@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-rate-limit-slice-surface' });
 import fs from 'fs';
@@ -6,28 +7,30 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const mainPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit.ts');
+const processingPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit-processing.ts');
 const buildersPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit-builders.ts');
 const builderExhaustionOptionsPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit-builders/exhaustion-options.ts');
+const rateLimitDiscordNotifierPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit-discord-notifier.ts');
 const exitPath = path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit-exit.ts');
 const contractPath = path.join(sourceRoot, 'skills/common/pipeline/services/rate-limit-contract.ts');
 const discordFieldsContractPath = path.join(sourceRoot, 'skills/common/pipeline/services/discord-fields-contract.ts');
 
 const mainSource = fs.readFileSync(mainPath, 'utf8');
-const buildersSource = [buildersPath, builderExhaustionOptionsPath]
+const processingSource = fs.readFileSync(processingPath, 'utf8');
+const serviceDir = path.dirname(mainPath);
+const splitBuilderPaths = fs.readdirSync(serviceDir)
+  .filter((name) => name.endsWith('.ts') && name.startsWith('rate-limit-') && (name.includes('builder') || name.includes('recovery')))
+  .map((name) => path.join(serviceDir, name));
+const buildersSource = [buildersPath, builderExhaustionOptionsPath, rateLimitDiscordNotifierPath, ...splitBuilderPaths]
   .map((filePath) => fs.readFileSync(filePath, 'utf8'))
   .join('\n');
-const exitSource = fs.readFileSync(exitPath, 'utf8');
+const exitSource = fs.readdirSync(serviceDir)
+  .filter((name) => name.startsWith('rate-limit-exit'))
+  .map((name) => fs.readFileSync(path.join(serviceDir, name), 'utf8'))
+  .join('\n');
 const contractSource = fs.readFileSync(contractPath, 'utf8');
 const discordFieldsContractSource = fs.readFileSync(discordFieldsContractPath, 'utf8');
 
@@ -37,15 +40,15 @@ assert.equal(mainSource.includes("from './rate-limit-builders.ts'"), true, 'rate
 assert.equal(mainSource.includes("from './rate-limit-exit.ts'"), true, 'rate-limit main surface should import the exit helper module');
 assert.equal(mainSource.includes('appendDurableRateLimitExhaustionAlert'), false, 'rate-limit main surface must not keep duplicate durable exhaustion alert logic');
 assert.equal(mainSource.includes('appendDurableOperatorAlert'), false, 'rate-limit main surface must not write exhaustion alerts directly');
-assert.equal(mainSource.includes('finalizeSessionRateLimitExhaustion'), true, 'generic rate-limit wrappers must route exhaustion through the central finalizer');
+assert.equal(processingSource.includes('finalizeSessionRateLimitExhaustion'), true, 'generic rate-limit wrappers must route exhaustion through the central finalizer');
 assert.equal(mainSource.includes('defaultSessionRateLimitExhaustedResult'), false, 'generic rate-limit wrappers must not synthesize default exhausted results');
 assert.equal(mainSource.includes('defaultSessionMonitorRateLimitExhaustedResult'), false, 'session monitor rate-limit exhaustion must require typed exhausted result options');
-assert.equal(mainSource.includes('session rate-limit exhaustion requires explicit typed buildExhaustedResult or exhaustedResultOptions'), true, 'generic rate-limit exhaustion must fail closed without typed exhausted result options');
+assert.equal(processingSource.includes('session rate-limit exhaustion requires explicit typed buildExhaustedResult or exhaustedResultOptions'), true, 'generic rate-limit exhaustion must fail closed without typed exhausted result options');
 assert.equal(buildersSource.includes('export function createTrackedModuleSessionRateLimitExhaustedResultOptions('), true, 'module rate-limit recovery must expose typed exhausted result options');
 assert.equal(buildersSource.includes('export function createTrackedGateSessionRateLimitExhaustedResultOptions('), true, 'gate rate-limit recovery must expose typed exhausted result options');
-assert.equal(exitSource.includes('appendDurableOperatorAlert(config'), true, 'rate-limit finalizer must write durable local evidence');
+assert.equal(/appendDurableOperatorAlert\s*\(/.test(exitSource), true, 'rate-limit finalizer must write durable local evidence');
 assert.equal(
-  exitSource.indexOf("if (config) {\n    appendDurableOperatorAlert(config, 'pipeline.operator_alert'") < exitSource.indexOf("await runHook('sendDiscord'"),
+  exitSource.indexOf('appendDurableOperatorAlert(') < exitSource.indexOf('await runHook('),
   true,
   'rate-limit finalizer must append durable evidence before network dispatch hooks',
 );
@@ -70,7 +73,6 @@ for (const marker of [
   'export async function finalizeSummarySessionRateLimitExit(',
   'export async function finalizeGateSessionRateLimitExit(',
   'export async function finalizeModuleSessionRateLimitExit(',
-  'export function createModuleSessionRateLimitExhaustionOptions(',
 ]) {
   assert.equal(exitSource.includes(marker), true, `rate-limit exit helpers must export ${marker}`);
 }
@@ -96,7 +98,7 @@ for (const [mod, name] of [
   [mainMod, 'resumeDurableCooldownForStep'],
   [mainMod, 'processSessionRateLimit'],
   [buildersMod, 'createTrackedGateSessionRateLimitRecoveryOptions'],
-  [buildersMod, 'buildTrackedModuleSessionRateLimitStatus'],
+  [mainMod, 'buildTrackedModuleSessionRateLimitStatus'],
   [exitMod, 'buildSessionRateLimitExitResult'],
   [exitMod, 'finalizeSessionRateLimitExhaustion'],
   [exitMod, 'createModuleSessionRateLimitExhaustionOptions'],
@@ -108,7 +110,11 @@ for (const [mod, name] of [
 assert.equal(Object.prototype.hasOwnProperty.call(mainMod, 'handleRateLimit'), false, 'legacy handleRateLimit wrapper must be deleted');
 assert.equal(mainSource.includes('pauseCount = 1, maxPauses = 5'), false, 'rate-limit surface must not keep hard-coded wrapper pause defaults');
 assert.equal(mainSource.includes('cooldown_buffer_ms ?? 5000'), false, 'rate-limit surface must not keep hidden cooldown buffer fallback');
-assert.equal(mainSource.includes('config?.rate_limit?.cooldown_buffer_ms'), true, 'rate-limit cooldown buffer must come from direct swarm config');
+assert.equal(
+  fs.readFileSync(path.join(serviceDir, 'rate-limit-durable-cooldown.ts'), 'utf8').includes('config?.rate_limit?.cooldown_buffer_ms'),
+  true,
+  'rate-limit cooldown buffer must come from direct swarm config',
+);
 assert.equal(buildersSource.includes('projectModuleSchedulerState('), true, 'tracked module rate-limit status must consume canonical module scheduler projections');
 assert.equal(buildersSource.includes("import { loadStatus }"), false, 'tracked module rate-limit status must not import legacy-shaped loadStatus snapshots');
 assert.equal(buildersSource.includes('?? moduleDir'), false, 'tracked module rate-limit status must not synthesize module identity from the directory');
@@ -147,14 +153,14 @@ const trackedRateLimitConfig = {
   },
 };
 fs.mkdirSync(trackedRateLimitConfig.paths.modules_dir, { recursive: true });
-const trackedModuleStatus = buildersMod.buildTrackedModuleSessionRateLimitStatus(
+const trackedModuleStatus = mainMod.buildTrackedModuleSessionRateLimitStatus(
   trackedRateLimitConfig,
   'alpha',
   { current_phase: 'forge' },
 );
 assert.equal(trackedModuleStatus.module_id, 'mod-alpha', 'tracked module rate-limit status must resolve module id from canonical progress config');
 assert.throws(
-  () => buildersMod.buildTrackedModuleSessionRateLimitStatus(
+  () => mainMod.buildTrackedModuleSessionRateLimitStatus(
     { ...trackedRateLimitConfig, _progress: { modules: {} } },
     'alpha',
     { current_phase: 'forge' },

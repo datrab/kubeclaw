@@ -71,7 +71,7 @@ export function sessionKillPolicy(config: AnyRecord): AnyRecord {
   };
 }
 
-export function sessionTerminationPolicy(config: AnyRecord): AnyRecord {
+function sessionTerminationPolicy(config: AnyRecord): AnyRecord {
   const termination = requireObject(config?.session?.termination, 'config.session.termination');
   return {
     graceMs: requireNumber(termination.grace_ms, 'config.session.termination.grace_ms'),

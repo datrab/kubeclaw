@@ -23,6 +23,7 @@ import { runPipeline, printStatus, dryRun } from './runners/pipeline-runner.ts';
 import { validateThinkingLevel, VALID_THINKING_LEVELS } from './core/policy.ts';
 import { parseCliFlagValues } from './cli-args.ts';
 import { limitEgressText, sanitizeJsonEgress } from './egress.ts';
+import { novaEnvironmentSnapshot } from './core/runtime-environment.ts';
 import { resolveNovaPromptIngress, PROMPT_INGRESS_MAX_BYTES } from './services/prompt-ingress.ts';
 
 declare const process: any;
@@ -73,7 +74,7 @@ function prepareResumeLifecycleContext(config: AnyRecord = {}) {
     config._runId = runId;
     config.run_id = runId;
     config._lifecycleReadOnlyRunLogDir = path.join(swarmDir, 'logs', 'pipeline', 'runs', runId);
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return;
   }
 }
@@ -101,12 +102,12 @@ export async function main() {
   const tempManager = createTempManager();
   const initTempDir = () => tempManager.init();
   const cleanupTempDir = () => tempManager.cleanup();
-  let output = (o) => new Promise((resolve) => {
+  let output = (o: any) => new Promise((resolve: any) => {
     process.stdout.write(JSON.stringify(sanitizeJsonEgress(o, 'cli_output')) + '\n', () => {
       resolve(undefined);
     });
   });
-  let log = (level, msg) => console.error(`[${level}]`, limitEgressText(msg, Number.POSITIVE_INFINITY));
+  let log = (level: any, msg: any) => console.error(`[${level}]`, limitEgressText(msg, Number.POSITIVE_INFINITY));
 
   let flags;
   try {
@@ -128,7 +129,7 @@ export async function main() {
         help: { type: 'boolean', default: false },
       },
     });
-    flags = normalizeNovaCliFlags(rawFlags, process.env);
+    flags = normalizeNovaCliFlags(rawFlags, novaEnvironmentSnapshot());
   } catch (e: any) {
     const message = errorMessage(e);
     log('ERROR', message);

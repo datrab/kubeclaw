@@ -7,14 +7,23 @@ import { normalizeBusterCapabilities, unsupportedBusterCapabilities } from './ca
 import { getRepoRoot, gitExec } from './git-workflows.ts';
 import { resolveScopedPath } from '../security.ts';
 import { validateImageReference } from './image-reference.ts';
+import type { AnyTaskRecord, BusterTaskIdentity, TaskIdentityCandidate } from './task-contracts.ts';
 
-export const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'];
+export const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'] as const;
+
+type AnyRecord = AnyTaskRecord;
+type UnsafeField = { field: string; reason: string };
 
 export class MalformedBusterTaskError extends Error {
-  constructor(message, details = {}) {
+  readonly code = 'BUSTER_TASK_MALFORMED';
+  readonly details: AnyRecord;
+  readonly missing_fields: unknown[];
+  readonly forbidden_fields: unknown[];
+  readonly unsafe_fields: unknown[];
+
+  constructor(message: string, details: AnyRecord = {}) {
     super(message);
     this.name = 'MalformedBusterTaskError';
-    this.code = 'BUSTER_TASK_MALFORMED';
     this.details = details;
     this.missing_fields = arrayValue(details.missing_fields);
     this.forbidden_fields = arrayValue(details.forbidden_fields);
@@ -22,42 +31,42 @@ export class MalformedBusterTaskError extends Error {
   }
 }
 
-export function normalizeRequiredIdentity(value) {
+export function normalizeRequiredIdentity(value: unknown): string | null {
   if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   const text = String(value).trim();
   return text ? text : null;
 }
 
-function normalizeAttempt(value) {
+function normalizeAttempt(value: unknown): number | null {
   if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   const numeric = Number(value);
   if (selectTruthyValue(() => (!Number.isInteger(numeric)), () => (numeric < 1))) return null;
   return numeric;
 }
 
-function isPlainObject(value) {
+function isPlainObject(value: unknown): value is AnyRecord {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
-function objectRecord(value) {
+function objectRecord(value: unknown): AnyRecord {
   return isPlainObject(value) ? value : {};
 }
 
-function arrayValue(value) {
+function arrayValue(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
 }
 
-function stringValue(value) {
+function stringValue(value: unknown): string {
   return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
 }
 
-function payloadValueType(value) {
+function payloadValueType(value: unknown): string {
   if (Array.isArray(value)) return 'array';
   if (value === null) return 'null';
   return typeof value;
 }
 
-function normalizeRequiredSuites(value) {
+function normalizeRequiredSuites(value: unknown): string[] | null {
   if (!Array.isArray(value)) return null;
   const suiteNames = [];
   for (const suite of value) {
@@ -67,11 +76,15 @@ function normalizeRequiredSuites(value) {
   return suiteNames.length > 0 ? suiteNames : null;
 }
 
-function containsParentTraversal(value) {
+function containsParentTraversal(value: unknown): boolean {
   return stringValue(value).split(/[\\/]+/).filter(Boolean).includes('..');
 }
 
-function validateRepoRelativePayloadPath(payload, field, { required = false, repoRoot = getRepoRoot() } = {}) {
+function validateRepoRelativePayloadPath(
+  payload: AnyRecord,
+  field: string,
+  { required = false, repoRoot = getRepoRoot() }: { required?: boolean; repoRoot?: string } = {},
+): string | null {
   const value = normalizeRequiredIdentity(payload?.[field]);
   if (!value) {
     if (required) throw new Error(`${field}: required`);
@@ -88,12 +101,12 @@ function validateRepoRelativePayloadPath(payload, field, { required = false, rep
   return value;
 }
 
-function gitCommonDir(repoRoot) {
+function gitCommonDir(repoRoot: string): string {
   const commonDir = gitExec(repoRoot, ['rev-parse', '--git-common-dir']);
   return path.resolve(repoRoot, commonDir);
 }
 
-function validateSessionCwdPath(payload, { repoRoot = getRepoRoot() } = {}) {
+function validateSessionCwdPath(payload: AnyRecord, { repoRoot = getRepoRoot() }: { repoRoot?: string } = {}): string {
   const value = normalizeRequiredIdentity(payload?.session?.cwd);
   if (!value) throw new Error('session.cwd: required');
   if (containsParentTraversal(value)) throw new Error('session.cwd: must not contain parent traversal');
@@ -115,9 +128,9 @@ function validateSessionCwdPath(payload, { repoRoot = getRepoRoot() } = {}) {
   return value;
 }
 
-function validatePayloadPathBoundaries(payload, taskType) {
+function validatePayloadPathBoundaries(payload: AnyRecord, taskType: string): void {
   const repoRoot = getRepoRoot();
-  const unsafe = [];
+  const unsafe: UnsafeField[] = [];
   const fields = ['output_file'];
   if (taskType === 'module_test') fields.push('module_path', 'buster_md_path');
   if (taskType === 'gate_test') fields.push('work_dir', 'instructions_file');
@@ -126,13 +139,13 @@ function validatePayloadPathBoundaries(payload, taskType) {
     try {
       validateRepoRelativePayloadPath(payload, field, { required: field === 'output_file', repoRoot });
     } catch (error) {
-      unsafe.push({ field, reason: error.message });
+      unsafe.push({ field, reason: error instanceof Error ? error.message : String(error) });
     }
   }
   try {
     validateSessionCwdPath(payload, { repoRoot });
   } catch (error) {
-    unsafe.push({ field: 'session.cwd', reason: error.message });
+    unsafe.push({ field: 'session.cwd', reason: error instanceof Error ? error.message : String(error) });
   }
 
   if (unsafe.length > 0) {
@@ -145,7 +158,7 @@ function validatePayloadPathBoundaries(payload, taskType) {
   }
 }
 
-function validateServeImagePolicy(testConfig) {
+function validateServeImagePolicy(testConfig: AnyRecord | null): void {
   const image = testConfig?.serve?.image;
   if (selectTruthyValue(() => (selectTruthyValue(() => (image === undefined), () => (image === null))), () => (image === ''))) return;
   const validation = validateImageReference(image);
@@ -156,7 +169,7 @@ function validateServeImagePolicy(testConfig) {
   });
 }
 
-function validateAgentJudgmentPolicy(payload) {
+function validateAgentJudgmentPolicy(payload: AnyRecord): void {
   const policy = payload?.agent_judgment;
   if (selectTruthyValue(() => (policy === undefined), () => (policy === null))) return;
   if (!isPlainObject(policy)) {
@@ -175,8 +188,71 @@ function validateAgentJudgmentPolicy(payload) {
   }
 }
 
-export function validateBusterTaskPayload(payload = {}) {
-  const missing = [];
+function taskIdentityCandidate(task: AnyRecord): TaskIdentityCandidate {
+  const testConfigProvided = task.test_config !== undefined;
+  const testConfig = isPlainObject(task.test_config) ? task.test_config : null;
+  return {
+    taskType: normalizeRequiredIdentity(task.task_type),
+    moduleId: normalizeRequiredIdentity(task.module_id),
+    project: normalizeRequiredIdentity(task.project),
+    runId: normalizeRequiredIdentity(task.run_id),
+    attempt: normalizeAttempt(task.attempt),
+    dispatchId: normalizeRequiredIdentity(task.dispatch_id),
+    completionStream: normalizeRequiredIdentity(task.completion_stream),
+    gateId: normalizeRequiredIdentity(task.gate_id),
+    commitHash: normalizeRequiredIdentity(task.commit_hash),
+    outputFile: normalizeRequiredIdentity(task.output_file),
+    stageId: normalizeRequiredIdentity(task.stage_id),
+    workerType: normalizeRequiredIdentity(task.worker_type),
+    timeoutSeconds: normalizeAttempt(task.timeout_seconds),
+    sessionRuntime: normalizeRequiredIdentity(task.session?.runtime)?.toLowerCase(),
+    sessionModel: normalizeRequiredIdentity(task.session?.model),
+    sessionAgentId: sessionAgentIdAuthority(task.session),
+    sessionCwd: normalizeRequiredIdentity(task.session?.cwd),
+    sessionLabel: normalizeRequiredIdentity(task.session?.label),
+    suites: normalizeRequiredSuites(task.suites),
+    capabilities: normalizeBusterCapabilities(task.capabilities) as string[],
+    testConfigProvided,
+    testConfig,
+    suiteTimeoutMs: testConfig ? normalizeAttempt(testConfig.suite_timeout_ms) : null,
+  };
+}
+
+function missingIdentityFields(candidate: TaskIdentityCandidate): string[] {
+  const missing: string[] = [];
+  if (!candidate.taskType || !(PIPELINE_TASK_TYPES as readonly string[]).includes(candidate.taskType)) missing.push('task_type');
+  const required: Array<[unknown, string]> = [
+    [candidate.moduleId, 'module_id'], [candidate.project, 'project'], [candidate.runId, 'run_id'],
+    [candidate.attempt, 'attempt'], [candidate.dispatchId, 'dispatch_id'],
+    [candidate.completionStream, 'completion_stream'], [candidate.commitHash, 'commit_hash'],
+    [candidate.outputFile, 'output_file'], [candidate.stageId, 'stage_id'],
+    [candidate.timeoutSeconds, 'timeout_seconds'], [candidate.sessionModel, 'session.model'],
+    [candidate.sessionAgentId, 'session.agentId'], [candidate.sessionCwd, 'session.cwd'],
+    [candidate.sessionLabel, 'session.label'], [candidate.suites, 'suites'],
+  ];
+  for (const [value, field] of required) if (value === null) missing.push(field);
+  if (candidate.taskType === 'module_test' && candidate.workerType !== 'module_buster') missing.push('worker_type');
+  if (candidate.sessionRuntime !== 'acp' && candidate.sessionRuntime !== 'subagent') missing.push('session.runtime');
+  if (!candidate.testConfigProvided) missing.push('test_config');
+  if (candidate.testConfig && candidate.suiteTimeoutMs === null) missing.push('test_config.suite_timeout_ms');
+  if (candidate.taskType === 'gate_test' && !candidate.gateId) missing.push('gate_id');
+  return missing;
+}
+
+function validatedIdentity(candidate: TaskIdentityCandidate): BusterTaskIdentity {
+  return {
+    taskType: candidate.taskType as 'module_test' | 'gate_test',
+    moduleId: candidate.moduleId!, gateId: candidate.taskType === 'gate_test' ? candidate.gateId : null,
+    project: candidate.project!, runId: candidate.runId!, attempt: candidate.attempt!,
+    dispatchId: candidate.dispatchId!, completionStream: candidate.completionStream!,
+    commitHash: candidate.commitHash!, stageId: candidate.stageId!,
+    workerType: candidate.taskType === 'module_test' ? candidate.workerType : null,
+    timeoutSeconds: candidate.timeoutSeconds!, suites: candidate.suites!,
+    capabilities: candidate.capabilities, suiteTimeoutMs: candidate.suiteTimeoutMs!,
+  };
+}
+
+export function validateBusterTaskPayload(payload: unknown = {}): BusterTaskIdentity {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!payload), () => (typeof payload !== 'object'))), () => (Array.isArray(payload)))) {
     throw new MalformedBusterTaskError('Buster task payload must be an object', {
       reason: 'payload_not_object',
@@ -184,102 +260,41 @@ export function validateBusterTaskPayload(payload = {}) {
     });
   }
 
-  const taskType = normalizeRequiredIdentity(payload.task_type);
-  if (!PIPELINE_TASK_TYPES.includes(taskType)) missing.push('task_type');
-
-  const moduleId = normalizeRequiredIdentity(payload.module_id);
-  const project = normalizeRequiredIdentity(payload.project);
-  const runId = normalizeRequiredIdentity(payload.run_id);
-  const attempt = normalizeAttempt(payload.attempt);
-  const dispatchId = normalizeRequiredIdentity(payload.dispatch_id);
-  const completionStream = normalizeRequiredIdentity(payload.completion_stream);
-  const gateId = normalizeRequiredIdentity(payload.gate_id);
-  const commitHash = normalizeRequiredIdentity(payload.commit_hash);
-  const outputFile = normalizeRequiredIdentity(payload.output_file);
-  const stageId = normalizeRequiredIdentity(payload.stage_id);
-  const workerType = normalizeRequiredIdentity(payload.worker_type);
-  const timeoutSeconds = normalizeAttempt(payload.timeout_seconds);
-  const sessionRuntime = normalizeRequiredIdentity(payload.session?.runtime)?.toLowerCase();
-  const sessionModel = normalizeRequiredIdentity(payload.session?.model);
-  const sessionAgentId = sessionAgentIdAuthority(payload.session);
-  const sessionCwd = normalizeRequiredIdentity(payload.session?.cwd);
-  const sessionLabel = normalizeRequiredIdentity(payload.session?.label);
-  const suites = normalizeRequiredSuites(payload.suites);
-  const capabilities = normalizeBusterCapabilities(payload.capabilities);
-  const unsupportedCapabilities = unsupportedBusterCapabilities(capabilities);
-  const testConfigProvided = payload.test_config !== undefined;
-  const testConfig = isPlainObject(payload.test_config) ? payload.test_config : null;
-  const suiteTimeoutMs = testConfig ? normalizeAttempt(testConfig.suite_timeout_ms) : null;
-
-  if (!moduleId) missing.push('module_id');
-  if (!project) missing.push('project');
-  if (!runId) missing.push('run_id');
-  if (attempt === null) missing.push('attempt');
-  if (!dispatchId) missing.push('dispatch_id');
-  if (!completionStream) missing.push('completion_stream');
-  if (!commitHash) missing.push('commit_hash');
-  if (!outputFile) missing.push('output_file');
-  if (!stageId) missing.push('stage_id');
-  if (taskType === 'module_test' && workerType !== 'module_buster') missing.push('worker_type');
-  if (timeoutSeconds === null) missing.push('timeout_seconds');
-  if (sessionRuntime !== 'acp' && sessionRuntime !== 'subagent') missing.push('session.runtime');
-  if (!sessionModel) missing.push('session.model');
-  if (!sessionAgentId) missing.push('session.agentId');
-  if (!sessionCwd) missing.push('session.cwd');
-  if (!sessionLabel) missing.push('session.label');
-  if (!suites) missing.push('suites');
-  if (testConfigProvided && !testConfig) {
+  const task = payload as AnyRecord;
+  const candidate = taskIdentityCandidate(task);
+  if (candidate.testConfigProvided && !candidate.testConfig) {
     throw new MalformedBusterTaskError('Buster task payload test_config must be an object', {
       reason: 'invalid_test_config_shape',
-      invalid_fields: [{ field: 'test_config', expected: 'object', actual: payloadValueType(payload.test_config) }],
-      payload_keys: Object.keys(payload),
+      invalid_fields: [{ field: 'test_config', expected: 'object', actual: payloadValueType(task.test_config) }],
+      payload_keys: Object.keys(task),
     });
   }
-  if (!testConfigProvided) missing.push('test_config');
-  if (testConfig && suiteTimeoutMs === null) missing.push('test_config.suite_timeout_ms');
-  if (taskType === 'gate_test' && !gateId) missing.push('gate_id');
-
+  const missing = missingIdentityFields(candidate);
   if (missing.length > 0) {
     throw new MalformedBusterTaskError(`Buster task payload missing required identity: ${missing.join(', ')}`, {
       reason: 'missing_required_identity',
       missing_fields: missing,
-      task_type: selectTruthyValue(() => (taskType), () => (null)),
-      payload_keys: Object.keys(payload),
+      task_type: candidate.taskType,
+      payload_keys: Object.keys(task),
     });
   }
 
+  const unsupportedCapabilities = unsupportedBusterCapabilities(candidate.capabilities);
   if (unsupportedCapabilities.length > 0) {
     throw new MalformedBusterTaskError(`Buster task payload contains unsupported capabilities: ${unsupportedCapabilities.join(', ')}`, {
       reason: 'unsupported_capabilities',
       unsupported_capabilities: unsupportedCapabilities,
-      payload_keys: Object.keys(payload),
+      payload_keys: Object.keys(task),
     });
   }
 
-  validatePayloadPathBoundaries(payload, taskType);
-  validateServeImagePolicy(testConfig);
-  validateAgentJudgmentPolicy(payload);
-
-  return {
-    taskType,
-    moduleId,
-    gateId: taskType === 'gate_test' ? gateId : null,
-    project,
-    runId,
-    attempt,
-    dispatchId,
-    completionStream,
-    commitHash,
-    stageId,
-    workerType: taskType === 'module_test' ? workerType : null,
-    timeoutSeconds,
-    suites,
-    capabilities,
-    suiteTimeoutMs,
-  };
+  validatePayloadPathBoundaries(task, candidate.taskType!);
+  validateServeImagePolicy(candidate.testConfig);
+  validateAgentJudgmentPolicy(task);
+  return validatedIdentity(candidate);
 }
 
-function sessionAgentIdAuthority(session) {
+function sessionAgentIdAuthority(session: AnyRecord | null | undefined): string | null {
   const canonical = normalizeRequiredIdentity(session?.agentId);
   if (canonical) return canonical;
   return normalizeRequiredIdentity(session?.agent_id);

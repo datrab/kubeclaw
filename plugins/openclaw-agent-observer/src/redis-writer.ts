@@ -11,6 +11,7 @@ import type {
 } from './agent-observability/index.ts';
 import { createRedisClient, loadRedisCtor } from './redis-transport.ts';
 import type { AgentObserverConfig } from './config.ts';
+import { setTimeout as delay } from 'node:timers/promises';
 
 type RedisClient = {
   xadd: (...args: unknown[]) => Promise<unknown> | unknown;
@@ -79,14 +80,11 @@ function defaultRedisClientFactory(config: AgentObserverConfig): RedisClient {
   ) as RedisClient;
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  const timeout = new Promise<never>((_resolve, reject) => {
-    timer = setTimeout(() => reject(new Error(message)), timeoutMs);
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+  const timeout = delay(timeoutMs, undefined, { ref: false }).then(() => {
+    throw new Error(message);
   });
-  return Promise.race([promise, timeout]).finally(() => {
-    if (timer) clearTimeout(timer);
-  });
+  return Promise.race([promise, timeout]);
 }
 
 function errorMessage(error: unknown): string {
@@ -308,7 +306,9 @@ export class AgentObserverRedisWriter {
   }
 
   private nextItem(): QueuedEvent | null {
-    return this.queues.control.shift() ?? this.queues.payload.shift() ?? null;
+    const control = this.queues.control.shift();
+    if (control) return control;
+    return this.queues.payload.shift() ?? null;
   }
 
   private hasItems(): boolean {

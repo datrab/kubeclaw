@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-worker-control-result-surface' });
 import fs from 'fs';
@@ -6,16 +7,8 @@ import assert from 'assert';
 import { pathToFileURL } from 'url';
 import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const genericMissingValueToken = ['unk', 'nown'].join('');
 const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
 const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);

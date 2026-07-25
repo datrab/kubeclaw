@@ -5,37 +5,13 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { spawnSync } from 'child_process';
+import { parseSourceRootArgs, runNode } from '../lib/contract-check-helpers.mjs';
 import {
   importRuntimeModule,
   materializeRuntimeTree,
 } from '../lib/lifecycle-audit-lib.mjs';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
-
-function runNode(args, options = {}) {
-  return spawnSync(process.execPath, args, {
-    cwd: options.cwd,
-    env: {
-      ...process.env,
-      ...options.env,
-    },
-    encoding: 'utf8',
-    timeout: options.timeout ?? 10000,
-  });
-}
-
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const busterShim = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
 const busterEntrypoint = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
 const source = fs.readFileSync(busterEntrypoint, 'utf8');

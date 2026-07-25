@@ -6,7 +6,7 @@ import {
 } from '../../noncritical-reporting.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-function reportFailureSurfaceIncident(config, classification, error, message, options = {}) {
+function reportFailureSurfaceIncident(config: any, classification: any, error: any, message: any, options: any = {}) {
   const resolvedConfig = selectDefinedValue(() => (config), () => ({}));
   reportClassifiedNonBlockingError({
     log,

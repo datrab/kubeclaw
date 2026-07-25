@@ -23,11 +23,28 @@ function close(server) {
   });
 }
 
-test('apiSuite interpolates templated default headers from auth setup variables', async () => {
+async function runApiFixture({ name, spec, server = null, port = 1 }) {
   const repoRoot = resolveRepoDir();
-  const fixtureDir = path.join(repoRoot, '.swarm', 'api-suite-test', String(process.pid), 'default-header-auth');
+  const fixtureDir = path.join(repoRoot, '.swarm', 'api-suite-test', String(process.pid), name);
   const specPath = path.join(fixtureDir, 'api.json');
+  fs.mkdirSync(fixtureDir, { recursive: true });
+  const actualPort = server ? await listen(server) : port;
+  fs.writeFileSync(specPath, JSON.stringify(spec, null, 2));
+  try {
+    return await apiSuite({
+      config: {
+        serve: { port: actualPort },
+        api: { spec_file: path.relative(repoRoot, specPath), thresholds: { max_failures: 0 } },
+      },
+      logSink: null,
+    });
+  } finally {
+    if (server) await close(server);
+    fs.rmSync(fixtureDir, { recursive: true, force: true });
+  }
+}
 
+test('apiSuite interpolates templated default headers from auth setup variables', async () => {
   const server = http.createServer((req, res) => {
     if (req.method === 'POST' && req.url === '/auth') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -46,9 +63,7 @@ test('apiSuite interpolates templated default headers from auth setup variables'
     res.end();
   });
 
-  fs.mkdirSync(fixtureDir, { recursive: true });
-  const port = await listen(server);
-  fs.writeFileSync(specPath, JSON.stringify({
+  const verdict = await runApiFixture({ name: 'default-header-auth', server, spec: {
     setup: { auth_endpoint: '/auth', token_path: 'token' },
     defaults: {
       headers: { Authorization: 'Bearer {{token}}' },
@@ -64,36 +79,14 @@ test('apiSuite interpolates templated default headers from auth setup variables'
         },
       },
     ],
-  }, null, 2));
-
-  try {
-    const verdict = await apiSuite({
-      config: {
-        serve: { port },
-        api: {
-          spec_file: path.relative(repoRoot, specPath),
-          thresholds: { max_failures: 0 },
-        },
-      },
-      logSink: null,
-    });
-
-    assert.equal(verdict.status, 'PASS');
-    assert.equal(verdict.checks_failed, 0);
-    assert.equal(verdict.findings.length, 0);
-  } finally {
-    await close(server);
-    fs.rmSync(fixtureDir, { recursive: true, force: true });
-  }
+  } });
+  assert.equal(verdict.status, 'PASS');
+  assert.equal(verdict.checks_failed, 0);
+  assert.equal(verdict.findings.length, 0);
 });
 
 test('apiSuite reports missing template variables in default headers', async () => {
-  const repoRoot = resolveRepoDir();
-  const fixtureDir = path.join(repoRoot, '.swarm', 'api-suite-test', String(process.pid), 'missing-default-header-var');
-  const specPath = path.join(fixtureDir, 'api.json');
-
-  fs.mkdirSync(fixtureDir, { recursive: true });
-  fs.writeFileSync(specPath, JSON.stringify({
+  const verdict = await runApiFixture({ name: 'missing-default-header-var', spec: {
     defaults: {
       headers: { Authorization: 'Bearer {{token}}' },
     },
@@ -105,34 +98,14 @@ test('apiSuite reports missing template variables in default headers', async () 
         expect: { status: 200 },
       },
     ],
-  }, null, 2));
-
-  try {
-    const verdict = await apiSuite({
-      config: {
-        serve: { port: 1 },
-        api: {
-          spec_file: path.relative(repoRoot, specPath),
-          thresholds: { max_failures: 0 },
-        },
-      },
-      logSink: null,
-    });
-
-    assert.equal(verdict.status, 'FAIL');
-    assert.equal(verdict.checks_failed, 1);
-    assert.equal(verdict.findings[0]?.rule, 'api-template-variable');
-    assert.match(verdict.findings[0]?.message || '', /Missing API template variable\(s\): token/);
-  } finally {
-    fs.rmSync(fixtureDir, { recursive: true, force: true });
-  }
+  } });
+  assert.equal(verdict.status, 'FAIL');
+  assert.equal(verdict.checks_failed, 1);
+  assert.equal(verdict.findings[0]?.rule, 'api-template-variable');
+  assert.match(verdict.findings[0]?.message || '', /Missing API template variable\(s\): token/);
 });
 
 test('apiSuite lets per-test headers override templated default headers before variable checks', async () => {
-  const repoRoot = resolveRepoDir();
-  const fixtureDir = path.join(repoRoot, '.swarm', 'api-suite-test', String(process.pid), 'override-default-header-var');
-  const specPath = path.join(fixtureDir, 'api.json');
-
   const server = http.createServer((req, res) => {
     if (req.url === '/public') {
       const authorized = req.headers.authorization === 'Bearer literal';
@@ -145,9 +118,7 @@ test('apiSuite lets per-test headers override templated default headers before v
     res.end();
   });
 
-  fs.mkdirSync(fixtureDir, { recursive: true });
-  const port = await listen(server);
-  fs.writeFileSync(specPath, JSON.stringify({
+  const verdict = await runApiFixture({ name: 'override-default-header-var', server, spec: {
     defaults: {
       headers: { Authorization: 'Bearer {{token}}' },
     },
@@ -163,25 +134,8 @@ test('apiSuite lets per-test headers override templated default headers before v
         },
       },
     ],
-  }, null, 2));
-
-  try {
-    const verdict = await apiSuite({
-      config: {
-        serve: { port },
-        api: {
-          spec_file: path.relative(repoRoot, specPath),
-          thresholds: { max_failures: 0 },
-        },
-      },
-      logSink: null,
-    });
-
-    assert.equal(verdict.status, 'PASS');
-    assert.equal(verdict.checks_failed, 0);
-    assert.equal(verdict.findings.length, 0);
-  } finally {
-    await close(server);
-    fs.rmSync(fixtureDir, { recursive: true, force: true });
-  }
+  } });
+  assert.equal(verdict.status, 'PASS');
+  assert.equal(verdict.checks_failed, 0);
+  assert.equal(verdict.findings.length, 0);
 });

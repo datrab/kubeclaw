@@ -1,16 +1,10 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-phase10-executable-delegate-surface' });
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function read(sourceRoot, relativePath) {
   return fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
@@ -24,7 +18,7 @@ function assertExcludes(source, needle, message) {
   assert.equal(source.includes(needle), false, message);
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 
 const busterShim = read(sourceRoot, 'skills/buster/buster-pipeline.ts');
 assertIncludes(busterShim, 'await handleBusterEntrypoint();', 'Buster executable entrypoint must run the typed handler on direct execution');

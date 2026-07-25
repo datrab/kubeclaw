@@ -94,7 +94,7 @@ export function coerceGeneratorResult(
   throw new Error(`${formatExpectedProducerType(producerType)} plugin output must be a typed generator result; only schemaVersion 'v1' with producerKind 'generator' is accepted`);
 }
 
-export function validateGeneratorArtifactRef(ref: unknown, pathPrefix = 'artifacts[]'): string[] {
+export function validateGeneratorArtifactRef(ref: unknown, pathPrefix: any = 'artifacts[]'): string[] {
   const errors: string[] = [];
   if (!isPlainObject(ref)) {
     errors.push(`${pathPrefix} must be an object`);
@@ -123,7 +123,7 @@ export function validateGeneratorResult(result: unknown, {
     if (!Array.isArray(result.artifacts)) {
       errors.push('artifacts must be an array when present');
     } else {
-      result.artifacts.forEach((artifact, index) => {
+      result.artifacts.forEach((artifact: any, index: any) => {
         errors.push(...validateGeneratorArtifactRef(artifact, `artifacts[${index}]`));
       });
     }
@@ -145,7 +145,7 @@ export function normalizeGeneratorResult(rawResult: unknown, {
   let generatorResult: GeneratorResult;
   try {
     generatorResult = coerceGeneratorResult(rawResult, { producerType });
-  } catch (error) {
+  } catch (error: any) {
     const validationErrors = [error instanceof Error && error.message ? error.message : 'coercion failed'];
     const errorLabel = generatorErrorLabel(label, stageId);
     throw createContractInvalidError(`${errorLabel} generator returned invalid result: ${validationErrors.join('; ')}`, {

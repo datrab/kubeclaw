@@ -1,18 +1,12 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-pipeline-complexity-budgets' });
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const DEFAULT_MAX_LINES = 780;
 const ACCEPTED_FILE_MAX_LINES = new Map([
   ['skills/nova/pipeline/agents/module-workers.ts', 842],

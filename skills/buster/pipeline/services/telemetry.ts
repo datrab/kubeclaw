@@ -7,11 +7,6 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Events are published to the canonical run-scoped pipeline stream so
 // downstream consumers can reconstruct one ordered timeline per run.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
-import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
-import path from 'path';
-
 import {
   TELEMETRY_SEQ_TTL_SECONDS,
   requireTelemetryStreamMaxLen,
@@ -21,108 +16,17 @@ import {
   createRedisClient,
   loadRedisCtor,
 } from '../telemetry.ts';
-import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
 import { sanitizeTelemetryPayload } from '../egress.ts';
-import { buildCanonicalEnvelope, redactProhibitedSecrets, sha256 } from '../observability-contract.ts';
 import { loadBusterPlatformConfig } from './runtime-policy.ts';
-import {
-  assertTelemetryEventPayload,
-  buildPluginTelemetryPayload,
-} from './telemetry/payload-schema.ts';
+import { assertTelemetryEventPayload, buildPluginTelemetryPayload } from './telemetry/payload-schema.ts';
+import { appendPipelineArtifactEvent, appendQuarantinedEvent, buildTelemetryEnvelope as buildEnvelope } from './telemetry-artifacts.ts';
+import { errorMessage, reportBusterTelemetryIncident } from './telemetry-incidents.ts';
+import type { BusterTelemetryContext, ContextOverrides, RedisClient, TelemetryHealth, TelemetryIdentity, TelemetryOptions, TelemetryRecord as AnyRecord } from './telemetry-contracts.ts';
+export type { BusterTelemetryContext } from './telemetry-contracts.ts';
 
-declare const process: {
-  stderr: { write(text: string): void };
-};
-
-type AnyRecord = Record<string, any>;
-
-interface ErrorLike {
-  message?: string;
-  validationErrors?: unknown[];
-}
-
-interface TelemetryOptions extends AnyRecord {
-  project?: unknown;
-  run_id?: unknown;
-  module_id?: string | null;
-  emitter?: string | null;
-  log_dir?: string | null;
-  pipeline_log_path?: string | null;
-  pipeline_run_log_path?: string | null;
-  attempt?: unknown;
-  dispatch_id?: string | null;
-  session_key?: string | null;
-  gate_id?: string | null;
-  gate_type?: string | null;
-  enabled?: boolean | undefined;
-  streamMaxLen?: number | undefined;
-}
-
-interface TelemetryIdentity {
-  ok: boolean;
-  project: string | null;
-  runId: string | null;
-  streamKey: string | null;
-  seqKey: string | null;
-  error: Error | null;
-}
-
-interface RedisMulti {
-  xadd(...args: unknown[]): RedisMulti;
-  expire(...args: unknown[]): RedisMulti;
-  exec(): Promise<unknown>;
-}
-
-interface RedisClient {
-  incr(key: string | null): Promise<number>;
-  multi(): RedisMulti;
-  quit(): Promise<unknown>;
-  on(event: string, listener: (error: unknown) => void): void;
-}
-
-interface TelemetryHealth {
-  redis?: AnyRecord;
-}
-
-export interface BusterTelemetryContext extends AnyRecord {
-  redis: RedisClient | null;
-  streamKey: string | null;
-  seqKey: string | null;
-  project: string;
-  runId: string;
-  moduleId: string;
-  emitter: string;
-  logDir: string | null;
-  pipelineLogPath: string | null;
-  pipelineRunLogPath: string | null;
-  attempt: unknown;
-  dispatchId: string | null;
-  sessionKey: string | null;
-  gateId: string | null;
-  gateType: string | null;
-  streamMaxLen: number;
-  _health: TelemetryHealth;
-}
-
+interface ErrorLike { message?: string; validationErrors?: unknown[] }
 function asTelemetryContext(ctx: unknown): BusterTelemetryContext | null {
   return ctx && typeof ctx === 'object' ? ctx as BusterTelemetryContext : null;
-}
-
-interface ContextOverrides {
-  identity?: TelemetryIdentity;
-  redis?: RedisClient | null;
-  health?: TelemetryHealth;
-}
-
-const INCIDENT_KEY_MISSING_AUTHORITY = 'not_emitted';
-const INCIDENT_KEY_NO_MODULE = 'not_applicable';
-
-function errorMessage(error: unknown, fallback = 'missing_error_detail'): string {
-  if (error && typeof error === 'object' && typeof (error as ErrorLike).message === 'string') {
-    return (error as ErrorLike).message as string;
-  }
-  if (error !== undefined && error !== null && error !== '') return String(error);
-  return fallback;
 }
 
 function resolveTelemetryStreamMaxLen(opts: TelemetryOptions = {}): number {
@@ -130,37 +34,6 @@ function resolveTelemetryStreamMaxLen(opts: TelemetryOptions = {}): number {
     return requireTelemetryStreamMaxLen(opts.streamMaxLen, 'telemetry.streamMaxLen');
   }
   return requireTelemetryStreamMaxLenFromConfig(loadBusterPlatformConfig());
-}
-
-function isBusterTelemetryContext(value: unknown): value is BusterTelemetryContext {
-  return Boolean(value && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'runId'));
-}
-
-function incidentProject(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value : INCIDENT_KEY_MISSING_AUTHORITY;
-}
-
-function incidentRunId(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value : INCIDENT_KEY_MISSING_AUTHORITY;
-}
-
-function incidentModuleId(value: unknown): string {
-  return typeof value === 'string' && value.trim() ? value : INCIDENT_KEY_NO_MODULE;
-}
-
-function incidentIdentity(ctxOrOpts: TelemetryOptions | BusterTelemetryContext = {}): { project: string; runId: string; moduleId: string } {
-  if (isBusterTelemetryContext(ctxOrOpts)) {
-    return {
-      project: incidentProject(ctxOrOpts.project),
-      runId: incidentRunId(ctxOrOpts.runId),
-      moduleId: incidentModuleId(ctxOrOpts.moduleId),
-    };
-  }
-  return {
-    project: ctxOrOpts.project ? String(ctxOrOpts.project) : INCIDENT_KEY_MISSING_AUTHORITY,
-    runId: ctxOrOpts.run_id ? String(ctxOrOpts.run_id) : INCIDENT_KEY_MISSING_AUTHORITY,
-    moduleId: ctxOrOpts.module_id ? String(ctxOrOpts.module_id) : INCIDENT_KEY_NO_MODULE,
-  };
 }
 
 function telemetryIdentityAuthority(opts: TelemetryOptions, overrides: ContextOverrides): ReturnType<typeof resolveTelemetryStreamIdentity> {
@@ -181,26 +54,6 @@ function telemetryHealthAuthority(identity: ReturnType<typeof resolveTelemetrySt
           detail: selectDefinedValue(() => (identity.error?.message), () => ('Buster telemetry stream identity missing')),
         },
   };
-}
-
-function reportBusterTelemetryIncident(ctxOrOpts: TelemetryOptions | BusterTelemetryContext = {}, classification: string, error: unknown, message: string, options: AnyRecord = {}): void {
-  const identity = incidentIdentity(ctxOrOpts);
-  reportClassifiedNonBlockingError({
-    reporter: 'buster-telemetry',
-    classification,
-    incidentKey: buildNonBlockingIncidentKey(
-      'buster-telemetry',
-      identity.project,
-      identity.runId,
-      identity.moduleId,
-      classification,
-      typeof options.scope === 'string' && options.scope.trim() ? options.scope : 'missing_scope'
-    ),
-    message,
-    error,
-    level: typeof options.level === 'string' && options.level.trim() ? options.level : 'DEBUG',
-    fallback: (_level: string, line: string) => process.stderr.write(`${line}\n`),
-  });
 }
 
 function normalizeTelemetryIdentityPart(value: unknown): string | null {
@@ -231,100 +84,31 @@ function resolveTelemetryStreamIdentity(opts: TelemetryOptions = {}): TelemetryI
   };
 }
 
-export function resolveTelemetryStreamKey(opts: TelemetryOptions = {}): string | null {
+function resolveTelemetryStreamKey(opts: TelemetryOptions = {}): string | null {
   const identity = resolveTelemetryStreamIdentity(opts);
   return identity.streamKey;
 }
 
-function buildEnvelope(ctx: BusterTelemetryContext, type: string, data: AnyRecord = {}, seq: number | null): AnyRecord {
-  const payload = data;
-  const hasModuleId = Object.prototype.hasOwnProperty.call(payload, 'module_id');
-  const normalizedPayload = {
-    ...payload,
-    module_id: hasModuleId ? payload.module_id : (payload?.gate_id ? null : (selectDefinedValue(() => (ctx.moduleId), () => (null)))),
-    attempt: selectDefinedValue(() => (selectDefinedValue(() => (payload.attempt), () => (ctx.attempt))), () => (null)),
-    dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (payload.dispatch_id), () => (ctx.dispatchId))), () => (null)),
-    session_key: selectDefinedValue(() => (selectDefinedValue(() => (payload.session_key), () => (ctx.sessionKey))), () => (null)),
-  };
-  delete normalizedPayload.project;
-  delete normalizedPayload.run_id;
-  delete normalizedPayload.source;
-  delete normalizedPayload.emitter;
-  if (seq == null) return { schema_version:'quarantined_payload.v1', quarantined_at:new Date().toISOString(), reason_code:'TRANSPORT_UNAVAILABLE', intended_type_sha256:sha256(type), project:ctx.project, run_id:ctx.runId, producer:ctx.emitter, original_sha256:sha256(JSON.stringify(normalizedPayload)), payload:redactProhibitedSecrets(normalizedPayload) };
-  const gateId = normalizedPayload.gate_id || ctx.gateId || null;
-  const workId = gateId || normalizedPayload.module_id || ctx.runId;
-  return buildCanonicalEnvelope({ type, payload:normalizedPayload, seq, identity:{project:ctx.project,run_id:ctx.runId,work_id:workId,work_type:gateId?'gate':normalizedPayload.module_id?'module':'pipeline',gate_id:gateId,attempt:normalizedPayload.attempt,dispatch_id:normalizedPayload.dispatch_id,session_id:normalizedPayload.session_key,agent_id:null,model_call_id:normalizedPayload.model_call_id,tool_call_id:normalizedPayload.tool_call_id,source:'buster',producer:ctx.emitter} });
-}
-
-function buildBusterQuarantineCorrelation(ctx: Partial<BusterTelemetryContext> = {}, data: AnyRecord = {}): AnyRecord {
-  const gateId = selectDefinedValue(() => (selectDefinedValue(() => (data.gate_id), () => (ctx.gateId))), () => (null));
-  return {
-    module_id: Object.prototype.hasOwnProperty.call(data, 'module_id')
-      ? data.module_id
-      : (gateId ? null : (selectDefinedValue(() => (ctx.moduleId), () => (null)))),
-    gate_id: gateId,
-    gate_type: gateId ? (selectDefinedValue(() => (selectDefinedValue(() => (data.gate_type), () => (ctx.gateType))), () => (null))) : undefined,
-    attempt: selectDefinedValue(() => (selectDefinedValue(() => (data.attempt), () => (ctx.attempt))), () => (null)),
-    dispatch_id: selectDefinedValue(() => (selectDefinedValue(() => (data.dispatch_id), () => (ctx.dispatchId))), () => (null)),
-    session_key: selectDefinedValue(() => (selectDefinedValue(() => (data.session_key), () => (ctx.sessionKey))), () => (null)),
-  };
-}
-
-function appendQuarantinedEvent(ctx: BusterTelemetryContext, type: string, data: AnyRecord = {}): void {
-  const targets: string[] = [];
-  if (ctx?.logDir) targets.push(path.join(ctx.logDir, 'quarantine.jsonl'));
-  if (ctx?.pipelineLogPath) targets.push(path.join(path.dirname(ctx.pipelineLogPath), 'quarantine.jsonl'));
-  if (ctx?.pipelineRunLogPath) targets.push(path.join(path.dirname(ctx.pipelineRunLogPath), 'quarantine.jsonl'));
-  const uniqueTargets = [...new Set(targets)];
-  if (!uniqueTargets.length) return;
-  try {
-    const payload={...buildBusterQuarantineCorrelation(ctx,data),...sanitizeTelemetryPayload(data)};
-    const serialized=JSON.stringify(payload);
-    const record = { schema_version:'quarantined_payload.v1', quarantined_at:new Date().toISOString(), reason_code:'REDIS_TELEMETRY_UNAVAILABLE', intended_type_sha256:sha256(type), project:ctx.project, run_id:ctx.runId, producer:ctx.emitter, original_byte_length:new TextEncoder().encode(serialized).byteLength, original_sha256:sha256(serialized), payload:redactProhibitedSecrets(payload) };
-    for (const target of uniqueTargets) {
-      fs.mkdirSync(path.dirname(target), { recursive: true });
-      fs.appendFileSync(target, JSON.stringify(record) + '\n');
-    }
-  } catch (error) {
-    reportBusterTelemetryIncident(ctx, 'quarantine_write_failed', error, 'Buster telemetry quarantine write failed', {
-      scope: type,
-    });
-  }
-}
-
-function appendPipelineArtifactEvent(ctx: BusterTelemetryContext, event: AnyRecord | null): void {
-  const targets = [ctx?.pipelineLogPath, ctx?.pipelineRunLogPath].filter(Boolean);
-  if (selectTruthyValue(() => (!targets.length), () => (!event))) return;
-  try {
-    for (const target of targets) {
-      fs.mkdirSync(path.dirname(target), { recursive: true });
-      fs.appendFileSync(target, JSON.stringify(event) + '\n');
-    }
-  } catch (error) {
-    reportBusterTelemetryIncident(ctx, 'pipeline_artifact_write_failed', error, 'Buster telemetry pipeline artifact mirror write failed', {
-      scope: selectTruthyValue(() => (event?.type), () => ('missing_event_type')),
-    });
-  }
-}
-
 function createContext(opts: TelemetryOptions = {}, overrides: ContextOverrides = {}): BusterTelemetryContext {
   const identity = telemetryIdentityAuthority(opts, overrides);
+  const redis = identity.ok && overrides.redis ? overrides.redis : null;
+  const stringOrNull = (value: unknown): string | null => typeof value === 'string' && value ? value : null;
   return {
-    redis: identity.ok ? (selectDefinedValue(() => (overrides.redis), () => (null))) : null,
+    redis,
     streamKey: identity.streamKey,
     seqKey: identity.seqKey,
-    project: selectDefinedValue(() => (identity.project), () => ('')),
-    runId: selectDefinedValue(() => (identity.runId), () => ('')),
+    project: stringOrNull(identity.project) || '',
+    runId: stringOrNull(identity.runId) || '',
     moduleId: typeof opts.module_id === 'string' ? opts.module_id : '',
     emitter: typeof opts.emitter === 'string' && opts.emitter.trim() ? opts.emitter : 'buster/pipeline/services/telemetry',
-    logDir: selectTruthyValue(() => (opts.log_dir), () => (null)),
-    pipelineLogPath: selectTruthyValue(() => (opts.pipeline_log_path), () => (null)),
-    pipelineRunLogPath: selectTruthyValue(() => (opts.pipeline_run_log_path), () => (null)),
+    logDir: stringOrNull(opts.log_dir),
+    pipelineLogPath: stringOrNull(opts.pipeline_log_path),
+    pipelineRunLogPath: stringOrNull(opts.pipeline_run_log_path),
     attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-    dispatchId: selectDefinedValue(() => (opts.dispatch_id), () => (null)),
-    sessionKey: selectDefinedValue(() => (opts.session_key), () => (null)),
-    gateId: selectDefinedValue(() => (opts.gate_id), () => (null)),
-    gateType: selectDefinedValue(() => (opts.gate_type), () => (null)),
+    dispatchId: stringOrNull(opts.dispatch_id),
+    sessionKey: stringOrNull(opts.session_key),
+    gateId: stringOrNull(opts.gate_id),
+    gateType: stringOrNull(opts.gate_type),
     streamMaxLen: resolveTelemetryStreamMaxLen(opts),
     _health: telemetryHealthAuthority(identity, overrides),
   };
@@ -355,7 +139,7 @@ function recordTelemetryPayloadInvalid(ctx: BusterTelemetryContext, type: string
 }
 
 function markTelemetryDegradedOnce(ctx: BusterTelemetryContext | null, type: string, detail: unknown): void {
-  if (selectTruthyValue(() => (!ctx), () => (ctx._health?.redis?.degraded))) return;
+  if (!ctx || ctx._health.redis.degraded) return;
   const degradedAt = new Date().toISOString();
   ctx._health = {
     ...(selectDefinedValue(() => (ctx._health), () => ({}))),
@@ -390,8 +174,8 @@ function markTelemetryDegradedOnce(ctx: BusterTelemetryContext | null, type: str
 }
 
 async function emitRestoredIfNeeded(ctx: BusterTelemetryContext): Promise<void> {
-  const redisHealth = ctx?._health?.redis;
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!redisHealth?.degraded), () => (redisHealth.restoring))), () => (!ctx?.redis))) return;
+  const redisHealth = ctx._health.redis;
+  if (!redisHealth.degraded || redisHealth.restoring || !ctx.redis) return;
   const degradedAt = selectTruthyValue(() => (redisHealth.degradedAt), () => (null));
   const degradedDetail = redisHealth.detail;
   ctx._health.redis = { ...redisHealth, restoring: true };
@@ -504,8 +288,8 @@ export function createTelemetryContext(opts: TelemetryOptions = {}): BusterTelem
  */
 export async function emitEvent(ctx: unknown, type: string, data: AnyRecord = {}): Promise<AnyRecord | void> {
   const telemetryCtx = asTelemetryContext(ctx);
-  if (selectTruthyValue(() => (!telemetryCtx), () => (!type))) return;
-  if (telemetryCtx?._health?.redis?.disabled) return;
+  if (!telemetryCtx || !type) return;
+  if (telemetryCtx._health.redis.disabled) return;
   try {
     const { project, run_id: runId, source, emitter, producer, ...payload } = data;
     assertTelemetryEventPayload(type, payload);
@@ -545,7 +329,7 @@ export function emitPluginEvent(ctx: unknown, pluginEvent: string, data: AnyReco
 
 export async function closeTelemetry(ctx: unknown): Promise<void> {
   const telemetryCtx = asTelemetryContext(ctx);
-  if (selectTruthyValue(() => (!telemetryCtx), () => (!telemetryCtx.redis))) return;
+  if (!telemetryCtx || !telemetryCtx.redis) return;
   try {
     await telemetryCtx.redis.quit();
   } catch (error) {

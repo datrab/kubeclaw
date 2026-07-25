@@ -6,32 +6,82 @@ import {
 } from '../pipeline-helpers.ts';
 import { safeErrorMessage } from '../runtime-diagnostics.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-function requireFunction(value, name) {
-  if (typeof value === 'function') return value;
+import { selectTruthyValue } from '../../optional-absence.ts';
+type AnyRecord = Record<string, any>;
+
+function requireFunction(value: unknown, name: string): (...args: any[]) => any {
+  if (typeof value === 'function') return value as (...args: any[]) => any;
   throw new Error(`Buster completion signal requires ${name}`);
 }
 
-function rateLimitSessionResultForResolver(value) {
+function rateLimitSessionResultForResolver(value: unknown): AnyRecord {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
-function suiteCompletionSummary(suitesInfo) {
+function suiteCompletionSummary(suitesInfo: AnyRecord): string {
   if (suitesInfo.suiteDetailSummary) return suitesInfo.suiteDetailSummary;
   return suitesInfo.suiteSummary;
 }
 
-function textValue(value) {
+function textValue(value: unknown): string | null {
   return typeof value === 'string' && value.trim() ? value.trim() : null;
 }
 
-function completionFailureClass({ outcome, spawnedSubagent, suitesInfo, agentResultForCompletion }) {
+function completionFailureClass({ outcome, spawnedSubagent, suitesInfo, agentResultForCompletion }: AnyRecord): string | null {
   if (outcome === 'PASS') return null;
   const agentFailureClass = textValue(agentResultForCompletion?.failure_class);
   if (agentFailureClass) return agentFailureClass;
   if (!spawnedSubagent && suitesInfo?.criticalFailed === true) return 'pretest_code';
   if (outcome === 'RATE_LIMITED') return 'rate_limit_exhausted';
   return null;
+}
+
+function completionSummary(request: AnyRecord): string {
+  if (!request.spawnedSubagent && request.suitesInfo.suiteSummary) return suiteCompletionSummary(request.suitesInfo);
+  if (request.agentResultForCompletion?.summary) return request.agentResultForCompletion.summary;
+  if (request.reason) return request.reason;
+  return request.suitesInfo.suiteSummary || '';
+}
+
+function artifactSummary(request: AnyRecord): string {
+  if (request.agentResultForCompletion?.summary) return request.agentResultForCompletion.summary;
+  if (request.reason) return request.reason;
+  if (request.suitesInfo.suiteDetailSummary) return request.suitesInfo.suiteDetailSummary;
+  return request.suitesInfo.suiteSummary || '';
+}
+
+function artifactData(request: AnyRecord): unknown {
+  if (!request.spawnedSubagent) return buildSuiteArtifactData(request.moduleId, request.project, request.suitesInfo);
+  const data = request.agentResultForCompletion?.data;
+  return data && typeof data === 'object' ? data : null;
+}
+
+function completionOptions(request: AnyRecord): AnyRecord {
+  const { payload, sessionResultForCompletion } = request;
+  const rateLimitMaxPauses = request.outcome === 'RATE_LIMITED'
+    ? resolveBusterRateLimitMaxPauses(payload, rateLimitSessionResultForResolver(sessionResultForCompletion))
+    : null;
+  return {
+    moduleId: request.moduleId, outcome: request.outcome, reason: request.reason,
+    failureClass: completionFailureClass(request), summary: completionSummary(request),
+    artifactSummary: artifactSummary(request), artifactSource: request.agentResultForCompletion?.source ?? null,
+    artifactData: artifactData(request),
+    preTestVerdict: request.spawnedSubagent ? null : buildPreTestVerdict(request.moduleId, request.project, request.suitesInfo),
+    rateLimitMaxPauses, runId: request.runId, attempt: request.attempt,
+    dispatchId: request.dispatchIdForCompletion, sessionKey: request.sessionKeyForCompletion,
+    source: 'buster-pipeline', ensureBusterOutputFile: request.deps.ensureBusterOutputFile,
+    verifyAndPush: request.deps.verifyAndPush, emitTaskCompletion: request.deps.emitTaskCompletion,
+    commitMessage: `[BUSTER] ${request.payload.task_type ?? 'task'} ${request.moduleId}: output artifact`,
+  };
+}
+
+function logPublishedArtifacts(published: AnyRecord, logger: AnyRecord): void {
+  if (published.outputFileResult) logger.info('TASK', `Buster output_file ready: ${published.outputFileResult.path}`, {
+    source: published.outputFileResult.source, status: published.outputFileResult.status,
+  });
+  if (published.verifyResult) logger.info('TASK', 'Buster output_file pushed before completion', {
+    action: published.verifyResult.action ?? null, commit_hash: published.verifyResult.commit_hash ?? null,
+  });
 }
 
 export async function sendTaskCompletionSignal({
@@ -51,7 +101,7 @@ export async function sendTaskCompletionSignal({
   sessionKeyForCompletion,
   logger,
   deps = {},
-}) {
+}: AnyRecord) {
   if (!payload?.completion_stream) return;
   if (selectTruthyValue(() => (!outcome), () => (!reason))) throw new Error('Buster completion signal requires explicit outcome and reason');
 
@@ -62,60 +112,19 @@ export async function sendTaskCompletionSignal({
     const publishCompletion = requireFunction(deps.publishTaskCompletionWithArtifact, 'deps.publishTaskCompletionWithArtifact');
 
     const redisClient = redisClientFactory();
-    const preTestVerdict = !spawnedSubagent
-      ? buildPreTestVerdict(moduleId, project, suitesInfo)
-      : null;
-    const artifactData = !spawnedSubagent
-      ? buildSuiteArtifactData(moduleId, project, suitesInfo)
-      : (agentResultForCompletion?.data && typeof agentResultForCompletion.data === 'object' ? agentResultForCompletion.data : null);
-    const completionSummary = !spawnedSubagent && suitesInfo.suiteSummary
-      ? suiteCompletionSummary(suitesInfo)
-      : (selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (agentResultForCompletion?.summary), () => (reason))), () => (suitesInfo.suiteSummary))), () => ('')));
-    const rateLimitMaxPauses = outcome === 'RATE_LIMITED'
-      ? resolveBusterRateLimitMaxPauses(payload, rateLimitSessionResultForResolver(sessionResultForCompletion))
-      : null;
-    const failureClass = completionFailureClass({ outcome, spawnedSubagent, suitesInfo, agentResultForCompletion });
-    const published = await publishCompletion(redisClient, payload, {
-      moduleId,
-      outcome,
-      reason,
-      failureClass,
-      summary: completionSummary,
-      artifactSummary: selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (agentResultForCompletion?.summary), () => (reason))), () => (suitesInfo.suiteDetailSummary))), () => (suitesInfo.suiteSummary))), () => ('')),
-      artifactSource: selectTruthyValue(() => (agentResultForCompletion?.source), () => (null)),
-      artifactData,
-      preTestVerdict,
-      rateLimitMaxPauses,
-      runId,
-      attempt,
-      dispatchId: dispatchIdForCompletion,
-      sessionKey: sessionKeyForCompletion,
-      source: 'buster-pipeline',
-      ensureBusterOutputFile: deps.ensureBusterOutputFile,
-      verifyAndPush: deps.verifyAndPush,
-      emitTaskCompletion: deps.emitTaskCompletion,
-      commitMessage: `[BUSTER] ${selectDefinedValue(() => (payload?.task_type), () => ('task'))} ${moduleId}: output artifact`,
-    });
-    if (published.outputFileResult) {
-      logger.info('TASK', `Buster output_file ready: ${published.outputFileResult.path}`, {
-        source: published.outputFileResult.source,
-        status: published.outputFileResult.status,
-      });
-    }
-    if (published.verifyResult) {
-      logger.info('TASK', `Buster output_file pushed before completion`, {
-        action: selectTruthyValue(() => (published.verifyResult?.action), () => (null)),
-        commit_hash: selectTruthyValue(() => (published.verifyResult?.commit_hash), () => (null)),
-      });
-    }
+    const request = { payload, completionState, spawnedSubagent, suitesInfo, agentResultForCompletion,
+      sessionResultForCompletion, moduleId, project, outcome, reason, runId, attempt,
+      dispatchIdForCompletion, sessionKeyForCompletion, logger, deps };
+    const published = await publishCompletion(redisClient, payload, completionOptions(request));
+    logPublishedArtifacts(published, logger);
     completionState.terminal = true;
     completionState.error = null;
     logger.info('TASK', `Completion signal sent to ${payload.completion_stream}`);
   } catch (e) {
     completionState.error = safeErrorMessage(e);
     logger.error('TASK', `Failed to send completion signal: ${completionState.error}`, {
-      error_name: selectTruthyValue(() => (e?.name), () => (null)),
-      error_code: selectTruthyValue(() => (e?.code), () => (null)),
+      error_name: e && typeof e === 'object' && 'name' in e ? e.name : null,
+      error_code: e && typeof e === 'object' && 'code' in e ? e.code : null,
     });
   }
 }

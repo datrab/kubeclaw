@@ -39,17 +39,17 @@ import { loadLintPolicy, policyDigest, selectPolicyProject, validatePolicyTarget
 import { buildToolRegistry, TOOL_ADAPTERS } from './lint-report/tool-registry.ts';
 import { parseCliFlagValues } from '../cli-args.ts';
 
-async function runAllTools(ctx) {
+async function runAllTools(ctx: any) {
   return runToolsForRegistry(ctx, buildToolRegistry(ctx.policy, ctx.projectTypes));
 }
 
-function lintReportExitCode(report = {}) {
+function lintReportExitCode(report: any = {}) {
   const totalBlocking = Number(selectDefinedValue(() => (report?.summary?.total_blocking), () => (0)));
   const toolsFailed = Number(selectDefinedValue(() => (report?.summary?.tools_failed), () => (0)));
   return selectTruthyValue(() => (totalBlocking > 0), () => (toolsFailed > 0)) ? 1 : 0;
 }
 
-function parseArgs(args = process.argv.slice(2)) {
+function parseArgs(args: any = process.argv.slice(2)) {
   return parseCliFlagValues(args, {
     flags: {
       repo: { type: 'string' },
@@ -61,12 +61,13 @@ function parseArgs(args = process.argv.slice(2)) {
       'policy-project': { type: 'string' },
       'changed-files': { type: 'string' },
       'log-path': { type: 'string' },
+      'include-debt': { type: 'boolean', default: false }, 'include-experimental': { type: 'boolean', default: false },
       help: { type: 'boolean', default: false },
     },
   });
 }
 
-function normalizeModulePath(repoRoot, rawModulePath) {
+function normalizeModulePath(repoRoot: any, rawModulePath: any) {
   if (!rawModulePath) return null;
   if (path.isAbsolute(rawModulePath)) {
     throw new Error('ERROR: --module-path must be relative to --repo.');
@@ -82,7 +83,7 @@ function normalizeModulePath(repoRoot, rawModulePath) {
   return modulePath;
 }
 
-function buildContext(flags) {
+function buildContext(flags: any) {
   if (!flags.repo) {
     throw new Error('ERROR: --repo is required. Use --help for usage.');
   }
@@ -95,12 +96,12 @@ function buildContext(flags) {
   }
 
   const tier = lintReportTierAuthority(flags);
-  if (!TIERS[tier]) {
+  if (!Object.hasOwn(TIERS, tier)) {
     throw new Error(`ERROR: unknown tier '${tier}'. Valid: ${Object.keys(TIERS).join(', ')}`);
   }
 
   const changedFiles = flags['changed-files']
-    ? flags['changed-files'].split(',').map(f => f.trim()).filter(Boolean)
+    ? flags['changed-files'].split(',').map((f: any) => f.trim()).filter(Boolean)
     : [];
 
   const modulePath = normalizeModulePath(repoRoot, flags['module-path']);
@@ -123,16 +124,17 @@ function buildContext(flags) {
     policyPath,
     policyDigest: policyDigest(policy),
     policyProject,
+    includeDebt: flags['include-debt'] === true, includeExperimental: flags['include-experimental'] === true,
     diagnostics: discoveryDiagnostics,
   };
 }
 
-function lintReportTierAuthority(flags) {
+function lintReportTierAuthority(flags: any) {
   if (flags.tier) return flags.tier;
   return DEFAULT_TIER;
 }
 
-function lintReportProjectAuthority(flags, repoRoot) {
+function lintReportProjectAuthority(flags: any, repoRoot: any) {
   if (flags.project) return flags.project;
   return path.basename(repoRoot);
 }
@@ -152,7 +154,7 @@ async function main() {
   let ctx;
   try {
     ctx = buildContext(flags);
-  } catch (e) {
+  } catch (e: any) {
     console.error(e.message);
     process.exit(1);
   }
@@ -189,7 +191,7 @@ const __entryPath = (process.argv[1] && fs.existsSync(process.argv[1]))
   : process.argv[1];
 
 if (__currentPath === __entryPath) {
-  main().catch(e => {
+  main().catch((e: any) => {
     log('ERROR', e.message);
     process.exit(1);
   });

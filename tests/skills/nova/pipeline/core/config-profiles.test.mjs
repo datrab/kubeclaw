@@ -70,6 +70,8 @@ test('standard compact swarm config expands to the complete runtime config shape
   assert.equal(expanded.gateway.invoke.session_spawn.timeout_ms, 30000);
   assert.equal(expanded.session.kill.stop_message, '/stop');
   assert.equal(expanded.buster.runtime.task_stream, 'swarm:buster:tasks');
+  assert.equal(expanded.control.enabled, false);
+  assert.deepEqual(expanded.control.capabilities, ['pipeline.control']);
 });
 
 test('shared runtime standard profile stays identical to the Nova reference profile', () => {
@@ -115,6 +117,13 @@ test('validateConfig accepts expanded run identity and pipeline review config au
   };
 
   assert.doesNotThrow(() => validateConfig(config, validProgress()));
+});
+
+test('validateConfig accepts and validates the standard pipeline control contract', () => {
+  const config = addRuntimeFields(expandSwarmConfig(loadCompactConfig()));
+  assert.doesNotThrow(() => validateConfig(config, validProgress()));
+  config.control.capabilities = [];
+  assert.throws(() => validateConfig(config, validProgress()), /config\.control\.capabilities: required non-empty array/);
 });
 
 test('compact swarm config supports structured overrides for known effective paths only', () => {

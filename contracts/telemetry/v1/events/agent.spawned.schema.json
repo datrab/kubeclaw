@@ -27,6 +27,10 @@
         "null"
       ]
     },
+    "authority_class": {
+      "minLength": 1,
+      "type": "string"
+    },
     "causation_id": {
       "type": [
         "string",
@@ -66,6 +70,18 @@
       "type": "string"
     },
     "extensions": {
+      "properties": {
+        "evidence_provenance": {
+          "enum": [
+            "production",
+            "recorded",
+            "synthetic"
+          ]
+        }
+      },
+      "required": [
+        "evidence_provenance"
+      ],
       "type": "object"
     },
     "gate_id": {
@@ -113,6 +129,18 @@
       "format": "date-time",
       "type": "string"
     },
+    "parent_session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parent_span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "producer": {
       "minLength": 1,
       "type": "string"
@@ -149,6 +177,16 @@
       "minLength": 1,
       "type": "string"
     },
+    "source_event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "substep": {
       "minLength": 1,
       "type": [
@@ -171,6 +209,12 @@
     },
     "tool_call_id": {
       "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "trace_id": {
       "type": [
         "string",
         "null"
@@ -200,14 +244,18 @@
   "required": [
     "schema_version",
     "event_id",
+    "source_event_id",
     "type",
     "occurred_at",
     "emitted_at",
     "seq",
+    "cursor",
     "project",
     "run_id",
     "source",
-    "producer"
+    "producer",
+    "authority_class",
+    "extensions"
   ],
   "type": "object"
 }

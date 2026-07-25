@@ -1,4 +1,9 @@
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
+import {
+  applyCompletionFields,
+  applyLifecycleTimestamps,
+  applyPhaseTransition,
+} from './lifecycle-transition-fields.ts';
 type AnyRecord = Record<string, any>;
 
 type LifecycleMutation = AnyRecord | null;
@@ -7,14 +12,6 @@ type LifecycleTransitionResult = {
   status: AnyRecord;
   lifecycleMutation: LifecycleMutation;
 };
-
-const NO_PHASE_STATUSES = new Set([
-  'PENDING',
-  'READY_FOR_TESTING',
-  'PASS',
-  'FAIL',
-  'BLOCKED',
-]);
 
 const PHASE_TO_STATUS: AnyRecord = {
   forge: 'IN_PROGRESS',
@@ -96,16 +93,45 @@ function mergeLifecycleMutation(current: any, patch: AnyRecord = {}) {
   };
 }
 
-function phaseStartedAtAuthority(candidate: any, now: any) {
-  return selectDefinedValue(() => (candidate), () => (now));
-}
-
 function completedAtAuthority(candidate: any, now: any) {
   return selectDefinedValue(() => (candidate), () => (now));
 }
 
 function lifecycleNowAuthority(opts: AnyRecord = {}) {
   return selectDefinedValue(() => (opts.now), () => (new Date().toISOString()));
+}
+
+function lifecycleMutationForTransition(
+  status: AnyRecord,
+  newStatus: string,
+  context: AnyRecord,
+): LifecycleMutation {
+  const eventType = deriveLifecycleEventType(newStatus);
+  const common = {
+    oldStatus: context.oldStatus,
+    newStatus,
+    previousPhase: context.previousPhase,
+    phase: selectDefinedValue(() => context.phase, () => status.current_phase ?? null),
+    now: context.now,
+    note: context.note,
+  };
+  if (eventType) {
+    return {
+      eventType,
+      ...common,
+      completionSummary: context.completionSummary !== undefined
+        ? context.completionSummary
+        : status.completion_summary,
+      activeAgent: cloneSerializable(status.active_agent ?? null),
+      attemptStartedAt: status.attempt_started_at ?? null,
+      phaseStartedAt: status.phase_started_at ?? null,
+      completedAt: status.completed_at ?? null,
+      clearActiveAgent: context.clearActiveAgent,
+    };
+  }
+  return newStatus === 'RATE_LIMITED'
+    ? { lifecycleIntent: 'rate_limit_pause', ...common }
+    : null;
 }
 
 export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
@@ -125,72 +151,25 @@ export function transitionModuleStatus(status: AnyRecord, newStatus: any, {
 
   appendHistory(status, newStatus, agent, note, now);
   status.status = newStatus;
-
-  if (phase !== undefined) {
-    status.current_phase = phase;
-  } else if (newStatus === 'IN_PROGRESS') {
-    status.current_phase = 'forge';
-  } else if (newStatus === 'TESTING') {
-    status.current_phase = 'buster';
-  } else if (newStatus !== 'RATE_LIMITED' && NO_PHASE_STATUSES.has(newStatus)) {
-    status.current_phase = null;
-  }
-
-  if (clearActiveAgent) status.active_agent = null;
-  if (selectTruthyValue(() => (clearCompletionSummary), () => (CLEAR_COMPLETION_SUMMARY_STATUSES.has(newStatus)))) {
-    status.completion_summary = null;
-  }
-  if (completionSummary !== undefined) {
-    status.completion_summary = completionSummary;
-  }
-
-  if (attemptStartedAt !== undefined) {
-    status.attempt_started_at = attemptStartedAt;
-  }
-
-  if (selectTruthyValue(() => (newStatus === 'IN_PROGRESS'), () => (newStatus === 'TESTING'))) {
-    status.phase_started_at = phaseStartedAtAuthority(phaseStartedAt, now);
-    status.completed_at = null;
-  } else if (newStatus === 'PASS') {
-    status.phase_started_at = null;
-    status.completed_at = completedAtAuthority(completedAt, now);
-  } else if (newStatus !== 'RATE_LIMITED') {
-    status.phase_started_at = null;
-    status.completed_at = null;
-  }
-
-  const eventType = deriveLifecycleEventType(newStatus);
-  if (eventType) {
-    return lifecycleResult(status, {
-      eventType,
-      oldStatus,
-      newStatus,
-      previousPhase,
-      phase: selectDefinedValue(() => (selectDefinedValue(() => (phase), () => (status.current_phase))), () => (null)),
-      now,
-      note,
-      completionSummary: completionSummary !== undefined ? completionSummary : status.completion_summary,
-      activeAgent: cloneSerializable(selectTruthyValue(() => (status.active_agent), () => (null))),
-      attemptStartedAt: selectTruthyValue(() => (status.attempt_started_at), () => (null)),
-      phaseStartedAt: selectTruthyValue(() => (status.phase_started_at), () => (null)),
-      completedAt: selectTruthyValue(() => (status.completed_at), () => (null)),
-      clearActiveAgent,
-    });
-  }
-
-  if (newStatus === 'RATE_LIMITED') {
-    return lifecycleResult(status, {
-      lifecycleIntent: 'rate_limit_pause',
-      oldStatus,
-      newStatus,
-      previousPhase,
-      phase: selectDefinedValue(() => (selectDefinedValue(() => (phase), () => (status.current_phase))), () => (null)),
-      now,
-      note,
-    });
-  }
-
-  return lifecycleResult(status, null);
+  const options = {
+    phase,
+    now,
+    note,
+    clearActiveAgent,
+    clearCompletionSummary,
+    completionSummary,
+    phaseStartedAt,
+    completedAt,
+    attemptStartedAt,
+  };
+  applyPhaseTransition(status, newStatus, phase);
+  applyCompletionFields(status, newStatus, options);
+  if (newStatus !== 'RATE_LIMITED') applyLifecycleTimestamps(status, newStatus, options);
+  return lifecycleResult(status, lifecycleMutationForTransition(status, newStatus, {
+    ...options,
+    oldStatus,
+    previousPhase,
+  }));
 }
 
 export function normalizeLifecycleStatus(status: AnyRecord = {}) {

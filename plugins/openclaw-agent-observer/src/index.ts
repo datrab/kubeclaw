@@ -3,7 +3,7 @@ import {
 } from './agent-observability/index.ts';
 import type { AgentObservabilityHook } from './agent-observability/index.ts';
 import type { AgentObservabilityIngressEventV1 } from './agent-observability/index.ts';
-import { resolveAgentObserverConfig } from './config.ts';
+import { agentObserverRuntimeEnvironment, resolveAgentObserverConfig } from './config.ts';
 import type { AgentObserverConfig } from './config.ts';
 import { subscribeModelUsageDiagnostics } from './diagnostics.ts';
 import { extractPluginConfig, normalizeAgentEvent, normalizeHookEvent, normalizeModelUsageDiagnosticEvent } from './hook-normalizers.ts';
@@ -87,7 +87,7 @@ export class OpenClawAgentObserver {
   private readonly recentIngressEvents = new Map<string, number>();
 
   constructor(options: AgentObserverOptions = {}) {
-    this.env = options.env ?? process.env;
+    this.env = options.env ?? agentObserverRuntimeEnvironment();
     this.logger = options.logger ?? console;
     this.registrationConfig = options.initialConfig;
     this.diagnosticSubscriberFactory = options.diagnosticSubscriberFactory ?? subscribeModelUsageDiagnostics;

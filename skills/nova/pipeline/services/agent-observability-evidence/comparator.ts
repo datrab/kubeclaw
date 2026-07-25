@@ -12,23 +12,16 @@ import type {
   AgentObservabilityParallelRunEvidenceInput,
   AgentObservabilityParallelRunEvidenceOptions,
   AgentObservabilityParallelRunEvidenceV1,
-  AgentObservabilityRedisPressureSnapshot,
   AgentObservabilityRedisPressureSummary,
   AgentObservabilitySessionTimingSummary,
   AgentObservabilitySpanCompletenessSummary,
 } from './types.ts';
+import { summarizeRedisPressure } from './pressure.ts';
+import { coverageIssues, identityGapIssues } from './issues.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 function stringValue(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim() ? value : undefined;
-}
-
-function requiredNumberValue(value: unknown, label: string): number {
-  const normalized = numberValue(value);
-  if (normalized === null) {
-    throw new Error(`${label}: required numeric threshold`);
-  }
-  return normalized;
 }
 
 function numberValue(value: unknown): number | null {
@@ -43,22 +36,18 @@ function firstDefined<T>(...values: Array<T | null | undefined>): T | null {
 }
 
 function identitySessionKey(identity: AgentObservabilityEvidenceIdentity): string | undefined {
-  return selectDefinedValue(() => (firstDefined(identity.session_key, identity.child_session_key)), () => (undefined));
+  return firstDefined(identity.session_key, identity.child_session_key) ?? undefined;
 }
 
 function identityAgentType(identity: AgentObservabilityEvidenceIdentity): string | undefined {
-  return selectDefinedValue(() => (firstDefined(identity.agent_type, identity.agent_id)), () => (undefined));
+  return firstDefined(identity.agent_type, identity.agent_id) ?? undefined;
 }
 
 function entitySessionIdentity(identity: AgentObservabilityEvidenceIdentity, recordType: string): string | undefined {
   if (recordType === 'agent.spawned') {
-    return selectDefinedValue(() => (firstDefined(identity.child_session_key, identity.session_key, identity.gateway_label)), () => (undefined));
+    return firstDefined(identity.child_session_key, identity.session_key, identity.gateway_label) ?? undefined;
   }
-  return selectDefinedValue(() => (firstDefined(identity.session_key, identity.child_session_key, identity.gateway_label)), () => (undefined));
-}
-
-function redisControlLag(input: AgentObservabilityRedisPressureSnapshot, controlPending: number | null): number | null {
-  return firstDefined(numberValue(input.controlLag), controlPending);
+  return firstDefined(identity.session_key, identity.child_session_key, identity.gateway_label) ?? undefined;
 }
 
 function evidenceGeneratedAt(
@@ -89,7 +78,7 @@ function issue(
 }
 
 function bump(counts: Record<string, number>, key: string): void {
-  const current = selectDefinedValue(() => (numberValue(counts[key])), () => (0));
+  const current = numberValue(counts[key]) ?? 0;
   counts[key] = current + 1;
 }
 
@@ -125,8 +114,8 @@ function payloadString(payload: AgentObservabilityIngressPayloadV1, key: string)
 
 function classifyObservedOutcome(event: AgentObservabilityIngressEventV1): AgentObservabilityEvidenceRecordType | null {
   const payload = event.payload as unknown as Record<string, unknown>;
-  const outcome = (selectDefinedValue(() => (stringValue(payload.outcome)), () => (''))).toLowerCase();
-  const reason = (selectDefinedValue(() => (stringValue(payload.reason)), () => (''))).toLowerCase();
+  const outcome = (stringValue(payload.outcome) ?? '').toLowerCase();
+  const reason = (stringValue(payload.reason) ?? '').toLowerCase();
   const hasError = payload.error !== undefined && payload.error !== null;
   const error = hasError ? JSON.stringify(payload.error).toLowerCase() : '';
   const haystack = `${outcome} ${reason} ${error}`;
@@ -146,8 +135,8 @@ function normalizeObservedEvent(event: AgentObservabilityIngressEventV1): AgentO
     source: event.source,
     ts: event.ts,
     identity: observedIdentity(event),
-    outcome: selectDefinedValue(() => (payloadString(event.payload, 'outcome')), () => (null)),
-    reason: selectDefinedValue(() => (payloadString(event.payload, 'reason')), () => (null)),
+    outcome: payloadString(event.payload, 'outcome') ?? null,
+    reason: payloadString(event.payload, 'reason') ?? null,
   };
   const classified = classifyObservedOutcome(event);
   return classified ? [base, { ...base, type: classified }] : [base];
@@ -199,7 +188,7 @@ function countByType(records: AgentObservabilityNormalizedEvidenceRecord[]): Rec
 }
 
 function recordsOf(records: AgentObservabilityNormalizedEvidenceRecord[], type: string): AgentObservabilityNormalizedEvidenceRecord[] {
-  return records.filter((record) => record.type === type);
+  return records.filter((record: any) => record.type === type);
 }
 
 function coverage(
@@ -218,30 +207,30 @@ function spanCompleteness(
   finishedType: string,
   field: 'tool_call_id' | 'model_call_id',
 ): AgentObservabilitySpanCompletenessSummary {
-  const started = new Set(recordsOf(records, startedType).map((record) => spanKey(record, field)));
-  const finished = new Set(recordsOf(records, finishedType).map((record) => spanKey(record, field)));
+  const started = new Set(recordsOf(records, startedType).map((record: any) => spanKey(record, field)));
+  const finished = new Set(recordsOf(records, finishedType).map((record: any) => spanKey(record, field)));
   let complete = 0;
   for (const key of started) if (finished.has(key)) complete += 1;
   return {
     started: started.size,
     finished: finished.size,
     complete,
-    orphan_started: [...started].filter((key) => !finished.has(key)).length,
-    orphan_finished: [...finished].filter((key) => !started.has(key)).length,
+    orphan_started: [...started].filter((key: any) => !finished.has(key)).length,
+    orphan_finished: [...finished].filter((key: any) => !started.has(key)).length,
   };
 }
 
 function llmCoverage(records: AgentObservabilityNormalizedEvidenceRecord[]): AgentObservabilityLlmCoverageSummary {
-  const inputs = new Set(recordsOf(records, 'agent.llm.input').map((record) => spanKey(record, 'model_call_id')));
-  const outputs = new Set(recordsOf(records, 'agent.llm.output').map((record) => spanKey(record, 'model_call_id')));
+  const inputs = new Set(recordsOf(records, 'agent.llm.input').map((record: any) => spanKey(record, 'model_call_id')));
+  const outputs = new Set(recordsOf(records, 'agent.llm.output').map((record: any) => spanKey(record, 'model_call_id')));
   let paired = 0;
   for (const key of inputs) if (outputs.has(key)) paired += 1;
   return {
     inputs: inputs.size,
     outputs: outputs.size,
     paired,
-    input_without_output: [...inputs].filter((key) => !outputs.has(key)).length,
-    output_without_input: [...outputs].filter((key) => !inputs.has(key)).length,
+    input_without_output: [...inputs].filter((key: any) => !outputs.has(key)).length,
+    output_without_input: [...outputs].filter((key: any) => !inputs.has(key)).length,
   };
 }
 
@@ -252,80 +241,6 @@ function sessionEndTiming(
   return { compared: ended.length, max_delta_ms: null, out_of_tolerance: 0 };
 }
 
-function identityGaps(records: AgentObservabilityNormalizedEvidenceRecord[]): AgentObservabilityEvidenceIssue[] {
-  const gaps: AgentObservabilityEvidenceIssue[] = [];
-  for (const record of records) {
-    const identity = record.identity;
-    const missing: string[] = [];
-    if (!identity.session_key && !identity.child_session_key) missing.push('session_key');
-    if (!identity.dispatch_id) missing.push('dispatch_id');
-    if (!identity.gateway_label) missing.push('gateway_label');
-    if (!identity.agent_type && !identity.agent_id) missing.push('agent_type');
-    if (selectTruthyValue(() => (record.type === 'agent.tool.started'), () => (record.type === 'agent.tool.finished'))) {
-      if (!identity.tool_call_id) missing.push('tool_call_id');
-    }
-    if (selectTruthyValue(() => (selectTruthyValue(() => (record.type === 'agent.model.started'), () => (record.type === 'agent.model.ended'))), () => (record.type.startsWith('agent.llm.')))) {
-      if (!identity.model_call_id) missing.push('model_call_id');
-    }
-    if (missing.length > 0) {
-      const issueData: Omit<AgentObservabilityEvidenceIssue, 'severity' | 'code' | 'message'> = {
-        identity,
-        details: { type: record.type, missing },
-      };
-      if (record.observed_type !== undefined) issueData.observed_type = record.observed_type;
-      gaps.push(issue('identity_gap', 'warning', 'Observed hook record is missing canonical identity fields.', issueData));
-    }
-  }
-  return gaps;
-}
-
-function pressureSummary(input?: AgentObservabilityRedisPressureSnapshot): AgentObservabilityRedisPressureSummary {
-  if (!input) {
-    return {
-      control_pending: null,
-      control_lag: null,
-      payload_length: null,
-      payload_bytes: null,
-      memory_bytes: null,
-      degraded: [],
-    };
-  }
-  const controlPending = selectDefinedValue(() => (numberValue(input?.controlPending)), () => (null));
-  const controlLag = redisControlLag(input, controlPending);
-  const payloadLength = selectDefinedValue(() => (numberValue(input?.payloadLength)), () => (null));
-  const payloadBytes = selectDefinedValue(() => (numberValue(input?.payloadBytes)), () => (null));
-  const memoryBytes = selectDefinedValue(() => (numberValue(input?.memoryBytes)), () => (null));
-  const controlLagThreshold = requiredNumberValue(input?.controlLagThreshold, 'redisPressure.controlLagThreshold');
-  const payloadPressureThreshold = requiredNumberValue(input?.payloadPressureThreshold, 'redisPressure.payloadPressureThreshold');
-  const payloadBytesThreshold = numberValue(input?.payloadBytesThreshold);
-  const memoryPressureThreshold = numberValue(input?.memoryPressureThreshold);
-  const degraded: string[] = [];
-  if (controlLag !== null && controlLag > controlLagThreshold) degraded.push('control_lag');
-  if (payloadLength !== null && payloadLength > payloadPressureThreshold) degraded.push('payload_stream_length');
-  if (payloadBytes !== null && payloadBytesThreshold !== null && payloadBytes > payloadBytesThreshold) degraded.push('payload_stream_bytes');
-  if (memoryBytes !== null && memoryPressureThreshold !== null && memoryBytes > memoryPressureThreshold) degraded.push('redis_memory');
-  return {
-    control_pending: controlPending,
-    control_lag: controlLag,
-    payload_length: payloadLength,
-    payload_bytes: payloadBytes,
-    memory_bytes: memoryBytes,
-    degraded,
-  };
-}
-
-function coverageIssues(summary: AgentObservabilityParallelRunEvidenceV1['coverage']): AgentObservabilityEvidenceIssue[] {
-  const issues: AgentObservabilityEvidenceIssue[] = [];
-  for (const [name, item] of Object.entries(summary)) {
-    if (item.observed === 0) {
-      issues.push(issue(`${name}_missing_observed_evidence`, 'warning', `Canonical ${name} evidence was not observed.`, {
-        details: { observed: item.observed },
-      }));
-    }
-  }
-  return issues;
-}
-
 export function compareAgentObservabilityParallelRunEvidence(
   input: AgentObservabilityParallelRunEvidenceInput,
   options: AgentObservabilityParallelRunEvidenceOptions = {},
@@ -333,7 +248,7 @@ export function compareAgentObservabilityParallelRunEvidence(
   const generatedAt = evidenceGeneratedAt(input, options);
   const observed = input.observedEvents.flatMap(normalizeObservedEvent);
   const issues: AgentObservabilityEvidenceIssue[] = [];
-  const identityGapIssues = identityGaps(observed);
+  const identityGaps = identityGapIssues(observed);
 
   const coverageSummary = {
     spawn: coverage(observed, 'agent.spawned'),
@@ -364,16 +279,16 @@ export function compareAgentObservabilityParallelRunEvidence(
   const sessionTiming = sessionEndTiming(
     observed,
   );
-  const redisPressure = pressureSummary(input.redisPressure);
+  const redisPressure = summarizeRedisPressure(input.redisPressure);
   if (redisPressure.degraded.length > 0) {
     issues.push(issue('redis_observability_pressure', 'warning', 'Agent-observability Redis stream pressure exceeded configured evidence thresholds.', {
       details: { degraded: redisPressure.degraded },
     }));
   }
 
-  issues.push(...identityGapIssues);
-  const hasCritical = issues.some((item) => item.severity === 'critical');
-  const hasWarnings = issues.some((item) => item.severity === 'warning');
+  issues.push(...identityGaps);
+  const hasCritical = issues.some((item: any) => item.severity === 'critical');
+  const hasWarnings = issues.some((item: any) => item.severity === 'warning');
   return {
     v: 1,
     generated_at: generatedAt,
@@ -382,7 +297,7 @@ export function compareAgentObservabilityParallelRunEvidence(
     coverage: coverageSummary,
     spans,
     session_end_timing: sessionTiming,
-    identity_gaps: identityGapIssues,
+    identity_gaps: identityGaps,
     redis_pressure: redisPressure,
     issues,
   };

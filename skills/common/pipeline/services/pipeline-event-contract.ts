@@ -1,4 +1,10 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { LocalEventEmitter } from './local-event-emitter.ts';
+import {
+  isNonEmptyText as isNonEmptyString,
+  isValueRecord as isPlainObject,
+  normalizeOptionalString as normalizeValue,
+} from '../value-boundary.ts';
 // Shared in-process pipeline event contract.
 // Edge adapters emit normalized events; orchestration waits on this contract
 // instead of owning transport-specific polling loops.
@@ -7,39 +13,23 @@ type UnknownRecord = Record<string, any>;
 
 const NO_REMAINING_BUDGET_MS = 0;
 
-function listenerSet(value: Set<(value: unknown) => void> | undefined): Set<(value: unknown) => void> {
-  return selectDefinedValue(() => (value), () => (new Set()));
-}
-
-class LocalEventEmitter {
-  #listeners = new Map<string, Set<(value: unknown) => void>>();
-
-  setMaxListeners(_maxListeners: number): void {}
-
-  on(channel: string, listener: (value: unknown) => void): void {
-    const listeners = listenerSet(this.#listeners.get(channel));
-    listeners.add(listener);
-    this.#listeners.set(channel, listeners);
-  }
-
-  off(channel: string, listener: (value: unknown) => void): void {
-    this.#listeners.get(channel)?.delete(listener);
-  }
-
-  emit(channel: string, value: unknown): void {
-    for (const listener of [...listenerSet(this.#listeners.get(channel))]) listener(value);
-  }
-
-  listenerCount(channel: string): number {
-    return selectDefinedValue(() => (this.#listeners.get(channel)?.size), () => (0));
-  }
-}
-
 import { BudgetExhaustedError } from '../timing.ts';
 import {
   validateAcpSessionStateEventPayload,
   validateAcpTranscriptDeltaEventPayload,
 } from './acp-gateway-contract.ts';
+import { validateApprovalSignalEventPayload } from './approval-signal-event-contract.ts';
+export { validateApprovalSignalEventPayload } from './approval-signal-event-contract.ts';
+import {
+  PipelineEventContractError,
+  PipelineEventWaitAbortedError,
+  PipelineEventWaitTimeoutError,
+} from './pipeline-event-errors.ts';
+export {
+  PipelineEventContractError,
+  PipelineEventWaitAbortedError,
+  PipelineEventWaitTimeoutError,
+} from './pipeline-event-errors.ts';
 
 export const PIPELINE_EVENT_SCHEMA_VERSION = 'v1';
 
@@ -72,162 +62,22 @@ export const PIPELINE_EVENT_IDENTITY_FIELDS = Object.freeze([
 
 const PIPELINE_EVENT_CHANNEL = 'pipeline:event';
 
-export class PipelineEventContractError extends Error {
-  code: string;
-  diagnostics: UnknownRecord;
-
-  constructor(message: string, diagnostics: UnknownRecord = {}) {
-    super(message);
-    this.name = 'PipelineEventContractError';
-    this.code = 'PIPELINE_EVENT_CONTRACT_INVALID';
-    this.diagnostics = diagnostics;
-  }
-}
-
-export class PipelineEventWaitTimeoutError extends Error {
-  code: string;
-  diagnostics: UnknownRecord;
-
-  constructor(message: string, diagnostics: UnknownRecord = {}) {
-    super(message);
-    this.name = 'PipelineEventWaitTimeoutError';
-    this.code = 'PIPELINE_EVENT_WAIT_TIMEOUT';
-    this.diagnostics = diagnostics;
-  }
-}
-
-export class PipelineEventWaitAbortedError extends Error {
-  code: string;
-  diagnostics: UnknownRecord;
-
-  constructor(message: string, diagnostics: UnknownRecord = {}) {
-    super(message);
-    this.name = 'PipelineEventWaitAbortedError';
-    this.code = 'PIPELINE_EVENT_WAIT_ABORTED';
-    this.diagnostics = diagnostics;
-  }
-}
-
-function isPlainObject(value: unknown): value is UnknownRecord {
-  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
-}
-
-function isNonEmptyString(value: unknown): value is string {
-  return typeof value === 'string' && value.trim().length > 0;
-}
-
-function isNullableString(value: unknown): boolean {
-  return selectTruthyValue(() => (value === null), () => (isNonEmptyString(value)));
-}
-
-const APPROVAL_SIGNAL_STATUSES = Object.freeze([
-  'PENDING_APPROVAL',
-  'APPROVED',
-  'REJECTED',
-  'TIMED_OUT',
-  'CANCELLED',
-]);
-
-const APPROVAL_SIGNAL_KINDS = Object.freeze([
-  'pending_update',
-  'approve',
-  'reject',
-  'cancel',
-  'timeout_continue',
-  'timeout_block',
-]);
-
-const APPROVAL_SIGNAL_TIMEOUT_POLICIES = Object.freeze(['BLOCK', 'CONTINUE']);
-
-const APPROVAL_SIGNAL_PAYLOAD_FIELDS = Object.freeze([
-  'gate_id',
-  'gate_type',
-  'run_id',
-  'project',
-  'wait_ref',
-  'status',
-  'signal_kind',
-  'requested_at',
-  'deadline',
-  'timeout_minutes',
-  'timeout_policy',
-  'resolved_at',
-  'decision_by',
-  'decision_via',
-  'continued',
-  'reason',
-  'state_path',
-  'updated_at',
-]);
-
-function validateNullableTimestamp(value: unknown, field: string, errors: string[]): void {
-  if (value === null) return;
-  if (!isNonEmptyString(value)) {
-    errors.push(`${field} must be null or a non-empty string`);
-  }
-}
-
-export function validateApprovalSignalEventPayload(payload: unknown = {}): string[] {
-  const errors = [];
-  if (!isPlainObject(payload)) return ['payload must be an object'];
-
-  for (const field of Object.keys(payload)) {
-    if (!APPROVAL_SIGNAL_PAYLOAD_FIELDS.includes(field)) errors.push(`${field} is not allowed`);
-  }
-
-  if (!isNonEmptyString(payload.gate_id)) errors.push('gate_id must be a non-empty string');
-  if (payload.gate_type !== 'approval') errors.push("gate_type must be 'approval'");
-  if (!isNullableString(payload.run_id)) errors.push('run_id must be null or a non-empty string');
-  if (!isNullableString(payload.project)) errors.push('project must be null or a non-empty string');
-  if (!isNullableString(payload.wait_ref)) errors.push('wait_ref must be null or a non-empty string');
-  if (!APPROVAL_SIGNAL_STATUSES.includes(payload.status)) {
-    errors.push(`status must be one of: ${APPROVAL_SIGNAL_STATUSES.join(', ')}`);
-  }
-  if (!APPROVAL_SIGNAL_KINDS.includes(payload.signal_kind)) {
-    errors.push(`signal_kind must be one of: ${APPROVAL_SIGNAL_KINDS.join(', ')}`);
-  }
-  validateNullableTimestamp(payload.requested_at, 'requested_at', errors);
-  validateNullableTimestamp(payload.deadline, 'deadline', errors);
-  if (payload.timeout_minutes !== null && (selectTruthyValue(() => (!Number.isFinite(payload.timeout_minutes)), () => (payload.timeout_minutes < 0)))) {
-    errors.push('timeout_minutes must be null or a non-negative number');
-  }
-  if (!APPROVAL_SIGNAL_TIMEOUT_POLICIES.includes(payload.timeout_policy)) {
-    errors.push(`timeout_policy must be one of: ${APPROVAL_SIGNAL_TIMEOUT_POLICIES.join(', ')}`);
-  }
-  validateNullableTimestamp(payload.resolved_at, 'resolved_at', errors);
-  if (!isNullableString(payload.decision_by)) errors.push('decision_by must be null or a non-empty string');
-  if (!isNullableString(payload.decision_via)) errors.push('decision_via must be null or a non-empty string');
-  if (payload.continued !== null && typeof payload.continued !== 'boolean') {
-    errors.push('continued must be null or a boolean');
-  }
-  if (!isNullableString(payload.reason)) errors.push('reason must be null or a non-empty string');
-  if (!isNonEmptyString(payload.state_path)) errors.push('state_path must be a non-empty string');
-  validateNullableTimestamp(payload.updated_at, 'updated_at', errors);
-
-  return errors;
-}
-
-function normalizeValue(value: unknown): string | null {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
-  return String(value);
-}
-
 function pipelineEventIdentitySource(event: UnknownRecord = {}): UnknownRecord {
   return isPlainObject(event.identity) ? event.identity : event;
 }
 
 function eventTimestampAuthority(event: UnknownRecord = {}): string {
-  return selectDefinedValue(() => (normalizeValue(selectDefinedValue(() => (event.ts), () => (event.timestamp)))), () => (new Date().toISOString()));
+  return normalizeValue(event.ts ?? event.timestamp) ?? new Date().toISOString();
 }
 
 function waitTimeoutBudgetAuthority(callerTimeoutMs: number, budgetRemainingMs: number | null): number {
-  return Math.min(callerTimeoutMs, selectDefinedValue(() => (budgetRemainingMs), () => (Infinity)));
+  return Math.min(callerTimeoutMs, budgetRemainingMs ?? Infinity);
 }
 
 export function normalizePipelineEventIdentity(identity: UnknownRecord = {}): UnknownRecord {
   return Object.fromEntries(
     PIPELINE_EVENT_IDENTITY_FIELDS
-      .map((field) => [field, normalizeValue((selectTruthyValue(() => (identity), () => ({})))[field])])
+      .map((field) => [field, normalizeValue(identity[field])])
       .filter(([, value]) => value !== null),
   );
 }
@@ -244,45 +94,45 @@ export function normalizePipelineEvent(event: UnknownRecord = {}): UnknownRecord
   };
 }
 
-export function validatePipelineEvent(event: unknown = {}, opts: UnknownRecord = {}): string[] {
-  const errors = [];
-  if (!isPlainObject(event)) return ['event must be an object'];
-
-  const normalized = normalizePipelineEvent(event);
+function validateEventEnvelope(event: UnknownRecord, normalized: UnknownRecord, errors: string[]): void {
   if (normalized.schema_version !== PIPELINE_EVENT_SCHEMA_VERSION) {
     errors.push(`schema_version must be '${PIPELINE_EVENT_SCHEMA_VERSION}'`);
   }
-  if (!PIPELINE_EVENT_TYPES.includes(normalized.type)) {
-    errors.push(`type must be one of: ${PIPELINE_EVENT_TYPES.join(', ')}`);
-  }
-  if (!PIPELINE_EVENT_SOURCES.includes(normalized.source)) {
-    errors.push(`source must be one of: ${PIPELINE_EVENT_SOURCES.join(', ')}`);
-  }
+  if (!PIPELINE_EVENT_TYPES.includes(normalized.type)) errors.push(`type must be one of: ${PIPELINE_EVENT_TYPES.join(', ')}`);
+  if (!PIPELINE_EVENT_SOURCES.includes(normalized.source)) errors.push(`source must be one of: ${PIPELINE_EVENT_SOURCES.join(', ')}`);
   if (!isPlainObject(event.identity)) errors.push('identity must be an object');
   if (!isPlainObject(event.payload)) errors.push('payload must be an object');
   if (!isNonEmptyString(normalized.ts)) errors.push('ts must be a non-empty string');
+}
 
-  if (isPlainObject(event.payload)) {
-    if (normalized.type === 'acp.session.state') {
-      errors.push(...validateAcpSessionStateEventPayload(event.payload).map((error) => `payload.${error}`));
-    } else if (normalized.type === 'acp.transcript.delta') {
-      errors.push(...validateAcpTranscriptDeltaEventPayload(event.payload).map((error) => `payload.${error}`));
-    } else if (normalized.type === 'approval.signal') {
-      errors.push(...validateApprovalSignalEventPayload(event.payload).map((error) => `payload.${error}`));
-    }
-  }
+function validateEventPayload(type: unknown, payload: UnknownRecord, errors: string[]): void {
+  const validators: Record<string, (value: unknown) => string[]> = {
+    'acp.session.state': validateAcpSessionStateEventPayload,
+    'acp.transcript.delta': validateAcpTranscriptDeltaEventPayload,
+    'approval.signal': validateApprovalSignalEventPayload,
+  };
+  const validator = validators[String(type)];
+  if (validator) errors.push(...validator(payload).map((error) => `payload.${error}`));
+}
 
-  const requiredIdentityFields = Array.isArray(opts.requiredIdentityFields)
-    ? opts.requiredIdentityFields
-    : [];
-  for (const field of requiredIdentityFields) {
+function validateRequiredIdentityFields(normalized: UnknownRecord, opts: UnknownRecord, errors: string[]): void {
+  const requiredFields = Array.isArray(opts.requiredIdentityFields) ? opts.requiredIdentityFields : [];
+  for (const field of requiredFields) {
     if (!PIPELINE_EVENT_IDENTITY_FIELDS.includes(field)) {
       errors.push(`requiredIdentityFields contains unsupported field '${field}'`);
     } else if (!isNonEmptyString(normalized.identity[field])) {
       errors.push(`identity.${field} must be a non-empty string`);
     }
   }
+}
 
+export function validatePipelineEvent(event: unknown = {}, opts: UnknownRecord = {}): string[] {
+  if (!isPlainObject(event)) return ['event must be an object'];
+  const normalized = normalizePipelineEvent(event);
+  const errors: string[] = [];
+  validateEventEnvelope(event, normalized, errors);
+  if (isPlainObject(event.payload)) validateEventPayload(normalized.type, event.payload, errors);
+  validateRequiredIdentityFields(normalized, opts, errors);
   return errors;
 }
 

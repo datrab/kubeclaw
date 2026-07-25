@@ -1,4 +1,4 @@
-import { BudgetExhaustedError, sleep, type TimeBudget } from '../timing.ts';
+import { abortSignalError, BudgetExhaustedError, sleep, type TimeBudget } from '../timing.ts';
 import {
   assertValidGatewayInvokeResult,
   buildGatewayInvokeHttpError,
@@ -6,6 +6,7 @@ import {
 } from '../services/acp-gateway-contract.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { readCommonEnvironment } from '../runtime-environment.ts';
 declare const process: {
   env: Record<string, string | undefined>;
 };
@@ -54,7 +55,7 @@ function stripInvokeSuffix(value: unknown) {
 function configuredGatewayUrl(override?: string | null) {
   const raw = override !== undefined && override !== null
     ? override
-    : process.env.OPENCLAW_GATEWAY_URL;
+    : readCommonEnvironment('OPENCLAW_GATEWAY_URL');
   const base = stripInvokeSuffix(raw);
   if (!base) {
     throw new Error('Gateway URL is required; provide gatewayUrl or OPENCLAW_GATEWAY_URL');
@@ -85,7 +86,7 @@ export function resolveGatewayHealthUrl(override?: string | null) {
 
 export function resolveGatewayToken(override?: string | null) {
   if (override !== undefined && override !== null) return String(override);
-  const token = process.env.OPENCLAW_GATEWAY_TOKEN;
+  const token = readCommonEnvironment('OPENCLAW_GATEWAY_TOKEN');
   if (token === undefined) {
     throw new Error('Gateway token policy is required; provide gatewayToken or OPENCLAW_GATEWAY_TOKEN');
   }
@@ -104,7 +105,7 @@ function gatewayHeaders(gatewayToken: string | null | undefined, extraHeaders: G
 function optionalGatewayHeaders(gatewayToken: string | null | undefined, extraHeaders: GatewayHeaders = {}) {
   const token = gatewayToken !== undefined && gatewayToken !== null
     ? String(gatewayToken)
-    : process.env.OPENCLAW_GATEWAY_TOKEN;
+    : readCommonEnvironment('OPENCLAW_GATEWAY_TOKEN');
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -113,34 +114,27 @@ function optionalGatewayHeaders(gatewayToken: string | null | undefined, extraHe
 }
 
 function isNetworkError(err: unknown) {
-  const error = (selectDefinedValue(() => (err), () => ({}))) as NetworkLikeError;
-  return !error.httpStatus && (
-    selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (error.name === 'AbortError'), () => (error.code === 'ECONNREFUSED'))), () => (error.code === 'ECONNRESET'))), () => (error.code === 'ETIMEDOUT'))), () => (error.cause?.code === 'ECONNREFUSED'))), () => (error.cause?.code === 'ECONNRESET'))), () => (/fetch failed|network|socket/i.test(selectDefinedValue(() => (error.message), () => ('')))))
-  );
-}
-
-function abortError(signal: AbortSignal | null | undefined) {
-  const reason = signal?.reason;
-  if (reason instanceof Error) return reason;
-  const err = new Error(reason ? String(reason) : 'Operation aborted') as Error & { code?: string };
-  err.name = 'AbortError';
-  err.code = 'ABORT_ERR';
-  return err;
+  const error = err && typeof err === 'object' ? err as NetworkLikeError : {};
+  if (error.httpStatus) return false;
+  const codes = [error.code, error.cause?.code];
+  return error.name === 'AbortError'
+    || codes.some((code) => code === 'ECONNREFUSED' || code === 'ECONNRESET' || code === 'ETIMEDOUT')
+    || /fetch failed|network|socket/i.test(error.message ?? '');
 }
 
 function throwIfCallerAborted(signal: AbortSignal | null | undefined, budget: TimeBudget | null | undefined) {
-  if (signal?.aborted) throw abortError(signal);
-  if (budget?.signal?.aborted) throw abortError(budget.signal);
+  if (signal?.aborted) throw abortSignalError(signal);
+  if (budget?.signal?.aborted) throw abortSignalError(budget.signal);
   budget?.throwIfExhausted?.('gateway_invoke_budget_exhausted');
 }
 
 function bridgeAbort(controller: AbortController, signal: AbortSignal | null | undefined) {
   if (!signal) return () => {};
   if (signal.aborted) {
-    controller.abort(abortError(signal));
+    controller.abort(abortSignalError(signal));
     return () => {};
   }
-  const onAbort = () => controller.abort(abortError(signal));
+  const onAbort = () => controller.abort(abortSignalError(signal));
   signal.addEventListener('abort', onAbort, { once: true });
   return () => signal.removeEventListener('abort', onAbort);
 }
@@ -165,10 +159,12 @@ async function invokeGatewayTool(tool: string, args: unknown, {
   if (selectTruthyValue(() => (!Number.isFinite(retryDelayMs)), () => (Number(retryDelayMs) < 0))) {
     throw new Error('Gateway invoke retryDelayMs must be explicit and non-negative');
   }
+  const retryCount = Number(maxRetries);
+  const retryDelay = Number(retryDelayMs);
   const url = resolveGatewayInvokeUrl(gatewayUrl);
   const headers = gatewayHeaders(gatewayToken, extraHeaders);
 
-  for (let attempt = 1; attempt <= Number(maxRetries); attempt += 1) {
+  for (let attempt = 1; attempt <= retryCount; attempt += 1) {
     throwIfCallerAborted(signal, budget);
     const controller = new AbortController();
     const timeoutBudgetMs = budget?.remainingMs ? budget.remainingMs() : Infinity;
@@ -207,8 +203,8 @@ async function invokeGatewayTool(tool: string, args: unknown, {
       const abortReason = controller.signal.reason;
       if (abortReason instanceof BudgetExhaustedError) throw abortReason;
       throwIfCallerAborted(signal, budget);
-      if (selectTruthyValue(() => (!isNetworkError(err)), () => (attempt >= Number(maxRetries)))) throw err;
-      await sleep(retryDelayMs, { budget, signal });
+      if (selectTruthyValue(() => (!isNetworkError(err)), () => (attempt >= retryCount))) throw err;
+      await sleep(retryDelay, { budget, signal });
     } finally {
       clearTimeout(timer);
       for (const cleanup of cleanupAbort) cleanup();
@@ -235,14 +231,14 @@ export async function gatewayInvoke(
     budget = null,
     signal = null,
     ...bodyFields
-  } = selectDefinedValue(() => (opts), () => ({}));
+  } = opts;
 
   return invokeGatewayTool(tool, args, {
-    gatewayUrl,
-    gatewayToken,
+    ...(gatewayUrl !== undefined ? { gatewayUrl } : {}),
+    ...(gatewayToken !== undefined ? { gatewayToken } : {}),
     timeoutMs: gatewayTimeoutAuthority(optTimeoutMs, timeoutMs),
-    maxRetries,
-    retryDelayMs,
+    ...(maxRetries !== undefined ? { maxRetries } : {}),
+    ...(retryDelayMs !== undefined ? { retryDelayMs } : {}),
     budget,
     signal,
     body: {

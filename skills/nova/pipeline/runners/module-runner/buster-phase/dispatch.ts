@@ -25,7 +25,7 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-export function createModuleBusterCompletionIdentity({ runId, moduleId, attempt, busterAttempt, nowMs }: AnyRecord = {}) {
+function createModuleBusterCompletionIdentity({ runId, moduleId, attempt, busterAttempt, nowMs }: AnyRecord = {}) {
   if (!runId) throw new Error('Module Buster completion identity requires runId');
   if (!moduleId) throw new Error('Module Buster completion identity requires moduleId');
   if (selectTruthyValue(() => (!Number.isInteger(attempt)), () => (attempt < 1))) throw new Error('Module Buster completion identity requires positive integer attempt');
@@ -80,219 +80,140 @@ function statusAfterWorkerOutcome(currentStatus: AnyRecord, workerOutcome: AnyRe
   return currentStatus;
 }
 
-export async function executeBusterAttemptDispatch({
-  config,
-  progress,
-  moduleId,
-  mod,
-  dir,
-  status,
-  timeout,
-  maxFails,
-  deps,
-  busterModel,
-  busterPolicy = {},
-  maxBusterCrashRetries,
-  busterAttempt,
-  startupRateLimitPauseCount = 0,
-}: AnyRecord = {}) {
-  const requestedSuites = normalizeRequestedBusterSuites(mod);
-  const runId = getRunId(config);
-  const attempt = status.fail_count + 1;
-  const completionIdentity = isBusterResumeDispatch(status) ? createResumedModuleBusterCompletionIdentity({
-    runId,
-    moduleId,
-    attempt,
-    status,
-  }) : createModuleBusterCompletionIdentity({
-    runId,
-    moduleId,
-    attempt,
-    busterAttempt,
-    nowMs: resolveModuleBusterIdentityNowMs(deps),
-  });
-  const busterReasoningLevel = busterPolicy.thinking_supported === false
-    ? 'not supported'
-    : (selectDefinedValue(() => (busterPolicy.thinking), () => ('default')));
-  Object.assign(completionIdentity, {
-    model: selectTruthyValue(() => (busterModel), () => (null)),
-    model_source: selectTruthyValue(() => (busterPolicy.model_source), () => (null)),
-    reasoning_level: busterReasoningLevel,
-    thinking_source: selectTruthyValue(() => (busterPolicy.thinking_source), () => (null)),
+function createBusterDispatchIdentity(context: AnyRecord) {
+  const { config, moduleId, status, busterAttempt, deps, busterModel, busterPolicy } = context;
+  const input = { runId: getRunId(config), moduleId, attempt: status.fail_count + 1, status };
+  const identity: AnyRecord = isBusterResumeDispatch(status)
+    ? createResumedModuleBusterCompletionIdentity(input)
+    : createModuleBusterCompletionIdentity({ ...input, busterAttempt, nowMs: resolveModuleBusterIdentityNowMs(deps) });
+  Object.assign(identity, {
+    model: busterModel ?? null,
+    model_source: busterPolicy.model_source ?? null,
+    reasoning_level: busterPolicy.thinking_supported === false ? 'not supported' : busterPolicy.thinking ?? 'default',
+    thinking_source: busterPolicy.thinking_source ?? null,
     runtime: 'session',
   });
+  return identity;
+}
 
-  if (requestedSuites.length === 0) {
-    const reason = 'Buster dispatch requires a typed nonempty test_suites list';
-    log('ERROR', `Module ${moduleId} — ${reason}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
-    return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
-      reason,
-      runId: completionIdentity.runId,
-      moduleDir: dir,
-      attempt: completionIdentity.attempt,
-      phase: 'buster',
-      dispatchId: completionIdentity.dispatchId,
-      gatewayLabel: resolveStatusGatewayLabel(status),
-      sessionKey: resolveStatusSessionKey(status),
-      diagnostics: {
-        metadata: { code: 'buster_test_suites_empty', test_suites: selectDefinedValue(() => (mod?.test_suites), () => (null)) },
-      },
-    }) };
-  }
+function busterDispatchTerminal(context: AnyRecord, identity: AnyRecord, reason: string, options: AnyRecord = {}) {
+  const { config, moduleId, dir, status, mod, busterModel } = context;
+  log('ERROR', `Module ${moduleId} — ${reason}`);
+  emitTerminalModuleFailTelemetry({ config, moduleId, status, mod, phase: 'buster', model: busterModel, oldStatus: status?.status });
+  const builder = options.needsNova ? buildModuleNeedsNovaTerminalResult : buildModuleErrorTerminalResult;
+  return { terminal: builder(config, moduleId, {
+    reason,
+    runId: identity.runId,
+    moduleDir: dir,
+    attempt: identity.attempt,
+    phase: 'buster',
+    dispatchId: identity.dispatchId,
+    gatewayLabel: resolveStatusGatewayLabel(status),
+    sessionKey: resolveStatusSessionKey(status),
+    ...(options.diagnostics ? { diagnostics: options.diagnostics } : {}),
+    ...(options.metadata ? { metadata: options.metadata } : {}),
+    ...(options.reasonCode ? { terminalReasonCode: options.reasonCode, terminalHumanReason: options.humanReason ?? reason } : {}),
+  }) };
+}
 
-  let busterPrompt;
-  {
-    let promptResult;
-    try {
-      promptResult = deps.buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails, completionIdentity);
-    } catch (e) {
-      promptResult = { error: errorMessage(e), thrown: true };
-    }
-    if (promptResult.error) {
-      log('ERROR', `Buster prompt build failed for ${moduleId}: ${promptResult.error}`);
-      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
-      return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
-        reason: promptResult.error,
-        runId: completionIdentity.runId,
-        moduleDir: dir,
-        attempt: completionIdentity.attempt,
-        phase: 'buster',
-        dispatchId: completionIdentity.dispatchId,
-        gatewayLabel: resolveStatusGatewayLabel(status),
-        sessionKey: resolveStatusSessionKey(status),
-        metadata: {
-          failure_class: 'buster_prompt_build_failed',
-          thrown: promptResult.thrown === true,
-        },
-        terminalReasonCode: 'buster_prompt_build_failed',
-        terminalHumanReason: `Buster prompt build failed for ${moduleId}: ${promptResult.error}`,
-      }) };
-    }
-    busterPrompt = promptResult.prompt;
-  }
-
+function buildBusterDispatchPrompt(context: AnyRecord, identity: AnyRecord) {
+  const { config, moduleId, mod, dir, status, maxFails, deps } = context;
+  let result;
   try {
-    deps.savePrompt(config, dir, 'buster', status.fail_count + 1, busterPrompt);
-  } catch (e) {
-    const reason = `Buster prompt artifact write failed: ${errorMessage(e)}`;
-    log('ERROR', `Module ${moduleId} — ${reason}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
-    return { terminal: buildModuleErrorTerminalResult(config, moduleId, {
-      reason,
-      runId: completionIdentity.runId,
-      moduleDir: dir,
-      attempt: completionIdentity.attempt,
-      phase: 'buster',
-      dispatchId: completionIdentity.dispatchId,
-      gatewayLabel: resolveStatusGatewayLabel(status),
-      sessionKey: resolveStatusSessionKey(status),
+    result = deps.buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails, identity);
+  } catch (error: unknown) {
+    result = { error: errorMessage(error), thrown: true };
+  }
+  if (!result.error) return { prompt: result.prompt, terminal: null };
+  const reason = `Buster prompt build failed for ${moduleId}: ${result.error}`;
+  return { prompt: null, terminal: busterDispatchTerminal(context, identity, reason, {
+    metadata: { failure_class: 'buster_prompt_build_failed', thrown: result.thrown === true },
+    reasonCode: 'buster_prompt_build_failed',
+  }).terminal };
+}
+
+function persistBusterPrompt(context: AnyRecord, identity: AnyRecord, prompt: string) {
+  const { config, moduleId, dir, status, deps } = context;
+  try {
+    deps.savePrompt(config, dir, 'buster', status.fail_count + 1, prompt);
+    return null;
+  } catch (error: unknown) {
+    const reason = `Buster prompt artifact write failed: ${errorMessage(error)}`;
+    return busterDispatchTerminal(context, identity, reason, {
       metadata: { failure_class: 'buster_prompt_artifact_failed' },
-      terminalReasonCode: 'buster_prompt_artifact_failed',
-      terminalHumanReason: reason,
-    }) };
+      reasonCode: 'buster_prompt_artifact_failed',
+    }).terminal;
   }
+}
 
-  // ── Pre-dispatch config validation ──
-  // Catches obvious config issues (missing paths, bad binaries) before wasting
-  // a full Buster dispatch cycle. Only checked on first buster attempt per module
-  // attempt — crash retries reuse the same config.
-  if (busterAttempt === 1) {
-    try {
-      deps.validateBusterConfig(config);
-    } catch (e) {
-      const reason = `Config validation failed: ${errorMessage(e)}`;
-      log('ERROR', `Module ${moduleId} — ${reason}`);
-      emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'buster', busterModel, status?.status);
-      const configInvalidCorrelation = {
-        run_id: completionIdentity.runId,
-        module_id: moduleId,
-        attempt: completionIdentity.attempt,
-        dispatch_id: completionIdentity.dispatchId,
-        gateway_label: completionIdentity.gateway_label,
-        session_key: completionIdentity.sessionKey,
-        model: completionIdentity.model,
-        model_source: completionIdentity.model_source,
-        reasoning_level: completionIdentity.reasoning_level,
-        thinking_source: completionIdentity.thinking_source,
-        runtime: completionIdentity.runtime,
-      };
-      await deps.discord(config, 'CRITICAL', `Module ${moduleId} — Config Invalid`,
-        `Pre-dispatch validation caught config issues. Fix progress.json before retrying.`,
-        buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, configInvalidCorrelation, [
-          { name: 'Issue', value: errorMessage(e).slice(0, 200) },
-        ]),
-        { correlation: configInvalidCorrelation },
-      );
-      deps.clearShutdownContext();
-      return { terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
-        reason,
-        runId: completionIdentity.runId,
-        moduleDir: dir,
-        attempt: completionIdentity.attempt,
-        phase: 'buster',
-        dispatchId: completionIdentity.dispatchId,
-        gatewayLabel: resolveStatusGatewayLabel(status),
-        sessionKey: resolveStatusSessionKey(status),
-      }) };
-    }
+async function validateInitialBusterDispatch(context: AnyRecord, identity: AnyRecord) {
+  const { config, moduleId, deps, busterAttempt } = context;
+  if (busterAttempt !== 1) return null;
+  try {
+    deps.validateBusterConfig(config);
+    return null;
+  } catch (error: unknown) {
+    const reason = `Config validation failed: ${errorMessage(error)}`;
+    const correlation = { ...identity, run_id: identity.runId, module_id: moduleId, dispatch_id: identity.dispatchId };
+    await deps.discord(config, 'CRITICAL', `Module ${moduleId} — Config Invalid`,
+      'Pre-dispatch validation caught config issues. Fix progress.json before retrying.',
+      buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, correlation, [
+        { name: 'Issue', value: errorMessage(error).slice(0, 200) },
+      ]), { correlation });
+    deps.clearShutdownContext();
+    return busterDispatchTerminal(context, identity, reason, { needsNova: true }).terminal;
   }
+}
 
-  if (completionIdentity.resumed === true) log('INFO', `Module ${moduleId}: adopting existing Buster dispatch ${completionIdentity.dispatchId} on resume`);
-
-  deps.setShutdownContext(config, 'buster', moduleId, dir);
-
-  const agentJudgment = buildBusterAgentJudgmentPolicy(mod);
-  const agentJudgmentEnabled = agentJudgment.required === true;
-
+async function notifyBusterQueued(context: AnyRecord, identity: AnyRecord, requestedSuites: string[]) {
+  const { config, moduleId, mod, deps } = context;
+  const judgment = buildBusterAgentJudgmentPolicy(mod);
+  const enabled = judgment.required === true;
+  const correlation = { run_id: identity.runId, module_id: moduleId, attempt: identity.attempt, dispatch_id: identity.dispatchId, gateway_label: identity.gateway_label, session_key: identity.sessionKey };
   await deps.discord(config, 'INFO', `Module ${moduleId} — Buster queued`,
-    agentJudgmentEnabled
+    enabled
       ? 'Buster work is queued. Deterministic suites run first; the Buster agent is configured to run after the suites pass.'
       : 'Buster work is queued. Deterministic suites are the final Buster authority for this module.', [
-      ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, {
-        run_id: completionIdentity.runId,
-        module_id: moduleId,
-        attempt: completionIdentity.attempt,
-        dispatch_id: completionIdentity.dispatchId,
-        gateway_label: completionIdentity.gateway_label,
-        session_key: completionIdentity.sessionKey,
-        model: completionIdentity.model,
-        model_source: completionIdentity.model_source,
-        reasoning_level: completionIdentity.reasoning_level,
-        thinking_source: completionIdentity.thinking_source,
-        runtime: completionIdentity.runtime,
-      }),
+      ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, { ...correlation, model: identity.model, model_source: identity.model_source, reasoning_level: identity.reasoning_level, thinking_source: identity.thinking_source, runtime: identity.runtime }),
       { name: 'Phase', value: 'buster', inline: true },
       { name: 'Queued Suites', value: requestedSuites.join(', '), inline: true },
-      { name: 'Agent Judgment', value: agentJudgmentEnabled ? 'enabled' : 'disabled', inline: true },
-      { name: 'Authority', value: agentJudgmentEnabled ? 'Buster agent is required after deterministic suites pass' : 'Deterministic suites are final authority', inline: false },
-      { name: 'Policy Reason', value: String(agentJudgment.reason), inline: false },
-      { name: 'Next', value: agentJudgmentEnabled ? 'Watch for suite results, then Buster agent spawn/result.' : 'Watch for deterministic suite result.', inline: false },
-    ],
-    {
-      correlation: {
-        run_id: completionIdentity.runId,
-        module_id: moduleId,
-        attempt: completionIdentity.attempt,
-        dispatch_id: completionIdentity.dispatchId,
-        gateway_label: completionIdentity.gateway_label,
-        session_key: completionIdentity.sessionKey,
-      },
+      { name: 'Agent Judgment', value: enabled ? 'enabled' : 'disabled', inline: true },
+      { name: 'Authority', value: enabled ? 'Buster agent is required after deterministic suites pass' : 'Deterministic suites are final authority', inline: false },
+      { name: 'Policy Reason', value: String(judgment.reason), inline: false },
+      { name: 'Next', value: enabled ? 'Watch for suite results, then Buster agent spawn/result.' : 'Watch for deterministic suite result.', inline: false },
+    ], { correlation });
+}
+
+export async function executeBusterAttemptDispatch(context: AnyRecord = {}) {
+  const {
+    config, progress, moduleId, mod, dir, status, timeout, maxFails, deps,
+    busterModel, busterPolicy = {}, maxBusterCrashRetries, busterAttempt,
+    startupRateLimitPauseCount = 0,
+  } = context;
+  const requestedSuites = normalizeRequestedBusterSuites(mod);
+  const completionIdentity = createBusterDispatchIdentity({ ...context, busterPolicy });
+  if (requestedSuites.length === 0) {
+    const reason = 'Buster dispatch requires a typed nonempty test_suites list';
+    return busterDispatchTerminal(context, completionIdentity, reason, {
+      needsNova: true,
+      diagnostics: { metadata: { code: 'buster_test_suites_empty', test_suites: mod?.test_suites ?? null } },
     });
-
+  }
+  const promptResult = buildBusterDispatchPrompt(context, completionIdentity);
+  if (promptResult.terminal) return { terminal: promptResult.terminal };
+  const promptTerminal = persistBusterPrompt(context, completionIdentity, promptResult.prompt);
+  if (promptTerminal) return { terminal: promptTerminal };
+  const validationTerminal = await validateInitialBusterDispatch(context, completionIdentity);
+  if (validationTerminal) return { terminal: validationTerminal };
+  if (completionIdentity.resumed === true) {
+    log('INFO', `Module ${moduleId}: adopting existing Buster dispatch ${completionIdentity.dispatchId} on resume`);
+  }
+  deps.setShutdownContext(config, 'buster', moduleId, dir);
+  await notifyBusterQueued(context, completionIdentity, requestedSuites);
   completionIdentity.gateway_label = null;
-
   const workerOutcome = await executeBusterWorkerAttempt({
-    config,
-    progress,
-    moduleId,
-    mod,
-    dir,
-    status,
-    timeout,
-    maxFails,
-    deps,
-    busterPrompt,
+    config, progress, moduleId, mod, dir, status, timeout, maxFails, deps,
+    busterPrompt: promptResult.prompt,
     completionIdentity,
     busterModel,
     busterPolicy,
@@ -300,7 +221,6 @@ export async function executeBusterAttemptDispatch({
     busterAttempt,
     startupRateLimitPauseCount,
   });
-
   return {
     completionIdentity,
     workerOutcome,

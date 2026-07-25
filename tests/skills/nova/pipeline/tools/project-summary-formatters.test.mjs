@@ -40,35 +40,26 @@ function minimalAgents() {
 }
 
 test('buildCaseStudyBase reports code files and test duration from collector fields', () => {
-  const summary = buildCaseStudyBase(
-    'case-study-metrics',
-    {
+  const summary = buildCaseStudyBase({ project: 'case-study-metrics', code: {
       totalFiles: 5,
       codeFiles: 3,
       swarmFiles: 2,
       codeLines: 100,
       totalLines: 120,
       byLang: {},
-    },
-    {
+    }, pipeline: {
       moduleCount: 0,
       totalCompleted: 0,
       totalBlocked: 0,
       totalPending: 0,
       gateStats: [],
       moduleStats: [],
-    },
-    {
+    }, tests: {
       totalRuns: 1,
       totalChecks: 4,
       totalFindings: 0,
       totalDuration: 2500,
-    },
-    { python: { functions: 0 }, frontend: { functions: 0 } },
-    { totalCases: 0 },
-    { reviews: [], totalCritical: 0, totalDeferred: 0 },
-    { total: 0 },
-  );
+    }, unitCensus: { python: { functions: 0 }, frontend: { functions: 0 } }, apiCensus: { totalCases: 0 }, reviews: { reviews: [], totalCritical: 0, totalDeferred: 0 }, agents: { total: 0 } });
 
   assert.equal(summary.code.code_files, 3);
   assert.equal(summary.code.pipeline_config_files, 2);
@@ -104,9 +95,7 @@ test('buildDiscordEmbeds keeps field values within Discord limits', () => {
     })),
   };
 
-  const embeds = buildDiscordEmbeds(
-    'oversized-summary',
-    {
+  const embeds = buildDiscordEmbeds({ project: 'oversized-summary', code: {
       codeLines: 1000,
       codeFiles: 10,
       commitCount: 2,
@@ -114,14 +103,7 @@ test('buildDiscordEmbeds keeps field values within Discord limits', () => {
         TypeScript: { code: 500 },
         Python: { code: 300 },
       },
-    },
-    pipeline,
-    {},
-    { python: { functions: 7 }, frontend: { functions: 8 } },
-    { totalCases: 9 },
-    { totalCritical: 1, totalDeferred: 2 },
-    { total: 20, forge: 10, buster: 6, echo: 4 },
-  );
+    }, pipeline: pipeline, tests: {}, unitCensus: { python: { functions: 7 }, frontend: { functions: 8 } }, apiCensus: { totalCases: 9 }, reviews: { totalCritical: 1, totalDeferred: 2 }, agents: { total: 20, forge: 10, buster: 6, echo: 4 } });
 
   for (const embed of embeds) {
     for (const field of embed.fields) {
@@ -134,16 +116,7 @@ test('buildDiscordEmbeds keeps field values within Discord limits', () => {
 });
 
 test('buildMarkdown supports legacy and partial census shapes', () => {
-  const markdown = buildMarkdown(
-    'legacy-census-markdown',
-    minimalCode(),
-    minimalPipeline(),
-    { totalRuns: 0, totalChecks: 0, totalFindings: 0, totalDuration: 0 },
-    { pythonFunctions: 2, frontendBlocks: 3 },
-    { totalCases: 4 },
-    minimalReviews(),
-    minimalAgents(),
-  );
+  const markdown = buildMarkdown({ project: 'legacy-census-markdown', code: minimalCode(), pipeline: minimalPipeline(), tests: { totalRuns: 0, totalChecks: 0, totalFindings: 0, totalDuration: 0 }, unitCensus: { pythonFunctions: 2, frontendBlocks: 3 }, apiCensus: { totalCases: 4 }, reviews: minimalReviews(), agents: minimalAgents() });
 
   assert.match(markdown, /\| Unit Tests \(Python\/pytest\) \| 2 functions in 0 files \|/);
   assert.match(markdown, /\| Unit Tests \(Frontend\/Vitest\) \| 3 test blocks in 0 files \|/);
@@ -166,32 +139,14 @@ test('buildMarkdown reports blocked module state explicitly', () => {
       blockedReason: 'SERVE_DOCKERFILE_NOT_DECLARED',
     }],
   };
-  const markdown = buildMarkdown(
-    'blocked-summary',
-    minimalCode(),
-    pipeline,
-    { totalRuns: 0, totalChecks: 0, totalFindings: 0, totalDuration: 0 },
-    { pythonFunctions: 0, frontendBlocks: 0 },
-    { totalCases: 0 },
-    minimalReviews(),
-    minimalAgents(),
-  );
+  const markdown = buildMarkdown({ project: 'blocked-summary', code: minimalCode(), pipeline: pipeline, tests: { totalRuns: 0, totalChecks: 0, totalFindings: 0, totalDuration: 0 }, unitCensus: { pythonFunctions: 0, frontendBlocks: 0 }, apiCensus: { totalCases: 0 }, reviews: minimalReviews(), agents: minimalAgents() });
 
   assert.match(markdown, /- \*\*Final Status:\*\* BLOCKED/);
   assert.match(markdown, /- \*\*Blocking Point:\*\* Content branch \/ preflight_contract — SERVE_DOCKERFILE_NOT_DECLARED/);
 });
 
 test('buildDiscordEmbeds supports legacy and partial census shapes', () => {
-  const embeds = buildDiscordEmbeds(
-    'legacy-census-discord',
-    minimalCode(),
-    minimalPipeline(),
-    {},
-    { pythonFunctions: 2, frontendBlocks: 3 },
-    { totalCases: 4 },
-    minimalReviews(),
-    minimalAgents(),
-  );
+  const embeds = buildDiscordEmbeds({ project: 'legacy-census-discord', code: minimalCode(), pipeline: minimalPipeline(), tests: {}, unitCensus: { pythonFunctions: 2, frontendBlocks: 3 }, apiCensus: { totalCases: 4 }, reviews: minimalReviews(), agents: minimalAgents() });
   const testsField = embeds[0].fields.find(field => field.name.includes('Tests Written'));
 
   assert.equal(testsField.value, '9 (2 py + 3 tsx + 4 api)');

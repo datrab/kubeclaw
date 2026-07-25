@@ -2,16 +2,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import test from 'node:test';
+import test, { after } from 'node:test';
 
 import {
   findNextStep,
   markScheduledValidatorComplete,
 } from '../../../../../skills/nova/pipeline/runners/pipeline-runner-scheduling.ts';
-import { appendModuleLifecycleEvent } from '../../../../../skills/nova/pipeline/services/status-store.ts';
+import { markModulePassed } from '../lifecycle-test-fixtures.mjs';
 
 function config() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-scheduling-'));
+  tempRepos.add(root);
   return {
     project: 'pipeline-scheduling-test',
     _runId: 'run-scheduling-test',
@@ -27,30 +28,10 @@ function config() {
   };
 }
 
-function markModulePass(cfg, moduleId) {
-  appendModuleLifecycleEvent(cfg, moduleId, {
-    module_id: moduleId,
-    status: 'IN_PROGRESS',
-    current_phase: 'forge',
-    fail_count: 0,
-  }, {
-    eventType: 'module_attempt.started',
-    oldStatus: 'PENDING',
-    newStatus: 'IN_PROGRESS',
-    now: '2026-07-10T00:00:00.000Z',
-  });
-  appendModuleLifecycleEvent(cfg, moduleId, {
-    module_id: moduleId,
-    status: 'PASS',
-    current_phase: 'complete',
-    fail_count: 0,
-  }, {
-    eventType: 'module_attempt.passed',
-    oldStatus: 'READY_FOR_TESTING',
-    newStatus: 'PASS',
-    now: '2026-07-10T00:00:00.000Z',
-  });
-}
+const markModulePass = (cfg, moduleId) => markModulePassed(cfg, moduleId, {
+  completedPhase: 'complete',
+  passingFrom: 'READY_FOR_TESTING',
+});
 
 function progress({ dependent = false } = {}) {
   return {
@@ -132,4 +113,8 @@ test('scheduler batches ready modules after completed inline validators', () => 
   markScheduledValidatorComplete(cfg, 'execution_order:validator:architecture');
 
   assert.deepEqual(findNextStep(cfg, prog), { type: 'module_batch', ids: ['02-nginx', '03-nginx'] });
+});
+const tempRepos = new Set();
+after(() => {
+  for (const root of tempRepos) fs.rmSync(root, { recursive: true, force: true });
 });

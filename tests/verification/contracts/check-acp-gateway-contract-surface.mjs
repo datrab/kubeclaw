@@ -1,17 +1,11 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const contractPath = path.join(sourceRoot, 'skills/common/pipeline/services/acp-gateway-contract.ts');
 const contractMod = await import(pathToFileURL(contractPath).href);
 
@@ -307,7 +301,7 @@ const sourceMarkers = [
   ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpTranscriptState(state)'],
   ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpSessionStateEventPayload({'],
   ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpTranscriptDeltaEventPayload({'],
-  ['skills/common/pipeline/agents/lifecycle.ts', 'assertValidSessionLifecycleRecord({'],
+  ['skills/common/pipeline/agents/session-spawn.ts', 'assertValidSessionLifecycleRecord({'],
   ['skills/common/pipeline/agents/lifecycle.ts', 'assertValidKillSessionResult({'],
   ['skills/common/pipeline/agents/session-termination.ts', 'assertValidSessionTerminationResult(result)'],
   ['skills/common/pipeline/integrations/gateway.ts', 'normalizeGatewayInvokeResult(parsed)'],

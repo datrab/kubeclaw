@@ -1,11 +1,18 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
 import { registerContainerYamlTools } from '../../../../../../skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts';
-import { registerKubernetesSecurityTools } from '../../../../../../skills/nova/pipeline/tools/lint-report/kubernetes-security-tools.ts';
+import {
+  CANONICAL_LINT_CONFIG_FALSE_POSITIVE,
+  isCanonicalLintConfigFalsePositive,
+  normalizedDocumentDigest,
+  registerKubernetesSecurityTools,
+  trivyFindings,
+} from '../../../../../../skills/nova/pipeline/tools/lint-report/kubernetes-security-tools.ts';
 
 test('hadolint operational failure with empty JSON fails closed', () => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'hadolint-error-test-'));
@@ -166,6 +173,47 @@ process.exitCode = 1;
   } finally {
     process.env.PATH = originalPath;
   }
+});
+
+test('trivy filters only the exact approved canonical lint ConfigMap false positive', () => {
+  const rendered = `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agent-nova-swarm-config
+data:
+  .semgrep.yml: |
+    rules: []
+  eslint.config.mjs: |
+    export default [];
+  lint-policy.json: |
+    {}
+`;
+  const issue = {
+    ID: CANONICAL_LINT_CONFIG_FALSE_POSITIVE.code,
+    Message: CANONICAL_LINT_CONFIG_FALSE_POSITIVE.message,
+    CauseMetadata: { StartLine: 4 },
+  };
+  const exactFilter = {
+    ...CANONICAL_LINT_CONFIG_FALSE_POSITIVE,
+    document_sha256: normalizedDocumentDigest(rendered),
+  };
+  const ctx = { repoRoot: '/repo' };
+  assert.equal(isCanonicalLintConfigFalsePositive(rendered, issue, '2026-07-21', exactFilter), true);
+  assert.equal(isCanonicalLintConfigFalsePositive(`${rendered}  token: actual-secret\n`, issue, '2026-07-21', exactFilter), false);
+  assert.equal(isCanonicalLintConfigFalsePositive(rendered.replace('agent-nova-swarm-config', 'other'), issue, '2026-07-21', exactFilter), false);
+  assert.equal(isCanonicalLintConfigFalsePositive(rendered, { ...issue, Message: 'actual secret' }, '2026-07-21', exactFilter), false);
+  assert.equal(isCanonicalLintConfigFalsePositive(rendered, issue, '2026-10-21', exactFilter), false);
+  assert.deepEqual(trivyFindings(ctx, '/repo/chart', rendered, [issue]).map(finding => finding.code), ['KSV-0109']);
+});
+
+test('trivy approved payload digest matches the canonical rendered chart', () => {
+  const rendered = execFileSync('helm', ['template', 'lint-kubeclaw', 'charts/kubeclaw', '--include-crds'], { encoding: 'utf8' });
+  const issue = {
+    ID: CANONICAL_LINT_CONFIG_FALSE_POSITIVE.code,
+    Message: CANONICAL_LINT_CONFIG_FALSE_POSITIVE.message,
+    CauseMetadata: { StartLine: 1 },
+  };
+  assert.equal(isCanonicalLintConfigFalsePositive(rendered, issue, '2026-07-21'), true);
 });
 
 test('trivy propagates a structured Helm render failure before writing or scanning', () => {

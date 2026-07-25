@@ -3,7 +3,7 @@
 import { relPath, projectSrcPath } from '../core/paths.ts';
 import { makePromptResult } from './shared.ts';
 
-export function buildReviewerPrompt(config, gateId, gate, reviewer, instructions, lintBlock, relOutput) {
+export function buildReviewerPrompt(config: any, gateId: any, gate: any, reviewer: any, instructions: any, lintBlock: any, relOutput: any) {
   const prompt = [
     '## Review Context',
     '',

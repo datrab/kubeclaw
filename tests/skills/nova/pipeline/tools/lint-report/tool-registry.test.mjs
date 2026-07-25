@@ -4,7 +4,17 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { TOOL_REGISTRY } from '../../../../../../skills/nova/pipeline/tools/lint-report/tool-registry.ts';
+import { TOOL_REGISTRY, uniqueTypeScriptFindings } from '../../../../../../skills/nova/pipeline/tools/lint-report/tool-registry.ts';
+
+test('TypeScript diagnostics from overlapping projects are deduplicated by exact source location', () => {
+  const duplicate = { file: 'src/a.ts', line: 4, column: 2, severity: 'error', code: 'TS1234', message: 'same problem' };
+  const findings = uniqueTypeScriptFindings('/repo', [
+    duplicate,
+    { ...duplicate, file: '/repo/src/a.ts' },
+    { ...duplicate, line: 5 },
+  ]);
+  assert.deepEqual(findings, [duplicate, { ...duplicate, line: 5 }]);
+});
 
 test('tsc runs each affected configured TypeScript project exactly once', () => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'tsc-project-target-test-'));

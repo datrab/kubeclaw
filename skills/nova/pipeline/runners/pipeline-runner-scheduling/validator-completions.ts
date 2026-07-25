@@ -1,6 +1,4 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { getRunId } from '../../core/runtime.ts';
@@ -41,7 +39,7 @@ function loadScheduledValidatorCompletions(config: AnyRecord): ValidatorRunState
   if (state.durableLoaded === true) return state;
   state.durableLoaded = true;
   const filePath = scheduledValidatorCompletionPath(config);
-  if (selectTruthyValue(() => (!filePath), () => (!fs.existsSync(filePath)))) return state;
+  if (!filePath || !fs.existsSync(filePath)) return state;
   try {
     const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const entries = Array.isArray(parsed?.completed) ? parsed.completed : [];
@@ -49,7 +47,7 @@ function loadScheduledValidatorCompletions(config: AnyRecord): ValidatorRunState
       const key = typeof entry === 'string' ? entry : entry?.key;
       if (key) state.completed.add(String(key));
     }
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(`Scheduled validator completion state is unreadable and requires repair: ${errorMessage(error)}`);
   }
   return state;

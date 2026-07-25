@@ -215,6 +215,8 @@
   "pre_check": {
     "enabled": true,
     "lint_report_path": "/app/skills/pipeline/tools/lint-report.ts",
+    "lint_policy_path": "/home/node/.openclaw/lint-policy.json",
+    "lint_policy_project": "workspace",
     "timeout_seconds": 60
   },
   "agents": {
@@ -246,6 +248,10 @@
     "agent_id": "codex",
     "output_file": "logs/pipeline/case-study.md",
     "timeout_minutes": 30
+  },
+  "control": {
+    "enabled": false,
+    "capabilities": ["pipeline.control"]
   },
   "plugins": {
     "enabled": true,

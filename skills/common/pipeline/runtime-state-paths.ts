@@ -1,7 +1,9 @@
 const SWARM_RUNTIME_ROOT_SEGMENT = '.swarm';
 const SWARM_RUNTIME_PATH_SEGMENT = `/${SWARM_RUNTIME_ROOT_SEGMENT}/`;
 
-const SWARM_RUNTIME_STATE_MATCHERS = [
+type RuntimeStateMatcher = (swarmPath: string) => boolean;
+
+const SWARM_RUNTIME_STATE_MATCHERS: readonly RuntimeStateMatcher[] = [
   (swarmPath) => swarmPath.startsWith('logs/'),
   (swarmPath) => swarmPath === 'progress.json',
   (swarmPath) => /^modules\/[^/]+\/(?:forge|buster|review|gate)-completion(?:\.[^/]+)?\.json$/.test(swarmPath),
@@ -16,7 +18,7 @@ const SWARM_RUNTIME_STATE_MATCHERS = [
   (swarmPath) => /^.*project-summary.*$/.test(swarmPath),
 ];
 
-function normalizeRepoPathForRuntimeCheck(relPathName) {
+function normalizeRepoPathForRuntimeCheck(relPathName: string): string {
   const normalized = String(relPathName ?? '')
     .replace(/\\/g, '/')
     .replace(/^(?:\.\/)+/, '')
@@ -24,7 +26,7 @@ function normalizeRepoPathForRuntimeCheck(relPathName) {
   return `/${normalized}`;
 }
 
-export function isRuntimeStatePath(relPathName) {
+export function isRuntimeStatePath(relPathName: string): boolean {
   const p = normalizeRepoPathForRuntimeCheck(relPathName);
   const swarmIndex = p.indexOf(SWARM_RUNTIME_PATH_SEGMENT);
   if (swarmIndex === -1) return false;

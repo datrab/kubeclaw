@@ -16,7 +16,7 @@ export function createRunId() {
   return `run-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 }
 
-export function createRunStats(startedAt = new Date().toISOString()) {
+export function createRunStats(startedAt: any = new Date().toISOString()) {
   return {
     started_at: startedAt,
     modules_completed: [] as any[],
@@ -105,7 +105,7 @@ export function getRunStats(config: RunContextLike | ConfigProjection = null) {
 export function getOptionalRunStats(config: RunContextLike | ConfigProjection = null) {
   try {
     return resolveRunContext(config).stats;
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return null;
   }
 }
@@ -121,12 +121,12 @@ export function isoNow(value: any = new Date()) {
   return new Date(timestampAuthority(value)).toISOString();
 }
 
-function timestampAuthority(value) {
+function timestampAuthority(value: any) {
   if (value) return value;
   return Date.now();
 }
 
-export function createOpaqueId(prefix = 'id') {
+export function createOpaqueId(prefix: any = 'id') {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 

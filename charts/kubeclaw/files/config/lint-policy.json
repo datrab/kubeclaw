@@ -1,6 +1,7 @@
 {
-  "schema_version": "pipeline_lint_policy.v5",
+  "schema_version": "pipeline_lint_policy.v6",
   "baseline_path": "lint-baseline.json",
+  "experimental_tools": [],
   "projects": [
     {
       "id": "workspace",
@@ -42,10 +43,34 @@
       { "id": "nova-pipeline", "roots": ["skills/nova/pipeline"], "may_depend_on": ["nova-pipeline", "common-pipeline"] }
     ]
   },
+  "rule_admission": {
+    "historical_commits": [
+      "c33020319b13ac0054622812eb454a828b0d5f74",
+      "c73802816dc86b0d4a84c2dcd64109db85ea26c4",
+      "ffd21d25af8e0e3547f948c83210c7bd62d53353"
+    ],
+    "rules": [
+      { "tool": "eslint", "code": "complexity", "principle": "Keep decision paths small and obvious.", "remediation": "Extract cohesive decisions without moving branches mechanically.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "gocyclo", "code": "go-complexity", "principle": "Keep decision paths small and obvious.", "remediation": "Extract cohesive Go decisions without moving branches mechanically.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "max-depth", "principle": "Keep control flow shallow.", "remediation": "Use guard clauses or extract one coherent operation.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "max-params", "principle": "Keep interfaces explicit and cohesive.", "remediation": "Replace parameter bundles with one typed request object.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "max-lines-per-function", "principle": "Keep functions focused on one responsibility.", "remediation": "Split complete responsibilities, not arbitrary line ranges.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "max-lines", "principle": "Keep files cohesive and narrow.", "remediation": "Move a complete concern behind an explicit interface.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/no-direct-env-access", "principle": "Read infrastructure environment only at declared boundaries.", "remediation": "Parse and validate environment input in an approved adapter.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/no-env-default", "principle": "Keep application settings in canonical configuration.", "remediation": "Require validated configuration instead of a hardcoded environment fallback.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/no-fallback-chain", "principle": "Use one explicit authority path.", "remediation": "Remove compatibility and guessed candidates, leaving one explicit fallback at most.", "historical_changed_sets": 3, "false_positives": 47, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/no-dynamic-module-loading", "principle": "Keep dependencies explicit.", "remediation": "Use a static import or a centrally declared loader boundary.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/no-top-level-mutable-state", "principle": "Avoid invisible shared state.", "remediation": "Move mutable state into an explicit lifecycle owner.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/no-swallowed-error", "principle": "Handle errors intentionally.", "remediation": "Return a typed failure or rethrow with context.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "discipline/filename-case", "principle": "Use predictable naming.", "remediation": "Rename source files to lowercase kebab-case and update imports.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" },
+      { "tool": "eslint", "code": "no-console", "principle": "Use structured logging.", "remediation": "Use the canonical logger with level and context.", "historical_changed_sets": 3, "false_positives": 0, "approved_by": "pipeline-maintainers", "approved_on": "2026-07-20" }
+    ]
+  },
   "tools": [
     {
       "id": "tsc", "required": true, "category": "types", "scope": "affected-projects", "tier": "pre-check", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["typescript"], "config_path": null,
       "targets": [
+        "contracts/agent-observability/v1/tsconfig.json",
         "plugins/openclaw-agent-observer/tsconfig.json",
         "skills/buster/tsconfig.json",
         "skills/common/pipeline/agent-observability/tsconfig.json",
@@ -58,7 +83,7 @@
     },
     { "id": "gofmt", "required": true, "category": "format", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": [], "targets": ["."], "include": ["**/*.go"], "exclude": [] },
     { "id": "go-vet", "required": true, "category": "lint", "scope": "affected-projects", "tier": "pre-check", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["./cmd/buster-namespace-controller/..."], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
-    { "id": "gocyclo", "required": true, "category": "architecture", "scope": "affected-projects", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["-over", "10"], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
+    { "id": "gocyclo", "required": true, "category": "architecture", "scope": "affected-projects", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["go"], "config_path": null, "arguments": ["-over", "10", "-ignore", "(^|/)(node_modules|vendor|generated)/"], "targets": ["."], "include": ["**/*.go", "go.mod", "go.sum"], "exclude": [] },
     { "id": "shellcheck", "required": true, "category": "lint", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["shell"], "config_path": null, "arguments": ["--severity=warning"], "targets": ["docker", "my-values", "scripts", "tests/verification"], "include": ["**/*.sh"], "exclude": [] },
     { "id": "shfmt", "required": true, "category": "format", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["shell"], "config_path": null, "arguments": ["-s", "-i", "2", "-ci"], "targets": ["docker", "my-values", "scripts", "tests/verification"], "include": ["**/*.sh"], "exclude": [] },
     { "id": "ruff", "required": true, "category": "lint", "scope": "changed-files", "tier": "pre-check", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["python"], "config_path": null, "targets": ["."], "include": ["**/*.py"], "exclude": [] },
@@ -76,7 +101,7 @@
     { "id": "terraform-validate", "required": true, "category": "lint", "scope": "project", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": null, "arguments": [], "targets": [], "include": ["**/*.tf", ".terraform.lock.hcl"], "exclude": ["**/.terraform/**"] },
     { "id": "tflint", "required": true, "category": "lint", "scope": "project", "tier": "full", "timeout_ms": 60000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": ".tflint.hcl", "arguments": [], "targets": [], "include": ["**/*.tf", "**/*.tfvars"], "exclude": ["**/.terraform/**"] },
     { "id": "trivy-terraform", "required": true, "category": "security", "scope": "project", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": ["terraform"], "config_path": null, "arguments": [], "targets": [], "include": ["**/*.tf", "**/*.tfvars"], "exclude": ["**/.terraform/**", "**/*.tfstate", "**/*.tfstate.*"] },
-    { "id": "semgrep", "required": true, "category": "security", "scope": "changed-files", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": [], "config_path": ".semgrep.yml", "targets": ["Projects/pipeline-smoke-landing/src", "plugins/openclaw-agent-observer/src", "scripts", "skills/buster", "skills/common/discord-purge.ts", "skills/common/pipeline", "skills/nova"], "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.cjs", "**/*.py"], "exclude": ["scripts/docs-check-refs.mjs"] },
+    { "id": "semgrep", "required": true, "category": "security", "scope": "changed-files", "tier": "full", "timeout_ms": 120000, "blocking_severity": "warning", "languages": [], "config_path": ".semgrep.yml", "targets": ["Projects/pipeline-smoke-landing/src", "contracts/agent-observability/v1", "contracts/telemetry/v1", "plugins/openclaw-agent-observer", "scripts", "skills/buster", "skills/common/discord-purge.ts", "skills/common/pipeline", "skills/nova"], "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.cjs", "**/*.py"], "exclude": ["scripts/docs-check-refs.mjs"] },
     { "id": "hadolint", "required": true, "category": "lint", "scope": "changed-files", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["docker"], "config_path": null, "targets": ["Projects/buster-infra-smoke/src/Dockerfile", "Projects/pipeline-smoke-landing/src/Dockerfile", "docker/Dockerfile.buster-gateway", "docker/Dockerfile.buster-pipeline", "docker/Dockerfile.general", "docker/Dockerfile.namespace-controller", "docker/Dockerfile.prism-preview", "tests/verification/e2e/fixtures/nginx-project/Dockerfile"], "include": ["**/Dockerfile", "**/Dockerfile.*", "**/*.dockerfile"], "exclude": [] },
     { "id": "helm-lint", "required": true, "category": "manifests", "scope": "project", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["helm"], "config_path": null, "targets": ["charts/kubeclaw"], "include": ["**/Chart.yaml"], "exclude": [] },
     { "id": "kubeconform", "required": true, "category": "manifests", "scope": "project", "tier": "full", "timeout_ms": 30000, "blocking_severity": "warning", "languages": ["helm"], "config_path": null, "targets": ["charts/kubeclaw"], "include": ["**/*.yaml", "**/*.yml"], "exclude": [] },

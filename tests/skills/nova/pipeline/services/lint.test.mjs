@@ -7,13 +7,15 @@ import { generateLintReport, runPreCheck } from '../../../../../skills/nova/pipe
 
 function writeLintPolicy(dir) {
   const policyPath = path.join(dir, 'lint-policy.json');
-  fs.writeFileSync(path.join(dir, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v1","groups":[]}\n');
+  fs.writeFileSync(path.join(dir, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v2","groups":[]}\n');
   fs.writeFileSync(policyPath, JSON.stringify({
-    schema_version: 'pipeline_lint_policy.v5',
+    schema_version: 'pipeline_lint_policy.v6',
     baseline_path: 'lint-baseline.json',
+    experimental_tools: [],
     projects: [{ id: 'workspace', root: '.', discovery_max_depth: 3, languages: ['shell'], language_evidence: { shell: ['**/*.sh'] } }],
     global_exclusions: [],
     architecture: { layers: [{ id: 'workspace', roots: ['.'], may_depend_on: ['workspace'] }] },
+    rule_admission: { historical_commits: ['ad77341f3d85de501d1fd5fdbad6ced613ccee16'], rules: [{ tool: 'shellcheck', code: 'fixture-rule', principle: 'Explicit shell behavior.', remediation: 'Fix the shell finding.', historical_changed_sets: 1, false_positives: 0, approved_by: 'platform', approved_on: '2026-07-20' }] },
     tools: [{ id: 'shellcheck', required: true, category: 'lint', scope: 'changed-files', tier: 'pre-check', timeout_ms: 1000, blocking_severity: 'error', languages: ['shell'], config_path: null, targets: ['.'], include: ['**/*.sh'], exclude: [] }],
   }));
   return policyPath;
@@ -36,11 +38,12 @@ const moduleIndex = process.argv.indexOf('--module-path');
 const modulePath = moduleIndex >= 0 ? process.argv[moduleIndex + 1] : 'full';
 
 fs.writeFileSync(output, JSON.stringify({
-  schema_version: 'pipeline_lint_report.v5',
-  policy: { schema_version: 'pipeline_lint_policy.v5', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'bb7e399cfbd2651eddfd7e7aca202f97f682ec1a61cde54b5ea12a26d8a7fe44' },
+  schema_version: 'pipeline_lint_report.v6',
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   scope: modulePath,
   tier,
+  visibility: { debt: false, experimental: false },
   timestamp: '2026-06-02T00:00:00.000Z',
   changed_files: [],
   detected_types: [],
@@ -51,6 +54,7 @@ fs.writeFileSync(output, JSON.stringify({
     total_warnings: 0,
     total_blocking: 0,
     total_baselined: 0,
+    total_experimental: 0,
     tools_ok: 0,
     tools_not_applicable: 0,
     tools_failed: 0
@@ -117,11 +121,12 @@ const moduleIndex = process.argv.indexOf('--module-path');
 const modulePath = moduleIndex >= 0 ? process.argv[moduleIndex + 1] : 'full';
 
 fs.writeFileSync(output, JSON.stringify({
-  schema_version: 'pipeline_lint_report.v5',
-  policy: { schema_version: 'pipeline_lint_policy.v5', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'bb7e399cfbd2651eddfd7e7aca202f97f682ec1a61cde54b5ea12a26d8a7fe44' },
+  schema_version: 'pipeline_lint_report.v6',
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   scope: modulePath,
   tier: 'pre-check',
+  visibility: { debt: false, experimental: false },
   timestamp: '2026-06-02T00:00:00.000Z',
   changed_files: [],
   detected_types: ['shell'],
@@ -139,6 +144,7 @@ fs.writeFileSync(output, JSON.stringify({
     total_warnings: 0,
     total_blocking: 0,
     total_baselined: 0,
+    total_experimental: 0,
     tools_ok: 0,
     tools_not_applicable: 0,
     tools_failed: 1
@@ -198,10 +204,11 @@ const policyPath = valueAfter('--policy');
 const policyDigest = crypto.createHash('sha256').update(fs.readFileSync(policyPath)).digest('hex');
 
 fs.writeFileSync(output, JSON.stringify({
-  schema_version: 'pipeline_lint_report.v5',
-  policy: { schema_version: 'pipeline_lint_policy.v5', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'bb7e399cfbd2651eddfd7e7aca202f97f682ec1a61cde54b5ea12a26d8a7fe44' },
+  schema_version: 'pipeline_lint_report.v6',
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   tier: valueAfter('--tier') || 'full',
+  visibility: { debt: false, experimental: false },
   timestamp: '2026-06-20T00:00:00.000Z',
   scope: modulePath,
   changed_files: changedFiles ? changedFiles.split(',') : [],
@@ -213,6 +220,7 @@ fs.writeFileSync(output, JSON.stringify({
     total_warnings: 0,
     total_blocking: 0,
     total_baselined: 0,
+    total_experimental: 0,
     tools_ok: 0,
     tools_not_applicable: 0,
     tools_failed: 0
@@ -270,11 +278,12 @@ const current = fs.existsSync(counterPath) ? Number(fs.readFileSync(counterPath,
 fs.writeFileSync(counterPath, String(current + 1));
 
 fs.writeFileSync(output, JSON.stringify({
-  schema_version: 'pipeline_lint_report.v5',
-  policy: { schema_version: 'pipeline_lint_policy.v5', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'bb7e399cfbd2651eddfd7e7aca202f97f682ec1a61cde54b5ea12a26d8a7fe44' },
+  schema_version: 'pipeline_lint_report.v6',
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   scope: modulePath,
   tier: 'full',
+  visibility: { debt: false, experimental: false },
   timestamp: '2026-07-08T00:00:00.000Z',
   changed_files: changedFiles,
   detected_types: [],
@@ -285,6 +294,7 @@ fs.writeFileSync(output, JSON.stringify({
     total_warnings: 0,
     total_blocking: 0,
     total_baselined: 0,
+    total_experimental: 0,
     tools_ok: 0,
     tools_not_applicable: 0,
     tools_failed: 0

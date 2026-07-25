@@ -3,6 +3,7 @@ import { createContractInvalidError } from '../contract-diagnostics.ts';
 import { cloneSerializable as cloneSerializableValue } from '../serialization.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+import { coerceControlResultOrThrow } from './control-result-envelope.ts';
 type UnknownRecord = Record<string, any>;
 type ExtraValidate = ((result: UnknownRecord) => string[] | undefined | null) | null;
 
@@ -66,7 +67,7 @@ function producerLabel(result: UnknownRecord): string {
 
 function formatAllowedNextActions(actions: readonly string[] = []): string {
   return actions
-    .map((value) => `'${value}'`)
+    .map((value: any) => `'${value}'`)
     .join(', ')
     .replace(/, ([^,]+)$/, ', or $1');
 }
@@ -276,7 +277,7 @@ export function validateGateControlResult(result: unknown, {
   stageId = `gate:${selectDefinedValue(() => (gateType), () => ('missing_gate_type'))}`,
   extraValidate = null,
 }: GateNormalizeOptions = {}): string[] {
-  const errors = [];
+  const errors: any[] = [];
   if (selectTruthyValue(() => (!result), () => (typeof result !== 'object'))) {
     errors.push('result must be an object');
     return errors;
@@ -314,24 +315,20 @@ export function normalizeGateControlResult(rawResult: unknown, {
   input = null,
   invocation = null,
 }: GateNormalizeOptions = {}): UnknownRecord {
-  let controlResult: UnknownRecord;
-  try {
-    controlResult = coerce(rawResult);
-  } catch (error) {
-    const validationErrors = [error instanceof Error && error.message ? error.message : 'coercion failed'];
-    throw createContractInvalidError(`${label} gate returned invalid control result: ${validationErrors.join('; ')}`, {
+  const controlResult = coerceControlResultOrThrow(rawResult, {
+    coerce,
+    messagePrefix: `${label} gate returned invalid control result`,
+    diagnostics: {
       label,
       stageId,
       hookFamily: 'gate.execute',
       moduleId,
       producerKind: 'gate',
       producerType: gateType,
-      validationErrors,
-      rawResult,
       input,
       invocation,
-    });
-  }
+    },
+  });
   const errors = validateGateControlResult(controlResult, {
     gateType,
     allowedNextActions,
@@ -416,24 +413,20 @@ export function normalizeRemediableTypedGateControlResult(rawResult: unknown, {
   invocation = null,
   coerce = (value: unknown) => coerceTypedGateControlResult(value, { producerType }),
 }: GateNormalizeOptions = {}): UnknownRecord {
-  let controlResult: UnknownRecord;
-  try {
-    controlResult = coerce(rawResult);
-  } catch (error) {
-    const validationErrors = [error instanceof Error && error.message ? error.message : 'coercion failed'];
-    throw createContractInvalidError(`${label} gate returned invalid control result: ${validationErrors.join('; ')}`, {
+  const controlResult = coerceControlResultOrThrow(rawResult, {
+    coerce,
+    messagePrefix: `${label} gate returned invalid control result`,
+    diagnostics: {
       label,
       stageId,
       hookFamily: 'gate.execute',
       moduleId,
       producerKind: 'gate',
       producerType,
-      validationErrors,
-      rawResult,
       input,
       invocation,
-    });
-  }
+    },
+  });
   const errors = validateRemediableTypedGateControlResult(controlResult, producerType);
   if (errors.length > 0) {
     throw createContractInvalidError(`${label} gate returned invalid control result: ${errors.join('; ')}`, {

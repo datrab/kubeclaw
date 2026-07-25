@@ -7,12 +7,12 @@ import path from 'path';
 export const PROMPT_INGRESS_MAX_BYTES = 32768;
 export const PROMPT_INGRESS_MAX_CHARS = 32768;
 
-function pathInside(candidate, root) {
+function pathInside(candidate: any, root: any) {
   const relative = path.relative(root, candidate);
   return selectTruthyValue(() => (relative === ''), () => ((relative && !relative.startsWith('..') && !path.isAbsolute(relative))));
 }
 
-export function resolvePromptFilePath(repoRoot, promptFile) {
+function resolvePromptFilePath(repoRoot: any, promptFile: any) {
   if (selectTruthyValue(() => (typeof repoRoot !== 'string'), () => (!repoRoot.trim()))) throw new Error('Prompt file policy requires a repository root');
   if (selectTruthyValue(() => (typeof promptFile !== 'string'), () => (!promptFile.trim()))) throw new Error('Prompt file path is empty');
   if (promptFile.includes('\0')) throw new Error('Prompt file path contains a null byte');
@@ -25,7 +25,7 @@ export function resolvePromptFilePath(repoRoot, promptFile) {
   let realPath;
   try {
     realPath = fs.realpathSync(candidatePath);
-  } catch (error) {
+  } catch (error: any) {
     if (error?.code === 'ENOENT') throw new Error(`Prompt file not found: ${promptFile}`);
     throw error;
   }
@@ -43,7 +43,7 @@ export function resolvePromptFilePath(repoRoot, promptFile) {
   return { realPath, repoRealPath, relativePath: path.relative(repoRealPath, realPath).split(path.sep).join('/') };
 }
 
-function normalizePromptText(rawText, source) {
+function normalizePromptText(rawText: any, source: any) {
   if (typeof rawText !== 'string') throw new Error('Prompt input must be a string');
   if (rawText.includes('\0')) throw new Error(`Prompt ${source} contains a null byte`);
 
@@ -67,7 +67,7 @@ function normalizePromptText(rawText, source) {
   };
 }
 
-export function resolveNovaPromptIngress({ prompt = null, promptFile = null, repoRoot }) {
+export function resolveNovaPromptIngress({ prompt = null, promptFile = null, repoRoot }: any) {
   if (prompt != null) {
     const resolved = normalizePromptText(prompt, 'inline');
     return { ...resolved, metadata: { ...resolved.metadata, prompt_file: null } };
@@ -86,7 +86,7 @@ export function resolveNovaPromptIngress({ prompt = null, promptFile = null, rep
   };
 }
 
-export function formatOperatorRemediationDirective(prompt) {
+export function formatOperatorRemediationDirective(prompt: any) {
   if (!prompt) return '';
   const escapedPrompt = String(prompt)
     .replace(/&/g, '&amp;')

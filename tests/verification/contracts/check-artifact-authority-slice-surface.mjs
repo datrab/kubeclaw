@@ -10,6 +10,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '../../..');
 const helperPath = path.join(repoRoot, 'skills/nova/pipeline/services/artifact-bundle.ts');
 const helperSource = fs.readFileSync(helperPath, 'utf8');
+const authorityPath = path.join(repoRoot, 'skills/nova/pipeline/services/artifact-authority.ts');
+const authoritySource = fs.readFileSync(authorityPath, 'utf8');
 const helperMod = await import(pathToFileURL(helperPath).href);
 const deniedNumericTerminalArtifactFields = ['exit', 'exit_code', 'exit_reason', 'exitCode', 'exitLabel'];
 
@@ -33,7 +35,7 @@ for (const expectedExport of [
   'export function buildPipelineArtifactAuthorityPolicy(',
   'export function projectPipelineArtifactEvidence(',
 ]) {
-  assert.equal(helperSource.includes(expectedExport), true, `artifact authority helper missing ${expectedExport}`);
+  assert.equal(authoritySource.includes(expectedExport), true, `artifact authority helper missing ${expectedExport}`);
 }
 
 for (const denied of [
@@ -43,7 +45,7 @@ for (const denied of [
   'allow_completion_authority: false',
   'allow_ordering_authority: false',
 ]) {
-  assert.equal(helperSource.includes(denied), true, `artifact policy must deny ${denied}`);
+  assert.equal(authoritySource.includes(denied), true, `artifact policy must deny ${denied}`);
 }
 
 assert.equal(Object.isFrozen(helperMod.PIPELINE_ARTIFACT_AUTHORITY_ROLES), true, 'artifact authority roles must be frozen');

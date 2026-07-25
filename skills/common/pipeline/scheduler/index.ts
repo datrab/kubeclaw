@@ -90,6 +90,7 @@ export function collectReadyBatch(input: {
   const batchIds = new Set<string>();
   for (let index = startIndex; index < orderedIds.length; index += 1) {
     const id = orderedIds[index];
+    if (id === undefined) break;
     const dependencies = uniqueStrings(dependencyIds(id));
     const dependsOnCurrentBatch = dependencies.some((dependency) => batchIds.has(dependency));
     const ready = !dependsOnCurrentBatch && input.isCandidateReady(id, { batchIds, dependencyIds: dependencies });

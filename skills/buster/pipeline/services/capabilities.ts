@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { sanitizeTelemetryPayload } from '../egress.ts';
 import { resolveScopedPath } from '../security.ts';
+import { arrayValue, objectRecord, selectPresentValue, textValue } from '../value-boundary.ts';
 
 export const BUSTER_CAPABILITIES = Object.freeze({
   IMAGE_BUILD: 'image_build',
@@ -21,34 +22,17 @@ const CAPABILITY_DENIED_REASON = 'buster_capability_denied';
 const DEFAULT_BLOCKED_ACTION = 'tool_execution';
 const DEFAULT_ASSERTION_SUITE = 'task';
 const CAPABILITY_ALERT_SEVERITY = 'CRITICAL';
+type AnyRecord = Record<string, any>;
 
-function arrayValue(value) {
-  return Array.isArray(value) ? value : [];
-}
-
-function objectRecord(value) {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-}
-
-function textValue(value) {
-  return typeof value === 'string' ? value : '';
-}
-
-function selectPresentValue(...values) {
-  for (const value of values) {
-    if (typeof value === 'string' && value.length > 0) return value;
-  }
-  return '';
-}
-
-function contextCapabilitySource(context = {}) {
+function contextCapabilitySource(context: AnyRecord = {}): unknown {
   if (context.capabilities !== undefined && context.capabilities !== null) return context.capabilities;
   if (context.payload?.capabilities !== undefined && context.payload.capabilities !== null) return context.payload.capabilities;
   return [];
 }
 
-function stderrErrorDetail(error) {
-  return typeof error?.message === 'string' && error.message ? error.message : String(error);
+function stderrErrorDetail(error: unknown): string {
+  const errorRecord = error && typeof error === 'object' ? error as Record<string, unknown> : null;
+  return typeof errorRecord?.message === 'string' && errorRecord.message ? errorRecord.message : String(error);
 }
 
 function missingCapabilityReason(missing = [], required = []) {
@@ -75,7 +59,7 @@ export class BusterCapabilityDeniedError extends Error {
   }
 }
 
-function splitCapabilityString(value) {
+function splitCapabilityString(value: unknown): string[] {
   const raw = textValue(value);
   return raw
     .split(/[\s,]+/)
@@ -83,16 +67,16 @@ function splitCapabilityString(value) {
     .filter(Boolean);
 }
 
-export function normalizeBusterCapabilities(value = []) {
+export function normalizeBusterCapabilities(value: unknown = []): string[] {
   const raw = typeof value === 'string' ? splitCapabilityString(value) : (Array.isArray(value) ? value : []);
-  return [...new Set(raw.map((entry) => textValue(entry).trim()).filter(Boolean))];
+  return [...new Set(raw.map((entry: unknown) => textValue(entry).trim()).filter(Boolean))];
 }
 
-export function unsupportedBusterCapabilities(value = []) {
-  return normalizeBusterCapabilities(value).filter((entry) => !KNOWN.has(entry));
+export function unsupportedBusterCapabilities(value: unknown = []): string[] {
+  return normalizeBusterCapabilities(value).filter((entry) => !KNOWN.has(entry as typeof KNOWN_BUSTER_CAPABILITIES[number]));
 }
 
-export function parseCapabilitiesEnv(value) {
+function parseCapabilitiesEnv(value: unknown): string[] {
   return normalizeBusterCapabilities(value);
 }
 
@@ -100,15 +84,15 @@ export function parseCapabilitiesFromEnv(env: Record<string, unknown>, key: stri
   return parseCapabilitiesEnv(env[key]);
 }
 
-export function resolveContextCapabilities(context = {}) {
+export function resolveContextCapabilities(context: AnyRecord = {}): string[] {
   return normalizeBusterCapabilities(contextCapabilitySource(context));
 }
 
-export function hasBusterCapability(capabilities, capability) {
+function hasBusterCapability(capabilities: unknown, capability: string): boolean {
   return normalizeBusterCapabilities(capabilities).includes(capability);
 }
 
-export function missingBusterCapabilities(capabilities, required = []) {
+function missingBusterCapabilities(capabilities: unknown, required: unknown = []): string[] {
   const current = new Set(normalizeBusterCapabilities(capabilities));
   return normalizeBusterCapabilities(required).filter((capability) => !current.has(capability));
 }
@@ -134,11 +118,11 @@ export function requiredCapabilitiesForSuite(suiteName: string, _context: Record
 
 const DEFAULT_OPERATOR_ALERT_PATH = path.join('.swarm', 'logs', 'pipeline', 'operator-alerts.jsonl');
 
-function containsParentTraversal(value) {
+function containsParentTraversal(value: unknown): boolean {
   return textValue(value).split(/[\\/]+/).includes('..');
 }
 
-function resolveAlertTarget(candidate, field, validationPath = candidate) {
+function resolveAlertTarget(candidate: unknown, field: string, validationPath: unknown = candidate): string | null {
   if (!candidate) return null;
   const raw = String(candidate);
   const validationRaw = String(validationPath);
@@ -151,7 +135,7 @@ function resolveAlertTarget(candidate, field, validationPath = candidate) {
   });
 }
 
-function normalizeAlertContext(context = {}) {
+function normalizeAlertContext(context: AnyRecord = {}): AnyRecord {
   const payload = objectRecord(context.payload);
   return {
     project: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (context.project), () => (context.config?.project))), () => (payload.project))), () => (null)),
@@ -165,7 +149,7 @@ function normalizeAlertContext(context = {}) {
   };
 }
 
-function alertTargets(context = {}) {
+function alertTargets(context: AnyRecord = {}): string[] {
   const targets = [];
   const explicitCandidates = [
     context.logDir && [path.join(context.logDir, 'operator-alerts.jsonl'), 'logDir', context.logDir],
@@ -183,12 +167,12 @@ function alertTargets(context = {}) {
     } catch (error) {
       try {
         process.stderr.write(`[BUSTER-CAPABILITY] ignored unsafe durable operator alert target: ${stderrErrorDetail(error)}\n`);
-      } catch (_stderrError) {
+      } catch (_stderrError) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
         // Durable-alert target filtering is best effort; the safe default remains.
       }
     }
   }
-  return [...new Set(targets.filter(Boolean))];
+  return [...new Set(targets.filter((target): target is string => Boolean(target)))];
 }
 
 export function appendDurableOperatorAlert(context: Record<string, any> = {}, alert: Record<string, any> = {}): Record<string, any> {
@@ -211,7 +195,7 @@ export function appendDurableOperatorAlert(context: Record<string, any> = {}, al
     } catch (error) {
       try {
         process.stderr.write(`[BUSTER-CAPABILITY] durable operator alert write failed: ${stderrErrorDetail(error)}\n`);
-      } catch (_stderrError) {
+      } catch (_stderrError) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
         // Durable-alert writes are best effort, but every target is attempted.
       }
     }
@@ -219,7 +203,7 @@ export function appendDurableOperatorAlert(context: Record<string, any> = {}, al
   return record;
 }
 
-export function buildCapabilityDeniedAlert({ suite = null, action, required = [], capabilities = [], missing = [], context = {} }: Record<string, any> = {}): Record<string, any> {
+function buildCapabilityDeniedAlert({ suite = null, action, required = [], capabilities = [], missing = [], context = {} }: Record<string, any> = {}): Record<string, any> {
   return {
     reason: CAPABILITY_DENIED_REASON,
     who: suite ? `suite:${suite}` : 'buster_task',

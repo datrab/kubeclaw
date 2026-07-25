@@ -26,6 +26,7 @@ const yamllintConfigSourcePath = path.join(chartDir, 'files', 'config', '.yamlli
 const tflintConfigSourcePath = path.join(chartDir, 'files', 'config', '.tflint.hcl');
 const knipConfigSourcePath = path.join(chartDir, 'files', 'config', 'knip.json');
 const jscpdConfigSourcePath = path.join(chartDir, 'files', 'config', 'jscpd.json');
+const jscpdTestsConfigSourcePath = path.join(chartDir, 'files', 'config', 'jscpd-tests.json');
 const lintBaselineSourcePath = path.join(chartDir, 'files', 'config', 'lint-baseline.json');
 const lintPolicySourcePath = path.join(chartDir, 'files', 'config', 'lint-policy.json');
 const deployScriptPath = path.join(sourceRoot, 'scripts', 'deploy.sh');
@@ -413,6 +414,7 @@ const yamllintConfigSource = fs.readFileSync(yamllintConfigSourcePath, 'utf8');
 const tflintConfigSource = fs.readFileSync(tflintConfigSourcePath, 'utf8');
 const knipConfigSource = fs.readFileSync(knipConfigSourcePath, 'utf8');
 const jscpdConfigSource = fs.readFileSync(jscpdConfigSourcePath, 'utf8');
+const jscpdTestsConfigSource = fs.readFileSync(jscpdTestsConfigSourcePath, 'utf8');
 const lintBaselineSource = fs.readFileSync(lintBaselineSourcePath, 'utf8');
 const lintPolicySource = fs.readFileSync(lintPolicySourcePath, 'utf8');
 const deployScript = fs.readFileSync(deployScriptPath, 'utf8');
@@ -451,6 +453,7 @@ const renderedYamllintConfig = extractLiteralDataBlock(renderedSwarmConfigMap, '
 const renderedTflintConfig = extractLiteralDataBlock(renderedSwarmConfigMap, '.tflint.hcl');
 const renderedKnipConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'knip.json');
 const renderedJscpdConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'jscpd.json');
+const renderedJscpdTestsConfig = extractLiteralDataBlock(renderedSwarmConfigMap, 'jscpd-tests.json');
 const renderedLintBaseline = extractLiteralDataBlock(renderedSwarmConfigMap, 'lint-baseline.json');
 const renderedLintPolicy = extractLiteralDataBlock(renderedSwarmConfigMap, 'lint-policy.json');
 const renderedBusterGatewayConfigMap = findRenderedDocument(renderedBuster, {
@@ -490,6 +493,8 @@ const busterDeploymentObject = findObject(renderedBusterObjects, 'Deployment', '
 const busterNamespaceControllerDeploymentObject = findObject(renderedBusterObjects, 'Deployment', 'agent-buster-namespace-controller');
 const novaDeploymentObject = findObject(renderedObjects, 'Deployment', 'agent-nova');
 const novaGatewayContainerObject = containerByName(novaDeploymentObject, 'kubeclaw');
+const novaInitSetupContainerObject = (novaDeploymentObject.spec?.template?.spec?.initContainers || [])
+  .find((entry) => entry?.name === 'init-setup');
 const busterGatewayContainerObject = containerByName(busterDeploymentObject, 'kubeclaw');
 const busterPipelineContainerObject = containerByName(busterDeploymentObject, 'buster-pipeline');
 const busterNamespaceControllerContainerObject = containerByName(busterNamespaceControllerDeploymentObject, 'controller');
@@ -815,6 +820,10 @@ assert.equal(envValue(busterPipelineContainerObject, 'KUBECLAW_HEALTH_STARTUP_ST
 assert.equal(novaDeploymentObject.spec?.template?.spec?.shareProcessNamespace, true, 'Structured Nova deployment should share process namespace for lifecycle coordination');
 assert.equal(busterDeploymentObject.spec?.template?.spec?.shareProcessNamespace, false, 'Structured Buster deployment must not expose gateway processes to the pipeline sidecar');
 assert.equal(novaGatewayContainerObject.securityContext?.privileged, false, 'Structured Nova gateway must remain non-privileged');
+assert.equal(novaGatewayContainerObject.securityContext?.readOnlyRootFilesystem, true, 'Structured Nova gateway must keep its image filesystem read-only');
+assert.equal(novaInitSetupContainerObject?.securityContext?.readOnlyRootFilesystem, true, 'Structured Nova init must keep its image filesystem read-only');
+assert.equal((novaGatewayContainerObject.volumeMounts || []).some((mount) => mount?.name === 'tmp' && mount?.mountPath === '/tmp'), true, 'Structured Nova gateway must isolate writable temporary files on emptyDir');
+assert.equal((novaInitSetupContainerObject?.volumeMounts || []).some((mount) => mount?.name === 'tmp' && mount?.mountPath === '/tmp'), true, 'Structured Nova init must isolate writable temporary files on emptyDir');
 assert.equal(busterGatewayContainerObject.securityContext?.privileged, false, 'Structured Buster gateway must remain non-privileged');
 assert.equal(busterPipelineContainerObject.securityContext?.privileged, false, 'Structured Buster pipeline must remain non-privileged');
 assert.equal(busterPipelineContainerObject.securityContext?.allowPrivilegeEscalation, true, 'Structured Buster pipeline must permit RootlessKit UID/GID mapping helpers');
@@ -964,7 +973,9 @@ assertIncludes(busterPipelineDockerfile, 'setcap cap_setgid=ep /usr/bin/newgidma
 assertIncludes(busterPipelineDockerfile, "getcap /usr/bin/newuidmap | grep -Fx '/usr/bin/newuidmap cap_setuid=ep'", 'Buster pipeline image build must verify the newuidmap capability');
 assertIncludes(busterPipelineDockerfile, "getcap /usr/bin/newgidmap | grep -Fx '/usr/bin/newgidmap cap_setgid=ep'", 'Buster pipeline image build must verify the newgidmap capability');
 assertIncludes(busterPipelineEntrypoint, 'kernel.apparmor_restrict_unprivileged_userns=1', 'Buster pipeline entrypoint must diagnose the Ubuntu rootless-user-namespace host policy explicitly');
-assertIncludes(busterPipelineEntrypoint, '--disable-host-loopback', 'Buster rootless network must not expose host loopback services');
+assertIncludes(busterPipelineEntrypoint, '--net=host', 'Buster rootless worker must reuse the pod network namespace so it can reach colocated gateway services without a TUN device');
+assert.equal(busterPipelineEntrypoint.includes('slirp4netns'), false, 'Buster rootless worker must not create a nested TAP network inside Kubernetes');
+assert.equal(busterPipelineDockerfile.includes('slirp4netns'), false, 'Buster pipeline image must not retain the obsolete nested-network dependency');
 assertIncludes(busterPipelineEntrypoint, '--otel-socket-path "$otel_socket"', 'Buster pipeline must place BuildKit\'s OTEL trace socket in its writable rootless runtime directory');
 assertIncludes(deploymentTemplate, 'chown -R 0:1000 /workspace', 'Deployment init must assign the shared workspace group canonically');
 assertIncludes(deploymentTemplate, 'chmod -R g+rwX /workspace', 'Deployment init must preserve shared workspace access across gateway and pipeline UIDs');
@@ -1272,7 +1283,7 @@ assertIncludes(deploymentTemplate, 'cp -Lf /config/.semgrep.yml /runtime-config/
 assertIncludes(deploymentTemplate, 'cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json', 'Deployment template must copy the canonical lint policy into the runtime config surface');
 assertIncludes(deploymentTemplate, 'cp -Lf /config/.yamllint.yml /runtime-config/.yamllint.yml', 'Deployment template must copy the canonical Yamllint config into the runtime config surface');
 assertIncludes(deploymentTemplate, 'cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl', 'Deployment template must copy the canonical TFLint config into the runtime config surface');
-assertIncludes(deploymentTemplate, 'for lint_config in knip.json jscpd.json lint-baseline.json', 'Deployment template must copy canonical architecture, duplication, and baseline configs');
+assertIncludes(deploymentTemplate, 'for lint_config in knip.json jscpd.json jscpd-tests.json lint-baseline.json', 'Deployment template must copy canonical architecture, duplication, and baseline configs');
 assertIncludes(deploymentTemplate, 'ln -sfnT /opt/kubeclaw-tools/node_modules /runtime-config/node_modules', 'Runtime ESLint config must replace stale paths and resolve its pinned parser from the general toolchain');
 assertIncludes(deploymentTemplate, 'ln -sfnT /opt/kubeclaw-tools/node_modules /config/node_modules', 'Authoritative persistent ESLint config must replace stale paths and resolve its pinned parser from the general toolchain');
 assertIncludes(deploymentTemplate, 'rm -rf /config/node_modules', 'Owned persistent ESLint module path must remove a stale real directory before linking the pinned toolchain');
@@ -1284,6 +1295,7 @@ assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/.yamllint.yml"', '
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/.tflint.hcl"', 'Swarm config template must source .tflint.hcl from the chart artifact');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/knip.json"', 'Swarm config template must source knip.json from the chart artifact');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/jscpd.json"', 'Swarm config template must source jscpd.json from the chart artifact');
+assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/jscpd-tests.json"', 'Swarm config template must source jscpd-tests.json from the chart artifact');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/lint-baseline.json"', 'Swarm config template must source the lint baseline from the chart artifact');
 assertIncludes(swarmConfigTemplate, '.Files.Get "files/config/lint-policy.json"', 'Swarm config template must source the canonical lint policy from the chart artifact');
 assertIncludes(customSkillsConfigMapTemplate, 'code bundles to /app/skills', 'Custom skills ConfigMap comment must match the code-bundle runtime skills mount path');
@@ -1344,6 +1356,10 @@ assertIncludes(generalDockerfile, 'install -m 0755 "$tmp/$kubectl_file" /usr/loc
 assert.equal(/\bchromium\b/.test(generalAptInstall), false, 'General Dockerfile must not duplicate Playwright Chromium with the Debian browser package');
 assertIncludes(busterGatewayDockerfile, 'ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:', 'Buster gateway must share the pinned OpenClaw base version');
 assertIncludes(imageBuildWorkflow, 'Verify the pinned base is current', 'Image workflow must compare the pinned OpenClaw digest with the current release');
+assertIncludes(imageBuildWorkflow, 'https://api.github.com/repos/openclaw/openclaw/releases/latest', 'Image workflow must derive release authority from the latest stable GitHub release');
+assertIncludes(imageBuildWorkflow, 'latest_ref="ghcr.io/openclaw/openclaw:${latest_version}"', 'Image workflow must inspect the immutable stable release tag instead of mutable GHCR latest');
+assertIncludes(imageBuildWorkflow, 'for attempt in 1 2 3', 'Image workflow must bound retries for transient registry inspection failures');
+assert.equal(imageBuildWorkflow.includes('ghcr.io/openclaw/openclaw:latest'), false, 'Image workflow must not treat mutable GHCR latest as release authority');
 assert.equal(imageBuildWorkflow.includes('/tmp/last-base-digest.txt'), false, 'Image workflow must not pretend ephemeral runner state persists between schedules');
 assertIncludes(busterPipelineDockerfile, 'FROM moby/buildkit:rootless AS buildkit', 'Buster pipeline image must source rootless BuildKit');
 assertIncludes(busterPipelineDockerfile, 'USER 1000:1000', 'Buster pipeline image must run as a non-root user');
@@ -1413,6 +1429,7 @@ assertIncludes(deployScript, 'tests/verification/live/buster-infra-production-sm
 assertIncludes(deployScript, 'local probe_image="${1:-$BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE}"', 'Standalone BuildKit preflight must retain the configurable official rootless image default');
 assertIncludes(deployScript, 'image: "${probe_image}"', 'BuildKit preflight must run the selected host or Buster pipeline image');
 assertIncludes(deployScript, 'command:\n        - rootlesskit', 'BuildKit preflight must bypass application entrypoints and launch RootlessKit directly');
+assertIncludes(deployScript, 'args:\n        - --net=host\n        - buildkitd', 'BuildKit preflight must use the same pod-network mode as the production Buster worker');
 assertIncludes(deployScript, 'imagePullPolicy: Always', 'BuildKit preflight must inspect the current mutable worker tag rather than a stale node image');
 assertIncludes(deployScript, 'name: XDG_RUNTIME_DIR\n          value: /run/user/1000', 'BuildKit preflight must place its rootless runtime in the writable runtime mount');
 assertIncludes(deployScript, 'local otel_socket="/run/user/1000/buildkit/otel-grpc.sock"', 'BuildKit preflight must place its OTEL trace socket in the writable runtime mount');
@@ -1609,6 +1626,7 @@ assert.equal(
 );
 assert.equal(normalizeLiteralPayload(renderedKnipConfig), normalizeLiteralPayload(knipConfigSource), 'Rendered knip.json must exactly match the chart source');
 assert.equal(normalizeLiteralPayload(renderedJscpdConfig), normalizeLiteralPayload(jscpdConfigSource), 'Rendered jscpd.json must exactly match the chart source');
+assert.equal(normalizeLiteralPayload(renderedJscpdTestsConfig), normalizeLiteralPayload(jscpdTestsConfigSource), 'Rendered jscpd-tests.json must exactly match the chart source');
 assert.equal(normalizeLiteralPayload(renderedLintBaseline), normalizeLiteralPayload(lintBaselineSource), 'Rendered lint-baseline.json must exactly match the chart source');
 assert.equal(
   normalizeLiteralPayload(renderedLintPolicy),

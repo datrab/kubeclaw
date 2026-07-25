@@ -150,6 +150,22 @@ function createPollingConfig(repoRoot, overrides = {}) {
   });
 }
 
+function createTrackedPollFixture(suffix, configOverrides = {}) {
+  const repoRoot = createRepo();
+  const label = `forge-${suffix}`;
+  const sessionKey = `session-${suffix}`;
+  const moduleId = `module-${suffix}`;
+  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
+  const trackedFile = path.join(repoRoot, 'tracked.txt');
+  fs.writeFileSync(trackedFile, 'original\n');
+  git(repoRoot, ['add', 'tracked.txt']);
+  git(repoRoot, ['commit', '-m', 'initial']);
+  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
+  const config = createPollingConfig(repoRoot, { _runId: `run-${suffix}`, ...configOverrides });
+  trackAgent(config, label, sessionKey, `agent-${suffix}`, label, streamLogPath, { moduleId });
+  return { config, label, moduleId, repoRoot, sessionKey, trackedFile };
+}
+
 test('tracked gate session identity drives session-end rate-limit scope', () => {
   const telemetryIdentity = resolveSessionPollIdentity({
     tracked: {
@@ -263,27 +279,12 @@ test('pollForSessionEnd timeout preserves late HEAD movement as changes', async 
 });
 
 test('pollForSessionEnd completes only after ACP terminal state and reports local changes', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-terminal-with-changes';
-  const sessionKey = 'session-terminal-with-changes';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, { _runId: 'run-terminal-with-changes' });
+  const { config, label, moduleId, sessionKey, trackedFile } = createTrackedPollFixture('terminal-with-changes');
   let edited = false;
-
-  trackAgent(config, label, sessionKey, 'agent-terminal-with-changes', label, streamLogPath, {
-    moduleId: 'module-terminal-with-changes',
-  });
   try {
     const result = await pollForSessionEnd(config, label, 1, 'terminal-with-changes-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-terminal-with-changes',
+      moduleId,
       getAcpMonitorState: async (request) => {
         if (!edited) {
           fs.writeFileSync(trackedFile, 'original\nagent edit\n');
@@ -303,26 +304,11 @@ test('pollForSessionEnd completes only after ACP terminal state and reports loca
 });
 
 test('pollForSessionEnd completes after ACP terminal state without local changes', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-terminal-no-changes';
-  const sessionKey = 'session-terminal-no-changes';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, { _runId: 'run-terminal-no-changes' });
-
-  trackAgent(config, label, sessionKey, 'agent-terminal-no-changes', label, streamLogPath, {
-    moduleId: 'module-terminal-no-changes',
-  });
+  const { config, label, moduleId } = createTrackedPollFixture('terminal-no-changes');
   try {
     const result = await pollForSessionEnd(config, label, 1, 'terminal-no-changes-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-terminal-no-changes',
+      moduleId,
       getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey),
     });
 
@@ -335,26 +321,11 @@ test('pollForSessionEnd completes after ACP terminal state without local changes
 });
 
 test('pollForSessionEnd returns typed lifecycle failure for terminal error state', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-terminal-error';
-  const sessionKey = 'session-terminal-error';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, { _runId: 'run-terminal-error' });
-
-  trackAgent(config, label, sessionKey, 'agent-terminal-error', label, streamLogPath, {
-    moduleId: 'module-terminal-error',
-  });
+  const { config, label, moduleId } = createTrackedPollFixture('terminal-error');
   try {
     const result = await pollForSessionEnd(config, label, 1, 'terminal-error-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-terminal-error',
+      moduleId,
       getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey, {
         sessionState: 'error',
         reason: 'session_terminal',
@@ -376,29 +347,13 @@ test('pollForSessionEnd returns typed lifecycle failure for terminal error state
 });
 
 test('pollForSessionEnd preserves structured rate-limit exhaustion path', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-rate-limit-terminal';
-  const sessionKey = 'session-rate-limit-terminal';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, {
-    _runId: 'run-rate-limit-terminal',
+  const { config, label, moduleId } = createTrackedPollFixture('rate-limit-terminal', {
     rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
-  });
-
-  trackAgent(config, label, sessionKey, 'agent-rate-limit-terminal', label, streamLogPath, {
-    moduleId: 'module-rate-limit-terminal',
   });
   try {
     const result = await pollForSessionEnd(config, label, 1, 'rate-limit-terminal-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-rate-limit-terminal',
+      moduleId,
       getAcpMonitorState: async (request) => ({
         ...terminalMonitorState(request.childSessionKey, {
           sessionState: 'error',
@@ -426,29 +381,13 @@ test('pollForSessionEnd preserves structured rate-limit exhaustion path', async 
 });
 
 test('pollForSessionEnd classifies terminal usage-limit errors as rate-limit exhaustion', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-usage-limit-terminal';
-  const sessionKey = 'session-usage-limit-terminal';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, {
-    _runId: 'run-usage-limit-terminal',
+  const { config, label, moduleId } = createTrackedPollFixture('usage-limit-terminal', {
     rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
-  });
-
-  trackAgent(config, label, sessionKey, 'agent-usage-limit-terminal', label, streamLogPath, {
-    moduleId: 'module-usage-limit-terminal',
   });
   try {
     const result = await pollForSessionEnd(config, label, 1, 'usage-limit-terminal-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-usage-limit-terminal',
+      moduleId,
       getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey, {
         sessionState: 'error',
         reason: 'session_terminal',
@@ -469,29 +408,13 @@ test('pollForSessionEnd classifies terminal usage-limit errors as rate-limit exh
 });
 
 test('pollForSessionEnd does not classify terminal usage-limit text without typed rate-limit evidence', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-usage-limit-text-only';
-  const sessionKey = 'session-usage-limit-text-only';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, {
-    _runId: 'run-usage-limit-text-only',
+  const { config, label, moduleId } = createTrackedPollFixture('usage-limit-text-only', {
     rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
-  });
-
-  trackAgent(config, label, sessionKey, 'agent-usage-limit-text-only', label, streamLogPath, {
-    moduleId: 'module-usage-limit-text-only',
   });
   try {
     const result = await pollForSessionEnd(config, label, 1, 'usage-limit-text-only-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-usage-limit-text-only',
+      moduleId,
       getAcpMonitorState: async (request) => terminalMonitorState(request.childSessionKey, {
         sessionState: 'error',
         reason: 'session_terminal',
@@ -510,26 +433,11 @@ test('pollForSessionEnd does not classify terminal usage-limit text without type
 });
 
 test('pollForSessionEnd fails closed when ACP monitor adapter fails', async () => {
-  const repoRoot = createRepo();
-  const label = 'forge-monitor-failure';
-  const sessionKey = 'session-monitor-failure';
-  const streamLogPath = path.join(repoRoot, '.swarm', 'logs', 'stream.jsonl');
-  const trackedFile = path.join(repoRoot, 'tracked.txt');
-
-  fs.writeFileSync(trackedFile, 'original\n');
-  git(repoRoot, ['add', 'tracked.txt']);
-  git(repoRoot, ['commit', '-m', 'initial']);
-  fs.mkdirSync(path.dirname(streamLogPath), { recursive: true });
-
-  const config = createPollingConfig(repoRoot, { _runId: 'run-monitor-failure' });
-
-  trackAgent(config, label, sessionKey, 'agent-monitor-failure', label, streamLogPath, {
-    moduleId: 'module-monitor-failure',
-  });
+  const { config, label, moduleId } = createTrackedPollFixture('monitor-failure');
   try {
     const result = await pollForSessionEnd(config, label, 1, 'monitor-failure-test', {
       budget: createOpenBudget(),
-      moduleId: 'module-monitor-failure',
+      moduleId,
       getAcpMonitorState: async () => {
         throw new Error('monitor unavailable');
       },

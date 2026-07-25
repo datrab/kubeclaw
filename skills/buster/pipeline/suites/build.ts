@@ -1,9 +1,7 @@
 import { selectDefinedValue } from '../optional-absence.ts';
 // The build suite is a thin adapter over the canonical BuildKit + leased
 // namespace k8s suite. It never runs workloads in the Buster pod.
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
 import type { SuiteVerdict } from '../services/verdict-schema.ts';
@@ -12,6 +10,7 @@ import k8sSuite from './k8s.ts';
 import { startServicePortForward } from './k8s-port-forward.ts';
 import { buildK8sCommandEnv } from './k8s-command-env.ts';
 import { resolveRepoScopedPath } from './repo-paths.ts';
+import { createSuiteLog } from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type BuildContext = {
@@ -21,6 +20,27 @@ type BuildContext = {
   repoRoot?: string;
   registerRuntimeCleanup?: (cleanup: () => Promise<void> | void) => void;
 };
+
+interface PreparedBuild {
+  input: AnyRecord;
+  repoRoot: string;
+  type: string;
+  port: number;
+  projectDir: string;
+  imageName: string;
+  serviceName: string;
+  dockerfile: string;
+  manifests: string[];
+}
+
+class BuildPreparationError extends Error {
+  readonly rule: string;
+
+  constructor(message: string, rule: string) {
+    super(message);
+    this.rule = rule;
+  }
+}
 
 const DEFAULTS = Object.freeze({
   type: 'static',
@@ -72,7 +92,9 @@ export function validateDockerfileFromImages(dockerfilePath: string): string[] {
 
 function referencedSecretNames(deploymentPath: string): string[] {
   const content = fs.readFileSync(deploymentPath, 'utf8');
-  return [...content.matchAll(/secretKeyRef:\s*\n\s+name:\s*['"]?([^\s'"#]+)/g)].map((match) => match[1]);
+  return [...content.matchAll(/secretKeyRef:\s*\n\s+name:\s*['"]?([^\s'"#]+)/g)]
+    .map((match) => match[1])
+    .filter((name): name is string => name !== undefined);
 }
 
 function declaredSecretName(secretPath: string): string | null {
@@ -157,76 +179,95 @@ function failure(startedAt: number, message: string, rule: string): SuiteVerdict
   });
 }
 
+function requireScopedPath(value: unknown, options: AnyRecord, rule: string, message: string): string {
+  const resolved = resolveRepoScopedPath(value, options);
+  if (!resolved) throw new BuildPreparationError(message, rule);
+  return resolved;
+}
+
+function prepareDockerfile(input: AnyRecord, tempDir: string, image: string, type: string, port: number): string {
+  if (input.dockerfile) {
+    return requireScopedPath(input.dockerfile, { field: 'serve.dockerfile' }, 'serve-dockerfile', 'serve.dockerfile is invalid');
+  }
+  const dockerfile = path.join(tempDir, 'Dockerfile');
+  fs.writeFileSync(dockerfile, generatedDockerfile({ ...DEFAULTS, ...input, port }, image, type));
+  return dockerfile;
+}
+
+function prepareManifests(input: AnyRecord, tempDir: string, imageName: string, serviceName: string, port: number): string[] {
+  let manifest: string;
+  if (input.deployment_yaml) {
+    manifest = requireScopedPath(input.deployment_yaml, { field: 'serve.deployment_yaml' }, 'serve-deployment-yaml', 'serve.deployment_yaml is invalid');
+  } else {
+    manifest = path.join(tempDir, 'deployment.yaml');
+    fs.writeFileSync(manifest, generatedManifest(imageName, serviceName, port));
+  }
+  if (!input.secret_yaml) return [manifest];
+  const secret = requireScopedPath(input.secret_yaml, { field: 'serve.secret_yaml' }, 'serve-secret-yaml', 'serve.secret_yaml is invalid');
+  return [secret, manifest];
+}
+
+function prepareBuild(context: BuildContext): PreparedBuild {
+  const input: AnyRecord = context.config?.serve ?? {};
+  const repoRoot = context.repoRoot;
+  if (typeof repoRoot !== 'string' || !path.isAbsolute(repoRoot)) {
+    throw new BuildPreparationError('build suite requires an absolute synchronized repository root', 'build-repo-root');
+  }
+  const type = input.type === 'server' ? 'server' : 'static';
+  const image = requireImage(input.image ?? DEFAULTS.image);
+  const port = requirePort(type === 'static' ? 80 : (input.port ?? DEFAULTS.port));
+  const projectDir = requireScopedPath(input.project_dir ?? DEFAULTS.project_dir, { repoDir: repoRoot, field: 'serve.project_dir' }, 'serve-project-dir', 'serve.project_dir is invalid');
+  const secretFailure = validateSecretAuthority(input);
+  if (secretFailure) throw new BuildPreparationError(secretFailure, 'serve-secret-ref');
+
+  const tempDir = path.join(projectDir, '.swarm', 'buster-build', `${process.pid}-${Date.now()}`);
+  fs.mkdirSync(tempDir, { recursive: true });
+  const imageName = `buster-build-${String(context.payload?.module_id ?? 'module').toLowerCase().replace(/[^a-z0-9-]/g, '-')}`;
+  const serviceName = imageName.slice(0, 63);
+  const dockerfile = prepareDockerfile(input, tempDir, image, type, port);
+  const dockerfileFindings = validateDockerfileFromImages(dockerfile);
+  if (dockerfileFindings.length) throw new BuildPreparationError(dockerfileFindings.join('\n'), 'dockerfile-from-image');
+
+  const manifests = prepareManifests(input, tempDir, imageName, serviceName, port);
+  return { input, repoRoot, type, port, projectDir, imageName, serviceName, dockerfile, manifests };
+}
+
+async function deployBuild(context: BuildContext, build: PreparedBuild): Promise<SuiteVerdict> {
+  const { input, repoRoot, imageName, serviceName, dockerfile, projectDir, manifests, port } = build;
+  return k8sSuite({
+    ...context,
+    repoRoot,
+    config: { k8s: {
+      image_name: imageName,
+      service_name: serviceName,
+      dockerfile: path.relative(repoRoot, dockerfile),
+      build_context: input.build_context ?? path.relative(repoRoot, projectDir),
+      manifests: manifests.map((manifestPath) => path.relative(repoRoot, manifestPath)),
+      port,
+      health_path: input.health_path ?? '/',
+      ready_timeout_seconds: input.ready_timeout_seconds ?? 120,
+      build_timeout_seconds: input.timeout ?? DEFAULTS.timeout,
+      namespace_prefix: 'test',
+      cleanup_policy: 'delete',
+    } },
+  });
+}
+
+function wrapBuildVerdict(startedAt: number, build: PreparedBuild, verdict: SuiteVerdict, extra: AnyRecord = {}): SuiteVerdict {
+  return createSuiteVerdict('build', verdict.status, {
+    ...verdict,
+    duration_ms: Date.now() - startedAt,
+    metadata: { ...(verdict.metadata ?? {}), tool: 'rootless-buildkit', serve_type: build.type, ...extra },
+  });
+}
+
 export default async function buildSuite(context: BuildContext): Promise<SuiteVerdict> {
   const startedAt = Date.now();
-  const input = selectDefinedValue(() => context.config?.serve, () => ({}));
-  const log = (message: string): void => {
-    console.log(`[SUITE] [BUILD] ${message}`);
-    if (context.logSink) context.logSink({ suite: 'build', message });
-  };
+  const log = createSuiteLog('build', 'BUILD', (entry) => context.logSink?.(entry));
   try {
-    const repoRoot = context.repoRoot;
-    if (typeof repoRoot !== 'string' || !path.isAbsolute(repoRoot)) {
-      return failure(startedAt, 'build suite requires an absolute synchronized repository root', 'build-repo-root');
-    }
-    const type = input.type === 'server' ? 'server' : 'static';
-    const image = requireImage(input.image ?? DEFAULTS.image);
-    const port = requirePort(type === 'static' ? 80 : (input.port ?? DEFAULTS.port));
-    const projectDir = resolveRepoScopedPath(input.project_dir ?? DEFAULTS.project_dir, { repoDir: repoRoot, field: 'serve.project_dir' });
-    if (!projectDir) return failure(startedAt, 'serve.project_dir is invalid', 'serve-project-dir');
-
-    const secretFailure = validateSecretAuthority(input);
-    if (secretFailure) return failure(startedAt, secretFailure, 'serve-secret-ref');
-
-    const tempDir = path.join(projectDir, '.swarm', 'buster-build', `${process.pid}-${Date.now()}`);
-    fs.mkdirSync(tempDir, { recursive: true });
-    const imageName = `buster-build-${String(context.payload?.module_id ?? 'module').toLowerCase().replace(/[^a-z0-9-]/g, '-')}`;
-    const serviceName = imageName.slice(0, 63);
-    const dockerfile = input.dockerfile
-      ? resolveRepoScopedPath(input.dockerfile, { field: 'serve.dockerfile' })
-      : path.join(tempDir, 'Dockerfile');
-    if (!dockerfile) return failure(startedAt, 'serve.dockerfile is invalid', 'serve-dockerfile');
-    if (!input.dockerfile) fs.writeFileSync(dockerfile, generatedDockerfile({ ...DEFAULTS, ...input, port }, image, type));
-    const dockerfileFindings = validateDockerfileFromImages(dockerfile);
-    if (dockerfileFindings.length) return failure(startedAt, dockerfileFindings.join('\n'), 'dockerfile-from-image');
-
-    const manifest = input.deployment_yaml
-      ? resolveRepoScopedPath(input.deployment_yaml, { field: 'serve.deployment_yaml' })
-      : path.join(tempDir, 'deployment.yaml');
-    if (!manifest) return failure(startedAt, 'serve.deployment_yaml is invalid', 'serve-deployment-yaml');
-    if (!input.deployment_yaml) fs.writeFileSync(manifest, generatedManifest(imageName, serviceName, port));
-    const secretManifest = input.secret_yaml
-      ? resolveRepoScopedPath(input.secret_yaml, { field: 'serve.secret_yaml' })
-      : null;
-    if (input.secret_yaml && !secretManifest) return failure(startedAt, 'serve.secret_yaml is invalid', 'serve-secret-yaml');
-    const manifests = secretManifest ? [secretManifest, manifest] : [manifest];
-
-    const verdict = await k8sSuite({
-      ...context,
-      repoRoot,
-      config: {
-        k8s: {
-          image_name: imageName,
-          service_name: serviceName,
-          dockerfile: path.relative(repoRoot, dockerfile),
-          build_context: input.build_context ?? path.relative(repoRoot, projectDir),
-          manifests: manifests.map((manifestPath) => path.relative(repoRoot, manifestPath)),
-          port,
-          health_path: input.health_path ?? '/',
-          ready_timeout_seconds: input.ready_timeout_seconds ?? 120,
-          build_timeout_seconds: input.timeout ?? DEFAULTS.timeout,
-          namespace_prefix: 'test',
-          cleanup_policy: 'delete',
-        },
-      },
-    });
-    if (verdict.status !== STATUS.PASS) {
-      return createSuiteVerdict('build', verdict.status, {
-        ...verdict,
-        duration_ms: Date.now() - startedAt,
-        metadata: { ...(verdict.metadata ?? {}), tool: 'rootless-buildkit', serve_type: type },
-      });
-    }
+    const build = prepareBuild(context);
+    const verdict = await deployBuild(context, build);
+    if (verdict.status !== STATUS.PASS) return wrapBuildVerdict(startedAt, build, verdict);
     if (!context.registerRuntimeCleanup) {
       return failure(startedAt, 'build suite requires task-scoped runtime cleanup authority', 'build-runtime-cleanup');
     }
@@ -236,25 +277,16 @@ export default async function buildSuite(context: BuildContext): Promise<SuiteVe
     }
     const portForward = await startServicePortForward(
       namespace,
-      serviceName,
-      port,
-      input.health_path ?? '/',
+      build.serviceName,
+      build.port,
+      build.input.health_path ?? '/',
       log,
       buildK8sCommandEnv(null),
     );
     context.registerRuntimeCleanup(portForward.stop);
-    return createSuiteVerdict('build', verdict.status, {
-      ...verdict,
-      duration_ms: Date.now() - startedAt,
-      metadata: {
-        ...(verdict.metadata ?? {}),
-        tool: 'rootless-buildkit',
-        serve_type: type,
-        port: portForward.localPort,
-        container_port: port,
-      },
-    });
+    return wrapBuildVerdict(startedAt, build, verdict, { port: portForward.localPort, container_port: build.port });
   } catch (error) {
-    return failure(startedAt, errorMessage(error), 'buildkit-deploy');
+    const rule = error instanceof BuildPreparationError ? error.rule : 'buildkit-deploy';
+    return failure(startedAt, errorMessage(error), rule);
   }
 }

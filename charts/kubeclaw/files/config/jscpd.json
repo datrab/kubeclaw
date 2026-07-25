@@ -13,6 +13,11 @@
     "**/dist/**",
     "**/generated/**",
     "**/node_modules/**",
-    "**/vendor/**"
+    "tests/**",
+    "**/vendor/**",
+    "contracts/telemetry/v1/telemetry-types.ts",
+    "contracts/telemetry/v1/telemetry_types.go",
+    "contracts/telemetry/v1/bundle-types.ts",
+    "contracts/telemetry/v1/bundle_types.go"
   ]
 }

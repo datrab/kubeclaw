@@ -5,23 +5,23 @@ import { modulePath, relPath, projectSrcPath, moduleBusterOutputPathRef, moduleB
 import { makePromptResult, quoteShellArg, buildGitSyncSection, buildAvailableToolsSection, buildTestWorkspaceSection, buildBusterCompletionProtocol } from './shared.ts';
 import { readBusterInstructions } from './buster-instructions.ts';
 
-function summarizeForgeDiffStat(diffStat) {
+function summarizeForgeDiffStat(diffStat: any) {
   if (selectTruthyValue(() => (typeof diffStat !== 'string'), () => (!diffStat.trim()))) return null;
   const relevantLines = diffStat
     .split('\n')
-    .map((line) => line.trimEnd())
-    .filter((line) => line.trim())
-    .filter((line) => !line.includes('/.swarm/'))
+    .map((line: any) => line.trimEnd())
+    .filter((line: any) => line.trim())
+    .filter((line: any) => !line.includes('/.swarm/'))
     .slice(0, 40);
   if (relevantLines.length === 0) return null;
   return relevantLines.join('\n');
 }
 
-export function buildBusterModulePrompt(config, moduleId, mod, dir, status, maxFails, completionIdentity = {}) {
+export function buildBusterModulePrompt(config: any, moduleId: any, mod: any, dir: any, status: any, maxFails: any, completionIdentity: any = {}) {
   // ── Read test spec ──
   let testInstructions;
   try { testInstructions = readBusterInstructions(config, dir); }
-  catch (e) { return { error: e.message }; }
+  catch (e: any) { return { error: e.message }; }
 
   const attempt = status.fail_count + 1;
 

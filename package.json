@@ -17,7 +17,7 @@
     "verify:pipeline": "node --test tests/verification/common-scheduler.test.mjs tests/verification/common-git-worktree.test.mjs tests/verification/live/buster-infra-production-smoke.test.mjs tests/skills/nova/pipeline/runners/pipeline-runner-scheduling.test.mjs tests/skills/nova/pipeline/runners/pipeline-runner-state-machine.test.mjs tests/skills/nova/pipeline/integrations/git-worktree.test.mjs tests/skills/nova/pipeline/agents/module-workers.test.mjs tests/skills/nova/pipeline/services/status-store-lifecycle.test.mjs tests/skills/nova/pipeline/runners/module-runner-buster-identity.test.mjs tests/skills/buster/pipeline/services/git-workflows.test.mjs tests/skills/buster/pipeline/services/task-validation.test.mjs",
     "verify:buster-buildkit-live": "node tests/verification/live/buster-buildkit-production-smoke.mjs",
     "verify:buster-infra-live": "node tests/verification/live/buster-infra-production-smoke.mjs",
-    "verify:product": "npm run typecheck:skills && npm run verify:contracts && npm run verify:pipeline && npm run docs:check",
+    "verify:product": "npm run typecheck:skills && npm run progress:scaffold:typecheck && npm run verify:contracts && npm run verify:pipeline && npm run docs:check",
     "progress:scaffold:typecheck": "tsc --noEmit -p skills/nova/project_setup/tsconfig.json",
     "progress:scaffold": "node skills/nova/project_setup/tools/progress-scaffold.ts"
   }

@@ -75,11 +75,11 @@ export function planModuleAttemptPhase(status: AnyRecord, stages: string[] = ['f
   return MODULE_ATTEMPT_ACTIONS.PREPARE_BUSTER;
 }
 
-export function planAfterBusterPreparation(prepared: AnyRecord = {}) {
+function planAfterBusterPreparation(prepared: AnyRecord = {}) {
   return prepared.terminal ? MODULE_ATTEMPT_ACTIONS.TERMINAL_OR_RETRY : MODULE_ATTEMPT_ACTIONS.RUN_BUSTER;
 }
 
-export function planAfterBusterPhase(busterPhase: AnyRecord = {}) {
+function planAfterBusterPhase(busterPhase: AnyRecord = {}) {
   return Object.prototype.hasOwnProperty.call(busterPhase, 'retry')
     ? MODULE_ATTEMPT_ACTIONS.TERMINAL_OR_RETRY
     : MODULE_ATTEMPT_ACTIONS.UNEXPECTED_STATUS;
@@ -88,10 +88,10 @@ export function planAfterBusterPhase(busterPhase: AnyRecord = {}) {
 async function releaseBlueprintForAttempt({ config, progress, moduleId, mod, dir, deps, status }: AnyRecord) {
   try {
     await deps.releaseBlueprint(config, progress, moduleId, dir, selectDefinedValue(() => (mod.stages), () => (['forge', 'buster'])));
-  } catch (e) {
+  } catch (e: any) {
     const reason = `Blueprint release failed: ${errorMessage(e)}. Nova may need to create/fix the architecture branch.`;
     log('ERROR', `Module ${moduleId}: blueprint release failed: ${errorMessage(e)}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, status, mod, 'blueprint_release', null, selectDefinedValue(() => (status?.status), () => (STATUS.PENDING)), reason, {}, deps._explicitDeps);
+    emitTerminalModuleFailTelemetry({ config, moduleId, status, mod, phase: 'blueprint_release', model: null, oldStatus: selectDefinedValue(() => (status?.status), () => (STATUS.PENDING)), reason, explicitDeps: deps._explicitDeps });
     return {
       status,
       terminal: buildModuleNeedsNovaTerminalResult(config, moduleId, {
@@ -119,7 +119,7 @@ function buildUnexpectedStatusTerminal({ config, moduleId, mod, status, deps }: 
   setLogScope(null, null);
   const reason = `Unexpected status: ${status?.status}`;
   log('ERROR', `Module ${moduleId} ended in unexpected status: ${status?.status}`);
-  emitTerminalModuleFailTelemetry(config, moduleId, status, mod, selectTruthyValue(() => (status?.current_phase), () => (null)), selectTruthyValue(() => (status?.active_agent?.model), () => (null)), selectDefinedValue(() => (status?.status), () => (null)), reason, {}, deps?._explicitDeps);
+  emitTerminalModuleFailTelemetry({ config, moduleId, status, mod, phase: selectTruthyValue(() => (status?.current_phase), () => (null)), model: selectTruthyValue(() => (status?.active_agent?.model), () => (null)), oldStatus: selectDefinedValue(() => (status?.status), () => (null)), reason, explicitDeps: deps?._explicitDeps });
   return buildModuleErrorTerminalResult(config, moduleId, {
     reason,
     phase: selectDefinedValue(() => (status?.current_phase), () => (null)),
@@ -160,56 +160,12 @@ export async function runModuleAttemptStateMachine({
 
   const stages = moduleStagesAuthority(mod);
   ensureValidationState(status);
-
-  log('INFO', `Module ${moduleId}: entering attempt (status=${selectDefinedValue(() => (status?.status), () => ('NEW'))}, ` +
-    `fail_count=${selectDefinedValue(() => (status?.fail_count), () => (0))}, stages=${stages.join('+')})`);
-
-  if (planModuleAttemptPhase(status, stages) === MODULE_ATTEMPT_ACTIONS.RUN_FORGE) {
-    const forgePhase = await runModuleForgePhase({
-      config,
-      progress,
-      moduleId,
-      mod,
-      dir,
-      status,
-      maxFails,
-      timeout,
-      novaPrompt,
-      stages,
-      deps,
-      recalledMemoryIds,
-    });
-    status = forgePhase.status;
-    recalledMemoryIds = forgePhase.recalledMemoryIds;
-    if (forgePhase.terminal) return forgePhase.terminal;
-  }
-
-  if (planModuleAttemptPhase(status, stages) === MODULE_ATTEMPT_ACTIONS.FINALIZE_FORGE_ONLY) {
-    const forgeOnlyPass = await finalizeForgeOnlyPass({
-      config,
-      moduleId,
-      mod,
-      dir,
-      status,
-      stages,
-      deps,
-    });
-    return forgeOnlyPass.terminal;
-  }
-
-  const busterPreparation = await prepareModuleForBuster({
-    config,
-    progress,
-    moduleId,
-    mod,
-    dir,
-    status,
-    maxFails,
-    timeout,
-    stages,
-    deps,
-    recalledMemoryIds,
-  });
+  logAttempt(moduleId, status, stages);
+  const forge = await executeForgeStage({ config, progress, moduleId, mod, dir, status, maxFails, timeout, novaPrompt, stages, deps, recalledMemoryIds });
+  if (forge.terminal) return forge.terminal;
+  status = forge.status;
+  recalledMemoryIds = forge.recalledMemoryIds;
+  const busterPreparation = await prepareModuleForBuster({ config, progress, moduleId, mod, dir, status, maxFails, timeout, stages, deps, recalledMemoryIds });
   status = busterPreparation.status;
   if (planAfterBusterPreparation(busterPreparation) === MODULE_ATTEMPT_ACTIONS.TERMINAL_OR_RETRY) {
     return busterPreparation.terminal;
@@ -235,4 +191,21 @@ export async function runModuleAttemptStateMachine({
   }
 
   return buildUnexpectedStatusTerminal({ config, moduleId, mod, status, deps });
+}
+
+function logAttempt(moduleId: string, status: AnyRecord, stages: string[]) {
+  log('INFO', `Module ${moduleId}: entering attempt (status=${selectDefinedValue(() => (status?.status), () => ('NEW'))}, ` +
+    `fail_count=${selectDefinedValue(() => (status?.fail_count), () => (0))}, stages=${stages.join('+')})`);
+}
+
+async function executeForgeStage(input: AnyRecord) {
+  const action = planModuleAttemptPhase(input.status, input.stages);
+  if (action === MODULE_ATTEMPT_ACTIONS.RUN_FORGE) {
+    return runModuleForgePhase(input);
+  }
+  if (action === MODULE_ATTEMPT_ACTIONS.FINALIZE_FORGE_ONLY) {
+    const finalized = await finalizeForgeOnlyPass(input);
+    return { ...finalized, recalledMemoryIds: input.recalledMemoryIds };
+  }
+  return { status: input.status, terminal: null, recalledMemoryIds: input.recalledMemoryIds };
 }

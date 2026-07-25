@@ -50,64 +50,56 @@ function sessionConfig() {
   };
 }
 
+function archValidatorFixture(prefix, {
+  project,
+  model = 'gpt-5.4',
+  thinking = 'none',
+  agentMaxAttempts,
+} = {}) {
+  const root = fs.mkdtempSync(path.join(process.cwd(), '.swarm', prefix));
+  const swarmDir = path.join(root, 'Projects', project, 'src', '.swarm');
+  const modulesDir = path.join(swarmDir, 'modules');
+  fs.mkdirSync(path.join(modulesDir, '01-nginx'), { recursive: true });
+  fs.writeFileSync(path.join(modulesDir, '01-nginx', 'FORGE.md'), '# Forge\n');
+  const progress = {
+    project,
+    execution_order: ['01-nginx'],
+    modules: { '01-nginx': { dir: '01-nginx', depends_on: [] } },
+    gates: {},
+    arch_validation: {
+      agent_enabled: true,
+      timeout_minutes: 1,
+      ...(agentMaxAttempts ? { agent_max_attempts: agentMaxAttempts } : {}),
+    },
+    defaults: {
+      models: { arch_validator: model },
+      thinking: { arch_validator: thinking },
+    },
+  };
+  const config = {
+    ...sessionConfig(),
+    project,
+    repo_root: root,
+    fallback_model: model,
+    paths: { swarm_dir: swarmDir, modules_dir: modulesDir, progress_file: path.join(swarmDir, 'progress.json') },
+    agents: { echo: { dispatch: 'subagent', acp_agent_id: 'echo-agent' } },
+    arch_validation: { enabled: true, agent_enabled: true, timeout_minutes: 1 },
+    rate_limit: { max_pauses_per_module: 1, cooldown_hours: 0, cooldown_buffer_ms: 0 },
+  };
+  return { config, progress };
+}
+
 test('architecture validator treats error severity as blocking authority', () => {
   assert.equal(isBlocking([{ severity: 'error' }]), true);
   assert.equal(isBlocking([{ severity: 'warn' }, { severity: 'info' }]), false);
 });
 
 test('architecture validator spawned session receives explicit lifecycle policies', async () => {
-  const root = fs.mkdtempSync(path.join(process.cwd(), '.swarm', 'arch-validator-policy-'));
-  const project = 'arch-validator-policy-test';
-  const swarmDir = path.join(root, 'Projects', project, 'src', '.swarm');
-  const modulesDir = path.join(swarmDir, 'modules');
-  const moduleDir = path.join(modulesDir, '01-nginx');
-  fs.mkdirSync(moduleDir, { recursive: true });
-  fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
-
-  const progress = {
-    project,
-    execution_order: ['01-nginx'],
-    modules: {
-      '01-nginx': { dir: '01-nginx', depends_on: [] },
-    },
-    gates: {},
-    arch_validation: {
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    defaults: {
-      models: { arch_validator: 'openai/gpt-5-codex' },
-      thinking: { arch_validator: 'low' },
-    },
-  };
-
-  const config = {
-    ...sessionConfig(),
-    project,
-    repo_root: root,
-    fallback_model: 'openai/gpt-5-codex',
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: modulesDir,
-      progress_file: path.join(swarmDir, 'progress.json'),
-    },
-    agents: {
-      echo: {
-        dispatch: 'subagent',
-        acp_agent_id: 'echo-agent',
-      },
-    },
-    arch_validation: {
-      enabled: true,
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    rate_limit: {
-      max_pauses_per_module: 1,
-      cooldown_hours: 0,
-      cooldown_buffer_ms: 0,
-    },
-  };
+  const { config, progress } = archValidatorFixture('arch-validator-policy-', {
+    project: 'arch-validator-policy-test',
+    model: 'openai/gpt-5-codex',
+    thinking: 'low',
+  });
 
   let spawnOptions = null;
   let terminateOptions = null;
@@ -147,58 +139,9 @@ test('architecture validator spawned session receives explicit lifecycle policie
 });
 
 test('architecture validator retries after canonical rate-limit cooldown', async () => {
-  const root = fs.mkdtempSync(path.join(process.cwd(), '.swarm', 'arch-validator-rate-limit-'));
-  const project = 'arch-validator-rate-limit-test';
-  const swarmDir = path.join(root, 'Projects', project, 'src', '.swarm');
-  const modulesDir = path.join(swarmDir, 'modules');
-  const moduleDir = path.join(modulesDir, '01-nginx');
-  fs.mkdirSync(moduleDir, { recursive: true });
-  fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
-
-  const progress = {
-    project,
-    execution_order: ['01-nginx'],
-    modules: {
-      '01-nginx': { dir: '01-nginx', depends_on: [] },
-    },
-    gates: {},
-    arch_validation: {
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    defaults: {
-      models: { arch_validator: 'gpt-5.4' },
-      thinking: { arch_validator: 'none' },
-    },
-  };
-
-  const config = {
-    ...sessionConfig(),
-    project,
-    repo_root: root,
-    fallback_model: 'gpt-5.4',
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: modulesDir,
-      progress_file: path.join(swarmDir, 'progress.json'),
-    },
-    agents: {
-      echo: {
-        dispatch: 'subagent',
-        acp_agent_id: 'echo-agent',
-      },
-    },
-    arch_validation: {
-      enabled: true,
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    rate_limit: {
-      max_pauses_per_module: 1,
-      cooldown_hours: 0,
-      cooldown_buffer_ms: 0,
-    },
-  };
+  const { config, progress } = archValidatorFixture('arch-validator-rate-limit-', {
+    project: 'arch-validator-rate-limit-test',
+  });
 
   const spawned = [];
   const terminated = [];
@@ -239,59 +182,10 @@ test('architecture validator retries after canonical rate-limit cooldown', async
 });
 
 test('architecture validator retries agent no-output failures within explicit attempt budget', async () => {
-  const root = fs.mkdtempSync(path.join(process.cwd(), '.swarm', 'arch-validator-no-output-'));
-  const project = 'arch-validator-no-output-test';
-  const swarmDir = path.join(root, 'Projects', project, 'src', '.swarm');
-  const modulesDir = path.join(swarmDir, 'modules');
-  const moduleDir = path.join(modulesDir, '01-nginx');
-  fs.mkdirSync(moduleDir, { recursive: true });
-  fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
-
-  const progress = {
-    project,
-    execution_order: ['01-nginx'],
-    modules: {
-      '01-nginx': { dir: '01-nginx', depends_on: [] },
-    },
-    gates: {},
-    arch_validation: {
-      agent_enabled: true,
-      timeout_minutes: 1,
-      agent_max_attempts: 2,
-    },
-    defaults: {
-      models: { arch_validator: 'gpt-5.4' },
-      thinking: { arch_validator: 'none' },
-    },
-  };
-
-  const config = {
-    ...sessionConfig(),
-    project,
-    repo_root: root,
-    fallback_model: 'gpt-5.4',
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: modulesDir,
-      progress_file: path.join(swarmDir, 'progress.json'),
-    },
-    agents: {
-      echo: {
-        dispatch: 'subagent',
-        acp_agent_id: 'echo-agent',
-      },
-    },
-    arch_validation: {
-      enabled: true,
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    rate_limit: {
-      max_pauses_per_module: 1,
-      cooldown_hours: 0,
-      cooldown_buffer_ms: 0,
-    },
-  };
+  const { config, progress } = archValidatorFixture('arch-validator-no-output-', {
+    project: 'arch-validator-no-output-test',
+    agentMaxAttempts: 2,
+  });
 
   const spawned = [];
   let polls = 0;
@@ -321,58 +215,9 @@ test('architecture validator retries agent no-output failures within explicit at
 });
 
 async function runAgentFindingCase({ findingScope = 'module' } = {}) {
-  const root = fs.mkdtempSync(path.join(process.cwd(), '.swarm', 'arch-validator-agent-finding-'));
-  const project = 'arch-validator-agent-finding';
-  const swarmDir = path.join(root, 'Projects', project, 'src', '.swarm');
-  const modulesDir = path.join(swarmDir, 'modules');
-  const moduleDir = path.join(modulesDir, '01-nginx');
-  fs.mkdirSync(moduleDir, { recursive: true });
-  fs.writeFileSync(path.join(moduleDir, 'FORGE.md'), '# Forge\n');
-
-  const progress = {
-    project,
-    execution_order: ['01-nginx'],
-    modules: {
-      '01-nginx': { dir: '01-nginx', depends_on: [] },
-    },
-    gates: {},
-    arch_validation: {
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    defaults: {
-      models: { arch_validator: 'gpt-5.4' },
-      thinking: { arch_validator: 'none' },
-    },
-  };
-
-  const config = {
-    ...sessionConfig(),
-    project,
-    repo_root: root,
-    fallback_model: 'gpt-5.4',
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: modulesDir,
-      progress_file: path.join(swarmDir, 'progress.json'),
-    },
-    agents: {
-      echo: {
-        dispatch: 'subagent',
-        acp_agent_id: 'echo-agent',
-      },
-    },
-    arch_validation: {
-      enabled: true,
-      agent_enabled: true,
-      timeout_minutes: 1,
-    },
-    rate_limit: {
-      max_pauses_per_module: 1,
-      cooldown_hours: 0,
-      cooldown_buffer_ms: 0,
-    },
-  };
+  const { config, progress } = archValidatorFixture('arch-validator-agent-finding-', {
+    project: 'arch-validator-agent-finding',
+  });
 
   return runArchValidator(config, progress, {
     deps: {

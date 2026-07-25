@@ -1,18 +1,12 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-phase10-nova-tool-adapter-surface' });
 import assert from 'assert';
 import path from 'path';
 import fs from 'fs';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 
 for (const relativePath of [
   'skills/nova/pipeline/tools/lint-report.ts',

@@ -3,11 +3,14 @@ import {
 } from '../../agent-observability/src/index.ts';
 import type {
   AgentObservabilityIngressEventV1,
-  AgentObservabilityJsonValue,
 } from '../../agent-observability/src/index.ts';
+import {
+  asJsonValue, charCount, errorMessage, isJsonObject, jsonObjectOrNull, jsonSize,
+  seconds, stringValue, usageNumber,
+} from './mapper-values.ts';
+import type { JsonRecord } from './mapper-values.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-type JsonRecord = Record<string, AgentObservabilityJsonValue | undefined>;
 
 export interface AgentObservabilityTelemetryEmission {
   eventType: string;
@@ -29,62 +32,15 @@ export interface AgentObservabilityMapperOptions {
   } | null;
 }
 
-function seconds(value: unknown): number | null {
-  return typeof value === 'number' && Number.isFinite(value) ? value / 1000 : null;
-}
-
-function stringValue(value: unknown): string | null {
-  if (typeof value === 'string' && value.trim()) return value;
-  return null;
-}
-
-function jsonSize(value: unknown): number | null {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
-  return new TextEncoder().encode(JSON.stringify(value)).byteLength;
-}
-
-function charCount(value: unknown): number | null {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
-  if (typeof value === 'string') return value.length;
-  return JSON.stringify(value).length;
-}
-
-function isJsonObject(value: unknown): value is JsonRecord {
-  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
-}
-
-function asJsonValue(value: unknown): AgentObservabilityJsonValue {
-  return value as AgentObservabilityJsonValue;
-}
-
-function jsonObjectOrNull(value: unknown): JsonRecord | null {
-  return isJsonObject(value) ? value as JsonRecord : null;
-}
-
-function errorMessage(value: unknown): string | null {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
-  if (typeof value === 'string') return value;
-  if (isJsonObject(value) && typeof value.message === 'string') return value.message;
-  return JSON.stringify(value);
-}
-
-function usageNumber(usage: unknown, ...keys: string[]): number | null {
-  if (!isJsonObject(usage)) return null;
-  for (const key of keys) {
-    const value = usage[key];
-    if (typeof value === 'number' && Number.isFinite(value)) return value;
-  }
-  return null;
-}
-
 function identityPayload(event: AgentObservabilityIngressEventV1): JsonRecord {
-  const identity = selectDefinedValue(() => (event.identity), () => ({}));
+  const identity = event.identity;
   return {
     module_id: selectDefinedValue(() => (identity.module_id), () => (null)),
     gate_id: selectDefinedValue(() => (identity.gate_id), () => (null)),
     agent_type: selectDefinedValue(() => (selectDefinedValue(() => (identity.agent_type), () => (identity.agent_id))), () => (null)),
     session_key: selectDefinedValue(() => (identity.session_key), () => (null)),
     dispatch_id: selectDefinedValue(() => (identity.dispatch_id), () => (null)),
+    attempt: selectDefinedValue(() => (identity.attempt), () => (null)),
     gateway_label: selectDefinedValue(() => (identity.gateway_label), () => (null)),
   };
 }
@@ -100,12 +56,13 @@ function baseOptions(event: AgentObservabilityIngressEventV1): AgentObservabilit
 }
 
 function pluginEventPayload(event: AgentObservabilityIngressEventV1): JsonRecord {
+  const payload = event.payload as unknown as JsonRecord;
   return {
     plugin_id: 'openclaw-agent-observer',
     plugin_event: event.type,
     ...identityPayload(event),
-    outcome: 'outcome' in event.payload ? selectDefinedValue(() => (event.payload.outcome), () => (null)) : null,
-    reason: 'reason' in event.payload ? selectDefinedValue(() => (event.payload.reason), () => (null)) : null,
+    outcome: selectDefinedValue(() => (payload.outcome), () => (null)),
+    reason: selectDefinedValue(() => (payload.reason), () => (null)),
     duration_seconds: 'duration_ms' in event.payload ? seconds(event.payload.duration_ms) : null,
     details: {
       ingress_type: event.type,
@@ -164,7 +121,7 @@ function deliveryTargetPayload(event: AgentObservabilityIngressEventV1): JsonRec
   };
 }
 
-function agentEndedPayload(event: AgentObservabilityIngressEventV1, scope = 'agent'): JsonRecord {
+function agentEndedPayload(event: AgentObservabilityIngressEventV1, scope: any = 'agent'): JsonRecord {
   const payload = event.payload;
   return {
     ...identityPayload(event),
@@ -220,6 +177,7 @@ function toolStartedPayload(event: AgentObservabilityIngressEventV1): JsonRecord
     ...identityPayload(event),
     tool_name: payload.tool_name,
     tool_call_id: selectDefinedValue(() => (event.identity.tool_call_id), () => (null)),
+    model_call_id: selectDefinedValue(() => (event.identity.model_call_id), () => (null)),
     params_bytes: jsonSize(payload.params),
     param_keys: params ? Object.keys(params) : null,
   };
@@ -232,6 +190,7 @@ function toolFinishedPayload(event: AgentObservabilityIngressEventV1): JsonRecor
     ...identityPayload(event),
     tool_name: payload.tool_name,
     tool_call_id: selectDefinedValue(() => (event.identity.tool_call_id), () => (null)),
+    model_call_id: selectDefinedValue(() => (event.identity.model_call_id), () => (null)),
     outcome: selectDefinedValue(() => (payload.outcome), () => (null)),
     reason: selectDefinedValue(() => ((payload as {
     reason?: string | null;
@@ -328,37 +287,23 @@ function sessionEndedPayload(event: AgentObservabilityIngressEventV1): JsonRecor
 }
 
 function payloadForTelemetryType(event: AgentObservabilityIngressEventV1, telemetryType: string, options: AgentObservabilityMapperOptions = {}): JsonRecord {
-  switch (telemetryType) {
-    case 'agent.spawn.requested':
-      return spawnRequestedPayload(event);
-    case 'agent.spawned':
-      return spawnedPayload(event);
-    case 'agent.delivery.target':
-      return deliveryTargetPayload(event);
-    case 'agent.ended':
-      return agentEndedPayload(event, event.type === 'openclaw.subagent.ended' ? 'subagent' : 'agent');
-    case 'agent.llm.input.summary':
-      return llmInputSummaryPayload(event);
-    case 'agent.llm.output.summary':
-      return llmOutputSummaryPayload(event);
-    case 'agent.tool.started':
-      return toolStartedPayload(event);
-    case 'agent.tool.finished':
-      return toolFinishedPayload(event);
-    case 'agent.model.started':
-      return modelStartedPayload(event);
-    case 'agent.model.ended':
-      return modelEndedPayload(event);
-    case 'cost.update':
-      return costUpdatePayload(event, options.modelUsageAggregate);
-    case 'agent.session.started':
-      return sessionStartedPayload(event);
-    case 'agent.session.ended':
-      return sessionEndedPayload(event);
-    case 'plugin.event':
-    default:
-      return pluginEventPayload(event);
-  }
+  const builders: Record<string, () => JsonRecord> = {
+    'agent.spawn.requested': () => spawnRequestedPayload(event),
+    'agent.spawned': () => spawnedPayload(event),
+    'agent.delivery.target': () => deliveryTargetPayload(event),
+    'agent.ended': () => agentEndedPayload(event, event.type === 'openclaw.subagent.ended' ? 'subagent' : 'agent'),
+    'agent.llm.input.summary': () => llmInputSummaryPayload(event),
+    'agent.llm.output.summary': () => llmOutputSummaryPayload(event),
+    'agent.tool.started': () => toolStartedPayload(event),
+    'agent.tool.finished': () => toolFinishedPayload(event),
+    'agent.model.started': () => modelStartedPayload(event),
+    'agent.model.ended': () => modelEndedPayload(event),
+    'cost.update': () => costUpdatePayload(event, options.modelUsageAggregate),
+    'agent.session.started': () => sessionStartedPayload(event),
+    'agent.session.ended': () => sessionEndedPayload(event),
+    'plugin.event': () => pluginEventPayload(event),
+  };
+  return (builders[telemetryType] ?? builders['plugin.event']!)();
 }
 
 export function mapAgentObservabilityEventToTelemetry(
@@ -366,7 +311,8 @@ export function mapAgentObservabilityEventToTelemetry(
   options: AgentObservabilityMapperOptions = {},
 ): AgentObservabilityTelemetryEmission | null {
   const mapping = getAgentObservabilityTelemetryMapping(event.type);
-  if (selectTruthyValue(() => (!mapping?.promoted_by_default), () => (!mapping.current_telemetry_type))) return null;
+  if (!mapping?.promoted_by_default) return null;
+  if (!mapping.current_telemetry_type) return null;
 
   return {
     eventType: mapping.current_telemetry_type,

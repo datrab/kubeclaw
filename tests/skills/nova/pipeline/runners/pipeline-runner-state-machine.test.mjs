@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import test from 'node:test';
+import test, { after } from 'node:test';
 
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 import { getActiveContext } from '../../../../../skills/nova/pipeline/core/logger.ts';
@@ -20,6 +20,7 @@ import {
 
 function testConfig() {
   const root = fs.mkdtempSync(path.join(process.cwd(), '.tmp-pipeline-state-machine-'));
+  tempRepos.add(root);
   const telemetrySink = {
     enabled: true,
     manifest: {
@@ -533,4 +534,8 @@ test('pipeline state machine reports module batch join conflicts without shared-
   ]);
   assert.deepEqual(halted.data.terminal_decision.metadata.failed_modules, []);
   assert.deepEqual(halted.data.terminal_decision.metadata.git.conflicted_paths, ['shared.txt']);
+});
+const tempRepos = new Set();
+after(() => {
+  for (const root of tempRepos) fs.rmSync(root, { recursive: true, force: true });
 });

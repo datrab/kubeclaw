@@ -11,7 +11,9 @@ import {
   reportBusterRuntimeDiagnostic,
 } from './runtime-diagnostics.ts';
 
-function inspectPersistedBusterActiveSession(activeStatePath) {
+type OrphanRecoveryOptions = { activeStatePath?: string; cwd?: string };
+
+function inspectPersistedBusterActiveSession(activeStatePath: string) {
   if (selectTruthyValue(() => (!activeStatePath), () => (!fs.existsSync(activeStatePath)))) return { exists: false, ok: true };
   try {
     const data = JSON.parse(fs.readFileSync(activeStatePath, 'utf8'));
@@ -24,7 +26,7 @@ function inspectPersistedBusterActiveSession(activeStatePath) {
   }
 }
 
-export async function recoverOrphanedActiveSession(options = {}) {
+export async function recoverOrphanedActiveSession(options: OrphanRecoveryOptions = {}) {
   const activeStatePath = activeSessionPathAuthority(options);
   const inspected = inspectPersistedBusterActiveSession(activeStatePath);
   if (!inspected.exists) return { ok: true, found: false, recovered: false, reason: 'no_active_session' };
@@ -56,7 +58,7 @@ export async function recoverOrphanedActiveSession(options = {}) {
   };
 }
 
-function activeSessionPathAuthority(options) {
+function activeSessionPathAuthority(options: OrphanRecoveryOptions): string {
   if (typeof options.activeStatePath === 'string' && options.activeStatePath.trim()) return options.activeStatePath;
   const cwd = typeof options.cwd === 'string' && options.cwd.trim() ? options.cwd : getRepoRoot();
   return resolveBusterActiveSessionPath(cwd);

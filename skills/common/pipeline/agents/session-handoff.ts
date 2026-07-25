@@ -3,6 +3,13 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
 type AnyRecord = Record<string, any>;
 type SessionMessageSender = (sessionKey: string, message: string, timeoutMs: number, opts?: AnyRecord) => Promise<any>;
+type ReceiptLayers = {
+  deliveryResult: AnyRecord;
+  result: AnyRecord;
+  details: AnyRecord;
+  delivery: AnyRecord;
+  response: AnyRecord;
+};
 
 export const AGENT_SESSION_HANDOFF_SURFACE = 'gateway_sessions_send';
 
@@ -18,6 +25,30 @@ function firstString(...values: any[]) {
     if (value !== undefined && value !== null && String(value).trim()) return String(value).trim();
   }
   return null;
+}
+
+function recordValue(value: unknown): AnyRecord {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : {};
+}
+
+function receiptLayers(value: unknown): ReceiptLayers {
+  const deliveryResult = recordValue(value);
+  const result = recordValue(firstDefined(deliveryResult.result, deliveryResult));
+  const details = recordValue(firstDefined(result.details, deliveryResult.details));
+  const delivery = recordValue(firstDefined(details.delivery, result.delivery, deliveryResult.delivery));
+  const response = recordValue(firstDefined(details.response, result.response, deliveryResult.response));
+  return { deliveryResult, result, details, delivery, response };
+}
+
+function receiptStatus({ deliveryResult, result, details, delivery }: ReceiptLayers): string {
+  return normalizeDeliveryStatus(firstDefined(
+    delivery.status,
+    recordValue(details.deliveryStatus).status,
+    recordValue(result.deliveryStatus).status,
+    details.status,
+    result.status,
+    deliveryResult.status,
+  ));
 }
 
 function normalizeDeliveryStatus(value: any) {
@@ -41,52 +72,43 @@ export function normalizeAgentSessionTarget(target: any, {
 }
 
 export function normalizeAgentSessionHandoffReceipt(deliveryResult: any) {
-  const result = firstDefined(deliveryResult?.result, deliveryResult, {});
-  const details = firstDefined(result?.details, deliveryResult?.details, {});
-  const delivery = firstDefined(details?.delivery, result?.delivery, deliveryResult?.delivery, {});
-  const response = firstDefined(details?.response, result?.response, deliveryResult?.response, {});
-  const status = normalizeDeliveryStatus(firstDefined(
-    delivery?.status,
-    details?.deliveryStatus?.status,
-    result?.deliveryStatus?.status,
-    details?.status,
-    result?.status,
-    deliveryResult?.status,
-  ));
+  const layers = receiptLayers(deliveryResult);
+  const { result, details, delivery, response } = layers;
+  const status = receiptStatus(layers);
   const sessionKey = firstString(
-    details?.sessionKey,
-    details?.session_key,
-    result?.sessionKey,
-    result?.session_key,
-    delivery?.sessionKey,
-    delivery?.session_key,
-    deliveryResult?.sessionKey,
-    deliveryResult?.session_key,
+    details.sessionKey,
+    details.session_key,
+    result.sessionKey,
+    result.session_key,
+    delivery.sessionKey,
+    delivery.session_key,
+    layers.deliveryResult.sessionKey,
+    layers.deliveryResult.session_key,
   );
   const turnId = firstString(
-    details?.turnId,
-    details?.turn_id,
-    result?.turnId,
-    result?.turn_id,
-    delivery?.turnId,
-    delivery?.turn_id,
-    response?.turnId,
-    response?.turn_id,
+    details.turnId,
+    details.turn_id,
+    result.turnId,
+    result.turn_id,
+    delivery.turnId,
+    delivery.turn_id,
+    response.turnId,
+    response.turn_id,
   );
   const responseStatus = firstString(
-    response?.status,
-    details?.responseStatus,
-    details?.response_status,
-    result?.responseStatus,
-    result?.response_status,
+    response.status,
+    details.responseStatus,
+    details.response_status,
+    result.responseStatus,
+    result.response_status,
   );
   const runId = firstString(
-    details?.runId,
-    details?.run_id,
-    result?.runId,
-    result?.run_id,
-    deliveryResult?.runId,
-    deliveryResult?.run_id,
+    details.runId,
+    details.run_id,
+    result.runId,
+    result.run_id,
+    layers.deliveryResult.runId,
+    layers.deliveryResult.run_id,
   );
   const acknowledged = deliveryAcknowledged(status);
   return {

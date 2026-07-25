@@ -19,6 +19,13 @@ type ClassifiedNonBlockingErrorOptions = {
   fallback?: IncidentOutput | null;
 };
 
+type IncidentDelivery = {
+  log: IncidentOutput | null;
+  fallback: IncidentOutput | null;
+  level: string;
+  line: string;
+};
+
 function readStringProperty(value: unknown, key: string) {
   if (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))) return null;
   const candidate = (value as Record<string, unknown>)[key];
@@ -69,8 +76,29 @@ export function normalizeNonBlockingErrorDetail(error: unknown) {
   try {
     const json = JSON.stringify(error);
     return json && json !== '{}' ? sanitizeNonBlockingErrorDetail(json) : null;
-  } catch (_error) {
+  } catch (_error) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
     return null;
+  }
+}
+
+function incidentLine(
+  reporter: string,
+  classification: string,
+  message: string,
+  detail: string | null,
+): string {
+  const prefix = `[${reporter}] ${message} (classification=${classification})`;
+  return detail ? `${prefix}: ${detail}` : prefix;
+}
+
+function deliverIncident({ log, fallback, level, line }: IncidentDelivery): boolean {
+  if (log && writeIncidentOutput(log, level, line)) return true;
+  if (fallback && writeIncidentOutput(fallback, level, line)) return true;
+  try {
+    process.stderr.write(`${line}\n`);
+    return true;
+  } catch (_error) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): every configured noncritical reporting channel has failed. */
+    return false;
   }
 }
 
@@ -91,35 +119,23 @@ export function reportClassifiedNonBlockingError({
   if (_reportedNonBlockingIncidents.has(resolvedKey)) return false;
 
   const detail = includeErrorDetail ? normalizeNonBlockingErrorDetail(error) : null;
-  const line = detail
-    ? `[${reporter}] ${resolvedMessage} (classification=${classification}): ${detail}`
-    : `[${reporter}] ${resolvedMessage} (classification=${classification})`;
-
-  if (typeof log === 'function' && writeIncidentOutput(log, level, line)) {
-    _reportedNonBlockingIncidents.add(resolvedKey);
-    return true;
-  }
-
-  if (typeof fallback === 'function' && writeIncidentOutput(fallback, level, line)) {
-    _reportedNonBlockingIncidents.add(resolvedKey);
-    return true;
-  }
-
-  try {
-    process.stderr.write(`${line}\n`);
-    _reportedNonBlockingIncidents.add(resolvedKey);
-    return true;
-  } catch (_error) {
-    return false;
-  }
+  const line = incidentLine(reporter, classification, resolvedMessage, detail);
+  const delivered = deliverIncident({ log, fallback, level, line });
+  if (delivered) _reportedNonBlockingIncidents.add(resolvedKey);
+  return delivered;
 }
 
-function nonCriticalMessageAuthority(message, classification) {
+function nonCriticalMessageAuthority(message: string | undefined, classification: string): string {
   if (message !== undefined && message !== null) return message;
   return classification;
 }
 
-function nonCriticalIncidentKeyAuthority(incidentKey, reporter, classification, resolvedMessage) {
+function nonCriticalIncidentKeyAuthority(
+  incidentKey: string | null,
+  reporter: string,
+  classification: string,
+  resolvedMessage: string,
+): string {
   if (incidentKey) return incidentKey;
   return buildNonBlockingIncidentKey(reporter, classification, resolvedMessage);
 }

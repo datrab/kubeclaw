@@ -6,20 +6,20 @@ import { publishAgentArtifact } from '../agent-artifact.ts';
 
 const STATUSES = new Set(['READY_FOR_TESTING', 'BLOCKED']);
 
-function requiredText(value, name) {
+function requiredText(value: any, name: any) {
   const text = String(value ?? '').trim();
   if (!text) throw new Error(`${name} is required`);
   return text;
 }
 
-export function buildForgeCompletionPayload(values) {
+export function buildForgeCompletionPayload(values: any) {
   const status = requiredText(values.status, 'status');
   if (!STATUSES.has(status)) {
     throw new Error('status must be READY_FOR_TESTING or BLOCKED');
   }
 
-  const inspectedFiles = (values.inspectedFiles ?? []).map((entry) => requiredText(entry, 'inspected-file'));
-  const consultedContracts = (values.consultedContracts ?? []).map((entry) => requiredText(entry, 'consulted-contract'));
+  const inspectedFiles = (values.inspectedFiles ?? []).map((entry: any) => requiredText(entry, 'inspected-file'));
+  const consultedContracts = (values.consultedContracts ?? []).map((entry: any) => requiredText(entry, 'consulted-contract'));
   if (inspectedFiles.length === 0) throw new Error('at least one inspected-file is required');
   if (consultedContracts.length === 0) throw new Error('at least one consulted-contract is required');
 
@@ -34,7 +34,7 @@ export function buildForgeCompletionPayload(values) {
   };
 }
 
-export function main(argv = process.argv.slice(2)) {
+export function main(argv: any = process.argv.slice(2)) {
   const { values } = parseArgs({
     args: argv,
     strict: true,
@@ -62,7 +62,7 @@ export function main(argv = process.argv.slice(2)) {
 if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
   try {
     main();
-  } catch (error) {
+  } catch (error: any) {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
   }

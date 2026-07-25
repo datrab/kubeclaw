@@ -31,15 +31,17 @@ import {
 } from '../services/contracts/terminal-decision.ts';
 import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
 import { startCommandRuntime } from '../services/command-runtime.ts';
+import { appendStructuredEvent } from '../services/observability.ts';
+import { emitTelemetryStreamEvent } from '../services/telemetry-stream.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-function positiveNumber(value, label) {
+function positiveNumber(value: any, label: any) {
   const num = Number(value);
   if (selectTruthyValue(() => (!Number.isFinite(num)), () => (num < 0))) throw new Error(`${label}: required non-negative number in swarm.config.json`);
   return num;
 }
 
-function pipelineRunAbortSettleMs(config) {
+function pipelineRunAbortSettleMs(config: any) {
   return positiveNumber(config?.locks?.pipeline_run?.abort_settle_ms, 'config.locks.pipeline_run.abort_settle_ms');
 }
 
@@ -47,7 +49,7 @@ const PIPELINE_RUNTIME_ERROR = 'PIPELINE_RUNTIME_ERROR';
 const PIPELINE_RUN_LOCK_LOST = 'pipeline_run_lock_lost';
 const PIPELINE_NOT_INITIALIZED = 'NOT_INITIALIZED';
 
-async function waitForInFlightPipelineSteps(inFlightSteps, timeoutMs) {
+async function waitForInFlightPipelineSteps(inFlightSteps: any, timeoutMs: any) {
   if (!inFlightSteps?.size) return;
   const settled = Promise.allSettled([...inFlightSteps]);
   if (timeoutMs === 0) {
@@ -56,23 +58,23 @@ async function waitForInFlightPipelineSteps(inFlightSteps, timeoutMs) {
   }
   await Promise.race([
     settled,
-    new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+    new Promise((resolve: any) => setTimeout(resolve, timeoutMs)),
   ]);
 }
 
-function abortReason(signal) {
+function abortReason(signal: any) {
   return signal?.reason instanceof Error ? signal.reason.message : String(selectDefinedValue(() => (signal?.reason), () => (PIPELINE_RUN_LOCK_LOST)));
 }
 
-function errorMessage(error) {
+function errorMessage(error: any) {
   return error instanceof Error ? error.message : String(error);
 }
 
-function runtimeErrorCode(error) {
+function runtimeErrorCode(error: any) {
   return selectDefinedValue(() => (selectDefinedValue(() => (error?.code), () => (error?.name))), () => (PIPELINE_RUNTIME_ERROR));
 }
 
-function runtimeErrorResult(config, error) {
+function runtimeErrorResult(config: any, error: any) {
   const code = runtimeErrorCode(error);
   const message = errorMessage(error);
   return buildPipelineStepResult({
@@ -100,12 +102,12 @@ function runtimeErrorResult(config, error) {
   });
 }
 
-async function abortablePipelineRunPromise(promise, signal) {
+async function abortablePipelineRunPromise(promise: any, signal: any) {
   if (selectTruthyValue(() => (!signal), () => (typeof signal.addEventListener !== 'function'))) return promise;
   if (signal.aborted) throw new Error(`Pipeline runtime lock lost: ${abortReason(signal)}`);
 
-  let removeAbortListener = null;
-  const aborted = new Promise((_resolve, reject) => {
+  let removeAbortListener: () => void = () => {};
+  const aborted = new Promise((_resolve: any, reject: any) => {
     const onAbort = () => reject(new Error(`Pipeline runtime lock lost: ${abortReason(signal)}`));
     signal.addEventListener('abort', onAbort, { once: true });
     removeAbortListener = () => signal.removeEventListener('abort', onAbort);
@@ -114,11 +116,12 @@ async function abortablePipelineRunPromise(promise, signal) {
   try {
     return await Promise.race([promise, aborted]);
   } finally {
-    removeAbortListener?.();
+    removeAbortListener();
   }
 }
 
-export async function runPipeline(config, progress, opts = {}) {
+export async function runPipeline(config: any, progress: any, opts: any = {}) {
+  installCanonicalEvidenceEmitter(config);
   const inFlightSteps = new Set();
   const lockAbortController = typeof AbortController === 'function' ? new AbortController() : null;
   const stepAbortController = typeof AbortController === 'function' ? new AbortController() : null;
@@ -131,7 +134,7 @@ export async function runPipeline(config, progress, opts = {}) {
   opts.signal?.addEventListener?.('abort', forwardExternalAbort, { once: true });
   const runLock = acquirePipelineRunLock(config, {
     ...opts,
-    onPipelineRunLockLost(reason) {
+    onPipelineRunLockLost(reason: any) {
       opts.onPipelineRunLockLost?.(reason);
       if (lockAbortController && !lockAbortController.signal.aborted) {
         lockAbortController.abort(reason);
@@ -146,86 +149,23 @@ export async function runPipeline(config, progress, opts = {}) {
     assertPipelineRunLockActive: () => runLock.heartbeat?.assertActive?.(),
     pipelineRunLockSignal: selectDefinedValue(() => (lockAbortController?.signal), () => (null)),
     signal: selectDefinedValue(() => (selectDefinedValue(() => (stepAbortController?.signal), () => (opts.signal))), () => (null)),
-    trackPipelineStep(promise) {
+    trackPipelineStep(promise: any) {
       if (selectTruthyValue(() => (!promise), () => (typeof promise.finally !== 'function'))) return;
       inFlightSteps.add(promise);
       promise.finally(() => inFlightSteps.delete(promise)).catch(() => {});
       opts.trackPipelineStep?.(promise);
     },
   };
-  let openClawAgentObserverPlugin = null;
-  let agentObservabilityIngester = null;
-  let commandRuntime = null;
+  const runtime: any = { observer: null, ingester: null, commands: null };
   let runError = null;
   try {
-    openClawAgentObserverPlugin = createOpenClawAgentObserverPluginController(config);
-    await openClawAgentObserverPlugin.start();
-    runOpts.assertPipelineRunLockActive();
-    await startPipelineRun(config, progress, runOpts);
-    await getPipelineRunnerDeps(config, runOpts.deps).preflightRuntimeRedis(config);
-    commandRuntime = startCommandRuntime(config, progress, {
-      abort(reason) {
-        if (stepAbortController && !stepAbortController.signal.aborted) stepAbortController.abort(reason);
-      },
-    });
-    runOpts.awaitCommandPermission = () => commandRuntime.awaitPermission();
-    agentObservabilityIngester = startAgentObservabilityIngester(config, {
-      runId: selectDefinedValue(() => (config._runId), () => (null)),
-      project: selectDefinedValue(() => (config.project), () => (null)),
-    });
-    await reconcileStaleModuleState(config, progress);
-    await reconcileStaleGateSessions(config, progress);
-
-    runOpts.assertPipelineRunLockActive();
-    if (runOpts.module) {
-      const singleModuleRun = runSingleModulePipeline(config, progress, runOpts);
-      runOpts.trackPipelineStep(singleModuleRun);
-      return await abortablePipelineRunPromise(singleModuleRun, runOpts.pipelineRunLockSignal);
-    }
-
-    runOpts.assertPipelineRunLockActive();
-    const startExitCode = await preparePipelineStart(config, progress, runOpts);
-    if (startExitCode != null) return startExitCode;
-
-    return await runPipelineLoop(config, progress, runOpts);
-  } catch (error) {
+    await startPipelineRuntime({ config, progress, runOpts, runtime, stepAbortController });
+    return await executePipelineRun(config, progress, runOpts);
+  } catch (error: any) {
     runError = error;
-    try {
-      return await finalizeTerminalHalt(config, progress, {
-        stepType: 'pipeline',
-        stepId: 'runtime_config',
-        result: runtimeErrorResult(config, error),
-        opts: runOpts,
-        summaryReason: runtimeErrorCode(error),
-        scheduleProjectSummaryOnBlocked: false,
-      });
-    } catch (_terminalError) {
-      throw error;
-    }
+    return finalizePipelineRuntimeError(config, progress, runOpts, error);
   } finally {
-    let cleanupError = null;
-    try {
-      opts.signal?.removeEventListener?.('abort', forwardExternalAbort);
-      if (runOpts.pipelineRunLockSignal?.aborted && inFlightSteps.size > 0) {
-        await waitForInFlightPipelineSteps(
-          inFlightSteps,
-          opts.pipelineRunLockAbortSettleMs == null
-            ? pipelineRunAbortSettleMs(config)
-            : positiveNumber(opts.pipelineRunLockAbortSettleMs, 'opts.pipelineRunLockAbortSettleMs'),
-        );
-        if (inFlightSteps.size > 0) {
-          log('ERROR', `Pipeline run lock lost with ${inFlightSteps.size} in-flight step(s) still unsettled after abort grace period`);
-        }
-      }
-      if (agentObservabilityIngester) await agentObservabilityIngester.stop();
-      if (commandRuntime) await commandRuntime.stop();
-      if (openClawAgentObserverPlugin) await openClawAgentObserverPlugin.stop();
-    } catch (error) {
-      cleanupError = error;
-      if (runError) log('WARN', `Pipeline observer cleanup failed after run error: ${errorMessage(error)}`);
-    } finally {
-      releasePipelineRunLock(runLock);
-    }
+    const cleanupError = await cleanupPipelineRuntime({ config, opts, runOpts, runtime, inFlightSteps, forwardExternalAbort, runLock, runError });
     emitPipelineCheckpoint(config, 'during_cleanup', {
       step_type: 'pipeline',
       step_id: 'runner_cleanup',
@@ -234,10 +174,82 @@ export async function runPipeline(config, progress, opts = {}) {
   }
 }
 
-export function printStatus(config, progress) {
+async function finalizePipelineRuntimeError(config: any, progress: any, runOpts: any, error: any) {
+  try {
+    return await finalizeTerminalHalt(config, progress, { stepType: 'pipeline', stepId: 'runtime_config', result: runtimeErrorResult(config, error), opts: runOpts, summaryReason: runtimeErrorCode(error), scheduleProjectSummaryOnBlocked: false });
+  } catch (_terminalError: any) {
+    throw error;
+  }
+}
+
+function installCanonicalEvidenceEmitter(config: any) {
+  config._emitCanonicalEvidence = (eventType: any, record: any, options: any = {}) => {
+    const payload = { ...record, ...(record?.correlation ?? {}) };
+    for (const key of ['schema_version', 'published_at', 'correlation', 'producer', 'project', 'run_id', 'source', 'work_id', 'work_type']) delete payload[key];
+    const authorityClass = options.authorityClass ?? 'pipeline_authority';
+    const producer = record?.producer ?? 'nova/pipeline';
+    const disk = appendStructuredEvent(config, eventType, { ...payload, source_event_id: options.sourceEventId, authority_class: authorityClass, source: 'pipeline', producer });
+    void emitTelemetryStreamEvent(config, eventType, payload, { sourceEventId: options.sourceEventId, authorityClass, source: 'pipeline', emitter: producer });
+    return disk;
+  };
+}
+
+async function startPipelineRuntime({ config, progress, runOpts, runtime, stepAbortController }: any) {
+  runtime.observer = createOpenClawAgentObserverPluginController(config);
+  await runtime.observer.start();
+  runOpts.assertPipelineRunLockActive();
+  await startPipelineRun(config, progress, runOpts);
+  await getPipelineRunnerDeps(config, runOpts.deps).preflightRuntimeRedis(config);
+  runtime.commands = startCommandRuntime(config, progress, { abort: (reason: any) => {
+    if (stepAbortController && !stepAbortController.signal.aborted) stepAbortController.abort(reason);
+  } });
+  runOpts.awaitCommandPermission = () => runtime.commands.awaitPermission();
+  runtime.ingester = startAgentObservabilityIngester(config, { runId: config._runId ?? null, project: config.project ?? null });
+  await reconcileStaleModuleState(config, progress);
+  await reconcileStaleGateSessions(config, progress);
+}
+
+async function executePipelineRun(config: any, progress: any, runOpts: any) {
+  runOpts.assertPipelineRunLockActive();
+  if (runOpts.module) {
+    const singleModuleRun = runSingleModulePipeline(config, progress, runOpts);
+    runOpts.trackPipelineStep(singleModuleRun);
+    return abortablePipelineRunPromise(singleModuleRun, runOpts.pipelineRunLockSignal);
+  }
+  const startExitCode = await preparePipelineStart(config, progress, runOpts);
+  if (startExitCode != null) return startExitCode;
+  return runPipelineLoop(config, progress, runOpts);
+}
+
+async function cleanupPipelineRuntime(input: any) {
+  const { config, opts, runOpts, runtime, inFlightSteps, forwardExternalAbort, runLock, runError } = input;
+  let cleanupError = null;
+  try {
+    opts.signal?.removeEventListener?.('abort', forwardExternalAbort);
+    await settleAbortedPipelineSteps(config, opts, runOpts, inFlightSteps);
+    if (runtime.ingester) await runtime.ingester.stop();
+    if (runtime.commands) await runtime.commands.stop();
+    if (runtime.observer) await runtime.observer.stop();
+  } catch (error: any) {
+    cleanupError = error;
+    if (runError) log('WARN', `Pipeline observer cleanup failed after run error: ${errorMessage(error)}`);
+  } finally {
+    releasePipelineRunLock(runLock);
+  }
+  return cleanupError;
+}
+
+async function settleAbortedPipelineSteps(config: any, opts: any, runOpts: any, inFlightSteps: Set<any>) {
+  if (!runOpts.pipelineRunLockSignal?.aborted || inFlightSteps.size === 0) return;
+  const settleMs = opts.pipelineRunLockAbortSettleMs == null ? pipelineRunAbortSettleMs(config) : positiveNumber(opts.pipelineRunLockAbortSettleMs, 'opts.pipelineRunLockAbortSettleMs');
+  await waitForInFlightPipelineSteps(inFlightSteps, settleMs);
+  if (inFlightSteps.size > 0) log('ERROR', `Pipeline run lock lost with ${inFlightSteps.size} in-flight step(s) still unsettled after abort grace period`);
+}
+
+export function printStatus(config: any, progress: any) {
   const deps = getPipelineRunnerDeps(config);
-  const overview = { project: config.project, timestamp: new Date().toISOString(), modules: {}, gates: {} };
-  for (const [id, mod] of Object.entries(progress.modules)) {
+  const overview: any = { project: config.project, timestamp: new Date().toISOString(), modules: {}, gates: {} };
+  for (const [id, mod] of Object.entries(progress.modules as Record<string, any>)) {
     const projected = loadAuthoritativeModuleState(config, progress, id);
     overview.modules[id] = {
       title: mod.title,
@@ -247,14 +259,14 @@ export function printStatus(config, progress) {
       duration_min: projected?.cost?.total_duration_seconds ? Math.round(projected.cost.total_duration_seconds / 60) : 0,
     };
   }
-  for (const [id, gate] of Object.entries(progress.gates)) {
+  for (const [id, gate] of Object.entries(progress.gates as Record<string, any>)) {
     const gateProjection = projectPipelineGateState(config, id, gate, deps);
     overview.gates[id] = { title: gate.title, completed: gateProjection?.completed === true };
   }
   output(overview);
 }
 
-export function dryRun(config, progress) {
+export function dryRun(config: any, progress: any) {
   const deps = getPipelineRunnerDeps(config);
   log('INFO', 'DRY RUN — no agents will be spawned\n');
   for (const stepId of progress.execution_order) {

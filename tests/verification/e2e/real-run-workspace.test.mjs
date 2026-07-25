@@ -1301,10 +1301,11 @@ test('namespace controller waits for namespace deletion before removing cleanup 
   assert.match(source, /return c\.removeFinalizer\(ctx, item\)/);
 });
 
-test('namespace controller initializes preview credential state before the service-pending return', () => {
+test('namespace controller reports unavailable credentials while preview service is pending', () => {
   const source = fs.readFileSync(path.join(REPO_ROOT, 'cmd', 'buster-namespace-controller', 'main.go'), 'utf8');
   const previewExposure = source.match(/func \(c \*controller\) ensurePreviewExposure[\s\S]*?\n}\n\nfunc \(c \*controller\) copySecrets/)?.[0] || '';
 
-  assert.match(previewExposure, /credentialsAvailable := false[\s\S]*?\/api\/v1\/namespaces\/"\+namespaceName\+"\/services\/"\+exposure\.ServiceName/);
+  assert.match(previewExposure, /if !serviceReady \{[\s\S]*?"credentialsAvailable": false,[\s\S]*?Waiting for Service\/" \+ exposure\.ServiceName/);
+  assert.match(previewExposure, /if !serviceReady \{[\s\S]*?\}[\s\S]*?c\.previewCredentialsAvailable\(ctx, namespaceName, exposure\)/);
   assert.match(previewExposure, /Waiting for Service\/" \+ exposure\.ServiceName \+ " before creating Tailscale ingress/);
 });

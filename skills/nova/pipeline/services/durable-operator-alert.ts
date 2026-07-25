@@ -12,6 +12,7 @@ import {
   buildNonBlockingIncidentKey,
   reportClassifiedNonBlockingError,
 } from '../noncritical-reporting.ts';
+import { arrayValue, objectRecord, selectPresentValue } from '../value-boundary.ts';
 
 const OPERATOR_ALERTS_JSONL = 'operator-alerts.jsonl';
 const DURABLE_OPERATOR_ALERT_TYPE = 'pipeline.operator_alert';
@@ -20,26 +21,11 @@ const DURABLE_OPERATOR_ALERT_EMITTER = 'nova/pipeline/services/durable-operator-
 const DURABLE_OPERATOR_ALERT_SEVERITY = 'CRITICAL';
 const DISCORD_DESCRIPTION_EMPTY = '';
 
-function arrayValue(value) {
-  return Array.isArray(value) ? value : [];
-}
-
-function objectRecord(value) {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-}
-
-function selectPresentValue(...values) {
-  for (const value of values) {
-    if (typeof value === 'string' && value.length > 0) return value;
-  }
-  return '';
-}
-
-function uniq(values = []) {
+function uniq(values: any = []) {
   return [...new Set(values.filter(Boolean).map(String))];
 }
 
-export function durableOperatorAlertTargets(config = {}) {
+export function durableOperatorAlertTargets(config: any = {}) {
   const artifacts = getPipelineArtifactBundle(config);
   return uniq([
     artifacts.pipeline_dir ? path.join(artifacts.pipeline_dir, OPERATOR_ALERTS_JSONL) : null,
@@ -47,7 +33,7 @@ export function durableOperatorAlertTargets(config = {}) {
   ]);
 }
 
-function sanitizePresentation(presentation = {}) {
+function sanitizePresentation(presentation: any = {}) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!presentation), () => (typeof presentation !== 'object'))), () => (Array.isArray(presentation)))) return {};
   const out = sanitizeTelemetryPayload(presentation);
   if (presentation.discord && typeof presentation.discord === 'object') {
@@ -76,11 +62,11 @@ function sanitizePresentation(presentation = {}) {
   return out;
 }
 
-function inferSeverity(options = {}, presentation = {}) {
+function inferSeverity(options: any = {}, presentation: any = {}) {
   return selectPresentValue(options.severity, presentation?.discord?.level, options.level, DURABLE_OPERATOR_ALERT_SEVERITY);
 }
 
-function buildDurableOperatorAlertRecord(config = {}, eventType, payload = {}, options = {}) {
+function buildDurableOperatorAlertRecord(config: any = {}, eventType: any, payload: any = {}, options: any = {}) {
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (options.runId), () => (getRunId(config)))), () => (config?._runId))), () => (config?.run_id))), () => (null));
   const sanitizedPayload = sanitizeTelemetryPayload(objectRecord(payload));
   const sanitizedPresentation = sanitizePresentation(objectRecord(options.presentation));
@@ -110,12 +96,12 @@ function buildDurableOperatorAlertRecord(config = {}, eventType, payload = {}, o
   };
 }
 
-function durableAlertOccurredAt(options) {
+function durableAlertOccurredAt(options: any) {
   if (options.occurredAt) return options.occurredAt;
   return new Date().toISOString();
 }
 
-function reportDurableAlertWriteFailure(config = {}, target, error) {
+function reportDurableAlertWriteFailure(config: any = {}, target: any, error: any) {
   reportClassifiedNonBlockingError({
     log,
     reporter: 'durable-operator-alert',
@@ -132,19 +118,19 @@ function reportDurableAlertWriteFailure(config = {}, target, error) {
   });
 }
 
-export function appendDurableOperatorAlert(config = {}, eventType, payload = {}, options = {}) {
+export function appendDurableOperatorAlert(config: any = {}, eventType: any, payload: any = {}, options: any = {}) {
   const targets = durableOperatorAlertTargets(config);
   if (!targets.length) return { ok: true, skipped: true, targets: [], record: null, errors: [] };
 
   const record = buildDurableOperatorAlertRecord(config, eventType, payload, options);
   const line = `${JSON.stringify(record)}\n`;
-  const errors = [];
+  const errors: any[] = [];
 
   for (const target of targets) {
     try {
       fs.mkdirSync(path.dirname(target), { recursive: true });
       fs.appendFileSync(target, line);
-    } catch (error) {
+    } catch (error: any) {
       errors.push({ target, error });
       reportDurableAlertWriteFailure(config, target, error);
     }

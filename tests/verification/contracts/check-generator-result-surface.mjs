@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-generator-result-surface' });
 import fs from 'fs';
@@ -5,16 +6,8 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/generator-result.ts');
 const legacyBarrelPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/index.ts');
 const summaryPath = path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts');
@@ -26,10 +19,21 @@ const commonStandardProfilePath = path.join(sourceRoot, 'skills/common/pipeline/
 const novaStandardProfilePath = path.join(sourceRoot, 'skills/nova/pipeline/core/config-profiles/standard.json');
 
 const helperSource = fs.readFileSync(helperPath, 'utf8');
-const summarySource = fs.readFileSync(summaryPath, 'utf8');
-const caseStudySource = fs.readFileSync(caseStudyPath, 'utf8');
+const summarySource = [
+  summaryPath,
+  path.join(sourceRoot, 'skills/nova/pipeline/services/pipeline-review-values.ts'),
+  path.join(sourceRoot, 'skills/nova/pipeline/services/pipeline-review-failure.ts'),
+  path.join(sourceRoot, 'skills/nova/pipeline/services/pipeline-review-success.ts'),
+].map((filePath) => fs.readFileSync(filePath, 'utf8')).join('\n');
+const caseStudySource = [
+  caseStudyPath,
+  path.join(sourceRoot, 'skills/nova/pipeline/services/case-study-outcomes.ts'),
+].map((filePath) => fs.readFileSync(filePath, 'utf8')).join('\n');
 const projectSummarySource = fs.readFileSync(projectSummaryPath, 'utf8');
-const schedulingSource = fs.readFileSync(schedulingPath, 'utf8');
+const schedulingSource = [
+  schedulingPath,
+  path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling-results.ts'),
+].map((filePath) => fs.readFileSync(filePath, 'utf8')).join('\n');
 const serializationSource = fs.readFileSync(serializationPath, 'utf8');
 const commonStandardProfile = JSON.parse(fs.readFileSync(commonStandardProfilePath, 'utf8'));
 const novaStandardProfile = JSON.parse(fs.readFileSync(novaStandardProfilePath, 'utf8'));

@@ -1,19 +1,10 @@
 #!/usr/bin/env node
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const evidenceModule = await import(path.join(sourceRoot, 'skills/nova/pipeline/services/agent-observability-evidence/index.ts'));
 const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agent-observability/src/index.ts'));
 

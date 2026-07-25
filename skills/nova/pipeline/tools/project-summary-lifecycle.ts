@@ -3,7 +3,7 @@ import path from 'path';
 import { discoverLatestRun } from '../run-discovery.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-export function addDiagnostic(diagnostics, entry = {}) {
+export function addDiagnostic(diagnostics: any, entry: any = {}) {
   if (!Array.isArray(diagnostics)) return;
   diagnostics.push({
     ts: new Date().toISOString(),
@@ -11,12 +11,12 @@ export function addDiagnostic(diagnostics, entry = {}) {
   });
 }
 
-export function readJsonRecord(filePath, diagnostics = null, { optional = true } = {}) {
+export function readJsonRecord(filePath: any, diagnostics: any = null, { optional = true }: any = {}) {
   try {
     const raw = fs.readFileSync(filePath, 'utf8');
     try {
       return { ok: true, data: JSON.parse(raw) };
-    } catch (error) {
+    } catch (error: any) {
       const diag = {
         source: 'json',
         status: 'malformed',
@@ -27,7 +27,7 @@ export function readJsonRecord(filePath, diagnostics = null, { optional = true }
       addDiagnostic(diagnostics, diag);
       return { ok: false, data: null, diagnostic: diag };
     }
-  } catch (error) {
+  } catch (error: any) {
     const missing = error?.code === 'ENOENT';
     const diag = {
       source: 'json',
@@ -41,12 +41,12 @@ export function readJsonRecord(filePath, diagnostics = null, { optional = true }
   }
 }
 
-export function readJsonData(filePath, diagnostics = null, opts = {}) {
+export function readJsonData(filePath: any, diagnostics: any = null, opts: any = {}) {
   return readJsonRecord(filePath, diagnostics, opts).data;
 }
 
-export function extToLang(ext) {
-  const m = {
+export function extToLang(ext: any) {
+  const m: Record<string, string> = {
     '.py':'Python','.pyi':'Python','.ts':'TypeScript','.tsx':'TypeScript',
     '.js':'JavaScript','.jsx':'JavaScript','.cjs':'JavaScript','.mjs':'JavaScript',
     '.html':'HTML','.htm':'HTML','.css':'CSS','.scss':'CSS','.less':'CSS',
@@ -56,7 +56,7 @@ export function extToLang(ext) {
   return selectDefinedValue(() => (m[ext]), () => ('Other'));
 }
 
-export function discoverLatestLifecycleReadModels(swarmRoot, readJsonData, diagnostics = null) {
+export function discoverLatestLifecycleReadModels(swarmRoot: any, readJsonData: any, diagnostics: any = null) {
   const pipelineLogRoot = path.join(swarmRoot, 'logs', 'pipeline');
   const latest = discoverLatestRun(pipelineLogRoot);
   if (!latest) return { data: null, path: null, source: 'absent' };

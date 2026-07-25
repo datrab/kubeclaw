@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-buster-verify-task-scope' });
 import assert from 'assert';
@@ -14,15 +15,8 @@ import {
 } from '../../../skills/buster/pipeline/tools/verify-task.ts';
 import { gitPushWithRetry } from '../../../skills/buster/pipeline/services/git-workflows.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const previousSwarmConfig = process.env.SWARM_CONFIG;
 const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-verify-scope-config-'));
 const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');
@@ -58,7 +52,7 @@ assert.equal(source.includes("agentRole.includes('forge')"), false, 'verify-task
 assert.equal(source.includes("agentRole.includes('test')"), false, 'verify-task must not authorize by test substring');
 assert.equal(source.includes("agentRole.includes('echo')"), false, 'verify-task must not authorize by echo substring');
 assert.equal(source.includes("gitExec(repoRoot, ['add', swarmRoot]"), false, 'verify-task should delegate scoped add/commit/push to gitPushWithRetry');
-assert.equal(source.includes('addPaths: [swarmRoot]'), true, 'verify-task must pass explicit swarm pathspec to gitPushWithRetry');
+assert.equal(source.includes('addPaths: explicitAddPaths'), true, 'verify-task must pass validated explicit swarm pathspecs to gitPushWithRetry');
 assert.equal(source.includes('[SWARM-SCOPE]'), true, 'verify-task must report swarm scope violations');
 
 const workflowsSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/git-workflows.ts'), 'utf8');

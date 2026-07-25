@@ -1,4 +1,3 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { selectTruthyValue } from '../optional-absence.ts';
 
@@ -12,7 +11,7 @@ export function normalizeRepoRelativePath(value: unknown): string {
     .trim();
 }
 
-export function projectScopePathspec(config: AnyRecord): string {
+function projectScopePathspec(config: AnyRecord): string {
   const repoRoot = typeof config?.repo_root === 'string' ? config.repo_root : '';
   const swarmDir = typeof config?.paths?.swarm_dir === 'string' ? config.paths.swarm_dir : '';
   if (!repoRoot || !swarmDir) return '';

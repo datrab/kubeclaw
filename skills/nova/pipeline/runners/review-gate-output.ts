@@ -7,13 +7,13 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
  */
 const REVIEW_ISSUE_MESSAGE_MISSING = 'Review issue';
 
-function issueList(value) {
+function issueList(value: any) {
   return Array.isArray(value) ? value : [];
 }
 
-export function extractReviewIssues(mergedResult) {
+export function extractReviewIssues(mergedResult: any) {
   if (!mergedResult) return [];
-  const issues = [];
+  const issues: any[] = [];
 
   for (const key of ['critical_issues', 'critical_blockers']) {
     if (Array.isArray(mergedResult[key])) {
@@ -31,9 +31,9 @@ export function extractReviewIssues(mergedResult) {
   return issues;
 }
 
-export function summarizeReviewFailReason(issues, mergedResult) {
+export function summarizeReviewFailReason(issues: any, mergedResult: any) {
   const descriptions = issueList(issues)
-    .map((issue) => issue?.description)
+    .map((issue: any) => issue?.description)
     .filter(Boolean);
 
   if (descriptions.length > 0) {
@@ -47,8 +47,8 @@ export function summarizeReviewFailReason(issues, mergedResult) {
   return 'Review returned FAIL';
 }
 
-export function buildReviewGateFindings(issues = []) {
-  return issueList(issues).map((issue = {}, index) => ({
+export function buildReviewGateFindings(issues: any = []) {
+  return issueList(issues).map((issue: any = {}, index: any) => ({
     code: `REVIEW_ISSUE_${index + 1}`,
     severity: 'error',
     message: selectDefinedValue(() => (selectDefinedValue(() => (issue.description), () => (issue.title))), () => (REVIEW_ISSUE_MESSAGE_MISSING)),
@@ -62,7 +62,7 @@ export function buildReviewGateFindings(issues = []) {
   }));
 }
 
-function validatePassIssueList(reviewResult, key) {
+function validatePassIssueList(reviewResult: any, key: any) {
   if (!Object.prototype.hasOwnProperty.call(reviewResult, key)) return null;
   if (!Array.isArray(reviewResult[key])) {
     return `Review output status PASS requires ${key} to be an empty array when present`;
@@ -73,7 +73,7 @@ function validatePassIssueList(reviewResult, key) {
   return null;
 }
 
-function validatePassEvidenceArray(reviewResult, key, { requireNonEmpty = false, requireEmpty = false } = {}) {
+function validatePassEvidenceArray(reviewResult: any, key: any, { requireNonEmpty = false, requireEmpty = false }: any = {}) {
   if (!Array.isArray(reviewResult[key])) {
     return `Review output status PASS requires ${key} to be an array`;
   }
@@ -86,7 +86,7 @@ function validatePassEvidenceArray(reviewResult, key, { requireNonEmpty = false,
   return null;
 }
 
-function validatePassEvidenceContract(reviewResult) {
+function validatePassEvidenceContract(reviewResult: any) {
   for (const [key, policy] of [
     ['checked_contracts', { requireNonEmpty: true }],
     ['opened_artifacts', { requireNonEmpty: true }],
@@ -99,15 +99,43 @@ function validatePassEvidenceContract(reviewResult) {
   return null;
 }
 
+function invalidPassResult(reviewResult: any, status: string, error: string) {
+  return {
+    ok: false,
+    decision: 'invalid_contract',
+    error,
+    invalid_contract: true,
+    mergedResult: reviewResult,
+    normalizedStatus: status,
+    displayStatus: reviewResult.status,
+  };
+}
+
+function parsePassReviewResult(reviewResult: any, status: string) {
+  for (const key of ['critical_issues', 'critical_blockers']) {
+    const contractError = validatePassIssueList(reviewResult, key);
+    if (contractError) return invalidPassResult(reviewResult, status, contractError);
+  }
+  const evidenceContractError = validatePassEvidenceContract(reviewResult);
+  if (evidenceContractError) return invalidPassResult(reviewResult, status, evidenceContractError);
+  return {
+    ok: true,
+    decision: 'pass',
+    mergedResult: reviewResult,
+    normalizedStatus: status,
+    displayStatus: reviewResult.status,
+  };
+}
+
 /**
  * Parse a raw Echo review output file into the same gate decision facts the runner used inline.
  * The runner still owns logging and filesystem paths; this helper only normalizes content.
  */
-export function parseReviewOutputContent(content) {
+export function parseReviewOutputContent(content: any) {
   let reviewResult;
   try {
     reviewResult = JSON.parse(content);
-  } catch (e) {
+  } catch (e: any) {
     return {
       ok: false,
       decision: 'invalid_contract',
@@ -127,41 +155,7 @@ export function parseReviewOutputContent(content) {
   }
 
   const status = String(selectDefinedValue(() => (reviewResult.status), () => (''))).trim().toUpperCase();
-  if (status === 'PASS') {
-    for (const key of ['critical_issues', 'critical_blockers']) {
-      const contractError = validatePassIssueList(reviewResult, key);
-      if (contractError) {
-        return {
-          ok: false,
-          decision: 'invalid_contract',
-          error: contractError,
-          invalid_contract: true,
-          mergedResult: reviewResult,
-          normalizedStatus: status,
-          displayStatus: reviewResult.status,
-        };
-      }
-    }
-    const evidenceContractError = validatePassEvidenceContract(reviewResult);
-    if (evidenceContractError) {
-      return {
-        ok: false,
-        decision: 'invalid_contract',
-        error: evidenceContractError,
-        invalid_contract: true,
-        mergedResult: reviewResult,
-        normalizedStatus: status,
-        displayStatus: reviewResult.status,
-      };
-    }
-    return {
-      ok: true,
-      decision: 'pass',
-      mergedResult: reviewResult,
-      normalizedStatus: status,
-      displayStatus: reviewResult.status,
-    };
-  }
+  if (status === 'PASS') return parsePassReviewResult(reviewResult, status);
   if (status === 'FAIL') {
     return {
       ok: false,

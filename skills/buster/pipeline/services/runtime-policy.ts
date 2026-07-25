@@ -1,9 +1,9 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/runtime-policy.ts — required Buster runtime policy from swarm.config.json
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 import { expandSwarmConfig } from '../platform-config.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 declare const process: {
   env: Record<string, string | undefined>;
@@ -11,8 +11,10 @@ declare const process: {
 
 const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
-let cachedPolicy: Record<string, any> | null = null;
-let cachedPlatformConfig: Record<string, any> | null = null;
+const runtimePolicyCache: {
+  policy: Record<string, any> | null;
+  platformConfig: Record<string, any> | null;
+} = { policy: null, platformConfig: null };
 
 function isRecord(value: unknown): value is Record<string, any> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -41,7 +43,7 @@ function requireNonEmptyString(record: Record<string, any>, field: string, label
 }
 
 export function loadBusterRuntimePolicy(): Record<string, any> {
-  if (cachedPolicy) return cachedPolicy;
+  if (runtimePolicyCache.policy) return runtimePolicyCache.policy;
   const config = loadBusterPlatformConfig();
   if (!isRecord(config?.buster)) {
     throw new Error('config.buster: required platform config object in swarm.config.json');
@@ -50,7 +52,7 @@ export function loadBusterRuntimePolicy(): Record<string, any> {
     throw new Error('config.buster.runtime: required platform config object in swarm.config.json');
   }
   const runtime = config.buster.runtime;
-  cachedPolicy = Object.freeze({
+  runtimePolicyCache.policy = Object.freeze({
     task_stream: requireNonEmptyString(runtime, 'task_stream', 'config.buster.runtime.task_stream'),
     heartbeat_path: requireNonEmptyString(runtime, 'heartbeat_path', 'config.buster.runtime.heartbeat_path'),
     heartbeat_interval_ms: requirePositiveInteger(runtime, 'heartbeat_interval_ms', 'config.buster.runtime.heartbeat_interval_ms'),
@@ -58,14 +60,15 @@ export function loadBusterRuntimePolicy(): Record<string, any> {
     task_pending_reclaim_idle_ms: requirePositiveInteger(runtime, 'task_pending_reclaim_idle_ms', 'config.buster.runtime.task_pending_reclaim_idle_ms'),
     task_stream_max_len: requirePositiveInteger(runtime, 'task_stream_max_len', 'config.buster.runtime.task_stream_max_len'),
   });
-  return cachedPolicy;
+  return runtimePolicyCache.policy;
 }
 
 export function loadBusterPlatformConfig(): Record<string, any> {
-  if (cachedPlatformConfig) return cachedPlatformConfig;
+  if (runtimePolicyCache.platformConfig) return runtimePolicyCache.platformConfig;
   const configPath = resolveSwarmConfigPathFromEnv();
-  cachedPlatformConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
-  return cachedPlatformConfig;
+  const platformConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
+  runtimePolicyCache.platformConfig = platformConfig;
+  return platformConfig;
 }
 
 export function loadBusterSessionPolicies(): Record<string, any> {
@@ -97,43 +100,62 @@ export function loadBusterSessionPolicies(): Record<string, any> {
   const listGateway = gatewayPolicy('subagent_list', 'config.gateway.invoke.subagent_list');
   return {
     gatewayStatusPolicy: statusGateway,
-    spawnPolicy: {
-      gateway: spawnGateway,
-      thread: spawnPolicy.thread === true,
-      mode: requireNonEmptyString(spawnPolicy, 'mode', 'config.session.spawn.mode'),
-      cleanup: requireNonEmptyString(spawnPolicy, 'cleanup', 'config.session.spawn.cleanup'),
-      streamTo: requireNonEmptyString(spawnPolicy, 'stream_to', 'config.session.spawn.stream_to'),
-    },
-    killPolicy: {
-      acpConfirmTimeoutMs: requireNonNegativeNumber(killPolicy, 'acp_confirm_timeout_ms', 'config.session.kill.acp_confirm_timeout_ms'),
-      subagentConfirmTimeoutMs: requireNonNegativeNumber(killPolicy, 'subagent_confirm_timeout_ms', 'config.session.kill.subagent_confirm_timeout_ms'),
-      confirmPollMs: requirePositiveInteger(killPolicy, 'confirm_poll_ms', 'config.session.kill.confirm_poll_ms'),
-      cleanupConfirmTimeoutMs: killPolicy.cleanup_confirm_timeout_ms === 'match_confirm_timeout'
-        ? 'match_confirm_timeout'
-        : requireNonNegativeNumber(killPolicy, 'cleanup_confirm_timeout_ms', 'config.session.kill.cleanup_confirm_timeout_ms'),
-      statusTimeoutMs: statusGateway.timeoutMs,
-      requestTimeoutMs: requestGateway.timeoutMs,
-      stopRequestTimeoutMs: stopGateway.timeoutMs,
-      listTimeoutMs: listGateway.timeoutMs,
-      statusGateway,
-      requestGateway,
-      stopGateway,
-      listGateway,
-      acpxTimeoutMs: requireNonNegativeNumber(killPolicy, 'acpx_timeout_ms', 'config.session.kill.acpx_timeout_ms'),
-      stopMessage: requireNonEmptyString(killPolicy, 'stop_message', 'config.session.kill.stop_message'),
-    },
-    terminationPolicy: {
-      graceMs: requireNonNegativeNumber(terminationPolicy, 'grace_ms', 'config.session.termination.grace_ms'),
-      maxGraceMs: requireNonNegativeNumber(terminationPolicy, 'max_grace_ms', 'config.session.termination.max_grace_ms'),
-      confirmPollMs: requirePositiveInteger(terminationPolicy, 'poll_ms', 'config.session.termination.poll_ms'),
-      gatewayRequestMaxMs: requirePositiveInteger(terminationPolicy, 'gateway_request_max_ms', 'config.session.termination.gateway_request_max_ms'),
-      cleanupConfirmTimeoutMs: requireNonNegativeNumber(terminationPolicy, 'cleanup_confirm_timeout_ms', 'config.session.termination.cleanup_confirm_timeout_ms'),
-      statusTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
-      requestTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
-      stopRequestTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
-      listTimeoutMs: requirePositiveInteger(terminationPolicy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms'),
-      acpxTimeoutMs: requirePositiveInteger(terminationPolicy, 'acpx_timeout_ms', 'config.session.termination.acpx_timeout_ms'),
-    },
+    spawnPolicy: buildSpawnPolicy(spawnPolicy, spawnGateway),
+    killPolicy: buildKillPolicy(killPolicy, statusGateway, requestGateway, stopGateway, listGateway),
+    terminationPolicy: buildTerminationPolicy(terminationPolicy),
+  };
+}
+
+function buildSpawnPolicy(policy: Record<string, any>, gateway: Record<string, any>): Record<string, any> {
+  return {
+    gateway,
+    thread: policy.thread === true,
+    mode: requireNonEmptyString(policy, 'mode', 'config.session.spawn.mode'),
+    cleanup: requireNonEmptyString(policy, 'cleanup', 'config.session.spawn.cleanup'),
+    streamTo: requireNonEmptyString(policy, 'stream_to', 'config.session.spawn.stream_to'),
+  };
+}
+
+function buildKillPolicy(
+  policy: Record<string, any>,
+  statusGateway: Record<string, any>,
+  requestGateway: Record<string, any>,
+  stopGateway: Record<string, any>,
+  listGateway: Record<string, any>,
+): Record<string, any> {
+  return {
+    acpConfirmTimeoutMs: requireNonNegativeNumber(policy, 'acp_confirm_timeout_ms', 'config.session.kill.acp_confirm_timeout_ms'),
+    subagentConfirmTimeoutMs: requireNonNegativeNumber(policy, 'subagent_confirm_timeout_ms', 'config.session.kill.subagent_confirm_timeout_ms'),
+    confirmPollMs: requirePositiveInteger(policy, 'confirm_poll_ms', 'config.session.kill.confirm_poll_ms'),
+    cleanupConfirmTimeoutMs: policy.cleanup_confirm_timeout_ms === 'match_confirm_timeout'
+      ? 'match_confirm_timeout'
+      : requireNonNegativeNumber(policy, 'cleanup_confirm_timeout_ms', 'config.session.kill.cleanup_confirm_timeout_ms'),
+    statusTimeoutMs: statusGateway.timeoutMs,
+    requestTimeoutMs: requestGateway.timeoutMs,
+    stopRequestTimeoutMs: stopGateway.timeoutMs,
+    listTimeoutMs: listGateway.timeoutMs,
+    statusGateway,
+    requestGateway,
+    stopGateway,
+    listGateway,
+    acpxTimeoutMs: requireNonNegativeNumber(policy, 'acpx_timeout_ms', 'config.session.kill.acpx_timeout_ms'),
+    stopMessage: requireNonEmptyString(policy, 'stop_message', 'config.session.kill.stop_message'),
+  };
+}
+
+function buildTerminationPolicy(policy: Record<string, any>): Record<string, any> {
+  const operationTimeoutMs = requirePositiveInteger(policy, 'gateway_operation_timeout_ms', 'config.session.termination.gateway_operation_timeout_ms');
+  return {
+    graceMs: requireNonNegativeNumber(policy, 'grace_ms', 'config.session.termination.grace_ms'),
+    maxGraceMs: requireNonNegativeNumber(policy, 'max_grace_ms', 'config.session.termination.max_grace_ms'),
+    confirmPollMs: requirePositiveInteger(policy, 'poll_ms', 'config.session.termination.poll_ms'),
+    gatewayRequestMaxMs: requirePositiveInteger(policy, 'gateway_request_max_ms', 'config.session.termination.gateway_request_max_ms'),
+    cleanupConfirmTimeoutMs: requireNonNegativeNumber(policy, 'cleanup_confirm_timeout_ms', 'config.session.termination.cleanup_confirm_timeout_ms'),
+    statusTimeoutMs: operationTimeoutMs,
+    requestTimeoutMs: operationTimeoutMs,
+    stopRequestTimeoutMs: operationTimeoutMs,
+    listTimeoutMs: operationTimeoutMs,
+    acpxTimeoutMs: requirePositiveInteger(policy, 'acpx_timeout_ms', 'config.session.termination.acpx_timeout_ms'),
   };
 }
 
@@ -162,12 +184,20 @@ export function loadBusterGatewayHealthPolicy(): Record<string, any> {
   };
 }
 
+export function loadBusterDiscordWebhookTimeoutMs(): number {
+  const config = loadBusterPlatformConfig();
+  if (!isRecord(config.discord)) {
+    throw new Error('config.discord: required platform config object in swarm.config.json');
+  }
+  return requirePositiveInteger(config.discord, 'webhook_timeout_ms', 'config.discord.webhook_timeout_ms');
+}
+
 export function resetBusterRuntimePolicyForTests(): void {
-  cachedPolicy = null;
-  cachedPlatformConfig = null;
+  runtimePolicyCache.policy = null;
+  runtimePolicyCache.platformConfig = null;
 }
 function resolveSwarmConfigPathFromEnv(): string {
-  const configured = process.env.SWARM_CONFIG;
+  const configured = readBusterEnvironment('SWARM_CONFIG');
   if (configured !== undefined && configured !== null && String(configured).trim()) {
     return String(configured);
   }

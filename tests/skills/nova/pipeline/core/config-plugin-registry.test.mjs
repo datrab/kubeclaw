@@ -91,6 +91,7 @@ function makeSwarmConfig() {
     case_study: { timeout_minutes: 1 },
     arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1 },
     telemetry: { enabled: false, stream_max_len: 1, sink_timeout_ms: 1 },
+    control: { enabled: true, capabilities: ['pipeline.control'] },
     plugins: {
       enabled: true,
       allowCustomModules: false,

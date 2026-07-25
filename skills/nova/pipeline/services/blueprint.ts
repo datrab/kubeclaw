@@ -74,7 +74,7 @@ const BLUEPRINT_POLICY = Object.freeze({
   }),
 });
 
-function nothingToCommit(text = ''): boolean {
+function nothingToCommit(text: any = ''): boolean {
   return /nothing to commit|nothing added to commit/i.test(text);
 }
 
@@ -102,7 +102,7 @@ function ensureRemoteBranchRef(config: AnyRecord, branch: string, operation: str
 
   try {
     gitExec(config.repo_root, ['fetch', 'origin', fetchRefspec], { stdio: 'ignore' });
-  } catch (e) {
+  } catch (e: any) {
     throw new Error(`Cannot fetch architecture branch '${branch}' before ${operation}: ${errorMessage(e)}`);
   }
 
@@ -180,7 +180,7 @@ export function listBlueprints(config: AnyRecord) {
   try {
     const out = gitExec(config.repo_root, ['ls-tree', '-d', '--name-only', branchRef, `${dir}/`]);
     return out.split('\n').filter(Boolean).map((fileName: string) => path.basename(fileName));
-  } catch (e) {
+  } catch (e: any) {
     throw new Error(`Cannot read architecture branch '${branch}': ${errorMessage(e)}`);
   }
 }
@@ -198,7 +198,7 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
     return { status: 'skipped', reason: `existing status: ${existingStatus.status}`, module: moduleDir };
   }
 
-  const requiredFiles = [];
+  const requiredFiles: any[] = [];
   if (stages.includes('forge')) {
     if (moduleConfig.substeps && moduleConfig.substeps.length > 0) {
       for (const stepId of moduleConfig.substeps) requiredFiles.push(`${stepId}/FORGE.md`);
@@ -210,11 +210,11 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
 
   for (const file of requiredFiles) {
     try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${targetPath}/${file}`], { stdio: 'ignore' }); }
-    catch (e) { throw new Error(`Blueprint incomplete: ${file} not found for ${moduleId} in architecture branch at ${targetPath}: ${errorMessage(e)}`); }
+    catch (e: any) { throw new Error(`Blueprint incomplete: ${file} not found for ${moduleId} in architecture branch at ${targetPath}: ${errorMessage(e)}`); }
   }
 
   try { gitExec(config.repo_root, ['checkout', branchRef, '--', targetPath], { stdio: 'ignore' }); }
-  catch (e) { throw new Error(`Blueprint checkout failed: ${errorMessage(e)}`); }
+  catch (e: any) { throw new Error(`Blueprint checkout failed: ${errorMessage(e)}`); }
 
   const blueprintFilePath = targetPath;
   const statusResult = gitSpawnSync(config.repo_root, ['status', '--porcelain', blueprintFilePath]);
@@ -239,7 +239,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
   const branch = `${config.project}/architecture`;
   let branchRef: string;
   try { branchRef = ensureRemoteBranchRef(config, branch, 'gate file release'); }
-  catch (e) {
+  catch (e: any) {
     const degraded = [buildBlueprintDegradedEvidence('blueprint_gate_fetch_failed', 'release_gate_files', e)];
     log('WARN', `Could not fetch origin/${branch} for gate files: ${errorMessage(e)}`);
     return { released: 0, degraded };
@@ -259,7 +259,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
   const degraded: BlueprintDegradedEvidence[] = [];
   for (const targetPath of gateDirRefs) {
     try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${targetPath}`], { stdio: 'ignore' }); }
-    catch (_e) { continue; }
+    catch (_e: any) { continue; }
 
     const localPath = path.join(config.repo_root, targetPath);
     if (fs.existsSync(localPath) && fs.readdirSync(localPath).length > 0) {
@@ -271,7 +271,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
       checkedOut.push(targetPath);
       checkedOutPaths.push(targetPath);
       log('OK', `Gate files released: ${targetPath}/`);
-    } catch (e) {
+    } catch (e: any) {
       degraded.push(buildBlueprintDegradedEvidence('blueprint_gate_checkout_failed', 'release_gate_files', e, { path: targetPath }));
       log('WARN', `Failed to checkout gate dir '${targetPath}': ${errorMessage(e)}`);
     }
@@ -281,7 +281,7 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
     try {
       commitSelectedPaths(config, `[blueprint] Release gate files: ${checkedOut.join(', ')}`, checkedOutPaths);
       log('OK', `Gate files committed and pushed: ${checkedOut.join(', ')}`);
-    } catch (e) {
+    } catch (e: any) {
       degraded.push(buildBlueprintDegradedEvidence('blueprint_gate_commit_failed', 'release_gate_files', e, { path: checkedOutPaths.join(',') }));
       log('WARN', `Gate files commit/push failed (non-critical): ${errorMessage(e)}`);
     }
@@ -294,7 +294,7 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   const branch = `${config.project}/architecture`;
   let branchRef: string;
   try { branchRef = ensureRemoteBranchRef(config, branch, 'control file sync'); }
-  catch (e) {
+  catch (e: any) {
     const degraded = [buildBlueprintDegradedEvidence('blueprint_control_fetch_failed', 'sync_control_files', e)];
     log('WARN', `syncControlFiles: could not fetch architecture branch — skipping without local-cache fallback: ${errorMessage(e)}`);
     return { synced: 0, files: [], degraded };
@@ -305,19 +305,19 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   const degraded: BlueprintDegradedEvidence[] = [];
   function syncFile(archPath: string) {
     try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${archPath}`], { stdio: 'ignore' }); }
-    catch (_e) { return; }
+    catch (_e: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */ return; }
 
     let archContent;
-    try { archContent = gitExec(config.repo_root, ['show', `${branchRef}:${archPath}`]); } catch (e) { log('WARN', `[blueprint-sync] could not read declared architecture control file ${archPath}: ${errorMessage(e)}`); return; }
+    try { archContent = gitExec(config.repo_root, ['show', `${branchRef}:${archPath}`]); } catch (e: any) { log('WARN', `[blueprint-sync] could not read declared architecture control file ${archPath}: ${errorMessage(e)}`); return; }
     const localAbsPath = path.join(config.repo_root, archPath);
     let localContent = null;
-    try { localContent = fs.readFileSync(localAbsPath, 'utf8'); } catch (e) { if ((e as AnyRecord)?.code !== 'ENOENT') log('DEBUG', `[blueprint-sync] could not read local ${archPath}: ${errorMessage(e)}`); }
+    try { localContent = fs.readFileSync(localAbsPath, 'utf8'); } catch (e: any) { if ((e as AnyRecord)?.code !== 'ENOENT') log('DEBUG', `[blueprint-sync] could not read local ${archPath}: ${errorMessage(e)}`); }
     if (localContent !== null && localContent.trim() === archContent.trim()) return;
     try {
       gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', archPath], { stdio: 'ignore' });
       synced.push({ path: archPath, action: localContent === null ? 'created' : 'updated' });
       log('OK', `[blueprint-sync] ${localContent === null ? 'created' : 'updated'}: ${archPath}`);
-    } catch (e) {
+    } catch (e: any) {
       degraded.push(buildBlueprintDegradedEvidence('blueprint_control_checkout_failed', 'sync_control_files', e, { path: archPath }));
       log('WARN', `[blueprint-sync] checkout failed for ${archPath}: ${errorMessage(e)}`);
     }
@@ -347,14 +347,14 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
 
   if (synced.length > 0) {
     try {
-      commitSelectedPaths(config, `[blueprint-sync] Sync ${synced.length} control file(s) from architecture`, synced.map((file) => file.path));
-    } catch (e) {
-      degraded.push(buildBlueprintDegradedEvidence('blueprint_control_commit_failed', 'sync_control_files', e, { path: synced.map((file) => file.path).join(',') }));
+      commitSelectedPaths(config, `[blueprint-sync] Sync ${synced.length} control file(s) from architecture`, synced.map((file: any) => file.path));
+    } catch (e: any) {
+      degraded.push(buildBlueprintDegradedEvidence('blueprint_control_commit_failed', 'sync_control_files', e, { path: synced.map((file: any) => file.path).join(',') }));
       log('WARN', `[blueprint-sync] commit/push failed (non-critical): ${errorMessage(e)}`);
     }
     await discord(config, 'INFO', 'Blueprint Sync', `${synced.length} control file(s) updated from architecture branch`, [
       ...buildBlueprintDiscordFields({ run_id: getRunId(config) }),
-      { name: 'Files', value: synced.map((file) => `${file.action} ${file.path.split('/').pop()}`).join(', ').slice(0, 200) },
+      { name: 'Files', value: synced.map((file: any) => `${file.action} ${file.path.split('/').pop()}`).join(', ').slice(0, 200) },
     ]);
   } else {
     log('DEBUG', '[blueprint-sync] All control files up to date — no changes');
@@ -365,7 +365,7 @@ export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
   if (syncOutputDir) {
     try {
       fs.writeFileSync(path.join(syncOutputDir, 'blueprint-sync.json'), JSON.stringify({ ts: new Date().toISOString(), synced: synced.length, files: synced }, null, 2));
-    } catch (e) {
+    } catch (e: any) {
       log('DEBUG', `[blueprint-sync] failed to write sync summary: ${errorMessage(e)}`);
     }
   }

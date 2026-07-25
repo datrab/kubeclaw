@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-pipeline-step-result-surface' });
 import fs from 'fs';
@@ -5,16 +6,8 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/pipeline-step-result.ts');
 const controlResultMappingPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/control-result-mapping.ts');
 const helperSource = fs.readFileSync(helperPath, 'utf8');

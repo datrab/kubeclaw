@@ -1,8 +1,5 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import os from 'os';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { log } from '../core/logger.ts';
@@ -10,6 +7,14 @@ import { appendDurableOperatorAlert } from '../services/telemetry.ts';
 import { ensureProjectLogDir } from '../core/paths.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { errorMessage, errorCode, pipelineRunLockPath, nowMs, isoFromMs, requirePipelineRunLockNumber, pipelineRunLockLeaseMs, pipelineRunLockHeartbeatMs, pipelineRunLockMutationStaleMs, readPipelineRunLock, removeFileIfPresent, removeDirectoryBestEffort, pipelineRunLockReclaimRaceLost, pipelineRunLockMutationOwnerPath, pipelineRunLockMutationOwner, generatedPipelineRunLockToken, lockRecord, readPipelineRunLockMutationSnapshot, sameStaleMutationOwner, reclaimStalePipelineRunLockMutation, acquirePipelineRunLockMutation, withPipelineRunLockMutation, normalizeLockTime } from './pipeline-runner-lock-storage.ts';
+import {
+  PIPELINE_RUN_CONCURRENCY_LIMIT, PIPELINE_RUN_LOCK_SCHEMA_VERSION,
+  INVALID_LOCK_JSON_REASON, PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST,
+  PIPELINE_RUN_LOCK_LOST_REASON_MISSING,
+} from './pipeline-runner-lock-storage.ts';
+export { PIPELINE_RUN_CONCURRENCY_LIMIT } from './pipeline-runner-lock-storage.ts';
+import { describePipelineRunLock } from './pipeline-runner-lock-description.ts';
 type AnyRecord = Record<string, any>;
 
 declare const process: {
@@ -19,198 +24,6 @@ declare const process: {
 
 declare function setInterval(handler: () => void, timeout: number): any;
 declare function clearInterval(timer: any): void;
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
-}
-
-function errorCode(error: unknown): string {
-  const code = (error as AnyRecord)?.code;
-  if (code !== undefined && code !== null && String(code).trim()) return String(code);
-  return errorMessage(error);
-}
-
-function pipelineRunLockPath(config: AnyRecord): string {
-  return path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'active-run.lock.json');
-}
-
-export const PIPELINE_RUN_CONCURRENCY_LIMIT = 1;
-const PIPELINE_RUN_LOCK_SCHEMA_VERSION = 1;
-const INVALID_LOCK_JSON_REASON = 'invalid JSON';
-const PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST = 'pipeline_run_lock_heartbeat_owner_lost';
-const PIPELINE_RUN_LOCK_LOST_REASON_MISSING = 'missing_lock_loss_reason';
-
-function nowMs(): number {
-  return Date.now();
-}
-
-function isoFromMs(ms: number): string {
-  return new Date(ms).toISOString();
-}
-
-function requirePipelineRunLockNumber(config: AnyRecord, field: string): number {
-  const value = config?.locks?.pipeline_run?.[field];
-  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))), () => (value <= 0))) {
-    throw new Error(`config.locks.pipeline_run.${field}: required positive number in swarm.config.json`);
-  }
-  return value;
-}
-
-function pipelineRunLockLeaseMs(config: AnyRecord): number {
-  return Math.max(2000, requirePipelineRunLockNumber(config, 'lease_ms'));
-}
-
-function pipelineRunLockHeartbeatMs(config: AnyRecord, leaseMs = pipelineRunLockLeaseMs(config)): number {
-  const configured = requirePipelineRunLockNumber(config, 'heartbeat_ms');
-  return Math.max(1000, Math.min(configured, Math.floor(leaseMs / 2)));
-}
-
-function pipelineRunLockMutationStaleMs(config: AnyRecord): number {
-  return requirePipelineRunLockNumber(config, 'mutation_stale_ms');
-}
-
-function readPipelineRunLock(lockPath: string): AnyRecord | null {
-  if (selectTruthyValue(() => (!lockPath), () => (!fs.existsSync(lockPath)))) return null;
-  try {
-    const raw = fs.readFileSync(lockPath, 'utf8');
-    if (!raw.trim()) throw new Error('empty lock file');
-    return JSON.parse(raw);
-  } catch (err) {
-    return {
-      malformed: true,
-      error: errorMessage(err),
-    };
-  }
-}
-
-function removeFileIfPresent(filePath: string): void {
-  if (!filePath) return;
-  try { fs.unlinkSync(filePath); } catch (err) {
-    if ((err as AnyRecord).code !== 'ENOENT') throw err;
-  }
-}
-
-function pipelineRunLockReclaimRaceLost(): Error {
-  const error = new Error('pipeline_run_lock_reclaim_race_lost');
-  (error as AnyRecord).code = 'PIPELINE_RUN_LOCK_RECLAIM_RACE_LOST';
-  return error;
-}
-
-function pipelineRunLockMutationOwnerPath(mutationDir: string): string {
-  return path.join(mutationDir, 'owner.json');
-}
-
-function pipelineRunLockMutationOwner(config: AnyRecord): AnyRecord {
-  const acquiredAtMs = nowMs();
-  return {
-    schema_version: PIPELINE_RUN_LOCK_SCHEMA_VERSION,
-    token: `${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-    pid: process.pid,
-    hostname: os.hostname(),
-    acquired_at: isoFromMs(acquiredAtMs),
-    stale_at: isoFromMs(acquiredAtMs + pipelineRunLockMutationStaleMs(config)),
-  };
-}
-
-function generatedPipelineRunLockToken(): string {
-  return `${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-}
-
-function lockRecord(value: AnyRecord | null): AnyRecord {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-}
-
-function readPipelineRunLockMutationSnapshot(config: AnyRecord, mutationDir: string, atMs = nowMs()): AnyRecord {
-  const ownerPath = pipelineRunLockMutationOwnerPath(mutationDir);
-  try {
-    const owner = JSON.parse(fs.readFileSync(ownerPath, 'utf8'));
-    const staleAt = normalizeLockTime(owner?.stale_at);
-    if (staleAt != null) {
-      return {
-        hasOwner: true,
-        token: typeof owner?.token === 'string' ? owner.token : null,
-        stale: atMs >= staleAt,
-      };
-    }
-  } catch (_err) {
-    // A crash between mkdir and owner write leaves only the directory. Fall
-    // back to directory age so that broken mutation guards are still bounded.
-  }
-
-  try {
-    const stat = fs.statSync(mutationDir);
-    return {
-      hasOwner: false,
-      token: null,
-      stale: atMs - stat.mtimeMs >= pipelineRunLockMutationStaleMs(config),
-    };
-  } catch (_err) {
-    return { hasOwner: false, token: null, stale: true };
-  }
-}
-
-function sameStaleMutationOwner(before: AnyRecord, after: AnyRecord): boolean {
-  if (!before.stale) return false;
-  if (before.hasOwner) return after.hasOwner === true && after.token === before.token;
-  return after.hasOwner !== true;
-}
-
-function reclaimStalePipelineRunLockMutation(config: AnyRecord, mutationDir: string): boolean {
-  const before = readPipelineRunLockMutationSnapshot(config, mutationDir);
-  if (!before.stale) return false;
-
-  const reclaimDir = path.join(mutationDir, 'reclaiming');
-  let claimed = false;
-  try {
-    fs.mkdirSync(reclaimDir);
-    claimed = true;
-    const after = readPipelineRunLockMutationSnapshot(config, mutationDir);
-    if (!sameStaleMutationOwner(before, after)) return false;
-    fs.rmSync(mutationDir, { recursive: true, force: true });
-    claimed = false;
-    return true;
-  } catch (err) {
-    if (selectTruthyValue(() => ((err as AnyRecord).code === 'ENOENT'), () => ((err as AnyRecord).code === 'EEXIST'))) return false;
-    throw err;
-  } finally {
-    if (claimed) {
-      try { fs.rmSync(reclaimDir, { recursive: true, force: true }); } catch (_err) { /* best effort */ }
-    }
-  }
-}
-
-function acquirePipelineRunLockMutation(config: AnyRecord, lockPath: string): string {
-  const mutationDir = `${lockPath}.mutation`;
-  while (true) {
-    try {
-      fs.mkdirSync(mutationDir);
-      try {
-        fs.writeFileSync(pipelineRunLockMutationOwnerPath(mutationDir), `${JSON.stringify(pipelineRunLockMutationOwner(config), null, 2)}\n`);
-      } catch (err) {
-        try { fs.rmSync(mutationDir, { recursive: true, force: true }); } catch (_cleanupErr) { /* best effort */ }
-        throw err;
-      }
-      return mutationDir;
-    } catch (err) {
-      if ((err as AnyRecord).code !== 'EEXIST') throw err;
-      if (!reclaimStalePipelineRunLockMutation(config, mutationDir)) throw err;
-    }
-  }
-}
-
-function withPipelineRunLockMutation<T>(config: AnyRecord, lockPath: string, fn: () => T): T {
-  const mutationDir = acquirePipelineRunLockMutation(config, lockPath);
-  try {
-    return fn();
-  } finally {
-    try { fs.rmSync(mutationDir, { recursive: true, force: true }); } catch (_err) { /* best effort */ }
-  }
-}
-
-function normalizeLockTime(value: unknown): number | null {
-  const ms = Date.parse(selectTruthyValue(() => (typeof value === 'string'), () => (typeof value === 'number')) ? String(value) : '');
-  return Number.isFinite(ms) ? ms : null;
-}
 
 function hasPipelineRunLockLeaseContract(lock: AnyRecord | null): boolean {
   return Boolean(lock
@@ -228,10 +41,10 @@ function hasPipelineRunLockLeaseContract(lock: AnyRecord | null): boolean {
     && normalizeLockTime(lock.stale_at) != null);
 }
 
-function lockLeaseExpired(lock: AnyRecord | null, atMs = nowMs()): boolean {
+function lockLeaseExpired(lock: AnyRecord | null, atMs: any = nowMs()): boolean {
   const expiresAt = normalizeLockTime(lock?.lease_expires_at);
   const staleAt = normalizeLockTime(lock?.stale_at);
-  if (selectTruthyValue(() => (expiresAt == null), () => (staleAt == null))) return false;
+  if (expiresAt == null || staleAt == null) return false;
   return selectTruthyValue(() => (atMs >= expiresAt), () => (atMs >= staleAt));
 }
 
@@ -240,7 +53,7 @@ function isPipelineRunLockReclaimable(lock: AnyRecord | null): boolean {
   return lockLeaseExpired(lock);
 }
 
-function appendDurableRunLockAlert(config: AnyRecord, existing: AnyRecord | null = {}, reason = 'pipeline_run_lock_conflict', error: unknown = null): void {
+function appendDurableRunLockAlert(config: AnyRecord, existing: AnyRecord | null = {}, reason: any = 'pipeline_run_lock_conflict', error: unknown = null): void {
   ensureProjectLogDir(config);
   appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
     reason,
@@ -284,31 +97,12 @@ function appendDurableRunLockAlert(config: AnyRecord, existing: AnyRecord | null
   });
 }
 
-function describePipelineRunLock(existing: AnyRecord | null, requestedConfig: AnyRecord): string {
-  if (existing?.malformed) {
-    return `Pipeline runtime lock is malformed and cannot be safely reclaimed (${selectDefinedValue(() => (existing.error), () => (INVALID_LOCK_JSON_REASON))}). Manual cleanup required: verify no pipeline run is active for this swarm_dir, then remove active-run.lock.json and retry.`;
-  }
-
-  if (!hasPipelineRunLockLeaseContract(existing)) {
-    return `Pipeline runtime lock does not match the required leased-lock contract. Manual cleanup required: verify no pipeline run is active for this swarm_dir, then remove active-run.lock.json and retry.`;
-  }
-
-  return `Another pipeline run is already active for this shared runtime/swarm`
-    + `${existing?.project ? ` (project ${existing.project}` : ` (requested project ${selectTruthyValue(() => (requestedConfig.project), () => ('missing_project'))}`}`
-    + `${existing?.run_id ? `, run ${existing.run_id}` : ''}`
-    + `${existing?.module ? `, module ${existing.module}` : ''}`
-    + `${existing?.pid ? `, pid ${existing.pid}` : ''}`
-    + `${existing?.hostname ? `, host ${existing.hostname}` : ''}`
-    + `${existing?.lease_expires_at ? `, lease_expires_at ${existing.lease_expires_at}` : ''}`
-    + `). Concurrent pipeline runs are intentionally serialized per swarm_dir.`;
-}
-
 function isPipelineRunLockActive(lock: AnyRecord | null): boolean {
   if (!hasPipelineRunLockLeaseContract(lock)) return true;
   return !lockLeaseExpired(lock);
 }
 
-function buildPipelineRunLockOwner(config: AnyRecord, opts: AnyRecord = {}, token: string | null = null, acquiredAtMs = nowMs()): AnyRecord {
+function buildPipelineRunLockOwner(config: AnyRecord, opts: AnyRecord = {}, token: string | null = null, acquiredAtMs: any = nowMs()): AnyRecord {
   const leaseMs = pipelineRunLockLeaseMs(config);
   const heartbeatAtMs = acquiredAtMs;
   const leaseExpiresAtMs = heartbeatAtMs + leaseMs;
@@ -376,79 +170,91 @@ function refreshPipelineRunLockOwner(owner: AnyRecord, config: AnyRecord): AnyRe
   };
 }
 
+function stopLockHeartbeat(state: AnyRecord, reason: string | null = null): void {
+  if (reason) {
+    const wasLost = state.lost;
+    state.lost = true;
+    state.lossReason = reason;
+    if (!wasLost) {
+      try { state.onLost?.(reason); } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(best_effort_cleanup_failed): lock loss remains authoritative. */ }
+    }
+  }
+  state.stopped = true;
+  if (state.timer) clearInterval(state.timer);
+  state.timer = null;
+}
+
+function lockOwnerMatches(current: AnyRecord | null, owner: AnyRecord): boolean {
+  return hasPipelineRunLockLeaseContract(current) && current?.token === owner.token;
+}
+
+function assertLockHeartbeatActive(config: AnyRecord, lockPath: string, state: AnyRecord): void {
+  if (state.lost) throw new Error(`Pipeline runtime lock lost: ${state.lossReason ?? PIPELINE_RUN_LOCK_LOST_REASON_MISSING}`);
+  if (lockLeaseExpired(state.currentOwner)) {
+    appendDurableRunLockAlert(config, state.currentOwner, 'pipeline_run_lock_lease_expired_self');
+    stopLockHeartbeat(state, 'pipeline_run_lock_lease_expired_self');
+    throw new Error('Pipeline runtime lock lost: pipeline_run_lock_lease_expired_self');
+  }
+  const current = readPipelineRunLock(lockPath);
+  if (lockOwnerMatches(current, state.currentOwner)) return;
+  appendDurableRunLockAlert(config, lockRecord(current), PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
+  stopLockHeartbeat(state, PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
+  throw new Error(`Pipeline runtime lock lost: ${PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST}`);
+}
+
+function beatPipelineRunLock(config: AnyRecord, lockPath: string, state: AnyRecord): void {
+  if (state.stopped) return;
+  if (lockLeaseExpired(state.currentOwner)) {
+    appendDurableRunLockAlert(config, state.currentOwner, 'pipeline_run_lock_lease_expired_self');
+    stopLockHeartbeat(state, 'pipeline_run_lock_lease_expired_self');
+    return;
+  }
+  const current = readPipelineRunLock(lockPath);
+  if (!lockOwnerMatches(current, state.currentOwner)) {
+    appendDurableRunLockAlert(config, lockRecord(current), PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
+    stopLockHeartbeat(state, PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
+    return;
+  }
+  try {
+    const nextOwner = refreshPipelineRunLockOwner(state.currentOwner, config);
+    state.currentOwner = replacePipelineRunLockIfOwner(config, lockPath, nextOwner, state.currentOwner.token);
+  } catch (error: any) {
+    appendDurableRunLockAlert(config, state.currentOwner, 'pipeline_run_lock_heartbeat_failed', error);
+    stopLockHeartbeat(state, 'pipeline_run_lock_heartbeat_failed');
+  }
+}
+
 function startPipelineRunLockHeartbeat(config: AnyRecord, lockPath: string, owner: AnyRecord): AnyRecord {
   const heartbeatMs = pipelineRunLockHeartbeatMs(config, owner.lease_ms);
-  const onLost = typeof config?._pipelineRunLockOnLost === 'function' ? config._pipelineRunLockOnLost : null;
-  let stopped = false;
-  let lost = false;
-  let lossReason: string | null = null;
-  let currentOwner = owner;
-  let timer: any = null;
-
-  const stop = (reason: string | null = null) => {
-    if (reason) {
-      const wasLost = lost;
-      lost = true;
-      lossReason = reason;
-      if (!wasLost) {
-        try { onLost?.(reason); } catch (_err) { /* best effort */ }
-      }
-    }
-    stopped = true;
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
+  const state: AnyRecord = {
+    stopped: false, lost: false, lossReason: null, currentOwner: owner, timer: null,
+    onLost: typeof config?._pipelineRunLockOnLost === 'function' ? config._pipelineRunLockOnLost : null,
   };
-
-  const assertActive = () => {
-    if (lost) throw new Error(`Pipeline runtime lock lost: ${selectDefinedValue(() => (lossReason), () => (PIPELINE_RUN_LOCK_LOST_REASON_MISSING))}`);
-    if (lockLeaseExpired(currentOwner)) {
-      appendDurableRunLockAlert(config, currentOwner, 'pipeline_run_lock_lease_expired_self');
-      stop('pipeline_run_lock_lease_expired_self');
-      throw new Error('Pipeline runtime lock lost: pipeline_run_lock_lease_expired_self');
-    }
-    const current = readPipelineRunLock(lockPath);
-    if (selectTruthyValue(() => (!hasPipelineRunLockLeaseContract(current)), () => (current?.token !== currentOwner.token))) {
-      appendDurableRunLockAlert(config, lockRecord(current), PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
-      stop(PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
-      throw new Error(`Pipeline runtime lock lost: ${PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST}`);
-    }
-  };
-
-  const beat = () => {
-    if (stopped) return;
-    if (lockLeaseExpired(currentOwner)) {
-      appendDurableRunLockAlert(config, currentOwner, 'pipeline_run_lock_lease_expired_self');
-      stop('pipeline_run_lock_lease_expired_self');
-      return;
-    }
-
-    const current = readPipelineRunLock(lockPath);
-    if (selectTruthyValue(() => (!hasPipelineRunLockLeaseContract(current)), () => (current?.token !== currentOwner.token))) {
-      appendDurableRunLockAlert(config, lockRecord(current), PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
-      stop(PIPELINE_RUN_LOCK_HEARTBEAT_OWNER_LOST);
-      return;
-    }
-
-    try {
-      const nextOwner = refreshPipelineRunLockOwner(currentOwner, config);
-      currentOwner = replacePipelineRunLockIfOwner(config, lockPath, nextOwner, currentOwner.token);
-    } catch (error) {
-      appendDurableRunLockAlert(config, currentOwner, 'pipeline_run_lock_heartbeat_failed', error);
-      stop('pipeline_run_lock_heartbeat_failed');
-    }
-  };
-
-  timer = setInterval(beat, heartbeatMs) as any;
-  if (timer && typeof timer.unref === 'function') timer.unref();
+  state.timer = setInterval(() => beatPipelineRunLock(config, lockPath, state), heartbeatMs) as any;
+  if (state.timer && typeof state.timer.unref === 'function') state.timer.unref();
   return {
-    stop,
-    assertActive,
-    get stopped() { return stopped; },
-    get lost() { return lost; },
-    get lossReason() { return lossReason; },
+    stop: (reason: string | null = null) => stopLockHeartbeat(state, reason),
+    assertActive: () => assertLockHeartbeatActive(config, lockPath, state),
+    get stopped() { return state.stopped; },
+    get lost() { return state.lost; },
+    get lossReason() { return state.lossReason; },
   };
+}
+
+function reclaimPipelineRunLock(config: AnyRecord, lockPath: string, existing: AnyRecord | null): boolean {
+  appendDurableRunLockAlert(config, existing, 'pipeline_run_lock_stale_reclaimed');
+  try {
+    withPipelineRunLockMutation(config, lockPath, () => {
+      const current = readPipelineRunLock(lockPath);
+      if (isPipelineRunLockActive(current) || !isPipelineRunLockReclaimable(current)) throw pipelineRunLockReclaimRaceLost();
+      fs.unlinkSync(lockPath);
+    });
+    return true;
+  } catch (error: any) {
+    if (errorCode(error) === 'PIPELINE_RUN_LOCK_RECLAIM_RACE_LOST' || error.code === 'EEXIST' || error.code === 'ENOENT') return false;
+    appendDurableRunLockAlert(config, existing, 'pipeline_run_lock_reclaim_failed', error);
+    throw error;
+  }
 }
 
 export function acquirePipelineRunLock(config: AnyRecord, opts: AnyRecord = {}): AnyRecord {
@@ -471,34 +277,18 @@ export function acquirePipelineRunLock(config: AnyRecord, opts: AnyRecord = {}):
       log('INFO', `Pipeline run lock acquired: ${lockPath}`);
       const heartbeat = startPipelineRunLockHeartbeat(heartbeatConfig, lockPath, owner);
       return { path: lockPath, token: owner.token, heartbeat, config };
-    } catch (err) {
+    } catch (err: any) {
       if ((err as AnyRecord).code !== 'EEXIST') throw err;
       const existing = readPipelineRunLock(lockPath);
       if (isPipelineRunLockActive(existing)) {
         appendDurableRunLockAlert(config, existing, existing?.malformed ? 'pipeline_run_lock_malformed' : 'pipeline_run_lock_active_or_invalid_contract');
-        throw new Error(describePipelineRunLock(existing, config));
+        throw new Error(describePipelineRunLock(existing, config, hasPipelineRunLockLeaseContract(existing)));
       }
       if (!isPipelineRunLockReclaimable(existing)) {
         appendDurableRunLockAlert(config, existing, 'pipeline_run_lock_unreclaimable');
-        throw new Error(describePipelineRunLock(existing, config));
+        throw new Error(describePipelineRunLock(existing, config, hasPipelineRunLockLeaseContract(existing)));
       }
-      appendDurableRunLockAlert(config, existing, 'pipeline_run_lock_stale_reclaimed');
-      try {
-        withPipelineRunLockMutation(config, lockPath, () => {
-          const current = readPipelineRunLock(lockPath);
-          if (selectTruthyValue(() => (isPipelineRunLockActive(current)), () => (!isPipelineRunLockReclaimable(current)))) {
-            throw pipelineRunLockReclaimRaceLost();
-          }
-          fs.unlinkSync(lockPath);
-        });
-      } catch (unlinkErr) {
-        if (errorCode(unlinkErr) === 'PIPELINE_RUN_LOCK_RECLAIM_RACE_LOST') continue;
-        if ((unlinkErr as AnyRecord).code === 'EEXIST') continue;
-        if ((unlinkErr as AnyRecord).code !== 'ENOENT') {
-          appendDurableRunLockAlert(config, existing, 'pipeline_run_lock_reclaim_failed', unlinkErr);
-          throw unlinkErr;
-        }
-      }
+      reclaimPipelineRunLock(config, lockPath, existing);
     }
   }
 }
@@ -521,7 +311,7 @@ export function releasePipelineRunLock(lock: AnyRecord): void {
     }
     fs.unlinkSync(lock.path);
     log('INFO', `Pipeline run lock released: ${lock.path}`);
-  } catch (err) {
+  } catch (err: any) {
     if ((err as AnyRecord).code !== 'ENOENT') throw err;
   }
 }

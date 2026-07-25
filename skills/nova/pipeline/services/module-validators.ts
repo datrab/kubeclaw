@@ -22,40 +22,40 @@ const PRE_CHECK_FAILED_SUMMARY = 'Pre-check failed';
 const FULL_LINT_FAILED_SUMMARY = 'Full lint failed';
 const FULL_LINT_REPORT_UNAVAILABLE = 'Full lint report unavailable';
 
-function objectRecord(value) {
+function objectRecord(value: any) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
-function selectPresentValue(...values) {
-  return values.find((value) => value !== undefined && value !== null && value !== '');
+function selectPresentValue(...values: any) {
+  return values.find((value: any) => value !== undefined && value !== null && value !== '');
 }
 
-function requireNonEmptyString(value, label) {
+function requireNonEmptyString(value: any, label: any) {
   if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label}: required non-empty string`);
   return value.trim();
 }
 
-function numericCount(value) {
+function numericCount(value: any) {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
 }
 
-function stageProducerType(input = {}, opts = {}) {
+function stageProducerType(input: any = {}, opts: any = {}) {
   const producerType = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (opts.producerType), () => (input?.validator?.producerType))), () => (input?.ids?.producerType))), () => (null));
   return typeof producerType === 'string' && producerType.trim() ? producerType.trim() : null;
 }
 
-function getModuleId(input = {}) {
+function getModuleId(input: any = {}) {
   return selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (input?.ids?.moduleId), () => (input?.module?.moduleId))), () => (input?.module_id))), () => (null));
 }
 
-function getModuleDir(input = {}) {
+function getModuleDir(input: any = {}) {
   if (input?.executionContext?.moduleDir !== undefined) return input.executionContext.moduleDir;
   if (input?.module?.dir !== undefined) return input.module.dir;
   if (input?.ids?.moduleDir !== undefined) return input.ids.moduleDir;
   return selectDefinedValue(() => (input?.module_dir), () => (null));
 }
 
-function getModuleConfig(progress = {}, moduleId = null, input = {}) {
+function getModuleConfig(progress: any = {}, moduleId: any = null, input: any = {}) {
   let config = null;
   if (input?.module?.config !== undefined) config = input.module.config;
   else if (input?.moduleConfig !== undefined) config = input.moduleConfig;
@@ -63,7 +63,7 @@ function getModuleConfig(progress = {}, moduleId = null, input = {}) {
   return objectRecord(config);
 }
 
-function getModuleStatus(input = {}) {
+function getModuleStatus(input: any = {}) {
   let status = null;
   if (input?.stateSnapshot?.module?.statusRaw !== undefined) status = input.stateSnapshot.module.statusRaw;
   else if (input?.module?.status !== undefined) status = input.module.status;
@@ -71,21 +71,21 @@ function getModuleStatus(input = {}) {
   return objectRecord(status);
 }
 
-function getGateId(input = {}) {
+function getGateId(input: any = {}) {
   return selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (input?.ids?.gateId), () => (input?.gate?.gateId))), () => (input?.gate_id))), () => (null));
 }
-function lintArtifactPart(value = null) {
+function lintArtifactPart(value: any = null) {
   const raw = requireNonEmptyString(value, 'lint artifact identity');
   const safe = raw.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120);
   if (!safe) throw new Error('lint artifact identity: no safe artifact token characters');
   return safe;
 }
-function lintScheduleKey(input = {}, stageId) {
+function lintScheduleKey(input: any = {}, stageId: any) {
   if (input?.executionContext?.scheduleKey !== undefined) return requireNonEmptyString(input.executionContext.scheduleKey, 'validator scheduleKey');
   if (input?.refs?.validatorResultRef !== undefined) return requireNonEmptyString(input.refs.validatorResultRef, 'validatorResultRef');
   return requireNonEmptyString(stageId, 'validator stageId');
 }
-function archiveFullLintReport(config, report = null, input = {}, moduleDir = null, stageId = 'validator:full_lint') {
+function archiveFullLintReport(config: any, report: any = null, input: any = {}, moduleDir: any = null, stageId: any = 'validator:full_lint') {
   if (!report) return null;
   const gateId = getGateId(input), runLogDir = resolvePipelineRunLogDir(config);
   const lintDir = moduleDir
@@ -98,13 +98,13 @@ function archiveFullLintReport(config, report = null, input = {}, moduleDir = nu
     fs.mkdirSync(lintDir, { recursive: true });
     fs.writeFileSync(archivePath, JSON.stringify(report, null, 2));
     return archivePath;
-  } catch (error) {
+  } catch (error: any) {
     log('DEBUG', `Full lint report archive failed: ${error.message}`);
     return null;
   }
 }
 
-function baseValidatorOpts(config, input = {}, stageId, extra = {}) {
+function baseValidatorOpts(config: any, input: any = {}, stageId: any, extra: any = {}) {
   const producerType = stageProducerType(input, extra);
   return {
     producerType: selectPresentValue(producerType, INVALID_VALIDATOR_PRODUCER),
@@ -118,7 +118,7 @@ function baseValidatorOpts(config, input = {}, stageId, extra = {}) {
   };
 }
 
-function moduleValidatorControlPolicy(result = {}) {
+function moduleValidatorControlPolicy(result: any = {}) {
   if (result?.passed === true) return { nextAction: 'pass', outcomeClass: 'passed' };
   if (selectTruthyValue(() => (result?.blocked === true), () => (result?.tool_error === true))) {
     return { ...EXECUTION_FAILED_VALIDATOR_POLICY };
@@ -126,7 +126,7 @@ function moduleValidatorControlPolicy(result = {}) {
   return { nextAction: 'request_fix', issueType: 'code', outcomeClass: 'validation_failed' };
 }
 
-function missingProducerControl(config, input = {}, stageId) {
+function missingProducerControl(config: any, input: any = {}, stageId: any) {
   return buildModuleValidatorControlResult(config, {
     passed: false,
     blocked: true,
@@ -140,7 +140,7 @@ function missingProducerControl(config, input = {}, stageId) {
   }));
 }
 
-export function runDeliveryLintValidatorStage(config, progress = {}, input = {}, opts = {}) {
+export function runDeliveryLintValidatorStage(config: any, progress: any = {}, input: any = {}, opts: any = {}) {
   const stageId = selectPresentValue(opts.stageId, input?.ids?.stageId, DELIVERY_LINT_STAGE_ID);
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);
@@ -166,7 +166,7 @@ export function runDeliveryLintValidatorStage(config, progress = {}, input = {},
   }, baseValidatorOpts(config, input, stageId, { producerType, ...moduleValidatorControlPolicy(result) }));
 }
 
-export async function runPreCheckValidatorStage(config, progress = {}, input = {}, opts = {}) {
+export async function runPreCheckValidatorStage(config: any, progress: any = {}, input: any = {}, opts: any = {}) {
   const stageId = selectPresentValue(opts.stageId, input?.ids?.stageId, PRE_CHECK_STAGE_ID);
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);
@@ -190,7 +190,7 @@ export async function runPreCheckValidatorStage(config, progress = {}, input = {
   }, baseValidatorOpts(config, input, stageId, { producerType, ...moduleValidatorControlPolicy(result) }));
 }
 
-function classifyFullLintResult(report = null, error = null) {
+function classifyFullLintResult(report: any = null, error: any = null) {
   if (!report) {
     return {
       passed: false,
@@ -219,7 +219,7 @@ function classifyFullLintResult(report = null, error = null) {
   };
 }
 
-export function runFullLintValidatorStage(config, progress = {}, input = {}, opts = {}) {
+export function runFullLintValidatorStage(config: any, progress: any = {}, input: any = {}, opts: any = {}) {
   const stageId = selectPresentValue(opts.stageId, input?.ids?.stageId, FULL_LINT_STAGE_ID);
   const moduleId = getModuleId(input);
   const moduleDir = getModuleDir(input);

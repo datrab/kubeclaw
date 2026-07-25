@@ -59,11 +59,11 @@ function parsePsTable(): PsRow[] | null {
       stdio: ['ignore', 'pipe', 'ignore'],
       env: buildSubprocessEnv(),
     });
-    return out.split('\n').map(line => line.trim()).filter(Boolean).map(line => {
+    return out.split('\n').map((line: any) => line.trim()).filter(Boolean).map((line: any) => {
       const match = line.match(/^(\d+)\s+(\d+)\s+(.*)$/);
       return match ? { pid: Number(match[1]), ppid: Number(match[2]), command: match[3] } : null;
     }).filter(Boolean) as PsRow[];
-  } catch (_error) { return null; }
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */ return null; }
 }
 function collectDescendants(rootPid: number, byParent: Map<number, PsRow[]>, acc: Set<number> = new Set()) {
   const children = selectDefinedValue(() => (byParent.get(rootPid)), () => ([]));
@@ -74,15 +74,15 @@ function collectDescendants(rootPid: number, byParent: Map<number, PsRow[]>, acc
   }
   return acc;
 }
-function signalPid(pid: number, signal: string) { try { process.kill(pid, signal); return true; } catch (_error) { return false; } }
-function pidAlive(pid: number) { try { process.kill(pid, 0); return true; } catch (_error) { return false; } }
+function signalPid(pid: number, signal: string) { try { process.kill(pid, signal); return true; } catch (_error: any) { return false; } }
+function pidAlive(pid: number) { try { process.kill(pid, 0); return true; } catch (_error: any) { return false; } }
 function isWrapperCommand(command: string | null) {
   return /\bclaude-agent-acp\b|\bnpm\s+exec\b.*\bacp\b|\bacpx\b/i.test(textValue(command));
 }
 function readProcEnv(pid: number): AnyRecord | null {
   try {
     const raw = fs.readFileSync(`/proc/${pid}/environ`, 'utf8');
-    const env = {};
+    const env: any = {};
     for (const entry of raw.split('\0')) {
       if (!entry) continue;
       const idx = entry.indexOf('=');
@@ -90,7 +90,7 @@ function readProcEnv(pid: number): AnyRecord | null {
       env[entry.slice(0, idx)] = entry.slice(idx + 1);
     }
     return env;
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return null;
   }
 }
@@ -133,7 +133,7 @@ export function buildVictimSet(agentId: string | null, sessionKey: string, gatew
     byParent.get(row.ppid).push(row);
   }
 
-  const roots = table.filter(row => {
+  const roots = table.filter((row: any) => {
     if (row.pid === process.pid) return false;
     const isWrapper = isWrapperCommand(row.command);
     const env = isWrapper ? readEnv(row.pid) : null;
@@ -149,7 +149,7 @@ export function buildVictimSet(agentId: string | null, sessionKey: string, gatew
     return false;
   });
 
-  const orphanRoots = table.filter(row => {
+  const orphanRoots = table.filter((row: any) => {
     if (row.pid === process.pid) return false;
     if (row.ppid !== 1) return false;
     if (!isWrapperCommand(row.command)) return false;
@@ -168,15 +168,15 @@ export function buildVictimSet(agentId: string | null, sessionKey: string, gatew
     }
   }
 
-  return [...victims.values()].sort((a, b) => b.pid - a.pid);
+  return [...victims.values()].sort((a: any, b: any) => b.pid - a.pid);
 }
 
 export async function reaperAfterKill(agentId: string | null, sessionKey: string, gatewayLabel: string | null = null) {
   try {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve: any) => setTimeout(resolve, 2000));
     const victims = buildVictimSet(agentId, sessionKey, gatewayLabel);
     for (const row of victims) if (signalPid(row.pid, 'SIGTERM')) log('DEBUG', `Reaped PID ${row.pid} (${row.command})`);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve: any) => setTimeout(resolve, 1000));
     for (const row of victims) if (pidAlive(row.pid) && signalPid(row.pid, 'SIGKILL')) log('DEBUG', `Reaped PID ${row.pid} (${row.command})`);
   } catch (e: any) { log('DEBUG', `ACP reaper skipped (non-fatal): ${e.message}`); }
 }

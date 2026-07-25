@@ -1,4 +1,4 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -30,6 +30,7 @@ function git(cwd, args, opts = {}) {
 
 function createRepo() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'common-git-worktree-'));
+  tempRepos.add(root);
   git(root, ['init', '-b', 'main']);
   git(root, ['config', 'user.name', 'E2E Test']);
   git(root, ['config', 'user.email', 'e2e@example.test']);
@@ -210,4 +211,8 @@ test('common Git authority rejects module worktree roots inside the run worktree
       return true;
     },
   );
+});
+const tempRepos = new Set();
+after(() => {
+  for (const root of tempRepos) fs.rmSync(root, { recursive: true, force: true });
 });

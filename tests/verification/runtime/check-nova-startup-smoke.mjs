@@ -4,34 +4,10 @@ import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { spawnSync } from 'child_process';
+import { parseSourceRootArgs, runNode } from '../lib/contract-check-helpers.mjs';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
-
-function runNode(args, options = {}) {
-  return spawnSync(process.execPath, args, {
-    cwd: options.cwd,
-    env: {
-      ...process.env,
-      KUBECLAW_DISABLE_DISCORD_WEBHOOKS: '1',
-      ...options.env,
-    },
-    encoding: 'utf8',
-    timeout: options.timeout ?? 10000,
-  });
-}
-
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
+const nodeOptions = { cwd: sourceRoot, env: { KUBECLAW_DISABLE_DISCORD_WEBHOOKS: '1' } };
 const novaEntrypoint = path.join(sourceRoot, 'skills/nova/pipeline.ts');
 const novaIndex = path.join(sourceRoot, 'skills/nova/pipeline/index.ts');
 const novaCli = path.join(sourceRoot, 'skills/nova/pipeline/cli.ts');
@@ -40,7 +16,7 @@ const configSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline
 const deploymentSource = fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/templates/deployment.yaml'), 'utf8');
 
 for (const entrypoint of [novaEntrypoint, novaIndex, novaCliShim, novaCli]) {
-  const syntax = runNode(['--check', entrypoint], { cwd: sourceRoot });
+  const syntax = runNode(['--check', entrypoint], nodeOptions);
   assert.equal(
     syntax.status,
     0,
@@ -82,7 +58,7 @@ for (const { args, error } of [
   { args: ['--unknown-flag', '1'], error: 'Unknown flag: --unknown-flag' },
   { args: ['--prompt-file'], error: 'Missing value for --prompt-file' },
 ]) {
-  const invalidArgv = runNode([novaEntrypoint, ...args], { cwd: sourceRoot });
+  const invalidArgv = runNode([novaEntrypoint, ...args], nodeOptions);
   assert.equal(
     invalidArgv.status,
     publicApi.EXIT_ERROR,
@@ -105,7 +81,7 @@ for (const { args, error } of [
   );
 }
 
-const help = runNode([novaEntrypoint, '--help'], { cwd: sourceRoot });
+const help = runNode([novaEntrypoint, '--help'], nodeOptions);
 assert.equal(
   help.status,
   0,

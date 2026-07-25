@@ -127,6 +127,27 @@ function makeSwarmDir({ checkpoint = 'fresh', scenario = 'success' } = {}) {
   return { root, swarmDir };
 }
 
+function postForgeCaptureController(storePrefix) {
+  const { root, swarmDir } = makeSwarmDir({ checkpoint: 'pre-forge' });
+  const workspace = {
+    runId: 'run-1',
+    projectName: 'project-a',
+    artifactRoot: root,
+    worktreePath: path.join(root, 'worktree'),
+    projectSrc: path.join(root, 'worktree', 'Projects', 'project-a', 'src'),
+    swarmDir,
+  };
+  const checkpointRoot = defaultCheckpointRoot(fs.mkdtempSync(path.join(os.tmpdir(), storePrefix)));
+  const controller = startCheckpointCaptureController({
+    checkpointRoot,
+    workspace,
+    seedId: 'seed-1',
+    checkpoints: ['post-forge'],
+    intervalMs: 10,
+  });
+  return { controller, swarmDir };
+}
+
 test('checkpoint definitions cover every named boundary', () => {
   assert.deepEqual(CHECKPOINT_NAMES, [
     'fresh',
@@ -448,23 +469,7 @@ test('post-final-review checkpoint capture prunes terminal files from late copie
 });
 
 test('checkpoint capture controller captures phase boundary before downstream artifacts appear', async () => {
-  const { root, swarmDir } = makeSwarmDir({ checkpoint: 'pre-forge' });
-  const checkpointRoot = defaultCheckpointRoot(fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-checkpoint-controller-store-')));
-  const workspace = {
-    runId: 'run-1',
-    projectName: 'project-a',
-    artifactRoot: root,
-    worktreePath: path.join(root, 'worktree'),
-    projectSrc: path.join(root, 'worktree', 'Projects', 'project-a', 'src'),
-    swarmDir,
-  };
-  const controller = startCheckpointCaptureController({
-    checkpointRoot,
-    workspace,
-    seedId: 'seed-1',
-    checkpoints: ['post-forge'],
-    intervalMs: 10,
-  });
+  const { controller, swarmDir } = postForgeCaptureController('real-e2e-checkpoint-controller-store-');
 
   write(path.join(swarmDir, 'modules', '01-nginx', 'forge-completion.json'));
   await new Promise((resolve) => setTimeout(resolve, 40));
@@ -472,23 +477,7 @@ test('checkpoint capture controller captures phase boundary before downstream ar
 });
 
 test('checkpoint capture controller waits for lifecycle boundary after forge artifact', async () => {
-  const { root, swarmDir } = makeSwarmDir({ checkpoint: 'pre-forge' });
-  const checkpointRoot = defaultCheckpointRoot(fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-checkpoint-controller-boundary-store-')));
-  const workspace = {
-    runId: 'run-1',
-    projectName: 'project-a',
-    artifactRoot: root,
-    worktreePath: path.join(root, 'worktree'),
-    projectSrc: path.join(root, 'worktree', 'Projects', 'project-a', 'src'),
-    swarmDir,
-  };
-  const controller = startCheckpointCaptureController({
-    checkpointRoot,
-    workspace,
-    seedId: 'seed-1',
-    checkpoints: ['post-forge'],
-    intervalMs: 10,
-  });
+  const { controller, swarmDir } = postForgeCaptureController('real-e2e-checkpoint-controller-boundary-store-');
 
   write(path.join(swarmDir, 'modules', '01-nginx', 'forge-completion.json'));
   await new Promise((resolve) => setTimeout(resolve, 40));

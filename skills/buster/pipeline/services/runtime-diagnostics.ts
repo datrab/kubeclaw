@@ -2,9 +2,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/runtime-diagnostics.ts — sanitized process diagnostic helpers
 // Owns non-blocking diagnostics for malformed tasks and process/runtime health.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { join } from 'path';
 import { sanitizeNonBlockingErrorDetail } from '../noncritical-reporting.ts';
 import { normalizeRequiredIdentity } from './task-validation.ts';
@@ -69,7 +67,7 @@ function normalizeDiagnosticDetail(errorOrDetail: unknown): string | null {
   }
 }
 
-export function sanitizeBusterRuntimeDetail(value: unknown, maxChars = 1200): string {
+function sanitizeBusterRuntimeDetail(value: unknown, maxChars = 1200): string {
   return sanitizeNonBlockingErrorDetail(value, maxChars);
 }
 
@@ -79,7 +77,7 @@ export function safeErrorMessage(error: unknown, fallback = 'missing_error_detai
   return sanitizeBusterRuntimeDetail(raw);
 }
 
-function errorMessageAuthority(errorLike: Record<string, unknown> | null, error: unknown, fallback: string): unknown {
+function errorMessageAuthority(errorLike: ErrorLike | null, error: unknown, fallback: string): unknown {
   if (errorLike?.message) return errorLike.message;
   if (errorLike?.code) return errorLike.code;
   if (error) return String(error);
@@ -111,7 +109,7 @@ export function buildBusterProcessDiagnosticRecord({
     scope: 'process',
     component,
     surface,
-    reason: selectDefinedValue(() => (reason), () => ('gateway_unavailable')),
+    reason: typeof reason === 'string' ? reason : 'gateway_unavailable',
     detail: normalizeDiagnosticDetail(detail),
     agent_type: 'buster',
     project_hint: normalizeRequiredIdentity(projectHint),
@@ -132,7 +130,7 @@ export function appendMalformedTaskArtifact(record: JsonObject = {}): void {
   } catch (error) {
     try {
       process.stderr.write(`[BUSTER-DIAGNOSTIC] malformed task artifact write failed: ${safeErrorMessage(error)}\n`);
-    } catch (_stderrError) {
+    } catch (_stderrError) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
       // KEEP_TYPED_POLICY: diagnostic artifact writes must never block
       // poison-message acknowledgement.
     }
@@ -147,7 +145,7 @@ export function appendBusterProcessDiagnostic(record: JsonObject = {}): void {
   } catch (error) {
     try {
       process.stderr.write(`[BUSTER-DIAGNOSTIC] process diagnostic write failed: ${safeErrorMessage(error)}\n`);
-    } catch (_stderrError) {
+    } catch (_stderrError) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
       // KEEP_TYPED_POLICY: process diagnostics must never block shutdown/cleanup.
     }
   }

@@ -21,6 +21,7 @@ Use this section when changing KubeClaw source code, verification, generated doc
 - [Linting rules](linting-rules.md)
 - [Linting improvement audit and target contract](linting-improvement-audit.md)
 - [Linting improvement implementation plan](linting-improvement-plan.md)
+- [Linting phase 8 and 9 evaluation](linting-phase8-9-evaluation.md)
 - [Adding verification](adding-verification.md)
 - [Testing and CI](testing-and-ci.md)
 - [Documentation conventions](documentation-conventions.md)

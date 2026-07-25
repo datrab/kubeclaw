@@ -1,6 +1,5 @@
 // OpenClaw diagnostic subscription bridge for plugin-owned runtime events.
 // Keep this self-contained: OpenClaw provides the plugin SDK at runtime.
-// @ts-expect-error kubeclaw plugin builds intentionally avoid a repo-wide @types/node dependency.
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url) as (id: string) => unknown;
@@ -17,8 +16,15 @@ function unsubscribe(subscription: DiagnosticSubscription): void {
     return;
   }
   if (!subscription || typeof subscription !== 'object') return;
-  const fn = subscription.unsubscribe ?? subscription.dispose ?? subscription.off;
-  if (typeof fn === 'function') fn.call(subscription);
+  if (typeof subscription.unsubscribe === 'function') {
+    subscription.unsubscribe();
+    return;
+  }
+  if (typeof subscription.dispose === 'function') {
+    subscription.dispose();
+    return;
+  }
+  if (typeof subscription.off === 'function') subscription.off();
 }
 
 export function subscribeModelUsageDiagnostics(handler: DiagnosticHandler): () => void {

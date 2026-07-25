@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-verification-wrapper-surface' });
 import assert from 'assert';
@@ -5,15 +6,8 @@ import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const helperPath = path.join(sourceRoot, 'tests/verification/lib/run-contract-suite.sh');
 const shellHelperPath = path.join(sourceRoot, 'tests/verification/lib/verification-shell.sh');
 const cleanupPath = path.join(sourceRoot, 'tests/verification/lib/cleanup-home-artifacts.sh');
@@ -28,8 +22,8 @@ const fullSource = fs.readFileSync(fullPath, 'utf8');
 
 assert.equal(fastSource.includes('tests/verification/lib/run-contract-suite.sh'), true, 'fast wrapper should delegate deterministic contract list to shared helper');
 assert.equal(fullSource.includes('tests/verification/lib/run-contract-suite.sh'), true, 'full wrapper should delegate deterministic contract list to shared helper');
-assert.equal(fastSource.includes('tests/verification/lib/verification-shell.sh'), true, 'fast wrapper should use shared quiet shell runner');
-assert.equal(fullSource.includes('tests/verification/lib/verification-shell.sh'), true, 'full wrapper should use shared quiet shell runner');
+assert.equal(fastSource.includes('source "$SCRIPT_DIR/lib/verification-shell.sh"'), true, 'fast wrapper should use shared quiet shell runner');
+assert.equal(fullSource.includes('source "$SCRIPT_DIR/lib/verification-shell.sh"'), true, 'full wrapper should use shared quiet shell runner');
 assert.equal(shellHelperSource.includes('verification_run_step()'), true, 'shared shell runner should expose quiet step execution');
 assert.equal(shellHelperSource.includes('VERIFICATION_VERBOSE'), true, 'shared shell runner should preserve verbose opt-in');
 assert.equal(shellHelperSource.includes('WARNING output from'), true, 'shared shell runner should print warning output from passing steps');
@@ -45,8 +39,8 @@ assert.equal(cleanupSource.includes('status-store-slice-*'), true, 'cleanup help
 assert.equal(cleanupSource.includes('module-completion-test-*'), true, 'cleanup helper should cover os.tmpdir module completion artifacts');
 assert.equal(cleanupSource.includes('operator-alert-fallback-contract-*'), true, 'cleanup helper should cover operator alert fallback artifacts');
 assert.equal(cleanupSource.includes('observability-ingester-test-*'), true, 'cleanup helper should cover observability ingester artifacts');
-assert.equal(cleanupSource.includes('[[ "$HOME_ROOT" != "/home" ]]'), true, 'cleanup helper should refuse broad non-/home roots');
-assert.equal(cleanupSource.includes('[[ "$WORKSPACE_ROOT" != "/home/node/.openclaw/workspace" ]]'), true, 'cleanup helper should refuse unexpected workspace roots');
+assert.match(cleanupSource, /\[\[ \$HOME_ROOT != "\/home" \]\]/, 'cleanup helper should refuse broad non-/home roots');
+assert.match(cleanupSource, /\[\[ \$WORKSPACE_ROOT != "\/home\/node\/\.openclaw\/workspace" \]\]/, 'cleanup helper should refuse unexpected workspace roots');
 assert.equal(fs.existsSync(path.join(sourceRoot, 'tests/verification/behavior/verify.mjs')), false, 'retired behavior harness should stay removed');
 assert.equal(fastSource.includes('tests/verification/behavior/verify.mjs'), false, 'fast wrapper should not invoke retired behavior harness');
 assert.equal(fullSource.includes('tests/verification/behavior/verify.mjs'), false, 'full wrapper should not invoke retired behavior harness');

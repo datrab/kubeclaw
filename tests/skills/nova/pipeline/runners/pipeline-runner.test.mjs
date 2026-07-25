@@ -46,6 +46,37 @@ function testConfig(dir) {
   return config;
 }
 
+function lifecycleReadModels(config) {
+  return JSON.parse(fs.readFileSync(path.join(
+    config.paths.swarm_dir,
+    'logs',
+    'pipeline',
+    'runs',
+    config._runId,
+    'lifecycle',
+    'read-models.json',
+  ), 'utf8'));
+}
+
+function terminalCompletionPath(config) {
+  return path.join(
+    config.paths.swarm_dir,
+    'logs',
+    'pipeline',
+    'runs',
+    config._runId,
+    'terminal-generator-completions.json',
+  );
+}
+
+function appendCompletedRun(config, progress) {
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
+    progress,
+    result: { exit: 0, reason: 'PIPELINE_COMPLETE' },
+  });
+}
+
 test('runPipeline releases the run lock when observer setup fails', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-setup-'));
   const lockPath = path.join(dir, 'logs', 'pipeline', 'active-run.lock.json');
@@ -250,58 +281,11 @@ function completedRunConfig(dir, calls, pluginConfig = {}) {
   return config;
 }
 
-test('completePipeline halts when a required terminal generator is disabled', async () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-disabled-'));
-  const calls = [];
-  const config = completedRunConfig(dir, calls, {
-    modules: {
-      'test.project_summary': { enabled: false },
-    },
-  });
-  const progress = { modules: {}, gates: {}, execution_order: [] };
-  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
-
-  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
-  fs.writeFileSync(runPipelineJsonl, JSON.stringify({
-    v: 1,
-    type: 'observability.degraded',
-    run_id: config._runId,
-    project: config.project,
-    component: 'discord',
-    surface: 'webhook',
-    reason: 'webhook_url_missing',
-    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
-  }) + '\n');
-
-  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
-  const exitCode = await completePipeline(config, progress, {
-    deps: { pipelineRunner: { writeSummary: () => ({}), output: () => {} } },
-  });
-
-  assert.equal(exitCode, 1);
-  assert.deepEqual(calls, []);
-
-  const readModels = JSON.parse(fs.readFileSync(path.join(
-    config.paths.swarm_dir,
-    'logs',
-    'pipeline',
-    'runs',
-    config._runId,
-    'lifecycle',
-    'read-models.json',
-  ), 'utf8'));
-  assert.equal(readModels.pipeline.status, 'HALTED');
-  assert.equal(readModels.pipeline.step_type, 'generator');
-  assert.equal(readModels.pipeline.step_id, 'generator:project_summary');
-});
-
-test('preparePipelineStart sends architecture validator start and pass notifications', async () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-arch-notify-'));
-  const calls = [];
+function architectureConfig(dir, calls, findings = []) {
   const config = {
-    project: 'pipeline-arch-notify',
-    _runId: 'run-arch-notify',
-    run_id: 'run-arch-notify',
+    project: findings.length ? 'pipeline-arch-approval' : 'pipeline-arch-notify',
+    _runId: findings.length ? 'run-arch-approval' : 'run-arch-notify',
+    run_id: findings.length ? 'run-arch-approval' : 'run-arch-notify',
     repo_root: dir,
     fallback_model: 'gpt-5.4',
     paths: {
@@ -319,10 +303,57 @@ test('preparePipelineStart sends architecture validator start and pass notificat
     stageOwners: {},
     restrictedCapabilityAllowlist: {},
   }, {
-    builtinModules: [
-      validatorDefinition('validator:architecture', calls),
-    ],
+    builtinModules: [validatorDefinition('validator:architecture', calls, { findings })],
   }).registry;
+  return config;
+}
+
+function writeRunObservability(config, entries) {
+  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
+  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
+  fs.writeFileSync(runPipelineJsonl, entries.map((entry) => JSON.stringify({
+    v: 1,
+    run_id: config._runId,
+    project: config.project,
+    ...entry,
+  })).join('\n') + '\n');
+}
+
+test('completePipeline halts when a required terminal generator is disabled', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-terminal-disabled-'));
+  const calls = [];
+  const config = completedRunConfig(dir, calls, {
+    modules: {
+      'test.project_summary': { enabled: false },
+    },
+  });
+  const progress = { modules: {}, gates: {}, execution_order: [] };
+  writeRunObservability(config, [{
+    type: 'observability.degraded',
+    component: 'discord',
+    surface: 'webhook',
+    reason: 'webhook_url_missing',
+    detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
+  }]);
+
+  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
+  const exitCode = await completePipeline(config, progress, {
+    deps: { pipelineRunner: { writeSummary: () => ({}), output: () => {} } },
+  });
+
+  assert.equal(exitCode, 1);
+  assert.deepEqual(calls, []);
+
+  const readModels = lifecycleReadModels(config);
+  assert.equal(readModels.pipeline.status, 'HALTED');
+  assert.equal(readModels.pipeline.step_type, 'generator');
+  assert.equal(readModels.pipeline.step_id, 'generator:project_summary');
+});
+
+test('preparePipelineStart sends architecture validator start and pass notifications', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-arch-notify-'));
+  const calls = [];
+  const config = architectureConfig(dir, calls);
   const discordCalls = [];
 
   const result = await preparePipelineStart(config, {
@@ -357,31 +388,7 @@ test('preparePipelineStart lists architecture findings and requires approval bef
     severity: 'warning',
     explanation: 'Module ownership boundary is under-modeled.',
   };
-  const config = {
-    project: 'pipeline-arch-approval',
-    _runId: 'run-arch-approval',
-    run_id: 'run-arch-approval',
-    repo_root: dir,
-    fallback_model: 'gpt-5.4',
-    paths: {
-      swarm_dir: path.join(dir, '.swarm'),
-      modules_dir: path.join(dir, '.swarm', 'modules'),
-      progress_file: path.join(dir, '.swarm', 'progress.json'),
-    },
-    arch_validation: { enabled: true, agent_enabled: false, timeout_minutes: 1, model: 'gpt-5.4' },
-  };
-  config.pluginRegistry = buildPluginRegistry({
-    enabled: true,
-    allowCustomModules: false,
-    extraModulePaths: [],
-    modules: {},
-    stageOwners: {},
-    restrictedCapabilityAllowlist: {},
-  }, {
-    builtinModules: [
-      validatorDefinition('validator:architecture', calls, { findings: [finding] }),
-    ],
-  }).registry;
+  const config = architectureConfig(dir, calls, [finding]);
   const discordCalls = [];
   const approvalCalls = [];
   const progress = {
@@ -430,20 +437,9 @@ test('completePipeline resumes missing terminal generators for completed runs', 
   const calls = [];
   const config = completedRunConfig(dir, calls);
   const progress = { modules: {}, gates: {}, execution_order: [] };
-  const completionPath = path.join(
-    config.paths.swarm_dir,
-    'logs',
-    'pipeline',
-    'runs',
-    config._runId,
-    'terminal-generator-completions.json',
-  );
+  const completionPath = terminalCompletionPath(config);
 
-  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
-  appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
-    progress,
-    result: { exit: 0, reason: 'PIPELINE_COMPLETE' },
-  });
+  appendCompletedRun(config, progress);
   fs.mkdirSync(path.dirname(completionPath), { recursive: true });
   fs.writeFileSync(completionPath, JSON.stringify({
     schemaVersion: 'v1',
@@ -472,22 +468,11 @@ test('completePipeline repairs stale terminal artifacts for completed resumed ru
   const calls = [];
   const config = completedRunConfig(dir, calls);
   const progress = { modules: {}, gates: {}, execution_order: [] };
-  const completionPath = path.join(
-    config.paths.swarm_dir,
-    'logs',
-    'pipeline',
-    'runs',
-    config._runId,
-    'terminal-generator-completions.json',
-  );
+  const completionPath = terminalCompletionPath(config);
   const latestPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'latest.json');
   const runTelemetryPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
 
-  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
-  appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
-    progress,
-    result: { exit: 0, reason: 'PIPELINE_COMPLETE' },
-  });
+  appendCompletedRun(config, progress);
   fs.mkdirSync(path.dirname(completionPath), { recursive: true });
   fs.writeFileSync(completionPath, JSON.stringify({
     schemaVersion: 'v1',
@@ -598,15 +583,7 @@ test('completePipeline halts when configured final preview lacks final-buster UR
   assert.equal(exitCode, 1);
   assert.deepEqual(calls, []);
 
-  const readModels = JSON.parse(fs.readFileSync(path.join(
-    config.paths.swarm_dir,
-    'logs',
-    'pipeline',
-    'runs',
-    config._runId,
-    'lifecycle',
-    'read-models.json',
-  ), 'utf8'));
+  const readModels = lifecycleReadModels(config);
   assert.equal(readModels.pipeline.status, 'HALTED');
   assert.equal(readModels.pipeline.step_type, 'pipeline');
   assert.equal(readModels.pipeline.step_id, 'final_preview_delivery');
@@ -625,15 +602,7 @@ test('completePipeline writes summary before terminal generators and completes a
   appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
   calls.inspect = (stageId) => {
     if (stageId !== 'generator:pipeline_review') return;
-    const readModels = JSON.parse(fs.readFileSync(path.join(
-      config.paths.swarm_dir,
-      'logs',
-      'pipeline',
-      'runs',
-      config._runId,
-      'lifecycle',
-      'read-models.json',
-    ), 'utf8'));
+    const readModels = lifecycleReadModels(config);
     assert.notEqual(readModels.pipeline.status, 'COMPLETED');
     assert.equal(fs.existsSync(summaryPath), true);
   };
@@ -748,15 +717,7 @@ test('completePipeline halts with generator timeout before recording clean compl
   assert.equal(terminalOutput.step_id, 'generator:pipeline_review');
   assert.equal(terminalOutput.terminal_decision.reasonCode, 'timeout');
 
-  const readModels = JSON.parse(fs.readFileSync(path.join(
-    config.paths.swarm_dir,
-    'logs',
-    'pipeline',
-    'runs',
-    config._runId,
-    'lifecycle',
-    'read-models.json',
-  ), 'utf8'));
+  const readModels = lifecycleReadModels(config);
   assert.equal(readModels.pipeline.status, 'HALTED');
   assert.equal(readModels.pipeline.step_type, 'generator');
   assert.equal(readModels.pipeline.step_id, 'generator:pipeline_review');
@@ -812,20 +773,14 @@ test('completePipeline blocks clean success with unresolved observability degrad
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-runner-observability-degraded-'));
   const config = completedRunConfig(dir, []);
   const progress = { modules: {}, gates: {}, execution_order: [] };
-  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
   const outputs = [];
-
-  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
-  fs.writeFileSync(runPipelineJsonl, JSON.stringify({
-    v: 1,
+  writeRunObservability(config, [{
     type: 'observability.degraded',
-    run_id: config._runId,
-    project: config.project,
     component: 'discord',
     surface: 'webhook',
     reason: 'webhook_url_missing',
     detail: 'discord webhook delivery skipped: config.discord_webhook_url is missing',
-  }) + '\n');
+  }]);
 
   appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
   const exitCode = await completePipeline(config, progress, {
@@ -852,15 +807,9 @@ test('completePipeline accepts restored observability degraded evidence with mat
   const calls = [];
   const config = completedRunConfig(dir, calls);
   const progress = { modules: {}, gates: {}, execution_order: [] };
-  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
-
-  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
-  fs.writeFileSync(runPipelineJsonl, [
+  writeRunObservability(config, [
     {
-      v: 1,
       type: 'observability.degraded',
-      run_id: config._runId,
-      project: config.project,
       component: 'telemetry_sink',
       surface: 'builtin.telemetry.redis',
       reason: 'telemetry_sink_failed',
@@ -869,10 +818,7 @@ test('completePipeline accepts restored observability degraded evidence with mat
       degraded_at: '2026-07-11T13:56:31.877Z',
     },
     {
-      v: 1,
       type: 'observability.restored',
-      run_id: config._runId,
-      project: config.project,
       component: 'telemetry_sink',
       surface: 'builtin.telemetry.redis',
       reason: 'telemetry_sink_failed',
@@ -882,7 +828,7 @@ test('completePipeline accepts restored observability degraded evidence with mat
       impacted_event_type: 'gate.started',
       restored_at: '2026-07-11T13:56:31.885Z',
     },
-  ].map((entry) => JSON.stringify(entry)).join('\n') + '\n');
+  ]);
 
   appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
   const exitCode = await completePipeline(config, progress, {
@@ -907,32 +853,23 @@ test('completePipeline keeps degraded evidence unresolved when restored health k
   const calls = [];
   const config = completedRunConfig(dir, calls);
   const progress = { modules: {}, gates: {}, execution_order: [] };
-  const runPipelineJsonl = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');
   const outputs = [];
-
-  fs.mkdirSync(path.dirname(runPipelineJsonl), { recursive: true });
-  fs.writeFileSync(runPipelineJsonl, [
+  writeRunObservability(config, [
     {
-      v: 1,
       type: 'observability.degraded',
-      run_id: config._runId,
-      project: config.project,
       component: 'telemetry_sink',
       surface: 'builtin.telemetry.redis',
       reason: 'telemetry_sink_failed',
       detail: 'telemetry sink timed out',
     },
     {
-      v: 1,
       type: 'observability.restored',
-      run_id: config._runId,
-      project: config.project,
       component: 'telemetry_sink',
       surface: 'builtin.telemetry.redis',
       reason: 'telemetry_sink_registry_failed',
       detail: 'different telemetry sink issue restored',
     },
-  ].map((entry) => JSON.stringify(entry)).join('\n') + '\n');
+  ]);
 
   appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
   const exitCode = await completePipeline(config, progress, {
@@ -1069,11 +1006,7 @@ test('terminal generator completion cache is isolated by run id when config is r
 
   config._runId = 'run-a';
   config.run_id = 'run-a';
-  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
-  appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
-    progress,
-    result: { exit: 0, reason: 'PIPELINE_COMPLETE' },
-  });
+  appendCompletedRun(config, progress);
   assert.equal(await completePipeline(config, progress, { deps }), 0);
   assert.deepEqual(calls, [
     'generator:project_summary',
@@ -1083,11 +1016,7 @@ test('terminal generator completion cache is isolated by run id when config is r
 
   config._runId = 'run-b';
   config.run_id = 'run-b';
-  appendPipelineLifecycleEvent(config, 'pipeline_run.started', { progress });
-  appendPipelineLifecycleEvent(config, 'pipeline_run.completed', {
-    progress,
-    result: { exit: 0, reason: 'PIPELINE_COMPLETE' },
-  });
+  appendCompletedRun(config, progress);
   assert.equal(await completePipeline(config, progress, { deps }), 0);
   assert.deepEqual(calls, [
     'generator:project_summary',

@@ -1,671 +1,84 @@
-import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 type UnknownRecord = Record<string, any>;
-type Validator = (value: any) => boolean;
-interface TelemetryPayloadSchema {
-  required: Record<string, Validator>;
-  optional: Record<string, Validator>;
-}
+type JsonSchema = Record<string, any>;
 
 export class TelemetryPayloadInvalidError extends Error {
-  code: string;
+  code = 'TELEMETRY_PAYLOAD_INVALID';
   eventType: string;
   validationErrors: string[];
-
   constructor(eventType: string, errors: string[] = []) {
     super(`Invalid telemetry payload for '${eventType}': ${errors.join('; ')}`);
     this.name = 'TelemetryPayloadInvalidError';
-    this.code = 'TELEMETRY_PAYLOAD_INVALID';
     this.eventType = eventType;
     this.validationErrors = [...errors];
   }
 }
 
+const contractRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../../contracts/telemetry/v1');
+const catalog = JSON.parse(fs.readFileSync(path.join(contractRoot, 'catalog.json'), 'utf8'));
+function readPayloadSchema(eventType: string): JsonSchema {
+  return JSON.parse(fs.readFileSync(path.join(contractRoot, 'payloads', `${eventType}.schema.json`), 'utf8'));
+}
+
+export const TELEMETRY_PAYLOAD_EVENT_TYPES: readonly string[] = Object.freeze([...catalog.event_types].sort());
+export const TELEMETRY_PAYLOAD_SCHEMAS: Readonly<Record<string, JsonSchema>> = Object.freeze(Object.fromEntries(
+  TELEMETRY_PAYLOAD_EVENT_TYPES.map((eventType) => [eventType, readPayloadSchema(eventType)]),
+));
+
 function isPlainObject(value: unknown): value is UnknownRecord {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
-
-function isFiniteNumber(value: unknown): boolean {
-  return typeof value === 'number' && Number.isFinite(value);
+function typeMatches(value: unknown, type: string): boolean {
+  if (type === 'null') return value === null;
+  if (type === 'array') return Array.isArray(value);
+  if (type === 'object') return isPlainObject(value);
+  if (type === 'integer') return Number.isInteger(value);
+  if (type === 'number') return typeof value === 'number' && Number.isFinite(value);
+  return typeof value === type;
 }
-
-function isNonEmptyString(value: unknown): value is string {
-  return typeof value === 'string' && value.trim().length > 0;
-}
-
-function optional(validator: Validator): Validator {
-  return (value: any) => selectTruthyValue(() => (value === undefined), () => (validator(value)));
-}
-
-function nullable(validator: Validator): Validator {
-  return (value: any) => selectTruthyValue(() => (selectTruthyValue(() => (value === null), () => (value === undefined))), () => (validator(value)));
-}
-
-const string: Validator = (value: any) => typeof value === 'string';
-const nonEmptyString: Validator = (value: any) => isNonEmptyString(value);
-const number: Validator = (value: any) => isFiniteNumber(value);
-const boolean: Validator = (value: any) => typeof value === 'boolean';
-const object: Validator = (value: any) => isPlainObject(value);
-const array: Validator = (value: any) => Array.isArray(value);
-const stringArray: Validator = (value: any) => Array.isArray(value) && value.every((item: any) => typeof item === 'string');
-const VERDICT_VALUES = new Set(['PASS', 'FAIL']);
-const TIMEOUT_POLICY_VALUES = new Set(['BLOCK', 'CONTINUE']);
-const verdict: Validator = (value: any) => VERDICT_VALUES.has(value);
-const any: Validator = () => true;
-const arrayOrObject: Validator = (value: any) => [Array.isArray(value), isPlainObject(value)].some(Boolean);
-const jsonScalar: Validator = (value: any) => value === null ? true : ['string', 'number', 'boolean'].includes(typeof value);
-const timeoutPolicy: Validator = (value: any) => TIMEOUT_POLICY_VALUES.has(value);
-function isJsonSafe(value: any, seen: Set<any> = new Set()): boolean {
-  if (jsonScalar(value)) return selectTruthyValue(() => (typeof value !== 'number'), () => (Number.isFinite(value)));
-  if (Array.isArray(value)) {
-    if (seen.has(value)) return false;
-    seen.add(value);
-    const ok = value.every((item) => isJsonSafe(item, seen));
-    seen.delete(value);
-    return ok;
+function validateSchema(value: unknown, schema: JsonSchema, field: string, seen: Set<unknown> = new Set()): string[] {
+  if((Array.isArray(value)||isPlainObject(value))&&seen.has(value))return[`${field.split('.')[1]??field} has invalid type or value`];
+  const nextSeen=new Set(seen);if(Array.isArray(value)||isPlainObject(value))nextSeen.add(value);
+  if (schema.const !== undefined && value !== schema.const) return [`${field} must equal ${JSON.stringify(schema.const)}`];
+  if (Array.isArray(schema.enum) && !schema.enum.some((candidate: unknown) => Object.is(candidate, value))) return [`${field} is not an allowed value`];
+  if (Array.isArray(schema.oneOf)) {
+    const matches = schema.oneOf.filter((candidate: JsonSchema) => validateSchema(value, candidate, field,seen).length === 0);
+    return matches.length === 1 ? [] : [`${field} must match exactly one allowed schema`];
   }
-  if (!isPlainObject(value)) return false;
-  if (seen.has(value)) return false;
-  seen.add(value);
-  const ok = Object.values(value).every((item: any) => selectTruthyValue(() => (item === undefined), () => (isJsonSafe(item, seen))));
-  seen.delete(value);
-  return ok;
-}
-const jsonObject: Validator = (value: any) => isPlainObject(value) && isJsonSafe(value);
-
-const commonFields: Record<string, Validator> = {
-  module_id: nullable(nonEmptyString),
-  gate_id: nullable(nonEmptyString),
-  gate_type: nullable(nonEmptyString),
-  attempt: nullable(number),
-  dispatch_id: nullable(nonEmptyString),
-  session_key: nullable(nonEmptyString),
-  agent_id: nullable(nonEmptyString),
-  model_call_id: nullable(nonEmptyString),
-  tool_call_id: nullable(nonEmptyString),
-  artifact_reference: optional(nonEmptyString),
-  content_completeness: optional(nonEmptyString),
-};
-
-function schema(required: Record<string, Validator> = {}, optionalFields: Record<string, Validator> = {}): TelemetryPayloadSchema {
-  return {
-    required,
-    optional: { ...commonFields, ...optionalFields },
-  };
+  const types = Array.isArray(schema.type) ? schema.type : schema.type ? [schema.type] : [];
+  if (types.length > 0 && !types.some((type: string) => typeMatches(value, type))) return [`${field} has invalid type`];
+  if (typeof value === 'string') {
+    if (schema.minLength != null && value.length < schema.minLength) return [`${field} is too short`];
+    if (schema.pattern && !(new RegExp(schema.pattern)).test(value)) return [`${field} has invalid format`];
+    if (schema.format === 'date-time' && Number.isNaN(Date.parse(value))) return [`${field} must be an ISO timestamp`];
+  }
+  if (typeof value === 'number' && schema.minimum != null && value < schema.minimum) return [`${field} is below minimum`];
+  if (Array.isArray(value) && schema.items) return value.flatMap((item, index) => validateSchema(item, schema.items, `${field}[${index}]`,nextSeen));
+  if(Array.isArray(value)&&!schema.items)return value.flatMap((item,index)=>validateSchema(item,{},`${field}[${index}]`,nextSeen));
+  if (isPlainObject(value) && schema.properties) {
+    const errors: string[] = [];
+    for (const required of schema.required || []) if (!Object.prototype.hasOwnProperty.call(value, required) || value[required] === undefined) errors.push(`${field}.${required} is required`);
+    if (schema.additionalProperties === false) for (const [key,child] of Object.entries(value)) if (child!==undefined&&!schema.properties[key]) errors.push(`${field}.${key} is not allowed`);
+    else if(isPlainObject(schema.additionalProperties))for(const[key,child]of Object.entries(value))if(child!==undefined&&!schema.properties[key])errors.push(...validateSchema(child,schema.additionalProperties,`${field}.${key}`,nextSeen));
+    for (const [key, child] of Object.entries(value)) if (child!==undefined&&schema.properties[key]) errors.push(...validateSchema(child, schema.properties[key], `${field}.${key}`,nextSeen));
+    return errors;
+  }
+  if(isPlainObject(value)&&!schema.properties&&isPlainObject(schema.additionalProperties))return Object.entries(value).flatMap(([key,child])=>validateSchema(child,schema.additionalProperties,`${field}.${key}`,nextSeen));
+  if(isPlainObject(value)&&!schema.properties)return Object.entries(value).flatMap(([key,child])=>validateSchema(child,{},`${field}.${key}`,nextSeen));
+  return [];
 }
 
-export const TELEMETRY_PAYLOAD_SCHEMAS: Record<string, TelemetryPayloadSchema> = Object.freeze({
-  'agent.killed': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    label: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    has_changes: nullable(boolean),
-    duration_seconds: nullable(number),
-    files_changed: nullable(stringArray),
-    reason: nullable(string),
-  }),
-  'agent.progress': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    label: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    elapsed_seconds: nullable(number),
-    transcript_events: nullable(number),
-    files_touched: nullable(array),
-    last_activity: nullable(string),
-    status: optional(nonEmptyString),
-  }),
-  'agent.spawn.requested': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    requester_session_key: nullable(nonEmptyString),
-    child_run_id: nullable(nonEmptyString),
-    mode: nullable(nonEmptyString),
-    spawn_mode: nullable(nonEmptyString),
-    thread: nullable(boolean),
-    expects_completion_message: nullable(boolean),
-    requester_origin: nullable(jsonObject),
-    requested_at: nullable(nonEmptyString),
-  }),
-  'agent.spawned': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    label: nullable(string),
-    model: nullable(nonEmptyString),
-    dispatch: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    substep: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    timeout_minutes: nullable(number),
-    session_key: nullable(nonEmptyString),
-    thinking_level: nullable(nonEmptyString),
-  }),
-  'agent.delivery.target': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    requester_session_key: nullable(nonEmptyString),
-    child_session_key: nullable(nonEmptyString),
-    child_run_id: nullable(nonEmptyString),
-    spawn_mode: nullable(nonEmptyString),
-    expects_completion_message: nullable(boolean),
-    requester_origin: nullable(jsonObject),
-    targeted_at: nullable(nonEmptyString),
-  }),
-  'agent.ended': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    agent_scope: nullable(nonEmptyString),
-    label: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    outcome: nullable(nonEmptyString),
-    reason: nullable(string),
-    duration_seconds: nullable(number),
-    final_message_count: nullable(number),
-    error: nullable(jsonObject),
-    error_message: nullable(string),
-    ended_at: nullable(nonEmptyString),
-  }),
-  'agent.llm.input.summary': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    provider: nullable(nonEmptyString),
-    model: nullable(nonEmptyString),
-    model_call_id: nullable(nonEmptyString),
-    prompt_chars: nullable(number),
-    system_prompt_chars: nullable(number),
-    history_message_count: nullable(number),
-    request: nullable(jsonObject),
-  }),
-  'agent.llm.output.summary': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    provider: nullable(nonEmptyString),
-    model: nullable(nonEmptyString),
-    model_call_id: nullable(nonEmptyString),
-    response_chars: nullable(number),
-    assistant_response_chars: nullable(number),
-    history_message_count: nullable(number),
-    usage: nullable(jsonObject),
-    input_tokens: nullable(number),
-    output_tokens: nullable(number),
-  }),
-  'agent.tool.started': schema({ tool_name: nonEmptyString }, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    tool_call_id: nullable(nonEmptyString),
-    params_bytes: nullable(number),
-    param_keys: nullable(stringArray),
-  }),
-  'agent.tool.finished': schema({ tool_name: nonEmptyString }, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    tool_call_id: nullable(nonEmptyString),
-    outcome: nullable(nonEmptyString),
-    reason: nullable(string),
-    duration_seconds: nullable(number),
-    result_bytes: nullable(number),
-    error: nullable(jsonObject),
-    error_message: nullable(string),
-  }),
-  'agent.model.started': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    provider: nullable(nonEmptyString),
-    model: nullable(nonEmptyString),
-    model_call_id: nullable(nonEmptyString),
-    request: nullable(jsonObject),
-  }),
-  'agent.model.ended': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    provider: nullable(nonEmptyString),
-    model: nullable(nonEmptyString),
-    model_call_id: nullable(nonEmptyString),
-    outcome: nullable(nonEmptyString),
-    reason: nullable(string),
-    duration_seconds: nullable(number),
-    usage: nullable(jsonObject),
-    input_tokens: nullable(number),
-    output_tokens: nullable(number),
-    cost_usd: nullable(number),
-    error: nullable(jsonObject),
-    error_message: nullable(string),
-  }),
-  'agent.session.started': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    session_id: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    started_at: nullable(nonEmptyString),
-  }),
-  'agent.session.ended': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    session_id: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    outcome: nullable(nonEmptyString),
-    reason: nullable(string),
-    duration_seconds: nullable(number),
-    error: nullable(jsonObject),
-    error_message: nullable(string),
-    ended_at: nullable(nonEmptyString),
-  }),
-  'agent.transcript': schema({}, {
-    agent_type: nullable(nonEmptyString),
-    label: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    line_kind: optional(nonEmptyString),
-    text: optional(string),
-    transcript_offset: nullable(number),
-    line_count: nullable(number),
-  }),
-  'approval.requested': schema({ approval_id: nonEmptyString, prompt: nonEmptyString, options: array }, {
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    gate_title: nullable(string),
-    timeout_minutes: nullable(number),
-    timeout_policy: optional(timeoutPolicy),
-  }),
-  'approval.resolved': schema({ approval_id: nonEmptyString }, {
-    module_id: nullable(nonEmptyString),
-    choice: nullable(string),
-    resolved_by: nullable(string),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    status: nullable(string),
-    decision_by: nullable(string),
-  }),
-  'budget.exceeded': schema({ threshold: any, current: number, limit: number, unit: nonEmptyString }, {
-    current_cost_usd: nullable(number),
-    budget_usd: nullable(number),
-    percent_used: nullable(number),
-  }),
-  'budget.warning': schema({ threshold: any, current: number, limit: number, unit: nonEmptyString }, {
-    current_cost_usd: nullable(number),
-    budget_usd: nullable(number),
-    percent_used: nullable(number),
-  }),
-  'cost.update': schema({}, {
-    module_id: nullable(nonEmptyString),
-    agent_type: nullable(nonEmptyString),
-    label: nullable(string),
-    cost_usd: nullable(number),
-    total_cost_usd: nullable(number),
-    input_tokens: nullable(number),
-    output_tokens: nullable(number),
-    gate_id: nullable(nonEmptyString),
-    model: nullable(nonEmptyString),
-    estimated_cost_usd: nullable(number),
-    cumulative_cost_usd: nullable(number),
-    tokens_in: nullable(number),
-    tokens_out: nullable(number),
-  }),
-  'error.escalation': schema({}, {
-    terminal_status: nullable(nonEmptyString),
-    terminal_decision: nullable(jsonObject),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    fail_count: nullable(number),
-    last_failure: nullable(string),
-    action: nullable(nonEmptyString),
-    step_type: nullable(nonEmptyString),
-    step_id: nullable(nonEmptyString),
-  }),
-  'gate.started': schema({ gate_id: nonEmptyString }, {
-    gate_type: nullable(nonEmptyString),
-    title: nullable(string),
-    reviewers: nullable(arrayOrObject),
-  }),
-  'gate.verdict': schema({ gate_id: nonEmptyString, verdict }, {
-    run_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    issues_count: nullable(number),
-    blockers_count: nullable(number),
-    fix_cycle: nullable(number),
-    duration_seconds: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    reason: nullable(string),
-    gateway_label: nullable(string),
-  }),
-  'module.started': schema({ module_id: nonEmptyString }, {
-    model: nullable(nonEmptyString),
-    attempt: nullable(number),
-  }),
-  'module.status_changed': schema({ module_id: nonEmptyString }, {
-    title: nullable(string),
-    old_status: nullable(string),
-    new_status: nullable(string),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    phase: nullable(nonEmptyString),
-    model: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    duration_seconds: nullable(number),
-    cost_estimate_usd: nullable(number),
-    commit_hash: nullable(nonEmptyString),
-    reason: nullable(string),
-  }),
-  'observability.degraded': schema({ component: nonEmptyString, surface: nonEmptyString, reason: nonEmptyString }, {
-    detail: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    agent_type: nullable(nonEmptyString),
-    impacted_event_type: nullable(nonEmptyString),
-    stream_key: nullable(nonEmptyString),
-    degraded_at: nullable(nonEmptyString),
-    hook_id: nullable(nonEmptyString),
-    stage_id: nullable(nonEmptyString),
-    validation_errors: nullable(array),
-    stdout: nullable(string),
-    error: nullable(string),
-    authorization: nullable(string),
-    payload: nullable(object),
-    transcript: nullable(arrayOrObject),
-  }),
-  'observability.restored': schema({ component: nonEmptyString, surface: nonEmptyString, reason: nonEmptyString }, {
-    detail: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    agent_type: nullable(nonEmptyString),
-    impacted_event_type: nullable(nonEmptyString),
-    stream_key: nullable(nonEmptyString),
-    hook_id: nullable(nonEmptyString),
-    stage_id: nullable(nonEmptyString),
-    validation_errors: nullable(array),
-    stdout: nullable(string),
-    error: nullable(string),
-    authorization: nullable(string),
-    payload: nullable(object),
-    transcript: nullable(arrayOrObject),
-    degraded_at: nullable(nonEmptyString),
-    restored_at: nullable(nonEmptyString),
-    restored_after_ms: nullable(number),
-  }),
-  'phase.completed': schema({ module_id: nonEmptyString, phase: nonEmptyString }),
-  'phase.started': schema({ module_id: nonEmptyString, phase: nonEmptyString }, {
-    model: nullable(nonEmptyString),
-  }),
-  'pipeline.completed': schema({ terminal_status: nonEmptyString }, {
-    reason_code: nullable(string),
-    duration_seconds: nullable(number),
-    modules_passed: nullable(number),
-    modules_failed: nullable(number),
-    modules_total: nullable(number),
-    total_cost_usd: nullable(number),
-  }),
-  'pipeline.halted': schema({ reason: nonEmptyString }, {
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    terminal_status: nullable(nonEmptyString),
-    terminal_decision: nullable(jsonObject),
-    rate_limit_exhausted: nullable(boolean),
-    max_rate_limit_pauses: nullable(number),
-    step_type: nullable(nonEmptyString),
-    step_id: nullable(nonEmptyString),
-  }),
-  'plugin.event': schema({ plugin_id: nonEmptyString, plugin_event: nonEmptyString, details: jsonObject }, {
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    agent_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    status: nullable(nonEmptyString),
-    outcome: nullable(nonEmptyString),
-    reason: nullable(string),
-    severity: nullable(nonEmptyString),
-    duration_seconds: nullable(number),
-  }),
-  'pipeline.started': schema({ modules: array, gates: array, execution_order: array, resume: boolean }, {
-    models: nullable(object),
-    nova_prompt: nullable(string),
-    manifest_fingerprint: nonEmptyString,
-    manifest_reference: nonEmptyString,
-  }),
-  'rate_limit.detected': schema({}, {
-    run_id: nullable(nonEmptyString),
-    agent_type: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    provider: nullable(nonEmptyString),
-    retry_after_seconds: nullable(number),
-    pause_count: nullable(number),
-    max_pauses: nullable(number),
-    cooldown_ms: nullable(number),
-    cooldown_source: nullable(nonEmptyString),
-    resume_at: nullable(nonEmptyString),
-    detail: nullable(string),
-  }),
-  'retry.exhausted': schema({}, {
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    attempt: nullable(number),
-    phase: nullable(nonEmptyString),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    session_key: nullable(nonEmptyString),
-    reason: nullable(string),
-    max_attempts: nullable(number),
-    max_fails: nullable(number),
-  }),
-  'retry.scheduled': schema({ module_id: nonEmptyString }, {
-    attempt: nullable(number),
-    max_attempts: nullable(number),
-    delay_seconds: nullable(number),
-    reason: nullable(string),
-    dispatch_id: nullable(nonEmptyString),
-    gateway_label: nullable(string),
-    session_key: nullable(nonEmptyString),
-    max_fails: nullable(number),
-  }),
-  'system.io_warning': schema({ component: nonEmptyString, surface: nonEmptyString, reason: nonEmptyString, operation: nonEmptyString, path: nonEmptyString }, {
-    path_role: nullable(nonEmptyString),
-    detail: nullable(string),
-    code: nullable(nonEmptyString),
-    errno: nullable(number),
-    syscall: nullable(nonEmptyString),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    warning_at: nullable(nonEmptyString),
-  }),
-  'summary.completed': schema({ summary_type: nonEmptyString }, {
-    gateway_label: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    status: nullable(string),
-    reason: nullable(string),
-    model: nullable(nonEmptyString),
-    runtime: nullable(nonEmptyString),
-    output: nullable(string),
-    output_path: nullable(string),
-    output_dir: nullable(string),
-    markdown_path: nullable(string),
-    data_path: nullable(string),
-    case_study_base_path: nullable(string),
-    summary_json_path: nullable(string),
-    pipeline_summary_path: nullable(string),
-    latest_json_path: nullable(string),
-    terminal_status: nullable(nonEmptyString),
-    terminal_decision: nullable(jsonObject),
-    reason_code: nullable(string),
-  }),
-  'summary.started': schema({ summary_type: nonEmptyString }, {
-    gateway_label: nullable(string),
-    module_id: nullable(nonEmptyString),
-    gate_id: nullable(nonEmptyString),
-    gate_type: nullable(nonEmptyString),
-    session_key: nullable(nonEmptyString),
-    attempt: nullable(number),
-    dispatch_id: nullable(nonEmptyString),
-    status: nullable(string),
-    model: nullable(nonEmptyString),
-    runtime: nullable(nonEmptyString),
-    output_dir: nullable(string),
-    terminal_status: nullable(nonEmptyString),
-    terminal_decision: nullable(jsonObject),
-    reason_code: nullable(string),
-  }),
-  'artifact.published': schema({ artifact_id:nonEmptyString, logical_id:nonEmptyString, kind:nonEmptyString, media_type:nonEmptyString, byte_length:number, sha256:nonEmptyString, content_class:nonEmptyString, reference:nonEmptyString }, { completeness:nonEmptyString, original_byte_length:nullable(number), original_sha256:nullable(nonEmptyString), transformation:nullable(string) }),
-  'lifecycle.transition': schema({ lifecycle_version:nonEmptyString, new_state:nonEmptyString, reason_code:nonEmptyString, effective_at:nonEmptyString, authority:nonEmptyString }, { previous_state:nullable(nonEmptyString) }),
-  'lifecycle.snapshot': schema({ lifecycle_version:nonEmptyString, read_models:jsonObject }, { event_count:number, last_cursor:nullable(nonEmptyString) }),
-  'producer.health': schema({ producer_id:nonEmptyString, status:nonEmptyString, invalid_count:number, quarantined_count:number, dead_letter_count:number }, { last_successful_emission:nullable(nonEmptyString), lag:nullable(number), checkpoint:nullable(nonEmptyString), missing_payload_count:number, restart_count:number, reconciliation:nullable(jsonObject) }),
-  'terminal.closure': schema({ outcome:nonEmptyString, reason_code:nonEmptyString, manifest_fingerprint:nonEmptyString, observability:nonEmptyString }, { duration_ms:nullable(number), counts:jsonObject, cost:nullable(jsonObject), last_work_id:nullable(nonEmptyString), references:array }),
-  'runtime.log': schema({ level:nonEmptyString, component:nonEmptyString, message:string }, { error_class:nullable(nonEmptyString), reason_code:nullable(nonEmptyString) }),
-  'git.evidence': schema({ repository:nonEmptyString }, { branch:nullable(nonEmptyString), starting_commit:nullable(nonEmptyString), final_commit:nullable(nonEmptyString), dirty:nullable(boolean), files_touched:stringArray, diff_stat:nullable(string), diff_reference:nullable(nonEmptyString) }),
-  'quality.evidence': schema({ item_type:nonEmptyString, verdict:nonEmptyString }, { suite:nullable(nonEmptyString), check:nullable(nonEmptyString), skipped_reason:nullable(string), findings:array, dispositions:array, source_commit:nullable(nonEmptyString), artifact_references:array, preview_url:nullable(nonEmptyString) }),
-  'infrastructure.evidence': schema({ evidence_type:nonEmptyString, status:nonEmptyString }, { workload:nullable(jsonObject), restarts:nullable(number), termination_reason:nullable(nonEmptyString), readiness:nullable(boolean), resource_usage:nullable(jsonObject), namespace_lease:nullable(jsonObject), rollout:nullable(jsonObject), preview_url:nullable(nonEmptyString), redis:nullable(jsonObject), gateway:nullable(jsonObject), delivery:nullable(jsonObject) }),
-  'evaluation.fact': schema({ dimension:nonEmptyString, value:any }, { fingerprint:nullable(nonEmptyString) }),
-  'command.requested': schema({ command_id:nonEmptyString, command_type:nonEmptyString, actor:nonEmptyString, capability:nonEmptyString, expires_at:nonEmptyString, expected_lifecycle_version:number }, { target:nullable(jsonObject), decision:nullable(nonEmptyString) }),
-  'command.accepted': schema({ command_id:nonEmptyString, command_type:nonEmptyString }, { actor:nullable(nonEmptyString), target:nullable(jsonObject) }),
-  'command.rejected': schema({ command_id:nonEmptyString, reason_code:nonEmptyString }, { command_type:nullable(nonEmptyString), actor:nullable(nonEmptyString), target:nullable(jsonObject) }),
-  'command.completed': schema({ command_id:nonEmptyString, command_type:nonEmptyString }, { actor:nullable(nonEmptyString), target:nullable(jsonObject), result:nullable(jsonObject) }),
-});
-
-export const TELEMETRY_PAYLOAD_EVENT_TYPES: readonly string[] = Object.freeze(Object.keys(TELEMETRY_PAYLOAD_SCHEMAS).sort());
+export function validateJsonSchema(value:unknown,schema:JsonSchema,field='value'):string[]{return validateSchema(value,schema,field);}
 
 export function validateTelemetryEventPayload(eventType: string, payload: unknown = {}): string[] {
-  const errors: string[] = [];
-  if (!isNonEmptyString(eventType)) errors.push('eventType must be a non-empty string');
-  if (!isPlainObject(payload)) {
-    errors.push('payload must be an object');
-    return errors;
-  }
-
-  const eventSchema = TELEMETRY_PAYLOAD_SCHEMAS[eventType];
-  if (!eventSchema) {
-    errors.push(`eventType '${eventType}' is not registered in TELEMETRY_PAYLOAD_SCHEMAS`);
-    return errors;
-  }
-
-  const required = selectDefinedValue(() => (eventSchema.required), () => ({}));
-  const optionalFields = selectDefinedValue(() => (eventSchema.optional), () => ({}));
-  const allowed = new Set([...Object.keys(required), ...Object.keys(optionalFields)]);
-
-  for (const [field, validator] of Object.entries(required)) {
-    if (!Object.prototype.hasOwnProperty.call(payload, field)) {
-      errors.push(`${field} is required`);
-    } else if (!validator(payload[field])) {
-      errors.push(`${field} has invalid type or value`);
-    }
-  }
-
-  for (const [field, value] of Object.entries(payload)) {
-    if (!allowed.has(field)) {
-      errors.push(`${field} is not allowed for ${eventType}`);
-      continue;
-    }
-    const optionalValidator = optionalFields[field];
-    if (!Object.prototype.hasOwnProperty.call(required, field) && typeof optionalValidator === 'function' && !optionalValidator(value)) {
-      errors.push(`${field} has invalid type or value`);
-    }
-  }
-
-  return errors;
+  if (typeof eventType !== 'string' || !eventType.trim()) return ['eventType must be a non-empty string'];
+  const schema = TELEMETRY_PAYLOAD_SCHEMAS[eventType];
+  if (!schema) return [`eventType '${eventType}' is not registered in the contract catalog`];
+  if (!isPlainObject(payload)) return ['payload must be an object'];
+  return validateSchema(payload, schema, 'payload');
 }
 
 export function assertTelemetryEventPayload(eventType: string, payload: unknown = {}): UnknownRecord {
@@ -674,39 +87,18 @@ export function assertTelemetryEventPayload(eventType: string, payload: unknown 
   return payload as UnknownRecord;
 }
 
-
-const PLUGIN_EVENT_TOP_LEVEL_FIELDS = new Set<string>([
-  'module_id',
-  'gate_id',
-  'gate_type',
-  'agent_type',
-  'session_key',
-  'attempt',
-  'dispatch_id',
-  'gateway_label',
-  'status',
-  'outcome',
-  'reason',
-  'severity',
-  'duration_seconds',
+const PLUGIN_EVENT_TOP_LEVEL_FIELDS = new Set([
+  'module_id','gate_id','gate_type','agent_type','session_key','attempt','dispatch_id','gateway_label',
+  'status','outcome','reason','severity','duration_seconds',
 ]);
-
 export function buildPluginTelemetryPayload(pluginId: string, pluginEvent: string, data: unknown = {}): UnknownRecord {
-  const payload: UnknownRecord = {
-    plugin_id: pluginId,
-    plugin_event: pluginEvent,
-    details: {} as UnknownRecord,
-  };
+  const payload: UnknownRecord = { plugin_id: pluginId, plugin_event: pluginEvent, details: {} };
   const source = isPlainObject(data) ? data : { value: data };
   for (const [key, value] of Object.entries(source)) {
     if (value === undefined) continue;
-    if (PLUGIN_EVENT_TOP_LEVEL_FIELDS.has(key)) {
-      payload[key] = value;
-    } else if (key === 'details' && isPlainObject(value)) {
-      payload.details = { ...payload.details, ...value };
-    } else {
-      payload.details[key] = value;
-    }
+    if (PLUGIN_EVENT_TOP_LEVEL_FIELDS.has(key)) payload[key] = value;
+    else if (key === 'details' && isPlainObject(value)) payload.details = { ...payload.details, ...value };
+    else payload.details[key] = value;
   }
   return payload;
 }

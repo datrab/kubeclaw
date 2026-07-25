@@ -1,12 +1,7 @@
-import {
-  spawnSession,
-  clearActiveSession,
-} from '../../agents/lifecycle.ts';
+import { clearActiveSession } from '../../agents/lifecycle.ts';
 import { terminateSession } from '../../agents/session-termination.ts';
 import { assertValidSessionTerminationResult } from '../acp-gateway-contract.ts';
 import {
-  resolveBusterActiveSessionPath,
-  buildSessionSpawnEmbed,
   buildTimeoutEmbed,
   buildSessionCompleteEmbed,
   resolveBusterAgentResult,
@@ -15,6 +10,7 @@ import { monitorSession } from '../session-monitor.ts';
 import { safeErrorMessage } from '../runtime-diagnostics.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
+export { spawnTaskSession } from './session-spawn.ts';
 interface Logger {
   info: (tag: string, msg: string, data?: Record<string, unknown>) => void;
   error: (tag: string, msg: string, data?: Record<string, unknown>) => void;
@@ -60,11 +56,9 @@ interface SessionResult {
 interface SessionTerminationResult {
   confirmed: boolean;
   unconfirmed: boolean;
-  [key: string]: unknown;
 }
 
 interface SessionTestHooks {
-  spawnSession?: typeof spawnSession;
   monitorSession?: typeof monitorSession;
   terminateSession?: typeof terminateSession;
   clearActiveSession?: typeof clearActiveSession;
@@ -106,21 +100,6 @@ function requireNonEmptyString(value: unknown, label: string): string {
   return normalized;
 }
 
-function resolveTaskThinking(payload: BusterTaskPayload): string | null {
-  const sessionThinking = normalizeThinking(payload?.session?.thinking);
-  if (sessionThinking) return sessionThinking;
-  const sessionThinkingLevel = normalizeThinking(payload?.session?.thinking_level);
-  if (sessionThinkingLevel) return sessionThinkingLevel;
-  const taskThinking = normalizeThinking(payload?.thinking);
-  if (taskThinking) return taskThinking;
-  return normalizeThinking(payload?.thinking_level);
-}
-
-function resolveCompletionDispatchId(dispatchIdForCompletion: string | null, sessionData: SessionData): string {
-  if (dispatchIdForCompletion !== null) return requireNonEmptyString(dispatchIdForCompletion, 'dispatchIdForCompletion');
-  return requireNonEmptyString(sessionData.label, 'sessionData.label');
-}
-
 function resolveTerminationResult(sessionResult: SessionResult, terminateChildSession: typeof terminateSession, sessionData: SessionData, sessionPolicies: BusterSessionPolicies) {
   if (sessionResult.termination) return sessionResult.termination;
   return terminateChildSession(sessionData.childSessionKey, {
@@ -129,15 +108,6 @@ function resolveTerminationResult(sessionResult: SessionResult, terminateChildSe
     agentId: sessionData.agentId,
     label:   sessionData.label,
   });
-}
-
-function normalizeThinking(value: unknown): string | null {
-  return normalizeRequiredString(value);
-}
-
-function normalizeRuntime(value: unknown): 'acp' | 'subagent' | null {
-  const runtime = normalizeRequiredString(value)?.toLowerCase();
-  return selectTruthyValue(() => (runtime === 'acp'), () => (runtime === 'subagent')) ? runtime : null;
 }
 
 function isMonitorHardTimeout(sessionResult: SessionResult): boolean {
@@ -161,118 +131,37 @@ function resolveTaskAgentResult(payload: BusterTaskPayload, sessionResult: Sessi
   return resolveBusterAgentResult(payload, sessionResult) as Record<string, unknown>;
 }
 
-export async function spawnTaskSession({
-  payload,
-  prompt,
-  timeoutSeconds,
-  moduleId,
-  project,
-  taskType,
-  logger,
-  tctx,
-  currentDiscordContext,
-  discord,
-  dispatchIdForCompletion,
-  budget = null,
-  signal = null,
-  sessionPolicies = {},
-  testHooks = {},
-}: {
-  payload: BusterTaskPayload;
-  prompt: string;
-  timeoutSeconds: number;
-  moduleId: string;
-  project: string;
-  taskType: string;
+async function monitorFailure(request: {
+  error: unknown;
+  monitorStart: number;
+  sessionData: SessionData;
   logger: Logger;
-  tctx: TelemetryContext;
-  currentDiscordContext: DiscordContextBuilder;
-  discord: DiscordSender;
-  dispatchIdForCompletion: string | null;
-  budget?: unknown;
-  signal?: AbortSignal | null;
-  sessionPolicies?: BusterSessionPolicies;
-  testHooks?: SessionTestHooks;
-}): Promise<{
-  ok: boolean;
-  reason?: string;
-  sessionData?: SessionData;
-  sessionKeyForCompletion?: string;
-  dispatchIdForCompletion?: string;
-}> {
-  const model = normalizeRequiredString(payload?.session?.model);
-  const runtime = normalizeRuntime(payload?.session?.runtime);
-  const primaryAgentId = normalizeRequiredString(payload?.session?.agentId);
-  const agentId = primaryAgentId ? primaryAgentId : normalizeRequiredString(payload?.session?.agent_id);
-  const cwd = normalizeRequiredString(payload?.session?.cwd);
-  const label = normalizeRequiredString(payload?.session?.label);
-  const thinking = resolveTaskThinking(payload);
-  const spawnChildSession = testHooks.spawnSession ? testHooks.spawnSession : spawnSession;
-  let sessionData: SessionData;
-  try {
-    sessionData = await spawnChildSession({
-      ...payload,
-      session: {
-        ...payload.session,
-        runtime,
-        model,
-        agentId,
-        cwd,
-        label,
-      },
-    }, prompt, timeoutSeconds, {
-      runtime,
-      model,
-      agentId,
-      cwd,
-      label,
-      thinking,
-      activeStatePath: resolveBusterActiveSessionPath(cwd),
-      spawnPolicy: sessionPolicies.spawnPolicy,
-      budget,
-      signal,
-      observabilityIdentity: {
-        run_id: selectDefinedValue(() => (selectDefinedValue(() => (payload?.run_id), () => (payload?.session?.run_id))), () => (null)),
-        project: selectDefinedValue(() => (payload?.project), () => (null)),
-        agent_type: 'buster',
-        module_id: moduleId,
-        gate_id: selectDefinedValue(() => (payload?.gate_id), () => (null)),
-        gate_type: selectDefinedValue(() => (payload?.gate_type), () => (null)),
-        attempt: selectDefinedValue(() => (payload?.attempt), () => (null)),
-        dispatch_id: payload?.dispatch_id !== undefined ? payload.dispatch_id : label,
-        gateway_label: label,
-      },
-    }) as SessionData;
-  } catch (err: unknown) {
-    const spawnErrorDetail = safeErrorMessage(err);
-    logger.error('SPAWN', `Spawn failed: ${spawnErrorDetail}`, {
-      error_name: errorField(err, 'name'),
-      error_code: errorField(err, 'code'),
-    });
-    return { ok: false, reason: `spawn_failed: ${spawnErrorDetail}` };
-  }
-
-  logger.info('SPAWN', `Session spawned: ${sessionData.childSessionKey}`, {
-    runtime: sessionData.runtime,
+  sessionPolicies: BusterSessionPolicies;
+  terminateChildSession: typeof terminateSession;
+  clearActiveChildSession: typeof clearActiveSession;
+}) {
+  const detail = safeErrorMessage(request.error);
+  request.logger.error('MONITOR', `Monitor failed for ${request.sessionData.childSessionKey}: ${detail}`, {
+    error_name: errorField(request.error, 'name'), error_code: errorField(request.error, 'code'),
   });
-  const nextDispatchId = resolveCompletionDispatchId(dispatchIdForCompletion, sessionData);
-  tctx.sessionKey = sessionData.childSessionKey;
-  tctx.dispatchId = nextDispatchId;
-  const sessionSpawnData = {
-    ...sessionData,
-    taskType,
-    timeoutSeconds,
-  };
-  discord(buildSessionSpawnEmbed(moduleId, project, sessionSpawnData), currentDiscordContext({
-    dispatch_id: nextDispatchId,
-    session_key: sessionData.childSessionKey,
-  }));
-
+  let termination: SessionTerminationResult | null = null;
+  try {
+    termination = assertValidSessionTerminationResult(await request.terminateChildSession(request.sessionData.childSessionKey, {
+      ...request.sessionPolicies, runtime: request.sessionData.runtime,
+      agentId: request.sessionData.agentId, label: request.sessionData.label,
+    }));
+  } catch (error) {
+    request.logger.error('SESSION', `Failed to terminate ${request.sessionData.childSessionKey} after monitor error: ${safeErrorMessage(error)}`, {
+      error_name: errorField(error, 'name'), error_code: errorField(error, 'code'),
+    });
+  } finally {
+    request.clearActiveChildSession({ preserveFile: termination?.unconfirmed === true });
+  }
   return {
     ok: true,
-    sessionData,
-    sessionKeyForCompletion: sessionData.childSessionKey,
-    dispatchIdForCompletion: nextDispatchId,
+    sessionResult: { terminal: true, failed: true, reason: 'monitor_error', detail,
+      state: { sessionState: 'error', detail }, termination },
+    elapsedSeconds: Math.round((Date.now() - request.monitorStart) / 1000),
   };
 }
 
@@ -310,42 +199,8 @@ export async function monitorTaskSession({
     const elapsedSeconds = Math.round((Date.now() - monitorStart) / 1000);
     return { ok: true, sessionResult, elapsedSeconds };
   } catch (monitorError: unknown) {
-    const elapsedSeconds = Math.round((Date.now() - monitorStart) / 1000);
-    const monitorReason = safeErrorMessage(monitorError);
-    logger.error('MONITOR', `Monitor failed for ${sessionData.childSessionKey}: ${monitorReason}`, {
-      error_name: errorField(monitorError, 'name'),
-      error_code: errorField(monitorError, 'code'),
-    });
-
-    let termination: SessionTerminationResult | null = null;
-    try {
-      termination = assertValidSessionTerminationResult(await terminateChildSession(sessionData.childSessionKey, {
-        ...sessionPolicies,
-        runtime: sessionData.runtime,
-        agentId: sessionData.agentId,
-        label:   sessionData.label,
-      })) as SessionTerminationResult;
-    } catch (terminationError: unknown) {
-      logger.error('SESSION', `Failed to terminate ${sessionData.childSessionKey} after monitor error: ${safeErrorMessage(terminationError)}`, {
-        error_name: errorField(terminationError, 'name'),
-        error_code: errorField(terminationError, 'code'),
-      });
-    } finally {
-      clearActiveChildSession({ preserveFile: termination?.unconfirmed === true });
-    }
-
-    return {
-      ok: true,
-      sessionResult: {
-        terminal: true,
-        failed: true,
-        reason: 'monitor_error',
-        detail: monitorReason,
-        state: { sessionState: 'error', detail: monitorReason },
-        termination,
-      },
-      elapsedSeconds,
-    };
+    return monitorFailure({ error: monitorError, monitorStart, sessionData, logger, sessionPolicies,
+      terminateChildSession, clearActiveChildSession });
   }
 }
 
@@ -372,7 +227,7 @@ export async function killTaskSession({
   const clearActiveChildSession = testHooks.clearActiveSession ? testHooks.clearActiveSession : clearActiveSession;
   let termination: SessionTerminationResult | null = null;
   try {
-    termination = assertValidSessionTerminationResult(await resolveTerminationResult(sessionResult, terminateChildSession, sessionData, sessionPolicies)) as SessionTerminationResult;
+    termination = assertValidSessionTerminationResult(await resolveTerminationResult(sessionResult, terminateChildSession, sessionData, sessionPolicies));
     if (sessionResult.termination) {
       logger.info('SESSION', 'Timeout termination already completed by monitor', {
         confirmed: termination.confirmed,

@@ -19,6 +19,21 @@ function lintFixture(files) {
   return JSON.parse(result.stdout).flatMap(file => file.messages);
 }
 
+function printedRule(file, rule) {
+  const result = spawnSync('eslint', ['--print-config', file, '--config', CONFIG], {
+    cwd: path.resolve('.'),
+    encoding: 'utf8',
+  });
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  return JSON.parse(result.stdout).rules[rule];
+}
+
+test('console output is allowed only at declared command and logging boundaries', () => {
+  assert.equal(printedRule('scripts/docs-check.mjs', 'no-console')[0], 0);
+  assert.equal(printedRule('skills/nova/pipeline/tools/lint-report/output.ts', 'no-console')[0], 0);
+  assert.equal(printedRule('skills/nova/pipeline/services/polling.ts', 'no-console')[0], 2);
+});
+
 test('discipline rules accept one explicit path and intentional error handling', () => {
   const messages = lintFixture({
     'clear-path.ts': `
@@ -39,6 +54,15 @@ export function featureEnabled(source: string): boolean {
     return JSON.parse(source).enabled === true;
   } catch {
     return false;
+  }
+}
+
+export function readOptionalJson(source: string): unknown {
+  try {
+    return JSON.parse(source);
+  } catch {
+    /* INTENTIONAL_NONCRITICAL(optional_probe_failed): invalid optional input is represented as absence. */
+    return null;
   }
 }
 `,
@@ -76,12 +100,27 @@ export async function load(primary, secondary, tertiary) {
   assert.equal(messages.filter(message => message.ruleId === 'discipline/no-fallback-chain').length, 3);
 });
 
+test('fallback discipline does not classify boolean predicates as value authority', () => {
+  const messages = lintFixture({
+    'boolean-predicates.ts': `
+export function validPort(value) {
+  return Number.isInteger(value) && !(value < 1 || value > 65535);
+}
+export function recognized(value) {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return true;
+  return value.startsWith('a') || value.endsWith('z') || value.includes('-');
+}
+`,
+  });
+  assert.equal(messages.filter(message => message.ruleId === 'discipline/no-fallback-chain').length, 0);
+});
+
 test('native complexity budgets report stable rule codes', () => {
-  const longBody = Array.from({ length: 42 }, (_, index) => `  const value${index} = ${index};`).join('\n');
+  const longBody = Array.from({ length: 62 }, (_, index) => `  const value${index} = ${index};`).join('\n');
   const padding = Array.from({ length: 305 }, (_, index) => `export const item${index} = ${index};`).join('\n');
   const messages = lintFixture({
     'complex-handler.ts': `
-export function complexHandler(a, b, c, d, e, f) {
+export function complexHandler(a, b, c, d, e, f, g, h) {
   if (a) { if (b) { if (c) { if (d) return 1; } } }
   if (e) return 2;
   if (f) return 3;
@@ -89,12 +128,13 @@ export function complexHandler(a, b, c, d, e, f) {
   if (a && c) return 5;
   if (a && d) return 6;
   if (b && c) return 7;
+  if (g && h) return 8;
   return 0;
 }
 
 export function longHandler() {
 ${longBody}
-  return value41;
+  return value61;
 }
 `,
     'large-file.ts': `${padding}\n`,

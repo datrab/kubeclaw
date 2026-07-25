@@ -12,12 +12,60 @@ import {
   formatPreviewCredentialsForDiscord,
 } from '../../../../../skills/nova/pipeline/services/preview-delivery.ts';
 
-test('collectFinalPreviewDeliveries reads final-buster k8s verdict metadata', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-delivery-'));
+function finalPreviewProgress({ outputFile = true } = {}) {
+  return {
+    gates: {
+      'final-buster': {
+        type: 'buster',
+        title: 'Final Buster',
+        ...(outputFile ? { output_file: 'buster-test/FINAL-BUSTER-RESULT.json' } : {}),
+        test_config: {
+          k8s: {
+            purpose: 'final-preview',
+            preview: { provider: 'tailscale-ingress' },
+          },
+        },
+      },
+    },
+  };
+}
+
+function writePreviewResult(prefix, result) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
   const swarmDir = path.join(root, '.swarm');
   const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  fs.writeFileSync(outputFile, JSON.stringify(result, null, 2));
+  return { root, swarmDir };
+}
+
+function previewRuntimeConfig(swarmDir) {
+  return {
+    project: 'preview-project',
+    _runId: 'run-preview-1',
+    paths: { swarm_dir: swarmDir },
+  };
+}
+
+async function capturePreviewDelivery(swarmDir) {
+  const calls = [];
+  await deliverFinalPreviews(previewRuntimeConfig(swarmDir), finalPreviewProgress(), {
+    discord: async (_config, level, title, description, fields) => {
+      calls.push({ level, title, description, fields });
+    },
+  });
+  return calls;
+}
+
+function rejectsPreviewDelivery(swarmDir, failureClass, discord) {
+  return assert.rejects(
+    () => deliverFinalPreviews(previewRuntimeConfig(swarmDir), finalPreviewProgress(), { discord }),
+    (error) => error instanceof FinalPreviewDeliveryError && error.failure_class === failureClass,
+  );
+}
+
+test('collectFinalPreviewDeliveries reads final-buster k8s verdict metadata', () => {
+  const { swarmDir } = writePreviewResult('preview-delivery-', {
     suites: {
       k8s: {
         suite: 'k8s',
@@ -37,25 +85,11 @@ test('collectFinalPreviewDeliveries reads final-buster k8s verdict metadata', ()
         },
       },
     },
-  }, null, 2));
+  });
 
   const deliveries = collectFinalPreviewDeliveries({
     paths: { swarm_dir: swarmDir },
-  }, {
-    gates: {
-      'final-buster': {
-        type: 'buster',
-        title: 'Final Buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-        test_config: {
-          k8s: {
-            purpose: 'final-preview',
-            preview: { provider: 'tailscale-ingress' },
-          },
-        },
-      },
-    },
-  });
+  }, finalPreviewProgress());
 
   assert.equal(deliveries.length, 1);
   assert.equal(deliveries[0].gate_id, 'final-buster');
@@ -68,11 +102,7 @@ test('collectFinalPreviewDeliveries reads final-buster k8s verdict metadata', ()
 });
 
 test('collectFinalPreviewDeliveries reads canonical gate output_file', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-output-file-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-output-file-', {
     suites: {
       k8s: {
         suite: 'k8s',
@@ -85,25 +115,11 @@ test('collectFinalPreviewDeliveries reads canonical gate output_file', () => {
         },
       },
     },
-  }, null, 2));
+  });
 
   const deliveries = collectFinalPreviewDeliveries({
     paths: { swarm_dir: swarmDir },
-  }, {
-    gates: {
-      'final-buster': {
-        type: 'buster',
-        title: 'Final Buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-        test_config: {
-          k8s: {
-            purpose: 'final-preview',
-            preview: { provider: 'tailscale-ingress' },
-          },
-        },
-      },
-    },
-  });
+  }, finalPreviewProgress());
 
   assert.equal(deliveries.length, 1);
   assert.equal(deliveries[0].preview_url, 'https://output-file.tailnet.ts.net');
@@ -163,11 +179,7 @@ test('formatPreviewCredentialCommandForDiscord wraps the helper as copy-paste sh
 });
 
 test('deliverFinalPreviews sends Discord URL, credential helper, and credential reference', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-discord-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-discord-', {
     suite: 'k8s',
     status: 'PASS',
     metadata: {
@@ -181,32 +193,8 @@ test('deliverFinalPreviews sends Discord URL, credential helper, and credential 
       test_namespace: 'buster-app-final',
       cleanup_policy: 'keep',
     },
-  }, null, 2));
-  const calls = [];
-
-  await deliverFinalPreviews({
-    project: 'preview-project',
-    _runId: 'run-preview-1',
-    paths: { swarm_dir: swarmDir },
-  }, {
-    gates: {
-      'final-buster': {
-        type: 'buster',
-        title: 'Final Buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-        test_config: {
-          k8s: {
-            purpose: 'final-preview',
-            preview: { provider: 'tailscale-ingress' },
-          },
-        },
-      },
-    },
-  }, {
-    discord: async (_config, level, title, description, fields) => {
-      calls.push({ level, title, description, fields });
-    },
   });
+  const calls = await capturePreviewDelivery(swarmDir);
 
   assert.equal(calls.length, 1);
   assert.equal(calls[0].level, 'OK');
@@ -219,11 +207,7 @@ test('deliverFinalPreviews sends Discord URL, credential helper, and credential 
 });
 
 test('deliverFinalPreviews reads final-preview gate verdicts and reports no credentials configured', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-gate-discord-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-gate-discord-', {
     suite: 'k8s',
     status: 'PASS',
     metadata: {
@@ -233,32 +217,8 @@ test('deliverFinalPreviews reads final-preview gate verdicts and reports no cred
       test_namespace: 'buster-final',
       cleanup_policy: 'keep',
     },
-  }, null, 2));
-  const calls = [];
-
-  await deliverFinalPreviews({
-    project: 'preview-project',
-    _runId: 'run-preview-1',
-    paths: { swarm_dir: swarmDir },
-  }, {
-    gates: {
-      'final-buster': {
-        type: 'buster',
-        title: 'Final Buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-        test_config: {
-          k8s: {
-            purpose: 'final-preview',
-            preview: { provider: 'tailscale-ingress' },
-          },
-        },
-      },
-    },
-  }, {
-    discord: async (_config, level, title, description, fields) => {
-      calls.push({ level, title, description, fields });
-    },
   });
+  const calls = await capturePreviewDelivery(swarmDir);
 
   assert.equal(calls.length, 1);
   assert.equal(calls[0].level, 'OK');
@@ -268,11 +228,7 @@ test('deliverFinalPreviews reads final-preview gate verdicts and reports no cred
 });
 
 test('deliverFinalPreviews reports credential command state', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-command-state-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-command-state-', {
     suite: 'k8s',
     status: 'PASS',
     metadata: {
@@ -282,43 +238,15 @@ test('deliverFinalPreviews reports credential command state', async () => {
       test_namespace: 'buster-final',
       cleanup_policy: 'keep',
     },
-  }, null, 2));
-  const calls = [];
-
-  await deliverFinalPreviews({
-    project: 'preview-project',
-    _runId: 'run-preview-1',
-    paths: { swarm_dir: swarmDir },
-  }, {
-    gates: {
-      'final-buster': {
-        type: 'buster',
-        title: 'Final Buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-        test_config: {
-          k8s: {
-            purpose: 'final-preview',
-            preview: { provider: 'tailscale-ingress' },
-          },
-        },
-      },
-    },
-  }, {
-    discord: async (_config, level, title, description, fields) => {
-      calls.push({ level, title, description, fields });
-    },
   });
+  const calls = await capturePreviewDelivery(swarmDir);
 
   assert.equal(calls[0].fields.some((field) => field.name === 'Credential State' && field.value === 'Credential command available'), true);
   assert.equal(calls[0].fields.some((field) => field.name === 'Credential Command' && field.value.includes("kubectl -n 'kubeclaw' get secret 'app-preview-login'")), true);
 });
 
 test('collectFinalPreviewDeliveries reports unavailable configured credentials', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-unavailable-creds-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-unavailable-creds-', {
     suite: 'k8s',
     status: 'PASS',
     metadata: {
@@ -329,25 +257,11 @@ test('collectFinalPreviewDeliveries reports unavailable configured credentials',
       test_namespace: 'buster-final',
       cleanup_policy: 'keep',
     },
-  }, null, 2));
+  });
 
   const deliveries = collectFinalPreviewDeliveries({
     paths: { swarm_dir: swarmDir },
-  }, {
-    gates: {
-      'final-buster': {
-        type: 'buster',
-        title: 'Final Buster',
-        output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-        test_config: {
-          k8s: {
-            purpose: 'final-preview',
-            preview: { provider: 'tailscale-ingress' },
-          },
-        },
-      },
-    },
-  });
+  }, finalPreviewProgress());
 
   assert.equal(deliveries[0].credential_state, 'configured_unavailable');
 });
@@ -387,11 +301,7 @@ test('deliverFinalPreviews fails configured final-preview target without recorde
 });
 
 test('deliverFinalPreviews rejects final-buster k8s verdict without final-preview purpose', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-wrong-purpose-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-wrong-purpose-', {
     suite: 'k8s',
     status: 'PASS',
     metadata: {
@@ -400,41 +310,13 @@ test('deliverFinalPreviews rejects final-buster k8s verdict without final-previe
       test_namespace: 'buster-final',
       cleanup_policy: 'keep',
     },
-  }, null, 2));
+  });
 
-  await assert.rejects(
-    () => deliverFinalPreviews({
-      project: 'preview-project',
-      _runId: 'run-preview-1',
-      paths: { swarm_dir: swarmDir },
-    }, {
-      gates: {
-        'final-buster': {
-          type: 'buster',
-          title: 'Final Buster',
-          output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-          test_config: {
-            k8s: {
-              purpose: 'final-preview',
-              preview: { provider: 'tailscale-ingress' },
-            },
-          },
-        },
-      },
-    }, {
-      discord: async () => {},
-    }),
-    (error) => error instanceof FinalPreviewDeliveryError
-      && error.failure_class === 'final_preview_verdict_not_final_preview',
-  );
+  await rejectsPreviewDelivery(swarmDir, 'final_preview_verdict_not_final_preview', async () => {});
 });
 
 test('deliverFinalPreviews fails when final-buster Discord delivery fails', async () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-discord-failure-'));
-  const swarmDir = path.join(root, '.swarm');
-  const outputFile = path.join(swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json');
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify({
+  const { swarmDir } = writePreviewResult('preview-discord-failure-', {
     suite: 'k8s',
     status: 'PASS',
     metadata: {
@@ -444,33 +326,9 @@ test('deliverFinalPreviews fails when final-buster Discord delivery fails', asyn
       test_namespace: 'buster-final',
       cleanup_policy: 'keep',
     },
-  }, null, 2));
+  });
 
-  await assert.rejects(
-    () => deliverFinalPreviews({
-      project: 'preview-project',
-      _runId: 'run-preview-1',
-      paths: { swarm_dir: swarmDir },
-    }, {
-      gates: {
-        'final-buster': {
-          type: 'buster',
-          title: 'Final Buster',
-          output_file: 'buster-test/FINAL-BUSTER-RESULT.json',
-          test_config: {
-            k8s: {
-              purpose: 'final-preview',
-              preview: { provider: 'tailscale-ingress' },
-            },
-          },
-        },
-      },
-    }, {
-      discord: async () => {
-        throw new Error('discord send failed');
-      },
-    }),
-    (error) => error instanceof FinalPreviewDeliveryError
-      && error.failure_class === 'final_preview_delivery_failed',
-  );
+  await rejectsPreviewDelivery(swarmDir, 'final_preview_delivery_failed', async () => {
+    throw new Error('discord send failed');
+  });
 });

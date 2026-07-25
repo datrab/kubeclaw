@@ -1,4 +1,3 @@
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 type CliFlagType = 'boolean' | 'string';
 
 type CliFlagSpec = {
@@ -14,8 +13,46 @@ type CliSchema = {
   maxPositionals?: number;
 };
 
-export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}) {
-  const flags = selectDefinedValue(() => (schema.flags), () => ({}));
+type ParsedCliArgs = {
+  values: Record<string, unknown>;
+  positionals: string[];
+};
+
+function parseBooleanFlag(name: string, inlineValue: string | null): boolean {
+  if (inlineValue === null || inlineValue === 'true') return true;
+  if (inlineValue === 'false') return false;
+  throw new Error(`Flag --${name} expects a boolean value when using --${name}=...`);
+}
+
+function readStringFlagValue(argv: string[], index: number, name: string, inlineValue: string | null): {
+  value: string;
+  consumedNextArgument: boolean;
+} {
+  const value = inlineValue ?? argv[index + 1];
+  if (value === undefined || value.startsWith('--')) throw new Error(`Missing value for --${name}`);
+  return { value, consumedNextArgument: inlineValue === null };
+}
+
+function assertRequiredFlags(flags: Record<string, CliFlagSpec>, values: Record<string, unknown>): void {
+  for (const [name, spec] of Object.entries(flags)) {
+    const value = values[name];
+    if (spec.required && (value === undefined || value === null || value === '')) {
+      throw new Error(`Missing required flag: --${name}`);
+    }
+  }
+}
+
+function assertPositionalCount(schema: CliSchema, positionals: string[]): void {
+  if (schema.minPositionals !== undefined && positionals.length < schema.minPositionals) {
+    throw new Error(`Expected at least ${schema.minPositionals} positional argument(s), got ${positionals.length}`);
+  }
+  if (schema.maxPositionals !== undefined && positionals.length > schema.maxPositionals) {
+    throw new Error(`Expected at most ${schema.maxPositionals} positional argument(s), got ${positionals.length}`);
+  }
+}
+
+export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}): ParsedCliArgs {
+  const flags: Record<string, CliFlagSpec> = schema.flags ?? {};
   const allowPositionals = schema.allowPositionals === true;
   const positionals: string[] = [];
   const values = Object.create(null) as Record<string, unknown>;
@@ -37,39 +74,20 @@ export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}) {
     const name = eqIndex === -1 ? raw : raw.slice(0, eqIndex);
     const inlineValue = eqIndex === -1 ? null : raw.slice(eqIndex + 1);
     if (!Object.prototype.hasOwnProperty.call(flags, name)) throw new Error(`Unknown flag: --${name}`);
-    const spec = flags[name];
+    const spec = flags[name] as CliFlagSpec;
 
     if (spec.type === 'boolean') {
-      if (inlineValue != null) {
-        if (inlineValue === 'true') values[name] = true;
-        else if (inlineValue === 'false') values[name] = false;
-        else throw new Error(`Flag --${name} expects a boolean value when using --${name}=...`);
-      } else {
-        values[name] = true;
-      }
+      values[name] = parseBooleanFlag(name, inlineValue);
       continue;
     }
 
-    const value = inlineValue != null ? inlineValue : argv[i + 1];
-    if (selectTruthyValue(() => (value === undefined), () => (String(value).startsWith('--')))) {
-      throw new Error(`Missing value for --${name}`);
-    }
-    if (inlineValue == null) i += 1;
-    values[name] = value;
+    const parsed = readStringFlagValue(argv, i, name, inlineValue);
+    if (parsed.consumedNextArgument) i += 1;
+    values[name] = parsed.value;
   }
 
-  for (const [name, spec] of Object.entries(flags)) {
-    if (spec.required && (selectTruthyValue(() => (selectTruthyValue(() => (values[name] === undefined), () => (values[name] === null))), () => (values[name] === '')))) {
-      throw new Error(`Missing required flag: --${name}`);
-    }
-  }
-
-  if (schema.minPositionals != null && positionals.length < schema.minPositionals) {
-    throw new Error(`Expected at least ${schema.minPositionals} positional argument(s), got ${positionals.length}`);
-  }
-  if (schema.maxPositionals != null && positionals.length > schema.maxPositionals) {
-    throw new Error(`Expected at most ${schema.maxPositionals} positional argument(s), got ${positionals.length}`);
-  }
+  assertRequiredFlags(flags, values);
+  assertPositionalCount(schema, positionals);
 
   return { values, positionals };
 }

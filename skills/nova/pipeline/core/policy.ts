@@ -30,9 +30,9 @@ export const VALID_THINKING_LEVELS = ['none', 'low', 'medium', 'high', 'xhigh', 
 export const THINKING_SUPPORTED_PATHS = ['acp', 'subagent', 'redis'];
 
 /** Dispatch paths where thinking parameters are silently dropped by the harness. */
-export const THINKING_UNSUPPORTED_PATHS = [];
+export const THINKING_UNSUPPORTED_PATHS: any[] = [];
 
-export function validateThinkingLevel(value: unknown, context = 'thinking') {
+export function validateThinkingLevel(value: unknown, context: any = 'thinking') {
   if (selectTruthyValue(() => (selectTruthyValue(() => (value === null), () => (value === undefined))), () => (value === ''))) return;
   if (!VALID_THINKING_LEVELS.includes(String(value))) {
     throw new Error(
@@ -120,7 +120,7 @@ export function logEffectivePolicy(config: any, entry: any) {
       thinking_supported: entry.thinking_supported !== false,
     };
     fs.appendFileSync(policyLog, JSON.stringify(record) + '\n');
-  } catch (e) {
+  } catch (e: any) {
     const error = e as Error;
     log('DEBUG', `[policy] logEffectivePolicy failed (non-critical): ${error.message}`);
     emitPolicyAuditAppendWarning(config, policyLog, error, entry);

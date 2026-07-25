@@ -17,6 +17,10 @@
 !plugins/
 !plugins/openclaw-agent-observer/
 !plugins/openclaw-agent-observer/**
+!contracts/
+!contracts/agent-observability/
+!contracts/agent-observability/v1/
+!contracts/agent-observability/v1/**
 
 # Always keep deployment values and local operator state out of image contexts,
 # even while my-values remains tracked as the audited deployment surface.
@@ -32,6 +36,7 @@ tmp/
 # Local dependencies, generated output, logs, and secret-shaped files.
 **/node_modules/
 plugins/openclaw-agent-observer/dist/
+contracts/agent-observability/v1/dist/
 *.log
 **/*.log
 *.env

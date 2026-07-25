@@ -76,7 +76,7 @@ export function validateAcpTranscriptState(state: unknown = {}): string[] {
   pushTypeError(errors, state.lastEventTs, 'lastEventTs', isStringOrNull);
   pushTypeError(errors, state.lastDetail, 'lastDetail', (value: unknown) => typeof value === 'string');
   pushTypeError(errors, state.partialLine, 'partialLine', (value: unknown) => typeof value === 'string');
-  if (selectTruthyValue(() => (!Array.isArray(state.newLines)), () => (!state.newLines.every((line) => typeof line === 'string')))) {
+  if (!Array.isArray(state.newLines) || !state.newLines.every((line: unknown) => typeof line === 'string')) {
     errors.push('newLines must be an array of strings');
   }
 
@@ -196,7 +196,7 @@ export function validateAcpTranscriptDeltaEventPayload(payload: unknown = {}): s
   ], '');
 
   pushTypeError(errors, payload.session_key, 'session_key', isStringOrNull);
-  if (selectTruthyValue(() => (!Array.isArray(payload.new_lines)), () => (!payload.new_lines.every((line) => typeof line === 'string')))) {
+  if (!Array.isArray(payload.new_lines) || !payload.new_lines.every((line: unknown) => typeof line === 'string')) {
     errors.push('new_lines must be an array of strings');
   }
   pushTypeError(errors, payload.line_count, 'line_count', isNonNegativeInteger);
@@ -298,9 +298,22 @@ export function validateSessionTerminationResult(result: unknown = {}): string[]
   return errors;
 }
 
-export function assertValidSessionTerminationResult(result: unknown, label = 'session termination result'): unknown {
+export interface SessionTerminationResult {
+  sessionKey: string | null;
+  requested: boolean;
+  confirmed: boolean;
+  unconfirmed: boolean;
+  terminal: boolean;
+  state: string;
+  cleanupAttempted: boolean;
+  cleanupConfirmed: boolean;
+  cleanupError: string | null;
+  graceMs: number;
+}
+
+export function assertValidSessionTerminationResult(result: unknown, label = 'session termination result'): SessionTerminationResult {
   assertNoErrors(validateSessionTerminationResult(result), label);
-  return result;
+  return result as SessionTerminationResult;
 }
 
 export function normalizeGatewayInvokeResult(value: unknown): UnknownRecord {

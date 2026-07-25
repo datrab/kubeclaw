@@ -1,4 +1,3 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
@@ -12,7 +11,7 @@ function hasRefPart(value: unknown): boolean {
 function assertValidStageRef(key: string, spec: Exclude<StageRefSpec, string | null | undefined>): string {
   const prefix = typeof spec?.prefix === 'string' && spec.prefix.trim() ? spec.prefix.trim() : null;
   const parts = Array.isArray(spec?.parts) ? spec.parts : null;
-  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!prefix), () => (!parts))), () => (parts.length === 0))), () => (parts.some((part: unknown) => !hasRefPart(part))))) {
+  if (!prefix || !parts || parts.length === 0 || parts.some((part: unknown) => !hasRefPart(part))) {
     throw new Error(`Malformed stage ref '${key}': prefix and non-empty parts are required`);
   }
   return `${prefix}:${parts.map((part: unknown) => String(part)).join(':')}`;
@@ -20,8 +19,8 @@ function assertValidStageRef(key: string, spec: Exclude<StageRefSpec, string | n
 
 export function buildStageRefs(entries: Record<string, StageRefSpec> = {}): Record<string, string> {
   const refs: Record<string, string> = {};
-  for (const [key, spec] of Object.entries(selectDefinedValue(() => (entries), () => ({})))) {
-    if (selectTruthyValue(() => (spec === null), () => (spec === undefined))) continue;
+  for (const [key, spec] of Object.entries(entries)) {
+    if (spec === null || spec === undefined) continue;
     if (typeof spec === 'string') {
       if (!spec.trim()) throw new Error(`Malformed stage ref '${key}': raw ref must be non-empty`);
       refs[key] = spec;

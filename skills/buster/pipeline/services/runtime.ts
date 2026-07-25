@@ -3,6 +3,7 @@ declare const process: {
 };
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 function normalizeDiscordWebhookUrl(value: unknown): string | null {
   if (typeof value !== 'string') return null;
@@ -13,6 +14,6 @@ function normalizeDiscordWebhookUrl(value: unknown): string | null {
 export function resolveDiscordWebhookUrl(override: unknown = null): string | null {
   const normalizedOverride = normalizeDiscordWebhookUrl(override);
   if (normalizedOverride !== null) return normalizedOverride;
-  if (typeof override === 'string') return normalizeDiscordWebhookUrl(process.env.DISCORD_WEBHOOK_URL);
+  if (typeof override === 'string') return normalizeDiscordWebhookUrl(readBusterEnvironment('DISCORD_WEBHOOK_URL'));
   return null;
 }

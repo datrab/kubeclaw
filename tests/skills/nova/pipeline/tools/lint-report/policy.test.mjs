@@ -10,15 +10,20 @@ import { applicablePolicyToolIds, LintPolicyError, loadLintPolicy, matchesPolicy
 
 const baselineRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-policy-baseline-test-'));
 const baselinePath = path.join(baselineRoot, 'lint-baseline.json');
-fs.writeFileSync(baselinePath, '{"schema_version":"pipeline_lint_baseline.v1","groups":[]}\n');
+fs.writeFileSync(baselinePath, '{"schema_version":"pipeline_lint_baseline.v2","groups":[]}\n');
 
 function policy(toolOverrides = {}) {
   return {
-    schema_version: 'pipeline_lint_policy.v5',
+    schema_version: 'pipeline_lint_policy.v6',
     baseline_path: baselinePath,
+    experimental_tools: [],
     projects: [{ id: 'workspace', root: '.', discovery_max_depth: 3, languages: ['shell'], language_evidence: { shell: ['**/*.sh'] } }],
     global_exclusions: ['**/generated/**'],
     architecture: { layers: [{ id: 'workspace', roots: ['.'], may_depend_on: ['workspace'] }] },
+    rule_admission: {
+      historical_commits: ['ad77341f3d85de501d1fd5fdbad6ced613ccee16'],
+      rules: [{ tool: toolOverrides.id || 'shellcheck', code: 'fixture-rule', principle: 'Keep fixture behavior explicit.', remediation: 'Fix the fixture finding.', historical_changed_sets: 1, false_positives: 0, approved_by: 'platform', approved_on: '2026-07-20' }],
+    },
     tools: [{
       id: 'shellcheck', required: true, category: 'lint', scope: 'changed-files', tier: 'pre-check',
       timeout_ms: 1000, blocking_severity: 'error', languages: ['shell'], config_path: null,
@@ -66,7 +71,7 @@ test('invalid policy fails before adapter execution', () => {
   );
 });
 
-test('policy v5 rejects ambiguous global tools across multiple projects', () => {
+test('policy v6 rejects ambiguous global tools across multiple projects', () => {
   const configured = policy();
   configured.projects.push({ ...configured.projects[0], id: 'other', root: 'other' });
   assert.throws(() => validateLintPolicy(configured, '/tmp/lint-policy.json'), /exactly one project/);
@@ -100,6 +105,29 @@ test('applicable tool inventory is derived from exact tier and active languages'
   assert.deepEqual(applicablePolicyToolIds(validated, new Set(), 'full'), []);
 });
 
+test('experimental tools run only when explicitly requested', () => {
+  const configured = policy();
+  configured.experimental_tools = ['shellcheck'];
+  const validated = validateLintPolicy(configured, '/tmp/lint-policy.json');
+  assert.deepEqual(applicablePolicyToolIds(validated, new Set(['shell']), 'pre-check'), []);
+  assert.deepEqual(applicablePolicyToolIds(validated, new Set(['shell']), 'pre-check', { includeExperimental: true }), ['shellcheck']);
+});
+
+test('suppression groups require explicit approval and cannot remain expired', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-suppression-policy-'));
+  const configured = policy();
+  configured.baseline_path = path.join(root, 'lint-baseline.json');
+  const group = { tool: 'shellcheck', owner: 'platform', reason: 'migration', created: '2026-07-20', expires: '2026-08-20', tracking: 'DEBT-1', approved_by: 'maintainer', approved_on: '2026-07-20', fingerprints: ['a'.repeat(64)] };
+  fs.writeFileSync(configured.baseline_path, JSON.stringify({ schema_version: 'pipeline_lint_baseline.v2', groups: [group] }));
+  assert.doesNotThrow(() => validateLintPolicy(configured, '/tmp/lint-policy.json', { today: '2026-07-21' }));
+  delete group.approved_by;
+  fs.writeFileSync(configured.baseline_path, JSON.stringify({ schema_version: 'pipeline_lint_baseline.v2', groups: [group] }));
+  assert.throws(() => validateLintPolicy(configured, '/tmp/lint-policy.json', { today: '2026-07-21' }), /approved_by/);
+  group.approved_by = 'maintainer';
+  fs.writeFileSync(configured.baseline_path, JSON.stringify({ schema_version: 'pipeline_lint_baseline.v2', groups: [group] }));
+  assert.throws(() => validateLintPolicy(configured, '/tmp/lint-policy.json', { today: '2026-08-21' }), /expired on 2026-08-20/);
+});
+
 test('canonical repository policy has no advisory warning tier and owns calibrated debt', () => {
   const policyPath = path.resolve('charts/kubeclaw/files/config/lint-policy.json');
   const configured = loadLintPolicy(policyPath);
@@ -113,7 +141,44 @@ test('canonical repository policy has no advisory warning tier and owns calibrat
   assert.equal(counts.gocyclo, 4);
   assert.equal(counts.semgrep, 1);
   assert.equal(counts['trivy-kubernetes'], 3);
-  assert.equal(configured.baseline.entries.length, 2352);
+  assert.equal(counts.tsc, 4220);
+  assert.equal(configured.baseline.entries.length, 6572);
+  assert.ok(configured.tools.every(tool => tool.mode === 'blocking'));
+  assert.equal(configured.rule_admission.rules.length, 14);
+  assert.deepEqual(configured.tools.find(tool => tool.id === 'gocyclo').arguments, [
+    '-over',
+    '10',
+    '-ignore',
+    '(^|/)(node_modules|vendor|generated)/',
+  ]);
+  const knip = JSON.parse(fs.readFileSync(path.resolve('charts/kubeclaw/files/config/knip.json'), 'utf8'));
+  assert.ok(knip.entry.includes('skills/buster/buster-pipeline.ts'));
+  assert.ok(knip.entry.includes('skills/nova/pipeline.ts'));
+  assert.ok(knip.entry.filter(entry => !entry.includes('*')).every(entry => fs.existsSync(path.resolve(entry))));
+  const runtimeToolPackage = JSON.parse(fs.readFileSync(path.resolve('docker/general-tools/package.json'), 'utf8'));
+  const virtualRuntimeDependencies = new Set(['@types/node', 'file', 'openclaw']);
+  for (const dependency of knip.ignoreDependencies) {
+    assert.ok(
+      virtualRuntimeDependencies.has(dependency) || runtimeToolPackage.dependencies[dependency],
+      `Knip dependency exclusion '${dependency}' must be runtime-provided or an approved virtual module`,
+    );
+  }
+  const jscpd = JSON.parse(fs.readFileSync(path.resolve('charts/kubeclaw/files/config/jscpd.json'), 'utf8'));
+  const jscpdTests = JSON.parse(fs.readFileSync(path.resolve('charts/kubeclaw/files/config/jscpd-tests.json'), 'utf8'));
+  assert.ok(jscpd.ignore.includes('tests/**'));
+  assert.equal(jscpd.minLines, 10);
+  assert.equal(jscpdTests.minLines, 18);
+  assert.equal(jscpdTests.minTokens, 100);
+  assert.ok(jscpd.ignore.includes('contracts/telemetry/v1/telemetry-types.ts'));
+  assert.ok(jscpd.ignore.includes('contracts/telemetry/v1/telemetry_types.go'));
+  assert.ok(jscpd.ignore.includes('contracts/telemetry/v1/bundle-types.ts'));
+  assert.ok(jscpd.ignore.includes('contracts/telemetry/v1/bundle_types.go'));
+  for (const commit of configured.rule_admission.historical_commits) {
+    assert.doesNotThrow(() => execFileSync('git', ['cat-file', '-e', `${commit}^{commit}`]));
+  }
+  for (const rule of configured.rule_admission.rules) {
+    assert.equal(rule.historical_changed_sets, configured.rule_admission.historical_commits.length);
+  }
 });
 
 test('canonical Semgrep roots cover every tracked production source file', () => {

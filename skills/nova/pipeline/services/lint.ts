@@ -10,6 +10,7 @@ import { buildSubprocessEnv } from '../security.ts';
 import { validateLintReport } from '../tools/lint-report/report-contract.ts';
 import { detectProjectTypes } from '../tools/lint-report/discovery.ts';
 import { applicablePolicyToolIds, loadLintPolicy, policyDigest, selectPolicyProject } from '../tools/lint-report/policy.ts';
+import { arrayValue, objectRecord as recordValue, selectPresentValue, textValue } from '../value-boundary.ts';
 
 const LINT_REPORT_MODULE_ID = 'report';
 const LINT_REPORT_UNAVAILABLE = 'Lint report unavailable';
@@ -17,87 +18,68 @@ const LINT_TOOL_ERROR_UNKNOWN = 'Unknown tool error';
 const LINT_FINDING_FILE_MISSING = '?';
 const LINT_SUMMARY_COUNT_MISSING = 0;
 
-function textValue(value) {
-  return typeof value === 'string' ? value : '';
-}
-
-function arrayValue(value) {
-  return Array.isArray(value) ? value : [];
-}
-
-function recordValue(value) {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-}
-
-function selectPresentValue(...values) {
-  for (const value of values) {
-    if (typeof value === 'string' && value.length > 0) return value;
-  }
-  return '';
-}
-
-function numericCount(value) {
+function numericCount(value: any) {
   const count = Number(value);
   return Number.isFinite(count) ? count : LINT_SUMMARY_COUNT_MISSING;
 }
 
-function nodeExec(scriptPath, args, opts = {}) {
+function nodeExec(scriptPath: any, args: any, opts: any = {}) {
   const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 50 * 1024 * 1024, env: buildSubprocessEnv() };
   const result = execFileSync('node', [scriptPath, ...args], { ...defaults, ...opts });
   return typeof result === 'string' ? result.trim() : '';
 }
 
-function execText(command, args, opts = {}) {
+function execText(command: any, args: any, opts: any = {}) {
   const defaults = { encoding: 'utf8', timeout: 30000, maxBuffer: 10 * 1024 * 1024, env: buildSubprocessEnv() };
   const result = execFileSync(command, args, { ...defaults, ...opts });
   return typeof result === 'string' ? result.trim() : '';
 }
 
-function tmpFile(prefix, moduleId = '', ext = '.tmp') {
+function tmpFile(prefix: any, moduleId: any = '', ext: any = '.tmp') {
   const ts = Date.now();
   const rand = Math.random().toString(36).slice(2, 8);
   return path.join('/tmp', `swarm-pipeline-${prefix}-${moduleId}-${ts}-${rand}${ext}`);
 }
 
-function changedFilesFromDiffStat(forgeDiffStat = '') {
+function changedFilesFromDiffStat(forgeDiffStat: any = '') {
   return textValue(forgeDiffStat)
     .split('\n')
-    .map(line => line.trim().split(/\s+\|/)[0]?.trim())
-    .filter(f => f && !f.includes('changed') && !f.includes('insertion') && !f.includes('deletion'));
+    .map((line: any) => line.trim().split(/\s+\|/)[0]?.trim())
+    .filter((f: any) => f && !f.includes('changed') && !f.includes('insertion') && !f.includes('deletion'));
 }
 
-function changedFilesFromCommit(config, commitHash = null) {
+function changedFilesFromCommit(config: any, commitHash: any = null) {
   if (selectTruthyValue(() => (typeof commitHash !== 'string'), () => (!commitHash.trim()))) return [];
   try {
     const output = execText('git', ['-C', config.repo_root, 'show', '--pretty=format:', '--name-only', commitHash]);
     return output
       .split('\n')
-      .map(line => line.trim())
+      .map((line: any) => line.trim())
       .filter(Boolean);
-  } catch (error) {
+  } catch (error: any) {
     log('WARN', `Unable to derive changed files from commit ${commitHash}: ${error.message}`);
     return [];
   }
 }
 
-function normalizeRepoRelativePath(filePath = '') {
+function normalizeRepoRelativePath(filePath: any = '') {
   const normalized = textValue(filePath).replace(/\\/g, '/').replace(/^\/+/, '');
   return normalized.replace(/^\.\//, '');
 }
 
-function scopeChangedFilesToModule(moduleDir = null, changedFiles = []) {
+function scopeChangedFilesToModule(moduleDir: any = null, changedFiles: any = []) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!moduleDir), () => (!Array.isArray(changedFiles)))), () => (changedFiles.length === 0))) return changedFiles;
   const normalizedModuleDir = normalizeRepoRelativePath(moduleDir).replace(/\/+$/, '');
   if (!normalizedModuleDir) return changedFiles;
   const modulePrefix = `${normalizedModuleDir}/`;
-  return changedFiles.filter((filePath) => {
+  return changedFiles.filter((filePath: any) => {
     const normalizedFilePath = normalizeRepoRelativePath(filePath);
     if (normalizedFilePath === normalizedModuleDir) return true;
     return normalizedFilePath.startsWith(modulePrefix);
   });
 }
 
-function preCheckTimeoutMs(config) {
+function preCheckTimeoutMs(config: any) {
   const timeoutSeconds = Number(config?.pre_check?.timeout_seconds);
   if (selectTruthyValue(() => (!Number.isFinite(timeoutSeconds)), () => (timeoutSeconds <= 0))) {
     throw new Error('config.pre_check.timeout_seconds must be a positive number');
@@ -105,7 +87,7 @@ function preCheckTimeoutMs(config) {
   return timeoutSeconds * 1000;
 }
 
-function resolveLintReportPath(config) {
+function resolveLintReportPath(config: any) {
   return validateSafePath(
     config.pre_check.lint_report_path,
     'config.pre_check.lint_report_path'
@@ -120,7 +102,7 @@ function resolveLintReportPath(config) {
  * @param {object} opts   - { moduleDir, moduleId, forgeDiffStat, changedFiles, commitHash, timeoutMs, logPath }
  * @returns {{ report: object|null, error: string|null }}
  */
-export function generateLintReport(config, tier, opts = {}) {
+export function generateLintReport(config: any, tier: any, opts: any = {}) {
   const cliTier = tier === 'buster' ? 'full' : tier;
   const lintReportPath = resolveLintReportPath(config);
 
@@ -146,9 +128,9 @@ export function generateLintReport(config, tier, opts = {}) {
     const { types } = detectProjectTypes(config.repo_root, expectedProject, expectedPolicy.global_exclusions);
     expectedToolIds = applicablePolicyToolIds(expectedPolicy, types, cliTier);
     expectedToolPolicies = Object.fromEntries(expectedPolicy.tools
-      .filter(tool => expectedToolIds.includes(tool.id))
-      .map(tool => [tool.id, { category: tool.category, scope: tool.scope, blocking_severity: tool.blocking_severity }]));
-  } catch (e) {
+      .filter((tool: any) => expectedToolIds.includes(tool.id))
+      .map((tool: any) => [tool.id, { category: tool.category, scope: tool.scope, blocking_severity: tool.blocking_severity, mode: tool.mode }]));
+  } catch (e: any) {
     const error = { code: 'LINT_POLICY_INVALID', message: `Lint policy invalid: ${e.message}`, lint_policy_path: lintPolicyPath, tier };
     log('ERROR', error.message);
     return { report: null, error: error.message, setup_failed: true, error_code: error.code, diagnostic: error };
@@ -187,7 +169,7 @@ export function generateLintReport(config, tier, opts = {}) {
   try {
     try {
       nodeExec(lintReportPath, args, { timeout });
-    } catch (e) {
+    } catch (e: any) {
       if (!fs.existsSync(outputPath)) {
         log('WARN', `lint-report.ts crashed: ${e.message?.split('\n')[0]}`);
         return { report: null, error: e.message };
@@ -206,12 +188,12 @@ export function generateLintReport(config, tier, opts = {}) {
         toolIds: expectedToolIds,
         toolPolicies: expectedToolPolicies,
         scope: requestedModulePath,
-        changedFiles,
+        changedFiles, visibility: { debt: false, experimental: false },
       });
-      const { total_errors, total_warnings, total_blocking, total_baselined, tools_ok, tools_failed } = report.summary;
-      log('INFO', `Lint report (${tier}): ${total_errors} errors, ${total_warnings} warnings, ${total_blocking} blocking, ${total_baselined} baselined (${tools_ok} ok, ${tools_failed} failed)`);
+      const { total_errors, total_warnings, total_blocking, total_baselined, total_experimental, tools_ok, tools_failed } = report.summary;
+      log('INFO', `Lint report (${tier}): ${total_errors} errors, ${total_warnings} warnings, ${total_blocking} blocking, ${total_baselined} baselined, ${total_experimental} experimental (${tools_ok} ok, ${tools_failed} failed)`);
       return { report, error: null };
-    } catch (e) {
+    } catch (e: any) {
       const contractInvalid = e?.code === 'LINT_REPORT_CONTRACT_INVALID';
       const error = {
         code: contractInvalid ? 'LINT_REPORT_CONTRACT_INVALID' : 'LINT_REPORT_UNPARSEABLE',
@@ -226,7 +208,7 @@ export function generateLintReport(config, tier, opts = {}) {
   } finally {
     try {
       fs.rmSync(outputPath, { force: true });
-    } catch (e) {
+    } catch (e: any) {
       log('DEBUG', `Lint report temp cleanup failed: ${e.message}`);
     }
   }
@@ -243,12 +225,12 @@ function lintTimeoutAuthority(opts: Record<string, any>, tier: string, config: R
  * Groups by tool, shows only errors, caps at 20 per tool.
  * @private
  */
-function formatLintErrors(report) {
-  const errorLines = [];
+function formatLintErrors(report: any) {
+  const errorLines: any[] = [];
   for (const [toolId, toolResult] of Object.entries(report.tools)) {
     if (selectTruthyValue(() => (toolResult.status !== 'ok'), () => (toolResult.errors === 0))) continue;
     errorLines.push(`### ${toolId}: ${toolResult.errors} error(s)`);
-    const errors = arrayValue(toolResult.findings).filter(f => f.severity === 'error');
+    const errors = arrayValue(toolResult.findings).filter((f: any) => f.severity === 'error');
     for (const finding of errors.slice(0, 20)) {
       const loc = finding.line ? `:${finding.line}` : '';
       errorLines.push(`- \`${selectPresentValue(finding.file, LINT_FINDING_FILE_MISSING)}${loc}\`: ${finding.message}${finding.code ? ` (${finding.code})` : ''}`);
@@ -261,8 +243,8 @@ function formatLintErrors(report) {
   return errorLines.join('\n');
 }
 
-function formatLintToolFailures(report) {
-  const failureLines = [];
+function formatLintToolFailures(report: any) {
+  const failureLines: any[] = [];
   for (const [toolId, toolResult] of Object.entries(recordValue(report.tools))) {
     if (toolResult.status !== 'error') continue;
     failureLines.push(`### ${toolId}: tool failed`);
@@ -276,7 +258,7 @@ function formatLintToolFailures(report) {
  * Format lint report as a structured block for injection into a reviewer prompt.
  * Includes both errors and warnings, grouped by tool.
  */
-export function formatLintReportForReviewer(report) {
+export function formatLintReportForReviewer(report: any) {
   const lines = [
     '## 📊 STATIC ANALYSIS REPORT (Automated)',
     '',
@@ -337,7 +319,7 @@ export function formatLintReportForReviewer(report) {
  * @param {string} moduleId   - Module identifier
  * @returns {{ passed: boolean, report: object|null, error: string|null }}
  */
-export async function runPreCheck(config, moduleDir, status, moduleId) {
+export async function runPreCheck(config: any, moduleDir: any, status: any, moduleId: any) {
   if (config.pre_check.enabled === false) {
     log('INFO', 'Pre-check disabled via config');
     return { passed: true, report: null, error: null };
@@ -360,7 +342,7 @@ export async function runPreCheck(config, moduleDir, status, moduleId) {
   if (report && lintDir) {
     try {
       fs.writeFileSync(path.join(lintDir, `precheck-attempt-${attempt}.json`), JSON.stringify(report, null, 2));
-    } catch (_error) { /* non-critical */ }
+    } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */ /* non-critical */ }
   }
 
   if (!report) {

@@ -3,8 +3,8 @@ import test from 'node:test';
 
 import {
   AGENT_OBSERVABILITY_SOURCE,
-} from '../../../../../../skills/common/pipeline/agent-observability/src/constants.ts';
-import { validateAgentObservabilityIngressEvent } from '../../../../../../skills/common/pipeline/agent-observability/src/validation.ts';
+} from '../../../../../../contracts/agent-observability/v1/src/constants.ts';
+import { validateAgentObservabilityIngressEvent } from '../../../../../../contracts/agent-observability/v1/src/validation.ts';
 
 function llmInputEvent(payloadOverrides = {}) {
   return {

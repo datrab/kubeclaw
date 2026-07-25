@@ -13,7 +13,7 @@ function runSummaryArtifactPath(artifacts: AnyRecord): string | null {
 export function countByStatus(values: unknown[] = []): Record<string, number> {
   return values.reduce((acc: Record<string, number>, value: unknown) => {
     const key = String(selectDefinedValue(() => (value), () => ('UNKNOWN')));
-    acc[key] = (selectDefinedValue(() => (acc[key]), () => (0))) + 1;
+    acc[key] = (acc[key] ?? 0) + 1;
     return acc;
   }, {});
 }

@@ -3,15 +3,13 @@ import test from 'node:test';
 
 import { DiscordWebhookDeliveryError, postDiscordWebhook } from '../../../../../skills/common/pipeline/integrations/discord-webhook.ts';
 
-test('caller signal does not replace discord webhook timeout', async () => {
-  const caller = new AbortController();
+async function assertWebhookTimeout({ signal } = {}) {
   let requestSignal = null;
   const startedAt = Date.now();
-
   await assert.rejects(
     postDiscordWebhook('https://discord.example/webhook', {
       body: '{}',
-      signal: caller.signal,
+      signal,
       timeoutMs: 10,
       fetchImpl: async (_url, init) => new Promise((_resolve, reject) => {
         requestSignal = init.signal;
@@ -27,10 +25,16 @@ test('caller signal does not replace discord webhook timeout', async () => {
       return true;
     },
   );
+  assert.ok(Date.now() - startedAt < 1000);
+  return requestSignal;
+}
+
+test('caller signal does not replace discord webhook timeout', async () => {
+  const caller = new AbortController();
+  const requestSignal = await assertWebhookTimeout({ signal: caller.signal });
 
   assert.notEqual(requestSignal, caller.signal);
   assert.equal(caller.signal.aborted, false);
-  assert.ok(Date.now() - startedAt < 1000);
 });
 
 test('discord webhook timeout falls back when AbortSignal.timeout is unavailable', async (t) => {
@@ -48,31 +52,10 @@ test('discord webhook timeout falls back when AbortSignal.timeout is unavailable
     }
   });
 
-  let requestSignal = null;
-  const startedAt = Date.now();
-
-  await assert.rejects(
-    postDiscordWebhook('https://discord.example/webhook', {
-      body: '{}',
-      timeoutMs: 10,
-      fetchImpl: async (_url, init) => new Promise((_resolve, reject) => {
-        requestSignal = init.signal;
-        init.signal.addEventListener('abort', () => {
-          reject(init.signal.reason || new Error('aborted'));
-        }, { once: true });
-      }),
-    }),
-    (error) => {
-      assert.equal(error instanceof DiscordWebhookDeliveryError, true);
-      assert.equal(error.code, 'DISCORD_WEBHOOK_DELIVERY_FAILED');
-      assert.ok(error.cause);
-      return true;
-    },
-  );
+  const requestSignal = await assertWebhookTimeout();
 
   assert.ok(requestSignal);
   assert.equal(requestSignal.aborted, true);
-  assert.ok(Date.now() - startedAt < 1000);
 });
 
 test('discord webhook returns parsed JSON response body when Discord wait mode is enabled', async () => {

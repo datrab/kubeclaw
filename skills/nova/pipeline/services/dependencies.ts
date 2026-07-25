@@ -5,15 +5,15 @@ import { log } from '../core/logger.ts';
 import { STATUS } from '../core/constants.ts';
 import { projectGateSchedulerState, projectModuleSchedulerState } from './status-store.ts';
 
-function isGateConsumed(projection = {}) {
+function isGateConsumed(projection: any = {}) {
   return selectTruthyValue(() => (projection?.scheduler_consumed === true), () => (projection?.completed === true));
 }
 
-function dependencyGateLabel(gate = null) {
+function dependencyGateLabel(gate: any = null) {
   return gate?.type === 'approval' ? 'Approval gate' : 'Gate';
 }
 
-function evaluateGateDependency(config, gateId, gate) {
+function evaluateGateDependency(config: any, gateId: any, gate: any) {
   const projection = projectGateSchedulerState(config, gateId, gate);
   if (isGateConsumed(projection)) {
     return { met: true };
@@ -48,7 +48,7 @@ function evaluateGateDependency(config, gateId, gate) {
  * @param {string} moduleId - Module to check
  * @returns {{ met: boolean, reason?: string }}
  */
-export function checkDependencies(config, progress, moduleId) {
+export function checkDependencies(config: any, progress: any, moduleId: any) {
   const authorityConfig = config?._sharedPipelineConfig || config;
   const mod = progress.modules[moduleId];
   if (!mod) {

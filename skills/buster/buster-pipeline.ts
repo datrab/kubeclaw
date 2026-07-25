@@ -15,9 +15,7 @@
 // runtime start/status API. Helper modules own their own exports; the old
 // broad helper barrel was deleted during Phase 5 P5-B01.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { fileURLToPath } from 'url';
 import { sleep } from './pipeline/timing.ts';
 
@@ -81,8 +79,10 @@ interface BusterEntrypointDeps {
   runMain: () => Promise<void>;
 }
 
-let shuttingDown = false;
-const runtimeLoopAbort = new AbortController();
+const busterRuntimeState = {
+  shuttingDown: false,
+  loopAbort: new AbortController(),
+};
 const BUSTER_RUNTIME_LOOP_POLICY = Object.freeze({
   errorBackoffMs: 3000,
 });
@@ -99,7 +99,7 @@ export function startBusterHeartbeat(): ReturnType<typeof setInterval> {
   const runtimePolicy = loadBusterRuntimePolicy();
   writeBusterHeartbeat();
   const interval = setInterval(() => {
-    if (!shuttingDown) writeBusterHeartbeat();
+    if (!busterRuntimeState.shuttingDown) writeBusterHeartbeat();
   }, runtimePolicy.heartbeat_interval_ms);
   interval.unref?.();
   return interval;
@@ -159,9 +159,9 @@ export function parseBusterEntrypointArgs(argv: string[] = process.argv): Buster
 }
 
 export async function shutdown(signal: string, opts: ShutdownOptions = {}): Promise<void> {
-  if (shuttingDown) return;
-  shuttingDown = true;
-  runtimeLoopAbort.abort(new Error(`Buster shutdown requested by ${signal}`));
+  if (busterRuntimeState.shuttingDown) return;
+  busterRuntimeState.shuttingDown = true;
+  busterRuntimeState.loopAbort.abort(new Error(`Buster shutdown requested by ${signal}`));
   const exitCode = opts.exitCode ?? SHUTDOWN_DEFAULT_EXIT_CODE;
   const cleanupStage = opts.cleanupStage ?? SHUTDOWN_DEFAULT_CLEANUP_STAGE;
   console.log(`\n[SHUTDOWN] ${signal} received. Cleaning up...`);
@@ -230,7 +230,7 @@ export async function main(): Promise<void> {
     throw new Error('BUSTER_RECOVERY_BLOCKED: persisted session evidence is diagnostic-only');
   }
   assertStartupResourceCleanupComplete(await doResourceCleanup('startup', {}));
-  startGatewayHealthMonitor({ isShuttingDown: () => shuttingDown, shutdown });
+  startGatewayHealthMonitor({ isShuttingDown: () => busterRuntimeState.shuttingDown, shutdown });
 
   const consumerGroup = await ensureTaskConsumerGroup();
   console.log(`[REDIS] Consumer group ${consumerGroup.created ? 'created' : 'exists'}: ${GROUP_NAME}`);
@@ -238,7 +238,7 @@ export async function main(): Promise<void> {
   console.log(`[REDIS] Pending reclaim enabled: idle >= ${loadBusterRuntimePolicy().task_pending_reclaim_idle_ms}ms → ${CONSUMER_NAME}`);
 
   console.log('[BUSTER PIPELINE] ✅ Ready. Polling for tasks...');
-  while (!shuttingDown) {
+  while (!busterRuntimeState.shuttingDown) {
     try {
       await processOneQueuedTask(processTask);
     } catch (e: unknown) {
@@ -250,9 +250,9 @@ export async function main(): Promise<void> {
       });
       console.error('[LOOP]', safeErrorMessage(e));
       try {
-        await sleep(BUSTER_RUNTIME_LOOP_POLICY.errorBackoffMs, { signal: runtimeLoopAbort.signal });
+        await sleep(BUSTER_RUNTIME_LOOP_POLICY.errorBackoffMs, { signal: busterRuntimeState.loopAbort.signal });
       } catch (sleepError: unknown) {
-        if (!shuttingDown) throw sleepError;
+        if (!busterRuntimeState.shuttingDown) throw sleepError;
       }
     }
   }

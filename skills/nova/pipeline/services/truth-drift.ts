@@ -7,30 +7,30 @@ import {
 } from './status-store-read-models.ts';
 import { adjudicateCompletionEvidence } from './completion-adjudicator.ts';
 
-function withSource(source, drift = []) {
-  return (Array.isArray(drift) ? drift : []).map((entry) => ({ source, ...entry }));
+function withSource(source: any, drift: any = []) {
+  return (Array.isArray(drift) ? drift : []).map((entry: any) => ({ source, ...entry }));
 }
 
-function collectModuleArtifactRefs(moduleProjection = {}) {
+function collectModuleArtifactRefs(moduleProjection: any = {}) {
   void moduleProjection;
   return {};
 }
 
-function collectGateArtifactRefs(gateProjection = {}) {
+function collectGateArtifactRefs(gateProjection: any = {}) {
   return {
     output_path: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (gateProjection?.output?.path), () => (gateProjection?.output_path))), () => (gateProjection?.gate_output_path))), () => (null)),
   };
 }
 
-function redisCompletionEntryPresent(redisEntry) {
+function redisCompletionEntryPresent(redisEntry: any) {
   return redisEntry !== null && redisEntry !== undefined;
 }
 
-function redisCompletionHasStatus(redisEntry) {
+function redisCompletionHasStatus(redisEntry: any) {
   return typeof redisEntry?.status === 'string' && redisEntry.status.trim() !== '';
 }
 
-function withMalformedGateCompletionDrift(adjudication, redisEntry) {
+function withMalformedGateCompletionDrift(adjudication: any, redisEntry: any) {
   if (selectTruthyValue(() => (!redisCompletionEntryPresent(redisEntry)), () => (redisCompletionHasStatus(redisEntry)))) {
     return adjudication;
   }
@@ -51,13 +51,13 @@ function withMalformedGateCompletionDrift(adjudication, redisEntry) {
   };
 }
 
-export function projectModuleTruthDrift(config, moduleId, moduleConfig = null, {
+export function projectModuleTruthDrift(config: any, moduleId: any, moduleConfig: any = null, {
   status = undefined,
   statusRead = undefined,
   redisEntry = null,
   expectedIdentity = {},
   expectedStatuses = ['PASS', 'FAIL', 'BLOCKED'],
-} = {}) {
+}: any = {}) {
   const schedulerReadModelProjection = projectModuleSchedulerState(config, moduleId, moduleConfig, {
     ...(status !== undefined ? { status } : {}),
     ...(statusRead !== undefined ? { statusRead } : {}),
@@ -87,11 +87,11 @@ export function projectModuleTruthDrift(config, moduleId, moduleConfig = null, {
   };
 }
 
-export function projectGateTruthDrift(config, gateId, gate = null, {
+export function projectGateTruthDrift(config: any, gateId: any, gate: any = null, {
   redisEntry = null,
   expectedIdentity = {},
   expectedStatuses = ['PASS', 'FAIL'],
-} = {}) {
+}: any = {}) {
   const schedulerReadModelProjection = projectGateSchedulerState(config, gateId, gate);
   const completionAdjudication = redisCompletionEntryPresent(redisEntry)
     ? withMalformedGateCompletionDrift(

@@ -12,7 +12,7 @@ import { redisLogArtifactTargets } from '../core/paths.ts';
 import { getRunId } from '../core/runtime.ts';
 import { sanitizeTelemetryPayload } from '../egress.ts';
 
-function reportRedisLogIncident(classification, error, context = {}) {
+function reportRedisLogIncident(classification: any, error: any, context: any = {}) {
   return reportClassifiedNonBlockingError({
     reporter: 'redis-log',
     classification,
@@ -30,34 +30,34 @@ function reportRedisLogIncident(classification, error, context = {}) {
   });
 }
 
-function isPlainObject(value) {
+function isPlainObject(value: any) {
   return value != null && typeof value === 'object' && !Array.isArray(value);
 }
 
-function errorDetail(error) {
+function errorDetail(error: any) {
   return typeof error?.message === 'string' && error.message ? error.message : String(error);
 }
 
-function redisLogErrorRecords(errors = []) {
-  return errors.map(({ filePath, error }) => ({ filePath, message: errorDetail(error) }));
+function redisLogErrorRecords(errors: any = []) {
+  return errors.map(({ filePath, error }: any) => ({ filePath, message: errorDetail(error) }));
 }
 
-export function getRedisLogTargets(config, fileName = 'redis-exchanges.jsonl') {
+function getRedisLogTargets(config: any, fileName: any = 'redis-exchanges.jsonl') {
   return redisLogArtifactTargets(config, fileName);
 }
 
-export function appendRedisArtifactRecord(config, record, fileName = 'redis-exchanges.jsonl') {
+function appendRedisArtifactRecord(config: any, record: any, fileName: any = 'redis-exchanges.jsonl') {
   try {
     if (!isPlainObject(record)) return { ok: false, skipped: true, reason: 'record_not_object' };
     const targets = getRedisLogTargets(config, fileName);
     if (!targets.length) return { ok: false, skipped: true, reason: 'no_targets' };
     const line = `${JSON.stringify(record)}\n`;
-    const errors = [];
+    const errors: any[] = [];
     for (const filePath of targets) {
       try {
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
         fs.appendFileSync(filePath, line);
-      } catch (error) {
+      } catch (error: any) {
         errors.push({ filePath, error });
         reportRedisLogIncident('redis_artifact_append_failed', error, {
           fileName,
@@ -71,7 +71,7 @@ export function appendRedisArtifactRecord(config, record, fileName = 'redis-exch
       targets,
       ...(errors.length > 0 && { errors: redisLogErrorRecords(errors) }),
     };
-  } catch (error) {
+  } catch (error: any) {
     reportRedisLogIncident('redis_artifact_record_failed', error, {
       fileName,
       message: `Redis artifact record handling failed for ${fileName}`,
@@ -91,7 +91,7 @@ export function appendRedisArtifactRecord(config, record, fileName = 'redis-exch
  * @param {string} scopeId    - module dir, gate id, etc.
  * @param {any}    payload    - message payload (will be sanitized to bounded size)
  */
-export function logRedisExchange(config, direction, type, scope, scopeId, payload) {
+export function logRedisExchange(config: any, direction: any, type: any, scope: any, scopeId: any, payload: any) {
   try {
     // Preserve payload values and cap the preview to avoid log bloat from large task payloads.
     let sanitizedPayload = null;
@@ -102,7 +102,7 @@ export function logRedisExchange(config, direction, type, scope, scopeId, payloa
         sanitizedPayload = raw.length > 2048
           ? { _truncated: true, _size: raw.length, _preview: raw.slice(0, 256) }
           : egressPayload;
-      } catch (error) {
+      } catch (error: any) {
         sanitizedPayload = { _serialization_error: true };
         reportRedisLogIncident('redis_exchange_payload_serialization_failed', error, {
           fileName: 'redis-exchanges.jsonl',
@@ -123,7 +123,7 @@ export function logRedisExchange(config, direction, type, scope, scopeId, payloa
       payload: sanitizedPayload,
     };
     return appendRedisArtifactRecord(config, entry, 'redis-exchanges.jsonl');
-  } catch (error) {
+  } catch (error: any) {
     reportRedisLogIncident('redis_exchange_log_failed', error, {
       fileName: 'redis-exchanges.jsonl',
       direction,
@@ -138,7 +138,7 @@ export function logRedisExchange(config, direction, type, scope, scopeId, payloa
  * Log Redis operation-level tracing for completion reads, archiving, etc.
  * Written to .swarm/logs/redis/redis-ops.jsonl plus the run-scoped mirror.
  */
-export function logRedisOperation(config, event = {}) {
+export function logRedisOperation(config: any, event: any = {}) {
   appendRedisArtifactRecord(config, {
     ts: new Date().toISOString(),
     run_id: getRunId(config),
@@ -149,14 +149,14 @@ export function logRedisOperation(config, event = {}) {
 /**
  * Log a sent Redis task message.
  */
-export function logRedisSent(config, type, scope, scopeId, payload) {
+export function logRedisSent(config: any, type: any, scope: any, scopeId: any, payload: any) {
   logRedisExchange(config, 'sent', type, scope, scopeId, payload);
 }
 
 /**
  * Log a received Redis completion/response message.
  */
-export function logRedisReceived(config, type, scope, scopeId, payload) {
+export function logRedisReceived(config: any, type: any, scope: any, scopeId: any, payload: any) {
   logRedisExchange(config, 'received', type, scope, scopeId, payload);
 }
 
@@ -164,6 +164,6 @@ export function logRedisReceived(config, type, scope, scopeId, payload) {
  * Flush and close the Redis log stream. Call on pipeline shutdown.
  * Non-blocking.
  */
-export function closeRedisLog() {
+function closeRedisLog() {
   return { ok: true, closed: false, reason: 'redis_log_uses_sync_jsonl_writes' };
 }

@@ -143,7 +143,7 @@ Source-proven current versions and assumptions:
 - LiteLLM: raw image `ghcr.io/berriai/litellm:main-latest`, NodePort `30050`, model config for Vertex AI Gemini and Claude routes.
 - Registry images: `registry:2` for mirror and local registry.
 - Agent images: GHCR KubeClaw images currently use `latest` tags in production values.
-- OpenClaw base image: the general and Buster gateway Dockerfiles share OpenClaw `2026.7.1` pinned by manifest digest; the nightly CI check compares that digest with the current `latest` release and requires intentional source updates on drift.
+- OpenClaw base image: the general and Buster gateway Dockerfiles share OpenClaw `2026.7.1` pinned by manifest digest; the nightly CI check resolves GitHub's latest stable OpenClaw release, verifies that release's GHCR tag with bounded retries, and requires intentional version, digest, and Debian snapshot updates on drift. The mutable GHCR `latest` tag is not release authority.
 - NetworkPolicy: `my-values/infra/network-policies.yaml` applies default-deny ingress/egress with explicit allowances for DNS, agent service access, Clawdeck Redis access, LiteLLM provider/PostgreSQL access, and registry-mirror upstream pulls.
 
 Known unverified compatibility details:

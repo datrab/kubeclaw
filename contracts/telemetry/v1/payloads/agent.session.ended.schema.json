@@ -3,6 +3,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "transcript_reference": { "type": ["string", "null"] },
+    "status": { "type": ["string", "null"] },
+    "runtime_ms": { "type": ["number", "null"] },
     "agent_id": {
       "minLength": 1,
       "type": [

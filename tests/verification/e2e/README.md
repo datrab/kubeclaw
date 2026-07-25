@@ -99,6 +99,12 @@ A zero exit from the Nova process is not enough. After the production process re
 - Buster task stream entries for both module and gate work, decoded from the canonical Redis task envelope.
 - Pipeline telemetry stream entries decoded from typed Redis `data` envelopes.
 - Agent observability success evidence from promoted `agent.*` events in the canonical pipeline event spine; raw observer Redis streams are ingress diagnostics.
+- The run-relative canonical observability bundle passes the pipeline-owned verifier and offline lifecycle replay with zero projection mismatches.
+- Run manifest, terminal closure, archive manifest, producer health, content-addressed artifact catalog, composed-prompt metadata, Git diff evidence, and immutable Git evaluation facts are present and mutually consistent.
+
+ACP sessions may declare tool evidence unavailable when the ACP runtime does not expose raw tool updates. Native OpenClaw subagent runs must still publish paired `agent.tool.started` and `agent.tool.finished` evidence; the E2E success path does not accept missing native-subagent tool evidence.
+
+Evidence corpora are deliberately separate: `generate-schema-conformance.mjs` creates synthetic positive/negative fixtures for every advertised event and marks them `readiness_eligible: false`; `generate-real-parallel-run.mjs` contains only recorded ACP evidence and its explicit tool capability limitation; the real E2E success and failure-matrix scenarios provide production evidence for native subagent tools, commands, retries, degradation, artifacts, Git, quality, and infrastructure. Every corpus event declares `production`, `recorded`, or `synthetic` provenance, and synthetic evidence is excluded from readiness coverage.
 
 Expected failure scenarios must also prove a run-scoped failure contract. A
 nonzero exit and matching stderr text are not sufficient; the run must leave

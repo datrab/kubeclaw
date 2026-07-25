@@ -56,7 +56,7 @@ export async function runModule(config: AnyRecord, progress: AnyRecord, moduleId
   logModuleBanner(moduleId, mod);
 
   while (true) {
-    const attempt = await executeModuleAttempt({
+    const attempt: AnyRecord = await executeModuleAttempt({
       config,
       progress,
       moduleId,
@@ -88,5 +88,3 @@ export async function runModule(config: AnyRecord, progress: AnyRecord, moduleId
     await deps.sleep(5000, { budget: selectTruthyValue(() => (opts.budget), () => (null)), signal: selectTruthyValue(() => (opts.signal), () => (null)) }); // Allow gateway to release session labels before retry
   }
 }
-
-export default runModule;

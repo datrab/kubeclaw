@@ -1,17 +1,11 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const transportPath = path.join(sourceRoot, 'skills/common/pipeline/redis-transport.ts');
 const transportSource = fs.readFileSync(transportPath, 'utf8');
 const runtimeRedisPreflightPath = path.join(sourceRoot, 'skills/nova/pipeline/services/runtime-redis-preflight.ts');

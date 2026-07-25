@@ -22,7 +22,7 @@ import path from 'path';
 import { log } from '../core/logger.ts';
 import { modulePath, resolveRepoRelativePath, resolveRepoRealPath } from '../core/paths.ts';
 
-export function isPlainObject(value) {
+export function isPlainObject(value: any) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
@@ -43,7 +43,7 @@ export const VALIDATION_CODES = {
 // ─── Internal helpers ─────────────────────────────────────────────────────────
 
 /** Normalize a path for comparison (remove trailing slash). */
-function normalizeDirPath(p) {
+function normalizeDirPath(p: any) {
   return typeof p === 'string' ? p.replace(/\/$/, '') : '';
 }
 
@@ -52,8 +52,8 @@ function normalizeDirPath(p) {
  * Handles optional flags: COPY [--chown=...] <src> <dest>
  * Returns array of { src, dest } pairs.
  */
-function parseDockerfileCopies(content) {
-  const copies = [];
+function parseDockerfileCopies(content: any) {
+  const copies: any[] = [];
   for (const line of content.split('\n')) {
     const trimmed = line.trim();
     // Match COPY followed by zero or more --flag args, then src and dest
@@ -67,7 +67,7 @@ function parseDockerfileCopies(content) {
  * Read FORGE.md content for the given module directory.
  * Modules with configured substeps must provide every substep FORGE.md.
  */
-function readForgeBlueprint(config, moduleDir, mod = {}) {
+function readForgeBlueprint(config: any, moduleDir: any, mod: any = {}) {
   const forgePath = path.join(modulePath(config, moduleDir), 'FORGE.md');
   if (mod?.substeps) {
     if (selectTruthyValue(() => (!Array.isArray(mod.substeps)), () => (mod.substeps.length === 0))) {
@@ -81,7 +81,7 @@ function readForgeBlueprint(config, moduleDir, mod = {}) {
         ),
       };
     }
-    const parts = [];
+    const parts: any[] = [];
     for (const stepId of mod.substeps) {
       if (selectTruthyValue(() => (typeof stepId !== 'string'), () => (!stepId.trim()))) {
         return {
@@ -108,7 +108,7 @@ function readForgeBlueprint(config, moduleDir, mod = {}) {
       }
       try {
         parts.push(fs.readFileSync(substepForgePath, 'utf8'));
-      } catch (error) {
+      } catch (error: any) {
         return {
           content: null,
           failure: validationFailure(
@@ -136,7 +136,7 @@ function readForgeBlueprint(config, moduleDir, mod = {}) {
   }
   try {
     return { content: fs.readFileSync(forgePath, 'utf8'), failure: null };
-  } catch (error) {
+  } catch (error: any) {
     return {
       content: null,
       failure: validationFailure(
@@ -149,7 +149,7 @@ function readForgeBlueprint(config, moduleDir, mod = {}) {
   }
 }
 
-function validationFailure(stage, code, explanation, nextStep) {
+function validationFailure(stage: any, code: any, explanation: any, nextStep: any) {
   return {
     stage,
     code,
@@ -158,7 +158,7 @@ function validationFailure(stage, code, explanation, nextStep) {
   };
 }
 
-function invalidServeDockerfileFailure(serveDockerfile, error) {
+function invalidServeDockerfileFailure(serveDockerfile: any, error: any) {
   return validationFailure(
     'delivery_lint',
     VALIDATION_CODES.SERVE_DOCKERFILE_PATH_INVALID,
@@ -167,7 +167,7 @@ function invalidServeDockerfileFailure(serveDockerfile, error) {
   );
 }
 
-function validateStaticPath(config, staticPath) {
+function validateStaticPath(config: any, staticPath: any) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (staticPath === undefined), () => (staticPath === null))), () => (staticPath === ''))) return null;
   if (selectTruthyValue(() => (typeof staticPath !== 'string'), () => (!staticPath.trim()))) {
     throw new Error('test_config.serve.static_path must be a non-empty string when set');
@@ -184,19 +184,19 @@ function validateStaticPath(config, staticPath) {
   return staticPath.replace(/\\/g, '/');
 }
 
-function normalizeComparablePath(value) {
+function normalizeComparablePath(value: any) {
   return typeof value === 'string'
     ? value.replace(/\\/g, '/').replace(/^\/+/, '').replace(/^(?:\.\/)+/, '').replace(/\/+$/, '').trim()
     : '';
 }
 
-function moduleOwnsReferencedPath(mod, reference) {
+function moduleOwnsReferencedPath(mod: any, reference: any) {
   const ref = normalizeComparablePath(reference);
   const ownedPaths = Array.isArray(mod?.owned_paths) ? mod.owned_paths : [];
   return ownedPaths
     .map(normalizeComparablePath)
     .filter(Boolean)
-    .some((owned) => ref === owned || ref.endsWith(`/${owned}`));
+    .some((owned: any) => ref === owned || ref.endsWith(`/${owned}`));
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
@@ -212,9 +212,9 @@ function moduleOwnsReferencedPath(mod, reference) {
  * @param {object} config    - Pipeline config (must have paths.modules_dir)
  * @returns {{ passed: boolean, failures: object[] }}
  */
-export function runPreflightValidation(mod, moduleDir, config) {
+export function runPreflightValidation(mod: any, moduleDir: any, config: any) {
   const testConfig = selectDefinedValue(() => (mod?.test_config), () => ({}));
-  const failures = [];
+  const failures: any[] = [];
 
   const forgeBlueprint = readForgeBlueprint(config, moduleDir, mod);
   if (forgeBlueprint.failure) {
@@ -254,7 +254,7 @@ export function runPreflightValidation(mod, moduleDir, config) {
   }
 
   if (failures.length > 0) {
-    log('WARN', `Preflight contract validation failed for ${moduleDir}: ${failures.map(f => f.code).join(', ')}`);
+    log('WARN', `Preflight contract validation failed for ${moduleDir}: ${failures.map((f: any) => f.code).join(', ')}`);
   } else {
     log('INFO', `Preflight contract validation passed for ${moduleDir}`);
   }
@@ -275,9 +275,9 @@ export function runPreflightValidation(mod, moduleDir, config) {
  * @param {object} config    - Pipeline config (must have repo_root)
  * @returns {{ passed: boolean, failures: object[] }}
  */
-export function runDeliveryLintValidation(mod, moduleDir, config) {
+export function runDeliveryLintValidation(mod: any, moduleDir: any, config: any) {
   const testConfig = selectDefinedValue(() => (mod?.test_config), () => ({}));
-  const failures = [];
+  const failures: any[] = [];
 
   const serveDockerfile = testConfig.serve?.dockerfile;
   if (!serveDockerfile) {
@@ -288,7 +288,7 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
   let dockerfilePath;
   try {
     dockerfilePath = resolveRepoRelativePath(config, serveDockerfile, 'test_config.serve.dockerfile');
-  } catch (error) {
+  } catch (error: any) {
     failures.push(invalidServeDockerfileFailure(serveDockerfile, error));
     log('WARN', `Delivery lint: ${VALIDATION_CODES.SERVE_DOCKERFILE_PATH_INVALID} — ${error.message}`);
     return { passed: false, failures };
@@ -308,7 +308,7 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
   let dockerfileRealPath;
   try {
     dockerfileRealPath = resolveRepoRealPath(config, serveDockerfile, 'test_config.serve.dockerfile');
-  } catch (error) {
+  } catch (error: any) {
     failures.push(invalidServeDockerfileFailure(serveDockerfile, error));
     log('WARN', `Delivery lint: ${VALIDATION_CODES.SERVE_DOCKERFILE_PATH_INVALID} — ${error.message}`);
     return { passed: false, failures };
@@ -317,7 +317,7 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
   let dockerfileContent;
   try {
     dockerfileContent = fs.readFileSync(dockerfileRealPath, 'utf8');
-  } catch (error) {
+  } catch (error: any) {
     failures.push(validationFailure(
       'delivery_lint',
       VALIDATION_CODES.SERVE_DOCKERFILE_READ_FAILED,
@@ -332,7 +332,7 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
   let normalizedStaticPath = null;
   try {
     normalizedStaticPath = validateStaticPath(config, staticPath);
-  } catch (error) {
+  } catch (error: any) {
     failures.push(validationFailure(
       'delivery_lint',
       VALIDATION_CODES.STATIC_PATH_INVALID,
@@ -344,9 +344,9 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
   if (normalizedStaticPath) {
     const copies = parseDockerfileCopies(dockerfileContent);
     if (copies.length > 0) {
-      const matched = copies.some(c => normalizeDirPath(c.dest) === normalizeDirPath(normalizedStaticPath));
+      const matched = copies.some((c: any) => normalizeDirPath(c.dest) === normalizeDirPath(normalizedStaticPath));
       if (!matched) {
-        const copyDests = copies.map(c => c.dest).join(', ');
+        const copyDests = copies.map((c: any) => c.dest).join(', ');
         failures.push(validationFailure(
           'delivery_lint',
           VALIDATION_CODES.STATIC_PATH_MISMATCH,
@@ -358,7 +358,7 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
   }
 
   if (failures.length > 0) {
-    log('WARN', `Delivery lint validation failed for ${moduleDir}: ${failures.map(f => f.code).join(', ')}`);
+    log('WARN', `Delivery lint validation failed for ${moduleDir}: ${failures.map((f: any) => f.code).join(', ')}`);
   } else {
     log('INFO', `Delivery lint validation passed for ${moduleDir}`);
   }
@@ -372,10 +372,10 @@ export function runDeliveryLintValidation(mod, moduleDir, config) {
  * @param {object[]} failures - Array of ValidationFailure objects
  * @returns {string}
  */
-export function formatValidationFailures(failures) {
+export function formatValidationFailures(failures: any) {
   if (selectTruthyValue(() => (!failures), () => (failures.length === 0))) return '';
   const header = `VALIDATION FAILED (${failures.length} issue${failures.length === 1 ? '' : 's'}):`;
-  const body = failures.map(f => [
+  const body = failures.map((f: any) => [
     `\n[${f.stage}] ${f.code}`,
     `  Why:  ${f.explanation}`,
     `  Fix:  ${f.next_step}`,

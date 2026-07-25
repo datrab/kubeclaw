@@ -1,4 +1,5 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 // ═══════════════════════════════════════════════════════════════
 // Verdict Schema — Deterministic Test Suite Results
 // ═══════════════════════════════════════════════════════════════
@@ -29,12 +30,12 @@ export const SEVERITY = Object.freeze({
 
 export type FindingSeverity = typeof SEVERITY[keyof typeof SEVERITY];
 
-export const RECOMMENDATION = Object.freeze({
+const RECOMMENDATION = Object.freeze({
   NO_SUBAGENT: 'NO_SUBAGENT',
   SPAWN:       'SPAWN',
 });
 
-export type RunnerRecommendation = typeof RECOMMENDATION[keyof typeof RECOMMENDATION];
+type RunnerRecommendation = typeof RECOMMENDATION[keyof typeof RECOMMENDATION];
 
 export interface FindingOptions {
   rule?: string | null;
@@ -86,8 +87,8 @@ interface NormalizedSuiteVerdictOptions {
   checks_failed: number;
   findings: Finding[];
   metadata: Record<string, unknown>;
-  reason?: string | null;
-  error?: string | null;
+  reason: string | null | undefined;
+  error: string | null | undefined;
 }
 
 export interface RunnerVerdict {
@@ -167,17 +168,17 @@ export function createFinding(severity: FindingSeverity, message: string, opts: 
   return {
     severity,
     message,
-    rule:    selectDefinedValue(() => (opts.rule), () => (null)),
-    element: selectDefinedValue(() => (opts.element), () => (null)),
-    file:    selectDefinedValue(() => (opts.file), () => (null)),
-    line:    selectDefinedValue(() => (opts.line), () => (null)),
+    rule: opts.rule === undefined ? null : opts.rule,
+    element: opts.element === undefined ? null : opts.element,
+    file: opts.file === undefined ? null : opts.file,
+    line: opts.line === undefined ? null : opts.line,
   };
 }
 
 // KEEP_TYPED_POLICY: runner aggregation produces deterministic summaries from
 // partial verdict data; no fail/error means PASS.
 export function createRunnerVerdict(module: string, project: string, suiteResults: Record<string, SuiteVerdict> | null | undefined): RunnerVerdict {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!suiteResults), () => (typeof suiteResults !== 'object'))), () => (Array.isArray(suiteResults)))) {
+  if (!suiteResults || typeof suiteResults !== 'object' || Array.isArray(suiteResults)) {
     throw new Error('createRunnerVerdict: suiteResults is required');
   }
   const suites = suiteResults;
@@ -241,7 +242,7 @@ function buildSummary(suites: Record<string, SuiteVerdict>, overallStatus: Suite
 
 // KEEP_TYPED_POLICY: prompt injection stays bounded while preserving full
 // artifact references.
-export function truncateForPrompt(runnerVerdict: RunnerVerdict, maxFindings = 5): RunnerVerdict {
+function truncateForPrompt(runnerVerdict: RunnerVerdict, maxFindings = 5): RunnerVerdict {
   const truncated = JSON.parse(JSON.stringify(runnerVerdict)) as RunnerVerdict;
 
   for (const [, suite] of Object.entries(truncated.suites)) {
@@ -249,7 +250,7 @@ export function truncateForPrompt(runnerVerdict: RunnerVerdict, maxFindings = 5)
       const total = suite.findings.length;
       suite.findings = suite.findings.slice(0, maxFindings);
       suite.findings.push(createFinding(SEVERITY.MINOR,
-        `${total - maxFindings} more findings in ${process.env.BUSTER_RESULTS_DIR ?? '/home/builder/.openclaw/results'}/${suite.suite}-verdict.json`,
+        `${total - maxFindings} more findings in ${readBusterEnvironment('BUSTER_RESULTS_DIR') ?? '/home/builder/.openclaw/results'}/${suite.suite}-verdict.json`,
       ));
     }
   }

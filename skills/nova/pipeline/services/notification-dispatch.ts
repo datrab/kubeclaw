@@ -1,6 +1,6 @@
 import { log } from '../core/logger.ts';
 import { createPluginContext, narrowPluginInputForCapabilities } from '../core/context.ts';
-import { getPluginRegistry, resolveHookListeners } from '../core/registry.ts';
+import { getPluginRegistry, resolveHookListeners } from '../core/registry-access.ts';
 import { assertNotificationEventInput, buildNotificationEventInput } from './notification-contract.ts';
 import { recordObservabilityDegraded, recordObservabilityRestored } from './observability.ts';
 import { deepClone, deepFreeze } from './serialization.ts';
@@ -12,7 +12,7 @@ const MISSING_NOTIFICATION_REASONS = Object.freeze([
   'notification_listener_missing',
 ]);
 
-function buildNotificationInvocation(input = {}) {
+function buildNotificationInvocation(input: any = {}) {
   return {
     runId: selectTruthyValue(() => (input?.ids?.runId), () => (null)),
     moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
@@ -26,7 +26,7 @@ function buildNotificationInvocation(input = {}) {
   };
 }
 
-function notificationPayload(input = {}, surface = 'listener_registry', reason = 'notification_listener_missing', detail = null) {
+function notificationPayload(input: any = {}, surface: any = 'listener_registry', reason: any = 'notification_listener_missing', detail: any = null) {
   return {
     component: 'notification',
     surface,
@@ -42,7 +42,7 @@ function notificationPayload(input = {}, surface = 'listener_registry', reason =
   };
 }
 
-function resolveMissingListenerIncident(config, input) {
+function resolveMissingListenerIncident(config: any, input: any) {
   const registry = getPluginRegistry(config);
   if (!registry) {
     return {
@@ -62,7 +62,7 @@ function resolveMissingListenerIncident(config, input) {
   };
 }
 
-async function reportMissingListeners(ctx, input) {
+async function reportMissingListeners(ctx: any, input: any) {
   const config = selectDefinedValue(() => (ctx?.config), () => ({}));
   const incident = resolveMissingListenerIncident(config, input);
   await recordObservabilityDegraded(ctx, notificationPayload(input, 'listener_registry', incident.reason, incident.detail));
@@ -70,13 +70,13 @@ async function reportMissingListeners(ctx, input) {
   return incident;
 }
 
-async function restoreMissingListenersIfNeeded(ctx, input) {
+async function restoreMissingListenersIfNeeded(ctx: any, input: any) {
   for (const reason of MISSING_NOTIFICATION_REASONS) {
     await recordObservabilityRestored(ctx, notificationPayload(input, 'listener_registry', reason, 'notification listener registry availability restored'));
   }
 }
 
-function ensureBuiltinNotificationRuntime(pluginContext, record, config, progress) {
+function ensureBuiltinNotificationRuntime(pluginContext: any, record: any, config: any, progress: any) {
   if (record?.manifest?.sourceType !== 'builtin') return;
   if (typeof pluginContext?.coreRuntime?.readConfig === 'function') return;
   Object.defineProperty(pluginContext, 'coreRuntime', {
@@ -91,7 +91,7 @@ function ensureBuiltinNotificationRuntime(pluginContext, record, config, progres
   });
 }
 
-export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) {
+export async function dispatchNotificationHook(ctx: any = {}, hookId: any, envelope: any = {}) {
   const config = ctx?.config;
   const progress = selectTruthyValue(() => (ctx?.progress), () => (null));
   const input = assertNotificationEventInput(buildNotificationEventInput(ctx, hookId, envelope));
@@ -112,8 +112,8 @@ export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) 
 
   const frozenInput = deepFreeze(deepClone(input));
   const invocation = buildNotificationInvocation(frozenInput);
-  const notificationState = {};
-  const results = [];
+  const notificationState: any = {};
+  const results: any[] = [];
 
   for (const record of listeners) {
     const moduleId = record.manifest.moduleId;
@@ -141,7 +141,7 @@ export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) 
       await record.implementation.observe(listenerInput, pluginContext);
       await recordObservabilityRestored(ctx, notificationPayload(frozenInput, moduleId, 'notification_listener_failed', `notification listener '${moduleId}' restored`));
       results.push({ moduleId, ok: true });
-    } catch (error) {
+    } catch (error: any) {
       const detail = selectDefinedValue(() => (error?.message), () => (`notification listener '${moduleId}' failed`));
       log('WARN', `[notification] listener '${moduleId}' degraded on '${hookId}': ${detail}`);
       await recordObservabilityDegraded(ctx, notificationPayload(frozenInput, moduleId, 'notification_listener_failed', detail));
@@ -151,7 +151,7 @@ export async function dispatchNotificationHook(ctx = {}, hookId, envelope = {}) 
 
   return {
     input: frozenInput,
-    listeners: listeners.map((record) => record.manifest.moduleId),
+    listeners: listeners.map((record: any) => record.manifest.moduleId),
     results,
     listenerMissing: false,
   };

@@ -8,35 +8,35 @@ import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-function jsonResourceItems(data) {
+function jsonResourceItems(data: any) {
   if (Array.isArray(data)) return data;
   return [];
 }
 
-function commandOutput(result) {
-  return selectDefinedValue(() => ([result.stdout, result.stderr].find((value) => typeof value === 'string' && value.length > 0)), () => (''));
+function commandOutput(result: any) {
+  return selectDefinedValue(() => ([result.stdout, result.stderr].find((value: any) => typeof value === 'string' && value.length > 0)), () => (''));
 }
 
-function scopedChangedFiles(ctx, predicate) {
+function scopedChangedFiles(ctx: any, predicate: any) {
   if (!ctx.changedFilesRequested) return null;
   return ctx.changedFiles
-    .filter(file => predicate(file.split(path.sep).join('/')))
-    .map(file => path.join(ctx.repoRoot, file));
+    .filter((file: any) => predicate(file.split(path.sep).join('/')))
+    .map((file: any) => path.join(ctx.repoRoot, file));
 }
 
-export function registerContainerYamlTools(registerTool) {
-  // ── hadolint (Dockerfile linting) ──
-  registerTool({
+
+function hadolintTool() {
+  return {
     id: 'hadolint',
     name: 'Hadolint (Dockerfile)',
     binary: 'hadolint',
     tier: 'full',
-    detect: (ctx) => ctx.projectTypes.has('docker'),
-    run: (ctx) => {
-      const dockerfiles = selectTruthyValue(() => (scopedChangedFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))), () => (listConfiguredTargetFiles(ctx, file => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))));
+    detect: (ctx: any) => ctx.projectTypes.has('docker'),
+    run: (ctx: any) => {
+      const dockerfiles = selectTruthyValue(() => (scopedChangedFiles(ctx, (file: any) => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))), () => (listConfiguredTargetFiles(ctx, (file: any) => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))));
       if (dockerfiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
-      const allFindings = [];
+      const allFindings: any[] = [];
       for (const dockerfile of dockerfiles) {
         const findingsBefore = allFindings.length;
         const sourceLines = fs.readFileSync(dockerfile, 'utf8').split('\n');
@@ -66,24 +66,25 @@ export function registerContainerYamlTools(registerTool) {
       }
 
       return {
-        errors: allFindings.filter(f => f.severity === 'error').length,
-        warnings: allFindings.filter(f => f.severity === 'warning').length,
+        errors: allFindings.filter((f: any) => f.severity === 'error').length,
+        warnings: allFindings.filter((f: any) => f.severity === 'warning').length,
         findings: allFindings,
       };
     },
-  });
+  };
+}
 
-  // ── helm lint (Helm chart validation) ──
-  registerTool({
+function helmLintTool() {
+  return {
     id: 'helm-lint',
     name: 'Helm Lint',
     binary: 'helm',
     tier: 'full',
-    detect: (ctx) => ctx.projectTypes.has('helm'),
-    run: (ctx) => {
+    detect: (ctx: any) => ctx.projectTypes.has('helm'),
+    run: (ctx: any) => {
       const chartDirs = configuredTargetPaths(ctx);
 
-      const allFindings = [];
+      const allFindings: any[] = [];
       for (const chartDir of chartDirs) {
         const findingCountBeforeChart = allFindings.length;
         const result = requireToolExecution(safeExec('helm', ['lint', '--strict', chartDir], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'helm-lint');
@@ -120,24 +121,25 @@ export function registerContainerYamlTools(registerTool) {
       }
 
       return {
-        errors: allFindings.filter(f => f.severity === 'error').length,
-        warnings: allFindings.filter(f => f.severity === 'warning').length,
+        errors: allFindings.filter((f: any) => f.severity === 'error').length,
+        warnings: allFindings.filter((f: any) => f.severity === 'warning').length,
         findings: allFindings,
       };
     },
-  });
+  };
+}
 
-  // ── kubeconform (K8s manifest validation) ──
-  registerTool({
+function kubeconformTool() {
+  return {
     id: 'kubeconform',
     name: 'Kubeconform',
     binary: 'kubeconform',
     tier: 'full',
-    detect: (ctx) => ctx.projectTypes.has('helm'),
-    run: (ctx) => {
-      const findings = [];
+    detect: (ctx: any) => ctx.projectTypes.has('helm'),
+    run: (ctx: any) => {
+      const findings: any[] = [];
 
-      const pushResourceFinding = (item) => {
+      const pushResourceFinding = (item: any) => {
         if (selectTruthyValue(() => (item?.status === 'statusInvalid'), () => (item?.status === 'statusError'))) {
           findings.push({
             file: item.filename,
@@ -167,32 +169,33 @@ export function registerContainerYamlTools(registerTool) {
       }
 
       return {
-        errors: findings.filter(f => f.severity === 'error').length,
-        warnings: findings.filter(f => f.severity === 'warning').length,
+        errors: findings.filter((f: any) => f.severity === 'error').length,
+        warnings: findings.filter((f: any) => f.severity === 'warning').length,
         findings,
       };
     },
-  });
+  };
+}
 
-  // ── yamllint (YAML syntax) ──
-  registerTool({
+function yamllintTool() {
+  return {
     id: 'yamllint',
     name: 'yamllint',
     binary: 'yamllint',
     tier: 'full',
-    detect: (ctx) => ctx.projectTypes.has('yaml'),
-    run: (ctx) => {
+    detect: (ctx: any) => ctx.projectTypes.has('yaml'),
+    run: (ctx: any) => {
       const config = ctx.tool.config_path;
       const yamlFiles = ctx.changedFilesRequested
-        ? ctx.changedFiles.map(file => path.join(ctx.repoRoot, file))
-        : listConfiguredTargetFiles(ctx, file => file.endsWith('.yaml') || file.endsWith('.yml'));
+        ? ctx.changedFiles.map((file: any) => path.join(ctx.repoRoot, file))
+        : listConfiguredTargetFiles(ctx, (file: any) => file.endsWith('.yaml') || file.endsWith('.yml'));
       if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       const args = ['-c', config, '-f', 'parsable', '--strict', ...yamlFiles];
 
       const result = requireToolExecution(safeExec('yamllint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'yamllint');
 
       // parsable format: file:line:col: [level] message (rule)
-      const findings = [];
+      const findings: any[] = [];
       const lines = commandOutput(result).split('\n').filter(Boolean);
       for (const line of lines) {
         const match = line.match(/^(.+?):(\d+):(\d+): \[(error|warning)\] (.+)/);
@@ -212,10 +215,17 @@ export function registerContainerYamlTools(registerTool) {
       }
 
       return {
-        errors: findings.filter(f => f.severity === 'error').length,
-        warnings: findings.filter(f => f.severity === 'warning').length,
+        errors: findings.filter((f: any) => f.severity === 'error').length,
+        warnings: findings.filter((f: any) => f.severity === 'warning').length,
         findings,
       };
     },
-  });
+  };
+}
+
+export function registerContainerYamlTools(registerTool: any) {
+  registerTool(hadolintTool());
+  registerTool(helmLintTool());
+  registerTool(kubeconformTool());
+  registerTool(yamllintTool());
 }

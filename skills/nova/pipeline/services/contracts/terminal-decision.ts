@@ -3,10 +3,10 @@ import { cloneSerializable as cloneSerializableValue } from '../serialization.ts
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
-export const PIPELINE_TERMINAL_DECISION_SCHEMA_VERSION = 'v1';
-export const PIPELINE_TERMINAL_DECISION_KIND = 'pipeline_terminal_decision';
+const PIPELINE_TERMINAL_DECISION_SCHEMA_VERSION = 'v1';
+const PIPELINE_TERMINAL_DECISION_KIND = 'pipeline_terminal_decision';
 
-export const PIPELINE_TERMINAL_STATUSES = Object.freeze({
+const PIPELINE_TERMINAL_STATUSES = Object.freeze({
   SUCCEEDED: 'succeeded',
   FAILED: 'failed',
   PAUSED: 'paused',
@@ -81,15 +81,15 @@ function optionalTextFields(input: UnknownRecord = {}, fields: string[] = []): U
   return result;
 }
 
-export function isPipelineTerminalStatus(status: unknown): boolean {
+function isPipelineTerminalStatus(status: unknown): boolean {
   return (Object.values(PIPELINE_TERMINAL_STATUSES) as readonly string[]).includes(status as string);
 }
 
-export function isPipelineTerminalAction(action: unknown): boolean {
+function isPipelineTerminalAction(action: unknown): boolean {
   return (Object.values(PIPELINE_TERMINAL_ACTIONS) as readonly string[]).includes(action as string);
 }
 
-export function isPipelineTerminalScope(scope: unknown): boolean {
+function isPipelineTerminalScope(scope: unknown): boolean {
   return (Object.values(PIPELINE_TERMINAL_SCOPES) as readonly string[]).includes(scope as string);
 }
 
@@ -99,7 +99,7 @@ export function pipelineTerminalStatusForStepOutcome(outcome: unknown): string |
   return selectDefinedValue(() => (TERMINAL_STATUS_BY_STEP_OUTCOME[normalizedOutcome]), () => (null));
 }
 
-export function buildPipelineTerminalDecision({
+function buildPipelineTerminalDecision({
   status,
   action,
   reasonCode = null,
@@ -195,7 +195,7 @@ function terminalReasonCodeAuthority(reasonCode: string | null, outcome: string)
   return outcome;
 }
 
-export function isPipelineTerminalDecision(decision: unknown): decision is UnknownRecord {
+function isPipelineTerminalDecision(decision: unknown): decision is UnknownRecord {
   return isPlainObject(decision)
     && decision.schemaVersion === PIPELINE_TERMINAL_DECISION_SCHEMA_VERSION
     && decision.kind === PIPELINE_TERMINAL_DECISION_KIND
@@ -240,7 +240,7 @@ export function validatePipelineTerminalDecision(decision: unknown = {}): string
   return errors;
 }
 
-export function assertPipelineTerminalDecision(decision: unknown = {}): UnknownRecord {
+function assertPipelineTerminalDecision(decision: unknown = {}): UnknownRecord {
   const errors = validatePipelineTerminalDecision(decision);
   if (errors.length > 0) throw new Error(`Invalid pipeline terminal decision: ${errors.join('; ')}`);
   return decision as UnknownRecord;

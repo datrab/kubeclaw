@@ -10,13 +10,9 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // STRICTIFY_TS_SLICE: filesystem/du probe failures remain nonfatal only as
 // typed degraded/unknown metadata, never as silent zero-size evidence.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFile } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import {
   createSuiteVerdict,
@@ -26,6 +22,8 @@ import {
 } from '../services/verdict-schema.ts';
 import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 import { buildSubprocessEnv, validateAllowedPath } from '../security.ts';
+import { createSuiteLog } from './support.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;
@@ -50,16 +48,13 @@ interface ScanResult {
 }
 
 const DEFAULTS = {
-  www_dir: process.env.BUSTER_BUILD_OUTPUT_DIR ?? `${process.env.REPO_ROOT ?? '/home/node/.openclaw/workspace/git-repo'}/dist`,
+  www_dir: readBusterEnvironment('BUSTER_BUILD_OUTPUT_DIR') ?? `${readBusterEnvironment('REPO_ROOT') ?? '/home/node/.openclaw/workspace/git-repo'}/dist`,
 };
 
 const execFileAsync = promisify(execFile) as any;
 
 function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
-  return (msg: string): void => {
-    console.log(`[SUITE] [BUNDLE] ${msg}`);
-    if (logSink) logSink({ suite: 'bundle', msg });
-  };
+  return createSuiteLog('bundle', 'BUNDLE', logSink);
 }
 
 function errorMessage(error: unknown): string {
@@ -126,10 +121,51 @@ function missingOutputFailure(startTime: number, wwwDir: string, log: (msg: stri
   });
 }
 
+async function probeBundleSize(wwwDir: string, context: BundleContext): Promise<{ sizeKb: number | null; error: string | null }> {
+  try {
+    const { stdout } = await execFileAsync('du', ['-sk', wwwDir], {
+      encoding: 'utf8',
+      env: buildSubprocessEnv(),
+      timeout: timeoutWithinSuite(10000, context),
+      signal: context.suiteAbortSignal,
+    });
+    const first = String(stdout).trim().split(/\s+/)[0];
+    const parsed = Number.parseInt(first === undefined ? '' : first, 10);
+    if (Number.isFinite(parsed)) return { sizeKb: parsed, error: null };
+    return { sizeKb: null, error: `bundle size probe degraded: du output did not start with a size: ${String(stdout).slice(0, 120)}` };
+  } catch (error) {
+    return { sizeKb: null, error: `bundle size probe degraded: ${errorMessage(error)}` };
+  }
+}
+
+function enforcedBundleFindings(totalSizeKb: number | null, fileCount: number, thresholds: AnyRecord): Finding[] {
+  const findings: Finding[] = [];
+  if (thresholds.max_size_kb != null && totalSizeKb === null) {
+    findings.push(createFinding(SEVERITY.SERIOUS, 'Cannot enforce max_size_kb because bundle size is unavailable', { rule: 'max-size-unavailable' }));
+  } else if (thresholds.max_size_kb != null && totalSizeKb !== null && totalSizeKb > thresholds.max_size_kb) {
+    findings.push(createFinding(SEVERITY.SERIOUS, `Bundle size ${totalSizeKb} KB exceeds max ${thresholds.max_size_kb} KB`, { rule: 'max-size' }));
+  }
+  if (thresholds.max_file_count != null && fileCount > thresholds.max_file_count) {
+    findings.push(createFinding(SEVERITY.MODERATE, `File count ${fileCount} exceeds max ${thresholds.max_file_count}`, { rule: 'max-files' }));
+  }
+  return findings;
+}
+
+function informationalBundleFindings(totalSizeKb: number | null): Finding[] {
+  if (totalSizeKb !== null && totalSizeKb > 5120) return [createFinding(SEVERITY.MODERATE, `Bundle size ${totalSizeKb} KB is large (>5 MB)`, { rule: 'size-info' })];
+  if (totalSizeKb !== null && totalSizeKb > 3072) return [createFinding(SEVERITY.MINOR, `Bundle size ${totalSizeKb} KB (>3 MB)`, { rule: 'size-info' })];
+  return [];
+}
+
+function bundlePolicyFindings(enforced: boolean, totalSizeKb: number | null, fileCount: number, thresholds: AnyRecord): Finding[] {
+  if (enforced) return enforcedBundleFindings(totalSizeKb, fileCount, thresholds);
+  return informationalBundleFindings(totalSizeKb);
+}
+
 export default async function bundleSuite(context: BundleContext): Promise<SuiteVerdict> {
   const log = createLog(context.logSink);
   const startTime = Date.now();
-  const config = selectDefinedValue(() => (context.config?.bundle), () => ({}));
+  const config: AnyRecord = context.config?.bundle === undefined ? {} : context.config.bundle;
   const wwwDir = validateAllowedPath(bundleWwwDirAuthority(config), 'bundle.www_dir');
   const thresholds = selectTruthyValue(() => (config.thresholds), () => (null));
   const enforced = thresholds !== null;
@@ -137,22 +173,7 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
 
   if (!fs.existsSync(wwwDir)) return missingOutputFailure(startTime, wwwDir, log);
 
-  let totalSizeKb: number | null = null;
-  let sizeProbeError: string | null = null;
-  try {
-    const { stdout: output } = await execFileAsync('du', ['-sk', wwwDir], {
-      encoding: 'utf8',
-      env: buildSubprocessEnv(),
-      timeout: timeoutWithinSuite(10000, context),
-      signal: context.suiteAbortSignal,
-    });
-    const first = String(output).trim().split(/\s+/)[0];
-    const parsed = Number.parseInt(selectDefinedValue(() => (first), () => ('')), 10);
-    if (Number.isFinite(parsed)) totalSizeKb = parsed;
-    else sizeProbeError = `bundle size probe degraded: du output did not start with a size: ${String(output).slice(0, 120)}`;
-  } catch (error) {
-    sizeProbeError = `bundle size probe degraded: ${errorMessage(error)}`;
-  }
+  const { sizeKb: totalSizeKb, error: sizeProbeError } = await probeBundleSize(wwwDir, context);
   if (sizeProbeError) log(sizeProbeError);
 
   const scan = scanDir(wwwDir, log);
@@ -165,7 +186,6 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
   log(`Size: ${totalSizeKb === null ? 'missing_bundle_size' : `${totalSizeKb} KB`} (${fileCount} files) — mode: ${mode}`);
 
   const findings: Finding[] = [];
-  let checksFailed = 0;
   const checksTotal = 2;
 
   if (sizeProbeError) {
@@ -175,28 +195,9 @@ export default async function bundleSuite(context: BundleContext): Promise<Suite
     findings.push(createFinding(SEVERITY.MINOR, `Bundle file scan degraded (${scan.probe_errors.length} probe error${scan.probe_errors.length === 1 ? '' : 's'})`, { rule: 'bundle-scan-degraded' }));
   }
 
-  if (enforced) {
-    const maxSizeKb = thresholds.max_size_kb;
-    const maxFiles = thresholds.max_file_count;
-
-    if (maxSizeKb != null) {
-      if (totalSizeKb === null) {
-        checksFailed++;
-        findings.push(createFinding(SEVERITY.SERIOUS, 'Cannot enforce max_size_kb because bundle size is unavailable', { rule: 'max-size-unavailable' }));
-      } else if (totalSizeKb > maxSizeKb) {
-        checksFailed++;
-        findings.push(createFinding(SEVERITY.SERIOUS, `Bundle size ${totalSizeKb} KB exceeds max ${maxSizeKb} KB`, { rule: 'max-size' }));
-      }
-    }
-
-    if (maxFiles != null && fileCount > maxFiles) {
-      checksFailed++;
-      findings.push(createFinding(SEVERITY.MODERATE, `File count ${fileCount} exceeds max ${maxFiles}`, { rule: 'max-files' }));
-    }
-  } else if (totalSizeKb !== null) {
-    if (totalSizeKb > 5120) findings.push(createFinding(SEVERITY.MODERATE, `Bundle size ${totalSizeKb} KB is large (>5 MB)`, { rule: 'size-info' }));
-    else if (totalSizeKb > 3072) findings.push(createFinding(SEVERITY.MINOR, `Bundle size ${totalSizeKb} KB (>3 MB)`, { rule: 'size-info' }));
-  }
+  const policyFindings = bundlePolicyFindings(enforced, totalSizeKb, fileCount, thresholds);
+  findings.push(...policyFindings);
+  const checksFailed = enforced ? policyFindings.length : 0;
 
   const checksPassed = checksTotal - checksFailed;
   const duration_ms = Date.now() - startTime;

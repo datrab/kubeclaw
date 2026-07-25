@@ -6,6 +6,7 @@ import { getPipelineArtifactBundle } from './artifact-bundle.ts';
 import { getTelemetryStreamKeyForRun, isTelemetryEnabled } from './telemetry-stream.ts';
 import { sleep } from '../timing.ts';
 import { agentObservabilityConfig, agentObservabilityStartupWait } from './agent-observability-config.ts';
+import { createBlockingRedisStreamReader } from './agent-observability-redis-reader.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
@@ -24,45 +25,19 @@ function configRecord(config: unknown): AnyRecord {
 }
 
 function requiredConfig(config: unknown) {
-  return agentObservabilityConfig(config);
+  return agentObservabilityConfig(configRecord(config));
 }
 
-export function isAgentObservabilityRequired(config: unknown = {}) {
+function isAgentObservabilityRequired(config: unknown = {}) {
   return requiredConfig(config).required === true;
 }
 
 export function agentObservabilityStartupTimeoutMs(config: unknown = {}) {
-  return agentObservabilityStartupWait(config).timeoutMs;
+  return agentObservabilityStartupWait(configRecord(config)).timeoutMs;
 }
 
 function agentObservabilityStartupReadBlockMs(config: unknown = {}) {
-  return agentObservabilityStartupWait(config).blockMs;
-}
-
-function redisFieldValue(value: unknown): string {
-  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
-}
-
-function decodeRedisEntry(rawEntry: unknown) {
-  if (!Array.isArray(rawEntry)) return null;
-  if (typeof rawEntry[0] !== 'string') return null;
-  if (!Array.isArray(rawEntry[1])) return null;
-  const data: AnyRecord = {};
-  for (let i = 0; i < rawEntry[1].length; i += 2) data[String(rawEntry[1][i])] = redisFieldValue(rawEntry[1][i + 1]);
-  return { id: rawEntry[0], data };
-}
-
-function decodeXreadEntries(result: unknown) {
-  const decoded: Array<{ id: string; data: AnyRecord }> = [];
-  if (!Array.isArray(result)) return decoded;
-  for (const streamResult of result) {
-    const entries = Array.isArray(streamResult?.[1]) ? streamResult[1] : [];
-    for (const rawEntry of entries) {
-      const entry = decodeRedisEntry(rawEntry);
-      if (entry) decoded.push(entry);
-    }
-  }
-  return decoded;
+  return agentObservabilityStartupWait(configRecord(config)).blockMs;
 }
 
 function parseTelemetryEvent(entry: { id: string; data: AnyRecord }) {
@@ -71,7 +46,7 @@ function parseTelemetryEvent(entry: { id: string; data: AnyRecord }) {
   try {
     const parsed = JSON.parse(raw);
     return parsed && typeof parsed === 'object' ? { ...parsed, redis_id: entry.id } : null;
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return null;
   }
 }
@@ -105,25 +80,21 @@ function isStartupLifecycleType(type: unknown) {
 
 export function matchesAgentLifecycleTelemetry(event: AnyRecord = {}, identity: AnyRecord = {}, types: string[] = []) {
   if (!types.includes(event.type)) return false;
+  const commonPairs: Array<[unknown, unknown]> = [
+    [identity.project, event.project],
+    [identity.dispatch_id, event.dispatch_id],
+    [identity.session_key, eventSessionKey(event)],
+    [identity.gateway_label, eventGatewayLabel(event)],
+    [identity.module_id, event.module_id],
+    [identity.gate_id, event.gate_id],
+  ];
   if (isStartupLifecycleType(event.type)) {
-    if (!matchesKnown(identity.session_key, eventSessionKey(event))) return false;
-    if (!matchesKnownWhenPresent(identity.gateway_label, eventGatewayLabel(event))) return false;
-    if (!matchesKnownWhenPresent(identity.project, event.project)) return false;
-    if (!matchesKnownWhenPresent(identity.dispatch_id, event.dispatch_id)) return false;
-    if (!matchesKnownWhenPresent(identity.module_id, event.module_id)) return false;
-    if (!matchesKnownWhenPresent(identity.gate_id, event.gate_id)) return false;
-    return true;
+    return commonPairs.every(([expected, actual], index) => index === 2
+      ? matchesKnown(expected, actual)
+      : matchesKnownWhenPresent(expected, actual));
   }
-
-  if (!matchesKnown(identity.run_id, event.run_id)) return false;
-  if (!matchesKnown(identity.project, event.project)) return false;
-  if (!matchesKnown(identity.dispatch_id, event.dispatch_id)) return false;
-  if (!matchesKnown(identity.session_key, eventSessionKey(event))) return false;
-  if (!matchesKnown(identity.gateway_label, eventGatewayLabel(event))) return false;
-  if (!matchesKnown(identity.module_id, event.module_id)) return false;
-  if (!matchesKnown(identity.gate_id, event.gate_id)) return false;
-  if (!matchesKnown(identity.agent_type, event.agent_type)) return false;
-  return true;
+  return [[identity.run_id, event.run_id], ...commonPairs, [identity.agent_type, event.agent_type]]
+    .every(([expected, actual]) => matchesKnown(expected, actual));
 }
 
 function parsePipelineJsonlLine(line: string) {
@@ -132,7 +103,7 @@ function parsePipelineJsonlLine(line: string) {
   try {
     const parsed = JSON.parse(trimmed);
     return parsed && typeof parsed === 'object' ? parsed : null;
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return null;
   }
 }
@@ -145,8 +116,8 @@ function firstDefined<T>(...values: T[]): T | undefined {
 }
 
 function startupStreamKey(config: AnyRecord, opts: AnyRecord, runId: string): string {
-  if (opts.stream !== undefined && opts.stream !== null) return opts.stream;
-  return getTelemetryStreamKeyForRun(config, runId);
+  if (typeof opts.stream === 'string') return opts.stream;
+  return getTelemetryStreamKeyForRun(config, runId) ?? '';
 }
 
 function startupReadBlockMs(config: AnyRecord, opts: AnyRecord): number {
@@ -172,18 +143,18 @@ function startupEventTypes(opts: AnyRecord): string[] {
 }
 
 function startupPipelineJsonlPaths(config: AnyRecord, opts: AnyRecord): string[] {
-  if (Array.isArray(opts.pipelineLogPaths)) return opts.pipelineLogPaths.filter(Boolean);
+  if (Array.isArray(opts.pipelineLogPaths)) return opts.pipelineLogPaths.filter((value: unknown): value is string => typeof value === 'string' && value.length > 0);
   const activeContext = getActiveContext();
   const contextPaths = [
     activeContext?._runPipelineLogPath,
     activeContext?._pipelineLogPath,
-  ].filter(Boolean);
+  ].filter((value: any): value is string => typeof value === 'string' && value.length > 0);
   const artifacts = getPipelineArtifactBundle(config);
   return [...new Set([
     ...contextPaths,
     artifacts.run_pipeline_jsonl_path,
     artifacts.global_pipeline_jsonl_path,
-  ].filter(Boolean))];
+  ].filter((value: any): value is string => typeof value === 'string' && value.length > 0))];
 }
 
 function findMatchingPipelineJsonlEvent(filePath: string, identity: AnyRecord = {}, types: string[] = []) {
@@ -191,12 +162,12 @@ function findMatchingPipelineJsonlEvent(filePath: string, identity: AnyRecord = 
   let content = '';
   try {
     content = fs.readFileSync(filePath, 'utf8');
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
     return null;
   }
   const lines = content.split('\n');
   for (let i = lines.length - 1; i >= 0; i -= 1) {
-    const event = parsePipelineJsonlLine(lines[i]);
+    const event = parsePipelineJsonlLine(lines[i] ?? '');
     if (!event) continue;
     if (matchesAgentLifecycleTelemetry(event as AnyRecord, identity, types)) {
       return { ...event, observability_source: 'pipeline_jsonl', pipeline_jsonl_path: filePath };
@@ -211,45 +182,26 @@ export function createAgentLifecycleTelemetryReader(config: AnyRecord = {}, opts
   const stream = startupStreamKey(config, opts, runId);
   const blockMs = startupReadBlockMs(config, opts);
   let pipelineJsonlPaths: string[] | null = null;
-  let lastId = selectDefinedValue(() => (opts.startId), () => (AGENT_OBSERVABILITY_STREAM_START_ID));
-  let client: AnyRecord | null = null;
-  let redisReady = false;
-
-  function redis() {
-    if (client) return client;
-    const RedisCtor = startupRedisCtor(opts);
-    client = createRedisClient(RedisCtor, configRecord(opts.redis), {
-      retryStrategy: startupRetryStrategy(opts),
-      maxRetriesPerRequest: 1,
-      enableOfflineQueue: false,
-      lazyConnect: true,
-    });
-    client.on?.('error', () => {});
-    return client;
-  }
-
-  async function ensureRedisReady() {
-    const current = redis();
-    if (redisReady) return current;
-    const status = typeof current.status === 'string' ? current.status : '';
-    if (typeof current.connect === 'function' && status !== 'ready') {
-      await current.connect();
-    }
-    if (typeof current.ping === 'function') {
-      await current.ping();
-    }
-    redisReady = true;
-    return current;
-  }
+  const reader = stream ? createBlockingRedisStreamReader({
+    stream,
+    blockMs,
+    startId: selectDefinedValue(() => (opts.startId), () => (AGENT_OBSERVABILITY_STREAM_START_ID)),
+    createClient() {
+      const RedisCtor = startupRedisCtor(opts);
+      return createRedisClient(RedisCtor as any, configRecord(opts.redis), {
+        retryStrategy: startupRetryStrategy(opts),
+        maxRetriesPerRequest: 1,
+        enableOfflineQueue: false,
+        lazyConnect: true,
+      }) as any;
+    },
+  }) : null;
 
   return {
     async read(identity: AnyRecord = {}, types: string[] = []) {
       if (stream) {
-        const current = await ensureRedisReady();
-        const result = await current.xread('BLOCK', String(blockMs), 'COUNT', '10', 'STREAMS', stream, lastId);
         let matched = null;
-        for (const entry of decodeXreadEntries(result)) {
-          if (entry.id) lastId = entry.id;
+        for (const entry of await reader!.read()) {
           const event = parseTelemetryEvent(entry);
           if (!event) continue;
           if (!matched && matchesAgentLifecycleTelemetry(event, identity, types)) matched = event;
@@ -264,16 +216,7 @@ export function createAgentLifecycleTelemetryReader(config: AnyRecord = {}, opts
       return null;
     },
     close() {
-      if (!client) return;
-      const current = client;
-      client = null;
-      redisReady = false;
-      try {
-        if (typeof current.disconnect === 'function') current.disconnect();
-        else void current.quit?.().catch?.(() => {});
-      } catch (_error) {
-        // best effort only
-      }
+      reader?.close();
     },
   };
 }

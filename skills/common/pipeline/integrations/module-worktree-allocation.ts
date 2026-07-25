@@ -1,19 +1,20 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { gitExec } from '../git-primitives.ts';
 
-function textValue(value) {
+type AnyRecord = Record<string, any>;
+type StructuredGitError = Error & { code: string; gitSync: AnyRecord };
+
+function textValue(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
-function selectPresentValue(...values) {
+function selectPresentValue(...values: unknown[]): unknown {
   return values.find((value) => value !== undefined && value !== null && value !== '');
 }
 
-function createStructuredGitError(config, code, message, details = {}) {
-  const error = new Error(message);
+function createStructuredGitError(config: AnyRecord, code: string, message: string, details: AnyRecord = {}): StructuredGitError {
+  const error = new Error(message) as StructuredGitError;
   error.code = code;
   error.gitSync = {
     code,
@@ -24,17 +25,17 @@ function createStructuredGitError(config, code, message, details = {}) {
   return error;
 }
 
-function sanitizeGitPathSegment(value) {
+function sanitizeGitPathSegment(value: unknown): string {
   const normalized = textValue(value)
     .trim()
     .replace(/\\/g, '/')
     .replace(/[^A-Za-z0-9._/-]+/g, '-')
     .replace(/^\/+|\/+$/g, '')
     .replace(/\/{2,}/g, '/');
-  return selectPresentValue(normalized, 'unknown');
+  return textValue(selectPresentValue(normalized, 'unknown'));
 }
 
-function moduleAttemptBranch(input = {}) {
+function moduleAttemptBranch(input: AnyRecord = {}): string {
   const runId = sanitizeGitPathSegment(selectPresentValue(input.runId, input.run_id));
   const moduleId = sanitizeGitPathSegment(selectPresentValue(input.moduleId, input.module_id, input.itemId));
   const attempt = Number(input.attempt);
@@ -43,26 +44,26 @@ function moduleAttemptBranch(input = {}) {
   return `run/${runId}/module/${moduleId}/attempt-${attempt}`;
 }
 
-function defaultParallelWorktreeRoot(config) {
+function defaultParallelWorktreeRoot(config: AnyRecord): string {
   const configured = textValue(selectPresentValue(config?.git?.parallel_worktree_root, config?.git?.worktree_root));
   if (configured) return path.isAbsolute(configured) ? configured : path.join(config.repo_root, configured);
   return path.join(path.dirname(config.repo_root), 'worktrees');
 }
 
-function isPathInsideOrEqual(child, parent) {
+function isPathInsideOrEqual(child: string, parent: string): boolean {
   const relative = path.relative(path.resolve(parent), path.resolve(child));
   if (relative === '') return true;
   return !relative.startsWith('..') && !path.isAbsolute(relative);
 }
 
-function assertParallelWorktreeRootOutsideRepo(config, root) {
+function assertParallelWorktreeRootOutsideRepo(config: AnyRecord, root: string): void {
   if (!isPathInsideOrEqual(root, config.repo_root)) return;
   throw createStructuredGitError(config, 'module_worktree/root_inside_repo', `Module worktree root must be outside the run worktree: ${root}`, {
     worktree_root: root,
   });
 }
 
-export function freezeParallelGitBase(config) {
+export function freezeParallelGitBase(config: AnyRecord): AnyRecord {
   const repoRoot = textValue(config?.repo_root);
   if (!repoRoot) throw new Error('freezeParallelGitBase requires config.repo_root');
   const baseCommit = gitExec(repoRoot, ['rev-parse', 'HEAD']).trim();
@@ -70,7 +71,7 @@ export function freezeParallelGitBase(config) {
   return { base_commit: baseCommit, repo_root: repoRoot };
 }
 
-export function allocateModuleWorktree(config, input = {}) {
+export function allocateModuleWorktree(config: AnyRecord, input: AnyRecord = {}): AnyRecord {
   const repoRoot = textValue(config?.repo_root);
   if (!repoRoot) throw new Error('allocateModuleWorktree requires config.repo_root');
   const branch = moduleAttemptBranch(input);

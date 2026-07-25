@@ -1,3 +1,4 @@
+import { parseSourceRootArgs, walkFiles } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-common-helper-import-surface' });
 import fs from 'fs';
@@ -15,27 +16,10 @@ import {
   setRepoRoot,
 } from '../../../skills/common/pipeline/git-primitives.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd(), overlayRoot: null };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-    if (token === '--overlay-root') args.overlayRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-function walk(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const abs = path.join(dir, entry.name);
-    if (entry.isDirectory()) walk(abs, out);
-    else if (entry.isFile() && /\.(?:js|mjs|cjs|ts)$/.test(entry.name)) out.push(abs);
-  }
-  return out;
-}
+const walk = (dir) => walkFiles(dir, (file) => /\.(?:js|mjs|cjs|ts)$/.test(file));
 
-const { sourceRoot, overlayRoot } = parseArgs();
+const { sourceRoot, overlayRoot } = parseSourceRootArgs();
 const previousSwarmConfig = process.env.SWARM_CONFIG;
 const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'common-helper-import-config-'));
 const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');

@@ -22,10 +22,11 @@
       "type": "string"
     },
     "attempt": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "type": "number"
+    },
+    "authority_class": {
+      "minLength": 1,
+      "type": "string"
     },
     "causation_id": {
       "type": [
@@ -56,6 +57,18 @@
       "type": "string"
     },
     "extensions": {
+      "properties": {
+        "evidence_provenance": {
+          "enum": [
+            "production",
+            "recorded",
+            "synthetic"
+          ]
+        }
+      },
+      "required": [
+        "evidence_provenance"
+      ],
       "type": "object"
     },
     "gate_id": {
@@ -84,10 +97,7 @@
     },
     "module_id": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "occurred_at": {
       "format": "date-time",
@@ -105,6 +115,18 @@
     "params_bytes": {
       "type": [
         "number",
+        "null"
+      ]
+    },
+    "parent_session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parent_span_id": {
+      "type": [
+        "string",
         "null"
       ]
     },
@@ -128,19 +150,28 @@
       "type": "integer"
     },
     "session_id": {
-      "minLength": 1,
-      "type": "string"
-    },
-    "session_key": {
-      "minLength": 1,
       "type": [
         "string",
         "null"
       ]
     },
+    "session_key": {
+      "minLength": 1,
+      "type": "string"
+    },
     "source": {
       "minLength": 1,
       "type": "string"
+    },
+    "source_event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "tool_call_id": {
       "minLength": 1,
@@ -150,12 +181,20 @@
       "minLength": 1,
       "type": "string"
     },
+    "trace_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "type": {
       "const": "agent.tool.started"
     },
     "work_id": {
-      "minLength": 1,
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "work_type": {
       "enum": [
@@ -172,22 +211,26 @@
   "required": [
     "schema_version",
     "event_id",
+    "source_event_id",
     "type",
     "occurred_at",
     "emitted_at",
     "seq",
+    "cursor",
     "project",
     "run_id",
     "source",
     "producer",
-    "work_id",
-    "work_type",
+    "authority_class",
+    "extensions",
+    "tool_name",
+    "tool_call_id",
+    "session_key",
+    "model_call_id",
+    "module_id",
     "attempt",
     "dispatch_id",
-    "session_id",
-    "model_call_id",
-    "tool_call_id",
-    "tool_name"
+    "content_completeness"
   ],
   "type": "object"
 }

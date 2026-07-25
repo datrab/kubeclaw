@@ -1,30 +1,13 @@
+import { parseSourceRootArgs, toRepoPath, walkFiles } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-common-pipeline-facades-surface' });
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-function walk(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const abs = path.join(dir, entry.name);
-    if (entry.isDirectory()) walk(abs, out);
-    else if (entry.isFile() && /\.(?:js|mjs|cjs|ts)$/.test(entry.name)) out.push(abs);
-  }
-  return out;
-}
-
-function relPath(sourceRoot, filePath) {
-  return path.relative(sourceRoot, filePath).replace(/\\/g, '/');
-}
+const walk = (dir) => walkFiles(dir, (file) => /\.(?:js|mjs|cjs|ts)$/.test(file));
+const relPath = toRepoPath;
 
 const APPROVED_COMMON_FACADES = Object.freeze([
   'skills/buster/pipeline/agent-artifact.ts',
@@ -66,6 +49,7 @@ const APPROVED_COMMON_FACADES = Object.freeze([
   'skills/buster/pipeline/services/telemetry/payload-schema.ts',
   'skills/buster/pipeline/telemetry.ts',
   'skills/buster/pipeline/timing.ts',
+  'skills/buster/pipeline/value-boundary.ts',
   'skills/nova/pipeline/agent-observability/src/index.ts',
   'skills/nova/pipeline/agent-artifact.ts',
   'skills/nova/pipeline/agents/acp-monitor.ts',
@@ -104,9 +88,10 @@ const APPROVED_COMMON_FACADES = Object.freeze([
   'skills/nova/pipeline/services/telemetry/payload-schema.ts',
   'skills/nova/pipeline/telemetry.ts',
   'skills/nova/pipeline/timing.ts',
+  'skills/nova/pipeline/value-boundary.ts',
 ]);
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const runtimeFiles = [
   ...walk(path.join(sourceRoot, 'skills/nova/pipeline')),
   ...walk(path.join(sourceRoot, 'skills/buster/pipeline')),

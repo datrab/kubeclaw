@@ -1,6 +1,13 @@
 import { getRunId } from '../../core/runtime.ts';
 import { createContractInvalidError } from '../contract-diagnostics.ts';
 import { cloneSerializable as cloneSerializableValue } from '../serialization.ts';
+import { firstNonEmptyText as firstTextValue, nonEmptyText as textValue } from '../text-values.ts';
+import {
+  coerceControlResultOrThrow,
+  type ControlResultNormalizeOptions,
+  isTypedControlResult,
+  validateControlResultEnvelope,
+} from './control-result-envelope.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
@@ -17,20 +24,6 @@ export function cloneSerializable(value: unknown): any {
 
 function isPlainObject(value: unknown): value is UnknownRecord {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
-}
-
-function textValue(value: unknown): string | null {
-  if (typeof value !== 'string') return null;
-  const normalized = value.trim();
-  return normalized ? normalized : null;
-}
-
-function firstTextValue(...values: unknown[]): string | null {
-  for (const value of values) {
-    const normalized = textValue(value);
-    if (normalized) return normalized;
-  }
-  return null;
 }
 
 function validatorProducerType(value: unknown): string {
@@ -57,7 +50,7 @@ function validatorScope(scope: unknown, moduleId: unknown): string {
 
 function summarizeValidationFailures(failures: unknown[] = []): string | null {
   if (selectTruthyValue(() => (!Array.isArray(failures)), () => (failures.length === 0))) return null;
-  return failures.map((failure = {}) => {
+  return failures.map((failure: any = {}) => {
     const item = isPlainObject(failure) ? failure : {};
     return validationFailureSummary(item);
   }).join(', ');
@@ -240,11 +233,7 @@ export function buildModuleValidatorControlResult(config: UnknownRecord, result:
 }
 
 export function isTypedValidatorControlResult(result: unknown, producerType: string | null = null): result is UnknownRecord {
-  return isPlainObject(result)
-    && result?.schemaVersion === 'v1'
-    && result?.producerKind === 'validator'
-    && (producerType ? result?.producerType === producerType : typeof result?.producerType === 'string')
-    && typeof result?.nextAction === 'string';
+  return isTypedControlResult(result, 'validator', producerType, true);
 }
 
 export function coerceTypedValidatorControlResult(result: unknown, { producerType }: { producerType?: string | null | undefined } = {}): UnknownRecord {
@@ -261,24 +250,17 @@ export function validateTypedValidatorControlResult(result: unknown, {
   stageId?: string;
   allowedNextActions?: readonly string[];
 } = {}): string[] {
-  const errors: string[] = [];
-  if (!isPlainObject(result)) {
-    errors.push('result must be an object');
-    return errors;
-  }
-  if (result.schemaVersion !== 'v1') errors.push("schemaVersion must be 'v1'");
-  if (result.producerKind !== 'validator') errors.push("producerKind must be 'validator'");
-  if (producerType && result.producerType !== producerType) errors.push(`producerType must be '${producerType}'`);
-  if (!allowedNextActions.includes(result.nextAction)) {
-    errors.push(`nextAction must be ${allowedNextActions.map((value) => `'${value}'`).join(', ').replace(/, ([^,]+)$/, ', or $1')} for ${stageId}`);
-  }
-  if (!isPlainObject(result.diagnostics)) {
+  const { errors, controlResult } = validateControlResultEnvelope(result, {
+    producerKind: 'validator', producerType, stageId, allowedNextActions, producerTypeOptional: true,
+  });
+  if (!controlResult) return errors;
+  if (!isPlainObject(controlResult.diagnostics)) {
     errors.push('diagnostics must be an object');
-  } else if (selectTruthyValue(() => (typeof result.diagnostics.summary !== 'string'), () => (!result.diagnostics.summary.trim()))) {
+  } else if (selectTruthyValue(() => (typeof controlResult.diagnostics.summary !== 'string'), () => (!controlResult.diagnostics.summary.trim()))) {
     errors.push('diagnostics.summary must be a non-empty string');
   }
-  if (['request_fix', 'block'].includes(result.nextAction) && !result.issueType) {
-    errors.push(`${result.nextAction} action requires issueType`);
+  if (['request_fix', 'block'].includes(controlResult.nextAction) && !controlResult.issueType) {
+    errors.push(`${controlResult.nextAction} action requires issueType`);
   }
   return errors;
 }
@@ -291,37 +273,24 @@ export function normalizeTypedValidatorControlResult(rawResult: unknown, {
   moduleId = null,
   input = null,
   invocation = null,
-}: {
-  producerType?: string | null | undefined;
-  label?: string | null;
-  stageId?: string;
-  coerce?: (value: unknown) => UnknownRecord;
-  moduleId?: string | null;
-  input?: unknown;
-  invocation?: unknown;
-} = {}): UnknownRecord {
-  let controlResult: UnknownRecord;
-  try {
-    controlResult = coerce(rawResult);
-  } catch (error) {
-    const validationErrors = [error instanceof Error && error.message ? error.message : 'coercion failed'];
-    const errorLabel = validatorErrorLabel(label, stageId);
-    throw createContractInvalidError(`${errorLabel} validator returned invalid control result: ${validationErrors.join('; ')}`, {
+}: ControlResultNormalizeOptions = {}): UnknownRecord {
+  const errorLabel = validatorErrorLabel(label, stageId);
+  const controlResult = coerceControlResultOrThrow(rawResult, {
+    coerce,
+    messagePrefix: `${errorLabel} validator returned invalid control result`,
+    diagnostics: {
       label: errorLabel,
       stageId,
       hookFamily: 'validator.run',
       moduleId,
       producerKind: 'validator',
       producerType,
-      validationErrors,
-      rawResult,
       input,
       invocation,
-    });
-  }
+    },
+  });
   const errors = validateTypedValidatorControlResult(controlResult, { producerType, stageId });
   if (errors.length > 0) {
-    const errorLabel = validatorErrorLabel(label, stageId);
     throw createContractInvalidError(`${errorLabel} validator returned invalid control result: ${errors.join('; ')}`, {
       label: errorLabel,
       stageId,

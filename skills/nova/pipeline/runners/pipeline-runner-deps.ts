@@ -36,7 +36,7 @@ export const DEFAULT_PIPELINE_RUNNER_DEPS = {
   preflightRuntimeRedis,
 };
 
-export function getPipelineRunnerDeps(config, overrides = {}) {
+export function getPipelineRunnerDeps(config: any, overrides: any = {}) {
   return {
     ...DEFAULT_PIPELINE_RUNNER_DEPS,
     ...selectDeps(overrides, 'pipelineRunner'),

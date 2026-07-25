@@ -8,7 +8,7 @@ function textValue(value: unknown): string | null {
   return normalized ? normalized : null;
 }
 
-export function isModuleBusterDispatchId(value: unknown): boolean {
+function isModuleBusterDispatchId(value: unknown): boolean {
   const dispatchId = textValue(value);
   return Boolean(dispatchId && /^buster-module-.+-\d+-\d+$/.test(dispatchId));
 }

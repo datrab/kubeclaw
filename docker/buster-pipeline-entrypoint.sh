@@ -21,17 +21,14 @@ cat >"${config_dir}/buildkitd.toml" <<EOF
 EOF
 
 rootlesskit \
-  --net=slirp4netns \
-  --disable-host-loopback \
-  --copy-up=/etc \
-  --copy-up=/run \
+  --net=host \
   buildkitd \
   --config "${config_dir}/buildkitd.toml" \
   --addr "$socket" \
   --otel-socket-path "$otel_socket" \
   --root "${BUILDKIT_STATE_DIR:-/home/builder/.local/share/buildkit}" \
   --oci-worker-no-process-sandbox \
-  > /tmp/buildkitd.log 2>&1 &
+  >/tmp/buildkitd.log 2>&1 &
 buildkit_pid=$!
 
 cleanup() {

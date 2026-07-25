@@ -1,4 +1,3 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { createRequire } from 'module';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
@@ -36,6 +35,12 @@ type RedisTransportOptions = {
 type RedisClientOptions = Record<string, unknown>;
 
 type RedisCtor = new (options: RedisClientOptions) => unknown;
+
+type RedisReadyClient = {
+  status?: string;
+  once(event: string, listener: (...args: any[]) => void): unknown;
+  off?(event: string, listener: (...args: any[]) => void): unknown;
+};
 
 export class RedisTransportPolicyError extends Error {
   code: string;
@@ -125,7 +130,7 @@ export function resolveRedisTransportConfig(opts: RedisTransportOptions = {}, en
   const networkIsolation = normalizeIsolation(selectDefinedValue(() => (opts.networkIsolation), () => (opts.redisNetworkIsolation), () => (env.REDIS_NETWORK_ISOLATION)));
   const enforceSecureMode = opts.enforceSecureMode !== false;
 
-  const hasSecureTransport = Boolean(selectTruthyValue(() => (selectTruthyValue(() => (password), () => (tlsEnabled))), () => (networkIsolation)));
+  const hasSecureTransport = Boolean(password || tlsEnabled || networkIsolation);
   if (!hasSecureTransport && enforceSecureMode) {
     throw new RedisTransportPolicyError('REDIS_PASSWORD, REDIS_TLS=true, or REDIS_NETWORK_ISOLATION=isolated is required for non-local Redis clients', {
       host,
@@ -175,4 +180,45 @@ export function createRedisClient(
   env: Record<string, string | undefined> = process.env,
 ) {
   return new RedisCtorImpl(buildRedisClientOptions(transportOpts, clientOpts, env));
+}
+
+export function waitForRedisReady(redis: RedisReadyClient, timeoutMs: number): Promise<void> {
+  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0) {
+    throw new TypeError('waitForRedisReady requires a positive integer timeoutMs');
+  }
+  if (redis.status === 'ready') return Promise.resolve();
+
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    const cleanup = (): void => {
+      redis.off?.('ready', onReady);
+      redis.off?.('error', onError);
+      redis.off?.('end', onEnd);
+      redis.off?.('close', onClose);
+      if (timeout) clearTimeout(timeout);
+    };
+    const settle = (callback: (value?: any) => void, value?: unknown): void => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      callback(value);
+    };
+    const onReady = (): void => settle(resolve);
+    const onError = (error: unknown): void => settle(
+      reject,
+      error instanceof Error ? error : new Error(String(selectDefinedValue(() => (error), () => ('Redis connection failed')))),
+    );
+    const onEnd = (): void => settle(reject, new Error('Redis connection ended before ready'));
+    const onClose = (): void => settle(reject, new Error('Redis connection closed before ready'));
+
+    redis.once('ready', onReady);
+    redis.once('error', onError);
+    redis.once('end', onEnd);
+    redis.once('close', onClose);
+    timeout = setTimeout(() => {
+      settle(reject, new Error(`Redis did not become ready within ${timeoutMs}ms`));
+    }, timeoutMs);
+  });
 }

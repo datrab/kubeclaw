@@ -1,20 +1,20 @@
 import { ACP_MONITOR_REASONS, isStoppedSessionState } from '../agents/acp-monitor.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-export const FAILURE_LAYERS = Object.freeze({
+const FAILURE_LAYERS = Object.freeze({
   LOAD: 'load',
   INVOCATION: 'invocation',
   SEMANTIC: 'semantic',
   CORE: 'core',
 });
 
-export const FAILURE_SOURCES = Object.freeze({
+const FAILURE_SOURCES = Object.freeze({
   PLUGIN: 'plugin',
   BACKEND: 'backend',
   CORE: 'core',
 });
 
-export const NORMALIZED_FAILURE_CODES = Object.freeze({
+const NORMALIZED_FAILURE_CODES = Object.freeze({
   LOAD_REJECTED: 'LOAD_REJECTED',
   CONTRACT_INVALID: 'CONTRACT_INVALID',
   CAPABILITY_DENIED: 'CAPABILITY_DENIED',
@@ -37,7 +37,7 @@ export const NORMALIZED_FAILURE_CODES = Object.freeze({
   CORE_TRANSITION_REJECTED: 'CORE_TRANSITION_REJECTED',
 });
 
-export const NORMALIZED_FAILURE_CLASSES = Object.freeze({
+const NORMALIZED_FAILURE_CLASSES = Object.freeze({
   FORGE_ERROR: 'forge_error',
   VALIDATION_ERROR: 'validation_error',
   TEST_FAILURE: 'test_failure',
@@ -54,17 +54,17 @@ export const STALE_RECOVERY_ACTIONS = Object.freeze({
 const TERMINAL_MONITOR_DETAIL = 'terminal';
 const ZERO_INACTIVITY_MINUTES = 0;
 
-function textValue(value) {
+function textValue(value: any) {
   if (typeof value !== 'string') return null;
   const normalized = value.trim();
   return normalized ? normalized : null;
 }
 
-function textForMatching(...values) {
-  return values.map((value) => selectDefinedValue(() => (textValue(value)), () => (''))).join(' ').trim();
+function textForMatching(...values: any) {
+  return values.map((value: any) => selectDefinedValue(() => (textValue(value)), () => (''))).join(' ').trim();
 }
 
-function firstTextValue(...values) {
+function firstTextValue(...values: any) {
   for (const value of values) {
     const normalized = textValue(value);
     if (normalized) return normalized;
@@ -72,8 +72,8 @@ function firstTextValue(...values) {
   return null;
 }
 
-function includesAny(text, patterns) {
-  return patterns.some((pattern) => pattern.test(text));
+function includesAny(text: any, patterns: any) {
+  return patterns.some((pattern: any) => pattern.test(text));
 }
 
 const TIMEOUT_PATTERNS = [
@@ -136,8 +136,8 @@ const FORGE_PATTERNS = [
   /expected output/i,
 ];
 
-export function normalizeGitFailureClass(reason = '') {
-  const value = selectDefinedValue(() => (textValue(reason)), () => (''));
+export function normalizeGitFailureClass(reason: any = '') {
+  const value = textValue(reason) ?? '';
   if (/authentication failed|publickey|permission denied \(publickey\)|could not read.*passphrase/i.test(value)) return 'git_credential_failed';
   if (/\[rejected\]|non-fast-forward|updates were rejected/i.test(value)) return 'git_non_fast_forward';
   if (/GIT_REBASE_CONFLICT|rebase conflict|\bCONFLICT\b|rebase --abort/i.test(value)) return 'git_rebase_conflict';
@@ -147,7 +147,7 @@ export function normalizeGitFailureClass(reason = '') {
   return null;
 }
 
-export function normalizeFailureClass(phase, reason = '', opts = {}) {
+export function normalizeFailureClass(phase: any, reason: any = '', opts: any = {}) {
   const text = textForMatching(
     phase,
     reason,
@@ -190,14 +190,14 @@ export function normalizeFailureClass(phase, reason = '', opts = {}) {
   return NORMALIZED_FAILURE_CLASSES.CLASSIFICATION_MISSING;
 }
 
-export function buildFailureFact({
+function buildFailureFact({
   layer,
   code,
   source,
   retryable,
   detail = null,
   ...rest
-} = {}) {
+}: any = {}) {
   return {
     layer: firstTextValue(layer, FAILURE_LAYERS.INVOCATION),
     code: firstTextValue(code, NORMALIZED_FAILURE_CODES.BACKEND_DISPATCH_FAILED),
@@ -208,7 +208,7 @@ export function buildFailureFact({
   };
 }
 
-export function classifyMonitorFailureFact(monitor = {}, identity = {}) {
+function classifyMonitorFailureFact(monitor: any = {}, identity: any = {}) {
   const reason = selectTruthyValue(() => (monitor?.reason), () => (null));
   const detail = {
     monitor_reason: reason,
@@ -267,17 +267,17 @@ export function classifyMonitorFailureFact(monitor = {}, identity = {}) {
   return null;
 }
 
-function monitorStateDefinitivelyStopped(monitor = {}) {
-  return ['failed', 'terminal', 'sessionTerminal'].some((field) => monitor?.[field]);
+function monitorStateDefinitivelyStopped(monitor: any = {}) {
+  return ['failed', 'terminal', 'sessionTerminal'].some((field: any) => monitor?.[field]);
 }
 
-export function isDefinitivelyStoppedMonitorState(monitor = {}) {
+export function isDefinitivelyStoppedMonitorState(monitor: any = {}) {
   return Boolean(
     selectTruthyValue(() => (monitorStateDefinitivelyStopped(monitor)), () => (isStoppedSessionState(selectDefinedValue(() => (textValue(monitor?.sessionState)), () => ('')))))
   );
 }
 
-export function buildStaleRecoveryEvidence(monitor = {}, extra = {}) {
+function buildStaleRecoveryEvidence(monitor: any = {}, extra: any = {}) {
   return {
     session_state: selectTruthyValue(() => (monitor?.sessionState), () => (null)),
     monitor_reason: selectTruthyValue(() => (monitor?.reason), () => (null)),
@@ -290,7 +290,7 @@ export function buildStaleRecoveryEvidence(monitor = {}, extra = {}) {
   };
 }
 
-export function describeStaleRecovery(previousPhase, action, detail = {}) {
+export function describeStaleRecovery(previousPhase: any, action: any, detail: any = {}) {
   const phase = selectTruthyValue(() => (previousPhase), () => ('missing_previous_phase'));
   if (action === STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL) {
     return `Recovered stale ${phase} state after child session ended: ${selectDefinedValue(() => (textValue(detail.detail)), () => (TERMINAL_MONITOR_DETAIL))}`;

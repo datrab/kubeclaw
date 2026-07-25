@@ -26,6 +26,20 @@
         "null"
       ]
     },
+    "capabilities": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "capability": { "minLength": 1, "type": "string" },
+          "details": { "type": ["object", "null"] },
+          "reason_code": { "type": ["string", "null"] },
+          "status": { "enum": ["available", "capability_unavailable", "degraded", "unknown"] }
+        },
+        "required": ["capability", "status", "reason_code"],
+        "type": "object"
+      },
+      "type": "array"
+    },
     "content_completeness": {
       "minLength": 1,
       "type": "string"
@@ -116,7 +130,8 @@
         "healthy",
         "degraded",
         "unhealthy",
-        "unknown"
+        "unknown",
+        "not_applicable"
       ]
     },
     "tool_call_id": {
@@ -134,6 +149,7 @@
     "quarantined_count",
     "dead_letter_count",
     "last_successful_emission"
+    ,"capabilities"
   ],
   "type": "object"
 }

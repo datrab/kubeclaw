@@ -9,7 +9,7 @@ import { gatewayInvokePolicy } from '../core/session-policy.ts';
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
-function errorMessage(error) {
+function errorMessage(error: any) {
   if (error && typeof error === 'object' && 'message' in error) {
     const message = error.message;
     if (typeof message === 'string' && message.trim()) return message;
@@ -71,7 +71,7 @@ function logTranscriptFallbackOnce(entry: AnyRecord | null, label: string, sessi
   log('WARN', `Agent health check using transcript fallback${detail ? ` (${detail})` : ''}: ${label} (${sessionKey})`);
 }
 
-export function healthCheckIdentity(entry: AnyRecord | null, agentType: string, sessionKey: string | null) {
+function healthCheckIdentity(entry: AnyRecord | null, agentType: string, sessionKey: string | null) {
   return {
     module_id: selectDefinedValue(() => (selectDefinedValue(() => (entry?.telemetry_module_id), () => (entry?.moduleId))), () => (null)),
     gate_id: selectDefinedValue(() => (entry?.telemetry_gate_id), () => (null)),

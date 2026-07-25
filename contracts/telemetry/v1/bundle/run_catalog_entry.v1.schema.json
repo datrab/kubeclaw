@@ -1,0 +1,56 @@
+{
+  "$id": "run_catalog_entry.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "archive_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "completeness": {
+      "enum": [
+        "complete",
+        "partial",
+        "degraded",
+        "unknown"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "recorded_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "repair_state": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "run_catalog_entry.v1"
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "project",
+    "archive_reference",
+    "sha256",
+    "completeness",
+    "repair_state",
+    "recorded_at"
+  ],
+  "type": "object"
+}

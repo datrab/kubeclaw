@@ -1,0 +1,186 @@
+{
+  "$id": "producer_health_snapshot.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "completeness": {
+      "enum": [
+        "complete",
+        "partial",
+        "degraded",
+        "unknown"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "producers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "capabilities": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "capability": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "details": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "reason_code": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "available",
+                    "capability_unavailable",
+                    "degraded",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "capability",
+                "status",
+                "reason_code"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "checkpoint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dead_letter_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "degradation_intervals": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "ended_at": {
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reason_code": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "started_at": {
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "started_at",
+                "reason_code"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "invalid_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "lag": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "last_successful_emission": {
+            "format": "date-time",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "missing_payload_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "producer_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "quarantined_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "reconciliation": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "restart_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "healthy",
+              "degraded",
+              "unhealthy",
+              "unknown",
+              "not_applicable"
+            ]
+          }
+        },
+        "required": [
+          "producer_id",
+          "status",
+          "last_successful_emission",
+          "lag",
+          "checkpoint",
+          "invalid_count",
+          "quarantined_count",
+          "dead_letter_count",
+          "missing_payload_count",
+          "restart_count",
+          "reconciliation",
+          "capabilities"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "producer_health_snapshot.v1"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "generated_at",
+    "producers",
+    "completeness"
+  ],
+  "type": "object"
+}

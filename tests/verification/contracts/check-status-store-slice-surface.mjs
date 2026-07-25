@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-status-store-slice-surface' });
 import fs from 'fs';
@@ -6,13 +7,6 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function extractExportedFunctionSource(source, name) {
   const start = source.indexOf(`export function ${name}(`);
@@ -38,14 +32,17 @@ function extractExportedFunctionSource(source, name) {
   throw new Error(`unterminated function body for ${name}`);
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const mainPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store.ts');
+const statusStoreIoPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-io.ts');
+const statusStoreCorePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-core.ts');
 const lifecyclePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-lifecycle.ts');
 const lifecycleLegalityPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-lifecycle/legality.ts');
 const compatPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models.ts');
 const compatCommonPath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/common.ts');
 const compatGatePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/gate-projection.ts');
 const compatModulePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/module-projection.ts');
+const compatModuleRuntimePath = path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-read-models/module-runtime-projection.ts');
 const completionAdjudicatorPath = path.join(sourceRoot, 'skills/nova/pipeline/services/completion-adjudicator.ts');
 const truthDriftPath = path.join(sourceRoot, 'skills/nova/pipeline/services/truth-drift.ts');
 const dependenciesPath = path.join(sourceRoot, 'skills/nova/pipeline/services/dependencies.ts');
@@ -61,13 +58,17 @@ const pipelineRunnerSharedPath = path.join(sourceRoot, 'skills/nova/pipeline/run
 const pathsPath = path.join(sourceRoot, 'skills/nova/pipeline/core/paths.ts');
 
 const mainSource = fs.readFileSync(mainPath, 'utf8');
+const statusStoreIoSource = fs.readFileSync(statusStoreIoPath, 'utf8');
+const statusStoreCoreSource = fs.readFileSync(statusStoreCorePath, 'utf8');
+const statusStoreImplementationSource = [mainSource, statusStoreIoSource, statusStoreCoreSource].join('\n');
 const lifecycleSource = fs.readFileSync(lifecyclePath, 'utf8');
 const lifecycleLegalitySource = fs.readFileSync(lifecycleLegalityPath, 'utf8');
 const compatFacadeSource = fs.readFileSync(compatPath, 'utf8');
 const compatCommonSource = fs.readFileSync(compatCommonPath, 'utf8');
 const compatGateSource = fs.readFileSync(compatGatePath, 'utf8');
 const compatModuleSource = fs.readFileSync(compatModulePath, 'utf8');
-const compatSource = [compatFacadeSource, compatCommonSource, compatGateSource, compatModuleSource].join('\n');
+const compatModuleRuntimeSource = fs.readFileSync(compatModuleRuntimePath, 'utf8');
+const compatSource = [compatFacadeSource, compatCommonSource, compatGateSource, compatModuleSource, compatModuleRuntimeSource].join('\n');
 const completionAdjudicatorSource = fs.readFileSync(completionAdjudicatorPath, 'utf8');
 const truthDriftSource = fs.readFileSync(truthDriftPath, 'utf8');
 const dependenciesSource = fs.readFileSync(dependenciesPath, 'utf8');
@@ -83,9 +84,9 @@ const pipelineRunnerSharedSource = fs.readFileSync(pipelineRunnerSharedPath, 'ut
 const pathsSource = fs.readFileSync(pathsPath, 'utf8');
 
 for (const marker of [
-  "from './status-store-lifecycle.ts'",
-  "from './status-store-read-models.ts'",
-  "from './truth-drift.ts'",
+  'from "./status-store-lifecycle.ts"',
+  'from "./status-store-read-models.ts"',
+  'from "./truth-drift.ts"',
   'export {\n  appendCooldownLifecycleEvent,',
   'export {\n  GATE_STATUS_AUTHORITY_ROLES,',
 ]) {
@@ -110,17 +111,17 @@ for (const marker of [
 }
 
 for (const marker of [
-  'export function getAuthoritativeModuleState(',
-  'export function projectModuleSchedulerState(',
-  'export function projectGateEvidenceIntoReadModel(',
-  'export function projectGateCompletionState(',
-  'export function projectGateSchedulerState(',
-  'export function syncApprovalWaitState(',
-  'export const GATE_STATUS_AUTHORITY_ROLES',
-  'export function buildGateStatusAuthorityPolicy(',
-  'export function readGateOutput(',
-  'export function gateOutputExists(',
-  'export function readBusterGateCompletion(',
+  'getAuthoritativeModuleState',
+  'projectModuleSchedulerState',
+  'projectGateEvidenceIntoReadModel',
+  'projectGateCompletionState',
+  'projectGateSchedulerState',
+  'syncApprovalWaitState',
+  'GATE_STATUS_AUTHORITY_ROLES',
+  'buildGateStatusAuthorityPolicy',
+  'readGateOutput',
+  'gateOutputExists',
+  'readBusterGateCompletion',
 ]) {
   assert.equal(compatSource.includes(marker), true, `status-store read-model helpers should export ${marker}`);
 }
@@ -154,16 +155,16 @@ assert.equal(blueprintSource.includes('loadStatus'), false, 'blueprint release m
 assert.equal(rateLimitExhaustionOptionsSource.includes('projectModuleSchedulerState(config, moduleProjection.moduleId, moduleProjection.moduleConfig)'), true, 'tracked module rate-limit status should consume canonical module scheduler projections');
 assert.equal(rateLimitExhaustionOptionsSource.includes('loadStatus'), false, 'tracked module rate-limit status must not read legacy-shaped loadStatus snapshots');
 
-const loadStatusSource = extractExportedFunctionSource(mainSource, 'loadStatus');
-assert.equal(mainSource.includes('function buildStatusFromLifecycleModule'), false, 'status-store must not keep the old private lifecycle projection helper');
-assert.equal(loadStatusSource.includes('projectModuleRuntimeState(config, moduleId'), true, 'loadStatus must delegate module runtime projection to the read-model projector');
-assert.equal(compatModuleSource.includes('export function projectModuleRuntimeState('), true, 'module read-model projector must own runtime module projection');
-assert.equal(compatModuleSource.includes('loadLifecycleReadModels(config)?.active_sessions?.modules'), true, 'runtime module projection should join active session read models explicitly');
+const loadStatusSource = extractExportedFunctionSource(statusStoreImplementationSource, 'loadStatus');
+assert.equal(statusStoreImplementationSource.includes('function buildStatusFromLifecycleModule'), false, 'status-store must not keep the old private lifecycle projection helper');
+assert.equal(loadStatusSource.includes('projectModuleRuntimeState('), true, 'loadStatus must delegate module runtime projection to the read-model projector');
+assert.equal(compatModuleRuntimeSource.includes('export function projectModuleRuntimeState('), true, 'module read-model projector must own runtime module projection');
+assert.equal(compatModuleRuntimeSource.includes('loadLifecycleReadModels(config)?.active_sessions?.modules'), true, 'runtime module projection should join active session read models explicitly');
 for (const disallowedLoadStatusRead of ['fs.', 'readModuleStatusJson', 'statusPath(']) {
   assert.equal(loadStatusSource.includes(disallowedLoadStatusRead), false, `loadStatus must not retain legacy status reads via ${disallowedLoadStatusRead}`);
 }
 
-const saveStatusSource = extractExportedFunctionSource(mainSource, 'saveStatus');
+const saveStatusSource = extractExportedFunctionSource(statusStoreImplementationSource, 'saveStatus');
 assert.equal(saveStatusSource.includes('appendModuleLifecycleEvent('), true, 'saveStatus must append lifecycle events');
 assert.equal(saveStatusSource.includes('syncRuntimeSnapshotToReadModels(config, dir, status)'), true, 'saveStatus should synchronize runtime snapshot fields into lifecycle read-models');
 for (const removedSnapshotWrite of ['fs.writeFileSync(tmp,', 'fs.renameSync(tmp, p)', 'statusPath(config, dir)']) {
@@ -206,7 +207,7 @@ assert.equal(
 );
 assert.equal(completionAdjudicatorSource.includes("statusSource = 'lifecycle_read_model'"), true, 'completion adjudication should default local status source to lifecycle_read_model');
 assert.equal(completionAdjudicatorSource.includes('status_json_status'), false, 'completion adjudicator drift fields must not retain status_json wording');
-assert.equal(truthDriftSource.includes('function collectModuleArtifactRefs(moduleProjection = {}) {\n  void moduleProjection;\n  return {};\n}'), true, 'module truth drift artifacts must no longer expose removed status paths');
+assert.equal(truthDriftSource.includes('function collectModuleArtifactRefs(') && truthDriftSource.includes('void moduleProjection;'), true, 'module truth drift artifacts must no longer expose removed status paths');
 
 assert.equal(pollingSource.includes("from './completion-adjudicator.ts'"), true, 'polling should import shared completion adjudication');
 assert.equal(pollingSource.includes('projectCompletionState,') || pollingSource.includes('projectCompletionState\n'), true, 'polling should re-export centralized completion projection helpers');

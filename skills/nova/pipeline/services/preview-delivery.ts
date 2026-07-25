@@ -52,7 +52,7 @@ function isRecord(value: unknown): value is AnyRecord {
 function readJson(filePath: string): AnyRecord {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (error) {
+  } catch (error: any) {
     throw new FinalPreviewDeliveryError(`Final preview verdict JSON is invalid: ${filePath}`, {
       failureClass: 'final_preview_verdict_invalid',
       details: { verdict_path: filePath },
@@ -90,10 +90,10 @@ function previewCredentialLabel(key: string): string {
   const label = keyText ? keyText : 'Credential';
   return label
     .replace(/[_-]+/g, ' ')
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    .replace(/\b\w/g, (char: any) => char.toUpperCase());
 }
 
-function truncateDiscordFieldValue(value: string, max = 950): string {
+function truncateDiscordFieldValue(value: string, max: any = 950): string {
   return value.length <= max ? value : `${value.slice(0, max - 1)}…`;
 }
 
@@ -105,8 +105,8 @@ export function formatPreviewCredentialsForDiscord(credentials: AnyRecord | stri
   }
   if (!isRecord(credentials)) return null;
   const lines = Object.entries(credentials)
-    .filter(([, value]) => value != null && value !== '')
-    .map(([key, value]) => `${previewCredentialLabel(key)}: ${String(value)}`);
+    .filter(([, value]: any) => value != null && value !== '')
+    .map(([key, value]: any) => `${previewCredentialLabel(key)}: ${String(value)}`);
   return lines.length ? truncateDiscordFieldValue(lines.join('\n')) : null;
 }
 
@@ -123,7 +123,7 @@ function errorMessage(error: unknown): string {
 function hasUsableCredentials(credentials: unknown): boolean {
   if (typeof credentials === 'string') return Boolean(credentials.trim());
   if (!isRecord(credentials)) return false;
-  return Object.values(credentials).some((value) => value !== null && value !== undefined && value !== '');
+  return Object.values(credentials).some((value: any) => value !== null && value !== undefined && value !== '');
 }
 
 function credentialState({ credentials, command, ref, available }: AnyRecord): FinalPreviewDelivery['credential_state'] {
@@ -315,7 +315,7 @@ export async function deliverFinalPreviews(config: AnyRecord = {}, progress: Any
         fields,
         { correlation: { run_id: runId, gate_id: delivery.gate_id } },
       );
-    } catch (error) {
+    } catch (error: any) {
       throw new FinalPreviewDeliveryError(`Final preview Discord delivery failed: ${errorMessage(error)}`, {
         failureClass: 'final_preview_delivery_failed',
         details: { gate_id: delivery.gate_id },

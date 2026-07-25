@@ -24,23 +24,23 @@ import { extractArchValidatorReport } from './arch-validator.ts';
 
 const APPROVAL_GATE_TYPE = 'approval';
 
-function normalizeApprovalTimeoutPolicy(value) {
+function normalizeApprovalTimeoutPolicy(value: any) {
   const normalized = String(selectDefinedValue(() => (value), () => (''))).trim().toUpperCase();
   if (selectTruthyValue(() => (normalized === 'BLOCK'), () => (normalized === 'CONTINUE'))) return normalized;
   return null;
 }
 
-function governanceRecordedAt(candidate) {
+function governanceRecordedAt(candidate: any) {
   return typeof candidate === 'string' && candidate.trim()
     ? candidate
     : new Date().toISOString();
 }
 
-function approvalTimeoutPolicyAuthority(identity) {
+function approvalTimeoutPolicyAuthority(identity: any) {
   return normalizeApprovalTimeoutPolicy(selectDefinedValue(() => (identity.timeout_policy), () => (identity.timeoutPolicy)));
 }
 
-function approvalGateTitleAuthority(gateTitle, gateId) {
+function approvalGateTitleAuthority(gateTitle: any, gateId: any) {
   return typeof gateTitle === 'string' && gateTitle.trim() ? gateTitle : gateId;
 }
 
@@ -53,19 +53,19 @@ function missingArchValidatorSummary() {
   };
 }
 
-function findingList(value) {
+function findingList(value: any) {
   return Array.isArray(value) ? value : [];
 }
 
-function approvalGateList(ctx) {
+function approvalGateList(ctx: any) {
   return Array.isArray(ctx?.approval_gates) ? ctx.approval_gates : [];
 }
 
-function tokenCount(value) {
+function tokenCount(value: any) {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
 }
 
-function normalizeGovernanceArtifactPath(config, artifactPath, fallback) {
+function normalizeGovernanceArtifactPath(config: any, artifactPath: any, fallback: any) {
   if (selectTruthyValue(() => (!artifactPath), () => (typeof artifactPath !== 'string'))) return fallback;
   const swarmDir = config?.paths?.swarm_dir;
   if (!swarmDir) return artifactPath;
@@ -87,7 +87,7 @@ function normalizeGovernanceArtifactPath(config, artifactPath, fallback) {
  * Ensure config._governanceCtx exists and return it.
  * Safe to call multiple times — idempotent.
  */
-export function initGovernanceCtx(config) {
+export function initGovernanceCtx(config: any) {
   if (!config._governanceCtx) {
     config._governanceCtx = {
       arch_validator: null,
@@ -100,7 +100,7 @@ export function initGovernanceCtx(config) {
 /**
  * Return the current governance context, or null if not initialized.
  */
-export function getGovernanceCtx(config) {
+function getGovernanceCtx(config: any) {
   return selectTruthyValue(() => (config._governanceCtx), () => (null));
 }
 
@@ -113,14 +113,14 @@ export function getGovernanceCtx(config) {
  * @param {object} config
  * @param {object} result  — { blocked, findings, timestamp, project }
  */
-export function recordArchValidatorResult(config, result) {
+export function recordArchValidatorResult(config: any, result: any) {
   const normalized = extractArchValidatorReport(result, config);
   const ctx = initGovernanceCtx(config);
   const findings = findingList(normalized.findings);
-  const blockingCount = findings.filter(f => f.severity === 'blocking').length;
-  const errorCount    = findings.filter(f => f.severity === 'error').length;
-  const warnCount     = findings.filter(f => f.severity === 'warn').length;
-  const infoCount     = findings.filter(f => f.severity === 'info').length;
+  const blockingCount = findings.filter((f: any) => f.severity === 'blocking').length;
+  const errorCount    = findings.filter((f: any) => f.severity === 'error').length;
+  const warnCount     = findings.filter((f: any) => f.severity === 'warn').length;
+  const infoCount     = findings.filter((f: any) => f.severity === 'info').length;
   const executionFailed = normalized.execution_failed === true;
 
   let outcome;
@@ -169,7 +169,7 @@ export function recordArchValidatorResult(config, result) {
  * @param {string|null} reason
  * @param {object} identity      — { gate_type?, run_id?, project? }
  */
-export function recordApprovalGateOutcome(config, gateId, gateTitle, status, decisionBy, reason, identity = {}) {
+export function recordApprovalGateOutcome(config: any, gateId: any, gateTitle: any, status: any, decisionBy: any, reason: any, identity: any = {}) {
   const ctx = initGovernanceCtx(config);
   const gateType = selectDefinedValue(() => (selectDefinedValue(() => (identity.gate_type), () => (identity.gateType))), () => (APPROVAL_GATE_TYPE));
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (identity.run_id), () => (identity.runId))), () => (getRunId(config)))), () => (null));
@@ -177,6 +177,11 @@ export function recordApprovalGateOutcome(config, gateId, gateTitle, status, dec
   const timeoutPolicy = approvalTimeoutPolicyAuthority(identity);
   const continued = identity.continued === true ? true : identity.continued === false ? false : null;
   const artifactRefs = approvalGateArtifactRefPaths(config, gateId);
+  if (!artifactRefs) {
+    throw new Error(
+      `Approval gate '${gateId}' requires canonical artifact paths`
+    );
+  }
   ctx.approval_gates.push({
     gate_id:     gateId,
     gate_type:   gateType,
@@ -213,7 +218,7 @@ export function recordApprovalGateOutcome(config, gateId, gateTitle, status, dec
  * @param {object} config
  * @returns {object} governance summary
  */
-export function buildGovernanceSummary(config) {
+export function buildGovernanceSummary(config: any) {
   const ctx = selectTruthyValue(() => (config._governanceCtx), () => (null));
   const stats = getRunStats(config);
 
@@ -222,11 +227,11 @@ export function buildGovernanceSummary(config) {
   if (ctx) {
     const archError = ctx.arch_validator?.execution_failed === true;
     const archBlocked = ctx.arch_validator?.blocked === true;
-    const anyRejected = ctx.approval_gates.some(g => g.status === 'REJECTED');
-    const anyCancelled = ctx.approval_gates.some(g => g.status === 'CANCELLED');
-    const anyTimeoutBlocked = ctx.approval_gates.some(g => g.status === 'TIMED_OUT' && g.continued !== true);
-    const anyTimeoutContinued = ctx.approval_gates.some(g => g.status === 'TIMED_OUT' && g.continued === true);
-    const allApproved = selectTruthyValue(() => (ctx.approval_gates.length === 0), () => (ctx.approval_gates.every(g => g.status === 'APPROVED')));
+    const anyRejected = ctx.approval_gates.some((g: any) => g.status === 'REJECTED');
+    const anyCancelled = ctx.approval_gates.some((g: any) => g.status === 'CANCELLED');
+    const anyTimeoutBlocked = ctx.approval_gates.some((g: any) => g.status === 'TIMED_OUT' && g.continued !== true);
+    const anyTimeoutContinued = ctx.approval_gates.some((g: any) => g.status === 'TIMED_OUT' && g.continued === true);
+    const allApproved = selectTruthyValue(() => (ctx.approval_gates.length === 0), () => (ctx.approval_gates.every((g: any) => g.status === 'APPROVED')));
 
     if (archError) {
       overall = 'ARCH_VALIDATOR_ERROR';
@@ -268,16 +273,16 @@ export function buildGovernanceSummary(config) {
  * @param {object} config
  * @returns {Array<{name: string, value: string, inline: boolean}>}
  */
-export function buildGovernanceEmbedFields(config) {
+export function buildGovernanceEmbedFields(config: any) {
   const ctx = config._governanceCtx;
-  const fields = [];
+  const fields: any[] = [];
 
   // Arch validator outcome
   if (ctx?.arch_validator) {
     const av = ctx.arch_validator;
     let avValue = av.outcome;
     if (av.findings_total > 0) {
-      const parts = [];
+      const parts: any[] = [];
       if (av.blocking_count > 0) parts.push(`${av.blocking_count} blocking`);
       if (av.error_count    > 0) parts.push(`${av.error_count} error`);
       if (av.warn_count     > 0) parts.push(`${av.warn_count} warn`);
@@ -298,7 +303,7 @@ export function buildGovernanceEmbedFields(config) {
         fields.push({ name: 'Tokens So Far', value: total.toLocaleString(), inline: true });
       }
     }
-  } catch (_error) { /* non-critical */ }
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* non-critical */ }
 
   return fields;
 }

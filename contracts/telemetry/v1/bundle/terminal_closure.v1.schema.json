@@ -1,0 +1,96 @@
+{
+  "$id": "terminal_closure.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_catalog_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "closed_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "cost": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "counts": {
+      "type": "object"
+    },
+    "duration_ms": {
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "last_work_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "manifest_fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "observability": {
+      "enum": [
+        "complete",
+        "partial",
+        "degraded",
+        "unknown"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "success",
+        "failure",
+        "paused",
+        "cancelled",
+        "process_lost",
+        "abandoned",
+        "completed"
+      ]
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_code": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "terminal_closure.v1"
+    },
+    "summary_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "project",
+    "closed_at",
+    "outcome",
+    "reason_code",
+    "manifest_fingerprint",
+    "observability",
+    "artifact_catalog_reference"
+  ],
+  "type": "object"
+}

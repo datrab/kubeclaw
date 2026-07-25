@@ -147,13 +147,14 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const requiredGeneral = [
     'sudo curl git openssh-client jq',
     'RUN mkdir -p /app/skills',
-    'node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p tsconfig.build.json',
+    'node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json',
     'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
     'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
   ];
   const requiredBusterPipeline = [
     'FROM moby/buildkit:rootless AS buildkit',
-    'npm install --prefix /app --no-audit --no-fund ioredis js-yaml uuid typescript',
+    'npm install --prefix /app --no-audit --no-fund',
+    'ioredis@5.11.1 js-yaml@5.2.2 uuid@14.0.1 typescript@5.9.3 eslint@10.7.0',
     'XDG_RUNTIME_DIR=/run/user/1000',
     'USER 1000:1000',
     'ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-pipeline-entrypoint"]',

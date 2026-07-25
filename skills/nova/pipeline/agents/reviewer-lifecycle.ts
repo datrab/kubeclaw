@@ -1,10 +1,11 @@
-import { resolvePolicy } from '../core/config.ts';
+import { resolvePolicy } from '../core/policy.ts';
 import { log } from '../core/logger.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
 import { discord } from '../integrations/discord.ts';
 import { reaperAfterKill } from './shutdown.ts';
 import { modelToHarness, resolveRuntime } from './runtime.ts';
 import { getTrackedAgent, spawnSession, trackAgent, untrackAgent } from './lifecycle.ts';
+import { prepareObservedAgentSpawn, spawnObservedAgentSession } from './spawn-observability.ts';
 import { terminateSession } from './session-termination.ts';
 import {
   assertRequiredAgentStartupEvidence,
@@ -48,38 +49,19 @@ export async function spawnReviewerAgent(
   const thinkingLevel = selectTruthyValue(() => (selectTruthyValue(() => (opts.thinking), () => (reviewer.thinking_level))), () => (null));
   const runtime = resolveRuntime({ runtime: reviewer.dispatch, model });
   const useSubagent = runtime === 'subagent';
-  const telemetryIdentity = {
-    run_id: runId,
-    project: selectTruthyValue(() => (config?.project), () => (null)),
-    agent_type: 'echo',
-    module_id: null,
-    gate_id: gateId,
-    gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
-    attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-    dispatch_id: dispatchId,
-    gateway_label: gatewayLabel,
-  };
-  const startupEvidenceReader = createAgentLifecycleTelemetryReader(config, {
-    runId,
-    startId: '0-0',
-    ...(opts.agentLifecycleReader ? { reader: opts.agentLifecycleReader } : {}),
-  });
+  const { telemetryIdentity, startupEvidenceReader } = prepareObservedAgentSpawn(config, {
+    runId, agentType: 'echo', moduleId: null, gateId,
+    gateType: opts.gate_type, attempt: opts.attempt, dispatchId, gatewayLabel,
+  }, opts.agentLifecycleReader);
   try {
-    const sessionData = await spawnSession({
-      session: { model, runtime, agentId, cwd, label: gatewayLabel },
-    }, instructions, selectTruthyValue(() => (reviewer?.timeout_seconds), () => (null)), {
-      ...sessionLifecyclePolicies(config),
-      runtime,
-      model,
-      agentId,
-      cwd,
-      label: gatewayLabel,
-      thinking: thinkingLevel,
-      trackActive: false,
-      budget: selectTruthyValue(() => (opts.budget), () => (null)),
-      signal: selectTruthyValue(() => (opts.signal), () => (null)),
-      observabilityIdentity: telemetryIdentity,
-    });
+    const sessionData = await spawnObservedAgentSession(
+      config,
+      { model, runtime, agentId, cwd, label: gatewayLabel },
+      instructions,
+      reviewer?.timeout_seconds,
+      telemetryIdentity,
+      { ...opts, thinking: thinkingLevel },
+    );
     log('OK', `Reviewer spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model, reviewer: reviewer.label, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
     trackAgent(config, trackingKey, sessionData.childSessionKey, agentId, gatewayLabel, sessionData.streamLogPath, {
       model,
@@ -126,7 +108,7 @@ export async function spawnReviewerAgent(
       { name: 'Reviewer', value: reviewer.label, inline: true },
       { name: 'Model', value: model, inline: true },
       { name: 'Agent', value: agentId, inline: true },
-    ]), { correlation: spawnDiscordCorrelation }).catch((e) => {
+    ]), { correlation: spawnDiscordCorrelation }).catch((e: any) => {
       log('DEBUG', `Reviewer spawn Discord notice failed for ${gatewayLabel}: ${errorDetail(e)}`);
     });
     return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
@@ -150,7 +132,7 @@ export async function spawnReviewerAgent(
         gatewayLabel,
       }),
       { correlation: spawnFailureDiscordCorrelation },
-    ).catch((discordError) => {
+    ).catch((discordError: any) => {
       log('DEBUG', `Reviewer spawn failure Discord notice failed for ${gatewayLabel}: ${errorDetail(discordError)}`);
     });
     const err: AnyRecord = new Error(`Failed to spawn reviewer '${gatewayLabel}': ${e.message}`);

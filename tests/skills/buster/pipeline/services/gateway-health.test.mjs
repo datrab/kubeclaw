@@ -31,6 +31,49 @@ function withSwarmConfig(t, overrides = {}) {
   });
 }
 
+async function assertMonitorFailure(t, { fetchResult, exposeGateway }) {
+  withSwarmConfig(t);
+  const originals = {
+    setInterval: globalThis.setInterval,
+    fetch: globalThis.fetch,
+    gatewayUrl: process.env.OPENCLAW_GATEWAY_URL,
+    gatewayToken: process.env.OPENCLAW_GATEWAY_TOKEN,
+  };
+  let scheduledCallback = null;
+  globalThis.setInterval = (callback) => {
+    scheduledCallback = callback;
+    return { id: 'gateway-health-interval' };
+  };
+  globalThis.fetch = fetchResult;
+  if (exposeGateway) {
+    process.env.OPENCLAW_GATEWAY_URL = 'http://gateway.test';
+    process.env.OPENCLAW_GATEWAY_TOKEN = 'token';
+  } else {
+    delete process.env.OPENCLAW_GATEWAY_URL;
+    delete process.env.OPENCLAW_GATEWAY_TOKEN;
+  }
+  try {
+    const { startGatewayHealthMonitor } = await import('../../../../../skills/buster/pipeline/services/gateway-health.ts');
+    startGatewayHealthMonitor();
+    await scheduledCallback();
+    await scheduledCallback();
+    await assert.rejects(() => scheduledCallback(), (error) => {
+      assert.equal(error.signal, 'GATEWAY_HEALTH_FAILED');
+      assert.equal(error.opts.cleanupStage, 'gateway-health-failed');
+      assert.equal(error.opts.reason, 'gateway_unreachable');
+      assert.match(error.message, /Gateway shutdown requested: GATEWAY_HEALTH_FAILED/);
+      return true;
+    });
+  } finally {
+    globalThis.setInterval = originals.setInterval;
+    globalThis.fetch = originals.fetch;
+    for (const [name, value] of [['OPENCLAW_GATEWAY_URL', originals.gatewayUrl], ['OPENCLAW_GATEWAY_TOKEN', originals.gatewayToken]]) {
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+  }
+}
+
 test('startGatewayHealthMonitor returns the interval handle so callers can clear it', async (t) => {
   withSwarmConfig(t);
   const originalSetInterval = globalThis.setInterval;
@@ -91,86 +134,8 @@ test('waitForGateway without shutdown throws a structured gateway timeout error'
   }
 });
 
-test('startGatewayHealthMonitor without shutdown throws a structured health failure error', async (t) => {
-  withSwarmConfig(t);
-  const originalSetInterval = globalThis.setInterval;
-  const originalFetch = globalThis.fetch;
-  const originalGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;
-  const originalGatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-  let scheduledCallback = null;
+test('startGatewayHealthMonitor without shutdown throws a structured health failure error', (t) =>
+  assertMonitorFailure(t, { fetchResult: async () => ({ ok: false }), exposeGateway: true }));
 
-  globalThis.setInterval = (callback) => {
-    scheduledCallback = callback;
-    return { id: 'gateway-health-interval' };
-  };
-  globalThis.fetch = async () => ({ ok: false });
-  process.env.OPENCLAW_GATEWAY_URL = 'http://gateway.test';
-  process.env.OPENCLAW_GATEWAY_TOKEN = 'token';
-
-  try {
-    const { startGatewayHealthMonitor } = await import('../../../../../skills/buster/pipeline/services/gateway-health.ts');
-    startGatewayHealthMonitor();
-
-    await scheduledCallback();
-    await scheduledCallback();
-    await assert.rejects(
-      () => scheduledCallback(),
-      (error) => {
-        assert.equal(error.signal, 'GATEWAY_HEALTH_FAILED');
-        assert.equal(error.opts.cleanupStage, 'gateway-health-failed');
-        assert.equal(error.opts.reason, 'gateway_unreachable');
-        assert.match(error.message, /Gateway shutdown requested: GATEWAY_HEALTH_FAILED/);
-        return true;
-      }
-    );
-  } finally {
-    globalThis.setInterval = originalSetInterval;
-    globalThis.fetch = originalFetch;
-    if (originalGatewayUrl === undefined) delete process.env.OPENCLAW_GATEWAY_URL;
-    else process.env.OPENCLAW_GATEWAY_URL = originalGatewayUrl;
-    if (originalGatewayToken === undefined) delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    else process.env.OPENCLAW_GATEWAY_TOKEN = originalGatewayToken;
-  }
-});
-
-test('startGatewayHealthMonitor treats thrown health checks as failures', async (t) => {
-  withSwarmConfig(t);
-  const originalSetInterval = globalThis.setInterval;
-  const originalFetch = globalThis.fetch;
-  const originalOpenClawGatewayUrl = process.env.OPENCLAW_GATEWAY_URL;
-  const originalOpenClawGatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-  let scheduledCallback = null;
-
-  globalThis.setInterval = (callback) => {
-    scheduledCallback = callback;
-    return { id: 'gateway-health-interval' };
-  };
-  globalThis.fetch = async () => ({ ok: true });
-  delete process.env.OPENCLAW_GATEWAY_URL;
-  delete process.env.OPENCLAW_GATEWAY_TOKEN;
-
-  try {
-    const { startGatewayHealthMonitor } = await import('../../../../../skills/buster/pipeline/services/gateway-health.ts');
-    startGatewayHealthMonitor();
-
-    await scheduledCallback();
-    await scheduledCallback();
-    await assert.rejects(
-      () => scheduledCallback(),
-      (error) => {
-        assert.equal(error.signal, 'GATEWAY_HEALTH_FAILED');
-        assert.equal(error.opts.cleanupStage, 'gateway-health-failed');
-        assert.equal(error.opts.reason, 'gateway_unreachable');
-        assert.match(error.message, /Gateway shutdown requested: GATEWAY_HEALTH_FAILED/);
-        return true;
-      }
-    );
-  } finally {
-    globalThis.setInterval = originalSetInterval;
-    globalThis.fetch = originalFetch;
-    if (originalOpenClawGatewayUrl === undefined) delete process.env.OPENCLAW_GATEWAY_URL;
-    else process.env.OPENCLAW_GATEWAY_URL = originalOpenClawGatewayUrl;
-    if (originalOpenClawGatewayToken === undefined) delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    else process.env.OPENCLAW_GATEWAY_TOKEN = originalOpenClawGatewayToken;
-  }
-});
+test('startGatewayHealthMonitor treats thrown health checks as failures', (t) =>
+  assertMonitorFailure(t, { fetchResult: async () => ({ ok: true }), exposeGateway: false }));

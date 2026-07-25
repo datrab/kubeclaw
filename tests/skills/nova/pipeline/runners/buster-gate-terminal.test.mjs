@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import test from 'node:test';
 
 import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
@@ -8,7 +9,7 @@ import { buildBusterGateControlResult } from '../../../../../skills/nova/pipelin
 import { handleBusterGateEvaluationResult } from '../../../../../skills/nova/pipeline/runners/buster-gate-terminal.ts';
 
 function makeConfig() {
-  const root = fs.mkdtempSync(path.join('/app', 'buster-gate-terminal-'));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-gate-terminal-'));
   return {
     project: 'test-project',
     repo_root: root,

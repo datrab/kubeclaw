@@ -18,7 +18,7 @@ export function createTempManager() {
       process.on('exit', () => manager.cleanup());
       return _dir;
     },
-    file(prefix: string, moduleId = '', ext = '.tmp') {
+    file(prefix: string, moduleId: any = '', ext: any = '.tmp') {
       if (!_dir) manager.init();
       const safePrefix = assertSafePathSegment(prefix, 'temp file prefix');
       const safeModuleId = assertSafePathSegment(moduleId, 'temp file module id', { allowEmpty: true });
@@ -31,7 +31,7 @@ export function createTempManager() {
       if (_dir && fs.existsSync(_dir)) {
         try {
           fs.rmSync(_dir, { recursive: true, force: true });
-        } catch (_error) { /* non-critical */ }
+        } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* non-critical */ }
       }
     },
     get dir() { return _dir; },

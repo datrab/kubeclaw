@@ -45,7 +45,7 @@ Current tools include:
 - `yamllint`: correctness-oriented YAML linting against explicit non-template roots.
 - `gofmt`: canonical Go formatting.
 - `go-vet`: compiler-supported Go correctness checks.
-- `gocyclo`: Go cyclomatic-complexity enforcement at the same maximum of 10 used for JavaScript/TypeScript.
+- `gocyclo`: Go cyclomatic-complexity enforcement at maximum 10, independently calibrated from JavaScript/TypeScript.
 - `go-imports`: Go import-boundary enforcement from canonical allowed prefixes.
 - `staticcheck`: deeper Go correctness and unused-code analysis.
 - `govulncheck`: reachable Go vulnerability analysis.
@@ -54,9 +54,13 @@ Current tools include:
 - `tflint`: Terraform language linting using the single deployed `.tflint.hcl`.
 - `trivy-terraform`: high/critical Terraform misconfiguration scanning without state-file inputs.
 
-The versioned `lint-policy.json` owns exactly one explicit project root and declares language evidence, exact tool targets, tool ownership, category, scope, timeout, config path, blocking severity, exclusions, and architecture layers. Version 5 also binds an expiring, fingerprinted debt baseline. It rejects multiple projects because tool settings are intentionally global rather than pretending to provide project isolation. Adapters contain execution and parsing only. Missing targets, invalid policy, and missing required native configs fail before tool execution.
+The versioned `lint-policy.json` owns exactly one explicit project root and declares language evidence, exact tool targets, tool ownership, category, scope, timeout, config path, blocking severity, exclusions, architecture layers, experimental tools, and rule admission evidence. Version 6 binds an expiring, fingerprinted debt baseline. It rejects multiple projects because tool settings are intentionally global rather than pretending to provide project isolation. Adapters contain execution and parsing only. Missing targets, invalid policy, and missing required native configs fail before tool execution.
 
-`lint-baseline.json` groups stable SHA-256 fingerprints by tool and requires an owner, reason, expiry, and tracking reference. Baselined findings remain visible in structured evidence but do not block. New findings block immediately. Phase 5 records 529 Knip findings, 45 dependency cycles, and 295 structural clones. Phase 6 records 1,464 ESLint findings, 11 Hadolint findings, four Go complexity findings, one Semgrep finding, and three rendered Kubernetes security findings. All 2,352 fingerprints expire on October 20, 2026.
+`lint-baseline.json` groups stable SHA-256 fingerprints by tool and requires an owner, reason, creation date, expiry, tracking reference, approver, and approval date. Expired groups invalidate the policy. Normal output hides approved debt details; `--include-debt` requests the complete debt evidence explicitly. New findings block immediately. Experimental findings cannot be suppressed. Phase 5 records 529 Knip findings, 45 dependency cycles, and 295 structural clones. Phase 6 records 1,464 ESLint findings, 11 Hadolint findings, four Go complexity findings, one Semgrep finding, and three rendered Kubernetes security findings. Phase 7 records the 4,220 unique strict-TypeScript fingerprints deferred from Phase 3. All 6,572 fingerprints expire on October 20, 2026.
+
+Maintainers add an approved group with `scripts/lint-baseline-update.mjs`. The command requires the exact current report and baseline digests plus owner, reason, creation, expiry, tracking, approver, and approval dates; it rejects experimental tools, stale reports, invalid fingerprints, and already-baselined findings.
+
+`experimental_tools` is the only experimental-rule switch. Those tools are absent from normal execution and output. `--include-experimental` runs and discloses them, but their findings increment only `summary.total_experimental`; they never affect error, warning, blocking, or debt totals. Promotion to blocking requires a machine-validated rule-admission record and removal from `experimental_tools`.
 
 ## Phase 6 Rule Contract
 
@@ -64,17 +68,18 @@ All findings are blocking at warning severity or higher. There is no advisory wa
 
 | Stable code | Rule | Rejected example | Accepted direction | Remediation |
 | --- | --- | --- | --- | --- |
-| `complexity` / `go-complexity` | cyclomatic complexity at most 10 | one function owns parsing, validation, retry, and persistence branches | small functions each own one decision domain | extract cohesive decisions; do not merely shuffle branches |
+| `complexity` | JavaScript/TypeScript cyclomatic complexity at most 15 | one function owns parsing, validation, retry, and persistence branches | small functions each own one decision domain | extract cohesive decisions; do not merely shuffle branches |
+| `go-complexity` | Go cyclomatic complexity at most 10 | one function owns parsing, validation, retry, and persistence branches | small functions each own one decision domain | extract cohesive decisions; do not merely shuffle branches |
 | `max-depth` | nesting depth at most 3 | four nested loops/conditions | guard clauses and named operations | flatten control flow or extract a coherent operation |
-| `max-params` | at most five parameters | `run(a, b, c, d, e, f)` | `run(request)` with a typed request | introduce one explicit input object |
-| `max-lines-per-function` | at most 40 logical lines | one orchestration function implements every step | short coordinator calling cohesive operations | split by responsibility, not by arbitrary line chunks |
+| `max-params` | at most seven parameters | `run(a, b, c, d, e, f, g, h)` | `run(request)` with a typed request | introduce one explicit input object |
+| `max-lines-per-function` | at most 60 logical lines | one orchestration function implements every step | short coordinator calling cohesive operations | split by responsibility, not by arbitrary line chunks |
 | `max-lines` | at most 300 logical lines | unrelated configuration, transport, and rendering in one file | one file owns one clear concern | move a complete concern behind an explicit interface |
 | `discipline/no-direct-env-access` | environment reads only in the exact adapters listed in `eslint.config.mjs` | `const timeout = process.env.TIMEOUT` in business logic | validated config passed into business logic | move infrastructure input parsing to a declared boundary |
 | `discipline/no-env-default` | no hardcoded application default behind infrastructure environment input | `process.env.REGION || "us-east-1"` | required validated config or a versioned settings value | put the value in canonical settings and fail if required input is absent |
-| `discipline/no-fallback-chain` | at most one fallback | `primary || legacy || guessed` | `primary ?? explicitFallback` | remove compatibility/guessing paths and select one authority |
+| `discipline/no-fallback-chain` | at most one value-selection fallback; boolean predicates are excluded | `primary || legacy || guessed` | `primary ?? explicitFallback` | remove compatibility/guessing paths and select one authority |
 | `discipline/no-dynamic-module-loading` | dynamic imports only in exact loader boundaries | `import(userSelectedPath)` in ordinary code | static import or a declared optional-dependency adapter | add the dependency statically or justify the exact boundary centrally |
 | `discipline/no-top-level-mutable-state` | no module-level `let` or `var` | `let client` shared implicitly | state owned by a class, factory, or explicit lifecycle object | move state into its owner and pass the owner explicitly |
-| `discipline/no-swallowed-error` | catches may not be empty, return absence, or only print | `catch { return null }` | contextual rethrow or explicit typed result | preserve failure evidence and let the owning boundary decide recovery |
+| `discipline/no-swallowed-error` | catches must report, rethrow, return a typed recovery, or carry `INTENTIONAL_NONCRITICAL(reason_code): explanation` for an expected probe/cleanup failure | `catch { return null }` | contextual rethrow, typed result, or classified noncritical recovery | preserve failure evidence and make every noncritical decision reviewable |
 | `discipline/filename-case` | lowercase kebab-case source filenames | `TaskRunner.ts` | `task-runner.ts` | rename the file and update imports |
 | `no-console` | structured logging only | `console.log(value)` | project logger with level/component/context | use the canonical logger at the owning boundary |
 
@@ -94,11 +99,13 @@ Reports include:
 - `summary.total_warnings`
 - `summary.total_blocking`
 - `summary.total_baselined`
+- `summary.total_experimental`
 - `summary.tools_ok`
 - `summary.tools_not_applicable`
 - `summary.tools_failed`
 - per-tool `status`
 - per-tool `findings`
+- `visibility.debt` and `visibility.experimental`
 
 Findings use a consistent shape:
 
@@ -145,6 +152,8 @@ CLI flags inside `lint-report.ts` include:
 - `--output`
 - `--changed-files`
 - `--log-path`
+- `--include-debt`
+- `--include-experimental`
 
 ## Failure Behavior
 

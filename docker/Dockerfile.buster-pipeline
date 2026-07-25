@@ -5,13 +5,40 @@ FROM moby/buildkit:rootless AS buildkit
 FROM node:24-bookworm-slim
 
 USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG KUBECTL_VERSION=1.35.6
 ARG TARGETARCH
 
+ARG BASH_VERSION=5.2.15-2+b13
+ARG BUILD_ESSENTIAL_VERSION=12.9
+ARG CA_CERTIFICATES_VERSION=20230311+deb12u1
+ARG CURL_VERSION=7.88.1-10+deb12u15
+ARG FUSE_OVERLAYFS_VERSION=1.10-1
+ARG GIT_VERSION=1:2.39.5-0+deb12u3
+ARG IPROUTE2_VERSION=6.1.0-3
+ARG IPTABLES_VERSION=1.8.9-2
+ARG JQ_VERSION=1.6-2.1+deb12u2
+ARG LIBCAP2_BIN_VERSION=1:2.66-4+deb12u3+b1
+ARG NETCAT_OPENBSD_VERSION=1.219-1
+ARG NMAP_VERSION=7.93+dfsg1-1
+ARG OPENSSH_CLIENT_VERSION=1:9.2p1-2+deb12u10
+ARG PYTHON3_VERSION=3.11.2-1+b1
+ARG PYTHON3_PIP_VERSION=23.0.1+dfsg-1
+ARG RIPGREP_VERSION=13.0.0-4+b2
+ARG SHELLCHECK_VERSION=0.9.0-1
+ARG TINI_VERSION=0.19.0-1+b3
+ARG TREE_VERSION=2.1.0-1
+ARG UIDMAP_VERSION=1:4.13+dfsg1-1+deb12u2
+ARG YAMLLINT_VERSION=1.29.0-1
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      bash ca-certificates curl git openssh-client jq python3 python3-pip \
-      uidmap libcap2-bin slirp4netns fuse-overlayfs iproute2 iptables tini \
-      build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap \
+      bash=${BASH_VERSION} ca-certificates=${CA_CERTIFICATES_VERSION} curl=${CURL_VERSION} \
+      git=${GIT_VERSION} openssh-client=${OPENSSH_CLIENT_VERSION} jq=${JQ_VERSION} \
+      python3=${PYTHON3_VERSION} python3-pip=${PYTHON3_PIP_VERSION} \
+      uidmap=${UIDMAP_VERSION} libcap2-bin=${LIBCAP2_BIN_VERSION} \
+      fuse-overlayfs=${FUSE_OVERLAYFS_VERSION} iproute2=${IPROUTE2_VERSION} iptables=${IPTABLES_VERSION} tini=${TINI_VERSION} \
+      build-essential=${BUILD_ESSENTIAL_VERSION} shellcheck=${SHELLCHECK_VERSION} yamllint=${YAMLLINT_VERSION} \
+      ripgrep=${RIPGREP_VERSION} tree=${TREE_VERSION} netcat-openbsd=${NETCAT_OPENBSD_VERSION} nmap=${NMAP_VERSION} \
     && rm -rf /var/lib/apt/lists/* \
     && chmod 0755 /usr/bin/newuidmap /usr/bin/newgidmap \
     && setcap cap_setuid=ep /usr/bin/newuidmap \
@@ -27,7 +54,10 @@ COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
 RUN arch="${TARGETARCH:-amd64}" \
     && curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl \
-    && npm install --prefix /app --no-audit --no-fund ioredis js-yaml uuid typescript eslint lighthouse playwright @axe-core/playwright pixelmatch pngjs ws \
+    && npm install --prefix /app --no-audit --no-fund \
+      ioredis@5.11.1 js-yaml@5.2.2 uuid@14.0.1 typescript@5.9.3 eslint@10.7.0 \
+      lighthouse@13.4.1 playwright@1.61.1 @axe-core/playwright@4.12.1 \
+      pixelmatch@7.2.0 pngjs@7.0.0 ws@8.21.1 \
     && groupmod --new-name builder node \
     && usermod --login builder --home /home/builder --move-home --shell /bin/bash node \
     && printf 'builder:100000:65536\n' >> /etc/subuid \
@@ -35,7 +65,8 @@ RUN arch="${TARGETARCH:-amd64}" \
     && mkdir -p /app/skills /home/builder/.openclaw /home/builder/.local/share/buildkit /run/user/1000/buildkit \
     && chown -R builder:builder /app/skills /home/builder /run/user/1000
 
-RUN pip install --break-system-packages --no-cache-dir ruff mypy pip-audit semgrep
+RUN pip install --break-system-packages --no-cache-dir \
+      ruff==0.15.22 mypy==2.3.0 pip-audit==2.10.1 semgrep==1.170.1
 
 ARG K6_VERSION=v0.54.0
 ARG HADOLINT_VERSION=2.12.0

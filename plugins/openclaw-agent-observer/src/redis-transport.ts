@@ -1,11 +1,10 @@
 // Local Redis transport for the OpenClaw plugin runtime.
 // Keep this plugin self-contained: do not import from the pipeline skill tree.
-// @ts-expect-error kubeclaw plugin builds intentionally avoid a repo-wide @types/node dependency.
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url) as (id: string) => unknown;
 
-export const REDIS_TRANSPORT_POLICY_ERROR_CODE = 'SECURE_REDIS_TRANSPORT_POLICY_VIOLATION';
+const REDIS_TRANSPORT_POLICY_ERROR_CODE = 'SECURE_REDIS_TRANSPORT_POLICY_VIOLATION';
 export const MISSING_DEPENDENCY_ERROR_CODE = 'MISSING_DEPENDENCY';
 
 const TRUE_VALUES = new Set(['1', 'true', 'yes', 'on', 'required', 'enabled']);
@@ -88,18 +87,18 @@ export function resolveRedisTransportConfig(opts: Record<string, unknown> = {}, 
   redisOptions: Record<string, unknown>;
   policy: Record<string, unknown>;
 } {
-  const host = normalizeString(opts.host ?? opts.redisHost ?? env.REDIS_HOST);
+  const host = normalizeString(opts.host ?? env.REDIS_HOST);
   if (!host) {
     throw new RedisTransportPolicyError('REDIS_HOST is required for agent observability Redis clients');
   }
-  const port = normalizeRedisPort(opts.port ?? opts.redisPort ?? env.REDIS_PORT);
-  const password = normalizeString(opts.password ?? opts.redisPassword ?? env.REDIS_PASSWORD) || undefined;
-  const username = normalizeString(opts.username ?? opts.redisUsername ?? env.REDIS_USERNAME) || undefined;
-  const tlsEnabled = normalizeBoolean(opts.tls ?? opts.redisTls ?? env.REDIS_TLS ?? env.REDIS_TLS_ENABLED);
-  const networkIsolation = normalizeIsolation(opts.networkIsolation ?? opts.redisNetworkIsolation ?? env.REDIS_NETWORK_ISOLATION);
+  const port = normalizeRedisPort(opts.port ?? env.REDIS_PORT);
+  const password = normalizeString(opts.password ?? env.REDIS_PASSWORD) ?? undefined;
+  const username = normalizeString(opts.username ?? env.REDIS_USERNAME) ?? undefined;
+  const tlsEnabled = normalizeBoolean(opts.tls ?? env.REDIS_TLS);
+  const networkIsolation = normalizeIsolation(opts.networkIsolation ?? env.REDIS_NETWORK_ISOLATION);
   const enforceSecureMode = opts.enforceSecureMode !== false;
 
-  const hasSecureTransport = Boolean(password || tlsEnabled || networkIsolation);
+  const hasSecureTransport = [password, tlsEnabled, networkIsolation].some(Boolean);
   if (!hasSecureTransport && enforceSecureMode) {
     throw new RedisTransportPolicyError('REDIS_PASSWORD, REDIS_TLS=true, or REDIS_NETWORK_ISOLATION=isolated is required for non-local Redis clients', {
       host,
@@ -130,7 +129,7 @@ export function resolveRedisTransportConfig(opts: Record<string, unknown> = {}, 
   };
 }
 
-export function buildRedisClientOptions(
+function buildRedisClientOptions(
   transportOpts: Record<string, unknown> = {},
   clientOpts: Record<string, unknown> = {},
   env: Record<string, unknown> = {},

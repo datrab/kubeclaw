@@ -1,6 +1,4 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import {
   createSuiteVerdict,
@@ -8,17 +6,26 @@ import {
   STATUS,
   SEVERITY,
 } from '../services/verdict-schema.ts';
-import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
-import { takeScreenshotBatch } from '../tools/screenshot.ts';
-import type { ScreenshotBatchTarget, ScreenshotResult } from '../tools/screenshot.ts';
-import { emitPluginEvent } from '../services/telemetry.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
 import { resolveDiscordWebhookUrl } from '../services/runtime.ts';
 import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.ts';
-import { deliverySkippedCapability, discordSingle, discordSummary } from './visual-reg-discord.ts';
+import { deliverySkippedCapability } from './visual-reg-discord.ts';
 import type { VisualDiscordDeliveryResult } from './visual-reg-discord.ts';
 import { BUSTER_CAPABILITIES, resolveContextCapabilities } from '../services/capabilities.ts';
+import {
+  createSuiteLog,
+  suiteErrorMessage as errorMessage,
+  suiteNonEmptyString as nonEmptyString,
+  suiteObject as objectRecord,
+  suiteObjectOrEmpty as objectRecordOrEmpty,
+} from './support.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
+import { runMultiPath } from './visual-reg-multi.ts';
+import type { VisualPathEntry } from './visual-reg-multi.ts';
+import { deliverVisualResults, finalizeVisualReg, resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.ts';
+export { resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.ts';
 // DELETE_LEGACY: visual-reg requires explicit reviewed baseline metadata in
 // paths.json plus per-route baseline PNGs. Legacy baseline path config,
 // HTML auto-generation, missing-baseline SKIP, and implicit single-path mode
@@ -72,160 +79,6 @@ interface VisualRegContext {
     'visual-reg'?: AnyRecord;
   };
   [key: string]: unknown;
-}
-
-interface VisualPathEntry {
-  name: string;
-  path: string;
-  nav?: string;
-}
-
-interface ImageComparison {
-  diffCount: number;
-  diffPercent: number;
-  width: number;
-  height: number;
-  baselineWidth: number;
-  baselineHeight: number;
-}
-
-interface PageResult {
-  name: string;
-  status: SuiteStatus;
-  diffPercent: number | null;
-  diffCount?: number;
-  diffPath?: string | null;
-  actualPath?: string;
-  baselinePath?: string;
-  canvasSize?: string;
-  error?: string;
-}
-
-interface MultiPathResult {
-  findings: Finding[];
-  pageResults: PageResult[];
-  checksTotal: number;
-  checksPassed: number;
-  checksFailed: number;
-}
-
-function createLog(logSink: LogSink | null = null): LogFn {
-  return (msg: string): void => {
-    console.log(`[SUITE] [VISUAL-REG] ${msg}`);
-    if (logSink) logSink({ suite: 'visual-reg', msg });
-  };
-}
-
-function objectRecord(value: unknown): AnyRecord | null {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
-}
-
-function nonEmptyString(value: unknown): string | null {
-  return typeof value === 'string' && value.trim() ? value : null;
-}
-
-function errorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  return error == null ? 'missing_error_detail' : String(error);
-}
-
-async function compareImages(baselinePath: string, actualPath: string, diffPath: string, pmThreshold: number): Promise<ImageComparison> {
-  // @ts-expect-error Optional runtime dependency declaration is not installed for this migration island.
-  const { PNG } = await import('pngjs');
-  // @ts-expect-error Optional runtime dependency declaration is not installed for this migration island.
-  const { default: pixelmatch } = await import('pixelmatch');
-
-  const baselinePng = PNG.sync.read(fs.readFileSync(baselinePath));
-  const actualPng = PNG.sync.read(fs.readFileSync(actualPath));
-
-  const width = Math.max(baselinePng.width, actualPng.width);
-  const height = Math.max(baselinePng.height, actualPng.height);
-
-  const baselineData = resizeBuffer(baselinePng, width, height);
-  const actualData = resizeBuffer(actualPng, width, height);
-
-  const diff = new PNG({ width, height });
-  const diffCount = pixelmatch(baselineData, actualData, diff.data, width, height, {
-    threshold: pmThreshold,
-    includeAA: true,
-  });
-
-  const totalPixels = width * height;
-  const diffPercent = totalPixels > 0 ? (diffCount / totalPixels) * 100 : 0;
-  fs.writeFileSync(diffPath, PNG.sync.write(diff));
-
-  return {
-    diffCount,
-    diffPercent: Math.round(diffPercent * 100) / 100,
-    width,
-    height,
-    baselineWidth: baselinePng.width,
-    baselineHeight: baselinePng.height,
-  };
-}
-
-function resizeBuffer(png: AnyRecord, targetWidth: number, targetHeight: number): Uint8Array {
-  if (png.width === targetWidth && png.height === targetHeight) return png.data;
-
-  const data = new Uint8Array(targetWidth * targetHeight * 4);
-  data.fill(0);
-
-  const rowBytes = png.width * 4;
-  for (let y = 0; y < png.height; y += 1) {
-    const srcOffset = y * rowBytes;
-    const destOffset = y * targetWidth * 4;
-    data.set(png.data.subarray(srcOffset, srcOffset + rowBytes), destOffset);
-  }
-
-  return data;
-}
-
-function isDeliveryResult(value: unknown): value is VisualDiscordDeliveryResult {
-  if (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))) return false;
-  const record = value as AnyRecord;
-  return (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (record.status === 'sent'), () => (record.status === 'skipped_no_webhook'))), () => (record.status === 'skipped_capability'))), () => (record.status === 'failed_noncritical')))
-    && typeof record.sent === 'boolean';
-}
-
-export function summarizeDiscordDelivery(results: VisualDiscordDeliveryResult[] = []): Record<string, unknown> {
-  const deliveries = Array.isArray(results) ? results : [];
-  for (const delivery of deliveries) {
-    if (!isDeliveryResult(delivery)) {
-      throw new Error('visual-reg Discord delivery result must be a typed delivery result');
-    }
-  }
-
-  const sent = deliveries.filter((delivery) => delivery.status === 'sent' && delivery.sent).length;
-  const failed = deliveries.filter((delivery) => delivery.status === 'failed_noncritical').length;
-  const skipped = deliveries.filter((delivery) => selectTruthyValue(() => (delivery.status === 'skipped_no_webhook'), () => (delivery.status === 'skipped_capability'))).length;
-  const skippedCapability = deliveries.filter((delivery) => delivery.status === 'skipped_capability').length;
-
-  let discordStatus = 'not_attempted';
-  if (deliveries.length > 0) {
-    if (sent === deliveries.length) discordStatus = 'sent';
-    else if (skippedCapability === deliveries.length) discordStatus = 'skipped_capability';
-    else if (skipped === deliveries.length) discordStatus = 'skipped_no_webhook';
-    else if (failed === deliveries.length) discordStatus = 'failed_noncritical';
-    else if (sent > 0) discordStatus = 'partial';
-    else if (failed > 0) discordStatus = 'failed_noncritical';
-    else if (skipped > 0) discordStatus = 'skipped';
-  }
-
-  return {
-    discord_sent: sent > 0,
-    discord_status: discordStatus,
-    discord_attempts: deliveries.length,
-    discord_successes: sent,
-    discord_failures: failed,
-    discord_skipped: skipped,
-    discord_skipped_capability: skippedCapability,
-  };
-}
-
-export function resolveVisualRegOverallStatus(pageResults: Array<{ status: SuiteStatus }>, enforced = false): SuiteStatus {
-  if (pageResults.some((p) => p.status === STATUS.ERROR)) return STATUS.ERROR;
-  if (pageResults.some((p) => p.status === STATUS.FAIL)) return enforced ? STATUS.FAIL : STATUS.ERROR;
-  return STATUS.PASS;
 }
 
 function contractFailure(startTime: number, message: string, log: LogFn, metadata: Record<string, unknown> = {}): SuiteVerdict {
@@ -290,8 +143,15 @@ export function resolveVisualRegBaselineDir(context: VisualRegContext = {}): str
 }
 
 function resolveArtifactDir(context: VisualRegContext = {}): string {
-  const preferred = selectDefinedValue(() => (nonEmptyString(context.screenshotsDir)), () => ((context.testsLogDir ? path.join(context.testsLogDir, 'visual-reg') : null)));
-  return selectDefinedValue(() => (preferred), () => (path.join(selectDefinedValue(() => (nonEmptyString(context.resultsDir)), () => (process.env.BUSTER_RESULTS_DIR ?? '/home/builder/.openclaw/results')), 'visual-reg')));
+  const screenshotsDir = nonEmptyString(context.screenshotsDir);
+  if (screenshotsDir !== null) return screenshotsDir;
+  if (context.testsLogDir) return path.join(context.testsLogDir, 'visual-reg');
+  const configuredResultsDir = nonEmptyString(context.resultsDir);
+  const environmentResultsDir = readBusterEnvironment('BUSTER_RESULTS_DIR');
+  const resultsDir = configuredResultsDir !== null
+    ? configuredResultsDir
+    : (environmentResultsDir === undefined ? '/home/builder/.openclaw/results' : environmentResultsDir);
+  return path.join(resultsDir, 'visual-reg');
 }
 
 function resolveChildArtifactPath(dir: string, fileName: string, field: string): string {
@@ -327,12 +187,12 @@ function parsePathsJson(pathsJsonPath: string): VisualPathEntry[] {
     throw new Error(`Invalid visual-reg paths.json: ${errorMessage(error)}`);
   }
 
-  if (selectTruthyValue(() => (!Array.isArray(parsed)), () => (parsed.length === 0))) {
+  if (!Array.isArray(parsed) || parsed.length === 0) {
     throw new Error('visual-reg paths.json must be a non-empty array of route entries');
   }
 
   const names = new Set<string>();
-  return parsed.map((entry, index) => {
+  return parsed.map((entry: unknown, index: number) => {
     const record = entry as AnyRecord;
     if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!record), () => (typeof record !== 'object'))), () => (typeof record.name !== 'string'))), () => (typeof record.path !== 'string'))) {
       throw new Error(`visual-reg paths.json entry ${index} must include string name and path`);
@@ -348,177 +208,28 @@ function parsePathsJson(pathsJsonPath: string): VisualPathEntry[] {
   });
 }
 
-async function runMultiPath(
-  context: VisualRegContext,
-  pathsJson: VisualPathEntry[],
-  baselineDir: string,
-  artifactDir: string,
-  baseUrl: string,
-  pmThreshold: number,
-  thresholds: AnyRecord | null,
-  enforced: boolean,
-  vrConf: AnyRecord,
-  log: LogFn,
-): Promise<MultiPathResult> {
-  fs.mkdirSync(artifactDir, { recursive: true });
-  const findings: Finding[] = [];
-  const pageResults: PageResult[] = [];
-  let checksTotal = 0;
-  let checksPassed = 0;
-  let checksFailed = 0;
-
-  const unsafeNames = new Set<string>();
-  const targets: ScreenshotBatchTarget[] = [];
-  for (const entry of pathsJson) {
-    try {
-      targets.push({
-        name: entry.name,
-        url: `${baseUrl}${entry.path}`,
-        outputPath: outputPathForName(artifactDir, entry.name, 'actual'),
-      });
-    } catch (error) {
-      const message = errorMessage(error);
-      unsafeNames.add(entry.name);
-      log(`ERROR: ${entry.name} — unsafe visual-reg artifact name: ${message}`);
-      pageResults.push({ name: entry.name, status: STATUS.ERROR, diffPercent: null, diffPath: null, error: message });
-      findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: unsafe visual-reg artifact name — ${message}`, { rule: 'path-boundary' }));
-      checksTotal += 1;
-      checksFailed += 1;
-    }
-  }
-
-  log(`Taking ${targets.length} screenshots via batch...`);
-  const fullPage = vrConf.fullPage === undefined ? true : Boolean(vrConf.fullPage);
-  const screenshots = targets.length > 0
-    ? await takeScreenshotBatch(targets, {
-      viewport: requireVisualRegViewport(vrConf),
-      fullPage,
-      waitUntil: 'networkidle',
-      timeout: 15000,
-    })
-    : [];
-
-  for (const entry of pathsJson) {
-    if (unsafeNames.has(entry.name)) continue;
-    const shot: ScreenshotResult | undefined = screenshots.find((s) => s.name === entry.name);
-    let baselinePath: string;
-    let actualPath: string;
-    let diffPath: string;
-    try {
-      baselinePath = baselinePathForName(baselineDir, entry.name);
-      actualPath = outputPathForName(artifactDir, entry.name, 'actual');
-      diffPath = outputPathForName(artifactDir, entry.name, 'diff');
-    } catch (error) {
-      const message = errorMessage(error);
-      log(`ERROR: ${entry.name} — unsafe visual-reg artifact name: ${message}`);
-      pageResults.push({ name: entry.name, status: STATUS.ERROR, diffPercent: null, diffPath: null, error: message });
-      findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: unsafe visual-reg artifact name — ${message}`, { rule: 'path-boundary' }));
-      checksFailed += 1;
-      continue;
-    }
-
-    checksTotal += 1;
-
-    if (selectTruthyValue(() => (!shot), () => (!shot.ok))) {
-      const message = selectDefinedValue(() => (nonEmptyString(shot?.error)), () => ('Screenshot not taken'));
-      log(`ERROR: ${entry.name} — screenshot failed: ${message}`);
-      pageResults.push({ name: entry.name, status: STATUS.ERROR, diffPercent: null, diffPath: null, error: message });
-      findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: screenshot failed — ${message}`, { rule: 'screenshot-error' }));
-      checksFailed += 1;
-      continue;
-    }
-
-    if (!fs.existsSync(baselinePath)) {
-      const message = `${entry.name}: missing explicit reviewed baseline at ${baselinePath}`;
-      log(`ERROR: ${message}`);
-      pageResults.push({ name: entry.name, status: STATUS.ERROR, diffPercent: null, diffPath: null, actualPath, baselinePath, error: message });
-      findings.push(createFinding(SEVERITY.SERIOUS, message, { rule: 'baseline-required', file: baselinePath }));
-      checksFailed += 1;
-      continue;
-    }
-
-    let comparison: ImageComparison;
-    try {
-      comparison = await compareImages(baselinePath, actualPath, diffPath, pmThreshold);
-    } catch (error) {
-      const message = errorMessage(error);
-      log(`ERROR: ${entry.name} — comparison failed: ${message}`);
-      pageResults.push({ name: entry.name, status: STATUS.ERROR, diffPercent: null, diffPath: null, error: message });
-      findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: comparison failed — ${message}`, { rule: 'compare-error' }));
-      checksFailed += 1;
-      continue;
-    }
-
-    const { diffPercent, diffCount, width, height, baselineWidth, baselineHeight } = comparison;
-    log(`${entry.name}: ${diffPercent}% diff (${diffCount} px of ${width}x${height})`);
-
-    let pageStatus: SuiteStatus = STATUS.PASS;
-    const maxDiffPercent = selectDefinedValue(() => (thresholds?.max_diff_percent), () => (0));
-    if (enforced && diffPercent > maxDiffPercent) {
-      pageStatus = STATUS.FAIL;
-      checksFailed += 1;
-    } else {
-      checksPassed += 1;
-    }
-
-    pageResults.push({
-      name: entry.name,
-      status: pageStatus,
-      diffPercent,
-      diffCount,
-      diffPath: diffPercent > 0 ? diffPath : null,
-      actualPath,
-      baselinePath,
-      canvasSize: `${width}x${height}`,
-    });
-
-    if (diffPercent > 0) {
-      const severity = diffPercent > 10 ? SEVERITY.SERIOUS
-        : diffPercent > 2 ? SEVERITY.MODERATE
-          : SEVERITY.MINOR;
-      findings.push(createFinding(severity, `${entry.name}: ${diffPercent}% diff (${diffCount} pixels)`, { rule: 'pixel-diff', file: diffPath }));
-
-      if (selectTruthyValue(() => (baselineWidth !== shot.width), () => (baselineHeight !== shot.height))) {
-        findings.push(createFinding(SEVERITY.MODERATE, `${entry.name}: size mismatch — baseline ${baselineWidth}x${baselineHeight}, actual ${shot.width}x${shot.height}`, { rule: 'size-mismatch' }));
-      }
-    }
-
-    if (context.screenshotsDir) {
-      try {
-        fs.mkdirSync(context.screenshotsDir, { recursive: true });
-        const att = selectDefinedValue(() => (context.attempt), () => (1));
-        if (fs.existsSync(actualPath)) fs.copyFileSync(actualPath, path.join(context.screenshotsDir, `${entry.name}-actual-attempt-${att}.png`));
-        if (diffPath && fs.existsSync(diffPath)) fs.copyFileSync(diffPath, path.join(context.screenshotsDir, `${entry.name}-diff-attempt-${att}.png`));
-      } catch (error) {
-        log(`non-blocking visual artifact fan-out failed: ${errorMessage(error)}`);
-      }
-    }
-  }
-
-  return { findings, pageResults, checksTotal, checksPassed, checksFailed };
+function visualDeliveryContext(ctx: VisualRegContext, moduleId: string, telemetryContext: unknown): Record<string, unknown> {
+  return {
+    project: selectDefinedValue(() => nonEmptyString(ctx.project), () => nonEmptyString(ctx.config?.project)),
+    run_id: ctx.runId ?? null, module_id: moduleId, attempt: ctx.attempt ?? null,
+    dispatch_id: ctx.dispatchId ?? null, session_key: ctx.sessionKey ?? null,
+    log_dir: selectDefinedValue(() => nonEmptyString(ctx.logDir), () => nonEmptyString(ctx.testsLogDir)),
+    pipeline_log_path: ctx.pipelineLogPath ?? null,
+    pipeline_run_log_path: ctx.pipelineRunLogPath ?? null,
+    telemetry_context: telemetryContext,
+  };
 }
 
 export async function runVisualReg(context: Record<string, unknown>): Promise<SuiteVerdict> {
   const ctx = context as VisualRegContext;
-  const log = createLog(selectDefinedValue(() => (ctx.logSink), () => (null)));
+  const log = createSuiteLog('visual-reg', 'VISUAL-REG', selectDefinedValue(() => (ctx.logSink), () => (null)));
   const tctx = selectDefinedValue(() => (ctx.telemetryContext), () => (null));
   const moduleId = safeModulePathSegment(ctx.moduleId);
-  const discordDeliveryContext = {
-    project: selectDefinedValue(() => (nonEmptyString(ctx.project)), () => (nonEmptyString(ctx.config?.project))),
-    run_id: selectDefinedValue(() => (ctx.runId), () => (null)),
-    module_id: moduleId,
-    attempt: selectDefinedValue(() => (ctx.attempt), () => (null)),
-    dispatch_id: selectDefinedValue(() => (ctx.dispatchId), () => (null)),
-    session_key: selectDefinedValue(() => (ctx.sessionKey), () => (null)),
-    log_dir: selectDefinedValue(() => (nonEmptyString(ctx.logDir)), () => (nonEmptyString(ctx.testsLogDir))),
-    pipeline_log_path: selectDefinedValue(() => (ctx.pipelineLogPath), () => (null)),
-    pipeline_run_log_path: selectDefinedValue(() => (ctx.pipelineRunLogPath), () => (null)),
-    telemetry_context: tctx,
-  };
+  const discordDeliveryContext = visualDeliveryContext(ctx, moduleId, tctx);
   const startTime = Date.now();
-  const serve = selectDefinedValue(() => (objectRecord(ctx.config?.serve)), () => ({}));
-  const vrConf = selectDefinedValue(() => (objectRecord(ctx.config?.['visual-reg'])), () => ({}));
-  const webhookUrl = selectDefinedValue(() => (resolveDiscordWebhookUrl()), () => (''));
+  const serve = objectRecordOrEmpty(ctx.config?.serve);
+  const vrConf = objectRecordOrEmpty(ctx.config?.['visual-reg']);
+  const webhookUrl = resolveDiscordWebhookUrl() ?? '';
   let discordCapabilitySkip: VisualDiscordDeliveryResult | null = null;
 
   try {
@@ -560,80 +271,16 @@ export async function runVisualReg(context: Record<string, unknown>): Promise<Su
     return contractFailure(startTime, errorMessage(error), log, { baseline_dir: baselineDir, paths_json: pathsJsonPath });
   }
 
-  const { findings, pageResults, checksTotal, checksPassed, checksFailed } = await runMultiPath(
-    ctx,
-    pathsJson,
-    baselineDir,
-    artifactDir,
-    baseUrl,
-    pmThreshold,
-    thresholds,
-    enforced,
-    vrConf,
-    log,
-  );
+  const { findings, pageResults, checksTotal, checksPassed, checksFailed } = await runMultiPath({
+    context: ctx, pathsJson, baselineDir, artifactDir, baseUrl, pmThreshold, thresholds, enforced, log,
+    viewport: () => requireVisualRegViewport(vrConf),
+    fullPage: vrConf.fullPage === undefined ? true : Boolean(vrConf.fullPage),
+    baselinePath: (name) => baselinePathForName(baselineDir, name),
+    outputPath: (name, suffix) => outputPathForName(artifactDir, name, suffix),
+  });
 
   const overallStatus = resolveVisualRegOverallStatus(pageResults, enforced);
-
-  const discordMode = selectDefinedValue(() => (nonEmptyString(vrConf.discord)), () => ((pathsJson.length > 3 ? 'summary' : 'all')));
-  const discordDeliveries: VisualDiscordDeliveryResult[] = [];
-
-  if (discordCapabilitySkip) {
-    discordDeliveries.push(discordCapabilitySkip);
-  } else if (discordMode === 'summary') {
-    discordDeliveries.push(await discordSummary(moduleId, pageResults, overallStatus, enforced, {
-      webhookUrl,
-      discordDiffThreshold: DEFAULTS.discord_diff_threshold,
-      log,
-      deliveryContext: discordDeliveryContext,
-    }));
-  } else {
-    for (const pr of pageResults) {
-      if (pr.actualPath) {
-        discordDeliveries.push(await discordSingle(moduleId, pr.name, pr.actualPath, selectDefinedValue(() => (pr.diffPath), () => (null)), selectDefinedValue(() => (pr.diffPercent), () => (0)), pr.status, {
-          webhookUrl,
-          log,
-          deliveryContext: discordDeliveryContext,
-        }));
-      }
-    }
-  }
-
-  const duration_ms = Date.now() - startTime;
-  const icon = overallStatus === STATUS.PASS ? '✅' : '⚠️';
-  log(`${icon} ${mode}: ${checksPassed}/${checksTotal} passed (${duration_ms}ms)`);
-
-  const discordMetadata = summarizeDiscordDelivery(discordDeliveries);
-  await emitPluginEvent(tctx, 'visual_reg', {
-    module_id: moduleId,
-    mode: 'multi_path',
-    pages_total: pathsJson.length,
-    pages_compared: pageResults.filter((p) => p.diffPercent != null).length,
-    pages_skipped: 0,
-    page_results: pageResults.map((p) => ({ name: p.name, status: p.status, diff_percent: p.diffPercent })),
-    overall: overallStatus,
-    ...discordMetadata,
-  });
-
-  return createSuiteVerdict('visual-reg', overallStatus, {
-    critical: false,
-    duration_ms,
-    checks_total: checksTotal,
-    checks_passed: checksPassed,
-    checks_failed: checksFailed,
-    findings,
-    metadata: {
-      tool: 'pixelmatch',
-      mode,
-      multi_path: true,
-      pages_total: pathsJson.length,
-      pages_compared: pageResults.filter((p) => p.diffPercent != null).length,
-      pages_skipped: 0,
-      baseline_dir: baselineDir,
-      discord_mode: discordMode,
-      ...discordMetadata,
-      page_results: pageResults.map((p) => ({ name: p.name, status: p.status, diff_percent: p.diffPercent })),
-      ...(enforced ? { thresholds } : {}),
-    },
-  });
+  const discordMode = nonEmptyString(vrConf.discord) ?? (pathsJson.length > 3 ? 'summary' : 'all');
+  const delivery = await deliverVisualResults({ moduleId, pageResults, status: overallStatus, enforced, mode: discordMode, webhookUrl, capabilitySkip: discordCapabilitySkip, deliveryContext: discordDeliveryContext, log });
+  return finalizeVisualReg({ startTime, result: { findings, pageResults, checksTotal, checksPassed, checksFailed }, status: overallStatus, enforced, mode, thresholds, pathsTotal: pathsJson.length, baselineDir, discordMode: delivery.discordMode, deliveries: delivery.deliveries, moduleId, telemetryContext: tctx, log });
 }

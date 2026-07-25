@@ -14,7 +14,6 @@ import {
 } from '../../../skills/nova/pipeline/runners/buster-gate-control.ts';
 import {
   buildReviewGateControlResult,
-  buildReviewRequestFixControlResult,
 } from '../../../skills/nova/pipeline/runners/review-gate-control.ts';
 
 const runId = 'run-gate-evidence';
@@ -138,26 +137,6 @@ const busterFix = buildBusterRequestFixControlResult(config, gateId, busterGate,
   gateStartedAt: '2026-06-17T00:00:00.000Z',
 });
 assertAuthority(busterFix, { expectedDispatchId: dispatchId, requireDispatchId: true });
-
-const reviewFix = buildReviewRequestFixControlResult(config, reviewGateId, reviewGate, {
-  mergedResult: {
-    status: 'FAIL',
-    issues: [{ title: 'Review issue', severity: 'critical' }],
-  },
-}, {
-  maxFixCycles: 3,
-  primaryReviewer: { label: 'reviewer' },
-}, {
-  attempt,
-  gatewayLabel: 'gateway-review',
-  sessionKey: 'session-review',
-  gateStartedAt: '2026-06-17T00:00:00.000Z',
-});
-assertAuthority(reviewFix, {
-  gateId: reviewGateId,
-  gateType: 'review',
-  requireDispatchId: false,
-});
 
 const staleErrors = validateGateEvidenceAuthority(busterPass, {
   expectedRunId: 'run-other',

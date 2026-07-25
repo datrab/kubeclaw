@@ -22,10 +22,7 @@
       "type": "string"
     },
     "attempt": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "type": "number"
     },
     "content_completeness": {
       "minLength": 1,
@@ -33,10 +30,7 @@
     },
     "dispatch_id": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "duration_seconds": {
       "type": [
@@ -81,24 +75,15 @@
     },
     "model_call_id": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "module_id": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "outcome": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "reason": {
       "type": [
@@ -107,24 +92,16 @@
       ]
     },
     "result_bytes": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "minimum": 0,
+      "type": "number"
     },
     "session_key": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "tool_call_id": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "tool_name": {
       "minLength": 1,
@@ -132,7 +109,17 @@
     }
   },
   "required": [
-    "tool_name"
+    "tool_name",
+    "tool_call_id",
+    "session_key",
+    "model_call_id",
+    "module_id",
+    "attempt",
+    "dispatch_id",
+    "content_completeness",
+    "outcome",
+    "result_bytes",
+    "error"
   ],
   "type": "object"
 }

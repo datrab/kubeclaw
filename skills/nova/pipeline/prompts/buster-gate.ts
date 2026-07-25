@@ -5,13 +5,13 @@ import path from 'path';
 import { relPath, projectSrcPath, gateOutputPath, gateInstructionsPath, resolveSwarmArtifactPath } from '../core/paths.ts';
 import { makePromptResult, quoteShellArg, buildGitSyncSection, buildAvailableToolsSection, buildTestWorkspaceSection, buildBusterGateCompletionProtocol } from './shared.ts';
 
-export function readGateInstructions(config, gate) {
+export function readGateInstructions(config: any, gate: any) {
   const p = gateInstructionsPath(config, gate);
   if (!fs.existsSync(p)) throw new Error(`Gate instructions not found: ${p}`);
   return fs.readFileSync(p, 'utf8');
 }
 
-export function buildBusterGatePrompt(config, gateId, gate, instructions, commitHash, attempt = 1, completionIdentity = {}) {
+export function buildBusterGatePrompt(config: any, gateId: any, gate: any, instructions: any, commitHash: any, attempt: any = 1, completionIdentity: any = {}) {
   // ── Context Block ──
   const contextBlock = [
     '## 🔬 TEST CONTEXT',

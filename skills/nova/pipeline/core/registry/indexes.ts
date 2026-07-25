@@ -2,15 +2,11 @@ import {
   PLUGIN_REJECTION_CODES,
   PLUGIN_STAGE_IDS,
 } from '../constants.ts';
-import { createRegistryDictionary } from './dictionary.ts';
+import { createRegistryDictionary, pushRegistryError as pushError } from './dictionary.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type RegistryError = { code: string; message: string; [key: string]: any };
-
-function pushError(errors: RegistryError[], code: string, message: string, details: AnyRecord = {}) {
-  errors.push({ code, message, ...details });
-}
 
 function ensureRegistryMap(parent: AnyRecord, key: string): AnyRecord {
   const existing = parent[key];

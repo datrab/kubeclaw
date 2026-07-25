@@ -1,5 +1,1 @@
-export * from './constants.ts';
-export * from './types.ts';
-export * from './validation.ts';
-export * from './routing.ts';
-export * from './mapping.ts';
+export * from '../../../../contracts/agent-observability/v1/src/index.ts';

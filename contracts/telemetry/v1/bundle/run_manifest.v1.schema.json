@@ -1,0 +1,154 @@
+{
+  "$id": "run_manifest.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "dependency_edges": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "to": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "deployment": {
+      "type": "object"
+    },
+    "execution_order": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "fingerprint": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "git": {
+      "type": "object"
+    },
+    "models": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "plugins": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "prompts": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "runtime_policies": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "run_manifest.v1"
+    },
+    "schema_versions": {
+      "type": "object"
+    },
+    "skills": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "tools": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "versions": {
+      "type": "object"
+    },
+    "work_items": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "configuration": {
+            "type": "object"
+          },
+          "depends_on": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "owner": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "work_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "work_type": {
+            "enum": [
+              "module",
+              "gate",
+              "generator",
+              "validator",
+              "pipeline_step"
+            ]
+          }
+        },
+        "required": [
+          "work_type",
+          "work_id",
+          "depends_on",
+          "owner",
+          "configuration"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "project",
+    "run_id",
+    "fingerprint",
+    "work_items",
+    "schema_versions"
+  ],
+  "type": "object"
+}

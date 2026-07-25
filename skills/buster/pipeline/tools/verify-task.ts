@@ -1,185 +1,40 @@
 #!/usr/bin/env node
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import process from 'process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
-import path from 'path';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { fileURLToPath } from 'url';
 import { parseCliFlagValues } from '../cli-args.ts';
-import { gitExec, getRepoRoot, getCurrentBranch, gitPushWithRetry } from '../services/git-workflows.ts';
-import { loadBusterGitPushPolicy } from '../services/runtime-policy.ts';
+import { getRepoRoot } from '../services/git-workflows.ts';
+import { errorMessage } from '../value-boundary.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
+import {
+  buildSwarmScope,
+  isGitPathInside,
+  listChangedFiles,
+  normalizeExplicitAddPaths,
+  requireNonEmptyString,
+} from './verify-task-scope.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+export {
+  buildSwarmScope,
+  cleanupForbiddenFile,
+  isGitPathInside,
+  normalizeGitPath,
+  parsePorcelainStatusPaths,
+  validateProjectSlug,
+} from './verify-task-scope.ts';
+export type { CleanupAction } from './verify-task-scope.ts';
+import type { CleanupAction } from './verify-task-scope.ts';
+import { cleanScopeViolations, commitVerifiedScope } from './verify-task-execution.ts';
+import type { VerifyResult } from './verify-task-execution.ts';
 // KEEP_TYPED_POLICY: role is presentation only, true no-change success is a
 // terminal helper success, and scope cleanup handles tracked and untracked
 // forbidden paths.
 // DELETE_LEGACY: cleanup failures are terminal typed failures; helper success
 // means all intended cleanup actions completed or there were no changes.
 
-type AnyRecord = Record<string, any>;
-
 interface VerifyOptions {
   commitMessage?: string;
   addPaths?: string[];
-}
-
-interface VerifyResult {
-  status: 'success' | 'error';
-  action: 'none' | 'reverted_all_bad_files' | 'pushed' | 'cleanup_failed';
-  logs: string[];
-  error?: string;
-  cleanup_proof?: Record<string, unknown>;
-  files_pushed?: number;
-  commit_hash?: string;
-}
-
-export interface CleanupAction {
-  file: string;
-  cleaned: boolean;
-  method?: 'checkout' | 'delete';
-  error?: string;
-}
-
-export function validateProjectSlug(currentProject: unknown): string {
-  const project = stringValue(currentProject).trim();
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!/^[A-Za-z0-9._-]+$/.test(project)), () => (project === '.'))), () => (project === '..'))) {
-    throw new Error('Invalid project id. Expected a safe project slug without path separators.');
-  }
-  return project;
-}
-
-export function normalizeGitPath(value: unknown): string {
-  return stringValue(value)
-    .replace(/\\/g, '/')
-    .replace(/^\/+/, '')
-    .replace(/\/+/g, '/')
-    .replace(/\/$/, '');
-}
-
-export function isGitPathInside(file: string, root: string): boolean {
-  const normalizedFile = normalizeGitPath(file);
-  const normalizedRoot = normalizeGitPath(root);
-  return selectTruthyValue(() => (normalizedFile === normalizedRoot), () => (normalizedFile.startsWith(`${normalizedRoot}/`)));
-}
-
-export function buildSwarmScope(currentProject: unknown): { project: string; projectRoot: string; swarmRoot: string } {
-  const project = validateProjectSlug(currentProject);
-  const projectRoot = `Projects/${project}`;
-  const swarmRoot = `${projectRoot}/src/.swarm`;
-  return { project, projectRoot, swarmRoot };
-}
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
-}
-
-function stringValue(value: unknown): string {
-  return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
-}
-
-function requireNonEmptyString(value: unknown, field: string): string {
-  const text = stringValue(value).trim();
-  if (!text) throw new Error(`${field} is required`);
-  return text;
-}
-
-function uniqueFiles(files: string[]): string[] {
-  return [...new Set(files.map(normalizeGitPath).filter(Boolean))];
-}
-
-function normalizeExplicitAddPaths(addPaths: unknown, projectRoot: string, swarmRoot: string): string[] {
-  if (addPaths === undefined || addPaths === null) return [swarmRoot];
-  if (!Array.isArray(addPaths) || addPaths.length === 0) {
-    throw new Error('verifyAndPush addPaths must be a non-empty array when provided');
-  }
-  const normalized = uniqueFiles(addPaths.map((entry) => stringValue(entry).trim()));
-  if (normalized.length !== addPaths.length) {
-    throw new Error('verifyAndPush addPaths must not contain empty or duplicate paths');
-  }
-  for (const file of normalized) {
-    if (!isGitPathInside(file, projectRoot)) {
-      throw new Error(`verifyAndPush addPath is outside project scope: ${file}`);
-    }
-    if (!isGitPathInside(file, swarmRoot)) {
-      throw new Error(`verifyAndPush addPath is outside swarm scope: ${file}`);
-    }
-  }
-  return normalized;
-}
-
-export function parsePorcelainStatusPaths(statusOut: string): string[] {
-  const entries = statusOut.split('\0').filter((entry: string) => entry.length > 0);
-  const files: string[] = [];
-
-  for (let i = 0; i < entries.length; i += 1) {
-    const entry = entries[i]!;
-    const fileStart = entry.length >= 3 && entry[2] === ' '
-      ? 3
-      : entry.indexOf(' ') >= 0
-        ? entry.indexOf(' ') + 1
-        : 3;
-    const file = entry.substring(fileStart);
-    if (!file) continue;
-
-    files.push(file);
-
-    const indexStatus = entry[0];
-    const worktreeStatus = entry[1];
-    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (indexStatus === 'R'), () => (indexStatus === 'C'))), () => (worktreeStatus === 'R'))), () => (worktreeStatus === 'C'))) {
-      const source = entries[i + 1];
-      if (source) {
-        files.push(source);
-        i += 1;
-      }
-    }
-  }
-
-  return uniqueFiles(files);
-}
-
-function listChangedFiles(repoRoot: string): string[] {
-  const statusOut = gitExec(repoRoot, ['status', '--porcelain=v1', '-z']);
-  if (!statusOut) return [];
-  return parsePorcelainStatusPaths(statusOut);
-}
-
-function findScopeViolations(files: string[], projectRoot: string, swarmRoot: string): { violations: string[]; badFiles: string[] } {
-  const violations: string[] = [];
-  const badFiles: string[] = [];
-
-  for (const file of files) {
-    let reason = '';
-
-    if (!isGitPathInside(file, projectRoot)) {
-      continue;
-    }
-    if (!isGitPathInside(file, swarmRoot)) {
-      reason = `[SWARM-SCOPE] This verifier only permits writes inside ${swarmRoot}/.`;
-    }
-
-    if (reason) {
-      violations.push(`${file} -> ${reason}`);
-      badFiles.push(file);
-    }
-  }
-
-  return { violations, badFiles };
-}
-
-export function cleanupForbiddenFile(repoRoot: string, file: string): CleanupAction {
-  const absPath = path.join(repoRoot, file);
-  try {
-    gitExec(repoRoot, ['checkout', 'HEAD', '--', file], { stdio: 'ignore' } as AnyRecord);
-    return { file, cleaned: true, method: 'checkout' };
-  } catch (_checkoutError) {
-    gitExec(repoRoot, ['rm', '--cached', '--ignore-unmatch', '-r', '--', file], { stdio: 'ignore' } as AnyRecord);
-    if (fs.existsSync(absPath)) {
-      fs.rmSync(absPath, { force: true, recursive: true });
-    }
-    return { file, cleaned: true, method: 'delete' };
-  }
 }
 
 async function verifyAndPush(agentRole: string, currentProject: string, opts: VerifyOptions = {}): Promise<VerifyResult> {
@@ -213,126 +68,12 @@ async function verifyAndPush(agentRole: string, currentProject: string, opts: Ve
     return { status: 'success', action: 'none', logs };
   }
 
-  const { violations, badFiles } = findScopeViolations(projectChangedFiles, projectRoot, swarmRoot);
-
-  const cleanupActions: CleanupAction[] = [];
-  if (badFiles.length > 0) {
-    log('⚠️ STAGE 1 WARNING: OUT OF SCOPE MODIFICATIONS DETECTED.');
-    violations.forEach((v) => log(`  - ${v}`));
-    log('[Verify] Cleaning up forbidden changes...');
-
-    for (const file of badFiles) {
-      try {
-        cleanupActions.push(cleanupForbiddenFile(repoRoot, file));
-        log(`  -> ⏪ Reverted/Deleted: ${file}`);
-      } catch (error) {
-        const message = errorMessage(error);
-        cleanupActions.push({ file, cleaned: false, error: message });
-        log(`  -> ❌ Could not clean up ${file}: ${message}`);
-      }
-    }
-
-    const remainingAfterCleanup = listChangedFiles(repoRoot).filter((file) => isGitPathInside(file, projectRoot));
-    const remainingBadFiles = badFiles.filter((file) => remainingAfterCleanup.includes(file));
-    const failedCleanup = cleanupActions.filter((action) => !action.cleaned);
-    if (selectTruthyValue(() => (failedCleanup.length > 0), () => (remainingBadFiles.length > 0))) {
-      const error = 'Forbidden file cleanup failed; refusing commit/push.';
-      log(`❌ [Verify] ${error}`);
-      return {
-        status: 'error',
-        action: 'cleanup_failed',
-        error,
-        logs,
-        cleanup_proof: {
-          intended_cleanup_count: badFiles.length,
-          actions: cleanupActions,
-          remaining_forbidden_files: remainingBadFiles,
-        },
-      };
-    }
-
-    log('✅ [Verify] Forbidden file cleanup completed with proof.');
-  } else {
-    log('✅ [Verify] Stage 1 Passed (Scope Check).');
-  }
-
   log('✅ [Verify] All conditions met. Running commit and push...');
+  const execution = { repoRoot, projectRoot, swarmRoot, commitMessage, explicitAddPaths, logs, log };
+  const cleanup = cleanScopeViolations(execution, projectChangedFiles);
+  if (cleanup.failure) return cleanup.failure;
   try {
-    const remainingChanges = gitExec(repoRoot, ['status', '--porcelain']);
-    if (!remainingChanges) {
-      log('⚠️ [Verify] No changes remaining after cleanup. Nothing to push.');
-      return {
-        status: 'success',
-        action: 'reverted_all_bad_files',
-        logs,
-        cleanup_proof: {
-          intended_cleanup_count: badFiles.length,
-          actions: cleanupActions,
-          remaining_forbidden_files: [],
-        },
-      };
-    }
-
-    const finalChangedFiles = listChangedFiles(repoRoot).filter((file) => isGitPathInside(file, projectRoot));
-    const finalScope = findScopeViolations(finalChangedFiles, projectRoot, swarmRoot);
-    if (finalScope.badFiles.length > 0) {
-      const error = 'Out-of-scope changes remain after cleanup; refusing commit/push.';
-      finalScope.violations.forEach((v) => log(`  - ${v}`));
-      log(`❌ [Verify] ${error}`);
-      return {
-        status: 'error',
-        action: 'cleanup_failed',
-        error,
-        logs,
-        cleanup_proof: {
-          intended_cleanup_count: badFiles.length,
-          actions: cleanupActions,
-          remaining_forbidden_files: finalScope.badFiles,
-        },
-      };
-    }
-
-    const currentBranch = getCurrentBranch(repoRoot);
-    log(`[Verify] Current branch: ${currentBranch}`);
-
-    const gitLogger = {
-      warn: (_scope: unknown, msg: string) => log(`⚠️ [Verify] ${msg}`),
-      info: (_scope: unknown, msg: string) => log(msg),
-    };
-    const gitPushPolicy = loadBusterGitPushPolicy();
-    gitExec(repoRoot, ['reset'], { stdio: 'ignore' } as AnyRecord);
-    const { hash: commitHash, pushed } = await gitPushWithRetry(repoRoot, currentBranch, {
-      logger: gitLogger,
-      maxAttempts: gitPushPolicy.maxAttempts,
-      retryDelayMs: gitPushPolicy.retryDelayMs,
-      commitMessage,
-      addPaths: explicitAddPaths,
-    });
-
-    if (!pushed) {
-      log('⚠️ [Verify] No scoped staged changes remained after add/cleanup. Nothing to push.');
-      return {
-        status: 'success',
-        action: badFiles.length > 0 ? 'reverted_all_bad_files' : 'none',
-        logs,
-        commit_hash: commitHash,
-        ...(badFiles.length > 0 ? {
-          cleanup_proof: { intended_cleanup_count: badFiles.length, actions: cleanupActions, remaining_forbidden_files: [] },
-        } : {}),
-      };
-    }
-
-    log(`✅ [Verify] Push successful! (${commitHash})`);
-    return {
-      status: 'success',
-      action: 'pushed',
-      files_pushed: remainingChanges.split('\n').filter((line: string) => line.trim()).length,
-      commit_hash: commitHash,
-      logs,
-      ...(badFiles.length > 0 ? {
-        cleanup_proof: { intended_cleanup_count: badFiles.length, actions: cleanupActions, remaining_forbidden_files: [] },
-      } : {}),
-    };
+    return await commitVerifiedScope(execution, cleanup);
   } catch (error) {
     throw new Error(`Error during Git push (conflicts?): ${errorMessage(error)}`);
   }
@@ -354,12 +95,12 @@ if (currentPath === entryPath) {
 
   const roleInput = flags.role
     ? flags.role
-    : process.env.AGENT_ROLE
-      ? process.env.AGENT_ROLE
-      : process.env.AGENT_NAME;
+    : readBusterEnvironment('AGENT_ROLE')
+      ? readBusterEnvironment('AGENT_ROLE')
+      : readBusterEnvironment('AGENT_NAME');
   if (!roleInput) throw new Error('agent role required via --role, AGENT_ROLE, or AGENT_NAME');
   const agentRole = roleInput.toLowerCase();
-  const currentProject = flags.project ? flags.project : process.env.CURRENT_PROJECT;
+  const currentProject = flags.project ? flags.project : readBusterEnvironment('CURRENT_PROJECT');
   const commitMessage = flags.message;
 
   if (!currentProject) {

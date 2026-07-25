@@ -3,15 +3,15 @@ import path from 'path';
 
 import { VERSION } from './constants.ts';
 
-let lintLogPath = null; // Set via --log-path CLI arg — dual-write execution trace
+const lintOutputState: { logPath: string | null } = { logPath: null }; // Set via --log-path CLI arg — dual-write execution trace
 
-function setLintLogPath(logPath) {
+function setLintLogPath(logPath: any) {
   if (!logPath) return;
   fs.mkdirSync(path.dirname(logPath), { recursive: true });
-  lintLogPath = logPath;
+  lintOutputState.logPath = logPath;
 }
 
-function log(level, msg, data = null) {
+function log(level: any, msg: any, data: any = null) {
   const entry = {
     ts: new Date().toISOString(),
     level,
@@ -20,8 +20,8 @@ function log(level, msg, data = null) {
     ...(data !== null && { data }),
   };
   console.error(JSON.stringify(entry));
-  if (lintLogPath) {
-    try { fs.appendFileSync(lintLogPath, `${JSON.stringify(entry)}\n`); } catch (_error) { /* non-critical */ }
+  if (lintOutputState.logPath) {
+    try { fs.appendFileSync(lintOutputState.logPath, `${JSON.stringify(entry)}\n`); } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */ /* non-critical */ }
   }
 }
 
@@ -42,6 +42,8 @@ Optional:
   --project <name>        Project name for report metadata
   --output <path>         Write JSON report to file (default: stdout)
   --changed-files <list>  Comma-separated list of changed files (repo-relative)
+  --include-debt          Include approved, unexpired debt findings in structured output
+  --include-experimental  Run and disclose experimental tools without making findings blocking
   --help                  Show this help
 
 Tiers:
@@ -53,13 +55,13 @@ Examples:
   `);
 }
 
-function writeReport(report, outputPath = null) {
+function writeReport(report: any, outputPath: any = null) {
   const json = `${JSON.stringify(report, null, 2)}\n`;
 
   if (outputPath) {
     fs.writeFileSync(outputPath, json);
     log('OK', `Report written to ${outputPath}`);
-    log('OK', `Summary: ${report.summary.total_errors} errors, ${report.summary.total_warnings} warnings, ${report.summary.total_blocking} blocking, ${report.summary.total_baselined} baselined `
+    log('OK', `Summary: ${report.summary.total_errors} errors, ${report.summary.total_warnings} warnings, ${report.summary.total_blocking} blocking, ${report.summary.total_baselined} baselined, ${report.summary.total_experimental} experimental `
       + `(${report.summary.tools_ok} ok, ${report.summary.tools_not_applicable} not applicable, ${report.summary.tools_failed} failed)`);
   } else {
     process.stdout.write(json);

@@ -1,6 +1,7 @@
 {
   "schema_version": "telemetry_envelope.v1",
   "event_id": "evt_56ae1bf7f72dc98b491dcb00aa90eb3867dfa530cf9f42c5d07863f89ecab98e",
+  "source_event_id": "observer/tool-1/started",
   "type": "agent.tool.started",
   "occurred_at": "2026-07-20T00:00:00.000Z",
   "emitted_at": "2026-07-20T00:00:00.010Z",
@@ -11,6 +12,7 @@
   "run_id": "run-1",
   "work_id": "module-a",
   "work_type": "module",
+  "module_id": "module-a",
   "gate_id": null,
   "attempt": 1,
   "dispatch_id": "dispatch-1",
@@ -18,7 +20,11 @@
   "agent_id": "forge-1",
   "model_call_id": "model-1",
   "tool_call_id": "tool-1",
+  "session_key": "session-1",
+  "content_completeness": "full",
   "source": "openclaw",
   "producer": "agent-observer",
+  "authority_class": "observer_authority",
+  "extensions": { "evidence_provenance": "synthetic" },
   "tool_name": "read"
 }

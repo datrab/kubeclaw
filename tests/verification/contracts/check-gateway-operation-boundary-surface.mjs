@@ -1,31 +1,14 @@
+import { parseSourceRootArgs, walkFiles } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-gateway-operation-boundary-surface' });
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
 
-function walk(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const abs = path.join(dir, entry.name);
-    if (entry.isDirectory()) walk(abs, out);
-    else if (entry.isFile() && /\.(?:js|mjs|cjs|ts)$/.test(entry.name)) out.push(abs);
-  }
-  return out;
-}
+const walk = (dir) => walkFiles(dir, (file) => /\.(?:js|mjs|cjs|ts)$/.test(file));
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const gatewayOwner = path.join(sourceRoot, 'skills/common/pipeline/integrations/gateway.ts');
 const gatewayOwnerTests = new Set([
   'skills/common/pipeline/integrations/gateway.test.mjs',

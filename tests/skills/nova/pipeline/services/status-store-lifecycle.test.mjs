@@ -71,6 +71,38 @@ function moduleStartedProposal() {
   };
 }
 
+function appendFailedAttemptProgression(config, { finalFailCount, finalSummary }) {
+  const dir = 'alpha';
+  const baseStatus = {
+    module_id: 'alpha',
+    title: 'Alpha',
+    status: 'IN_PROGRESS',
+    current_phase: 'forge',
+    fail_count: 0,
+  };
+  appendModuleLifecycleEvent(config, dir, baseStatus, {
+    eventType: 'module_attempt.started', oldStatus: 'PENDING', newStatus: 'IN_PROGRESS', now: '2026-06-03T06:00:00.000Z',
+  });
+  appendModuleLifecycleEvent(config, dir, { ...baseStatus, status: 'FAIL', completion_summary: 'first attempt failed' }, {
+    eventType: 'module_attempt.failed', oldStatus: 'IN_PROGRESS', newStatus: 'FAIL', now: '2026-06-03T06:01:00.000Z',
+  });
+  appendModuleLifecycleEvent(config, dir, { ...baseStatus, status: 'READY_FOR_TESTING', fail_count: 1 }, {
+    eventType: 'module_attempt.ready_for_testing', oldStatus: 'FAIL', newStatus: 'READY_FOR_TESTING', now: '2026-06-03T06:02:00.000Z',
+  });
+  appendModuleLifecycleEvent(config, dir, {
+    ...baseStatus,
+    status: 'FAIL',
+    ...(finalFailCount === undefined ? {} : { fail_count: finalFailCount }),
+    completion_summary: finalSummary,
+  }, {
+    eventType: 'module_attempt.failed', oldStatus: 'READY_FOR_TESTING', newStatus: 'FAIL', now: '2026-06-03T06:03:00.000Z',
+  });
+  return {
+    failedEvents: readLifecycleEvents(config).filter((event) => event.type === 'module_attempt.failed'),
+    readModels: loadLifecycleReadModels(config),
+  };
+}
+
 test('idempotent lifecycle retry catches read models up from canonical events', () => {
   const config = makeConfig();
   const proposal = moduleStartedProposal();
@@ -274,55 +306,9 @@ test('gate wait refs reject overlapping retry waits while an earlier wait is ope
 
 test('failed module attempts keep the current attempt when fail_count has not advanced', () => {
   const config = makeConfig();
-  const dir = 'alpha';
-  const baseStatus = {
-    module_id: 'alpha',
-    title: 'Alpha',
-    status: 'IN_PROGRESS',
-    current_phase: 'forge',
-    fail_count: 0,
-  };
-
-  appendModuleLifecycleEvent(config, dir, baseStatus, {
-    eventType: 'module_attempt.started',
-    oldStatus: 'PENDING',
-    newStatus: 'IN_PROGRESS',
-    now: '2026-06-03T06:00:00.000Z',
+  const { failedEvents, readModels } = appendFailedAttemptProgression(config, {
+    finalSummary: 'second attempt failed',
   });
-  appendModuleLifecycleEvent(config, dir, {
-    ...baseStatus,
-    status: 'FAIL',
-    completion_summary: 'first attempt failed',
-  }, {
-    eventType: 'module_attempt.failed',
-    oldStatus: 'IN_PROGRESS',
-    newStatus: 'FAIL',
-    now: '2026-06-03T06:01:00.000Z',
-  });
-  appendModuleLifecycleEvent(config, dir, {
-    ...baseStatus,
-    status: 'READY_FOR_TESTING',
-    fail_count: 1,
-  }, {
-    eventType: 'module_attempt.ready_for_testing',
-    oldStatus: 'FAIL',
-    newStatus: 'READY_FOR_TESTING',
-    now: '2026-06-03T06:02:00.000Z',
-  });
-
-  appendModuleLifecycleEvent(config, dir, {
-    ...baseStatus,
-    status: 'FAIL',
-    completion_summary: 'second attempt failed',
-  }, {
-    eventType: 'module_attempt.failed',
-    oldStatus: 'READY_FOR_TESTING',
-    newStatus: 'FAIL',
-    now: '2026-06-03T06:03:00.000Z',
-  });
-
-  const failedEvents = readLifecycleEvents(config).filter((event) => event.type === 'module_attempt.failed');
-  const readModels = loadLifecycleReadModels(config);
 
   assert.equal(failedEvents.length, 2);
   assert.equal(failedEvents[1].refs.attempt, 2);
@@ -689,55 +675,10 @@ test('failed gate completion is terminal in lifecycle read model', () => {
 
 test('failed module attempts honor an advanced fail_count for direct terminal updates', () => {
   const config = makeConfig();
-  const dir = 'alpha';
-  const baseStatus = {
-    module_id: 'alpha',
-    title: 'Alpha',
-    status: 'IN_PROGRESS',
-    current_phase: 'forge',
-    fail_count: 0,
-  };
-
-  appendModuleLifecycleEvent(config, dir, baseStatus, {
-    eventType: 'module_attempt.started',
-    oldStatus: 'PENDING',
-    newStatus: 'IN_PROGRESS',
-    now: '2026-06-03T06:00:00.000Z',
+  const { failedEvents, readModels } = appendFailedAttemptProgression(config, {
+    finalFailCount: 3,
+    finalSummary: 'third attempt failed',
   });
-  appendModuleLifecycleEvent(config, dir, {
-    ...baseStatus,
-    status: 'FAIL',
-    completion_summary: 'first attempt failed',
-  }, {
-    eventType: 'module_attempt.failed',
-    oldStatus: 'IN_PROGRESS',
-    newStatus: 'FAIL',
-    now: '2026-06-03T06:01:00.000Z',
-  });
-  appendModuleLifecycleEvent(config, dir, {
-    ...baseStatus,
-    status: 'READY_FOR_TESTING',
-    fail_count: 1,
-  }, {
-    eventType: 'module_attempt.ready_for_testing',
-    oldStatus: 'FAIL',
-    newStatus: 'READY_FOR_TESTING',
-    now: '2026-06-03T06:02:00.000Z',
-  });
-  appendModuleLifecycleEvent(config, dir, {
-    ...baseStatus,
-    status: 'FAIL',
-    fail_count: 3,
-    completion_summary: 'third attempt failed',
-  }, {
-    eventType: 'module_attempt.failed',
-    oldStatus: 'READY_FOR_TESTING',
-    newStatus: 'FAIL',
-    now: '2026-06-03T06:03:00.000Z',
-  });
-
-  const failedEvents = readLifecycleEvents(config).filter((event) => event.type === 'module_attempt.failed');
-  const readModels = loadLifecycleReadModels(config);
 
   assert.equal(failedEvents.length, 2);
   assert.equal(failedEvents[1].refs.attempt, 3);

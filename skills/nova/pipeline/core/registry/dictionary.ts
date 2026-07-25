@@ -14,3 +14,12 @@ export function createRegistryDictionary(): AnyRecord {
 export function isReservedRegistryKey(key: string) {
   return RESERVED_REGISTRY_KEYS.has(key);
 }
+
+export function pushRegistryError(
+  errors: Array<{ code: string; message: string; [key: string]: any }>,
+  code: string,
+  message: string,
+  details: AnyRecord = {},
+): void {
+  errors.push({ code, message, ...details });
+}

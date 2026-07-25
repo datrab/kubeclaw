@@ -42,6 +42,7 @@ import {
   restoreCheckpointProjectSource,
   startCheckpointCaptureController,
 } from './checkpoints.mjs';
+import { rateLimitCooldownDetails } from './rate-limit-output.mjs';
 
 const OPENCLAW_CONFIG_PATH = '/home/node/.openclaw/openclaw.json';
 const RESULT_SCHEMA_VERSION = 'real_pipeline_e2e_result.v1';
@@ -53,8 +54,6 @@ const DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS = Number(
     || 3 * 60 * 60 * 1000,
 );
 const DEFAULT_RATE_LIMIT_MAX_PAUSES = Number(process.env.REAL_E2E_RATE_LIMIT_MAX_PAUSES || 5);
-const RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN = /\b(rate[- ]limit(?:ed)?|usage limit|subscription usage limit)\b[\s\S]{0,240}\b(cooldown|sleeping|resume at|retrying after cooldown|authorized_rate_limit_cooldown)\b/i;
-const RATE_LIMIT_RESUME_AT_PATTERN = /\bresume at\s+([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+Z)\b/i;
 
 function parseArgs(argv) {
   const args = {
@@ -876,21 +875,6 @@ async function waitForPipelineRunLockLeaseExpiry(workspace, { bufferMs = 250, ma
   }
   if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
   return { waited_ms: waitMs, reason: 'lease_expired', lease_expires_at: lock.lease_expires_at };
-}
-
-function rateLimitCooldownDetails(output) {
-  if (!output) return null;
-  const text = [
-    output.stdout?.tail,
-    output.stderr?.tail,
-    ...(output.stdout?.fatal_lines || []),
-    ...(output.stderr?.fatal_lines || []),
-  ].filter(Boolean).join('\n');
-  if (!RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN.test(text)) return null;
-  return {
-    resumeAt: text.match(RATE_LIMIT_RESUME_AT_PATTERN)?.[1] || null,
-    evidenceLength: text.length,
-  };
 }
 
 export function busterSimulatorTimeoutMsForPipeline({

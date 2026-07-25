@@ -344,15 +344,13 @@ function parseArgs(raw) {
     branchPrefix: 'clawpatch/light',
     worktreeDir: '',
     statusFile: '',
-    clawpatchStateDir: process.env.CLAWPATCH_STATE_DIR || '',
-    clawpatchExtraStateDirs: (process.env.CLAWPATCH_EXTRA_STATE_DIRS || '')
-      .split(path.delimiter)
-      .filter(Boolean),
-    clawpatchRootSubdir: process.env.CLAWPATCH_ROOT_SUBDIR || '',
-    validationCommand: process.env.PIPELINE_LIGHT_VALIDATE || '',
-    notifyCommand: process.env.PIPELINE_LIGHT_NOTIFY_CMD || '',
-    autoreviewCommand: process.env.AUTOREVIEW_CMD || DEFAULT_AUTOREVIEW,
-    codexBin: process.env.CODEX_BIN || 'codex',
+    clawpatchStateDir: '',
+    clawpatchExtraStateDirs: [],
+    clawpatchRootSubdir: '',
+    validationCommand: '',
+    notifyCommand: '',
+    autoreviewCommand: DEFAULT_AUTOREVIEW,
+    codexBin: 'codex',
     maxFixCycles: 3,
     maxChangedFiles: 30,
     maxNetAddedLines: 250,
@@ -522,7 +520,7 @@ function clawpatchPatchAttemptSummary(findingId) {
 function readJsonFile(filePath) {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (_error) {
+  } catch (_error) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
     return null;
   }
 }

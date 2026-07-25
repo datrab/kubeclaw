@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-module-runner-slice-surface' });
 import fs from 'fs';
@@ -20,16 +21,8 @@ function contractRunConfig(runId, prefix) {
   };
 }
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const moduleRunnerPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner.ts');
 const sharedPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-shared.ts');
 const forgePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-forge.ts');
@@ -45,13 +38,26 @@ const moduleRunnerCompletionsPath = path.join(sourceRoot, 'skills/nova/pipeline/
 const terminalResultsPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/terminal-results.ts');
 const contextPath = path.join(sourceRoot, 'skills/nova/pipeline/core/context.ts');
 const registryPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry.ts');
+const registryAccessPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry-access.ts');
 const registryBuiltinsPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry/builtins.ts');
 const constantsPath = path.join(sourceRoot, 'skills/nova/pipeline/core/constants.ts');
 const pluginContextRuntimePath = path.join(sourceRoot, 'skills/nova/pipeline/core/plugin-context-runtime.ts');
 
 const moduleRunnerSource = fs.readFileSync(moduleRunnerPath, 'utf8');
 const sharedSource = fs.readFileSync(sharedPath, 'utf8');
-const forgeSource = fs.readFileSync(forgePath, 'utf8');
+const helperSurfaceSource = [
+  sharedSource,
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-runtime.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-buster-input.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-plugin-contracts.ts'), 'utf8'),
+].join('\n');
+const forgeSource = [
+  fs.readFileSync(forgePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-forge-setup.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-forge-worker.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-forge-success.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-forge-failures.ts'), 'utf8'),
+].join('\n');
 const prebusterSource = fs.readFileSync(prebusterPath, 'utf8');
 const attemptSource = fs.readFileSync(attemptPath, 'utf8');
 const stateMachineSource = fs.readFileSync(stateMachinePath, 'utf8');
@@ -59,12 +65,21 @@ const preflightSource = fs.readFileSync(preflightPath, 'utf8');
 const orchestrationSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), 'utf8');
 const busterPhaseSource = fs.readFileSync(busterPhasePath, 'utf8');
 const busterDispatchSource = fs.readFileSync(busterDispatchPath, 'utf8');
-const busterPollFailureSource = fs.readFileSync(busterPollFailurePath, 'utf8');
-const busterTerminalFailureSource = fs.readFileSync(busterTerminalFailurePath, 'utf8');
+const busterPollFailureSource = [
+  fs.readFileSync(busterPollFailurePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts'), 'utf8'),
+].join('\n');
+const busterTerminalFailureSource = [
+  fs.readFileSync(busterTerminalFailurePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts'), 'utf8'),
+].join('\n');
 const moduleRunnerCompletionsSource = fs.readFileSync(moduleRunnerCompletionsPath, 'utf8');
 const terminalResultsSource = fs.readFileSync(terminalResultsPath, 'utf8');
 const contextSource = fs.readFileSync(contextPath, 'utf8');
 const registrySource = fs.readFileSync(registryPath, 'utf8');
+const registryAccessSource = fs.readFileSync(registryAccessPath, 'utf8');
 const registryBuiltinsSource = fs.readFileSync(registryBuiltinsPath, 'utf8');
 const registryRuntimeSource = `${registrySource}\n${registryBuiltinsSource}`;
 const constantsSource = fs.readFileSync(constantsPath, 'utf8');
@@ -79,7 +94,7 @@ for (const marker of [
   'export function normalizeModuleBusterWorkerResult(',
   'export function emitTerminalModuleFailTelemetry(',
 ]) {
-  assert.equal(sharedSource.includes(marker), true, `module-runner shared helper must export ${marker}`);
+  assert.equal(helperSurfaceSource.includes(marker), true, `module-runner helper surface must export ${marker}`);
 }
 
 for (const marker of [
@@ -114,11 +129,11 @@ assert.equal(attemptSource.includes('moduleTerminalOutcomeForResult('), false, '
 assert.equal(attemptSource.includes('assertPipelineStepResult(terminal.result)'), true, 'module-runner attempt boundary must fail closed on non-typed terminal results');
 assert.equal(sharedSource.includes('export function buildModuleStepResult('), false, 'shared module-runner helper must delete buildModuleStepResult compatibility reconstruction');
 assert.equal(attemptSource.includes('resolveResultAttempt(rawResult)'), false, 'module terminal fallback projection must be deleted');
-assert.equal(stateMachineSource.includes('await runModuleForgePhase({'), true, 'state machine should delegate Forge phase execution through the extracted helper');
-assert.equal(stateMachineSource.includes('await finalizeForgeOnlyPass({'), true, 'state machine should delegate forge-only pass promotion through the extracted helper');
+assert.equal(stateMachineSource.includes('return runModuleForgePhase(input);'), true, 'state machine should delegate Forge phase execution through the extracted helper');
+assert.equal(stateMachineSource.includes('await finalizeForgeOnlyPass(input)'), true, 'state machine should delegate forge-only pass promotion through the extracted helper');
 assert.equal(stateMachineSource.includes('await prepareModuleForBuster({'), true, 'state machine should delegate pre-Buster preparation through the extracted helper');
 assert.equal(stateMachineSource.includes('await runModuleBusterPhase({'), true, 'state machine should delegate Buster phase execution through the extracted helper');
-assert.equal(forgeSource.includes('await runModulePreflight({'), true, 'Forge phase should delegate preflight validation through the extracted helper');
+assert.equal(forgeSource.includes('await runModulePreflight(context)'), true, 'Forge phase should delegate preflight validation through the extracted helper');
 assert.equal(forgeSource.includes('{ softFail: true }'), false, 'Forge-only PASS must not use soft-fail Git publication');
 assert.equal(forgeSource.includes('Forge-only module cannot PASS without durable Git persistence'), true, 'Forge-only thrown Git publication failures must stop PASS');
 assert.equal(forgeSource.includes('Forge-only module cannot PASS without a durable Git commit'), true, 'Forge-only non-committed Git results must stop PASS');
@@ -171,7 +186,7 @@ assert.equal(constantsSource.includes('dispatch.worker_backend'), false, 'capabi
 assert.equal(sharedSource.includes('workerBackend'), false, 'module runner effects must not provide legacy workerBackend alias');
 assert.equal(registrySource.includes('export function resolveGateTypeOwner('), false, 'registry must not keep unused optional gate-owner decision lookup');
 assert.equal(registrySource.includes('export function resolveStageHandler('), false, 'registry must not keep optional stage-handler decision lookup');
-assert.equal(registrySource.includes('Absence means no observer/sink is\n// registered'), true, 'registry must document optional hook listener absence semantics');
+assert.equal(registryAccessSource.includes('Absence means no observer/sink is\n// registered'), true, 'registry access must document optional hook listener absence semantics');
 assert.equal(fs.existsSync(pluginContextRuntimePath), false, 'PluginContext must not keep the hidden WeakMap runtime binding helper');
 assert.equal(contextSource.includes('bindPluginContextRuntime'), false, 'PluginContext must not bind runtime through hidden compatibility helpers');
 assert.equal(registryRuntimeSource.includes('getRuntimeConfigFromPluginContext'), false, 'built-in registry must use explicit coreRuntime instead of hidden context getters');
@@ -188,6 +203,8 @@ assert.equal(moduleRunnerSource.includes('function normalizeModuleForgeWorkerRes
 assert.equal(moduleRunnerSource.includes('function normalizeModuleBusterWorkerResult('), false, 'module-runner must not keep a local Buster worker-result normalizer');
 
 const sharedMod = await import(pathToFileURL(sharedPath).href);
+const busterInputMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-buster-input.ts')).href);
+const pluginContractsMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-plugin-contracts.ts')).href);
 const forgeMod = await import(pathToFileURL(forgePath).href);
 const prebusterMod = await import(pathToFileURL(prebusterPath).href);
 const attemptMod = await import(pathToFileURL(attemptPath).href);
@@ -200,10 +217,10 @@ const registryMod = await import(pathToFileURL(registryPath).href);
 assert.equal(typeof sharedMod.currentAttemptNumber, 'function', 'shared module-runner helper should expose currentAttemptNumber');
 assert.equal(typeof sharedMod.buildModuleForgeRunInput, 'function', 'shared module-runner helper should expose buildModuleForgeRunInput');
 assert.equal(typeof sharedMod.buildModuleValidatorRunInput, 'function', 'shared module-runner helper should expose buildModuleValidatorRunInput');
-assert.equal(typeof sharedMod.buildModuleBusterRunInput, 'function', 'shared module-runner helper should expose buildModuleBusterRunInput');
-assert.equal(typeof sharedMod.buildModuleWorkerPluginInvocation, 'function', 'shared module-runner helper should expose buildModuleWorkerPluginInvocation');
-assert.equal(typeof sharedMod.buildModuleValidatorPluginInvocation, 'function', 'shared module-runner helper should expose buildModuleValidatorPluginInvocation');
-assert.equal(typeof sharedMod.normalizeModuleBusterWorkerResult, 'function', 'shared module-runner helper should expose normalizeModuleBusterWorkerResult');
+assert.equal(typeof busterInputMod.buildModuleBusterRunInput, 'function', 'Buster input owner should expose buildModuleBusterRunInput');
+assert.equal(typeof pluginContractsMod.buildModuleWorkerPluginInvocation, 'function', 'plugin contract owner should expose buildModuleWorkerPluginInvocation');
+assert.equal(typeof pluginContractsMod.buildModuleValidatorPluginInvocation, 'function', 'plugin contract owner should expose buildModuleValidatorPluginInvocation');
+assert.equal(typeof busterInputMod.normalizeModuleBusterWorkerResult, 'function', 'Buster input owner should expose normalizeModuleBusterWorkerResult');
 assert.equal(typeof forgeMod.runModuleForgePhase, 'function', 'forge helper should expose runModuleForgePhase');
 assert.equal(typeof forgeMod.finalizeForgeOnlyPass, 'function', 'forge helper should expose finalizeForgeOnlyPass');
 assert.equal(typeof prebusterMod.prepareModuleForBuster, 'function', 'pre-Buster helper should expose prepareModuleForBuster');

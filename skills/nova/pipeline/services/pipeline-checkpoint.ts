@@ -26,7 +26,7 @@ export function emitPipelineCheckpoint(config: AnyRecord = {}, point: string, de
         details: cloneSerializable(selectDefinedValue(() => (details), () => ({}))),
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     const message = error instanceof Error ? error.message : String(error);
     log('WARN', `Pipeline checkpoint '${normalizedPoint}' could not be recorded: ${message}`);
   }

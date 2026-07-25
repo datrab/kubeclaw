@@ -33,6 +33,8 @@ data:
 {{ .Files.Get "files/config/knip.json" | indent 4 }}
   jscpd.json: |
 {{ .Files.Get "files/config/jscpd.json" | indent 4 }}
+  jscpd-tests.json: |
+{{ .Files.Get "files/config/jscpd-tests.json" | indent 4 }}
   lint-baseline.json: |
 {{ .Files.Get "files/config/lint-baseline.json" | indent 4 }}
   lint-policy.json: |

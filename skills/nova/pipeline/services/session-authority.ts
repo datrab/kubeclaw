@@ -12,41 +12,41 @@ export const STRONG_ACTIVE_SESSION_IDENTITY_FIELDS = Object.freeze([
   'session_key',
 ]);
 
-export const OPTIONAL_ACTIVE_SESSION_IDENTITY_FIELDS = Object.freeze([
+const OPTIONAL_ACTIVE_SESSION_IDENTITY_FIELDS = Object.freeze([
   'gateway_label',
 ]);
 
-export const ACTIVE_SESSION_EVIDENCE_ROLES = Object.freeze({
+const ACTIVE_SESSION_EVIDENCE_ROLES = Object.freeze({
   LIFECYCLE_AUTHORITY: 'lifecycle_read_model_authority',
   CONFIRMED_DIAGNOSTIC_EVIDENCE: 'confirmed_diagnostic_evidence',
   DIAGNOSTIC_EVIDENCE: 'diagnostic_evidence',
   ABSENT: 'absent',
 });
 
-function normalizeText(value) {
+function normalizeText(value: any) {
   if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
   const normalized = String(value).trim();
   return normalized ? normalized : null;
 }
 
-function normalizeAttempt(value) {
+function normalizeAttempt(value: any) {
   if (typeof value === 'number' && Number.isFinite(value)) return normalizeText(value);
   return typeof value === 'string' ? normalizeText(value) : null;
 }
 
-function identityAttempt(identity = {}, defaults = {}) {
+function identityAttempt(identity: any = {}, defaults: any = {}) {
   return normalizeAttempt(selectDefinedValue(() => (identity?.attempt), () => (defaults?.attempt)));
 }
 
-function identityRuntime(identity = {}, defaults = {}) {
+function identityRuntime(identity: any = {}, defaults: any = {}) {
   return normalizeText(selectDefinedValue(() => (identity?.runtime), () => (defaults?.runtime)));
 }
 
-function identityModel(identity = {}, defaults = {}) {
+function identityModel(identity: any = {}, defaults: any = {}) {
   return normalizeText(selectDefinedValue(() => (identity?.model), () => (defaults?.model)));
 }
 
-function hasAnySessionEvidence(identity = {}) {
+function hasAnySessionEvidence(identity: any = {}) {
   if (selectTruthyValue(() => (!identity), () => (typeof identity !== 'object'))) return false;
   return [
     ...STRONG_ACTIVE_SESSION_IDENTITY_FIELDS,
@@ -56,10 +56,10 @@ function hasAnySessionEvidence(identity = {}) {
     'runtime',
     'model',
     'stream_log_path',
-  ].some((field) => normalizeText(identity[field]) !== null);
+  ].some((field: any) => normalizeText(identity[field]) !== null);
 }
 
-export function normalizeActiveSessionIdentity(identity = {}, defaults = {}) {
+export function normalizeActiveSessionIdentity(identity: any = {}, defaults: any = {}) {
   return {
     run_id: normalizeText(identity?.run_id),
     attempt: identityAttempt(identity, defaults),
@@ -73,26 +73,26 @@ export function normalizeActiveSessionIdentity(identity = {}, defaults = {}) {
   };
 }
 
-export function getMissingActiveSessionIdentityFields(identity = {}) {
+export function getMissingActiveSessionIdentityFields(identity: any = {}) {
   const normalized = normalizeActiveSessionIdentity(identity);
-  return STRONG_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field) => !normalized[field]);
+  return STRONG_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field: any) => !normalized[field]);
 }
 
-export function hasStrongActiveSessionIdentity(identity = {}) {
+export function hasStrongActiveSessionIdentity(identity: any = {}) {
   return getMissingActiveSessionIdentityFields(identity).length === 0;
 }
 
-export function buildActiveSessionConfirmation(expectedIdentity = {}, observedIdentity = {}) {
+export function buildActiveSessionConfirmation(expectedIdentity: any = {}, observedIdentity: any = {}) {
   const expected = normalizeActiveSessionIdentity(expectedIdentity);
   const observed = normalizeActiveSessionIdentity(observedIdentity);
   const missingExpected = getMissingActiveSessionIdentityFields(expected);
-  const missingObserved = STRONG_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field) => !observed[field]);
-  const mismatched = STRONG_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field) => (
+  const missingObserved = STRONG_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field: any) => !observed[field]);
+  const mismatched = STRONG_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field: any) => (
     expected[field]
       && observed[field]
       && expected[field] !== observed[field]
   ));
-  const optionalMismatched = OPTIONAL_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field) => (
+  const optionalMismatched = OPTIONAL_ACTIVE_SESSION_IDENTITY_FIELDS.filter((field: any) => (
     expected[field]
       && observed[field]
       && expected[field] !== observed[field]
@@ -114,7 +114,7 @@ export function buildActiveSessionConfirmation(expectedIdentity = {}, observedId
   };
 }
 
-function gatewayEvidenceConfirmed(gatewayEvidence) {
+function gatewayEvidenceConfirmed(gatewayEvidence: any) {
   return gatewayEvidence?.confirmed === true;
 }
 
@@ -124,7 +124,7 @@ export function buildActiveSessionAuthorityPolicy({
   gatewayEvidence = null,
   monitorEvidence = null,
   requireGatewayConfirmation = false,
-} = {}) {
+}: any = {}) {
   const lifecycle = normalizeActiveSessionIdentity(selectDefinedValue(() => (lifecycleActiveSession), () => ({})));
   const evidence = normalizeActiveSessionIdentity(selectDefinedValue(() => (evidenceActiveSession), () => ({})));
   const hasLifecycleEvidence = hasStrongActiveSessionIdentity(lifecycleActiveSession);

@@ -15,7 +15,7 @@ import {
   extractReviewIssues,
 } from './review-gate-output.ts';
 
-export const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
+const REVIEW_GATE_FAILURE_CLASSES = Object.freeze([
   'config_invalid',
   'invalid_contract',
   'timeout',
@@ -48,23 +48,23 @@ const REVIEW_GATE_TYPE = 'review';
 const REVIEW_GATE_FAILED_STATUS = 'failed';
 const REVIEW_GATE_ZERO_FIX_CYCLES = 0;
 
-function selectPresentValue(...values) {
-  return values.find((value) => value !== undefined && value !== null && value !== '');
+function selectPresentValue(...values: any) {
+  return values.find((value: any) => value !== undefined && value !== null && value !== '');
 }
 
-function normalizedFailureClass(result = {}) {
+function normalizedFailureClass(result: any = {}) {
   return typeof result?.failure_class === 'string' ? result.failure_class.trim().toLowerCase() : '';
 }
 
-function gateType(gate) {
+function gateType(gate: any) {
   return selectPresentValue(gate?.type, REVIEW_GATE_TYPE);
 }
 
-function reviewReason(result, fallback) {
+function reviewReason(result: any, fallback: any) {
   return selectPresentValue(result?.reason, fallback);
 }
 
-function buildReviewControlSummary(gateId, result = {}) {
+function buildReviewControlSummary(gateId: any, result: any = {}) {
   if (isReviewGatePassResult(result)) {
     return `Review gate '${gateId}' passed`;
   }
@@ -80,7 +80,7 @@ function buildReviewControlSummary(gateId, result = {}) {
   return reviewReason(result, `Review gate '${gateId}' failed`);
 }
 
-function requireReviewFailureClass(result = {}, gateId = '') {
+function requireReviewFailureClass(result: any = {}, gateId: any = '') {
   if (isReviewGatePassResult(result)) return null;
   const failureClass = normalizedFailureClass(result);
   if (!failureClass) {
@@ -92,37 +92,37 @@ function requireReviewFailureClass(result = {}, gateId = '') {
   return failureClass;
 }
 
-function reviewGateDecisionForResult(result = {}, failureClass = null) {
+function reviewGateDecisionForResult(result: any = {}, failureClass: any = null) {
   if (isReviewGatePassResult(result)) {
     return { nextAction: GATE_CONTROL_ACTIONS.PASS, issueType: undefined, outcomeClass: 'passed' };
   }
-  const decision = REVIEW_GATE_FAILURE_DECISIONS[failureClass];
+  const decision = REVIEW_GATE_FAILURE_DECISIONS[failureClass as keyof typeof REVIEW_GATE_FAILURE_DECISIONS];
   if (!decision) {
     throw new Error(`Review failure_class '${failureClass}' does not have a registered decision mapping`);
   }
   return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, ...decision };
 }
 
-function canonicalReviewGateRunStatus(result = {}) {
+function canonicalReviewGateRunStatus(result: any = {}) {
   return isReviewGatePassResult(result) ? 'PASS' : 'FAIL';
 }
 
-function reviewGateAttemptAuthority(result = {}, opts = {}) {
+function reviewGateAttemptAuthority(result: any = {}, opts: any = {}) {
   return Number(selectDefinedValue(() => (result?.attempt), () => (opts?.input?.ids?.attempt)));
 }
 
-function reviewGateIdAuthority(result = {}, gateId) {
+function reviewGateIdAuthority(result: any = {}, gateId: any) {
   return selectTruthyValue(() => (result?.gate), () => (gateId));
 }
 
-function reviewAttemptAuthority(result = {}, attempt) {
+function reviewAttemptAuthority(result: any = {}, attempt: any) {
   return selectDefinedValue(() => (result?.review_attempt), () => (attempt));
 }
 
-function buildReviewControlFindings(result = {}, gateId, issues = [], failureClass = null) {
+function buildReviewControlFindings(result: any = {}, gateId: any, issues: any = [], failureClass: any = null) {
   if (issues.length > 0) return buildReviewGateFindings(issues);
   if (isReviewGatePassResult(result)) return [];
-  const finding = REVIEW_GATE_FAILURE_FINDINGS[failureClass];
+  const finding = REVIEW_GATE_FAILURE_FINDINGS[failureClass as keyof typeof REVIEW_GATE_FAILURE_FINDINGS];
   if (!finding) {
     throw new Error(`Review failure_class '${failureClass}' does not have a registered finding mapping`);
   }
@@ -137,11 +137,11 @@ function buildReviewControlFindings(result = {}, gateId, issues = [], failureCla
   }];
 }
 
-function isReviewGatePassResult(result = {}) {
+function isReviewGatePassResult(result: any = {}) {
   return result?.outcome_class === 'passed';
 }
 
-export function buildReviewGateControlResult(config, gateId, gate, result = {}, opts = {}) {
+export function buildReviewGateControlResult(config: any, gateId: any, gate: any, result: any = {}, opts: any = {}) {
   const failureClass = requireReviewFailureClass(result, gateId);
   const decision = reviewGateDecisionForResult(result, failureClass);
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(config)), () => (config?._runId))), () => (config?.run_id))), () => (null));
@@ -194,10 +194,10 @@ export function buildReviewGateControlResult(config, gateId, gate, result = {}, 
   });
 }
 
-export function isReviewGateControlResult(result) {
+function isReviewGateControlResult(result: any) {
   return isTypedGateControlResult(result, 'review');
 }
 
-export function coerceReviewGateControlResult(config, gateId, gate, result) {
+export function coerceReviewGateControlResult(config: any, gateId: any, gate: any, result: any) {
   return coerceTypedGateControlResult(result, { producerType: 'review' });
 }

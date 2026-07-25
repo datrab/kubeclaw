@@ -8,13 +8,9 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // DELETE_LEGACY: legacy perf.output_path authority remains rejected, and
 // enforced thresholds fail when requested Lighthouse categories are missing.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFile } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import {
   createSuiteVerdict,
@@ -24,6 +20,14 @@ import {
 } from '../services/verdict-schema.ts';
 import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import {
+  createSuiteLog,
+  suiteErrorMessage as errorMessage,
+  suiteNonEmptyString as nonEmptyString,
+  suiteObject as objectRecord,
+  suiteObjectOrEmpty as objectRecordOrEmpty,
+} from './support.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;
@@ -50,6 +54,18 @@ interface PerfReportPaths {
   finalPath: string;
 }
 
+interface PerfSettings extends PerfReportPaths {
+  url: string;
+  thresholds: AnyRecord | null;
+  timeout: number;
+}
+
+interface PerfEvaluation {
+  findings: Finding[];
+  checksTotal: number;
+  checksFailed: number;
+}
+
 const DEFAULTS = {
   static_port: 9999,
   server_port: 3000,
@@ -59,7 +75,7 @@ const DEFAULTS = {
 
 const execFileAsync = promisify(execFile) as any;
 
-const DEFAULT_RESULTS_DIR = process.env.BUSTER_RESULTS_DIR ?? '/home/builder/.openclaw/results';
+const DEFAULT_RESULTS_DIR = readBusterEnvironment('BUSTER_RESULTS_DIR') ?? '/home/builder/.openclaw/results';
 const CATEGORY_NAMES: Record<string, string> = {
   performance: 'Performance',
   accessibility: 'Accessibility',
@@ -67,24 +83,8 @@ const CATEGORY_NAMES: Record<string, string> = {
   seo: 'SEO',
 };
 
-let _logSink: LogSink | null = null;
-function log(msg: string): void {
-  console.log(`[SUITE] [PERF] ${msg}`);
-  if (_logSink) _logSink({ suite: 'perf', msg });
-}
-
-function objectRecord(value: unknown): AnyRecord | null {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
-}
-
-function nonEmptyString(value: unknown): string | null {
-  return typeof value === 'string' && value.trim() ? value : null;
-}
-
-function errorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  return error == null ? 'missing_error_detail' : String(error);
-}
+const perfSuiteState: { logSink: LogSink | null } = { logSink: null };
+const log = createSuiteLog('perf', 'PERF', (entry) => perfSuiteState.logSink?.(entry));
 
 function safeArtifactSegment(value: unknown, fallback = 'missing_artifact_segment'): string {
   const source = selectTruthyValue(() => (value == null), () => (value === '')) ? fallback : value;
@@ -103,7 +103,8 @@ function evidenceMode(enforced: boolean): 'enforced' | 'evidence-only' {
 }
 
 function lighthouseCategoryName(category: string): string {
-  if (Object.prototype.hasOwnProperty.call(CATEGORY_NAMES, category)) return CATEGORY_NAMES[category];
+  const configuredName = CATEGORY_NAMES[category];
+  if (configuredName !== undefined) return configuredName;
   return category;
 }
 
@@ -114,14 +115,16 @@ function scratchRunSegment(context: PerfContext): string {
 }
 
 export function resolvePerfReportPaths(context: PerfContext = {}, perfConf: AnyRecord = {}): PerfReportPaths {
-  const normalizedPerfConf = selectDefinedValue(() => (objectRecord(perfConf)), () => ({}));
+  const normalizedPerfConf = objectRecordOrEmpty(perfConf);
   if (Object.prototype.hasOwnProperty.call(normalizedPerfConf, 'output_path')) {
     throw new Error('perf.output_path is no longer supported; Lighthouse reports are written to the module test log directory');
   }
   const attempt = selectDefinedValue(() => (context.attempt), () => (1));
   const moduleSegment = safeArtifactSegment(context.moduleId);
-  const resultsRoot = selectDefinedValue(() => (nonEmptyString(context.resultsDir)), () => (DEFAULT_RESULTS_DIR));
-  const artifactDir = selectDefinedValue(() => (nonEmptyString(context.testsLogDir)), () => (path.join(resultsRoot, `${moduleSegment}-attempt-${attempt}`)));
+  const configuredResultsRoot = nonEmptyString(context.resultsDir);
+  const resultsRoot = configuredResultsRoot === null ? DEFAULT_RESULTS_DIR : configuredResultsRoot;
+  const configuredArtifactDir = nonEmptyString(context.testsLogDir);
+  const artifactDir = configuredArtifactDir === null ? path.join(resultsRoot, `${moduleSegment}-attempt-${attempt}`) : configuredArtifactDir;
   const runSegment = scratchRunSegment(context);
   const scratchPath = path.join(artifactDir, `.lighthouse-report-${moduleSegment}-attempt-${attempt}-${runSegment}.tmp.json`);
   const finalPath = path.join(artifactDir, `lighthouse-report-${moduleSegment}-attempt-${attempt}-${runSegment}.json`);
@@ -146,126 +149,128 @@ function toolErrorVerdict(startTime: number, message: string, rule = 'lighthouse
   });
 }
 
-export default async function perfSuite(context: PerfContext): Promise<SuiteVerdict> {
-  _logSink = selectTruthyValue(() => (context.logSink), () => (null));
-  const startTime = Date.now();
-  const serve = selectDefinedValue(() => (objectRecord(context.config?.serve)), () => ({}));
-  const perfConf = selectDefinedValue(() => (objectRecord(context.config?.perf)), () => ({}));
+function resolvePerfSettings(context: PerfContext): PerfSettings {
+  const serve = objectRecordOrEmpty(context.config?.serve);
+  const config = objectRecordOrEmpty(context.config?.perf);
+  const type = nonEmptyString(serve.type) ?? 'static';
+  const port = serve.port ?? (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
+  const urlPath = nonEmptyString(config.path) ?? DEFAULTS.path;
+  return {
+    ...resolvePerfReportPaths(context, config),
+    url: `http://localhost:${port}${urlPath}`,
+    thresholds: objectRecord(config.thresholds),
+    timeout: timeoutWithinSuite((config.timeout ?? DEFAULTS.timeout) * 1000, context),
+  };
+}
 
-  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
-  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
-  const urlPath = selectDefinedValue(() => (nonEmptyString(perfConf.path)), () => (DEFAULTS.path));
-  const url = `http://localhost:${port}${urlPath}`;
+async function runLighthouse(context: PerfContext, settings: PerfSettings): Promise<AnyRecord> {
+  for (const targetDir of new Set([path.dirname(settings.scratchPath), path.dirname(settings.finalPath)])) {
+    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+  }
+  fs.rmSync(settings.scratchPath, { force: true });
+  const args = [
+    settings.url,
+    '--output', 'json',
+    '--output-path', settings.scratchPath,
+    '--chrome-flags=--headless --no-sandbox --disable-setuid-sandbox --disable-gpu',
+    '--only-categories=performance,accessibility,best-practices,seo',
+    '--quiet',
+  ];
+  await execFileAsync('lighthouse', args, {
+    encoding: 'utf8',
+    timeout: settings.timeout,
+    stdio: ['pipe', 'pipe', 'pipe'],
+    env: buildSubprocessEnv(),
+    signal: context.suiteAbortSignal,
+  });
+  if (!fs.existsSync(settings.scratchPath)) throw new Error(`Lighthouse report not found at ${settings.scratchPath}`);
+  const report = JSON.parse(fs.readFileSync(settings.scratchPath, 'utf8'));
+  fs.renameSync(settings.scratchPath, settings.finalPath);
+  return report;
+}
 
-  const thresholds = objectRecord(perfConf.thresholds);
-  const enforced = thresholds !== null;
+function extractScores(report: AnyRecord): Record<string, number> {
+  const scores: Record<string, number> = {};
+  for (const [key, value] of Object.entries(objectRecordOrEmpty(report.categories))) {
+    scores[key] = Math.round(((value as AnyRecord).score ?? 0) * 100);
+  }
+  return scores;
+}
+
+function evaluateEnforcedScores(scores: Record<string, number>, thresholds: AnyRecord): PerfEvaluation {
+  const findings: Finding[] = [];
+  let checksFailed = 0;
+  for (const [category, rawThreshold] of Object.entries(thresholds)) {
+    const threshold = Number(rawThreshold);
+    const score = scores[category];
+    const name = lighthouseCategoryName(category);
+    if (score === undefined) {
+      checksFailed += 1;
+      findings.push(createFinding(SEVERITY.SERIOUS, `${name}: Lighthouse category missing from report; cannot enforce threshold ${threshold}`, { rule: `lighthouse-${category}-missing` }));
+    } else if (score < threshold) {
+      checksFailed += 1;
+      findings.push(createFinding(scoreSeverity(score, threshold), `${name}: score ${score} below threshold ${threshold}`, { rule: `lighthouse-${category}` }));
+    }
+  }
+  return { findings, checksTotal: Object.keys(thresholds).length, checksFailed };
+}
+
+function evaluateInformationalScores(scores: Record<string, number>): PerfEvaluation {
+  const findings: Finding[] = [];
+  for (const [category, score] of Object.entries(scores)) {
+    const name = lighthouseCategoryName(category);
+    if (score < 50) findings.push(createFinding(SEVERITY.MODERATE, `${name}: score ${score} (low)`, { rule: `lighthouse-${category}` }));
+    else if (score < 70) findings.push(createFinding(SEVERITY.MINOR, `${name}: score ${score} (could improve)`, { rule: `lighthouse-${category}` }));
+  }
+  return { findings, checksTotal: Object.keys(scores).length, checksFailed: 0 };
+}
+
+function evaluateScores(scores: Record<string, number>, thresholds: AnyRecord | null): PerfEvaluation {
+  if (thresholds) return evaluateEnforcedScores(scores, thresholds);
+  return evaluateInformationalScores(scores);
+}
+
+function completedPerfVerdict(startTime: number, settings: PerfSettings, scores: Record<string, number>, evaluation: PerfEvaluation): SuiteVerdict {
+  const enforced = settings.thresholds !== null;
+  const checksPassed = evaluation.checksTotal - evaluation.checksFailed;
+  const status: SuiteStatus = enforced && evaluation.checksFailed > 0 ? STATUS.FAIL : STATUS.PASS;
+  const durationMs = Date.now() - startTime;
   const mode = evidenceMode(enforced);
-  const timeout = timeoutWithinSuite((selectDefinedValue(() => (perfConf.timeout), () => (DEFAULTS.timeout))) * 1000, context);
+  log(`${status === STATUS.PASS ? '✅' : '⚠️'} ${mode}: ${checksPassed}/${evaluation.checksTotal} (${durationMs}ms)`);
+  return createSuiteVerdict('perf', status, {
+    critical: false,
+    duration_ms: durationMs,
+    checks_total: evaluation.checksTotal,
+    checks_passed: checksPassed,
+    checks_failed: evaluation.checksFailed,
+    findings: evaluation.findings,
+    metadata: {
+      tool: 'Lighthouse CLI', url_tested: settings.url, scores, mode,
+      ...(enforced ? { thresholds: settings.thresholds } : {}),
+      report_path: settings.finalPath, scratch_report_path: settings.scratchPath,
+    },
+  });
+}
 
-  let reportPaths: PerfReportPaths;
+export default async function perfSuite(context: PerfContext): Promise<SuiteVerdict> {
+  perfSuiteState.logSink = typeof context.logSink === 'function' ? context.logSink : null;
+  const startTime = Date.now();
+  let settings: PerfSettings;
   try {
-    reportPaths = resolvePerfReportPaths(context, perfConf);
+    settings = resolvePerfSettings(context);
   } catch (error) {
     return toolErrorVerdict(startTime, errorMessage(error), 'path-boundary');
   }
-  const { scratchPath, finalPath } = reportPaths;
-
-  log(`Auditing ${url} (mode: ${mode}${enforced ? ', thresholds: ' + JSON.stringify(thresholds) : ''})`);
-
-  for (const targetDir of new Set([path.dirname(scratchPath), path.dirname(finalPath)])) {
-    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-  }
-  fs.rmSync(scratchPath, { force: true });
-
+  const mode = evidenceMode(settings.thresholds !== null);
+  log(`Auditing ${settings.url} (mode: ${mode}${settings.thresholds ? ', thresholds: ' + JSON.stringify(settings.thresholds) : ''})`);
   let report: AnyRecord;
   try {
-    const args = [
-      url,
-      '--output', 'json',
-      '--output-path', scratchPath,
-      '--chrome-flags=--headless --no-sandbox --disable-setuid-sandbox --disable-gpu',
-      '--only-categories=performance,accessibility,best-practices,seo',
-      '--quiet',
-    ];
-
-    await execFileAsync('lighthouse', args, {
-      encoding: 'utf8',
-      timeout,
-      stdio: ['pipe', 'pipe', 'pipe'],
-      env: buildSubprocessEnv(),
-      signal: context.suiteAbortSignal,
-    });
-
-    if (!fs.existsSync(scratchPath)) throw new Error(`Lighthouse report not found at ${scratchPath}`);
-    report = JSON.parse(fs.readFileSync(scratchPath, 'utf8'));
-    fs.renameSync(scratchPath, finalPath);
+    report = await runLighthouse(context, settings);
   } catch (error: any) {
     const message = error?.stderr ? String(error.stderr).slice(0, 500) : errorMessage(error);
     return toolErrorVerdict(startTime, message);
   }
-
-  const categories = selectDefinedValue(() => (objectRecord(report.categories)), () => ({}));
-  const scores: Record<string, number> = {};
-  for (const [key, cat] of Object.entries(categories)) {
-    const category = cat as AnyRecord;
-    scores[key] = Math.round((selectDefinedValue(() => (category.score), () => (0))) * 100);
-  }
-
+  const scores = extractScores(report);
   log(`Scores: ${Object.entries(scores).map(([key, value]) => `${key}=${value}`).join(', ')}`);
-
-  const findings: Finding[] = [];
-  let checksFailed = 0;
-  let checksTotal = 0;
-
-  if (enforced) {
-    for (const [category, rawThreshold] of Object.entries(thresholds)) {
-      const threshold = Number(rawThreshold);
-      const score = scores[category];
-      const name = lighthouseCategoryName(category);
-      checksTotal++;
-
-      if (score === undefined) {
-        checksFailed++;
-        findings.push(createFinding(SEVERITY.SERIOUS, `${name}: Lighthouse category missing from report; cannot enforce threshold ${threshold}`, { rule: `lighthouse-${category}-missing` }));
-        continue;
-      }
-
-      if (score < threshold) {
-        checksFailed++;
-        findings.push(createFinding(scoreSeverity(score, threshold), `${name}: score ${score} below threshold ${threshold}`, { rule: `lighthouse-${category}` }));
-      }
-    }
-  } else {
-    for (const [category, score] of Object.entries(scores)) {
-      checksTotal++;
-      const name = lighthouseCategoryName(category);
-      if (score < 50) findings.push(createFinding(SEVERITY.MODERATE, `${name}: score ${score} (low)`, { rule: `lighthouse-${category}` }));
-      else if (score < 70) findings.push(createFinding(SEVERITY.MINOR, `${name}: score ${score} (could improve)`, { rule: `lighthouse-${category}` }));
-    }
-  }
-
-  const checksPassed = checksTotal - checksFailed;
-  const duration_ms = Date.now() - startTime;
-  const status: SuiteStatus = (enforced && checksFailed > 0) ? STATUS.FAIL : STATUS.PASS;
-  const icon = status === STATUS.PASS ? '✅' : '⚠️';
-
-  log(`${icon} ${mode}: ${checksPassed}/${checksTotal} (${duration_ms}ms)`);
-
-  return createSuiteVerdict('perf', status, {
-    critical: false,
-    duration_ms,
-    checks_total: checksTotal,
-    checks_passed: checksPassed,
-    checks_failed: checksFailed,
-    findings,
-    metadata: {
-      tool: 'Lighthouse CLI',
-      url_tested: url,
-      scores,
-      mode,
-      ...(enforced ? { thresholds } : {}),
-      report_path: finalPath,
-      scratch_report_path: scratchPath,
-    },
-  });
+  return completedPerfVerdict(startTime, settings, scores, evaluateScores(scores, settings.thresholds));
 }

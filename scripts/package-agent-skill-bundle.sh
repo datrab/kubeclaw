@@ -31,6 +31,7 @@ bundle_root="${temp_root}/${bundle_root_name}"
 skills_root="${bundle_root}/skills"
 role_source="${REPO_DIR}/skills/${role}"
 common_source="${REPO_DIR}/skills/common"
+agent_observability_contract_source="${REPO_DIR}/contracts/agent-observability/v1/src"
 
 mkdir -p "$skills_root"
 
@@ -39,6 +40,11 @@ mkdir -p "$skills_root"
 # compatibility facades in matching paths.
 cp -R "${role_source}/." "$skills_root/"
 cp -R "${common_source}/." "$skills_root/"
+# The repository facade points at the neutral top-level contract. Runtime
+# bundles materialize that same source at the stable /app/skills facade path.
+rm -rf "${skills_root}/pipeline/agent-observability/src"
+mkdir -p "${skills_root}/pipeline/agent-observability/src"
+cp -R "${agent_observability_contract_source}/." "${skills_root}/pipeline/agent-observability/src/"
 
 cat >"${bundle_root}/manifest.json" <<EOF
 {
@@ -50,7 +56,8 @@ cat >"${bundle_root}/manifest.json" <<EOF
   "builtAt": "${built_at}",
   "sourceSubpaths": [
     "skills/${role}",
-    "skills/common"
+    "skills/common",
+    "contracts/agent-observability/v1"
   ],
   "overlayOrder": [
     "skills/${role}",

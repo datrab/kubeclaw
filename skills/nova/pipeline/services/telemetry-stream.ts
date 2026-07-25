@@ -11,27 +11,12 @@ import {
 } from '../telemetry.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-let _redis = null;
-let _redisTransportKey = '';
+import { objectRecord, selectPresentValue, textValue } from '../value-boundary.ts';
+const telemetryTransportState: { redis: any; key: string } = { redis: null, key: '' };
 const TELEMETRY_EMITTER = 'nova/pipeline/services/telemetry';
 const TELEMETRY_RUN_ID_MISSING = '';
 
-function objectRecord(value) {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
-}
-
-function textValue(value) {
-  return typeof value === 'string' ? value : '';
-}
-
-function selectPresentValue(...values) {
-  for (const value of values) {
-    if (typeof value === 'string' && value.length > 0) return value;
-  }
-  return '';
-}
-
-function reportTelemetryStreamIncident(classification, error, message) {
+function reportTelemetryStreamIncident(classification: any, error: any, message: any) {
   reportClassifiedNonBlockingError({
     reporter: 'telemetry-stream',
     classification,
@@ -42,7 +27,7 @@ function reportTelemetryStreamIncident(classification, error, message) {
   });
 }
 
-function telemetryTransportKey(config = {}) {
+function telemetryTransportKey(config: any = {}) {
   const telemetry = objectRecord(config?.telemetry);
   return JSON.stringify({
     redisHost: selectDefinedValue(() => (selectDefinedValue(() => (telemetry.redisHost), () => (telemetry.host))), () => (null)),
@@ -54,43 +39,43 @@ function telemetryTransportKey(config = {}) {
   });
 }
 
-function getRedisClient(config = {}) {
+function getRedisClient(config:any = {}) {
   const transportKey = telemetryTransportKey(config);
-  if (_redis && _redisTransportKey === transportKey) return _redis;
-  if (_redis && _redisTransportKey !== transportKey) {
+  if (telemetryTransportState.redis && telemetryTransportState.key === transportKey) return telemetryTransportState.redis;
+  if (telemetryTransportState.redis && telemetryTransportState.key !== transportKey) {
     try {
-      _redis.disconnect?.();
-    } catch (_error) {
+      telemetryTransportState.redis.disconnect?.();
+    } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(fallback_reporting_failed): the authoritative operation must survive failure of this noncritical reporting channel. */
       // Best-effort cache rotation; subsequent client creation still reports its own failures.
     }
-    _redis = null;
-    _redisTransportKey = '';
+    telemetryTransportState.redis = null;
+    telemetryTransportState.key = '';
   }
   try {
     const Redis = loadRedisCtor();
-    _redis = createRedisClient(Redis, objectRecord(config?.telemetry), {
-      retryStrategy: (times) => Math.min(times * 50, 2000),
+    telemetryTransportState.redis = createRedisClient(Redis, objectRecord(config?.telemetry), {
+      retryStrategy: (times:number) => Math.min(times * 50, 2000),
       maxRetriesPerRequest: 1,
       lazyConnect: true,
       enableReadyCheck: false,
     });
-    _redis.on('error', (error) => {
+    telemetryTransportState.redis.on('error', (error:unknown) => {
       reportTelemetryStreamIncident('redis_client_runtime_error', error, 'redis telemetry client emitted a non-blocking runtime error');
     });
-    _redisTransportKey = transportKey;
-    return _redis;
-  } catch (error) {
+    telemetryTransportState.key = transportKey;
+    return telemetryTransportState.redis;
+  } catch (error: any) {
     reportTelemetryStreamIncident('redis_client_init_failed', error, 'redis telemetry client initialization failed');
     return null;
   }
 }
 
-function normalizeTelemetryIdentityPart(value) {
+function normalizeTelemetryIdentityPart(value: any) {
   const normalized = textValue(value).trim();
   return selectTruthyValue(() => (normalized), () => (null));
 }
 
-function resolveTelemetryStreamIdentity(config = {}, opts = {}) {
+function resolveTelemetryStreamIdentity(config: any = {}, opts: any = {}) {
   const runId = normalizeTelemetryIdentityPart(opts.runId);
   const project = normalizeTelemetryIdentityPart(config?.project);
   if (selectTruthyValue(() => (!project), () => (!runId))) {
@@ -113,32 +98,39 @@ function resolveTelemetryStreamIdentity(config = {}, opts = {}) {
   };
 }
 
-export function isTelemetryEnabled(config) {
+export function isTelemetryEnabled(config: any) {
   return config?.telemetry?.enabled === true;
 }
 
-export function getTelemetryStreamKeyForRun(config, runId = '') {
+export function getTelemetryStreamKeyForRun(config: any, runId: any = '') {
   const identity = resolveTelemetryStreamIdentity(config, { runId });
   return identity.ok ? identity.streamKey : null;
 }
 
-async function allocateSeq(redis, seqKey) {
+async function allocateSeq(redis: any, seqKey: any) {
   const seq = await redis.incr(seqKey);
   await redis.expire(seqKey, TELEMETRY_SEQ_TTL_SECONDS);
   return seq;
 }
 
-export function buildTelemetryStreamEvent(eventType, payload = {}, identity = {}, seq, opts = {}, emittedAt = new Date().toISOString()) {
+function telemetryWorkIdentity(payload: any, runId: any) {
+  const gateId = normalizeTelemetryIdentityPart(payload.gate_id);
+  const moduleId = normalizeTelemetryIdentityPart(payload.module_id);
+  const stepId = normalizeTelemetryIdentityPart(payload.step_id);
+  if (gateId) return { gateId, moduleId, stepId, workId: gateId, workType: 'gate' };
+  if (moduleId) return { gateId, moduleId, stepId, workId: moduleId, workType: 'module' };
+  if (stepId) return { gateId, moduleId, stepId, workId: stepId, workType: 'pipeline_step' };
+  return { gateId, moduleId, stepId, workId: runId, workType: 'pipeline' };
+}
+
+export function buildTelemetryStreamEvent(eventType: any, payload: any = {}, identity: any = {}, seq: any, opts: any = {}, emittedAt: any = new Date().toISOString()) {
   const sanitized = sanitizeTelemetryPayload(objectRecord(payload));
   delete sanitized.project;
   delete sanitized.run_id;
   delete sanitized.source;
   delete sanitized.emitter;
-  const gateId = normalizeTelemetryIdentityPart(sanitized.gate_id);
-  const moduleId = normalizeTelemetryIdentityPart(sanitized.module_id);
-  const stepId = normalizeTelemetryIdentityPart(sanitized.step_id);
-  const workId = gateId || moduleId || stepId || identity.runId;
-  const workType = gateId ? 'gate' : moduleId ? 'module' : stepId ? 'pipeline_step' : 'pipeline';
+  const { gateId, moduleId, stepId, workId, workType } = telemetryWorkIdentity(sanitized, identity.runId);
+  const sourceEventId = opts.sourceEventId !== undefined ? opts.sourceEventId : sanitized.source_event_id;
   return buildCanonicalEnvelope({
     type: eventType,
     payload: sanitized,
@@ -146,57 +138,41 @@ export function buildTelemetryStreamEvent(eventType, payload = {}, identity = {}
     occurredAt: opts.occurredAt || emittedAt,
     emittedAt,
     causationId: opts.causationId || null,
+    sourceEventId: sourceEventId ?? null,
+    authorityClass: opts.authorityClass || 'pipeline_authority',
     identity: {
       project: identity.project, run_id: identity.runId, work_id: workId, work_type: workType,
-      gate_id: gateId, attempt: sanitized.attempt, dispatch_id: sanitized.dispatch_id,
+      module_id:moduleId,gate_id: gateId,gate_type:sanitized.gate_type, attempt: sanitized.attempt, dispatch_id: sanitized.dispatch_id,
       session_id: sanitized.session_id || sanitized.session_key, agent_id: sanitized.agent_id || sanitized.agent_type,
       model_call_id: sanitized.model_call_id, tool_call_id: sanitized.tool_call_id,
+      parent_session_id:sanitized.parent_session_id,trace_id:sanitized.trace_id,span_id:sanitized.span_id,parent_span_id:sanitized.parent_span_id,
       source: selectPresentValue(opts.source, 'pipeline'), producer: selectPresentValue(opts.emitter, TELEMETRY_EMITTER),
     },
   });
 }
 
-export async function emitTelemetryStreamEvent(config, eventType, payload = {}, opts = {}) {
+function telemetryEmitFailure(reason: string, identity: any = {}, error: any = null, redis: any = null) {
+  return {
+    ok: false, skipped: reason === 'disabled', reason,
+    runId: selectPresentValue(identity.runId, TELEMETRY_RUN_ID_MISSING),
+    streamKey: identity.streamKey ?? null, event: null, redis, error,
+  };
+}
+
+export async function emitTelemetryStreamEvent(config: any, eventType: any, payload: any = {}, opts: any = {}) {
   if (!isTelemetryEnabled(config)) {
-    return {
-      ok: false,
-      skipped: true,
-      reason: 'disabled',
-      runId: selectPresentValue(opts.runId, TELEMETRY_RUN_ID_MISSING),
-      streamKey: null,
-      event: null,
-      redis: null,
-      error: null,
-    };
+    return telemetryEmitFailure('disabled', { runId: opts.runId });
   }
 
   const identity = resolveTelemetryStreamIdentity(config, opts);
   const { runId, streamKey } = identity;
   if (!identity.ok) {
-    return {
-      ok: false,
-      skipped: false,
-      reason: 'missing_identity',
-      runId: selectPresentValue(runId, TELEMETRY_RUN_ID_MISSING),
-      streamKey: null,
-      event: null,
-      redis: null,
-      error: identity.error,
-    };
+    return telemetryEmitFailure('missing_identity', { runId }, identity.error);
   }
 
   const redis = getRedisClient(config);
   if (!redis) {
-    return {
-      ok: false,
-      skipped: false,
-      reason: 'redis_unavailable',
-      runId,
-      streamKey,
-      event: null,
-      redis: null,
-      error: new Error('redis client unavailable'),
-    };
+    return telemetryEmitFailure('redis_unavailable', identity, new Error('redis client unavailable'));
   }
 
   const emittedAt = telemetryEmittedAtAuthority(opts);
@@ -214,33 +190,24 @@ export async function emitTelemetryStreamEvent(config, eventType, payload = {}, 
       redis,
       error: null,
     };
-  } catch (error) {
-    return {
-      ok: false,
-      skipped: false,
-      reason: 'redis_emit_failed',
-      runId,
-      streamKey,
-      event: null,
-      redis,
-      error,
-    };
+  } catch (error: any) {
+    return telemetryEmitFailure('redis_emit_failed', identity, error, redis);
   }
 }
 
-function telemetryEmittedAtAuthority(opts) {
+function telemetryEmittedAtAuthority(opts: any) {
   if (opts.emittedAt) return opts.emittedAt;
   return new Date().toISOString();
 }
 
 export async function closeTelemetryStreamRedis() {
-  if (!_redis) return;
+  if (!telemetryTransportState.redis) return;
   try {
-    await _redis.quit();
-  } catch (e) {
+    await telemetryTransportState.redis.quit();
+  } catch (e: any) {
     reportTelemetryStreamIncident('redis_client_close_failed', e, 'redis telemetry client close failed');
   } finally {
-    _redis = null;
-    _redisTransportKey = '';
+    telemetryTransportState.redis = null;
+    telemetryTransportState.key = '';
   }
 }

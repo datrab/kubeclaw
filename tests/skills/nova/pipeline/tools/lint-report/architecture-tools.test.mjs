@@ -2,15 +2,21 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  canonicalCycle,
   dependencyCruiserFindings,
   jscpdFindings,
   knipFindings,
+  stronglyConnectedComponents,
 } from '../../../../../../skills/nova/pipeline/tools/lint-report/architecture-tools.ts';
 
-test('directed cycles have one stable rotation-independent identity', () => {
-  assert.deepEqual(canonicalCycle(['b.ts', 'c.ts', 'a.ts', 'b.ts']), ['a.ts', 'b.ts', 'c.ts']);
-  assert.deepEqual(canonicalCycle(['c.ts', 'a.ts', 'b.ts', 'c.ts']), ['a.ts', 'b.ts', 'c.ts']);
+test('overlapping cycle routes collapse into deterministic strongly connected components', () => {
+  const modules = [
+    { source: 'a.ts', dependencies: [{ resolved: 'b.ts' }] },
+    { source: 'b.ts', dependencies: [{ resolved: 'c.ts' }, { resolved: 'd.ts' }] },
+    { source: 'c.ts', dependencies: [{ resolved: 'a.ts' }] },
+    { source: 'd.ts', dependencies: [{ resolved: 'b.ts' }] },
+    { source: 'outside.ts', dependencies: [{ resolved: 'a.ts' }] },
+  ];
+  assert.deepEqual(stronglyConnectedComponents(modules), [['a.ts', 'b.ts', 'c.ts', 'd.ts']]);
 });
 
 test('dependency cruiser enforces boundaries and deduplicates cycles', () => {
@@ -41,6 +47,10 @@ test('dependency cruiser enforces boundaries and deduplicates cycles', () => {
   const findings = dependencyCruiserFindings(ctx, modules);
   assert.equal(findings.filter(finding => finding.code === 'architecture:forbidden-dependency').length, 1);
   assert.equal(findings.filter(finding => finding.code === 'architecture:circular-dependency').length, 1);
+  assert.deepEqual(findings.find(finding => finding.code === 'architecture:circular-dependency').fingerprint_seed.members, [
+    'src/domain/a.ts',
+    'src/domain/c.ts',
+  ]);
 });
 
 test('dependency cruiser assigns nested roots to the most specific matching layer', () => {

@@ -1,6 +1,4 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { Buffer } from 'buffer';
 import { STATUS } from '../services/verdict-schema.ts';
 import type { SuiteStatus } from '../services/verdict-schema.ts';
@@ -72,9 +70,53 @@ function buildDeliveryContext(moduleId: string, options: DeliveryContextOptions 
   };
 }
 
-function visualDeliveryModuleId(deliveryContext, moduleId) {
-  if (deliveryContext.module_id !== undefined && deliveryContext.module_id !== null) return deliveryContext.module_id;
+function visualDeliveryModuleId(deliveryContext: AnyRecord, moduleId: string): string {
+  if (typeof deliveryContext.module_id === 'string' && deliveryContext.module_id) return deliveryContext.module_id;
   return moduleId;
+}
+
+type Attachment = { path: string; filename: string };
+
+function pageStatusIcon(status: SuiteStatus): string {
+  if (status === STATUS.PASS) return '✅';
+  if (status === STATUS.FAIL) return '❌';
+  if (status === STATUS.SKIP) return '⏭️';
+  return '⚠️';
+}
+
+function buildSummaryEmbed(moduleId: string, pageResults: VisualPageResult[], overallStatus: SuiteStatus, enforced: boolean): AnyRecord {
+  const passCount = pageResults.filter((page) => page.status === STATUS.PASS).length;
+  const failCount = pageResults.filter((page) => page.status === STATUS.FAIL).length;
+  const skipCount = pageResults.filter((page) => page.status === STATUS.SKIP || page.status === STATUS.ERROR).length;
+  const lines = pageResults.map((page) => `${pageStatusIcon(page.status)} **${page.name}** — ${page.diffPercent === null ? '—' : `${page.diffPercent}%`}`);
+  return {
+    title: `${overallStatus === STATUS.PASS ? '✅' : '⚠️'} Visual Regression: Module ${moduleId}`,
+    color: overallStatus === STATUS.PASS ? 5763719 : 16776960,
+    description: [`**${passCount}** pass · **${failCount}** fail · **${skipCount}** skip`, `Mode: ${enforced ? 'enforced' : 'evidence-only'}`, '', lines.join('\n')].join('\n'),
+    footer: { text: `Buster Visual-Reg • ${pageResults.length} pages • ${new Date().toISOString()}` },
+  };
+}
+
+function collectSummaryAttachments(pageResults: VisualPageResult[], threshold: number): Attachment[] {
+  return pageResults
+    .filter((page) => typeof page.diffPercent === 'number' && page.diffPercent > threshold && page.diffPath && fs.existsSync(page.diffPath))
+    .map((page) => ({ path: page.diffPath as string, filename: `diff-${page.name}.png` }));
+}
+
+function multipartBody(boundary: string, embed: AnyRecord, attachments: Attachment[]): Buffer {
+  const bodyParts = [Buffer.from(
+    `--${boundary}\r\nContent-Disposition: form-data; name="payload_json"\r\nContent-Type: application/json\r\n\r\n${JSON.stringify({ embeds: [embed] })}`,
+    'utf8',
+  )];
+  attachments.slice(0, 10).forEach((attachment, index) => {
+    bodyParts.push(Buffer.from(
+      `\r\n--${boundary}\r\nContent-Disposition: form-data; name="files[${index}]"; filename="${attachment.filename}"\r\nContent-Type: image/png\r\n\r\n`,
+      'utf8',
+    ));
+    bodyParts.push(fs.readFileSync(attachment.path));
+  });
+  bodyParts.push(Buffer.from(`\r\n--${boundary}--\r\n`, 'utf8'));
+  return Buffer.concat(bodyParts);
 }
 
 export async function discordSummary(
@@ -86,70 +128,17 @@ export async function discordSummary(
 ): Promise<VisualDiscordDeliveryResult> {
   if (!webhookUrl) return deliverySkippedNoWebhook();
   try {
-    const icon = overallStatus === STATUS.PASS ? '✅' : '⚠️';
-    const passCount = pageResults.filter((p) => p.status === STATUS.PASS).length;
-    const failCount = pageResults.filter((p) => p.status === STATUS.FAIL).length;
-    const skipCount = pageResults.filter((p) => selectTruthyValue(() => (p.status === STATUS.SKIP), () => (p.status === STATUS.ERROR))).length;
-
-    const lines = pageResults.map((p) => {
-      const si = p.status === STATUS.PASS ? '✅'
-        : p.status === STATUS.FAIL ? '❌'
-          : p.status === STATUS.SKIP ? '⏭️' : '⚠️';
-      const diff = p.diffPercent != null ? `${p.diffPercent}%` : '—';
-      return `${si} **${p.name}** — ${diff}`;
-    });
-
-    const embed: AnyRecord = {
-      title: `${icon} Visual Regression: Module ${moduleId}`,
-      color: overallStatus === STATUS.PASS ? 5763719 : 16776960,
-      description: [
-        `**${passCount}** pass · **${failCount}** fail · **${skipCount}** skip`,
-        `Mode: ${enforced ? 'enforced' : 'evidence-only'}`,
-        '',
-        lines.join('\n'),
-      ].join('\n'),
-      footer: { text: `Buster Visual-Reg • ${pageResults.length} pages • ${new Date().toISOString()}` },
-    };
-
-    const attachments: Array<{ path: string; filename: string }> = [];
-    pageResults.forEach((p) => {
-      if (typeof p.diffPercent === 'number' && p.diffPercent > discordDiffThreshold && p.diffPath && fs.existsSync(p.diffPath)) {
-        attachments.push({ path: p.diffPath, filename: `diff-${p.name}.png` });
-      }
-    });
-
+    const embed = buildSummaryEmbed(moduleId, pageResults, overallStatus, enforced);
+    const attachments = collectSummaryAttachments(pageResults, discordDiffThreshold);
     if (attachments.length > 0 && attachments.length <= 4) {
       embed.image = { url: `attachment://${attachments[0]!.filename}` };
     }
-
     const boundary = `----VisRegSummary${Date.now()}`;
-    const embedJson = JSON.stringify({ embeds: [embed] });
-    const bodyParts = [Buffer.from(
-      `--${boundary}\r\n` +
-      'Content-Disposition: form-data; name="payload_json"\r\n' +
-      'Content-Type: application/json\r\n\r\n' +
-      embedJson,
-      'utf8',
-    )];
-
     const maxAttach = Math.min(attachments.length, 10);
-    for (let i = 0; i < maxAttach; i += 1) {
-      const att = attachments[i]!;
-      bodyParts.push(Buffer.from(
-        `\r\n--${boundary}\r\n` +
-        `Content-Disposition: form-data; name="files[${i}]"; filename="${att.filename}"\r\n` +
-        'Content-Type: image/png\r\n\r\n',
-        'utf8',
-      ));
-      bodyParts.push(fs.readFileSync(att.path));
-    }
-
-    bodyParts.push(Buffer.from(`\r\n--${boundary}--\r\n`, 'utf8'));
-
     await deliverDiscordWebhookRequest({
       webhook_url: webhookUrl,
       headers: { 'Content-Type': `multipart/form-data; boundary=${boundary}` },
-      body: Buffer.concat(bodyParts),
+      body: multipartBody(boundary, embed, attachments),
     }, buildDeliveryContext(moduleId, { deliveryContext, telemetryContext }));
 
     log(`Discord: summary sent (${pageResults.length} pages, ${maxAttach} diff images attached)`);
@@ -158,6 +147,38 @@ export async function discordSummary(
     log(`Discord summary failed (non-critical): ${errorMessage(error)}`);
     return deliveryFailed(error);
   }
+}
+
+function singleStatusPresentation(status: SuiteStatus | 'APP_SCREENSHOT' | 'NEW_BASELINE', diffPercent: number): AnyRecord {
+  const isAppShot = status === 'APP_SCREENSHOT';
+  const isBaseline = status === 'NEW_BASELINE';
+  let icon = '📸';
+  if (isBaseline) icon = '🆕';
+  else if (status === STATUS.PASS) icon = '✅';
+  else if (status === STATUS.FAIL) icon = '❌';
+  let description = `**${diffPercent}%** pixel difference detected.`;
+  if (isAppShot) description = 'Current state of the running application.';
+  else if (isBaseline) description = 'New baseline generated from HTML design reference.';
+  else if (diffPercent === 0) description = 'Pixel-perfect match with baseline.';
+  return { isAppShot, isBaseline, icon, description };
+}
+
+function buildSingleEmbed(moduleId: string, pageName: string, diffPercent: number, status: SuiteStatus | 'APP_SCREENSHOT' | 'NEW_BASELINE'): AnyRecord {
+  const view = singleStatusPresentation(status, diffPercent);
+  const color = view.isAppShot ? 5793266 : view.isBaseline ? 3447003 : (diffPercent === 0 ? 5763719 : (diffPercent > 5 ? 15548997 : 16776960));
+  const fields: AnyRecord[] = [
+    { name: 'Page', value: pageName, inline: true },
+    { name: 'Status', value: view.isAppShot ? 'Live' : view.isBaseline ? 'Baseline' : status, inline: true },
+  ];
+  if (!view.isAppShot && !view.isBaseline) fields.push({ name: 'Diff', value: `${diffPercent}%`, inline: true });
+  return {
+    title: `${view.icon} ${view.isAppShot ? 'Live App' : 'Visual Regression'}: ${pageName} (${moduleId})`,
+    color,
+    description: view.description,
+    fields,
+    image: { url: 'attachment://screenshot.png' },
+    footer: { text: `Buster Visual-Reg • ${new Date().toISOString()}` },
+  };
 }
 
 export async function discordSingle(
@@ -172,67 +193,12 @@ export async function discordSingle(
   if (!webhookUrl) return deliverySkippedNoWebhook();
   try {
     const boundary = `----VisRegBoundary${Date.now()}`;
-    const icon = status === 'APP_SCREENSHOT' ? '📸'
-      : status === 'NEW_BASELINE' ? '🆕'
-        : status === STATUS.PASS ? '✅'
-          : status === STATUS.FAIL ? '❌' : '📸';
-    const isAppShot = status === 'APP_SCREENSHOT';
-    const isBaseline = status === 'NEW_BASELINE';
-
-    const embedJson = JSON.stringify({
-      embeds: [{
-        title: `${icon} ${isAppShot ? 'Live App' : 'Visual Regression'}: ${pageName} (${moduleId})`,
-        color: isAppShot ? 5793266 : isBaseline ? 3447003 : (diffPercent === 0 ? 5763719 : (diffPercent > 5 ? 15548997 : 16776960)),
-        description: isAppShot
-          ? 'Current state of the running application.'
-          : isBaseline
-            ? 'New baseline generated from HTML design reference.'
-            : diffPercent === 0
-              ? 'Pixel-perfect match with baseline.'
-              : `**${diffPercent}%** pixel difference detected.`,
-        fields: [
-          { name: 'Page', value: pageName, inline: true },
-          { name: 'Status', value: isAppShot ? 'Live' : isBaseline ? 'Baseline' : status, inline: true },
-          ...(!isAppShot && !isBaseline ? [{ name: 'Diff', value: `${diffPercent}%`, inline: true }] : []),
-        ],
-        image: { url: 'attachment://screenshot.png' },
-        footer: { text: `Buster Visual-Reg • ${new Date().toISOString()}` },
-      }],
-    });
-
-    const bodyParts = [
-      Buffer.from(
-        `--${boundary}\r\n` +
-        'Content-Disposition: form-data; name="payload_json"\r\n' +
-        'Content-Type: application/json\r\n\r\n' +
-        embedJson,
-        'utf8',
-      ),
-      Buffer.from(
-        `\r\n--${boundary}\r\n` +
-        'Content-Disposition: form-data; name="files[0]"; filename="screenshot.png"\r\n' +
-        'Content-Type: image/png\r\n\r\n',
-        'utf8',
-      ),
-      fs.readFileSync(actualPath),
-    ];
-
-    if (diffPath && diffPercent > 0 && fs.existsSync(diffPath)) {
-      bodyParts.push(Buffer.from(
-        `\r\n--${boundary}\r\n` +
-        'Content-Disposition: form-data; name="files[1]"; filename="diff.png"\r\n' +
-        'Content-Type: image/png\r\n\r\n',
-        'utf8',
-      ));
-      bodyParts.push(fs.readFileSync(diffPath));
-    }
-
-    bodyParts.push(Buffer.from(`\r\n--${boundary}--\r\n`, 'utf8'));
-
+    const attachments: Attachment[] = [{ path: actualPath, filename: 'screenshot.png' }];
+    if (diffPath && diffPercent > 0 && fs.existsSync(diffPath)) attachments.push({ path: diffPath, filename: 'diff.png' });
     await deliverDiscordWebhookRequest({
       webhook_url: webhookUrl,
       headers: { 'Content-Type': `multipart/form-data; boundary=${boundary}` },
-      body: Buffer.concat(bodyParts),
+      body: multipartBody(boundary, buildSingleEmbed(moduleId, pageName, diffPercent, status), attachments),
     }, buildDeliveryContext(moduleId, { deliveryContext, telemetryContext }));
 
     log(`Discord: ${pageName} sent`);

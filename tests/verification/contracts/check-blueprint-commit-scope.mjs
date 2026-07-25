@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-blueprint-commit-scope' });
 import assert from 'node:assert/strict';
@@ -9,13 +10,6 @@ import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function git(cwd, args) {
   return execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -63,7 +57,7 @@ function setupBlueprintRepo(prefix) {
   return { root, repo, config, progress };
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const previousSwarmConfig = process.env.SWARM_CONFIG;
 const expandedConfigDir = fs.mkdtempSync(path.join(os.tmpdir(), 'blueprint-commit-scope-config-'));
 const expandedConfigPath = path.join(expandedConfigDir, 'swarm.config.effective.json');

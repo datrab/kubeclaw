@@ -92,9 +92,11 @@ function checkPackageTypecheck(relPath) {
 checkFallbackLedger();
 checkSliceTemplate();
 checkPackageTypecheck('skills/common/pipeline/agent-observability/package.json');
+checkPackageTypecheck('contracts/agent-observability/v1/package.json');
 checkPackageTypecheck('skills/nova/package.json');
 checkPackageTypecheck('skills/buster/package.json');
 checkTsConfig('skills/common/pipeline/agent-observability/tsconfig.json');
+checkTsConfig('contracts/agent-observability/v1/tsconfig.json');
 checkTsConfig('skills/nova/tsconfig.json');
 checkTsConfig('skills/buster/tsconfig.json');
 

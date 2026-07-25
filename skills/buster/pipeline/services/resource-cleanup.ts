@@ -1,16 +1,12 @@
 // Buster cleanup authority: only namespace leases are runtime resources.
 // Deleting a lease delegates namespace deletion to the trusted controller.
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFile } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { createHash } from 'crypto';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
 import { buildSubprocessEnv } from '../security.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 type Payload = Record<string, any>;
 type CleanupState = { leases: string[] };
@@ -19,7 +15,7 @@ const execFileAsync = promisify(execFile) as any;
 const CLEANUP_SCOPE_LABEL = 'kubeclaw.io/cleanup-scope';
 
 function runtimeStateRoot(): string {
-  const repoRoot = String(process.env.REPO_ROOT ?? '').trim();
+  const repoRoot = String(readBusterEnvironment('REPO_ROOT') ?? '').trim();
   if (!repoRoot) throw new Error('REPO_ROOT is required for Buster runtime cleanup state');
   return path.join(repoRoot, '.swarm', 'resource-cleanup');
 }
@@ -30,11 +26,18 @@ function token(value: unknown): string {
   return String(value ?? 'none').toLowerCase().replace(/[^a-z0-9._-]+/g, '-').slice(0, 80);
 }
 
-function scopeKey(payload: Payload): string {
-  return [payload.project, payload.module_id ?? payload.gate_id ?? payload.task_id, payload.attempt, payload.run_id].map(token).join('--');
+function cleanupWorkId(payload: Payload): unknown {
+  if (payload.module_id !== undefined && payload.module_id !== null) return payload.module_id;
+  if (payload.gate_id !== undefined && payload.gate_id !== null) return payload.gate_id;
+  if (payload.task_id !== undefined && payload.task_id !== null) return payload.task_id;
+  return null;
 }
 
-export function buildCleanupScopeLabel(payload: Payload = {}): string {
+function scopeKey(payload: Payload): string {
+  return [payload.project, cleanupWorkId(payload), payload.attempt, payload.run_id].map(token).join('--');
+}
+
+function buildCleanupScopeLabel(payload: Payload = {}): string {
   return `oc-${createHash('sha256').update(scopeKey(payload)).digest('hex').slice(0, 20)}`;
 }
 
@@ -64,7 +67,7 @@ export function trackRuntimeResources(payload: Payload = {}, resources: { leases
 }
 
 async function deleteLease(lease: string): Promise<void> {
-  await execFileAsync('kubectl', ['delete', 'busternamespacelease', lease, '-n', process.env.KUBECLAW_NAMESPACE ?? 'kubeclaw', '--ignore-not-found=true', '--wait=true'], {
+  await execFileAsync('kubectl', ['delete', 'busternamespacelease', lease, '-n', readBusterEnvironment('KUBECLAW_NAMESPACE') ?? 'kubeclaw', '--ignore-not-found=true', '--wait=true'], {
     timeout: 180000,
     encoding: 'utf8',
     env: buildSubprocessEnv(),

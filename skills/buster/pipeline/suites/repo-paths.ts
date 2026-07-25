@@ -27,7 +27,7 @@ export function resolveRepoScopedPath(p: unknown, options: RepoScopedPathOptions
   return resolveScopedPath(String(p), {
     baseDir,
     scopeDir,
-    field: selectDefinedValue(() => (options.field), () => ('path')),
+    field: options.field === undefined ? 'path' : options.field,
     scopeDescription: 'allowed repository scope',
   });
 }

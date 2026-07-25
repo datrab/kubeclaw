@@ -3,11 +3,12 @@ import { assertValidSessionTerminationResult } from './acp-gateway-contract.ts';
 import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-function resolveValue(value) {
+type AnyRecord = Record<string, any>;
+function resolveValue(value: any) {
   return typeof value === 'function' ? value() : value;
 }
 
-function normalizeIdentity(identity = {}) {
+function normalizeIdentity(identity: any = {}) {
   return {
     config: selectTruthyValue(() => (resolveValue(identity.config)), () => (null)),
     sessionKey: selectTruthyValue(() => (resolveValue(identity.sessionKey)), () => (null)),
@@ -19,13 +20,13 @@ function normalizeIdentity(identity = {}) {
   };
 }
 
-export function createTrackedSummarySessionCleanup(deps = {}, identity = {}, options = {}) {
+export function createTrackedSummarySessionCleanup(deps: any = {}, identity: any = {}, options: any = {}) {
   let cleanupAttempted = false;
   let terminationCleaned = false;
   let untrackCleaned = false;
   const summaryType = selectDefinedValue(() => (options.summaryType), () => ('summary-session'));
 
-  return async function cleanupTrackedSummarySession(reason = 'finally') {
+  return async function cleanupTrackedSummarySession(reason: any = 'finally') {
     const resolved = normalizeIdentity(identity);
     const shouldTerminate = Boolean(resolved.sessionKey && typeof deps.terminateSession === 'function' && !terminationCleaned);
     const shouldUntrack = Boolean(resolved.trackingKey && typeof deps.untrackAgent === 'function' && !untrackCleaned);
@@ -34,7 +35,7 @@ export function createTrackedSummarySessionCleanup(deps = {}, identity = {}, opt
     }
     cleanupAttempted = true;
 
-    const diagnostics = {
+    const diagnostics: AnyRecord = {
       cleaned: true,
       reason,
       session_key: resolved.sessionKey,
@@ -44,32 +45,8 @@ export function createTrackedSummarySessionCleanup(deps = {}, identity = {}, opt
       untrack_error: null,
     };
 
-    if (shouldTerminate) {
-      try {
-        const terminationOptions = {
-          runtime: resolved.runtime,
-          model: resolved.model,
-          agentId: resolved.agentId,
-          label: resolved.label,
-        };
-        if (resolved.config !== null) Object.assign(terminationOptions, sessionLifecyclePolicies(resolved.config));
-        diagnostics.termination = assertValidSessionTerminationResult(await deps.terminateSession(resolved.sessionKey, terminationOptions));
-        terminationCleaned = true;
-      } catch (error) {
-        diagnostics.termination_error = selectTruthyValue(() => (error?.message), () => ('missing_error_message'));
-        log('WARN', `[${summaryType}] Failed to terminate tracked summary session ${resolved.sessionKey}: ${diagnostics.termination_error}`);
-      }
-    }
-
-    if (shouldUntrack) {
-      try {
-        deps.untrackAgent(resolved.trackingKey);
-        untrackCleaned = true;
-      } catch (error) {
-        diagnostics.untrack_error = selectTruthyValue(() => (error?.message), () => ('missing_error_message'));
-        log('WARN', `[${summaryType}] Failed to untrack summary session ${resolved.trackingKey}: ${diagnostics.untrack_error}`);
-      }
-    }
+    if (shouldTerminate) terminationCleaned = await terminateTrackedSession(deps, resolved, diagnostics, summaryType);
+    if (shouldUntrack) untrackCleaned = untrackTrackedSession(deps, resolved, diagnostics, summaryType);
 
     if (selectTruthyValue(() => (diagnostics.termination_error), () => (diagnostics.untrack_error))) {
       log('WARN', `[${summaryType}] Summary session cleanup completed with errors (reason=${reason})`);
@@ -79,4 +56,33 @@ export function createTrackedSummarySessionCleanup(deps = {}, identity = {}, opt
 
     return diagnostics;
   };
+}
+
+async function terminateTrackedSession(deps: AnyRecord, resolved: AnyRecord, diagnostics: AnyRecord, summaryType: string) {
+  try {
+    const terminationOptions: AnyRecord = {
+      runtime: resolved.runtime,
+      model: resolved.model,
+      agentId: resolved.agentId,
+      label: resolved.label,
+    };
+    if (resolved.config !== null) Object.assign(terminationOptions, sessionLifecyclePolicies(resolved.config));
+    diagnostics.termination = assertValidSessionTerminationResult(await deps.terminateSession(resolved.sessionKey, terminationOptions));
+    return true;
+  } catch (error: any) {
+    diagnostics.termination_error = selectTruthyValue(() => error?.message, () => 'missing_error_message');
+    log('WARN', `[${summaryType}] Failed to terminate tracked summary session ${resolved.sessionKey}: ${diagnostics.termination_error}`);
+    return false;
+  }
+}
+
+function untrackTrackedSession(deps: AnyRecord, resolved: AnyRecord, diagnostics: AnyRecord, summaryType: string) {
+  try {
+    deps.untrackAgent(resolved.trackingKey);
+    return true;
+  } catch (error: any) {
+    diagnostics.untrack_error = selectTruthyValue(() => error?.message, () => 'missing_error_message');
+    log('WARN', `[${summaryType}] Failed to untrack summary session ${resolved.trackingKey}: ${diagnostics.untrack_error}`);
+    return false;
+  }
 }

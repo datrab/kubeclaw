@@ -1,9 +1,7 @@
 // Shared pipeline egress helpers.
 // Values are preserved; helpers only enforce bounded output and JSON-safe shapes.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import crypto from 'crypto';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';

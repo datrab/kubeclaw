@@ -16,26 +16,26 @@ const TELEMETRY_PAYLOAD_VALIDATION_FAILED = 'telemetry payload validation failed
 const TELEMETRY_SINK_DISPATCH_FAILED = 'telemetry sink dispatch failed';
 const OPERATOR_ALERT_SINK_DISPATCH_FAILED = 'operator alert sink dispatch failed';
 
-function objectRecord(value) {
+function objectRecord(value: any) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
-function selectPresentValue(...values) {
+function selectPresentValue(...values: any) {
   for (const value of values) {
     if (typeof value === 'string' && value.length > 0) return value;
   }
   return '';
 }
 
-function errorDetail(error) {
+function errorDetail(error: any) {
   return typeof error?.message === 'string' && error.message ? error.message : String(error);
 }
 
-function telemetryAppendFailureError(result) {
+function telemetryAppendFailureError(result: any) {
   return selectDefinedValue(() => (result?.error), () => (new Error('core telemetry disk append failed')));
 }
 
-function appendCoreTelemetryEvent(ctx, eventType, payload = {}, options = {}, sinkResult = null) {
+function appendCoreTelemetryEvent(ctx: any, eventType: any, payload: any = {}, options: any = {}, sinkResult: any = null) {
   const config = objectRecord(ctx?.config);
   const redisEvent = selectTruthyValue(() => (sinkResult?.telemetrySinkState?.redisEvent), () => (null));
   const diskPayload = redisEvent && typeof redisEvent === 'object'
@@ -52,7 +52,7 @@ function appendCoreTelemetryEvent(ctx, eventType, payload = {}, options = {}, si
   return result;
 }
 
-function reportTelemetryWrapperFailure(ctx, eventType, error) {
+function reportTelemetryWrapperFailure(ctx: any, eventType: any, error: any) {
   const config = objectRecord(ctx?.config);
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (getRunId(config)), () => (ctx?.runId))), () => (config?.run_id))), () => (config?._runId))), () => ('missing_run_id'));
   reportClassifiedNonBlockingError({
@@ -66,8 +66,8 @@ function reportTelemetryWrapperFailure(ctx, eventType, error) {
   });
 }
 
-export function emitEventNonBlocking(ctx, eventType, payload = {}, options = {}) {
-  return emitEvent(ctx, eventType, payload, options).catch((error) => {
+export function emitEventNonBlocking(ctx: any, eventType: any, payload: any = {}, options: any = {}) {
+  return emitEvent(ctx, eventType, payload, options).catch((error: any) => {
     reportTelemetryWrapperFailure(ctx, eventType, error);
   });
 }
@@ -79,10 +79,10 @@ export function emitEventNonBlocking(ctx, eventType, payload = {}, options = {})
  * registry-owned telemetry sink plugins. Sink failure records degraded
  * observability instead of rerouting to another network sink.
  */
-export async function emitEvent(ctx, eventType, payload = {}, options = {}) {
+export async function emitEvent(ctx: any, eventType: any, payload: any = {}, options: any = {}) {
   try {
     assertTelemetryEventPayload(eventType, payload);
-  } catch (error) {
+  } catch (error: any) {
     reportTelemetryWrapperFailure(ctx, eventType, error);
     await recordObservabilityDegraded(ctx, {
       component: 'telemetry_spine',
@@ -107,7 +107,7 @@ export async function emitEvent(ctx, eventType, payload = {}, options = {}) {
   let sinkResult = null;
   try {
     sinkResult = await dispatchTelemetrySinks(ctx, eventType, payload, options);
-  } catch (error) {
+  } catch (error: any) {
     reportTelemetryWrapperFailure(ctx, eventType, error);
     await recordObservabilityDegraded(ctx, {
       component: 'telemetry_spine',
@@ -125,7 +125,7 @@ export async function emitEvent(ctx, eventType, payload = {}, options = {}) {
   };
 }
 
-export async function emitOperatorAlert(ctx, eventType, payload = {}, options = {}) {
+export async function emitOperatorAlert(ctx: any, eventType: any, payload: any = {}, options: any = {}) {
   const durable = appendDurableOperatorAlert(objectRecord(ctx?.config), eventType, payload, options);
   try {
     const sinkResult = await dispatchTelemetrySinks(ctx, eventType, payload, {
@@ -133,7 +133,7 @@ export async function emitOperatorAlert(ctx, eventType, payload = {}, options = 
       sinkModuleIds: ['builtin.telemetry.discord'],
     });
     return { ...sinkResult, durable };
-  } catch (error) {
+  } catch (error: any) {
     reportTelemetryWrapperFailure(ctx, eventType, error);
     await recordObservabilityDegraded(ctx, {
       component: 'telemetry_spine',

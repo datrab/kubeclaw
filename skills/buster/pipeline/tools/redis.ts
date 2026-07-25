@@ -1,9 +1,6 @@
 #!/usr/bin/env node
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { fileURLToPath } from 'url';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import process from 'process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 import { parseCliFlagValues } from '../cli-args.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
@@ -13,6 +10,9 @@ import { formatSummaryForDiscord, summarizePayloadForDiscord } from '../egress.t
 import { assertRedisTaskEntry, buildRedisTaskStreamEntry } from '../services/redis-message-contract.ts';
 import { createRedisEventBus, createRedisTaskQueue } from '../services/task-transport-contract.ts';
 import { sendDiscord } from '../services/discord.ts';
+import { waitForRedisReady as waitForRedisTransportReady } from '../redis-transport.ts';
+import { errorMessage } from '../value-boundary.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // DELETE_LEGACY: direct completion emission and implicit sender/consumer
@@ -24,7 +24,9 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
 type AnyRecord = Record<string, any>;
 
-type RedisClient = AnyRecord;
+type RedisClient = AnyRecord & {
+  once(event: string, listener: (...args: any[]) => void): unknown;
+};
 
 interface PublishOptions {
   sender?: string;
@@ -35,14 +37,10 @@ interface ReadOptions {
   consumerName?: string;
 }
 
-let _redis: RedisClient | null = null;
+const redisToolState: { redis: RedisClient | null } = { redis: null };
 
 function redisReadyTimeoutMs(): number {
   return loadBusterGatewayHealthPolicy().readyTimeoutMs;
-}
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(selectTruthyValue(() => (error), () => ('missing_error_detail')));
 }
 
 function stringValue(value: unknown): string {
@@ -56,51 +54,20 @@ function getRequiredEnv(name: string, value: unknown): string {
 }
 
 function getRedis(): RedisClient {
-  if (!_redis) {
-    _redis = createRedisClient(loadRedisCtor(), {}, {
+  if (!redisToolState.redis) {
+    redisToolState.redis = createRedisClient(loadRedisCtor(), {}, {
       retryStrategy: (times: number) => Math.min(times * 50, 2000),
       maxRetriesPerRequest: 3,
       lazyConnect: false,
       enableReadyCheck: true,
     }) as RedisClient;
-    _redis.on('error', (err: unknown) => console.error('[Redis Error]', errorMessage(err)));
+    redisToolState.redis.on('error', (err: unknown) => console.error('[Redis Error]', errorMessage(err)));
   }
-  return _redis as RedisClient;
+  return redisToolState.redis as RedisClient;
 }
 
 export function waitForRedisReady(redis: RedisClient, timeoutMs = redisReadyTimeoutMs()): Promise<void> {
-  if (redis.status === 'ready') return Promise.resolve();
-
-  return new Promise((resolve, reject) => {
-    let settled = false;
-    let timeout: ReturnType<typeof setTimeout> | null = null;
-
-    const cleanup = (): void => {
-      redis.off?.('ready', onReady);
-      redis.off?.('error', onError);
-      redis.off?.('end', onEnd);
-      redis.off?.('close', onClose);
-      if (timeout) clearTimeout(timeout);
-    };
-    const settle = (fn: (value?: any) => void, value?: unknown): void => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      fn(value);
-    };
-    const onReady = (): void => settle(resolve);
-    const onError = (err: unknown): void => settle(reject, err instanceof Error ? err : new Error(selectTruthyValue(() => (stringValue(err)), () => ('Redis connection failed'))));
-    const onEnd = (): void => settle(reject, new Error('Redis connection ended before ready'));
-    const onClose = (): void => settle(reject, new Error('Redis connection closed before ready'));
-
-    redis.once('ready', onReady);
-    redis.once('error', onError);
-    redis.once('end', onEnd);
-    redis.once('close', onClose);
-    timeout = setTimeout(() => {
-      settle(reject, new Error(`Redis did not become ready within ${timeoutMs}ms`));
-    }, timeoutMs);
-  });
+  return waitForRedisTransportReady(redis, timeoutMs);
 }
 
 const WEBHOOK_URL = resolveDiscordWebhookUrl();
@@ -137,14 +104,14 @@ async function logToDiscord(sender: string, target: string, type: string, iter: 
       pipeline_run_log_path: selectTruthyValue(() => (taskPayload.pipeline_run_log_path), () => (null)),
       webhook_url: WEBHOOK_URL,
     });
-  } catch (_error) {
+  } catch (_error) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */
     // Discord is noncritical operator notification policy.
   }
 }
 
-function taskAttemptAuthority(taskPayload: Record<string, any>, iter: number): number {
+function taskAttemptAuthority(taskPayload: Record<string, any>, iter: number | string): number {
   if (taskPayload.attempt !== undefined && taskPayload.attempt !== null) return taskPayload.attempt;
-  return iter;
+  return Number(iter);
 }
 
 const TARGET_STREAMS: Record<string, string> = {
@@ -164,7 +131,7 @@ const lib = {
     const streamKey = TARGET_STREAMS[targetKey];
     if (!streamKey) throw new Error(`Unknown target: ${targetAgent}`);
 
-    const senderInput = options.sender !== undefined ? options.sender : process.env.AGENT_NAME;
+    const senderInput = options.sender !== undefined ? options.sender : readBusterEnvironment('AGENT_NAME');
     const sender = getRequiredEnv('AGENT_NAME', senderInput);
     const sourceInput = options.source !== undefined ? options.source : sender;
     const source = getRequiredEnv('task source', sourceInput);
@@ -189,10 +156,10 @@ const lib = {
   },
 
   async readMyTasks(count = 1, options: ReadOptions = {}): Promise<unknown> {
-    const myName = getRequiredEnv('AGENT_NAME', process.env.AGENT_NAME);
+    const myName = getRequiredEnv('AGENT_NAME', readBusterEnvironment('AGENT_NAME'));
     const consumerIdentity = getRequiredEnv(
       'REDIS_CONSUMER_NAME',
-      options.consumerName !== undefined ? options.consumerName : process.env.REDIS_CONSUMER_NAME,
+      options.consumerName !== undefined ? options.consumerName : readBusterEnvironment('REDIS_CONSUMER_NAME'),
     );
 
     const streamKey = `swarm:${myName}:tasks`;
@@ -210,9 +177,9 @@ const lib = {
   },
 
   async disconnect(): Promise<void> {
-    if (_redis) {
-      await _redis.quit();
-      _redis = null;
+    if (redisToolState.redis) {
+      await redisToolState.redis.quit();
+      redisToolState.redis = null;
     }
   },
 };
@@ -247,7 +214,7 @@ if (currentPath === entryPath) {
         const payloadText = flags.payload;
         if (!payloadText) throw new Error('Missing --payload');
         const payload = JSON.parse(payloadText);
-        if (selectTruthyValue(() => (!target), () => (!type))) throw new Error('Missing --target or --type');
+        if (!target || !type) throw new Error('Missing --target or --type');
 
         const res = await lib.publishTask(target, type, payload, iter);
         console.log(JSON.stringify(res));

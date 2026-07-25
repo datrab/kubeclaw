@@ -16,7 +16,7 @@ export const APPROVAL_TIMEOUT_POLICY = {
 
 export const APPROVAL_TERMINAL_OR_WAIT_STATUSES = new Set(Object.values(APPROVAL_STATUS));
 
-export function normalizeApprovalTimeoutPolicy(value) {
+export function normalizeApprovalTimeoutPolicy(value: any) {
   const normalized = String(selectDefinedValue(() => (value), () => (''))).trim().toUpperCase();
   if (selectTruthyValue(() => (normalized === APPROVAL_TIMEOUT_POLICY.BLOCK), () => (normalized === APPROVAL_TIMEOUT_POLICY.CONTINUE))) {
     return normalized;
@@ -24,14 +24,14 @@ export function normalizeApprovalTimeoutPolicy(value) {
   throw new Error(`approval timeout_policy is required and must be ${APPROVAL_TIMEOUT_POLICY.BLOCK} or ${APPROVAL_TIMEOUT_POLICY.CONTINUE}`);
 }
 
-export function resolveApprovalTimeoutPolicyFromGate(gate = {}, gateId = 'approval') {
+export function resolveApprovalTimeoutPolicyFromGate(gate: any = {}, gateId: any = 'approval') {
   if (selectTruthyValue(() => (selectTruthyValue(() => (gate?.on_timeout === undefined), () => (gate?.on_timeout === null))), () => (gate?.on_timeout === ''))) {
     throw new Error(`approval gate '${gateId}' requires explicit on_timeout policy`);
   }
   return normalizeApprovalTimeoutPolicy(gate.on_timeout);
 }
 
-export function resolveApprovalTimeoutPolicyFromState(state = {}, gateId = 'approval') {
+export function resolveApprovalTimeoutPolicyFromState(state: any = {}, gateId: any = 'approval') {
   if (selectTruthyValue(() => (!state), () => (typeof state !== 'object'))) {
     throw new Error(`approval gate '${gateId}' requires persisted timeout_policy authority`);
   }
@@ -41,32 +41,45 @@ export function resolveApprovalTimeoutPolicyFromState(state = {}, gateId = 'appr
   return normalizeApprovalTimeoutPolicy(state.timeout_policy);
 }
 
-export function isApprovalTimeoutContinue(value) {
+export function isApprovalTimeoutContinue(value: any) {
   return normalizeApprovalTimeoutPolicy(value) === APPROVAL_TIMEOUT_POLICY.CONTINUE;
 }
 
-export function normalizeApprovalGateState(state, identity = {}) {
-  if (selectTruthyValue(() => (!state), () => (typeof state !== 'object'))) return state;
-  const normalizedGateId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (state.gate_id), () => (identity.gate_id))), () => (identity.gateId))), () => (null));
-  const normalizedGateType = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (state.gate_type), () => (identity.gate_type))), () => (identity.gateType))), () => (null));
-  const normalizedProject = selectTruthyValue(() => (selectTruthyValue(() => (state.project), () => (identity.project))), () => (null));
+export function normalizeApprovalGateState(state: any, identity: any = {}) {
+  if (!state || typeof state !== 'object') return state;
   const hasTimeoutPolicy = state.timeout_policy !== undefined && state.timeout_policy !== null && state.timeout_policy !== '';
   const timeoutPolicy = hasTimeoutPolicy ? normalizeApprovalTimeoutPolicy(state.timeout_policy) : null;
-  let next = state;
-
-  if (hasTimeoutPolicy && state.timeout_policy !== timeoutPolicy) next = { ...next, timeout_policy: timeoutPolicy };
-  if (normalizedGateId && state.gate_id !== normalizedGateId) next = next === state ? { ...next, gate_id: normalizedGateId } : { ...next, gate_id: normalizedGateId };
-  if (normalizedGateType && state.gate_type !== normalizedGateType) next = next === state ? { ...next, gate_type: normalizedGateType } : { ...next, gate_type: normalizedGateType };
-  if (normalizedProject && state.project !== normalizedProject) next = next === state ? { ...next, project: normalizedProject } : { ...next, project: normalizedProject };
-
-  return next;
+  const identityUpdates = approvalIdentityUpdates(state, identity);
+  const normalized = {
+    ...(hasTimeoutPolicy && state.timeout_policy !== timeoutPolicy ? { timeout_policy: timeoutPolicy } : {}),
+    ...identityUpdates,
+  };
+  return Object.keys(normalized).length > 0 ? { ...state, ...normalized } : state;
 }
 
-export function buildApprovalIdentity(config, gateId, gate = null, state = null) {
+function approvalIdentityUpdates(state: any, identity: any) {
+  const gateId = firstPresent(state.gate_id, identity.gate_id, identity.gateId);
+  const gateType = firstPresent(state.gate_type, identity.gate_type, identity.gateType);
+  const project = firstPresent(state.project, identity.project);
   return {
-    run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (state?.run_id), () => (config._runId))), () => (config.run_id))), () => (null)),
-    project: selectTruthyValue(() => (selectTruthyValue(() => (state?.project), () => (config.project))), () => (null)),
-    gate_id: selectTruthyValue(() => (selectTruthyValue(() => (state?.gate_id), () => (gateId))), () => (null)),
-    gate_type: selectDefinedValue(() => (selectDefinedValue(() => (state?.gate_type), () => (gate?.type))), () => ('approval')),
+    ...(gateId && state.gate_id !== gateId ? { gate_id: gateId } : {}),
+    ...(gateType && state.gate_type !== gateType ? { gate_type: gateType } : {}),
+    ...(project && state.project !== project ? { project } : {}),
+  };
+}
+
+function firstPresent(...values: any[]) {
+  for (const value of values) {
+    if (value !== undefined && value !== null && value !== '') return value;
+  }
+  return null;
+}
+
+export function buildApprovalIdentity(config: any, gateId: any, gate: any = null, state: any = null) {
+  return {
+    run_id: firstPresent(state?.run_id, config._runId, config.run_id),
+    project: firstPresent(state?.project, config.project),
+    gate_id: firstPresent(state?.gate_id, gateId),
+    gate_type: firstPresent(state?.gate_type, gate?.type, 'approval'),
   };
 }

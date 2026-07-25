@@ -83,6 +83,7 @@
         "null"
       ]
     },
+    "reason_code": { "type": ["string", "null"] },
     "session_key": {
       "minLength": 1,
       "type": [

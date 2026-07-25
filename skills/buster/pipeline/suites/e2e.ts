@@ -9,13 +9,9 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // mode; Playwright reporter variation is normalized into deterministic
 // findings/verdicts.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFile } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import {
   createSuiteVerdict,
@@ -26,6 +22,13 @@ import {
 import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 import { REPO_DIR, resolveRepoScopedPath, stripRepoDirPrefix } from './repo-paths.ts';
 import { buildSubprocessEnv } from '../security.ts';
+import {
+  createSuiteLog,
+  suiteErrorMessage as errorMessage,
+  suiteNonEmptyString as nonEmptyString,
+  suiteObject as objectRecord,
+  suiteObjectOrEmpty as objectRecordOrEmpty,
+} from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;
@@ -48,6 +51,21 @@ interface PlaywrightParseResult {
   errors: Array<{ test: string; message: string }>;
 }
 
+interface E2eSettings {
+  projectDir: string;
+  testsDir: string;
+  testFiles: string[];
+  baseUrl: string;
+  thresholds: AnyRecord | null;
+  timeoutMs: number;
+}
+
+interface PlaywrightRun {
+  stdout: string;
+  stderr: string;
+  exitCode: number;
+}
+
 const DEFAULTS = {
   static_port: 9999,
   server_port: 3000,
@@ -57,26 +75,6 @@ const DEFAULTS = {
 };
 
 const execFileAsync = promisify(execFile) as any;
-
-function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
-  return (msg: string): void => {
-    console.log(`[SUITE] [E2E] ${msg}`);
-    if (logSink) logSink({ suite: 'e2e', msg });
-  };
-}
-
-function objectRecord(value: unknown): AnyRecord | null {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
-}
-
-function nonEmptyString(value: unknown): string | null {
-  return typeof value === 'string' && value.trim() ? value : null;
-}
-
-function errorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  return error == null ? 'missing_error_detail' : String(error);
-}
 
 function subprocessExitCode(error: any): number {
   if (Number.isInteger(error?.status)) return error.status;
@@ -147,7 +145,8 @@ function parsePlaywrightOutput(stdout: string, stderr: string): PlaywrightParseR
 
   const failBlocks = combinedOutput.split(/\n\s*\d+\)\s+/);
   for (let i = 1; i < failBlocks.length; i++) {
-    const block = selectDefinedValue(() => (failBlocks[i]), () => (''));
+    const maybeBlock = failBlocks[i];
+    const block: string = maybeBlock === undefined ? '' : maybeBlock;
     const lines = block.split('\n');
     const testName = selectDefinedValue(() => (nonEmptyString(lines[0]?.trim())), () => ('missing_test_name'));
     const errorLines: string[] = [];
@@ -159,7 +158,7 @@ function parsePlaywrightOutput(stdout: string, stderr: string): PlaywrightParseR
       errorLines.push(line);
     }
     const message = selectDefinedValue(() => (nonEmptyString(errorLines.join(' ').slice(0, 300))), () => ('Test failed'));
-    result.errors.push({ test: testName, message });
+    result.errors.push({ test: String(testName), message: String(message) });
   }
 
   return result;
@@ -179,117 +178,110 @@ function contractFailure(startTime: number, message: string, metadata: AnyRecord
   });
 }
 
-export default async function e2eSuite(context: E2eContext): Promise<SuiteVerdict> {
-  const log = createLog(context.logSink);
-  const startTime = Date.now();
-  const serve = selectDefinedValue(() => (objectRecord(context.config?.serve)), () => ({}));
-  const e2eConf = selectDefinedValue(() => (objectRecord(context.config?.e2e)), () => ({}));
-  const rawProjectDir = selectDefinedValue(() => (nonEmptyString(serve.project_dir)), () => (''));
+function resolveE2eSettings(context: E2eContext, log: (message: string) => void): E2eSettings {
+  const serve = objectRecordOrEmpty(context.config?.serve);
+  const config = objectRecordOrEmpty(context.config?.e2e);
+  const rawProjectDir = nonEmptyString(serve.project_dir) ?? '';
   const projectDir = rawProjectDir ? resolveRepoScopedPath(rawProjectDir, { field: 'serve.project_dir' }) : REPO_DIR;
-  if (!projectDir) return contractFailure(startTime, 'serve.project_dir is invalid for e2e suite', {}, log);
-
-  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
-  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
-  const baseUrl = `http://localhost:${port}`;
-
-  if (!e2eConf.tests_dir) return contractFailure(startTime, 'e2e.tests_dir is required when the E2E suite is requested', { project_dir: projectDir }, log);
-
-  let testsDir: string;
-  try {
-    testsDir = resolveTestsDir(String(e2eConf.tests_dir), projectDir);
-  } catch (error) {
-    return contractFailure(startTime, errorMessage(error), { project_dir: projectDir, tests_dir: e2eConf.tests_dir }, log);
-  }
-
-  const thresholds = selectTruthyValue(() => (e2eConf.thresholds), () => (null));
-  const enforced = thresholds !== null;
-  const mode = evidenceMode(enforced);
-  const timeoutMs = timeoutWithinSuite(e2eTimeoutMsAuthority(e2eConf), context);
-
-  log(`Looking for tests in ${testsDir} (mode: ${mode})`);
+  if (!projectDir) throw new Error('serve.project_dir is invalid for e2e suite');
+  if (!config.tests_dir) throw new Error('e2e.tests_dir is required when the E2E suite is requested');
+  const testsDir = resolveTestsDir(String(config.tests_dir), projectDir);
   const testFiles = discoverTests(testsDir, log);
+  if (testFiles.length === 0) throw new Error(`No test files found in ${testsDir}`);
+  const type = nonEmptyString(serve.type) ?? 'static';
+  const port = serve.port ?? (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
+  return {
+    projectDir,
+    testsDir,
+    testFiles,
+    baseUrl: `http://localhost:${port}`,
+    thresholds: objectRecord(config.thresholds),
+    timeoutMs: timeoutWithinSuite(e2eTimeoutMsAuthority(config), context),
+  };
+}
 
-  if (testFiles.length === 0) {
-    return contractFailure(startTime, `No test files found in ${testsDir}`, { tests_dir: testsDir, patterns: DEFAULTS.test_patterns }, log);
-  }
-
-  log(`Found ${testFiles.length} test file(s): ${testFiles.map((file) => path.basename(file)).join(', ')}`);
-
-  const env = buildSubprocessEnv({ BASE_URL: baseUrl, PLAYWRIGHT_BROWSERS_PATH: '/ms-playwright', CI: 'true' });
-  const playwrightArgs = ['test', ...testFiles, '--reporter=line', `--timeout=${timeoutMs}`];
-
-  let stdout = '';
-  let stderr = '';
-  let exitCode = 0;
-
+async function runPlaywright(context: E2eContext, settings: E2eSettings): Promise<PlaywrightRun> {
+  const env = buildSubprocessEnv({ BASE_URL: settings.baseUrl, PLAYWRIGHT_BROWSERS_PATH: '/ms-playwright', CI: 'true' });
+  const args = ['test', ...settings.testFiles, '--reporter=line', `--timeout=${settings.timeoutMs}`];
   try {
-    const result = await execFileAsync('playwright', playwrightArgs, {
+    const result = await execFileAsync('playwright', args, {
       encoding: 'utf8',
-      timeout: timeoutWithinSuite(timeoutMs + 10000, context),
+      timeout: timeoutWithinSuite(settings.timeoutMs + 10000, context),
       env,
-      cwd: testsDir,
+      cwd: settings.testsDir,
       stdio: ['pipe', 'pipe', 'pipe'],
       signal: context.suiteAbortSignal,
     });
-    stdout = selectDefinedValue(() => (result.stdout), () => (''));
-    stderr = selectDefinedValue(() => (result.stderr), () => (''));
+    return { stdout: result.stdout ?? '', stderr: result.stderr ?? '', exitCode: 0 };
   } catch (error: any) {
-    exitCode = subprocessExitCode(error);
-    stdout = selectDefinedValue(() => (error?.stdout), () => (''));
-    stderr = selectDefinedValue(() => (error?.stderr), () => (''));
+    return { stdout: error?.stdout ?? '', stderr: error?.stderr ?? '', exitCode: subprocessExitCode(error) };
   }
+}
 
-  const parsed = parsePlaywrightOutput(stdout, stderr);
-  if (parsed.total === 0 && exitCode !== 0) {
-    const duration_ms = Date.now() - startTime;
-    const errorOutput = selectDefinedValue(() => (nonEmptyString(stderr)), () => (nonEmptyString(stdout)));
-    const errorMsg = errorOutput ? errorOutput.slice(0, 500) : `Playwright exited with code ${exitCode}`;
-    log(`ERROR: Playwright failed to run — ${errorMsg.slice(0, 100)}`);
+function playwrightExecutionError(startTime: number, settings: E2eSettings, run: PlaywrightRun, log: (message: string) => void): SuiteVerdict {
+  const output = nonEmptyString(run.stderr) ?? nonEmptyString(run.stdout);
+  const message = output ? output.slice(0, 500) : `Playwright exited with code ${run.exitCode}`;
+  log(`ERROR: Playwright failed to run — ${message.slice(0, 100)}`);
+  return createSuiteVerdict('e2e', STATUS.ERROR, {
+    critical: false,
+    duration_ms: Date.now() - startTime,
+    error: message,
+    findings: [createFinding(SEVERITY.SERIOUS, `Playwright execution error: ${message.slice(0, 200)}`, { rule: 'playwright-error' })],
+    metadata: { tests_dir: settings.testsDir, test_files: settings.testFiles.length, exit_code: run.exitCode },
+  });
+}
 
-    return createSuiteVerdict('e2e', STATUS.ERROR, {
-      critical: false,
-      duration_ms,
-      error: errorMsg,
-      findings: [createFinding(SEVERITY.SERIOUS, `Playwright execution error: ${errorMsg.slice(0, 200)}`, { rule: 'playwright-error' })],
-      metadata: { tests_dir: testsDir, test_files: testFiles.length, exit_code: exitCode },
-    });
-  }
-
-  const findings: Finding[] = [];
-  for (const err of parsed.errors) {
-    if (findings.length >= DEFAULTS.max_findings) break;
-    findings.push(createFinding(SEVERITY.SERIOUS, `${err.test}: ${err.message}`, { rule: 'e2e-test' }));
-  }
-
+function playwrightFindings(parsed: PlaywrightParseResult): Finding[] {
+  const findings = parsed.errors.slice(0, DEFAULTS.max_findings)
+    .map((error) => createFinding(SEVERITY.SERIOUS, `${error.test}: ${error.message}`, { rule: 'e2e-test' }));
   if (parsed.failed > 0 && findings.length === 0) {
     findings.push(createFinding(SEVERITY.SERIOUS, `${parsed.failed} test(s) failed — check test output for details`, { rule: 'e2e-test' }));
   }
+  return findings;
+}
 
-  let status: SuiteStatus = STATUS.PASS;
-  const maxFailures = selectDefinedValue(() => (thresholds?.max_failures), () => (0));
-  if (enforced && parsed.failed > maxFailures) status = STATUS.FAIL;
-
-  const duration_ms = Date.now() - startTime;
-  const icon = status === STATUS.PASS ? '✅' : '⚠️';
-  log(`${icon} ${mode}: ${parsed.passed}/${parsed.total} passed, ${parsed.failed} failed, ${parsed.skipped} skipped (${duration_ms}ms)`);
-
+function completedE2eVerdict(startTime: number, settings: E2eSettings, run: PlaywrightRun, parsed: PlaywrightParseResult, log: (message: string) => void): SuiteVerdict {
+  const enforced = settings.thresholds !== null;
+  const mode = evidenceMode(enforced);
+  const maxFailures = settings.thresholds?.max_failures ?? 0;
+  const status: SuiteStatus = enforced && parsed.failed > maxFailures ? STATUS.FAIL : STATUS.PASS;
+  const durationMs = Date.now() - startTime;
+  log(`${status === STATUS.PASS ? '✅' : '⚠️'} ${mode}: ${parsed.passed}/${parsed.total} passed, ${parsed.failed} failed, ${parsed.skipped} skipped (${durationMs}ms)`);
   return createSuiteVerdict('e2e', status, {
     critical: false,
-    duration_ms,
+    duration_ms: durationMs,
     checks_total: parsed.total,
     checks_passed: parsed.passed,
     checks_failed: parsed.failed,
-    findings,
+    findings: playwrightFindings(parsed),
     metadata: {
-      tests_dir: testsDir,
-      test_files: testFiles.length,
-      base_url: baseUrl,
+      tests_dir: settings.testsDir,
+      test_files: settings.testFiles.length,
+      base_url: settings.baseUrl,
       mode,
-      exit_code: exitCode,
+      exit_code: run.exitCode,
       skipped: parsed.skipped,
-      ...(enforced ? { thresholds } : {}),
+      ...(enforced ? { thresholds: settings.thresholds } : {}),
     },
   });
+}
+
+export default async function e2eSuite(context: E2eContext): Promise<SuiteVerdict> {
+  const log = createSuiteLog('e2e', 'E2E', context.logSink);
+  const startTime = Date.now();
+  let settings: E2eSettings;
+  try {
+    settings = resolveE2eSettings(context, log);
+  } catch (error) {
+    return contractFailure(startTime, errorMessage(error), {}, log);
+  }
+  const mode = evidenceMode(settings.thresholds !== null);
+  log(`Looking for tests in ${settings.testsDir} (mode: ${mode})`);
+  log(`Found ${settings.testFiles.length} test file(s): ${settings.testFiles.map((file) => path.basename(file)).join(', ')}`);
+  const run = await runPlaywright(context, settings);
+  const parsed = parsePlaywrightOutput(run.stdout, run.stderr);
+  if (parsed.total === 0 && run.exitCode !== 0) return playwrightExecutionError(startTime, settings, run, log);
+  return completedE2eVerdict(startTime, settings, run, parsed, log);
 }
 
 function e2eTimeoutMsAuthority(e2eConf: AnyRecord): number {

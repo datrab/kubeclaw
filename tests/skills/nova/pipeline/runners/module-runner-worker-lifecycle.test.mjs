@@ -80,34 +80,41 @@ function statusFixture(overrides = {}) {
   };
 }
 
+function forgePhaseHarness(config, runModuleForgeWorker, policy = {}) {
+  const state = { status: statusFixture() };
+  const clone = (value) => JSON.parse(JSON.stringify(value));
+  return {
+    state,
+    deps: {
+      runPreflightValidation: () => ({ passed: true }),
+      resolvePolicy: () => ({ model: 'forge-model', thinking: null, model_source: 'test', ...policy }),
+      logEffectivePolicy: () => {},
+      buildForgePrompt: () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
+      savePrompt: () => {},
+      saveStatus: (_config, _dir, nextStatus) => { state.status = clone(nextStatus); },
+      loadStatus: () => clone(state.status),
+      applyModuleCompletion: (_config, _dir, nextStatus, completion) => {
+        nextStatus.status = completion.phase === 'forge' && completion.status === 'PASS'
+          ? STATUS.READY_FOR_TESTING
+          : completion.status;
+        nextStatus.current_phase = null;
+        nextStatus.completion_summary = completion.summary;
+        state.status = clone(nextStatus);
+        return { status: nextStatus };
+      },
+      setShutdownContext: () => {},
+      invalidateHeadHash: () => {},
+      headHash: () => 'head-before',
+      acpLabel: () => 'forge-module-a',
+      discord: async () => {},
+      runModuleForgeWorker,
+    },
+  };
+}
+
 test('forge worker dispatch-then-throw clears persisted active_agent and preserves terminal correlation', async () => {
   const config = configWithWorker('worker:module_forge', 'builtin.worker.module_forge');
-  let savedStatus = statusFixture();
-  const deps = {
-    runPreflightValidation: () => ({ passed: true }),
-    resolvePolicy: () => ({ model: 'forge-model', thinking: null, model_source: 'test' }),
-    logEffectivePolicy: () => {},
-    buildForgePrompt: () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
-    savePrompt: () => {},
-    saveStatus: (_config, _dir, nextStatus) => {
-      savedStatus = JSON.parse(JSON.stringify(nextStatus));
-    },
-    loadStatus: () => JSON.parse(JSON.stringify(savedStatus)),
-    applyModuleCompletion: (_config, _dir, nextStatus, completion) => {
-      nextStatus.status = completion.phase === 'forge' && completion.status === 'PASS'
-        ? STATUS.READY_FOR_TESTING
-        : completion.status;
-      nextStatus.current_phase = null;
-      nextStatus.completion_summary = completion.summary;
-      savedStatus = JSON.parse(JSON.stringify(nextStatus));
-      return { status: nextStatus };
-    },
-    setShutdownContext: () => {},
-    invalidateHeadHash: () => {},
-    headHash: () => 'head-before',
-    acpLabel: () => 'forge-module-a',
-    discord: async () => {},
-    runModuleForgeWorker: async ({ workerInput }) => {
+  const { deps, state } = forgePhaseHarness(config, async ({ workerInput }) => {
       await workerInput.onDispatched({
         session_key: 'forge-session',
         gateway_label: 'forge-gateway',
@@ -115,8 +122,7 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
         run_id: 'run-worker-lifecycle',
       });
       throw new Error('forge worker crashed after dispatch');
-    },
-  };
+  });
 
   const result = await runModuleForgePhase({
     config,
@@ -124,7 +130,7 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
     moduleId: 'module-a',
     mod: { title: 'Module A', stages: ['forge'] },
     dir: 'module-a',
-    status: savedStatus,
+    status: state.status,
     maxFails: 1,
     timeout: 1,
     novaPrompt: null,
@@ -135,7 +141,7 @@ test('forge worker dispatch-then-throw clears persisted active_agent and preserv
   assert.equal(result.terminal.result.outcome, 'error');
   assert.equal(result.terminal.result.correlation.session_key, 'forge-session');
   assert.equal(result.terminal.result.correlation.gateway_label, 'forge-gateway');
-  assert.equal(savedStatus.active_agent, null);
+  assert.equal(state.status.active_agent, null);
   assert.equal(result.status.active_agent, null);
 });
 
@@ -155,33 +161,8 @@ test('module runner default deps expose Forge worker polling authority', () => {
 
 test('forge startup retries use dedicated swarm config budget before succeeding', async () => {
   const config = configWithWorker('worker:module_forge', 'builtin.worker.module_forge');
-  let savedStatus = statusFixture();
   let workerCalls = 0;
-  const deps = {
-    runPreflightValidation: () => ({ passed: true }),
-    resolvePolicy: () => ({ model: 'forge-model', thinking: null, model_source: 'test', thinking_source: 'test' }),
-    logEffectivePolicy: () => {},
-    buildForgePrompt: () => ({ prompt: 'forge prompt', recalledMemoryIds: [] }),
-    savePrompt: () => {},
-    saveStatus: (_config, _dir, nextStatus) => {
-      savedStatus = JSON.parse(JSON.stringify(nextStatus));
-    },
-    loadStatus: () => JSON.parse(JSON.stringify(savedStatus)),
-    applyModuleCompletion: (_config, _dir, nextStatus, completion) => {
-      nextStatus.status = completion.phase === 'forge' && completion.status === 'PASS'
-        ? STATUS.READY_FOR_TESTING
-        : completion.status;
-      nextStatus.current_phase = null;
-      nextStatus.completion_summary = completion.summary;
-      savedStatus = JSON.parse(JSON.stringify(nextStatus));
-      return { status: nextStatus };
-    },
-    setShutdownContext: () => {},
-    invalidateHeadHash: () => {},
-    headHash: () => 'head-before',
-    acpLabel: () => 'forge-module-a',
-    discord: async () => {},
-    runModuleForgeWorker: async (ctx) => {
+  const { deps, state } = forgePhaseHarness(config, async (ctx) => {
       workerCalls += 1;
       if (workerCalls < 3) {
         return buildModuleForgeWorkerControlResult(config, ctx.workerInput, {
@@ -203,8 +184,7 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
           summary: 'Forge completion evidence ready',
         },
       });
-    },
-  };
+  }, { thinking_source: 'test' });
 
   const result = await runModuleForgePhase({
     config,
@@ -212,7 +192,7 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
     moduleId: 'module-a',
     mod: { title: 'Module A', stages: ['forge', 'buster'] },
     dir: 'module-a',
-    status: savedStatus,
+    status: state.status,
     maxFails: 1,
     timeout: 1,
     novaPrompt: null,
@@ -222,8 +202,8 @@ test('forge startup retries use dedicated swarm config budget before succeeding'
 
   assert.equal(workerCalls, 3);
   assert.equal(result.terminal, null);
-  assert.equal(savedStatus.fail_count, 0);
-  assert.equal(savedStatus.status, STATUS.READY_FOR_TESTING);
+  assert.equal(state.status.fail_count, 0);
+  assert.equal(state.status.status, STATUS.READY_FOR_TESTING);
 });
 
 test('buster worker dispatch-then-throw clears persisted active_agent and preserves terminal correlation', async () => {

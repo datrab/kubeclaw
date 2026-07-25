@@ -130,7 +130,7 @@ test('telemetry sink and stream envelopes keep authoritative identity fields', (
   assert.equal(event.seq, 7);
   assert.equal(event.project, config.project);
   assert.equal(event.source, 'pipeline');
-  assert.equal(event.emitter, 'option-emitter');
+  assert.equal(event.producer, 'option-emitter');
   assert.equal(event.module_id, 'alpha');
 });
 

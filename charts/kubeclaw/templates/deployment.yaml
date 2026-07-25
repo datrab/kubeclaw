@@ -67,16 +67,13 @@ spec:
           securityContext:
             # Init always runs as root (needs chown, mkdir /root/.ssh, etc.)
             runAsUser: 0
+            readOnlyRootFilesystem: true
           command:
             - /bin/bash
             - -c
             - |
               set -e
               echo "==> 0. Backup Originals"
-              if [ -d /app/skills ] && [ ! -d /app/skills_org ]; then
-                cp -r /app/skills /app/skills_org
-                echo "    /app/skills_org created"
-              fi
               if [ -f /config/openclaw.json ] && [ ! -f /config/openclaw_org.json ]; then
                 cp /config/openclaw.json /config/openclaw_org.json
                 echo "    openclaw_org.json created"
@@ -104,9 +101,6 @@ spec:
               REPO_DIR="/workspace/git-repo"
               CURRENT_AGENT="${AGENT_NAME:-unknown}"
               AGENT_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${CURRENT_AGENT:0:1})${CURRENT_AGENT:1}"
-              git config --global user.email "${CURRENT_AGENT}@kubeclaw.swarm"
-              git config --global user.name "${AGENT_CAPITALIZED} Agent"
-
               if [ ! -d "$REPO_DIR/.git" ]; then
                 echo "    Cloning repository..."
                 git clone "$GIT_REPO_URL" "$REPO_DIR"
@@ -133,6 +127,8 @@ spec:
                   echo "    WARNING: Repository has local edits; skipping git update to preserve workspace changes." >&2
                 fi
               fi
+              git -C "$REPO_DIR" config user.email "${CURRENT_AGENT}@kubeclaw.swarm"
+              git -C "$REPO_DIR" config user.name "${AGENT_CAPITALIZED} Agent"
 
               echo "==> 3. Workspace Sync"
               mkdir -p /workspace/memory
@@ -325,7 +321,7 @@ spec:
                 cp -Lf "/init-swarm-config/.tflint.hcl" "/config/.tflint.hcl"
                 echo "    .tflint.hcl written from chart source"
               fi
-              for lint_config in knip.json jscpd.json lint-baseline.json; do
+              for lint_config in knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
                 if [ -f "/init-swarm-config/$lint_config" ]; then
                   cp -Lf "/init-swarm-config/$lint_config" "/config/$lint_config"
                   echo "    $lint_config written from chart source"
@@ -356,7 +352,7 @@ spec:
               if [ -f /config/.tflint.hcl ]; then
                 cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl
               fi
-              for lint_config in knip.json jscpd.json lint-baseline.json; do
+              for lint_config in knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
                 if [ -f "/config/$lint_config" ]; then
                   cp -Lf "/config/$lint_config" "/runtime-config/$lint_config"
                 fi
@@ -940,6 +936,8 @@ spec:
             - name: init-swarm-config
               mountPath: /init-swarm-config
               readOnly: true
+            - name: tmp
+              mountPath: /tmp
 
       # ---------------------------------------------------------------
       # MAIN CONTAINERS
@@ -1089,6 +1087,8 @@ spec:
               mountPath: /root/.ssh
             - name: skills-merged
               mountPath: /app/skills
+            - name: tmp
+              mountPath: /tmp
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -1124,6 +1124,7 @@ spec:
             {{- end }}
             allowPrivilegeEscalation: false
             privileged: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
@@ -1429,6 +1430,8 @@ spec:
             defaultMode: 0444
             optional: true
         - name: skills-merged
+          emptyDir: {}
+        - name: tmp
           emptyDir: {}
         {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }}
         - name: buildkit-state

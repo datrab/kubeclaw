@@ -163,6 +163,7 @@ test('model usage snapshots are idempotent when an ack failure causes replay', a
     }),
     env: {},
     redisClientFactory: () => redis,
+    publishArtifact: () => null,
     emitEvent: async (_ctx, _type, payload) => {
       emittedPayloads.push(payload);
       return { ok: true };

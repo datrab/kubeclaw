@@ -18,6 +18,7 @@ test('hasAnyStartedModules normalizes module-prefixed execution entries', () => 
       swarm_dir: path.join(dir, '.swarm'),
       modules_dir: path.join(dir, 'modules'),
     },
+    locks: { lifecycle_append: { stale_ms: 5000, timeout_ms: 1000, retry_ms: 5 } },
   };
   const progress = {
     execution_order: ['module:api'],

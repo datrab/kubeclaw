@@ -46,7 +46,7 @@ function redisSurfaces(config: AnyRecord = {}): Array<{ name: string; opts: AnyR
 
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | null = null;
-  const timeout = new Promise<T>((_resolve, reject) => {
+  const timeout = new Promise<T>((_resolve: any, reject: any) => {
     timer = setTimeout(() => {
       const error = new Error(`${label} Redis preflight timed out after ${timeoutMs}ms`) as Error & { code?: string };
       error.code = 'REDIS_CONNECTION_UNAVAILABLE';
@@ -66,7 +66,7 @@ function redisPreflightError(error: unknown, lastRedisError: unknown, surfaceNam
   if (!root) return error;
   const wrapped = new Error(`${surfaceName} Redis preflight failed: ${root.message}`) as Error & AnyRecord;
   wrapped.name = root.name;
-  wrapped.code = (root as AnyRecord).code || (error as AnyRecord)?.code || 'REDIS_CONNECTION_UNAVAILABLE';
+  wrapped.code = (root as AnyRecord).code ?? 'REDIS_CONNECTION_UNAVAILABLE';
   wrapped.cause = root;
   return wrapped;
 }
@@ -96,7 +96,7 @@ async function preflightSurface(
     if (typeof redis.ping === 'function') {
       await withTimeout(Promise.resolve(redis.ping()), surface.timeoutMs, surface.name);
     }
-  } catch (error) {
+  } catch (error: any) {
     throw redisPreflightError(error, lastRedisError, surface.name);
   } finally {
     redis.off?.('error', onRedisError);
@@ -109,7 +109,7 @@ export async function preflightRuntimeRedis(config: AnyRecord = {}, env: Record<
   for (const surface of redisSurfaces(config)) {
     try {
       await preflightSurface(surface, env);
-    } catch (error) {
+    } catch (error: any) {
       if (selectTruthyValue(() => (!error), () => (typeof error !== 'object'))) throw error;
       (error as AnyRecord).surface = surface.name;
       throw error;

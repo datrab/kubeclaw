@@ -16,7 +16,7 @@ export function sanitizeForJson(value: unknown, seen: WeakSet<object> = new Weak
   if (seen.has(value)) return '[Circular]';
   seen.add(value);
   try {
-    if (Array.isArray(value)) return value.map((entry) => sanitizeForJson(entry, seen));
+    if (Array.isArray(value)) return value.map((entry: any) => sanitizeForJson(entry, seen));
     const output: Record<string, JsonSafeValue> = {};
     for (const [key, child] of Object.entries(value)) {
       output[key] = sanitizeForJson(child, seen);

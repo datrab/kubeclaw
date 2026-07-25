@@ -20,7 +20,7 @@ export async function runModulePreflight({
   maxFails,
   deps,
   recalledMemoryIds = [],
-} = {}) {
+}: any = {}) {
   const preflightResult = deps.runPreflightValidation(mod, dir, config);
   if (preflightResult.passed) return { status, terminal: null };
 
@@ -37,18 +37,16 @@ export async function runModulePreflight({
       ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.MODULE_SESSION, preflightCorrelation),
       { name: 'Stage', value: 'preflight_contract' },
       { name: 'Issues', value: String(preflightResult.failures.length) },
-      { name: 'Codes', value: preflightResult.failures.map(f => f.code).join(', ') },
+      { name: 'Codes', value: preflightResult.failures.map((f: any) => f.code).join(', ') },
     ],
     { correlation: preflightCorrelation },
   );
 
-  const failResult = await deps.handleFail(config, status, dir, moduleId, maxFails, 'preflight_contract', reason, {
+  const failResult = await deps.handleFail({ config, status, moduleDir: dir, moduleId, maxFails, phase: 'preflight_contract', reason, opts: {
     progress,
     recalledMemoryIds,
-  });
+  } });
   return failResult._retry
     ? { status, terminal: buildRetryResult(failResult, status) }
     : { status, terminal: { retry: false, result: failResult } };
 }
-
-export default runModulePreflight;

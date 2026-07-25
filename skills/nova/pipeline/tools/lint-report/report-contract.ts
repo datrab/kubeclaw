@@ -1,6 +1,7 @@
 import { LINT_POLICY_SCHEMA_VERSION } from './policy.ts';
+import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
-const LINT_REPORT_SCHEMA_VERSION = 'pipeline_lint_report.v5';
+const LINT_REPORT_SCHEMA_VERSION = 'pipeline_lint_report.v6';
 const TOOL_STATUSES = new Set(['ok', 'error', 'not_applicable']);
 const FINDING_SEVERITIES = new Set(['info', 'warning', 'error']);
 type AnyRecord = Record<string, any>;
@@ -19,7 +20,8 @@ function fail(path: string, message: string): never {
 }
 
 function requireRecord(value: unknown, path: string): AnyRecord {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) fail(path, 'required object');
+  if (!value || typeof value !== 'object') fail(path, 'required object');
+  if (Array.isArray(value)) fail(path, 'required object');
   return value;
 }
 
@@ -41,7 +43,7 @@ function validateFinding(finding: unknown, path: string): void {
   if (!/^[a-f0-9]{64}$/.test(value.fingerprint)) fail(`${path}.fingerprint`, 'required lowercase SHA-256');
   if (value.baseline !== undefined) {
     const baseline = requireRecord(value.baseline, `${path}.baseline`);
-    for (const field of ['owner', 'reason', 'expires', 'tracking']) requireString(baseline[field], `${path}.baseline.${field}`);
+    for (const field of ['owner', 'reason', 'created', 'expires', 'tracking', 'approved_by', 'approved_on']) requireString(baseline[field], `${path}.baseline.${field}`);
   }
   for (const coordinate of ['line', 'column']) {
     if (value[coordinate] !== null && value[coordinate] !== undefined) {
@@ -52,43 +54,59 @@ function validateFinding(finding: unknown, path: string): void {
   }
 }
 
-function validateToolResult(result: unknown, path: string, toolPolicies: AnyRecord): void {
+function validateToolPolicy(value: AnyRecord, path: string, expected: AnyRecord | null): void {
+  requireString(value.category, `${path}.category`);
+  requireString(value.scope, `${path}.scope`);
+  if (!['warning', 'error'].includes(value.blocking_severity)) fail(`${path}.blocking_severity`, 'unknown severity');
+  if (!['blocking', 'experimental'].includes(value.mode)) fail(`${path}.mode`, 'unknown mode');
+  if (!expected) return;
+  for (const field of ['category', 'scope', 'blocking_severity', 'mode']) if (value[field] !== expected[field]) fail(`${path}.${field}`, 'does not match configured tool policy');
+}
+
+function validateExperimentalResult(value: AnyRecord, path: string, visibility: AnyRecord): void {
+  if (!visibility.experimental) fail(`${path}.mode`, 'experimental tool cannot appear in normal output');
+  const forbiddenTotal = value.errors + value.warnings + value.blocking_findings + value.baselined_findings;
+  if (forbiddenTotal !== 0) fail(path, 'experimental findings cannot affect blocking or debt counts');
+  if (value.experimental_findings < value.findings.length) fail(`${path}.experimental_findings`, 'cannot be lower than disclosed findings');
+  if (value.findings.some((finding: AnyRecord) => finding.baseline)) fail(`${path}.findings`, 'experimental findings cannot carry suppressions');
+}
+
+function validateBlockingResult(value: AnyRecord, path: string, visibility: AnyRecord): void {
+  const errors = value.findings.filter((finding: AnyRecord) => !finding.baseline && finding.severity === 'error').length;
+  const warnings = value.findings.filter((finding: AnyRecord) => !finding.baseline && finding.severity === 'warning').length;
+  const baselined = value.findings.filter((finding: AnyRecord) => finding.baseline).length;
+  if (errors > value.errors) fail(`${path}.errors`, `cannot be lower than ${errors} reported findings`);
+  if (warnings > value.warnings) fail(`${path}.warnings`, `cannot be lower than ${warnings} reported findings`);
+  if (baselined > value.baselined_findings) fail(`${path}.baselined_findings`, `cannot be lower than ${baselined} disclosed debt findings`);
+  validateDebtVisibility(value, path, visibility, baselined);
+  if (value.experimental_findings !== 0) fail(`${path}.experimental_findings`, 'blocking tool cannot report experimental findings');
+  const blocking = value.blocking_severity === 'warning' ? value.errors + value.warnings : value.errors;
+  if (value.blocking_findings !== blocking) fail(`${path}.blocking_findings`, `expected ${blocking} from findings`);
+}
+
+function validateDebtVisibility(value: AnyRecord, path: string, visibility: AnyRecord, disclosed: number): void {
+  if (visibility.debt && value.baselined_findings !== disclosed) fail(`${path}.baselined_findings`, `expected all ${value.baselined_findings} debt findings when debt visibility is enabled`);
+  if (!visibility.debt && disclosed !== 0) fail(`${path}.findings`, 'normal output must not contain debt findings');
+}
+
+function validateOkToolResult(value: AnyRecord, path: string, toolPolicies: AnyRecord, visibility: AnyRecord): void {
+  for (const field of ['errors', 'warnings', 'blocking_findings', 'baselined_findings', 'experimental_findings']) requireCount(value[field], `${path}.${field}`);
+  if (!Array.isArray(value.findings)) fail(`${path}.findings`, 'required array');
+  validateToolPolicy(value, path, expectedToolPolicy(path, toolPolicies));
+  value.findings.forEach((finding: any, index: any) => validateFinding(finding, `${path}.findings[${index}]`));
+  if (value.mode === 'experimental') validateExperimentalResult(value, path, visibility);
+  else validateBlockingResult(value, path, visibility);
+}
+
+function validateToolResult(result: unknown, path: string, toolPolicies: AnyRecord, visibility: AnyRecord): void {
   const value = requireRecord(result, path);
   if (!TOOL_STATUSES.has(value.status)) fail(`${path}.status`, 'unknown status');
   requireCount(value.duration_ms, `${path}.duration_ms`);
-
-  if (value.status === 'ok') {
-    requireCount(value.errors, `${path}.errors`);
-    requireCount(value.warnings, `${path}.warnings`);
-    if (!Array.isArray(value.findings)) fail(`${path}.findings`, 'required array');
-    requireCount(value.blocking_findings, `${path}.blocking_findings`);
-    requireCount(value.baselined_findings, `${path}.baselined_findings`);
-    requireString(value.category, `${path}.category`);
-    requireString(value.scope, `${path}.scope`);
-    if (!['warning', 'error'].includes(value.blocking_severity)) fail(`${path}.blocking_severity`, 'unknown severity');
-    const expectedTool = expectedToolPolicy(path, toolPolicies);
-    if (expectedTool) {
-      for (const field of ['category', 'scope', 'blocking_severity']) if (value[field] !== expectedTool[field]) fail(`${path}.${field}`, 'does not match configured tool policy');
-    }
-    value.findings.forEach((finding, index) => validateFinding(finding, `${path}.findings[${index}]`));
-    const errors = value.findings.filter(finding => !finding.baseline && finding.severity === 'error').length;
-    const warnings = value.findings.filter(finding => !finding.baseline && finding.severity === 'warning').length;
-    const baselined = value.findings.filter(finding => finding.baseline).length;
-    if (errors > value.errors) fail(`${path}.errors`, `cannot be lower than ${errors} reported findings`);
-    if (warnings > value.warnings) fail(`${path}.warnings`, `cannot be lower than ${warnings} reported findings`);
-    if (value.baselined_findings !== baselined) fail(`${path}.baselined_findings`, `expected ${baselined} from findings`);
-    const blocking = value.blocking_severity === 'warning' ? value.errors + value.warnings : value.errors;
-    if (value.blocking_findings !== blocking) fail(`${path}.blocking_findings`, `expected ${blocking} from findings`);
-    return;
-  }
-
-  if (value.status === 'error') {
+  if (value.status === 'ok') validateOkToolResult(value, path, toolPolicies, visibility);
+  else if (value.status === 'error') {
     requireString(value.code, `${path}.code`);
     requireString(value.error, `${path}.error`);
-    return;
-  }
-
-  requireString(value.reason, `${path}.reason`);
+  } else requireString(value.reason, `${path}.reason`);
 }
 
 function expectedToolPolicy(path: string, policies: AnyRecord): AnyRecord | null {
@@ -96,83 +114,90 @@ function expectedToolPolicy(path: string, policies: AnyRecord): AnyRecord | null
   return toolId && policies[toolId] ? policies[toolId] : null;
 }
 
-function validateLintReport(report: unknown, expected: AnyRecord = {}): AnyRecord {
-  const value = requireRecord(report, 'report');
-  if (value.schema_version !== LINT_REPORT_SCHEMA_VERSION) {
-    fail('report.schema_version', `expected ${LINT_REPORT_SCHEMA_VERSION}`);
-  }
-  requireString(value.project, 'report.project');
+function validatePolicyEvidence(value: AnyRecord, expected: AnyRecord): AnyRecord {
   const policy = requireRecord(value.policy, 'report.policy');
   if (policy.schema_version !== LINT_POLICY_SCHEMA_VERSION) fail('report.policy.schema_version', `expected ${LINT_POLICY_SCHEMA_VERSION}`);
-  requireString(policy.digest, 'report.policy.digest');
-  requireString(policy.baseline_digest, 'report.policy.baseline_digest');
-  requireString(policy.project, 'report.policy.project');
+  for (const field of ['digest', 'baseline_digest', 'project']) requireString(policy[field], `report.policy.${field}`);
   const configDigests = requireRecord(policy.config_digests, 'report.policy.config_digests');
   for (const [toolId, digest] of Object.entries(configDigests)) {
     requireString(toolId, 'report.policy.config_digests key');
     requireString(digest, `report.policy.config_digests.${toolId}`);
   }
-  if (expected.tier !== undefined && value.tier !== expected.tier) fail('report.tier', `expected requested tier ${expected.tier}`);
+  validateExpectedPolicy(policy, configDigests, expected);
+  return policy;
+}
+
+function validateExpectedPolicy(policy: AnyRecord, configDigests: AnyRecord, expected: AnyRecord): void {
   if (expected.policyProject !== undefined && policy.project !== expected.policyProject) fail('report.policy.project', `expected configured project ${expected.policyProject}`);
   if (expected.policyDigest !== undefined && policy.digest !== expected.policyDigest) fail('report.policy.digest', 'does not match configured policy');
   if (expected.baselineDigest !== undefined && policy.baseline_digest !== expected.baselineDigest) fail('report.policy.baseline_digest', 'does not match configured baseline');
-  if (expected.configDigests !== undefined) {
-    const actualKeys = Object.keys(configDigests).sort();
-    const expectedKeys = Object.keys(expected.configDigests).sort();
-    if (JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)) fail('report.policy.config_digests', 'keys do not match configured native configs');
-    for (const toolId of expectedKeys) if (configDigests[toolId] !== expected.configDigests[toolId]) fail(`report.policy.config_digests.${toolId}`, 'does not match configured native config');
-  }
-  requireString(value.scope, 'report.scope');
+  if (expected.configDigests !== undefined) validateConfigDigests(configDigests, expected.configDigests);
+}
+
+function validateConfigDigests(actual: AnyRecord, expected: AnyRecord): void {
+  const actualKeys = Object.keys(actual).sort();
+  const expectedKeys = Object.keys(expected).sort();
+  if (JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)) fail('report.policy.config_digests', 'keys do not match configured native configs');
+  for (const toolId of expectedKeys) if (actual[toolId] !== expected[toolId]) fail(`report.policy.config_digests.${toolId}`, 'does not match configured native config');
+}
+
+function validateReportScope(value: AnyRecord, expected: AnyRecord): AnyRecord {
+  for (const field of ['project', 'scope', 'timestamp', 'tier']) requireString(value[field], `report.${field}`);
+  validateExpectedScope(value, expected);
+  const visibility = requireRecord(value.visibility, 'report.visibility');
+  for (const field of ['debt', 'experimental']) if (typeof visibility[field] !== 'boolean') fail(`report.visibility.${field}`, 'required boolean');
+  if (expected.visibility !== undefined && JSON.stringify(visibility) !== JSON.stringify(expected.visibility)) fail('report.visibility', 'does not match requested visibility');
+  validateReportLists(value, expected);
+  return visibility;
+}
+
+function validateExpectedScope(value: AnyRecord, expected: AnyRecord): void {
+  if (expected.tier !== undefined && value.tier !== expected.tier) fail('report.tier', `expected requested tier ${expected.tier}`);
   if (expected.scope !== undefined && value.scope !== expected.scope) fail('report.scope', `expected requested scope ${expected.scope}`);
-  requireString(value.timestamp, 'report.timestamp');
-  requireString(value.tier, 'report.tier');
+}
+
+function validateReportLists(value: AnyRecord, expected: AnyRecord): void {
   if (!Array.isArray(value.changed_files)) fail('report.changed_files', 'required array');
-  value.changed_files.forEach((file, index) => requireString(file, `report.changed_files[${index}]`));
-  if (expected.changedFiles !== undefined && JSON.stringify(value.changed_files) !== JSON.stringify(expected.changedFiles)) {
-    fail('report.changed_files', 'does not match requested changed-file scope');
-  }
+  value.changed_files.forEach((file: any, index: any) => requireString(file, `report.changed_files[${index}]`));
+  if (expected.changedFiles !== undefined && JSON.stringify(value.changed_files) !== JSON.stringify(expected.changedFiles)) fail('report.changed_files', 'does not match requested changed-file scope');
   if (!Array.isArray(value.detected_types)) fail('report.detected_types', 'required array');
   if (!Array.isArray(value.diagnostics)) fail('report.diagnostics', 'required array');
+}
 
-  const tools = requireRecord(value.tools, 'report.tools');
-  if (expected.toolIds !== undefined) {
-    const actualToolIds = Object.keys(tools).sort();
-    const expectedToolIds = [...expected.toolIds].sort();
-    if (JSON.stringify(actualToolIds) !== JSON.stringify(expectedToolIds)) fail('report.tools', `expected exact tool inventory: ${expectedToolIds.join(', ') || '<empty>'}`);
-  }
-  const summary = requireRecord(value.summary, 'report.summary');
-  for (const field of ['total_errors', 'total_warnings', 'total_blocking', 'total_baselined', 'tools_ok', 'tools_not_applicable', 'tools_failed']) {
-    requireCount(summary[field], `report.summary.${field}`);
-  }
+function validateToolInventory(tools: AnyRecord, expectedIds: unknown): void {
+  if (expectedIds === undefined) return;
+  const actual = Object.keys(tools).sort();
+  const expected = [...expectedIds as string[]].sort();
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) fail('report.tools', `expected exact tool inventory: ${expected.join(', ') || '<empty>'}`);
+}
 
-  let totalErrors = 0;
-  let totalWarnings = 0;
-  let toolsOk = 0;
-  let toolsNotApplicable = 0;
-  let toolsFailed = 0;
-  let totalBlocking = 0;
-  let totalBaselined = 0;
+function reportSummary(tools: AnyRecord, expected: AnyRecord, visibility: AnyRecord): AnyRecord {
+  const summary = createToolSummary();
   for (const [toolId, result] of Object.entries(tools)) {
     requireString(toolId, 'report.tools key');
-    validateToolResult(result, `report.tools.${toolId}`, expected.toolPolicies || {});
-    if (result.status === 'ok') {
-      toolsOk++;
-      totalErrors += result.errors;
-      totalWarnings += result.warnings;
-      totalBlocking += result.blocking_findings;
-      totalBaselined += result.baselined_findings;
-    } else if (result.status === 'not_applicable') {
-      toolsNotApplicable++;
-    } else {
-      toolsFailed++;
-    }
+    validateToolResult(result, `report.tools.${toolId}`, expected.toolPolicies || {}, visibility);
+    accumulateToolSummary(summary, result);
   }
+  return summary;
+}
 
-  const expectedSummary = { total_errors: totalErrors, total_warnings: totalWarnings, total_blocking: totalBlocking, total_baselined: totalBaselined, tools_ok: toolsOk, tools_not_applicable: toolsNotApplicable, tools_failed: toolsFailed };
-  for (const [field, count] of Object.entries(expectedSummary)) {
+function validateSummary(value: unknown, expected: AnyRecord): void {
+  const summary = requireRecord(value, 'report.summary');
+  for (const [field, count] of Object.entries(expected)) {
+    requireCount(summary[field], `report.summary.${field}`);
     if (summary[field] !== count) fail(`report.summary.${field}`, `expected ${count} from tool results`);
   }
+}
+
+function validateLintReport(report: unknown, expected: AnyRecord = {}): AnyRecord {
+  const value = requireRecord(report, 'report');
+  if (value.schema_version !== LINT_REPORT_SCHEMA_VERSION) fail('report.schema_version', `expected ${LINT_REPORT_SCHEMA_VERSION}`);
+  validatePolicyEvidence(value, expected);
+  const visibility = validateReportScope(value, expected);
+  const tools = requireRecord(value.tools, 'report.tools');
+  validateToolInventory(tools, expected.toolIds);
+  validateSummary(value.summary, reportSummary(tools, expected, visibility));
   return value;
 }
 
-export { LINT_REPORT_SCHEMA_VERSION, LintReportContractError, validateLintReport };
+export { LINT_REPORT_SCHEMA_VERSION,  validateLintReport };

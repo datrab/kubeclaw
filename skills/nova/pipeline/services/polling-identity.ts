@@ -10,45 +10,45 @@ import {
 
 const REVIEW_GATE_AGENT_TYPE = 'review';
 
-export function sessionLabelAgentType(label = '') {
+export function sessionLabelAgentType(label: any = '') {
   if (label === 'Pipeline Review') return 'review';
   if (label === 'Case Study') return 'case_study';
   return null;
 }
 
-function gateAgentType(gateType) {
+function gateAgentType(gateType: any) {
   return selectDefinedValue(() => (gateType), () => (REVIEW_GATE_AGENT_TYPE));
 }
 
-function selectPresentValue(...values) {
+function selectPresentValue(...values: any) {
   for (const value of values) {
     if (value !== undefined && value !== null && value !== '') return value;
   }
   return null;
 }
 
-function filePollLabel(label, tracked) {
+function filePollLabel(label: any, tracked: any) {
   return selectPresentValue(tracked?.gatewayLabel, label);
 }
 
-function trackedAgentType(label, tracked) {
+function trackedAgentType(label: any, tracked: any) {
   if (!tracked?.telemetry_gate_id) return sessionLabelAgentType(label);
   return gateAgentType(tracked?.telemetry_gate_type);
 }
 
-function statusFallbackLabel(moduleDir, status, tracked, sessionLabel) {
+function statusFallbackLabel(moduleDir: any, status: any, tracked: any, sessionLabel: any) {
   return selectPresentValue(tracked?.gatewayLabel, sessionLabel, status?.module_id, moduleDir);
 }
 
-function statusPollLabel(gatewayLabel, fallbackLabel) {
+function statusPollLabel(gatewayLabel: any, fallbackLabel: any) {
   return selectPresentValue(gatewayLabel, fallbackLabel);
 }
 
-function statusPollModuleId(moduleDir, status, tracked) {
+function statusPollModuleId(moduleDir: any, status: any, tracked: any) {
   return selectPresentValue(status?.module_id, tracked?.moduleId, moduleDir);
 }
 
-export function resolveFilePollIdentity(label, tracked = null) {
+export function resolveFilePollIdentity(label: any, tracked: any = null) {
   return {
     label: filePollLabel(label, tracked),
     gateway_label: selectTruthyValue(() => (tracked?.gatewayLabel), () => (null)),
@@ -62,7 +62,7 @@ export function resolveFilePollIdentity(label, tracked = null) {
   };
 }
 
-export function resolveSessionPollIdentity({ tracked = null, explicitModuleId = null, gateId = null, gateType = null, sessionKey = null, logLabel = null, sessionLabel = null } = {}) {
+export function resolveSessionPollIdentity({ tracked = null, explicitModuleId = null, gateId = null, gateType = null, sessionKey = null, logLabel = null, sessionLabel = null }: any = {}) {
   const telemetryGateId = selectDefinedValue(() => (selectDefinedValue(() => (tracked?.telemetry_gate_id), () => (gateId))), () => (null));
   return {
     label: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (tracked?.gatewayLabel), () => (logLabel))), () => (sessionLabel))), () => (null)),
@@ -78,7 +78,7 @@ export function resolveSessionPollIdentity({ tracked = null, explicitModuleId = 
   };
 }
 
-export function resolveStatusPollIdentity(moduleDir, status = null, tracked = null, sessionLabel = null) {
+export function resolveStatusPollIdentity(moduleDir: any, status: any = null, tracked: any = null, sessionLabel: any = null) {
   const fallbackLabel = statusFallbackLabel(moduleDir, status, tracked, sessionLabel);
   const gatewayLabel = selectDefinedValue(() => (selectDefinedValue(() => (resolveStatusGatewayLabel(status)), () => (tracked?.gatewayLabel))), () => (null));
   const gateId = selectTruthyValue(() => (selectTruthyValue(() => (status?.gate_id), () => (tracked?.telemetry_gate_id))), () => (null));
@@ -96,7 +96,7 @@ export function resolveStatusPollIdentity(moduleDir, status = null, tracked = nu
   };
 }
 
-export function buildAcpPollLogKey(acpState = {}) {
+export function buildAcpPollLogKey(acpState: any = {}) {
   const transcriptState = acpState?.transcript?.lastActivityPoll === 0
     ? 'active'
     : (acpState?.transcript?.eventCount > 0 ? 'stale' : 'empty');
@@ -109,6 +109,6 @@ export function buildAcpPollLogKey(acpState = {}) {
   ].join(' ');
 }
 
-export function buildSessionProgressStateKey(sessionEndDetected = false) {
+export function buildSessionProgressStateKey(sessionEndDetected: any = false) {
   return sessionEndDetected ? 'session_active_waiting_for_push' : 'session_active';
 }

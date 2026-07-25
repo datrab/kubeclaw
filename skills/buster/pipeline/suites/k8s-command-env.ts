@@ -1,4 +1,3 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFile } from 'child_process';
 import { buildSubprocessEnv } from '../security.ts';
 
@@ -24,6 +23,10 @@ export function execFileWithInput(command: string, args: string[], input: string
       }
       resolve({ stdout, stderr });
     });
+    if (child.stdin === null) {
+      reject(new Error(`${command} did not expose stdin`));
+      return;
+    }
     child.stdin.end(input);
   });
 }

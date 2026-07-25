@@ -2,8 +2,18 @@
 import { emitPluginEvent } from '../telemetry.ts';
 import { doResourceCleanup } from '../pipeline-helpers.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-export async function runResourceCleanupStage({ payload, moduleId, tctx, logger, stage, logCompletion = false }) {
+import { selectTruthyValue } from '../../optional-absence.ts';
+
+type CleanupRequest = {
+  payload: Record<string, any>;
+  moduleId: string;
+  tctx: any;
+  logger: any;
+  stage: string;
+  logCompletion?: boolean;
+};
+
+export async function runResourceCleanupStage({ payload, moduleId, tctx, logger, stage, logCompletion = false }: CleanupRequest) {
   const cleanupStart = Date.now();
   await emitPluginEvent(tctx, 'resource_cleanup', {
     module_id:        moduleId,
@@ -25,7 +35,7 @@ export async function runResourceCleanupStage({ payload, moduleId, tctx, logger,
   });
 
   if (logCompletion) {
-    logger.info('CLEANUP', `${stage[0].toUpperCase()}${stage.slice(1)} cleanup complete`, { ok: cleanup.ok });
+    logger.info('CLEANUP', `${stage.charAt(0).toUpperCase()}${stage.slice(1)} cleanup complete`, { ok: cleanup.ok });
   }
 
   return cleanup;

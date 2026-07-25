@@ -17,6 +17,13 @@ import {
 import type { Finding, SuiteVerdict } from '../services/verdict-schema.ts';
 import { sleep } from '../timing.ts';
 import { buildLocalhostSuiteUrl } from './url-paths.ts';
+import {
+  createSuiteLog,
+  suiteErrorMessage as errorMessage,
+  suiteNonEmptyString as nonEmptyString,
+  suiteObject as objectRecord,
+  suiteObjectOrEmpty as objectRecordOrEmpty,
+} from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;
@@ -35,6 +42,22 @@ interface AttemptResult {
   body: string | null;
 }
 
+interface HealthSettings {
+  port: number;
+  url: string;
+  retries: number;
+  baseDelay: number;
+  timeout: number;
+  smokePaths: string[] | null;
+  smokeExpectedText: Record<string, string>;
+}
+
+interface HealthAttemptSummary {
+  lastResult: AttemptResult;
+  passed: boolean;
+  attempts: number;
+}
+
 const DEFAULTS = {
   static_port:  9999,
   server_port:  3000,
@@ -43,26 +66,6 @@ const DEFAULTS = {
   base_delay:   1000,
   timeout:      10000,
 };
-
-function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
-  return (msg: string): void => {
-    console.log(`[SUITE] [HEALTH] ${msg}`);
-    if (logSink) logSink({ suite: 'health', msg });
-  };
-}
-
-function objectRecord(value: unknown): AnyRecord | null {
-  return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
-}
-
-function nonEmptyString(value: unknown): string | null {
-  return typeof value === 'string' && value.trim() ? value : null;
-}
-
-function errorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  return error == null ? 'missing_error_detail' : String(error);
-}
 
 async function attempt(url: string, timeoutMs: number): Promise<AttemptResult> {
   const controller = new AbortController();
@@ -126,110 +129,105 @@ function normalizeSmokeExpectedText(value: unknown, smokePaths: string[] | null)
   return normalized;
 }
 
-export default async function healthSuite(context: HealthContext): Promise<SuiteVerdict> {
-  const log = createLog(context.logSink);
-  const startTime = Date.now();
-  const serve = selectDefinedValue(() => (objectRecord(context.config?.serve)), () => ({}));
+function invalidSettingsVerdict(startTime: number, reason: string, message: string, rule: string): SuiteVerdict {
+  return createSuiteVerdict('health', STATUS.ERROR, {
+    critical: true,
+    duration_ms: Date.now() - startTime,
+    error: message,
+    reason,
+    findings: [createFinding(SEVERITY.CRITICAL, message, { rule })],
+  });
+}
 
-  const type = selectDefinedValue(() => (nonEmptyString(serve.type)), () => ('static'));
-  const port = selectDefinedValue(() => (serve.port), () => ((type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port)));
-  let url: string;
-  try {
-    url = buildLocalhostSuiteUrl(port, selectDefinedValue(() => (nonEmptyString(serve.health_path)), () => (DEFAULTS.health_path)), 'serve.health_path');
-  } catch (error) {
-    const message = errorMessage(error);
-    return createSuiteVerdict('health', STATUS.ERROR, {
-      critical: true,
-      duration_ms: Date.now() - startTime,
-      error: message,
-      reason: 'invalid_health_path',
-      findings: [createFinding(SEVERITY.CRITICAL, message, { rule: 'health-path' })],
-    });
-  }
-  const retries = selectDefinedValue(() => (serve.health_retries), () => (DEFAULTS.retries));
-  const baseDelay = selectDefinedValue(() => (serve.health_base_delay), () => (DEFAULTS.base_delay));
-  const timeout = selectDefinedValue(() => (serve.health_timeout), () => (DEFAULTS.timeout));
+function resolveHealthSettings(serve: AnyRecord): HealthSettings {
+  const type = nonEmptyString(serve.type) ?? 'static';
+  const port = serve.port ?? (type === 'server' ? DEFAULTS.server_port : DEFAULTS.static_port);
+  const url = buildLocalhostSuiteUrl(port, nonEmptyString(serve.health_path) ?? DEFAULTS.health_path, 'serve.health_path');
+  const smokePaths = normalizeSmokePaths(serve.smoke_paths);
+  return {
+    port,
+    url,
+    retries: serve.health_retries ?? DEFAULTS.retries,
+    baseDelay: serve.health_base_delay ?? DEFAULTS.base_delay,
+    timeout: serve.health_timeout ?? DEFAULTS.timeout,
+    smokePaths,
+    smokeExpectedText: normalizeSmokeExpectedText(serve.smoke_expected_text, smokePaths),
+  };
+}
 
-  let smokePaths: string[] | null;
-  let smokeExpectedText: Record<string, string>;
-  try {
-    smokePaths = normalizeSmokePaths(serve.smoke_paths);
-    smokeExpectedText = normalizeSmokeExpectedText(serve.smoke_expected_text, smokePaths);
-  } catch (error) {
-    const message = errorMessage(error);
-    return createSuiteVerdict('health', STATUS.ERROR, {
-      critical: true,
-      duration_ms: Date.now() - startTime,
-      error: message,
-      reason: 'invalid_smoke_paths',
-      findings: [createFinding(SEVERITY.CRITICAL, message, { rule: 'smoke-paths' })],
-    });
-  }
-
-  log(`Checking ${url} (retries=${retries}, timeout=${timeout}ms)`);
-
+async function attemptUntilHealthy(settings: HealthSettings, log: (message: string) => void): Promise<HealthAttemptSummary> {
   let lastResult: AttemptResult = { ok: false, status: null, responseTime: 0, error: 'not attempted', body: null };
-  let httpPassed = false;
-  let httpAttempts = 0;
-
-  for (let i = 0; i < retries; i++) {
-    if (i > 0) {
-      const delay = baseDelay * Math.pow(2, i - 1);
-      log(`Retry ${i}/${retries - 1} in ${delay}ms...`);
+  for (let index = 0; index < settings.retries; index += 1) {
+    if (index > 0) {
+      const delay = settings.baseDelay * Math.pow(2, index - 1);
+      log(`Retry ${index}/${settings.retries - 1} in ${delay}ms...`);
       await sleep(delay);
     }
-    lastResult = await attempt(url, timeout);
-    httpAttempts = i + 1;
+    lastResult = await attempt(settings.url, settings.timeout);
     if (lastResult.ok) {
       log(`✅ ${lastResult.status} in ${lastResult.responseTime}ms`);
-      httpPassed = true;
-      break;
+      return { lastResult, passed: true, attempts: index + 1 };
     }
-    const detail = selectDefinedValue(() => (lastResult.error), () => (`HTTP ${lastResult.status}`));
-    log(`Attempt ${i + 1}/${retries}: ${detail} (${lastResult.responseTime}ms)`);
+    const detail = lastResult.error ?? `HTTP ${lastResult.status}`;
+    log(`Attempt ${index + 1}/${settings.retries}: ${detail} (${lastResult.responseTime}ms)`);
   }
+  return { lastResult, passed: false, attempts: settings.retries };
+}
 
-  if (!httpPassed) {
-    const reason = selectDefinedValue(() => (lastResult.error), () => (`HTTP ${lastResult.status}`));
-    const findings = [createFinding(SEVERITY.CRITICAL, lastResult.error ? `${url}: ${lastResult.error}` : `${url}: expected 2xx, got ${lastResult.status}`, { rule: lastResult.error ? 'connection' : 'status-code' })];
-    return createSuiteVerdict('health', STATUS.FAIL, {
-      critical: true,
-      duration_ms: Date.now() - startTime,
-      checks_total: 1,
-      checks_passed: 0,
-      checks_failed: 1,
-      findings,
-      metadata: { url, status_code: lastResult.status, response_time_ms: lastResult.responseTime, attempts: retries, last_error: reason },
-    });
-  }
-
-  const smokeFindings: Finding[] = [];
-  if (smokePaths && smokePaths.length > 0) {
-    log(`Smoke HTTP checks: ${smokePaths.length} path(s)`);
-    smokeFindings.push(...await smokeHttp(port, smokePaths, smokeExpectedText, timeout, log));
-  }
-
-  const duration_ms = Date.now() - startTime;
-  const smokeErrors = smokeFindings.filter((finding) => selectTruthyValue(() => (finding.severity === SEVERITY.SERIOUS), () => (finding.severity === SEVERITY.CRITICAL)));
-  if (smokeErrors.length > 0) {
-    return createSuiteVerdict('health', STATUS.FAIL, {
-      critical: false,
-      duration_ms,
-      checks_total: 1 + (selectDefinedValue(() => (smokePaths?.length), () => (0))),
-      checks_passed: 1,
-      checks_failed: smokeErrors.length,
-      findings: smokeFindings,
-      metadata: { url, status_code: lastResult.status, response_time_ms: lastResult.responseTime, attempts: httpAttempts, smoke_paths: smokePaths, smoke_expected_text: smokeExpectedText, smoke_errors: smokeErrors.length },
-    });
-  }
-
-  return createSuiteVerdict('health', STATUS.PASS, {
+function failedHealthVerdict(startTime: number, settings: HealthSettings, summary: HealthAttemptSummary): SuiteVerdict {
+  const { lastResult } = summary;
+  const reason = lastResult.error ?? `HTTP ${lastResult.status}`;
+  const message = lastResult.error ? `${settings.url}: ${lastResult.error}` : `${settings.url}: expected 2xx, got ${lastResult.status}`;
+  return createSuiteVerdict('health', STATUS.FAIL, {
     critical: true,
-    duration_ms,
-    checks_total: 1 + (selectDefinedValue(() => (smokePaths?.length), () => (0))),
-    checks_passed: 1 + (selectDefinedValue(() => (smokePaths?.length), () => (0))),
-    checks_failed: 0,
-    findings: smokeFindings,
-    metadata: { url, status_code: lastResult.status, response_time_ms: lastResult.responseTime, attempts: httpAttempts, ...(smokePaths ? { smoke_paths: smokePaths, smoke_expected_text: smokeExpectedText } : {}) },
+    duration_ms: Date.now() - startTime,
+    checks_total: 1,
+    checks_passed: 0,
+    checks_failed: 1,
+    findings: [createFinding(SEVERITY.CRITICAL, message, { rule: lastResult.error ? 'connection' : 'status-code' })],
+    metadata: { url: settings.url, status_code: lastResult.status, response_time_ms: lastResult.responseTime, attempts: summary.attempts, last_error: reason },
   });
+}
+
+function completedHealthVerdict(startTime: number, settings: HealthSettings, summary: HealthAttemptSummary, findings: Finding[]): SuiteVerdict {
+  const smokeCount = settings.smokePaths?.length ?? 0;
+  const errors = findings.filter((finding) => finding.severity === SEVERITY.SERIOUS || finding.severity === SEVERITY.CRITICAL);
+  const status = errors.length > 0 ? STATUS.FAIL : STATUS.PASS;
+  return createSuiteVerdict('health', status, {
+    critical: errors.length === 0,
+    duration_ms: Date.now() - startTime,
+    checks_total: 1 + smokeCount,
+    checks_passed: errors.length > 0 ? 1 : 1 + smokeCount,
+    checks_failed: errors.length,
+    findings,
+    metadata: {
+      url: settings.url,
+      status_code: summary.lastResult.status,
+      response_time_ms: summary.lastResult.responseTime,
+      attempts: summary.attempts,
+      ...(settings.smokePaths ? { smoke_paths: settings.smokePaths, smoke_expected_text: settings.smokeExpectedText } : {}),
+      ...(errors.length > 0 ? { smoke_errors: errors.length } : {}),
+    },
+  });
+}
+
+export default async function healthSuite(context: HealthContext): Promise<SuiteVerdict> {
+  const log = createSuiteLog('health', 'HEALTH', context.logSink);
+  const startTime = Date.now();
+  const serve = objectRecordOrEmpty(context.config?.serve);
+  let settings: HealthSettings;
+  try {
+    settings = resolveHealthSettings(serve);
+  } catch (error) {
+    const message = errorMessage(error);
+    const smokeFailure = message.includes('smoke_');
+    return invalidSettingsVerdict(startTime, smokeFailure ? 'invalid_smoke_paths' : 'invalid_health_path', message, smokeFailure ? 'smoke-paths' : 'health-path');
+  }
+  log(`Checking ${settings.url} (retries=${settings.retries}, timeout=${settings.timeout}ms)`);
+  const summary = await attemptUntilHealthy(settings, log);
+  if (!summary.passed) return failedHealthVerdict(startTime, settings, summary);
+  const smokeFindings = settings.smokePaths?.length
+    ? await smokeHttp(settings.port, settings.smokePaths, settings.smokeExpectedText, settings.timeout, log)
+    : [];
+  return completedHealthVerdict(startTime, settings, summary, smokeFindings);
 }

@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-buster-pipeline-slice-surface' });
 import fs from 'fs';
@@ -6,16 +7,8 @@ import assert from 'assert';
 import { pathToFileURL } from 'url';
 import { execFileSync } from 'child_process';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const genericMissingValueToken = ['unk', 'nown'].join('');
 process.env.REPO_ROOT = sourceRoot;
 const shimPath = path.join(sourceRoot, 'skills/buster/buster-pipeline.ts');
@@ -57,11 +50,17 @@ const novaOrchestrationPath = path.join(sourceRoot, 'skills/nova/pipeline/agents
 
 const shimSource = fs.readFileSync(shimPath, 'utf8');
 const mainSource = fs.readFileSync(mainPath, 'utf8');
-const helpersSource = fs.readFileSync(helpersPath, 'utf8');
-const monitorSource = fs.readFileSync(monitorPath, 'utf8');
+const helpersSource = [helpersPath,
+  path.join(sourceRoot, 'skills/buster/pipeline/services/buster-output.ts'),
+  path.join(sourceRoot, 'skills/buster/pipeline/services/pipeline-embeds.ts')]
+  .map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const monitorSource = [monitorPath, path.join(sourceRoot, 'skills/buster/pipeline/services/session-monitor-runtime.ts')]
+  .map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const taskLifecycleSource = fs.readFileSync(taskLifecyclePath, 'utf8');
-const telemetrySource = fs.readFileSync(telemetryPath, 'utf8');
-const taskQueueSource = fs.readFileSync(taskQueuePath, 'utf8');
+const telemetrySource = [telemetryPath, path.join(sourceRoot, 'skills/buster/pipeline/services/telemetry-artifacts.ts')]
+  .map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+const taskQueueSource = [taskQueuePath, path.join(sourceRoot, 'skills/buster/pipeline/services/task-queue-client.ts')]
+  .map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const taskCompletionSource = fs.readFileSync(taskCompletionPath, 'utf8');
 const redisToolSource = fs.readFileSync(redisToolPath, 'utf8');
 const taskLifecycleSessionSource = fs.readFileSync(taskLifecycleSessionPath, 'utf8');
@@ -70,19 +69,24 @@ const taskLifecycleCombinedSource = `${taskLifecycleSource}\n${taskLifecycleSess
 const taskValidationSource = fs.readFileSync(taskValidationPath, 'utf8');
 const capabilitiesSource = fs.readFileSync(capabilitiesPath, 'utf8');
 const resourceCleanupSource = fs.readFileSync(resourceCleanupPath, 'utf8');
-const rateLimitSource = fs.readFileSync(rateLimitPath, 'utf8');
+const rateLimitSource = [rateLimitPath, path.join(sourceRoot, 'skills/buster/pipeline/services/rate-limit-discord.ts')]
+  .map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const discordSource = fs.readFileSync(discordPath, 'utf8');
 const imageReferenceSource = fs.readFileSync(imageReferencePath, 'utf8');
 const buildkitSource = fs.readFileSync(buildkitPath, 'utf8');
 const gatewayHealthSource = fs.readFileSync(gatewayHealthPath, 'utf8');
-const suiteRunnerSource = fs.readFileSync(suiteRunnerPath, 'utf8');
+const suiteRunnerSource = ['suite-runner.ts', 'suite-runner-execution.ts', 'suite-runner-artifacts.ts', 'suite-runner-graph.ts', 'suite-runner-telemetry.ts']
+  .map((file) => fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/runners', file), 'utf8')).join('\n');
+const suiteRunnerExecutionSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/runners/suite-runner-execution.ts'), 'utf8');
 const a11ySuiteSource = fs.readFileSync(a11ySuitePath, 'utf8');
-const apiSuiteSource = fs.readFileSync(apiSuitePath, 'utf8');
+const apiSuiteSource = [apiSuitePath, path.join(sourceRoot, 'skills/buster/pipeline/suites/api-runner.ts')]
+  .map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 const buildSuiteSource = fs.readFileSync(buildSuitePath, 'utf8');
 const bundleSuiteSource = fs.readFileSync(bundleSuitePath, 'utf8');
 const e2eSuiteSource = fs.readFileSync(e2eSuitePath, 'utf8');
 const healthSuiteSource = fs.readFileSync(healthSuitePath, 'utf8');
-const k8sSuiteSource = fs.readFileSync(k8sSuitePath, 'utf8');
+const k8sSuiteSource = ['k8s.ts', 'k8s-plan.ts', 'k8s-execution.ts', 'k8s-base.ts', 'k8s-lease.ts', 'k8s-runtime.ts']
+  .map((file) => fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/suites', file), 'utf8')).join('\n');
 const manifestSuiteSource = fs.readFileSync(manifestSuitePath, 'utf8');
 const perfSuiteSource = fs.readFileSync(perfSuitePath, 'utf8');
 const securitySuiteSource = fs.readFileSync(securitySuitePath, 'utf8');
@@ -132,7 +136,7 @@ assert.equal(`${taskValidationSource}\n${capabilitiesSource}\n${orchestrationSou
 assert.equal(suiteRunnerSource.includes("import buildSuite from '../suites/build.ts'"), true, 'suite runner should statically register suite implementations');
 assert.equal(suiteRunnerSource.includes("import bundleSuite from '../suites/bundle.ts'"), true, 'suite runner should statically register migrated quality suite implementations');
 assert.equal(suiteRunnerSource.includes('import('), false, 'suite runner must not dynamically import suite implementations');
-assert.equal(suiteRunnerSource.indexOf('enforceSuiteCapabilities(suiteName, context)') < suiteRunnerSource.indexOf('const suiteFn = loadSuite(suiteName)'), true, 'suite runner must enforce capabilities before selecting a suite implementation');
+assert.equal(suiteRunnerExecutionSource.indexOf('requiredCapabilitiesForSuite(suiteName, context)') < suiteRunnerExecutionSource.indexOf('runSuiteWithTimeout(suiteName, input.suiteFn'), true, 'suite runner must enforce capabilities before executing the statically selected suite implementation');
 assert.equal(a11ySuiteSource.includes('evidence-only'), true, 'a11y informational mode should be named as evidence-only policy');
 assert.equal(bundleSuiteSource.includes('STATUS.SKIP'), false, 'requested bundle suite must not SKIP missing build output');
 assert.equal(bundleSuiteSource.includes('Build output directory not found'), true, 'bundle suite should fail typed validation when build output is missing');
@@ -159,11 +163,11 @@ assert.equal(buildSuiteSource.includes('k8sSuite'), true, 'build suite should re
 assert.equal(buildkitSource.includes('push=true'), true, 'BuildKit must build and publish in one operation');
 assert.equal(buildkitSource.includes('immutableImage'), true, 'BuildKit must return an immutable digest reference');
 assert.equal(healthSuiteSource.includes('autoDetectSmokePaths'), false, 'health suite must not infer smoke paths from visual-reg baselines');
-assert.equal(healthSuiteSource.includes('Smoke HTTP checks'), true, 'health suite smoke paths should be bounded HTTP checks');
+assert.equal(healthSuiteSource.includes('Smoke HTTP:'), true, 'health suite smoke paths should be bounded HTTP checks');
 assert.equal(healthSuiteSource.includes("import('playwright')"), false, 'health suite must not depend on Playwright for smoke paths');
 assert.equal(k8sSuiteSource.includes('STATUS.SKIP'), false, 'requested k8s suite must not SKIP missing deployment config');
 assert.equal(k8sSuiteSource.includes('k8s suite requires either source_image or dockerfile'), true, 'k8s suite should support exact source_image promotion instead of requiring a rebuild');
-assert.equal(k8sSuiteSource.includes("runStep('source-image-promote'"), true, 'k8s suite should expose source image promotion as a typed check');
+assert.equal(k8sSuiteSource.includes("'source-image-promote'"), true, 'k8s suite should expose source image promotion as a typed check');
 assert.equal(k8sSuiteSource.includes('Required secret copy failed'), true, 'k8s secret propagation failures should fail the requested suite');
 assert.equal(k8sSuiteSource.includes('Requested manifest not found'), true, 'k8s manifest apply should fail when any requested manifest path is missing');
 assert.equal(k8sSuiteSource.includes('retryHttpHealthCheck'), true, 'k8s Service health check should retry boundedly after pods become ready');
@@ -225,12 +229,12 @@ assert.equal(taskLifecycleCompletionSource.includes('resolveBusterRateLimitMaxPa
 for (const deleted of ['sessionResult?.max_rate_limit_pauses', 'rate_limit_status?.max_pauses', 'rateLimitStatus?.maxRateLimitPauses', 'rateLimit?.maxPauses', 'acp_monitor?.max_rate_limit_pauses']) {
   assert.equal(helpersSource.includes(deleted), false, `Buster rate-limit max pause resolver must not accept legacy alias ${deleted}`);
 }
-assert.equal(monitorSource.includes('rate_limit_status: buildRateLimitStatus(rlState)'), true, 'monitor should return rate-limit status to completion emission');
+assert.equal(monitorSource.includes('rate_limit_status: rateLimitStatus(runtime.rateLimitState)'), true, 'monitor should return rate-limit status to completion emission');
 assert.equal(monitorSource.includes('ownsCanonicalSignal: true'), true, 'buster child-session monitor should own canonical pause telemetry while it sleeps');
-assert.equal(rateLimitSource.includes('ownsCanonicalSignal = true'), true, 'buster rate-limit service should default to emitting canonical pause telemetry for local sleeps');
+assert.equal(rateLimitSource.includes('opts.ownsCanonicalSignal !== false'), true, 'buster rate-limit service should default to emitting canonical pause telemetry for local sleeps');
 assert.equal(rateLimitSource.includes("taskType !== 'gate_test'"), false, 'gate_test must not suppress Buster-owned canonical pause telemetry');
 assert.equal(rateLimitSource.includes('Rate-limit Discord notice failed'), true, 'Buster rate-limit Discord fire-and-forget path must report delivery failures explicitly');
-assert.equal(telemetrySource.includes("schema_version:'quarantined_payload.v1'"), true, 'Buster telemetry must persist explicit quarantined evidence for rejected or transport-lost events');
+assert.equal(telemetrySource.includes("schema_version: 'quarantined_payload.v1'"), true, 'Buster telemetry must persist explicit quarantined evidence for rejected or transport-lost events');
 assert.equal(discordSource.includes('createObservabilityHealthState'), true, 'Buster Discord health should use the shared observability health state machine');
 assert.equal(discordSource.includes('new Map<string, HealthState>()'), false, 'Buster Discord must not own a local health-state map');
 assert.equal(redisToolSource.includes('shouldNotifyRedisTaskPayload'), true, 'Buster Redis tool must centralize task payload notification policy');
@@ -245,7 +249,7 @@ assert.equal(mainSource.includes('new Promise(resolve => setTimeout(resolve, 300
 assert.equal(gatewayHealthSource.includes("shutdownGateway('GATEWAY_HEALTH_FAILED'"), true, 'buster gateway health monitor should route failures through structured shutdown');
 assert.equal(mainSource.includes('doResourceCleanup(cleanupStage'), true, 'structured shutdown should run lease cleanup for the triggering stage');
 assert.equal(suiteRunnerSource.includes('export async function runSuiteWithTimeout('), true, 'suite runner should expose timeout wrapper for direct cleanup regression coverage');
-assert.equal(suiteRunnerSource.includes('clearTimeout(timeoutId)'), true, 'suite runner must clear suite timeout handles after suite completion');
+assert.equal(suiteRunnerSource.includes('clearTimeout(timeout)'), true, 'suite runner must clear suite timeout handles after suite completion');
 assert.equal(suiteRunnerSource.includes("emitEvent(tctx, 'observability.degraded'"), true, 'suite result write failures should emit structured degraded diagnostics');
 assert.equal(suiteRunnerSource.includes("reason: classification"), true, 'suite result write diagnostics should preserve failure classification');
 assert.equal(taskLifecycleSessionSource.includes('resolveBusterAgentResult(payload, sessionResult, { repairOutputFileIdentity: true })'), false, 'buster task lifecycle must not repair child-written output_file identity');
@@ -599,6 +603,7 @@ const fakeSuiteTelemetryRedis = {
   on() {},
 };
 const blockedLogDir = path.join(repoRootForArtifact, '.tmp-buster-suite-blocked-log');
+fs.rmSync(blockedLogDir, { recursive: true, force: true });
 fs.writeFileSync(blockedLogDir, 'not-a-directory\n');
 const suiteResultWithBlockedWrite = await suiteRunnerMod.runSuites(['build'], {
   repoRoot: repoRootForArtifact,
@@ -626,11 +631,15 @@ const suiteResultWithBlockedWrite = await suiteRunnerMod.runSuites(['build'], {
     sessionKey: null,
     gateId: null,
     gateType: null,
-    _health: {},
+    streamMaxLen: 1000,
+    _health: { redis: { disabled: false, degraded: false, degradedAt: null } },
   },
 });
 assert.equal(suiteResultWithBlockedWrite.criticalFailed, true, 'suite result write diagnostics must preserve suite verdicts');
-const suiteWriteDiagnostic = suiteTelemetryEvents.find((event) => event.type === 'observability.degraded' && event.reason === 'swarm_results_write_failed');
+const suiteWriteDiagnostic = suiteTelemetryEvents.find((event) => event.type === 'observability.degraded'
+  && event.reason === 'swarm_results_write_failed'
+  && event.component === 'buster_suite_runner'
+  && event.surface === 'suite_results');
 assert(suiteWriteDiagnostic, 'blocked suite result writes should emit structured degraded diagnostics');
 assert.equal(suiteWriteDiagnostic.component, 'buster_suite_runner');
 assert.equal(suiteWriteDiagnostic.surface, 'suite_results');

@@ -15,7 +15,7 @@ function nonEmptyString(value: any, field: string): string {
   throw new Error(`${field} must be a non-empty string`);
 }
 
-function numberValue(value: any, field: string, { positive = false, integer = false } = {}): number {
+function numberValue(value: any, field: string, { positive = false, integer = false }: any = {}): number {
   const normalized = Number(value);
   if (!Number.isFinite(normalized)) throw new Error(`${field} must be a number`);
   if (integer && !Number.isInteger(normalized)) throw new Error(`${field} must be an integer`);
@@ -33,7 +33,7 @@ export function agentObservabilityProfile(config: AnyRecord = {}): AnyRecord {
   return agentObservabilityConfig(config);
 }
 
-export function agentObservabilityPayloadMaxBytes(config: AnyRecord = {}): number {
+function agentObservabilityPayloadMaxBytes(config: AnyRecord = {}): number {
   const payload = record(agentObservabilityConfig(config).payload, 'agent_observability.payload');
   return numberValue(payload.max_event_bytes, 'agent_observability payload max_event_bytes', { positive: true, integer: true });
 }

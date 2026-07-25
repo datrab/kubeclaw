@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-buster-repo-scoped-paths' });
 import assert from 'assert';
@@ -21,13 +22,6 @@ import {
 } from '../../../skills/buster/pipeline/suites/visual-reg.ts';
 import { resolvePerfReportPaths } from '../../../skills/buster/pipeline/suites/perf.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -41,7 +35,7 @@ function assertRejectsPath(label, input, options) {
   );
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 assert.equal(REPO_DIR, sourceRoot, 'Buster suite repo root resolves from the active repository');
 assert.equal(resolveRepoDir(sourceRoot), sourceRoot, 'resolveRepoDir returns the shared git root for an explicit start path');
 

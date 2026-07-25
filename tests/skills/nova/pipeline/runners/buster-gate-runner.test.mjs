@@ -3,93 +3,70 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
-import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 import { gateActiveSessionPath } from '../../../../../skills/nova/pipeline/core/paths.ts';
 import { runBusterGateEvaluation } from '../../../../../skills/nova/pipeline/runners/buster-gate-runner.ts';
 import { buildBusterGateSpawnOptions } from '../../../../../skills/nova/pipeline/runners/buster-gate-task.ts';
 
-function makeConfig() {
-  const root = fs.mkdtempSync(path.join('/home', 'buster-gate-runner-'));
-  const swarmDir = path.join(root, '.swarm');
-  fs.mkdirSync(swarmDir, { recursive: true });
+import { makeGateTestConfig } from './gate-test-fixtures.mjs';
+
+const makeConfig = () => makeGateTestConfig('buster-gate-runner-', { modulesUnderSwarm: true });
+
+function gateProgress(gateId, overrides = {}) {
+  return { gates: { [gateId]: { type: 'buster', title: 'Quality Gate', ...overrides } } };
+}
+
+function passingGateCompletion({ completionIdentity }) {
   return {
-    project: 'test-project',
-    repo_root: root,
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: path.join(swarmDir, 'modules'),
+    ok: true,
+    reason: 'target_reached',
+    status: {
+      status: 'PASS',
+      _source: 'redis',
+      run_id: completionIdentity.runId,
+      attempt: completionIdentity.attempt,
+      dispatch_id: completionIdentity.dispatchId,
+      gateway_label: completionIdentity.gateway_label,
+      session_key: completionIdentity.sessionKey,
     },
-    pipeline_defaults: {
-      timeout_minutes: 1,
-      max_fails: 0,
-      auto_retry_threshold: 0,
-      agent_startup_retry_budget: 0,
-      session_nudge_threshold: 0,
-    },
-    rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
-    locks: {
-      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
-      gate_active_session: { stale_ms: 1, timeout_ms: 1 },
-    },
-    _runId: 'run-test',
-    run_id: 'run-test',
-    _runStats: createRunStats(),
+  };
+}
+
+function gateRunnerDeps(overrides = {}) {
+  return {
+    resolvePolicy: () => ({ model: 'test-model', model_source: 'test' }),
+    logEffectivePolicy: () => {},
+    validateBusterConfig: () => {},
+    headHash: () => 'abc123',
+    async discord() {},
+    archiveGateOutputIfPresent: () => null,
+    readBusterGateCompletion: () => ({ isPass: false, output: { exists: false } }),
+    sleep: async () => {},
+    archiveModuleCompletions: async () => ({ archived: 0 }),
+    readGateInstructions: () => 'run the gate checks',
+    buildBusterGatePrompt: () => ({ prompt: 'buster prompt' }),
+    acpLabel: () => 'buster-quality',
+    spawnAgent: async () => {},
+    getTrackedAgent: () => ({ sessionKey: 'session-test', gatewayLabel: 'gateway-test', runtime: 'redis', model: 'test-model' }),
+    waitBusterGateCompletionEvidence: passingGateCompletion,
+    killAgent: async () => false,
+    ...overrides,
   };
 }
 
 test('buster gate completion clears active session when killAgent does not kill a process', async () => {
   const config = makeConfig();
   const gateId = 'quality';
-  const progress = {
-    gates: {
-      [gateId]: {
-        type: 'buster',
-        title: 'Quality Gate',
-      },
-    },
-  };
+  const progress = gateProgress(gateId);
   let killCalls = 0;
 
   const result = await runBusterGateEvaluation(config, progress, gateId, {
     skipStartedTelemetry: true,
-    deps: {
-      resolvePolicy: () => ({ model: 'test-model', model_source: 'test' }),
-      logEffectivePolicy: () => {},
-      validateBusterConfig: () => {},
-      headHash: () => 'abc123',
-      async discord() {},
-      archiveGateOutputIfPresent: () => null,
-      readBusterGateCompletion: () => ({ isPass: false, output: { exists: false } }),
-      sleep: async () => {},
-      archiveModuleCompletions: async () => ({ archived: 0 }),
-      readGateInstructions: () => 'run the gate checks',
-      buildBusterGatePrompt: () => ({ prompt: 'buster prompt' }),
-      acpLabel: () => 'buster-quality',
-      spawnAgent: async () => {},
-      getTrackedAgent: () => ({
-        sessionKey: 'session-test',
-        gatewayLabel: 'gateway-test',
-        runtime: 'redis',
-        model: 'test-model',
-      }),
-      waitBusterGateCompletionEvidence: async ({ completionIdentity }) => ({
-        ok: true,
-        reason: 'target_reached',
-        status: {
-          status: 'PASS',
-          _source: 'redis',
-          run_id: completionIdentity.runId,
-          attempt: completionIdentity.attempt,
-          dispatch_id: completionIdentity.dispatchId,
-          gateway_label: completionIdentity.gateway_label,
-          session_key: completionIdentity.sessionKey,
-        },
-      }),
+    deps: gateRunnerDeps({
       killAgent: async () => {
         killCalls++;
         return false;
       },
-    },
+    }),
   });
 
   assert.equal(killCalls, 1);
@@ -121,36 +98,17 @@ test('buster gate spawn options require canonical commit identity', () => {
 test('buster gate runner does not dispatch without current HEAD commit hash', async () => {
   const config = makeConfig();
   const gateId = 'quality';
-  const progress = {
-    gates: {
-      [gateId]: {
-        type: 'buster',
-        title: 'Quality Gate',
-      },
-    },
-  };
+  const progress = gateProgress(gateId);
   let spawnCalls = 0;
 
   const result = await runBusterGateEvaluation(config, progress, gateId, {
     skipStartedTelemetry: true,
-    deps: {
-      resolvePolicy: () => ({ model: 'test-model', model_source: 'test' }),
-      logEffectivePolicy: () => {},
-      validateBusterConfig: () => {},
+    deps: gateRunnerDeps({
       headHash: () => '',
-      async discord() {},
-      archiveGateOutputIfPresent: () => null,
-      readBusterGateCompletion: () => ({ isPass: false, output: { exists: false } }),
-      sleep: async () => {},
-      archiveModuleCompletions: async () => ({ archived: 0 }),
-      readGateInstructions: () => 'run the gate checks',
-      buildBusterGatePrompt: () => ({ prompt: 'buster prompt' }),
-      acpLabel: () => 'buster-quality',
       spawnAgent: async () => { spawnCalls++; },
       getTrackedAgent: () => null,
       waitBusterGateCompletionEvidence: async () => ({ ok: false }),
-      killAgent: async () => false,
-    },
+    }),
   });
 
   assert.equal(spawnCalls, 0);
@@ -163,55 +121,16 @@ test('buster gate runner does not dispatch without current HEAD commit hash', as
 test('buster gate still dispatches first attempt when fix loop has zero cycles', async () => {
   const config = makeConfig();
   const gateId = 'final-buster';
-  const progress = {
-    gates: {
-      [gateId]: {
-        type: 'buster',
-        title: 'Final Buster',
-        on_fail: 'fix_and_retest',
-        max_fix_cycles: 0,
-      },
-    },
-  };
+  const progress = gateProgress(gateId, { title: 'Final Buster', on_fail: 'fix_and_retest', max_fix_cycles: 0 });
   let spawnCalls = 0;
 
   const result = await runBusterGateEvaluation(config, progress, gateId, {
     skipStartedTelemetry: true,
-    deps: {
-      resolvePolicy: () => ({ model: 'test-model', model_source: 'test' }),
-      logEffectivePolicy: () => {},
-      validateBusterConfig: () => {},
-      headHash: () => 'abc123',
-      async discord() {},
-      archiveGateOutputIfPresent: () => null,
-      readBusterGateCompletion: () => ({ isPass: false, output: { exists: false } }),
-      sleep: async () => {},
-      archiveModuleCompletions: async () => ({ archived: 0 }),
+    deps: gateRunnerDeps({
       readGateInstructions: () => 'run final buster',
-      buildBusterGatePrompt: () => ({ prompt: 'buster prompt' }),
       acpLabel: () => 'buster-final-buster',
       spawnAgent: async () => { spawnCalls++; },
-      getTrackedAgent: () => ({
-        sessionKey: 'session-test',
-        gatewayLabel: 'gateway-test',
-        runtime: 'redis',
-        model: 'test-model',
-      }),
-      waitBusterGateCompletionEvidence: async ({ completionIdentity }) => ({
-        ok: true,
-        reason: 'target_reached',
-        status: {
-          status: 'PASS',
-          _source: 'redis',
-          run_id: completionIdentity.runId,
-          attempt: completionIdentity.attempt,
-          dispatch_id: completionIdentity.dispatchId,
-          gateway_label: completionIdentity.gateway_label,
-          session_key: completionIdentity.sessionKey,
-        },
-      }),
-      killAgent: async () => false,
-    },
+    }),
   });
 
   assert.equal(spawnCalls, 1);

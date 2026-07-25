@@ -4,11 +4,12 @@ import { discord, discordEmbeds } from '../integrations/discord.ts';
 import { appendStructuredEventMirror, recordObservabilityDegraded, recordObservabilityRestored } from './observability.ts';
 import { emitTelemetryStreamEvent } from './telemetry-stream.ts';
 import { deepClone } from './serialization.ts';
+import { canonicalExplicitRef, canonicalRef } from './contract-reference.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
-export const NOTIFICATION_HOOK_IDS: readonly string[] = Object.freeze([
+const NOTIFICATION_HOOK_IDS: readonly string[] = Object.freeze([
   'pipeline.started',
   'pipeline.completed',
   'module.started',
@@ -29,17 +30,6 @@ function notificationSinkPriority(sinkId: string): number {
   }
   return priority;
 }
-function canonicalRef(prefix: string, value: unknown): string | null {
-  if (selectTruthyValue(() => (value == null), () => (value === ''))) return null;
-  const normalized = String(value).trim();
-  if (!normalized) return null;
-  return normalized.startsWith(`${prefix}:`) ? normalized : `${prefix}:${normalized}`;
-}
-
-function canonicalExplicitRef(value: unknown): string | null {
-  return typeof value === 'string' && value.trim() ? value.trim() : null;
-}
-
 function isRecord(value: unknown): value is UnknownRecord {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
@@ -146,7 +136,7 @@ function discordPresentationRequiresActionableContract(discordPresentation: Unkn
     discordPresentation.require_actionable,
     discordPresentation.requires_actionable_contract,
   ];
-  if (explicitFlags.some((value) => value === true)) return true;
+  if (explicitFlags.some((value: any) => value === true)) return true;
   const level = String(selectDefinedValue(() => (optionalText(discordPresentation.level)), () => (''))).toUpperCase();
   return ['WARN', 'WARNING', 'ERROR', 'CRITICAL', 'FAIL', 'FAILED', 'BLOCKED', 'DEGRADED'].includes(level);
 }
@@ -160,19 +150,19 @@ export function validateDiscordOperatorPresentation(discordPresentation: Unknown
   if (!discordPresentationRequiresActionableContract(discordPresentation)) return errors;
 
   const fields = collectDiscordFields(discordPresentation);
-  const fieldByName = new Map(fields.map((field) => [normalizeFieldName(field?.name), field?.value]));
+  const fieldByName = new Map(fields.map((field: any) => [normalizeFieldName(field?.name), field?.value]));
   const verdictValues = [
     discordPresentation.verdict,
     discordPresentation.status,
     discordPresentation.outcome,
     discordPresentation.terminal_status,
-    ...['verdict', 'status', 'outcome', 'terminal status', 'result'].map((name) => fieldByName.get(name)),
+    ...['verdict', 'status', 'outcome', 'terminal status', 'result'].map((name: any) => fieldByName.get(name)),
   ];
   const actionValues = [
     discordPresentation.next_action,
     discordPresentation.nextAction,
     discordPresentation.action,
-    ...['next action', 'action', 'operator action'].map((name) => fieldByName.get(name)),
+    ...['next action', 'action', 'operator action'].map((name: any) => fieldByName.get(name)),
   ];
   const hasVerdict = verdictValues.some(hasActionableValue);
   const hasAction = actionValues.some(hasActionableValue);
@@ -265,7 +255,7 @@ export function assertNotificationEventInput(input: UnknownRecord = {}): Unknown
   return input;
 }
 
-export async function observeTelemetryNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
+async function observeTelemetryNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
   const config = await readNotificationConfig(ctx);
   const eventType = requiredText(firstText(input?.event?.type, input?.ids?.hookId), 'notification.event.type');
   const payload = eventPayload(input);
@@ -309,7 +299,7 @@ function telemetrySinkFailureAuthority(telemetryError: Error | undefined, eventT
   return new Error(`telemetry sink failed for ${eventType}`);
 }
 
-export async function observeStructuredEventNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
+async function observeStructuredEventNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
   const config = await readNotificationConfig(ctx);
   const eventType = requiredText(firstText(input?.event?.type, input?.ids?.hookId), 'notification.event.type');
   const payload = eventPayload(input);

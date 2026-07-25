@@ -4,41 +4,77 @@ import { createDefaultAgentObservabilityRedisClient } from './agent-observabilit
 import { agentObservabilityIngesterConfig } from './agent-observability-config.ts';
 import { recordObservabilityDegraded } from './observability.ts';
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function sleep(ms: any) {
+  return new Promise((resolve: any) => setTimeout(resolve, ms));
 }
 
-function requireNonNegativeNumber(value, field) {
+function requireNonNegativeNumber(value: any, field: any) {
   const num = Number(value);
   if (Number.isFinite(num) && num >= 0) return num;
   throw new Error(`agent_observability.ingester.${field} must be a non-negative number`);
 }
 
-function errorDetail(error) {
+function errorDetail(error: any) {
   if (error instanceof Error && typeof error.message === 'string' && error.message.trim()) return error.message.trim();
   return String(error);
 }
 
-function didTimeout(...results) {
-  return results.some((result) => result?.timedOut === true);
+function didTimeout(...results: any) {
+  return results.some((result: any) => result?.timedOut === true);
 }
 
-function withTimeout(promise, timeoutMs) {
+function withTimeout(promise: any, timeoutMs: any) {
   if (timeoutMs === 0) return promise;
-  let timer;
-  const timeout = new Promise((resolve) => {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise((resolve: any) => {
     timer = setTimeout(() => resolve({ timedOut: true }), timeoutMs);
     timer.unref?.();
   });
   return Promise.race([
-    promise.then((value) => ({ value, timedOut: false })),
+    promise.then((value: any) => ({ value, timedOut: false })),
     timeout,
   ]).finally(() => {
     if (timer) clearTimeout(timer);
   });
 }
 
-export function startAgentObservabilityIngester(config, ctx = {}) {
+async function reportRuntimeLoopFailure(ctx: any, error: any) {
+  const detail = errorDetail(error);
+  log('WARN', `[agent-observability-ingester] runtime loop failed: ${detail}`);
+  try {
+    await recordObservabilityDegraded(ctx, {
+      component: 'agent_observability_ingester', surface: 'redis_control_stream',
+      reason: 'agent_observability_ingester_loop_failed', source: 'agent_observability_ingester_runtime', detail,
+    });
+  } catch (reportError: any) {
+    log('WARN', `[agent-observability-ingester] degraded evidence failed: ${errorDetail(reportError)}`);
+  }
+}
+
+function createRuntimeLoop(ingester: any, context: any) {
+  let tick = 0;
+  let loggedFailure = false;
+  return async function loop(isStopped: () => boolean) {
+    while (!isStopped()) {
+      try {
+        await ingester.processNext(context.ctx);
+        tick += 1;
+        if (context.healthCheckEvery > 0 && tick % context.healthCheckEvery === 0 && typeof ingester.checkPressure === 'function') {
+          await ingester.checkPressure(context.ctx);
+        }
+        if (typeof ingester.trim === 'function') await ingester.trim();
+      } catch (error: any) {
+        if (!loggedFailure) {
+          loggedFailure = true;
+          await reportRuntimeLoopFailure(context.ctx, error);
+        }
+        await sleep(context.loopDelayMs);
+      }
+    }
+  };
+}
+
+export function startAgentObservabilityIngester(config: any, ctx: any = {}) {
   const runtimeConfig = agentObservabilityIngesterConfig(config);
   if (runtimeConfig.enabled !== true) {
     return {
@@ -58,41 +94,10 @@ export function startAgentObservabilityIngester(config, ctx = {}) {
   const healthCheckEvery = requireNonNegativeNumber(runtimeConfig.healthCheckEvery, 'healthCheckEvery');
   const stopTimeoutMs = requireNonNegativeNumber(runtimeConfig.stopTimeoutMs, 'stopTimeoutMs');
   let stopped = false;
-  let tick = 0;
-  let loggedFailure = false;
-
-  async function loop() {
-    while (!stopped) {
-      try {
-        await ingester.processNext({ ...ctx, config });
-        tick += 1;
-        if (healthCheckEvery > 0 && tick % healthCheckEvery === 0 && typeof ingester.checkPressure === 'function') {
-          await ingester.checkPressure({ ...ctx, config });
-        }
-        if (typeof ingester.trim === 'function') await ingester.trim();
-      } catch (error) {
-        if (!loggedFailure) {
-          loggedFailure = true;
-          const detail = errorDetail(error);
-          log('WARN', `[agent-observability-ingester] runtime loop failed: ${detail}`);
-          try {
-            await recordObservabilityDegraded({ ...ctx, config }, {
-              component: 'agent_observability_ingester',
-              surface: 'redis_control_stream',
-              reason: 'agent_observability_ingester_loop_failed',
-              source: 'agent_observability_ingester_runtime',
-              detail,
-            });
-          } catch (reportError) {
-            log('WARN', `[agent-observability-ingester] degraded evidence failed: ${errorDetail(reportError)}`);
-          }
-        }
-        await sleep(loopDelayMs);
-      }
-    }
-  }
-
-  const task = loop();
+  const loop = createRuntimeLoop(ingester, {
+    ctx: { ...ctx, config }, healthCheckEvery, loopDelayMs,
+  });
+  const task = loop(() => stopped);
   log('INFO', '[agent-observability-ingester] runtime loop started from swarm.config.json');
 
   const controller = {
@@ -100,7 +105,7 @@ export function startAgentObservabilityIngester(config, ctx = {}) {
     stats: () => (typeof ingester.getStats === 'function' ? ingester.getStats() : null),
     async stop() {
       stopped = true;
-      const stopResults = [];
+      const stopResults: any[] = [];
       if (typeof ingester.stop === 'function') {
         const stopResult = await withTimeout(Promise.resolve().then(() => ingester.stop()), stopTimeoutMs);
         stopResults.push(stopResult);
@@ -108,7 +113,7 @@ export function startAgentObservabilityIngester(config, ctx = {}) {
       try {
         const loopResult = await withTimeout(task, stopTimeoutMs);
         stopResults.push(loopResult);
-      } catch (_error) { /* loop errors are logged above */ }
+      } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* loop errors are logged above */ }
       if (didTimeout(...stopResults)) {
         log('WARN', `[agent-observability-ingester] runtime loop stop timed out after ${stopTimeoutMs}ms`);
       } else {

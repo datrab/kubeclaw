@@ -13,7 +13,7 @@ function normalizeString(value: unknown): string | null {
   return selectTruthyValue(() => (normalized), () => (null));
 }
 
-function normalizeAttempt(value: unknown, fallback = 1): number {
+function normalizeAttempt(value: unknown, fallback: any = 1): number {
   const numeric = Number(value);
   return Number.isFinite(numeric) && numeric > 0 ? numeric : fallback;
 }

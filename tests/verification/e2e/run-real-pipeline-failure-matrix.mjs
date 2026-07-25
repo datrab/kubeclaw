@@ -19,6 +19,7 @@ import {
   defaultCheckpointRoot,
   validateCheckpointBundle,
 } from './checkpoints.mjs';
+import { hasRateLimitCooldownEvidence, rateLimitCooldownDetails } from './rate-limit-output.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');
@@ -32,8 +33,6 @@ const DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS = Number(
 );
 const DEFAULT_MATRIX_DISCORD_TIMEOUT_MS = Number(process.env.REAL_E2E_MATRIX_DISCORD_TIMEOUT_MS || 10000);
 const DEFAULT_GLOBAL_BLOCKER_THRESHOLD = 2;
-const RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN = /\b(rate[- ]limit(?:ed)?|usage limit|subscription usage limit)\b[\s\S]{0,240}\b(cooldown|sleeping|resume at|retrying after cooldown|authorized_rate_limit_cooldown)\b/i;
-const RATE_LIMIT_RESUME_AT_PATTERN = /\bresume at\s+([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+Z)\b/i;
 
 function parseArgs(argv) {
   const args = {
@@ -214,29 +213,7 @@ function signalChildTree(child, signal) {
 }
 
 function rateLimitCooldownEvidence(output) {
-  if (!output) return false;
-  const text = [
-    output.stdout?.tail,
-    output.stderr?.tail,
-    ...(output.stdout?.fatal_lines || []),
-    ...(output.stderr?.fatal_lines || []),
-  ].filter(Boolean).join('\n');
-  return RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN.test(text);
-}
-
-function rateLimitCooldownDetails(output) {
-  if (!output) return null;
-  const text = [
-    output.stdout?.tail,
-    output.stderr?.tail,
-    ...(output.stdout?.fatal_lines || []),
-    ...(output.stderr?.fatal_lines || []),
-  ].filter(Boolean).join('\n');
-  if (!RATE_LIMIT_COOLDOWN_OUTPUT_PATTERN.test(text)) return null;
-  return {
-    resumeAt: text.match(RATE_LIMIT_RESUME_AT_PATTERN)?.[1] || null,
-    evidenceLength: text.length,
-  };
+  return hasRateLimitCooldownEvidence(output);
 }
 
 async function waitForChildWithTimeout(child, timeoutMs, {
@@ -411,7 +388,7 @@ function requestedSuitesForArgs(args) {
   return args.suites.filter((suiteId) => suiteScenariosForArgs(args, suiteId).length > 0);
 }
 
-function timeoutResultRecord({ mode, scenario, resultPath, exit, timeoutMs, diagnostics, existingResult = null }) {
+function failedMatrixChildBase({ mode, scenario, exit, diagnostics, existingResult }) {
   const now = new Date().toISOString();
   const base = existingResult && typeof existingResult === 'object' && !Array.isArray(existingResult)
     ? existingResult
@@ -423,17 +400,24 @@ function timeoutResultRecord({ mode, scenario, resultPath, exit, timeoutMs, diag
         scenario: { id: scenario },
         phases: [],
       };
-  const errors = Array.isArray(base.errors) ? base.errors : [];
   return {
-    ...base,
-    updated_at: now,
-    ok: false,
-    exit_code: exit?.code ?? null,
-    signal: exit?.signal ?? null,
-    diagnostics: {
-      ...(base.diagnostics || {}),
-      matrix_child: diagnostics,
+    base,
+    errors: Array.isArray(base.errors) ? base.errors : [],
+    common: {
+      ...base,
+      updated_at: now,
+      ok: false,
+      exit_code: exit?.code ?? null,
+      signal: exit?.signal ?? null,
+      diagnostics: { ...(base.diagnostics || {}), matrix_child: diagnostics },
     },
+  };
+}
+
+function timeoutResultRecord({ mode, scenario, resultPath, exit, timeoutMs, diagnostics, existingResult = null }) {
+  const { common, errors } = failedMatrixChildBase({ mode, scenario, exit, diagnostics, existingResult });
+  return {
+    ...common,
     errors: [
       ...errors,
       {
@@ -453,24 +437,9 @@ function resultHasPipelineRunVerdict(result) {
 }
 
 function abortedResultRecord({ mode, scenario, resultPath, exit, diagnostics, existingResult = null }) {
-  const now = new Date().toISOString();
-  const base = existingResult && typeof existingResult === 'object' && !Array.isArray(existingResult)
-    ? existingResult
-    : {
-        schema_version: 'real_pipeline_e2e_result.v1',
-        artifact_type: 'real_pipeline_e2e_result',
-        created_at: now,
-        mode,
-        scenario: { id: scenario },
-        phases: [],
-      };
-  const errors = Array.isArray(base.errors) ? base.errors : [];
+  const { base, common, errors } = failedMatrixChildBase({ mode, scenario, exit, diagnostics, existingResult });
   return {
-    ...base,
-    updated_at: now,
-    ok: false,
-    exit_code: exit?.code ?? null,
-    signal: exit?.signal ?? null,
+    ...common,
     pipeline: resultHasPipelineRunVerdict(base) ? base.pipeline : {
       phase: 'harness-aborted',
       ok: false,
@@ -485,10 +454,6 @@ function abortedResultRecord({ mode, scenario, resultPath, exit, diagnostics, ex
         matched: false,
         reason: 'REAL_E2E_HARNESS_ABORTED_BEFORE_PIPELINE_RESULT',
       },
-    },
-    diagnostics: {
-      ...(base.diagnostics || {}),
-      matrix_child: diagnostics,
     },
     errors: [
       ...errors,

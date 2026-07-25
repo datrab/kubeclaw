@@ -1,5 +1,5 @@
 import { bindRunContext, createRunId, createRunStats, createEffectReceipt } from './runtime.ts';
-import { resolveStageOwner } from './registry.ts';
+import { resolveStageOwner } from './registry-access.ts';
 import { buildInvocationSnapshot } from '../services/correlation.ts';
 import { createPluginArtifactsApi } from '../services/artifact-bundle.ts';
 import { appendStructuredEvent } from '../services/observability.ts';
@@ -170,7 +170,7 @@ export class PipelineContext {
   }
 }
 
-export function isPipelineContext(value: any) {
+function isPipelineContext(value: any) {
   return selectTruthyValue(() => (value instanceof PipelineContext), () => (value?.schemaVersion === 'pipeline-context-v1'));
 }
 

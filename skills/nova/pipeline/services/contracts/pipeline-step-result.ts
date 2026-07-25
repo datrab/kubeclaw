@@ -110,15 +110,15 @@ function maxRateLimitPausesAuthority(rateLimit: UnknownRecord, rateLimitStatus: 
   return selectDefinedValue(() => (rateLimitStatus?.max_rate_limit_pauses), () => (null));
 }
 
-export function isPipelineStepAction(action: unknown): boolean {
+function isPipelineStepAction(action: unknown): boolean {
   return Object.values(PIPELINE_STEP_ACTIONS).includes(action as string);
 }
 
-export function isPipelineStepOutcome(outcome: unknown): boolean {
+function isPipelineStepOutcome(outcome: unknown): boolean {
   return Object.values(PIPELINE_STEP_OUTCOMES).includes(outcome as string);
 }
 
-export function isTerminalPipelineStepOutcome(outcome: unknown): boolean {
+function isTerminalPipelineStepOutcome(outcome: unknown): boolean {
   return pipelineTerminalStatusForStepOutcome(outcome) != null;
 }
 
@@ -337,7 +337,7 @@ export function validatePipelineStepResult(result: unknown = {}): string[] {
   } else if (expectedTerminalStatus != null) {
     const decisionErrors = validatePipelineTerminalDecision(terminalDecision);
     if (decisionErrors.length > 0) {
-      errors.push(...decisionErrors.map((error) => `terminal.decision ${error}`));
+      errors.push(...decisionErrors.map((error: any) => `terminal.decision ${error}`));
     } else if (terminalDecision.status !== expectedTerminalStatus) {
       errors.push(`terminal.decision.status must be ${expectedTerminalStatus} for outcome '${result.outcome}'`);
     }

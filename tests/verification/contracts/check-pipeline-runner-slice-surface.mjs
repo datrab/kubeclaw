@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-pipeline-runner-slice-surface' });
 import fs from 'fs';
@@ -6,16 +7,8 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const mainPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner.ts');
 const sharedPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-shared.ts');
 const schedulingPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling.ts');
@@ -33,15 +26,38 @@ const agentObservabilityRuntimePath = path.join(sourceRoot, 'skills/nova/pipelin
 
 const mainSource = fs.readFileSync(mainPath, 'utf8');
 const sharedSource = fs.readFileSync(sharedPath, 'utf8');
-const schedulingSource = fs.readFileSync(schedulingPath, 'utf8');
+const schedulingSource = [
+  ...fs.readdirSync(path.dirname(schedulingPath))
+    .filter((fileName) => fileName.startsWith('pipeline-runner-scheduling') && fileName.endsWith('.ts'))
+    .map((fileName) => path.join(path.dirname(schedulingPath), fileName)),
+  ...fs.readdirSync(path.join(path.dirname(schedulingPath), 'pipeline-runner-scheduling'))
+    .filter((fileName) => fileName.endsWith('.ts'))
+    .map((fileName) => path.join(path.dirname(schedulingPath), 'pipeline-runner-scheduling', fileName)),
+].sort().map((filePath) => fs.readFileSync(filePath, 'utf8')).join('\n');
 const validatorCompletionsSource = fs.readFileSync(validatorCompletionsPath, 'utf8');
-const recoverySource = fs.readFileSync(recoveryPath, 'utf8');
-const lockSource = fs.readFileSync(lockPath, 'utf8');
+const recoverySource = fs.readdirSync(path.dirname(recoveryPath))
+  .filter((fileName) => fileName.startsWith('pipeline-runner-recovery') && fileName.endsWith('.ts'))
+  .sort()
+  .map((fileName) => fs.readFileSync(path.join(path.dirname(recoveryPath), fileName), 'utf8'))
+  .join('\n');
+const lockSource = fs.readdirSync(path.dirname(lockPath))
+  .filter((fileName) => fileName.startsWith('pipeline-runner-lock') && fileName.endsWith('.ts'))
+  .sort()
+  .map((fileName) => fs.readFileSync(path.join(path.dirname(lockPath), fileName), 'utf8'))
+  .join('\n');
 const depsSource = fs.readFileSync(depsPath, 'utf8');
 const startSource = fs.readFileSync(startPath, 'utf8');
 const loopSource = fs.readFileSync(loopPath, 'utf8');
-const stateMachineSource = fs.readFileSync(stateMachinePath, 'utf8');
-const terminalSource = fs.readFileSync(terminalPath, 'utf8');
+const stateMachineSource = [
+  'pipeline-runner-state-machine.ts',
+  'pipeline-runner-module-batch.ts',
+  'pipeline-runner-batch-results.ts',
+].map((fileName) => fs.readFileSync(path.join(path.dirname(stateMachinePath), fileName), 'utf8')).join('\n');
+const terminalSource = fs.readdirSync(path.dirname(terminalPath))
+  .filter((fileName) => fileName.startsWith('pipeline-runner-terminal') && fileName.endsWith('.ts'))
+  .sort()
+  .map((fileName) => fs.readFileSync(path.join(path.dirname(terminalPath), fileName), 'utf8'))
+  .join('\n');
 const openClawPluginRuntimeSource = fs.readFileSync(openClawPluginRuntimePath, 'utf8');
 const commonOpenClawPluginRuntimeSource = fs.readFileSync(commonOpenClawPluginRuntimePath, 'utf8');
 const agentObservabilityRuntimeSource = fs.readFileSync(agentObservabilityRuntimePath, 'utf8');
@@ -53,10 +69,10 @@ for (const marker of [
   "from './pipeline-runner-start.ts'",
   "from './pipeline-runner-loop.ts'",
   "from '../services/openclaw-plugin-runtime.ts'",
-  'await openClawAgentObserverPlugin.start();',
+  'await runtime.observer.start();',
   'await startPipelineRun(config, progress, runOpts);',
-  'return await runPipelineLoop(config, progress, runOpts);',
-  'await openClawAgentObserverPlugin.stop();',
+  'return runPipelineLoop(config, progress, runOpts);',
+  'await runtime.observer.stop();',
 ]) {
   assert.equal(mainSource.includes(marker), true, `pipeline-runner should include ${marker}`);
 }
@@ -67,10 +83,10 @@ for (const marker of [
   'async function finalizeTerminalHalt(',
   'pipelineStepDiagnosticSummary(stepResult)',
   'pipelineStepRateLimitDetails(stepResult)',
-  'rate_limit_authority: typedRateLimit.source',
+  'rate_limit_authority: rateLimit.source',
   'scheduleProjectSummaryOnBlocked',
   'invalid_step_result_rejected',
-  'const operatorReason = typedOperatorReason;',
+  'const operatorReason = pipelineStepDiagnosticSummary(stepResult)',
 ]) {
   assert.equal(terminalSource.includes(marker), true, `pipeline-runner terminal helper should include ${marker}`);
 }
@@ -103,7 +119,7 @@ for (const marker of [
   'export const PIPELINE_RUNNER_ACTIONS',
   'export function planPipelineStep(',
   'export async function runPipelineStateMachine(',
-  'const stepResult = selectDefinedValue(() => (result),',
+  'const stepResult = result ??',
   'normalizeStepResultForPipeline(stepResult,',
   'resumeDurableCooldownForStep(config, progress, next,',
 ]) {
@@ -304,7 +320,7 @@ fs.rmSync(corruptCompletionDir, { recursive: true, force: true });
 assert.equal(recoverySource.includes("reason: 'stale_module_recovery_requires_session_evidence'"), true, 'stale no-session recovery must emit durable typed operator evidence');
 assert.equal(recoverySource.includes("status_reset_to: 'unchanged'"), true, 'stale no-session recovery must leave module status unchanged');
 assert.equal(recoverySource.includes('refusing age-only reset'), true, 'stale no-session recovery must refuse age-only reset');
-assert.equal(recoverySource.includes('const recoveryTargetStatus = getRetryStatusForPhase(previousPhase);'), true, 'stale recovery retry status should only be reached after typed session evidence sets shouldReset');
+assert.equal(recoverySource.includes('const targetStatus = getRetryStatusForPhase(previousPhase);'), true, 'stale recovery retry status should only be reached after typed session evidence authorizes recovery');
 
 assert.equal(schedulingSource.includes("code: 'blueprint_gate_release_failed'"), true, 'gate release failures must emit typed startup degraded evidence');
 assert.equal(schedulingSource.includes("code: 'blueprint_control_sync_failed'"), true, 'control sync failures must emit typed startup degraded evidence');

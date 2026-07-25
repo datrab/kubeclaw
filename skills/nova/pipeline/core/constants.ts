@@ -56,7 +56,7 @@ export const PLUGIN_ALLOWED_HOOK_FAMILIES = Object.freeze({
   telemetry: new Set(['telemetry.sink']),
 });
 
-export const PLUGIN_HOOK_FAMILIES = new Set(Object.values(PLUGIN_ALLOWED_HOOK_FAMILIES).flatMap((families) => [...families]));
+export const PLUGIN_HOOK_FAMILIES = new Set(Object.values(PLUGIN_ALLOWED_HOOK_FAMILIES).flatMap((families: any) => [...families]));
 
 export const PLUGIN_SOURCE_TYPES = new Set(['builtin', 'local', 'external']);
 export const PLUGIN_TRUST_TIERS = new Set(['trusted', 'restricted']);

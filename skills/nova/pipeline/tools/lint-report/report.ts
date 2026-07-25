@@ -5,33 +5,34 @@ import { log } from './output.ts';
 import { LINT_REPORT_SCHEMA_VERSION } from './report-contract.ts';
 import { policyIncludesFile } from './policy.ts';
 import { normalizeFindings } from './finding-fingerprints.ts';
+import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 const FULL_REPORT_SCOPE = 'full';
 const NO_OUTPUT_CAPTURED = 'no output captured';
 
-function resultCount(value) {
+function resultCount(value: any) {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
 }
 
-function resultFindings(value) {
+function resultFindings(value: any) {
   return Array.isArray(value) ? value : [];
 }
 
-function changedFiles(ctx) {
+function changedFiles(ctx: any) {
   return Array.isArray(ctx.changedFiles) ? ctx.changedFiles : [];
 }
 
-function reportTargetFile(ctx, file = null) {
+function reportTargetFile(ctx: any, file: any = null) {
   if (file) return file;
   return ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
 }
 
-function toolBinaryName(tool) {
+function toolBinaryName(tool: any) {
   return selectDefinedValue(() => (tool.binary), () => (tool.id));
 }
 
-function reportProjectName(ctx) {
+function reportProjectName(ctx: any) {
   return selectDefinedValue(() => (ctx.project), () => (path.basename(ctx.repoRoot)));
 }
 
@@ -49,41 +50,43 @@ function failConfigMissing(code: string, message: string): never {
   throw new LintToolExecutionError(code, message);
 }
 
-function failParse(ctx, toolId, parsed, result, file = null): never {
+function failParse(ctx: any, toolId: any, parsed: any, result: any, file: any = null): never {
   const targetFile = reportTargetFile(ctx, file);
-  const output = selectDefinedValue(() => ([result.stdout, result.stderr].find((value) => typeof value === 'string' && value.trim())?.trim()), () => (''));
+  const output = selectDefinedValue(() => ([result.stdout, result.stderr].find((value: any) => typeof value === 'string' && value.trim())?.trim()), () => (''));
   const preview = output ? output.split('\n')[0].slice(0, 200) : NO_OUTPUT_CAPTURED;
   const message = `${toolId} output could not be parsed. parseError=${parsed.error}; exitCode=${result.exitCode}; preview=${preview}`;
   log('WARN', message, { file: targetFile });
   throw new LintToolExecutionError(`${toolId}-parse-failed`, message);
 }
 
-function notApplicable(reason) {
+function notApplicable(reason: any) {
   return { status: 'not_applicable', reason };
 }
 
-function toolContext(ctx, tool) {
+function toolAuthorityFiles(ctx: any, tool: any) {
+  const absolutePaths = [tool.config_path, ctx.policy.baseline?.path, ctx.policyPath];
+  return absolutePaths
+    .filter(Boolean)
+    .map((file: any) => path.relative(ctx.repoRoot, path.resolve(file)).split(path.sep).join('/'))
+    .filter((file: any) => !file.startsWith('../'));
+}
+
+function toolContext(ctx: any, tool: any) {
   const projectRoot = ctx.policyProject.root === '.' ? null : ctx.policyProject.root;
   if (tool.scope === 'repository') return { ...ctx, modulePath: null, changedFiles: [], changedFilesRequested: false, tool };
   if (tool.scope === 'project') return { ...ctx, modulePath: projectRoot, changedFiles: [], changedFilesRequested: false, tool };
-  const configRelative = tool.config_path
-    ? path.relative(ctx.repoRoot, path.resolve(tool.config_path)).split(path.sep).join('/')
-    : null;
-  const baselineRelative = ctx.policy.baseline?.path
-    ? path.relative(ctx.repoRoot, path.resolve(ctx.policy.baseline.path)).split(path.sep).join('/')
-    : null;
-  const authorityFiles = [configRelative, baselineRelative].filter(file => file && !file.startsWith('../'));
-  const configChanged = changedFiles(ctx).some(file => authorityFiles.includes(file.split(path.sep).join('/').replace(/^\.\//, '')));
+  const authorityFiles = toolAuthorityFiles(ctx, tool);
+  const configChanged = changedFiles(ctx).some((file: any) => authorityFiles.includes(file.split(path.sep).join('/').replace(/^\.\//, '')));
   if (configChanged) return { ...ctx, modulePath: projectRoot, changedFiles: [], changedFilesRequested: false, tool };
   const normalizedProjectRoot = ctx.policyProject.root === '.' ? '' : ctx.policyProject.root.replace(/\/$/, '');
-  const scopedChangedFiles = changedFiles(ctx).filter((file) => {
+  const scopedChangedFiles = changedFiles(ctx).filter((file: any) => {
     const normalized = file.split(path.sep).join('/').replace(/^\.\//, '');
     if (normalizedProjectRoot && normalized !== normalizedProjectRoot && !normalized.startsWith(`${normalizedProjectRoot}/`)) return false;
     const projectRelative = normalizedProjectRoot ? normalized.slice(normalizedProjectRoot.length).replace(/^\//, '') : normalized;
     const scopeTool = tool.scope === 'affected-projects' ? { ...tool, targets: ['.'] } : tool;
     if (policyIncludesFile(projectRelative, scopeTool, ctx.policy.global_exclusions)) return true;
     if (tool.scope !== 'affected-projects') return false;
-    const authorityFile = tool.targets.some(target => target !== '.' && target.replace(/^\.\//, '') === projectRelative);
+    const authorityFile = tool.targets.some((target: any) => target !== '.' && target.replace(/^\.\//, '') === projectRelative);
     return authorityFile && policyIncludesFile(projectRelative, { ...scopeTool, include: ['**/*'] }, ctx.policy.global_exclusions);
   });
   if (tool.scope === 'affected-projects') {
@@ -97,16 +100,39 @@ function toolContext(ctx, tool) {
   };
 }
 
-function blockingFindingCount(result, threshold) {
+function blockingFindingCount(result: any, threshold: any) {
   const errors = resultCount(result.errors);
   return threshold === 'warning' ? errors + resultCount(result.warnings) : errors;
+}
+
+function missingBinaryResult(tool: any, binaryName: any) {
+  if (tool.required === false) return { status: 'not_applicable', reason: `${binaryName} not found in PATH`, duration_ms: 0 };
+  return { status: 'error', code: 'lint-tool-binary-missing', error: `${binaryName} not found in PATH`, duration_ms: 0 };
+}
+
+function successfulResult(ctx: any, tool: any, result: any, findings: any, durationMs: any) {
+  const common = { status: 'ok', category: tool.category, scope: tool.scope, blocking_severity: tool.blocking_severity, mode: tool.mode, duration_ms: durationMs };
+  if (tool.mode === 'experimental') {
+    return { ...common, errors: 0, warnings: 0, blocking_findings: 0, baselined_findings: 0, experimental_findings: Math.max(findings.length, resultCount(result.errors) + resultCount(result.warnings)), findings };
+  }
+  const active = findings.filter((finding: any) => !finding.baseline);
+  const baselinedErrors = findings.filter((finding: any) => finding.baseline && finding.severity === 'error').length;
+  const baselinedWarnings = findings.filter((finding: any) => finding.baseline && finding.severity === 'warning').length;
+  const errors = Math.max(0, resultCount(result.errors) - baselinedErrors);
+  const warnings = Math.max(0, resultCount(result.warnings) - baselinedWarnings);
+  return { ...common, errors, warnings, blocking_findings: blockingFindingCount({ errors, warnings }, tool.blocking_severity), baselined_findings: findings.length - active.length, experimental_findings: 0, findings: ctx.includeDebt === true ? findings : active };
+}
+
+function executionError(tool: any, error: any, startTime: any) {
+  log('WARN', `Tool ${tool.id} failed: ${error.message}`);
+  return { status: 'error', code: typeof error?.code === 'string' ? error.code : 'lint-tool-execution-failed', error: error.message, duration_ms: Date.now() - startTime };
 }
 
 /**
  * Run a single tool with full error handling.
  * Returns a standardized result object for the report.
  */
-async function runTool(tool, ctx) {
+async function runTool(tool: any, ctx: any) {
   const startTime = Date.now();
 
   const scopedContext = toolContext(ctx, tool);
@@ -116,21 +142,7 @@ async function runTool(tool, ctx) {
 
   // Check if the tool binary exists
   const binaryName = toolBinaryName(tool);
-  if (!commandExists(binaryName)) {
-    if (tool.required !== false) {
-      return {
-        status: 'error',
-        code: 'lint-tool-binary-missing',
-        error: `${binaryName} not found in PATH`,
-        duration_ms: 0,
-      };
-    }
-    return {
-      status: 'not_applicable',
-      reason: `${binaryName} not found in PATH`,
-      duration_ms: 0,
-    };
-  }
+  if (!commandExists(binaryName)) return missingBinaryResult(tool, binaryName);
 
   try {
     const result = await tool.run(scopedContext);
@@ -141,96 +153,52 @@ async function runTool(tool, ctx) {
     }
 
     const findings = normalizeFindings(scopedContext, tool.id, resultFindings(result.findings));
-    const activeFindings = findings.filter(finding => !finding.baseline);
-    const baselinedErrors = findings.filter(finding => finding.baseline && finding.severity === 'error').length;
-    const baselinedWarnings = findings.filter(finding => finding.baseline && finding.severity === 'warning').length;
-    const errors = Math.max(0, resultCount(result.errors) - baselinedErrors);
-    const warnings = Math.max(0, resultCount(result.warnings) - baselinedWarnings);
-    return {
-      status: 'ok',
-      errors,
-      warnings,
-      blocking_findings: blockingFindingCount({ errors, warnings }, tool.blocking_severity),
-      baselined_findings: findings.length - activeFindings.length,
-      category: tool.category,
-      scope: tool.scope,
-      blocking_severity: tool.blocking_severity,
-      findings,
-      duration_ms: durationMs,
-    };
-  } catch (e) {
-    const durationMs = Date.now() - startTime;
-    log('WARN', `Tool ${tool.id} failed: ${e.message}`);
-
-    return {
-      status: 'error',
-      code: typeof e?.code === 'string' ? e.code : 'lint-tool-execution-failed',
-      error: e.message,
-      duration_ms: durationMs,
-    };
+    return successfulResult(ctx, tool, result, findings, durationMs);
+  } catch (e: any) {
+    return executionError(tool, e, startTime);
   }
+}
+
+function applicableTools(ctx: any, toolRegistry: any) {
+  const tiers = ['pre-check', 'full'];
+  const tierIndex = tiers.indexOf(ctx.tier);
+  return toolRegistry.filter((tool: any) => tiers.indexOf(tool.tier) <= tierIndex)
+    .filter((tool: any) => tool.mode === 'blocking' || ctx.includeExperimental === true)
+    .filter((tool: any) => tool.detect(ctx));
+}
+
+function logToolResult(tool: any, result: any) {
+  if (result.status === 'ok') log('OK', `${tool.name}: ${result.errors} errors, ${result.warnings} warnings (${result.duration_ms}ms)`);
+  else if (result.status === 'not_applicable') log('INFO', `${tool.name}: not applicable — ${result.reason}`);
+  else log('WARN', `${tool.name}: error — ${result.error}`);
+}
+
+async function executeTools(ctx: any, applicable: any) {
+  const results: any = {};
+  for (const tool of applicable) {
+    log('STEP', `Running: ${tool.name}`);
+    results[tool.id] = await runTool(tool, ctx);
+    logToolResult(tool, results[tool.id]);
+  }
+  return results;
+}
+
+function summarizeTools(results: any) {
+  const summary = createToolSummary();
+  for (const result of Object.values(results)) {
+    accumulateToolSummary(summary, result);
+  }
+  return summary;
 }
 
 /**
  * Run all applicable tools for the current context.
  * Returns the complete report object.
  */
-async function runAllTools(ctx, toolRegistry) {
-  const tierOrder = ['pre-check', 'full'];
-  const tierIndex = tierOrder.indexOf(ctx.tier);
-
-  const applicable = toolRegistry.filter(tool => {
-    // Tier check: pre-check tools run in both tiers, full-only tools only in full
-    const toolTierIndex = tierOrder.indexOf(tool.tier);
-    if (toolTierIndex > tierIndex) return false;
-
-    // Project type check
-    if (!tool.detect(ctx)) return false;
-
-    return true;
-  });
-
-  log('INFO', `Running ${applicable.length} tools (tier: ${ctx.tier})`, {
-    tools: applicable.map(t => t.id),
-  });
-
-  const toolResults = {};
-  for (const tool of applicable) {
-    log('STEP', `Running: ${tool.name}`);
-    toolResults[tool.id] = await runTool(tool, ctx);
-
-    const r = toolResults[tool.id];
-    if (r.status === 'ok') {
-      log('OK', `${tool.name}: ${r.errors} errors, ${r.warnings} warnings (${r.duration_ms}ms)`);
-    } else if (r.status === 'not_applicable') {
-      log('INFO', `${tool.name}: not applicable — ${r.reason}`);
-    } else {
-      log('WARN', `${tool.name}: error — ${r.error}`);
-    }
-  }
-
-  // Build summary
-  let totalErrors = 0;
-  let totalWarnings = 0;
-  let toolsOk = 0;
-  let toolsNotApplicable = 0;
-  let toolsFailed = 0;
-  let totalBlocking = 0;
-  let totalBaselined = 0;
-
-  for (const r of Object.values(toolResults)) {
-    if (r.status === 'ok') {
-      toolsOk++;
-      totalErrors += r.errors;
-      totalWarnings += r.warnings;
-      totalBlocking += r.blocking_findings;
-      totalBaselined += r.baselined_findings;
-    } else if (r.status === 'not_applicable') {
-      toolsNotApplicable++;
-    } else {
-      toolsFailed++;
-    }
-  }
+async function runAllTools(ctx: any, toolRegistry: any) {
+  const applicable = applicableTools(ctx, toolRegistry);
+  log('INFO', `Running ${applicable.length} tools (tier: ${ctx.tier})`, { tools: applicable.map((tool: any) => tool.id) });
+  const toolResults = await executeTools(ctx, applicable);
 
   return {
     schema_version: LINT_REPORT_SCHEMA_VERSION,
@@ -245,18 +213,16 @@ async function runAllTools(ctx, toolRegistry) {
     scope: selectDefinedValue(() => (ctx.modulePath), () => (FULL_REPORT_SCOPE)),
     timestamp: new Date().toISOString(),
     tier: ctx.tier,
+    visibility: {
+      debt: ctx.includeDebt === true,
+      experimental: ctx.includeExperimental === true,
+    },
     changed_files: changedFiles(ctx),
     detected_types: [...ctx.projectTypes],
     diagnostics: Array.isArray(ctx.diagnostics) ? ctx.diagnostics : [],
     tools: toolResults,
     summary: {
-      total_errors: totalErrors,
-      total_warnings: totalWarnings,
-      total_blocking: totalBlocking,
-      total_baselined: totalBaselined,
-      tools_ok: toolsOk,
-      tools_not_applicable: toolsNotApplicable,
-      tools_failed: toolsFailed,
+      ...summarizeTools(toolResults),
     },
   };
 }

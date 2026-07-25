@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -8,17 +9,31 @@ import { renderChart } from './helm-render.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
 
-function issueMessage(issue) {
+const CANONICAL_LINT_CONFIG_FALSE_POSITIVE = {
+  code: 'KSV-0109',
+  resource: 'ConfigMap:default:agent-nova-swarm-config',
+  document_sha256: '6e1860a5a1a01e896e694e954bd7af34850769ec13b09f48323d86d458c21528',
+  message: `ConfigMap 'agent-nova-swarm-config' in 'default' namespace stores secrets in key(s) or value(s) '{"              password ", "              secret ", "              token ", "          - pattern"}'`,
+  owner: 'pipeline-maintainers',
+  reason: 'Trivy reads Semgrep rule examples embedded as lint configuration as ConfigMap secret values; the exact canonical resource and config payload are not credentials.',
+  created: '2026-07-21',
+  expires: '2026-10-20',
+  tracking: 'lint-calibration-phase-8',
+  approved_by: 'pipeline-maintainers',
+  approved_on: '2026-07-21',
+};
+
+function issueMessage(issue: any) {
   if (issue.Message) return issue.Message;
   if (issue.Title) return issue.Title;
   return 'Kubernetes security misconfiguration';
 }
 
-function unquote(value) {
+function unquote(value: any) {
   return value?.trim().replace(/^['"]|['"]$/g, '') || null;
 }
 
-function documentAtLine(rendered, lineNumber) {
+function documentAtLine(rendered: any, lineNumber: any) {
   const lines = rendered.split('\n');
   const lineIndex = Math.max(0, Math.min(lines.length - 1, Number(lineNumber || 1) - 1));
   let start = lineIndex;
@@ -29,10 +44,10 @@ function documentAtLine(rendered, lineNumber) {
   return lines.slice(start, end);
 }
 
-function metadataLines(document) {
-  const metadataIndex = document.findIndex(line => /^metadata:\s*$/.test(line));
+function metadataLines(document: any) {
+  const metadataIndex = document.findIndex((line: any) => /^metadata:\s*$/.test(line));
   if (metadataIndex < 0) return [];
-  const lines = [];
+  const lines: any[] = [];
   for (const line of document.slice(metadataIndex + 1)) {
     if (line.trim() && !/^\s/.test(line)) break;
     lines.push(line);
@@ -40,16 +55,42 @@ function metadataLines(document) {
   return lines;
 }
 
-function resourceIdentity(rendered, lineNumber) {
+function resourceIdentity(rendered: any, lineNumber: any) {
   const document = documentAtLine(rendered, lineNumber);
-  const kind = unquote(document.find(line => /^kind:\s*\S+/.test(line))?.replace(/^kind:\s*/, ''));
+  const kind = unquote(document.find((line: any) => /^kind:\s*\S+/.test(line))?.replace(/^kind:\s*/, ''));
   const metadata = metadataLines(document);
-  const name = unquote(metadata.find(line => /^\s+name:\s*\S+/.test(line))?.replace(/^\s+name:\s*/, ''));
-  const namespace = unquote(metadata.find(line => /^\s+namespace:\s*\S+/.test(line))?.replace(/^\s+namespace:\s*/, '')) || 'default';
+  const name = unquote(metadata.find((line: any) => /^\s+name:\s*\S+/.test(line))?.replace(/^\s+name:\s*/, ''));
+  const namespace = unquote(metadata.find((line: any) => /^\s+namespace:\s*\S+/.test(line))?.replace(/^\s+namespace:\s*/, '')) || 'default';
   return kind && name ? `${kind}:${namespace}:${name}` : 'unresolved-resource';
 }
 
-function trivyFinding(ctx, chartDir, rendered, issue, occurrence) {
+function documentForResource(rendered: string, resource: string): string {
+  for (const document of rendered.split(/^---\s*$/m)) {
+    if (resourceIdentity(document, 1) === resource) return document;
+  }
+  return '';
+}
+
+function normalizedDocumentDigest(document: string): string {
+  const normalized = document.trim().replace(/\r\n/g, '\n');
+  return crypto.createHash('sha256').update(normalized).digest('hex');
+}
+
+function isCanonicalLintConfigFalsePositive(
+  rendered: string,
+  issue: any,
+  today: any = new Date().toISOString().slice(0, 10),
+  filter: any = CANONICAL_LINT_CONFIG_FALSE_POSITIVE,
+): boolean {
+  if (today > filter.expires) return false;
+  if (issue.ID !== filter.code) return false;
+  if (issueMessage(issue) !== filter.message) return false;
+  const document = documentForResource(rendered, filter.resource);
+  if (!document) return false;
+  return normalizedDocumentDigest(document) === filter.document_sha256;
+}
+
+function trivyFinding(ctx: any, chartDir: any, rendered: any, issue: any, occurrence: any) {
   const code = issue.ID || 'trivy-kubernetes';
   const message = issueMessage(issue);
   const resource = resourceIdentity(rendered, issue.CauseMetadata?.StartLine);
@@ -64,9 +105,9 @@ function trivyFinding(ctx, chartDir, rendered, issue, occurrence) {
   };
 }
 
-function trivyFindings(ctx, chartDir, rendered, issues) {
+function trivyFindings(ctx: any, chartDir: any, rendered: any, issues: any) {
   const occurrences = new Map();
-  return issues.map((issue) => {
+  return issues.filter((issue: any) => !isCanonicalLintConfigFalsePositive(rendered, issue)).map((issue: any) => {
     const resource = resourceIdentity(rendered, issue.CauseMetadata?.StartLine);
     const identity = JSON.stringify({ resource, code: issue.ID, message: issueMessage(issue) });
     const occurrence = (occurrences.get(identity) || 0) + 1;
@@ -75,10 +116,9 @@ function trivyFindings(ctx, chartDir, rendered, issues) {
   });
 }
 
-function runTrivyKubernetes(ctx) {
-  const findings = [];
+function runTrivyKubernetes(ctx: any) {
+  const findings: any[] = [];
   for (const chartDir of configuredTargetPaths(ctx)) {
-    const findingsBefore = findings.length;
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-trivy-kubernetes-'));
     const manifestPath = path.join(tempDir, 'rendered.yaml');
     try {
@@ -90,9 +130,9 @@ function runTrivyKubernetes(ctx) {
       if (!parsed.ok) return failParse(ctx, 'trivy-kubernetes', parsed, result, chartDir);
       if (result.exitCode !== 0 && result.exitCode !== 1) return failParse(ctx, 'trivy-kubernetes', { error: `unexpected exit code ${result.exitCode}` }, result, chartDir);
       const results = Array.isArray(parsed.data?.Results) ? parsed.data.Results : [];
-      const issues = results.flatMap(entry => Array.isArray(entry.Misconfigurations) ? entry.Misconfigurations : []);
+      const issues = results.flatMap((entry: any) => Array.isArray(entry.Misconfigurations) ? entry.Misconfigurations : []);
       findings.push(...trivyFindings(ctx, chartDir, rendered, issues));
-      if (result.exitCode !== 0 && findings.length === findingsBefore) return failParse(ctx, 'trivy-kubernetes', { error: 'non-zero exit without misconfigurations' }, result, chartDir);
+      if (result.exitCode !== 0 && issues.length === 0) return failParse(ctx, 'trivy-kubernetes', { error: 'non-zero exit without misconfigurations' }, result, chartDir);
     } finally {
       fs.rmSync(tempDir, { recursive: true, force: true });
     }
@@ -100,15 +140,15 @@ function runTrivyKubernetes(ctx) {
   return { errors: findings.length, warnings: 0, findings };
 }
 
-function registerKubernetesSecurityTools(registerTool) {
+function registerKubernetesSecurityTools(registerTool: any) {
   registerTool({
     id: 'trivy-kubernetes',
     name: 'Trivy Kubernetes',
     binary: 'trivy',
     tier: 'full',
-    detect: (ctx) => ctx.projectTypes.has('helm'),
+    detect: (ctx: any) => ctx.projectTypes.has('helm'),
     run: runTrivyKubernetes,
   });
 }
 
-export { registerKubernetesSecurityTools };
+export { CANONICAL_LINT_CONFIG_FALSE_POSITIVE, isCanonicalLintConfigFalsePositive, normalizedDocumentDigest, registerKubernetesSecurityTools, trivyFindings };

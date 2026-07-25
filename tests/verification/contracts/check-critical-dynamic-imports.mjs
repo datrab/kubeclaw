@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-critical-dynamic-imports' });
 import fs from 'fs';
@@ -5,14 +6,6 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function readSource(sourceRoot, relativePath) {
   return fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
@@ -22,7 +15,7 @@ function countDynamicImports(source) {
   return (source.match(/\bimport\s*\(/g) || []).length;
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 
 const notificationSource = readSource(sourceRoot, 'skills/nova/pipeline/services/notification-contract.ts');
 const orchestrationSource = readSource(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts');
@@ -33,7 +26,10 @@ const summarySource = [
 ].map((relativePath) => readSource(sourceRoot, relativePath)).join('\n');
 const adapterRegistrySource = readSource(sourceRoot, 'skills/nova/pipeline/services/adapter-registry.ts');
 const suiteRunnerSource = readSource(sourceRoot, 'skills/buster/pipeline/runners/suite-runner.ts');
-const observabilitySource = readSource(sourceRoot, 'skills/nova/pipeline/services/observability.ts');
+const observabilitySource = [
+  'skills/nova/pipeline/services/observability.ts',
+  'skills/nova/pipeline/services/observability-usage.ts',
+].map((relativePath) => readSource(sourceRoot, relativePath)).join('\n');
 const acpMonitorSource = readSource(sourceRoot, 'skills/common/pipeline/agents/acp-monitor.ts');
 const lifecycleSource = readSource(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts');
 const busterRedisSource = readSource(sourceRoot, 'skills/buster/pipeline/tools/redis.ts');

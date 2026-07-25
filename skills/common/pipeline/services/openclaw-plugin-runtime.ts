@@ -1,30 +1,34 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { writeRuntimeLog } from '../runtime-log.ts';
 // Shared OpenClaw plugin runtime control for Nova and Buster entrypoints.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { spawnSync } from 'child_process';
 
-function controlConfig(config = {}) {
-  return selectDefinedValue(() => (config?.agent_observability?.plugin_control), () => ({}));
+type AnyRecord = Record<string, any>;
+type CommandResult = ReturnType<typeof spawnSync>;
+
+function controlConfig(config: AnyRecord = {}): AnyRecord {
+  const control = config.agent_observability?.plugin_control;
+  return control && typeof control === 'object' && !Array.isArray(control) ? control : {};
 }
 
-function configStringField(config, field) {
+function configStringField(config: AnyRecord, field: string): string {
   return typeof config?.[field] === 'string' ? config[field].trim() : '';
 }
 
-function requireString(config, field) {
+function requireString(config: AnyRecord, field: string): string {
   const value = configStringField(config, field);
   if (value) return value;
   throw new Error(`agent_observability.plugin_control.${field} is required when plugin control is enabled`);
 }
 
-function commandResultText(result) {
+function commandResultText(result: CommandResult): string {
   const stdout = result?.stdout ? String(result.stdout).trim() : '';
   const stderr = result?.stderr ? String(result.stderr).trim() : '';
   return [stdout, stderr].filter(Boolean).join('\n');
 }
 
-function defaultCommandRunner(command, args, options) {
+function defaultCommandRunner(command: string, args: string[], options: { timeoutMs: number }): CommandResult {
   return spawnSync(command, args, {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -32,7 +36,7 @@ function defaultCommandRunner(command, args, options) {
   });
 }
 
-function runPluginCommand(action, runtimeConfig) {
+function runPluginCommand(action: 'enable' | 'disable', runtimeConfig: AnyRecord): AnyRecord {
   const pluginId = requireString(runtimeConfig, 'pluginId');
   const command = requireString(runtimeConfig, 'command');
   const timeoutMs = Number(runtimeConfig.timeout_ms);
@@ -40,7 +44,7 @@ function runPluginCommand(action, runtimeConfig) {
     throw new Error('agent_observability.plugin_control.timeout_ms is required when plugin control is enabled');
   }
   const args = ['plugins', action, pluginId];
-  const result = defaultCommandRunner(command, args, { timeoutMs, pluginId, action });
+  const result = defaultCommandRunner(command, args, { timeoutMs });
   if (result?.error) {
     throw new Error(`${command} ${args.join(' ')} failed: ${result.error.message}`);
   }
@@ -51,7 +55,7 @@ function runPluginCommand(action, runtimeConfig) {
   return { command, args, output: commandResultText(result) };
 }
 
-export function createOpenClawAgentObserverPluginController(config = {}) {
+export function createOpenClawAgentObserverPluginController(config: AnyRecord = {}) {
   const runtimeConfig = controlConfig(config);
   if (runtimeConfig.enabled !== true) {
     return {
@@ -71,7 +75,7 @@ export function createOpenClawAgentObserverPluginController(config = {}) {
     async start() {
       const result = runPluginCommand('enable', runtimeConfig);
       started = true;
-      console.info?.(`[openclaw-plugin-runtime] enabled ${runtimeConfig.pluginId}`);
+      writeRuntimeLog('info', 'common/openclaw-plugin-runtime', `enabled ${runtimeConfig.pluginId}`);
       return result;
     },
     async stop() {
@@ -79,10 +83,10 @@ export function createOpenClawAgentObserverPluginController(config = {}) {
       try {
       const result = runPluginCommand('disable', runtimeConfig);
         started = false;
-        console.info?.(`[openclaw-plugin-runtime] disabled ${runtimeConfig.pluginId}`);
+        writeRuntimeLog('info', 'common/openclaw-plugin-runtime', `disabled ${runtimeConfig.pluginId}`);
         return result;
       } catch (error) {
-        console.warn?.(`[openclaw-plugin-runtime] failed to disable ${runtimeConfig.pluginId}: ${error.message}`);
+        writeRuntimeLog('warn', 'common/openclaw-plugin-runtime', `failed to disable ${runtimeConfig.pluginId}`, { error: error instanceof Error ? error.message : String(error) });
         return { ok: false, error };
       }
     },

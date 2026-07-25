@@ -1,14 +1,8 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function relPath(sourceRoot, filePath) {
   return path.relative(sourceRoot, filePath).replace(/\\/g, '/');
@@ -63,7 +57,7 @@ function sourceForActiveDocDebtScan(sourceRoot, filePath) {
     }, source);
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 
 const runtimeRoots = [
   'skills/nova/pipeline',

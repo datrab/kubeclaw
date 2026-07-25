@@ -1,9 +1,8 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
+import { commonEnvironmentSnapshot } from './runtime-environment.ts';
 declare const process: {
   env: Record<string, string | undefined>;
   cwd(): string;
@@ -29,6 +28,7 @@ const DEFAULT_SUBPROCESS_ENV_ALLOWLIST = Object.freeze([
   'GIT_EDITOR',
   'NODE_ENV',
   'XDG_RUNTIME_DIR',
+  'XDG_CACHE_HOME',
   'XDG_CONFIG_HOME',
   'XDG_DATA_HOME',
   'KUBECONFIG',
@@ -43,6 +43,10 @@ const DEFAULT_SUBPROCESS_ENV_ALLOWLIST = Object.freeze([
   'TF_DATA_DIR',
   'TF_CLI_CONFIG_FILE',
   'SEMGREP_LOG_FILE',
+  'GOCACHE',
+  'GOMODCACHE',
+  'STATICCHECK_CACHE',
+  'TRIVY_CACHE_DIR',
   'CONTAINER_HOST',
   'DOCKER_HOST',
   'SSH_AUTH_SOCK',
@@ -88,7 +92,7 @@ export function isDeniedSubprocessEnvKey(key: unknown) {
 }
 
 export function buildSubprocessEnv(overrides: Record<string, unknown> = {}, options: BuildEnvOptions = {}) {
-  const sourceEnv = options.sourceEnv !== undefined ? options.sourceEnv : process.env;
+  const sourceEnv = options.sourceEnv !== undefined ? options.sourceEnv : commonEnvironmentSnapshot();
   const allowlist = options.allowlist !== undefined ? options.allowlist : DEFAULT_SUBPROCESS_ENV_ALLOWLIST;
   const allowedKeys = new Set(allowlist.filter((key) => key && !isDeniedSubprocessEnvKey(key)));
   const env: Record<string, string> = {};
@@ -136,15 +140,15 @@ function realpathForScope(candidate: string) {
 }
 
 function scopedBaseDir(options: ScopedPathOptions) {
-  return path.resolve(selectDefinedValue(() => (selectDefinedValue(() => (options.baseDir), () => (options.scopeDir))), () => (process.cwd())));
+  return path.resolve(options.baseDir ?? options.scopeDir ?? process.cwd());
 }
 
 function scopedRootDir(options: ScopedPathOptions, baseDir: string) {
-  return path.resolve(selectDefinedValue(() => (options.scopeDir), () => (baseDir)));
+  return path.resolve(options.scopeDir ?? baseDir);
 }
 
 function allowedPathPrefixes(opts: AllowedPathOptions = {}) {
-  const prefixes = selectDefinedValue(() => (opts.allowedPrefixes), () => (DEFAULT_ALLOWED_PATH_PREFIXES));
+  const prefixes = opts.allowedPrefixes ?? DEFAULT_ALLOWED_PATH_PREFIXES;
   return prefixes.map(normalizeAllowedPrefix);
 }
 
@@ -179,7 +183,7 @@ function normalizeAllowedPrefix(prefix: string) {
 }
 
 export function validateAllowedPath(filePath: unknown, label: string, opts: AllowedPathOptions = {}) {
-  if (selectTruthyValue(() => (!filePath), () => (typeof filePath !== 'string'))) {
+  if (typeof filePath !== 'string' || !filePath) {
     throw new Error(`${label}: path is empty or not a string`);
   }
   const normalized = path.resolve(filePath);
@@ -209,7 +213,7 @@ export function tokenizeCommandString(command: unknown, label = 'command') {
     return argv;
   }
 
-  if (selectTruthyValue(() => (!command), () => (typeof command !== 'string'))) {
+  if (typeof command !== 'string' || !command) {
     throw new Error(`${label}: command is empty or not a string`);
   }
 

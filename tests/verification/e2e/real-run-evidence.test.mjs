@@ -9,6 +9,7 @@ import {
   evidenceSchemaTestHooks,
   expectedFailureContractForScenario,
   verifyExpectedFailureEvidence,
+  verifyNativeSubagentToolPairs,
   verifyRealRunEvidence,
 } from './real-run-evidence.mjs';
 import {
@@ -18,6 +19,28 @@ import {
 import { malformedOutputScenarioConfig } from './malformed-output-publisher.mjs';
 
 let eventCounter = 0;
+
+function pairedToolEvents(overrides={}) {
+  const identity={tool_call_id:'tool-1',session_key:'session-1',model_call_id:'model-1',module_id:'01-nginx',attempt:1,dispatch_id:'dispatch-1'};
+  return[
+    {type:'agent.tool.started',event_id:'tool-start',occurred_at:'2026-07-21T00:00:00.000Z',tool_name:'read',content_completeness:'full',...identity,...overrides.start},
+    {type:'agent.tool.finished',event_id:'tool-finish',occurred_at:'2026-07-21T00:00:01.000Z',tool_name:'read',content_completeness:'full',outcome:'success',result_bytes:1,error:null,...identity,...overrides.finish},
+  ];
+}
+
+test('native subagent tool evidence requires exact causal pairing',()=>{
+  assert.equal(verifyNativeSubagentToolPairs(pairedToolEvents()).ok,true);
+  assert.equal(verifyNativeSubagentToolPairs(pairedToolEvents({finish:{session_key:'other'}})).errors.some(error=>error.reason==='TOOL_PAIR_IDENTITY_MISMATCH'),true);
+  assert.equal(verifyNativeSubagentToolPairs([pairedToolEvents()[0]]).errors.some(error=>error.reason==='ORPHAN_TOOL_START'),true);
+  assert.equal(verifyNativeSubagentToolPairs([pairedToolEvents()[1]]).errors.some(error=>error.reason==='ORPHAN_TOOL_FINISH'),true);
+});
+
+test('native subagent tool evidence rejects duplicate, reversed, and incomplete finishes',()=>{
+  const pair=pairedToolEvents();
+  assert.equal(verifyNativeSubagentToolPairs([...pair,pair[1]]).errors.some(error=>error.reason==='DUPLICATE_TOOL_FINISH'),true);
+  assert.equal(verifyNativeSubagentToolPairs(pairedToolEvents({finish:{occurred_at:'2026-07-20T23:59:59.000Z'}})).errors.some(error=>error.reason==='TOOL_FINISH_BEFORE_START'),true);
+  assert.equal(verifyNativeSubagentToolPairs(pairedToolEvents({finish:{content_completeness:null}})).errors.some(error=>error.reason==='TOOL_FINISH_EVIDENCE_INCOMPLETE'),true);
+});
 
 function writeJson(filePath, data) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -44,6 +67,10 @@ function passEchoReview(workspace, gateId, overrides = {}) {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function readJsonLines(filePath) {
+  return fs.readFileSync(filePath, 'utf8').trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
 }
 
 function appendJsonl(filePath, data) {
@@ -116,10 +143,13 @@ function writeLifecycleReadModels(workspace, moduleState, extraModules = {}) {
   writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunIdFor(workspace), 'lifecycle', 'read-models.json'), {
     schema_version: 'pipeline_lifecycle_read_models.v1',
     run_id: pipelineRunIdFor(workspace),
+    pipeline: null,
     modules: {
       '01-nginx': moduleState,
       ...extraModules,
     },
+    gates: {},
+    attempts: {},
   });
 }
 
@@ -299,6 +329,56 @@ function createRetryWorkspace({
   return { scenario, workspace };
 }
 
+const MULTI_RETRY_FAILURE_MARKERS = [
+  'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_1',
+  'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_2',
+];
+
+async function evaluateMultiRetryEvidence({ taskAttempts = [1, 2, 3], finalPromptMarkers = null } = {}) {
+  const failureMarkers = MULTI_RETRY_FAILURE_MARKERS;
+  const { workspace } = createRetryWorkspace({
+    scenarioId: 'forge-retry-then-success',
+    attempts: 3,
+    failCount: 2,
+    currentAttempt: 3,
+    failedAttempts: [1, 2],
+    failedAttemptsWithTesting: [1, 2],
+    passedAttempt: 3,
+    taskAttempts,
+    failSummaries: failureMarkers.map((marker, index) => ({
+      attempt: index + 1,
+      phase: 'buster',
+      failure_class: 'pretest_code',
+      summary: `NO_SUBAGENT: unit: FAIL - ${marker}`,
+    })),
+  });
+  if (finalPromptMarkers) {
+    fs.writeFileSync(
+      path.join(workspace.swarmDir, 'logs', 'modules', '01-nginx', 'forge-prompt-attempt-3.md'),
+      `attempt: 3\n${finalPromptMarkers.join('\n')}\n`,
+    );
+  }
+  const evidence = await evidenceSchemaTestHooks.requireRetryFixCycleEvidence(workspace, {
+    code: 'success_after_multi_retry',
+    expectedModuleStatus: 'PASS',
+    expectedFailCount: 2,
+    expectedAttempts: 3,
+    expectedCurrentAttempt: 3,
+    expectedFailedAttempts: [1, 2],
+    failedAttemptsWithTesting: [1, 2],
+    passedAttempt: 3,
+    expectedModuleTaskAttempts: [1, 2, 3],
+    expectFinalGateTask: true,
+    expectProjectSummary: true,
+    requiredFailureMarkers: failureMarkers,
+    promptContracts: [
+      { attempt: 2, requiredFailureMarkers: [failureMarkers[0]] },
+      { attempt: 3, requiredFailureMarkers: failureMarkers },
+    ],
+  });
+  return { evidence, failureMarkers };
+}
+
 function writeMultiModuleProjectSummary(workspace, moduleStats) {
   writeJson(path.join(workspace.swarmDir, 'logs', 'pipeline', 'project-summary.json'), {
     pipeline: { moduleStats },
@@ -326,6 +406,130 @@ function appendPipelineAgentEvent(workspace, event) {
     source: 'pipeline',
     emitter: 'nova/pipeline/services/agent-observability-ingester',
     ...event,
+  });
+}
+
+function writeCanonicalObservabilityBundle(workspace) {
+  const runId = pipelineRunIdFor(workspace);
+  const runDir = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', runId);
+  const lifecyclePath = path.join(runDir, 'lifecycle', 'canonical-events.jsonl');
+  appendJsonl(lifecyclePath, {
+    event_id:`evt-${++eventCounter}`,source_event_id:'e2e/module/pass',type:'lifecycle.transition',run_id:runId,project:workspace.projectName,work_id:'01-nginx',work_type:'module',module_id:'01-nginx',new_state:'PASS',
+  });
+  appendJsonl(lifecyclePath, {
+    event_id: `evt-${++eventCounter}`,
+    type: 'lifecycle.transition',
+    run_id: runId,
+    project: workspace.projectName,
+    previous_state: 'running',
+    new_state: 'succeeded',
+    terminal_status: 'succeeded',
+  });
+  const readModelsPath = path.join(runDir, 'lifecycle', 'read-models.json');
+  const readModels = readJson(readModelsPath);
+  writeJson(readModelsPath, { ...readModels, pipeline: { status: 'succeeded' } });
+  appendJsonl(path.join(runDir, 'pipeline.jsonl'), {
+    schema_version:'telemetry_envelope.v1',
+    event_id: `event-${++eventCounter}`,
+    source_event_id:'e2e/pipeline/completed',
+    type: 'pipeline.completed',
+    occurred_at:'2026-07-11T00:00:00.000Z',
+    emitted_at:'2026-07-11T00:00:00.000Z',
+    seq:1,
+    cursor:`${workspace.projectName}/${runId}/1`,
+    run_id: runId,
+    project: workspace.projectName,
+    work_id:runId,
+    work_type:'pipeline',
+    module_id:null,gate_id:null,gate_type:null,attempt:null,dispatch_id:null,session_id:null,parent_session_id:null,agent_id:null,model_call_id:null,tool_call_id:null,trace_id:null,span_id:null,parent_span_id:null,
+    source:'pipeline',producer:'real-e2e',authority_class:'pipeline_authority',causation_id:null,extensions:{evidence_provenance:'production'},
+    terminal_status: 'succeeded',
+  });
+
+  const manifest = {
+    schema_version: 'run_manifest.v1',
+    run_id: runId,
+    project: workspace.projectName,
+    fingerprint: crypto.createHash('sha256').update(`manifest:${runId}`).digest('hex'),
+    work_items: [{ work_type: 'module', work_id: '01-nginx', depends_on: [], owner: 'nova',configuration:{} }],
+    schema_versions:{telemetry:'telemetry_envelope.v1'},
+  };
+  writeJson(path.join(runDir, 'run-manifest.json'), manifest);
+  writeJson(path.join(runDir, 'terminal-closure.json'), {
+    schema_version: 'terminal_closure.v1',
+    run_id: runId,
+    project: workspace.projectName,
+    outcome: 'success',
+    observability: 'complete',
+    manifest_fingerprint: manifest.fingerprint,
+    artifact_catalog_reference: 'artifacts.jsonl',
+  });
+  writeJson(path.join(runDir, 'producer-health.json'), {
+    schema_version: 'producer_health_snapshot.v1',
+    run_id: runId,
+    generated_at:'2026-07-11T00:00:00.000Z',
+    completeness: 'complete',
+    producers: [{ producer_id: 'nova', status: 'healthy',last_successful_emission:'2026-07-11T00:00:00.000Z',lag:0,checkpoint:'1',invalid_count:0,quarantined_count:0,dead_letter_count:0,missing_payload_count:0,restart_count:0,reconciliation:null,degradation_intervals:[],capabilities:[] }],
+  });
+  appendJsonl(path.join(runDir, 'evaluation-facts.jsonl'), {
+    schema_version: 'evaluation_fact.v1',
+    run_id: runId,
+    dimension: 'git.workspace',
+    value:{final_commit:'0123456789abcdef'},
+  });
+  fs.writeFileSync(path.join(runDir,'commands.jsonl'),'');
+  fs.writeFileSync(path.join(runDir,'runtime-logs.jsonl'),'');
+  fs.writeFileSync(path.join(runDir,'quarantine.jsonl'),'');
+  writeJson(path.join(runDir,'contract-manifest.json'),{schema_version:'telemetry_contract_manifest.v1',contract_version:1,files:[{path:'envelope.schema.json',byte_length:1,sha256:'a'.repeat(64)}]});
+
+  for (const [kind, content] of [
+    ['composed-prompt', '# composed prompt\n'],
+    ['prompt-metadata', '{"template_version":"pipeline-prompt.v1"}\n'],
+    ['git-diff', 'diff --git a/a b/a\n'],
+  ]) {
+    const bytes = Buffer.from(content);
+    const hash = crypto.createHash('sha256').update(bytes).digest('hex');
+    const reference = `blobs/sha256/${hash.slice(0, 2)}/${hash.slice(2)}`;
+    const blobPath = path.join(runDir, reference);
+    fs.mkdirSync(path.dirname(blobPath), { recursive: true });
+    fs.writeFileSync(blobPath, bytes);
+    appendJsonl(path.join(runDir, 'artifacts.jsonl'), {
+      schema_version: 'artifact_published.v1',
+      artifact_id: `artifact-${kind}`,
+      logical_id: `e2e/${kind}`,
+      kind,
+      media_type: kind === 'composed-prompt' ? 'text/markdown' : 'application/octet-stream',
+      byte_length: bytes.length,
+      sha256: hash,
+      content_class: 'artifact',
+      producer: 'real-e2e',
+      reference,
+      correlation: { project: workspace.projectName, run_id: runId },
+    });
+  }
+
+  const lifecycleBytes = fs.readFileSync(lifecyclePath);
+  const lifecycleEvents = readJsonLines(lifecyclePath);
+  writeJson(path.join(runDir,'expected-source-facts.json'),{schema_version:'expected_source_facts.v1',run_id:runId,project:workspace.projectName,event_types:['pipeline.completed'],readiness_event_types:['pipeline.completed'],artifact_kinds:['composed-prompt','git-diff','prompt-metadata'],lifecycle_projection:readJson(readModelsPath),scenario_facts:[],capabilities:[]});
+  writeJson(path.join(runDir, 'archive-manifest.json'), {
+    schema_version: 'run_archive_manifest.v1',
+    run_id: runId,
+    project: workspace.projectName,
+    lifecycle: {
+      event_count: lifecycleEvents.length,
+      first_cursor: lifecycleEvents[0]?.event_id || null,
+      last_cursor: lifecycleEvents.at(-1)?.event_id || null,
+    },
+    sources: [{
+      reference: 'lifecycle/canonical-events.jsonl',
+      byte_length: lifecycleBytes.length,
+      sha256: crypto.createHash('sha256').update(lifecycleBytes).digest('hex'),
+    }],
+    manifest_reference: 'run-manifest.json',
+    terminal_reference: 'terminal-closure.json',
+    completeness: 'complete',
+    repair_state: 'verified',
+    sha256: crypto.createHash('sha256').update(`archive:${runId}`).digest('hex'),
   });
 }
 
@@ -410,12 +614,13 @@ function writeModuleBoundarySuccessArtifacts(workspace) {
   ];
   for (const event of [
     { type: 'agent.spawned', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
-    { type: 'agent.tool.started', label: 'forge-01-nginx-1', tool_name: 'bash' },
-    { type: 'agent.tool.finished', label: 'forge-01-nginx-1', tool_name: 'bash', outcome: 'completed' },
+    { type: 'agent.tool.started', label: 'forge-01-nginx-1', tool_name: 'bash',tool_call_id:'fixture-tool',session_key:'agent:forge',model_call_id:'fixture-model',module_id:'01-nginx',attempt:1,dispatch_id:'fixture-dispatch',content_completeness:'full' },
+    { type: 'agent.tool.finished', label: 'forge-01-nginx-1', tool_name: 'bash', outcome: 'completed',tool_call_id:'fixture-tool',session_key:'agent:forge',model_call_id:'fixture-model',module_id:'01-nginx',attempt:1,dispatch_id:'fixture-dispatch',content_completeness:'full',result_bytes:0,error:null },
     { type: 'agent.ended', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
   ]) {
     appendPipelineAgentEvent(workspace, event);
   }
+  writeCanonicalObservabilityBundle(workspace);
 }
 
 function createMultiModuleWorkspace({
@@ -1420,45 +1625,7 @@ test('retry fix-cycle Buster task order prefers payload run id over restored str
 });
 
 test('multi-retry success evidence requires two failed attempts before third attempt passes', async () => {
-  const failureMarkers = [
-    'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_1',
-    'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_2',
-  ];
-  const { workspace } = createRetryWorkspace({
-    scenarioId: 'forge-retry-then-success',
-    attempts: 3,
-    failCount: 2,
-    currentAttempt: 3,
-    failedAttempts: [1, 2],
-    failedAttemptsWithTesting: [1, 2],
-    passedAttempt: 3,
-    taskAttempts: [1, 2, 3],
-    failSummaries: failureMarkers.map((marker, index) => ({
-      attempt: index + 1,
-      phase: 'buster',
-      failure_class: 'pretest_code',
-      summary: `NO_SUBAGENT: unit: FAIL - ${marker}`,
-    })),
-  });
-
-  const evidence = await evidenceSchemaTestHooks.requireRetryFixCycleEvidence(workspace, {
-    code: 'success_after_multi_retry',
-    expectedModuleStatus: 'PASS',
-    expectedFailCount: 2,
-    expectedAttempts: 3,
-    expectedCurrentAttempt: 3,
-    expectedFailedAttempts: [1, 2],
-    failedAttemptsWithTesting: [1, 2],
-    passedAttempt: 3,
-    expectedModuleTaskAttempts: [1, 2, 3],
-    expectFinalGateTask: true,
-    expectProjectSummary: true,
-    requiredFailureMarkers: failureMarkers,
-    promptContracts: [
-      { attempt: 2, requiredFailureMarkers: [failureMarkers[0]] },
-      { attempt: 3, requiredFailureMarkers: failureMarkers },
-    ],
-  });
+  const { evidence } = await evaluateMultiRetryEvidence();
 
   assert.equal(evidence.ok, true);
   assert.equal(evidence.code, 'success_after_multi_retry');
@@ -1472,45 +1639,7 @@ test('multi-retry success evidence requires two failed attempts before third att
 });
 
 test('multi-retry success evidence rejects missing third Buster attempt', async () => {
-  const failureMarkers = [
-    'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_1',
-    'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_2',
-  ];
-  const { workspace } = createRetryWorkspace({
-    scenarioId: 'forge-retry-then-success',
-    attempts: 3,
-    failCount: 2,
-    currentAttempt: 3,
-    failedAttempts: [1, 2],
-    failedAttemptsWithTesting: [1, 2],
-    passedAttempt: 3,
-    taskAttempts: [1, 2],
-    failSummaries: failureMarkers.map((marker, index) => ({
-      attempt: index + 1,
-      phase: 'buster',
-      failure_class: 'pretest_code',
-      summary: `NO_SUBAGENT: unit: FAIL - ${marker}`,
-    })),
-  });
-
-  const evidence = await evidenceSchemaTestHooks.requireRetryFixCycleEvidence(workspace, {
-    code: 'success_after_multi_retry',
-    expectedModuleStatus: 'PASS',
-    expectedFailCount: 2,
-    expectedAttempts: 3,
-    expectedCurrentAttempt: 3,
-    expectedFailedAttempts: [1, 2],
-    failedAttemptsWithTesting: [1, 2],
-    passedAttempt: 3,
-    expectedModuleTaskAttempts: [1, 2, 3],
-    expectFinalGateTask: true,
-    expectProjectSummary: true,
-    requiredFailureMarkers: failureMarkers,
-    promptContracts: [
-      { attempt: 2, requiredFailureMarkers: [failureMarkers[0]] },
-      { attempt: 3, requiredFailureMarkers: failureMarkers },
-    ],
-  });
+  const { evidence } = await evaluateMultiRetryEvidence({ taskAttempts: [1, 2] });
 
   assert.equal(evidence.ok, false);
   const taskFailure = evidence.failures.find((failure) => failure.code === 'retry_buster_task_stream');
@@ -1519,48 +1648,8 @@ test('multi-retry success evidence rejects missing third Buster attempt', async 
 });
 
 test('multi-retry success evidence rejects final fix prompt missing second failure context', async () => {
-  const failureMarkers = [
-    'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_1',
-    'REAL_E2E_EXPECTED_MULTI_RETRY_FORGE_CODE_FAILURE_ATTEMPT_2',
-  ];
-  const { workspace } = createRetryWorkspace({
-    scenarioId: 'forge-retry-then-success',
-    attempts: 3,
-    failCount: 2,
-    currentAttempt: 3,
-    failedAttempts: [1, 2],
-    failedAttemptsWithTesting: [1, 2],
-    passedAttempt: 3,
-    taskAttempts: [1, 2, 3],
-    failSummaries: failureMarkers.map((marker, index) => ({
-      attempt: index + 1,
-      phase: 'buster',
-      failure_class: 'pretest_code',
-      summary: `NO_SUBAGENT: unit: FAIL - ${marker}`,
-    })),
-  });
-  fs.writeFileSync(
-    path.join(workspace.swarmDir, 'logs', 'modules', '01-nginx', 'forge-prompt-attempt-3.md'),
-    `attempt: 3\n${failureMarkers[0]}\n`,
-  );
-
-  const evidence = await evidenceSchemaTestHooks.requireRetryFixCycleEvidence(workspace, {
-    code: 'success_after_multi_retry',
-    expectedModuleStatus: 'PASS',
-    expectedFailCount: 2,
-    expectedAttempts: 3,
-    expectedCurrentAttempt: 3,
-    expectedFailedAttempts: [1, 2],
-    failedAttemptsWithTesting: [1, 2],
-    passedAttempt: 3,
-    expectedModuleTaskAttempts: [1, 2, 3],
-    expectFinalGateTask: true,
-    expectProjectSummary: true,
-    requiredFailureMarkers: failureMarkers,
-    promptContracts: [
-      { attempt: 2, requiredFailureMarkers: [failureMarkers[0]] },
-      { attempt: 3, requiredFailureMarkers: failureMarkers },
-    ],
+  const { evidence, failureMarkers } = await evaluateMultiRetryEvidence({
+    finalPromptMarkers: [MULTI_RETRY_FAILURE_MARKERS[0]],
   });
 
   assert.equal(evidence.ok, false);
@@ -2632,8 +2721,8 @@ test('agent observability success evidence uses promoted pipeline events, not ra
   for (const event of [
     { type: 'agent.spawned', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
     { type: 'agent.session.started', session_key: 'agent:forge' },
-    { type: 'agent.tool.started', tool_name: 'bash' },
-    { type: 'agent.tool.finished', tool_name: 'bash', outcome: 'completed' },
+    { type: 'agent.tool.started', tool_name: 'bash',tool_call_id:'fixture-tool',session_key:'agent:forge',model_call_id:'fixture-model',module_id:'01-nginx',attempt:1,dispatch_id:'fixture-dispatch',content_completeness:'full' },
+    { type: 'agent.tool.finished', tool_name: 'bash', outcome: 'completed',tool_call_id:'fixture-tool',session_key:'agent:forge',model_call_id:'fixture-model',module_id:'01-nginx',attempt:1,dispatch_id:'fixture-dispatch',content_completeness:'full',result_bytes:0,error:null },
     { type: 'agent.ended', session_key: 'agent:forge' },
     { type: 'agent.spawned', label: 'echo-echo-codex-module-review-1', session_key: 'agent:review' },
     { type: 'agent.spawned', label: 'case-study-1', session_key: 'agent:case-study' },
@@ -2667,8 +2756,8 @@ test('module-boundary agent observability evidence requires only in-boundary age
   const eventsPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl');
   for (const event of [
     { type: 'agent.spawned', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
-    { type: 'agent.tool.started', label: 'forge-01-nginx-1', tool_name: 'bash' },
-    { type: 'agent.tool.finished', label: 'forge-01-nginx-1', tool_name: 'bash', outcome: 'completed' },
+    { type: 'agent.tool.started', label: 'forge-01-nginx-1', tool_name: 'bash',tool_call_id:'fixture-tool',session_key:'agent:forge',model_call_id:'fixture-model',module_id:'01-nginx',attempt:1,dispatch_id:'fixture-dispatch',content_completeness:'full' },
+    { type: 'agent.tool.finished', label: 'forge-01-nginx-1', tool_name: 'bash', outcome: 'completed',tool_call_id:'fixture-tool',session_key:'agent:forge',model_call_id:'fixture-model',module_id:'01-nginx',attempt:1,dispatch_id:'fixture-dispatch',content_completeness:'full',result_bytes:0,error:null },
     { type: 'agent.ended', label: 'forge-01-nginx-1', session_key: 'agent:forge' },
   ]) {
     appendJsonl(eventsPath, {
@@ -2801,7 +2890,7 @@ test('forge malformed output derives the eventual recovery attempt from lifecycl
 
   const evidence = await verifyExpectedFailureEvidence(workspace, scenario);
 
-  assert.equal(evidence.ok, true, JSON.stringify(evidence.failures, null, 2));
+  assert.equal(evidence.ok, true);
   assert.equal(evidence.checks.find((check) => check.code === 'malformed_output_production_rejection')?.ok, true);
 });
 
@@ -3032,4 +3121,22 @@ test('module-boundary success evidence does not require skipped terminal artifac
   assert.equal(evidence.checks.some((check) => check.code === 'pipeline_review_json'), false);
   assert.equal(evidence.checks.some((check) => check.code === 'architecture_validator_results'), false);
   assert.equal(evidence.checks.some((check) => check.code === 'architecture_validator_summary'), false);
+  assert.equal(evidence.checks.some((check) => check.code === 'canonical_observability_bundle' && check.ok), true);
+});
+
+test('canonical E2E observability gate rejects a corrupt content-addressed artifact', () => {
+  const scenario = resolveRealE2EScenario('success');
+  const workspace = createWorkspace(scenario, {
+    progressFields: { 'real_e2e.execution_boundary': 'modules' },
+  });
+  writeModuleBoundarySuccessArtifacts(workspace);
+  const runDir = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunIdFor(workspace));
+  const artifact = readJsonLines(path.join(runDir, 'artifacts.jsonl'))[0];
+  fs.writeFileSync(path.join(runDir, artifact.reference), 'corrupt');
+
+  const evidence = evidenceSchemaTestHooks.requireCanonicalObservabilityBundle(workspace);
+
+  assert.equal(evidence.ok, false);
+  assert.equal(evidence.reason, 'REAL_E2E_CANONICAL_OBSERVABILITY_BUNDLE_INCOMPLETE');
+  assert.equal(evidence.failures.some((failure) => failure.contract === 'portable_bundle_verification'), true);
 });

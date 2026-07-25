@@ -13,7 +13,7 @@ const FORGE_COMPLETION_WRITER_PATH = path.resolve(
 // ─── Return shape helper ──────────────────────────────────────────────────────
 // All prompt builders return this shape. The .toString() shim lets callers
 // that still use the return value as a plain string continue to work unchanged.
-export function makePromptResult(prompt, metadata = {}) {
+export function makePromptResult(prompt: any, metadata: any = {}) {
   const result = {
     prompt,
     metadata: { phase: '', moduleId: '', attempt: 1, recalledMemoryIds: [], ...metadata },
@@ -22,13 +22,13 @@ export function makePromptResult(prompt, metadata = {}) {
   return result;
 }
 
-export function quoteShellArg(value) {
+export function quoteShellArg(value: any) {
   return `'${String(value).replace(/'/g, `'\\''`)}'`;
 }
 
 // ─── Shared section builders ──────────────────────────────────────────────────
 
-export function buildGitSyncSection(commitHash) {
+export function buildGitSyncSection(commitHash: any) {
   const lines = [
     '## Git Context',
     '',
@@ -85,7 +85,7 @@ export function buildAvailableToolsSection() {
   ];
 }
 
-export function buildTestWorkspaceSection(testWorkspacePath) {
+export function buildTestWorkspaceSection(testWorkspacePath: any) {
   return [
     '## Test Workspace',
     '',
@@ -105,11 +105,11 @@ export function buildTestWorkspaceSection(testWorkspacePath) {
   ];
 }
 
-export function forgeCompletionArtifactPath(config, dir) {
+export function forgeCompletionArtifactPath(config: any, dir: any) {
   return path.join(modulePath(config, dir), 'forge-completion.json');
 }
 
-export function buildForgeCompletionArtifactContract(config, dir, identity = {}) {
+export function buildForgeCompletionArtifactContract(config: any, dir: any, identity: any = {}) {
   const artifactPath = forgeCompletionArtifactPath(config, dir);
   const runId = identity.run_id ? identity.run_id : (identity.runId ? identity.runId : 'run-id-from-prompt');
   const moduleId = identity.module_id ? identity.module_id : (identity.moduleId ? identity.moduleId : dir);
@@ -147,7 +147,7 @@ export function buildForgeCompletionArtifactContract(config, dir, identity = {})
   ];
 }
 
-export function buildBusterResultArtifactContract(config, dir) {
+function buildBusterResultArtifactContract(config: any, dir: any) {
   const outputFile = moduleBusterOutputPathRef(config, dir);
   return [
     `Write the prompt-provided \`output_file\` (\`${outputFile}\`) as raw, directly parseable JSON. Do not wrap it in Markdown, do not use fenced code blocks, and do not write explanatory text into the file.`,
@@ -166,7 +166,7 @@ export function buildBusterResultArtifactContract(config, dir) {
   ];
 }
 
-export function buildBusterCompletionProtocol(config, moduleId, dir, status, identity = {}) {
+export function buildBusterCompletionProtocol(config: any, moduleId: any, dir: any, status: any, identity: any = {}) {
   return [
     '## When Testing Is Complete',
     '',
@@ -190,7 +190,7 @@ export function buildBusterCompletionProtocol(config, moduleId, dir, status, ide
   ];
 }
 
-export function buildBusterGateCompletionProtocol(config, gateId, gate, identity = {}) {
+export function buildBusterGateCompletionProtocol(config: any, gateId: any, gate: any, identity: any = {}) {
   const outputFile = gate.output_file
     ? relPath(config, gateOutputPath(config, gate))
     : null;

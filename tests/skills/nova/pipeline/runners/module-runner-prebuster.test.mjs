@@ -91,6 +91,21 @@ function depsForGitSyncFailure(message) {
   };
 }
 
+function prepare(status, deps) {
+  return prepareModuleForBuster({
+    config: config(),
+    progress: {},
+    moduleId: '01-nginx',
+    mod: { title: 'nginx', stages: ['forge', 'buster'] },
+    dir: '01-nginx',
+    status,
+    maxFails: 0,
+    timeout: 1,
+    stages: ['forge', 'buster'],
+    deps,
+  });
+}
+
 const gitSyncFailures = [
   ['git_credential_failed', '[GIT_SYNC_FAILED] Git sync failed before Buster handoff: Permission denied (publickey).'],
   ['git_non_fast_forward', '[GIT_SYNC_FAILED] Git sync failed before Buster handoff: ! [rejected] main -> main (non-fast-forward)'],
@@ -101,18 +116,7 @@ const gitSyncFailures = [
 
 for (const [expectedClass, message] of gitSyncFailures) {
   test(`pre-Buster git sync terminal uses canonical Git class: ${expectedClass}`, async () => {
-    const result = await prepareModuleForBuster({
-      config: config(),
-      progress: {},
-      moduleId: '01-nginx',
-      mod: { title: 'nginx', stages: ['forge', 'buster'] },
-      dir: '01-nginx',
-      status: readyStatus(),
-      maxFails: 0,
-      timeout: 1,
-      stages: ['forge', 'buster'],
-      deps: depsForGitSyncFailure(message),
-    });
+    const result = await prepare(readyStatus(), depsForGitSyncFailure(message));
 
     const decision = result.terminal.result.terminal.decision;
     assert.equal(decision.reasonCode, expectedClass);
@@ -126,17 +130,7 @@ test('pre-Buster preparation preserves resumed Buster dispatch without re-runnin
   let saveCalls = 0;
   const status = resumedBusterStatus();
 
-  const result = await prepareModuleForBuster({
-    config: config(),
-    progress: {},
-    moduleId: '01-nginx',
-    mod: { title: 'nginx', stages: ['forge', 'buster'] },
-    dir: '01-nginx',
-    status,
-    maxFails: 0,
-    timeout: 1,
-    stages: ['forge', 'buster'],
-    deps: {
+  const result = await prepare(status, {
       saveStatus() {
         saveCalls += 1;
       },
@@ -148,7 +142,6 @@ test('pre-Buster preparation preserves resumed Buster dispatch without re-runnin
         gitSyncCalls += 1;
         throw new Error('git sync must not run for an already-dispatched Buster phase');
       },
-    },
   });
 
   assert.equal(gitSyncCalls, 0);
@@ -164,17 +157,7 @@ test('pre-Buster preparation does not treat stale Forge dispatch as resumed Bust
   let saveCalls = 0;
   const status = contaminatedBusterStatus();
 
-  const result = await prepareModuleForBuster({
-    config: config(),
-    progress: {},
-    moduleId: '01-nginx',
-    mod: { title: 'nginx', stages: ['forge', 'buster'] },
-    dir: '01-nginx',
-    status,
-    maxFails: 0,
-    timeout: 1,
-    stages: ['forge', 'buster'],
-    deps: {
+  const result = await prepare(status, {
       saveStatus() {
         saveCalls += 1;
       },
@@ -186,7 +169,6 @@ test('pre-Buster preparation does not treat stale Forge dispatch as resumed Bust
         gitSyncCalls += 1;
         return { lifecycleMutation: null };
       },
-    },
   });
 
   assert.equal(gitSyncCalls, 1);

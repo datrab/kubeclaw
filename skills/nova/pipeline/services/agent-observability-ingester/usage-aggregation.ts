@@ -38,7 +38,7 @@ function usageNumber(usage: unknown, ...keys: string[]): number | null {
 }
 
 function usageTokenCount(usage: unknown, ...keys: string[]): number {
-  return selectDefinedValue(() => (usageNumber(usage, ...keys)), () => (0));
+  return usageNumber(usage, ...keys) ?? 0;
 }
 
 function currentTokenTotal(value: unknown): number {
@@ -47,7 +47,7 @@ function currentTokenTotal(value: unknown): number {
 
 function addNullableCost(currentCost: number | null, deltaCost: number | null): number | null {
   if (deltaCost === null) return currentCost;
-  return (selectDefinedValue(() => (currentCost), () => (0))) + deltaCost;
+  return (currentCost ?? 0) + deltaCost;
 }
 
 function modelUsageDelta(event: AgentObservabilityIngressEventV1): {
@@ -73,7 +73,8 @@ export function prepareModelUsageAggregate(
 ): ModelUsageAggregateProjection | null {
   const config = configFromContext(ctx);
   const delta = modelUsageDelta(event);
-  if (selectTruthyValue(() => (!config), () => (!delta))) return null;
+  if (!config) return null;
+  if (!delta) return null;
 
   const current = aggregateUsage(config as never);
   const alreadyRecorded = hasUsageSnapshotEvent(config as never, opts.eventId);
@@ -100,7 +101,8 @@ export function commitModelUsageSnapshot(
 ): void {
   const config = configFromContext(ctx);
   const delta = modelUsageDelta(event);
-  if (selectTruthyValue(() => (!config), () => (!delta))) return;
+  if (!config) return;
+  if (!delta) return;
 
   const identity = isRecord(event.identity) ? event.identity : {};
   recordUsageSnapshot(config as never, {
@@ -117,7 +119,7 @@ export function commitModelUsageSnapshot(
   });
 }
 
-export function modelUsageAggregateDetails(
+function modelUsageAggregateDetails(
   aggregate: ModelUsageAggregateProjection | null,
 ): Record<string, AgentObservabilityJsonValue | undefined> | null {
   if (!aggregate) return null;

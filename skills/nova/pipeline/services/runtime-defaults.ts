@@ -1,4 +1,4 @@
-function requireNumber(section, field, label, { positive = false, integer = false } = {}) {
+function requireNumber(section: any, field: any, label: any, { positive = false, integer = false }: any = {}) {
   const value = Number(section?.[field]);
   if (!Number.isFinite(value)) {
     throw new Error(`${label}.${field}: required number in swarm.config.json`);
@@ -12,24 +12,24 @@ function requireNumber(section, field, label, { positive = false, integer = fals
   return value;
 }
 
-function requireString(section, field, label) {
+function requireString(section: any, field: any, label: any) {
   const value = section?.[field];
   if (typeof value === 'string' && value.trim()) return value;
   throw new Error(`${label}.${field}: required non-empty string in swarm.config.json`);
 }
 
-function requireBoolean(section, field, label) {
+function requireBoolean(section: any, field: any, label: any) {
   const value = section?.[field];
   if (typeof value === 'boolean') return value;
   throw new Error(`${label}.${field}: required boolean in swarm.config.json`);
 }
 
-function requireObjectSection(section, label) {
+function requireObjectSection(section: any, label: any) {
   if (section && typeof section === 'object' && !Array.isArray(section)) return section;
   throw new Error(`${label}: required object in swarm.config.json`);
 }
 
-export function getReviewDefaultsConfig(config = {}) {
+export function getReviewDefaultsConfig(config: any = {}) {
   const section = requireObjectSection(config?.review_defaults, 'config.review_defaults');
   return {
     timeout_minutes: requireNumber(section, 'timeout_minutes', 'config.review_defaults', { positive: true }),
@@ -39,7 +39,7 @@ export function getReviewDefaultsConfig(config = {}) {
   };
 }
 
-export function getCaseStudyConfig(config = {}) {
+export function getCaseStudyConfig(config: any = {}) {
   const section = requireObjectSection(config?.case_study, 'config.case_study');
   return {
     ...section,
@@ -47,7 +47,7 @@ export function getCaseStudyConfig(config = {}) {
   };
 }
 
-export function getArchValidationConfig(config = {}) {
+export function getArchValidationConfig(config: any = {}) {
   const section = requireObjectSection(config?.arch_validation, 'config.arch_validation');
   return {
     ...section,
@@ -57,7 +57,7 @@ export function getArchValidationConfig(config = {}) {
   };
 }
 
-export function getBusterRuntimeConfig(config = {}) {
+export function getBusterRuntimeConfig(config: any = {}) {
   const runtime = requireObjectSection(config?.buster?.runtime, 'config.buster.runtime');
   return {
     ...runtime,
@@ -66,7 +66,7 @@ export function getBusterRuntimeConfig(config = {}) {
   };
 }
 
-export function getPipelineDefaultsConfig(config = {}) {
+export function getPipelineDefaultsConfig(config: any = {}) {
   const section = requireObjectSection(config?.pipeline_defaults, 'config.pipeline_defaults');
   return {
     timeout_minutes: requireNumber(section, 'timeout_minutes', 'config.pipeline_defaults', { positive: true }),

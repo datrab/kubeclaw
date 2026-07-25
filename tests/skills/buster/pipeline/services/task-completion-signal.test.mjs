@@ -45,6 +45,67 @@ function logger() {
   };
 }
 
+function completionDeps(payload, emitted, verified = [], overrides = {}) {
+  return {
+    publishTaskCompletionWithArtifact,
+    verifyAndPush: async (...args) => {
+      verified.push(args);
+      return { action: 'noop', commit_hash: 'verify-sha' };
+    },
+    getRedisClient: () => ({}),
+    emitTaskCompletion: async (...args) => {
+      emitted.push(args);
+      return { ok: true, stream: payload.completion_stream, id: '1-0' };
+    },
+    ...overrides,
+  };
+}
+
+function completionRequest(payload, completionState, overrides = {}) {
+  return {
+    payload,
+    completionState,
+    moduleId: payload.module_id,
+    project: payload.project,
+    runId: payload.run_id,
+    attempt: payload.attempt,
+    dispatchIdForCompletion: payload.dispatch_id,
+    logger: logger(),
+    ...overrides,
+  };
+}
+
+async function withStaleOutputSignal(signal, verify) {
+  const payload = makePayload();
+  const outputPath = resolveBusterOutputFilePath(payload);
+  const completionState = createTaskCompletionState();
+  const emitted = [];
+  const verified = [];
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify({
+    artifact_type: 'buster_output',
+    run_id: 'run-stale',
+    attempt: '1',
+    dispatch_id: 'dispatch-stale',
+    completion_key: 'run-stale:1:dispatch-stale',
+    status: 'PASS',
+    summary: 'child wrote a stale-looking PASS',
+    findings: [],
+  }, null, 2));
+  try {
+    await sendTaskCompletionSignal(completionRequest(payload, completionState, {
+      spawnedSubagent: true,
+      suitesInfo: { results: [], suiteSummary: '', suiteDetailSummary: '' },
+      sessionKeyForCompletion: 'session-current',
+      deps: completionDeps(payload, emitted, verified),
+      ...signal,
+    }));
+    verify({ artifact: JSON.parse(fs.readFileSync(outputPath, 'utf8')), completionState, emitted, payload, verified });
+  } finally {
+    fs.rmSync(outputPath, { force: true });
+  }
+}
+
 test('Buster completion record carries payload session identity', () => {
   const payload = makePayload({ session_key: 'buster-module-01-forge-dispatch-1' });
   const record = buildTaskCompletionRecord(payload, {
@@ -60,57 +121,12 @@ test('Buster completion record carries payload session identity', () => {
 });
 
 test('Buster completion signal rejects stale output_file identity before Redis completion', async () => {
-  const payload = makePayload();
-  const outputPath = resolveBusterOutputFilePath(payload);
-  const completionState = createTaskCompletionState();
-  const redisClient = {};
-  const emitted = [];
-  const verified = [];
-
-  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, JSON.stringify({
-    artifact_type: 'buster_output',
-    run_id: 'run-stale',
-    attempt: '1',
-    dispatch_id: 'dispatch-stale',
-    completion_key: 'run-stale:1:dispatch-stale',
-    status: 'PASS',
-    summary: 'child wrote a stale-looking PASS',
-    findings: [],
-  }, null, 2));
-
-  try {
-    await sendTaskCompletionSignal({
-      payload,
-      completionState,
-      spawnedSubagent: true,
-      suitesInfo: { results: [], suiteSummary: '', suiteDetailSummary: '' },
+  await withStaleOutputSignal({
       agentResultForCompletion: { summary: 'child wrote a stale-looking PASS', source: 'output_file' },
       sessionResultForCompletion: { terminal: true },
-      moduleId: payload.module_id,
-      project: payload.project,
       outcome: 'PASS',
       reason: 'output_file_pass',
-      runId: payload.run_id,
-      attempt: payload.attempt,
-      dispatchIdForCompletion: payload.dispatch_id,
-      sessionKeyForCompletion: 'session-current',
-      logger: logger(),
-      deps: {
-        publishTaskCompletionWithArtifact,
-        verifyAndPush: async (...args) => {
-          verified.push(args);
-          return { action: 'noop', commit_hash: 'verify-sha' };
-        },
-        getRedisClient: () => redisClient,
-        emitTaskCompletion: async (...args) => {
-          emitted.push(args);
-          return { ok: true, stream: payload.completion_stream, id: '1-0' };
-        },
-      },
-    });
-
-    const artifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+  }, ({ artifact, completionState, emitted, verified }) => {
     assert.equal(artifact.status, 'PASS');
     assert.equal(artifact.run_id, 'run-stale');
     assert.equal(artifact.attempt, '1');
@@ -123,66 +139,19 @@ test('Buster completion signal rejects stale output_file identity before Redis c
     assert.equal(emitted[0][2].reason, 'output_file_identity_mismatch:run_id,attempt,dispatch_id,completion_key');
     assert.equal(completionState.terminal, true);
     assert.equal(completionState.error, null);
-  } finally {
-    fs.rmSync(outputPath, { force: true });
-  }
+  });
 });
 
 test('Buster completion signal writes supervisor-owned session failure over stale child output', async () => {
-  const payload = makePayload();
-  const outputPath = resolveBusterOutputFilePath(payload);
-  const completionState = createTaskCompletionState();
-  const redisClient = {};
-  const emitted = [];
-  const verified = [];
-
-  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, JSON.stringify({
-    artifact_type: 'buster_output',
-    run_id: 'run-stale',
-    attempt: '1',
-    dispatch_id: 'dispatch-stale',
-    completion_key: 'run-stale:1:dispatch-stale',
-    status: 'PASS',
-    summary: 'child wrote a stale-looking PASS',
-    findings: [],
-  }, null, 2));
-
-  try {
-    await sendTaskCompletionSignal({
-      payload,
-      completionState,
-      spawnedSubagent: true,
-      suitesInfo: { results: [], suiteSummary: '', suiteDetailSummary: '' },
+  await withStaleOutputSignal({
       agentResultForCompletion: {
         summary: 'Buster child session failed before canonical output',
         source: 'session_monitor',
       },
       sessionResultForCompletion: { terminal: true, failed: true },
-      moduleId: payload.module_id,
-      project: payload.project,
       outcome: 'FAIL',
       reason: 'agent_session_lifecycle_unstable',
-      runId: payload.run_id,
-      attempt: payload.attempt,
-      dispatchIdForCompletion: payload.dispatch_id,
-      sessionKeyForCompletion: 'session-current',
-      logger: logger(),
-      deps: {
-        publishTaskCompletionWithArtifact,
-        verifyAndPush: async (...args) => {
-          verified.push(args);
-          return { action: 'noop', commit_hash: 'verify-sha' };
-        },
-        getRedisClient: () => redisClient,
-        emitTaskCompletion: async (...args) => {
-          emitted.push(args);
-          return { ok: true, stream: payload.completion_stream, id: '1-0' };
-        },
-      },
-    });
-
-    const artifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+  }, ({ artifact, completionState, emitted, payload, verified }) => {
     assert.equal(artifact.status, 'FAIL');
     assert.equal(artifact.reason, 'agent_session_lifecycle_unstable');
     assert.equal(artifact.run_id, payload.run_id);
@@ -193,9 +162,7 @@ test('Buster completion signal writes supervisor-owned session failure over stal
     assert.equal(emitted.length, 1);
     assert.equal(completionState.terminal, true);
     assert.equal(completionState.error, null);
-  } finally {
-    fs.rmSync(outputPath, { force: true });
-  }
+  });
 });
 
 test('Buster completion signal writes deterministic suite PASS artifact without child spawn', async () => {
@@ -230,18 +197,7 @@ test('Buster completion signal writes deterministic suite PASS artifact without 
       dispatchIdForCompletion: payload.dispatch_id,
       sessionKeyForCompletion: null,
       logger: logger(),
-      deps: {
-        publishTaskCompletionWithArtifact,
-        verifyAndPush: async (...args) => {
-          verified.push(args);
-          return { action: 'noop', commit_hash: 'verify-sha' };
-        },
-        getRedisClient: () => ({}),
-        emitTaskCompletion: async (...args) => {
-          emitted.push(args);
-          return { ok: true, stream: payload.completion_stream, id: '1-0' };
-        },
-      },
+      deps: completionDeps(payload, emitted, verified),
     });
 
     const artifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
@@ -291,15 +247,9 @@ test('Buster completion signal does not emit Redis when output_file verify fails
           errors.push(msg);
         },
       },
-      deps: {
-        publishTaskCompletionWithArtifact,
+      deps: completionDeps(payload, emitted, [], {
         verifyAndPush: async () => ({ status: 'error', action: 'cleanup_failed', error: 'scope check failed' }),
-        getRedisClient: () => ({}),
-        emitTaskCompletion: async (...args) => {
-          emitted.push(args);
-          return { ok: true, stream: payload.completion_stream, id: '1-0' };
-        },
-      },
+      }),
     });
 
     const artifact = JSON.parse(fs.readFileSync(outputPath, 'utf8'));

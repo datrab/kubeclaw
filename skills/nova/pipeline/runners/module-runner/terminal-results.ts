@@ -97,33 +97,21 @@ export function buildModulePassTerminalResult(config: AnyRecord, moduleId: strin
   };
 }
 
-export function buildModuleHaltTerminalResult(config: AnyRecord, moduleId: string, {
-  outcome,
-  reason,
-  issueType = 'environment',
-  runId = null,
-  moduleDir = null,
-  attempt = null,
-  phase = null,
-  dispatchId = null,
-  gatewayLabel = null,
-  sessionKey = null,
-  correlationProvenance = null,
-  diagnostics = {},
-  metadata = {},
-  rateLimit = null,
-  terminalAction = null,
-  terminalReasonCode = null,
-  terminalHumanReason = null,
-  terminalSource = null,
-  terminalMetadata = {},
-}: AnyRecord = {}) {
+function buildModuleHaltTerminalResult(config: AnyRecord, moduleId: string, options: AnyRecord = {}) {
+  const values: AnyRecord = {
+    issueType: 'environment', diagnostics: {}, metadata: {}, terminalMetadata: {},
+    runId: null, moduleDir: null, attempt: null, phase: null, dispatchId: null,
+    gatewayLabel: null, sessionKey: null, correlationProvenance: null, rateLimit: null,
+    terminalAction: null, terminalReasonCode: null, terminalHumanReason: null, terminalSource: null,
+    ...options,
+  };
+  const { outcome, reason, issueType, diagnostics, metadata, rateLimit, terminalAction,
+    terminalReasonCode, terminalHumanReason, terminalSource, terminalMetadata } = values;
   const typedFailureClass = typeof metadata?.failure_class === 'string' && metadata.failure_class.trim()
     ? metadata.failure_class.trim()
     : null;
-  return {
-    retry: false,
-    result: buildPipelineStepResult({
+  const correlation = buildModuleTerminalCorrelation(config, moduleId, values);
+  const result = buildPipelineStepResult({
       stepType: PIPELINE_STEP_TYPES.MODULE,
       stepId: moduleId,
       nextAction: PIPELINE_STEP_ACTIONS.HALT,
@@ -137,17 +125,7 @@ export function buildModuleHaltTerminalResult(config: AnyRecord, moduleId: strin
           ...metadata,
         },
       },
-      correlation: {
-        run_id: moduleTerminalRunId(config, runId),
-        module_id: moduleId,
-        module_dir: moduleDir,
-        attempt,
-        phase,
-        dispatch_id: dispatchId,
-        gateway_label: gatewayLabel,
-        session_key: sessionKey,
-        ...(correlationProvenance == null ? {} : { correlation_provenance: correlationProvenance }),
-      },
+      correlation,
       rateLimit,
       terminalAction,
       terminalScope: PIPELINE_TERMINAL_SCOPES.MODULE,
@@ -155,7 +133,21 @@ export function buildModuleHaltTerminalResult(config: AnyRecord, moduleId: strin
       terminalHumanReason,
       terminalSource,
       terminalMetadata,
-    }),
+    });
+  return { retry: false, result };
+}
+
+function buildModuleTerminalCorrelation(config: AnyRecord, moduleId: string, values: AnyRecord) {
+  return {
+    run_id: moduleTerminalRunId(config, values.runId),
+    module_id: moduleId,
+    module_dir: values.moduleDir,
+    attempt: values.attempt,
+    phase: values.phase,
+    dispatch_id: values.dispatchId,
+    gateway_label: values.gatewayLabel,
+    session_key: values.sessionKey,
+    ...(values.correlationProvenance == null ? {} : { correlation_provenance: values.correlationProvenance }),
   };
 }
 

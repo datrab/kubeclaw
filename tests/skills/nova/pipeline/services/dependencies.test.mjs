@@ -5,7 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { checkDependencies } from '../../../../../skills/nova/pipeline/services/dependencies.ts';
-import { appendModuleLifecycleEvent } from '../../../../../skills/nova/pipeline/services/status-store.ts';
+import { markModulePassed } from '../lifecycle-test-fixtures.mjs';
 
 function config(runId = 'run-dependencies-test') {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dependencies-test-'));
@@ -18,30 +18,7 @@ function config(runId = 'run-dependencies-test') {
   };
 }
 
-function markModulePass(cfg, moduleId) {
-  appendModuleLifecycleEvent(cfg, moduleId, {
-    module_id: moduleId,
-    status: 'IN_PROGRESS',
-    current_phase: 'forge',
-    fail_count: 0,
-  }, {
-    eventType: 'module_attempt.started',
-    oldStatus: 'PENDING',
-    newStatus: 'IN_PROGRESS',
-    now: '2026-07-10T00:00:00.000Z',
-  });
-  appendModuleLifecycleEvent(cfg, moduleId, {
-    module_id: moduleId,
-    status: 'PASS',
-    current_phase: null,
-    fail_count: 0,
-  }, {
-    eventType: 'module_attempt.passed',
-    oldStatus: 'TESTING',
-    newStatus: 'PASS',
-    now: '2026-07-10T00:00:00.000Z',
-  });
-}
+const markModulePass = markModulePassed;
 
 test('checkDependencies reports missing gate when progress.gates is omitted', () => {
   const result = checkDependencies({}, {

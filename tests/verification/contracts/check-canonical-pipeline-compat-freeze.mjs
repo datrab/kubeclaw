@@ -1,42 +1,14 @@
+import { parseSourceRootArgs, toRepoPath, walkFiles } from '../lib/contract-check-helpers.mjs';
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-function walk(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const abs = path.join(dir, entry.name);
-    if (entry.isDirectory()) walk(abs, out);
-    else if (entry.isFile() && /\.(?:js|mjs|cjs|ts)$/.test(entry.name)) out.push(abs);
-  }
-  return out;
-}
+const walk = (dir) => walkFiles(dir, (file) => /\.(?:js|mjs|cjs|ts)$/.test(file));
+const walkMarkdown = (dir) => walkFiles(dir, (file) => file.endsWith('.md') && !toRepoPath(sourceRoot, file).startsWith('docs/archive/'));
+const relPath = toRepoPath;
 
-function walkMarkdown(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const abs = path.join(dir, entry.name);
-    const rel = relPath(sourceRoot, abs);
-    if (rel.startsWith('docs/archive/')) continue;
-    if (entry.isDirectory()) walkMarkdown(abs, out);
-    else if (entry.isFile() && entry.name.endsWith('.md')) out.push(abs);
-  }
-  return out;
-}
-
-function relPath(sourceRoot, filePath) {
-  return path.relative(sourceRoot, filePath).replace(/\\/g, '/');
-}
-
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const runtimeRoots = [
   'skills/nova/pipeline',
   'skills/common/pipeline',
@@ -47,34 +19,11 @@ const runtimeFiles = runtimeRoots
   .flatMap((root) => walk(path.join(sourceRoot, root)))
   .sort();
 
-const planPath = path.join(sourceRoot, 'docs/archive/pipeline-plans/canonical-pipeline-compat-removal-plan.md');
-const inventoryPath = path.join(sourceRoot, 'docs/archive/pipeline-plans/canonical-pipeline-compat-inventory.md');
-const planSource = fs.readFileSync(planPath, 'utf8');
-const inventorySource = fs.readFileSync(inventoryPath, 'utf8');
-
-for (const required of [
-  'Phase 0: Inventory and freeze compatibility growth',
-  'Operator audit',
-  'Search every `||` in runtime pipeline code',
-]) {
-  assert.equal(planSource.includes(required), true, `plan should describe Phase 0 inventory/freeze requirement: ${required}`);
-}
-
-for (const required of [
-  '## Debt Map',
-  '## High-Risk `||` Audit',
-  '## Phase 0 Contract Gates',
-  'P1: Status-store compatibility and gate status evidence',
-  'P2: Completion legacy sources and local evidence fallback',
-  'P3: ACP polling and agent-side git completion inference',
-  'P5: Task transport aliases',
-  'P6: Legacy config and environment aliases',
-  'P7: Agent observability legacy comparison mode',
-  'P8: Diagnostic correlation and replay-shape compatibility',
-  'P9: Active docs and tests that still protect old surfaces',
-]) {
-  assert.equal(inventorySource.includes(required), true, `inventory should map compatibility surface: ${required}`);
-}
+assert.equal(
+  fs.existsSync(path.join(sourceRoot, 'docs/archive')),
+  false,
+  'deleted historical compatibility plans must not return as active repository authority',
+);
 
 const markerLimits = {
   statusStoreCompat: {
@@ -206,6 +155,8 @@ const highRiskOrLimits = {
   'skills/nova/pipeline/services/blueprint.ts': 2,
   'skills/nova/pipeline/services/buster-completion-controller.ts': 2,
   'skills/nova/pipeline/services/case-study.ts': 2,
+  'skills/nova/pipeline/services/command-lifecycle.ts': 2,
+  'skills/nova/pipeline/services/command-runtime.ts': 1,
   'skills/nova/pipeline/services/completion-adjudicator.ts': 4,
   'skills/nova/pipeline/services/contract-diagnostics.ts': 1,
   'skills/nova/pipeline/services/contracts/gate-control-result.ts': 9,
@@ -215,6 +166,7 @@ const highRiskOrLimits = {
   'skills/nova/pipeline/services/correlation.ts': 1,
   'skills/nova/pipeline/services/dependencies.ts': 2,
   'skills/nova/pipeline/services/durable-operator-alert.ts': 7,
+  'skills/nova/pipeline/services/evidence-plane.ts': 1,
   'skills/nova/pipeline/services/failure-semantics.ts': 5,
   'skills/nova/pipeline/services/failures/classification.ts': 4,
   'skills/nova/pipeline/services/failures/incidents.ts': 1,
@@ -255,10 +207,14 @@ const highRiskOrLimits = {
   'skills/nova/pipeline/services/telemetry/dispatch.ts': 7,
   'skills/nova/pipeline/services/telemetry-sink-contract.ts': 15,
   'skills/nova/pipeline/services/telemetry-sink-dispatch.ts': 1,
+  'skills/nova/pipeline/services/telemetry-stream.ts': 3,
   'skills/nova/pipeline/services/truth-drift.ts': 4,
+  'skills/nova/pipeline/tools/lint-report/architecture-tools.ts': 2,
   'skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts': 1,
   'skills/nova/pipeline/tools/lint-report/discovery.ts': 1,
   'skills/nova/pipeline/tools/lint-report/report.ts': 1,
+  'skills/nova/pipeline/tools/lint-report/tool-registry.ts': 2,
+  'skills/nova/pipeline/tools/observability-readiness.ts': 5,
   'skills/nova/pipeline/tools/project-summary-formatters.ts': 14,
   'skills/nova/pipeline/tools/project-summary.ts': 17,
   'skills/nova/pipeline/tools/redis.ts': 2,

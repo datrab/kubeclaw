@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-prompt-ingress-surface' });
 import assert from 'assert';
@@ -6,18 +7,8 @@ import os from 'os';
 import path from 'path';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/prompt-ingress.ts');
 const cliPath = path.join(sourceRoot, 'skills/nova/pipeline/cli.ts');
 const forgePath = path.join(sourceRoot, 'skills/nova/pipeline/prompts/forge.ts');

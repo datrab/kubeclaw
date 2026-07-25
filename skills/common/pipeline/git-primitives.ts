@@ -1,11 +1,9 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFileSync } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { buildSubprocessEnv } from './security.ts';
 import { expandSwarmConfig } from './platform-config.ts';
+import { readCommonEnvironment } from './runtime-environment.ts';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: any;
@@ -15,10 +13,17 @@ type AnyRecord = Record<string, any>;
 const DEFAULT_RUNTIME_REPO_ROOT = '/home/node/.openclaw/workspace/git-repo';
 const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
-const repoRootCache = new Map();
-const headHashCache = new Map();
-let defaultRepoRoot: string | null = null;
-let gitRuntimePolicy: AnyRecord | null = null;
+const gitPrimitiveState: {
+  repoRootCache: Map<any, any>;
+  headHashCache: Map<any, any>;
+  defaultRepoRoot: string | null;
+  runtimePolicy: AnyRecord | null;
+} = {
+  repoRootCache: new Map(),
+  headHashCache: new Map(),
+  defaultRepoRoot: null,
+  runtimePolicy: null,
+};
 
 function requireNumber(obj: AnyRecord, field: string, label: string): number {
   const value = obj?.[field];
@@ -40,21 +45,21 @@ function resolveGitRuntimePolicyFromConfig(config: AnyRecord): AnyRecord {
 }
 
 function resolveGitRuntimePolicy(): AnyRecord {
-  if (gitRuntimePolicy) return gitRuntimePolicy;
-  const configuredPath = process.env.SWARM_CONFIG;
+  if (gitPrimitiveState.runtimePolicy) return gitPrimitiveState.runtimePolicy;
+  const configuredPath = readCommonEnvironment('SWARM_CONFIG');
   const configPath = configuredPath !== undefined && configuredPath !== null && String(configuredPath).trim()
     ? String(configuredPath)
     : DEFAULT_SWARM_CONFIG_PATH;
-  gitRuntimePolicy = resolveGitRuntimePolicyFromConfig(expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8'))));
-  return gitRuntimePolicy;
+  gitPrimitiveState.runtimePolicy = resolveGitRuntimePolicyFromConfig(expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8'))));
+  return gitPrimitiveState.runtimePolicy;
 }
 
 export function setGitRuntimePolicy(policy: AnyRecord | null = null) {
   if (!policy) {
-    gitRuntimePolicy = null;
+    gitPrimitiveState.runtimePolicy = null;
     return;
   }
-  gitRuntimePolicy = resolveGitRuntimePolicyFromConfig(policy);
+  gitPrimitiveState.runtimePolicy = resolveGitRuntimePolicyFromConfig(policy);
 }
 
 function resolveRepoInput(input: any) {
@@ -62,7 +67,7 @@ function resolveRepoInput(input: any) {
   if (input?.repo_root) return path.resolve(input.repo_root);
   if (input?.repoRoot) return path.resolve(input.repoRoot);
   if (input?.repo) return path.resolve(input.repo);
-  return defaultRepoRoot;
+  return gitPrimitiveState.defaultRepoRoot;
 }
 
 function isPathInsideOrEqual(child: string, parent: string) {
@@ -76,7 +81,8 @@ function isPackagedRuntimePath(value: string) {
 }
 
 function resolveRuntimeRepoRoot() {
-  if (process.env.REPO_ROOT) return path.resolve(process.env.REPO_ROOT);
+  const configuredRoot = readCommonEnvironment('REPO_ROOT');
+  if (configuredRoot) return path.resolve(configuredRoot);
   return fs.existsSync(DEFAULT_RUNTIME_REPO_ROOT) ? DEFAULT_RUNTIME_REPO_ROOT : null;
 }
 
@@ -95,8 +101,8 @@ export function getRepoRoot(startDir?: any) {
     return runtimeRepoRoot;
   }
   const cacheKey = path.resolve(requestedStart);
-  if (!repoRootCache.has(cacheKey)) {
-    repoRootCache.set(
+  if (!gitPrimitiveState.repoRootCache.has(cacheKey)) {
+    gitPrimitiveState.repoRootCache.set(
       cacheKey,
       execFileSync('git', ['-C', cacheKey, 'rev-parse', '--show-toplevel'], {
         encoding: 'utf8',
@@ -104,7 +110,7 @@ export function getRepoRoot(startDir?: any) {
       }).trim(),
     );
   }
-  return repoRootCache.get(cacheKey);
+  return gitPrimitiveState.repoRootCache.get(cacheKey);
 }
 
 export function gitExec(repoRoot: any, args: any[], opts: AnyRecord = {}) {
@@ -112,8 +118,9 @@ export function gitExec(repoRoot: any, args: any[], opts: AnyRecord = {}) {
     ? resolveGitRuntimePolicyFromConfig(repoRoot)
     : resolveGitRuntimePolicy();
   const resolvedRepoRoot = resolveRepoInput(repoRoot);
+  if (!resolvedRepoRoot) throw new Error('gitExec requires an explicit repository root');
   const defaults = {
-    encoding: 'utf8',
+    encoding: 'utf8' as const,
     timeout: policy.timeout_ms,
     maxBuffer: policy.max_buffer_bytes,
     env: buildSubprocessEnv(),
@@ -123,7 +130,7 @@ export function gitExec(repoRoot: any, args: any[], opts: AnyRecord = {}) {
 }
 
 export function getCurrentBranch(repoRoot: any) {
-  let currentBranch;
+  let currentBranch: string;
   try {
     currentBranch = gitExec(repoRoot, ['rev-parse', '--abbrev-ref', 'HEAD']);
   } catch (_error) {
@@ -147,25 +154,25 @@ export function getCurrentBranch(repoRoot: any) {
 }
 
 export function setRepoRoot(repoRoot: any) {
-  defaultRepoRoot = repoRoot ? path.resolve(repoRoot) : null;
-  if (defaultRepoRoot) headHashCache.delete(defaultRepoRoot);
+  gitPrimitiveState.defaultRepoRoot = repoRoot ? path.resolve(repoRoot) : null;
+  if (gitPrimitiveState.defaultRepoRoot) gitPrimitiveState.headHashCache.delete(gitPrimitiveState.defaultRepoRoot);
 }
 
 export function headHash(repoRootOrConfig: any = null) {
   const repoRoot = resolveRepoInput(repoRootOrConfig);
   if (!repoRoot) return null;
-  if (headHashCache.has(repoRoot)) return headHashCache.get(repoRoot);
+  if (gitPrimitiveState.headHashCache.has(repoRoot)) return gitPrimitiveState.headHashCache.get(repoRoot);
   try {
     const hash = gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']);
-    headHashCache.set(repoRoot, hash);
+    gitPrimitiveState.headHashCache.set(repoRoot, hash);
     return hash;
-  } catch (_error) {
+  } catch (_error) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return null;
   }
 }
 
 export function invalidateHeadHash(repoRootOrConfig: any = null) {
   const repoRoot = resolveRepoInput(repoRootOrConfig);
-  if (repoRoot) headHashCache.delete(repoRoot);
-  else headHashCache.clear();
+  if (repoRoot) gitPrimitiveState.headHashCache.delete(repoRoot);
+  else gitPrimitiveState.headHashCache.clear();
 }

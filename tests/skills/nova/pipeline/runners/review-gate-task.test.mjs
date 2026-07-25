@@ -3,40 +3,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
-import { createRunStats } from '../../../../../skills/nova/pipeline/core/runtime.ts';
 import { appendModuleLifecycleEvent } from '../../../../../skills/nova/pipeline/services/status-store.ts';
 import { reviewOutputPath, runReviewGateOnce } from '../../../../../skills/nova/pipeline/runners/review-gate-task.ts';
+import { makeGateTestConfig } from './gate-test-fixtures.mjs';
 
-function makeConfig() {
-  const root = fs.mkdtempSync(path.join('/app', 'review-gate-task-'));
-  const swarmDir = path.join(root, '.swarm');
-  fs.mkdirSync(swarmDir, { recursive: true });
-  return {
-    project: 'test-project',
-    repo_root: root,
-    paths: {
-      swarm_dir: swarmDir,
-      modules_dir: path.join(root, 'modules'),
-    },
-    pipeline_defaults: {
-      timeout_minutes: 1,
-      max_fails: 0,
-      auto_retry_threshold: 0,
-      agent_startup_retry_budget: 0,
-      session_nudge_threshold: 0,
-    },
-    rate_limit: { max_pauses_per_module: 0, cooldown_hours: 0, cooldown_buffer_ms: 0 },
-    locks: {
-      lifecycle_append: { stale_ms: 1, timeout_ms: 1 },
-      gate_active_session: { stale_ms: 1, timeout_ms: 1 },
-    },
-    _runId: 'run-test',
-    run_id: 'run-test',
-    _runStats: createRunStats(),
-  };
-}
+const makeConfig = () => makeGateTestConfig('review-gate-task-');
 
-function makeDeps({ outputFilePath }) {
+function baseReviewDeps(overrides = {}) {
   return {
     generateLintReport() {
       return {
@@ -58,9 +31,7 @@ function makeDeps({ outputFilePath }) {
     buildReviewerPrompt() {
       return { prompt: 'review prompt' };
     },
-    archiveGateOutputIfPresent() {
-      throw new Error('archive failed');
-    },
+    archiveGateOutputIfPresent() { return null; },
     resolvePolicy() {
       return { model: 'test-model', model_source: 'test', thinking: null };
     },
@@ -69,54 +40,30 @@ function makeDeps({ outputFilePath }) {
     getTrackedAgent() {
       return null;
     },
-    async pollForFile() {
-      assert.equal(fs.existsSync(outputFilePath), false, 'stale review output should be removed before polling');
-      return { ok: false, reason: 'timeout' };
-    },
+    async pollForFile() { return { ok: false, reason: 'timeout' }; },
     sleep() {},
     discord() {},
     async killReviewerAgent() {
       return true;
     },
-    async gitCommitAndPush() {
-      throw new Error('git should not run when review output was not received');
-    },
+    async gitCommitAndPush() { throw new Error('unexpected review artifact publish'); },
+    ...overrides,
   };
 }
 
-function makeSuccessfulDeps({ outputFilePath, canonicalOutputPath, onCommit }) {
-  return {
-    generateLintReport() {
-      return {
-        report: {
-          summary: {
-            total_errors: 0,
-            total_warnings: 0,
-          },
-        },
-        error: null,
-      };
+function makeDeps({ outputFilePath }) {
+  return baseReviewDeps({
+    archiveGateOutputIfPresent() { throw new Error('archive failed'); },
+    async pollForFile() {
+      assert.equal(fs.existsSync(outputFilePath), false, 'stale review output should be removed before polling');
+      return { ok: false, reason: 'timeout' };
     },
-    formatLintReportForReviewer() {
-      return 'lint ok';
-    },
-    readGateInstructions() {
-      return 'review instructions';
-    },
-    buildReviewerPrompt() {
-      return { prompt: 'review prompt' };
-    },
-    archiveGateOutputIfPresent() {
-      return null;
-    },
-    resolvePolicy() {
-      return { model: 'test-model', model_source: 'test', thinking: null };
-    },
-    logEffectivePolicy() {},
-    async spawnReviewerAgent() {},
-    getTrackedAgent() {
-      return null;
-    },
+    async gitCommitAndPush() { throw new Error('git should not run when review output was not received'); },
+  });
+}
+
+function makeSuccessfulDeps({ outputFilePath, onCommit }) {
+  return baseReviewDeps({
     async pollForFile() {
       fs.writeFileSync(outputFilePath, JSON.stringify({
         status: 'PASS',
@@ -130,83 +77,49 @@ function makeSuccessfulDeps({ outputFilePath, canonicalOutputPath, onCommit }) {
       }));
       return { ok: true };
     },
-    sleep() {},
-    discord() {},
-    async killReviewerAgent() {
-      return true;
-    },
     async gitCommitAndPush(_config, _message, options = {}) {
       onCommit(options);
       return { committed: true };
     },
-  };
+  });
 }
 
 function makeInvalidOutputDeps({ outputFilePath }) {
-  return {
-    generateLintReport() {
-      return {
-        report: {
-          summary: {
-            total_errors: 0,
-            total_warnings: 0,
-          },
-        },
-        error: null,
-      };
-    },
-    formatLintReportForReviewer() {
-      return 'lint ok';
-    },
-    readGateInstructions() {
-      return 'review instructions';
-    },
-    buildReviewerPrompt() {
-      return { prompt: 'review prompt' };
-    },
-    archiveGateOutputIfPresent() {
-      return null;
-    },
-    resolvePolicy() {
-      return { model: 'test-model', model_source: 'test', thinking: null };
-    },
-    logEffectivePolicy() {},
-    async spawnReviewerAgent() {},
-    getTrackedAgent() {
-      return null;
-    },
+  return baseReviewDeps({
     async pollForFile() {
       fs.writeFileSync(outputFilePath, '{not json');
       return { ok: true };
     },
-    sleep() {},
-    discord() {},
-    async killReviewerAgent() {
-      return true;
-    },
-    async gitCommitAndPush() {
-      throw new Error('git should not run for invalid review output');
-    },
-  };
+    async gitCommitAndPush() { throw new Error('git should not run for invalid review output'); },
+  });
 }
 
-test('runReviewGateOnce removes stale review output even when archival fails', async () => {
+function reviewGateFixture({ gateId = 'review-gate', canonicalOutput = false } = {}) {
   const config = makeConfig();
-  const gateId = 'review-gate';
   const gate = {
     type: 'review',
     title: 'Review Gate',
     review_name: 'main',
     review_output_dir: 'echo-reviews',
+    ...(canonicalOutput ? { output_file: 'canonical/review-output.json' } : {}),
   };
-  const reviewConfig = {
-    reviewers: [{ label: 'echo', model: 'test-model' }],
-    primaryReviewer: { label: 'echo', model: 'test-model' },
-    timeout: 1,
-    lintTier: 'full',
-    lintRequired: true,
+  return {
+    config,
+    gateId,
+    gate,
+    reviewConfig: {
+      reviewers: [{ label: 'echo', model: 'test-model' }],
+      primaryReviewer: { label: 'echo', model: 'test-model' },
+      timeout: 1,
+      lintTier: 'full',
+      lintRequired: true,
+    },
+    outputFilePath: reviewOutputPath(config, gate, 'echo'),
   };
-  const outputFilePath = reviewOutputPath(config, gate, 'echo');
+}
+
+test('runReviewGateOnce removes stale review output even when archival fails', async () => {
+  const { config, gateId, gate, reviewConfig, outputFilePath } = reviewGateFixture();
   fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
   fs.writeFileSync(outputFilePath, JSON.stringify({
     status: 'PASS',
@@ -232,30 +145,13 @@ test('runReviewGateOnce removes stale review output even when archival fails', a
 });
 
 test('runReviewGateOnce writes canonical gate output before publishing review artifacts', async () => {
-  const config = makeConfig();
-  const gateId = 'review-gate';
-  const gate = {
-    type: 'review',
-    title: 'Review Gate',
-    review_name: 'main',
-    review_output_dir: 'echo-reviews',
-    output_file: 'canonical/review-output.json',
-  };
-  const reviewConfig = {
-    reviewers: [{ label: 'echo', model: 'test-model' }],
-    primaryReviewer: { label: 'echo', model: 'test-model' },
-    timeout: 1,
-    lintTier: 'full',
-    lintRequired: true,
-  };
-  const outputFilePath = reviewOutputPath(config, gate, 'echo');
+  const { config, gateId, gate, reviewConfig, outputFilePath } = reviewGateFixture({ canonicalOutput: true });
   const canonicalOutputPath = path.join(config.paths.swarm_dir, gate.output_file);
   let commitObservedCanonical = false;
 
   const result = await runReviewGateOnce({
     deps: makeSuccessfulDeps({
       outputFilePath,
-      canonicalOutputPath,
       onCommit(options) {
         assert.equal(fs.existsSync(outputFilePath), true, 'reviewer output should exist before publish');
         assert.equal(fs.existsSync(canonicalOutputPath), true, 'canonical gate output should exist before publish');
@@ -285,22 +181,7 @@ test('runReviewGateOnce writes canonical gate output before publishing review ar
 });
 
 test('runReviewGateOnce scopes full lint to the reviewed module when gate order implies one', async () => {
-  const config = makeConfig();
-  const gateId = 'module-01-review';
-  const gate = {
-    type: 'review',
-    title: 'Review Gate',
-    review_name: 'main',
-    review_output_dir: 'echo-reviews',
-  };
-  const reviewConfig = {
-    reviewers: [{ label: 'echo', model: 'test-model' }],
-    primaryReviewer: { label: 'echo', model: 'test-model' },
-    timeout: 1,
-    lintTier: 'full',
-    lintRequired: true,
-  };
-  const outputFilePath = reviewOutputPath(config, gate, 'echo');
+  const { config, gateId, gate, reviewConfig, outputFilePath } = reviewGateFixture({ gateId: 'module-01-review' });
   let lintArgs = null;
 
   appendModuleLifecycleEvent(config, '01-foundation', {
@@ -326,7 +207,6 @@ test('runReviewGateOnce scopes full lint to the reviewed module when gate order 
   const deps = {
     ...makeSuccessfulDeps({
       outputFilePath,
-      canonicalOutputPath: path.join(config.paths.swarm_dir, 'unused.json'),
       onCommit() {},
     }),
     generateLintReport(_config, _tier, opts) {
@@ -372,23 +252,7 @@ test('runReviewGateOnce scopes full lint to the reviewed module when gate order 
 });
 
 test('runReviewGateOnce validates review output before publishing artifacts', async () => {
-  const config = makeConfig();
-  const gateId = 'review-gate';
-  const gate = {
-    type: 'review',
-    title: 'Review Gate',
-    review_name: 'main',
-    review_output_dir: 'echo-reviews',
-    output_file: 'canonical/review-output.json',
-  };
-  const reviewConfig = {
-    reviewers: [{ label: 'echo', model: 'test-model' }],
-    primaryReviewer: { label: 'echo', model: 'test-model' },
-    timeout: 1,
-    lintTier: 'full',
-    lintRequired: true,
-  };
-  const outputFilePath = reviewOutputPath(config, gate, 'echo');
+  const { config, gateId, gate, reviewConfig, outputFilePath } = reviewGateFixture({ canonicalOutput: true });
   const canonicalOutputPath = path.join(config.paths.swarm_dir, gate.output_file);
 
   const result = await runReviewGateOnce({

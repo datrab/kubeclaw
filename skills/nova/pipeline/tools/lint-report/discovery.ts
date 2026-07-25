@@ -5,7 +5,7 @@ import { log } from './output.ts';
 import { matchesPolicyPattern, policyIncludesFile } from './policy.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-const discoveryDiagnostics = [];
+const discoveryDiagnostics: any[] = [];
 const LINT_POLICY_IGNORED_PATH_SEGMENTS = [
   '/node_modules/',
   '/dist/',
@@ -26,7 +26,7 @@ const LINT_POLICY_IGNORED_FILE_PATTERNS = [
   /\.(test|spec)\.[jt]sx?$/,
   /\.min\.(js|mjs|cjs)$/,
 ];
-function recordDiscoveryDiagnostic(entry = {}) {
+function recordDiscoveryDiagnostic(entry: any = {}) {
   discoveryDiagnostics.push({
     source: 'lint-report.discovery',
     ts: new Date().toISOString(),
@@ -38,7 +38,7 @@ function takeDiscoveryDiagnostics() {
   return discoveryDiagnostics.splice(0, discoveryDiagnostics.length);
 }
 
-function findNearestTsconfigDir(repoRoot, modulePath = null) {
+function findNearestTsconfigDir(repoRoot: any, modulePath: any = null) {
   const cwd = modulePath ? path.join(repoRoot, modulePath) : repoRoot;
   let tsconfigDir = cwd;
 
@@ -53,33 +53,33 @@ function findNearestTsconfigDir(repoRoot, modulePath = null) {
   return null;
 }
 
-function isPolicyIgnoredFile(filePath) {
+function isPolicyIgnoredFile(filePath: any) {
   const normalized = filePath.split(path.sep).join('/');
   return [
-    LINT_POLICY_IGNORED_PATH_SEGMENTS.some(segment => normalized.includes(segment)),
-    LINT_POLICY_IGNORED_FILE_PATTERNS.some(pattern => pattern.test(normalized)),
+    LINT_POLICY_IGNORED_PATH_SEGMENTS.some((segment: any) => normalized.includes(segment)),
+    LINT_POLICY_IGNORED_FILE_PATTERNS.some((pattern: any) => pattern.test(normalized)),
   ].some(Boolean);
 }
 
-function listPolicySourceFiles(scanRoot) {
-  return findFiles(scanRoot, f => /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(f), 12)
-    .filter(file => !isPolicyIgnoredFile(file));
+function listPolicySourceFiles(scanRoot: any) {
+  return findFiles(scanRoot, (f: any) => /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(f), 12)
+    .filter((file: any) => !isPolicyIgnoredFile(file));
 }
 
-function configuredTargetPaths(ctx, tool = ctx.tool) {
+function configuredTargetPaths(ctx: any, tool: any = ctx.tool) {
   const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
-  return tool.targets.map(target => path.resolve(projectRoot, target));
+  return tool.targets.map((target: any) => path.resolve(projectRoot, target));
 }
 
-function listConfiguredTargetFiles(ctx, predicate = () => true) {
+function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
   const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
-  const candidates = [];
+  const candidates: any[] = [];
   for (const target of configuredTargetPaths(ctx)) {
     const stat = fs.statSync(target);
     candidates.push(...(stat.isDirectory() ? findFiles(target, () => true, Number.MAX_SAFE_INTEGER) : [target]));
   }
   return [...new Set(candidates)]
-    .filter(file => {
+    .filter((file: any) => {
       const relative = path.relative(projectRoot, file).split(path.sep).join('/');
       return predicate(relative) && policyIncludesFile(relative, ctx.tool, ctx.policy.global_exclusions);
     })
@@ -94,19 +94,19 @@ function listConfiguredTargetFiles(ctx, predicate = () => true) {
  * @param {string|null} modulePath - Optional module subdirectory to narrow scope
  * @returns {{ types: Set<string>, markers: object }}
  */
-function detectProjectTypes(repoRoot, project, globalExclusions = []) {
+function detectProjectTypes(repoRoot: any, project: any, globalExclusions: any = []) {
   const scanRoot = path.resolve(repoRoot, project.root);
   const types = new Set();
-  const markers = {};
+  const markers: any = {};
 
   const candidates = findFiles(scanRoot, () => true, project.discovery_max_depth)
-    .map(file => path.relative(scanRoot, file).split(path.sep).join('/'))
-    .filter(file => !globalExclusions.some(pattern => matchesPolicyPattern(file, pattern)));
+    .map((file: any) => path.relative(scanRoot, file).split(path.sep).join('/'))
+    .filter((file: any) => !globalExclusions.some((pattern: any) => matchesPolicyPattern(file, pattern)));
   for (const language of project.languages) {
     const evidence = project.language_evidence[language];
-    const matched = evidence.find((pattern) => {
+    const matched = evidence.find((pattern: any) => {
       if (!pattern.includes('*')) return fs.existsSync(path.join(scanRoot, pattern));
-      return candidates.some(candidate => matchesPolicyPattern(candidate, pattern));
+      return candidates.some((candidate: any) => matchesPolicyPattern(candidate, pattern));
     });
     if (matched) {
       types.add(language);
@@ -122,14 +122,14 @@ function detectProjectTypes(repoRoot, project, globalExclusions = []) {
  * Find files matching a predicate, with max depth.
  * Lightweight alternative to glob — no dependencies.
  */
-function findFiles(dir, predicate, maxDepth = 3, _depth = 0) {
+function findFiles(dir: any, predicate: any, maxDepth: any = 3, _depth: any = 0) {
   if (_depth > maxDepth) return [];
   if (!fs.existsSync(dir)) return [];
-  const results = [];
+  const results: any[] = [];
 
   let entries;
   try { entries = fs.readdirSync(dir, { withFileTypes: true }); }
-  catch (error) {
+  catch (error: any) {
     recordDiscoveryDiagnostic({
       status: 'unavailable',
       path: dir,
@@ -157,10 +157,10 @@ function findFiles(dir, predicate, maxDepth = 3, _depth = 0) {
  * @param {object} ctx - Run context
  * @returns {string[]} List of files to scope lint to, or empty for full scope
  */
-function resolveScope(ctx) {
+function resolveScope(ctx: any) {
   if (ctx.changedFiles && ctx.changedFiles.length > 0) {
     // Verify files exist (forge_diff_stat may reference files that were deleted)
-    const existing = ctx.changedFiles.filter(f => {
+    const existing = ctx.changedFiles.filter((f: any) => {
       const abs = path.isAbsolute(f) ? f : path.join(ctx.repoRoot, f);
       return fs.existsSync(abs);
     });
@@ -180,7 +180,7 @@ function resolveScope(ctx) {
 export {
   detectProjectTypes,
   findFiles,
-  findNearestTsconfigDir,
+
   configuredTargetPaths,
   listConfiguredTargetFiles,
   listPolicySourceFiles,

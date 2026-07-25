@@ -6,29 +6,21 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Buster-specific Git workflows built on shared Git primitives.
 // Destructive sync/push policy remains Buster-owned.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import os from 'os';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { getRepoRoot, gitExec, getCurrentBranch } from '../git-primitives.ts';
 import { sleep } from '../timing.ts';
-import type { TimeBudget } from '../timing.ts';
 import { isRuntimeStatePath } from '../runtime-state-paths.ts';
+import { busterEnvironmentSnapshot } from '../runtime-environment.ts';
+import { ensureGitIdentity, hasScopedStagedChanges } from './git-identity.ts';
+import { logGit } from './git-workflow-contracts.ts';
+import type { GitLogger, GitPushOptions, GitWorkflowOptions } from './git-workflow-contracts.ts';
+import { normalizeNonNegativeNumber, normalizePositiveInteger, normalizePushBranch, normalizeScopedAddPaths } from './git-push-policy.ts';
 
 export { getRepoRoot, gitExec, getCurrentBranch };
 
-interface GitLogger {
-  info?: (tag: string, msg: string) => void;
-  warn?: (tag: string, msg: string) => void;
-}
-
-interface GitWorkflowOptions {
-  logger?: GitLogger | null;
-}
-
-export interface GitSyncSuccess {
+interface GitSyncSuccess {
   ok: true;
   target_hash: string;
   actual_hash: string;
@@ -36,7 +28,7 @@ export interface GitSyncSuccess {
   detail: null;
 }
 
-export interface GitSyncFailure {
+interface GitSyncFailure {
   ok: false;
   target_hash: string | null;
   actual_hash: null;
@@ -46,33 +38,19 @@ export interface GitSyncFailure {
 
 export type GitSyncResult = GitSyncSuccess | GitSyncFailure;
 
-interface GitPushOptions extends GitWorkflowOptions {
-  maxAttempts: number;
-  retryDelayMs: number;
-  commitMessage?: string;
-  addPaths?: string[];
-  budget?: TimeBudget | null;
-  signal?: AbortSignal | null;
-}
-
 export interface GitPushResult {
   pushed: boolean;
   hash: string;
 }
 
-function titleCaseAgent(value: string): string {
-  const normalized = String(selectDefinedValue(() => (value), () => (''))).trim().replace(/[-_]+/g, ' ');
-  if (!normalized) return 'Buster';
-  return normalized
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part[0].toUpperCase() + part.slice(1).toLowerCase())
-    .join(' ');
+interface PushAttemptContext {
+  repoRoot: string; branch: string; attempt: number; maxAttempts: number; retryDelayMs: number;
+  options: GitPushOptions; logger: GitLogger | null;
 }
 
 function firstLine(error: unknown): string {
-  if (error instanceof Error) return selectTruthyValue(() => ((selectTruthyValue(() => (error.message), () => (String(error)))).split('\n')[0]), () => ('missing_error_detail'));
-  return selectTruthyValue(() => (String(selectTruthyValue(() => (error), () => ('missing_error_detail'))).split('\n')[0]), () => ('missing_error_detail'));
+  const detail = error instanceof Error && error.message ? error.message : String(error || 'missing_error_detail');
+  return detail.split('\n').at(0) || 'missing_error_detail';
 }
 
 function normalizeGitTargetHash(expectedHash: unknown): string | null {
@@ -127,48 +105,6 @@ function restoreRuntimeState(repoRoot: string, snapshot: { root: string; paths: 
   }
 }
 
-function logGit(logger: GitLogger | null, level: 'info' | 'warn', msg: string): void {
-  if (logger) logger[level]?.('GIT', msg);
-}
-
-function gitConfigValue(repoRoot: string, key: string): string | null {
-  try {
-    const value = gitExec(repoRoot, ['config', '--get', key]);
-    return selectTruthyValue(() => (value), () => (null));
-  } catch (_error: unknown) {
-    return null;
-  }
-}
-
-function ensureGitIdentity(repoRoot: string, logger: GitLogger | null): void {
-  const existingName = gitConfigValue(repoRoot, 'user.name');
-  const existingEmail = gitConfigValue(repoRoot, 'user.email');
-  if (existingName && existingEmail) return;
-
-  const rawAgent = process.env.CURRENT_AGENT ? process.env.CURRENT_AGENT : process.env.AGENT_NAME ? process.env.AGENT_NAME : 'buster';
-  const agent = String(rawAgent).trim() ? String(rawAgent).trim() : 'buster';
-  const fallbackName = `${titleCaseAgent(agent)} Agent`;
-  const fallbackEmail = `${agent.toLowerCase()}@kubeclaw.swarm`;
-
-  if (!existingName) {
-    gitExec(repoRoot, ['config', 'user.name', fallbackName]);
-    logGit(logger, 'info', `Configured local git user.name for ${agent}`);
-  }
-  if (!existingEmail) {
-    gitExec(repoRoot, ['config', 'user.email', fallbackEmail]);
-    logGit(logger, 'info', `Configured local git user.email for ${agent}`);
-  }
-}
-
-function hasScopedStagedChanges(repoRoot: string, addPaths: string[]): boolean {
-  try {
-    gitExec(repoRoot, ['diff', '--cached', '--quiet', '--', ...addPaths]);
-    return false;
-  } catch (_error: unknown) {
-    return true;
-  }
-}
-
 // ─── gitSync ─────────────────────────────────────────────────────────────────
 
 /**
@@ -181,7 +117,7 @@ function hasScopedStagedChanges(repoRoot: string, addPaths: string[]): boolean {
  * but return typed failure metadata instead of a magic null sentinel.
  */
 export async function gitSync(repoRoot: string, expectedHash: string, opts: GitWorkflowOptions = {}): Promise<GitSyncResult> {
-  const logger = selectTruthyValue(() => (opts.logger), () => (null));
+  const logger = opts.logger ? opts.logger : null;
   const targetHash = normalizeGitTargetHash(expectedHash);
   if (!targetHash) {
     const detail = 'gitSync requires explicit expectedHash; branch-derived sync is deleted';
@@ -233,44 +169,6 @@ export async function gitSync(repoRoot: string, expectedHash: string, opts: GitW
 }
 
 // ─── gitPushWithRetry ────────────────────────────────────────────────────────
-
-function normalizePositiveInteger(value: unknown, field: string): number {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
-    throw new Error(`gitPushWithRetry ${field} is required`);
-  }
-  const numeric = Number(value);
-  if (selectTruthyValue(() => (!Number.isInteger(numeric)), () => (numeric < 1))) {
-    throw new Error(`gitPushWithRetry ${field} must be a positive integer`);
-  }
-  return numeric;
-}
-
-function normalizeNonNegativeNumber(value: unknown, field: string): number {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
-    throw new Error(`gitPushWithRetry ${field} is required`);
-  }
-  const numeric = Number(value);
-  if (selectTruthyValue(() => (!Number.isFinite(numeric)), () => (numeric < 0))) {
-    throw new Error(`gitPushWithRetry ${field} must be a non-negative number`);
-  }
-  return numeric;
-}
-
-function normalizeScopedAddPaths(addPaths: unknown): string[] {
-  if (selectTruthyValue(() => (!Array.isArray(addPaths)), () => (addPaths.length === 0))) {
-    throw new Error('gitPushWithRetry commit mode requires non-empty opts.addPaths');
-  }
-  const normalized = addPaths.map((entry) => String(selectDefinedValue(() => (entry), () => (''))).trim()).filter(Boolean);
-  if (normalized.length !== addPaths.length) {
-    throw new Error('gitPushWithRetry opts.addPaths must not contain empty pathspecs');
-  }
-  for (const pathspec of normalized) {
-    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (pathspec === '.'), () => (pathspec === './'))), () => (pathspec === ':/'))), () => (pathspec === '-A'))), () => (pathspec.startsWith('-')))) {
-      throw new Error(`gitPushWithRetry opts.addPaths contains unsafe broad pathspec: ${pathspec}`);
-    }
-  }
-  return normalized;
-}
 
 function normalizeRepoRelativePath(value: unknown): string {
   return String(selectDefinedValue(() => (value), () => ('')))
@@ -332,7 +230,7 @@ function tryAutoResolveRebaseForScopedPaths(repoRoot: string, addPaths: string[]
       gitExec(repoRoot, ['rebase', '--continue'], {
         stdio: 'ignore',
         env: {
-          ...process.env,
+          ...busterEnvironmentSnapshot(),
           GIT_EDITOR: 'true',
         },
       });
@@ -351,7 +249,7 @@ function tryAutoResolveRebaseForScopedPaths(repoRoot: string, addPaths: string[]
 }
 
 function rebuildScopedCommitOnOrigin(repoRoot: string, branch: string, addPaths: string[], commitMessage: string, logger: GitLogger | null): boolean {
-  try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* best-effort abort */ }
+  try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* INTENTIONAL_NONCRITICAL(best_effort_cleanup_failed): cleanup is idempotent or a primary failure remains authoritative. */ /* best-effort abort */ }
   gitExec(repoRoot, ['fetch', 'origin'], { stdio: 'ignore', timeout: 30000 });
   gitExec(repoRoot, ['reset', '--soft', `origin/${branch}`], { stdio: 'ignore' });
   gitExec(repoRoot, ['reset'], { stdio: 'ignore' });
@@ -365,29 +263,31 @@ function rebuildScopedCommitOnOrigin(repoRoot: string, branch: string, addPaths:
   return true;
 }
 
-function normalizePushBranch(branch: unknown): string {
-  if (typeof branch !== 'string') {
-    throw new Error('gitPushWithRetry branch must be a valid branch name');
+function prepareScopedCommit(repoRoot: string, options: GitPushOptions, logger: GitLogger | null): GitPushResult | null {
+  if (!options.commitMessage) return null;
+  const addPaths = normalizeScopedAddPaths(options.addPaths);
+  ensureGitIdentity(repoRoot, logger);
+  gitExec(repoRoot, ['add', '--', ...addPaths]);
+  if (!hasScopedStagedChanges(repoRoot, addPaths)) return { pushed: false, hash: gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']) };
+  gitExec(repoRoot, ['commit', '-m', options.commitMessage]);
+  return null;
+}
+
+async function recoverRebase(error: unknown, context: PushAttemptContext): Promise<'push' | 'retry' | GitPushResult> {
+  const { repoRoot, branch, attempt, maxAttempts, retryDelayMs, options, logger } = context;
+  const detail = firstLine(error);
+  logGit(logger, 'warn', `Rebase attempt ${attempt}/${maxAttempts}: ${detail}`);
+  const addPaths = options.commitMessage ? normalizeScopedAddPaths(options.addPaths) : [];
+  if (tryAutoResolveRebaseForScopedPaths(repoRoot, addPaths, logger)) return 'push';
+  if (options.commitMessage) {
+    const rebuilt = rebuildScopedCommitOnOrigin(repoRoot, branch, addPaths, options.commitMessage, logger);
+    return rebuilt ? 'push' : { pushed: false, hash: gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']) };
   }
-  const normalized = branch;
-  const invalidBranchChecks = [
-    () => !normalized,
-    () => normalized.startsWith('-'),
-    () => normalized.startsWith('/'),
-    () => normalized.endsWith('/'),
-    () => normalized.endsWith('.'),
-    () => normalized === '@',
-    () => normalized.includes('..'),
-    () => normalized.includes('@{'),
-    () => normalized.includes('//'),
-    () => /(?:^|\/)\./.test(normalized),
-    () => /(?:^|\/)[^/]+\.lock(?:\/|$)/.test(normalized),
-    () => /[\s\x00-\x1f\x7f~^:?*[\\]/.test(normalized),
-  ];
-  if (invalidBranchChecks.some((isInvalidBranch) => isInvalidBranch())) {
-    throw new Error(`gitPushWithRetry branch must be a valid branch name: ${String(branch)}`);
-  }
-  return normalized;
+  try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); }
+  catch (_error: unknown) { /* INTENTIONAL_NONCRITICAL(best_effort_cleanup_failed): cleanup is idempotent or a primary failure remains authoritative. */ }
+  if (attempt >= maxAttempts) throw new Error(`gitPushWithRetry rebase failed after ${maxAttempts} attempt(s): ${detail}`);
+  await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget: options.budget || null, signal: options.signal || null });
+  return 'retry';
 }
 
 /**
@@ -407,38 +307,18 @@ export async function gitPushWithRetry(repoRoot: string, branch: string, opts: G
   const retryDelayMs = normalizeNonNegativeNumber(opts.retryDelayMs, 'opts.retryDelayMs');
   const budget = selectTruthyValue(() => (opts.budget), () => (null));
   const signal = selectTruthyValue(() => (opts.signal), () => (null));
-  const logger = selectTruthyValue(() => (opts.logger), () => (null));
+  const logger = opts.logger ? opts.logger : null;
 
-  if (opts.commitMessage) {
-    const addPaths = normalizeScopedAddPaths(opts.addPaths);
-    ensureGitIdentity(repoRoot, logger);
-    gitExec(repoRoot, ['add', '--', ...addPaths]);
-    if (!hasScopedStagedChanges(repoRoot, addPaths)) {
-      return { pushed: false, hash: gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']) };
-    }
-    gitExec(repoRoot, ['commit', '-m', opts.commitMessage]);
-  }
+  const commitResult = prepareScopedCommit(repoRoot, opts, logger);
+  if (commitResult) return commitResult;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
       gitExec(repoRoot, ['pull', '--rebase', '--autostash', 'origin', pushBranch], { stdio: 'ignore', timeout: 30000 });
     } catch (rebaseErr: unknown) {
-      const detail = firstLine(rebaseErr);
-      logGit(logger, 'warn', `Rebase attempt ${attempt}/${maxAttempts}: ${detail}`);
-      const commitModeAddPaths = opts.commitMessage ? normalizeScopedAddPaths(opts.addPaths) : [];
-      if (tryAutoResolveRebaseForScopedPaths(repoRoot, commitModeAddPaths, logger)) {
-        // Rebase is already completed above. Continue to push on this same attempt.
-      } else if (opts.commitMessage) {
-        const rebuilt = rebuildScopedCommitOnOrigin(repoRoot, pushBranch, commitModeAddPaths, opts.commitMessage, logger);
-        if (!rebuilt) return { pushed: false, hash: gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']) };
-      } else {
-        try { gitExec(repoRoot, ['rebase', '--abort'], { stdio: 'ignore' }); } catch (_error: unknown) { /* best-effort abort */ }
-        if (attempt < maxAttempts) {
-          await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal });
-          continue;
-        }
-        throw new Error(`gitPushWithRetry rebase failed after ${maxAttempts} attempt(s): ${detail}`);
-      }
+      const recovery = await recoverRebase(rebaseErr, { repoRoot, branch: pushBranch, attempt, maxAttempts, retryDelayMs, options: opts, logger });
+      if (recovery === 'retry') continue;
+      if (recovery !== 'push') return recovery;
     }
 
     try {
@@ -448,7 +328,7 @@ export async function gitPushWithRetry(repoRoot: string, branch: string, opts: G
     } catch (error: unknown) {
       if (attempt === maxAttempts) throw error;
       logGit(logger, 'warn', `Push attempt ${attempt}/${maxAttempts} failed: ${firstLine(error)}`);
-      await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal });
+      await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget: budget || null, signal: signal || null });
     }
   }
 

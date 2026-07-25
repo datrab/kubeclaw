@@ -76,7 +76,8 @@ function requiredPositiveInteger(config: UnknownRecord, field: string): number {
   if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
     throw new Error(`${field} is required when agent observability ingester is enabled`);
   }
-  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isInteger(value)))), () => (value <= 0))) {
+  if (typeof value !== 'number') throw new Error(`${field} must be a positive integer`);
+  if (!Number.isInteger(value) || value <= 0) {
     throw new Error(`${field} must be a positive integer`);
   }
   return value;
@@ -87,7 +88,8 @@ function requiredNonNegativeInteger(config: UnknownRecord, field: string): numbe
   if (selectTruthyValue(() => (value === undefined), () => (value === null))) {
     throw new Error(`${field} is required when agent observability ingester is enabled`);
   }
-  if (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isInteger(value)))), () => (value < 0))) {
+  if (typeof value !== 'number') throw new Error(`${field} must be a non-negative integer`);
+  if (!Number.isInteger(value) || value < 0) {
     throw new Error(`${field} must be a non-negative integer`);
   }
   return value;
@@ -96,7 +98,8 @@ function requiredNonNegativeInteger(config: UnknownRecord, field: string): numbe
 function typedRedisPort(config: UnknownRecord): number | undefined {
   const value = config.redisPort;
   if (selectTruthyValue(() => (value === undefined), () => (value === null))) return undefined;
-  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isInteger(value)))), () => (value <= 0))), () => (value > 65535))) {
+  if (typeof value !== 'number') throw new Error('redisPort must be an integer between 1 and 65535');
+  if (!Number.isInteger(value) || value <= 0 || value > 65535) {
     throw new Error('redisPort must be an integer between 1 and 65535');
   }
   return value;
@@ -129,24 +132,11 @@ export function resolveAgentObservabilityIngesterConfig(
 ): AgentObservabilityIngesterConfig {
   const config = asRecord(input);
   const enabled = typedBoolean(config, 'enabled', false);
-  const resolved: AgentObservabilityIngesterConfig = {
-    enabled,
-    groupName: enabled ? requiredString(config, 'groupName') : '',
-    consumerName: enabled ? requiredString(config, 'consumerName') : '',
-    pollBlockMs: enabled ? requiredPositiveInteger(config, 'pollBlockMs') : 0,
-    reclaimIdleMs: enabled ? requiredPositiveInteger(config, 'reclaimIdleMs') : 0,
-    redisCommandTimeoutMs: enabled ? requiredPositiveInteger(config, 'redisCommandTimeoutMs') : 0,
-    loopDelayMs: enabled ? requiredPositiveInteger(config, 'loopDelayMs') : 0,
-    trimIntervalMs: enabled ? requiredPositiveInteger(config, 'trimIntervalMs') : 0,
-    stopTimeoutMs: enabled ? requiredNonNegativeInteger(config, 'stopTimeoutMs') : 0,
-    deadLetterMaxLen: enabled ? requiredPositiveInteger(config, 'deadLetterMaxLen') : 0,
-    controlStreamMaxLen: enabled ? requiredPositiveInteger(config, 'controlStreamMaxLen') : 0,
-    payloadStreamMaxLen: enabled ? requiredPositiveInteger(config, 'payloadStreamMaxLen') : 0,
-    controlLagDegradedThreshold: enabled ? requiredNonNegativeInteger(config, 'controlLagDegradedThreshold') : 0,
-    payloadPressureDegradedThreshold: enabled ? requiredNonNegativeInteger(config, 'payloadPressureDegradedThreshold') : 0,
-  };
+  const resolved: AgentObservabilityIngesterConfig = enabled
+    ? enabledIngesterConfig(config)
+    : disabledIngesterConfig();
 
-  const redisTls = typedBoolean(config, 'redisTls', selectDefinedValue(() => (envBoolean(env, 'REDIS_TLS')), () => (false)));
+  const redisTls = typedBoolean(config, 'redisTls', envBoolean(env, 'REDIS_TLS') ?? false);
   if (redisTls) resolved.redisTls = redisTls;
 
   const redisHost = typedString(config, 'redisHost')
@@ -162,4 +152,33 @@ export function resolveAgentObservabilityIngesterConfig(
   if (redisNetworkIsolation !== undefined) resolved.redisNetworkIsolation = redisNetworkIsolation;
 
   return resolved;
+}
+
+function enabledIngesterConfig(config: UnknownRecord): AgentObservabilityIngesterConfig {
+  return {
+    enabled: true,
+    groupName: requiredString(config, 'groupName'),
+    consumerName: requiredString(config, 'consumerName'),
+    pollBlockMs: requiredPositiveInteger(config, 'pollBlockMs'),
+    reclaimIdleMs: requiredPositiveInteger(config, 'reclaimIdleMs'),
+    redisCommandTimeoutMs: requiredPositiveInteger(config, 'redisCommandTimeoutMs'),
+    loopDelayMs: requiredPositiveInteger(config, 'loopDelayMs'),
+    trimIntervalMs: requiredPositiveInteger(config, 'trimIntervalMs'),
+    stopTimeoutMs: requiredNonNegativeInteger(config, 'stopTimeoutMs'),
+    deadLetterMaxLen: requiredPositiveInteger(config, 'deadLetterMaxLen'),
+    controlStreamMaxLen: requiredPositiveInteger(config, 'controlStreamMaxLen'),
+    payloadStreamMaxLen: requiredPositiveInteger(config, 'payloadStreamMaxLen'),
+    controlLagDegradedThreshold: requiredNonNegativeInteger(config, 'controlLagDegradedThreshold'),
+    payloadPressureDegradedThreshold: requiredNonNegativeInteger(config, 'payloadPressureDegradedThreshold'),
+  };
+}
+
+function disabledIngesterConfig(): AgentObservabilityIngesterConfig {
+  return {
+    enabled: false,
+    groupName: '', consumerName: '', pollBlockMs: 0, reclaimIdleMs: 0,
+    redisCommandTimeoutMs: 0, loopDelayMs: 0, trimIntervalMs: 0, stopTimeoutMs: 0,
+    deadLetterMaxLen: 0, controlStreamMaxLen: 0, payloadStreamMaxLen: 0,
+    controlLagDegradedThreshold: 0, payloadPressureDegradedThreshold: 0,
+  };
 }

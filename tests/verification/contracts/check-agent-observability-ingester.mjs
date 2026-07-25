@@ -1,21 +1,12 @@
 #!/usr/bin/env node
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const ingesterModule = await import(path.join(sourceRoot, 'skills/nova/pipeline/services/agent-observability-ingester/index.ts'));
 const observabilityModule = await import(path.join(sourceRoot, 'skills/nova/pipeline/services/observability.ts'));
 const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agent-observability/src/index.ts'));
@@ -112,6 +103,7 @@ function makeEvent(type, payload, identity = {}) {
       session_key: 'agent:forge:session-1',
       dispatch_id: 'dispatch-1',
       gateway_label: 'forge-dispatch-1',
+      model_call_id: 'model-call-default',
       agent_type: 'forge',
       module_id: '01',
       ...identity,
@@ -219,6 +211,15 @@ assert.equal(
   true,
   'deployment env booleans remain accepted at the environment boundary',
 );
+for (const type of ['openclaw.tool.started', 'openclaw.tool.finished']) {
+  const mapped = ingesterModule.mapAgentObservabilityEventToTelemetry(makeEvent(type, type.endsWith('started') ? {
+    hook: 'before_tool_call', tool_name: 'read', params: { path: 'README.md' },
+  } : {
+    hook: 'after_tool_call', tool_name: 'read', result: 'ok', outcome: 'success', duration_ms: 1,
+  }, { tool_call_id: 'tool-1', model_call_id: 'model-1', attempt: 1 }));
+  assert.equal(mapped.payload.tool_call_id, 'tool-1');
+  assert.equal(mapped.payload.model_call_id, 'model-1');
+}
 const emitted = [];
 const redis = new FakeRedis();
 redis.newEntries.push(entry('1-0', makeEvent('openclaw.agent.ended', {
@@ -328,7 +329,7 @@ const usageRedis = new FakeRedis();
 const usageEmits = [];
 const usageSwarmDir = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-observability-usage-'));
 const usageLogDir = path.join(usageSwarmDir, 'logs');
-const usageConfig = { paths: { swarm_dir: usageSwarmDir }, project: 'contract' };
+const usageConfig = { paths: { swarm_dir: usageSwarmDir }, project: 'contract', run_id: 'run-ao2', _runId: 'run-ao2' };
 usageRedis.newEntries.push(entry('5-0', makeEvent('openclaw.model.usage', {
   hook: 'model_usage',
   provider: 'anthropic',

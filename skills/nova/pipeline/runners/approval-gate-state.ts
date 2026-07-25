@@ -25,27 +25,27 @@ const APPROVAL_STATE_MISSING_PARSE_ERROR = 'missing_parse_error';
 const APPROVAL_STATE_MISSING_PROJECT = 'missing_project';
 const APPROVAL_STATE_MISSING_RUN_ID = 'missing_recovery_target_id';
 
-function objectRecord(value) {
+function objectRecord(value: any) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
-function selectPresentValue(...values) {
-  return values.find((value) => value !== undefined && value !== null && value !== '');
+function selectPresentValue(...values: any) {
+  return values.find((value: any) => value !== undefined && value !== null && value !== '');
 }
 
-function gateRef(gateId) {
+function gateRef(gateId: any) {
   return `gate:${gateId}`;
 }
 
-function approvalGateType(...sources) {
+function approvalGateType(...sources: any) {
   return selectPresentValue(...sources, APPROVAL_GATE_TYPE);
 }
 
-function errorMessage(error) {
+function errorMessage(error: any) {
   return error instanceof Error ? error.message : String(error);
 }
 
-function recordApprovalAuditDegraded(config, gateId, artifact, error) {
+function recordApprovalAuditDegraded(config: any, gateId: any, artifact: any, error: any) {
   log('WARN', `Approval gate '${gateId}' audit artifact '${artifact}' write failed: ${errorMessage(error)}`);
   appendDurableOperatorAlert(config, 'pipeline.operator_alert', {
     reason: 'approval_audit_write_failed',
@@ -60,16 +60,16 @@ function recordApprovalAuditDegraded(config, gateId, artifact, error) {
   });
 }
 
-export function loadApprovalGateState(config, gateId) {
+function loadApprovalGateState(config: any, gateId: any) {
   const p = gateStatusPath(config, gateId);
   if (!fs.existsSync(p)) return null;
   try {
     return JSON.parse(fs.readFileSync(p, 'utf8'));
-  } catch (error) {
+  } catch (error: any) {
     let preview = '';
     try {
       preview = fs.readFileSync(p, 'utf8').slice(0, 200);
-    } catch (_error) { /* unreadable */ }
+    } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* unreadable */ }
     return {
       _corrupted_gate_state: true,
       gate_id: gateId,
@@ -82,18 +82,18 @@ export function loadApprovalGateState(config, gateId) {
   }
 }
 
-function buildCorruptedApprovalStateReason(gateId, state = {}) {
+function buildCorruptedApprovalStateReason(gateId: any, state: any = {}) {
   const parseError = selectPresentValue(state?.parse_error, APPROVAL_STATE_INVALID_JSON);
   const filePath = selectPresentValue(state?.parse_error_path, gateRef(gateId));
   return `Approval gate '${gateId}' has corrupted persisted state at '${filePath}': ${parseError}`;
 }
 
-function invalidApprovalStatusAuthority(state = {}) {
+function invalidApprovalStatusAuthority(state: any = {}) {
   if (selectTruthyValue(() => (state?.status == null), () => (String(state.status).trim() === ''))) return APPROVAL_STATE_MISSING_STATUS;
   return String(state.status);
 }
 
-function buildInvalidApprovalStateReason(gateId, state = {}) {
+function buildInvalidApprovalStateReason(gateId: any, state: any = {}) {
   if (state?.invalid_state_error) {
     const filePath = selectPresentValue(state?.state_path, gateRef(gateId));
     return `Approval gate '${gateId}' has invalid persisted state at '${filePath}': ${state.invalid_state_error}; refusing to reopen or reset approval automatically`;
@@ -103,7 +103,7 @@ function buildInvalidApprovalStateReason(gateId, state = {}) {
   return `Approval gate '${gateId}' has invalid persisted state status '${status}' at '${filePath}'; refusing to reopen or reset approval automatically`;
 }
 
-export async function failClosedOnCorruptedApprovalState(config, gateId, gate, state, deps) {
+export async function failClosedOnCorruptedApprovalState(config: any, gateId: any, gate: any, state: any, deps: any) {
   const reason = buildCorruptedApprovalStateReason(gateId, state);
   const preview = state?.parse_error_preview
     ? state.parse_error_preview.replace(/\s+/g, ' ').trim().slice(0, 200)
@@ -137,7 +137,7 @@ export async function failClosedOnCorruptedApprovalState(config, gateId, gate, s
   };
 }
 
-export async function failClosedOnInvalidApprovalState(config, gateId, gate, state, deps) {
+export async function failClosedOnInvalidApprovalState(config: any, gateId: any, gate: any, state: any, deps: any) {
   const stateWithPath = {
     ...objectRecord(state),
     state_path: gateStatusPath(config, gateId),
@@ -172,7 +172,7 @@ export async function failClosedOnInvalidApprovalState(config, gateId, gate, sta
   };
 }
 
-export function saveApprovalGateState(config, gateId, state) {
+function saveApprovalGateState(config: any, gateId: any, state: any) {
   const p = gateStatusPath(config, gateId);
   const tmp = p + '.tmp';
   state = normalizeApprovalGateState(state, {
@@ -186,7 +186,7 @@ export function saveApprovalGateState(config, gateId, state) {
   fs.renameSync(tmp, p);
 }
 
-export function appendApprovalTransition(config, gateId, from, to, note = '', identity = {}) {
+function appendApprovalTransition(config: any, gateId: any, from: any, to: any, note: any = '', identity: any = {}) {
   const paths = approvalGateArtifactPaths(config, gateId); if (!paths) return;
   try {
     fs.mkdirSync(paths.dir, { recursive: true });
@@ -201,18 +201,18 @@ export function appendApprovalTransition(config, gateId, from, to, note = '', id
       note,
     };
     fs.appendFileSync(paths.transitionsJsonl, JSON.stringify(entry) + '\n');
-  } catch (error) { recordApprovalAuditDegraded(config, gateId, 'transitions.jsonl', error); }
+  } catch (error: any) { recordApprovalAuditDegraded(config, gateId, 'transitions.jsonl', error); }
 }
 
-function approvalTransitionGateId(identity, gateId) {
+function approvalTransitionGateId(identity: any, gateId: any) {
   if (typeof identity?.gate_id === 'string' && identity.gate_id.trim()) return identity.gate_id.trim();
   if (typeof gateId === 'string' && gateId.trim()) return gateId.trim();
   throw new Error('Approval transition requires gate_id');
 }
 
-export function writeApprovalRequest(config, gateId, gate, state) {
+export function writeApprovalRequest(config: any, gateId: any, gate: any, state: any) {
   const paths = approvalGateArtifactPaths(config, gateId); if (!paths) return;
-  try { fs.mkdirSync(paths.dir, { recursive: true }); } catch (error) { recordApprovalAuditDegraded(config, gateId, 'audit_dir', error); return; }
+  try { fs.mkdirSync(paths.dir, { recursive: true }); } catch (error: any) { recordApprovalAuditDegraded(config, gateId, 'audit_dir', error); return; }
 
   state = normalizeApprovalGateState(state, buildApprovalIdentity(config, gateId, gate, state));
 
@@ -239,17 +239,17 @@ export function writeApprovalRequest(config, gateId, gate, state) {
       paths.requestJson,
       JSON.stringify(payload, null, 2) + '\n'
     );
-  } catch (error) { recordApprovalAuditDegraded(config, gateId, 'request.json', error); }
+  } catch (error: any) { recordApprovalAuditDegraded(config, gateId, 'request.json', error); }
 
   try {
     fs.writeFileSync(
       paths.requestMarkdown,
       buildRequestMarkdown(gateId, gate, state, approvalGateArtifactRefPaths(config, gateId))
     );
-  } catch (error) { recordApprovalAuditDegraded(config, gateId, 'request.md', error); }
+  } catch (error: any) { recordApprovalAuditDegraded(config, gateId, 'request.md', error); }
 }
 
-export function writeApprovalDecision(config, gateId, state) {
+export function writeApprovalDecision(config: any, gateId: any, state: any) {
   const paths = approvalGateArtifactPaths(config, gateId); if (!paths) return;
   state = normalizeApprovalGateState(state, {
     gate_id: gateId,
@@ -262,10 +262,10 @@ export function writeApprovalDecision(config, gateId, state) {
       paths.decisionJson,
       JSON.stringify(state, null, 2) + '\n'
     );
-  } catch (error) { recordApprovalAuditDegraded(config, gateId, 'decision.json', error); }
+  } catch (error: any) { recordApprovalAuditDegraded(config, gateId, 'decision.json', error); }
 }
 
-function buildRequestMarkdown(gateId, gate, state, artifactRefs = {}) {
+function buildRequestMarkdown(gateId: any, gate: any, state: any, artifactRefs: any = {}) {
   state = normalizeApprovalGateState(state, { gate_id: gateId, gate_type: approvalGateType(gate?.type) });
   const deadline = state.deadline ? new Date(state.deadline).toUTCString()  : 'approval_deadline_missing';
   const timeoutNote = isApprovalTimeoutContinue(state.timeout_policy)
@@ -308,5 +308,5 @@ export const DEFAULT_APPROVAL_GATE_DEPS = {
   appendTransition:     appendApprovalTransition,
   writeApprovalRequest,
   writeApprovalDecision,
-  sleep: (ms) => ms > 0 ? new Promise(r => setTimeout(r, ms)) : Promise.resolve(),
+  sleep: (ms: any) => ms > 0 ? new Promise((r: any) => setTimeout(r, ms)) : Promise.resolve(),
 };

@@ -49,7 +49,7 @@ export class BudgetExhaustedError extends Error {
     this.code = 'BUDGET_EXHAUSTED';
     this.deadlineMs = Number.isFinite(details.deadlineMs) ? details.deadlineMs as number : null;
     this.remainingMs = Number.isFinite(details.remainingMs) ? details.remainingMs as number : 0;
-    this.reason = selectDefinedValue(() => (textValue(details.reason)), () => (DEFAULT_BUDGET_REASON));
+    this.reason = textValue(details.reason) ?? DEFAULT_BUDGET_REASON;
   }
 }
 
@@ -64,7 +64,7 @@ function nonNegativeMs(value: unknown): number {
   return Math.max(0, Number.isFinite(parsed) ? parsed : 0);
 }
 
-function abortError(signal: AbortSignal | null | undefined) {
+export function abortSignalError(signal: AbortSignal | null | undefined) {
   const reason = signal?.reason;
   if (reason instanceof Error) return reason;
   const err = new Error(reason ? String(reason) : 'Operation aborted') as Error & { code?: string };
@@ -94,8 +94,8 @@ export function isBudgetExhaustedError(error: unknown) {
 export function createBudget(input: BudgetInput = {}): TimeBudget {
   let deadlineMs = toDeadlineMs(input);
   const controller = new AbortController();
-  const upstream = selectTruthyValue(() => (input.signal), () => (null));
-  const label = selectDefinedValue(() => (textValue(input.label)), () => (DEFAULT_BUDGET_LABEL));
+  const upstream = input.signal ?? null;
+  const label = textValue(input.label) ?? DEFAULT_BUDGET_LABEL;
   const extensions: Array<{ ms: number; reason: string; at: string }> = [];
   let deadlineTimer: ReturnType<typeof setTimeout> | null = null;
   let upstreamAbortHandler: (() => void) | null = null;
@@ -121,7 +121,7 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
   }
 
   function removeUpstreamAbortListener() {
-    if (selectTruthyValue(() => (!upstream), () => (!upstreamAbortHandler))) return;
+    if (!upstream || !upstreamAbortHandler) return;
     upstream.removeEventListener('abort', upstreamAbortHandler);
     upstreamAbortHandler = null;
   }
@@ -137,14 +137,14 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
   }
 
   if (upstream) {
-    if (upstream.aborted) controller.abort(abortError(upstream));
+    if (upstream.aborted) controller.abort(abortSignalError(upstream));
     else {
       upstreamAbortHandler = () => {
         if (controller.signal.aborted) return;
         if (deadlineTimer) clearTimeout(deadlineTimer);
         deadlineTimer = null;
         removeUpstreamAbortListener();
-        controller.abort(abortError(upstream));
+        controller.abort(abortSignalError(upstream));
       };
       upstream.addEventListener('abort', upstreamAbortHandler, { once: true });
     }
@@ -156,7 +156,7 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
     get extensions() { return extensions.slice(); },
     remainingMs,
     throwIfExhausted(reason = 'budget_exhausted') {
-      if (controller.signal.aborted) throw abortError(controller.signal);
+      if (controller.signal.aborted) throw abortSignalError(controller.signal);
       if (remainingMs() <= 0) {
         const error = exhaustedError(reason);
         abortIfNeeded(reason);
@@ -164,7 +164,7 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
       }
     },
     extend(ms: number, meta: BudgetExtensionMeta = {}) {
-      if (selectTruthyValue(() => (meta.authorized !== true), () => (!meta.reason))) {
+      if (meta.authorized !== true || !meta.reason) {
         throw new TypeError('Budget extension requires explicit authorization and reason');
       }
       const extensionMs = nonNegativeMs(ms);
@@ -177,7 +177,7 @@ export function createBudget(input: BudgetInput = {}): TimeBudget {
       const bufferMs = nonNegativeMs(meta.bufferMs);
       return budget.extend(nonNegativeMs(cooldownMs) + bufferMs, {
         authorized: true,
-        reason: selectDefinedValue(() => (textValue(meta.reason)), () => (RATE_LIMIT_COOLDOWN_REASON)),
+        reason: textValue(meta.reason) ?? RATE_LIMIT_COOLDOWN_REASON,
       });
     },
     async sleep(ms: number) {
@@ -198,7 +198,7 @@ export function sleep(ms: number, options: { budget?: TimeBudget | null; signal?
   const signals = [options.signal, budget?.signal].filter(Boolean) as AbortSignal[];
 
   for (const signal of signals) {
-    if (signal.aborted) return Promise.reject(abortError(signal));
+    if (signal.aborted) return Promise.reject(abortSignalError(signal));
   }
   try {
     budget?.throwIfExhausted?.();
@@ -223,7 +223,7 @@ export function sleep(ms: number, options: { budget?: TimeBudget | null; signal?
       cleanup();
       fn(value);
     };
-    const onAbort = (event: Event) => finish(reject, abortError(event?.target as AbortSignal | null));
+    const onAbort = (event: Event) => finish(reject, abortSignalError(event?.target as AbortSignal | null));
 
     for (const signal of signals) signal.addEventListener('abort', onAbort, { once: true });
     timer = setTimeout(() => {

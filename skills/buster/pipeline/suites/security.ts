@@ -15,6 +15,7 @@ import {
 } from '../services/verdict-schema.ts';
 import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 import { buildLocalhostSuiteUrl } from './url-paths.ts';
+import { createSuiteLog } from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;
@@ -36,6 +37,23 @@ interface HeaderCheck {
   name: string;
   severity: Finding['severity'];
   check: (headers: Headers, config: AnyRecord) => HeaderIssue | null;
+}
+
+interface SecuritySettings {
+  config: AnyRecord;
+  port: number;
+  paths: string[];
+  urls: Array<{ path: string; url: string }>;
+  checkCors: boolean;
+  thresholds: AnyRecord | null;
+  timeoutMs: number;
+}
+
+interface PathScanResult {
+  findings: Finding[];
+  totalChecks: number;
+  failedChecks: number;
+  metadata: AnyRecord;
 }
 
 const DEFAULTS = {
@@ -111,10 +129,7 @@ const HEADER_CHECKS: HeaderCheck[] = [
 ];
 
 function createLog(logSink: LogSink | null | undefined): (msg: string) => void {
-  return (msg: string): void => {
-    console.log(`[SUITE] [SECURITY] ${msg}`);
-    if (logSink) logSink({ suite: 'security', msg });
-  };
+  return createSuiteLog('security', 'SECURITY', logSink);
 }
 
 function errorMessage(error: unknown): string {
@@ -132,24 +147,24 @@ function requireObject(value: unknown, field: string): AnyRecord {
 }
 
 function requireNonEmptyString(value: unknown, field: string): string {
-  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${field}: required non-empty string`);
+  if (typeof value !== 'string' || !value.trim()) throw new Error(`${field}: required non-empty string`);
   return value.trim();
 }
 
 function requirePort(value: unknown, field: string): number {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!Number.isInteger(value)), () => (value < 1))), () => (value > 65535))) throw new Error(`${field}: required integer port`);
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 1 || value > 65535) throw new Error(`${field}: required integer port`);
   return value;
 }
 
 function requireStringArray(value: unknown, field: string): string[] {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!Array.isArray(value)), () => (value.length === 0))), () => (value.some((entry) => selectTruthyValue(() => (typeof entry !== 'string'), () => (!entry.trim())))))) {
+  if (!Array.isArray(value) || value.length === 0 || value.some((entry: unknown) => typeof entry !== 'string' || !entry.trim())) {
     throw new Error(`${field}: required non-empty string array`);
   }
-  return value.map((entry) => entry.trim());
+  return value.map((entry: string) => entry.trim());
 }
 
 function requireNonNegativeInteger(value: unknown, field: string): number {
-  if (selectTruthyValue(() => (!Number.isInteger(value)), () => (value < 0))) throw new Error(`${field}: required non-negative integer`);
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) throw new Error(`${field}: required non-negative integer`);
   return value;
 }
 
@@ -171,7 +186,8 @@ function checkCookies(headers: Headers): { findings: Finding[]; cookieCount: num
 
   for (const cookie of cookies) {
     const parts = cookie.toLowerCase();
-    const name = selectTruthyValue(() => (cookie.split('=')[0]?.trim()), () => ('missing_cookie_name'));
+    const parsedName = cookie.split('=')[0]?.trim();
+    const name = parsedName ? parsedName : 'missing_cookie_name';
     if (!parts.includes('httponly')) findings.push(createFinding(SEVERITY.SERIOUS, `Cookie "${name}" missing HttpOnly flag`, { rule: 'cookie-httponly', element: name }));
     if (!parts.includes('secure')) findings.push(createFinding(SEVERITY.SERIOUS, `Cookie "${name}" missing Secure flag`, { rule: 'cookie-secure', element: name }));
     if (!parts.includes('samesite')) findings.push(createFinding(SEVERITY.MODERATE, `Cookie "${name}" missing SameSite attribute`, { rule: 'cookie-samesite', element: name }));
@@ -187,130 +203,102 @@ function checkCors(headers: Headers): Finding | null {
   return null;
 }
 
+function resolveSecuritySettings(context: SecurityContext): SecuritySettings {
+  const serve = requireObject(context.config?.serve, 'test_config.serve');
+  const config = requireObject(context.config?.security, 'test_config.security');
+  requireNonEmptyString(serve.type, 'test_config.serve.type');
+  const port = requirePort(serve.port, 'test_config.serve.port');
+  const paths = requireStringArray(config.paths, 'test_config.security.paths');
+  const thresholds = config.thresholds == null ? null : requireObject(config.thresholds, 'test_config.security.thresholds');
+  const timeoutMs = config.timeout_ms === undefined ? DEFAULTS.timeout_ms : requireNonNegativeInteger(config.timeout_ms, 'test_config.security.timeout_ms');
+  const urls = paths.map((urlPath) => ({ path: urlPath, url: buildLocalhostSuiteUrl(port, urlPath, 'security.paths[]') }));
+  return { config, port, paths, urls, checkCors: config.check_cors !== false, thresholds, timeoutMs };
+}
+
+function inspectHeaders(headers: Headers, urlPath: string, settings: SecuritySettings): Omit<PathScanResult, 'metadata'> {
+  const findings: Finding[] = [];
+  let totalChecks = 0;
+  let failedChecks = 0;
+  for (const check of HEADER_CHECKS) {
+    totalChecks += 1;
+    const issue = check.check(headers, settings.config);
+    if (!issue) continue;
+    failedChecks += 1;
+    if (findings.length < DEFAULTS.max_findings) findings.push(createFinding(check.severity, `${urlPath}: ${issue.message}`, { rule: issue.rule, element: urlPath }));
+  }
+  const cookies = checkCookies(headers);
+  totalChecks += cookies.cookieCount;
+  failedChecks += cookies.findings.length;
+  findings.push(...cookies.findings.slice(0, Math.max(0, DEFAULTS.max_findings - findings.length)));
+  if (settings.checkCors) {
+    totalChecks += 1;
+    const issue = checkCors(headers);
+    if (issue) {
+      failedChecks += 1;
+      if (findings.length < DEFAULTS.max_findings) findings.push(issue);
+    }
+  }
+  return { findings, totalChecks, failedChecks };
+}
+
+async function scanSecurityPath(urlPath: string, url: string, settings: SecuritySettings, log: (message: string) => void): Promise<PathScanResult> {
+  log(`  Scanning ${url}`);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), settings.timeoutMs);
+  try {
+    const response = await fetch(url, { signal: controller.signal, headers: { Accept: 'text/html, application/json, */*' } });
+    const result = inspectHeaders(response.headers, urlPath, settings);
+    const metadata = {
+      path: urlPath, status: response.status, issues: result.findings.length,
+      headers_present: HEADER_CHECKS.filter((check) => response.headers.get(check.name)).map((check) => check.name),
+    };
+    log(`  ${result.findings.length === 0 ? '✅' : '⚠️'} ${urlPath}: ${result.findings.length} issue(s)`);
+    return { ...result, metadata };
+  } catch (error: any) {
+    const message = error?.name === 'AbortError' ? `Timeout after ${settings.timeoutMs}ms` : errorMessage(error);
+    log(`  ❌ ${url}: ${message}`);
+    return {
+      findings: [createFinding(SEVERITY.CRITICAL, `Cannot reach ${url}: ${message}`, { rule: 'connection', element: urlPath })],
+      totalChecks: 1, failedChecks: 1, metadata: { path: urlPath, error: message },
+    };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function securityConfigError(startTime: number, error: unknown): SuiteVerdict {
+  const message = errorMessage(error);
+  return createSuiteVerdict('security', STATUS.ERROR, {
+    critical: false, duration_ms: Date.now() - startTime, error: message,
+    findings: [createFinding(SEVERITY.CRITICAL, message, { rule: 'security-config' })],
+  });
+}
+
 export default async function securitySuite(context: SecurityContext): Promise<SuiteVerdict> {
   const log = createLog(context.logSink);
   const startTime = Date.now();
-  let serve: AnyRecord;
-  let secConf: AnyRecord;
-  let type: string;
-  let port: number;
-  let paths: string[];
-  let checkCorsEnabled: boolean;
-  let thresholds: AnyRecord | null;
-  let enforced: boolean;
-  let timeoutMs: number;
+  let settings: SecuritySettings;
   try {
-    serve = requireObject(context.config?.serve, 'test_config.serve');
-    secConf = requireObject(context.config?.security, 'test_config.security');
-    type = requireNonEmptyString(serve.type, 'test_config.serve.type');
-    port = requirePort(serve.port, 'test_config.serve.port');
-    paths = requireStringArray(secConf.paths, 'test_config.security.paths');
-    checkCorsEnabled = secConf.check_cors !== false;
-    thresholds = selectTruthyValue(() => (secConf.thresholds === undefined), () => (secConf.thresholds === null))
-      ? null
-      : requireObject(secConf.thresholds, 'test_config.security.thresholds');
-    enforced = thresholds !== null;
-    timeoutMs = secConf.timeout_ms === undefined
-      ? DEFAULTS.timeout_ms
-      : requireNonNegativeInteger(secConf.timeout_ms, 'test_config.security.timeout_ms');
+    settings = resolveSecuritySettings(context);
   } catch (error) {
-    const message = errorMessage(error);
-    return createSuiteVerdict('security', STATUS.ERROR, {
-      critical: false,
-      duration_ms: Date.now() - startTime,
-      error: message,
-      findings: [createFinding(SEVERITY.CRITICAL, message, { rule: 'security-config' })],
-    });
+    return securityConfigError(startTime, error);
   }
+  const enforced = settings.thresholds !== null;
   const mode = evidenceMode(enforced);
-
-  let urls: Array<{ path: string; url: string }>;
-  try {
-    urls = paths.map((urlPath) => ({ path: urlPath, url: buildLocalhostSuiteUrl(port, urlPath, 'security.paths[]') }));
-  } catch (error) {
-    const message = errorMessage(error);
-    return createSuiteVerdict('security', STATUS.ERROR, {
-      critical: false,
-      duration_ms: Date.now() - startTime,
-      error: message,
-      findings: [createFinding(SEVERITY.CRITICAL, message, { rule: 'security-path' })],
-    });
-  }
-
-  log(`Checking ${urls.length} path(s) on http://localhost:${port} (mode: ${mode})`);
-
+  log(`Checking ${settings.urls.length} path(s) on http://localhost:${settings.port} (mode: ${mode})`);
   const allFindings: Finding[] = [];
   let totalChecks = 0;
   let failedChecks = 0;
   const pathResults: AnyRecord[] = [];
-
-  for (const { path: urlPath, url } of urls) {
-    log(`  Scanning ${url}`);
-
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-    let headers: Headers;
-    let status: number;
-    try {
-      const res = await fetch(url, { signal: controller.signal, headers: { Accept: 'text/html, application/json, */*' } });
-      headers = res.headers;
-      status = res.status;
-    } catch (error: any) {
-      clearTimeout(timer);
-      const msg = error?.name === 'AbortError' ? `Timeout after ${timeoutMs}ms` : errorMessage(error);
-      log(`  ❌ ${url}: ${msg}`);
-      allFindings.push(createFinding(SEVERITY.CRITICAL, `Cannot reach ${url}: ${msg}`, { rule: 'connection', element: urlPath }));
-      failedChecks++;
-      totalChecks++;
-      pathResults.push({ path: urlPath, error: msg });
-      continue;
-    } finally {
-      clearTimeout(timer);
-    }
-
-    const pathFindings: Finding[] = [];
-    for (const check of HEADER_CHECKS) {
-      totalChecks++;
-      const issue = check.check(headers, secConf);
-      if (issue) {
-        failedChecks++;
-        if (allFindings.length + pathFindings.length < DEFAULTS.max_findings) {
-          pathFindings.push(createFinding(check.severity, `${urlPath}: ${issue.message}`, { rule: issue.rule, element: urlPath }));
-        }
-      }
-    }
-
-    const { findings: cookieFindings, cookieCount } = checkCookies(headers);
-    totalChecks += cookieCount > 0 ? cookieCount : 0;
-    for (const finding of cookieFindings) {
-      failedChecks++;
-      if (allFindings.length + pathFindings.length < DEFAULTS.max_findings) pathFindings.push(finding);
-    }
-
-    if (checkCorsEnabled) {
-      totalChecks++;
-      const corsIssue = checkCors(headers);
-      if (corsIssue) {
-        failedChecks++;
-        if (allFindings.length + pathFindings.length < DEFAULTS.max_findings) pathFindings.push(corsIssue);
-      }
-    }
-
-    allFindings.push(...pathFindings);
-    pathResults.push({
-      path: urlPath,
-      status,
-      issues: pathFindings.length,
-      headers_present: HEADER_CHECKS.filter((check) => headers.get(check.name)).map((check) => check.name),
-    });
-
-    const icon = pathFindings.length === 0 ? '✅' : '⚠️';
-    log(`  ${icon} ${urlPath}: ${pathFindings.length} issue(s)`);
+  for (const { path: urlPath, url } of settings.urls) {
+    const result = await scanSecurityPath(urlPath, url, settings, log);
+    allFindings.push(...result.findings.slice(0, Math.max(0, DEFAULTS.max_findings - allFindings.length)));
+    totalChecks += result.totalChecks;
+    failedChecks += result.failedChecks;
+    pathResults.push(result.metadata);
   }
-
   let suiteStatus: SuiteStatus = STATUS.PASS;
-  if (enforced && thresholds && failedChecks > requireNonNegativeInteger(thresholds.max_missing_headers, 'test_config.security.thresholds.max_missing_headers')) suiteStatus = STATUS.FAIL;
+  if (settings.thresholds && failedChecks > requireNonNegativeInteger(settings.thresholds.max_missing_headers, 'test_config.security.thresholds.max_missing_headers')) suiteStatus = STATUS.FAIL;
 
   const passedChecks = totalChecks - failedChecks;
   const duration_ms = Date.now() - startTime;
@@ -325,11 +313,11 @@ export default async function securitySuite(context: SecurityContext): Promise<S
     checks_failed: failedChecks,
     findings: allFindings,
     metadata: {
-      paths_checked: paths,
+      paths_checked: settings.paths,
       path_results: pathResults,
       mode,
-      check_cors: checkCorsEnabled,
-      ...(enforced ? { thresholds } : {}),
+      check_cors: settings.checkCors,
+      ...(enforced ? { thresholds: settings.thresholds } : {}),
     },
   });
 }

@@ -55,6 +55,31 @@ function statusDetail(statusResult: any) {
   );
 }
 
+function parsedSessionState(active: boolean, state: string, detail: string | null, statusResult: any) {
+  return {
+    active,
+    state,
+    detail,
+    rateLimited: !active && isErrorSessionState(state) && statusRateLimited(statusResult),
+  };
+}
+
+function parseStatusText(statusText: string, detail: string | null, statusResult: any) {
+  const failure = statusText.match(/\b(error|failed|failure|errored|aborted|cancelled|canceled)\b/i);
+  if (failure) return parsedSessionState(false, normalizeSessionState(failure[1]), detail, statusResult);
+  if (/\bclosed\b/i.test(statusText)) return parsedSessionState(false, 'closed', detail, statusResult);
+  if (/Tasks:\s*\d+\s+active\b/i.test(statusText)) return parsedSessionState(true, 'running', detail, statusResult);
+  if (/Tasks:\s*(?:\d+\s+)?(?:latest\s+)?(?:succeeded|completed|finished)\b/i.test(statusText)) {
+    return parsedSessionState(false, 'completed', detail, statusResult);
+  }
+  if (/Tasks:\s*(?:\d+\s+)?(?:(?:latest|recent)\s+)?(?:failed|failure|errored|aborted|cancelled|canceled)\b/i.test(statusText)) {
+    return parsedSessionState(false, 'error', detail, statusResult);
+  }
+  if (/Queue:\s*running/i.test(statusText)) return parsedSessionState(true, 'running', detail, statusResult);
+  if (/Queue:\s*(?:collect|steer)\b/i.test(statusText)) return parsedSessionState(false, 'idle', detail, statusResult);
+  return parsedSessionState(false, `status_unparsed (${statusText.slice(0, 80)})`, detail, statusResult);
+}
+
 export function parseSessionState(statusResult: any) {
   if (!statusResult) return { active: false, state: 'status_missing' };
 
@@ -63,27 +88,11 @@ export function parseSessionState(statusResult: any) {
   if (acpState) {
     const active = /^(running|creating|cancelling)$/i.test(acpState);
     const state = normalizeSessionState(acpState);
-    return { active, state, detail, rateLimited: !active && isErrorSessionState(state) && statusRateLimited(statusResult) };
+    return parsedSessionState(active, state, detail, statusResult);
   }
 
   const statusText = selectDefinedValue(() => (selectDefinedValue(() => (statusResult?.statusText), () => (statusResult?.raw))), () => (''));
-  if (statusText) {
-    if (/\b(error|failed|failure|errored|aborted|cancelled|canceled)\b/i.test(statusText)) {
-      const m = statusText.match(/\b(error|failed|failure|errored|aborted|cancelled|canceled)\b/i);
-      const matchedState = m?.[1]?.toLowerCase();
-      const state = matchedState ? normalizeSessionState(matchedState) : 'status_missing';
-      return { active: false, state, detail, rateLimited: isErrorSessionState(state) && statusRateLimited(statusResult) };
-    }
-    if (/\bclosed\b/i.test(statusText)) {
-      return { active: false, state: 'closed', detail, rateLimited: false };
-    }
-    if (/Tasks:\s*\d+\s+active\b/i.test(statusText)) return { active: true, state: 'running', detail, rateLimited: false };
-    if (/Tasks:\s*(?:\d+\s+)?(?:latest\s+)?(?:succeeded|completed|finished)\b/i.test(statusText)) return { active: false, state: 'completed', detail, rateLimited: false };
-    if (/Tasks:\s*(?:\d+\s+)?(?:(?:latest|recent)\s+)?(?:failed|failure|errored|aborted|cancelled|canceled)\b/i.test(statusText)) return { active: false, state: 'error', detail, rateLimited: statusRateLimited(statusResult) };
-    if (/Queue:\s*running/i.test(statusText)) return { active: true, state: 'running', detail, rateLimited: false };
-    if (/Queue:\s*(?:collect|steer)\b/i.test(statusText)) return { active: false, state: 'idle', detail, rateLimited: false };
-    return { active: false, state: `status_unparsed (${statusText.slice(0, 80)})`, detail, rateLimited: false };
-  }
+  if (statusText) return parseStatusText(String(statusText), detail, statusResult);
 
   return { active: false, state: 'status_missing', detail, rateLimited: false };
 }

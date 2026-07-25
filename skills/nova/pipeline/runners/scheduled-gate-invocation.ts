@@ -1,12 +1,12 @@
 
 import { buildPluginInvocationEnvelope, createPluginContext } from '../core/context.ts';
-import { requireStageHandler } from '../core/registry.ts';
+import { requireStageHandler } from '../core/registry-access.ts';
 import { ensurePipelineRunLogDir } from '../core/paths.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-function requireNonEmptyString(value, label) {
+function requireNonEmptyString(value: any, label: any) {
   if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) {
-    const messages = {
+    const messages: Record<string, string> = {
       stageId: 'scheduled gate invocation requires explicit stageId',
       gateId: 'scheduled gate invocation requires explicit gateId',
       runId: 'scheduled gate invocation requires explicit runId',
@@ -17,7 +17,7 @@ function requireNonEmptyString(value, label) {
   return value.trim();
 }
 
-function requirePositiveAttempt(value) {
+function requirePositiveAttempt(value: any) {
   const attempt = Number(value);
   if (selectTruthyValue(() => (!Number.isFinite(attempt)), () => (attempt < 1))) {
     throw new Error('scheduled gate invocation requires explicit positive attempt');
@@ -25,21 +25,21 @@ function requirePositiveAttempt(value) {
   return attempt;
 }
 
-function assertOptionalIdentityMatch(actual, expected, message) {
+function assertOptionalIdentityMatch(actual: any, expected: any, message: any) {
   if (actual == null) return;
   if (actual !== expected) {
     throw new Error(message);
   }
 }
 
-function assertOptionalAttemptMatch(actual, expected) {
+function assertOptionalAttemptMatch(actual: any, expected: any) {
   if (actual == null) return;
   if (Number(actual) !== expected) {
     throw new Error('scheduled gate invocation plugin attempt must match gate input ids.attempt');
   }
 }
 
-export function ensureScheduledGatePluginLogDirs(config) {
+export function ensureScheduledGatePluginLogDirs(config: any) {
   ensurePipelineRunLogDir(config);
 }
 
@@ -48,7 +48,7 @@ export function assertScheduledGateInvocationIdentity({
   gateId,
   gateInput,
   pluginInvocation,
-}) {
+}: any) {
   const ids = selectDefinedValue(() => (gateInput?.ids), () => ({}));
   const explicitStageId = requireNonEmptyString(stageId, 'stageId');
   const explicitGateId = requireNonEmptyString(gateId, 'gateId');
@@ -82,7 +82,7 @@ export async function runScheduledGateInvocation({
   stageId,
   gateInput,
   pluginInvocation,
-}) {
+}: any) {
   const identity = assertScheduledGateInvocationIdentity({
     stageId,
     gateId,
@@ -113,4 +113,18 @@ export async function runScheduledGateInvocation({
   );
 
   return { rawResult, pluginContext, record, identity };
+}
+
+export async function runScheduledGateControlInvocation({ normalizeControlResult, ...invocation }: any) {
+  const { rawResult, record } = await runScheduledGateInvocation(invocation);
+  const normalizeBase = {
+    input: invocation.gateInput,
+    stageId: invocation.stageId,
+    moduleId: selectTruthyValue(() => (record?.manifest?.moduleId), () => (null)),
+    pluginInvocation: invocation.pluginInvocation,
+  };
+  return {
+    controlResult: normalizeControlResult(rawResult, normalizeBase),
+    normalizeResult: (result: any, options: any = {}) => normalizeControlResult(result, { ...normalizeBase, ...options }),
+  };
 }

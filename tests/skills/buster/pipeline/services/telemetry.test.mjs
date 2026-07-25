@@ -115,7 +115,7 @@ test('payload fields cannot override canonical telemetry envelope fields', async
   assert.equal(artifactEvent.seq, 1);
   assert.equal(artifactEvent.source, 'buster');
   assert.equal(artifactEvent.producer, 'buster/pipeline/services/telemetry.test');
-  assert.equal(artifactEvent.module_id, 'payload-module');
+  assert.equal(artifactEvent.module_id, 'module-a');
   assert.deepEqual(redisEvent, artifactEvent);
 });
 

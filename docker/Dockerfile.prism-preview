@@ -1,19 +1,17 @@
 # =============================================================================
 # KubeClaw Prism Preview — Lightweight static file server for design previews
 # =============================================================================
-# Serves HTML previews from /designs via `serve` on port 3456.
+# Serves HTML previews from /designs via nginx on port 3456.
 # Used as sidecar in the Nova pod — mounts workspace/prism/designs.
 #
 # Build:  docker build -f docker/Dockerfile.prism-preview -t ghcr.io/datrab/kubeclaw-prism-preview:latest .
 # Run:    docker run -p 3456:3456 -v ./designs:/designs ghcr.io/datrab/kubeclaw-prism-preview:latest
 # =============================================================================
-FROM docker.io/library/node:20-alpine
+FROM docker.io/library/nginx:1.29-alpine
 
-RUN npm install -g serve && npm cache clean --force
+COPY docker/prism-preview.nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3456
 
-# Ensure /designs exists (empty is fine — serve handles it gracefully)
+# Ensure /designs exists (empty is fine — nginx lists the directory).
 RUN mkdir -p /designs
-
-CMD ["serve", "/designs", "-p", "3456", "--no-clipboard"]

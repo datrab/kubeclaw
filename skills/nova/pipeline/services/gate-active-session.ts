@@ -3,6 +3,7 @@ import path from 'path';
 import { gateActiveSessionPath } from '../core/paths.ts';
 import { log } from '../core/logger.ts';
 import { loadLifecycleReadModels } from './status-store-lifecycle.ts';
+import { inspectContendedLock, requireConfiguredNumber as requireNumber, sleepSync, writeJsonAtomic } from './file-lock-primitives.ts';
 import {
   buildActiveSessionConfirmation,
   hasStrongActiveSessionIdentity,
@@ -10,32 +11,14 @@ import {
 } from './session-authority.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-export const GATE_ACTIVE_SESSION_EVIDENCE_ROLES = Object.freeze({
+const GATE_ACTIVE_SESSION_EVIDENCE_ROLES = Object.freeze({
   LIFECYCLE_AUTHORITY: 'lifecycle_read_model_authority',
   RECOVERY_EVIDENCE: 'gate_active_session_recovery_evidence',
   RUNTIME_EVIDENCE: 'tracked_agent_runtime_evidence',
   ABSENT: 'absent',
 });
 
-function writeJsonAtomic(filePath, data) {
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  const tmpPath = `${filePath}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`;
-  try {
-    fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2) + '\n');
-    fs.renameSync(tmpPath, filePath);
-  } catch (error) {
-    try {
-      fs.unlinkSync(tmpPath);
-    } catch {}
-    throw error;
-  }
-}
-
-function sleepSync(ms) {
-  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
-}
-
-function errorMessage(error) {
+function errorMessage(error: any) {
   if (error && typeof error === 'object' && 'message' in error) {
     const message = error.message;
     if (typeof message === 'string' && message.trim()) return message;
@@ -43,25 +26,7 @@ function errorMessage(error) {
   return String(error);
 }
 
-function isProcessAlive(pid) {
-  if (!pid) return false;
-  try {
-    process.kill(Number(pid), 0);
-    return true;
-  } catch (error) {
-    return error?.code === 'EPERM';
-  }
-}
-
-function requireNumber(obj, field, label) {
-  const value = obj?.[field];
-  if (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))) {
-    throw new Error(`${label}.${field}: required number in swarm.config.json`);
-  }
-  return value;
-}
-
-function withGateActiveSessionMutationLock(config, activeSessionPath, fn, opts = {}) {
+function withGateActiveSessionMutationLock(config: any, activeSessionPath: any, fn: any, opts: any = {}) {
   const lockConfig = config?.locks?.gate_active_session;
   const staleMs = opts.staleMs
   const timeoutMs = opts.timeoutMs
@@ -78,26 +43,13 @@ function withGateActiveSessionMutationLock(config, activeSessionPath, fn, opts =
         acquired_at: new Date().toISOString(),
       }) + '\n');
       break;
-    } catch (error) {
+    } catch (error: any) {
       if (error?.code !== 'EEXIST') throw error;
-      let ageMs = 0;
-      try {
-        ageMs = Date.now() - fs.statSync(lockPath).mtimeMs;
-      } catch (statError) {
-        if (statError?.code === 'ENOENT') continue;
-        throw statError;
-      }
-      if (ageMs > staleMs) {
-        let owner = null;
-        try {
-          owner = JSON.parse(fs.readFileSync(path.join(lockPath, 'owner.json'), 'utf8'));
-        } catch {
-          owner = null;
-        }
-        if (!isProcessAlive(owner?.pid)) {
-          fs.rmSync(lockPath, { recursive: true, force: true });
-          continue;
-        }
+      const lockState = inspectContendedLock(lockPath, path.join(lockPath, 'owner.json'), staleMs);
+      if (lockState === 'missing') continue;
+      if (lockState === 'remove') {
+        fs.rmSync(lockPath, { recursive: true, force: true });
+        continue;
       }
       if (Date.now() - startedAt > timeoutMs) {
         throw new Error(`timed out waiting for gate active-session lock: ${lockPath}`);
@@ -114,27 +66,27 @@ function withGateActiveSessionMutationLock(config, activeSessionPath, fn, opts =
       if (owner?.token === ownerToken) {
         fs.rmSync(lockPath, { recursive: true, force: true });
       }
-    } catch {}
+    } catch { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */}
   }
 }
 
-function readJsonIfPresent(filePath) {
+function readJsonIfPresent(filePath: any) {
   if (selectTruthyValue(() => (!filePath), () => (!fs.existsSync(filePath)))) return { exists: false, data: null };
   try {
     return { exists: true, data: JSON.parse(fs.readFileSync(filePath, 'utf8')) };
-  } catch (error) {
+  } catch (error: any) {
     return { exists: true, data: null, parse_error: errorMessage(error) };
   }
 }
 
-function firstDefined(...values) {
+function firstDefined(...values: any) {
   for (const value of values) {
     if (value !== undefined && value !== null) return value;
   }
   return undefined;
 }
 
-function normalizeGateActiveSessionEntry(entry = null, gateId = null, { requireStrong = false } = {}) {
+function normalizeGateActiveSessionEntry(entry: any = null, gateId: any = null, { requireStrong = false }: any = {}) {
   if (selectTruthyValue(() => (!entry), () => (typeof entry !== 'object'))) return null;
   const identity = normalizeActiveSessionIdentity(entry);
   if (requireStrong && !hasStrongActiveSessionIdentity(identity)) return null;
@@ -154,7 +106,7 @@ function normalizeGateActiveSessionEntry(entry = null, gateId = null, { requireS
   };
 }
 
-function normalizeGateActiveSessionCleanupIdentity(identity = null) {
+function normalizeGateActiveSessionCleanupIdentity(identity: any = null) {
   if (selectTruthyValue(() => (!identity), () => (typeof identity !== 'object'))) return null;
   return normalizeActiveSessionIdentity({
     run_id: firstDefined(identity.run_id, identity.runId),
@@ -165,18 +117,18 @@ function normalizeGateActiveSessionCleanupIdentity(identity = null) {
   });
 }
 
-function hasGateRecoveryEvidence(policy, fileRead) {
+function hasGateRecoveryEvidence(policy: any, fileRead: any) {
   return Boolean(selectTruthyValue(() => (selectTruthyValue(() => (policy.recovery_identity), () => (policy.gate_active_session_file))), () => (fileRead.parse_error)));
 }
 
-function strongGateActiveSessionIdentityMatches(expectedIdentity = null, observedIdentity = null) {
+function strongGateActiveSessionIdentityMatches(expectedIdentity: any = null, observedIdentity: any = null) {
   const confirmation = buildActiveSessionConfirmation(selectDefinedValue(() => (expectedIdentity), () => ({})), selectDefinedValue(() => (observedIdentity), () => ({})));
   return confirmation.missing_expected_fields.length === 0
     && confirmation.missing_observed_fields.length === 0
     && confirmation.mismatched_fields.length === 0;
 }
 
-function getLifecycleGateActiveSession(config, gateId) {
+function getLifecycleGateActiveSession(config: any, gateId: any) {
   if (!gateId) return null;
   return normalizeGateActiveSessionEntry(
     selectTruthyValue(() => (loadLifecycleReadModels(config)?.active_sessions?.gates?.[gateId]), () => (null)),
@@ -190,39 +142,25 @@ export function buildGateActiveSessionRecoveryPolicy({
   lifecycleActiveSession = null,
   gateActiveSessionFile = null,
   trackedAgent = null,
-} = {}) {
+}: any = {}) {
   const lifecycleIdentity = normalizeGateActiveSessionEntry(lifecycleActiveSession, gateId, { requireStrong: true });
   const fileIdentity = normalizeGateActiveSessionEntry(gateActiveSessionFile, gateId, { requireStrong: true });
   const trackedIdentity = normalizeGateActiveSessionEntry(trackedAgent, gateId, { requireStrong: true });
   const hasLifecycleAuthority = hasStrongActiveSessionIdentity(selectDefinedValue(() => (lifecycleIdentity), () => ({})));
-  const fileConfirmation = hasLifecycleAuthority && fileIdentity
-    ? buildActiveSessionConfirmation(lifecycleIdentity, fileIdentity)
-    : null;
-  const trackedConfirmation = hasLifecycleAuthority && trackedIdentity
-    ? buildActiveSessionConfirmation(lifecycleIdentity, trackedIdentity)
-    : null;
+  const fileConfirmation = activeSessionConfirmation(hasLifecycleAuthority, lifecycleIdentity, fileIdentity);
+  const trackedConfirmation = activeSessionConfirmation(hasLifecycleAuthority, lifecycleIdentity, trackedIdentity);
   const fileConflicts = Boolean(fileConfirmation && fileConfirmation.confirmed !== true);
   const trackedConflicts = Boolean(trackedConfirmation && trackedConfirmation.confirmed !== true);
 
-  let code = 'no_gate_active_session_evidence';
-  if (hasLifecycleAuthority && fileConflicts) code = 'lifecycle_active_session_overrides_conflicting_gate_file';
-  else if (hasLifecycleAuthority) code = 'lifecycle_active_session_authoritative';
-  else if (fileIdentity) code = 'gate_active_session_file_diagnostic_only';
-  else if (trackedIdentity) code = 'tracked_agent_runtime_evidence_only';
+  const code = gateRecoveryCode({ hasLifecycleAuthority, fileConflicts, fileIdentity, trackedIdentity });
 
   return {
     code,
     gate_id: gateId,
     active_session_authority_source: hasLifecycleAuthority ? 'lifecycle_read_model' : null,
-    lifecycle_active_session_role: hasLifecycleAuthority
-      ? GATE_ACTIVE_SESSION_EVIDENCE_ROLES.LIFECYCLE_AUTHORITY
-      : GATE_ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT,
-    gate_active_session_file_role: fileIdentity
-      ? GATE_ACTIVE_SESSION_EVIDENCE_ROLES.RECOVERY_EVIDENCE
-      : GATE_ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT,
-    tracked_agent_role: trackedIdentity
-      ? GATE_ACTIVE_SESSION_EVIDENCE_ROLES.RUNTIME_EVIDENCE
-      : GATE_ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT,
+    lifecycle_active_session_role: evidenceRole(hasLifecycleAuthority, GATE_ACTIVE_SESSION_EVIDENCE_ROLES.LIFECYCLE_AUTHORITY),
+    gate_active_session_file_role: evidenceRole(fileIdentity, GATE_ACTIVE_SESSION_EVIDENCE_ROLES.RECOVERY_EVIDENCE),
+    tracked_agent_role: evidenceRole(trackedIdentity, GATE_ACTIVE_SESSION_EVIDENCE_ROLES.RUNTIME_EVIDENCE),
     allow_status_active_agent_authority: false,
     allow_gate_active_session_file_authority: false,
     allow_tracked_agent_authority: false,
@@ -239,7 +177,23 @@ export function buildGateActiveSessionRecoveryPolicy({
   };
 }
 
-export function resolveGateActiveSessionRecoveryEvidence(config, gateId, { trackedAgent = null } = {}) {
+function activeSessionConfirmation(hasAuthority: boolean, authority: any, candidate: any) {
+  return hasAuthority && candidate ? buildActiveSessionConfirmation(authority, candidate) : null;
+}
+
+function evidenceRole(present: any, role: string) {
+  return present ? role : GATE_ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT;
+}
+
+function gateRecoveryCode({ hasLifecycleAuthority, fileConflicts, fileIdentity, trackedIdentity }: any) {
+  if (hasLifecycleAuthority && fileConflicts) return 'lifecycle_active_session_overrides_conflicting_gate_file';
+  if (hasLifecycleAuthority) return 'lifecycle_active_session_authoritative';
+  if (fileIdentity) return 'gate_active_session_file_diagnostic_only';
+  if (trackedIdentity) return 'tracked_agent_runtime_evidence_only';
+  return 'no_gate_active_session_evidence';
+}
+
+export function resolveGateActiveSessionRecoveryEvidence(config: any, gateId: any, { trackedAgent = null }: any = {}) {
   const activeSessionPath = gateActiveSessionPath(config, gateId);
   const fileRead = readJsonIfPresent(activeSessionPath);
   const policy = buildGateActiveSessionRecoveryPolicy({
@@ -260,7 +214,7 @@ export function resolveGateActiveSessionRecoveryEvidence(config, gateId, { track
   };
 }
 
-export function persistGateActiveSession(config, gateId, label, entry, extra = {}) {
+export function persistGateActiveSession(config: any, gateId: any, label: any, entry: any, extra: any = {}) {
   const activeSessionPath = gateActiveSessionPath(config, gateId); if (!activeSessionPath) return false;
   const identity = normalizeActiveSessionIdentity({
     run_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (extra.run_id), () => (entry?.run_id))), () => (config?._runId))), () => (config?.run_id))), () => (null)),
@@ -296,7 +250,7 @@ export function persistGateActiveSession(config, gateId, label, entry, extra = {
   });
 }
 
-export function clearGateActiveSession(config, gateId, expectedIdentity = null) {
+export function clearGateActiveSession(config: any, gateId: any, expectedIdentity: any = null) {
   const activeSessionPath = gateActiveSessionPath(config, gateId); if (!activeSessionPath) return;
   const expected = normalizeGateActiveSessionCleanupIdentity(expectedIdentity);
   if (expectedIdentity && !hasStrongActiveSessionIdentity(expected)) {
@@ -316,7 +270,7 @@ export function clearGateActiveSession(config, gateId, expectedIdentity = null) 
     try {
       fs.unlinkSync(activeSessionPath);
       return true;
-    } catch (e) {
+    } catch (e: any) {
       if (e?.code !== 'ENOENT') log('DEBUG', `Failed to clear active gate session for ${gateId}: ${selectTruthyValue(() => (e?.message), () => (e))}`);
       return false;
     }

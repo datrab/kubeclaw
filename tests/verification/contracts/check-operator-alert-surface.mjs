@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-operator-alert-surface' });
 import fs from 'fs';
@@ -7,16 +8,8 @@ import assert from 'assert';
 import { pathToFileURL } from 'url';
 import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
 const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 
@@ -159,7 +152,11 @@ const moduleRunnerBusterPhaseSource = [
   path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts'),
 ].map((sourcePath) => fs.readFileSync(sourcePath, 'utf8')).join('\n');
 const pipelineRunnerSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner.ts'), 'utf8');
-const pipelineRunnerTerminalSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-terminal.ts'), 'utf8');
+const pipelineRunnerTerminalSource = [
+  'pipeline-runner-terminal.ts',
+  'pipeline-runner-terminal-halt.ts',
+  'pipeline-runner-terminal-results.ts',
+].map((fileName) => fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners', fileName), 'utf8')).join('\n');
 const telemetrySource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/telemetry.ts'), 'utf8');
 const observabilitySource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/observability.ts'), 'utf8');
 const telemetryDispatchSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/telemetry/dispatch.ts'), 'utf8');
@@ -169,9 +166,22 @@ const notificationDispatchSource = fs.readFileSync(path.join(sourceRoot, 'skills
 const discordIntegrationSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/integrations/discord.ts'), 'utf8');
 const discordFieldsContractSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/services/discord-fields-contract.ts'), 'utf8');
 const sinkContractSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/telemetry-sink-contract.ts'), 'utf8');
-const rateLimitSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit.ts'), 'utf8');
+const rateLimitWrapperSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/rate-limit.ts'), 'utf8');
+const rateLimitSource = [
+  'rate-limit.ts',
+  'rate-limit-handler.ts',
+  'rate-limit-processing.ts',
+  'rate-limit-exit.ts',
+  'rate-limit-exit-finalizer.ts',
+  'rate-limit-exit-gate.ts',
+  'rate-limit-exit-module.ts',
+  'rate-limit-exit-summary.ts',
+].map((fileName) => fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services', fileName), 'utf8')).join('\n');
 const pollingDualSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/polling-dual.ts'), 'utf8');
-const pollingSessionEndSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/polling-session-end.ts'), 'utf8');
+const pollingSessionEndSource = [
+  'polling-session-end.ts',
+  'polling-session-end-support.ts',
+].map((fileName) => fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services', fileName), 'utf8')).join('\n');
 const busterGateCompletionSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-completion.ts'), 'utf8');
 const pipelineRecoverySource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-recovery.ts'), 'utf8');
 const pipelineLockSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-lock.ts'), 'utf8');
@@ -181,7 +191,11 @@ assert.equal(
   true,
   'module-runner should route operator-only alerts through emitOperatorAlert',
 );
-assert.equal(`${pipelineRunnerSource}\n${pipelineRunnerTerminalSource}`.includes("emitOperatorAlert(ctx, 'pipeline.operator_alert'"), true, 'pipeline-runner should route terminal pipeline alerts through emitOperatorAlert');
+assert.match(
+  `${pipelineRunnerSource}\n${pipelineRunnerTerminalSource}`,
+  /emitOperatorAlert\((?:ctx|ctx\.telemetry), 'pipeline\.operator_alert'/,
+  'pipeline-runner should route terminal pipeline alerts through emitOperatorAlert',
+);
 assert.equal(telemetrySource.includes('operatorFallback'), false, 'telemetry spine must not keep a direct Discord fallback path');
 assert.equal(telemetrySource.includes('appendDurableOperatorAlert'), true, 'telemetry spine should write local durable operator alerts before sink dispatch');
 assert.equal(telemetrySource.includes('direct fallback path'), false, 'telemetry spine comments should avoid ambiguous direct fallback wording');
@@ -202,7 +216,7 @@ for (const filePath of listFiles(path.join(sourceRoot, 'skills/nova/pipeline'), 
   const missing = directDiscordCallsMissingCorrelation(fs.readFileSync(filePath, 'utf8'));
   assert.deepEqual(missing, [], `${relativePath} direct Discord identity fields require explicit structured correlation`);
 }
-assert.equal(rateLimitSource.includes('appendDurableRateLimitExhaustionAlert'), false, 'rate-limit main wrapper must not keep duplicate durable exhaustion alert logic');
+assert.equal(rateLimitWrapperSource.includes('appendDurableRateLimitExhaustionAlert'), false, 'rate-limit main wrapper must not keep duplicate durable exhaustion alert logic');
 assert.equal(rateLimitSource.includes('finalizeSessionRateLimitExhaustion'), true, 'rate-limit exhaustion should route through the central finalizer for durable terminal alert evidence');
 assert.equal(`${pollingDualSource}\n${busterGateCompletionSource}`.includes('completion_event_adapter_failed'), true, 'completion adapter fatal paths should keep explicit terminal reason');
 assert.equal(`${pollingDualSource}\n${busterGateCompletionSource}`.includes('appendDurableOperatorAlert'), true, 'completion adapter fatal/timeout paths should write durable terminal alert evidence');

@@ -74,7 +74,7 @@ test('appendStructuredEvent writes durable event ids to global and run-scoped st
   });
 
   assert.equal(result.ok, true);
-  assert.match(result.event.event_id, /^event-/);
+  assert.match(result.event.event_id, /^evt_[a-f0-9]{64}$/);
 
   const globalPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'pipeline.jsonl');
   const runPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', config._runId, 'pipeline.jsonl');

@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import fs from 'fs';
 import path from 'path';
 
@@ -10,24 +11,6 @@ const RUNTIME_ROOTS = [
 const CODE_FILE_RE = /\.(?:js|mjs|cjs|ts)$/;
 const SKIP_FILE_RE = /\.(?:d\.ts|test\.(?:js|mjs|cjs|ts)|spec\.(?:js|mjs|cjs|ts))$/;
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = {
-    sourceRoot: process.cwd(),
-    outDir: null,
-    markdownRowsPerCategory: 80,
-  };
-  for (let i = 0; i < argv.length; i += 1) {
-    const arg = argv[i];
-    if (arg === '--source-root') {
-      args.sourceRoot = path.resolve(argv[++i]);
-    } else if (arg === '--out-dir') {
-      args.outDir = path.resolve(argv[++i]);
-    } else if (arg === '--markdown-rows-per-category') {
-      args.markdownRowsPerCategory = Number(argv[++i]);
-    }
-  }
-  return args;
-}
 
 function walk(dir, out = []) {
   if (!fs.existsSync(dir)) return out;
@@ -251,7 +234,7 @@ function markdown(candidates, args) {
 }
 
 function main() {
-  const args = parseArgs();
+  const args = parseSourceRootArgs();
   const candidates = inventory(args.sourceRoot);
   const payload = {
     generated_at: new Date().toISOString(),

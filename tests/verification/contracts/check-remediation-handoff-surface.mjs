@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-remediation-handoff-surface' });
 import fs from 'fs';
@@ -5,16 +6,8 @@ import path from 'path';
 import assert from 'assert';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 
 const gateRunnerSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/gate-runner.ts'), 'utf8');
 const reviewGateSource = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/review-gate-runner.ts'), 'utf8');
@@ -58,7 +51,7 @@ assert.equal(engineSource.includes('createRemediationController'), true, 'shared
 assert.equal(engineSource.includes('buildExhaustedControlResult'), true, 'shared remediable gate engine should consume typed exhausted control results');
 assert.equal(engineSource.includes('buildExhaustedCompatibilityResult'), false, 'shared remediable gate engine must not consume exhausted compatibility results');
 assert.equal(engineSource.includes('fixOutcome.controlResult'), true, 'shared remediable gate engine should require terminal fix outcomes to return typed control results');
-assert.equal(engineSource.includes("fixOutcome?.mode === 're_evaluate'"), true, 'shared remediable gate engine should require explicit re_evaluate fix outcome mode before re-running the gate');
+assert.equal(engineSource.includes("fixOutcome?.mode !== 're_evaluate'"), true, 'shared remediable gate engine should reject every non-re_evaluate mode before re-running the gate');
 assert.equal(engineSource.includes('remediation outcome must use typed mode terminal, retry_request_fix, or re_evaluate'), true, 'shared remediable gate engine should reject legacy control-result-only fix outcomes');
 assert.equal(engineSource.includes('fixOutcomeDegraded:'), true, 'shared remediable gate engine should pass typed degraded fix outcome state to re-evaluation');
 assert.equal(remediationSource.includes("nextAction: 'request_fix'") && remediationSource.includes('validateGateRemediationControlResult'), true, 'shared remediation service should define and validate the request_fix control contract');

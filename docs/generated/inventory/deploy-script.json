@@ -215,6 +215,7 @@
     "wait_for_agent_rollout",
     "append_image_override_file",
     "append_code_bundle_override_file",
+    "yaml_trim_scalar",
     "yaml_get_section_key",
     "yaml_get_nested_section_key",
     "yaml_get_first_named_list_item",
@@ -266,12 +267,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 789,
-    "secrets": 833,
-    "tailscale": 892,
-    "infra": 983,
-    "agents": 1207,
-    "smoke": 1308,
-    "teardown": 1463
+    "setup": 782,
+    "secrets": 826,
+    "tailscale": 885,
+    "infra": 976,
+    "agents": 1200,
+    "smoke": 1301,
+    "teardown": 1456
   }
 }

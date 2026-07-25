@@ -1,24 +1,17 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-buster-operator-surface' });
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function countOccurrences(text, needle) {
   if (!needle) return 0;
   return text.split(needle).length - 1;
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const pipelineHelpersPath = path.join(sourceRoot, 'skills/buster/pipeline/services/pipeline-helpers.ts');
 const discordPath = path.join(sourceRoot, 'skills/buster/pipeline/services/discord.ts');
 const taskLifecyclePath = path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle.ts');

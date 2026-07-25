@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-redis-completion-service-surface' });
 import assert from 'assert';
@@ -7,15 +8,8 @@ import { pathToFileURL } from 'url';
 import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 import { resolveRedisCompletionPolicy } from '../../../skills/nova/pipeline/services/redis-completion-policy.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
 const redisCompletionPolicy = resolveRedisCompletionPolicy(expandSwarmConfig(compactSwarmConfig));
 const redisToolPath = path.join(sourceRoot, 'skills/nova/pipeline/tools/redis.ts');

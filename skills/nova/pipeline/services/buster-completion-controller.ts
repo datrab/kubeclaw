@@ -7,8 +7,12 @@ import { STATUS } from '../core/constants.ts';
 import { adjudicateCompletionEvidence } from './completion-adjudicator.ts';
 import { validateRedisCompletionEntry } from './redis-message-contract.ts';
 import { waitForAny, PipelineEventContractError } from './pipeline-event-contract.ts';
+import {
+  firstDefinedCompletionValue as firstDefined,
+  normalizeCompletionIdentityValue as normalizeValue,
+} from './completion-identity-values.ts';
 
-export const BUSTER_COMPLETION_EVENT_TYPES = Object.freeze([
+const BUSTER_COMPLETION_EVENT_TYPES = Object.freeze([
   'completion.evidence',
   'local.evidence.updated',
   'local.evidence.warning',
@@ -22,54 +26,42 @@ const SYSTEM_SOURCE = 'system';
 const LOCAL_FS_SOURCE = 'local_fs';
 const LOCAL_EVIDENCE_WARNING_REASON = 'local_evidence_warning';
 
-function normalizeValue(value) {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
-  return String(value);
-}
-
-function firstDefined(...values) {
-  for (const value of values) {
-    if (value !== undefined && value !== null) return value;
-  }
-  return null;
-}
-
-function completionTargetModuleId(rawEntry, targetKind, targetId) {
+function completionTargetModuleId(rawEntry: any, targetKind: any, targetId: any) {
   return normalizeValue(firstDefined(rawEntry.module_id, targetKind === 'module' ? targetId : null));
 }
 
-function completionTargetGateId(rawEntry, targetKind, targetId) {
+function completionTargetGateId(rawEntry: any, targetKind: any, targetId: any) {
   return normalizeValue(firstDefined(rawEntry.gate_id, targetKind === 'gate' ? targetId : null));
 }
 
-function completionTimestamp(rawEntry) {
+function completionTimestamp(rawEntry: any) {
   const timestamp = normalizeValue(firstDefined(rawEntry.timestamp, rawEntry.ts));
   if (!timestamp) throw new PipelineEventContractError('Redis completion entry requires timestamp', { field: 'timestamp' });
   return timestamp;
 }
 
-function completionBudgetTimeout(timeoutRemainingMs, budgetRemainingMs) {
+function completionBudgetTimeout(timeoutRemainingMs: any, budgetRemainingMs: any) {
   if (timeoutRemainingMs == null) return budgetRemainingMs;
   if (budgetRemainingMs == null) return timeoutRemainingMs;
   return Math.min(timeoutRemainingMs, budgetRemainingMs);
 }
 
-function safeRedisCompletionSource(source) {
+function safeRedisCompletionSource(source: any) {
   const normalizedSource = normalizeValue(source);
-  return ['buster-pipeline', 'buster-pipeline-task-queue', 'completion-conflict', 'completion-invalid', 'agent'].includes(normalizedSource)
+  return ['buster-pipeline', 'buster-pipeline-task-queue', 'completion-conflict', 'completion-invalid', 'agent'].includes(normalizedSource ?? '')
     ? normalizedSource
     : REDIS_COMPLETION_SOURCE_AGENT;
 }
 
-function objectRecord(value) {
+function objectRecord(value: any) {
   return value !== null && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
-export function buildCompletionEventEntry(rawEntry = {}, {
+function buildCompletionEventEntry(rawEntry: any = {}, {
   config = {},
   targetKind = 'module',
   targetId = null,
-} = {}) {
+}: any = {}) {
   const moduleId = completionTargetModuleId(rawEntry, targetKind, targetId);
   const gateId = completionTargetGateId(rawEntry, targetKind, targetId);
   return {
@@ -87,26 +79,25 @@ export function buildCompletionEventEntry(rawEntry = {}, {
     attempt: selectDefinedValue(() => (rawEntry.attempt), () => (null)),
     dispatch_id: normalizeValue(firstDefined(rawEntry.dispatch_id, rawEntry.dispatchId)),
     session_key: normalizeValue(firstDefined(rawEntry.session_key, rawEntry.sessionKey)),
-    source: safeRedisCompletionSource(rawEntry.source),
     timestamp: completionTimestamp(rawEntry),
     ...rawEntry,
     source: safeRedisCompletionSource(rawEntry.source),
   };
 }
 
-function defaultExpectedStatuses(targetKind) {
+function defaultExpectedStatuses(targetKind: any) {
   return targetKind === 'gate'
     ? [STATUS.PASS, STATUS.FAIL]
     : [STATUS.PASS, STATUS.FAIL, STATUS.BLOCKED];
 }
 
-function requireSignal(signal) {
+function requireSignal(signal: any) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!signal), () => (typeof signal.addEventListener !== 'function'))), () => (typeof signal.removeEventListener !== 'function'))) {
     throw new PipelineEventContractError('Buster completion controller requires an AbortSignal', { option: 'signal' });
   }
 }
 
-function buildInvalidCompletionEntry(entry = {}, validationErrors = []) {
+function buildInvalidCompletionEntry(entry: any = {}, validationErrors: any = []) {
   return {
     ...entry,
     status: STATUS.FAIL,
@@ -122,7 +113,7 @@ function buildInvalidCompletionEntry(entry = {}, validationErrors = []) {
   };
 }
 
-function eventRedisEntry(event = {}) {
+function eventRedisEntry(event: any = {}) {
   return selectTruthyValue(() => (event?.payload?.entry), () => (null));
 }
 
@@ -135,7 +126,7 @@ function buildRedisCompletionResult({
   localStatus = null,
   statusSource = 'local_evidence',
   event = null,
-}) {
+}: any) {
   const redisRecord = objectRecord(redisEntry);
   const validationErrors = validateRedisCompletionEntry(redisRecord);
   const effectiveRedisEntry = validationErrors.length > 0
@@ -153,32 +144,10 @@ function buildRedisCompletionResult({
     preferRedis: true,
   });
 
-  let reason = 'pending';
-  let resolved = false;
-
-  if (completion.completion_conflict) {
-    reason = 'completion_conflict';
-    resolved = true;
-  } else if (completion.terminalOwnedRateLimited) {
-    reason = 'terminal_owned_rate_limited';
-    resolved = true;
-  } else if (completion.rateLimited && !completion.targetReached) {
-    reason = 'rate_limited';
-    resolved = true;
-  } else if (completion.timeout) {
-    reason = 'timeout';
-    resolved = true;
-  } else if (completion.targetReached) {
-    reason = 'target_reached';
-    resolved = true;
-  } else if (completion.blocked) {
-    reason = 'blocked';
-    resolved = true;
-  }
+  const decision = redisCompletionDecision(completion);
 
   return {
-    resolved,
-    reason,
+    ...decision,
     source: 'redis',
     target_kind: targetKind,
     target_id: targetId,
@@ -190,28 +159,22 @@ function buildRedisCompletionResult({
   };
 }
 
-export async function resolveBusterCompletionEvent({
-  event,
-  targetKind = 'module',
-  targetId = null,
-  expectedStatuses = defaultExpectedStatuses(targetKind),
-  expectedIdentity = {},
-  localStatus = null,
-  statusSource = 'local_evidence',
-  resolveLocalEvidence = null,
-} = {}) {
-  if (event?.type === 'fatal.error') {
-    return {
-      resolved: true,
-      reason: 'fatal_error',
-      source: selectDefinedValue(() => (normalizeValue(event.source)), () => (SYSTEM_SOURCE)),
-      target_kind: targetKind,
-      target_id: targetId,
-      event,
-      error: objectRecord(event.payload),
-    };
-  }
+function redisCompletionDecision(completion: any) {
+  if (completion.completion_conflict) return { resolved: true, reason: 'completion_conflict' };
+  if (completion.terminalOwnedRateLimited) return { resolved: true, reason: 'terminal_owned_rate_limited' };
+  if (completion.rateLimited && !completion.targetReached) return { resolved: true, reason: 'rate_limited' };
+  if (completion.timeout) return { resolved: true, reason: 'timeout' };
+  if (completion.targetReached) return { resolved: true, reason: 'target_reached' };
+  if (completion.blocked) return { resolved: true, reason: 'blocked' };
+  return { resolved: false, reason: 'pending' };
+}
 
+export async function resolveBusterCompletionEvent(options: any = {}) {
+  const initialTargetKind = options.targetKind ?? 'module';
+  const values = { targetKind: initialTargetKind, targetId: null, expectedStatuses: defaultExpectedStatuses(initialTargetKind), expectedIdentity: {}, localStatus: null, statusSource: 'local_evidence', resolveLocalEvidence: null, ...options };
+  const { event, targetKind, targetId, expectedStatuses, expectedIdentity, localStatus, statusSource, resolveLocalEvidence } = values;
+  const context = { event, targetKind, targetId };
+  if (event?.type === 'fatal.error') return fatalCompletionEvent(context);
   if (event?.type === 'completion.evidence') {
     return buildRedisCompletionResult({
       targetKind,
@@ -225,40 +188,25 @@ export async function resolveBusterCompletionEvent({
     });
   }
 
-  if (event?.type === 'local.evidence.updated') {
-    if (typeof resolveLocalEvidence === 'function') {
-      const localResult = await resolveLocalEvidence(event);
-      if (localResult) return localResult;
-    }
-    return {
-      resolved: false,
-      reason: 'local_evidence_pending',
-      source: 'local_fs',
-      target_kind: targetKind,
-      target_id: targetId,
-      event,
-    };
-  }
+  if (event?.type === 'local.evidence.updated') return localEvidenceUpdated(context, resolveLocalEvidence);
+  if (event?.type === 'local.evidence.warning') return localEvidenceWarning(context);
+  return { resolved: false, reason: 'ignored_event', source: normalizeValue(event?.source), target_kind: targetKind, target_id: targetId, event };
+}
 
-  if (event?.type === 'local.evidence.warning') {
-    return {
-      resolved: false,
-      reason: selectDefinedValue(() => (normalizeValue(event?.payload?.reason)), () => (LOCAL_EVIDENCE_WARNING_REASON)),
-      source: LOCAL_FS_SOURCE,
-      target_kind: targetKind,
-      target_id: targetId,
-      event,
-    };
-  }
+function fatalCompletionEvent({ event, targetKind, targetId }: any) {
+  return { resolved: true, reason: 'fatal_error', source: normalizeValue(event.source) || SYSTEM_SOURCE, target_kind: targetKind, target_id: targetId, event, error: objectRecord(event.payload) };
+}
 
-  return {
-    resolved: false,
-    reason: 'ignored_event',
-    source: normalizeValue(event?.source),
-    target_kind: targetKind,
-    target_id: targetId,
-    event,
-  };
+async function localEvidenceUpdated({ event, targetKind, targetId }: any, resolver: any) {
+  if (typeof resolver === 'function') {
+    const result = await resolver(event);
+    if (result) return result;
+  }
+  return { resolved: false, reason: 'local_evidence_pending', source: LOCAL_FS_SOURCE, target_kind: targetKind, target_id: targetId, event };
+}
+
+function localEvidenceWarning({ event, targetKind, targetId }: any) {
+  return { resolved: false, reason: normalizeValue(event?.payload?.reason) || LOCAL_EVIDENCE_WARNING_REASON, source: LOCAL_FS_SOURCE, target_kind: targetKind, target_id: targetId, event };
 }
 
 export async function waitForBusterCompletion({
@@ -274,31 +222,12 @@ export async function waitForBusterCompletion({
   statusSource = 'local_evidence',
   resolveLocalEvidence = null,
   budget = null,
-} = {}) {
+}: any = {}) {
   requireSignal(signal);
   const deadline = timeoutMs == null ? null : Date.now() + Number(timeoutMs);
 
   while (!signal.aborted) {
-    budget?.throwIfExhausted?.();
-    const timeoutRemainingMs = deadline == null ? undefined : Math.max(0, deadline - Date.now());
-    const budgetRemainingMs = budget?.remainingMs ? budget.remainingMs() : undefined;
-    const remainingTimeoutMs = completionBudgetTimeout(timeoutRemainingMs, budgetRemainingMs);
-    const event = await waitForAny(eventBus, BUSTER_COMPLETION_EVENT_TYPES, identity, {
-      signal,
-      timeoutMs: remainingTimeoutMs,
-      ...(budget ? { budget } : {}),
-    });
-    const localStatus = typeof getLocalStatus === 'function' ? getLocalStatus() : null;
-    const result = await resolveBusterCompletionEvent({
-      event,
-      targetKind,
-      targetId,
-      expectedStatuses,
-      expectedIdentity,
-      localStatus,
-      statusSource,
-      resolveLocalEvidence,
-    });
+    const result = await waitForBusterCompletionIteration({ eventBus, identity, signal, deadline, budget, getLocalStatus, targetKind, targetId, expectedStatuses, expectedIdentity, statusSource, resolveLocalEvidence });
     if (result?.resolved) return result;
   }
 
@@ -311,16 +240,28 @@ export async function waitForBusterCompletion({
   };
 }
 
-export function buildGateLocalEvidenceResolver(projectGateCompletionState, {
+async function waitForBusterCompletionIteration(input: any) {
+  input.budget?.throwIfExhausted?.();
+  const timeoutRemainingMs = input.deadline == null ? undefined : Math.max(0, input.deadline - Date.now());
+  const budgetRemainingMs = input.budget?.remainingMs ? input.budget.remainingMs() : undefined;
+  const timeoutMs = completionBudgetTimeout(timeoutRemainingMs, budgetRemainingMs);
+  const event = await waitForAny(input.eventBus, BUSTER_COMPLETION_EVENT_TYPES, input.identity, {
+    signal: input.signal, timeoutMs, ...(input.budget ? { budget: input.budget } : {}),
+  });
+  const localStatus = typeof input.getLocalStatus === 'function' ? input.getLocalStatus() : null;
+  return resolveBusterCompletionEvent({ ...input, event, localStatus });
+}
+
+function buildGateLocalEvidenceResolver(projectGateCompletionState: any, {
   config,
   gateId,
   gate,
   activeDispatch = null,
-} = {}) {
+}: any = {}) {
   if (typeof projectGateCompletionState !== 'function') {
     throw new PipelineEventContractError('buildGateLocalEvidenceResolver requires projectGateCompletionState', { function: 'projectGateCompletionState' });
   }
-  return function resolveGateLocalEvidence(event) {
+  return function resolveGateLocalEvidence(event: any) {
     const fileCompletion = projectGateCompletionState(config, gateId, gate, { activeDispatch });
     return {
       resolved: false,

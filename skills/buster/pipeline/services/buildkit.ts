@@ -1,17 +1,13 @@
 // Canonical Buster image-build authority. BuildKit builds and publishes in one
 // operation; callers receive the registry digest and deploy only that digest.
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFile } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import os from 'os';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { promisify } from 'util';
 import { buildSubprocessEnv } from '../security.ts';
 import { validateImageReference } from './image-reference.ts';
+import { readBusterEnvironment } from '../runtime-environment.ts';
 
 type SuiteLog = (message: string) => void;
 type ExecFileAsync = (command: string, args: string[], options?: Record<string, unknown>) => Promise<{ stdout?: string; stderr?: string }>;
@@ -65,7 +61,7 @@ export async function buildAndPushImage({
   const outputImage = requireImage(image);
   const metadataPath = path.join(os.tmpdir(), `buster-buildkit-${process.pid}-${Date.now()}.json`);
   const args = [
-    '--addr', process.env.BUILDKIT_HOST || 'unix:///run/user/1000/buildkit/buildkitd.sock',
+    '--addr', readBusterEnvironment('BUILDKIT_HOST') || 'unix:///run/user/1000/buildkit/buildkitd.sock',
     'build',
     '--frontend', 'dockerfile.v0',
     '--local', `context=${contextDir}`,

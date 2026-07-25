@@ -9,6 +9,12 @@
         "null"
       ]
     },
+    "module_id": { "type": ["string", "null"] },
+    "gate_type": { "type": ["string", "null"] },
+    "parent_session_id": { "type": ["string", "null"] },
+    "trace_id": { "type": ["string", "null"] },
+    "span_id": { "type": ["string", "null"] },
+    "parent_span_id": { "type": ["string", "null"] },
     "attempt": {
       "minimum": 0,
       "type": [

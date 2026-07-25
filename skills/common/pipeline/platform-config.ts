@@ -1,6 +1,4 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
@@ -41,7 +39,7 @@ function cloneJson<T>(value: T): T {
 
 const cachedProfiles = new Map<string, AnyRecord>();
 
-function loadProfile(profileName: string, stack: string[] = []) {
+function loadProfile(profileName: string, stack: string[] = []): AnyRecord {
   if (cachedProfiles.has(profileName)) return cloneJson(cachedProfiles.get(profileName) as AnyRecord);
   const profileUrl = PROFILE_URLS[profileName];
   if (!profileUrl) {
@@ -122,9 +120,9 @@ function mergeKnownOverrides(target: AnyRecord, overrides: AnyRecord) {
   return target;
 }
 
-function substituteProfileTemplates(value: any, context: AnyRecord, pathParts: string[] = []) {
+function substituteProfileTemplates(value: any, context: AnyRecord, pathParts: string[] = []): any {
   if (typeof value === 'string') {
-    return value.replace(/\$\{([a-z_]+)\}/g, (match, key) => {
+    return value.replace(/\$\{([a-z_]+)\}/g, (match: string, key: string): string => {
       const replacement = context[key];
       if (selectTruthyValue(() => (typeof replacement !== 'string'), () => (!replacement.trim()))) {
         throw new Error(`config.${pathParts.join('.')}: profile placeholder ${match} requires config.${key} or ${key.toUpperCase()}`);
@@ -205,18 +203,19 @@ export function discoverPlatformSwarmConfigCandidates() {
   return [...new Set([
     process.env.SWARM_CONFIG,
     DEFAULT_SWARM_CONFIG_PATH,
-  ].filter(Boolean).map(candidate => path.resolve(candidate)))];
+  ].filter((candidate): candidate is string => typeof candidate === 'string' && candidate.length > 0)
+    .map(candidate => path.resolve(candidate)))];
 }
 
-export function discoverSwarmConfigPath(candidates = discoverPlatformSwarmConfigCandidates()) {
+export function discoverSwarmConfigPath(candidates = discoverPlatformSwarmConfigCandidates()): string {
   const normalizedCandidates = [...new Set(candidates.filter(Boolean).map(candidate => path.resolve(candidate)))];
   for (const candidate of normalizedCandidates) {
     if (fs.existsSync(candidate)) return candidate;
   }
-  return normalizedCandidates[0];
+  return normalizedCandidates[0] ?? DEFAULT_SWARM_CONFIG_PATH;
 }
 
-export function loadPlatformSwarmConfig(configPath = discoverSwarmConfigPath()) {
+export function loadPlatformSwarmConfig(configPath: string = discoverSwarmConfigPath()) {
   const resolvedPath = path.resolve(configPath);
   if (!fs.existsSync(resolvedPath)) {
     throw new Error(

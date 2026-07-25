@@ -84,33 +84,34 @@ function toJsonValue(value: unknown, seen = new Set<object>()): AgentObservabili
   if (typeof value === 'function' || typeof value === 'symbol') return String(value);
   if (value instanceof Date) return value.toISOString();
   if (value instanceof Error) {
-    return {
+    const normalized: Record<string, AgentObservabilityJsonValue> = {
       name: value.name,
       message: value.message,
-      stack: value.stack,
     };
+    if (value.stack) normalized.stack = value.stack;
+    return normalized;
   }
   if (Array.isArray(value)) return value.map((item) => toJsonValue(item, seen));
   if (!isRecord(value)) return String(value);
   if (seen.has(value)) return '[Circular]';
   seen.add(value);
-  const next: Record<string, AgentObservabilityJsonValue | undefined> = {};
+  const next: Record<string, AgentObservabilityJsonValue> = {};
   for (const [key, item] of Object.entries(value)) {
-    next[key] = item === undefined ? undefined : toJsonValue(item, seen);
+    if (item !== undefined) next[key] = toJsonValue(item, seen);
   }
   seen.delete(value);
   return next;
 }
 
-function toJsonRecord(value: unknown): Record<string, AgentObservabilityJsonValue | undefined> | undefined {
+function toJsonRecord(value: unknown): Record<string, AgentObservabilityJsonValue> | undefined {
   if (!isRecord(value)) return undefined;
-  return toJsonValue(value) as Record<string, AgentObservabilityJsonValue | undefined>;
+  return toJsonValue(value) as Record<string, AgentObservabilityJsonValue>;
 }
 
 function dropUndefined(value: AgentObservabilityJsonValue): AgentObservabilityJsonValue {
   if (Array.isArray(value)) return value.map((item) => dropUndefined(item));
   if (value && typeof value === 'object') {
-    const next: Record<string, AgentObservabilityJsonValue | undefined> = {};
+    const next: Record<string, AgentObservabilityJsonValue> = {};
     for (const [key, item] of Object.entries(value)) {
       if (item !== undefined) next[key] = dropUndefined(item);
     }
@@ -149,7 +150,9 @@ function asRecord(value: unknown): UnknownRecord {
   return isRecord(value) ? value : {};
 }
 
-function putIdentity(identity: AgentObservabilityIdentityV1, key: keyof AgentObservabilityIdentityV1, value: unknown): void {
+type StringIdentityKey = Exclude<keyof AgentObservabilityIdentityV1, 'attempt'>;
+
+function putIdentity(identity: AgentObservabilityIdentityV1, key: StringIdentityKey, value: unknown): void {
   const normalized = stringValue(value);
   if (normalized) identity[key] = normalized;
 }
@@ -158,7 +161,7 @@ export function extractPluginConfig(event: unknown, hookContext?: unknown): unkn
   return valueAt(contextOf(event, hookContext), 'pluginConfig') ?? valueAt(event, 'pluginConfig');
 }
 
-export function normalizeIdentity(event: unknown, hookContext?: unknown): AgentObservabilityIdentityV1 {
+function normalizeIdentity(event: unknown, hookContext?: unknown): AgentObservabilityIdentityV1 {
   const ctx = contextOf(event, hookContext);
   const session = asRecord(valueAt(event, 'session'));
   const metadata = asRecord(valueAt(event, 'metadata'));
@@ -174,6 +177,8 @@ export function normalizeIdentity(event: unknown, hookContext?: unknown): AgentO
   putIdentity(identity, 'agent_type', firstValue(valueAt(event, 'agentType', 'agent_type'), valueAt(ctx, 'agentType', 'agent_type')));
   putIdentity(identity, 'module_id', firstValue(valueAt(event, 'moduleId', 'module_id'), valueAt(ctx, 'moduleId', 'module_id'), valueAt(metadata, 'module_id')));
   putIdentity(identity, 'gate_id', firstValue(valueAt(event, 'gateId', 'gate_id'), valueAt(ctx, 'gateId', 'gate_id'), valueAt(metadata, 'gate_id')));
+  const attempt=firstValue(valueAt(event,'attempt'),valueAt(ctx,'attempt'),valueAt(metadata,'attempt'));
+  if(typeof attempt==='number'&&Number.isFinite(attempt))identity.attempt=attempt;
   putIdentity(identity, 'tool_call_id', firstValue(valueAt(event, 'toolCallId', 'tool_call_id'), valueAt(ctx, 'toolCallId', 'tool_call_id')));
   putIdentity(identity, 'model_call_id', firstValue(valueAt(event, 'modelCallId', 'model_call_id', 'requestId'), valueAt(ctx, 'modelCallId', 'model_call_id', 'requestId')));
   putIdentity(identity, 'parent_session_key', firstValue(valueAt(event, 'parentSessionKey', 'parent_session_key', 'requesterSessionKey', 'requester_session_key'), valueAt(ctx, 'parentSessionKey', 'parent_session_key', 'requesterSessionKey', 'requester_session_key')));
@@ -200,7 +205,7 @@ function outcome(event: unknown): string | undefined {
   return undefined;
 }
 
-function baseMetadata(event: unknown): Record<string, AgentObservabilityJsonValue | undefined> | undefined {
+function baseMetadata(event: unknown): Record<string, AgentObservabilityJsonValue> | undefined {
   return toJsonRecord(valueAt(event, 'metadata'));
 }
 
@@ -250,7 +255,7 @@ function normalizeAgentEventHook(event: unknown): AgentObservabilityHook | null 
   return null;
 }
 
-export function normalizePayload(hook: AgentObservabilityHook, event: unknown): AgentObservabilityIngressPayloadV1 {
+function normalizePayload(hook: AgentObservabilityHook, event: unknown): AgentObservabilityIngressPayloadV1 {
   switch (hook) {
     case 'llm_input':
       return {

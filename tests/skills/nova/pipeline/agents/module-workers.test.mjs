@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import test from 'node:test';
+import test, { after } from 'node:test';
 
 import {
   runModuleBusterWorker,
@@ -11,6 +11,7 @@ import {
 
 function baseConfig() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'module-workers-test-'));
+  tempRepos.add(root);
   const swarmDir = path.join(root, '.swarm');
   fs.mkdirSync(path.join(swarmDir, 'modules'), { recursive: true });
   return {
@@ -101,6 +102,50 @@ function busterDeps(overrides = {}) {
   };
 }
 
+function forgeScenarioDeps(calls, overrides = {}) {
+  return forgeDeps({
+    spawnAgent: async () => calls.push('spawn'),
+    verifyAgentHealth: async () => true,
+    acpLabel: () => 'forge-mod-a',
+    getTrackedAgent: () => ({
+      sessionKey: 'session-1',
+      gatewayLabel: 'gateway-1',
+      streamLogPath: '/tmp/forge.log',
+    }),
+    pollForgeCompletionWithRateLimitRecovery: async () => {
+      calls.push('poll');
+      return { ok: true };
+    },
+    killAgent: async () => calls.push('kill'),
+    loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
+    saveStreamLog: () => calls.push('save'),
+    clearShutdownContext: () => calls.push('clear'),
+    ...overrides,
+  });
+}
+
+function busterScenarioDeps(calls, overrides = {}) {
+  return busterDeps({
+    spawnAgent: async () => ({
+      dispatch_id: 'dispatch-1',
+      run_id: 'run-1',
+      session_key: 'session-1',
+      gateway_label: 'gateway-1',
+      stream_log_path: '/tmp/buster.log',
+    }),
+    verifyAgentHealth: async () => true,
+    pollDualWithRateLimitRecovery: async () => {
+      calls.push('poll');
+      return { ok: true };
+    },
+    killAgent: async () => calls.push('kill'),
+    loadStatus: () => ({}),
+    saveStreamLog: () => calls.push('save'),
+    clearShutdownContext: () => calls.push('clear'),
+    ...overrides,
+  });
+}
+
 test('module forge cleans up and returns typed block when dispatch hook rejects', async () => {
   const calls = [];
   const result = await runModuleForgeWorker({
@@ -111,25 +156,7 @@ test('module forge cleans up and returns typed block when dispatch hook rejects'
         throw new Error('dispatch failed');
       },
     }),
-    deps: {
-      ...forgeDeps(),
-      spawnAgent: async () => calls.push('spawn'),
-      verifyAgentHealth: async () => true,
-      acpLabel: () => 'forge-mod-a',
-      getTrackedAgent: () => ({
-        sessionKey: 'session-1',
-        gatewayLabel: 'gateway-1',
-        streamLogPath: '/tmp/forge.log',
-      }),
-      pollForgeCompletionWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return { ok: true };
-      },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    deps: forgeScenarioDeps(calls),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -149,25 +176,7 @@ test('module forge saves stream log and clears context when finalize hook reject
         throw new Error('finalize failed');
       },
     }),
-    deps: {
-      ...forgeDeps(),
-      spawnAgent: async () => calls.push('spawn'),
-      verifyAgentHealth: async () => true,
-      acpLabel: () => 'forge-mod-a',
-      getTrackedAgent: () => ({
-        sessionKey: 'session-1',
-        gatewayLabel: 'gateway-1',
-        streamLogPath: '/tmp/forge.log',
-      }),
-      pollForgeCompletionWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return { ok: true };
-      },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    deps: forgeScenarioDeps(calls),
   });
 
   assert.equal(result.producerType, 'module_forge');
@@ -182,28 +191,12 @@ test('module forge returns typed block when cleanup kill rejects after poll', as
     config: baseConfig(),
     progress: {},
     workerInput: forgeInput(),
-    deps: {
-      ...forgeDeps(),
-      spawnAgent: async () => calls.push('spawn'),
-      verifyAgentHealth: async () => true,
-      acpLabel: () => 'forge-mod-a',
-      getTrackedAgent: () => ({
-        sessionKey: 'session-1',
-        gatewayLabel: 'gateway-1',
-        streamLogPath: '/tmp/forge.log',
-      }),
-      pollForgeCompletionWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return { ok: true };
-      },
+    deps: forgeScenarioDeps(calls, {
       killAgent: async () => {
         calls.push('kill');
         throw new Error('kill failed');
       },
-      loadStatus: () => ({ status: 'READY_FOR_TESTING' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -221,16 +214,7 @@ test('module forge carries successful poll status even before Nova lifecycle tra
     config: baseConfig(),
     progress: {},
     workerInput: forgeInput(),
-    deps: {
-      ...forgeDeps(),
-      spawnAgent: async () => calls.push('spawn'),
-      verifyAgentHealth: async () => true,
-      acpLabel: () => 'forge-mod-a',
-      getTrackedAgent: () => ({
-        sessionKey: 'session-1',
-        gatewayLabel: 'gateway-1',
-        streamLogPath: '/tmp/forge.log',
-      }),
+    deps: forgeScenarioDeps(calls, {
       pollForgeCompletionWithRateLimitRecovery: async () => {
         calls.push('poll');
         return {
@@ -248,9 +232,7 @@ test('module forge carries successful poll status even before Nova lifecycle tra
         calls.push('kill');
       },
       loadStatus: () => ({ status: 'IN_PROGRESS' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -490,26 +472,7 @@ test('module buster cleans up and returns typed block when dispatch hook rejects
         throw new Error('dispatch failed');
       },
     }),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
-      pollDualWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return { ok: true };
-      },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({}),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    deps: busterScenarioDeps(calls),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -549,20 +512,9 @@ test('module buster retries when agent fails health check immediately after spaw
     config: baseConfig(),
     progress: {},
     workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
+    deps: busterScenarioDeps(calls, {
       verifyAgentHealth: async () => false,
-      killAgent: async () => calls.push('kill'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.producerType, 'module_buster');
@@ -578,9 +530,7 @@ test('module buster routes startup health-check usage limits through cooldown be
     config: baseConfig(),
     progress: {},
     workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
+    deps: busterScenarioDeps(calls, {
       spawnAgent: async () => {
         calls.push('spawn');
         return {
@@ -609,9 +559,7 @@ test('module buster routes startup health-check usage limits through cooldown be
           gateway_label: 'gateway-rate',
         },
       }),
-      killAgent: async () => calls.push('kill'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.producerType, 'module_buster');
@@ -654,26 +602,12 @@ test('module buster returns typed block when poll failure class is missing', asy
     config: baseConfig(),
     progress: {},
     workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
+    deps: busterScenarioDeps(calls, {
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return { ok: false, reason: 'redis_missing', status: { status: 'BLOCKED' } };
       },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({}),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -684,93 +618,53 @@ test('module buster returns typed block when poll failure class is missing', asy
   assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
 });
 
-test('module buster classifies output_file identity mismatch as infrastructure block', async () => {
+async function assertBusterInfrastructurePollFailure(pollResult, failureClass, extraAssertion = () => {}) {
   const calls = [];
   const result = await runModuleBusterWorker({
     config: baseConfig(),
     progress: {},
     workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
+    deps: busterScenarioDeps(calls, {
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
-        return {
-          ok: false,
-          reason: 'output_file_identity_mismatch',
-          status: {
-            status: 'FAIL',
-            summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
-          },
-        };
+        return pollResult;
       },
-      killAgent: async () => calls.push('kill'),
       loadStatus: () => ({ status: 'FAIL' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
-
   assert.equal(result.schemaVersion, 'v1');
   assert.equal(result.producerType, 'module_buster');
   assert.equal(result.nextAction, 'block');
   assert.equal(result.issueType, 'environment');
-  assert.equal(result.diagnostics.metadata.reason, 'output_file_identity_mismatch');
-  assert.equal(result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
+  assert.equal(result.diagnostics.metadata.failure_class, failureClass);
+  extraAssertion(result);
   assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+}
+
+test('module buster classifies output_file identity mismatch as infrastructure block', async () => {
+  await assertBusterInfrastructurePollFailure({
+    ok: false,
+    reason: 'output_file_identity_mismatch',
+    status: {
+      status: 'FAIL',
+      summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
+    },
+  }, 'output_file_identity_mismatch', (result) => {
+    assert.equal(result.diagnostics.metadata.reason, 'output_file_identity_mismatch');
+  });
 });
 
 test('module buster classifies output_file identity mismatch from Redis entry reason', async () => {
-  const calls = [];
-  const result = await runModuleBusterWorker({
-    config: baseConfig(),
-    progress: {},
-    workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
-      pollDualWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return {
-          ok: false,
-          status: {
-            status: 'FAIL',
-            _redis_entry: {
-              reason: 'output_file_identity_mismatch',
-              summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
-            },
-          },
-        };
+  await assertBusterInfrastructurePollFailure({
+    ok: false,
+    status: {
+      status: 'FAIL',
+      _redis_entry: {
+        reason: 'output_file_identity_mismatch',
+        summary: 'Buster output_file identity mismatch: attempt, dispatch_id, completion_key',
       },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({ status: 'FAIL' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
     },
-  });
-
-  assert.equal(result.schemaVersion, 'v1');
-  assert.equal(result.producerType, 'module_buster');
-  assert.equal(result.nextAction, 'block');
-  assert.equal(result.issueType, 'environment');
-  assert.equal(result.diagnostics.metadata.failure_class, 'output_file_identity_mismatch');
-  assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+  }, 'output_file_identity_mismatch');
 });
 
 test('module buster accepts Redis dispatch completion without session key', async () => {
@@ -779,9 +673,7 @@ test('module buster accepts Redis dispatch completion without session key', asyn
     config: baseConfig(),
     progress: {},
     workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
+    deps: busterScenarioDeps(calls, {
       spawnAgent: async () => ({
         dispatch_id: 'dispatch-1',
         run_id: 'run-1',
@@ -789,7 +681,6 @@ test('module buster accepts Redis dispatch completion without session key', asyn
         stream_log_path: null,
         runtime: 'redis',
       }),
-      verifyAgentHealth: async () => true,
       pollDualWithRateLimitRecovery: async () => {
         calls.push('poll');
         return {
@@ -802,11 +693,8 @@ test('module buster accepts Redis dispatch completion without session key', asyn
           },
         };
       },
-      killAgent: async () => calls.push('kill'),
       loadStatus: () => ({ status: 'FAIL' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -819,55 +707,24 @@ test('module buster accepts Redis dispatch completion without session key', asyn
 });
 
 test('module buster classifies missing output_file from Redis entry reason as infrastructure block', async () => {
-  const calls = [];
-  const result = await runModuleBusterWorker({
-    config: baseConfig(),
-    progress: {},
-    workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
+  await assertBusterInfrastructurePollFailure({
+    ok: false,
+    status: {
+      status: 'FAIL',
+      _redis_entry: {
+        status: 'FAIL',
+        reason: 'output_file_missing',
+        summary: 'output_file missing: /tmp/buster-output.json',
         run_id: 'run-1',
+        attempt: '1',
+        dispatch_id: 'dispatch-1',
         session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
-      pollDualWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return {
-          ok: false,
-          status: {
-            status: 'FAIL',
-            _redis_entry: {
-              status: 'FAIL',
-              reason: 'output_file_missing',
-              summary: 'output_file missing: /tmp/buster-output.json',
-              run_id: 'run-1',
-              attempt: '1',
-              dispatch_id: 'dispatch-1',
-              session_key: 'session-1',
-              completion_key: 'run-1:1:dispatch-1',
-            },
-          },
-        };
+        completion_key: 'run-1:1:dispatch-1',
       },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({ status: 'FAIL' }),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
     },
+  }, 'output_file_missing', (result) => {
+    assert.equal(result.diagnostics.metadata.redis_entry.reason, 'output_file_missing');
   });
-
-  assert.equal(result.schemaVersion, 'v1');
-  assert.equal(result.producerType, 'module_buster');
-  assert.equal(result.nextAction, 'block');
-  assert.equal(result.issueType, 'environment');
-  assert.equal(result.diagnostics.metadata.failure_class, 'output_file_missing');
-  assert.equal(result.diagnostics.metadata.redis_entry.reason, 'output_file_missing');
-  assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
 });
 
 test('module buster dispatch uses worker workspace repo root as session cwd authority', async () => {
@@ -913,26 +770,7 @@ test('module buster saves stream log and clears context when finalize hook rejec
         throw new Error('finalize failed');
       },
     }),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
-      pollDualWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return { ok: true };
-      },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({}),
-      saveStreamLog: () => calls.push('save'),
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    deps: busterScenarioDeps(calls),
   });
 
   assert.equal(result.producerType, 'module_buster');
@@ -947,29 +785,12 @@ test('module buster returns typed block when save stream log rejects after poll'
     config: baseConfig(),
     progress: {},
     workerInput: busterInput(),
-    deps: {
-      ...busterDeps(),
-      archiveModuleCompletions: async () => ({ failed: false }),
-      spawnAgent: async () => ({
-        dispatch_id: 'dispatch-1',
-        run_id: 'run-1',
-        session_key: 'session-1',
-        gateway_label: 'gateway-1',
-        stream_log_path: '/tmp/buster.log',
-      }),
-      verifyAgentHealth: async () => true,
-      pollDualWithRateLimitRecovery: async () => {
-        calls.push('poll');
-        return { ok: true };
-      },
-      killAgent: async () => calls.push('kill'),
-      loadStatus: () => ({}),
+    deps: busterScenarioDeps(calls, {
       saveStreamLog: async () => {
         calls.push('save');
         throw new Error('save failed');
       },
-      clearShutdownContext: () => calls.push('clear'),
-    },
+    }),
   });
 
   assert.equal(result.schemaVersion, 'v1');
@@ -979,4 +800,8 @@ test('module buster returns typed block when save stream log rejects after poll'
   assert.equal(result.diagnostics.metadata.failure_class, 'cleanup_failed');
   assert.equal(result.diagnostics.metadata.error, 'save failed');
   assert.deepEqual(calls, ['poll', 'kill', 'save', 'clear']);
+});
+const tempRepos = new Set();
+after(() => {
+  for (const root of tempRepos) fs.rmSync(root, { recursive: true, force: true });
 });

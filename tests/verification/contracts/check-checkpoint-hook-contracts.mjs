@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
@@ -22,13 +23,6 @@ import {
   assertScenarioMutationChannel,
 } from '../e2e/failure-scenarios.mjs';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let index = 0; index < argv.length; index += 1) {
-    if (argv[index] === '--source-root') args.sourceRoot = path.resolve(argv[index + 1]);
-  }
-  return args;
-}
 
 function read(sourceRoot, relativePath) {
   return fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
@@ -42,7 +36,7 @@ function faultSurfaceAllowed(surface, allowedSurfaces) {
   });
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const knownMutationChannels = new Set([
   'buster-simulator',
   'cleanup-blocker',

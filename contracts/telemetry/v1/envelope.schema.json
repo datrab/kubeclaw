@@ -1,13 +1,17 @@
 {
   "$id": "telemetry_envelope.v1",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
+  "additionalProperties": false,
   "properties": {
     "agent_id": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "authority_class": {
+      "minLength": 1,
+      "type": "string"
     },
     "attempt": {
       "minimum": 0,
@@ -43,13 +47,25 @@
       "type": "string"
     },
     "extensions": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "evidence_provenance": {
+          "enum": ["production", "recorded", "synthetic"]
+        }
+      },
+      "required": ["evidence_provenance"]
     },
     "gate_id": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "gate_type": {
+      "type": ["string", "null"]
+    },
+    "module_id": {
+      "type": ["string", "null"]
     },
     "model_call_id": {
       "type": [
@@ -65,6 +81,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "parent_session_id": { "type": ["string", "null"] },
+    "trace_id": { "type": ["string", "null"] },
+    "span_id": { "type": ["string", "null"] },
+    "parent_span_id": { "type": ["string", "null"] },
     "project": {
       "minLength": 1,
       "type": "string"
@@ -75,6 +95,10 @@
     },
     "schema_version": {
       "const": "telemetry_envelope.v1"
+    },
+    "source_event_id": {
+      "minLength": 1,
+      "type": "string"
     },
     "seq": {
       "minimum": 1,
@@ -174,14 +198,18 @@
   "required": [
     "schema_version",
     "event_id",
+    "source_event_id",
     "type",
     "occurred_at",
     "emitted_at",
     "seq",
+    "cursor",
     "project",
     "run_id",
     "source",
-    "producer"
+    "producer",
+    "authority_class"
+    ,"extensions"
   ],
   "type": "object"
 }

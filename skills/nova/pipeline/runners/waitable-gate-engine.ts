@@ -1,8 +1,8 @@
-import { runScheduledGateInvocation } from './scheduled-gate-invocation.ts';
+import { runScheduledGateControlInvocation } from './scheduled-gate-invocation.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-export function validateGateWaitController(controller = {}, stageId = 'gate:missing_gate_type') {
-  const errors = [];
+function validateGateWaitController(controller: any = {}, stageId: any = 'gate:missing_gate_type') {
+  const errors: any[] = [];
   if (selectTruthyValue(() => (!controller), () => (typeof controller !== 'object'))) {
     return [`${stageId} wait controller must be an object`];
   }
@@ -12,20 +12,20 @@ export function validateGateWaitController(controller = {}, stageId = 'gate:miss
   return errors;
 }
 
-export function resolveGateWaitController(controller = {}, stageId = 'gate:missing_gate_type') {
+export function resolveGateWaitController(controller: any = {}, stageId: any = 'gate:missing_gate_type') {
   const errors = validateGateWaitController(controller, stageId);
   if (errors.length > 0) throw new Error(errors.join('; '));
   return controller;
 }
 
 
-export async function runWaitableGateControlLoopResult({
+async function runWaitableGateControlLoopResult({
   initialControlResult,
   waitController,
   normalizeControlResult,
   gateId,
   gate,
-}) {
+}: any) {
   if (typeof normalizeControlResult !== 'function') {
     throw new Error(`gate:${selectTruthyValue(() => (selectTruthyValue(() => (gate?.type), () => (gateId))), () => ('missing_gate_type'))} waitable loop requires normalizeControlResult(...)`);
   }
@@ -55,8 +55,8 @@ export async function runScheduledWaitableGate({
   pluginInvocation,
   normalizeControlResult,
   createWaitController,
-}) {
-  const { rawResult, record } = await runScheduledGateInvocation({
+}: any) {
+  const { controlResult, normalizeResult } = await runScheduledGateControlInvocation({
     config,
     progress,
     gateId,
@@ -65,10 +65,8 @@ export async function runScheduledWaitableGate({
     stageId,
     gateInput,
     pluginInvocation,
+    normalizeControlResult,
   });
-
-  const normalizeBase = { input: gateInput, stageId, moduleId: selectTruthyValue(() => (record?.manifest?.moduleId), () => (null)), pluginInvocation };
-  const controlResult = normalizeControlResult(rawResult, normalizeBase);
   const waitController = controlResult?.nextAction === 'wait'
     ? createWaitController(controlResult)
     : null;
@@ -76,12 +74,12 @@ export async function runScheduledWaitableGate({
     const loopResult = await runWaitableGateControlLoopResult({
       initialControlResult: controlResult,
       waitController,
-      normalizeControlResult: (rawResult, normalizeOpts = {}) => normalizeControlResult(rawResult, { ...normalizeBase, ...normalizeOpts }),
+      normalizeControlResult: normalizeResult,
       gateId,
       gate,
     });
     return { controlResult: loopResult.controlResult };
-  } catch (error) {
+  } catch (error: any) {
     return { controlResult: null, error, stageStarted: true };
   }
 }

@@ -27,6 +27,10 @@
         "null"
       ]
     },
+    "authority_class": {
+      "minLength": 1,
+      "type": "string"
+    },
     "causation_id": {
       "type": [
         "string",
@@ -45,7 +49,10 @@
     },
     "dispatch_id": {
       "minLength": 1,
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "emitted_at": {
       "format": "date-time",
@@ -56,6 +63,18 @@
       "type": "string"
     },
     "extensions": {
+      "properties": {
+        "evidence_provenance": {
+          "enum": [
+            "production",
+            "recorded",
+            "synthetic"
+          ]
+        }
+      },
+      "required": [
+        "evidence_provenance"
+      ],
       "type": "object"
     },
     "gate_id": {
@@ -93,7 +112,10 @@
     },
     "model_call_id": {
       "minLength": 1,
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "module_id": {
       "minLength": 1,
@@ -105,6 +127,18 @@
     "occurred_at": {
       "format": "date-time",
       "type": "string"
+    },
+    "parent_session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parent_span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "producer": {
       "minLength": 1,
@@ -145,8 +179,10 @@
       "type": "integer"
     },
     "session_id": {
-      "minLength": 1,
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "session_key": {
       "minLength": 1,
@@ -158,6 +194,16 @@
     "source": {
       "minLength": 1,
       "type": "string"
+    },
+    "source_event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "system_prompt_chars": {
       "type": [
@@ -172,12 +218,20 @@
         "null"
       ]
     },
+    "trace_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "type": {
       "const": "agent.llm.input.summary"
     },
     "work_id": {
-      "minLength": 1,
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "work_type": {
       "enum": [
@@ -194,20 +248,18 @@
   "required": [
     "schema_version",
     "event_id",
+    "source_event_id",
     "type",
     "occurred_at",
     "emitted_at",
     "seq",
+    "cursor",
     "project",
     "run_id",
     "source",
     "producer",
-    "work_id",
-    "work_type",
-    "attempt",
-    "dispatch_id",
-    "session_id",
-    "model_call_id"
+    "authority_class",
+    "extensions"
   ],
   "type": "object"
 }

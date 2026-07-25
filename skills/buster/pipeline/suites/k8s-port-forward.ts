@@ -1,9 +1,7 @@
 // Task-scoped Kubernetes service access. The leased workload stays inside its
 // namespace; dependent suites receive a loopback port that is closed by the
 // suite runner's guaranteed runtime cleanup path.
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { spawn } from 'child_process';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import net from 'net';
 import type { K8sCommandEnv } from './k8s-command-env.ts';
 
@@ -33,19 +31,10 @@ export function buildLocalServiceHealthUrl(localPort: number, healthPath: string
   return `http://127.0.0.1:${localPort}${healthPath.startsWith('/') ? healthPath : `/${healthPath}`}`;
 }
 
-export async function startServicePortForward(ns: string, serviceName: string, servicePort: number, healthPath: string, log: SuiteLog, env: K8sCommandEnv): Promise<{ localPort: number; url: string; stop: () => Promise<void> }> {
-  const localPort = await allocateLocalPort();
-  const url = buildLocalServiceHealthUrl(localPort, healthPath);
-  log(`Port-forwarding svc/${serviceName} ${localPort}:${servicePort} in ${ns}`);
-  const child = spawn('kubectl', ['-n', ns, 'port-forward', `svc/${serviceName}`, `${localPort}:${servicePort}`, '--address', '127.0.0.1'], {
-    env,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-  let output = '';
-  let settled = false;
-  let exited = false;
-  const ready = new Promise<void>((resolve, reject) => {
-    const timeout = setTimeout(() => reject(new Error(`kubectl port-forward did not become ready: ${trimOutput(output)}`)), 15000);
+function waitForPortForwardReady(child: ReturnType<typeof spawn>, outputState: { value: string; exited: boolean }): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    let settled = false;
+    const timeout = setTimeout(() => finish(new Error(`kubectl port-forward did not become ready: ${trimOutput(outputState.value)}`)), 15000);
     const finish = (error?: Error): void => {
       if (settled) return;
       settled = true;
@@ -54,48 +43,61 @@ export async function startServicePortForward(ns: string, serviceName: string, s
       else resolve();
     };
     const onData = (chunk: unknown): void => {
-      output += String(chunk);
-      if (/Forwarding from/i.test(output)) finish();
+      outputState.value += String(chunk);
+      if (/Forwarding from/i.test(outputState.value)) finish();
     };
     child.stdout?.on('data', onData);
     child.stderr?.on('data', onData);
     child.once('error', (error: Error) => finish(error));
     child.once('exit', (code: number | null, signal: string | null) => {
-      exited = true;
-      finish(new Error(`kubectl port-forward exited before ready (code=${code ?? 'unknown'} signal=${signal ?? 'unknown'}): ${trimOutput(output)}`));
+      outputState.exited = true;
+      finish(new Error(`kubectl port-forward exited before ready (code=${code ?? 'unknown'} signal=${signal ?? 'unknown'}): ${trimOutput(outputState.value)}`));
     });
   });
+}
+
+async function stopPortForward(child: ReturnType<typeof spawn>, outputState: { exited: boolean }): Promise<void> {
+  if (outputState.exited) return;
+  await new Promise<void>((resolve) => {
+    let complete = false;
+    const finish = (): void => {
+      if (complete) return;
+      complete = true;
+      clearTimeout(forceTimer);
+      resolve();
+    };
+    const forceTimer = setTimeout(() => {
+      if (!outputState.exited) child.kill('SIGKILL');
+      finish();
+    }, 5000);
+    child.once('exit', () => {
+      outputState.exited = true;
+      finish();
+    });
+    child.kill('SIGTERM');
+  });
+}
+
+export async function startServicePortForward(ns: string, serviceName: string, servicePort: number, healthPath: string, log: SuiteLog, env: K8sCommandEnv): Promise<{ localPort: number; url: string; stop: () => Promise<void> }> {
+  const localPort = await allocateLocalPort();
+  const url = buildLocalServiceHealthUrl(localPort, healthPath);
+  log(`Port-forwarding svc/${serviceName} ${localPort}:${servicePort} in ${ns}`);
+  const child = spawn('kubectl', ['-n', ns, 'port-forward', `svc/${serviceName}`, `${localPort}:${servicePort}`, '--address', '127.0.0.1'], {
+    env,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const outputState = { value: '', exited: false };
   try {
-    await ready;
+    await waitForPortForwardReady(child, outputState);
   } catch (error) {
-    if (!exited) child.kill('SIGTERM');
+    if (!outputState.exited) child.kill('SIGTERM');
     throw error;
   }
 
   return {
     localPort,
     url,
-    stop: async (): Promise<void> => {
-      if (exited) return;
-      await new Promise<void>((resolve) => {
-        let complete = false;
-        const finish = (): void => {
-          if (complete) return;
-          complete = true;
-          clearTimeout(forceTimer);
-          resolve();
-        };
-        const forceTimer = setTimeout(() => {
-          if (!exited) child.kill('SIGKILL');
-          finish();
-        }, 5000);
-        child.once('exit', () => {
-          exited = true;
-          finish();
-        });
-        child.kill('SIGTERM');
-      });
-    },
+    stop: () => stopPortForward(child, outputState),
   };
 }
 

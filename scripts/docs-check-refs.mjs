@@ -40,8 +40,7 @@ const historicalRepoRefDocs = new Set([
 ]);
 
 const errors = [];
-let checkedMarkdownLinks = 0;
-let checkedRepoRefs = 0;
+const scanCounts = { markdownLinks: 0, repoRefs: 0 };
 
 function rel(filePath) {
   return path.relative(root, filePath).split(path.sep).join('/');
@@ -121,7 +120,7 @@ function checkMarkdownLinks(filePath, text) {
     if (!target) continue;
     const resolved = path.resolve(path.dirname(filePath), decodeURI(target));
     if (rel(resolved).startsWith('docs/archive/')) continue;
-    checkedMarkdownLinks += 1;
+    scanCounts.markdownLinks += 1;
     if (!fs.existsSync(resolved)) {
       errors.push(`${rel(filePath)} links to missing local path: ${match[1]}`);
     }
@@ -145,7 +144,7 @@ function checkRepoRefs(filePath, text) {
   for (const raw of candidateRefs(text)) {
     const ref = normalizeReference(raw);
     if (!ref || !isRepoReference(ref) || shouldSkipRepoReference(ref)) continue;
-    checkedRepoRefs += 1;
+    scanCounts.repoRefs += 1;
     if (!existsRepoReference(ref)) {
       errors.push(`${rel(filePath)} cites missing repository path: ${ref}`);
     }
@@ -167,4 +166,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`docs reference check passed (${checkedMarkdownLinks} local links, ${checkedRepoRefs} repository path refs)`);
+console.log(`docs reference check passed (${scanCounts.markdownLinks} local links, ${scanCounts.repoRefs} repository path refs)`);

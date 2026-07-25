@@ -115,10 +115,15 @@
         "string",
         "null"
       ]
+    },
+    "verdict": {
+      "enum": ["PASS", "FAIL"],
+      "type": "string"
     }
   },
   "required": [
-    "gate_id"
+    "gate_id",
+    "verdict"
   ],
   "type": "object"
 }

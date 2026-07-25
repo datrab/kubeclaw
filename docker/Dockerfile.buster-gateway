@@ -9,12 +9,18 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TYPESCRIPT_VERSION=5.9.3
 RUN npm install -g "typescript@${TYPESCRIPT_VERSION}"
 
-COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
-RUN cd /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer \
-    && rm -rf dist \
-    && node "$(npm root -g)/typescript/bin/tsc" -p tsconfig.build.json \
+COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
+COPY plugins/openclaw-agent-observer/ /tmp/plugins/openclaw-agent-observer/
+WORKDIR /tmp/plugins/openclaw-agent-observer
+RUN node "$(npm root -g)/typescript/bin/tsc" -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
+    && node scripts/build.mjs --tsc "$(npm root -g)/typescript/bin/tsc" \
     && mkdir -p /out/extensions/kubeclaw-agent-observer \
-    && cp -R package.json openclaw.plugin.json src dist /out/extensions/kubeclaw-agent-observer/
+    && cp -R \
+      /tmp/plugins/openclaw-agent-observer/package.json \
+      /tmp/plugins/openclaw-agent-observer/openclaw.plugin.json \
+      /tmp/plugins/openclaw-agent-observer/src \
+      /tmp/plugins/openclaw-agent-observer/dist \
+      /out/extensions/kubeclaw-agent-observer/
 
 ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
 RUN mkdir -p /tmp/openclaw-plugin-home \
@@ -22,16 +28,30 @@ RUN mkdir -p /tmp/openclaw-plugin-home \
     && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" \
     && mkdir -p /out/openclaw-plugin-home \
     && cp -a /tmp/openclaw-plugin-home/.openclaw/. /out/openclaw-plugin-home/ \
-    && cd /out/openclaw-plugin-home/npm \
-    && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version
+    && find /out/openclaw-plugin-home/npm -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version
+
+USER node
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE}
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+ARG CA_CERTIFICATES_VERSION=20230311+deb12u1
+ARG CURL_VERSION=7.88.1-10+deb12u15
+ARG GIT_VERSION=1:2.39.5-0+deb12u3
+ARG OPENSSH_CLIENT_VERSION=1:9.2p1-2+deb12u10
+ARG JQ_VERSION=1.6-2.1+deb12u2
+ARG RIPGREP_VERSION=13.0.0-4+b2
+ARG TREE_VERSION=2.1.0-1
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      ca-certificates curl git openssh-client jq ripgrep tree \
+      ca-certificates=${CA_CERTIFICATES_VERSION} \
+      curl=${CURL_VERSION} \
+      git=${GIT_VERSION} \
+      openssh-client=${OPENSSH_CLIENT_VERSION} \
+      jq=${JQ_VERSION} \
+      ripgrep=${RIPGREP_VERSION} \
+      tree=${TREE_VERSION} \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /app/skills /root/.npm \
     && npm config set cache /root/.npm --global \
@@ -43,6 +63,8 @@ COPY --from=gateway-assets /out/openclaw-plugin-home /opt/openclaw-plugin-home
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules \
     NPM_CONFIG_CACHE=/root/.npm \
     HOME=/home/node
+
+USER node
 
 LABEL org.opencontainers.image.title="KubeClaw Buster Gateway"
 LABEL org.opencontainers.image.description="Minimal OpenClaw gateway for Buster native and ACP agents"

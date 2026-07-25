@@ -6,17 +6,13 @@ import {
   PLUGIN_OPTIONAL_CAPABILITIES,
 } from '../constants.ts';
 import { isPlainObject } from '../../services/validation.ts';
-import { createRegistryDictionary, isReservedRegistryKey } from './dictionary.ts';
+import { createRegistryDictionary, isReservedRegistryKey, pushRegistryError as pushError } from './dictionary.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type RegistryError = { code: string; message: string; [key: string]: any };
 
-function pushError(errors: RegistryError[], code: string, message: string, details: AnyRecord = {}) {
-  errors.push({ code, message, ...details });
-}
-
-function assertBoolean(value: any, label: string, errors: RegistryError[], code = PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID) {
+function assertBoolean(value: any, label: string, errors: RegistryError[], code: any = PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID) {
   if (typeof value !== 'boolean') {
     pushError(errors, code, `${label} must be a boolean`);
     return false;

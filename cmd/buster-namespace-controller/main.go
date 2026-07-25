@@ -212,39 +212,48 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 		return c.reconcileDeletedLease(ctx, item, namespaceName)
 	}
 
-	if stringValueDefault(item.Spec["cleanupPolicy"], "delete") == "delete" && stringValue(item.Status["phase"]) == "Ready" {
-		expiresAt := stringValue(item.Status["expiresAt"])
-		if expiresAt != "" {
-			deadline, err := time.Parse(time.RFC3339, expiresAt)
-			if err == nil && time.Now().After(deadline) {
-				if err := c.patchStatus(ctx, name, map[string]interface{}{
-					"phase":         "Expired",
-					"namespaceName": namespaceName,
-					"message":       "Lease TTL expired; deleting broker-owned namespace",
-				}); err != nil {
-					return err
-				}
-				return c.deleteNamespace(ctx, namespaceName)
-			}
-		}
+	if expired, err := c.expireReadyLease(ctx, item, namespaceName); expired || err != nil {
+		return err
 	}
 
 	if stringValue(item.Status["phase"]) == "Ready" {
-		exposure, err := c.ensurePreviewExposure(ctx, item, namespaceName)
-		if err != nil {
-			return err
-		}
-		if exposureChanged(item.Status, exposure) {
-			next := copyStatusWithoutCredentials(item.Status)
-			for key, value := range exposure {
-				next[key] = value
-			}
-			return c.patchStatus(ctx, name, next)
-		}
-		return nil
+		return c.reconcileReadyLease(ctx, item, namespaceName)
 	}
+	return c.provisionLease(ctx, item, namespaceName)
+}
 
-	if err := c.patchStatus(ctx, name, map[string]interface{}{
+func (c *controller) expireReadyLease(ctx context.Context, item *lease, namespaceName string) (bool, error) {
+	if stringValueDefault(item.Spec["cleanupPolicy"], "delete") != "delete" || stringValue(item.Status["phase"]) != "Ready" {
+		return false, nil
+	}
+	deadline, err := time.Parse(time.RFC3339, stringValue(item.Status["expiresAt"]))
+	if err != nil || !time.Now().After(deadline) {
+		return false, nil
+	}
+	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
+		"phase":         "Expired",
+		"namespaceName": namespaceName,
+		"message":       "Lease TTL expired; deleting broker-owned namespace",
+	}); err != nil {
+		return true, err
+	}
+	return true, c.deleteNamespace(ctx, namespaceName)
+}
+
+func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, namespaceName string) error {
+	exposure, err := c.ensurePreviewExposure(ctx, item, namespaceName)
+	if err != nil || !exposureChanged(item.Status, exposure) {
+		return err
+	}
+	next := copyStatusWithoutCredentials(item.Status)
+	for key, value := range exposure {
+		next[key] = value
+	}
+	return c.patchStatus(ctx, item.Metadata.Name, next)
+}
+
+func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceName string) error {
+	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
 		"phase":         "Provisioning",
 		"namespaceName": namespaceName,
 		"message":       "Creating broker-owned namespace access",
@@ -283,7 +292,7 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 	if stringValue(exposure["previewUrl"]) != "" {
 		status["message"] = exposure["message"]
 	}
-	return c.patchStatus(ctx, name, status)
+	return c.patchStatus(ctx, item.Metadata.Name, status)
 }
 
 func (c *controller) reconcileDeletedLease(ctx context.Context, item *lease, namespaceName string) error {
@@ -504,35 +513,24 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 		}, nil
 	}
 
-	credentialsAvailable := false
-	err = c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/services/"+exposure.ServiceName, nil, "application/json", nil)
+	serviceReady, err := c.previewServiceReady(ctx, namespaceName, exposure.ServiceName)
 	if err != nil {
-		var apiErr *apiError
-		if !errors.As(err, &apiErr) || apiErr.statusCode != http.StatusNotFound {
-			return nil, err
-		}
+		return nil, err
+	}
+	if !serviceReady {
 		return map[string]interface{}{
 			"exposurePhase":        "Pending",
 			"previewUrl":           nil,
 			"exposureHostname":     exposure.Hostname,
 			"credentialsRef":       nullableString(exposure.CredentialsRef),
-			"credentialsAvailable": credentialsAvailable,
+			"credentialsAvailable": false,
 			"message":              "Waiting for Service/" + exposure.ServiceName + " before creating Tailscale ingress",
 		}, nil
 	}
 
-	if exposure.RevealCredentials {
-		if exposure.CredentialsSecretName == "" {
-			return nil, errors.New("preview credential reveal requested but no credentialsSecretName or credentialsRef secret was provided")
-		}
-		var secret map[string]interface{}
-		if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/secrets/"+exposure.CredentialsSecretName, nil, "application/json", &secret); err != nil {
-			return nil, err
-		}
-		credentialsAvailable = secretHasCredentialKeys(secret, exposure.CredentialsKeys)
-		if !credentialsAvailable {
-			return nil, fmt.Errorf("preview credential secret %s did not contain any readable credential keys", exposure.CredentialsSecretName)
-		}
+	credentialsAvailable, err := c.previewCredentialsAvailable(ctx, namespaceName, exposure)
+	if err != nil {
+		return nil, err
 	}
 
 	var ingress map[string]interface{}
@@ -559,6 +557,35 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 		"credentialsAvailable": credentialsAvailable,
 		"message":              message,
 	}, nil
+}
+
+func (c *controller) previewServiceReady(ctx context.Context, namespaceName string, serviceName string) (bool, error) {
+	err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/services/"+serviceName, nil, "application/json", nil)
+	if err == nil {
+		return true, nil
+	}
+	var apiErr *apiError
+	if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
+		return false, nil
+	}
+	return false, err
+}
+
+func (c *controller) previewCredentialsAvailable(ctx context.Context, namespaceName string, exposure *previewExposure) (bool, error) {
+	if !exposure.RevealCredentials {
+		return false, nil
+	}
+	if exposure.CredentialsSecretName == "" {
+		return false, errors.New("preview credential reveal requested but no credentialsSecretName or credentialsRef secret was provided")
+	}
+	var secret map[string]interface{}
+	if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/secrets/"+exposure.CredentialsSecretName, nil, "application/json", &secret); err != nil {
+		return false, err
+	}
+	if !secretHasCredentialKeys(secret, exposure.CredentialsKeys) {
+		return false, fmt.Errorf("preview credential secret %s did not contain any readable credential keys", exposure.CredentialsSecretName)
+	}
+	return true, nil
 }
 
 func previewIngress(item *lease, namespaceName string, exposure *previewExposure) map[string]interface{} {
@@ -684,13 +711,9 @@ func (c *controller) patchStatus(ctx context.Context, name string, status map[st
 }
 
 func (c *controller) kube(ctx context.Context, method string, path string, body interface{}, contentType string, out interface{}) error {
-	var payload io.Reader
-	if body != nil {
-		data, err := json.Marshal(body)
-		if err != nil {
-			return err
-		}
-		payload = bytes.NewReader(data)
+	payload, err := requestPayload(body)
+	if err != nil {
+		return err
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, c.apiURL+kubePath(path), payload)
@@ -712,23 +735,39 @@ func (c *controller) kube(ctx context.Context, method string, path string, body 
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		message := string(responseBody)
-		var parsed map[string]interface{}
-		if json.Unmarshal(responseBody, &parsed) == nil {
-			if parsedMessage := stringValue(parsed["message"]); parsedMessage != "" {
-				message = parsedMessage
-			}
-		}
-		if message == "" {
-			message = fmt.Sprintf("HTTP %d", resp.StatusCode)
-		}
-		return &apiError{statusCode: resp.StatusCode, message: message}
+	if err := kubeResponseError(resp.StatusCode, responseBody); err != nil {
+		return err
 	}
 	if out == nil || len(responseBody) == 0 {
 		return nil
 	}
 	return json.Unmarshal(responseBody, out)
+}
+
+func requestPayload(body interface{}) (io.Reader, error) {
+	if body == nil {
+		return nil, nil
+	}
+	data, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(data), nil
+}
+
+func kubeResponseError(statusCode int, responseBody []byte) error {
+	if statusCode >= 200 && statusCode < 300 {
+		return nil
+	}
+	message := string(responseBody)
+	var parsed map[string]interface{}
+	if json.Unmarshal(responseBody, &parsed) == nil && stringValue(parsed["message"]) != "" {
+		message = stringValue(parsed["message"])
+	}
+	if message == "" {
+		message = fmt.Sprintf("HTTP %d", statusCode)
+	}
+	return &apiError{statusCode: statusCode, message: message}
 }
 
 func (c *controller) leasePath(name string) string {
@@ -869,15 +908,11 @@ func secretHasCredentialKeys(secret map[string]interface{}, keys []string) bool 
 			allowed[key] = true
 		}
 	}
-	for key, value := range objectValue(secret["data"]) {
-		if len(allowed) > 0 && !allowed[key] {
-			continue
-		}
-		if stringValue(value) != "" {
-			return true
-		}
-	}
-	for key, value := range objectValue(secret["stringData"]) {
+	return containsReadableCredential(objectValue(secret["data"]), allowed) || containsReadableCredential(objectValue(secret["stringData"]), allowed)
+}
+
+func containsReadableCredential(values map[string]interface{}, allowed map[string]bool) bool {
+	for key, value := range values {
 		if len(allowed) > 0 && !allowed[key] {
 			continue
 		}

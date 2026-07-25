@@ -60,6 +60,8 @@ Inside project workspaces, pipeline artifacts under `.swarm/logs/**` are the pri
 
 The `kubeclaw-agent-observer` plugin is the source-owned agent runtime observability path. It runs in the OpenClaw gateway, not the Buster pipeline sidecar. Buster gateway config keeps it enabled for the gateway lifetime; the Buster worker does not execute `openclaw plugins` commands. The plugin registers the known OpenClaw hook family, prefers the runtime `events.onAgentEvent` bus for live agent output, falls back to the host agent-event subscription bridge when the runtime facade is absent, and exposes Gateway methods `kubeclaw.agentObserver.status` and `kubeclaw.agentObserver.selfTest`. Its Redis streams are:
 
+The versioned wire boundary between that OpenClaw-owned adapter and pipeline ingestion lives at `contracts/agent-observability/v1`. Neither side maintains its own copy: observer images materialize the contract into the self-contained plugin at build time, while agent code bundles materialize it behind the stable `/app/skills/pipeline/agent-observability` facade. The observer owns capture and delivery; the pipeline owns admission and promotion into `contracts/telemetry/v1`.
+
 - `pipeline:agent-observability:control:v1`
 - `pipeline:agent-observability:payload:v1`
 - `pipeline:agent-observability:deadletter:v1`

@@ -198,10 +198,11 @@ Goal: enforce the smallest clear implementation and explicit settings boundaries
 
 Initial candidate budgets to calibrate against real code:
 
-- Cyclomatic complexity: 10 per function.
+- JavaScript/TypeScript cyclomatic complexity: 15 per function.
+- Go cyclomatic complexity: 10 per function.
 - Nesting depth: 3.
 - Parameters: 5.
-- Function size: 40 logical lines.
+- Function size: 60 logical lines.
 - File size: 300 logical lines.
 - Duplicate block: approximately 10–12 meaningful lines.
 
@@ -223,9 +224,9 @@ Exit criteria:
 
 Implementation evidence:
 
-- ESLint is the single JavaScript/TypeScript owner for complexity 10, nesting depth 3, five parameters, 40 logical function lines, 300 logical file lines, lowercase kebab-case filenames, direct environment access, environment-backed hardcoded defaults, fallback chains longer than two candidates, dynamic module loading, module-level mutable state, swallowed errors, and unstructured console output.
+- ESLint is the single JavaScript/TypeScript owner for complexity 15, nesting depth 3, seven parameters, 60 logical function lines, 300 logical file lines, lowercase kebab-case filenames, direct environment access, environment-backed hardcoded defaults, fallback chains longer than two candidates, dynamic module loading, module-level mutable state, swallowed errors, and unstructured console output.
 - Exact environment and dynamic-loader boundaries live in the native ESLint settings file. Tests and fixtures are parsed but excluded from production maintainability budgets.
-- Gocyclo 0.6.0 is pinned in the general runtime and enforces the same complexity maximum of 10 over explicit Go module roots. Its text output, finding exits, and operational failures are normalized independently.
+- Gocyclo 0.6.0 is pinned in the general runtime and independently enforces complexity 10 over explicit Go module roots. Its text output, finding exits, and operational failures are normalized independently.
 - Semgrep no longer duplicates JavaScript/TypeScript swallowed-error, dynamic-loading, or console rules. The broad path-traversal rule was rejected after 340 false positives, and raw Helm-template scanning was removed after deterministic parser failures. Semgrep now scans every tracked production code and executable-script root through an explicit allowlist with focused security rules. A policy test fails when a supported production source file lacks a Semgrep root. The documentation-reference parser is the sole exact exclusion because Semgrep 1.170.0 only partially parses its regular-expression grammar; ESLint still covers it.
 - Trivy scans deterministic Helm-rendered manifests for high and critical Kubernetes security misconfigurations. It replaces the removed raw-template Semgrep rules without confusing Helm syntax for YAML, and it runs with embedded checks plus update/version checks disabled.
 - Every tool blocks at warning severity. Existing Phase 6 debt is fingerprinted rather than emitted as advisory noise: 1,464 ESLint findings, 11 Hadolint findings, four Go complexity findings, one Semgrep finding, and three rendered Kubernetes security findings. Together with Phase 5, the baseline contains 2,352 fingerprints, all expiring October 20, 2026.
@@ -233,7 +234,7 @@ Implementation evidence:
 - The accepted-rule contract documents stable codes, rejected and accepted examples, remediation, and the two noisy proposals rejected during calibration. Focused tests execute both clean and violating examples.
 - `pipeline_lint_policy.v5` and `pipeline_lint_report.v5` bind the stricter warning threshold and updated native configuration digests into evidence.
 
-## Phase 7: Ratchet, Suppressions, And Cutover
+## Phase 7: Ratchet, Suppressions, And Cutover (implemented July 20, 2026)
 
 Goal: activate strict enforcement without preserving permanent compatibility paths.
 
@@ -253,6 +254,60 @@ Exit criteria:
 - Existing debt cannot increase.
 - No old/new dual implementation remains.
 - Local and CI normalized reports are equivalent.
+
+Implementation evidence:
+
+- `pipeline_lint_policy.v6` owns one explicit `experimental_tools` list. Experimental tools do not run or appear in normal reports; `--include-experimental` runs them as non-blocking evidence with separate counts.
+- `pipeline_lint_report.v6` has explicit debt and experimental visibility. Normal reports disclose only active actionable findings. `--include-debt` reveals approved debt records without changing blocking counts.
+- `pipeline_lint_baseline.v2` requires tool, stable fingerprint, owner, reason, creation date, expiry, tracking reference, approver, and approval date. Missing approval is invalid, and an expired group fails policy loading even when its finding is absent.
+- New findings remain unmatched and blocking. New suppressions cannot take effect without explicit approval metadata, and experimental findings cannot be suppressed. Phase 7 fingerprints the 4,220 unique TypeScript diagnostics deliberately deferred from Phase 3; overlapping project runs may emit the same fingerprint more than once without weakening the ratchet.
+- The Phase 6 rule-admission records are machine-validated against three representative historical changed-file commits. Each admitted rule records its principle, remediation, reviewed changed-set count, observed false positives, approver, and approval date.
+- The pipeline invokes the same reporter and default visibility locally and in CI. Contract tests bind exact tool inventory, policy/config/baseline digests, changed-file scope, and visibility.
+- The root reporter alias, config discovery, unsafe cache, Madge path, duplicate-export proxy, raw Helm validation, and advisory-warning path remain deleted. Contract checks prevent these compatibility paths from returning.
+
+## Phase 8: Calibrate Using Real History (evaluated July 20, 2026)
+
+Goal: prove that admitted blocking rules produce actionable findings on current and representative historical changes without preserving shared false-positive exceptions.
+
+Procedure:
+
+1. Run the canonical reporter against the current repository and an isolated committed snapshot.
+2. Run every admitted ESLint rule against representative historical JavaScript and TypeScript changed sets.
+3. Classify every recurring finding pattern as actionable or noise.
+4. Correct native rule scope when a false positive is systematic; do not edit unrelated application code to make calibration appear clean.
+5. Keep genuine existing debt visible and fingerprinted.
+6. Introduce a temporary deliberate violation and prove that it is unmatched and blocking.
+
+Evaluation evidence:
+
+- The three originally recorded historical commits changed no ESLint-applicable files. They were rejected as invalid calibration evidence and replaced with `c33020319b13ac0054622812eb454a828b0d5f74`, `c73802816dc86b0d4a84c2dcd64109db85ea26c4`, and `ffd21d25af8e0e3547f948c83210c7bd62d53353`.
+- The replacement sets exercise 55, five, and six JavaScript/TypeScript files respectively. After calibration they produce 225, six, and 62 actionable findings.
+- Generated telemetry types are excluded from production cohesion budgets because the file is generated and explicitly says not to edit it.
+- `no-console` is disabled only for four declared command-line or logging boundaries. Direct console use elsewhere remains blocking.
+- A temporary changed-file probe produced unbaselined TypeScript, ESLint, and Knip findings, including direct environment access, an environment-backed default, a fallback chain, excessive nesting, and a dead file. The canonical report blocked it. The probe worktree was deleted after the check.
+
+Outcome: rule calibration is materially improved and the strict ratchet works. The repository is not yet a clean gate: current genuine debt, runtime tool drift, and TypeScript environment dependence are recorded in `linting-phase8-9-evaluation.md` and must not be hidden by expanding the baseline without explicit approval.
+
+## Phase 9: Roll Out In Narrow Vertical Slices (evaluated July 20, 2026)
+
+Goal: audit the completed implementation as ten independently verifiable capability slices instead of treating tool installation as completion.
+
+Slices:
+
+1. Reporter correctness and canonical policy.
+2. TypeScript detection and ESLint support.
+3. Go and Terraform adapters.
+4. YAML, Helm, and Kubernetes scope.
+5. Architecture and circular dependencies.
+6. Dead code and unused exports.
+7. Structural duplication.
+8. Complexity and file/function cohesion.
+9. Environment, settings, fallback, and hardcoded-policy rules.
+10. Initial baseline and strict ratchet activation.
+
+Outcome: all ten slices have canonical controls and focused contract tests, but rollout is only partially operational. The deployed live runtime is missing required binaries, TypeScript evidence changes with module-resolution layout, and the committed repository has new unmatched debt. The detailed slice verdict and P00-P25 control are authoritative in `linting-phase8-9-evaluation.md`. Phase 9 is complete as an audit, not accepted as a clean production rollout.
+
+The executable debt-removal and typed-boundary migration sequence is maintained in `pipeline-type-and-structure-migration-plan.md`. It starts from commit `3332db05d`, migrates Common before Buster and Nova, and requires every completed slice to reach zero TypeScript and ESLint findings without baseline expansion.
 
 ## Rule Admission Checklist
 

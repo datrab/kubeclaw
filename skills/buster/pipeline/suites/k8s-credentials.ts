@@ -11,16 +11,16 @@ function uniqueStrings(values: string[]): string[] {
 }
 
 export function parseSecretNameFromRef(ref: string | null): string | null {
-  if (selectTruthyValue(() => (typeof ref !== 'string'), () => (!ref.trim()))) return null;
+  if (typeof ref !== 'string' || !ref.trim()) return null;
   const trimmed = ref.trim();
   const prefixed = trimmed.match(/^secret\/([A-Za-z0-9._-]+)$/);
-  if (prefixed) return prefixed[1];
+  if (prefixed?.[1] !== undefined) return prefixed[1];
   if (/^[A-Za-z0-9._-]+$/.test(trimmed)) return trimmed;
   return null;
 }
 
 function normalizeSecretName(value: unknown): string | null {
-  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) return null;
+  if (typeof value !== 'string' || !value.trim()) return null;
   const parsed = parseSecretNameFromRef(value);
   return parsed && /^[A-Za-z0-9._-]+$/.test(parsed) ? parsed : null;
 }
@@ -39,7 +39,7 @@ export function normalizeTestCredentialSpecs(k8sCfg: AnyRecord = {}, previewCfg:
     if (!isObjectDoc(entry)) continue;
     const secretName = normalizeSecretName(entry.secret_name);
     const keys = normalizeCredentialKeys(entry.keys);
-    if (selectTruthyValue(() => (!secretName), () => (keys.length === 0))) continue;
+    if (secretName === null || keys.length === 0) continue;
     specs.push({
       secretName,
       keys,

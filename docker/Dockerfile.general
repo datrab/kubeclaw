@@ -184,13 +184,14 @@ RUN set -eux; \
 RUN mkdir -p /app/skills /opt/terraform-provider-mirror
 
 # The observer is self-contained and must not import from /app/skills.
-COPY plugins/openclaw-agent-observer/ /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer/
-WORKDIR /tmp/kubeclaw-openclaw-plugins/kubeclaw-agent-observer
-RUN rm -rf dist \
-    && node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p tsconfig.build.json \
+COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
+COPY plugins/openclaw-agent-observer/ /tmp/plugins/openclaw-agent-observer/
+WORKDIR /tmp/plugins/openclaw-agent-observer
+RUN node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
+    && node scripts/build.mjs --tsc /opt/kubeclaw-tools/node_modules/typescript/bin/tsc \
     && mkdir -p /app/dist/extensions/kubeclaw-agent-observer \
     && cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
-    && rm -rf /tmp/kubeclaw-openclaw-plugins
+    && rm -rf /tmp/plugins /tmp/contracts
 
 # Official plugins are pinned and baked into an OpenClaw home seed so startup
 # never requires a network install.

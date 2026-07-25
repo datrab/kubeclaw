@@ -1,3 +1,4 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-validator-control-result-surface' });
 import fs from 'fs';
@@ -6,16 +7,8 @@ import assert from 'assert';
 import { pathToFileURL } from 'url';
 import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i];
-    if (token === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
 const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/validator-control-result.ts');
@@ -171,13 +164,15 @@ const lintAttemptRoot = fs.mkdtempSync(path.join(sourceRoot, '.tmp-validator-lin
 try {
   const lintReportPath = path.join(lintAttemptRoot, 'fake-lint-report.mjs');
   const lintPolicyPath = path.join(lintAttemptRoot, 'lint-policy.json');
-  fs.writeFileSync(path.join(lintAttemptRoot, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v1","groups":[]}\n');
+  fs.writeFileSync(path.join(lintAttemptRoot, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v2","groups":[]}\n');
   fs.writeFileSync(lintPolicyPath, JSON.stringify({
-    schema_version: 'pipeline_lint_policy.v5',
+    schema_version: 'pipeline_lint_policy.v6',
     baseline_path: 'lint-baseline.json',
+    experimental_tools: [],
     projects: [{ id: 'workspace', root: '.', discovery_max_depth: 3, languages: ['shell'], language_evidence: { shell: ['never-present.sh'] } }],
     global_exclusions: [],
     architecture: { layers: [{ id: 'workspace', roots: ['.'], may_depend_on: ['workspace'] }] },
+    rule_admission: { historical_commits: ['ad77341f3d85de501d1fd5fdbad6ced613ccee16'], rules: [{ tool: 'shellcheck', code: 'fixture-rule', principle: 'Explicit shell behavior.', remediation: 'Fix the shell finding.', historical_changed_sets: 1, false_positives: 0, approved_by: 'platform', approved_on: '2026-07-20' }] },
     tools: [{ id: 'shellcheck', required: true, category: 'lint', scope: 'changed-files', tier: 'pre-check', timeout_ms: 1000, blocking_severity: 'error', languages: ['shell'], config_path: null, targets: ['.'], include: ['**/*.sh'], exclude: [] }],
   }));
   fs.writeFileSync(lintReportPath, `
@@ -206,17 +201,18 @@ if (logPath) {
   fs.writeFileSync(logPath, JSON.stringify({ event: 'trace' }) + '\\n');
 }
 fs.writeFileSync(output, JSON.stringify({
-  schema_version: 'pipeline_lint_report.v5',
-  policy: { schema_version: 'pipeline_lint_policy.v5', digest: policyDigest, project: 'workspace', config_digests: configDigests, baseline_digest: 'bb7e399cfbd2651eddfd7e7aca202f97f682ec1a61cde54b5ea12a26d8a7fe44' },
+  schema_version: 'pipeline_lint_report.v6',
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: configDigests, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'validator-control-contract',
   scope: requestedScope,
   tier: valueAfter('--tier') || 'pre-check',
+  visibility: { debt: false, experimental: false },
   timestamp: '2026-05-07T00:00:00.000Z',
   changed_files: requestedChangedFiles ? requestedChangedFiles.split(',') : [],
   detected_types: [],
   diagnostics: [],
   summary: { total_errors: 0, total_warnings: 0, total_blocking: 0,
-    total_baselined: 0, tools_ok: 0, tools_not_applicable: 0, tools_failed: 0 },
+    total_baselined: 0, total_experimental: 0, tools_ok: 0, tools_not_applicable: 0, tools_failed: 0 },
   tools: {},
 }, null, 2));
 `);

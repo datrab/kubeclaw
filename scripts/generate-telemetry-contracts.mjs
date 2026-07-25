@@ -1,59 +1,17 @@
 #!/usr/bin/env node
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const contractDir = path.join(root, 'contracts', 'telemetry', 'v1');
 const catalog = JSON.parse(fs.readFileSync(path.join(contractDir, 'catalog.json'), 'utf8'));
+const identitySchema = JSON.parse(fs.readFileSync(path.join(contractDir, 'correlation_identity.schema.json'), 'utf8'));
+const envelopeSchema = JSON.parse(fs.readFileSync(path.join(contractDir, 'envelope.schema.json'), 'utf8'));
 const check = process.argv.includes('--check');
-const runtimeValidatorSource = fs.readFileSync(path.join(root,'skills','common','pipeline','services','telemetry','payload-schema.ts'),'utf8');
-
-function balanced(source,start,open='{',close='}') { let depth=0,quote=null;for(let i=start;i<source.length;i++){const char=source[i];if(quote){if(char==='\\')i+=1;else if(char===quote)quote=null;continue;}if(['"',"'",'`'].includes(char)){quote=char;continue;}if(char===open)depth+=1;if(char===close&&--depth===0)return source.slice(start+1,i);}throw new Error(`unbalanced ${open}${close}`); }
-function fields(objectSource){const result={};let start=0,depth=0,quote=null;const chunks=[];for(let i=0;i<=objectSource.length;i++){const char=objectSource[i]??',';if(quote){if(char==='\\')i+=1;else if(char===quote)quote=null;continue;}if(['"',"'",'`'].includes(char)){quote=char;continue;}if('([{'.includes(char))depth+=1;if(')]}'.includes(char))depth-=1;if(char===','&&depth===0){chunks.push(objectSource.slice(start,i));start=i+1;}}for(const chunk of chunks){const match=chunk.trim().match(/^([a-zA-Z0-9_]+)\s*:\s*(.+)$/s);if(match)result[match[1]]=match[2].trim();}return result;}
-function jsonType(expression){const nullableType=expression.includes('nullable(');let schema;if(expression.includes('stringArray'))schema={type:'array',items:{type:'string'}};else if(expression.includes('arrayOrObject'))schema={oneOf:[{type:'array'},{type:'object'}]};else if(expression.includes('jsonObject')||/\bobject\b/.test(expression))schema={type:'object'};else if(/\barray\b/.test(expression))schema={type:'array'};else if(/\bboolean\b/.test(expression))schema={type:'boolean'};else if(/\bnumber\b/.test(expression))schema={type:'number'};else if(/nonEmptyString/.test(expression))schema={type:'string',minLength:1};else if(/\bstring\b/.test(expression))schema={type:'string'};else schema={};if(nullableType&&schema.type)schema.type=[schema.type,'null'];return schema;}
-function runtimePayloadDefinition(type){const marker=`'${type}': schema(`;const at=runtimeValidatorSource.indexOf(marker);if(at<0)throw new Error(`runtime validator missing ${type}`);const argsStart=runtimeValidatorSource.indexOf('(',at)+1;const firstStart=runtimeValidatorSource.indexOf('{',argsStart);const requiredFields=fields(balanced(runtimeValidatorSource,firstStart));const afterFirst=firstStart+balanced(runtimeValidatorSource,firstStart).length+2;const secondStart=runtimeValidatorSource.indexOf('{',afterFirst);const optionalFields=fields(balanced(runtimeValidatorSource,secondStart));return{required:Object.keys(requiredFields),properties:Object.fromEntries([...Object.entries(requiredFields),...Object.entries(optionalFields)].map(([key,expression])=>[key,jsonType(expression)]))};}
-const commonMarker=runtimeValidatorSource.indexOf('const commonFields:');const commonStart=runtimeValidatorSource.indexOf('{',commonMarker);const commonPayloadFields=fields(balanced(runtimeValidatorSource,commonStart));
-
-const identityProperties = {
-  project: { type: 'string', minLength: 1 }, run_id: { type: 'string', minLength: 1 },
-  work_id: { type: ['string', 'null'] }, work_type: { enum: ['pipeline', 'module', 'gate', 'generator', 'validator', 'pipeline_step', null] },
-  gate_id: { type: ['string', 'null'] }, attempt: { type: ['integer', 'null'], minimum: 0 },
-  dispatch_id: { type: ['string', 'null'] }, session_id: { type: ['string', 'null'] },
-  agent_id: { type: ['string', 'null'] }, model_call_id: { type: ['string', 'null'] },
-  tool_call_id: { type: ['string', 'null'] }, source: { type: 'string', minLength: 1 },
-  producer: { type: 'string', minLength: 1 }
-};
-const identityRequired = ['project', 'run_id', 'source', 'producer'];
-const identitySchema = {
-  $schema: 'https://json-schema.org/draft/2020-12/schema', $id: 'correlation_identity.v1',
-  title: 'Canonical correlation identity', type: 'object', additionalProperties: false,
-  required: identityRequired, properties: identityProperties
-};
-const envelopeSchema = {
-  $schema: 'https://json-schema.org/draft/2020-12/schema', $id: 'telemetry_envelope.v1',
-  type: 'object', additionalProperties: true,
-  required: ['schema_version', 'event_id', 'type', 'occurred_at', 'emitted_at', 'seq', ...identityRequired],
-  properties: {
-    schema_version: { const: 'telemetry_envelope.v1' }, event_id: { type: 'string', minLength: 1 },
-    type: { enum: catalog.event_types }, occurred_at: { type: 'string', format: 'date-time' },
-    emitted_at: { type: 'string', format: 'date-time' }, seq: { type: 'integer', minimum: 1 },
-    cursor: { type: ['string', 'null'] }, causation_id: { type: ['string', 'null'] },
-    ...identityProperties,
-    extensions: { type: 'object' }
-  }
-};
-const specialPayloads = {
-  'artifact.published': {
-    required: ['artifact_id', 'logical_id', 'kind', 'media_type', 'byte_length', 'sha256', 'content_class', 'reference'],
-    properties: { artifact_id:{type:'string'}, logical_id:{type:'string'}, kind:{type:'string'}, media_type:{type:'string'}, byte_length:{type:'integer',minimum:0}, sha256:{type:'string',pattern:'^[a-f0-9]{64}$'}, content_class:{enum:['metadata','payload','artifact','quarantined']}, reference:{type:'string'}, completeness:{enum:['full','truncated','summarized','transformed','unavailable','reference-only']}, original_byte_length:{type:['integer','null']}, original_sha256:{type:['string','null']}, transformation:{type:['string','null']} }
-  },
-  'terminal.closure': { required:['outcome','reason_code','manifest_fingerprint','observability'], properties:{outcome:{enum:['success','failure','paused','cancelled','process_lost','abandoned','completed']},reason_code:{type:'string'},duration_ms:{type:['integer','null']},manifest_fingerprint:{type:'string'},observability:{enum:['complete','partial','degraded','unknown']},counts:{type:'object'},cost:{type:['object','null']},last_work_id:{type:['string','null']},references:{type:'array'}} },
-  'runtime.log': { required:['level','component','message'], properties:{level:{enum:['trace','debug','info','warn','error','fatal']},component:{type:'string'},message:{type:'string'},error_class:{type:['string','null']},reason_code:{type:['string','null']}} },
-  'producer.health': { required:['producer_id','status','last_successful_emission','invalid_count','quarantined_count','dead_letter_count'], properties:{producer_id:{type:'string'},status:{enum:['healthy','degraded','unhealthy','unknown']},last_successful_emission:{type:['string','null']},lag:{type:['integer','null']},checkpoint:{type:['string','null']},invalid_count:{type:'integer'},quarantined_count:{type:'integer'},dead_letter_count:{type:'integer'},missing_payload_count:{type:'integer'},restart_count:{type:'integer'},reconciliation:{type:['object','null']}} },
-  'lifecycle.transition': { required:['lifecycle_version','previous_state','new_state','reason_code','effective_at','authority'], properties:{lifecycle_version:{const:'pipeline_lifecycle.v1'},previous_state:{type:['string','null']},new_state:{type:'string'},reason_code:{type:'string'},effective_at:{type:'string',format:'date-time'},authority:{type:'string'}} },
-  'command.requested': { required:['command_id','command_type','actor','capability','expires_at','expected_lifecycle_version'], properties:{command_id:{type:'string'},command_type:{enum:['approval.resolve','pipeline.pause','pipeline.resume','pipeline.cancel']},actor:{type:'string'},capability:{type:'string'},expires_at:{type:'string',format:'date-time'},target:{type:['object','null']},expected_lifecycle_version:{type:'integer',minimum:0}} }
-};
+const written = new Set();
 
 function stable(value) {
   if (Array.isArray(value)) return value.map(stable);
@@ -61,8 +19,16 @@ function stable(value) {
   return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])]));
 }
 function render(value) { return `${JSON.stringify(stable(value), null, 2)}\n`; }
+function sha256(bytes) { return crypto.createHash('sha256').update(bytes).digest('hex'); }
+function formatGo(content) {
+  const result = spawnSync('gofmt', [], { input: content, encoding: 'utf8' });
+  if (result.error) throw new Error(`gofmt is required to generate telemetry contracts: ${result.error.message}`);
+  if (result.status !== 0) throw new Error(`gofmt failed while generating telemetry contracts: ${result.stderr.trim()}`);
+  return result.stdout;
+}
 function output(relative, content) {
   const target = path.join(contractDir, relative);
+  written.add(relative);
   if (check) {
     if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== content) throw new Error(`telemetry contract drift: ${relative}`);
     return;
@@ -70,28 +36,159 @@ function output(relative, content) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, content);
 }
+function schemaRef(name, required, properties, extra = {}) {
+  return {
+    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    $id: name,
+    type: 'object',
+    additionalProperties: false,
+    required,
+    properties: { extensions: { type: 'object' }, ...properties },
+    ...extra,
+  };
+}
+const string = { type: 'string', minLength: 1 };
+const nullableString = { type: ['string', 'null'] };
+const timestamp = { type: 'string', format: 'date-time' };
+const hash = { type: 'string', pattern: '^[a-f0-9]{64}$' };
+const gitCommit = { type: 'string', pattern: '^[a-f0-9]{40,64}$' };
+const correlation = { $ref: '../correlation_identity.schema.json' };
+const completeness = { enum: ['full', 'truncated', 'summarized', 'transformed', 'unavailable', 'reference_only'] };
+const observability = { enum: ['complete', 'partial', 'degraded', 'unknown'] };
+const evidenceProvenance = { enum: ['production', 'recorded', 'synthetic'] };
+const capabilityAvailability = {
+  type:'object', additionalProperties:false, required:['capability','status','reason_code'], properties:{
+    capability:string, status:{enum:['available','capability_unavailable','degraded','unknown']}, reason_code:nullableString, details:{type:['object','null']},
+  },
+};
+const producerHealthEntry = {
+  type:'object', additionalProperties:false,
+  required:['producer_id','status','last_successful_emission','lag','checkpoint','invalid_count','quarantined_count','dead_letter_count','missing_payload_count','restart_count','reconciliation','capabilities'],
+  properties:{producer_id:string,status:{enum:['healthy','degraded','unhealthy','unknown','not_applicable']},last_successful_emission:{type:['string','null'],format:'date-time'},lag:{type:['integer','null'],minimum:0},checkpoint:nullableString,invalid_count:{type:'integer',minimum:0},quarantined_count:{type:'integer',minimum:0},dead_letter_count:{type:'integer',minimum:0},missing_payload_count:{type:'integer',minimum:0},restart_count:{type:'integer',minimum:0},reconciliation:{type:['object','null']},degradation_intervals:{type:'array',items:{type:'object',additionalProperties:false,required:['started_at','reason_code'],properties:{started_at:timestamp,ended_at:{type:['string','null'],format:'date-time'},reason_code:string}}},capabilities:{type:'array',items:capabilityAvailability}},
+};
+const lifecycleProjection = {type:'object',additionalProperties:false,required:['status'],properties:{status:string,run_id:nullableString,run_ref:nullableString,work_id:nullableString,module_id:nullableString,gate_id:nullableString,gate_type:nullableString,title:nullableString,module_dir:nullableString,attempt:{type:['integer','null'],minimum:0},current_attempt:{type:['integer','null'],minimum:0},previous_state:nullableString,reason_code:nullableString,halt_reason:nullableString,terminal_status:nullableString,terminal_decision:{type:['object','null']},run_mode:nullableString,resume:{type:['boolean','null']},requested_module_id:nullableString,entrypoint:nullableString,current_phase:nullableString,started_at:{type:['string','null'],format:'date-time'},attempt_started_at:{type:['string','null'],format:'date-time'},phase_started_at:{type:['string','null'],format:'date-time'},completed_at:{type:['string','null'],format:'date-time'},completion_summary:nullableString,fail_count:{type:['integer','null'],minimum:0},fail_summaries:{type:'array',items:{type:'object'}},last_failure:nullableString,blocked_at:{type:['string','null'],format:'date-time'},blocked_reason:nullableString,blocked_phase:nullableString,blocked_fail_count:{type:['integer','null'],minimum:0},dispatch_id:nullableString,gateway_label:nullableString,session_id:nullableString,session_key:nullableString,model:nullableString,commit_hash:nullableString,history:{type:'array',items:{type:'object',additionalProperties:false,properties:{timestamp:timestamp,from:nullableString,to:nullableString,agent:nullableString,note:nullableString}}},validation:{type:['object','null']},projection_source:nullableString,latest_event_type:nullableString,latest_event_at:{type:['string','null'],format:'date-time'},last_event_id:nullableString,last_effective_at:{type:['string','null'],format:'date-time'},lifecycle_version:{type:['integer','string','null']}}};
+const lifecycleProjectionMap = {type:'object',additionalProperties:lifecycleProjection};
+const attemptProjection={type:'object',additionalProperties:false,required:['attempt_id','work_id','work_type','attempt','status','last_event_id','last_effective_at'],properties:{attempt_id:string,work_id:string,work_type:{enum:['module','gate','generator','validator','pipeline_step']},attempt:{type:'integer',minimum:1},status:string,reason_code:nullableString,dispatch_id:nullableString,session_id:nullableString,last_event_id:string,last_effective_at:timestamp}};
+const genericProjectionMap={type:'object',additionalProperties:{type:'object'}};
+const lifecycleReadModels = {type:'object',additionalProperties:false,required:['pipeline','modules','gates','attempts'],properties:{pipeline:{oneOf:[lifecycleProjection,{type:'null'}]},modules:lifecycleProjectionMap,gates:lifecycleProjectionMap,generators:lifecycleProjectionMap,validators:lifecycleProjectionMap,pipeline_steps:lifecycleProjectionMap,attempts:{type:'object',additionalProperties:attemptProjection},progression:{type:'object',additionalProperties:false,required:['modules_total','modules_passed','modules_failed','modules_blocked','modules_active'],properties:{modules_total:{type:'integer',minimum:0},modules_passed:{type:'integer',minimum:0},modules_failed:{type:'integer',minimum:0},modules_blocked:{type:'integer',minimum:0},modules_active:{type:'integer',minimum:0}}},waits:genericProjectionMap,signals:genericProjectionMap,active_sessions:genericProjectionMap,cooldowns:genericProjectionMap,generated_at:timestamp,last_event_id:nullableString,last_event_type:nullableString,event_count:{type:'integer',minimum:0}}};
+const lifecycleSnapshot={type:'object',additionalProperties:false,required:['schema_version','run_id','pipeline','modules','gates','attempts'],properties:{schema_version:{const:'pipeline_lifecycle_read_models.v1'},run_id:string,lifecycle_version:{const:'pipeline_lifecycle.v1'},last_cursor:nullableString,...lifecycleReadModels.properties}};
+const workItem = {type:'object',additionalProperties:false,required:['work_type','work_id','depends_on','owner','configuration'],properties:{work_type:{enum:['module','gate','generator','validator','pipeline_step']},work_id:string,depends_on:{type:'array',items:string,uniqueItems:true},owner:string,configuration:{type:'object'}}};
+const dependencyEdge = {type:'object',additionalProperties:false,required:['from','to'],properties:{from:string,to:string}};
+const commandResult = {type:'object',additionalProperties:false,required:['status'],properties:{status:{enum:['completed','failed','rejected']},value:{},error_class:nullableString,message:nullableString}};
+const scenarioFact = {type:'object',additionalProperties:false,required:['scenario_id','provenance','status','event_types'],properties:{scenario_id:string,provenance:evidenceProvenance,status:{enum:['covered','not_observed','capability_unavailable']},event_types:{type:'array',items:string,uniqueItems:true},reason_code:nullableString,bundle_reference:nullableString}};
 
-output('correlation_identity.schema.json', render(identitySchema));
-output('envelope.schema.json', render(envelopeSchema));
+const durableSchemas = {
+  'run_manifest.v1': schemaRef('run_manifest.v1', ['schema_version','project','run_id','fingerprint','work_items','schema_versions'], {
+    schema_version:{const:'run_manifest.v1'}, project:string, run_id:string, fingerprint:hash, work_items:{type:'array',items:workItem}, execution_order:{type:'array',items:{type:'string'}}, dependency_edges:{type:'array',items:dependencyEdge}, runtime_policies:{type:'object'}, models:{type:'array',items:{type:'object'}}, prompts:{type:'array',items:{type:'object'}}, tools:{type:'array',items:{type:'object'}}, skills:{type:'array',items:{type:'object'}}, plugins:{type:'array',items:{type:'object'}}, git:{type:'object'}, deployment:{type:'object'}, versions:{type:'object'}, schema_versions:{type:'object'}, created_at:timestamp,
+  }),
+  'run_archive_manifest.v1': schemaRef('run_archive_manifest.v1', ['schema_version','run_id','project','lifecycle','sources','manifest_reference','completeness','repair_state','sha256'], {
+    schema_version:{const:'run_archive_manifest.v1'}, run_id:string, project:string, created_at:timestamp, lifecycle:{type:'object'}, sources:{type:'array'}, manifest_reference:string, terminal_reference:nullableString, completeness:observability, repair_state:{enum:['verified','repair_required','repaired','unrecoverable']}, sha256:hash,
+  }),
+  'run_catalog_entry.v1': schemaRef('run_catalog_entry.v1', ['schema_version','run_id','project','archive_reference','sha256','completeness','repair_state','recorded_at'], {
+    schema_version:{const:'run_catalog_entry.v1'}, run_id:string, project:string, archive_reference:string, sha256:hash, completeness:observability, repair_state:string, recorded_at:timestamp,
+  }),
+  'artifact_published.v1': schemaRef('artifact_published.v1', ['schema_version','artifact_id','logical_id','kind','media_type','byte_length','sha256','content_class','producer','reference','correlation','completeness','original_byte_length','original_sha256','published_at'], {
+    schema_version:{const:'artifact_published.v1'}, artifact_id:string, logical_id:string, kind:string, media_type:string, byte_length:{type:'integer',minimum:0}, sha256:hash, content_class:{enum:['metadata','payload','artifact','quarantined']}, producer:string, reference:{type:'string',pattern:'^blobs/sha256/[a-f0-9]{2}/[a-f0-9]{62}$'}, correlation, completeness, original_byte_length:{type:['integer','null'],minimum:0}, original_sha256:{oneOf:[hash,{type:'null'}]}, transformation:{type:['object','null']}, published_at:timestamp,
+  }),
+  'producer_health_snapshot.v1': schemaRef('producer_health_snapshot.v1', ['schema_version','run_id','generated_at','producers','completeness'], {
+    schema_version:{const:'producer_health_snapshot.v1'}, run_id:string, generated_at:timestamp, producers:{type:'array',minItems:1,items:producerHealthEntry}, completeness:observability,
+  }),
+  'terminal_closure.v1': schemaRef('terminal_closure.v1', ['schema_version','run_id','project','closed_at','outcome','reason_code','manifest_fingerprint','observability','artifact_catalog_reference'], {
+    schema_version:{const:'terminal_closure.v1'}, run_id:string, project:string, closed_at:timestamp, outcome:{enum:['success','failure','paused','cancelled','process_lost','abandoned','completed']}, reason_code:string, duration_ms:{type:['integer','null'],minimum:0}, counts:{type:'object'}, cost:{type:['object','null']}, last_work_id:nullableString, manifest_fingerprint:hash, observability, summary_reference:nullableString, artifact_catalog_reference:string,
+  }),
+  'pipeline_lifecycle_event.v1': schemaRef('pipeline_lifecycle_event.v1', ['schema_version','event_id','source_event_id','run_id','project','lifecycle_version','effective_at','authority','previous_state','new_state','reason_code'], {
+    schema_version:{const:'pipeline_lifecycle_event.v1'}, event_id:string, source_event_id:string, run_id:string, project:string, work_id:nullableString, work_type:nullableString, module_id:nullableString, gate_id:nullableString, attempt:{type:['integer','null'],minimum:0}, lifecycle_version:{const:'pipeline_lifecycle.v1'}, effective_at:timestamp, authority:string, previous_state:nullableString, new_state:string, reason_code:string, data:{type:'object'},
+  }),
+  'pipeline_lifecycle_read_models.v1': schemaRef('pipeline_lifecycle_read_models.v1', ['schema_version','run_id','pipeline','modules','gates','attempts'], {
+    schema_version:{const:'pipeline_lifecycle_read_models.v1'}, run_id:string, ...lifecycleReadModels.properties, lifecycle_version:{const:'pipeline_lifecycle.v1'}, last_cursor:nullableString,
+  }),
+  'evaluation_fact.v1': schemaRef('evaluation_fact.v1', ['schema_version','recorded_at','run_id','dimension','value'], {
+    schema_version:{const:'evaluation_fact.v1'}, recorded_at:timestamp, run_id:string, project:string, work_id:nullableString, attempt:{type:['integer','null'],minimum:0}, dimension:string, value:{}, fingerprint:nullableString,
+  }),
+  'pipeline_command_evidence.v1': schemaRef('pipeline_command_evidence.v1', ['schema_version','state','recorded_at','command_id','command_type','actor','reason','command_hash'], {
+    schema_version:{const:'pipeline_command_evidence.v1'}, state:{enum:['requested','accepted','rejected','completed']}, recorded_at:timestamp, command_id:string, command_type:{enum:['approval.resolve','pipeline.pause','pipeline.resume','pipeline.cancel']}, actor:string, capability:string, target:{type:['object','null']}, expected_lifecycle_version:{type:'integer',minimum:0}, reason:string, reason_code:nullableString, result:{oneOf:[commandResult,{type:'null'}]}, command_hash:hash,
+  }),
+  'runtime_log.v1': schemaRef('runtime_log.v1', ['schema_version','timestamp','level','component','message'], {
+    schema_version:{const:'runtime_log.v1'}, timestamp:timestamp, level:{enum:['trace','debug','info','warn','error','fatal']}, component:string, message:{type:'string'}, project:nullableString, run_id:nullableString, work_id:nullableString, error_class:nullableString, reason_code:nullableString, extensions:{type:'object'},
+  }),
+  'quarantined_payload.v1': schemaRef('quarantined_payload.v1', ['schema_version','quarantine_id','quarantined_at','reason_code','producer'], {
+    schema_version:{const:'quarantined_payload.v1'}, quarantine_id:string, quarantined_at:timestamp, reason_code:string, producer:string, identity:{type:['object','null']}, original_byte_length:{type:['integer','null'],minimum:0}, original_sha256:{oneOf:[hash,{type:'null'}]}, intended_type:nullableString,
+  }),
+  'pipeline_evidence_export.v1': schemaRef('pipeline_evidence_export.v1', ['schema_version','exported_at','source_run_id','verification','contracts_reference','contract_manifest_reference','source_git_commit','source_git_clean','bundle_sha256','hash_algorithm'], {
+    schema_version:{const:'pipeline_evidence_export.v1'}, exported_at:timestamp, source_run_id:string, verification:{type:'object'}, contracts_reference:string, contract_manifest_reference:string, expected_source_facts_reference:string, source_git_commit:gitCommit, source_git_clean:{type:'boolean'}, bundle_sha256:hash, hash_algorithm:{const:'sha256-path-content-v1'},
+  }),
+  'expected_source_facts.v1': schemaRef('expected_source_facts.v1', ['schema_version','run_id','project','event_types','readiness_event_types','artifact_kinds','lifecycle_projection','scenario_facts','capabilities'], {
+    schema_version:{const:'expected_source_facts.v1'}, run_id:string, project:string, event_types:{type:'array',items:{type:'string'},uniqueItems:true}, readiness_event_types:{type:'array',items:{type:'string'},uniqueItems:true}, artifact_kinds:{type:'array',items:{type:'string'},uniqueItems:true}, lifecycle_projection:lifecycleSnapshot, scenario_facts:{type:'array',items:scenarioFact}, capabilities:{type:'array',items:capabilityAvailability},
+  }),
+  'composed_prompt.v1': schemaRef('composed_prompt.v1', ['schema_version','artifact_id','reference','template_version','sections','completeness','byte_length','sha256','correlation'], {
+    schema_version:{const:'composed_prompt.v1'}, artifact_id:string, reference:string, template_version:string, sections:{type:'array',minItems:1}, model:nullableString, provider:nullableString, thinking:nullableString, completeness, byte_length:{type:'integer',minimum:0}, sha256:hash, correlation,
+  }),
+  'pipeline_command_request.v1': schemaRef('pipeline_command_request.v1', ['schema_version','command_id','command_type','project','run_id','actor','capability','issued_at','expires_at','reason','target','expected_lifecycle_version'], {
+    schema_version:{const:'pipeline_command_request.v1'}, command_id:string, command_type:{enum:['approval.resolve','pipeline.pause','pipeline.resume','pipeline.cancel']}, project:string, run_id:string, actor:string, capability:string, issued_at:timestamp, expires_at:timestamp, reason:string, target:{type:'object'}, expected_lifecycle_version:{type:'integer',minimum:0}, decision:nullableString, extensions:{type:'object'},
+  }),
+};
+
+function tsType(schema = {}) {
+  if (schema.const !== undefined) return JSON.stringify(schema.const);
+  if (schema.enum) return schema.enum.map((value) => JSON.stringify(value)).join(' | ');
+  if (schema.oneOf) return schema.oneOf.map(tsType).join(' | ');
+  const types = Array.isArray(schema.type) ? schema.type : schema.type ? [schema.type] : [];
+  return types.map((type) => type === 'string' ? 'string' : type === 'integer' || type === 'number' ? 'number' : type === 'boolean' ? 'boolean' : type === 'null' ? 'null' : type === 'array' ? `Array<${tsType(schema.items)}>` : type === 'object' ? schema.properties ? `{ ${Object.entries(schema.properties).map(([name,value])=>`${JSON.stringify(name)}${(schema.required||[]).includes(name)?'':'?'}: ${tsType(value)}`).join('; ')} }` : schema.additionalProperties && typeof schema.additionalProperties==='object' ? `Record<string, ${tsType(schema.additionalProperties)}>` : 'Record<string, unknown>' : 'unknown').join(' | ') || 'unknown';
+}
+function goType(schema = {}) {
+  if (schema.oneOf) {
+    const nullable = schema.oneOf.some(item=>item.type==='null');
+    const selected = schema.oneOf.find(item=>item.type!=='null') ?? {};
+    const resolved = goType(selected);
+    return nullable && !resolved.startsWith('*') ? `*${resolved}` : resolved;
+  }
+  const types = Array.isArray(schema.type) ? schema.type.filter((type) => type !== 'null') : schema.type ? [schema.type] : [];
+  const base = types[0] === 'string' ? 'string' : types[0] === 'integer' ? 'int64' : types[0] === 'number' ? 'float64' : types[0] === 'boolean' ? 'bool' : types[0] === 'array' ? `[]${goType(schema.items)}` : types[0] === 'object' && schema.properties ? `struct { ${Object.entries(schema.properties).map(([name,value])=>`${goName(name)} ${goType(value)} \`json:"${name}${(schema.required||[]).includes(name)?'':',omitempty'}"\``).join('; ')} }` : types[0] === 'object' && schema.additionalProperties && typeof schema.additionalProperties==='object' ? `map[string]${goType(schema.additionalProperties)}` : 'json.RawMessage';
+  return Array.isArray(schema.type) && schema.type.includes('null') ? `*${base}` : base;
+}
+function goName(value) { return value.split(/[^a-zA-Z0-9]+/).filter(Boolean).map((part) => part[0].toUpperCase()+part.slice(1)).join(''); }
+
+const payloadSchemas = new Map();
 for (const type of catalog.event_types) {
-  const runtimeDefinition=runtimePayloadDefinition(type);
-  const special=specialPayloads[type]||{required:[],properties:{}};
-  const definition={required:[...new Set([...runtimeDefinition.required,...special.required])],properties:{...Object.fromEntries(Object.entries(commonPayloadFields).map(([key,expression])=>[key,jsonType(expression)])),...runtimeDefinition.properties,...special.properties}};
-  output(`payloads/${type}.schema.json`, render({
-    $schema:'https://json-schema.org/draft/2020-12/schema', $id:`${type}.payload.v1`,
-    type:'object', additionalProperties: false, required:definition.required,
-    properties:{...definition.properties, extensions:{type:'object'}}
-  }));
-  const causalRequired = type.startsWith('agent.tool.') ? ['work_id','work_type','attempt','dispatch_id','session_id','model_call_id','tool_call_id'] : type.startsWith('agent.model.') || type.startsWith('agent.llm.') ? ['work_id','work_type','attempt','dispatch_id','session_id','model_call_id'] : [];
-  const causalProperties = Object.fromEntries(causalRequired.filter(key=>key!=='attempt'&&key!=='work_type').map(key=>[key,{type:'string',minLength:1}]));
+  const relative = `payloads/${type}.schema.json`;
+  const schema = JSON.parse(fs.readFileSync(path.join(contractDir, relative), 'utf8'));
+  payloadSchemas.set(type, schema);
+  written.add(relative);
   output(`events/${type}.schema.json`, render({
-    $schema:'https://json-schema.org/draft/2020-12/schema', $id:`${type}.event.v1`,
-    type:'object', additionalProperties:false,
-    required:['schema_version','event_id','type','occurred_at','emitted_at','seq',...identityRequired,...causalRequired,...definition.required],
-    properties:{...envelopeSchema.properties,...definition.properties,...causalProperties,type:{const:type}}
+    $schema:'https://json-schema.org/draft/2020-12/schema', $id:`${type}.event.v1`, type:'object', additionalProperties:false,
+    required:[...new Set([...envelopeSchema.required, ...(schema.required || [])])],
+    properties:{...envelopeSchema.properties,...schema.properties,type:{const:type},extensions:envelopeSchema.properties.extensions},
   }));
 }
-const union = catalog.event_types.map((type) => `  | '${type}'`).join('\n');
-output('telemetry-types.ts', `// Generated by scripts/generate-telemetry-contracts.mjs. Do not edit.\nexport type TelemetryEventType =\n${union};\nexport interface CorrelationIdentity { project:string; run_id:string; work_id?:string|null; work_type?:'pipeline'|'module'|'gate'|'generator'|'validator'|'pipeline_step'|null; gate_id?:string|null; attempt?:number|null; dispatch_id?:string|null; session_id?:string|null; agent_id?:string|null; model_call_id?:string|null; tool_call_id?:string|null; source:string; producer:string; }\nexport type TelemetryEnvelope<T extends Record<string, unknown> = Record<string, unknown>> = CorrelationIdentity & T & { schema_version:'telemetry_envelope.v1'; event_id:string; type:TelemetryEventType; occurred_at:string; emitted_at:string; seq:number; cursor?:string|null; causation_id?:string|null; };\n`);
-output('telemetry_types.go', `// Code generated by scripts/generate-telemetry-contracts.mjs. DO NOT EDIT.\npackage telemetryv1\n\nimport "encoding/json"\n\ntype CorrelationIdentity struct {\n Project string \`json:"project"\`; RunID string \`json:"run_id"\`; WorkID *string \`json:"work_id,omitempty"\`; WorkType *string \`json:"work_type,omitempty"\`; GateID *string \`json:"gate_id,omitempty"\`; Attempt *int \`json:"attempt,omitempty"\`; DispatchID *string \`json:"dispatch_id,omitempty"\`; SessionID *string \`json:"session_id,omitempty"\`; AgentID *string \`json:"agent_id,omitempty"\`; ModelCallID *string \`json:"model_call_id,omitempty"\`; ToolCallID *string \`json:"tool_call_id,omitempty"\`; Source string \`json:"source"\`; Producer string \`json:"producer"\`\n}\ntype Envelope struct { CorrelationIdentity; SchemaVersion string \`json:"schema_version"\`; EventID string \`json:"event_id"\`; Type string \`json:"type"\`; OccurredAt string \`json:"occurred_at"\`; EmittedAt string \`json:"emitted_at"\`; Seq uint64 \`json:"seq"\`; Cursor *string \`json:"cursor,omitempty"\`; CausationID *string \`json:"causation_id,omitempty"\`; Extensions map[string]json.RawMessage \`json:"extensions,omitempty"\` }\n`);
-console.log(JSON.stringify({ ok:true, checked:check, events:catalog.event_types.length }));
+for (const [name, schema] of Object.entries(durableSchemas)) output(`bundle/${name}.schema.json`, render(schema));
+
+const eventUnion = catalog.event_types.map((type) => `  | ${JSON.stringify(type)}`).join('\n');
+const payloadInterfaces = [...payloadSchemas].map(([type,schema]) => {
+  const required = new Set(schema.required || []);
+  const fields = Object.entries(schema.properties || {}).filter(([name])=>name!=='extensions').map(([name,value])=>`  ${JSON.stringify(name)}${required.has(name)?'':'?'}: ${tsType(value)};`).join('\n');
+  return `export interface ${goName(type)}Payload {\n${fields}\n}`;
+}).join('\n\n');
+const payloadMap = catalog.event_types.map((type)=>`  ${JSON.stringify(type)}: ${goName(type)}Payload;`).join('\n');
+output('telemetry-types.ts', `// Generated from contracts/telemetry/v1 JSON Schemas. Do not edit.\nexport type TelemetryEventType =\n${eventUnion};\n${payloadInterfaces}\nexport interface TelemetryPayloadMap {\n${payloadMap}\n}\nexport interface CorrelationIdentity { project:string; run_id:string; work_id?:string|null; work_type?:string|null; module_id?:string|null; gate_id?:string|null; gate_type?:string|null; attempt?:number|null; dispatch_id?:string|null; session_id?:string|null; parent_session_id?:string|null; agent_id?:string|null; model_call_id?:string|null; tool_call_id?:string|null; trace_id?:string|null; span_id?:string|null; parent_span_id?:string|null; source:string; producer:string; }\nexport type TelemetryEnvelope<K extends TelemetryEventType = TelemetryEventType> = CorrelationIdentity & TelemetryPayloadMap[K] & { schema_version:'telemetry_envelope.v1'; event_id:string; source_event_id:string; type:K; occurred_at:string; emitted_at:string; seq:number; cursor:string; authority_class:string; causation_id?:string|null; extensions?:Record<string,unknown>; };\n`);
+const goPayloads = [...payloadSchemas].map(([type,schema])=>`type ${goName(type)}Payload struct {\n${Object.entries(schema.properties||{}).filter(([name])=>name!=='extensions').map(([name,value])=>` ${goName(name)} ${goType(value)} \`json:"${name}${(schema.required||[]).includes(name)?'':',omitempty'}"\``).join('\n')}\n}`).join('\n\n');
+output('telemetry_types.go', formatGo(`// Code generated from contracts/telemetry/v1 JSON Schemas. DO NOT EDIT.\npackage telemetryv1\n\nimport "encoding/json"\n\ntype CorrelationIdentity struct { Project string \`json:"project"\`; RunID string \`json:"run_id"\`; WorkID *string \`json:"work_id,omitempty"\`; WorkType *string \`json:"work_type,omitempty"\`; ModuleID *string \`json:"module_id,omitempty"\`; GateID *string \`json:"gate_id,omitempty"\`; GateType *string \`json:"gate_type,omitempty"\`; Attempt *int64 \`json:"attempt,omitempty"\`; DispatchID *string \`json:"dispatch_id,omitempty"\`; SessionID *string \`json:"session_id,omitempty"\`; ParentSessionID *string \`json:"parent_session_id,omitempty"\`; AgentID *string \`json:"agent_id,omitempty"\`; ModelCallID *string \`json:"model_call_id,omitempty"\`; ToolCallID *string \`json:"tool_call_id,omitempty"\`; TraceID *string \`json:"trace_id,omitempty"\`; SpanID *string \`json:"span_id,omitempty"\`; ParentSpanID *string \`json:"parent_span_id,omitempty"\`; Source string \`json:"source"\`; Producer string \`json:"producer"\` }\ntype Envelope struct { CorrelationIdentity; SchemaVersion string \`json:"schema_version"\`; EventID string \`json:"event_id"\`; SourceEventID string \`json:"source_event_id"\`; Type string \`json:"type"\`; OccurredAt string \`json:"occurred_at"\`; EmittedAt string \`json:"emitted_at"\`; Seq uint64 \`json:"seq"\`; Cursor string \`json:"cursor"\`; AuthorityClass string \`json:"authority_class"\`; CausationID *string \`json:"causation_id,omitempty"\`; Extensions map[string]json.RawMessage \`json:"extensions,omitempty"\` }\n\n${goPayloads}\n`));
+
+const durableTs = Object.entries(durableSchemas).map(([name,schema])=>`export type ${goName(name)} = ${tsType(schema)};`).join('\n\n');
+output('bundle-types.ts', `// Generated from bundle JSON Schemas. Do not edit.\n${durableTs}\n`);
+const durableGo = Object.entries(durableSchemas).map(([name,schema])=>`type ${goName(name)} struct {\n${Object.entries(schema.properties||{}).map(([field,value])=>` ${goName(field)} ${goType(value)} \`json:"${field}${(schema.required||[]).includes(field)?'':',omitempty'}"\``).join('\n')}\n}`).join('\n\n');
+output('bundle_types.go', formatGo(`// Code generated from bundle JSON Schemas. DO NOT EDIT.\npackage telemetryv1\n\nimport "encoding/json"\n\nvar _ json.RawMessage\n\n${durableGo}\n`));
+
+output('fixtures/invalid/missing-run-id.json', render({schema_version:'telemetry_envelope.v1',event_id:'invalid',source_event_id:'invalid',type:'pipeline.started'}));
+
+const manifestFiles = [
+  'README.md','catalog.json','correlation_identity.schema.json','envelope.schema.json','telemetry-types.ts','telemetry_types.go','bundle-types.ts','bundle_types.go','fixtures/golden-event.json','fixtures/invalid/missing-run-id.json',
+  ...catalog.event_types.flatMap((type)=>[`payloads/${type}.schema.json`,`events/${type}.schema.json`]),
+  ...Object.keys(durableSchemas).map((name)=>`bundle/${name}.schema.json`),
+].sort();
+const manifest = {
+  schema_version:'telemetry_contract_manifest.v1', contract_version:catalog.contract_version,
+  compatibility:{unknown_fields:'reject_except_extensions',event_addition:'backward_compatible',required_field_addition:'breaking',migration:'explicit_versioned_adapter'},
+  files:manifestFiles.map((relative)=>{const bytes=fs.readFileSync(path.join(contractDir,relative));return{path:relative,byte_length:bytes.length,sha256:sha256(bytes)};}),
+};
+output('contract-manifest.json', render(manifest));
+console.log(JSON.stringify({ok:true,checked:check,events:catalog.event_types.length,durable_schemas:Object.keys(durableSchemas).length,manifest_files:manifest.files.length}));

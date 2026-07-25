@@ -1,11 +1,9 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { getRunId } from '../core/runtime.ts';
 import { resolvePipelineRunLogDir } from '../core/paths.ts';
-import { requireStageHandler } from '../core/registry.ts';
+import { requireStageHandler } from '../core/registry-access.ts';
 import { runScheduledGenerator as runScheduledGeneratorImpl } from './pipeline-runner-scheduling.ts';
 import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
@@ -36,7 +34,7 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-function requirePipelineRunId(config: AnyRecord, purpose = 'pipeline terminal operation'): string {
+function requirePipelineRunId(config: AnyRecord, purpose: any = 'pipeline terminal operation'): string {
   const runId = getRunId(config);
   if (runId) return runId;
   throw new Error(`${purpose} requires a run id`);
@@ -68,7 +66,7 @@ function loadTerminalGeneratorCompletions(config: AnyRecord): TerminalGeneratorR
   if (state.durableLoaded === true) return state;
   state.durableLoaded = true;
   const filePath = terminalGeneratorCompletionPath(config);
-  if (selectTruthyValue(() => (!filePath), () => (!fs.existsSync(filePath)))) return state;
+  if (!filePath || !fs.existsSync(filePath)) return state;
   try {
     const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const entries = Array.isArray(parsed?.completed) ? parsed.completed : [];
@@ -76,7 +74,7 @@ function loadTerminalGeneratorCompletions(config: AnyRecord): TerminalGeneratorR
       const stageId = typeof entry === 'string' ? entry : entry?.stage_id;
       if (stageId) state.completed.add(String(stageId));
     }
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(`Terminal generator completion state is unreadable and requires repair: ${errorMessage(error)}`);
   }
   return state;
@@ -167,7 +165,7 @@ export function validateTerminalCompletionGenerators(config: AnyRecord, progress
     if (isTerminalGeneratorComplete(config, generator.stageId)) continue;
     try {
       requireStageHandler(config, 'generator.run', generator.stageId, 'run');
-    } catch (error) {
+    } catch (error: any) {
       return {
         stageId: generator.stageId,
         result: {

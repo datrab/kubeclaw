@@ -1,20 +1,11 @@
 #!/usr/bin/env node
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const pluginRoot = path.join(sourceRoot, 'plugins/openclaw-agent-observer');
 const plugin = await import(path.join(pluginRoot, 'src/index.ts'));
 const pluginConfig = await import(path.join(pluginRoot, 'src/config.ts'));
@@ -242,6 +233,7 @@ llmInputHook.handler({
 }, {
   runId: 'run-1',
   sessionKey: 'agent:forge:session-1',
+  modelCallId: 'model-call-1',
   agentId: 'forge',
 });
 await observer.flush();
@@ -443,6 +435,21 @@ assert.equal(runtimeConfigRedis.commands.length, 1);
 assert.equal(runtimeConfigObserver.getStats().droppedQueueFull, 1);
 let runtimeWritten = parseWritten(runtimeConfigRedis.commands[0]);
 assert.equal(runtimeWritten.event.identity.session_key, 'ctx-session');
+
+const toolRedis = new FakeRedis();
+const toolObserver = plugin.createOpenClawAgentObserver({
+  initialConfig: observerConfig(), env: {}, logger: makeLogger(), redisClientFactory: () => toolRedis,
+});
+toolObserver.handleHook('before_tool_call', { toolName: 'read', params: { path: 'README.md' } }, { sessionId: 'session-tool', toolCallId: 'tool-1', modelCallId: 'model-1' });
+toolObserver.handleHook('after_tool_call', { toolName: 'read', result: 'ok', outcome: 'success' }, { sessionId: 'session-tool', toolCallId: 'tool-1', modelCallId: 'model-1' });
+await toolObserver.flush();
+assert.equal(toolRedis.commands.length, 2);
+for (const command of toolRedis.commands) {
+  const toolEvent = parseWritten(command).event;
+  assert.equal(contract.validateAgentObservabilityIngressEvent(toolEvent).ok, true);
+  assert.equal(toolEvent.identity.tool_call_id, 'tool-1');
+  assert.equal(toolEvent.identity.model_call_id, 'model-1');
+}
 
 const agentEventRedis = new FakeRedis();
 const agentEventObserver = plugin.createOpenClawAgentObserver({

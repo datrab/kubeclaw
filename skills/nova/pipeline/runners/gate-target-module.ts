@@ -7,7 +7,7 @@ function normalizeModuleStepId(stepId: string): string | null {
   return stepId.startsWith('module:') ? stepId.slice('module:'.length) : stepId;
 }
 
-function explicitGateModuleId(progress: AnyRecord = {}, gateId = ''): string | null {
+function explicitGateModuleId(progress: AnyRecord = {}, gateId: any = ''): string | null {
   const gate = progress?.gates?.[gateId] ? progress.gates[gateId] : {};
   const explicit = gate.module_id
     ? gate.module_id
@@ -22,7 +22,7 @@ function explicitGateModuleId(progress: AnyRecord = {}, gateId = ''): string | n
   return progress?.modules?.[explicit] ? explicit : null;
 }
 
-export function resolveGateTargetModule(progress: AnyRecord = {}, gateId = ''): { moduleId: string | null; moduleDir: string | null; source: string } {
+export function resolveGateTargetModule(progress: AnyRecord = {}, gateId: any = ''): { moduleId: string | null; moduleDir: string | null; source: string } {
   const explicit = explicitGateModuleId(progress, gateId);
   if (explicit) {
     return {

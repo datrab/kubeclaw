@@ -55,12 +55,10 @@ test('full pipeline resume command shell-quotes dynamic arguments', () => {
 });
 
 test('needs-Nova escalation keeps terminal reason distinct from underlying failure class', () => {
-  const result = buildNovaEscalation(
-    {
+  const result = buildNovaEscalation({ config: {
       project: 'real-pipeline-e2e-real-e2e-test',
       run_id: 'run-test',
-    },
-    {
+    }, status: {
       status: 'FAIL',
       current_phase: 'buster',
       fail_count: 1,
@@ -73,19 +71,11 @@ test('needs-Nova escalation keeps terminal reason distinct from underlying failu
           timestamp: '2026-07-12T00:00:00.000Z',
         },
       ],
-    },
-    '01-nginx',
-    '01-nginx',
-    2,
-    'buster',
-    false,
-    1,
-    {
+    }, moduleId: '01-nginx', moduleDir: '01-nginx', maxFails: 2, phase: 'buster', isTimeout: false, autoRetryThreshold: 1, opts: {
       dispatch_id: 'buster-module-01-nginx-test',
       gateway_label: 'buster-module-01-nginx-test',
       session_key: 'agent:main:subagent:test',
-    },
-  );
+    } });
 
   assert.equal(result.outcome, 'needs_nova');
   assert.equal(result.terminal.decision.action, 'request_handoff');
@@ -119,12 +109,12 @@ test('auto-retry lifecycle summary preserves concrete failure evidence', async (
   status.current_phase = 'buster';
   const reason = 'NO_SUBAGENT: unit: FAIL - REAL_E2E_EXPECTED_RETRY_BUDGET_EXHAUSTED';
 
-  const result = await handleFail(config, status, '01-nginx', '01-nginx', 2, 'buster', reason, {
+  const result = await handleFail({ config: config, status: status, moduleDir: '01-nginx', moduleId: '01-nginx', maxFails: 2, phase: 'buster', reason: reason, opts: {
     progress: { auto_retry_threshold: 1, modules: { '01-nginx': { dir: '01-nginx' } } },
     dispatch_id: 'buster-module-01-nginx-test',
     gateway_label: 'buster-module-01-nginx-test',
     session_key: 'agent:test',
-  });
+  } });
 
   assert.equal(result._retry, true);
   assert.equal(status.fail_summaries[0].summary, reason);

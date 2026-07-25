@@ -24,35 +24,37 @@ import {
 } from '../../agents/session-handoff.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-function telemetryCtx(config) {
+import { readNovaEnvironment } from '../../core/runtime-environment.ts';
+type AnyRecord = Record<string, any>;
+function telemetryCtx(config: any) {
   const active = getActiveContext();
   if (active) return active;
   const runId = selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (getRunId(config)), () => (config?.run_id))), () => (config?._runId))), () => (null));
   return { config, runId };
 }
 
-function firstDefined(...values) {
+function firstDefined(...values: any) {
   for (const value of values) {
     if (value !== undefined && value !== null) return value;
   }
   return undefined;
 }
 
-function errorMessage(error) {
+function errorMessage(error: any) {
   return error instanceof Error ? error.message : String(error);
 }
 
-function injectionRunId(config) {
+function injectionRunId(config: any) {
   return firstDefined(config?._runId, config?.run_id, getRunId(config));
 }
 
-function computeElapsedSeconds(fromIso, toIso = new Date().toISOString()) {
+function computeElapsedSeconds(fromIso: any, toIso: any = new Date().toISOString()) {
   if (!fromIso) return null;
   const delta = new Date(toIso).getTime() - new Date(fromIso).getTime();
   return Number.isFinite(delta) ? Math.max(0, Math.round(delta / 1000)) : null;
 }
 
-function buildFailureDiscordFields(identity = {}, extra = []) {
+function buildFailureDiscordFields(identity: any = {}, extra: any = []) {
   return buildDiscordIdentityFields(identity, [
     DISCORD_FIELD_SPECS.RUN_ID,
     DISCORD_FIELD_SPECS.MODULE_ID,
@@ -68,7 +70,7 @@ function buildFailureDiscordFields(identity = {}, extra = []) {
   ], extra);
 }
 
-function buildFailureDiscordCorrelation(identity = {}) {
+function buildFailureDiscordCorrelation(identity: any = {}) {
   return {
     run_id: selectTruthyValue(() => (identity.run_id), () => (null)),
     module_id: selectTruthyValue(() => (identity.module_id), () => (null)),
@@ -81,7 +83,7 @@ function buildFailureDiscordCorrelation(identity = {}) {
   };
 }
 
-function buildModuleFailureTelemetry(status, phase, reason, oldStatus, opts = {}) {
+function buildModuleFailureTelemetry(status: any, phase: any, reason: any, oldStatus: any, opts: any = {}) {
   const startedAt = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (status?.phase_started_at), () => (status?.attempt_started_at))), () => (status?.started_at))), () => (null));
   return {
     title: selectTruthyValue(() => (selectTruthyValue(() => (status?.title), () => (opts.moduleTitle))), () => (null)),
@@ -103,22 +105,23 @@ function buildModuleFailureTelemetry(status, phase, reason, oldStatus, opts = {}
   };
 }
 
-export function buildPreTestDiscordFields(redisEntry) {
+export function buildPreTestDiscordFields(redisEntry: any) {
   const suites = selectDefinedValue(() => (parsePreTestVerdict(redisEntry).suites), () => ({}));
-  const passed = [];
-  const failed = [];
-  const skipped = [];
+  const passed: any[] = [];
+  const failed: any[] = [];
+  const skipped: any[] = [];
 
   for (const [name, suite] of Object.entries(suites)) {
-    const status = String(selectDefinedValue(() => (suite?.status), () => (''))).toUpperCase();
+    const suiteRecord = suite as AnyRecord;
+    const status = String(selectDefinedValue(() => suiteRecord.status, () => '')).toUpperCase();
     if (status === 'PASS') passed.push(name);
     else if (status === 'SKIP') skipped.push(name);
-    else if (selectTruthyValue(() => (status === 'FAIL'), () => (status === 'ERROR'))) failed.push({ name, detail: selectDefinedValue(() => (getSuiteFailureDetail(suite)), () => ('failed')) });
+    else if (selectTruthyValue(() => status === 'FAIL', () => status === 'ERROR')) failed.push({ name, detail: selectDefinedValue(() => getSuiteFailureDetail(suiteRecord), () => 'failed') });
   }
 
   const fields = [
     { name: 'Passed Suites', value: passed.length ? truncateForDiscord(passed.join(', '), 1024) : '—', inline: true },
-    { name: 'Failed Suites', value: failed.length ? truncateForDiscord(failed.map(s => s.name).join(', '), 1024) : '—', inline: true },
+    { name: 'Failed Suites', value: failed.length ? truncateForDiscord(failed.map((s: any) => s.name).join(', '), 1024) : '—', inline: true },
   ];
 
   if (skipped.length) {
@@ -129,7 +132,7 @@ export function buildPreTestDiscordFields(redisEntry) {
     fields.push({
       name: 'Issue',
       value: truncateForDiscord(
-        failed.slice(0, 3).map(({ name, detail }) => `${name}: ${detail}`).join('\n'),
+        failed.slice(0, 3).map(({ name, detail }: any) => `${name}: ${detail}`).join('\n'),
         1024,
       ),
       inline: false,
@@ -143,7 +146,7 @@ export function buildPreTestDiscordFields(redisEntry) {
  * Truncate text safely for Discord, appending "…" if truncated.
  * Discord limits: field value ≤ 1024 chars, description ≤ 4096 chars.
  */
-export function truncateForDiscord(text, maxLength = 1024) {
+export function truncateForDiscord(text: any, maxLength: any = 1024) {
   const s = String(selectDefinedValue(() => (text), () => ('')));
   if (s.length <= maxLength) return s;
   return s.slice(0, maxLength - 1) + '…';
@@ -159,152 +162,133 @@ export function truncateForDiscord(text, maxLength = 1024) {
  * @param {number} maxPauses - max allowed pauses
  * @param {number} cooldownMs - cooldown duration in milliseconds
  */
-export function formatRateLimitEmbed(config, context, pauseCount, maxPauses, cooldownMs) {
+export function formatRateLimitEmbed(config: any, context: any, pauseCount: any, maxPauses: any, cooldownMs: any) {
   return formatSharedRateLimitEmbed(context, pauseCount, maxPauses, cooldownMs);
 }
 
-export async function injectNeedsNova(config, result, novaChannel, stepType = 'module', stepId = null, opts = {}) {
-  const configuredChannel = novaChannel !== undefined && novaChannel !== null && String(novaChannel).trim()
-    ? novaChannel
-    : process.env.NOVA_CHANNEL !== undefined && process.env.NOVA_CHANNEL !== null && String(process.env.NOVA_CHANNEL).trim()
-      ? process.env.NOVA_CHANNEL
-      : null;
-  const sessionTarget = normalizeAgentSessionTarget(configuredChannel);
-  const sessionSender = opts?.sendGatewaySessionMessage;
-  const targetId = selectTruthyValue(() => (selectTruthyValue(() => (stepId), () => (result?.module))), () => ('missing_step_target'));
-  const terminalStatus = selectDefinedValue(() => (selectDefinedValue(() => (result?.terminal_status), () => (result?.terminal?.status))), () => ('action_required'));
-  const terminalDecision = selectTruthyValue(() => (selectTruthyValue(() => (result?.terminal_decision), () => (result?.terminal?.decision))), () => (null));
-  const terminalAction = selectTruthyValue(() => (terminalDecision?.action), () => (null));
-  if (!terminalAction) {
-    throw new Error('Nova injection requires an explicit terminal decision action');
-  }
-  const runId = injectionRunId(config);
-  const injectionCorrelation = resolveResultCorrelation(result);
-  const injectionCorrelationProvenance = resolveResultReadModelCorrelationProvenance(result);
-  const attempt = injectionCorrelation.attempt;
-  const dispatchId = injectionCorrelation.dispatch_id;
-  const gatewayLabel = injectionCorrelation.gateway_label;
-  const childSessionKey = injectionCorrelation.session_key;
+function configuredNovaChannel(novaChannel: any) {
+  if (novaChannel !== undefined && novaChannel !== null && String(novaChannel).trim()) return novaChannel;
+  const environmentChannel = readNovaEnvironment('NOVA_CHANNEL');
+  return environmentChannel !== undefined && String(environmentChannel).trim() ? environmentChannel : null;
+}
+
+function prepareNovaHandoff(config: AnyRecord, result: AnyRecord, novaChannel: any, stepType: string, stepId: any) {
+  const sessionTarget = normalizeAgentSessionTarget(configuredNovaChannel(novaChannel));
+  const targetId = selectTruthyValue(() => stepId, () => result?.module, () => 'missing_step_target');
+  const terminalStatus = selectDefinedValue(() => result?.terminal_status, () => result?.terminal?.status, () => 'action_required');
+  const terminalDecision = selectTruthyValue(() => result?.terminal_decision, () => result?.terminal?.decision, () => null);
+  const terminalAction = selectTruthyValue(() => terminalDecision?.action, () => null);
+  if (!terminalAction) throw new Error('Nova injection requires an explicit terminal decision action');
+  const correlation = resolveResultCorrelation(result);
   const gateId = stepType === 'gate' ? firstDefined(result?.gate_id, targetId) : null;
-  const gateType = stepType === 'gate' ? injectionCorrelation.gate_type : null;
   const artifactBundle = getPipelineArtifactBundle(config);
-  const injectionLogPaths = [
-    artifactBundle.global_nova_injections_jsonl_path,
-    artifactBundle.run_nova_injections_jsonl_path,
-  ].filter(Boolean);
-
-  const entry = {
-    ts: new Date().toISOString(),
-    run_id: runId,
-    status: 'prepared',
-    session_key: sessionTarget,
-    delivery_surface: AGENT_SESSION_HANDOFF_SURFACE,
-    step_type: stepType,
-    step_id: targetId,
-    module: selectTruthyValue(() => (result?.module), () => (null)),
-    gate_id: stepType === 'gate' ? gateId : undefined,
-    gate_type: stepType === 'gate' ? gateType : undefined,
-    terminal_status: terminalStatus,
-    terminal_decision: terminalDecision,
-    terminal_action: terminalAction,
-    reason: String(selectDefinedValue(() => (result?.reason), () => (''))).slice(0, 500),
-    attempt,
-    dispatch_id: dispatchId,
-    gateway_label: gatewayLabel,
-    child_session_key: childSessionKey,
-    correlation_provenance: injectionCorrelationProvenance,
-    fail_count: selectDefinedValue(() => (result?.fail_count), () => (null)),
-    max_fails: selectDefinedValue(() => (result?.max_fails), () => (null)),
-    remaining_attempts: selectDefinedValue(() => (result?.remaining_attempts), () => (null)),
+  const injectionLogPaths = [artifactBundle.global_nova_injections_jsonl_path, artifactBundle.run_nova_injections_jsonl_path]
+    .filter((value): value is string => typeof value === 'string' && value.length > 0);
+  return {
+    sessionTarget, targetId, terminalStatus, terminalDecision, terminalAction, stepType,
+    runId: injectionRunId(config), attempt: correlation.attempt,
+    dispatchId: correlation.dispatch_id, gatewayLabel: correlation.gateway_label,
+    childSessionKey: correlation.session_key, gateId,
+    gateType: stepType === 'gate' ? correlation.gate_type : null,
+    correlationProvenance: resolveResultReadModelCorrelationProvenance(result), injectionLogPaths,
   };
+}
 
-  const appendInjectionLog = () => {
-    for (const injectionLogPath of injectionLogPaths) {
-      try {
-        fs.mkdirSync(path.dirname(injectionLogPath), { recursive: true });
-        fs.appendFileSync(injectionLogPath, JSON.stringify(entry) + '\n');
-      } catch (error) {
-        reportFailureSurfaceIncident(config, 'nova_injection_log_write_failed', error, 'Nova injection log write failed', {
-          scope: injectionLogPath,
-        });
-      }
+function createNovaInjectionEntry(context: AnyRecord, result: AnyRecord): AnyRecord {
+  return {
+    ts: new Date().toISOString(), run_id: context.runId, status: 'prepared',
+    session_key: context.sessionTarget, delivery_surface: AGENT_SESSION_HANDOFF_SURFACE,
+    step_type: context.stepType, step_id: context.targetId, module: result?.module ?? null,
+    gate_id: context.stepType === 'gate' ? context.gateId : undefined,
+    gate_type: context.stepType === 'gate' ? context.gateType : undefined,
+    terminal_status: context.terminalStatus, terminal_decision: context.terminalDecision,
+    terminal_action: context.terminalAction, reason: String(result?.reason ?? '').slice(0, 500),
+    attempt: context.attempt, dispatch_id: context.dispatchId, gateway_label: context.gatewayLabel,
+    child_session_key: context.childSessionKey, correlation_provenance: context.correlationProvenance,
+    fail_count: result?.fail_count ?? null, max_fails: result?.max_fails ?? null,
+    remaining_attempts: result?.remaining_attempts ?? null,
+  };
+}
+
+function appendNovaInjectionLogs(config: AnyRecord, paths: string[], entry: AnyRecord) {
+  for (const injectionLogPath of paths) {
+    try {
+      fs.mkdirSync(path.dirname(injectionLogPath), { recursive: true });
+      fs.appendFileSync(injectionLogPath, `${JSON.stringify(entry)}\n`);
+    } catch (error: any) {
+      reportFailureSurfaceIncident(config, 'nova_injection_log_write_failed', error, 'Nova injection log write failed', { scope: injectionLogPath });
     }
-  };
-
-  if (!sessionTarget) {
-    log('INFO', `${terminalStatus} — no --nova-channel set, skipping Nova handoff notification`);
-    entry.status = 'skipped_no_session';
-    entry.delivery_status = 'skipped_no_session';
-    entry.delivery_content_known = false;
-    entry.delivery_acknowledged = false;
-    appendInjectionLog();
-    return;
   }
+}
 
-  const messageLines = [
+function attemptLine(context: AnyRecord, result: AnyRecord): string | null {
+  if (context.attempt != null && result?.max_fails != null) return `Attempts: ${context.attempt}/${result.max_fails}`;
+  if (context.attempt != null) return `Attempt: ${context.attempt}`;
+  if (result?.fail_count != null && result?.max_fails != null) return `Attempts: ${result.fail_count}/${result.max_fails}`;
+  if (result?.fail_count != null) return `Attempt: ${result.fail_count}`;
+  return null;
+}
+
+function buildNovaHandoffMessage(config: AnyRecord, context: AnyRecord, result: AnyRecord) {
+  const lines = [
     `Project: ${config.project}`,
-    `${stepType === 'gate' ? 'Gate' : 'Module'}: ${targetId}`,
-    `Status: ${terminalStatus}`,
-    `Action: ${terminalAction}`,
+    `${context.stepType === 'gate' ? 'Gate' : 'Module'}: ${context.targetId}`,
+    `Status: ${context.terminalStatus}`,
+    `Action: ${context.terminalAction}`,
   ];
-  if (runId) messageLines.push(`Run ID: ${runId}`);
-  if (stepType === 'gate' && gateType) messageLines.push(`Gate Type: ${gateType}`);
-  if (dispatchId) messageLines.push(`Dispatch: ${dispatchId}`);
-  if (gatewayLabel && gatewayLabel !== dispatchId) messageLines.push(`Label: ${gatewayLabel}`);
-  if (childSessionKey) messageLines.push(`Session: ${childSessionKey}`);
-  if (result?.reason) messageLines.push(`Reason: ${String(result.reason).slice(0, 300)}`);
-  if (attempt != null && result?.max_fails != null) {
-    messageLines.push(`Attempts: ${attempt}/${result.max_fails}`);
-  } else if (attempt != null) {
-    messageLines.push(`Attempt: ${attempt}`);
-  } else if (result?.fail_count != null && result?.max_fails != null) {
-    messageLines.push(`Attempts: ${result.fail_count}/${result.max_fails}`);
-  } else if (result?.fail_count != null) {
-    messageLines.push(`Attempt: ${result.fail_count}`);
-  }
-  if (result?.resume_command) {
-    messageLines.push(`Resume: ${String(result.resume_command).slice(0, 400)}`);
-  }
-  const message = messageLines.join('\n');
-  const title = `Nova handoff required: ${targetId}`;
+  if (context.runId) lines.push(`Run ID: ${context.runId}`);
+  if (context.stepType === 'gate' && context.gateType) lines.push(`Gate Type: ${context.gateType}`);
+  if (context.dispatchId) lines.push(`Dispatch: ${context.dispatchId}`);
+  if (context.gatewayLabel && context.gatewayLabel !== context.dispatchId) lines.push(`Label: ${context.gatewayLabel}`);
+  if (context.childSessionKey) lines.push(`Session: ${context.childSessionKey}`);
+  if (result?.reason) lines.push(`Reason: ${String(result.reason).slice(0, 300)}`);
+  const attempt = attemptLine(context, result);
+  if (attempt) lines.push(attempt);
+  if (result?.resume_command) lines.push(`Resume: ${String(result.resume_command).slice(0, 400)}`);
+  return `Nova handoff required: ${context.targetId}\n${lines.join('\n')}`;
+}
+
+async function deliverNovaHandoff(config: AnyRecord, context: AnyRecord, result: AnyRecord, entry: AnyRecord, sessionSender: any) {
   entry.intent_status = 'recorded';
   entry.delivery_content_known = true;
-
   try {
     const sendPolicy = gatewayInvokePolicy(config, 'session_send');
     const receipt = await sendAgentSessionHandoff({
-      sessionKey: sessionTarget,
-      message: `${title}\n${message}`,
+      sessionKey: context.sessionTarget,
+      message: buildNovaHandoffMessage(config, context, result),
       timeoutMs: sendPolicy.timeoutMs,
       policy: sendPolicy,
       ...(sessionSender ? { sendSessionMessage: sessionSender } : {}),
     });
-    entry.delivery_acknowledged = receipt.acknowledged;
-    entry.delivery_status = receipt.delivery_status;
-    entry.raw_delivery_status = receipt.raw_delivery_status;
-    entry.gateway_run_id = receipt.gateway_run_id;
-    entry.delivery_session_key = receipt.session_key;
-    entry.turn_id = receipt.turn_id;
-    entry.response_status = receipt.response_status;
-    entry.status = entry.delivery_acknowledged ? 'ok' : 'failed';
-    entry.notification_status = entry.delivery_acknowledged ? 'ok' : 'failed';
-    if (!entry.delivery_acknowledged) {
+    Object.assign(entry, {
+      delivery_acknowledged: receipt.acknowledged, delivery_status: receipt.delivery_status,
+      raw_delivery_status: receipt.raw_delivery_status, gateway_run_id: receipt.gateway_run_id,
+      delivery_session_key: receipt.session_key, turn_id: receipt.turn_id,
+      response_status: receipt.response_status, status: receipt.acknowledged ? 'ok' : 'failed',
+      notification_status: receipt.acknowledged ? 'ok' : 'failed',
+    });
+    if (!receipt.acknowledged) {
       entry.error = 'gateway sessions_send delivery receipt missing';
-      log('WARN', `Nova session handoff delivery was not acknowledged for ${stepType} ${targetId}: ${entry.error}`);
-    } else {
-      log('OK', `${terminalStatus} Nova handoff delivered to session ${sessionTarget} for ${stepType} ${targetId}`);
-    }
-  } catch (sendError) {
-    const sendErrMsg = selectTruthyValue(() => (sendError?.message?.split('\n')[0]), () => ('missing_error_detail'));
-    entry.status = 'failed';
-    entry.notification_status = 'failed';
-    entry.delivery_status = 'gateway_sessions_send_failed';
-    entry.delivery_acknowledged = false;
-    entry.error = sendErrMsg;
-    log('WARN', `Nova session handoff failed for ${stepType} ${targetId}: ${sendErrMsg}`);
-  } finally {
-    appendInjectionLog();
+      log('WARN', `Nova session handoff delivery was not acknowledged for ${context.stepType} ${context.targetId}: ${entry.error}`);
+    } else log('OK', `${context.terminalStatus} Nova handoff delivered to session ${context.sessionTarget} for ${context.stepType} ${context.targetId}`);
+  } catch (error: any) {
+    const detail = error?.message?.split('\n')[0] ?? 'missing_error_detail';
+    Object.assign(entry, { status: 'failed', notification_status: 'failed', delivery_status: 'gateway_sessions_send_failed', delivery_acknowledged: false, error: detail });
+    log('WARN', `Nova session handoff failed for ${context.stepType} ${context.targetId}: ${detail}`);
   }
+}
+
+export async function injectNeedsNova(config: AnyRecord, result: AnyRecord, novaChannel: any, stepType = 'module', stepId: any = null, opts: AnyRecord = {}) {
+  const context = prepareNovaHandoff(config, result, novaChannel, stepType, stepId);
+  const entry = createNovaInjectionEntry(context, result);
+  if (!context.sessionTarget) {
+    log('INFO', `${context.terminalStatus} — no --nova-channel set, skipping Nova handoff notification`);
+    Object.assign(entry, { status: 'skipped_no_session', delivery_status: 'skipped_no_session', delivery_content_known: false, delivery_acknowledged: false });
+    appendNovaInjectionLogs(config, context.injectionLogPaths, entry);
+    return;
+  }
+  await deliverNovaHandoff(config, context, result, entry, opts.sendGatewaySessionMessage);
+  appendNovaInjectionLogs(config, context.injectionLogPaths, entry);
 }
 
 export {

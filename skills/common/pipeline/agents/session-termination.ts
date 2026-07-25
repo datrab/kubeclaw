@@ -137,6 +137,72 @@ async function awaitWithGrace(promise: Promise<any>, graceMs: number, onGraceExp
   }
 }
 
+function forwardAbort(signal: AbortSignal | null, controller: AbortController): () => void {
+  if (!signal) return () => {};
+  if (signal.aborted) {
+    controller.abort(signal.reason);
+    return () => {};
+  }
+  const onAbort = () => controller.abort(signal.reason);
+  signal.addEventListener('abort', onAbort, { once: true });
+  return () => signal.removeEventListener('abort', onAbort);
+}
+
+function buildKillPolicy(opts: AnyRecord, policy: AnyRecord, graceBounded: boolean): AnyRecord {
+  return {
+    ...(selectDefinedValue(() => opts.killPolicy, () => ({}))),
+    ...(graceBounded ? {
+      acpConfirmTimeoutMs: policy.graceMs,
+      subagentConfirmTimeoutMs: policy.graceMs,
+      confirmPollMs: policy.confirmPollMs,
+      cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
+      statusTimeoutMs: policy.statusTimeoutMs,
+      requestTimeoutMs: policy.requestTimeoutMs,
+      stopRequestTimeoutMs: policy.stopRequestTimeoutMs,
+      listTimeoutMs: policy.listTimeoutMs,
+      acpxTimeoutMs: policy.acpxTimeoutMs,
+    } : {}),
+  };
+}
+
+async function requestSessionTermination(
+  childSessionKey: string,
+  opts: AnyRecord,
+  policy: AnyRecord,
+): Promise<AnyRecord | typeof GRACE_EXPIRED> {
+  const killSessionFn = typeof opts.killSession === 'function' ? opts.killSession : killSession;
+  const controller = new AbortController();
+  const removeAbortListener = forwardAbort(opts.signal ?? null, controller);
+  const { killSession: _killSession, ...killOpts } = opts;
+  const promise = Promise.resolve().then(() => killSessionFn(childSessionKey, {
+    ...killOpts,
+    killPolicy: buildKillPolicy(opts, policy, opts.graceBounded !== false),
+    signal: controller.signal,
+  }));
+  void promise.catch(() => { /* INTENTIONAL_NONCRITICAL(wait_observed_by_owner): the authoritative await below handles the failure. */ });
+  try {
+    if (opts.graceBounded === false) return await promise;
+    return await awaitWithGrace(promise, policy.graceMs, () => {
+      controller.abort('session_termination_grace_expired');
+    });
+  } finally {
+    removeAbortListener();
+  }
+}
+
+function failedTerminationResult(sessionKey: string, state: string, graceMs: number, error?: unknown) {
+  return buildTerminationResult({
+    sessionKey,
+    requested: false,
+    confirmed: false,
+    state,
+    cleanupAttempted: false,
+    cleanupConfirmed: false,
+    cleanupError: error === undefined ? null : errorMessage(error),
+    graceMs,
+  });
+}
+
 export async function terminateSession(childSessionKey: any, opts: AnyRecord = {}) {
   const policy = resolveSessionTerminationPolicy(opts);
   const graceMs = policy.graceMs;
@@ -153,70 +219,14 @@ export async function terminateSession(childSessionKey: any, opts: AnyRecord = {
     });
   }
 
-  let killResult;
-  const killSessionFn = typeof opts.killSession === 'function' ? opts.killSession : killSession;
-  const killController = new AbortController();
-  const externalSignal = selectTruthyValue(() => (opts.signal), () => (null));
-  let removeExternalAbortListener: AnyFunction | null = null;
-  if (externalSignal) {
-    if (externalSignal.aborted) killController.abort(externalSignal.reason);
-    else {
-      const onExternalAbort = () => killController.abort(externalSignal.reason);
-      externalSignal.addEventListener('abort', onExternalAbort, { once: true });
-      removeExternalAbortListener = () => externalSignal.removeEventListener('abort', onExternalAbort);
-    }
-  }
-  const { killSession: _killSession, ...killOpts } = opts;
-  const killPolicy = {
-    ...(selectDefinedValue(() => (opts.killPolicy), () => ({}))),
-    ...(graceBounded ? {
-      acpConfirmTimeoutMs: graceMs,
-      subagentConfirmTimeoutMs: graceMs,
-      confirmPollMs: policy.confirmPollMs,
-      cleanupConfirmTimeoutMs: policy.cleanupConfirmTimeoutMs,
-      statusTimeoutMs: policy.statusTimeoutMs,
-      requestTimeoutMs: policy.requestTimeoutMs,
-      stopRequestTimeoutMs: policy.stopRequestTimeoutMs,
-      listTimeoutMs: policy.listTimeoutMs,
-      acpxTimeoutMs: policy.acpxTimeoutMs,
-    } : {}),
-  };
-  const killPromise = Promise.resolve().then(() => killSessionFn(childSessionKey, {
-    ...killOpts,
-    killPolicy,
-    signal: killController.signal,
-  }));
-  killPromise.catch(() => {});
+  let killResult: AnyRecord | typeof GRACE_EXPIRED;
   try {
-    if (graceBounded) {
-      killResult = await awaitWithGrace(killPromise, graceMs, () => killController.abort('session_termination_grace_expired'));
-      if (killResult === GRACE_EXPIRED) {
-        return buildTerminationResult({
-          sessionKey: childSessionKey,
-          requested: false,
-          confirmed: false,
-          state: 'termination_grace_expired',
-          cleanupAttempted: false,
-          cleanupConfirmed: false,
-          graceMs,
-        });
-      }
-    } else {
-      killResult = await killPromise;
+    killResult = await requestSessionTermination(childSessionKey, opts, policy);
+    if (killResult === GRACE_EXPIRED) {
+      return failedTerminationResult(childSessionKey, 'termination_grace_expired', graceMs);
     }
   } catch (error) {
-    return buildTerminationResult({
-      sessionKey: childSessionKey,
-      requested: false,
-      confirmed: false,
-      state: 'termination_error',
-      cleanupAttempted: false,
-      cleanupConfirmed: false,
-      cleanupError: errorMessage(error),
-      graceMs,
-    });
-  } finally {
-    removeExternalAbortListener?.();
+    return failedTerminationResult(childSessionKey, 'termination_error', graceMs, error);
   }
 
   const cleanup = await runCleanup(opts.cleanup, {

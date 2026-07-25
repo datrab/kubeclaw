@@ -13,6 +13,7 @@ import {
   postToDiscord,
   resolveProjectPaths,
 } from '../../../../../skills/nova/pipeline/tools/project-summary.ts';
+import { canonicalFingerprint } from '../../../../../skills/common/pipeline/portable-artifacts.ts';
 
 function writeSwarmConfig(dir, config = {}) {
   const configPath = path.join(dir, 'swarm.config.json');
@@ -120,6 +121,9 @@ test('project summary uses lifecycle gates and labeled agent spawn telemetry', a
     execution_order: ['module:01-app', 'gate:module-review'],
   }, null, 2));
   fs.mkdirSync(path.join(swarmRoot, 'logs', 'pipeline', 'runs', 'run-demo', 'lifecycle'), { recursive: true });
+  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'latest.json'), JSON.stringify({
+    run_id: 'run-demo', project: 'demo', run_dir: 'runs/run-demo',
+  }));
   fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'runs', 'run-demo', 'lifecycle', 'read-models.json'), JSON.stringify({
     modules: {
       '01-app': { status: 'PASS', current_attempt: 1, completed_at: '2026-07-07T00:02:00.000Z', started_at: '2026-07-07T00:00:00.000Z' },
@@ -128,8 +132,10 @@ test('project summary uses lifecycle gates and labeled agent spawn telemetry', a
       'module-review': { status: 'PASS', completed: true, completed_at: '2026-07-07T00:03:00.000Z', started_at: '2026-07-07T00:02:00.000Z' },
     },
   }, null, 2));
-  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'runs', 'run-demo', 'archive-manifest.json'), JSON.stringify({ run_id:'run-demo', sha256:'archive-demo' }));
-  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'run-catalog.jsonl'), `${JSON.stringify({ run_id:'run-demo', archive_reference:'runs/run-demo/archive-manifest.json', sha256:'archive-demo' })}\n`);
+  const archive = { run_id: 'run-demo' };
+  const archiveSha = canonicalFingerprint(archive);
+  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'runs', 'run-demo', 'archive-manifest.json'), JSON.stringify({ ...archive, sha256: archiveSha }));
+  fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'run-catalog.jsonl'), `${JSON.stringify({ run_id:'run-demo', archive_reference:'runs/run-demo/archive-manifest.json', sha256: archiveSha })}\n`);
   fs.writeFileSync(path.join(swarmRoot, 'logs', 'pipeline', 'pipeline.jsonl'), [
     JSON.stringify({ type: 'agent.spawned', label: 'forge-01-app-1', ts: '2026-07-07T00:00:00.000Z' }),
     JSON.stringify({ type: 'agent.spawned', label: 'echo-echo-codex-module-review-1', ts: '2026-07-07T00:02:00.000Z' }),

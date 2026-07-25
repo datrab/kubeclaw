@@ -25,7 +25,7 @@ function readIdentityValue(identity: UnknownRecord = {}, keys: string[] = []): u
 
 function normalizeFieldSpec(spec: DiscordFieldSpec = {}): NormalizedDiscordFieldSpec {
   return {
-    name: selectTruthyValue(() => (spec.name), () => ('Missing field name')),
+    name: spec.name || 'Missing field name',
     keys: Array.isArray(spec.keys) ? spec.keys : [],
     inline: spec.inline !== false,
     format: typeof spec.format === 'function' ? spec.format : ((value: unknown) => String(value)),

@@ -27,7 +27,7 @@ function findingFingerprint(toolId: string, repoRoot: string, finding: Record<st
 function normalizeFindings(ctx: Record<string, any>, toolId: string, findings: unknown[]): Record<string, any>[] {
   const baseline = ctx.policy.baseline?.entries_by_key ?? new Map();
   const today = new Date().toISOString().slice(0, 10);
-  return findings.map((raw) => {
+  return findings.map((raw: any) => {
     const finding = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw as Record<string, any> : {};
     const fingerprint = findingFingerprint(toolId, ctx.repoRoot, finding);
     const baselineEntry = baseline.get(`${toolId}:${fingerprint}`);
@@ -41,12 +41,15 @@ function normalizeFindings(ctx: Record<string, any>, toolId: string, findings: u
       normalized.baseline = {
         owner: baselineEntry.owner,
         reason: baselineEntry.reason,
+        created: baselineEntry.created,
         expires: baselineEntry.expires,
         tracking: baselineEntry.tracking,
+        approved_by: baselineEntry.approved_by,
+        approved_on: baselineEntry.approved_on,
       };
     }
     return normalized;
   });
 }
 
-export { findingFingerprint, normalizeFindings, normalizedFile };
+export { findingFingerprint, normalizeFindings,  };

@@ -3,6 +3,7 @@
 
 import { checkGatewayHealth as checkCommonGatewayHealth } from '../integrations/gateway.ts';
 import { loadBusterGatewayHealthPolicy } from './runtime-policy.ts';
+import { writeBusterRuntimeLog } from './logger.ts';
 
 export async function checkGatewayHealth() {
   const policy = loadBusterGatewayHealthPolicy();
@@ -23,16 +24,16 @@ function gatewayShutdownAuthority(shutdown?: (signal: string, opts?: Record<stri
 export async function waitForGateway({ shutdown }: { shutdown?: (signal: string, opts?: Record<string, any>) => any } = {}): Promise<void> {
   const shutdownGateway = gatewayShutdownAuthority(shutdown);
   const policy = loadBusterGatewayHealthPolicy();
-  console.log(`[GATEWAY] Waiting for gateway readiness (max ${policy.readyTimeoutMs / 1000}s)...`);
+  writeBusterRuntimeLog('info', 'gateway-health', `Waiting for gateway readiness (max ${policy.readyTimeoutMs / 1000}s)`);
   const deadline = Date.now() + policy.readyTimeoutMs;
   while (Date.now() < deadline) {
     if (await checkGatewayHealth()) {
-      console.log('[GATEWAY] ✅ Gateway ready.');
+      writeBusterRuntimeLog('info', 'gateway-health', 'Gateway ready');
       return;
     }
     await new Promise(r => setTimeout(r, policy.readyIntervalMs));
   }
-  console.error('[GATEWAY] ❌ Gateway not ready within timeout. Starting structured shutdown.');
+  writeBusterRuntimeLog('error', 'gateway-health', 'Gateway not ready within timeout; starting structured shutdown');
   await shutdownGateway('GATEWAY_READY_TIMEOUT', {
     exitCode: 1,
     cleanupStage: 'gateway-ready-timeout',
@@ -53,13 +54,13 @@ export function startGatewayHealthMonitor({ isShuttingDown = () => false, shutdo
       healthy = await checkGatewayHealth();
     } catch (error) {
       const detail = error instanceof Error ? error.message : String(error);
-      console.warn(`[GATEWAY] Health check threw: ${detail}`);
+      writeBusterRuntimeLog('warn', 'gateway-health', 'Gateway health check threw', { detail });
     }
     if (!healthy) {
       consecutiveFailures++;
-      console.warn(`[GATEWAY] ⚠️ Health check failed (${consecutiveFailures}/${policy.maxFailures})`);
+      writeBusterRuntimeLog('warn', 'gateway-health', 'Gateway health check failed', { consecutiveFailures, maxFailures: policy.maxFailures });
       if (consecutiveFailures >= policy.maxFailures) {
-        console.error('[GATEWAY] ❌ Gateway unreachable. Starting structured shutdown.');
+        writeBusterRuntimeLog('error', 'gateway-health', 'Gateway unreachable; starting structured shutdown');
         await shutdownGateway('GATEWAY_HEALTH_FAILED', {
           exitCode: 1,
           cleanupStage: 'gateway-health-failed',
@@ -69,7 +70,7 @@ export function startGatewayHealthMonitor({ isShuttingDown = () => false, shutdo
         });
       }
     } else {
-      if (consecutiveFailures > 0) console.log(`[GATEWAY] ✅ Recovered after ${consecutiveFailures} failed check(s).`);
+      if (consecutiveFailures > 0) writeBusterRuntimeLog('info', 'gateway-health', 'Gateway health recovered', { previousFailures: consecutiveFailures });
       consecutiveFailures = 0;
     }
   }, policy.monitorIntervalMs);

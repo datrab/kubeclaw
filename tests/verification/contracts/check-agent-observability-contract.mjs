@@ -1,20 +1,12 @@
 #!/usr/bin/env node
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import path from 'node:path';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') {
-      args.sourceRoot = path.resolve(argv[i + 1]);
-      i += 1;
-    }
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
-const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agent-observability/src/index.ts'));
+const { sourceRoot } = parseSourceRootArgs();
+const contract = await import(path.join(sourceRoot, 'contracts/agent-observability/v1/src/index.ts'));
 const novaShim = await import(path.join(sourceRoot, 'skills/nova/pipeline/agent-observability/src/index.ts'));
 const busterShim = await import(path.join(sourceRoot, 'skills/buster/pipeline/agent-observability/src/index.ts'));
 
@@ -22,6 +14,16 @@ assert.equal(novaShim.AGENT_OBSERVABILITY_CONTROL_STREAM, contract.AGENT_OBSERVA
 assert.equal(busterShim.AGENT_OBSERVABILITY_CONTROL_STREAM, contract.AGENT_OBSERVABILITY_CONTROL_STREAM);
 assert.deepEqual([...novaShim.AGENT_OBSERVABILITY_HOOKS], [...contract.AGENT_OBSERVABILITY_HOOKS]);
 assert.deepEqual([...busterShim.AGENT_OBSERVABILITY_HOOKS], [...contract.AGENT_OBSERVABILITY_HOOKS]);
+assert.equal(
+  fs.readdirSync(path.join(sourceRoot, 'plugins/openclaw-agent-observer/src/agent-observability')).join(','),
+  'index.ts',
+  'observer source must contain only the neutral-contract development facade',
+);
+assert.equal(
+  fs.readdirSync(path.join(sourceRoot, 'skills/common/pipeline/agent-observability/src')).join(','),
+  'index.ts',
+  'common source must contain only the neutral-contract compatibility facade',
+);
 
 function baseEvent(overrides = {}) {
   return {
@@ -35,6 +37,7 @@ function baseEvent(overrides = {}) {
       session_key: 'agent:forge:session-1',
       dispatch_id: 'dispatch-1',
       agent_id: 'forge',
+      model_call_id: 'model-call-1',
       agent_type: 'forge',
       module_id: '01',
     },
@@ -105,7 +108,6 @@ for (const type of contract.AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES) {
   assert.equal(mapping.ingress_type, type);
 }
 assert.equal(contract.getAgentObservabilityTelemetryMapping('openclaw.agent.ended').current_telemetry_type, 'agent.ended');
-assert.equal(contract.getAgentObservabilityTelemetryMapping('openclaw.llm.input').current_telemetry_type, 'agent.llm.input.summary');
 assert.equal(contract.getAgentObservabilityTelemetryMapping('openclaw.llm.input').promoted_by_default, false);
 assert.equal(contract.getAgentObservabilityTelemetryMapping('openclaw.llm.output').future_telemetry_type, 'agent.llm.output.summary');
 assert.equal(contract.getAgentObservabilityTelemetryMapping('openclaw.tool.finished').current_telemetry_type, 'agent.tool.finished');

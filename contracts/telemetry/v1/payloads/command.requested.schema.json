@@ -63,6 +63,8 @@
       "format": "date-time",
       "type": "string"
     },
+    "issued_at": { "format": "date-time", "type": "string" },
+    "reason": { "minLength": 1, "type": "string" },
     "extensions": {
       "type": "object"
     },
@@ -121,6 +123,8 @@
     "actor",
     "capability",
     "expires_at",
+    "issued_at",
+    "reason",
     "expected_lifecycle_version"
   ],
   "type": "object"

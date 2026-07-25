@@ -5,7 +5,7 @@ export function telemetryModuleId(opts: AnyRecord = {}, fallback: string | null 
   return Object.prototype.hasOwnProperty.call(opts, 'module_id') ? opts.module_id : fallback;
 }
 
-export function buildSpawnTelemetryPayload({
+function buildSpawnTelemetryPayload({
   label,
   model,
   dispatch,
@@ -35,7 +35,7 @@ export function buildSpawnTelemetryPayload({
   };
 }
 
-export function buildKillTelemetryPayload({
+function buildKillTelemetryPayload({
   entry = null,
   fallbackLabel = null,
   fallbackModuleId = null,

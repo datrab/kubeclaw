@@ -304,22 +304,24 @@ EOF
   fi
 }
 
+yaml_trim_scalar() {
+  awk '
+    {
+      sub(/^[[:space:]]+/, "", $0)
+      sub(/[[:space:]]+$/, "", $0)
+      gsub(/^"|"$/, "", $0)
+      gsub(/^'"'"'|'"'"'$/, "", $0)
+      print
+    }
+  '
+}
+
 yaml_get_section_key() {
   local file="$1"
   local section="$2"
   local key="$3"
 
   awk -v section="$section" -v key="$key" '
-    function trim(value) {
-      sub(/^[[:space:]]+/, "", value)
-      sub(/[[:space:]]+$/, "", value)
-      gsub(/^"/, "", value)
-      gsub(/"$/, "", value)
-      gsub(/^'\''/, "", value)
-      gsub(/'\''$/, "", value)
-      return value
-    }
-
     $0 ~ ("^" section ":[[:space:]]*$") {
       in_section = 1
       next
@@ -332,10 +334,10 @@ yaml_get_section_key() {
     in_section && $0 ~ ("^[[:space:]]{2}" key ":[[:space:]]*") {
       value = $0
       sub("^[[:space:]]{2}" key ":[[:space:]]*", "", value)
-      print trim(value)
+      print value
       exit
     }
-  ' "$file"
+  ' "$file" | yaml_trim_scalar
 }
 
 yaml_get_nested_section_key() {
@@ -345,16 +347,6 @@ yaml_get_nested_section_key() {
   local key="$4"
 
   awk -v section="$section" -v subsection="$subsection" -v key="$key" '
-    function trim(value) {
-      sub(/^[[:space:]]+/, "", value)
-      sub(/[[:space:]]+$/, "", value)
-      gsub(/^"/, "", value)
-      gsub(/"$/, "", value)
-      gsub(/^'\''/, "", value)
-      gsub(/'\''$/, "", value)
-      return value
-    }
-
     $0 ~ ("^" section ":[[:space:]]*$") {
       in_section = 1
       in_subsection = 0
@@ -378,10 +370,10 @@ yaml_get_nested_section_key() {
     in_section && in_subsection && $0 ~ ("^[[:space:]]{4}" key ":[[:space:]]*") {
       value = $0
       sub("^[[:space:]]{4}" key ":[[:space:]]*", "", value)
-      print trim(value)
+      print value
       exit
     }
-  ' "$file"
+  ' "$file" | yaml_trim_scalar
 }
 
 yaml_get_first_named_list_item() {
@@ -712,6 +704,7 @@ ${pull_secret_yaml}
       command:
         - rootlesskit
       args:
+        - --net=host
         - buildkitd
         - --addr
         - ${socket}

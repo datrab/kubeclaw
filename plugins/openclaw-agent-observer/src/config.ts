@@ -1,5 +1,4 @@
 import { normalizeAgentObservabilityMaxEventBytes } from './agent-observability/index.ts';
-// @ts-expect-error kubeclaw plugin builds intentionally avoid a repo-wide @types/node dependency.
 import fs from 'node:fs';
 
 declare const process: { env: Record<string, unknown> };
@@ -215,7 +214,7 @@ export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: Unkn
     redisPort: positivePort(config.redisPort ?? env.REDIS_PORT),
     redisUsername: stringValue(config.redisUsername ?? env.REDIS_USERNAME),
     redisPassword: stringValue(config.redisPassword ?? env.REDIS_PASSWORD),
-    redisTls: boolValue(config.redisTls ?? env.REDIS_TLS ?? env.REDIS_TLS_ENABLED, false),
+    redisTls: boolValue(config.redisTls ?? env.REDIS_TLS, false),
     redisNetworkIsolation: config.redisNetworkIsolation as boolean | string | undefined ?? stringValue(env.REDIS_NETWORK_ISOLATION),
     maxEventBytes: normalizeAgentObservabilityMaxEventBytes(config.maxEventBytes ?? env.OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES),
     maxQueuePerStream: positiveInteger(config.maxQueuePerStream ?? env.OPENCLAW_AGENT_OBSERVER_MAX_QUEUE_PER_STREAM, 'maxQueuePerStream'),
@@ -228,4 +227,8 @@ export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: Unkn
     hookPriority: integerValue(config.hookPriority ?? env.OPENCLAW_AGENT_OBSERVER_HOOK_PRIORITY, 'hookPriority'),
     hookTimeoutMs: positiveInteger(config.hookTimeoutMs ?? env.OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS, 'hookTimeoutMs'),
   };
+}
+
+export function agentObserverRuntimeEnvironment(): UnknownRecord {
+  return process.env;
 }

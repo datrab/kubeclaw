@@ -34,13 +34,23 @@ function installFakeWatch() {
   };
 }
 
-test('approval signal adapter emitExisting waits when state file is absent', async () => {
-  const fakeWatch = installFakeWatch();
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'approval-signal-watch-'));
-  const statePath = path.join(tmpDir, 'deploy-gate-status.json');
+function approvalState(gateId = 'deploy', status = 'APPROVED') {
+  return {
+    gate_id: gateId,
+    gate_type: 'approval',
+    run_id: 'run-approval',
+    project: 'approval-signal-test',
+    status,
+    timeout_policy: 'BLOCK',
+    decision_by: 'operator',
+  };
+}
+
+function filesystemApprovalFixture(prefix, relativeStatePath = 'deploy-gate-status.json', options = {}) {
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
+  const statePath = path.join(tmpDir, relativeStatePath);
   const eventBus = createPipelineEventBus();
   const controller = new AbortController();
-  const identity = { gate_id: 'deploy', run_id: 'run-approval' };
   const adapter = createApprovalSignalEventAdapter({
     project: 'approval-signal-test',
     _runId: 'run-approval',
@@ -51,9 +61,24 @@ test('approval signal adapter emitExisting waits when state file is absent', asy
     gateId: 'deploy',
     gate: { type: 'approval' },
     statePath,
-    emitExisting: true,
     debounceMs: 10,
+    ...options,
   });
+  return { tmpDir, statePath, eventBus, controller, adapter };
+}
+
+function stopApprovalFixture(fixture, fakeWatch) {
+  fixture.controller.abort('test_done');
+  fixture.adapter.stop('test_done');
+  fakeWatch.restore();
+  fs.rmSync(fixture.tmpDir, { recursive: true, force: true });
+}
+
+test('approval signal adapter emitExisting waits when state file is absent', async () => {
+  const fakeWatch = installFakeWatch();
+  const fixture = filesystemApprovalFixture('approval-signal-watch-', 'deploy-gate-status.json', { emitExisting: true });
+  const { statePath, eventBus, controller, adapter } = fixture;
+  const identity = { gate_id: 'deploy', run_id: 'run-approval' };
 
   try {
     const fatalWait = eventBus.waitForEvent('fatal.error', identity, {
@@ -68,15 +93,7 @@ test('approval signal adapter emitExisting waits when state file is absent', asy
       signal: controller.signal,
       timeoutMs: 500,
     });
-    fs.writeFileSync(statePath, JSON.stringify({
-      gate_id: 'deploy',
-      gate_type: 'approval',
-      run_id: 'run-approval',
-      project: 'approval-signal-test',
-      status: 'APPROVED',
-      timeout_policy: 'BLOCK',
-      decision_by: 'operator',
-    }));
+    fs.writeFileSync(statePath, JSON.stringify(approvalState()));
     fakeWatch.calls[0].listener('change', path.basename(statePath));
 
     const event = await signalWait;
@@ -84,32 +101,18 @@ test('approval signal adapter emitExisting waits when state file is absent', asy
     assert.equal(event.payload.signal_kind, 'approve');
     assert.equal(event.payload.state_path, statePath);
   } finally {
-    controller.abort('test_done');
-    adapter.stop('test_done');
-    fakeWatch.restore();
-    fs.rmSync(tmpDir, { recursive: true, force: true });
+    stopApprovalFixture(fixture, fakeWatch);
   }
 });
 
 test('approval signal adapter creates the canonical state directory before watching', async () => {
   const fakeWatch = installFakeWatch();
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'approval-signal-missing-dir-'));
-  const statePath = path.join(tmpDir, 'missing', 'nested', 'deploy-gate-status.json');
-  const eventBus = createPipelineEventBus();
-  const controller = new AbortController();
+  const fixture = filesystemApprovalFixture(
+    'approval-signal-missing-dir-',
+    path.join('missing', 'nested', 'deploy-gate-status.json'),
+  );
+  const { statePath, eventBus, controller, adapter } = fixture;
   const identity = { gate_id: 'deploy', run_id: 'run-approval' };
-  const adapter = createApprovalSignalEventAdapter({
-    project: 'approval-signal-test',
-    _runId: 'run-approval',
-    run_id: 'run-approval',
-    paths: { swarm_dir: tmpDir },
-  }, {
-    eventBus,
-    gateId: 'deploy',
-    gate: { type: 'approval' },
-    statePath,
-    debounceMs: 10,
-  });
 
   try {
     const fatalWait = eventBus.waitForEvent('fatal.error', identity, {
@@ -125,24 +128,13 @@ test('approval signal adapter creates the canonical state directory before watch
       signal: controller.signal,
       timeoutMs: 500,
     });
-    fs.writeFileSync(statePath, JSON.stringify({
-      gate_id: 'deploy',
-      gate_type: 'approval',
-      run_id: 'run-approval',
-      project: 'approval-signal-test',
-      status: 'APPROVED',
-      timeout_policy: 'BLOCK',
-      decision_by: 'operator',
-    }));
+    fs.writeFileSync(statePath, JSON.stringify(approvalState()));
     fakeWatch.calls[0].listener('change', path.basename(statePath));
 
     const event = await signalWait;
     assert.equal(event.payload.status, 'APPROVED');
   } finally {
-    controller.abort('test_done');
-    adapter.stop('test_done');
-    fakeWatch.restore();
-    fs.rmSync(tmpDir, { recursive: true, force: true });
+    stopApprovalFixture(fixture, fakeWatch);
   }
 });
 
@@ -186,15 +178,7 @@ test('approval signal adapter shares one filesystem watcher per directory', asyn
       signal: controller.signal,
       timeoutMs: 500,
     });
-    fs.writeFileSync(firstStatePath, JSON.stringify({
-      gate_id: 'deploy',
-      gate_type: 'approval',
-      run_id: 'run-approval',
-      project: 'approval-signal-test',
-      status: 'APPROVED',
-      timeout_policy: 'BLOCK',
-      decision_by: 'operator',
-    }));
+    fs.writeFileSync(firstStatePath, JSON.stringify(approvalState()));
     fakeWatch.calls[0].listener('change', path.basename(firstStatePath));
 
     const firstEvent = await firstWait;
@@ -204,15 +188,7 @@ test('approval signal adapter shares one filesystem watcher per directory', asyn
       signal: controller.signal,
       timeoutMs: 500,
     });
-    fs.writeFileSync(secondStatePath, JSON.stringify({
-      gate_id: 'release',
-      gate_type: 'approval',
-      run_id: 'run-approval',
-      project: 'approval-signal-test',
-      status: 'REJECTED',
-      timeout_policy: 'BLOCK',
-      decision_by: 'operator',
-    }));
+    fs.writeFileSync(secondStatePath, JSON.stringify(approvalState('release', 'REJECTED')));
     fakeWatch.calls[0].listener('change', path.basename(secondStatePath));
 
     const secondEvent = await secondWait;

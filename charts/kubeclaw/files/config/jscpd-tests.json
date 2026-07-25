@@ -1,0 +1,15 @@
+{
+  "minTokens": 100,
+  "minLines": 18,
+  "mode": "mild",
+  "maxSize": "1mb",
+  "format": ["javascript", "jsx", "typescript", "tsx", "go", "python", "bash"],
+  "reporters": ["json", "silent"],
+  "ignore": [
+    "**/build/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "**/generated/**",
+    "**/node_modules/**"
+  ]
+}

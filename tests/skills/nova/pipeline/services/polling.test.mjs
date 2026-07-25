@@ -106,6 +106,70 @@ function forgeCompletionArtifact(overrides = {}) {
   };
 }
 
+function moduleCompletionFixture(t, moduleDir = 'module-a-dir') {
+  const config = makeModuleCompletionConfig();
+  t.after(() => fs.rmSync(config.repo_root, { recursive: true, force: true }));
+  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
+  fs.mkdirSync(moduleRoot, { recursive: true });
+  return { config, moduleDir, moduleRoot };
+}
+
+function redisCompletionEvent(overrides = {}) {
+  return {
+    schema_version: 'v1',
+    type: 'completion',
+    stream_role: 'completion',
+    project: 'module-completion-test',
+    target_kind: 'module',
+    target_id: 'module-a',
+    module: 'module-a',
+    status: 'FAIL',
+    outcome: 'FAIL',
+    source: 'buster-pipeline',
+    run_id: 'run-test',
+    attempt: '1',
+    dispatch_id: 'dispatch-test',
+    timestamp: '2026-06-03T00:00:00.000Z',
+    ...overrides,
+  };
+}
+
+function firstEventRedisCtor(id, event) {
+  return class FakeRedis {
+    calls = 0;
+    waiting = null;
+    on() {}
+    async xread() {
+      this.calls += 1;
+      if (this.calls === 1) return completionXreadResult(id, { _id: id, ...event });
+      return new Promise((resolve) => { this.waiting = resolve; });
+    }
+    async xrevrange() { return []; }
+    disconnect() { this.waiting?.(null); }
+  };
+}
+
+async function waitForRedisModuleScenario(t, {
+  localStatus,
+  eventId,
+  event,
+  selector,
+  timeoutMinutes = 0.01,
+}) {
+  const { config, moduleDir } = moduleCompletionFixture(t);
+  saveModuleStatus(config, 'module-a', moduleDir, localStatus);
+  return waitForModuleBusterCompletion({ config: config, moduleDir: moduleDir, moduleId: 'module-a', expectedStatuses: ['PASS', 'FAIL', 'BLOCKED'], timeoutMinutes: timeoutMinutes, expectedIdentity: selector, pollResult: (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }), opts: {
+      deps: {
+        completionEventAdapters: {
+          RedisCtor: firstEventRedisCtor(eventId, event),
+          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
+          createRedisCompletionEventAdapter,
+          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
+        },
+      },
+    } });
+}
+
 test('pollGeneric preserves rate-limit lifecycle mutation metadata', async () => {
   const lifecycleMutation = {
     eventType: 'module.status_changed',
@@ -135,14 +199,7 @@ test('pollGeneric preserves rate-limit lifecycle mutation metadata', async () =>
 });
 
 test('pollForgeCompletion normalizes missing Forge completion envelope identity fields', async (t) => {
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-
-  const moduleDir = 'module-a-dir';
-  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
-  fs.mkdirSync(moduleRoot, { recursive: true });
+  const { config, moduleDir, moduleRoot } = moduleCompletionFixture(t);
   fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify({
     status: 'READY_FOR_TESTING',
     summary: 'ready with repairable envelope',
@@ -170,14 +227,7 @@ test('pollForgeCompletion normalizes missing Forge completion envelope identity 
 });
 
 test('pollForgeCompletion does not normalize wrong Forge completion identity values', async (t) => {
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-
-  const moduleDir = 'module-a-dir';
-  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
-  fs.mkdirSync(moduleRoot, { recursive: true });
+  const { config, moduleDir, moduleRoot } = moduleCompletionFixture(t);
   fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({
     run_id: 'wrong-run',
     module_id: moduleDir,
@@ -236,83 +286,18 @@ test('pollForgeCompletion lets an active Forge session replace an invalid interm
 });
 
 test('module completion wait preserves attempt zero in event identity', async (t) => {
-  class FakeRedis {
-    constructor() {
-      this.calls = 0;
-      this.waiting = null;
-    }
-
-    on() {}
-
-    async xread() {
-      this.calls += 1;
-      if (this.calls === 1) {
-        return completionXreadResult('1-0', {
-          _id: '1-0',
-          schema_version: 'v1',
-          type: 'completion',
-          stream_role: 'completion',
-          project: 'module-completion-test',
-          target_kind: 'module',
-          target_id: 'module-a',
-          module: 'module-a',
-          status: 'FAIL',
-          outcome: 'FAIL',
-          source: 'buster-pipeline',
-          run_id: 'run-test',
-          attempt: '1',
-          dispatch_id: 'dispatch-test',
-          session_key: 'session-test',
-          timestamp: '2026-06-03T00:00:00.000Z',
-        });
-      }
-      return new Promise((resolve) => {
-        this.waiting = resolve;
-      });
-    }
-
-    async xrevrange() {
-      return [];
-    }
-
-    disconnect() {
-      this.waiting?.(null);
-    }
-  }
-
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-  const moduleId = 'module-a';
-  const moduleDir = 'module-a-dir';
-  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
-  saveModuleStatus(config, moduleId, moduleDir, 'PASS');
-
-  const result = await waitForModuleBusterCompletion(
-    config,
-    moduleDir,
-    moduleId,
-    ['PASS', 'FAIL', 'BLOCKED'],
-    0.001,
-    {
+  const result = await waitForRedisModuleScenario(t, {
+    localStatus: 'PASS',
+    eventId: '1-0',
+    event: redisCompletionEvent({ session_key: 'session-test' }),
+    timeoutMinutes: 0.001,
+    selector: {
       run_id: 'run-test',
       attempt: 0,
       dispatch_id: 'dispatch-test',
       session_key: 'session-test',
     },
-    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
-    {
-      deps: {
-        completionEventAdapters: {
-          RedisCtor: FakeRedis,
-          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
-          createRedisCompletionEventAdapter,
-          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
-        },
-      },
-    },
-  );
+  });
 
   assert.equal(result.ok, false);
   assert.equal(result.reason, 'timeout');
@@ -320,83 +305,17 @@ test('module completion wait preserves attempt zero in event identity', async (t
 });
 
 test('module completion wait does not require gateway label in Redis completion events', async (t) => {
-  class FakeRedis {
-    constructor() {
-      this.calls = 0;
-      this.waiting = null;
-    }
-
-    on() {}
-
-    async xread() {
-      this.calls += 1;
-      if (this.calls === 1) {
-        return completionXreadResult('2-0', {
-          _id: '2-0',
-          schema_version: 'v1',
-          type: 'completion',
-          stream_role: 'completion',
-          project: 'module-completion-test',
-          target_kind: 'module',
-          target_id: 'module-a',
-          module: 'module-a',
-          status: 'FAIL',
-          outcome: 'FAIL',
-          failure_class: 'verdict_fail',
-          source: 'buster-pipeline',
-          run_id: 'run-test',
-          attempt: '1',
-          dispatch_id: 'dispatch-test',
-          timestamp: '2026-06-03T00:00:00.000Z',
-        });
-      }
-      return new Promise((resolve) => {
-        this.waiting = resolve;
-      });
-    }
-
-    async xrevrange() {
-      return [];
-    }
-
-    disconnect() {
-      this.waiting?.(null);
-    }
-  }
-
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-  const moduleId = 'module-a';
-  const moduleDir = 'module-a-dir';
-  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
-  saveModuleStatus(config, moduleId, moduleDir, 'FAIL');
-
-  const result = await waitForModuleBusterCompletion(
-    config,
-    moduleDir,
-    moduleId,
-    ['PASS', 'FAIL', 'BLOCKED'],
-    0.01,
-    {
+  const result = await waitForRedisModuleScenario(t, {
+    localStatus: 'FAIL',
+    eventId: '2-0',
+    event: redisCompletionEvent({ failure_class: 'verdict_fail' }),
+    selector: {
       run_id: 'run-test',
       attempt: 1,
       dispatch_id: 'dispatch-test',
       gateway_label: 'buster-module-a-dispatch-test',
     },
-    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
-    {
-      deps: {
-        completionEventAdapters: {
-          RedisCtor: FakeRedis,
-          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
-          createRedisCompletionEventAdapter,
-          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
-        },
-      },
-    },
-  );
+  });
 
   assert.equal(result.ok, true);
   assert.equal(result.reason, 'target_reached');
@@ -406,83 +325,17 @@ test('module completion wait does not require gateway label in Redis completion 
 });
 
 test('module completion wait treats session key as observed metadata, not selector authority', async (t) => {
-  class FakeRedis {
-    constructor() {
-      this.calls = 0;
-      this.waiting = null;
-    }
-
-    on() {}
-
-    async xread() {
-      this.calls += 1;
-      if (this.calls === 1) {
-        return completionXreadResult('3-0', {
-          _id: '3-0',
-          schema_version: 'v1',
-          type: 'completion',
-          stream_role: 'completion',
-          project: 'module-completion-test',
-          target_kind: 'module',
-          target_id: 'module-a',
-          module: 'module-a',
-          status: 'PASS',
-          outcome: 'PASS',
-          source: 'buster-pipeline',
-          run_id: 'run-test',
-          attempt: '1',
-          dispatch_id: 'dispatch-test',
-          session_key: 'session-current',
-          timestamp: '2026-06-03T00:00:00.000Z',
-        });
-      }
-      return new Promise((resolve) => {
-        this.waiting = resolve;
-      });
-    }
-
-    async xrevrange() {
-      return [];
-    }
-
-    disconnect() {
-      this.waiting?.(null);
-    }
-  }
-
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-  const moduleId = 'module-a';
-  const moduleDir = 'module-a-dir';
-  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
-  saveModuleStatus(config, moduleId, moduleDir, 'PASS');
-
-  const result = await waitForModuleBusterCompletion(
-    config,
-    moduleDir,
-    moduleId,
-    ['PASS', 'FAIL', 'BLOCKED'],
-    0.01,
-    {
+  const result = await waitForRedisModuleScenario(t, {
+    localStatus: 'PASS',
+    eventId: '3-0',
+    event: redisCompletionEvent({ status: 'PASS', outcome: 'PASS', session_key: 'session-current' }),
+    selector: {
       run_id: 'run-test',
       attempt: 1,
       dispatch_id: 'dispatch-test',
       session_key: 'session-stale',
     },
-    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
-    {
-      deps: {
-        completionEventAdapters: {
-          RedisCtor: FakeRedis,
-          redisOptions: { host: '127.0.0.1', port: '6379', enforceSecureMode: false },
-          createRedisCompletionEventAdapter,
-          createLocalEvidenceEventAdapter: createNoopLocalEvidenceEventAdapter,
-        },
-      },
-    },
-  );
+  });
 
   assert.equal(result.ok, true);
   assert.equal(result.reason, 'target_reached');
@@ -506,29 +359,16 @@ test('module completion wait recovers canonical Redis completion from tail scan 
     }
   }
 
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
+  const { config, moduleDir } = moduleCompletionFixture(t);
   const moduleId = 'module-a';
-  const moduleDir = 'module-a-dir';
-  fs.mkdirSync(path.join(config.paths.modules_dir, moduleDir), { recursive: true });
   saveModuleStatus(config, moduleId, moduleDir, 'TESTING');
 
-  const result = await waitForModuleBusterCompletion(
-    config,
-    moduleDir,
-    moduleId,
-    ['PASS', 'FAIL', 'BLOCKED'],
-    0.01,
-    {
+  const result = await waitForModuleBusterCompletion({ config: config, moduleDir: moduleDir, moduleId: moduleId, expectedStatuses: ['PASS', 'FAIL', 'BLOCKED'], timeoutMinutes: 0.01, expectedIdentity: {
       run_id: 'run-test',
       attempt: 1,
       dispatch_id: 'dispatch-test',
       session_key: 'session-test',
-    },
-    (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }),
-    {
+    }, pollResult: (ok, reason, status = null, extra = {}) => ({ ok, reason, status, ...extra }), opts: {
       deps: {
         completionEventAdapters: {
           RedisCtor: FakeRedis,
@@ -562,8 +402,7 @@ test('module completion wait recovers canonical Redis completion from tail scan 
           truncated: false,
         }),
       },
-    },
-  );
+    } });
 
   assert.equal(result.ok, true);
   assert.equal(result.reason, 'target_reached');
@@ -573,14 +412,7 @@ test('module completion wait recovers canonical Redis completion from tail scan 
 });
 
 test('pollForgeCompletion accepts a valid forge completion artifact without waiting for session end', async (t) => {
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-
-  const moduleDir = 'module-a-dir';
-  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
-  fs.mkdirSync(moduleRoot, { recursive: true });
+  const { config, moduleDir, moduleRoot } = moduleCompletionFixture(t);
   fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({ module_id: moduleDir }), null, 2));
 
   const result = await pollForgeCompletion(config, moduleDir, 1, { runId: 'run-test', moduleId: moduleDir, attempt: 1 });
@@ -632,14 +464,7 @@ test('pollForgeCompletion returns typed rate limit status from monitored Forge t
 });
 
 test('pollForgeCompletion accepts a valid artifact written at the timeout edge', async (t) => {
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-
-  const moduleDir = 'module-a-dir';
-  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
-  fs.mkdirSync(moduleRoot, { recursive: true });
+  const { config, moduleDir, moduleRoot } = moduleCompletionFixture(t);
 
   const timer = setTimeout(() => {
     fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({
@@ -658,14 +483,7 @@ test('pollForgeCompletion accepts a valid artifact written at the timeout edge',
 });
 
 test('pollForgeCompletion rejects stale forge completion identity', async (t) => {
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-
-  const moduleDir = 'module-a-dir';
-  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
-  fs.mkdirSync(moduleRoot, { recursive: true });
+  const { config, moduleDir, moduleRoot } = moduleCompletionFixture(t);
   fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({
     run_id: 'old-run',
     module_id: moduleDir,
@@ -684,14 +502,7 @@ test('pollForgeCompletion rejects stale forge completion identity', async (t) =>
 });
 
 test('archived stale forge completion cannot satisfy a fresh attempt', async (t) => {
-  const config = makeModuleCompletionConfig();
-  t.after(() => {
-    fs.rmSync(config.repo_root, { recursive: true, force: true });
-  });
-
-  const moduleDir = 'module-a-dir';
-  const moduleRoot = path.join(config.paths.modules_dir, moduleDir);
-  fs.mkdirSync(moduleRoot, { recursive: true });
+  const { config, moduleDir, moduleRoot } = moduleCompletionFixture(t);
   fs.writeFileSync(path.join(moduleRoot, 'forge-completion.json'), JSON.stringify(forgeCompletionArtifact({
     module_id: moduleDir,
     summary: 'stale success',

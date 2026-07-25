@@ -60,3 +60,9 @@ test('telemetry payload handling does not recurse indefinitely on circular array
     true,
   );
 });
+
+test('artifact completeness uses canonical reference_only spelling',()=>{
+  const base={artifact_id:'artifact-1',logical_id:'logical-1',kind:'result',media_type:'application/json',byte_length:1,sha256:'a'.repeat(64),content_class:'artifact',reference:`blobs/sha256/${'a'.repeat(2)}/${'a'.repeat(62)}`};
+  assert.deepEqual(validateTelemetryEventPayload('artifact.published',{...base,completeness:'reference_only'}),[]);
+  assert.equal(validateTelemetryEventPayload('artifact.published',{...base,completeness:'reference-only'}).length>0,true);
+});

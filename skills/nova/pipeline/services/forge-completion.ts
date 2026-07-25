@@ -4,31 +4,31 @@ import { STATUS } from '../core/constants.ts';
 import { modulePath } from '../core/paths.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-export const FORGE_COMPLETION_ARTIFACT_TYPE = 'forge_completion';
-export const FORGE_COMPLETION_STATUSES = Object.freeze([
+const FORGE_COMPLETION_ARTIFACT_TYPE = 'forge_completion';
+const FORGE_COMPLETION_STATUSES = Object.freeze([
   STATUS.READY_FOR_TESTING,
   STATUS.BLOCKED,
 ]);
 
-function isAbsent(value) {
+function isAbsent(value: any) {
   return value === undefined || value === null || value === '';
 }
 
-function nonEmptyStringArray(value) {
-  return Array.isArray(value) && value.some((entry) => typeof entry === 'string' && entry.trim());
+function nonEmptyStringArray(value: any) {
+  return Array.isArray(value) && value.some((entry: any) => typeof entry === 'string' && entry.trim());
 }
 
-function normalizeStringArray(value) {
+function normalizeStringArray(value: any) {
   return Array.isArray(value)
-    ? value.map((entry) => typeof entry === 'string' ? entry.trim() : '').filter(Boolean)
+    ? value.map((entry: any) => typeof entry === 'string' ? entry.trim() : '').filter(Boolean)
     : [];
 }
 
-export function forgeCompletionArtifactFile(config, moduleDir) {
+export function forgeCompletionArtifactFile(config: any, moduleDir: any) {
   return path.join(modulePath(config, moduleDir), 'forge-completion.json');
 }
 
-export function archiveForgeCompletionArtifact(config, moduleDir, attempt) {
+export function archiveForgeCompletionArtifact(config: any, moduleDir: any, attempt: any) {
   const file = forgeCompletionArtifactFile(config, moduleDir);
   if (!fs.existsSync(file)) return null;
   const archiveFile = path.join(
@@ -39,7 +39,7 @@ export function archiveForgeCompletionArtifact(config, moduleDir, attempt) {
   return archiveFile;
 }
 
-export function invalidForgeCompletionArtifactStatus(config, moduleDir, identity = {}, errors = []) {
+export function invalidForgeCompletionArtifactStatus(config: any, moduleDir: any, identity: any = {}, errors: any = []) {
   return {
     status: STATUS.FAIL,
     source: 'forge_completion_artifact',
@@ -55,8 +55,8 @@ export function invalidForgeCompletionArtifactStatus(config, moduleDir, identity
   };
 }
 
-export function validateForgeCompletionArtifact(value) {
-  const errors = [];
+function validateForgeCompletionArtifact(value: any) {
+  const errors: any[] = [];
   if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     return ['completion artifact must be a JSON object'];
   }
@@ -90,12 +90,12 @@ export function validateForgeCompletionArtifact(value) {
   return errors;
 }
 
-function normalizeIdentityValue(value) {
+function normalizeIdentityValue(value: any) {
   if (isAbsent(value)) return null;
   return String(value);
 }
 
-function normalizeExpectedIdentity(expected = {}) {
+function normalizeExpectedIdentity(expected: any = {}) {
   return {
     run_id: normalizeIdentityValue(selectDefinedValue(() => (expected.run_id), () => (expected.runId))),
     module_id: normalizeIdentityValue(selectDefinedValue(() => (expected.module_id), () => (expected.moduleId))),
@@ -103,13 +103,13 @@ function normalizeExpectedIdentity(expected = {}) {
   };
 }
 
-function normalizeForgeCompletionEnvelope(value, expected = {}) {
+function normalizeForgeCompletionEnvelope(value: any, expected: any = {}) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     return { value, normalized: false, normalized_fields: [] };
   }
   const expectedIdentity = normalizeExpectedIdentity(expected);
   const next = { ...value };
-  const normalizedFields = [];
+  const normalizedFields: any[] = [];
 
   if (isAbsent(next.artifact_type)) {
     next.artifact_type = FORGE_COMPLETION_ARTIFACT_TYPE;
@@ -126,8 +126,8 @@ function normalizeForgeCompletionEnvelope(value, expected = {}) {
   return { value: next, normalized: true, normalized_fields: normalizedFields };
 }
 
-function validateForgeCompletionIdentity(value, expected = {}) {
-  const errors = [];
+function validateForgeCompletionIdentity(value: any, expected: any = {}) {
+  const errors: any[] = [];
   const expectedIdentity = normalizeExpectedIdentity(expected);
   for (const field of ['run_id', 'module_id', 'attempt']) {
     const expectedValue = expectedIdentity[field];
@@ -142,14 +142,14 @@ function validateForgeCompletionIdentity(value, expected = {}) {
   return errors;
 }
 
-export function readForgeCompletionArtifact(config, moduleDir, expectedIdentity = {}) {
+export function readForgeCompletionArtifact(config: any, moduleDir: any, expectedIdentity: any = {}) {
   const file = forgeCompletionArtifactFile(config, moduleDir);
   if (!fs.existsSync(file)) return { found: false, file };
 
   let parsed;
   try {
     parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
-  } catch (error) {
+  } catch (error: any) {
     return { found: true, file, valid: false, errors: [`invalid JSON: ${error.message}`] };
   }
 

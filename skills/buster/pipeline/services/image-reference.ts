@@ -7,7 +7,7 @@ export type ImageReferenceValidationResult =
 const IMAGE_REF_RE = /^[a-z0-9]+(?:(?:[._-][a-z0-9]+)+|[a-z0-9]*)(?::[0-9]+)?(?:\/[a-z0-9]+(?:(?:[._-][a-z0-9]+)+|[a-z0-9]*))*?(?::[A-Za-z0-9_][A-Za-z0-9_.-]{0,127})?(?:@sha256:[a-f0-9]{64})?$/;
 
 function hasExplicitRegistryComponent(imageRef: string): boolean {
-  const registry = selectDefinedValue(() => imageRef.split('/')[0], () => '');
+  const registry = imageRef.split('/').at(0) || '';
   return selectTruthyValue(() => registry === 'localhost', () => registry.includes('.')) || registry.includes(':');
 }
 

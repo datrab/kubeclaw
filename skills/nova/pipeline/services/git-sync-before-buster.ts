@@ -76,7 +76,7 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
 
     try {
       status.forge_diff_stat = gitExec(config.repo_root, ['diff', '--stat', 'HEAD~1', 'HEAD']);
-    } catch (_error) {
+    } catch (_error: any) {
       status.forge_diff_stat = null;
     }
     const diff = gitExec(config.repo_root, ['diff', '--binary', `${status?.head_before || `${commitHash}^`}`, commitHash, '--', ...addPaths]);
@@ -93,12 +93,12 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
     log('OK', `Forge commit hash recorded: ${shortHash}`);
 
     return { commitHash, lifecycleMutation: gitSyncTransition.lifecycleMutation };
-  } catch (e) {
+  } catch (e: any) {
     throw new Error(`[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git sync failed before Buster handoff: ${errorMessage(e)}`);
   }
 }
 
-function commitHashAuthority(result, config) {
+function commitHashAuthority(result: any, config: any) {
   if (typeof result.hash === 'string' && result.hash.trim()) return result.hash;
   return gitExec(config.repo_root, ['rev-parse', 'HEAD']);
 }

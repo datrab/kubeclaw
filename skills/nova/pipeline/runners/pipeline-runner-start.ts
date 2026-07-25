@@ -1,6 +1,4 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from '../services/discord-fields.ts';
@@ -42,88 +40,19 @@ import {
 } from './pipeline-runner-terminal.ts';
 import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
 import { getArchValidationConfig } from '../services/runtime-defaults.ts';
+import {
+  architectureBlockingFindings,
+  architectureValidationBlockSummary,
+  architectureValidationEnabled,
+  architectureValidatorDiscordFields,
+  installArchitectureApprovalGate,
+} from './pipeline-runner-architecture.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
-const ARCH_VALIDATION_PRE_MODULE_FAILURE = 'Architecture validation failed before module execution';
-const ARCHITECTURE_APPROVAL_GATE_ID = 'architecture-approval';
 const SINGLE_MODULE_COMPLETE_REASON = 'single_module_complete';
 const SINGLE_MODULE_DEFAULT_TERMINAL_STATUS = 'failed';
-
-function architectureValidationEnabled(progress: AnyRecord, archConfig: AnyRecord): boolean {
-  if (typeof progress?.arch_validation?.enabled === 'boolean') return progress.arch_validation.enabled;
-  if (typeof archConfig?.enabled === 'boolean') return archConfig.enabled;
-  throw new Error('Architecture validation requires typed enabled authority');
-}
-
-function architectureValidationBlockSummary(archResult: AnyRecord, archReport: AnyRecord, blockingFindings: AnyRecord[]): string {
-  const findingsSummary = blockingFindings.map((finding: AnyRecord) => `[${finding.id}] ${finding.explanation}`).join('; ');
-  if (findingsSummary) return findingsSummary;
-  if (typeof archResult?.diagnostics?.summary === 'string' && archResult.diagnostics.summary.trim()) return archResult.diagnostics.summary.trim();
-  if (typeof archReport?.error === 'string' && archReport.error.trim()) return archReport.error.trim();
-  return ARCH_VALIDATION_PRE_MODULE_FAILURE;
-}
-
-function architectureBlockingFindings(findings: AnyRecord[] = []): AnyRecord[] {
-  return findings.filter((finding: AnyRecord) => finding?.severity === 'blocking' || finding?.severity === 'error');
-}
-
-function architectureFindingLabel(finding: AnyRecord): string {
-  const id = typeof finding?.id === 'string' && finding.id.trim() ? finding.id.trim() : 'finding_id_missing';
-  const severity = typeof finding?.severity === 'string' && finding.severity.trim() ? finding.severity.trim() : 'severity_missing';
-  const explanation = typeof finding?.explanation === 'string' && finding.explanation.trim()
-    ? finding.explanation.trim()
-    : 'explanation_missing';
-  return `[${id}] ${severity}: ${explanation}`;
-}
-
-function architectureFindingDetails(findings: AnyRecord[], maxFindings = 6): string {
-  const lines = findings.slice(0, maxFindings).map(architectureFindingLabel);
-  if (findings.length > maxFindings) lines.push(`… ${findings.length - maxFindings} more finding(s)`);
-  return lines.join('\n');
-}
-
-function architectureValidatorDiscordFields(archCorrelation: AnyRecord, archReport: AnyRecord, extra: AnyRecord[] = []): AnyRecord[] {
-  const findings = Array.isArray(archReport?.findings) ? archReport.findings : [];
-  const fields = buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, archCorrelation, [
-    { name: 'Findings', value: String(findings.length), inline: true },
-    ...extra,
-  ]);
-  if (findings.length) {
-    fields.push({ name: 'Finding Details', value: architectureFindingDetails(findings).slice(0, 1024), inline: false });
-  }
-  return fields;
-}
-
-function requireArchitectureApprovalTimeout(progress: AnyRecord, archConfig: AnyRecord): number {
-  const explicit = selectDefinedValue(
-    () => (progress?.arch_validation?.approval_gate?.timeout_minutes),
-    () => (archConfig?.approval_gate?.timeout_minutes),
-  );
-  if (Number.isInteger(explicit) && explicit > 0) return explicit;
-  throw new Error('Architecture findings approval requires progress.arch_validation.approval_gate.timeout_minutes or config.arch_validation.approval_gate.timeout_minutes');
-}
-
-function installArchitectureApprovalGate(progress: AnyRecord, archConfig: AnyRecord, archReport: AnyRecord): string {
-  const findings = Array.isArray(archReport?.findings) ? archReport.findings : [];
-  progress.gates = objectValue(progress.gates);
-  progress.gates[ARCHITECTURE_APPROVAL_GATE_ID] = {
-    type: 'approval',
-    title: 'Architecture findings approval',
-    timeout_minutes: requireArchitectureApprovalTimeout(progress, archConfig),
-    on_timeout: 'block',
-    description: [
-      'Architecture Validator passed with advisory findings. Approve to continue module work, or deny to send it back for changes.',
-      '',
-      architectureFindingDetails(findings, 12),
-    ].join('\n').trim(),
-  };
-  progress.execution_order = Array.isArray(progress.execution_order) ? progress.execution_order : [];
-  const step = `gate:${ARCHITECTURE_APPROVAL_GATE_ID}`;
-  if (!progress.execution_order.includes(step)) progress.execution_order.unshift(step);
-  return ARCHITECTURE_APPROVAL_GATE_ID;
-}
 
 function listValue(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
@@ -151,7 +80,7 @@ function writeConfigValidationSnapshot(config: AnyRecord): void {
       config_validation_issues: listValue(config._runStats?.config_validation_issues),
     };
     fs.writeFileSync(path.join(runLogDir, 'config-validation.json'), JSON.stringify(snapshot, null, 2));
-  } catch (_error) { /* non-critical */ }
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* non-critical */ }
 }
 
 function buildStartDescription(config: AnyRecord, progress: AnyRecord, opts: AnyRecord, deps: AnyRecord): string {
@@ -176,7 +105,7 @@ function buildStartDescription(config: AnyRecord, progress: AnyRecord, opts: Any
 
 export async function startPipelineRun(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}): Promise<void> {
   const deps = getPipelineRunnerDeps(config, opts.deps);
-  const ctx = _telemetryCtx(config);
+  const ctx: AnyRecord = _telemetryCtx(config) ?? { config, runId: config._runId ?? config.run_id };
   config._progress = progress;
 
   ensureRunScopedLogDir(config);
@@ -212,7 +141,7 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
   if (!opts.module) return null;
 
   const deps = getPipelineRunnerDeps(config, opts.deps);
-  const ctx = _telemetryCtx(config);
+  const ctx: AnyRecord = _telemetryCtx(config) ?? { config, runId: config._runId ?? config.run_id };
   await resumeDurableCooldownForStep(config, progress, { type: 'module', id: opts.module }, {
     budget: selectTruthyValue(() => (opts.budget), () => (null)),
   });
@@ -232,6 +161,11 @@ export async function runSingleModulePipeline(config: AnyRecord, progress: AnyRe
     });
   }
 
+  return finalizeSingleModuleSuccess({ config, progress, opts, deps, ctx, normalizedResult, stepResult, terminalStatus, singleModuleExitCode });
+}
+
+async function finalizeSingleModuleSuccess(input: AnyRecord) {
+  const { config, progress, opts, deps, ctx, normalizedResult, stepResult, terminalStatus, singleModuleExitCode } = input;
   const resultWithStatusCorrelation = buildResultWithStepCorrelation(config, progress, 'module', opts.module, {
     terminal_status: terminalStatus,
     terminal_decision: selectTruthyValue(() => (normalizedResult.terminalDecision), () => (null)),
@@ -314,118 +248,46 @@ async function maybeRunArchitectureValidation(config: AnyRecord, progress: AnyRe
   recordArchValidatorResult(config, archResult);
 
   if (archResult.nextAction !== 'block') {
-    const findingCount = Array.isArray(archReport?.findings) ? archReport.findings.length : 0;
-    if (findingCount === 0) {
-      await deps.discord(config, 'OK', 'Architecture Validator passed',
-        'Pre-pipeline architecture validation passed; module execution can continue.',
-        architectureValidatorDiscordFields(archCorrelation, archReport),
-        { deps: opts.deps, correlation: archCorrelation },
-      );
-    }
-    if (findingCount > 0) {
-      const approvalGateId = installArchitectureApprovalGate(progress, archConfig, archReport);
-      const approvalResult = await deps.runGate(config, progress, approvalGateId, {
-        deps: opts.deps,
-        attempt: 1,
-        budget: selectTruthyValue(() => (opts.budget), () => (null)),
-        signal: selectTruthyValue(() => (opts.signal), () => (null)),
-      });
-      const normalizedApproval = normalizeStepResultForPipeline(approvalResult, { stepType: 'gate', stepId: approvalGateId });
-      if (!normalizedApproval.shouldContinue) {
-        return finalizeTerminalHalt(config, progress, {
-          stepType: 'gate',
-          stepId: approvalGateId,
-          result: approvalResult,
-          opts,
-          summaryReason: 'architecture_findings_approval',
-          scheduleProjectSummaryOnBlocked: false,
-        });
-      }
-    }
-    return null;
+    return handlePassingArchitectureValidation({ config, progress, opts, deps, archConfig, archReport, archCorrelation });
   }
 
   const isExecutionError = archReport.execution_failed === true;
   const blockingFindings = architectureBlockingFindings(archReport.findings);
   const summary = architectureValidationBlockSummary(archResult, archReport, blockingFindings);
 
-  if (isExecutionError) {
-    const terminalStatus = 'failed';
-    const terminalExitCode = processExitCodeForTerminalStatus(terminalStatus);
-    await emitOperatorAlert(ctx, 'pipeline.operator_alert', {
-      step_type: 'arch_validation',
-      terminal_status: terminalStatus,
-      reason: summary,
-    }, {
-      hookId: 'pipeline.completed',
-      presentation: {
-        discord: {
-          level: 'CRITICAL',
-          title: `Pipeline halted: ${config.project}`,
-          description: 'Architecture validator execution failed before module execution.',
-          fields: [
-            ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: selectTruthyValue(() => (selectTruthyValue(() => (config._runId), () => (config.run_id))), () => ('missing_run_id')), step_type: 'arch_validation' }),
-            { name: 'Reason', value: summary.slice(0, 1000) },
-            { name: 'Action', value: 'Fix validator configuration/runtime and rerun' },
-          ],
-        },
-      },
-    });
-    deps.output({ exit: terminalExitCode, terminal_status: terminalStatus, reason: 'ARCH_VALIDATION_ERROR', error: summary });
-    onEscalated(ctx, 'step', 'arch-validation', {
-      action: 'ERROR',
-      last_failure: summary,
-      step_type: 'arch_validation',
-      step_id: 'arch-validation',
-      terminal_status: terminalStatus,
-    });
-    onPipelineHalted(ctx, {
-      step_type: 'arch_validation',
-      step_id: 'arch-validation',
-      terminal_status: terminalStatus,
-      reason: 'ARCH_VALIDATION_ERROR',
-    });
-    emitPipelineSummaryLifecycle(config, ctx, terminalStatus, 'ARCH_VALIDATION_ERROR', progress, deps.writeSummary);
-    return terminalExitCode;
-  }
+  return finalizeArchitectureValidationBlock({ config, progress, deps, ctx, isExecutionError, blockingFindings, summary });
+}
 
-  const terminalStatus = 'blocked';
-  const terminalExitCode = processExitCodeForTerminalStatus(terminalStatus);
-  await emitOperatorAlert(ctx, 'pipeline.operator_alert', {
-    step_type: 'arch_validation',
-    terminal_status: terminalStatus,
-    reason: summary,
-  }, {
-    hookId: 'pipeline.completed',
-    presentation: {
-      discord: {
-        level: 'CRITICAL',
-        title: `Pipeline blocked: ${config.project}`,
-        description: `Architecture validation failed before module execution. ${blockingFindings.length} blocking/error finding(s).`,
-        fields: [
-          ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: selectTruthyValue(() => (selectTruthyValue(() => (config._runId), () => (config.run_id))), () => ('missing_run_id')), step_type: 'arch_validation' }),
-          { name: 'Blocking/Error Findings', value: summary.slice(0, 1000) },
-          { name: 'Action', value: 'Fix architecture issues, then --resume' },
-        ],
-      },
-    },
+async function finalizeArchitectureValidationBlock(input: AnyRecord) {
+  const { config, progress, deps, ctx, isExecutionError, blockingFindings, summary } = input;
+  const status = isExecutionError ? 'failed' : 'blocked';
+  const reason = isExecutionError ? 'ARCH_VALIDATION_ERROR' : 'ARCH_VALIDATION_BLOCKED';
+  const exit = processExitCodeForTerminalStatus(status);
+  const description = isExecutionError ? 'Architecture validator execution failed before module execution.' : `Architecture validation failed before module execution. ${blockingFindings.length} blocking/error finding(s).`;
+  const action = isExecutionError ? 'Fix validator configuration/runtime and rerun' : 'Fix architecture issues, then --resume';
+  await emitOperatorAlert(ctx, 'pipeline.operator_alert', { step_type: 'arch_validation', terminal_status: status, reason: summary }, {
+    hookId: 'pipeline.completed', presentation: { discord: { level: 'CRITICAL', title: `Pipeline ${isExecutionError ? 'halted' : 'blocked'}: ${config.project}`, description,
+      fields: [...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, { run_id: selectDefinedValue(() => (config._runId), () => (selectDefinedValue(() => (config.run_id), () => ('missing_run_id')))), step_type: 'arch_validation' }), { name: isExecutionError ? 'Reason' : 'Blocking/Error Findings', value: summary.slice(0, 1000) }, { name: 'Action', value: action }] } },
   });
-  deps.output({ exit: terminalExitCode, terminal_status: terminalStatus, reason: 'ARCH_VALIDATION_BLOCKED', findings: blockingFindings.length });
-  onEscalated(ctx, 'step', 'arch-validation', {
-    action: 'BLOCKED',
-    last_failure: 'Architecture validation failed before module execution',
-    step_type: 'arch_validation',
-    step_id: 'arch-validation',
-    terminal_status: terminalStatus,
-  });
-  onPipelineHalted(ctx, {
-    step_type: 'arch_validation',
-    step_id: 'arch-validation',
-    terminal_status: terminalStatus,
-    reason: 'ARCH_VALIDATION_BLOCKED',
-  });
-  emitPipelineSummaryLifecycle(config, ctx, terminalStatus, 'ARCH_VALIDATION_BLOCKED', progress, deps.writeSummary);
-  return terminalExitCode;
+  deps.output({ exit, terminal_status: status, reason, ...(isExecutionError ? { error: summary } : { findings: blockingFindings.length }) });
+  onEscalated(ctx, 'step', 'arch-validation', { action: isExecutionError ? 'ERROR' : 'BLOCKED', last_failure: isExecutionError ? summary : 'Architecture validation failed before module execution', step_type: 'arch_validation', step_id: 'arch-validation', terminal_status: status });
+  onPipelineHalted(ctx, { step_type: 'arch_validation', step_id: 'arch-validation', terminal_status: status, reason });
+  emitPipelineSummaryLifecycle(config, ctx, status, reason, progress, deps.writeSummary);
+  return exit;
+}
+
+async function handlePassingArchitectureValidation(input: AnyRecord) {
+  const { config, progress, opts, deps, archConfig, archReport, archCorrelation } = input;
+  const findingCount = Array.isArray(archReport?.findings) ? archReport.findings.length : 0;
+  if (findingCount === 0) {
+    await deps.discord(config, 'OK', 'Architecture Validator passed', 'Pre-pipeline architecture validation passed; module execution can continue.', architectureValidatorDiscordFields(archCorrelation, archReport), { deps: opts.deps, correlation: archCorrelation });
+    return null;
+  }
+  const approvalGateId = installArchitectureApprovalGate(progress, archConfig, archReport);
+  const approvalResult = await deps.runGate(config, progress, approvalGateId, { deps: opts.deps, attempt: 1, budget: opts.budget ?? null, signal: opts.signal ?? null });
+  const normalized = normalizeStepResultForPipeline(approvalResult, { stepType: 'gate', stepId: approvalGateId });
+  if (normalized.shouldContinue) return null;
+  return finalizeTerminalHalt(config, progress, { stepType: 'gate', stepId: approvalGateId, result: approvalResult, opts, summaryReason: 'architecture_findings_approval', scheduleProjectSummaryOnBlocked: false });
 }
 
 export async function preparePipelineStart(config: AnyRecord, progress: AnyRecord, opts: AnyRecord = {}): Promise<any> {

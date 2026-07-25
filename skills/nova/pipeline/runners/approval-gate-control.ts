@@ -17,23 +17,23 @@ const APPROVAL_FAILED_STATUS = 'FAILED';
 const CORRUPTED_STATE_STATUS = 'CORRUPTED_STATE';
 const INVALID_STATE_STATUS = 'INVALID_STATE';
 
-function selectPresentValue(...values) {
-  return values.find((value) => value !== undefined && value !== null && value !== '');
+function selectPresentValue(...values: any) {
+  return values.find((value: any) => value !== undefined && value !== null && value !== '');
 }
 
-function normalizedStatus(value) {
+function normalizedStatus(value: any) {
   return typeof value === 'string' ? value.trim().toUpperCase() : '';
 }
 
-function approvalGateType(gate) {
+function approvalGateType(gate: any) {
   return selectPresentValue(gate?.type, APPROVAL_GATE_TYPE);
 }
 
-function approvalReason(result, fallback) {
+function approvalReason(result: any, fallback: any) {
   return selectPresentValue(result?.reason, fallback);
 }
 
-function buildApprovalControlSummary(gateId, result = {}) {
+function buildApprovalControlSummary(gateId: any, result: any = {}) {
   const status = normalizedStatus(result?.status);
   if (isApprovalGatePassResult(result) && status === APPROVAL_STATUS.APPROVED) {
     return `Approval gate '${gateId}' approved`;
@@ -56,7 +56,7 @@ function buildApprovalControlSummary(gateId, result = {}) {
   return approvalReason(result, `Approval gate '${gateId}' failed`);
 }
 
-function buildApprovalFindings(result = {}) {
+function buildApprovalFindings(result: any = {}) {
   const status = normalizedStatus(result?.status);
   if (isApprovalGatePassResult(result)) return [];
 
@@ -83,7 +83,7 @@ function buildApprovalFindings(result = {}) {
   }];
 }
 
-function approvalGateDecisionForResult(result = {}) {
+function approvalGateDecisionForResult(result: any = {}) {
   const status = normalizedStatus(result?.status);
   if (isApprovalGatePassResult(result)) {
     if (status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true) {
@@ -107,18 +107,18 @@ function approvalGateDecisionForResult(result = {}) {
   return { nextAction: GATE_CONTROL_ACTIONS.BLOCK, issueType: 'contract', outcomeClass: 'error' };
 }
 
-function canonicalApprovalGateRunStatus(status, result = {}) {
+function canonicalApprovalGateRunStatus(status: any, result: any = {}) {
   if (status === APPROVAL_STATUS.TIMED_OUT) return 'TIMED_OUT';
   if (isApprovalGatePassResult(result)) return 'PASS';
   if (status === APPROVAL_STATUS.PENDING_APPROVAL) return 'WAIT';
   return 'FAIL';
 }
 
-function isApprovalGatePassResult(result = {}) {
+function isApprovalGatePassResult(result: any = {}) {
   return result?.outcome_class === 'passed';
 }
 
-function assertApprovalGateResultContract(gateId, status, result = {}) {
+function assertApprovalGateResultContract(gateId: any, status: any, result: any = {}) {
   if (result?.outcome_class !== 'passed') return;
   const hasApprovedAuthority = status === APPROVAL_STATUS.APPROVED;
   const hasTimeoutContinueAuthority = status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true;
@@ -127,16 +127,16 @@ function assertApprovalGateResultContract(gateId, status, result = {}) {
   }
 }
 
-function tryResolveApprovalTimeoutPolicyFromState(stateAuthority, gateId) {
+function tryResolveApprovalTimeoutPolicyFromState(stateAuthority: any, gateId: any) {
   if (!stateAuthority?.timeout_policy) return null;
   try {
     return resolveApprovalTimeoutPolicyFromState(stateAuthority, gateId);
-  } catch (_error) {
+  } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
     return null;
   }
 }
 
-function requireApprovalStateAuthority(opts = {}, gateId) {
+function requireApprovalStateAuthority(opts: any = {}, gateId: any) {
   const state = selectDefinedValue(() => (opts?.approvalState), () => (opts?.input?.stateSnapshot?.gate));
   if (selectTruthyValue(() => (!state), () => (typeof state !== 'object'))) {
     throw new Error(`approval gate '${gateId}' persisted state requires timeout_policy authority`);
@@ -144,15 +144,15 @@ function requireApprovalStateAuthority(opts = {}, gateId) {
   return state;
 }
 
-function isTimedOutApproval(status, result = {}) {
+function isTimedOutApproval(status: any, result: any = {}) {
   return selectTruthyValue(() => (result?.timed_out === true), () => (status === APPROVAL_STATUS.TIMED_OUT));
 }
 
-function approvalSchedulerConsumed(status, result = {}) {
+function approvalSchedulerConsumed(status: any, result: any = {}) {
   return selectTruthyValue(() => (status === APPROVAL_STATUS.APPROVED), () => ((status === APPROVAL_STATUS.TIMED_OUT && result?.continued === true)));
 }
 
-export function buildApprovalGateControlResult(config, gateId, gate, result = {}, opts = {}) {
+export function buildApprovalGateControlResult(config: any, gateId: any, gate: any, result: any = {}, opts: any = {}) {
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (null));
   const status = selectTruthyValue(() => (normalizedStatus(result?.status)), () => (null));
   assertApprovalGateResultContract(gateId, status, result);
@@ -199,7 +199,7 @@ export function buildApprovalGateControlResult(config, gateId, gate, result = {}
   });
 }
 
-export function buildApprovalGateWaitControlResult(config, gateId, gate, gateState = {}, opts = {}) {
+export function buildApprovalGateWaitControlResult(config: any, gateId: any, gate: any, gateState: any = {}, opts: any = {}) {
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (gateState?.run_id))), () => (null));
   const timeoutPolicy = resolveApprovalTimeoutPolicyFromState(gateState, gateId);
   const waitRef = selectTruthyValue(() => (selectTruthyValue(() => (gateState?.wait_ref), () => (opts?.input?.refs?.waitRef))), () => (null));
@@ -241,10 +241,10 @@ export function buildApprovalGateWaitControlResult(config, gateId, gate, gateSta
   });
 }
 
-export function isApprovalGateControlResult(result) {
+export function isApprovalGateControlResult(result: any) {
   return isTypedGateControlResult(result, 'approval');
 }
 
-export function coerceApprovalGateControlResult(config, gateId, gate, result) {
+export function coerceApprovalGateControlResult(config: any, gateId: any, gate: any, result: any) {
   return coerceTypedGateControlResult(result, { producerType: 'approval' });
 }

@@ -62,13 +62,13 @@ Flags:
 
 ## Report Shape
 
-The single `pipeline_lint_policy.v5` project owns language evidence, architecture layers, native tool settings, Go and Terraform authority, and an exact `pipeline_lint_baseline.v1` path. Baselined findings require stable fingerprints, owner, reason, expiry, and tracking metadata. New findings block immediately.
+The single `pipeline_lint_policy.v6` project owns language evidence, architecture layers, native tool settings, Go and Terraform authority, experimental-tool selection, rule admission, and an exact `pipeline_lint_baseline.v2` path. Suppressions require stable fingerprints, owner, reason, creation, expiry, tracking, and explicit approval metadata. Expired suppressions invalidate policy loading; new findings block immediately.
 
 ```json
 {
-  "schema_version": "pipeline_lint_report.v5",
+  "schema_version": "pipeline_lint_report.v6",
   "policy": {
-    "schema_version": "pipeline_lint_policy.v5",
+    "schema_version": "pipeline_lint_policy.v6",
     "digest": "...",
     "project": "workspace",
     "config_digests": {},

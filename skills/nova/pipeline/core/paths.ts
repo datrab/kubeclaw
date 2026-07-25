@@ -16,7 +16,7 @@ export function validateSafePath(filePath: any, label: any) {
     throw new Error(`${label}: path is empty or not a string`);
   }
   const normalized = path.resolve(filePath);
-  const allowed = ALLOWED_PATH_PREFIXES.some((prefix) => {
+  const allowed = ALLOWED_PATH_PREFIXES.some((prefix: any) => {
     const resolvedPrefix = path.resolve(prefix);
     const prefixWithSep = resolvedPrefix.endsWith(path.sep) ? resolvedPrefix : `${resolvedPrefix}${path.sep}`;
     return selectTruthyValue(() => (normalized === resolvedPrefix), () => (normalized.startsWith(prefixWithSep)));
@@ -39,7 +39,7 @@ export function projectSrcPath(config: any) {
   return sourcePath;
 }
 export function relPath(config: any, absPath: any)  { return path.relative(config.repo_root, absPath); }
-export function portableRelPath(config: any, absPath: any) { return relPath(config, absPath).split(path.sep).join('/'); }
+function portableRelPath(config: any, absPath: any) { return relPath(config, absPath).split(path.sep).join('/'); }
 
 function firstDefined(...values: any[]) {
   for (const value of values) {
@@ -132,7 +132,7 @@ export function moduleBusterOutputPathRef(config: any, dir: any) {
   return portableArtifactRefPath(config, moduleBusterOutputPath(config, dir));
 }
 
-export function moduleBusterTestWorkspacePath(config: any, dir: any, attempt: any) {
+function moduleBusterTestWorkspacePath(config: any, dir: any, attempt: any) {
   const moduleDir = assertRelativePathInput(dir, 'module.dir', 'modules root');
   return assertPathInside(path.resolve(config.paths.modules_dir, moduleDir, 'tests', `attempt-${attempt}`), config.paths.modules_dir, 'module buster test workspace', 'modules root');
 }
@@ -156,11 +156,11 @@ export function resolveSwarmArtifactPath(config: any, artifactPath: any, label: 
   return assertPathInside(path.resolve(swarmRoot(config), artifactPath), swarmRoot(config), label);
 }
 
-export function swarmArtifactRefPath(config: any, artifactPath: any, label: any = 'swarm artifact path') {
+function swarmArtifactRefPath(config: any, artifactPath: any, label: any = 'swarm artifact path') {
   return portableArtifactRefPath(config, resolveSwarmArtifactPath(config, artifactPath, label));
 }
 
-export function swarmArtifactTopLevelRef(config: any, artifactPath: any, label: any = 'swarm artifact path') {
+function swarmArtifactTopLevelRef(config: any, artifactPath: any, label: any = 'swarm artifact path') {
   const ref = path.relative(swarmRoot(config), resolveSwarmArtifactPath(config, artifactPath, label)).split(path.sep).join('/');
   const [topLevel] = ref.split('/').filter(Boolean);
   if (!topLevel) throw new Error(`${label}: path must include a top-level artifact directory`);
@@ -271,12 +271,12 @@ export function approvalGateArtifactRefPaths(config: any, gateId: any) {
   };
 }
 
-export function runRedisLogDir(config: any) {
+function runRedisLogDir(config: any) {
   const runLogDir = resolvePipelineRunLogDir(config);
   return runLogDir ? path.join(runLogDir, 'redis') : null;
 }
 
-export function redisLogArtifactPath(config: any, fileName: any = 'redis-exchanges.jsonl', scope: any = 'project') {
+function redisLogArtifactPath(config: any, fileName: any = 'redis-exchanges.jsonl', scope: any = 'project') {
   const safeFileName = assertArtifactFileName(fileName, 'Redis artifact file name');
   const dir = scope === 'project' ? redisLogDir(config) : scope === 'run' ? runRedisLogDir(config) : null;
   if (!dir && scope !== 'project' && scope !== 'run') throw new Error(`Redis artifact scope must be 'project' or 'run'`);
@@ -340,14 +340,14 @@ export function costLogDir(config: any) {
   return projectLogSubdir(config, 'cost');
 }
 
-export function redisLogDir(config: any) {
+function redisLogDir(config: any) {
   return projectLogSubdir(config, 'redis');
 }
 
 function projectLogSubdir(config: any, ...segments: any[]) {
   const logDir = projectLogDir(config);
   if (!logDir) return null;
-  const safeSegments = segments.map((segment, index) => assertSafePathSegment(segment, `project log segment ${index + 1}`));
+  const safeSegments = segments.map((segment: any, index: any) => assertSafePathSegment(segment, `project log segment ${index + 1}`));
   return assertPathInside(path.join(logDir, ...safeSegments), logDir, 'project log path', 'project log root');
 }
 
@@ -379,7 +379,7 @@ export function archValidatorLogDir(config: any) {
   return projectLogSubdir(config, 'architecture-validator');
 }
 
-export function pipelineRunLogDir(config: any) {
+function pipelineRunLogDir(config: any) {
   const runId = getRunId(config);
   const logDir = pipelineLogDir(config);
   if (selectTruthyValue(() => (!logDir), () => (!runId))) return null;

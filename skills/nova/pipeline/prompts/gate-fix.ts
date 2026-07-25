@@ -4,7 +4,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 import { relPath, projectSrcPath, swarmRoot } from '../core/paths.ts';
 import { makePromptResult, quoteShellArg } from './shared.ts';
 
-export function buildGateFixPrompt(config, gate, issues, attempt, maxAttempts, fixHistory = []) {
+export function buildGateFixPrompt(config: any, gate: any, issues: any, attempt: any, maxAttempts: any, fixHistory: any = []) {
   // ── Context header — fresh Forge has no context window history ──
   const header = [
     `## Gate Fix: ${gate.title} (Attempt ${attempt}/${maxAttempts})`,
@@ -29,14 +29,14 @@ export function buildGateFixPrompt(config, gate, issues, attempt, maxAttempts, f
       if (!prev.hasChanges) {
         header.push(`${prev.attempt}. **Attempt ${prev.attempt}:** Forge crashed or produced no changes.`);
       } else {
-        const issueList = prev.issues.map(i => selectTruthyValue(() => (i.title), () => (i.description))).join('; ');
+        const issueList = prev.issues.map((i: any) => selectTruthyValue(() => (i.title), () => (i.description))).join('; ');
         header.push(`${prev.attempt}. **Attempt ${prev.attempt}:** Applied changes but issues persisted: ${issueList}`);
       }
     }
     header.push('', 'Understand WHY these fixes failed and take a fundamentally different approach.', '');
   }
 
-  const issueBlocks = issues.map((issue, i) => [
+  const issueBlocks = issues.map((issue: any, i: any) => [
     `### Issue ${i + 1}: ${issue.title}${issue.severity ? ` [${issue.severity.toUpperCase()}]` : ''}`,
     issue.description ? `**Description:** ${issue.description}` : '',
     issue.reproduction ? `**Reproduction:** ${issue.reproduction}` : '',

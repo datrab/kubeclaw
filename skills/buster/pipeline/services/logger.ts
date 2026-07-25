@@ -15,9 +15,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 //   logger.error('SPAWN', 'Failed to spawn session', { err: e.message });
 //   logger.flush(); // no-op — writes are synchronous
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { appendFileSync, mkdirSync } from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { dirname } from 'path';
 import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError, sanitizeNonBlockingErrorDetail } from '../noncritical-reporting.ts';
 
@@ -53,6 +51,22 @@ export interface Logger {
   error(tag: string, msg: string, data?: JsonObject): void;
   step(stepName: string): void;
   flush(): void;
+}
+
+interface LoggerState {
+  currentStep: string;
+  degraded: boolean;
+  degradedReason: string | null;
+}
+
+export function writeBusterRuntimeLog(
+  level: 'info' | 'warn' | 'error',
+  component: string,
+  message: string,
+  data?: JsonObject,
+): void {
+  const logger = createLogger({ taskType: component });
+  logger[level](component.toUpperCase(), message, data);
 }
 
 function asErrorLike(value: unknown): ErrorLike | null {
@@ -118,18 +132,18 @@ function buildLoggerDegradedPayload(opts: LoggerOptions = {}, classification: st
  * @returns {Logger}
  */
 export function createLogger(opts: LoggerOptions = {}): Logger {
-  const { logPath, module: mod = '', taskType = '' } = opts;
-  let currentStep = '';
-  let loggerDegraded = false;
-  let loggerDegradedReason: string | null = null;
+  const logPath = opts.logPath;
+  const mod = opts.module || '';
+  const taskType = opts.taskType || '';
+  const state: LoggerState = { currentStep: '', degraded: false, degradedReason: null };
 
   const reportLoggerIncident = (classification: string, error: unknown, message: string, level = 'WARN'): void => {
     // KEEP_TYPED_POLICY: file logging is observability only. JSONL mkdir/append
     // failures report degraded evidence and continue with stdout; telemetry
     // hooks are optional and must not recurse or fail logging.
-    if (!loggerDegraded && typeof opts.emitTelemetry === 'function') {
-      loggerDegraded = true;
-      loggerDegradedReason = classification;
+    if (!state.degraded && typeof opts.emitTelemetry === 'function') {
+      state.degraded = true;
+      state.degradedReason = classification;
       try {
         opts.emitTelemetry('observability.degraded', buildLoggerDegradedPayload(opts, classification, error));
       } catch (telemetryError) {
@@ -147,73 +161,12 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
     });
   };
 
-  // Create parent directory once at construction time, not per-entry.
-  if (logPath) {
-    try {
-      mkdirSync(dirname(logPath), { recursive: true });
-    } catch (error) {
-      reportLoggerIncident('log_directory_create_failed', error, 'Buster logger output directory creation failed; continuing with stdout only');
-    }
-  }
+  initializeLogPath(logPath, reportLoggerIncident);
 
   function write(level: string, tag: string, msg: string, data?: JsonObject): void {
-    const entry: JsonObject = {
-      schema_version: 'runtime_log.v1',
-      timestamp: new Date().toISOString(),
-      level: level.toLowerCase() === 'step' ? 'info' : level.toLowerCase(),
-      component: 'buster/pipeline',
-      tag,
-      message: msg,
-      work_id: mod || opts.gateId || null,
-      work_type: opts.gateId ? 'gate' : mod ? 'module' : null,
-      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-      dispatch_id: selectTruthyValue(() => (opts.dispatchId), () => (null)),
-      session_id: selectTruthyValue(() => (opts.sessionKey), () => (null)),
-      step:      currentStep,
-      task_type: taskType,
-    };
-    if (data !== undefined && data !== null && typeof data === 'object' && Object.keys(data).length > 0) {
-      entry.data = sanitizeLoggerValue(data);
-    }
-
+    const entry = buildLogEntry({ opts, state, level, tag, msg, data: data || {}, mod, taskType });
     console.log(JSON.stringify(entry));
-
-    // file — compact JSON line
-    if (logPath) {
-      try {
-        const line = JSON.stringify(entry) + '\n';
-        try {
-          appendFileSync(logPath, line);
-        } catch (appendError) {
-          mkdirSync(dirname(logPath), { recursive: true });
-          appendFileSync(logPath, line);
-        }
-        if (loggerDegraded && typeof opts.emitTelemetry === 'function') {
-          loggerDegraded = false;
-          const restoredReason = selectTruthyValue(() => (loggerDegradedReason), () => ('missing_logger_degraded_reason'));
-          loggerDegradedReason = null;
-          try {
-            opts.emitTelemetry('observability.restored', {
-              component: 'buster_logger',
-              surface: 'jsonl_file',
-              reason: restoredReason,
-              detail: 'Buster logger file append restored',
-              module_id: selectTruthyValue(() => (mod), () => (null)),
-              gate_id: selectTruthyValue(() => (opts.gateId), () => (null)),
-              attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-              dispatch_id: selectTruthyValue(() => (opts.dispatchId), () => (null)),
-              session_key: selectTruthyValue(() => (opts.sessionKey), () => (null)),
-              restored_at: new Date().toISOString(),
-            });
-          } catch (telemetryError) {
-            process.stderr.write(`[buster-logger] restored telemetry emit failed: ${sanitizeNonBlockingErrorDetail(selectTruthyValue(() => (asErrorLike(telemetryError)?.message), () => ('missing_telemetry_error_detail')))}\n`);
-          }
-        }
-      } catch (error) {
-        reportLoggerIncident('log_file_append_failed', error, 'Buster logger file append failed; continuing with stdout only');
-        process.stderr.write(`[logger] appendFileSync failed: ${logPath}\n`);
-      }
-    }
+    appendLogEntry(logPath, entry, opts, state, mod, reportLoggerIncident);
   }
 
   return {
@@ -242,7 +195,7 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
      * @param {string} stepName - Step identifier (e.g. "pre-cleanup", "git-sync")
      */
     step(stepName: string) {
-      currentStep = stepName;
+      state.currentStep = stepName;
       write('STEP', 'STEP', stepName);
     },
 
@@ -251,4 +204,62 @@ export function createLogger(opts: LoggerOptions = {}): Logger {
      */
     flush() {},
   };
+}
+
+function initializeLogPath(logPath: string | null | undefined, report: (classification: string, error: unknown, message: string) => void): void {
+  if (!logPath) return;
+  try {
+    mkdirSync(dirname(logPath), { recursive: true });
+  } catch (error) {
+    report('log_directory_create_failed', error, 'Buster logger output directory creation failed; continuing with stdout only');
+  }
+}
+
+function buildLogEntry(input: { opts: LoggerOptions; state: LoggerState; level: string; tag: string; msg: string; data?: JsonObject; mod: string; taskType: string }): JsonObject {
+  const { opts, state, level, tag, msg, data, mod, taskType } = input;
+  const entry: JsonObject = {
+    schema_version: 'runtime_log.v1', timestamp: new Date().toISOString(),
+    level: level.toLowerCase() === 'step' ? 'info' : level.toLowerCase(), component: 'buster/pipeline', tag, message: msg,
+    work_id: mod ? mod : (opts.gateId ?? null), work_type: opts.gateId ? 'gate' : mod ? 'module' : null,
+    attempt: selectDefinedValue(() => (opts.attempt), () => (null)), dispatch_id: opts.dispatchId || null,
+    session_id: opts.sessionKey || null, step: state.currentStep, task_type: taskType,
+  };
+  if (data && Object.keys(data).length > 0) entry.data = sanitizeLoggerValue(data);
+  return entry;
+}
+
+function appendLogEntry(logPath: string | null | undefined, entry: JsonObject, opts: LoggerOptions, state: LoggerState, mod: string, report: (classification: string, error: unknown, message: string) => void): void {
+  if (!logPath) return;
+  try {
+    appendLogLine(logPath, `${JSON.stringify(entry)}\n`);
+    emitLoggerRestored(opts, state, mod);
+  } catch (error) {
+    report('log_file_append_failed', error, 'Buster logger file append failed; continuing with stdout only');
+    process.stderr.write(`[logger] appendFileSync failed: ${logPath}\n`);
+  }
+}
+
+function appendLogLine(logPath: string, line: string): void {
+  try {
+    appendFileSync(logPath, line);
+  } catch (_appendError) {
+    mkdirSync(dirname(logPath), { recursive: true });
+    appendFileSync(logPath, line);
+  }
+}
+
+function emitLoggerRestored(opts: LoggerOptions, state: LoggerState, mod: string): void {
+  if (!state.degraded || typeof opts.emitTelemetry !== 'function') return;
+  state.degraded = false;
+  const reason = state.degradedReason || 'missing_logger_degraded_reason';
+  state.degradedReason = null;
+  try {
+    opts.emitTelemetry('observability.restored', {
+      component: 'buster_logger', surface: 'jsonl_file', reason, detail: 'Buster logger file append restored',
+      module_id: mod || null, gate_id: opts.gateId || null, attempt: opts.attempt ?? null,
+      dispatch_id: opts.dispatchId || null, session_key: opts.sessionKey || null, restored_at: new Date().toISOString(),
+    });
+  } catch (error) {
+    process.stderr.write(`[buster-logger] restored telemetry emit failed: ${sanitizeNonBlockingErrorDetail(asErrorLike(error)?.message || 'missing_telemetry_error_detail')}\n`);
+  }
 }

@@ -1,254 +1,120 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-// runners/module-runner-buster-worker.ts — registry-backed Buster worker dispatch
-
 import { buildPluginInvocationEnvelope, createPluginContext } from '../core/context.ts';
 import { STATUS } from '../core/constants.ts';
 import { log } from '../core/logger.ts';
-import { requireStageHandler } from '../core/registry.ts';
-import { setModuleActiveAgent, clearModuleActiveAgent, startModulePhase } from '../lifecycle-state.ts';
-import { emitPipelineCheckpoint } from '../services/pipeline-checkpoint.ts';
+import { requireStageHandler } from '../core/registry-access.ts';
+import { clearModuleActiveAgent } from '../lifecycle-state.ts';
 import {
   buildModuleBusterRunInput,
-  buildModuleWorkerPluginInvocation,
+  normalizeModuleBusterWorkerResult,
+} from './module-runner-buster-input.ts';
+import {
   buildWorkerPluginEffects,
   emitTerminalModuleFailTelemetry,
   ensureModulePluginLogDirs,
-  normalizeModuleBusterWorkerResult,
 } from './module-runner-shared.ts';
+import { buildModuleWorkerPluginInvocation } from './module-runner-plugin-contracts.ts';
 import { buildModuleErrorTerminalResult } from './module-runner/terminal-results.ts';
+import { buildBusterWorkerInput } from './module-runner-buster-worker-input.ts';
 
 type AnyRecord = Record<string, any>;
 
-function errorMessage(error: unknown): string {
+function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : String(error);
 }
 
-function mergeFinalizedStatus(latestStatus: AnyRecord | null, finalizedStatus: AnyRecord | null): AnyRecord | null {
-  if (!finalizedStatus) return latestStatus;
-  return {
-    ...(selectDefinedValue(() => (latestStatus), () => ({}))),
-    ...finalizedStatus,
-    validation: selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus.validation), () => (latestStatus?.validation))), () => (null)),
-    cost: selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus.cost), () => (latestStatus?.cost))), () => (null)),
-    active_agent: selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus.active_agent), () => (latestStatus?.active_agent))), () => (null)),
-    session_key: selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus.session_key), () => (latestStatus?.session_key))), () => (null)),
-    dispatch_id: selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus.dispatch_id), () => (latestStatus?.dispatch_id))), () => (null)),
-    gateway_label: selectTruthyValue(() => (selectTruthyValue(() => (finalizedStatus.gateway_label), () => (latestStatus?.gateway_label))), () => (null)),
-  };
-}
-
-function dispatchIdentityValue(dispatch: AnyRecord, completionIdentity: AnyRecord, field: 'dispatch_id' | 'run_id'): string {
-  const dispatchValue = typeof dispatch?.[field] === 'string' && dispatch[field].trim() ? dispatch[field].trim() : null;
-  const identityField = field === 'dispatch_id' ? 'dispatchId' : 'runId';
-  const identityValue = typeof completionIdentity?.[identityField] === 'string' && completionIdentity[identityField].trim()
-    ? completionIdentity[identityField].trim()
-    : null;
-  if (dispatchValue) return dispatchValue;
-  if (identityValue) return identityValue;
-  throw new Error(`Buster worker dispatch requires ${field}`);
-}
-
-function statusForBusterWorkerExecutionFailure(status: AnyRecord | null): string {
-  if (typeof status?.status === 'string' && status.status.trim()) return status.status.trim();
-  return STATUS.READY_FOR_TESTING;
-}
-
-function hasBusterTerminalTelemetryIdentity(status: AnyRecord | null, completionIdentity: AnyRecord, sessionKey: string | null): boolean {
-  return Boolean(
-    completionIdentity?.dispatchId
-    && (selectTruthyValue(() => (selectTruthyValue(() => (completionIdentity?.gateway_label), () => (status?.gateway_label))), () => (status?.active_agent?.gateway_label)))
-    && (selectTruthyValue(() => (selectTruthyValue(() => (sessionKey), () => (status?.session_key))), () => (status?.active_agent?.session_key)))
-  );
-}
-
-function clearBusterActiveAgentAfterWorkerFailure({ config, dir, status, deps }: AnyRecord = {}) {
+function clearActiveAgent(ctx: any, state: any) {
   try {
-    const latestStatus = selectTruthyValue(() => (deps.loadStatus(config, dir)), () => (status));
-    clearModuleActiveAgent(latestStatus);
-    deps.saveStatus(config, dir, latestStatus);
-    return latestStatus;
-  } catch (cleanupError) {
-    log('WARN', `Failed to clear Module Buster active agent after worker failure: ${errorMessage(cleanupError)}`);
-    return status;
+    state.status = ctx.deps.loadStatus(ctx.config, ctx.dir) ?? state.status;
+    clearModuleActiveAgent(state.status);
+    ctx.deps.saveStatus(ctx.config, ctx.dir, state.status);
+  } catch (error: any) {
+    log('WARN', `Failed to clear Module Buster active agent after worker failure: ${errorMessage(error)}`);
   }
 }
 
-export async function executeBusterWorkerAttempt({
-  config,
-  progress,
-  moduleId,
-  mod,
-  dir,
-  status,
-  timeout,
-  maxFails,
-  deps,
-  busterPrompt,
-  completionIdentity,
-  busterModel,
-  busterPolicy = {},
-  maxBusterCrashRetries,
-  busterAttempt,
-  startupRateLimitPauseCount = 0,
-}: AnyRecord = {}) {
-  const busterStageId = 'worker:module_buster';
-  const busterExecutionInput = buildModuleBusterRunInput(config, moduleId, mod, dir, status, {
-    attempt: completionIdentity.attempt,
-    runId: completionIdentity.runId,
-    dispatchId: completionIdentity.dispatchId,
-    gatewayLabel: completionIdentity.gateway_label,
-    model: busterModel,
-    modelSource: selectTruthyValue(() => (busterPolicy.model_source), () => (null)),
-    thinking: selectTruthyValue(() => (busterPolicy.thinking), () => (null)),
-    thinkingSource: selectTruthyValue(() => (busterPolicy.thinking_source), () => (null)),
-    thinkingSupported: selectDefinedValue(() => (busterPolicy.thinking_supported), () => (null)),
-    timeoutMinutes: timeout,
-    maxFails,
-    maxCrashRetries: maxBusterCrashRetries,
-    busterAttempt,
+function firstPresent(...values: any[]) {
+  for (const value of values) {
+    if (value !== undefined && value !== null) return value;
+  }
+  return null;
+}
+
+function terminalTelemetryIdentity(ctx: any, state: any) {
+  const status = state.status;
+  return Boolean(ctx.completionIdentity.dispatchId
+    && firstPresent(ctx.completionIdentity.gateway_label, status?.gateway_label, status?.active_agent?.gateway_label)
+    && firstPresent(state.busterSessionKey, status?.session_key, status?.active_agent?.session_key));
+}
+
+function emitFailureTelemetry(ctx: any, state: any, reason: string) {
+  if (!terminalTelemetryIdentity(ctx, state)) {
+    log('WARN', `Module ${ctx.moduleId}: Buster worker failed before session identity was available; terminal telemetry omitted for pre-session failure`);
+    return;
+  }
+  emitTerminalModuleFailTelemetry({
+    config: ctx.config, moduleId: ctx.moduleId, status: state.status, mod: ctx.mod, phase: 'buster', model: ctx.busterModel,
+    oldStatus: typeof state.status?.status === 'string' && state.status.status.trim() ? state.status.status.trim() : STATUS.READY_FOR_TESTING,
+    reason,
+    correlation: { dispatchId: ctx.completionIdentity.dispatchId, gatewayLabel: ctx.completionIdentity.gateway_label, sessionKey: state.busterSessionKey },
   });
-  const busterWorkerInput = {
-    ...busterExecutionInput,
-    executionContext: {
-      ...busterExecutionInput.executionContext,
-      startupRateLimitPauseCount,
-    },
-    prompt: busterPrompt,
-    status,
-    onDispatched: async (dispatch: AnyRecord = {}) => {
-      const dispatchId = dispatchIdentityValue(dispatch, completionIdentity, 'dispatch_id');
-      const dispatchRunId = dispatchIdentityValue(dispatch, completionIdentity, 'run_id');
-      completionIdentity.dispatchId = dispatchId;
-      completionIdentity.gateway_label = selectTruthyValue(() => (dispatch.gateway_label), () => (null));
-      const busterPhaseStartedAt = new Date().toISOString();
-      const busterStartTransition = startModulePhase(status, 'buster',
-        `Buster started (subagent attempt ${busterAttempt}/${maxBusterCrashRetries + 1})`,
-        { now: busterPhaseStartedAt, clearCompletionSummary: true });
-      const activeAgentTransition = setModuleActiveAgent(status, {
-        session_key: selectTruthyValue(() => (dispatch.session_key), () => (null)),
-        stream_log_path: selectTruthyValue(() => (dispatch.stream_log_path), () => (null)),
-        label: dispatchId,
-        gateway_label: selectTruthyValue(() => (dispatch.gateway_label), () => (null)),
-        dispatch_id: dispatchId,
-        run_id: dispatchRunId,
-        attempt: completionIdentity.attempt,
-        runtime: selectTruthyValue(() => (dispatch.runtime), () => (null)),
-        model: busterModel,
-        model_source: selectTruthyValue(() => (busterPolicy.model_source), () => (null)),
-        reasoning_level: busterPolicy.thinking_supported === false ? 'not supported' : (selectDefinedValue(() => (busterPolicy.thinking), () => ('default'))),
-        thinking_source: selectTruthyValue(() => (busterPolicy.thinking_source), () => (null)),
-        agent_id: selectTruthyValue(() => (dispatch.agent_id), () => (null)),
-        phase: 'buster',
-        started_at: new Date().toISOString(),
-      }, { lifecycleMutation: busterStartTransition.lifecycleMutation });
-      status.session_key = selectTruthyValue(() => (dispatch.session_key), () => (null));
-      status.dispatch_id = dispatchId;
-      status.gateway_label = selectTruthyValue(() => (dispatch.gateway_label), () => (null));
-      busterSessionKey = selectTruthyValue(() => (dispatch.session_key), () => (null));
-      deps.saveStatus(config, dir, status, activeAgentTransition);
-      const crashDetails = {
-        step_type: 'module',
-        step_id: moduleId,
-        module_id: moduleId,
-        attempt: completionIdentity.attempt,
-        dispatch_id: completionIdentity.dispatchId,
-      };
-      emitPipelineCheckpoint(config, 'after_buster_task_enqueue', crashDetails);
-      emitPipelineCheckpoint(config, 'during_buster_wait', crashDetails);
-    },
-    onFinalized: async ({ status: finalizedStatus = null, session_key: finalizedSessionKey = null }: AnyRecord = {}) => {
-      status = mergeFinalizedStatus(selectTruthyValue(() => (deps.loadStatus(config, dir)), () => (status)), finalizedStatus);
-      busterSessionKey = selectTruthyValue(() => (selectTruthyValue(() => (finalizedSessionKey), () => (busterSessionKey))), () => (null));
-      status.session_key = selectTruthyValue(() => (selectTruthyValue(() => (status.session_key), () => (busterSessionKey))), () => (null));
-      status.dispatch_id = selectTruthyValue(() => (selectTruthyValue(() => (status.dispatch_id), () => (completionIdentity.dispatchId))), () => (null));
-      status.gateway_label = selectTruthyValue(() => (selectTruthyValue(() => (status.gateway_label), () => (completionIdentity.gateway_label))), () => (null));
-      clearModuleActiveAgent(status);
-      deps.saveStatus(config, dir, status);
-    },
-  };
-
-  let executeBusterWorker;
-  let busterOwnerRecord;
-  let busterSessionKey: string | null = null;
-  let busterWorkerControlResult: AnyRecord | null = null;
-  try {
-    ({ handler: executeBusterWorker, record: busterOwnerRecord } = requireStageHandler(config, 'worker.execute', busterStageId, 'execute'));
-    ensureModulePluginLogDirs(config);
-    const pluginInvocation = buildModuleWorkerPluginInvocation(moduleId, status, busterStageId, {
-      attempt: completionIdentity.attempt,
-      dispatchId: completionIdentity.dispatchId,
-    });
-    const pluginContext = createPluginContext({
-      config,
-      progress,
-      hookFamily: 'worker.execute',
-      stageId: busterStageId,
-      record: busterOwnerRecord,
-      invocation: pluginInvocation,
-      stateSnapshot: async () => busterExecutionInput.stateSnapshot,
-      environmentMetadata: {
-        moduleId,
-        phase: 'buster',
-        workerType: 'module_buster',
-        model: busterModel,
-        modelSource: selectTruthyValue(() => (busterPolicy.model_source), () => (null)),
-        thinking: selectTruthyValue(() => (busterPolicy.thinking), () => (null)),
-        thinkingSource: selectTruthyValue(() => (busterPolicy.thinking_source), () => (null)),
-        thinkingSupported: selectDefinedValue(() => (busterPolicy.thinking_supported), () => (null)),
-        dispatchId: completionIdentity.dispatchId,
-      },
-      effects: buildWorkerPluginEffects(config, progress, busterStageId, busterWorkerInput, deps),
-    });
-
-    const rawBusterWorkerResult: unknown = await executeBusterWorker(
-      buildPluginInvocationEnvelope({
-        ...busterExecutionInput,
-        executionContext: busterWorkerInput.executionContext,
-      }, pluginContext, { workerInput: busterWorkerInput }),
-      pluginContext,
-    );
-    const controlResult = normalizeModuleBusterWorkerResult(config, busterExecutionInput, rawBusterWorkerResult, { stageId: busterStageId, moduleId: busterOwnerRecord.manifest.moduleId, pluginInvocation });
-    busterWorkerControlResult = controlResult;
-  } catch (error) {
-    const reason = `Module Buster worker execution failed: ${errorMessage(error)}`;
-    log('ERROR', reason);
-    status = clearBusterActiveAgentAfterWorkerFailure({ config, dir, status, deps });
-    if (hasBusterTerminalTelemetryIdentity(status, completionIdentity, busterSessionKey)) {
-      emitTerminalModuleFailTelemetry(
-        config,
-        moduleId,
-        status,
-        mod,
-        'buster',
-        busterModel,
-        statusForBusterWorkerExecutionFailure(status),
-        reason,
-        {
-          dispatchId: completionIdentity.dispatchId,
-          gatewayLabel: completionIdentity.gateway_label,
-          sessionKey: busterSessionKey,
-        },
-      );
-    } else {
-      log('WARN', `Module ${moduleId}: Buster worker failed before session identity was available; terminal telemetry omitted for pre-session failure`);
-    }
-    return {
-      status,
-      terminal: buildModuleErrorTerminalResult(config, moduleId, {
-        reason,
-        runId: completionIdentity.runId,
-        moduleDir: dir,
-        attempt: completionIdentity.attempt,
-        phase: 'buster',
-        dispatchId: completionIdentity.dispatchId,
-        gatewayLabel: completionIdentity.gateway_label,
-        sessionKey: busterSessionKey,
-        ...((error as AnyRecord)?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: (error as AnyRecord).diagnostics } } : {}),
-      }),
-    };
-  }
-
-  return { status, busterWorkerControlResult, busterSessionKey };
 }
 
-export default executeBusterWorkerAttempt;
+function failureResult(ctx: any, state: any, error: any) {
+  const reason = `Module Buster worker execution failed: ${errorMessage(error)}`;
+  log('ERROR', reason);
+  clearActiveAgent(ctx, state);
+  emitFailureTelemetry(ctx, state, reason);
+  return {
+    status: state.status,
+    terminal: buildModuleErrorTerminalResult(ctx.config, ctx.moduleId, {
+      reason, runId: ctx.completionIdentity.runId, moduleDir: ctx.dir, attempt: ctx.completionIdentity.attempt,
+      phase: 'buster', dispatchId: ctx.completionIdentity.dispatchId, gatewayLabel: ctx.completionIdentity.gateway_label,
+      sessionKey: state.busterSessionKey,
+      ...(error?.diagnostics ? { diagnostics: { contract_invalid: true, contract_diagnostic: error.diagnostics } } : {}),
+    }),
+  };
+}
+
+function buildExecutionInput(ctx: any, state: any) {
+  return buildModuleBusterRunInput(ctx.config, ctx.moduleId, ctx.mod, ctx.dir, state.status, {
+    attempt: ctx.completionIdentity.attempt, runId: ctx.completionIdentity.runId, dispatchId: ctx.completionIdentity.dispatchId,
+    gatewayLabel: ctx.completionIdentity.gateway_label, model: ctx.busterModel, modelSource: ctx.busterPolicy.model_source ?? null,
+    thinking: ctx.busterPolicy.thinking ?? null, thinkingSource: ctx.busterPolicy.thinking_source ?? null,
+    thinkingSupported: ctx.busterPolicy.thinking_supported ?? null, timeoutMinutes: ctx.timeout, maxFails: ctx.maxFails,
+    maxCrashRetries: ctx.maxBusterCrashRetries, busterAttempt: ctx.busterAttempt,
+  });
+}
+
+async function invokeWorker(ctx: any, state: any, executionInput: any, workerInput: any) {
+  const stageId = 'worker:module_buster';
+  const { handler, record } = requireStageHandler(ctx.config, 'worker.execute', stageId, 'execute');
+  ensureModulePluginLogDirs(ctx.config);
+  const invocation = buildModuleWorkerPluginInvocation(ctx.moduleId, state.status, stageId, { attempt: ctx.completionIdentity.attempt, dispatchId: ctx.completionIdentity.dispatchId });
+  const pluginContext = createPluginContext({
+    config: ctx.config, progress: ctx.progress, hookFamily: 'worker.execute', stageId, record, invocation,
+    stateSnapshot: async () => executionInput.stateSnapshot,
+    environmentMetadata: {
+      moduleId: ctx.moduleId, phase: 'buster', workerType: 'module_buster', model: ctx.busterModel,
+      modelSource: ctx.busterPolicy.model_source ?? null, thinking: ctx.busterPolicy.thinking ?? null,
+      thinkingSource: ctx.busterPolicy.thinking_source ?? null, thinkingSupported: ctx.busterPolicy.thinking_supported ?? null,
+      dispatchId: ctx.completionIdentity.dispatchId,
+    },
+    effects: buildWorkerPluginEffects(ctx.config, ctx.progress, stageId, workerInput, ctx.deps),
+  });
+  const raw = await handler(buildPluginInvocationEnvelope({ ...executionInput, executionContext: workerInput.executionContext }, pluginContext, { workerInput }), pluginContext);
+  return normalizeModuleBusterWorkerResult(ctx.config, executionInput, raw, { stageId, moduleId: record.manifest.moduleId, pluginInvocation: invocation });
+}
+
+export async function executeBusterWorkerAttempt(input: AnyRecord = {}) {
+  const ctx: AnyRecord = { ...input, busterPolicy: input.busterPolicy ?? {}, startupRateLimitPauseCount: input.startupRateLimitPauseCount ?? 0 };
+  const state = { status: ctx.status, busterSessionKey: null };
+  const executionInput = buildExecutionInput(ctx, state);
+  const workerInput = buildBusterWorkerInput(ctx, executionInput, state);
+  try {
+    const busterWorkerControlResult = await invokeWorker(ctx, state, executionInput, workerInput);
+    return { status: state.status, busterWorkerControlResult, busterSessionKey: state.busterSessionKey };
+  } catch (error: any) {
+    return failureResult(ctx, state, error);
+  }
+}

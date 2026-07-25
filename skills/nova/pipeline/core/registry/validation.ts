@@ -82,7 +82,7 @@ function allowlistForModule(capabilityAllowlist: AnyRecord, manifest: AnyRecord,
   return new Set(configured);
 }
 
-export function validateManifestConfigSchema(manifest: AnyRecord, errors: RegistryError[]) {
+function validateManifestConfigSchema(manifest: AnyRecord, errors: RegistryError[]) {
   if (!isPlainObject(manifest.configSchema)) {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' must declare an object configSchema envelope`);
     return;

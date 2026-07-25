@@ -10,13 +10,15 @@ import { detectProjectTypes, listPolicySourceFiles } from '../../../../../../ski
 
 function writePolicy(repoRoot, languages = ['javascript']) {
   const policyPath = path.join(repoRoot, 'lint-policy.json');
-  fs.writeFileSync(path.join(repoRoot, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v1","groups":[]}\n');
+  fs.writeFileSync(path.join(repoRoot, 'lint-baseline.json'), '{"schema_version":"pipeline_lint_baseline.v2","groups":[]}\n');
   fs.writeFileSync(policyPath, JSON.stringify({
-    schema_version: 'pipeline_lint_policy.v5',
+    schema_version: 'pipeline_lint_policy.v6',
     baseline_path: 'lint-baseline.json',
+    experimental_tools: [],
     projects: [{ id: 'workspace', root: '.', discovery_max_depth: 5, languages, language_evidence: Object.fromEntries(languages.map(language => [language, language === 'helm' ? ['**/Chart.yaml'] : ['package.json']])) }],
     global_exclusions: [],
     architecture: { layers: [{ id: 'workspace', roots: ['.'], may_depend_on: ['workspace'] }] },
+    rule_admission: { historical_commits: ['ad77341f3d85de501d1fd5fdbad6ced613ccee16'], rules: [{ tool: 'shellcheck', code: 'fixture-rule', principle: 'Explicit shell behavior.', remediation: 'Fix the shell finding.', historical_changed_sets: 1, false_positives: 0, approved_by: 'platform', approved_on: '2026-07-20' }] },
     tools: [{ id: 'shellcheck', required: true, category: 'lint', scope: 'changed-files', tier: 'pre-check', timeout_ms: 1000, blocking_severity: 'error', languages: [], config_path: null, targets: ['.'], include: [], exclude: [] }],
   }));
   return policyPath;

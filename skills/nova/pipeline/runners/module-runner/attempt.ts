@@ -4,7 +4,8 @@ import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts
 import { selectDeps } from '../../core/deps.ts';
 import { STATUS } from '../../core/constants.ts';
 import { log } from '../../core/logger.ts';
-import { validateBusterConfig, resolvePolicy, logEffectivePolicy } from '../../core/config.ts';
+import { validateBusterConfig } from '../../core/buster-config.ts';
+import { resolvePolicy, logEffectivePolicy } from '../../core/policy.ts';
 import { headHash, invalidateHeadHash } from '../../core/git-context.ts';
 import { loadStatus, saveStatus, initStatus, savePrompt, saveStreamLog, applyModuleCompletion } from '../../services/status-store.ts';
 import { releaseBlueprint } from '../../services/blueprint.ts';
@@ -155,7 +156,7 @@ export async function executeModuleAttempt({
     const dependencyStatus = deps.loadStatus(config, dir);
     const reason = `Dependencies not met: ${dependencyState.reason}`;
     log('ERROR', `Module ${moduleId} dependencies not met: ${dependencyState.reason}`);
-    emitTerminalModuleFailTelemetry(config, moduleId, dependencyStatus, mod, 'dependency_check', null, dependencyFailureStatusAuthority(dependencyStatus), reason);
+    emitTerminalModuleFailTelemetry({ config, moduleId, status: dependencyStatus, mod, phase: 'dependency_check', model: null, oldStatus: dependencyFailureStatusAuthority(dependencyStatus), reason });
     return buildModuleErrorTerminalResult(config, moduleId, {
       reason,
       moduleDir: dir,
@@ -169,7 +170,7 @@ export async function executeModuleAttempt({
   }
 
   const handleModuleFail = (statusValue: AnyRecord, phase: string, reason: string, opts: AnyRecord = {}) => (
-    deps.handleFail(config, statusValue, dir, moduleId, maxFails, phase, reason, { progress, ...opts })
+    deps.handleFail({ config, status: statusValue, moduleDir: dir, moduleId, maxFails, phase, reason, opts: { progress, ...opts } })
   );
 
   return assertTypedModuleAttemptTerminal(await runModuleAttemptStateMachine({
@@ -184,7 +185,5 @@ export async function executeModuleAttempt({
     deps,
     status: deps.loadStatus(config, dir),
     handleModuleFail,
-  }));
+  }) as AnyRecord);
 }
-
-export default executeModuleAttempt;

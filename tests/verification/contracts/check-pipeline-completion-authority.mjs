@@ -1,14 +1,8 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
 function read(sourceRoot, relativePath) {
   return fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
@@ -33,7 +27,7 @@ function functionSource(source, name) {
   throw new Error(`unterminated function ${name}`);
 }
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 
 const plan = read(sourceRoot, 'docs/pipeline/completion-authority-plan.md');
 const completion = read(sourceRoot, 'skills/common/pipeline/completion.ts');

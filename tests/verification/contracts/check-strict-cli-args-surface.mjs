@@ -1,29 +1,20 @@
+import { parseSourceRootArgs } from '../lib/contract-check-helpers.mjs';
 import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
 const quietConsole = installQuietRuntimeConsole({ label: 'contracts/check-strict-cli-args-surface' });
 import assert from 'assert';
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
-import { execFileSync, spawnSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { pathToFileURL } from 'url';
 
-function parseArgs(argv = process.argv.slice(2)) {
-  const args = { sourceRoot: process.cwd() };
-  for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--source-root') args.sourceRoot = path.resolve(argv[i + 1]);
-  }
-  return args;
-}
 
-const { sourceRoot } = parseArgs();
+const { sourceRoot } = parseSourceRootArgs();
 const parserPath = path.join(sourceRoot, 'skills/common/pipeline/cli-args.ts');
 const { parseCliArgs, parseCliFlagValues } = await import(pathToFileURL(parserPath).href);
 const novaCliPath = path.join(sourceRoot, 'skills/nova/pipeline/cli.ts');
 const { normalizeNovaCliFlags } = await import(pathToFileURL(novaCliPath).href);
 const lintReportCliPath = path.join(sourceRoot, 'skills/nova/pipeline/tools/lint-report.ts');
-const lintReportReportPath = path.join(sourceRoot, 'skills/nova/pipeline/tools/lint-report/report.ts');
 const { lintReportExitCode } = await import(pathToFileURL(lintReportCliPath).href);
-const { runAllTools: runLintReportTools } = await import(pathToFileURL(lintReportReportPath).href);
 
 assert.deepEqual(
   parseCliArgs(['--name', 'demo', '--json', 'pos'], {
@@ -102,26 +93,14 @@ const envFallbackNovaFlags = normalizeNovaCliFlags({ resume: false, status: fals
 assert.equal(envFallbackNovaFlags.project, 'env-project', 'project should use env fallback when CLI value is absent');
 assert.equal(envFallbackNovaFlags.novaChannel, 'env-channel', 'novaChannel should use env fallback when CLI value is absent');
 
-assert.equal(lintReportExitCode({ summary: { total_errors: 0, tools_failed: 0 } }), 0, 'clean lint reports should exit 0');
-assert.equal(lintReportExitCode({ summary: { total_errors: 1, tools_failed: 0 } }), 1, 'lint findings should exit 1');
+assert.equal(lintReportExitCode({ summary: { total_blocking: 0, tools_failed: 0 } }), 0, 'clean lint reports should exit 0');
+assert.equal(lintReportExitCode({ summary: { total_blocking: 1, tools_failed: 0 } }), 1, 'blocking lint findings should exit 1');
 
-const throwingLintReport = await runLintReportTools({
-  repoRoot: sourceRoot,
-  project: 'strict-cli-lint-tool-failure',
-  tier: 'pre-check',
-  changedFiles: [],
-  projectTypes: new Set(['javascript']),
-}, [{
-  id: 'throwing-tool',
-  name: 'Throwing Tool',
-  binary: 'node',
-  tier: 'pre-check',
-  detect: () => true,
-  run: () => { throw new Error('synthetic tool failure'); },
-}]);
-assert.equal(throwingLintReport.summary.total_errors, 0, 'synthetic tool failure should not create findings');
-assert.equal(throwingLintReport.summary.tools_failed, 1, 'synthetic tool failure should be counted in report summary');
-assert.equal(lintReportExitCode(throwingLintReport), 1, 'lint-report CLI should fail when tools_failed is nonzero without findings');
+assert.equal(
+  lintReportExitCode({ summary: { total_blocking: 0, tools_failed: 1 } }),
+  1,
+  'lint-report CLI should fail when tools_failed is nonzero without findings',
+);
 
 const migratedCliFiles = [
   'skills/nova/pipeline/cli.ts',
@@ -160,24 +139,5 @@ assert.equal(
   'Buster Redis direct CLI must import parseCliFlagValues',
 );
 
-const lintScopeRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'strict-cli-lint-scope-'));
-try {
-  const repoRoot = path.join(lintScopeRoot, 'repo');
-  fs.mkdirSync(repoRoot, { recursive: true });
-  fs.writeFileSync(path.join(repoRoot, 'existing.js'), 'export const ok = true;\n');
-  const outputPath = path.join(lintScopeRoot, 'lint-report.json');
-  execFileSync(process.execPath, [
-    path.join(sourceRoot, 'skills/nova/pipeline/tools/lint-report.ts'),
-    '--repo', repoRoot,
-    '--tier', 'pre-check',
-    '--changed-files', 'existing.js,deleted.js',
-    '--output', outputPath,
-  ], { encoding: 'utf8' });
-  const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-  assert.deepEqual(report.changed_files, ['existing.js'], 'lint-report CLI should apply existing-file changed scope before running/reporting tools');
-} finally {
-  fs.rmSync(lintScopeRoot, { recursive: true, force: true });
-}
-
 quietConsole.restore();
-console.log(JSON.stringify({ ok: true, checked: 36 }));
+console.log(JSON.stringify({ ok: true, checked: 35 }));

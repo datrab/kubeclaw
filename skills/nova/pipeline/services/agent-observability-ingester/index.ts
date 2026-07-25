@@ -13,6 +13,6 @@ export type {
   AgentObservabilityPressureStatus,
 } from './consumer.ts';
 
-export function createAgentObservabilityIngester(options = {}) {
+export function createAgentObservabilityIngester(options: any = {}) {
   return new AgentObservabilityIngester(options);
 }

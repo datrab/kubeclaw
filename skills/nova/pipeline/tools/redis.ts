@@ -7,13 +7,15 @@ import { expandSwarmConfig } from '../core/platform-config.ts';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
 import { createRedisEventBus } from '../services/task-transport-contract.ts';
 import { resolveRedisCompletionPolicy } from '../services/redis-completion-policy.ts';
+import { waitForRedisReady } from '../redis-transport.ts';
+import { readNovaEnvironment } from '../core/runtime-environment.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // --- CONFIG ---
 const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 
 function loadSwarmConfig() {
-  const configuredPath = process.env.SWARM_CONFIG;
+  const configuredPath = readNovaEnvironment('SWARM_CONFIG');
   const configPath = configuredPath !== undefined && configuredPath !== null && String(configuredPath).trim()
     ? String(configuredPath)
     : DEFAULT_SWARM_CONFIG_PATH;
@@ -38,65 +40,29 @@ function redisToolPolicy() {
   };
 }
 
-function requiredEnvString(name) {
-  const value = process.env[name];
+function requiredEnvString(name: any) {
+  const value = readNovaEnvironment(name as 'AGENT_NAME');
   if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (!String(value).trim()))) {
     throw new Error(`${name}: required runtime identity env var`);
   }
   return String(value).trim();
 }
 
-let _redis = null;
+const redisToolState: { redis: any; logCallback: ((entry:any)=>void) | null } = { redis: null, logCallback: null };
 function getRedis() {
-  if (!_redis) {
-    _redis = createRedisClient(loadRedisCtor(), {}, {
-      retryStrategy: (times) => Math.min(times * 50, 2000),
+  if (!redisToolState.redis) {
+    redisToolState.redis = createRedisClient(loadRedisCtor(), {}, {
+      retryStrategy: (times:number) => Math.min(times * 50, 2000),
       maxRetriesPerRequest: 3,
       lazyConnect: false,
       enableReadyCheck: true
     });
-    _redis.on('error', (err) => console.error('[Redis Error]', err.message));
+    redisToolState.redis.on('error', (err:any) => console.error('[Redis Error]', err.message));
   }
-  return _redis;
+  return redisToolState.redis;
 }
 
-function waitForRedisReady(redis, timeoutMs) {
-  if (selectTruthyValue(() => (timeoutMs === undefined), () => (timeoutMs === null))) throw new Error('waitForRedisReady requires explicit timeoutMs');
-  if (redis.status === 'ready') return Promise.resolve();
-
-  return new Promise((resolve, reject) => {
-    let settled = false;
-    let timeout = null;
-
-    const cleanup = () => {
-      redis.off?.('ready', onReady);
-      redis.off?.('error', onError);
-      redis.off?.('end', onEnd);
-      redis.off?.('close', onClose);
-      if (timeout) clearTimeout(timeout);
-    };
-    const settle = (fn, value) => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      fn(value);
-    };
-    const onReady = () => settle(resolve);
-    const onError = (err) => settle(reject, err instanceof Error ? err : new Error(String(selectDefinedValue(() => (err), () => ('Redis connection failed')))));
-    const onEnd = () => settle(reject, new Error('Redis connection ended before ready'));
-    const onClose = () => settle(reject, new Error('Redis connection closed before ready'));
-
-    redis.once('ready', onReady);
-    redis.once('error', onError);
-    redis.once('end', onEnd);
-    redis.once('close', onClose);
-    timeout = setTimeout(() => {
-      settle(reject, new Error(`Redis did not become ready within ${timeoutMs}ms`));
-    }, timeoutMs);
-  });
-}
-
-const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
+const WEBHOOK_URL = readNovaEnvironment('DISCORD_WEBHOOK');
 
 // ═══════════════════════════════════════════════════════════════
 // DISCORD LOGGING — Full payload, no truncation
@@ -110,13 +76,13 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
 // If payload > 3500 chars, split across multiple embeds.
 // ═══════════════════════════════════════════════════════════════
 
-function normalizeDiscordFieldValue(value) {
+function normalizeDiscordFieldValue(value: any) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   return String(value);
 }
 
-function buildRedisDispatchDiscordFields(payload = {}, iter = 1, extra = []) {
-  const fields = [];
+function buildRedisDispatchDiscordFields(payload: any = {}, iter: any = 1, extra: any = []) {
+  const fields: any[] = [];
   const runId = normalizeDiscordFieldValue(payload.run_id);
   const moduleId = normalizeDiscordFieldValue(payload.module_id);
   const gateId = normalizeDiscordFieldValue(payload.gate_id);
@@ -138,7 +104,7 @@ function buildRedisDispatchDiscordFields(payload = {}, iter = 1, extra = []) {
   return [...fields, ...extra];
 }
 
-function resolveRedisDiscordContext(payload = {}) {
+function resolveRedisDiscordContext(payload: any = {}) {
   const pipelineLogPath = normalizeDiscordFieldValue(payload.pipeline_log_path);
   const pipelineRunLogPath = normalizeDiscordFieldValue(payload.pipeline_run_log_path);
   const runId = normalizeDiscordFieldValue(payload.run_id);
@@ -157,7 +123,7 @@ function resolveRedisDiscordContext(payload = {}) {
   };
 }
 
-async function logToDiscord(sender, target, type, iter, payload) {
+async function logToDiscord(sender: any, target: any, type: any, iter: any, payload: any) {
   try {
     const [{ discordEmbeds }, { formatSummaryForDiscord, summarizePayloadForDiscord }] = await Promise.all([
       import('../integrations/discord.ts'),
@@ -165,7 +131,7 @@ async function logToDiscord(sender, target, type, iter, payload) {
     ]);
     const header = `**${sender}** → **${target}**\nType: \`${type}\` | Iter: \`${iter}\``;
     const payloadSummary = summarizePayloadForDiscord(payload, 'task_payload');
-    const summaryFields = [];
+    const summaryFields: any[] = [];
     if (payload && typeof payload === 'object') {
       if (payload.project) summaryFields.push({ name: 'Project', value: String(payload.project), inline: true });
       if (Array.isArray(payload.test_suites) && payload.test_suites.length) summaryFields.push({ name: 'Suites', value: payload.test_suites.join(', '), inline: true });
@@ -199,7 +165,7 @@ async function logToDiscord(sender, target, type, iter, payload) {
       },
       auditTargets: [context.globalDiscordPath, context.runDiscordPath],
     });
-  } catch (e) { /* ignore */ }
+  } catch (e: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* ignore */ }
 }
 
 function busterTaskStream() {
@@ -210,12 +176,10 @@ function busterTaskStream() {
 
 // ─── Log Callback ──────────────────────────────────────────────────────────
 // Set by pipeline.ts after import to write Redis operations to redis-ops.jsonl.
-let _logCallback = null;
-
-function emitLog(event) {
-  if (_logCallback) {
-    try { _logCallback({ ts: new Date().toISOString(), component: 'redis', ...event }); }
-    catch (_error) { /* non-critical */ }
+function emitLog(event:any) {
+  if (redisToolState.logCallback) {
+    try { redisToolState.logCallback({ ts: new Date().toISOString(), component: 'redis', ...event }); }
+    catch (_error: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* non-critical */ }
   }
 }
 
@@ -262,13 +226,13 @@ export {
 const lib = {
   get client() { return getRedis(); },
 
-  setLogCallback(fn) { _logCallback = fn; },
+  setLogCallback(fn: any) { redisToolState.logCallback = fn; },
 
   /**
    * Publish a task to Buster's task queue.
    * Nova only dispatches to Buster via this TaskQueue boundary (Forge/Echo use ACP).
    */
-  async publishTask(targetAgent, type, payload, iteration = 1) {
+  async publishTask(targetAgent: any, type: any, payload: any, iteration: any = 1) {
     const myName = requiredEnvString('AGENT_NAME');
     const redis = getRedis();
 
@@ -298,7 +262,7 @@ const lib = {
    * @param {object} [expected] - Optional strong identity filter (run_id, attempt, dispatch_id, session_key)
    * @returns {object|null} - Completion entry or null
    */
-  async readCompletion(streamKey, moduleId, expected = {}) {
+  async readCompletion(streamKey: any, moduleId: any, expected: any = {}) {
     const redis = getRedis();
     const normalizedExpected = normalizeExpectedCompletionIdentity(expected);
     if (!hasStrongExpectedCompletionIdentity(normalizedExpected)) {
@@ -341,7 +305,7 @@ const lib = {
    * @param {number} maxLen - Max archive stream length (trimmed with ~ approximation)
    * @returns {{ archived: number }}
    */
-  async archiveCompletions(streamKey, archiveStreamKey, moduleId, maxLen, activeIdentity = {}, opts = {}) {
+  async archiveCompletions(streamKey: any, archiveStreamKey: any, moduleId: any, maxLen: any, activeIdentity: any = {}, opts: any = {}) {
     const redis = getRedis();
     const policy = redisToolPolicy();
     const archiveMaxLen = policy.archiveMaxLen;
@@ -364,16 +328,16 @@ const lib = {
   },
 
   async disconnect() {
-    if (_redis) {
-      await _redis.quit();
-      _redis = null;
+    if (redisToolState.redis) {
+      await redisToolState.redis.quit();
+      redisToolState.redis = null;
     }
   }
 };
 
 export default lib;
 
-async function main(args = process.argv.slice(2)) {
+async function main(args: any = process.argv.slice(2)) {
   const flags = parseCliFlagValues(args, {
     flags: {
       action: { type: 'string', required: true },
@@ -420,7 +384,7 @@ async function main(args = process.argv.slice(2)) {
           dispatch_id: '--dispatch-id',
           session_key: '--session-key',
         };
-        throw new Error(`Missing completion identity fields: ${missingIdentity.map((field) => {
+        throw new Error(`Missing completion identity fields: ${missingIdentity.map((field: any) => {
           if (Object.prototype.hasOwnProperty.call(flagNames, field)) return flagNames[field];
           return field;
         }).join(', ')}`);
@@ -463,7 +427,7 @@ const entryPath = process.argv[1] && fs.existsSync(process.argv[1]) ? fs.realpat
 if (currentPath === entryPath) {
   main().then(
     () => {},
-    (e) => {
+    (e: any) => {
       console.error(JSON.stringify({ error: e.message }));
       process.exitCode = 1;
     }

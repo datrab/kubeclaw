@@ -12,15 +12,15 @@ import { resolveRedisCompletionPolicy } from './redis-completion-policy.ts';
 const COMPLETION_ARCHIVE_UNAVAILABLE = 'redis completion archive unavailable';
 const BUSTER_AGENT_TYPE = 'buster';
 
-function objectRecord(value) {
+function objectRecord(value: any) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
-function archiveErrorMessage(error, fallback = COMPLETION_ARCHIVE_UNAVAILABLE) {
+function archiveErrorMessage(error: any, fallback: any = COMPLETION_ARCHIVE_UNAVAILABLE) {
   return selectDefinedValue(() => (error?.message), () => (String(selectDefinedValue(() => (error), () => (fallback)))));
 }
 
-function buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity = {}, error = null) {
+function buildCompletionArchiveFailureResult(moduleId: any, stream: any, archiveStream: any, activeIdentity: any = {}, error: any = null) {
   const message = archiveErrorMessage(error);
   return {
     archived: 0,
@@ -34,7 +34,7 @@ function buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, ac
   };
 }
 
-function emitCompletionArchiveFailure(config, moduleId, stream, activeIdentity = {}, error = null, opts = {}) {
+function emitCompletionArchiveFailure(config: any, moduleId: any, stream: any, activeIdentity: any = {}, error: any = null, opts: any = {}) {
   const detail = `Redis completion archive failed: ${archiveErrorMessage(error, 'archive unavailable')}`;
   const targetKind = pollingTargetKindAuthority(opts);
   emitObservabilityDegraded({ config }, {
@@ -53,13 +53,13 @@ function emitCompletionArchiveFailure(config, moduleId, stream, activeIdentity =
   });
 }
 
-function pollingTargetKindAuthority(opts) {
+function pollingTargetKindAuthority(opts: any) {
   if (opts.targetKind) return opts.targetKind;
   if (opts.target_kind) return opts.target_kind;
   return opts.gate_id ? 'gate' : 'module';
 }
 
-async function resolveRedisModule(config, opts = {}) {
+async function resolveRedisModule(config: any, opts: any = {}) {
   try {
     const { adapter, key } = resolveRegisteredRedisAdapter(config, {
       source: 'completion archive',
@@ -69,9 +69,9 @@ async function resolveRedisModule(config, opts = {}) {
 
     // Set log callback for Redis operation tracing → redis/redis-ops.jsonl.
     // Resolve per call so long-lived processes honor the current config/test adapter.
-    if (adapter?.setLogCallback) adapter.setLogCallback((event) => logRedisOperation(config, event));
+    if (adapter?.setLogCallback) adapter.setLogCallback((event: any) => logRedisOperation(config, event));
     return { redisMod: adapter, importError: null };
-  } catch (e) {
+  } catch (e: any) {
     const importError = `Redis module import failed: ${e.message}`;
     log('ERROR', `${importError} — Buster completion requires Redis; Git status is diagnostic only`);
     return { redisMod: null, importError };
@@ -86,14 +86,14 @@ async function resolveRedisModule(config, opts = {}) {
  *
  * Called once before each Buster dispatch (not on every poll cycle).
  */
-export async function archiveModuleCompletions(config, moduleId, activeIdentity = {}, opts = {}) {
+export async function archiveModuleCompletions(config: any, moduleId: any, activeIdentity: any = {}, opts: any = {}) {
   const stream = completionStreamKey(config);
   const archiveStream = `${stream}:log`;
 
   try {
     const { redisMod, importError } = await resolveRedisModule(config, opts);
     if (!redisMod) {
-      const error = new Error(selectDefinedValue(() => (importError), () => (COMPLETION_ARCHIVE_UNAVAILABLE)));
+      const error = new Error(String(selectDefinedValue(() => importError, () => COMPLETION_ARCHIVE_UNAVAILABLE)));
       emitCompletionArchiveFailure(config, moduleId, stream, activeIdentity, error, opts);
       log('WARN', `Completion archive failed for ${moduleId}: ${error.message}`);
       return buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity, error);
@@ -106,7 +106,7 @@ export async function archiveModuleCompletions(config, moduleId, activeIdentity 
       log('INFO', `Archived ${result.archived} old completion(s) for ${moduleId} → ${archiveStream}`);
     }
     return result;
-  } catch (e) {
+  } catch (e: any) {
     emitCompletionArchiveFailure(config, moduleId, stream, activeIdentity, e, opts);
     log('WARN', `Completion archive failed for ${moduleId}: ${e.message}`);
     return buildCompletionArchiveFailureResult(moduleId, stream, archiveStream, activeIdentity, e);

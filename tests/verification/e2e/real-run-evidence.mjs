@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { checkpointSkippedAgentPhases } from './checkpoints.mjs';
 import {
   realE2EScenarioSetupContract,
@@ -1212,6 +1214,7 @@ export const evidenceSchemaTestHooks = Object.freeze({
   requireScenarioFailureContract,
   requireScenarioSetupContract,
   requireAgentObservabilityTelemetryEvidence,
+  requireCanonicalObservabilityBundle,
   requireBusterStreamEvidence,
   requirePipelineTelemetryStreamEvidence,
   validateArchitectureResultsForWorkspace,
@@ -3189,6 +3192,29 @@ async function requirePipelineTelemetryStreamEvidence(workspace) {
   });
 }
 
+export function verifyNativeSubagentToolPairs(events) {
+  const starts=events.filter(event=>event?.type==='agent.tool.started');
+  const finishes=events.filter(event=>event?.type==='agent.tool.finished');
+  const errors=[];const startsById=new Map();const finishesById=new Map();
+  const causalIdentity=(event)=>({
+    session_id:event.session_id??event.session_key??null,
+    model_call_id:event.model_call_id??null,
+    work_id:event.work_id??event.module_id??event.gate_id??null,
+    attempt:event.attempt??null,
+    dispatch_id:event.dispatch_id??null,
+  });
+  const identityFields=['session_id','model_call_id','work_id','attempt','dispatch_id'];
+  for(const event of [...starts,...finishes]){
+    if(!event.tool_call_id)errors.push({reason:'TOOL_CALL_ID_MISSING',event_id:event.event_id??null,type:event.type});
+    const identity=causalIdentity(event);for(const field of identityFields)if(identity[field]===null||identity[field]===undefined||identity[field]==='')errors.push({reason:'TOOL_CAUSAL_IDENTITY_MISSING',field,event_id:event.event_id??null,type:event.type});
+  }
+  for(const event of starts){if(!event.tool_call_id)continue;if(startsById.has(event.tool_call_id))errors.push({reason:'DUPLICATE_TOOL_START',tool_call_id:event.tool_call_id});else startsById.set(event.tool_call_id,event);}
+  for(const event of finishes){if(!event.tool_call_id)continue;const list=finishesById.get(event.tool_call_id)??[];list.push(event);finishesById.set(event.tool_call_id,list);if(!event.outcome||!event.content_completeness||event.result_bytes===null||event.result_bytes===undefined||event.error===undefined)errors.push({reason:'TOOL_FINISH_EVIDENCE_INCOMPLETE',tool_call_id:event.tool_call_id});}
+  for(const [id,start] of startsById){const paired=finishesById.get(id)??[];if(paired.length===0){errors.push({reason:'ORPHAN_TOOL_START',tool_call_id:id});continue;}if(paired.length>1){errors.push({reason:'DUPLICATE_TOOL_FINISH',tool_call_id:id,count:paired.length});continue;}const finish=paired[0];const startIdentity=causalIdentity(start);const finishIdentity=causalIdentity(finish);for(const field of identityFields)if(startIdentity[field]!==finishIdentity[field])errors.push({reason:'TOOL_PAIR_IDENTITY_MISMATCH',tool_call_id:id,field,start:startIdentity[field]??null,finish:finishIdentity[field]??null});const started=Date.parse(start.occurred_at??start.ts);const ended=Date.parse(finish.occurred_at??finish.ts);if(Number.isFinite(started)&&Number.isFinite(ended)&&ended<started)errors.push({reason:'TOOL_FINISH_BEFORE_START',tool_call_id:id});}
+  for(const id of finishesById.keys())if(!startsById.has(id))errors.push({reason:'ORPHAN_TOOL_FINISH',tool_call_id:id});
+  return{ok:errors.length===0,starts:starts.length,finishes:finishes.length,errors};
+}
+
 function requireAgentObservabilityTelemetryEvidence(workspace) {
   const scope = evidenceScopeForWorkspace(workspace);
   const eventPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl');
@@ -3216,8 +3242,9 @@ function requireAgentObservabilityTelemetryEvidence(workspace) {
       source: event.source || null,
       emitter: event.emitter || null,
     }));
+  const nativeToolPairing=verifyNativeSubagentToolPairs(agentEvents);
 
-  return agentEvents.length > 0 && missingTypes.length === 0 && missingLabels.length === 0 && invalidEvents.length === 0
+  return agentEvents.length > 0 && missingTypes.length === 0 && missingLabels.length === 0 && invalidEvents.length === 0 && nativeToolPairing.ok
     ? evidencePass('agent_observability_pipeline_events', {
       path: rel(workspace, eventPath),
       event_count: events.length,
@@ -3225,6 +3252,7 @@ function requireAgentObservabilityTelemetryEvidence(workspace) {
       types: [...typeSet].sort(),
       labels: labels.slice(0, 20),
       execution_boundary: scope.executionBoundary,
+      native_tool_pairing: nativeToolPairing,
     })
     : evidenceFail('agent_observability_pipeline_events', 'REAL_E2E_AGENT_OBSERVABILITY_TELEMETRY_EVIDENCE_FAILED', {
       path: rel(workspace, eventPath),
@@ -3233,6 +3261,7 @@ function requireAgentObservabilityTelemetryEvidence(workspace) {
       missing_types: missingTypes,
       missing_labels: missingLabels,
       invalid_events: invalidEvents,
+      native_tool_pairing: nativeToolPairing,
       expected: {
         source: 'pipeline',
         emitter: 'nova/pipeline/services/agent-observability-ingester',
@@ -3241,6 +3270,100 @@ function requireAgentObservabilityTelemetryEvidence(workspace) {
         required_types: requiredTypes,
         required_labels: requiredLabels,
       },
+    });
+}
+
+function runObservabilityReadiness(command, runDir) {
+  const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+  const toolPath = path.join(repoRoot, 'skills', 'nova', 'pipeline', 'tools', 'observability-readiness.ts');
+  try {
+    const stdout = execFileSync(process.execPath, [toolPath, command, '--run-dir', runDir], {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      timeout: 60_000,
+    });
+    return { ok: true, result: JSON.parse(stdout) };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error?.message || String(error),
+      stdout: String(error?.stdout || ''),
+      stderr: String(error?.stderr || ''),
+    };
+  }
+}
+
+function requireCanonicalObservabilityBundle(workspace) {
+  const pipelineRunId = primaryExpectedRunId(workspace);
+  const runDir = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId);
+  const verification = runObservabilityReadiness('verify', runDir);
+  const replay = verification.ok ? runObservabilityReadiness('replay', runDir) : null;
+  const manifest = readJsonIfPresent(path.join(runDir, 'run-manifest.json'));
+  const closure = readJsonIfPresent(path.join(runDir, 'terminal-closure.json'));
+  const archive = readJsonIfPresent(path.join(runDir, 'archive-manifest.json'));
+  const health = readJsonIfPresent(path.join(runDir, 'producer-health.json'));
+  const artifacts = readJsonLines(path.join(runDir, 'artifacts.jsonl'));
+  const evaluationFacts = readJsonLines(path.join(runDir, 'evaluation-facts.jsonl'));
+  const failures = [];
+
+  if (!verification?.ok || verification.result?.ok !== true || verification.result?.contracts_checked < 25) {
+    failures.push({ contract: 'portable_bundle_verification', details: verification });
+  }
+  if (!replay?.ok || replay.result?.ok !== true || (replay.result?.replay?.mismatches || []).length !== 0) {
+    failures.push({ contract: 'offline_replay_equivalence', details: replay });
+  }
+  if (manifest?.schema_version !== 'run_manifest.v1' || !manifest?.fingerprint || manifest?.run_id !== pipelineRunId) {
+    failures.push({ contract: 'run_manifest', actual: manifest });
+  }
+  if (closure?.schema_version !== 'terminal_closure.v1'
+    || closure?.run_id !== pipelineRunId
+    || closure?.outcome !== 'success'
+    || closure?.observability !== 'complete'
+    || closure?.manifest_fingerprint !== manifest?.fingerprint) {
+    failures.push({ contract: 'terminal_closure', actual: closure, expected_manifest_fingerprint: manifest?.fingerprint || null });
+  }
+  if (archive?.schema_version !== 'run_archive_manifest.v1'
+    || archive?.run_id !== pipelineRunId
+    || archive?.repair_state !== 'verified'
+    || archive?.completeness !== 'complete'
+    || !archive?.sha256) {
+    failures.push({ contract: 'archive_manifest', actual: archive });
+  }
+  if (health?.schema_version !== 'producer_health_snapshot.v1'
+    || health?.run_id !== pipelineRunId
+    || health?.completeness !== 'complete'
+    || !Array.isArray(health?.producers)
+    || health.producers.length === 0) {
+    failures.push({ contract: 'producer_health', actual: health });
+  }
+  if (artifacts.length === 0 || artifacts.some((artifact) => artifact?.schema_version !== 'artifact_published.v1'
+    || artifact?.correlation?.run_id !== pipelineRunId
+    || !artifact?.sha256
+    || !artifact?.reference)) {
+    failures.push({ contract: 'artifact_catalog', artifact_count: artifacts.length });
+  }
+  const artifactKinds = new Set(artifacts.map((artifact) => artifact.kind));
+  const missingArtifactKinds = requiredValuesMissing([...artifactKinds], ['composed-prompt', 'prompt-metadata', 'git-diff']);
+  if (missingArtifactKinds.length > 0) failures.push({ contract: 'p1_artifact_evidence', missing_artifact_kinds: missingArtifactKinds });
+  const evaluationDimensions = new Set(evaluationFacts.map((fact) => fact.dimension));
+  if (!evaluationDimensions.has('git.workspace')) failures.push({ contract: 'evaluation_facts', missing_dimensions: ['git.workspace'] });
+
+  return failures.length === 0
+    ? evidencePass('canonical_observability_bundle', {
+      run_dir: rel(workspace, runDir),
+      contracts_checked: verification.result.contracts_checked,
+      lifecycle_events: verification.result.events,
+      artifacts: artifacts.length,
+      artifact_kinds: [...artifactKinds].sort(),
+      evaluation_dimensions: [...evaluationDimensions].sort(),
+      replay_mismatches: replay.result.replay.mismatches.length,
+      manifest_fingerprint: manifest.fingerprint,
+      archive_sha256: archive.sha256,
+    })
+    : evidenceFail('canonical_observability_bundle', 'REAL_E2E_CANONICAL_OBSERVABILITY_BUNDLE_INCOMPLETE', {
+      run_dir: rel(workspace, runDir),
+      failures,
     });
 }
 
@@ -3360,6 +3483,7 @@ async function verifyModuleBoundarySuccessAfterRetry(workspace, { mode = 'full',
     requireDiscordDeliveryReceipt(workspace),
     await requirePipelineTelemetryStreamEvidence(workspace),
     requireAgentObservabilityTelemetryEvidence(workspace),
+    requireCanonicalObservabilityBundle(workspace),
   ];
   const failures = checks.filter((check) => !check.ok);
   return {
@@ -3406,6 +3530,7 @@ async function verifyModuleBoundarySuccess(workspace, { mode = 'full', scenario 
     requireDiscordDeliveryReceipt(workspace),
     await requirePipelineTelemetryStreamEvidence(workspace),
     requireAgentObservabilityTelemetryEvidence(workspace),
+    requireCanonicalObservabilityBundle(workspace),
   ];
 
   if (scenario?.id === 'git-dirty-worktree-preserved') {
@@ -3472,6 +3597,7 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full', scenario
     await requireBusterStreamEvidence(workspace, { requireModuleTask: requireModuleBusterTask, requireGateTask: requireFinalBusterTask }),
     await requirePipelineTelemetryStreamEvidence(workspace),
     requireAgentObservabilityTelemetryEvidence(workspace),
+    requireCanonicalObservabilityBundle(workspace),
   ];
   if (scope.terminalExtras) {
     checks.splice(8, 0,

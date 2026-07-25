@@ -6,9 +6,10 @@ import {
   createAgentEndedTelemetryReader,
   isForgeCompletionControlPath,
 } from '../../../../../skills/nova/pipeline/services/agent-observability-forge-completion.ts';
+import { lazyTelemetryRedis, telemetryXreadResult } from './agent-observability-test-fixtures.mjs';
 
 function xreadResult(id, event) {
-  return [['telemetry-stream', [[id, ['data', JSON.stringify(event)]]]]];
+  return telemetryXreadResult(id, event);
 }
 
 function observabilityConfig() {
@@ -71,38 +72,13 @@ test('agent ended telemetry reader advances past ignored stream entries', async 
 test('agent ended telemetry reader connects lazy Redis clients before xread', async () => {
   const calls = [];
 
-  class FakeRedis {
-    constructor() {
-      this.status = 'wait';
-    }
-
-    on() {}
-
-    async connect() {
-      calls.push('connect');
-      this.status = 'ready';
-    }
-
-    async ping() {
-      calls.push('ping');
-      return 'PONG';
-    }
-
-    async xread(...args) {
-      calls.push(['xread', ...args]);
-      return xreadResult('1-0', {
-        type: 'agent.ended',
-        agent_type: 'forge',
-        run_id: 'run-a',
-        module_id: 'module-a',
-        outcome: 'success',
-      });
-    }
-
-    disconnect() {
-      calls.push('disconnect');
-    }
-  }
+  const FakeRedis = lazyTelemetryRedis({ calls, event: {
+    type: 'agent.ended',
+    agent_type: 'forge',
+    run_id: 'run-a',
+    module_id: 'module-a',
+    outcome: 'success',
+  } });
 
   const reader = createAgentEndedTelemetryReader({
     project: 'project-a',

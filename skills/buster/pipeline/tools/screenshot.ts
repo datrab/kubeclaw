@@ -1,15 +1,17 @@
 #!/usr/bin/env node
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { fileURLToPath } from 'url';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import process from 'process';
-import { parseCliArgs } from '../cli-args.ts';
+import { runScreenshotCli } from './screenshot-cli.ts';
+import { parseBaselineRoutes } from './screenshot-routes.ts';
+import type { BaselineGenerationResult, BaselineRoute, BaselineRouteResult } from './screenshot-routes.ts';
+
+export { parseBaselineRoutes } from './screenshot-routes.ts';
+export type { BaselineGenerationResult } from './screenshot-routes.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { busterEnvironmentSnapshot } from '../runtime-environment.ts';
 // KEEP_TYPED_POLICY: Docker and runtime-installed Playwright browser layouts are
 // both supported, local HTML previews are valid screenshot inputs, missing
 // Playwright becomes a clear tool error, browser close failures are nonblocking,
@@ -18,7 +20,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // errors during screenshot/baseline capture now fail the capture instead of
 // producing blessed broken baselines.
 
-const processEnv = process.env;
+const processEnv = busterEnvironmentSnapshot();
 if (!processEnv.PLAYWRIGHT_BROWSERS_PATH && fs.existsSync('/ms-playwright')) {
   processEnv.PLAYWRIGHT_BROWSERS_PATH = '/ms-playwright';
 }
@@ -67,28 +69,6 @@ export interface ScreenshotBatchTarget {
   outputPath: string;
 }
 
-interface BaselineRoute {
-  name: string;
-  nav: string;
-  path: string;
-}
-
-interface BaselineRouteResult extends BaselineRoute {
-  ok: boolean;
-  width?: number;
-  height?: number;
-  error?: string;
-}
-
-export interface BaselineGenerationResult {
-  ok: boolean;
-  routes: BaselineRouteResult[];
-  error?: string;
-  pathsJsonPath?: string;
-  generated?: number;
-  failed?: number;
-}
-
 function log(msg: string): void {
   console.log(`[SCREENSHOT] ${msg}`);
 }
@@ -122,7 +102,7 @@ function requirePositiveNumber(value: unknown, label: string): number {
 }
 
 function requireNonEmptyString(value: unknown, label: string): string {
-  if (selectTruthyValue(() => (typeof value !== 'string'), () => (!value.trim()))) throw new Error(`${label} is required`);
+  if (typeof value !== 'string' || !value.trim()) throw new Error(`${label} is required`);
   return value;
 }
 
@@ -168,7 +148,6 @@ function resolveUrl(input: string): string {
 
 async function launchBrowser(): Promise<AnyRecord> {
   try {
-    // @ts-expect-error Optional runtime dependency declaration is not installed for this migration island.
     const mod = await import('playwright');
     return mod.chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   } catch (_error) {
@@ -232,6 +211,37 @@ export async function takeScreenshot(target: string, outputPath: string, opts: S
   }
 }
 
+async function captureBatchTarget(context: AnyRecord, target: ScreenshotBatchTarget, options: ResolvedScreenshotOptions): Promise<ScreenshotResult> {
+  let page: AnyRecord | null = null;
+  try {
+    const outDir = path.dirname(target.outputPath);
+    if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+    const currentPage: AnyRecord = await context.newPage();
+    page = currentPage;
+    const errors = attachFailOnPageError(currentPage);
+    await currentPage.goto(target.url, { waitUntil: options.waitUntil, timeout: options.timeout });
+    assertNoPageErrors(errors, target.name);
+    await currentPage.screenshot({ path: target.outputPath, fullPage: options.fullPage });
+    assertNoPageErrors(errors, target.name);
+    const dimensions = await getPageDimensions(currentPage);
+    await currentPage.close();
+    log(`OK: ${target.name} → ${target.outputPath} (${dimensions.width}x${dimensions.height})`);
+    return { name: target.name, ok: true, path: target.outputPath, width: dimensions.width, height: dimensions.height };
+  } catch (error) {
+    const message = errorMessage(error);
+    log(`FAIL: ${target.name} (${target.url}) → ${message}`);
+    if (page) await page.close().catch(() => {});
+    return { name: target.name, ok: false, error: message };
+  }
+}
+
+function appendMissingBatchFailures(results: ScreenshotResult[], targets: ScreenshotBatchTarget[], message: string): void {
+  const completed = new Set(results.map((result) => result.name));
+  for (const target of targets) {
+    if (!completed.has(target.name)) results.push({ name: target.name, ok: false, error: `Browser error: ${message}` });
+  }
+}
+
 export async function takeScreenshotBatch(targets: ScreenshotBatchTarget[], opts: ScreenshotOptions = {}): Promise<ScreenshotResult[]> {
   const { viewport, fullPage, waitUntil, timeout } = resolveScreenshotOptions(opts, 'takeScreenshotBatch options');
 
@@ -245,41 +255,14 @@ export async function takeScreenshotBatch(targets: ScreenshotBatchTarget[], opts
     const context = await browser.newContext({ viewport });
 
     for (const target of targets) {
-      let page: AnyRecord | null = null;
-      try {
-        const outDir = path.dirname(target.outputPath);
-        if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-
-        const currentPage: AnyRecord = await context.newPage();
-        page = currentPage;
-        const pageErrors = attachFailOnPageError(currentPage);
-        await currentPage.goto(target.url, { waitUntil, timeout });
-        assertNoPageErrors(pageErrors, target.name);
-        await currentPage.screenshot({ path: target.outputPath, fullPage });
-        assertNoPageErrors(pageErrors, target.name);
-
-        const dimensions = await getPageDimensions(currentPage);
-        await currentPage.close();
-
-        log(`OK: ${target.name} → ${target.outputPath} (${dimensions.width}x${dimensions.height})`);
-        results.push({ name: target.name, ok: true, path: target.outputPath, width: dimensions.width, height: dimensions.height });
-      } catch (error) {
-        const message = errorMessage(error);
-        log(`FAIL: ${target.name} (${target.url}) → ${message}`);
-        results.push({ name: target.name, ok: false, error: message });
-        if (page) await page.close().catch(() => {});
-      }
+      results.push(await captureBatchTarget(context, target, { viewport, fullPage, waitUntil, timeout }));
     }
 
     await context.close();
   } catch (error) {
     const message = errorMessage(error);
     log(`Browser-level error: ${message}`);
-    for (const target of targets) {
-      if (!results.find((r) => r.name === target.name)) {
-        results.push({ name: target.name, ok: false, error: `Browser error: ${message}` });
-      }
-    }
+    appendMissingBatchFailures(results, targets, message);
   } finally {
     if (browser) await browser.close().catch((error: unknown) => log(`non-blocking browser close failed: ${errorMessage(error)}`));
   }
@@ -287,23 +270,25 @@ export async function takeScreenshotBatch(targets: ScreenshotBatchTarget[], opts
   return results;
 }
 
-export function parseBaselineRoutes(htmlPath: string): BaselineRoute[] {
-  const html = fs.readFileSync(htmlPath, 'utf8');
-  const match = html.match(/<script\s+type="application\/json"\s+data-routes\s*>([\s\S]*?)<\/script>/);
-  if (!match?.[1]) throw new Error('No <script data-routes> manifest found in HTML');
-  const parsed = JSON.parse(match[1]);
-  if (selectTruthyValue(() => (!Array.isArray(parsed)), () => (parsed.length === 0))) throw new Error('data-routes manifest is empty or not an array');
-
-  return parsed.map((route: unknown, index: number) => {
-    const record = route as AnyRecord;
-    if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!record), () => (typeof record.name !== 'string'))), () => (typeof record.nav !== 'string'))), () => (typeof record.path !== 'string'))) {
-      throw new Error(`Invalid route entry at index ${index}: name, nav, and path are required`);
-    }
-    if (!record.path.startsWith('/')) {
-      throw new Error(`Invalid route entry at index ${index}: path must start with /`);
-    }
-    return { name: record.name, nav: record.nav, path: record.path };
-  });
+async function captureBaselineRoute(page: AnyRecord, pageErrors: string[], route: BaselineRoute, outputDir: string, fullPage: boolean, settleMs: number): Promise<BaselineRouteResult> {
+  try {
+    const errorsBeforeClick = pageErrors.length;
+    const navSelector = `text="${route.nav}"`;
+    await page.waitForSelector(navSelector, { state: 'visible', timeout: 5000 });
+    await page.click(navSelector);
+    await page.waitForTimeout(settleMs);
+    if (pageErrors.length > errorsBeforeClick) throw new Error(`JS error after clicking "${route.nav}": ${pageErrors[pageErrors.length - 1]}`);
+    const pngPath = childFilePath(outputDir, `${route.name}-baseline.png`, 'visual-reg baseline file');
+    await page.screenshot({ path: pngPath, fullPage });
+    assertNoPageErrors(pageErrors, route.name);
+    const dimensions = await getPageDimensions(page);
+    log(`OK: ${route.name} ("${route.nav}") → ${pngPath}`);
+    return { ...route, ok: true, width: dimensions.width, height: dimensions.height };
+  } catch (error) {
+    const message = errorMessage(error);
+    log(`FAIL: ${route.name} ("${route.nav}") → ${message}`);
+    return { ...route, ok: false, error: message };
+  }
 }
 
 export async function generateBaselines(htmlPath: string, outputDir: string, opts: ScreenshotOptions & { settleMs?: number } = {}): Promise<BaselineGenerationResult> {
@@ -334,28 +319,7 @@ export async function generateBaselines(htmlPath: string, outputDir: string, opt
     log('Preview loaded with ?baselines=true');
 
     for (const route of routes) {
-      try {
-        const errorsBeforeClick = pageErrors.length;
-        const navSelector = `text="${route.nav}"`;
-        await page.waitForSelector(navSelector, { state: 'visible', timeout: 5000 });
-        await page.click(navSelector);
-        await page.waitForTimeout(settleMs);
-        if (pageErrors.length > errorsBeforeClick) {
-          throw new Error(`JS error after clicking "${route.nav}": ${pageErrors[pageErrors.length - 1]}`);
-        }
-
-        const pngPath = childFilePath(outputDir, `${route.name}-baseline.png`, 'visual-reg baseline file');
-        await page.screenshot({ path: pngPath, fullPage });
-        assertNoPageErrors(pageErrors, route.name);
-        const dims = await getPageDimensions(page);
-
-        log(`OK: ${route.name} ("${route.nav}") → ${pngPath}`);
-        results.push({ name: route.name, nav: route.nav, path: route.path, ok: true, width: dims.width, height: dims.height });
-      } catch (error) {
-        const message = errorMessage(error);
-        log(`FAIL: ${route.name} ("${route.nav}") → ${message}`);
-        results.push({ name: route.name, nav: route.nav, path: route.path, ok: false, error: message });
-      }
+      results.push(await captureBaselineRoute(page, pageErrors, route, outputDir, fullPage, settleMs));
     }
 
     await context.close();
@@ -383,69 +347,11 @@ const __entryFile = (process.argv[1] && fs.existsSync(process.argv[1]))
   : process.argv[1];
 
 if (__currentFile === __entryFile) {
-  const { values: flags, positionals } = parseCliArgs(process.argv.slice(2), {
-    allowPositionals: true,
-    maxPositionals: 2,
-    flags: {
-      'generate-baselines': { type: 'boolean', default: false },
-      width: { type: 'string', default: String(DEFAULTS.viewport.width) },
-      height: { type: 'string', default: String(DEFAULTS.viewport.height) },
-      'no-fullpage': { type: 'boolean', default: false },
-    },
+  runScreenshotCli({
+    takeScreenshot,
+    generateBaselines,
+    defaults: DEFAULTS,
+    stdout: (message) => console.log(message),
+    stderr: (message) => console.error(message),
   });
-
-  if (flags['generate-baselines']) {
-    const htmlPath = positionals[0];
-    const outputDir = positionals[1];
-
-    if (selectTruthyValue(() => (!htmlPath), () => (!outputDir))) {
-      console.error('Usage: node screenshot.ts --generate-baselines <preview.html> <output-dir/>');
-      process.exit(2);
-    }
-
-    const absHtml = path.isAbsolute(String(htmlPath)) ? String(htmlPath) : path.resolve(String(htmlPath));
-    const absDir = path.isAbsolute(String(outputDir)) ? String(outputDir) : path.resolve(String(outputDir));
-    const width = Number.parseInt(String(flags.width), 10);
-    const height = Number.parseInt(String(flags.height), 10);
-
-    generateBaselines(absHtml, absDir, {
-      viewport: { width, height },
-      fullPage: !flags['no-fullpage'],
-      waitUntil: DEFAULTS.waitUntil,
-      timeout: DEFAULTS.timeout,
-      settleMs: DEFAULTS.settleMs,
-    }).then((result) => {
-      console.log(JSON.stringify(result, null, 2));
-      process.exit(result.ok ? 0 : 1);
-    }).catch((error: unknown) => {
-      console.error(`Fatal: ${errorMessage(error)}`);
-      process.exit(2);
-    });
-  } else {
-    const target = positionals[0];
-    const outputPath = positionals[1];
-
-    if (selectTruthyValue(() => (!target), () => (!outputPath))) {
-      console.error('Usage: node screenshot.ts <target> <output.png> [--width N] [--height N] [--no-fullpage]');
-      console.error('       node screenshot.ts --generate-baselines <preview.html> <output-dir/>');
-      process.exit(2);
-    }
-
-    const width = Number.parseInt(String(flags.width), 10);
-    const height = Number.parseInt(String(flags.height), 10);
-    const fullPage = !flags['no-fullpage'];
-
-    takeScreenshot(String(target), String(outputPath), {
-      viewport: { width, height },
-      fullPage,
-      waitUntil: DEFAULTS.waitUntil,
-      timeout: DEFAULTS.timeout,
-    }).then((result) => {
-      console.log(JSON.stringify(result, null, 2));
-      process.exit(result.ok ? 0 : 1);
-    }).catch((error: unknown) => {
-      console.error(`Fatal: ${errorMessage(error)}`);
-      process.exit(2);
-    });
-  }
 }

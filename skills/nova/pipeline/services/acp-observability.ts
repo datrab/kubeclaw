@@ -4,17 +4,17 @@ import { updateGatewayObservability, updateTranscriptObservability } from './tel
 import { sleep } from '../timing.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-function observabilityCtx(config) {
+function observabilityCtx(config: any) {
   return selectTruthyValue(() => (getActiveContext()), () => ({ config, runId: selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (null)) }));
 }
 
-function normalizeAttempt(value) {
+function normalizeAttempt(value: any) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
   const numberValue = Number(value);
   return Number.isFinite(numberValue) ? numberValue : null;
 }
 
-function normalizeIdentity(identity = {}) {
+function normalizeIdentity(identity: any = {}) {
   return {
     module_id: selectDefinedValue(() => (selectDefinedValue(() => (identity.module_id), () => (identity.moduleId))), () => (null)),
     gate_id: selectDefinedValue(() => (selectDefinedValue(() => (identity.gate_id), () => (identity.gateId))), () => (null)),
@@ -27,7 +27,7 @@ function normalizeIdentity(identity = {}) {
   };
 }
 
-function buildObservabilityData(identity, monitor = {}) {
+function buildObservabilityData(identity: any, monitor: any = {}) {
   const transcriptDetail = selectTruthyValue(() => (monitor?.transcript?.lastDetail), () => (null));
   return {
     ...identity,
@@ -38,7 +38,7 @@ function buildObservabilityData(identity, monitor = {}) {
   };
 }
 
-export async function observeAcpMonitorSurfaces(config, sessionLabelOrKey, identity = {}, opts = {}) {
+export async function observeAcpMonitorSurfaces(config: any, sessionLabelOrKey: any, identity: any = {}, opts: any = {}) {
   const ctx = observabilityCtx(config);
   const normalizedIdentity = normalizeIdentity(identity);
   const gatewayState = observabilityStateAuthority(opts.gatewayState);
@@ -78,7 +78,7 @@ export async function observeAcpMonitorSurfaces(config, sessionLabelOrKey, ident
   return { monitor, gatewayState, transcriptState };
 }
 
-function observabilityStateAuthority(state) {
+function observabilityStateAuthority(state: any) {
   if (state) return state;
   return { active: false, degradedAt: null };
 }

@@ -6,7 +6,7 @@ import {
   rebuildLifecycleReadModels as rebuildLifecycleReadModelsImpl,
   recomputeProgression as recomputeProgressionImpl,
   saveLifecycleReadModels as saveLifecycleReadModelsImpl,
-} from './status-store-lifecycle/read-models.ts';
+} from "./status-store-lifecycle/read-models.ts";
 import {
   appendCooldownLifecycleEvent as appendCooldownLifecycleEventImpl,
   appendLifecycleEvent as appendLifecycleEventImpl,
@@ -20,8 +20,8 @@ import {
   getLifecycleGateState as getLifecycleGateStateImpl,
   getLifecycleModuleState as getLifecycleModuleStateImpl,
   resetLifecycleStore as resetLifecycleStoreImpl,
-} from './status-store-lifecycle/appenders.ts';
-import { cloneSerializable as cloneSerializableValue } from './serialization.ts';
+} from "./status-store-lifecycle/appenders.ts";
+import { cloneSerializable as cloneSerializableValue } from "./serialization.ts";
 
 export {
   buildGateEvaluationRefs,
@@ -29,78 +29,108 @@ export {
   buildResumeSignalRefs,
   getActiveProgress,
   resolveModuleConfig,
-} from './status-store-lifecycle/refs.ts';
+} from "./status-store-lifecycle/refs.ts";
 
-export { deriveApprovalResolutionFromState } from './status-store-lifecycle/projections.ts';
+export { deriveApprovalResolutionFromState } from "./status-store-lifecycle/projections.ts";
 
-export function loadLifecycleReadModels(config) {
+export function loadLifecycleReadModels(config: any) {
   return loadLifecycleReadModelsImpl(config);
 }
 
-export function saveLifecycleReadModels(config, readModels) {
+export function saveLifecycleReadModels(config: any, readModels: any) {
   return saveLifecycleReadModelsImpl(config, readModels);
 }
 
-export function readLifecycleEvents(config) {
+export function readLifecycleEvents(config: any) {
   return readLifecycleEventsImpl(config);
 }
 
-export function rebuildLifecycleReadModels(config, events = readLifecycleEventsImpl(config)) {
+export function rebuildLifecycleReadModels(
+  config: any,
+  events: any = readLifecycleEventsImpl(config),
+) {
   return rebuildLifecycleReadModelsImpl(config, events);
 }
 
-export function recomputeProgression(readModels) {
+function recomputeProgression(readModels: any) {
   return recomputeProgressionImpl(readModels);
 }
 
-export function cloneSerializable(value) {
+export function cloneSerializable(value: any) {
   return cloneSerializableValue(value);
 }
 
-export function appendLifecycleEvent(config, proposal = {}) {
+export function appendLifecycleEvent(config: any, proposal: any = {}) {
   return appendLifecycleEventImpl(config, proposal);
 }
 
-export function applyModuleCompletion(config, dir, status, completion = {}) {
+export function applyModuleCompletion(
+  config: any,
+  dir: any,
+  status: any,
+  completion: any = {},
+) {
   return applyModuleCompletionImpl(config, dir, status, completion);
 }
 
-export function applyGateCompletion(config, gateId, gate = {}, completion = {}) {
+export function applyGateCompletion(
+  config: any,
+  gateId: any,
+  gate: any = {},
+  completion: any = {},
+) {
   return applyGateCompletionImpl(config, gateId, gate, completion);
 }
 
-export function appendPipelineLifecycleEvent(config, type, opts = {}) {
+export function appendPipelineLifecycleEvent(
+  config: any,
+  type: any,
+  opts: any = {},
+) {
   return appendPipelineLifecycleEventImpl(config, type, opts);
 }
 
-export function appendWaitLifecycleEvent(config, type, opts = {}) {
+export function appendWaitLifecycleEvent(
+  config: any,
+  type: any,
+  opts: any = {},
+) {
   return appendWaitLifecycleEventImpl(config, type, opts);
 }
 
-export function appendCooldownLifecycleEvent(config, type, opts = {}) {
+export function appendCooldownLifecycleEvent(
+  config: any,
+  type: any,
+  opts: any = {},
+) {
   return appendCooldownLifecycleEventImpl(config, type, opts);
 }
 
-export function appendStaleRecoveryLifecycleEvent(config, opts = {}) {
+export function appendStaleRecoveryLifecycleEvent(config: any, opts: any = {}) {
   return appendStaleRecoveryLifecycleEventImpl(config, opts);
 }
 
-export function appendModuleLifecycleEvent(config, dir, status, mutation = {}) {
+export function appendModuleLifecycleEvent(
+  config: any,
+  dir: any,
+  status: any,
+  mutation: any = {},
+) {
   return appendModuleLifecycleEventImpl(config, dir, status, mutation);
 }
 
-export function getLifecycleGateState(config, gateId) {
+export function getLifecycleGateState(config: any, gateId: any) {
   return getLifecycleGateStateImpl(config, gateId);
 }
 
-export function getLifecycleModuleState(config, moduleId) {
+export function getLifecycleModuleState(config: any, moduleId: any) {
   return getLifecycleModuleStateImpl(config, moduleId);
 }
 
-export function getLifecycleCooldown(config, opts = {}) {
+export function getLifecycleCooldown(config: any, opts: any = {}) {
   return getLifecycleCooldownImpl(config, opts);
 }
 
-export function resetLifecycleStore(config) {
+export function resetLifecycleStore(config: any) {
   return resetLifecycleStoreImpl(config);
 }
