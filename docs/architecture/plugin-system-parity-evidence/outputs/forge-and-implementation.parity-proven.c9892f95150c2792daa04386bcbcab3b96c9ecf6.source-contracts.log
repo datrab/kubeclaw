@@ -1,0 +1,560 @@
+
+> verify:contracts
+> npm run plugin-system:inventory:check && npm run verify:plugin-system-v2 && npm run verify:observability && node tests/verification/contracts/check-common-pipeline-facades-surface.mjs && node tests/verification/contracts/check-pipeline-completion-authority.mjs && node tests/verification/contracts/check-checkpoint-hook-contracts.mjs && node tests/verification/contracts/check-gate-control-result-surface.mjs && node tests/verification/contracts/check-pipeline-complexity-budgets.mjs && node tests/verification/contracts/check-module-runner-slice-surface.mjs && node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs
+
+
+> plugin-system:inventory:check
+> node scripts/plugin-system-inventory.mjs --check
+
+plugin-system inventory is current (1474 files, 0 unclassified)
+
+> verify:plugin-system-v2
+> npm run plugin-system:sdk:check && npm run plugin-system:plugins:build && npm run plugin-system:sandbox:build && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node tests/verification/contracts/check-plugin-system-v2-contracts.mjs && node tests/verification/contracts/check-plugin-system-v2-boundaries.mjs && node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs && node tests/verification/contracts/check-plugin-system-v2-registry.mjs && node tests/verification/contracts/check-plugin-system-v2-import-safety.mjs && node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-phase7.mjs && node tests/verification/contracts/check-plugin-system-v2-phase8.mjs && node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs && node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs && npm run verify:plugin-live-capabilities && node tests/verification/contracts/check-plugin-system-v2-e2e.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-plugin-system-v2-isolation.mjs && node tests/verification/contracts/check-plugin-system-v2-installation.mjs && node tests/verification/contracts/check-plugin-system-v2-external-engine.mjs
+
+
+> plugin-system:sdk:check
+> node scripts/generate-plugin-sdk-types.mjs --check
+
+
+> plugin-system:plugins:build
+> npm run plugin-system:sdk:build && node scripts/build-v2-plugins.mjs
+
+
+> plugin-system:sdk:build
+> tsc -p skills/common/plugin-runtime/sdk/tsconfig.build.json
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+{"ok":true,"contract":"pipeline-plugin-v2"}
+{"ok":true,"contract":"plugin-system-v2-boundaries"}
+{"ok":true,"contract":"plugin-system-v2-platform-config"}
+{"ok":true,"contract":"plugin-system-v2-registry"}
+{"ok":true,"contract":"plugin-system-v2-import-safety","packages":30,"registrations":35}
+{"ok":true,"contract":"plugin-system-v2-lifecycle"}
+{"ok":true,"contract":"plugin-system-v2-phase6"}
+{"ok":true,"contract":"plugin-system-v2-phase7"}
+{"ok":true,"contract":"plugin-system-v2-phase8"}
+{"ok":true,"contract":"plugin-system-v2-capability-runtime"}
+{"ok":true,"contract":"plugin-system-v2-capability-security","capabilities":19}
+
+> verify:plugin-live-capabilities
+> node scripts/verify-plugin-live-capabilities.mjs
+
+
+> test
+> npm run build && node --experimental-strip-types tests/protocol.test.ts && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.test-agent","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.test-agent","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.test-agent","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/observers.unit.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"observers-unit"}
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"live-function"}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.command-runner","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.command-runner","suite":"live-function"}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.git-workspace","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.git-workspace","suite":"live-function"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.network-http","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.network-http","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/observer.unit.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"observer-unit"}
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-events","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-events","suite":"package-boundary"}
+
+> @kubeclaw/openclaw-agent-observer@0.0.0 test
+> npm run typecheck && node --experimental-strip-types tests/config.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> @kubeclaw/openclaw-agent-observer@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"config"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"live-function","registrations":{"openclaw:service":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":3}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node --experimental-strip-types tests/package-boundary.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.redis-transport","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.redis-transport","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.secret-resolver","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.secret-resolver","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.state-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.state-store","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.telemetry-observer","suite":"live-function","registrations":{"observer:telemetry":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.telemetry-observer","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.telemetry-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.telemetry-store","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/config-validation.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.transport-publisher","suite":"config-validation"}
+{"ok":true,"plugin":"kubeclaw.transport-publisher","suite":"live-function","publications":4}
+{"ok":true,"plugin":"kubeclaw.transport-publisher","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.wait-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.wait-store","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/protocol.unit.test.ts && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"package-boundary"}
+
+> test
+> npm run build && node --experimental-strip-types tests/protocol.test.ts && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.buster-quality-gate","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.buster-quality-gate","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.buster-quality-gate","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/protocol.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.delivery-lint","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.delivery-lint","suite":"live-function","registrations":{"stage:delivery-lint":["pass","fail","blocked","crash"]}}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"boundary"}
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"unit"}
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"live-function"}
+
+> test
+> npm run build && node --experimental-strip-types tests/protocol.test.ts && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"live-function"}
+
+> test
+> npm run build && node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/adapter-boundary.test.mjs && node --experimental-strip-types tests/parity.test.ts && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.lint","suite":"unit"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"adapter-boundary"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"legacy-parity"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"live-function","registrations":{"stage:pre-check":["pass","fail","crash"],"stage:full":["pass","fail","crash"],"adapter:executor":["pass","fail","crash"]}}
+
+> test
+> npm run build && node tests/protocol.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node tests/declarations.unit.test.mjs && node --experimental-strip-types tests/parity.test.ts && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"unit"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"legacy-parity"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"live-function"}
+
+> test
+> npm run build && node tests/summary.test.mjs && node --experimental-strip-types tests/parity.test.ts && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"summary"}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"behavior-parity"}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"package-boundary"}
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.repository-adapter","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.repository-adapter","suite":"live-function"}
+
+> test
+> npm run build && node tests/protocol.unit.test.mjs && node tests/review-output.unit.test.mjs && node tests/stage.unit.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-output-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"stage-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"package-boundary"}
+{"ok":true,"gate":"plugin-packages","packages":["skills/buster/plugins/test-agent","skills/common/plugins/agent-observability","skills/common/plugins/artifact-store","skills/common/plugins/command-runner","skills/common/plugins/git-workspace","skills/common/plugins/network-http","skills/common/plugins/notification-observer","skills/common/plugins/openclaw-agent-events","skills/common/plugins/openclaw-agent-observer","skills/common/plugins/operator-messaging","skills/common/plugins/redis-transport","skills/common/plugins/runtime-dispatch","skills/common/plugins/secret-resolver","skills/common/plugins/state-store","skills/common/plugins/telemetry-observer","skills/common/plugins/telemetry-store","skills/common/plugins/transport-publisher","skills/common/plugins/wait-store","skills/nova/plugins/architecture-validator","skills/nova/plugins/blueprint-sync","skills/nova/plugins/buster-quality-gate","skills/nova/plugins/case-study","skills/nova/plugins/delivery-lint","skills/nova/plugins/human-approval","skills/nova/plugins/implementation-agent","skills/nova/plugins/lint","skills/nova/plugins/pipeline-review","skills/nova/plugins/preflight-contract","skills/nova/plugins/project-summary","skills/nova/plugins/repository-adapter","skills/nova/plugins/review"],"count":31}
+{"ok":true,"plugin":"kubeclaw.test-agent","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.agent-observability","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.command-runner","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.git-workspace","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.network-http","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-events","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"live-function","registrations":{"openclaw:service":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":3}
+{"ok":true,"plugin":"kubeclaw.redis-transport","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.secret-resolver","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.state-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.telemetry-observer","suite":"live-function","registrations":{"observer:telemetry":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.telemetry-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.transport-publisher","suite":"live-function","publications":4}
+{"ok":true,"plugin":"kubeclaw.wait-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.buster-quality-gate","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.delivery-lint","suite":"live-function","registrations":{"stage:delivery-lint":["pass","fail","blocked","crash"]}}
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"live-function","registrations":{"stage:pre-check":["pass","fail","crash"],"stage:full":["pass","fail","crash"],"adapter:executor":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.repository-adapter","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function"}
+{"ok":true,"gate":"plugin-live-crash-matrix","registrations":[{"registrationId":"kubeclaw.test-agent:test","surface":"stage","contained":true},{"registrationId":"kubeclaw.architecture-validator:architecture","surface":"stage","contained":true},{"registrationId":"kubeclaw.blueprint-sync:sync","surface":"stage","contained":true},{"registrationId":"kubeclaw.buster-quality-gate:quality","surface":"stage","contained":true},{"registrationId":"kubeclaw.case-study:case-study","surface":"stage","contained":true},{"registrationId":"kubeclaw.delivery-lint:delivery-lint","surface":"stage","contained":true},{"registrationId":"kubeclaw.human-approval:approval","surface":"stage","contained":true},{"registrationId":"kubeclaw.implementation-agent:implementation","surface":"stage","contained":true},{"registrationId":"kubeclaw.lint:pre-check","surface":"stage","contained":true},{"registrationId":"kubeclaw.lint:full","surface":"stage","contained":true},{"registrationId":"kubeclaw.pipeline-review:review","surface":"stage","contained":true},{"registrationId":"kubeclaw.preflight-contract:validate","surface":"stage","contained":true},{"registrationId":"kubeclaw.project-summary:summary","surface":"stage","contained":true},{"registrationId":"kubeclaw.review:review","surface":"stage","contained":true},{"registrationId":"kubeclaw.agent-observability:ingester","surface":"observer","contained":true},{"registrationId":"kubeclaw.agent-observability:evidence","surface":"observer","contained":true},{"registrationId":"kubeclaw.notification-observer:notifications","surface":"observer","contained":true},{"registrationId":"kubeclaw.notification-observer:preview-delivery","surface":"observer","contained":true},{"registrationId":"kubeclaw.telemetry-observer:telemetry","surface":"observer","contained":true},{"registrationId":"kubeclaw.artifact-store:artifact-store","surface":"adapter","contained":true},{"registrationId":"kubeclaw.command-runner:command","surface":"adapter","contained":true},{"registrationId":"kubeclaw.git-workspace:git","surface":"adapter","contained":true},{"registrationId":"kubeclaw.network-http:http","surface":"adapter","contained":true},{"registrationId":"kubeclaw.openclaw-agent-events:source","surface":"adapter","contained":true},{"registrationId":"kubeclaw.operator-messaging:operator","surface":"adapter","contained":true},{"registrationId":"kubeclaw.redis-transport:publisher","surface":"adapter","contained":true},{"registrationId":"kubeclaw.redis-transport:telemetry","surface":"adapter","contained":true},{"registrationId":"kubeclaw.runtime-dispatch:runtime","surface":"adapter","contained":true},{"registrationId":"kubeclaw.secret-resolver:secrets","surface":"adapter","contained":true},{"registrationId":"kubeclaw.state-store:state","surface":"adapter","contained":true},{"registrationId":"kubeclaw.telemetry-store:telemetry","surface":"adapter","contained":true},{"registrationId":"kubeclaw.transport-publisher:publisher","surface":"adapter","contained":true},{"registrationId":"kubeclaw.wait-store:waits","surface":"adapter","contained":true},{"registrationId":"kubeclaw.lint:executor","surface":"adapter","contained":true},{"registrationId":"kubeclaw.repository-adapter:repository","surface":"adapter","contained":true}],"count":35}
+{"ok":true,"gate":"plugin-live-capabilities","packages":["skills/buster/plugins/test-agent","skills/common/plugins/agent-observability","skills/common/plugins/artifact-store","skills/common/plugins/command-runner","skills/common/plugins/git-workspace","skills/common/plugins/network-http","skills/common/plugins/notification-observer","skills/common/plugins/openclaw-agent-events","skills/common/plugins/openclaw-agent-observer","skills/common/plugins/operator-messaging","skills/common/plugins/redis-transport","skills/common/plugins/runtime-dispatch","skills/common/plugins/secret-resolver","skills/common/plugins/state-store","skills/common/plugins/telemetry-observer","skills/common/plugins/telemetry-store","skills/common/plugins/transport-publisher","skills/common/plugins/wait-store","skills/nova/plugins/architecture-validator","skills/nova/plugins/blueprint-sync","skills/nova/plugins/buster-quality-gate","skills/nova/plugins/case-study","skills/nova/plugins/delivery-lint","skills/nova/plugins/human-approval","skills/nova/plugins/implementation-agent","skills/nova/plugins/lint","skills/nova/plugins/pipeline-review","skills/nova/plugins/preflight-contract","skills/nova/plugins/project-summary","skills/nova/plugins/repository-adapter","skills/nova/plugins/review"],"count":31}
+{"ok":true,"contract":"plugin-system-v2-e2e"}
+{"ok":true,"contract":"plugin-system-v2-engine"}
+{"ok":true,"contract":"plugin-system-v2-resume"}
+{"ok":true,"contract":"plugin-system-v2-isolation"}
+{"ok":true,"contract":"plugin-system-v2-installation"}
+{"ok":true,"contract":"plugin-system-v2-external-engine"}
+
+> verify:observability
+> node scripts/generate-telemetry-contracts.mjs --check && node tests/verification/contracts/check-observability-p0-contracts.mjs
+
+{"ok":true,"checked":true,"events":53,"durable_schemas":16,"manifest_files":132}
+{"ok":true,"checked":20,"run_dir":"/tmp/pipeline-observability-p0-cNzJ4n/.swarm/logs/pipeline/runs/golden-parallel-run"}
+{"ok":true,"checked":81}
+pipeline completion authority contract ok
+{"ok":true,"registered_scenarios":46,"matrix_suites":8,"matrix_scenarios":46,"manual_scenarios":[],"hooks":13,"fixture_families":["standard-4-module","linear-2-module","single-module"]}
+{"ok":true,"checked":"typed-gate-controls-only"}
+{"ok":true,"defaultMaxLines":780,"checked":706,"extension":".ts","largest":[{"path":"skills/nova/pipeline/cli.ts","lines":473,"maxLines":780},{"path":"skills/buster/pipeline/tools/screenshot.ts","lines":357,"maxLines":780},{"path":"skills/nova/pipeline/runners/buster-gate-runner.ts","lines":354,"maxLines":780},{"path":"skills/nova/pipeline/tools/redis.ts","lines":344,"maxLines":780},{"path":"skills/buster/pipeline/services/telemetry.ts","lines":338,"maxLines":780},{"path":"skills/nova/pipeline/runners/gate-runner.ts","lines":336,"maxLines":780},{"path":"skills/buster/pipeline/services/git-workflows.ts","lines":336,"maxLines":780},{"path":"skills/common/pipeline/agents/acp-monitor-transcript.ts","lines":336,"maxLines":780},{"path":"skills/buster/pipeline/services/discord.ts","lines":333,"maxLines":780},{"path":"skills/common/pipeline/integrations/git-worktree-sync.ts","lines":333,"maxLines":780}]}
+{"ok":true,"checked":111}
+{"ok":true,"checked":118}
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+To /tmp/kubeclaw-git-workspace-2E1j0d/origin.git
+ * [new branch]      main -> main
+Already on 'main'
+To /tmp/kubeclaw-git-workspace-2E1j0d/origin.git
+   d9235fe..b51658b  main -> main
+Switched to a new branch 'merge-source'
+Switched to a new branch 'project/architecture'
+Switched to branch 'main'
+{"ts":"2026-07-28T21:11:32.389Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:11:32.390Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:11:32.390Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:11:32.391Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:11:32.406Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (14ms)"}
+{"ts":"2026-07-28T21:11:32.406Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:11:32.416Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (9ms)"}
+{"ts":"2026-07-28T21:11:32.845Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:11:32.845Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:11:32.845Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:11:32.845Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:11:32.861Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (15ms)"}
+{"ts":"2026-07-28T21:11:32.861Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:11:32.868Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (7ms)"}
+{"ts":"2026-07-28T21:11:33.293Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:11:33.293Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:11:33.293Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:11:33.293Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:11:33.307Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (14ms)"}
+{"ts":"2026-07-28T21:11:33.307Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:11:33.316Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (9ms)"}
+{"ts":"2026-07-28T21:11:33.776Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:11:33.776Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:11:33.776Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:11:33.776Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:11:33.791Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (14ms)"}
+{"ts":"2026-07-28T21:11:33.791Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:11:33.799Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (8ms)"}
+{"ts":"2026-07-28T21:11:34.256Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:11:34.256Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:11:34.256Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:11:34.256Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:11:34.271Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (14ms)"}
+{"ts":"2026-07-28T21:11:34.271Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:11:34.280Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (9ms)"}
+{"ts":"2026-07-28T21:11:34.685Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:11:34.686Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:11:34.686Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:11:34.686Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:11:34.700Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (14ms)"}
+{"ts":"2026-07-28T21:11:34.700Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:11:34.710Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (10ms)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.324Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.325Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.332Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: SERVE_DOCKERFILE_NOT_DECLARED"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.332Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: SERVE_DOCKERFILE_NOT_DECLARED"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.333Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.333Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.333Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: API_SPEC_NOT_DECLARED"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:11:38.333Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: API_SPEC_NOT_DECLARED"}
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+To /tmp/kubeclaw-git-workspace-mfpzqw/origin.git
+ * [new branch]      main -> main
+Already on 'main'
+To /tmp/kubeclaw-git-workspace-mfpzqw/origin.git
+   024d86f..8afb95e  main -> main
+Switched to a new branch 'merge-source'
+Switched to a new branch 'project/architecture'
+Switched to branch 'main'
+{"ts":"2026-07-28T21:12:07.535Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:12:07.536Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:12:07.537Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:12:07.537Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:12:07.553Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (16ms)"}
+{"ts":"2026-07-28T21:12:07.554Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:12:07.563Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (9ms)"}
+{"ts":"2026-07-28T21:12:07.987Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:12:07.987Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:12:07.987Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:12:07.987Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:12:07.998Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (11ms)"}
+{"ts":"2026-07-28T21:12:07.999Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:12:08.004Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (5ms)"}
+{"ts":"2026-07-28T21:12:08.408Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:12:08.408Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:12:08.409Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:12:08.409Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:12:08.422Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (13ms)"}
+{"ts":"2026-07-28T21:12:08.422Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:12:08.431Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (9ms)"}
+{"ts":"2026-07-28T21:12:08.836Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:12:08.837Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:12:08.837Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:12:08.837Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:12:08.852Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (15ms)"}
+{"ts":"2026-07-28T21:12:08.852Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:12:08.860Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (8ms)"}
+{"ts":"2026-07-28T21:12:09.292Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:12:09.292Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:12:09.292Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:12:09.292Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:12:09.306Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (14ms)"}
+{"ts":"2026-07-28T21:12:09.306Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:12:09.314Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (8ms)"}
+{"ts":"2026-07-28T21:12:09.729Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-07-28T21:12:09.729Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-07-28T21:12:09.729Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-07-28T21:12:09.729Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-07-28T21:12:09.743Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (14ms)"}
+{"ts":"2026-07-28T21:12:09.743Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-07-28T21:12:09.753Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (10ms)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:12:18.464Z","level":"warn","component":"nova/pipeline","message":"[telemetry] Telemetry sink dispatch could not run because the startup-frozen plugin registry is missing."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:12:18.466Z","level":"warn","component":"nova/pipeline","message":"[telemetry] Telemetry sink dispatch could not run because the startup-frozen plugin registry is missing."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:12:18.467Z","level":"warn","component":"nova/pipeline","message":"[telemetry] Telemetry sink dispatch could not run because the startup-frozen plugin registry is missing."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:12:18.469Z","level":"warn","component":"nova/pipeline","message":"[telemetry] Telemetry sink dispatch could not run because the startup-frozen plugin registry is missing."}

@@ -595,7 +595,9 @@ spec:
                   await check('gateway', checkGateway);
                 }
               } else {
-                await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
+                if (containerRole !== 'buster-pipeline') {
+                  await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
+                }
                 await check('runtime swarm config', () => requirePath(process.env.SWARM_CONFIG, 'file'));
                 await check('code bundle', checkCodeBundle);
                 await check('skills', () => requirePath('/app/skills', 'dir'));

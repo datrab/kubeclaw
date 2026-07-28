@@ -1,0 +1,55 @@
+✔ architecture judgment scopes are first-class schema values (0.665547ms)
+✔ checkDependencyGraph accepts dependencies on defined gates (0.631087ms)
+✔ checkDependencyGraph reports missing gate dependencies as blocking gate findings (0.232016ms)
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.818Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.820Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-policy-Yg52g7/Projects/arch-validator-policy-test/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.823Z","level":"warn","component":"nova/pipeline","message":"[arch-validator] Architecture validation passed with 1 non-blocking finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.824Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.824Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-rate-limit-g4UTTo/Projects/arch-validator-rate-limit-test/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.826Z","level":"warn","component":"nova/pipeline","message":"[arch-validator] ACP session rate limited (pause 1/1) — sleeping 0h (resume at 2026-07-28T21:01:09.824Z)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.828Z","level":"debug","component":"nova/pipeline","message":"[telemetry] non-blocking telemetry emission failed for 'rate_limit.detected' (classification=event_emit_failed): Invalid telemetry sink input: telemetry sink ids.runId must be a non-empty string; telemetry sink refs.runRef must be a non-empty string"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.829Z","level":"debug","component":"nova/pipeline","message":"Rate-limit pause Discord notice failed: config.run_id: required non-empty string"}
+✔ architecture validator treats error severity as blocking authority (0.692768ms)
+✔ architecture validator spawned session receives explicit lifecycle policies (6.247644ms)
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.832Z","level":"info","component":"nova/pipeline","message":"[arch-validator] ACP session rate limit cooldown complete — retrying validation agent"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.832Z","level":"debug","component":"nova/pipeline","message":"Rate-limit resume Discord notice failed: config.run_id: required non-empty string"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.833Z","level":"warn","component":"nova/pipeline","message":"[arch-validator] Architecture validation passed with 1 non-blocking finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.833Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.834Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-no-output-I7JPQ9/Projects/arch-validator-no-output-test/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.834Z","level":"warn","component":"nova/pipeline","message":"[arch-validator] Agent judgment produced no findings output (session_ended_no_output); retrying"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.835Z","level":"warn","component":"nova/pipeline","message":"[arch-validator] Architecture validation passed with 1 non-blocking finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.835Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.835Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-agent-finding-WDoMrI/Projects/arch-validator-agent-finding/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.836Z","level":"error","component":"nova/pipeline","message":"[arch-validator] Architecture validation BLOCKED — 1 blocking/error finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.836Z","level":"error","component":"nova/pipeline","message":"  [ARCHITECTURE_BOUNDARY_RISK] The module ownership boundary is unclear for the proposed software architecture."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.836Z","level":"error","component":"nova/pipeline","message":"  Fix: Split ownership responsibilities before implementation."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.837Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.837Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-agent-finding-5rZSyv/Projects/arch-validator-agent-finding/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.837Z","level":"error","component":"nova/pipeline","message":"[arch-validator] Architecture validation BLOCKED — 1 blocking/error finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.837Z","level":"error","component":"nova/pipeline","message":"  [ARCHITECTURE_BOUNDARY_RISK] The module ownership boundary is unclear for the proposed software architecture."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.837Z","level":"error","component":"nova/pipeline","message":"  Fix: Split ownership responsibilities before implementation."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.838Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.838Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-agent-finding-jsNSNM/Projects/arch-validator-agent-finding/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.838Z","level":"error","component":"nova/pipeline","message":"[arch-validator] Architecture validation BLOCKED — 1 blocking/error finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.838Z","level":"error","component":"nova/pipeline","message":"  [ARCHITECTURE_BOUNDARY_RISK] The module ownership boundary is unclear for the proposed software architecture."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.838Z","level":"error","component":"nova/pipeline","message":"  Fix: Split ownership responsibilities before implementation."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.839Z","level":"info","component":"nova/pipeline","message":"[arch-validator] Running pre-pipeline architecture validation..."}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.839Z","level":"debug","component":"nova/pipeline","message":"[policy] logEffectivePolicy failed (non-critical): ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/git-repo/.swarm/arch-validator-agent-finding-vZPjT9/Projects/arch-validator-agent-finding/src/.swarm/logs/pipeline/model-policy.jsonl'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.840Z","level":"error","component":"nova/pipeline","message":"[arch-validator] Unexpected error during validation: Architecture validator agent execution failed: agent finding 'ARCHITECTURE_BOUNDARY_RISK' has invalid scope 'preview_boundary_thing'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.840Z","level":"error","component":"nova/pipeline","message":"[arch-validator] Architecture validation BLOCKED — 1 blocking/error finding(s)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.840Z","level":"error","component":"nova/pipeline","message":"  [VALIDATOR_INTERNAL_ERROR] Architecture validator encountered an internal error: Architecture validator agent execution failed: agent finding 'ARCHITECTURE_BOUNDARY_RISK' has invalid scope 'preview_boundary_thing'"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:09.840Z","level":"error","component":"nova/pipeline","message":"  Fix: Review validator logs and fix the validator/runtime error before starting pipeline work."}
+✔ architecture validator retries after canonical rate-limit cooldown (9.88622ms)
+✔ architecture validator retries agent no-output failures within explicit attempt budget (1.591102ms)
+✔ architecture validator agent blocking findings block by severity (1.422837ms)
+✔ architecture validator accepts advertised architecture judgment scopes (2.381643ms)
+✔ architecture validator rejects invented agent judgment scopes (1.334565ms)
+✔ architecture validator agent prompt is scoped to software architecture judgment (0.164454ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 360.327084

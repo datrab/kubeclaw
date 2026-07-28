@@ -1,0 +1,5 @@
+
+> plugin-system:inventory:check
+> node scripts/plugin-system-inventory.mjs --check
+
+plugin-system inventory is current (1474 files, 0 unclassified)

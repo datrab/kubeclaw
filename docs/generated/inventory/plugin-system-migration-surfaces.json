@@ -2,7 +2,7 @@
   "schemaVersion": "plugin-system-migration-surfaces-v2",
   "generatedFrom": {
     "inventory": "docs/generated/inventory/plugin-system.json",
-    "inventoryDigest": "3ca57b4896c9a4eae80225f5092e7446da8c931591d725b69af16958b0498ae1",
+    "inventoryDigest": "9c9cf3221c848faa784909dd17c30bb1ee007389e6bc22ef917aa7fd7bd02777",
     "units": "docs/architecture/plugin-system-migration-units.json",
     "unitsDigest": "7d658488058f389b91d8b6584d2fe38dea3af2f27d15e47a1d1c06ff16dc54cb"
   },

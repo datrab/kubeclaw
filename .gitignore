@@ -17,6 +17,7 @@ Thumbs.db
 
 # Logs
 *.log
+!docs/architecture/plugin-system-parity-evidence/outputs/*.log
 active-run.lock.json
 /.swarm/
 **/.swarm/live-buster-infra/

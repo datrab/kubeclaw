@@ -1,6 +1,6 @@
 # Phase 9 Changelog
 
-Status: in progress
+Status: complete for package parity
 
 This file records implementation decisions, behavior findings, test evidence,
 deletions, and atomic commits for the concrete plugin and adapter migration.
@@ -233,3 +233,41 @@ deletions, and atomic commits for the concrete plugin and adapter migration.
   implementation decision, architecture boundary, and complete behavioral
   proof, with authority/durability/security details recorded only where they
   change the decision.
+
+## Batch 7: Immutable Parity Evidence And Completion Gate
+
+### Findings
+
+- All six Phase 9 migration units had complete implementation decisions,
+  replacement scenarios, and no remaining parity blockers.
+- The global `*.log` ignore rule initially excluded the command outputs named
+  by immutable evidence records. That made local verification pass but would
+  have made the evidence incomplete on a clean clone.
+- Registration-count assertions and the dynamic crash-fixture generator still
+  reflected the pre-Redis registry.
+
+### Changes
+
+- Recorded committed `parity-proven` evidence for validation/lint,
+  review/approval/reporting, Forge/implementation, Buster execution/quality,
+  privileged adapters, and the prompt contract.
+- Retained all 97 command-output attestations referenced by those evidence
+  records, including their recorded SHA-256 digests.
+- Updated registry assertions to 30 pipeline packages and 35 registrations:
+  14 stages, 5 observers, and 16 adapters.
+- Generalized composed-schema fixture generation and added Redis endpoint
+  synthesis to the TypeScript crash matrix; no plugin-specific fixture bypass
+  was introduced.
+- Added the TypeScript Phase 9 completion contract and the machine-readable
+  Phase 9 evidence summary.
+- Kept the authority boundary explicit: observers remain Phase 10, restricted
+  external execution remains Phase 11, and consumer cutover plus v1 deletion
+  remain Phase 12.
+
+### Verification
+
+- `npm run verify:plugin-system:phase9`
+- `npm run plugin-system:migration:check`
+- Six immutable evidence records and 97 retained output attestations
+- 31 package-local live suites
+- 35-registration crash-containment matrix

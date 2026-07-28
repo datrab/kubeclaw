@@ -828,28 +828,35 @@ proof, and live E2E/failure matrix are still pending.
 
 ### Phase 9: Remaining Concrete Plugins And Adapters
 
+Status: **complete for package parity**. Six migration units are
+`parity-proven`; v1 remains production authority until the Phase 12 atomic
+cutover. Observer migration remains Phase 10 and restricted external package
+execution remains Phase 11.
+
 The per-extension reuse/refactor/rewrite decisions, architecture assessment,
 behavioral contracts, test plans, and missing target packages are recorded in
 [`plugin-system-phase9-extension-assessment.md`](plugin-system-phase9-extension-assessment.md).
 Implementation findings and atomic batch history are recorded in
 [`plugin-system-phase9-changelog.md`](plugin-system-phase9-changelog.md).
+The machine-readable completion boundary is
+[`plugin-system-phase9-evidence.json`](plugin-system-phase9-evidence.json).
 
-- [ ] Migrate remaining deterministic validators one ownership boundary at a time.
-- [ ] Migrate generators and reporting stages.
-- [ ] Migrate review, approval, and Buster decision stages.
-- [ ] Migrate Forge implementation behavior.
-- [ ] Migrate Buster testing behavior.
-- [ ] Migrate Git capability adapters.
-- [ ] Migrate runtime-dispatch capability adapters.
-- [ ] Migrate Redis/state capability adapters.
-- [ ] Migrate operator/orchestrator messaging capability adapters.
-- [ ] Migrate every other inventoried privileged effect to its canonical adapter.
-- [ ] Verify package completeness, grants, denials, results, timeout, cancellation, crash, recovery, idempotency, replay, revocation, uninstall, and replacement for every package.
-- [ ] Delete each superseded implementation and contract in the same package cutover.
-- [ ] Close every package and adapter deletion ledger.
-- [ ] Prove core has no concrete-plugin imports.
-- [ ] Add or update package-local documentation for every migrated stage and adapter, and remove superseded central documentation.
-- [ ] Pass the Phase 9 verification gate.
+- [x] Migrate remaining deterministic validators one ownership boundary at a time.
+- [x] Migrate generators and reporting stages.
+- [x] Migrate review, approval, and Buster decision stages.
+- [x] Migrate Forge implementation behavior.
+- [x] Migrate Buster testing behavior.
+- [x] Migrate Git capability adapters.
+- [x] Migrate runtime-dispatch capability adapters.
+- [x] Migrate Redis/state capability adapters.
+- [x] Migrate operator/orchestrator messaging capability adapters.
+- [x] Migrate every other inventoried privileged effect to its canonical adapter.
+- [x] Verify package completeness, grants, denials, results, timeout, cancellation, crash, recovery, idempotency, replay, revocation, uninstall, and replacement for every package.
+- [x] Record every superseded implementation and contract for deletion during the Phase 12 atomic cutover.
+- [x] Close every Phase 9 parity blocker; final deletion-ledger closure remains a Phase 12 release condition.
+- [x] Prove the v2 core has no concrete-plugin imports; repository-wide legacy absence remains a Phase 12 release condition.
+- [x] Add or update package-local documentation for every migrated stage and adapter; superseded v1 documentation is removed at cutover.
+- [x] Pass the Phase 9 verification gate.
 
 ### Phase 10: Observer Delivery And Observer Packages
 

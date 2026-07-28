@@ -1,0 +1,13 @@
+
+> test
+> npm run build && node tests/protocol.unit.test.mjs && node tests/review-output.unit.test.mjs && node tests/stage.unit.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-output-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"stage-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"package-boundary"}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "plugin-system-phase9-evidence-v1",
+  "status": "complete",
+  "activeAuthority": "skills-role-bundles-v1",
+  "units": [
+    "buster-worker-and-suites",
+    "forge-and-implementation",
+    "privileged-adapters",
+    "prompt-library",
+    "review-approval-and-reporting",
+    "validation-and-lint"
+  ],
+  "registry": {
+    "pipelinePackages": 30,
+    "stages": 14,
+    "observers": 5,
+    "adapters": 16,
+    "registrations": 35,
+    "discoveredPackageRoots": 31
+  },
+  "behaviorProof": {
+    "implementationPolicy": "reuse-refactor-or-rewrite-by-evidence",
+    "nativeTestLanguageRequired": true,
+    "packageLiveSuites": 31,
+    "registrationCrashMatrix": 35,
+    "externalAgentOrProductionServiceE2eDeferredToPhase12": true
+  },
+  "authorityBoundaries": {
+    "observerMigration": "phase10",
+    "externalPluginIsolation": "phase11",
+    "consumerCutoverAndLegacyDeletion": "phase12"
+  }
+}

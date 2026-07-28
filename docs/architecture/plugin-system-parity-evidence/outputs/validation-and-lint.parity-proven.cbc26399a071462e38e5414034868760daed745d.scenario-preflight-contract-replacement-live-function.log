@@ -1,0 +1,20 @@
+
+> test
+> npm run build && node tests/package-boundary.test.mjs && node tests/declarations.unit.test.mjs && node --experimental-strip-types tests/parity.test.ts && node --experimental-strip-types tests/live-function.test.ts
+
+
+> build
+> tsc -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"unit"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"legacy-parity"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"live-function"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.756Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.760Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.761Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: SERVE_DOCKERFILE_NOT_DECLARED"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.761Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: SERVE_DOCKERFILE_NOT_DECLARED"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.761Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.761Z","level":"info","component":"nova/pipeline","message":"Preflight contract validation passed for fixture"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.762Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: API_SPEC_NOT_DECLARED"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:01:20.762Z","level":"warn","component":"nova/pipeline","message":"Preflight contract validation failed for fixture: API_SPEC_NOT_DECLARED"}

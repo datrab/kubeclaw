@@ -7022,12 +7022,12 @@
         },
         {
           "id": "result.needs_nova",
-          "line": 1019,
+          "line": 1026,
           "evidence": "Every result variant has an exact schema and lifecycle mapping. Observer and adapter registrations have explicit identity, subscription/provision, authority, ordering, error, timeout, replay/readiness, cancellation, and shutdown contracts. "
         },
         {
           "id": "result.needs_nova",
-          "line": 1207,
+          "line": 1214,
           "evidence": "- replace `needs_nova` with `orchestrator_required`"
         },
         {
@@ -7037,17 +7037,17 @@
         },
         {
           "id": "result.action_required",
-          "line": 1019,
+          "line": 1026,
           "evidence": "Every result variant has an exact schema and lifecycle mapping. Observer and adapter registrations have explicit identity, subscription/provision, authority, ordering, error, timeout, replay/readiness, cancellation, and shutdown contracts. "
         },
         {
           "id": "result.action_required",
-          "line": 1208,
+          "line": 1215,
           "evidence": "- remove `action_required` as a plugin-control synonym"
         },
         {
           "id": "manifest.contract-v1",
-          "line": 1021,
+          "line": 1028,
           "evidence": "The new manifest API version is `pipeline-plugin-v2`. The cutover rejects existing `pipeline-plugin-v1` manifests; core does not adapt or load both versions."
         }
       ],

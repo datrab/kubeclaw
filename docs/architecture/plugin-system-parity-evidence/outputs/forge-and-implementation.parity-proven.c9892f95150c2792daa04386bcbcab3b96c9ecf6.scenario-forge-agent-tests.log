@@ -1,0 +1,49 @@
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.294Z","level":"warn","component":"nova/pipeline","message":"[forge-mod-a] ACP startup rate limited (pause 1/1) — sleeping 0h (resume at 2026-07-28T21:09:53.287Z)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.302Z","level":"warn","component":"nova/pipeline","message":"[telemetry] Telemetry sink dispatch could not run because the startup-frozen plugin registry is missing."}
+✔ module forge cleans up and returns typed block when dispatch hook rejects (3.326907ms)
+✔ module forge saves stream log and clears context when finalize hook rejects (0.559425ms)
+✔ module forge returns typed block when cleanup kill rejects after poll (0.558034ms)
+✔ module forge carries successful poll status even before Nova lifecycle transition (0.698689ms)
+✔ module forge scopes lifecycle labels by run and attempt (2.359492ms)
+✔ module buster classifies terminal session lifecycle failure as retryable environment failure (2.758203ms)
+✔ module forge classifies missing completion artifact as retryable environment failure (0.643747ms)
+✔ module forge retries when startup evidence never appears during spawn (0.560545ms)
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.306Z","level":"info","component":"nova/pipeline","message":"[forge-mod-a] ACP startup rate limit cooldown complete — retrying spawn"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.317Z","level":"warn","component":"nova/pipeline","message":"[buster-mod-a] ACP startup rate limited (pause 1/1) — sleeping 0h (resume at 2026-07-28T21:09:53.316Z)"}
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.318Z","level":"warn","component":"nova/pipeline","message":"[telemetry] Telemetry sink dispatch could not run because the startup-frozen plugin registry is missing."}
+✔ module forge routes startup health-check usage limits through cooldown before retry (27.833541ms)
+✔ module buster cleans up and returns typed block when dispatch hook rejects (0.944785ms)
+✔ module buster retries when startup evidence never appears during spawn (0.512614ms)
+✔ module buster retries when agent fails health check immediately after spawn (0.437312ms)
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.321Z","level":"info","component":"nova/pipeline","message":"[buster-mod-a] ACP startup rate limit cooldown complete — retrying spawn"}
+✔ module buster routes startup health-check usage limits through cooldown before retry (7.120507ms)
+✔ module buster contains thrown archive errors as typed blocks (0.496513ms)
+✔ module buster returns typed block when poll failure class is missing (0.559634ms)
+✔ module buster classifies output_file identity mismatch as infrastructure block (0.571565ms)
+✔ module buster classifies output_file identity mismatch from Redis entry reason (0.554354ms)
+✔ module buster accepts Redis dispatch completion without session key (0.559424ms)
+✔ module buster classifies missing output_file from Redis entry reason as infrastructure block (0.514813ms)
+✔ module buster dispatch uses worker workspace repo root as session cwd authority (0.509633ms)
+✔ module buster saves stream log and clears context when finalize hook rejects (0.561865ms)
+✔ module buster returns typed block when save stream log rejects after poll (0.484523ms)
+{"schema_version":"runtime_log.v1","timestamp":"2026-07-28T21:09:53.399Z","level":"step","component":"common/agent-lifecycle","message":"Spawning ACP session: forge-01-nginx-1785272993397 (model: gpt-5.4/low, agentId: real-e2e-missing-forge-agent)"}
+✔ computeFilesChanged uses the cwd captured with the baseline (50.620049ms)
+✔ computeFilesChanged suppresses telemetry when baseline cwd is missing (0.194405ms)
+✔ buildBusterTestConfig isolates standard PORT-based serve commands per dispatch (0.882093ms)
+✔ buildBusterTestConfig leaves non-standard serve commands unchanged (0.271537ms)
+✔ buildBusterAgentJudgmentPolicy emits the canonical deterministic default (0.219696ms)
+✔ buildBusterAgentJudgmentPolicy preserves explicit required agent judgment (0.152704ms)
+✔ buildBusterPayload carries pipeline Discord webhook authority for module and gate tasks (4.249941ms)
+✔ buildBusterPayload rounds tiny positive timeout minutes up to valid task timeout seconds (0.907163ms)
+✔ spawnAcpAgent uses configured acp_agent_id before model harness mapping (28.506809ms)
+✔ clearShutdownContext preserves tracked live sessions (0.847513ms)
+✔ clearShutdownContext removes placeholder entries without sessions (0.135293ms)
+✔ buildVictimSet does not include unrelated same-project orphan ACP wrappers (1.248292ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 655.96741

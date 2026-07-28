@@ -1263,6 +1263,7 @@ assertIncludes(deploymentTemplate, 'sleep "${KUBECLAW_PRESTOP_DRAIN_SECONDS:-5}"
 assert.equal(deploymentTemplate.includes('tcpSocket:'), false, 'Deployment template must not use TCP-only probes');
 assert.equal(deploymentTemplate.includes("if (containerRole === 'buster-pipeline')"), false, 'Deployment liveness must not restart Buster pipeline solely on heartbeat age');
 assertIncludes(deploymentTemplate, "containerRole !== 'buster-pipeline'", 'Deployment liveness must keep Buster pipeline liveness local-only');
+assertIncludes(deploymentTemplate, "if (containerRole !== 'buster-pipeline') {\n                  await check('runtime openclaw config'", 'Deployment health must not require the gateway OpenClaw config inside the isolated Buster pipeline worker');
 assert.equal(deploymentTemplate.includes('git pull origin main || echo'), false, 'Deployment init must not swallow git pull failures');
 assertIncludes(deploymentTemplate, 'git clone "$GIT_REPO_URL" "$REPO_DIR"', 'Deployment init must fail closed on first clone failure');
 assertIncludes(deploymentTemplate, 'export GIT_CONFIG_KEY_0=safe.directory', 'Deployment init must trust the exact persisted checkout after its UID ownership handoff');
