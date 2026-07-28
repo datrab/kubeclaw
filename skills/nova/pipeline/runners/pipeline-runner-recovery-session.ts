@@ -20,7 +20,7 @@ export function shouldPreserveTerminalModuleRecovery({ previousPhase, recoveryAc
   return textValue(previousPhase) === MODULE_BUSTER_PHASE && recoveryAction === STALE_RECOVERY_ACTIONS.OBSERVED_TERMINAL;
 }
 
-export function runtimeName(active: AnyRecord): string | null {
+function runtimeName(active: AnyRecord): string | null {
   return textValue(active.runtime);
 }
 
@@ -115,7 +115,7 @@ export function removeFileIfPresent(filePath: string | null): void {
   }
 }
 
-export function buildRecoverySessionAuthority(_config: AnyRecord, active: AnyRecord | null = null, gatewayEvidence: AnyRecord | null = null): AnyRecord {
+function buildRecoverySessionAuthority(_config: AnyRecord, active: AnyRecord | null = null, gatewayEvidence: AnyRecord | null = null): AnyRecord {
   return buildActiveSessionAuthorityPolicy({
     lifecycleActiveSession: selectTruthyValue(() => (active), () => (null)),
     gatewayEvidence,
@@ -123,7 +123,7 @@ export function buildRecoverySessionAuthority(_config: AnyRecord, active: AnyRec
   } as AnyRecord) as AnyRecord;
 }
 
-export async function assertRecoverySessionIdentityConfirmed(config: AnyRecord, {
+async function assertRecoverySessionIdentityConfirmed(config: AnyRecord, {
   scope,
   moduleId = null,
   gateId = null,
@@ -163,7 +163,7 @@ export async function assertRecoverySessionIdentityConfirmed(config: AnyRecord, 
   throw new Error(reason);
 }
 
-export async function observeRecoverySession(config: AnyRecord, context: AnyRecord) {
+async function observeRecoverySession(config: AnyRecord, context: AnyRecord) {
   const { active, monitorIdentity, gatewayLabel, diagnosticLabel, attempt, dispatchId, previousPhase } = context;
   const { monitor } = await observeAcpMonitorSurfaces(config, active.session_key, {
     ...monitorIdentity, gateway_label: gatewayLabel, diagnostic_label: diagnosticLabel,
@@ -178,7 +178,7 @@ export async function observeRecoverySession(config: AnyRecord, context: AnyReco
   };
 }
 
-export async function terminateRecoverySession(config: AnyRecord, context: AnyRecord) {
+async function terminateRecoverySession(config: AnyRecord, context: AnyRecord) {
   const { active, gatewayLabel, diagnosticLabel } = context;
   const label = selectTruthyValue(() => gatewayLabel, () => diagnosticLabel);
   return terminateSession(active.session_key, {

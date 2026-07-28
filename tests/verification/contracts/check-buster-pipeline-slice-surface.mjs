@@ -95,7 +95,10 @@ const busterConventionsSource = fs.readFileSync(busterConventionsPath, 'utf8');
 const busterReadmeSource = fs.readFileSync(busterReadmePath, 'utf8');
 const novaPromptSharedSource = fs.readFileSync(novaPromptSharedPath, 'utf8');
 const novaBusterModulePromptSource = fs.readFileSync(novaBusterModulePromptPath, 'utf8');
-const orchestrationSource = fs.readFileSync(novaOrchestrationPath, 'utf8');
+const orchestrationSource = [
+  fs.readFileSync(novaOrchestrationPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration-buster-payload.ts'), 'utf8'),
+].join('\n');
 
 assert.equal(shimSource.includes('await handleBusterEntrypoint();'), true, 'buster-pipeline.ts should execute the typed entrypoint directly');
 assert.equal(shimSource.includes('export * from'), false, 'buster-pipeline.ts must not preserve public helper re-exports');

@@ -212,7 +212,15 @@ async function resolveBusterDispatchOutcome(context: AnyRecord) {
     return { retry: false, status, terminal: moduleTerminalResult(pollFailure.terminal) };
   }
   status = finalStatus ?? status;
-  return resolveCompletedBusterAttempt({ ...context, dispatchResult, status, redisEntry: metadata.redis_entry ?? null, completionSessionKey: completionIdentity.sessionKey, control: busterWorkerControlResult });
+  return resolveCompletedBusterAttempt({
+    ...context,
+    dispatchResult,
+    status,
+    redisEntry: metadata.redis_entry ?? null,
+    completionSessionKey: completionIdentity.sessionKey,
+    control: busterWorkerControlResult,
+    failureClass: metadata.failure_class ?? null,
+  });
 }
 
 async function runBusterAttempt(context: AnyRecord, counters: AnyRecord) {

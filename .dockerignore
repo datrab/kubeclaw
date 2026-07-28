@@ -15,8 +15,8 @@
 !cmd/buster-namespace-controller/**
 
 !plugins/
-!plugins/openclaw-agent-observer/
-!plugins/openclaw-agent-observer/**
+!skills/common/plugins/openclaw-agent-observer/
+!skills/common/plugins/openclaw-agent-observer/**
 !contracts/
 !contracts/agent-observability/
 !contracts/agent-observability/v1/
@@ -35,7 +35,7 @@ tmp/
 
 # Local dependencies, generated output, logs, and secret-shaped files.
 **/node_modules/
-plugins/openclaw-agent-observer/dist/
+skills/common/plugins/openclaw-agent-observer/dist/
 contracts/agent-observability/v1/dist/
 *.log
 **/*.log

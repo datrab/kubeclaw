@@ -34,27 +34,61 @@ export function normalizeCorrelationIdentity(input: any = {}) {
   };
 }
 
-export function validateCorrelationIdentity(identity: any, { eventType = '', authoritative = {} as any } = {}) {
-  const normalized = normalizeCorrelationIdentity(identity);
+function requiredIdentityErrors(normalized: any, eventType: string): string[] {
   const errors: string[] = [];
-  for (const field of ['project', 'run_id', 'source', 'producer']) if (!(normalized as any)[field]) errors.push(`${field} is required`);
-  const workIdentityMissing = [normalized.work_id, normalized.work_type].some((value) => !value);
-  if (WORK_OWNED.has(eventType) && workIdentityMissing) errors.push(`${eventType} requires work_id and work_type`);
-  const toolIdentityMissing = [normalized.session_id, normalized.model_call_id, normalized.tool_call_id, normalized.dispatch_id].some((value) => !value)
-    || normalized.attempt == null;
-  if (eventType.startsWith('agent.tool.') && toolIdentityMissing) errors.push(`${eventType} requires attempt, dispatch, session, model_call, and tool_call identity`);
-  const isModelEvent = ['agent.model.', 'agent.llm.'].some((prefix) => eventType.startsWith(prefix));
-  const modelIdentityMissing = [normalized.session_id, normalized.model_call_id, normalized.dispatch_id].some((value) => !value)
-    || normalized.attempt == null;
-  if (isModelEvent && modelIdentityMissing) errors.push(`${eventType} requires attempt, dispatch, session, and model_call identity`);
-  for (const [field, value] of Object.entries(authoritative || {})) {
-    if (value != null && value !== '' && (normalized as any)[field] !== value) errors.push(`${field} does not match producer authority`);
+  for (const field of ['project', 'run_id', 'source', 'producer']) {
+    if (!normalized[field]) errors.push(`${field} is required`);
   }
+  if (WORK_OWNED.has(eventType) && (!normalized.work_id || !normalized.work_type)) {
+    errors.push(`${eventType} requires work_id and work_type`);
+  }
+  return errors;
+}
+
+function agentIdentityErrors(normalized: any, eventType: string): string[] {
+  const errors: string[] = [];
+  const missingToolIdentity = [normalized.session_id, normalized.model_call_id, normalized.tool_call_id, normalized.dispatch_id].some((value) => !value)
+    || normalized.attempt == null;
+  if (eventType.startsWith('agent.tool.') && missingToolIdentity) {
+    errors.push(`${eventType} requires attempt, dispatch, session, model_call, and tool_call identity`);
+  }
+  const isModelEvent = ['agent.model.', 'agent.llm.'].some((prefix) => eventType.startsWith(prefix));
+  const missingModelIdentity = [normalized.session_id, normalized.model_call_id, normalized.dispatch_id].some((value) => !value)
+    || normalized.attempt == null;
+  if (isModelEvent && missingModelIdentity) {
+    errors.push(`${eventType} requires attempt, dispatch, session, and model_call identity`);
+  }
+  return errors;
+}
+
+function authorityErrors(normalized: any, authoritative: any): string[] {
+  const errors: string[] = [];
+  for (const [field, value] of Object.entries(authoritative || {})) {
+    if (value != null && value !== '' && normalized[field] !== value) {
+      errors.push(`${field} does not match producer authority`);
+    }
+  }
+  return errors;
+}
+
+function workIdentityErrors(normalized: any): string[] {
+  const errors: string[] = [];
   if (normalized.work_type === 'gate' && !normalized.gate_id) errors.push('gate work requires gate_id');
   if (normalized.module_id && normalized.work_type !== 'module') errors.push('module_id requires work_type module');
   if (normalized.gate_id && normalized.work_type !== 'gate') errors.push('gate_id requires work_type gate');
   if (normalized.module_id && normalized.work_id !== normalized.module_id) errors.push('module_id must equal canonical work_id');
   if (normalized.gate_id && normalized.work_id !== normalized.gate_id) errors.push('gate_id must equal canonical work_id');
+  return errors;
+}
+
+export function validateCorrelationIdentity(identity: any, { eventType = '', authoritative = {} as any } = {}) {
+  const normalized = normalizeCorrelationIdentity(identity);
+  const errors = [
+    ...requiredIdentityErrors(normalized, eventType),
+    ...agentIdentityErrors(normalized, eventType),
+    ...authorityErrors(normalized, authoritative),
+    ...workIdentityErrors(normalized),
+  ];
   return { ok: errors.length === 0, errors, identity: normalized };
 }
 

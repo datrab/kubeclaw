@@ -12,119 +12,17 @@ import {
   runFullLintValidatorStage,
 } from '../../services/module-validators.ts';
 import { generateProjectSummary, generatePipelineReview } from '../../services/summary.ts';
-import { generateCaseStudy } from '../../services/case-study.ts';
 import { getBuiltinNotificationPluginDefinitions } from '../../services/notification-contract.ts';
 import { getBuiltinTelemetrySinkPluginDefinitions } from '../../services/telemetry-sink-contract.ts';
+import { emitBuiltinBridgeTrace, readPluginConfig, readPluginDeps, readPluginProgress } from './builtin-bridge.ts';
+import { getBuiltinWorkerPluginDefinitions } from './builtin-workers.ts';
+import { getBuiltinCaseStudyPluginDefinition } from './builtin-case-study.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 
-async function readPluginConfig(ctx: AnyRecord = {}) {
-  if (typeof ctx?.coreRuntime?.readConfig === 'function') return ctx.coreRuntime.readConfig();
-  throw new Error('Built-in plugin bridge requires explicit coreRuntime config; public PluginContextV1 does not expose read.config()');
-}
-
-async function readPluginProgress(ctx: AnyRecord = {}) {
-  if (typeof ctx?.coreRuntime?.readProgress === 'function') return ctx.coreRuntime.readProgress();
-  throw new Error('Built-in plugin bridge requires explicit coreRuntime progress; public PluginContextV1 does not expose read.progress()');
-}
-
-function readPluginDeps(ctx: AnyRecord = {}) {
-  return typeof ctx?.coreRuntime?.readDeps === 'function' ? ctx.coreRuntime.readDeps() : null;
-}
-
-async function emitBuiltinBridgeTrace(ctx: AnyRecord = {}, eventType: string, message: string, payload: AnyRecord = {}) {
-  const pluginId = eventType.startsWith('plugin.') && eventType.endsWith('.bridge_invoked')
-    ? `builtin.${eventType.slice('plugin.'.length, -'.bridge_invoked'.length)}`
-    : 'builtin.missing';
-  const canonicalPayload = {
-    plugin_id: pluginId,
-    plugin_event: 'bridge_invoked',
-    module_id: selectTruthyValue(() => (payload.moduleId), () => (null)),
-    gate_id: selectTruthyValue(() => (payload.gateId), () => (null)),
-    gate_type: selectTruthyValue(() => (payload.gateType), () => (null)),
-    attempt: selectDefinedValue(() => (payload.attempt), () => (null)),
-    dispatch_id: selectTruthyValue(() => (payload.dispatchId), () => (null)),
-    details: {
-      bridge_event_type: eventType,
-      message,
-      ...payload,
-    },
-  };
-  if (typeof ctx?.telemetry?.emit === 'function') {
-    await ctx.telemetry.emit({ eventType: 'plugin.event', payload: canonicalPayload });
-  }
-}
-
 export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
-  {
-    manifest: {
-      moduleId: 'builtin.worker.module_forge',
-      contractVersion: PLUGIN_CONTRACT_VERSION,
-      kind: 'worker',
-      hookFamily: 'worker.execute',
-      stageIds: ['worker:module_forge'],
-      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'dispatch.worker_runtime', 'notify.operator'],
-      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
-      sourceType: 'builtin',
-      trustTier: 'trusted',
-      displayName: 'Built-in module Forge worker',
-      description: 'Current module Forge worker execution wired through the startup registry seam.',
-      defaultEnabled: true,
-    },
-    implementation: {
-      execute: async (input: AnyRecord = {}, ctx: AnyRecord = {}) => {
-        const config = await readPluginConfig(ctx);
-        await emitBuiltinBridgeTrace(ctx, 'plugin.worker.module_forge.bridge_invoked', 'Invoking built-in module Forge worker through PluginContextV1', {
-          stageId: 'worker:module_forge',
-          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
-          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
-        });
-        return ctx.workerRuntime.dispatch({
-          workerType: 'module_forge',
-          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
-          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
-        });
-      },
-    },
-    sourceRef: 'builtin:agents/orchestration.ts',
-    implementationRef: 'agents/orchestration.ts#runModuleForgeWorker',
-  },
-  {
-    manifest: {
-      moduleId: 'builtin.worker.module_buster',
-      contractVersion: PLUGIN_CONTRACT_VERSION,
-      kind: 'worker',
-      hookFamily: 'worker.execute',
-      stageIds: ['worker:module_buster'],
-      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'dispatch.worker_runtime', 'notify.operator'],
-      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
-      sourceType: 'builtin',
-      trustTier: 'trusted',
-      displayName: 'Built-in module Buster worker',
-      description: 'Current module Buster worker execution wired through the startup registry seam.',
-      defaultEnabled: true,
-    },
-    implementation: {
-      execute: async (input: AnyRecord = {}, ctx: AnyRecord = {}) => {
-        const config = await readPluginConfig(ctx);
-        await emitBuiltinBridgeTrace(ctx, 'plugin.worker.module_buster.bridge_invoked', 'Invoking built-in module Buster worker through PluginContextV1', {
-          stageId: 'worker:module_buster',
-          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
-          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
-          dispatchId: selectTruthyValue(() => (input?.ids?.dispatchId), () => (null)),
-        });
-        return ctx.workerRuntime.dispatch({
-          workerType: 'module_buster',
-          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
-          attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
-          dispatchId: selectTruthyValue(() => (input?.ids?.dispatchId), () => (null)),
-        });
-      },
-    },
-    sourceRef: 'builtin:agents/orchestration.ts',
-    implementationRef: 'agents/orchestration.ts#runModuleBusterWorker',
-  },
+  ...getBuiltinWorkerPluginDefinitions(),
   {
     manifest: {
       moduleId: 'builtin.gate.review',
@@ -387,33 +285,7 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
     sourceRef: 'builtin:services/summary.ts',
     implementationRef: 'services/summary.ts#generatePipelineReview',
   },
-  {
-    manifest: {
-      moduleId: 'builtin.generator.case_study',
-      contractVersion: PLUGIN_CONTRACT_VERSION,
-      kind: 'generator',
-      hookFamily: 'generator.run',
-      stageIds: ['generator:case_study'],
-      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'write.artifacts', 'emit.telemetry', 'notify.operator'],
-      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
-      sourceType: 'builtin',
-      trustTier: 'trusted',
-      displayName: 'Built-in case study generator',
-      description: 'Current case-study generator wired through the startup registry seam.',
-      defaultEnabled: true,
-    },
-    implementation: {
-      run: async (_input: AnyRecord = {}, ctx: AnyRecord = {}) => {
-        const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
-        await emitBuiltinBridgeTrace(ctx, 'plugin.generator.case_study.bridge_invoked', 'Invoking built-in case study generator through PluginContextV1', {
-          stageId: 'generator:case_study',
-        });
-        return generateCaseStudy(config, progress, { deps: readPluginDeps(ctx) });
-      },
-    },
-    sourceRef: 'builtin:services/case-study.ts',
-    implementationRef: 'services/case-study.ts#generateCaseStudy',
-  },
+  getBuiltinCaseStudyPluginDefinition(),
   ...getBuiltinNotificationPluginDefinitions(),
   ...getBuiltinTelemetrySinkPluginDefinitions(),
 ]);

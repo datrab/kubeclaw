@@ -2,6 +2,7 @@ Runtime and packaging structure verifiers live here.
 
 Canonical entrypoints:
 - `tests/verification/runtime/check-runtime-collisions.mjs`
+- `tests/verification/runtime/check-agent-skill-bundles.mjs`
 - `tests/verification/runtime/check-nova-startup-smoke.mjs`
 - `tests/verification/runtime/check-buster-startup-smoke.mjs`
 

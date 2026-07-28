@@ -1,0 +1,161 @@
+{
+  "$id": "infrastructure.evidence.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "delivery": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gateway": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "namespace_lease": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "preview_url": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "readiness": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "redis": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "resource_usage": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "restarts": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "rollout": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "termination_reason": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workload": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "evidence_type",
+    "status"
+  ],
+  "type": "object"
+}

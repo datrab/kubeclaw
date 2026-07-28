@@ -29,7 +29,7 @@ jobs:
               - 'docker/**'
               - 'go.mod'
               - 'cmd/buster-namespace-controller/**'
-              - 'plugins/openclaw-agent-observer/**'
+              - 'skills/common/plugins/openclaw-agent-observer/**'
               - 'contracts/agent-observability/v1/**'
   check-base-image:
     name: Check pinned OpenClaw base

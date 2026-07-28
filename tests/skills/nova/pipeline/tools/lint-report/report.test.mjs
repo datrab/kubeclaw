@@ -289,7 +289,7 @@ test('canonical policy changes expand every changed-file tool to configured targ
 test('report contract rejects inconsistent summary evidence', () => {
   const report = {
     schema_version: LINT_REPORT_SCHEMA_VERSION,
-    policy: { schema_version: 'pipeline_lint_policy.v6', digest: 'fixture', project: 'fixture', config_digests: {}, baseline_digest: 'fixture-baseline' },
+    policy: { schema_version: 'pipeline_lint_policy.v6', digest: 'fixture', project: 'fixture', config_digests: {}, effective_targets: {}, baseline_digest: 'fixture-baseline' },
     project: 'fixture',
     scope: 'full',
     timestamp: '2026-07-20T00:00:00.000Z',
@@ -317,7 +317,7 @@ test('report contract rejects inconsistent summary evidence', () => {
 test('report contract rejects incompatible policy schema evidence', () => {
   const report = {
     schema_version: LINT_REPORT_SCHEMA_VERSION,
-    policy: { schema_version: 'pipeline_lint_policy.v2', digest: 'fixture', project: 'fixture', config_digests: {}, baseline_digest: 'fixture-baseline' },
+    policy: { schema_version: 'pipeline_lint_policy.v2', digest: 'fixture', project: 'fixture', config_digests: {}, effective_targets: {}, baseline_digest: 'fixture-baseline' },
     project: 'fixture', scope: 'full', timestamp: '2026-07-20T00:00:00.000Z', tier: 'full',
     changed_files: [], detected_types: [], diagnostics: [], tools: {},
     visibility: { debt: false, experimental: false },
@@ -329,7 +329,7 @@ test('report contract rejects incompatible policy schema evidence', () => {
 test('report contract binds evidence to the requested tier and policy authority', () => {
   const report = {
     schema_version: LINT_REPORT_SCHEMA_VERSION,
-    policy: { schema_version: 'pipeline_lint_policy.v6', digest: 'actual', project: 'workspace', config_digests: {}, baseline_digest: 'fixture-baseline' },
+    policy: { schema_version: 'pipeline_lint_policy.v6', digest: 'actual', project: 'workspace', config_digests: {}, effective_targets: {}, baseline_digest: 'fixture-baseline' },
     project: 'fixture', scope: 'full', timestamp: '2026-07-20T00:00:00.000Z', tier: 'pre-check',
     visibility: { debt: false, experimental: false }, changed_files: [], detected_types: [], diagnostics: [], tools: {},
     summary: { total_errors: 0, total_warnings: 0, total_blocking: 0, total_baselined: 0, total_experimental: 0, tools_ok: 0, tools_not_applicable: 0, tools_failed: 0 },

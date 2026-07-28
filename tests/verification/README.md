@@ -38,6 +38,7 @@ ACP launch reachability can also be checked directly:
 - `tests/verification/run-fast-verification.sh`: fast local wrapper
 - `tests/verification/run-full-verification.sh`: exhaustive local wrapper
 - `tests/verification/run-local-acp-verification.sh`: direct ACP/provider smoke wrapper
+- `tests/verification/runtime/check-agent-skill-bundles.mjs`: exact Nova/Buster role-first, Common-second bundle guard
 - `tests/verification/runtime/check-runtime-collisions.mjs`: runtime/package collision guard
 - `tests/verification/runtime/check-nova-startup-smoke.mjs`: Nova import/CLI startup smoke
 - `tests/verification/runtime/check-buster-startup-smoke.mjs`: Buster import/CLI startup smoke

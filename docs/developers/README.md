@@ -15,6 +15,8 @@ Use this section when changing KubeClaw source code, verification, generated doc
 - [Project setup skill](project-setup.md)
 - [Adding gates](adding-gates.md)
 - [Hooks and plugins](hooks-and-plugins.md)
+- [Migrating pipeline plugins](migrating-pipeline-plugins.md)
+- [Planned self-contained plugin architecture](../architecture/plugin-system-vision.md)
 - [Replacing or adapting the agent runtime](replacing-agent-runtime.md)
 - [Adding Buster suites](adding-buster-suites.md)
 - [Adding observability sinks](adding-observability-sinks.md)
@@ -35,7 +37,7 @@ Use this section when changing KubeClaw source code, verification, generated doc
 | Project setup docs or skill | `project-setup.md`; `../pipeline/progress-json.md`; `../reference/progress-json.md` | `skills/nova/project_setup/*.md`; `skills/nova/pipeline/core/config.ts`; `skills/nova/pipeline/core/policy.ts`; `skills/buster/pipeline/services/task-validation.ts` | docs-surface and telemetry-docs real E2E scenarios |
 | Plugin or hook behavior | `hooks-and-plugins.md`; `../concepts/extensibility-model.md` | `skills/nova/pipeline/core/registry.ts`; `skills/nova/pipeline/core/registry/*.ts`; `charts/kubeclaw/files/config/swarm.config.json` | config plugin registry test |
 | Buster suites or worker tasks | `adding-buster-suites.md`; `../pipeline/workers-and-buster.md` | `skills/buster/pipeline/suites/*.ts`; `services/task-queue.ts`; `services/task-validation.ts`; `services/task-completion.ts` | Buster contract check and focused Buster unit tests |
-| Observability | `adding-observability-sinks.md`; `../reference/observability-sinks.md` | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `plugins/openclaw-agent-observer/src/index.ts` | telemetry-docs behavior area and telemetry contract check |
+| Observability | `adding-observability-sinks.md`; `../reference/observability-sinks.md` | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `skills/common/plugins/openclaw-agent-observer/src/index.ts` | telemetry-docs behavior area and telemetry contract check |
 | Deployment or values | `../deployment/README.md`; `../deployment/values-files.md` | `scripts/deploy.sh`; `my-values/*.yaml`; `charts/kubeclaw/templates/*.yaml` | deployment truth and Helm render for Nova/Buster |
 
 ## Development Commands

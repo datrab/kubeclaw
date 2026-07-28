@@ -38,7 +38,7 @@ const CONSOLE_BOUNDARIES = [
 
 const ENVIRONMENT_BOUNDARIES = [
   'scripts/clawpatch-pipeline-light.mjs',
-  'plugins/openclaw-agent-observer/src/config.ts',
+  'skills/common/plugins/openclaw-agent-observer/src/config.ts',
   'skills/buster/pipeline/runtime-environment.ts',
   'skills/buster/pipeline/services/runtime-diagnostics.ts',
   'skills/buster/pipeline/services/runtime-policy.ts',

@@ -18,6 +18,9 @@ For high-level mental models before architecture details, start with `../concept
 - [Lifecycle and state](lifecycle-and-state.md)
 - [Security model](security-model.md)
 - [Observability model](observability-model.md)
+- [Plugin system vision](plugin-system-vision.md) — planned self-contained plugin architecture, not current runtime behavior
+- [Plugin system implementation plan](plugin-system-implementation-plan.md) — phased cutovers, decision gates, and verification
+- [Plugin system current inventory](plugin-system-current-inventory.md) — generated ownership, dependency, effect, legacy-contract, and extraction evidence
 
 ## Source Authority Map
 
@@ -29,7 +32,7 @@ Use this section when you need to verify an architecture claim before changing a
 | Pipeline orchestration and lifecycle authority | `skills/nova/pipeline/cli.ts`; `skills/nova/pipeline/runners/pipeline-runner.ts`; `skills/nova/pipeline/runners/module-runner.ts`; `skills/nova/pipeline/runners/gate-runner.ts`; `skills/nova/pipeline/runners/pipeline-runner-terminal.ts` | `CURRENT_PROJECT`, `REPO_ROOT`, `SWARM_CONFIG`, `.swarm/progress.json`; status read models, lifecycle events, terminal decisions, pipeline artifacts | `node --test tests/verification/e2e/*.test.mjs`; `node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs --source-root "$PWD"` |
 | Buster worker boundary | `skills/buster/buster-pipeline.ts`; `skills/buster/pipeline/services/task-queue.ts`; `skills/buster/pipeline/services/task-validation.ts`; `skills/buster/pipeline/services/task-completion.ts`; `skills/buster/pipeline/services/runtime-policy.ts` | `BUSTER_TASK_STREAM`, Redis task/completion/dead-letter streams, Buster heartbeat file, sandbox outputs | `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"`; `node --test tests/skills/buster/pipeline/services/task-validation.test.mjs tests/skills/buster/pipeline/services/task-completion.test.mjs` |
 | Security and network boundary | `my-values/infra/network-policies.yaml`; `charts/kubeclaw/templates/rbac.yaml`; `my-values/infra/buster-namespace-fence.yaml`; `charts/kubeclaw/templates/deployment.yaml` | 13 portable NetworkPolicies, Buster namespace lease RBAC, sandbox security context, NodePort exposure for Prism preview and LiteLLM | deployment truth check; `kubectl auth can-i` checks from `../operators/security-operations.md` |
-| Observability and artifacts | `skills/nova/pipeline/services/telemetry.ts`; `skills/nova/pipeline/services/telemetry/builders.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/artifact-bundle.ts`; `plugins/openclaw-agent-observer/src/index.ts` | telemetry events, Redis telemetry stream entries, `pipeline.jsonl`, `latest.json`, run-scoped artifact bundle files | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"`; `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
+| Observability and artifacts | `skills/nova/pipeline/services/telemetry.ts`; `skills/nova/pipeline/services/telemetry/builders.ts`; `skills/nova/pipeline/services/telemetry/dispatch.ts`; `skills/nova/pipeline/services/artifact-bundle.ts`; `skills/common/plugins/openclaw-agent-observer/src/index.ts` | telemetry events, Redis telemetry stream entries, `pipeline.jsonl`, `latest.json`, run-scoped artifact bundle files | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"`; `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
 
 ## Failure And Change Signals
 

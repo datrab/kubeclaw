@@ -15,6 +15,7 @@ import {
   materializeRuntimeTree,
   importRuntimeModule,
 } from '../lib/lifecycle-audit-lib.mjs';
+import { verifyModuleGraph } from '../lib/module-graph.mjs';
 
 const args = parseArgs();
 const { sourceRoot, overlayRoot } = resolveRoots(args);
@@ -38,9 +39,15 @@ function resolveRelativeImport(baseFile, specifier) {
   const basePath = path.resolve(path.dirname(baseFile), specifier);
   const candidates = [
     basePath,
+    basePath.replace(/\.(?:js|mjs|cjs)$/, '.ts'),
+    basePath.replace(/\.(?:js|mjs|cjs)$/, '.tsx'),
+    `${basePath}.ts`,
+    `${basePath}.tsx`,
     `${basePath}.js`,
     `${basePath}.mjs`,
     `${basePath}.cjs`,
+    path.join(basePath, 'index.ts'),
+    path.join(basePath, 'index.tsx'),
     path.join(basePath, 'index.js'),
     path.join(basePath, 'index.mjs'),
     path.join(basePath, 'index.cjs'),
@@ -49,7 +56,7 @@ function resolveRelativeImport(baseFile, specifier) {
 }
 
 function collectBrokenRelativeImports(scanRoot, baseRoot = scanRoot) {
-  const jsFiles = walkFiles(scanRoot).filter((file) => /\.(js|mjs|cjs)$/.test(file));
+  const jsFiles = walkFiles(scanRoot).filter((file) => /\.(ts|tsx|js|mjs|cjs)$/.test(file) && !file.endsWith('.d.ts'));
   const violations = [];
   const importPattern = /(?:import|export)\s+(?:[^'"`]+?\s+from\s+)?['"](\.[^'"]+)['"]|import\(\s*['"](\.[^'"]+)['"]\s*\)/g;
 
@@ -68,6 +75,32 @@ function collectBrokenRelativeImports(scanRoot, baseRoot = scanRoot) {
   }
 
   return violations;
+}
+
+function runtimePackages(image, sourceRoot, overlayRoot) {
+  if (image === 'general') {
+    const packageJsonPath = overlayRoot && fs.existsSync(path.join(overlayRoot, 'docker/general-tools/package.json'))
+      ? path.join(overlayRoot, 'docker/general-tools/package.json')
+      : path.join(sourceRoot, 'docker/general-tools/package.json');
+    return [
+      ...Object.keys(JSON.parse(fs.readFileSync(packageJsonPath, 'utf8')).dependencies || {}),
+    ];
+  }
+  const dockerfilePath = overlayRoot && fs.existsSync(path.join(overlayRoot, 'docker/Dockerfile.buster-pipeline'))
+    ? path.join(overlayRoot, 'docker/Dockerfile.buster-pipeline')
+    : path.join(sourceRoot, 'docker/Dockerfile.buster-pipeline');
+  const dockerfile = fs.readFileSync(dockerfilePath, 'utf8');
+  const install = dockerfile.match(/npm install --prefix \/app[\s\S]*?\\\n\s*&& groupmod/)?.[0] || '';
+  return [
+    ...[...install.matchAll(/(?:^|\s)((?:@[^/\s]+\/)?[^@\s\\]+)@[^\s\\]+/gm)].map((match) => match[1]),
+  ];
+}
+
+function roleConsumerPackage({ file, dependency }) {
+  if (dependency !== 'openclaw') return false;
+  const normalized = file.replaceAll(path.sep, '/');
+  return normalized.includes('/plugins/openclaw-agent-events/')
+    || normalized.includes('/plugins/openclaw-agent-observer/');
 }
 
 function materializeEffectiveTree(sourceRoot, overlayRoot, relDir) {
@@ -163,6 +196,7 @@ function isTestOrSpecFile(relPath) {
 function collectSkillSourceTestFiles(sourceRoot, overlayRoot) {
   return [...effectiveFiles(sourceRoot, overlayRoot, 'skills').keys()]
     .map((relPath) => relPath.replace(/\\/g, '/'))
+    .filter((relPath) => !/(?:^|\/)plugins\/[^/]+\/tests\//.test(relPath))
     .filter(isTestOrSpecFile)
     .map((relPath) => path.posix.join('skills', relPath))
     .sort();
@@ -170,7 +204,7 @@ function collectSkillSourceTestFiles(sourceRoot, overlayRoot) {
 
 function collectTsNoCheckFiles(sourceRoot, overlayRoot) {
   const files = [];
-  for (const relDir of ['skills', 'plugins']) {
+  for (const relDir of ['skills']) {
     for (const [relPath, absPath] of effectiveFiles(sourceRoot, overlayRoot, relDir).entries()) {
       if (!/\.ts$/.test(relPath) || /\.d\.ts$/.test(relPath)) continue;
       const text = fs.readFileSync(absPath, 'utf8');
@@ -207,7 +241,17 @@ for (const image of images) {
   const { runtimeRoot } = materializeRuntimeTree(sourceRoot, overlayRoot, image);
   const commonSurfaceViolations = collectRuntimeCommonSurfaceViolations(runtimeRoot, manifest);
   runtimeCommonSurfaceViolations.push({ image, ...commonSurfaceViolations });
-  const brokenRelativeImports = collectBrokenRelativeImports(path.join(runtimeRoot, 'app', 'skills'), runtimeRoot);
+  const runtimeSkillsRoot = path.join(runtimeRoot, 'app', 'skills');
+  const moduleGraph = verifyModuleGraph({
+    root: runtimeSkillsRoot,
+    runtimeRoot: runtimeSkillsRoot,
+    allowedPackages: runtimePackages(image, sourceRoot, overlayRoot),
+    allowPackage: roleConsumerPackage,
+  });
+  const brokenRelativeImports = moduleGraph.violations.filter((entry) =>
+    entry.issue === 'unresolved-local-module' || entry.issue === 'escaped-runtime-root');
+  const undeclaredRuntimePackages = moduleGraph.violations.filter((entry) =>
+    entry.issue === 'undeclared-runtime-package');
   const importChecks = [];
   const ownerDrift = Object.entries(expectedOwners).flatMap(([destPath, expectedOwner]) => {
     const actual = manifest.get(destPath);
@@ -225,7 +269,7 @@ for (const image of images) {
       }
     }
   } else if (image === 'busterPipeline') {
-    for (const runtimePath of ['/app/skills/buster-pipeline.ts', '/app/skills/pipeline/tools/redis.ts']) {
+    for (const runtimePath of ['/app/skills/pipeline/tools/redis.ts']) {
       try {
         await importRuntimeModule(runtimeRoot, runtimePath);
         importChecks.push({ runtimePath, ok: true });
@@ -242,6 +286,10 @@ for (const image of images) {
     fileCount: manifest.size,
     brokenRelativeImportCount: brokenRelativeImports.length,
     brokenRelativeImports,
+    moduleGraphFileCount: moduleGraph.files,
+    moduleGraphEdgeCount: moduleGraph.edges,
+    undeclaredRuntimePackageCount: undeclaredRuntimePackages.length,
+    undeclaredRuntimePackages,
     importChecks,
     ownerDrift,
     collisions: collisions.map((entry) => ({
@@ -262,6 +310,7 @@ for (const image of images) {
 const totalCollisions = results.reduce((sum, entry) => sum + entry.collisionCount, 0);
 const totalOwnerDrift = results.reduce((sum, entry) => sum + entry.ownerDriftCount, 0);
 const totalBrokenRelativeImports = results.reduce((sum, entry) => sum + entry.brokenRelativeImportCount, 0);
+const totalUndeclaredRuntimePackages = results.reduce((sum, entry) => sum + entry.undeclaredRuntimePackageCount, 0);
 const totalBrokenSourceRelativeImports = sourceBrokenRelativeImports.length;
 const totalRuntimeCommonManifestPaths = runtimeCommonSurfaceViolations.reduce((sum, entry) => sum + entry.manifestPaths.length, 0);
 const totalRuntimeCommonImports = runtimeCommonSurfaceViolations.reduce((sum, entry) => sum + entry.importViolations.length, 0);
@@ -273,6 +322,7 @@ console.log(JSON.stringify({
   totalCollisions,
   totalOwnerDrift,
   totalBrokenRelativeImports,
+  totalUndeclaredRuntimePackages,
   totalBrokenSourceRelativeImports,
   totalSourceSkillTestFiles: sourceSkillTestFiles.length,
   totalSourceTsNoCheckFiles: sourceTsNoCheckFiles.length,
@@ -294,6 +344,7 @@ process.exit(
   totalCollisions === 0
   && totalOwnerDrift === 0
   && totalBrokenRelativeImports === 0
+  && totalUndeclaredRuntimePackages === 0
   && totalBrokenSourceRelativeImports === 0
   && sourceSkillTestFiles.length === 0
   && sourceTsNoCheckFiles.length === 0

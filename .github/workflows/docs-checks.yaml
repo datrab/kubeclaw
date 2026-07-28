@@ -15,7 +15,6 @@ on:
       - 'docker/**'
       - 'tests/**'
       - 'skills/**'
-      - 'plugins/**'
   push:
     branches: [main]
     paths:
@@ -31,7 +30,6 @@ on:
       - 'docker/**'
       - 'tests/**'
       - 'skills/**'
-      - 'plugins/**'
   workflow_dispatch:
 
 permissions:

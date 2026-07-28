@@ -1,0 +1,1 @@
+{"id":"kubeclaw.runtime-dispatch","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"runtime","module":"dist/adapter.js","export":"activate","providesCapabilities":["runtime.dispatch"],"requiredCapabilities":["network.http","secrets.read"],"configSchema":"schemas/config.schema.json"}]}

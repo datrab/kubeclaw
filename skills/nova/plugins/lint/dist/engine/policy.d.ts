@@ -1,0 +1,11 @@
+import { LintPolicyError } from './policy-validation.js';
+declare const LINT_POLICY_SCHEMA_VERSION = "pipeline_lint_policy.v6";
+declare function validateLintPolicy(input: unknown, policyPath: string, options?: Record<string, any>): Record<string, any>;
+declare function loadLintPolicy(policyPath: string): Record<string, any>;
+declare function selectPolicyProject(policy: Record<string, any>, projectId: string): Record<string, any>;
+declare function policyDigest(policy: Record<string, any>): string;
+declare function matchesPolicyPattern(file: string, pattern: string): boolean;
+declare function policyIncludesFile(file: string, tool: Record<string, any>, globalExclusions: string[]): boolean;
+declare function validatePolicyTargetPaths(repoRoot: string, policy: Record<string, any>, project: Record<string, any>): void;
+declare function applicablePolicyToolIds(policy: Record<string, any>, projectTypes: Set<string>, tier: string, options?: Record<string, any>): string[];
+export { LINT_POLICY_SCHEMA_VERSION, LintPolicyError, applicablePolicyToolIds, loadLintPolicy, matchesPolicyPattern, policyDigest, policyIncludesFile, selectPolicyProject, validateLintPolicy, validatePolicyTargetPaths };

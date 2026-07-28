@@ -80,8 +80,8 @@ function parseStatusText(statusText: string, detail: string | null, statusResult
   return parsedSessionState(false, `status_unparsed (${statusText.slice(0, 80)})`, detail, statusResult);
 }
 
-export function parseSessionState(statusResult: any) {
-  if (!statusResult) return { active: false, state: 'status_missing' };
+export function parseSessionState(statusResult: any): { active: boolean; state: string; detail: string | null; rateLimited: boolean } {
+  if (!statusResult) return { active: false, state: 'status_missing', detail: null, rateLimited: false };
 
   const detail = statusDetail(statusResult);
   const acpState = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (statusResult?.acp?.state), () => (statusResult?.state))), () => (statusResult?.status))), () => (null));

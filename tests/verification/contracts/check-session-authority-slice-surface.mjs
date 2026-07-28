@@ -19,7 +19,10 @@ const busterRecoveryPath = path.join(sourceRoot, 'skills/buster/pipeline/service
 
 const sessionAuthoritySource = fs.readFileSync(sessionAuthorityPath, 'utf8');
 const correlationSource = fs.readFileSync(correlationPath, 'utf8');
-const statusStoreSource = fs.readFileSync(statusStorePath, 'utf8');
+const statusStoreSource = [
+  fs.readFileSync(statusStorePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/status-store-projection.ts'), 'utf8'),
+].join('\n');
 const statusCompatSource = `${fs.readFileSync(statusCompatPath, 'utf8')}\n${fs.readFileSync(statusCompatModulePath, 'utf8')}`;
 const lifecycleSource = fs.readFileSync(lifecyclePath, 'utf8');
 const busterSource = `${fs.readFileSync(busterPipelinePath, 'utf8')}\n${fs.readFileSync(busterRecoveryPath, 'utf8')}`;
@@ -47,11 +50,11 @@ assert.equal(busterSource.includes('active_session_file_diagnostic_only'), true,
 assert.equal(busterSource.includes('allow_evidence_hydration: false'), true, 'Buster startup diagnostic policy must prohibit hydration');
 assert.equal(sessionAuthoritySource.includes('lifecycle_active_session_identity_incomplete'), false, 'module lifecycle weak-evidence guard should be deleted after removing weak producers');
 assert.equal(statusStoreSource.includes('const activeStatusSessionKey = activeAgent?.session_key'), false, 'status-store must not produce lifecycle active-session read models from session-only evidence');
-assert.equal(statusStoreSource.includes('readModels.active_sessions.modules[moduleId] = activeSessionProjection'), true, 'status-store should keep module active-session read-model projection explicit');
-assert.equal(statusStoreSource.includes('buildStrongModuleActiveSessionProjection'), true, 'status-store should centralize lifecycle active-session projection hardening');
+assert.equal(statusStoreSource.includes('readModels.active_sessions.modules[moduleId] = projection'), true, 'status-store should keep module active-session read-model projection explicit');
+assert.equal(statusStoreSource.includes('function activeSessionProjection('), true, 'status-store should centralize lifecycle active-session projection hardening');
 assert.equal(statusStoreSource.includes('hasStrongActiveSessionIdentity(identity)'), true, 'module active-session read models must only be emitted with complete identity');
 assert.equal(
-  statusStoreSource.includes('session_key: selectTruthyValue(() => (activeAgent?.session_key), () => (null))'),
+  statusStoreSource.includes('session_key: firstTruthy(activeAgent.session_key)'),
   true,
   'module active-session identity must read session_key from typed active_agent evidence',
 );

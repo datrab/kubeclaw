@@ -1,0 +1,1 @@
+{"id":"kubeclaw.wait-store","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"waits","module":"dist/adapter.js","export":"activate","providesCapabilities":["signal.wait"],"requiredCapabilities":[],"configSchema":"schemas/config.schema.json"}]}

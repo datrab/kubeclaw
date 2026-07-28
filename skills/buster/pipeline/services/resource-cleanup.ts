@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
 import { buildSubprocessEnv } from '../security.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 type Payload = Record<string, any>;
 type CleanupState = { leases: string[] };

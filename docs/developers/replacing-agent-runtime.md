@@ -99,7 +99,7 @@ Recommended sequence:
 - `skills/nova/pipeline/runners/module-runner.ts`
 - `skills/nova/pipeline/runners/pipeline-runner.ts`
 - `skills/common/pipeline/services/acp-gateway-contract.ts`
-- `plugins/openclaw-agent-observer/`
+- `skills/common/plugins/openclaw-agent-observer/`
 
 ## Runtime Replacement Contract
 

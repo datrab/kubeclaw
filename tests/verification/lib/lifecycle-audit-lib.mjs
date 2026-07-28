@@ -11,7 +11,9 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/agents/session-semantics.ts',
   'pipeline/agents/session-termination.ts',
   'pipeline/agents/tracked-agents.ts',
+  'pipeline/agents/session-handoff.ts',
   'pipeline/agent-observability/src/index.ts',
+  'pipeline/completion.ts',
   'pipeline/integrations/discord-webhook.ts',
   'pipeline/integrations/gateway.ts',
   'pipeline/integrations/git-worktree.ts',
@@ -19,9 +21,14 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/git-primitives.ts',
   'pipeline/lifecycle-state.ts',
   'pipeline/noncritical-reporting.ts',
+  'pipeline/observability-contract.ts',
+  'pipeline/optional-absence.ts',
   'pipeline/platform-config.ts',
+  'pipeline/portable-artifacts.ts',
   'pipeline/egress.ts',
   'pipeline/redis-transport.ts',
+  'pipeline/run-discovery.ts',
+  'pipeline/runtime-state-paths.ts',
   'pipeline/scheduler.ts',
   'pipeline/security.ts',
   'pipeline/services/acp-gateway-contract.ts',
@@ -37,6 +44,7 @@ export const SHARED_PIPELINE_HELPER_PATHS = [
   'pipeline/services/telemetry/payload-schema.ts',
   'pipeline/telemetry.ts',
   'pipeline/timing.ts',
+  'pipeline/value-boundary.ts',
 ];
 
 export const DEFAULT_TELEMETRY_CONTRACT_REL_PATH = 'docs/lifecycle-unification/TELEMETRY_CONTRACT_V1.md';
@@ -52,6 +60,8 @@ export function expectedPackagedRuntimeOwners(image) {
   if (image === 'busterPipeline') {
     owners['/app/skills/pipeline/tools/redis.ts'] = 'skills/buster/pipeline/tools/redis.ts';
   }
+  owners['/app/skills/pipeline/agent-observability/src/index.ts'] =
+    'contracts/agent-observability/v1/src/index.ts';
 
   return owners;
 }
@@ -147,14 +157,15 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   const requiredGeneral = [
     'sudo curl git openssh-client jq',
     'RUN mkdir -p /app/skills',
-    'node /opt/kubeclaw-tools/node_modules/typescript/bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json',
+    './node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json',
     'mkdir -p /app/dist/extensions/kubeclaw-agent-observer',
     'cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/',
   ];
   const requiredBusterPipeline = [
     'FROM moby/buildkit:rootless AS buildkit',
     'npm install --prefix /app --no-audit --no-fund',
-    'ioredis@5.11.1 js-yaml@5.2.2 uuid@14.0.1 typescript@5.9.3 eslint@10.7.0',
+    'ajv@8.20.0 ajv-formats@3.0.1 ioredis@5.11.1 js-yaml@5.2.2 uuid@14.0.1 typescript@5.9.3 eslint@10.7.0',
+    'pixelmatch@7.2.0 pngjs@7.0.0 ws@8.21.1',
     'XDG_RUNTIME_DIR=/run/user/1000',
     'USER 1000:1000',
     'ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-pipeline-entrypoint"]',
@@ -182,7 +193,8 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
     if (dockerfile.includes('/app/common')) {
       throw new Error(`${relPath} must not materialize shared pipeline helpers under /app/common`);
     }
-    if (dockerfile.includes('COPY skills/')) {
+    const nonBundlePluginSource = 'COPY skills/common/plugins/openclaw-agent-observer/';
+    if (dockerfile.replaceAll(nonBundlePluginSource, '').includes('COPY skills/')) {
       throw new Error(`${relPath} must not bake fast-changing agent skills; use code bundles for /app/skills`);
     }
   }
@@ -190,14 +202,92 @@ export function loadPackagingRules(sourceRoot, overlayRoot) {
   return {
     general: {
       layers: [
-        { sourceDir: 'skills/nova', destDir: '/app/skills', excludes: new Set() },
-        { sourceDir: 'skills/common', destDir: '/app/skills', excludes: new Set() },
+        {
+          sourceDir: 'skills/nova',
+          destDir: '/app/skills',
+          excludes: new Set(),
+          excludePrefixes: [
+            'pipeline/agent-observability/src/',
+            'plugins/openclaw-agent-observer/src/agent-observability/',
+          ],
+          excludePatterns: [/^plugins\/[^/]+\/tests\//],
+        },
+        {
+          sourceDir: 'skills/common',
+          destDir: '/app/skills',
+          excludes: new Set(),
+          excludePrefixes: [
+            'pipeline/agent-observability/src/',
+            'plugins/openclaw-agent-observer/src/agent-observability/',
+          ],
+          excludePatterns: [/^plugins\/[^/]+\/tests\//],
+        },
+        {
+          sourceDir: 'contracts/agent-observability/v1/src',
+          destDir: '/app/skills/pipeline/agent-observability/src',
+          excludes: new Set(),
+          excludePrefixes: [],
+          excludePatterns: [],
+        },
+        {
+          sourceDir: 'contracts/agent-observability/v1/src',
+          destDir: '/app/skills/plugins/openclaw-agent-observer/src/agent-observability',
+          excludes: new Set(),
+          excludePrefixes: [],
+          excludePatterns: [],
+        },
+        {
+          sourceDir: 'contracts/telemetry/v1',
+          destDir: '/app/skills/pipeline/contracts/telemetry/v1',
+          excludes: new Set(),
+          excludePrefixes: [],
+          excludePatterns: [],
+        },
       ],
     },
     busterPipeline: {
       layers: [
-        { sourceDir: 'skills/buster', destDir: '/app/skills', excludes: new Set() },
-        { sourceDir: 'skills/common', destDir: '/app/skills', excludes: new Set() },
+        {
+          sourceDir: 'skills/buster',
+          destDir: '/app/skills',
+          excludes: new Set(),
+          excludePrefixes: [
+            'pipeline/agent-observability/src/',
+            'plugins/openclaw-agent-observer/src/agent-observability/',
+          ],
+          excludePatterns: [/^plugins\/[^/]+\/tests\//],
+        },
+        {
+          sourceDir: 'skills/common',
+          destDir: '/app/skills',
+          excludes: new Set(),
+          excludePrefixes: [
+            'pipeline/agent-observability/src/',
+            'plugins/openclaw-agent-observer/src/agent-observability/',
+          ],
+          excludePatterns: [/^plugins\/[^/]+\/tests\//],
+        },
+        {
+          sourceDir: 'contracts/agent-observability/v1/src',
+          destDir: '/app/skills/pipeline/agent-observability/src',
+          excludes: new Set(),
+          excludePrefixes: [],
+          excludePatterns: [],
+        },
+        {
+          sourceDir: 'contracts/agent-observability/v1/src',
+          destDir: '/app/skills/plugins/openclaw-agent-observer/src/agent-observability',
+          excludes: new Set(),
+          excludePrefixes: [],
+          excludePatterns: [],
+        },
+        {
+          sourceDir: 'contracts/telemetry/v1',
+          destDir: '/app/skills/pipeline/contracts/telemetry/v1',
+          excludes: new Set(),
+          excludePrefixes: [],
+          excludePatterns: [],
+        },
       ],
     },
   };
@@ -215,6 +305,8 @@ export function buildManifest(sourceRoot, overlayRoot, image) {
     const files = effectiveFiles(sourceRoot, overlayRoot, layer.sourceDir);
     for (const [relPath, absPath] of files.entries()) {
       if (layer.excludes.has(relPath)) continue;
+      if (layer.excludePrefixes.some((prefix) => relPath.startsWith(prefix))) continue;
+      if (layer.excludePatterns.some((pattern) => pattern.test(relPath))) continue;
       const destPath = path.posix.join(layer.destDir, relPath.replace(/\\/g, '/'));
       const owner = {
         sourceDir: layer.sourceDir,

@@ -21,13 +21,11 @@ import { loadBusterPlatformConfig } from './runtime-policy.ts';
 import { assertTelemetryEventPayload, buildPluginTelemetryPayload } from './telemetry/payload-schema.ts';
 import { appendPipelineArtifactEvent, appendQuarantinedEvent, buildTelemetryEnvelope as buildEnvelope } from './telemetry-artifacts.ts';
 import { errorMessage, reportBusterTelemetryIncident } from './telemetry-incidents.ts';
+import { asBusterTelemetryContext } from './telemetry-contracts.ts';
 import type { BusterTelemetryContext, ContextOverrides, RedisClient, TelemetryHealth, TelemetryIdentity, TelemetryOptions, TelemetryRecord as AnyRecord } from './telemetry-contracts.ts';
 export type { BusterTelemetryContext } from './telemetry-contracts.ts';
 
 interface ErrorLike { message?: string; validationErrors?: unknown[] }
-function asTelemetryContext(ctx: unknown): BusterTelemetryContext | null {
-  return ctx && typeof ctx === 'object' ? ctx as BusterTelemetryContext : null;
-}
 
 function resolveTelemetryStreamMaxLen(opts: TelemetryOptions = {}): number {
   if (opts.streamMaxLen !== undefined) {
@@ -287,7 +285,7 @@ export function createTelemetryContext(opts: TelemetryOptions = {}): BusterTelem
  * @param {object} data
  */
 export async function emitEvent(ctx: unknown, type: string, data: AnyRecord = {}): Promise<AnyRecord | void> {
-  const telemetryCtx = asTelemetryContext(ctx);
+  const telemetryCtx = asBusterTelemetryContext(ctx);
   if (!telemetryCtx || !type) return;
   if (telemetryCtx._health.redis.disabled) return;
   try {
@@ -328,7 +326,7 @@ export function emitPluginEvent(ctx: unknown, pluginEvent: string, data: AnyReco
 }
 
 export async function closeTelemetry(ctx: unknown): Promise<void> {
-  const telemetryCtx = asTelemetryContext(ctx);
+  const telemetryCtx = asBusterTelemetryContext(ctx);
   if (!telemetryCtx || !telemetryCtx.redis) return;
   try {
     await telemetryCtx.redis.quit();

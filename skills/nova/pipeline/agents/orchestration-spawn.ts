@@ -28,14 +28,14 @@ function createSpawnContext(
 ): AnyRecord {
   const agentConfig = config.agents[agentType];
   const resolvedModel = requiredCanonicalModelId(model, `Agent '${agentType}' model`);
-  const trackingKey = opts.trackingLabel || acpLabel(agentType, moduleId);
+  const trackingKey = selectTruthyValue(() => opts.trackingLabel, () => acpLabel(agentType, moduleId));
   const dispatchTs = Date.now();
   const gatewayLabel = `${trackingKey}-${dispatchTs}`;
   const runId = selectTruthyValue(
     () => (opts.run_id),
     () => (selectTruthyValue(() => (config?._runId), () => (selectTruthyValue(() => (config?.run_id), () => (null))))),
   );
-  const dispatchId = opts.dispatch_id || `${trackingKey}-dispatch-${dispatchTs}`;
+  const dispatchId = selectTruthyValue(() => opts.dispatch_id, () => `${trackingKey}-dispatch-${dispatchTs}`);
   const runtime = agentConfig.dispatch === 'acp' ? 'acp' : resolveRuntime({ model: resolvedModel });
   const context: AnyRecord = {
     config,

@@ -1,8 +1,5 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { AsyncLocalStorage } from 'async_hooks';
 import { sanitizeJsonEgress } from '../egress.ts';
 import { emitPipelineLogAppendWarning } from '../services/system-io-warning.ts';
@@ -10,15 +7,16 @@ import { emitPipelineLogAppendWarning } from '../services/system-io-warning.ts';
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type PipelineLogContext = {
   runId?: string;
-  config?: Record<string, unknown>;
+  config?: Record<string, unknown> | null;
   pluginRegistry?: unknown;
-  stats: { errors: Array<Record<string, unknown>> };
-  _pipelineLogFd?: { path?: string } | null;
-  _runPipelineLogFd?: { path?: string } | null;
+  runtimeOverrides?: unknown;
+  stats?: Record<string, any>;
+  _pipelineLogFd?: { path?: string | Buffer } | null;
+  _runPipelineLogFd?: { path?: string | Buffer } | null;
   _pipelineLogPath?: string | null;
   _runPipelineLogPath?: string | null;
-  _logFd?: { path?: string } | null;
-  _runLogFd?: { path?: string } | null;
+  _logFd?: { path?: string | Buffer } | null;
+  _runLogFd?: { path?: string | Buffer } | null;
   _logModule?: string | null;
   _logPhase?: string | null;
   _runtimeLogSequence?: number;
@@ -71,29 +69,7 @@ function writeEntry(ctx: PipelineLogContext, entry: LogEntry) {
       });
     }
   }
-  if (ctx._runPipelineLogPath) {
-    const runtimeLogPath = path.join(path.dirname(ctx._runPipelineLogPath), 'runtime-logs.jsonl');
-    const runtimeEntry = {
-      schema_version: 'runtime_log.v1',
-      timestamp: safeEntry.timestamp,
-      level: safeEntry.level,
-      component: safeEntry.component,
-      message: safeEntry.message,
-      project: typeof ctx.config?.project === 'string' ? ctx.config.project : null,
-      run_id: ctx.runId ?? null,
-      work_id: safeEntry.work_id ?? null,
-      error_class: null,
-      reason_code: null,
-    };
-    try {
-      fs.appendFileSync(runtimeLogPath, JSON.stringify(runtimeEntry) + '\n');
-    } catch (error: any) {
-      emitPipelineLogAppendWarning(ctx.config, runtimeLogPath, error, {
-        module_id: selectDefinedValue(() => (safeEntry.work_id), () => (ctx._logModule)),
-        path_role: 'run_runtime_logs_jsonl',
-      });
-    }
-  }
+  appendRuntimeLogEntry(ctx, safeEntry);
   const emitCanonical = ctx.config?._emitCanonicalEvidence;
   if (typeof emitCanonical === 'function') {
     ctx._runtimeLogSequence = (ctx._runtimeLogSequence ?? 0) + 1;
@@ -105,6 +81,31 @@ function writeEntry(ctx: PipelineLogContext, entry: LogEntry) {
       error_class: null,
       reason_code: null,
     }, { sourceEventId: `runtime-log/${safeEntry.timestamp}/${safeEntry.component}/${safeEntry.work_id ?? 'run'}/${ctx._runtimeLogSequence}` }));
+  }
+}
+
+function appendRuntimeLogEntry(ctx: PipelineLogContext, entry: LogEntry): void {
+  if (!ctx._runPipelineLogPath) return;
+  const runtimeLogPath = path.join(path.dirname(ctx._runPipelineLogPath), 'runtime-logs.jsonl');
+  const runtimeEntry = {
+    schema_version: 'runtime_log.v1',
+    timestamp: entry.timestamp,
+    level: entry.level,
+    component: entry.component,
+    message: entry.message,
+    project: typeof ctx.config?.project === 'string' ? ctx.config.project : null,
+    run_id: ctx.runId ?? null,
+    work_id: entry.work_id ?? null,
+    error_class: null,
+    reason_code: null,
+  };
+  try {
+    fs.appendFileSync(runtimeLogPath, JSON.stringify(runtimeEntry) + '\n');
+  } catch (error: any) {
+    emitPipelineLogAppendWarning(ctx.config, runtimeLogPath, error, {
+      module_id: entry.work_id ?? ctx._logModule,
+      path_role: 'run_runtime_logs_jsonl',
+    });
   }
 }
 
@@ -138,8 +139,9 @@ function emitScopedLogEntry(ctx: PipelineLogContext, level: string, msg: string,
   const safeEntry = sanitizeJsonEgress(buildScopedLogEntry(ctx, level, msg, data), 'log_entry') as LogEntry;
   console.error(JSON.stringify(safeEntry));
   writeEntry(ctx, safeEntry);
-  if (level === 'ERROR' && ctx.stats.errors.length < 50) {
-    ctx.stats.errors.push({ timestamp: safeEntry.timestamp, message: safeEntry.message, ...(ctx._logModule && { work_id: ctx._logModule }) });
+  const errors = Array.isArray(ctx.stats?.errors) ? ctx.stats.errors : null;
+  if (level === 'ERROR' && errors && errors.length < 50) {
+    errors.push({ timestamp: safeEntry.timestamp, message: safeEntry.message, ...(ctx._logModule && { work_id: ctx._logModule }) });
   }
 }
 

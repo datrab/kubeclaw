@@ -5,7 +5,7 @@ import { emitEvent } from '../services/telemetry.ts';
 import { createRunnerVerdict } from '../services/verdict-schema.ts';
 import type { SuiteVerdict } from '../services/verdict-schema.ts';
 import { writeBusterRuntimeLog } from '../services/logger.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 export const RESULTS_DIR = readBusterEnvironment('BUSTER_RESULTS_DIR') ?? '/home/builder/.openclaw/results';
 

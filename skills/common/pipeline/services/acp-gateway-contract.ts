@@ -13,10 +13,6 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
-function isFiniteNumber(value: unknown): boolean {
-  return typeof value === 'number' && Number.isFinite(value);
-}
-
 function isNonNegativeInteger(value: unknown): boolean {
   return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0;
 }
@@ -43,11 +39,13 @@ function assertNoErrors(errors: string[], label: string): void {
   }
 }
 
-function normalizeGatewayRawValue(value: unknown): string | null {
-  if (value === undefined) return null;
-  if (typeof value === 'string') return value;
-  return JSON.stringify(value);
-}
+export {
+  assertValidGatewayInvokeResult,
+  buildGatewayInvokeHttpError,
+  normalizeGatewayInvokeResult,
+  validateGatewayInvokeError,
+  validateGatewayInvokeResult,
+} from './gateway-invoke-contract.ts';
 
 export function validateAcpTranscriptState(state: unknown = {}): string[] {
   const errors: string[] = [];
@@ -181,6 +179,22 @@ function arraysEqual(left: unknown, right: unknown): boolean {
     && left.every((value, index) => value === right[index]);
 }
 
+function validateTranscriptDeltaConsistency(
+  payload: Record<string, unknown>,
+  errors: string[],
+): void {
+  if (!isPlainObject(payload.transcript)) return;
+  if (!arraysEqual(payload.new_lines, payload.transcript.newLines)) {
+    errors.push('new_lines must equal transcript.newLines');
+  }
+  if (payload.transcript_offset !== null && payload.transcript.offset !== payload.transcript_offset) {
+    errors.push('transcript_offset must equal transcript.offset when present');
+  }
+  if (payload.byte_offset !== null && payload.transcript.byteOffset !== payload.byte_offset) {
+    errors.push('byte_offset must equal transcript.byteOffset when present');
+  }
+}
+
 export function validateAcpTranscriptDeltaEventPayload(payload: unknown = {}): string[] {
   const errors: string[] = [];
   if (!isPlainObject(payload)) return ['transcript delta payload must be an object'];
@@ -208,17 +222,7 @@ export function validateAcpTranscriptDeltaEventPayload(payload: unknown = {}): s
   if (Array.isArray(payload.new_lines) && Number.isSafeInteger(payload.line_count) && payload.line_count !== payload.new_lines.length) {
     errors.push('line_count must equal new_lines.length');
   }
-  if (isPlainObject(payload.transcript)) {
-    if (!arraysEqual(payload.new_lines, payload.transcript.newLines)) {
-      errors.push('new_lines must equal transcript.newLines');
-    }
-    if (payload.transcript_offset !== null && payload.transcript?.offset !== payload.transcript_offset) {
-      errors.push('transcript_offset must equal transcript.offset when present');
-    }
-    if (payload.byte_offset !== null && payload.transcript?.byteOffset !== payload.byte_offset) {
-      errors.push('byte_offset must equal transcript.byteOffset when present');
-    }
-  }
+  validateTranscriptDeltaConsistency(payload, errors);
 
   return errors;
 }
@@ -314,40 +318,4 @@ export interface SessionTerminationResult {
 export function assertValidSessionTerminationResult(result: unknown, label = 'session termination result'): SessionTerminationResult {
   assertNoErrors(validateSessionTerminationResult(result), label);
   return result as SessionTerminationResult;
-}
-
-export function normalizeGatewayInvokeResult(value: unknown): UnknownRecord {
-  if (isPlainObject(value)) return value;
-  return { raw: normalizeGatewayRawValue(value) };
-}
-
-export function validateGatewayInvokeResult(result: unknown = {}): string[] {
-  if (!isPlainObject(result)) return ['gateway invoke result must be an object'];
-  if (result.raw !== undefined && typeof result.raw !== 'string' && result.raw !== null) {
-    return ['raw must be a string or null when present'];
-  }
-  return [];
-}
-
-export function assertValidGatewayInvokeResult(result: unknown, label = 'gateway invoke result'): unknown {
-  assertNoErrors(validateGatewayInvokeResult(result), label);
-  return result;
-}
-
-export function buildGatewayInvokeHttpError(tool: string, status: number, statusText: string, bodyText: unknown): Error & { httpStatus: number; httpBody: string | null } {
-  const err = new Error(`Gateway ${tool} failed: ${status} ${statusText}`) as Error & { httpStatus: number; httpBody: string | null };
-  err.httpStatus = status;
-  err.httpBody = typeof bodyText === 'string' ? bodyText : normalizeGatewayRawValue(bodyText);
-  return err;
-}
-
-export function validateGatewayInvokeError(error: any = {}): string[] {
-  const errors: string[] = [];
-  if (selectTruthyValue(() => (!error), () => (typeof error !== 'object'))) return ['gateway invoke error must be an object'];
-  if (!isNonEmptyString(error.message)) errors.push('message must be a non-empty string');
-  if (error.httpStatus !== undefined && !isFiniteNumber(error.httpStatus)) errors.push('httpStatus must be a number when present');
-  if (error.httpBody !== undefined && typeof error.httpBody !== 'string' && error.httpBody !== null) {
-    errors.push('httpBody must be a string or null when present');
-  }
-  return errors;
 }

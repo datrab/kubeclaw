@@ -7,6 +7,7 @@ import { makePromptResult, quoteShellArg, buildGitSyncSection, buildAvailableToo
 
 export function readGateInstructions(config: any, gate: any) {
   const p = gateInstructionsPath(config, gate);
+  if (!p) throw new Error('Gate instructions path is required');
   if (!fs.existsSync(p)) throw new Error(`Gate instructions not found: ${p}`);
   return fs.readFileSync(p, 'utf8');
 }
@@ -38,7 +39,9 @@ export function buildBusterGatePrompt(config: any, gateId: any, gate: any, instr
   const availableTools = buildAvailableToolsSection();
 
   // ── Test Workspace ──
-  const gateDir = gate.output_file ? path.dirname(gateOutputPath(config, gate)) : resolveSwarmArtifactPath(config, gateId, 'gate test workspace root');
+  const outputPath = gate.output_file ? gateOutputPath(config, gate) : null;
+  if (gate.output_file && !outputPath) throw new Error('Gate output path is required');
+  const gateDir = outputPath ? path.dirname(outputPath) : resolveSwarmArtifactPath(config, gateId, 'gate test workspace root');
   const testWorkspacePath = relPath(config, path.join(gateDir, 'tests', `attempt-${attempt}`));
   const testWorkspace = buildTestWorkspaceSection(testWorkspacePath);
 

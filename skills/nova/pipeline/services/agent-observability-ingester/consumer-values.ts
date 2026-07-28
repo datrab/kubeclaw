@@ -25,7 +25,7 @@ export function emitFailureError(result: unknown): string | null {
   return null;
 }
 
-export function redisFieldValue(value: unknown): string {
+function redisFieldValue(value: unknown): string {
   return selectTruthyValue(() => (value === undefined), () => (value === null)) ? '' : String(value);
 }
 
@@ -44,7 +44,7 @@ export function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: 
   });
 }
 
-export function streamEntryFromRedis(stream: AgentObservabilityStreamKey, entry: unknown, reclaimed: boolean): StreamEntry | null {
+function streamEntryFromRedis(stream: AgentObservabilityStreamKey, entry: unknown, reclaimed: boolean): StreamEntry | null {
   if (!Array.isArray(entry)) return null;
   if (entry.length < 2) return null;
   if (typeof entry[0] !== 'string') return null;
@@ -97,7 +97,7 @@ export function rawDataForDeadLetter(data: string | undefined): string | null {
   return data.length > 4096 ? `${data.slice(0, 4096)}...[truncated]` : data;
 }
 
-export function isAgentObservabilityStreamKey(stream: unknown): stream is AgentObservabilityStreamKey {
+function isAgentObservabilityStreamKey(stream: unknown): stream is AgentObservabilityStreamKey {
   return selectTruthyValue(() => (stream === AGENT_OBSERVABILITY_CONTROL_STREAM), () => (stream === AGENT_OBSERVABILITY_PAYLOAD_STREAM));
 }
 

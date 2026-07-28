@@ -17,8 +17,14 @@ const gateFixScaffoldPath = path.join(sourceRoot, 'skills/nova/pipeline/services
 
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 const reviewSource = fs.readFileSync(reviewPath, 'utf8');
-const reviewTaskSource = fs.readFileSync(reviewTaskPath, 'utf8');
-const busterSource = fs.readFileSync(busterPath, 'utf8');
+const reviewTaskSource = [
+  fs.readFileSync(reviewTaskPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/review-gate-reviewer-session.ts'), 'utf8'),
+].join('\n');
+const busterSource = [
+  fs.readFileSync(busterPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-attempt.ts'), 'utf8'),
+].join('\n');
 const gateFixScaffoldSource = fs.readFileSync(gateFixScaffoldPath, 'utf8');
 
 assert.equal(helperSource.includes('export function persistGateActiveSession('), true, 'shared gate active-session helper should export persistGateActiveSession');

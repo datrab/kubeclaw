@@ -123,6 +123,12 @@ function validatePolicyEvidence(value: AnyRecord, expected: AnyRecord): AnyRecor
     requireString(toolId, 'report.policy.config_digests key');
     requireString(digest, `report.policy.config_digests.${toolId}`);
   }
+  const effectiveTargets = requireRecord(policy.effective_targets, 'report.policy.effective_targets');
+  for (const [toolId, targets] of Object.entries(effectiveTargets)) {
+    requireString(toolId, 'report.policy.effective_targets key');
+    if (!Array.isArray(targets) || targets.length === 0) fail(`report.policy.effective_targets.${toolId}`, 'required non-empty array');
+    targets.forEach((target, index) => requireString(target, `report.policy.effective_targets.${toolId}[${index}]`));
+  }
   validateExpectedPolicy(policy, configDigests, expected);
   return policy;
 }

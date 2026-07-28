@@ -249,12 +249,16 @@ export async function main(): Promise<void> {
         detail: e,
       });
       console.error('[LOOP]', safeErrorMessage(e));
-      try {
-        await sleep(BUSTER_RUNTIME_LOOP_POLICY.errorBackoffMs, { signal: busterRuntimeState.loopAbort.signal });
-      } catch (sleepError: unknown) {
-        if (!busterRuntimeState.shuttingDown) throw sleepError;
-      }
+      await waitAfterTaskLoopFailure();
     }
+  }
+}
+
+async function waitAfterTaskLoopFailure(): Promise<void> {
+  try {
+    await sleep(BUSTER_RUNTIME_LOOP_POLICY.errorBackoffMs, { signal: busterRuntimeState.loopAbort.signal });
+  } catch (error: unknown) {
+    if (!busterRuntimeState.shuttingDown) throw error;
   }
 }
 

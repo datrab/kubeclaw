@@ -80,7 +80,6 @@ function activeAgentCallbacks(context: AnyRecord, execution: AnyRecord) {
       clearModuleActiveAgent(context.status);
       deps.saveStatus(config, dir, context.status);
     },
-    executionContext: execution,
   };
 }
 

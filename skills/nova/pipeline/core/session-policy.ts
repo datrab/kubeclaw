@@ -98,3 +98,11 @@ export function sessionLifecyclePolicies(config: AnyRecord): AnyRecord {
 export function gatewayInvokePolicy(config: AnyRecord, key: string): AnyRecord {
   return invokePolicy(config, key);
 }
+
+export function sessionStatusGatewayPolicy(config: AnyRecord): AnyRecord {
+  return invokePolicy(config, 'session_status');
+}
+
+export function sessionSendGatewayPolicy(config: AnyRecord): AnyRecord {
+  return invokePolicy(config, 'session_send');
+}

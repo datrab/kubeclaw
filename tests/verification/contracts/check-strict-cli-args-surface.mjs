@@ -113,7 +113,15 @@ const migratedCliFiles = [
   'skills/buster/pipeline/tools/screenshot.ts',
 ];
 for (const relativePath of migratedCliFiles) {
-  const source = fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8');
+  const source = [
+    fs.readFileSync(path.join(sourceRoot, relativePath), 'utf8'),
+    ...(relativePath === 'skills/nova/pipeline/tools/project-summary.ts'
+      ? [fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/tools/project-summary-runner.ts'), 'utf8')]
+      : []),
+    ...(relativePath === 'skills/buster/pipeline/tools/screenshot.ts'
+      ? [fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/tools/screenshot-cli.ts'), 'utf8')]
+      : []),
+  ].join('\n');
   assert.equal(source.includes('parseCliArgs') || source.includes('parseCliFlagValues'), true, `${relativePath} should use the shared strict CLI parser`);
   assert.equal(/args\.indexOf\(['"`]--/.test(source), false, `${relativePath} should not keep manual args.indexOf('--...') parsing`);
 }

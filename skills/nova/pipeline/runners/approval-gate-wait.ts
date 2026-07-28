@@ -86,4 +86,3 @@ export async function waitForApprovalSignalFlow({ config, gateId, gate, state, p
     adapter.stop?.('approval_wait_complete');
   }
 }
-

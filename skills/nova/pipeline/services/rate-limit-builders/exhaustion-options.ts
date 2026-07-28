@@ -72,102 +72,112 @@ function resolveModuleProjectionInput(config: any, moduleDir: any, moduleId: any
   };
 }
 
-export function createGateSessionRateLimitExhaustionOptions(config: any, {
-  discordFn = discord,
-  gateId = null,
-  gateType = null,
-  phase = null,
-  exhaustedReason = 'rate_limit_exhausted',
-  beforeReturn = null,
-  gateFailureData = null,
-  telemetryCtx = null,
-  runId = null,
-  discordLevel = 'CRITICAL',
-  discordTitle = null,
-  discordDescription = null,
-  logMessage = exhaustedReason,
-  logLevel = 'WARN',
-}: any = {}) {
+export function createGateSessionRateLimitExhaustionOptions(config: any, input: any = {}) {
+  const options = {
+    discordFn: discord,
+    gateId: null,
+    gateType: null,
+    phase: null,
+    exhaustedReason: 'rate_limit_exhausted',
+    beforeReturn: null,
+    gateFailureData: null,
+    telemetryCtx: null,
+    runId: null,
+    discordLevel: 'CRITICAL',
+    discordTitle: null,
+    discordDescription: null,
+    logLevel: 'WARN',
+    ...input,
+  };
+  const logMessage = input.logMessage ?? options.exhaustedReason;
   return {
-    beforeReturn: async (exitResult: any) => {
-      try {
-        if (typeof beforeReturn === 'function') await beforeReturn(exitResult);
-      } finally {
-        if (gateId && telemetryCtx) {
-          const extraGateFailureData = typeof gateFailureData === 'function'
-            ? objectRecord(gateFailureData(exitResult))
-            : objectRecord(gateFailureData);
-          const discordPresentation = extraGateFailureData?.presentation?.discord;
-          const presentation = discordPresentation && typeof discordPresentation === 'object' && !Array.isArray(discordPresentation)
-            ? {
-              ...extraGateFailureData.presentation,
-              discord: {
-                next_action: 'retry_later',
-                action: 'retry_later',
-                ...discordPresentation,
-              },
-            }
-            : extraGateFailureData?.presentation;
-          await onGateFail(telemetryCtx, gateId, {
-            gate_type: gateType,
-            attempt: exitResult.attempt,
-            reason: exhaustedReason,
-            dispatch_id: exitResult.dispatch_id,
-            gateway_label: exitResult.gateway_label,
-            session_key: exitResult.session_key,
-            ...extraGateFailureData,
-            ...(presentation == null ? {} : { presentation }),
-          });
-        }
-      }
-    },
-    emitRetryExhausted: (exitResult: any) => {
-      if (selectTruthyValue(() => (selectTruthyValue(() => (!gateId), () => (!telemetryCtx))), () => (!phase))) return;
-      return emitGateRetryExhausted(telemetryCtx, gateId, {
-        gateType,
-        phase,
-        attempt: exitResult.attempt,
-        maxAttempts: exitResult.max_rate_limit_pauses,
-        reason: exhaustedReason,
-        sessionKey: exitResult.session_key,
-        dispatchId: exitResult.dispatch_id,
-        gatewayLabel: exitResult.gateway_label,
-      });
-    },
-    sendDiscord: (exitResult: any) => {
-      const title = typeof discordTitle === 'function' ? discordTitle(exitResult) : discordTitle;
-      const description = typeof discordDescription === 'function' ? discordDescription(exitResult) : discordDescription;
-      if (selectTruthyValue(() => (selectTruthyValue(() => (!config), () => (!title))), () => (!description))) return null;
-
-      return discordFn(
-        config,
-        discordLevel,
-        title,
-        description,
-        buildSessionRateLimitDiscordFields({
-          run_id: requiredText(firstDefined(exitResult.run_id, runId), 'gate rate-limit run_id'),
-          ...(gateId == null ? {} : { gate_id: gateId }),
-          ...(gateType == null ? {} : { gate_type: gateType }),
-          attempt: exitResult.attempt,
-          dispatch_id: exitResult.dispatch_id,
-          gateway_label: exitResult.gateway_label,
-          session_key: exitResult.session_key,
-        }),
-        {
-          correlation: {
-            run_id: firstDefined(exitResult.run_id, runId),
-            ...(gateId == null ? {} : { gate_id: gateId }),
-            ...(gateType == null ? {} : { gate_type: gateType }),
-            attempt: selectDefinedValue(() => (exitResult.attempt), () => (null)),
-            dispatch_id: selectTruthyValue(() => (exitResult.dispatch_id), () => (null)),
-            gateway_label: selectTruthyValue(() => (exitResult.gateway_label), () => (null)),
-            session_key: selectTruthyValue(() => (exitResult.session_key), () => (null)),
-          },
-        },
-      );
-    },
+    beforeReturn: gateRateLimitBeforeReturn(options),
+    emitRetryExhausted: gateRetryExhaustedEmitter(options),
+    sendDiscord: gateRateLimitDiscordSender(config, options),
     logMessage,
-    logLevel,
+    logLevel: options.logLevel,
+  };
+}
+
+function gateRateLimitBeforeReturn(options: any) {
+  return async (exitResult: any) => {
+    try {
+      if (typeof options.beforeReturn === 'function') await options.beforeReturn(exitResult);
+    } finally {
+      await emitGateFailureAfterReturn(options, exitResult);
+    }
+  };
+}
+
+async function emitGateFailureAfterReturn(options: any, exitResult: any): Promise<void> {
+  if (!options.gateId || !options.telemetryCtx) return;
+  const extra = typeof options.gateFailureData === 'function'
+    ? objectRecord(options.gateFailureData(exitResult))
+    : objectRecord(options.gateFailureData);
+  const discordPresentation = extra?.presentation?.discord;
+  const presentation = discordPresentation && typeof discordPresentation === 'object' && !Array.isArray(discordPresentation)
+    ? {
+      ...extra.presentation,
+      discord: { next_action: 'retry_later', action: 'retry_later', ...discordPresentation },
+    }
+    : extra?.presentation;
+  await onGateFail(options.telemetryCtx, options.gateId, {
+    gate_type: options.gateType,
+    attempt: exitResult.attempt,
+    reason: options.exhaustedReason,
+    dispatch_id: exitResult.dispatch_id,
+    gateway_label: exitResult.gateway_label,
+    session_key: exitResult.session_key,
+    ...extra,
+    ...(presentation == null ? {} : { presentation }),
+  });
+}
+
+function gateRetryExhaustedEmitter(options: any) {
+  return (exitResult: any) => {
+    if (!options.gateId || !options.telemetryCtx || !options.phase) return;
+    return emitGateRetryExhausted(options.telemetryCtx, options.gateId, {
+      gateType: options.gateType,
+      phase: options.phase,
+      attempt: exitResult.attempt,
+      maxAttempts: exitResult.max_rate_limit_pauses,
+      reason: options.exhaustedReason,
+      sessionKey: exitResult.session_key,
+      dispatchId: exitResult.dispatch_id,
+      gatewayLabel: exitResult.gateway_label,
+    });
+  };
+}
+
+function gateRateLimitDiscordSender(config: any, options: any) {
+  return (exitResult: any) => {
+    const title = typeof options.discordTitle === 'function'
+      ? options.discordTitle(exitResult)
+      : options.discordTitle;
+    const description = typeof options.discordDescription === 'function'
+      ? options.discordDescription(exitResult)
+      : options.discordDescription;
+    if (!config || !title || !description) return null;
+    const identity = {
+      run_id: firstDefined(exitResult.run_id, options.runId),
+      ...(options.gateId == null ? {} : { gate_id: options.gateId }),
+      ...(options.gateType == null ? {} : { gate_type: options.gateType }),
+      attempt: exitResult.attempt,
+      dispatch_id: exitResult.dispatch_id,
+      gateway_label: exitResult.gateway_label,
+      session_key: exitResult.session_key,
+    };
+    return options.discordFn(
+      config,
+      options.discordLevel,
+      title,
+      description,
+      buildSessionRateLimitDiscordFields({
+        ...identity,
+        run_id: requiredText(identity.run_id, 'gate rate-limit run_id'),
+      }),
+      { correlation: buildRateLimitDiscordCorrelation(identity) },
+    );
   };
 }
 

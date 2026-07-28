@@ -35,7 +35,7 @@ function normalizedLowerText(value: any) {
   return selectTruthyValue(() => value === undefined, () => value === null) ? '' : String(value).trim().toLowerCase();
 }
 
-export function nullableString(value: any) {
+function nullableString(value: any) {
   return selectTruthyValue(() => value === undefined, () => value === null, () => value === '') ? null : String(value);
 }
 
@@ -175,11 +175,16 @@ export function emitApprovalSignalEvent(eventBus: any, config: any, gateId: any,
 }
 
 export function approvalSignalEventFromRedisEntry(entry: any = {}) {
-  let payload = null;
+  let payload: Record<string, any> | null = null;
   if (entry.payload) {
     try { payload = JSON.parse(entry.payload); } catch (_error: any) { payload = null; }
   }
-  if (selectTruthyValue(() => !payload, () => typeof payload !== 'object', () => Array.isArray(payload))) {
+  const payloadInvalid = !payload
+    ? true
+    : typeof payload !== 'object'
+      ? true
+      : Array.isArray(payload);
+  if (payloadInvalid) {
     payload = {
       gate_id: nullableString(entry.gate_id), gate_type: nullableString(entry.gate_type) ?? APPROVAL_GATE_TYPE,
       run_id: nullableString(entry.run_id), project: nullableString(entry.project), wait_ref: nullableString(entry.wait_ref),
@@ -188,6 +193,7 @@ export function approvalSignalEventFromRedisEntry(entry: any = {}) {
       state_path: nullableString(entry.state_path),
     };
   }
+  if (!payload) throw new Error('Approval signal payload normalization failed');
   return assertPipelineEvent({
     type: 'approval.signal', source: 'redis',
     identity: { gate_id: nullableString(payload.gate_id), ...(payload.run_id ? { run_id: nullableString(payload.run_id) } : {}) },

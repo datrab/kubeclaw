@@ -19,6 +19,7 @@ const allowedFacadePaths = new Set([
 ]);
 const configOwnerPaths = new Set([
   'skills/nova/pipeline/core/config.ts',
+  'skills/nova/pipeline/core/config-validation-services.ts',
   'skills/nova/pipeline/core/session-policy.ts',
   'skills/buster/pipeline/services/runtime-policy.ts',
 ]);
@@ -62,13 +63,12 @@ for (const wrapperName of [
 }
 
 for (const [relPath, marker] of [
-  ['skills/common/pipeline/agents/lifecycle.ts', 'spawnGatewaySession'],
+  ['skills/common/pipeline/agents/session-spawn.ts', 'spawnGatewaySession'],
   ['skills/common/pipeline/agents/lifecycle.ts', 'sendGatewaySessionMessage'],
   ['skills/common/pipeline/agents/session-handoff.ts', 'sendGatewaySessionMessage'],
-  ['skills/common/pipeline/agents/acp-monitor.ts', 'getGatewaySessionStatus'],
+  ['skills/common/pipeline/agents/acp-monitor-state.ts', 'getGatewaySessionStatus'],
   ['skills/nova/pipeline/services/failures/presentation.ts', 'sendAgentSessionHandoff'],
-  ['skills/nova/pipeline/services/polling-session-end.ts', 'sendGatewaySessionMessage'],
-  ['skills/nova/pipeline/agents/orchestration.ts', 'sendGatewaySessionMessage'],
+  ['skills/nova/pipeline/services/polling-session-end-cycle.ts', 'sendGatewaySessionMessage'],
   ['skills/nova/pipeline/agents/orchestration-healthcheck.ts', 'getGatewaySessionStatus'],
   ['skills/buster/pipeline/services/gateway-health.ts', 'checkCommonGatewayHealth'],
 ]) {

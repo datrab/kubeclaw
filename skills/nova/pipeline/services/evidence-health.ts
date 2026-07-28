@@ -20,10 +20,10 @@ const BASE_HEALTH = Object.freeze({
 });
 
 function lastProducerEvent(events: any[], producer: string) {
-  return events.filter((event) =>
-    String(event.producer ?? '').includes(producer)
-    || String(event.source ?? '').includes(producer)
-  ).at(-1);
+  return events.filter((event) => [
+    String(event.producer ?? '').includes(producer),
+    String(event.source ?? '').includes(producer),
+  ].some(Boolean)).at(-1);
 }
 
 function observerCapability(ingester: any) {

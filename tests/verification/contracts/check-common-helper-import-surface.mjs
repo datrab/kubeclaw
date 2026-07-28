@@ -38,12 +38,12 @@ assert.deepEqual(expectedInventory, commonFiles, 'shared helper inventory must m
 
 const productionLocalMarkers = [
   [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), "from './lifecycle.ts'"],
-  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), "from './acp-monitor.ts'"],
-  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts'), "from '../integrations/gateway.ts'"],
-  [path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts'), "from '../agents/runtime.ts'"],
-  [path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts'), "from '../agents/lifecycle.ts'"],
-  [path.join(sourceRoot, 'skills/nova/pipeline/services/summary.ts'), "from '../agents/session-termination.ts'"],
-  [path.join(sourceRoot, 'skills/nova/pipeline/services/polling.ts'), "from '../agents/acp-monitor.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration-healthcheck.ts'), "from './acp-monitor.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/agents/orchestration-healthcheck.ts'), "from '../integrations/gateway.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/pipeline-review-values.ts'), "from '../agents/runtime.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/pipeline-review-values.ts'), "from '../agents/lifecycle.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/pipeline-review-values.ts'), "from '../agents/session-termination.ts'"],
+  [path.join(sourceRoot, 'skills/nova/pipeline/services/polling-file.ts'), 'agents/acp-monitor.ts'],
   [path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner/attempt.ts'), "from '../../agents/runtime.ts'"],
   [path.join(sourceRoot, 'skills/buster/buster-pipeline.ts'), "from './pipeline/agents/session-termination.ts'"],
   [path.join(sourceRoot, 'skills/buster/buster-pipeline.ts'), "from './pipeline/integrations/gateway.ts'"],

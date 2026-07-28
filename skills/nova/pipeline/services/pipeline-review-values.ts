@@ -16,6 +16,7 @@ import {
   buildGeneratorArtifactRef,
   buildGeneratorResult,
 } from './contracts/generator-result.ts';
+import { archiveSummaryTranscript } from './summary-session-values.ts';
 
 const DEFAULT_DEPS = {
   spawnSession,
@@ -170,23 +171,11 @@ export function removePipelineReviewOutputArtifacts(
 }
 
 export function archivePipelineReviewTranscript(state: any) {
-  const archiveDir = path.join(
-    swarmRoot(state.config),
-    'logs',
-    'pipeline-review'
+  archiveSummaryTranscript(
+    state,
+    'pipeline-review',
+    'pipeline-review-transcript',
   );
-  fs.mkdirSync(archiveDir, { recursive: true });
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  if (
-    state.runtime === 'acp'
-    && state.streamLogPath
-    && fs.existsSync(state.streamLogPath)
-  ) {
-    state.deps.copyTranscriptArtifact(
-      state.streamLogPath,
-      path.join(archiveDir, `pipeline-review-transcript-${timestamp}.jsonl`)
-    );
-  }
 }
 
 export function buildPipelineReviewGeneratorResult(

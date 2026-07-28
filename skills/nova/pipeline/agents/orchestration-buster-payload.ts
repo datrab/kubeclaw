@@ -36,7 +36,9 @@ function deriveIsolatedServePort(input: AnyRecord = {}) {
     () => (input.config?._runId),
     () => (selectTruthyValue(() => (input.config?.run_id), () => (''))),
   );
-  if (!runId || !input.targetId || !Number.isInteger(input.attempt) || input.attempt < 1) return null;
+  if (!runId) return null;
+  if (!input.targetId) return null;
+  if (!Number.isInteger(input.attempt) || input.attempt < 1) return null;
   const dispatchId = selectDefinedValue(() => (textValue(input.dispatchId)), () => (''));
   return 20000 + stablePortOffset(`${runId}:${input.targetId}:${input.attempt}:${dispatchId}`);
 }
@@ -172,7 +174,10 @@ function validateDispatchIdentity(taskType: string, opts: AnyRecord, config: Any
   if (!Number.isInteger(opts.attempt) || opts.attempt < 1) {
     throw new Error(`Buster ${taskType} payload requires explicit positive integer attempt`);
   }
-  if (typeof opts.dispatch_id !== 'string' || !opts.dispatch_id.trim()) {
+  if (typeof opts.dispatch_id !== 'string') {
+    throw new Error(`Buster ${taskType} payload requires explicit dispatch_id`);
+  }
+  if (!opts.dispatch_id.trim()) {
     throw new Error(`Buster ${taskType} payload requires explicit dispatch_id`);
   }
   return selectTruthyValue(() => (opts.run_id), () => (selectTruthyValue(() => (config.run_id), () => (config._runId))));

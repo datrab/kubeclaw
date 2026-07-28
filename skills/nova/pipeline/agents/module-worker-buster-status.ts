@@ -34,23 +34,32 @@ function selectPresentValue(...values: unknown[]): string {
   return '';
 }
 
+function rateLimitEvidence(pollResult: AnyRecord | null, status: AnyRecord | null): AnyRecord | null {
+  const explicit = objectOrNull(pollResult?.rate_limit_status);
+  if (explicit) return explicit;
+  return isRateLimitReason(pollResult?.reason) ? status : null;
+}
+
+function pollingGitEvidence(pollResult: AnyRecord | null, status: AnyRecord | null): AnyRecord | null {
+  if (pollResult?.reason !== 'git_error') return null;
+  return objectOrNull(status?.details) ?? status;
+}
+
+function normalizedStatusText(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
 export function statusEvidenceFields(pollResult: AnyRecord | null = null): AnyRecord {
   const status = pollStatus(pollResult);
   const redisEntry = pollRedisEntry(pollResult);
-  let rateLimitStatus = objectOrNull(pollResult?.rate_limit_status);
-  if (rateLimitStatus === null && isRateLimitReason(pollResult?.reason)) {
-    rateLimitStatus = status;
-  }
   return {
-    statusDetail: typeof status?.detail === 'string' && status.detail.trim() ? status.detail.trim() : null,
-    statusMessage: typeof status?.message === 'string' && status.message.trim() ? status.message.trim() : null,
+    statusDetail: normalizedStatusText(status?.detail),
+    statusMessage: normalizedStatusText(status?.message),
     statusErrors: Array.isArray(status?.errors) ? status.errors : null,
-    pollingGit: pollResult?.reason === 'git_error'
-      ? (status?.details ? status.details : status ? status : null)
-      : null,
+    pollingGit: pollingGitEvidence(pollResult, status),
     completionConflict: pollResult?.reason === 'completion_conflict' ? (status ?? null) : null,
     redisEntry,
-    rateLimitStatus,
+    rateLimitStatus: rateLimitEvidence(pollResult, status),
     rateLimitPauses: pollResult?.rate_limit_pauses ?? null,
     maxRateLimitPauses: pollResult?.max_rate_limit_pauses ?? null,
   };

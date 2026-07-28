@@ -1,73 +1,17 @@
-import { assertCompletion } from "../../completion.ts";
-import {
-  appendJsonLine,
-  lifecycleEventsPath,
-  withLifecycleAppendLock,
-} from "./storage.ts";
-import { buildLifecycleIdempotencyKey } from "./idempotency.ts";
-import { getPipelineArtifactBundle } from "../artifact-bundle.ts";
 import {
   buildCooldownRefs,
-  buildGateEvaluationRefs,
-  buildModuleAttemptRefs,
-  buildPipelineRefs,
   buildResumeSignalRefs,
   buildWaitRefs,
-  getActiveProgress,
-  resolveModuleAttempt,
-  resolveModuleCommit,
-  resolveModuleConfig,
 } from "./refs.ts";
-import {
-  createDefaultLifecycleReadModels,
-  loadLifecycleReadModels,
-  readLifecycleEvents,
-  rebuildLifecycleReadModels,
-  saveLifecycleReadModels,
-} from "./read-models.ts";
-import { ensureLifecycleEventLegal } from "./legality.ts";
-import {
-  resolveStatusSessionKey,
-  resolveStatusDispatchId,
-  resolveStatusGatewayLabel,
-} from "../correlation.ts";
-import { normalizeFailureClass } from "../failure-semantics.ts";
-import { cloneSerializable } from "../serialization.ts";
 import {
   selectDefinedValue,
   selectTruthyValue,
 } from "../../optional-absence.ts";
-import {
-  firstDefinedValue as firstDefined,
-  objectRecord,
-  selectPresent,
-} from "../../value-boundary.ts";
+import { firstDefinedValue as firstDefined } from "../../value-boundary.ts";
 import {
   appendLifecycleEvent,
   selectPresentValue,
   eventOccurredAt,
-  requiredText,
-  pipelineProgressModules,
-  pipelineProgressGates,
-  PIPELINE_RUN_COMPLETED_STATUS,
-  PIPELINE_RUN_COMPLETED_REASON,
-  PIPELINE_RUN_HALTED_REASON,
-  STALE_RECOVERY_ATTEMPT,
-  STALE_RECOVERY_TARGET_STATUS,
-  STALE_RECOVERY_REASON,
-  MODULE_READY_FOR_TESTING_STATUS,
-  MODULE_ATTEMPT_FAILED_REASON,
-  MODULE_LIFECYCLE_PHASE_BUSTER,
-  MODULE_BLOCKED_REASON,
-  MODULE_COMPLETION_PASS_STATUS,
-  MODULE_COMPLETION_FAIL_STATUS,
-  MODULE_COMPLETION_BLOCKED_STATUS,
-  MODULE_COMPLETION_ERROR_STATUS,
-  GATE_COMPLETION_PASS_STATUS,
-  GATE_COMPLETION_BLOCKED_STATUS,
-  GATE_COMPLETION_FAIL_STATUS,
-  GATE_COMPLETION_ERROR_STATUS,
-  LIFECYCLE_READ_MODELS_VERSION,
 } from "./appenders-base.ts";
 export function appendWaitLifecycleEvent(
   config: any,

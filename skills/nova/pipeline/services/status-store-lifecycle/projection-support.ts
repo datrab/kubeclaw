@@ -136,7 +136,7 @@ export function recoveredActiveSession(
   };
 }
 
-export function normalizedUpperText(value: any) {
+function normalizedUpperText(value: any) {
   if (
     selectTruthyValue(
       () => value === undefined,
@@ -147,7 +147,7 @@ export function normalizedUpperText(value: any) {
   return String(value).trim().toUpperCase();
 }
 
-export function normalizedSignalKind(value: any) {
+function normalizedSignalKind(value: any) {
   if (
     selectTruthyValue(
       () => value === undefined,

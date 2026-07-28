@@ -228,7 +228,13 @@ assert.equal(lifecycleSource.includes("opts.stopMessage || '/stop'"), false, 'ki
 assert.equal(lifecycleSource.includes('opts.confirmTimeoutMs ?? (isSubagent ? 120000 : 15000)'), false, 'killSession confirm timeout must resolve through named policy');
 assert.equal(lifecycleSource.includes('opts.cleanupConfirmTimeoutMs ?? confirmTimeoutMs'), false, 'killSession cleanup confirmation timeout must resolve through named policy');
 
-const acpMonitorSource = fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/acp-monitor.ts'), 'utf8');
+const acpMonitorSource = [
+  'acp-monitor.ts',
+  'acp-monitor-events.ts',
+  'acp-monitor-state.ts',
+  'acp-monitor-transcript.ts',
+  'acp-monitor-wait.ts',
+].map((file) => fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents', file), 'utf8')).join('\n');
 assert.equal(acpMonitorSource.includes('SESSION_IDLE_POLICY_DEFAULTS'), false, 'session idle timing defaults must not live in code');
 assert.equal(acpMonitorSource.includes('optsOrGraceMs'), false, 'waitForSessionIdle must not accept legacy positional grace arguments');
 assert.equal(acpMonitorSource.includes('maybeTimeoutMs'), false, 'waitForSessionIdle must not accept legacy positional timeout arguments');
@@ -297,14 +303,14 @@ assert.throws(() => trackedAgentsMod.untrackAgent(null), /untrackAgent requires 
 assert.throws(() => trackedAgentsMod.getTrackedAgent(undefined), /getTrackedAgent requires explicit tracked agent label/);
 
 const sourceMarkers = [
-  ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpMonitorState({'],
-  ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpTranscriptState(state)'],
-  ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpSessionStateEventPayload({'],
-  ['skills/common/pipeline/agents/acp-monitor.ts', 'assertValidAcpTranscriptDeltaEventPayload({'],
+  ['skills/common/pipeline/agents/acp-monitor-state.ts', 'assertValidAcpMonitorState({'],
+  ['skills/common/pipeline/agents/acp-monitor-transcript.ts', 'assertValidAcpTranscriptState(state)'],
+  ['skills/common/pipeline/agents/acp-monitor-events.ts', 'assertValidAcpSessionStateEventPayload({'],
+  ['skills/common/pipeline/agents/acp-monitor-events.ts', 'assertValidAcpTranscriptDeltaEventPayload({'],
   ['skills/common/pipeline/agents/session-spawn.ts', 'assertValidSessionLifecycleRecord({'],
   ['skills/common/pipeline/agents/lifecycle.ts', 'assertValidKillSessionResult({'],
   ['skills/common/pipeline/agents/session-termination.ts', 'assertValidSessionTerminationResult(result)'],
-  ['skills/common/pipeline/integrations/gateway.ts', 'normalizeGatewayInvokeResult(parsed)'],
+  ['skills/common/pipeline/integrations/gateway.ts', 'assertValidGatewayInvokeResult(normalizeGatewayInvokeResult(JSON.parse(text)))'],
   ['skills/common/pipeline/integrations/gateway.ts', 'buildGatewayInvokeHttpError(tool, response.status, response.statusText, text)'],
 ];
 for (const [relPath, marker] of sourceMarkers) {

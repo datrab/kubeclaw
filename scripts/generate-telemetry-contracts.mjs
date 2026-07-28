@@ -143,8 +143,20 @@ function goType(schema = {}) {
     return nullable && !resolved.startsWith('*') ? `*${resolved}` : resolved;
   }
   const types = Array.isArray(schema.type) ? schema.type.filter((type) => type !== 'null') : schema.type ? [schema.type] : [];
-  const base = types[0] === 'string' ? 'string' : types[0] === 'integer' ? 'int64' : types[0] === 'number' ? 'float64' : types[0] === 'boolean' ? 'bool' : types[0] === 'array' ? `[]${goType(schema.items)}` : types[0] === 'object' && schema.properties ? `struct { ${Object.entries(schema.properties).map(([name,value])=>`${goName(name)} ${goType(value)} \`json:"${name}${(schema.required||[]).includes(name)?'':',omitempty'}"\``).join('; ')} }` : types[0] === 'object' && schema.additionalProperties && typeof schema.additionalProperties==='object' ? `map[string]${goType(schema.additionalProperties)}` : 'json.RawMessage';
+  const base = goBaseType(types[0], schema);
   return Array.isArray(schema.type) && schema.type.includes('null') ? `*${base}` : base;
+}
+function goBaseType(type, schema) {
+  const primitives = { string: 'string', integer: 'int64', number: 'float64', boolean: 'bool' };
+  if (primitives[type]) return primitives[type];
+  if (type === 'array') return `[]${goType(schema.items)}`;
+  if (type !== 'object') return 'json.RawMessage';
+  if (schema.properties) {
+    return `struct { ${Object.entries(schema.properties).map(([name,value])=>`${goName(name)} ${goType(value)} \`json:"${name}${(schema.required||[]).includes(name)?'':',omitempty'}"\``).join('; ')} }`;
+  }
+  return schema.additionalProperties && typeof schema.additionalProperties==='object'
+    ? `map[string]${goType(schema.additionalProperties)}`
+    : 'json.RawMessage';
 }
 function goName(value) { return value.split(/[^a-zA-Z0-9]+/).filter(Boolean).map((part) => part[0].toUpperCase()+part.slice(1)).join(''); }
 

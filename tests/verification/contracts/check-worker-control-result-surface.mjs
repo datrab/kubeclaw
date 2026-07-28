@@ -23,13 +23,23 @@ const moduleRunnerSharedPath = path.join(sourceRoot, 'skills/nova/pipeline/runne
 const registryPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry.ts');
 
 const helperSource = fs.readFileSync(helperPath, 'utf8');
-const orchestrationSource = fs.readFileSync(orchestrationPath, 'utf8');
+const orchestrationSource = fs.readdirSync(path.dirname(orchestrationPath))
+  .filter((name) => name.endsWith('.ts') && (name === 'orchestration.ts' || name.startsWith('orchestration-')))
+  .map((name) => fs.readFileSync(path.join(path.dirname(orchestrationPath), name), 'utf8'))
+  .join('\n');
 const moduleWorkerControlResultsSource = fs.readFileSync(moduleWorkerControlResultsPath, 'utf8');
-const moduleWorkersSource = fs.readFileSync(moduleWorkersPath, 'utf8');
+const moduleWorkersSource = fs.readdirSync(path.dirname(moduleWorkersPath))
+  .filter((name) => name.endsWith('.ts') && (name === 'module-workers.ts' || name.startsWith('module-worker-')))
+  .map((name) => fs.readFileSync(path.join(path.dirname(moduleWorkersPath), name), 'utf8'))
+  .join('\n');
 const moduleRunnerSource = fs.readFileSync(moduleRunnerPath, 'utf8');
 const moduleRunnerBusterWorkerSource = fs.readFileSync(moduleRunnerBusterWorkerPath, 'utf8');
 const moduleRunnerForgeSource = fs.readFileSync(moduleRunnerForgePath, 'utf8');
-const moduleRunnerSharedSource = fs.readFileSync(moduleRunnerSharedPath, 'utf8');
+const moduleRunnerSharedSource = [
+  fs.readFileSync(moduleRunnerSharedPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-plugin-contracts.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-buster-input.ts'), 'utf8'),
+].join('\n');
 const registrySource = fs.readFileSync(registryPath, 'utf8');
 
 for (const marker of [
@@ -84,8 +94,8 @@ assert.equal(moduleWorkerControlResultsSource.includes('workerInput?.moduleDir')
 assert.equal(moduleWorkerControlResultsSource.includes('result?.failureClass'), false, 'Buster worker failure_class authority must not accept legacy camelCase failureClass');
 assert.equal(moduleWorkerControlResultsSource.includes('_redis_entry?.failure_class'), false, 'Buster worker failure_class authority must not read legacy Redis entry failure_class');
 
-assert.equal(moduleWorkersSource.includes('return buildModuleForgeWorkerControlResult(config, workerInput,'), true, 'Forge worker backend should return typed worker control results directly');
-assert.equal(moduleWorkersSource.includes('return buildModuleBusterWorkerControlResult(config, workerInput,'), true, 'Buster worker backend should return typed worker control results directly');
+assert.equal(moduleWorkersSource.includes('return buildModuleForgeWorkerControlResult(runtime.config, runtime.input,'), true, 'Forge worker backend should return typed worker control results directly');
+assert.equal(moduleWorkersSource.includes('return buildModuleBusterWorkerControlResult(runtime.config, runtime.input,'), true, 'Buster worker backend should return typed worker control results directly');
 assert.equal(moduleWorkersSource.includes('normalizeModuleWorkerInput('), true, 'module workers should canonicalize worker input before runner logic reads it');
 assert.equal(moduleWorkersSource.includes('workerInput?.moduleId'), false, 'module workers must not accept legacy top-level moduleId aliases');
 assert.equal(moduleWorkersSource.includes('workerInput?.runId'), false, 'module workers must not accept legacy top-level runId aliases');

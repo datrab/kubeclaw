@@ -16,3 +16,11 @@ export interface BusterTelemetryContext extends TelemetryRecord {
   streamMaxLen: number; _health: TelemetryHealth;
 }
 export interface ContextOverrides { identity?: TelemetryIdentity; redis?: RedisClient | null; health?: TelemetryHealth }
+
+export function asBusterTelemetryContext(ctx: unknown): BusterTelemetryContext | null {
+  if (!ctx || typeof ctx !== 'object') return null;
+  const candidate = ctx as Partial<BusterTelemetryContext>;
+  return candidate._health?.redis && typeof candidate._health.redis === 'object'
+    ? candidate as BusterTelemetryContext
+    : null;
+}

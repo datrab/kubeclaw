@@ -1,0 +1,9 @@
+{
+  "name": "@kubeclaw/plugin-repository-adapter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node tests/package-boundary.test.mjs && node tests/live-function.test.mjs"
+  }
+}

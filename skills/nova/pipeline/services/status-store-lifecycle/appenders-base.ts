@@ -1,25 +1,10 @@
-import { assertCompletion } from "../../completion.ts";
 import {
   appendJsonLine,
   lifecycleEventsPath,
   withLifecycleAppendLock,
 } from "./storage.ts";
 import { buildLifecycleIdempotencyKey } from "./idempotency.ts";
-import { getPipelineArtifactBundle } from "../artifact-bundle.ts";
 import {
-  buildCooldownRefs,
-  buildGateEvaluationRefs,
-  buildModuleAttemptRefs,
-  buildPipelineRefs,
-  buildResumeSignalRefs,
-  buildWaitRefs,
-  getActiveProgress,
-  resolveModuleAttempt,
-  resolveModuleCommit,
-  resolveModuleConfig,
-} from "./refs.ts";
-import {
-  createDefaultLifecycleReadModels,
   loadLifecycleReadModels,
   readLifecycleEvents,
   rebuildLifecycleReadModels,
@@ -27,22 +12,15 @@ import {
 } from "./read-models.ts";
 import { ensureLifecycleEventLegal } from "./legality.ts";
 import {
-  resolveStatusSessionKey,
-  resolveStatusDispatchId,
-  resolveStatusGatewayLabel,
-} from "../correlation.ts";
-import { normalizeFailureClass } from "../failure-semantics.ts";
-import { cloneSerializable } from "../serialization.ts";
+  cloneSerializable,
+} from "../serialization.ts";
 import {
-  selectDefinedValue,
   selectTruthyValue,
 } from "../../optional-absence.ts";
 import {
-  firstDefinedValue as firstDefined,
   objectRecord,
   selectPresent,
 } from "../../value-boundary.ts";
-export const LIFECYCLE_READ_MODELS_VERSION = "v1";
 export const PIPELINE_RUN_COMPLETED_STATUS = "succeeded";
 export const PIPELINE_RUN_COMPLETED_REASON = "PIPELINE_COMPLETE";
 export const PIPELINE_RUN_HALTED_REASON = "halted";
@@ -91,7 +69,7 @@ export function pipelineProgressGates(progress: any) {
   return objectRecord(progress?.gates);
 }
 
-export function proposalData(proposal: any) {
+function proposalData(proposal: any) {
   return objectRecord(proposal?.data);
 }
 function lifecycleWork(refs: any = {}) {

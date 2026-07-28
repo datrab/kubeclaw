@@ -96,7 +96,7 @@ function isPipelineTerminalScope(scope: unknown): boolean {
 export function pipelineTerminalStatusForStepOutcome(outcome: unknown): string | null {
   const normalizedOutcome = normalizeToken(outcome);
   if (!normalizedOutcome) return null;
-  return selectDefinedValue(() => (TERMINAL_STATUS_BY_STEP_OUTCOME[normalizedOutcome]), () => (null));
+  return TERMINAL_STATUS_BY_STEP_OUTCOME[normalizedOutcome] ?? null;
 }
 
 function buildPipelineTerminalDecision({
@@ -169,10 +169,7 @@ export function buildPipelineTerminalDecisionFromStepOutcome({
   if (!isPipelineTerminalScope(normalizedScope)) {
     throw new Error(`Invalid pipeline terminal decision: scope must be one of: ${Object.values(PIPELINE_TERMINAL_SCOPES).join(', ')}`);
   }
-  const scopedIdentity: UnknownRecord = {};
-  if (normalizedScope === PIPELINE_TERMINAL_SCOPES.MODULE) scopedIdentity.moduleId = stepId;
-  else if (normalizedScope === PIPELINE_TERMINAL_SCOPES.GATE) scopedIdentity.gateId = stepId;
-  else if (normalizedScope === PIPELINE_TERMINAL_SCOPES.VALIDATOR) scopedIdentity.validatorId = stepId;
+  const scopedIdentity = terminalScopeIdentity(normalizedScope as string, stepId);
 
   return buildPipelineTerminalDecision({
     status,
@@ -188,6 +185,16 @@ export function buildPipelineTerminalDecisionFromStepOutcome({
     metadata,
     ...scopedIdentity,
   });
+}
+
+function terminalScopeIdentity(scope: string, stepId: unknown): UnknownRecord {
+  const fieldByScope: Record<string, string> = {
+    [PIPELINE_TERMINAL_SCOPES.MODULE]: 'moduleId',
+    [PIPELINE_TERMINAL_SCOPES.GATE]: 'gateId',
+    [PIPELINE_TERMINAL_SCOPES.VALIDATOR]: 'validatorId',
+  };
+  const field = fieldByScope[scope];
+  return field ? { [field]: stepId } : {};
 }
 
 function terminalReasonCodeAuthority(reasonCode: string | null, outcome: string): string {
@@ -209,34 +216,40 @@ export function validatePipelineTerminalDecision(decision: unknown = {}): string
     return ['decision must be an object'];
   }
 
+  errors.push(...terminalShapeErrors(decision));
+  errors.push(...terminalCorrelationErrors(decision.correlation));
+
+  return errors;
+}
+
+function terminalShapeErrors(decision: UnknownRecord): string[] {
+  const errors: string[] = [];
   if (decision.schemaVersion !== PIPELINE_TERMINAL_DECISION_SCHEMA_VERSION) errors.push(`schemaVersion must be '${PIPELINE_TERMINAL_DECISION_SCHEMA_VERSION}'`);
   if (decision.kind !== PIPELINE_TERMINAL_DECISION_KIND) errors.push(`kind must be '${PIPELINE_TERMINAL_DECISION_KIND}'`);
   if (!isPipelineTerminalStatus(decision.status)) errors.push(`status must be one of: ${Object.values(PIPELINE_TERMINAL_STATUSES).join(', ')}`);
   if (!isPipelineTerminalAction(decision.action)) errors.push(`action must be one of: ${Object.values(PIPELINE_TERMINAL_ACTIONS).join(', ')}`);
   if (!isPipelineTerminalScope(decision.scope)) errors.push(`scope must be one of: ${Object.values(PIPELINE_TERMINAL_SCOPES).join(', ')}`);
-
-  if (decision.reasonCode != null && typeof decision.reasonCode !== 'string') errors.push('reasonCode must be a string or null');
-  if (decision.humanReason != null && typeof decision.humanReason !== 'string') errors.push('humanReason must be a string or null');
-  if (decision.source != null && typeof decision.source !== 'string') errors.push('source must be a string or null');
+  for (const field of ['reasonCode', 'humanReason', 'source']) {
+    if (decision[field] != null && typeof decision[field] !== 'string') errors.push(`${field} must be a string or null`);
+  }
   if (!isPlainObject(decision.correlation)) errors.push('correlation must be an object');
   if (!isPlainObject(decision.metadata)) errors.push('metadata must be an object');
-
   for (const fieldName of NUMERIC_EXIT_FIELD_NAMES) {
-    if (Object.prototype.hasOwnProperty.call(decision, fieldName)) {
-      errors.push(`terminal decision must not carry numeric ${fieldName}`);
+    if (Object.prototype.hasOwnProperty.call(decision, fieldName)) errors.push(`terminal decision must not carry numeric ${fieldName}`);
+  }
+  return errors;
+}
+
+function terminalCorrelationErrors(correlation: unknown): string[] {
+  if (!isPlainObject(correlation)) return [];
+  const errors: string[] = [];
+  for (const [key, value] of Object.entries(correlation)) {
+    if (key === 'attempt' && (!Number.isInteger(value) || Number(value) < 1)) {
+      errors.push('correlation.attempt must be a positive integer when present');
+    } else if (key !== 'attempt' && value != null && typeof value !== 'string') {
+      errors.push(`correlation.${key} must be a string when present`);
     }
   }
-
-  if (isPlainObject(decision.correlation)) {
-    for (const [key, value] of Object.entries(decision.correlation)) {
-      if (key === 'attempt') {
-        if (selectTruthyValue(() => (!Number.isInteger(value)), () => (Number(value) < 1))) errors.push('correlation.attempt must be a positive integer when present');
-      } else if (value != null && typeof value !== 'string') {
-        errors.push(`correlation.${key} must be a string when present`);
-      }
-    }
-  }
-
   return errors;
 }
 

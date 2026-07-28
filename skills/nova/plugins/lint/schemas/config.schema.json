@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policyPath", "policyProject"],
+  "properties": {
+    "policyPath": { "type": "string", "minLength": 1 },
+    "policyProject": { "type": "string", "minLength": 1 },
+    "includeDebt": { "type": "boolean", "default": false },
+    "includeExperimental": { "type": "boolean", "default": false }
+  }
+}

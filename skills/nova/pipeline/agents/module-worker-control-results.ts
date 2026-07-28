@@ -141,43 +141,16 @@ export function buildModuleBusterWorkerControlResult(config: AnyRecord, workerIn
   if (nextAction !== 'pass' && !failureClass) {
     throw new Error('module_buster worker failure result requires explicit typed failureClass');
   }
-  const ids = objectRecord(workerInput?.ids);
   const refs = objectRecord(workerInput?.refs);
   const finalStatus = selectDefinedValue(() => (input.finalStatus), () => (null));
   const redisEntry = selectTruthyValue(() => (input.redisEntry), () => (null));
   const runId = requireWorkerRunId(workerInput, 'module_buster');
-  const metadata = {
-    module_id: selectTruthyValue(() => (ids.moduleId), () => (null)),
-    run_id: runId,
-    attempt: selectDefinedValue(() => (selectDefinedValue(() => (ids.attempt), () => (input?.attempt))), () => (null)),
-    stage_id: selectPresentValue(ids.stageId, opts?.stageId, WORKER_STAGE_IDS.module_buster),
-    worker_type: selectPresentValue(workerInput?.worker?.workerType, WORKER_TYPES.module_buster),
-    module_dir: selectTruthyValue(() => (workerInput?.executionContext?.moduleDir), () => (null)),
-    reason: selectTruthyValue(() => (input?.reason), () => (null)),
-    error: selectTruthyValue(() => (input?.error), () => (null)),
-    failure_class: failureClass,
-    dispatch_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (input?.dispatchId), () => (ids.dispatchId))), () => (refs.workerDispatchRef))), () => (null)),
-    gateway_label: selectTruthyValue(() => (input?.gatewayLabel), () => (null)),
-    session_key: selectTruthyValue(() => (selectTruthyValue(() => (input?.sessionKey), () => (redisEntry?.session_key))), () => (null)),
-    model: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.model), () => (null)),
-    model_source: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.modelSource), () => (null)),
-    reasoning_level: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.reasoningLevel), () => (null)),
-    thinking_source: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.thinkingSource), () => (null)),
-    runtime: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.runtimeKind), () => (null)),
-    stream_log_path: selectTruthyValue(() => (input?.streamLogPath), () => (null)),
-    module_attempt_ref: selectTruthyValue(() => (refs.moduleAttemptRef), () => (null)),
-    worker_dispatch_ref: selectTruthyValue(() => (refs.workerDispatchRef), () => (null)),
-    redis_entry: cloneSerializable(redisEntry),
-    final_status: cloneSerializable(finalStatus),
-    status_detail: selectTruthyValue(() => (input?.statusDetail), () => (null)),
-    status_message: selectTruthyValue(() => (input?.statusMessage), () => (null)),
-    status_errors: Array.isArray(input?.statusErrors) ? cloneSerializable(input.statusErrors) : null,
-    completion_conflict: cloneSerializable(selectTruthyValue(() => (input?.completionConflict), () => (null))),
-    polling_git: cloneSerializable(selectTruthyValue(() => (input?.pollingGit), () => (null))),
-    rate_limit_status: cloneSerializable(selectTruthyValue(() => (input?.rateLimitStatus), () => (null))),
-    rate_limit_pauses: selectDefinedValue(() => (input?.rateLimitPauses), () => (null)),
-    max_rate_limit_pauses: selectDefinedValue(() => (input?.maxRateLimitPauses), () => (null)),
-  };
+  const metadata = buildModuleBusterMetadata(workerInput, input, opts, {
+    failureClass,
+    finalStatus,
+    redisEntry,
+    runId,
+  });
 
   return buildTypedWorkerControlResult({
     producerType: 'module_buster',
@@ -195,6 +168,53 @@ export function buildModuleBusterWorkerControlResult(config: AnyRecord, workerIn
       redis_source: selectTruthyValue(() => (redisEntry?.source), () => (null)),
     },
   });
+}
+
+function buildModuleBusterMetadata(
+  workerInput: AnyRecord,
+  input: AnyRecord,
+  opts: AnyRecord,
+  values: {
+    failureClass: string | null;
+    finalStatus: unknown;
+    redisEntry: AnyRecord | null;
+    runId: string;
+  },
+) {
+  const ids = objectRecord(workerInput?.ids);
+  const refs = objectRecord(workerInput?.refs);
+  return {
+    module_id: selectTruthyValue(() => (ids.moduleId), () => (null)),
+    run_id: values.runId,
+    attempt: selectDefinedValue(() => (selectDefinedValue(() => (ids.attempt), () => (input?.attempt))), () => (null)),
+    stage_id: selectPresentValue(ids.stageId, opts?.stageId, WORKER_STAGE_IDS.module_buster),
+    worker_type: selectPresentValue(workerInput?.worker?.workerType, WORKER_TYPES.module_buster),
+    module_dir: selectTruthyValue(() => (workerInput?.executionContext?.moduleDir), () => (null)),
+    reason: selectTruthyValue(() => (input?.reason), () => (null)),
+    error: selectTruthyValue(() => (input?.error), () => (null)),
+    failure_class: values.failureClass,
+    dispatch_id: selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (input?.dispatchId), () => (ids.dispatchId))), () => (refs.workerDispatchRef))), () => (null)),
+    gateway_label: selectTruthyValue(() => (input?.gatewayLabel), () => (null)),
+    session_key: selectTruthyValue(() => (selectTruthyValue(() => (input?.sessionKey), () => (values.redisEntry?.session_key))), () => (null)),
+    model: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.model), () => (null)),
+    model_source: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.modelSource), () => (null)),
+    reasoning_level: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.reasoningLevel), () => (null)),
+    thinking_source: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.thinkingSource), () => (null)),
+    runtime: selectTruthyValue(() => (workerInput?.worker?.backendConfig?.runtimeKind), () => (null)),
+    stream_log_path: selectTruthyValue(() => (input?.streamLogPath), () => (null)),
+    module_attempt_ref: selectTruthyValue(() => (refs.moduleAttemptRef), () => (null)),
+    worker_dispatch_ref: selectTruthyValue(() => (refs.workerDispatchRef), () => (null)),
+    redis_entry: cloneSerializable(values.redisEntry),
+    final_status: cloneSerializable(values.finalStatus),
+    status_detail: selectTruthyValue(() => (input?.statusDetail), () => (null)),
+    status_message: selectTruthyValue(() => (input?.statusMessage), () => (null)),
+    status_errors: Array.isArray(input?.statusErrors) ? cloneSerializable(input.statusErrors) : null,
+    completion_conflict: cloneSerializable(selectTruthyValue(() => (input?.completionConflict), () => (null))),
+    polling_git: cloneSerializable(selectTruthyValue(() => (input?.pollingGit), () => (null))),
+    rate_limit_status: cloneSerializable(selectTruthyValue(() => (input?.rateLimitStatus), () => (null))),
+    rate_limit_pauses: selectDefinedValue(() => (input?.rateLimitPauses), () => (null)),
+    max_rate_limit_pauses: selectDefinedValue(() => (input?.maxRateLimitPauses), () => (null)),
+  };
 }
 
 function forgeWorkerSummaryAuthority(workerInput: AnyRecord, input: AnyRecord, nextAction: string) {

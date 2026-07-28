@@ -1,0 +1,9 @@
+{
+  "name": "@kubeclaw/plugin-transport-publisher",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node tests/config-validation.test.mjs && node tests/live-function.test.mjs && node tests/package-boundary.test.mjs"
+  }
+}

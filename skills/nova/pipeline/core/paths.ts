@@ -1,34 +1,30 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // core/paths.ts — Path helpers for swarm module/gate layout
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-import { getRunId } from './runtime.ts';
+import {
+  projectLogDir,
+  projectLogSubdir,
+  resolvePipelineRunLogDir,
+} from './pipeline-log-paths.ts';
+import {
+  assertPathInside,
+  assertRelativePathInput,
+  assertSafePathSegment,
+  isPathInside,
+  portableArtifactRefPath,
+} from './path-safety.ts';
 
-const ALLOWED_PATH_PREFIXES = ['/app/', '/opt/', '/home/'];
-const UNSAFE_PATH_SEGMENT_NAMES = new Set(['.', '..']);
-
-// Single canonical safe-path validator for the refactored pipeline.
-export function validateSafePath(filePath: any, label: any) {
-  if (selectTruthyValue(() => (!filePath), () => (typeof filePath !== 'string'))) {
-    throw new Error(`${label}: path is empty or not a string`);
-  }
-  const normalized = path.resolve(filePath);
-  const allowed = ALLOWED_PATH_PREFIXES.some((prefix: any) => {
-    const resolvedPrefix = path.resolve(prefix);
-    const prefixWithSep = resolvedPrefix.endsWith(path.sep) ? resolvedPrefix : `${resolvedPrefix}${path.sep}`;
-    return selectTruthyValue(() => (normalized === resolvedPrefix), () => (normalized.startsWith(prefixWithSep)));
-  });
-  if (!allowed) {
-    throw new Error(
-      `${label}: path '${normalized}' not in allowed prefixes [${ALLOWED_PATH_PREFIXES.join(', ')}]. ` +
-      `Update ALLOWED_PATH_PREFIXES in core/paths.ts if this is intentional.`
-    );
-  }
-  return normalized;
-}
+export { assertSafePathSegment, validateSafePath } from './path-safety.ts';
+export {
+  archValidatorLogDir,
+  ensurePipelineRunLogDir,
+  ensureProjectLogDir,
+  pipelineLogDir,
+  projectLogDir,
+  resolvePipelineRunLogDir,
+} from './pipeline-log-paths.ts';
 
 export function swarmRoot(config: any)         { return config.paths.swarm_dir; }
 export function projectSrcPath(config: any) {
@@ -46,64 +42,6 @@ function firstDefined(...values: any[]) {
     if (value !== undefined && value !== null) return value;
   }
   return null;
-}
-
-function requiredRepoRoot(config: any, label: any = 'repository root') {
-  if (selectTruthyValue(() => (typeof config?.repo_root !== 'string'), () => (!config.repo_root.trim()))) {
-    throw new Error(`${label}: required non-empty string`);
-  }
-  return config.repo_root;
-}
-
-function unsafePathSegmentSyntax(segment: string) {
-  if (/[\0/\\]/u.test(segment)) return true;
-  if (path.isAbsolute(segment)) return true;
-  return UNSAFE_PATH_SEGMENT_NAMES.has(segment);
-}
-
-function portableArtifactRefPath(config: any, absPath: any) {
-  const basePath = requiredRepoRoot(config);
-  return path.relative(basePath, absPath).split(path.sep).join('/');
-}
-
-function rootedPrefix(root: any) {
-  const resolvedRoot = path.resolve(root);
-  return resolvedRoot.endsWith(path.sep) ? resolvedRoot : `${resolvedRoot}${path.sep}`;
-}
-
-function isPathInside(candidate: any, root: any) {
-  const resolvedCandidate = path.resolve(candidate);
-  const resolvedRoot = path.resolve(root);
-  return selectTruthyValue(() => (resolvedCandidate === resolvedRoot), () => (resolvedCandidate.startsWith(rootedPrefix(resolvedRoot))));
-}
-
-function assertPathInside(candidate: any, root: any, label: any, scopeDescription: any = 'swarm root') {
-  const resolvedCandidate = path.resolve(candidate);
-  const resolvedRoot = path.resolve(root);
-  if (isPathInside(resolvedCandidate, resolvedRoot)) return resolvedCandidate;
-  throw new Error(`${label}: path escapes ${scopeDescription}: ${candidate}`);
-}
-
-function assertRelativePathInput(inputPath: any, label: any, scopeDescription: any) {
-  if (selectTruthyValue(() => (typeof inputPath !== 'string'), () => (!inputPath.trim()))) {
-    throw new Error(`${label}: path is empty or not a string`);
-  }
-  if (inputPath.includes('\0')) throw new Error(`${label}: path contains a null byte`);
-  if (path.isAbsolute(inputPath)) throw new Error(`${label}: path must be relative to ${scopeDescription}`);
-  const segments = inputPath.split(/[\\/]+/).filter(Boolean);
-  if (segments.includes('..')) throw new Error(`${label}: path must not contain parent traversal`);
-  return inputPath;
-}
-
-export function assertSafePathSegment(segment: any, label: any, opts: any = {}) {
-  if (segment === '' && opts.allowEmpty === true) return segment;
-  if (selectTruthyValue(() => (typeof segment !== 'string'), () => (!segment.trim()))) {
-    throw new Error(`${label}: identifier is empty or not a string`);
-  }
-  if (unsafePathSegmentSyntax(segment)) {
-    throw new Error(`${label}: identifier must be a single safe path segment`);
-  }
-  return segment;
 }
 
 export function modulePath(config: any, dir: any) {
@@ -342,47 +280,4 @@ export function costLogDir(config: any) {
 
 function redisLogDir(config: any) {
   return projectLogSubdir(config, 'redis');
-}
-
-function projectLogSubdir(config: any, ...segments: any[]) {
-  const logDir = projectLogDir(config);
-  if (!logDir) return null;
-  const safeSegments = segments.map((segment: any, index: any) => assertSafePathSegment(segment, `project log segment ${index + 1}`));
-  return assertPathInside(path.join(logDir, ...safeSegments), logDir, 'project log path', 'project log root');
-}
-
-export function projectLogDir(config: any) {
-  return config?.paths?.swarm_dir ? path.join(config.paths.swarm_dir, 'logs') : config?.paths?.modules_dir ? path.join(path.dirname(config.paths.modules_dir), 'logs') : null;
-}
-
-export function pipelineLogDir(config: any) {
-  return projectLogSubdir(config, 'pipeline');
-}
-
-export function ensureProjectLogDir(config: any) {
-  const logDir = projectLogDir(config); if (logDir) fs.mkdirSync(logDir, { recursive: true }); return logDir;
-}
-
-export function resolvePipelineRunLogDir(config: any, runId: any = getRunId(config)) {
-  const logDir = pipelineLogDir(config);
-  if (!logDir) throw new Error('pipeline log dir: required for pipeline run log path');
-  if (!runId) throw new Error('pipeline run id: required for pipeline run log path');
-  const safeRunId = assertSafePathSegment(runId, 'pipeline run id');
-  return assertPathInside(path.join(logDir, 'runs', safeRunId), logDir, 'pipeline run log path', 'pipeline log root');
-}
-
-export function ensurePipelineRunLogDir(config: any) {
-  const runLogDir = resolvePipelineRunLogDir(config); if (runLogDir) fs.mkdirSync(runLogDir, { recursive: true }); return runLogDir;
-}
-
-export function archValidatorLogDir(config: any) {
-  return projectLogSubdir(config, 'architecture-validator');
-}
-
-function pipelineRunLogDir(config: any) {
-  const runId = getRunId(config);
-  const logDir = pipelineLogDir(config);
-  if (selectTruthyValue(() => (!logDir), () => (!runId))) return null;
-  const safeRunId = assertSafePathSegment(runId, 'pipeline run id');
-  return assertPathInside(path.join(logDir, 'runs', safeRunId), logDir, 'pipeline run log path', 'pipeline log root');
 }

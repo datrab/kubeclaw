@@ -70,10 +70,10 @@ export function classifyPipelineArtifactSurface(
   if (OPERATOR_MIRROR_SURFACES.has(normalized)) {
     return PIPELINE_ARTIFACT_AUTHORITY_ROLES.OPERATOR_MIRROR;
   }
-  if (
-    QUARANTINED_EVIDENCE_SURFACES.has(normalized)
-    || artifact?.schema_version === 'quarantined_payload.v1'
-  ) {
+  if (QUARANTINED_EVIDENCE_SURFACES.has(normalized)) {
+    return PIPELINE_ARTIFACT_AUTHORITY_ROLES.QUARANTINED_EVIDENCE;
+  }
+  if (artifact?.schema_version === 'quarantined_payload.v1') {
     return PIPELINE_ARTIFACT_AUTHORITY_ROLES.QUARANTINED_EVIDENCE;
   }
   return PIPELINE_ARTIFACT_AUTHORITY_ROLES.OPERATOR_MIRROR;
@@ -105,11 +105,11 @@ function identityComparison(input: any, identity: any) {
     runIdMatches,
     sessionKeyMatches,
     dispatchIdMatches,
-    identityDrift: Boolean(
-      (input.expectedRunId && identity.runId && !runIdMatches)
-      || (input.expectedSessionKey && identity.sessionKey && !sessionKeyMatches)
-      || (input.expectedDispatchId && identity.dispatchId && !dispatchIdMatches)
-    ),
+    identityDrift: [
+      input.expectedRunId && identity.runId && !runIdMatches,
+      input.expectedSessionKey && identity.sessionKey && !sessionKeyMatches,
+      input.expectedDispatchId && identity.dispatchId && !dispatchIdMatches,
+    ].some(Boolean),
   };
 }
 

@@ -31,4 +31,3 @@ export function emitPipelineCheckpoint(config: AnyRecord = {}, point: string, de
     log('WARN', `Pipeline checkpoint '${normalizedPoint}' could not be recorded: ${message}`);
   }
 }
-

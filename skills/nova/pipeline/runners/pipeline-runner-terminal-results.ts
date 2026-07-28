@@ -1,22 +1,10 @@
 import {
-  onPipelineCompleted,
-  onPipelineHalted,
   onSummaryStarted,
   onSummaryCompleted,
-  onEscalated,
-  emitOperatorAlert,
 } from '../services/telemetry.ts';
-import {
-  resolveResultAttempt,
-  resolveResultSessionKey,
-  resolveResultGatewayLabel,
-  resolveResultDispatchId,
-} from '../services/correlation.ts';
 import {
   buildPipelineStepResult,
   isPipelineStepResult,
-  pipelineStepDiagnosticSummary,
-  pipelineStepRateLimitDetails,
   pipelineStepTerminalDecision,
   pipelineStepTerminalStatus,
   PIPELINE_STEP_ACTIONS,
@@ -29,42 +17,23 @@ import {
 } from '../services/contracts/terminal-decision.ts';
 import {
   _telemetryCtx,
-  buildEscalationPayload,
-  buildPipelineHaltPayload,
-  buildBlockedModuleResult,
-  buildResultWithStepCorrelation,
-  resolvePipelineGateType,
 } from './pipeline-runner-shared.ts';
-import { getPipelineRunnerDeps } from './pipeline-runner-deps.ts';
 import { getRunId } from '../core/runtime.ts';
 import { getPipelineArtifactBundle } from '../services/artifact-bundle.ts';
+import { loadLifecycleReadModels } from '../services/status-store.ts';
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 const PROCESS_SUCCESS_CODE = 0;
 const PROCESS_FAILURE_CODE = 1;
-const NEEDS_NOVA_TERMINAL_STATUSES = Object.freeze(['action_required', 'timed_out']);
-const ESCALATION_TERMINAL_STATUSES = Object.freeze(['action_required', 'timed_out', 'blocked']);
 
 function objectRecord(value: unknown): AnyRecord | null {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as AnyRecord : null;
-}
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
 }
 
 function requirePipelineRunId(config: AnyRecord, purpose: any = 'pipeline terminal operation'): string {
   const runId = getRunId(config);
   if (runId) return runId;
   throw new Error(`${purpose} requires a run id`);
-}
-
-function shouldInjectNeedsNovaForTerminalStatus(terminalStatus: string | null | undefined): boolean {
-  return terminalStatus != null && NEEDS_NOVA_TERMINAL_STATUSES.includes(terminalStatus);
-}
-
-function shouldEmitEscalationForTerminalStatus(terminalStatus: string | null | undefined): boolean {
-  return terminalStatus != null && ESCALATION_TERMINAL_STATUSES.includes(terminalStatus);
 }
 
 export function processExitCodeForTerminalStatus(terminalStatus: string | null | undefined): number {
@@ -224,6 +193,3 @@ export function buildTerminalGeneratorFailureResult(config: AnyRecord, stageId: 
     terminalSource: `pipeline:${stageId}`,
   });
 }
-
-import { log } from '../core/logger.ts';
-import { appendPipelineLifecycleEvent, loadLifecycleReadModels } from '../services/status-store.ts';

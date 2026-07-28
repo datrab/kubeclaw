@@ -77,11 +77,19 @@ const busterTerminalFailureSource = [
 ].join('\n');
 const moduleRunnerCompletionsSource = fs.readFileSync(moduleRunnerCompletionsPath, 'utf8');
 const terminalResultsSource = fs.readFileSync(terminalResultsPath, 'utf8');
-const contextSource = fs.readFileSync(contextPath, 'utf8');
+const contextSource = [
+  fs.readFileSync(contextPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/core/plugin-context-surfaces.ts'), 'utf8'),
+].join('\n');
 const registrySource = fs.readFileSync(registryPath, 'utf8');
 const registryAccessSource = fs.readFileSync(registryAccessPath, 'utf8');
 const registryBuiltinsSource = fs.readFileSync(registryBuiltinsPath, 'utf8');
-const registryRuntimeSource = `${registrySource}\n${registryBuiltinsSource}`;
+const registryRuntimeSource = [
+  registrySource,
+  registryBuiltinsSource,
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/core/registry/builtin-bridge.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/core/registry/builtin-workers.ts'), 'utf8'),
+].join('\n');
 const constantsSource = fs.readFileSync(constantsPath, 'utf8');
 
 for (const marker of [
@@ -192,9 +200,9 @@ assert.equal(contextSource.includes('bindPluginContextRuntime'), false, 'PluginC
 assert.equal(registryRuntimeSource.includes('getRuntimeConfigFromPluginContext'), false, 'built-in registry must use explicit coreRuntime instead of hidden context getters');
 assert.equal(registryRuntimeSource.includes('ctx.coreRuntime.readConfig()'), true, 'built-in registry should read runtime config through explicit coreRuntime');
 assert.equal(contextSource.includes("Object.defineProperty(pluginContext, 'coreRuntime'"), true, 'PluginContext should expose explicit non-enumerable coreRuntime only for built-ins');
-assert.equal(contextSource.includes("workerRuntime: selectDefinedValue(() => (objectRecord(resolvedEffects.workerRuntime)), () => ({}))"), true, 'PluginContext should resolve the core worker runtime adapter effects through typed record normalization');
-assert.equal(contextSource.includes("hasCapability(capabilities, 'dispatch.worker_runtime')"), true, 'PluginContext should gate worker runtime dispatch by the renamed capability');
-assert.equal(contextSource.includes('pluginContext.workerRuntime'), true, 'PluginContext should expose the renamed trusted worker runtime surface');
+assert.equal(contextSource.includes('workerRuntime: objectRecord(value.workerRuntime) ?? {}'), true, 'PluginContext should resolve the core worker runtime adapter effects through typed record normalization');
+assert.equal(contextSource.includes("['dispatch.worker_runtime', 'workerRuntime', 'dispatch'"), true, 'PluginContext should declare worker runtime dispatch under the renamed capability');
+assert.equal(contextSource.includes('pluginContext[namespace]'), true, 'PluginContext should expose capability-gated trusted runtime surfaces');
 assert.equal(registryRuntimeSource.includes('ctx.workerRuntime.dispatch('), true, 'built-in worker stage owners should call the trusted worker runtime adapter');
 assert.equal(constantsSource.includes('dispatch.worker_runtime'), true, 'capability registry should use dispatch.worker_runtime');
 assert.equal(moduleRunnerSource.includes('function buildModuleForgeRunInput('), false, 'module-runner must not keep a local Forge run-input builder');

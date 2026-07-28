@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
-import { sendTaskCompletionSignal } from '../../../../../skills/buster/pipeline/services/task-lifecycle/completion-signal.ts';
+import { publishTaskCompletionSignal } from '../../../../../skills/buster/pipeline/services/task-lifecycle/completion-signal.ts';
 import { resolveBusterOutputFilePath } from '../../../../../skills/buster/pipeline/services/pipeline-helpers.ts';
 import {
   buildTaskCompletionRecord,
@@ -93,7 +93,7 @@ async function withStaleOutputSignal(signal, verify) {
     findings: [],
   }, null, 2));
   try {
-    await sendTaskCompletionSignal(completionRequest(payload, completionState, {
+    await publishTaskCompletionSignal(completionRequest(payload, completionState, {
       spawnedSubagent: true,
       suitesInfo: { results: [], suiteSummary: '', suiteDetailSummary: '' },
       sessionKeyForCompletion: 'session-current',
@@ -173,7 +173,7 @@ test('Buster completion signal writes deterministic suite PASS artifact without 
   const verified = [];
 
   try {
-    await sendTaskCompletionSignal({
+    await publishTaskCompletionSignal({
       payload,
       completionState,
       spawnedSubagent: false,
@@ -226,7 +226,7 @@ test('Buster completion signal does not emit Redis when output_file verify fails
   const errors = [];
 
   try {
-    await sendTaskCompletionSignal({
+    await publishTaskCompletionSignal({
       payload,
       completionState,
       spawnedSubagent: true,

@@ -12,8 +12,8 @@ import { getRepoRoot } from '../services/git-workflows.ts';
 import { buildCleanupKubernetesLabels } from '../services/resource-cleanup.ts';
 import { dumpYamlDocuments, loadYamlDocuments } from './manifest.ts';
 import { parseSecretNameFromRef } from './k8s-credentials.ts';
-import { busterEnvironmentSnapshot, readBusterEnvironment } from '../runtime-environment.ts';
-import type { BusterEnvironmentKey } from '../runtime-environment.ts';
+import { busterEnvironmentSnapshot, readBusterEnvironment } from '../buster-environment.ts';
+import type { BusterEnvironmentKey } from '../buster-environment.ts';
 
 export type AnyRecord = Record<string, any>;
 export type SuiteLog = (msg: string) => void;

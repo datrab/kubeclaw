@@ -27,6 +27,10 @@ run_step "runtime collisions" \
   node tests/verification/runtime/check-runtime-collisions.mjs \
   --source-root "$REPO_DIR"
 
+run_step "agent skill bundles" \
+  node tests/verification/runtime/check-agent-skill-bundles.mjs \
+  --source-root "$REPO_DIR"
+
 run_step "final-gate hardening" \
   node tests/verification/runtime/check-final-gate-hardening.mjs \
   --source-root "$REPO_DIR"

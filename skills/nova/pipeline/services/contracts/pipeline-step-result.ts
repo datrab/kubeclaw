@@ -4,6 +4,8 @@ import {
   pipelineTerminalStatusForStepOutcome,
   validatePipelineTerminalDecision,
 } from './terminal-decision.ts';
+import { buildStepDiagnostics } from './pipeline-step-diagnostics.ts';
+import { arrayValue, isPlainObject, objectRecord } from './contract-values.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
@@ -65,24 +67,9 @@ export function cloneSerializable(value: unknown): any {
   return cloneSerializableValue(value);
 }
 
-function arrayValue(value: unknown): unknown[] {
-  return Array.isArray(value) ? value : [];
-}
-
-function firstArrayValue(...values: unknown[]): unknown[] {
-  for (const value of values) {
-    if (Array.isArray(value)) return value;
-  }
-  return [];
-}
-
-function objectRecord(value: unknown): UnknownRecord {
-  return isPlainObject(value) ? value : {};
-}
-
 function allowedOutcomesForAction(action: unknown): readonly string[] {
   if (!isPipelineStepAction(action)) return [];
-  return OUTCOMES_BY_ACTION[action as string];
+  return OUTCOMES_BY_ACTION[action as string] ?? [];
 }
 
 function normalizeStepType(stepType: unknown): string | null {
@@ -134,10 +121,6 @@ export function normalizePipelineStepOutcome(value: unknown): string | null {
   return null;
 }
 
-function isPlainObject(value: unknown): value is UnknownRecord {
-  return value !== null && typeof value === 'object' && !Array.isArray(value);
-}
-
 function normalizeTerminal({
   outcome,
   stepId,
@@ -169,54 +152,25 @@ function normalizeTerminal({
   };
 }
 
-export function buildPipelineStepResult({
-  stepType,
-  stepId,
-  nextAction,
-  outcome,
-  issueType = null,
-  reason = null,
-  summary = null,
-  diagnostics = {},
-  correlation = {},
-  remediation = null,
-  wait = null,
-  rateLimit = null,
-  controlResult = null,
-  terminalAction = null,
-  terminalScope = null,
-  terminalReasonCode = null,
-  terminalHumanReason = null,
-  terminalSource = null,
-  terminalMetadata = {},
-}: UnknownRecord = {}): UnknownRecord {
+export function buildPipelineStepResult(input: UnknownRecord = {}): UnknownRecord {
+  const {
+    stepType, stepId, nextAction, outcome, issueType, reason, summary,
+    diagnostics, correlation, remediation, wait, rateLimit, controlResult,
+    terminalAction, terminalScope, terminalReasonCode, terminalHumanReason,
+    terminalSource, terminalMetadata,
+  } = input;
   const normalizedStepType = normalizeStepType(stepType);
   const normalizedStepId = normalizeStepId(stepId);
   const normalizedAction = selectTruthyValue(() => (nextAction), () => (null));
   const normalizedOutcome = normalizePipelineStepOutcome(outcome);
-  const normalizedReason = selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (reason), () => (summary))), () => (diagnostics?.summary))), () => (controlResult?.diagnostics?.summary))), () => (null));
-  const typedDiagnostics = {
-    ...(diagnostics?.typed ? cloneSerializable(diagnostics.typed) : {}),
-    ...(controlResult ? { controlResult: cloneSerializable(controlResult) } : {}),
-    ...(remediation ? { remediation: cloneSerializable(remediation) } : {}),
-    ...(wait ? { wait: cloneSerializable(wait) } : {}),
-  };
-  const result = {
+  const result: UnknownRecord = {
     schemaVersion: PIPELINE_STEP_RESULT_SCHEMA_VERSION,
     kind: PIPELINE_STEP_RESULT_KIND,
     stepType: normalizedStepType,
     stepId: normalizedStepId,
     nextAction: normalizedAction,
     outcome: normalizedOutcome,
-    ...(issueType ? { issueType } : {}),
-    diagnostics: {
-      summary: normalizedReason,
-      findings: cloneSerializable(firstArrayValue(diagnostics?.findings, controlResult?.diagnostics?.findings)),
-      metadata: cloneSerializable(objectRecord(diagnostics?.metadata)),
-      typed: typedDiagnostics,
-      ...(diagnostics?.contract_invalid === true ? { contract_invalid: true } : {}),
-      ...(diagnostics?.contract_diagnostic ? { contract_diagnostic: cloneSerializable(diagnostics.contract_diagnostic) } : {}),
-    },
+    diagnostics: buildStepDiagnostics({ reason, summary, diagnostics, controlResult, remediation, wait }),
     correlation: cloneSerializable(objectRecord(correlation)),
     rateLimit: rateLimit == null ? null : cloneSerializable(rateLimit),
     terminal: normalizeTerminal({
@@ -231,6 +185,7 @@ export function buildPipelineStepResult({
       terminalMetadata,
     }),
   };
+  if (issueType) result.issueType = issueType;
 
   const errors = validatePipelineStepResult(result);
   if (errors.length > 0) {
@@ -239,26 +194,15 @@ export function buildPipelineStepResult({
   return result;
 }
 
-export function buildPipelineStepResultFromControlResult(controlResult: UnknownRecord = {}, {
-  stepType,
-  stepId,
-  outcome = null,
-  reason = null,
-  correlation = {},
-  remediation = null,
-  wait = null,
-  rateLimit = null,
-  terminalAction = null,
-  terminalScope = null,
-  terminalReasonCode = null,
-  terminalHumanReason = null,
-  terminalSource = null,
-  terminalMetadata = {},
-}: UnknownRecord = {}): UnknownRecord {
+export function buildPipelineStepResultFromControlResult(controlResult: UnknownRecord = {}, options: UnknownRecord = {}): UnknownRecord {
+  const {
+    stepType, stepId, outcome, reason, correlation, remediation, wait, rateLimit,
+    terminalAction, terminalScope, terminalReasonCode, terminalHumanReason,
+    terminalSource, terminalMetadata,
+  } = options;
+  const diagnostics = objectRecord(controlResult.diagnostics);
   const action = pipelineStepActionForControlAction(controlResult?.nextAction);
-  const metadata = isPlainObject(controlResult?.diagnostics?.metadata)
-    ? controlResult.diagnostics.metadata
-    : {};
+  const metadata = objectRecord(diagnostics.metadata);
   const controlFailureClass = typeof metadata.failure_class === 'string' && metadata.failure_class.trim()
     ? metadata.failure_class.trim()
     : null;
@@ -267,12 +211,12 @@ export function buildPipelineStepResultFromControlResult(controlResult: UnknownR
     stepId,
     nextAction: action,
     outcome,
-    issueType: selectTruthyValue(() => (controlResult?.issueType), () => (null)),
+    issueType: controlResult.issueType ?? null,
     reason,
-    summary: selectTruthyValue(() => (controlResult?.diagnostics?.summary), () => (null)),
+    summary: diagnostics.summary ?? null,
     diagnostics: {
-      findings: arrayValue(controlResult?.diagnostics?.findings),
-      metadata: objectRecord(controlResult?.diagnostics?.metadata),
+      findings: arrayValue(diagnostics.findings),
+      metadata,
     },
     correlation,
     remediation,
@@ -298,52 +242,57 @@ export function isPipelineStepResult(result: unknown): result is UnknownRecord {
     && typeof result.outcome === 'string';
 }
 
-export function validatePipelineStepResult(result: unknown = {}): string[] {
+function stepShapeErrors(result: UnknownRecord): string[] {
   const errors: string[] = [];
-  if (!isPlainObject(result)) {
-    return ['result must be an object'];
-  }
   if (result.schemaVersion !== PIPELINE_STEP_RESULT_SCHEMA_VERSION) errors.push(`schemaVersion must be '${PIPELINE_STEP_RESULT_SCHEMA_VERSION}'`);
   if (result.kind !== PIPELINE_STEP_RESULT_KIND) errors.push(`kind must be '${PIPELINE_STEP_RESULT_KIND}'`);
   if (!Object.values(PIPELINE_STEP_TYPES).includes(result.stepType)) errors.push(`stepType must be one of: ${Object.values(PIPELINE_STEP_TYPES).join(', ')}`);
-  if (selectTruthyValue(() => (!result.stepId), () => (typeof result.stepId !== 'string'))) errors.push('stepId must be a non-empty string');
+  if (!result.stepId || typeof result.stepId !== 'string') errors.push('stepId must be a non-empty string');
   if (!isPipelineStepAction(result.nextAction)) errors.push(`nextAction must be one of: ${Object.values(PIPELINE_STEP_ACTIONS).join(', ')}`);
   if (!isPipelineStepOutcome(result.outcome)) errors.push(`outcome must be one of: ${Object.values(PIPELINE_STEP_OUTCOMES).join(', ')}`);
-
-  const allowedOutcomes = allowedOutcomesForAction(result.nextAction);
-  if (result.outcome && allowedOutcomes.length > 0 && !allowedOutcomes.includes(result.outcome)) {
+  const allowed = allowedOutcomesForAction(result.nextAction);
+  if (result.outcome && allowed.length > 0 && !allowed.includes(result.outcome)) {
     errors.push(`outcome '${result.outcome}' is not valid for nextAction '${result.nextAction}'`);
   }
+  return errors;
+}
 
-  const terminal = objectRecord(result?.terminal);
-  if (Object.prototype.hasOwnProperty.call(terminal, 'exitCode')) errors.push('numeric terminal exitCode must not be present');
-  if (Object.prototype.hasOwnProperty.call(terminal, 'exitLabel')) errors.push('numeric terminal exitLabel must not be present');
-  if (Object.prototype.hasOwnProperty.call(terminal, 'exit_code')) errors.push('numeric terminal exit_code must not be present');
-  if (Object.prototype.hasOwnProperty.call(terminal, 'exit_label')) errors.push('numeric terminal exit_label must not be present');
+function terminalEnvelopeErrors(result: UnknownRecord): string[] {
+  const errors: string[] = [];
+  const terminal = objectRecord(result.terminal);
+  for (const field of ['exitCode', 'exitLabel', 'exit_code', 'exit_label']) {
+    if (Object.prototype.hasOwnProperty.call(terminal, field)) errors.push(`numeric terminal ${field} must not be present`);
+  }
   if (result.rateLimit != null && !isPlainObject(result.rateLimit)) errors.push('rateLimit must be an object or null');
   if (result.outcome === PIPELINE_STEP_OUTCOMES.RATE_LIMITED && !isPlainObject(result.rateLimit)) {
     errors.push('rateLimit must be provided for rate_limited outcomes');
   }
-
-  const expectedTerminalStatus = pipelineTerminalStatusForStepOutcome(result.outcome);
-  const actualTerminalStatus = selectDefinedValue(() => (result?.terminal?.status), () => (null));
-  if (expectedTerminalStatus !== actualTerminalStatus) {
-    errors.push(`terminal.status must be ${expectedTerminalStatus == null ? 'null' : expectedTerminalStatus} for outcome '${result.outcome}'`);
-  }
-
-  const terminalDecision = selectDefinedValue(() => (result?.terminal?.decision), () => (null));
-  if (expectedTerminalStatus == null && terminalDecision != null) {
-    errors.push(`terminal.decision must be null for non-terminal outcome '${result.outcome}'`);
-  } else if (expectedTerminalStatus != null) {
-    const decisionErrors = validatePipelineTerminalDecision(terminalDecision);
-    if (decisionErrors.length > 0) {
-      errors.push(...decisionErrors.map((error: any) => `terminal.decision ${error}`));
-    } else if (terminalDecision.status !== expectedTerminalStatus) {
-      errors.push(`terminal.decision.status must be ${expectedTerminalStatus} for outcome '${result.outcome}'`);
-    }
-  }
-
   return errors;
+}
+
+function terminalDecisionErrors(result: UnknownRecord): string[] {
+  const errors: string[] = [];
+  const terminal = objectRecord(result.terminal);
+  const expected = pipelineTerminalStatusForStepOutcome(result.outcome);
+  const actual = terminal.status ?? null;
+  if (expected !== actual) errors.push(`terminal.status must be ${expected == null ? 'null' : expected} for outcome '${result.outcome}'`);
+  const decision = terminal.decision ?? null;
+  if (expected == null && decision != null) {
+    errors.push(`terminal.decision must be null for non-terminal outcome '${result.outcome}'`);
+    return errors;
+  }
+  if (expected == null) return errors;
+  const decisionErrors = validatePipelineTerminalDecision(decision);
+  errors.push(...decisionErrors.map((error) => `terminal.decision ${error}`));
+  if (decisionErrors.length === 0 && decision.status !== expected) {
+    errors.push(`terminal.decision.status must be ${expected} for outcome '${result.outcome}'`);
+  }
+  return errors;
+}
+
+export function validatePipelineStepResult(result: unknown = {}): string[] {
+  if (!isPlainObject(result)) return ['result must be an object'];
+  return [...stepShapeErrors(result), ...terminalEnvelopeErrors(result), ...terminalDecisionErrors(result)];
 }
 
 export function assertPipelineStepResult(result: unknown = {}): UnknownRecord {

@@ -12,7 +12,7 @@ import path from 'path';
 import { getRepoRoot, gitExec, getCurrentBranch } from '../git-primitives.ts';
 import { sleep } from '../timing.ts';
 import { isRuntimeStatePath } from '../runtime-state-paths.ts';
-import { busterEnvironmentSnapshot } from '../runtime-environment.ts';
+import { busterEnvironmentSnapshot } from '../buster-environment.ts';
 import { ensureGitIdentity, hasScopedStagedChanges } from './git-identity.ts';
 import { logGit } from './git-workflow-contracts.ts';
 import type { GitLogger, GitPushOptions, GitWorkflowOptions } from './git-workflow-contracts.ts';

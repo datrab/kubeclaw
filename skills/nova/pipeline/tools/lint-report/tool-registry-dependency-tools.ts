@@ -1,15 +1,22 @@
-import fs from 'fs';
-import os from 'os';
 import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
-import { configuredTargetPaths, findFiles, listConfiguredTargetFiles } from './discovery.ts';
+import { configuredTargetPaths } from './discovery.ts';
 import { tryParseJson } from './parsers.ts';
-import { failConfigMissing, failParse, notApplicable } from './report.ts';
-import { log } from './output.ts';
-import { arrayValue, objectRecord as recordValue, selectPresentValue, textValue } from '../../value-boundary.ts';
-import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
-import { affectedTypeScriptConfigs, eslintFindingSeed, isJavaScriptOrTypeScriptProject, LINT_VULNERABILITY_FOUND, npmAuditSeverity, registerTool, requireNumber, requireString, TOOL_OUTPUT_PREVIEW_MISSING, uniqueTypeScriptFindings } from './tool-registry-core.ts';
+import { failParse } from './report.ts';
+import {
+  objectRecord as recordValue,
+  selectPresentValue,
+  textValue,
+} from '../../value-boundary.ts';
+import { selectTruthyValue } from '../../optional-absence.ts';
+import {
+  isJavaScriptOrTypeScriptProject,
+  LINT_VULNERABILITY_FOUND,
+  npmAuditSeverity,
+  registerTool,
+  requireString,
+} from './tool-registry-core.ts';
 
 // ── npm audit (Dependency security) ──
 registerTool({

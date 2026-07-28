@@ -70,7 +70,7 @@ function sourceInventories(repo: string | null, progress: any, config: any) {
   const skills = ['skills/common', 'skills/nova', 'skills/buster']
     .filter((relative) => repo && fs.existsSync(path.join(repo, relative)))
     .map((relative) => versionedSource(repo, path.basename(relative), relative));
-  const observerPath = 'plugins/openclaw-agent-observer';
+  const observerPath = 'skills/common/plugins/openclaw-agent-observer';
   const observer = repo && fs.existsSync(path.join(repo, observerPath))
     ? [versionedSource(repo, 'openclaw-agent-observer', observerPath)]
     : [];

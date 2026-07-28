@@ -4,11 +4,8 @@ import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 // Internal helpers (initTempDir, output, log, dryRun) will be co-located here
 // as extraction proceeds in later modules.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { fileURLToPath } from 'url';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { discoverLatestRun } from './run-discovery.ts';
 import { registerShutdownHooks } from './agents/shutdown.ts';
@@ -98,10 +95,191 @@ export function normalizeNovaCliFlags(rawFlags: AnyRecord = {}, env: AnyRecord =
   });
 }
 
+function cliOutput(value: any) {
+  return new Promise<void>((resolve) => {
+    process.stdout.write(JSON.stringify(sanitizeJsonEgress(value, 'cli_output')) + '\n', () => {
+      resolve();
+    });
+  });
+}
+
+function cliLog(level: any, message: any) {
+  console.error(`[${level}]`, limitEgressText(message, Number.POSITIVE_INFINITY));
+}
+
+function parseFlags() {
+  const rawFlags = parseCliFlagValues(process.argv.slice(2), {
+    flags: {
+      project: { type: 'string' },
+      repo: { type: 'string' },
+      module: { type: 'string' },
+      blueprint: { type: 'string' },
+      'blueprint-list': { type: 'boolean', default: false },
+      prompt: { type: 'string' },
+      'prompt-file': { type: 'string' },
+      'nova-channel': { type: 'string' },
+      model: { type: 'string' },
+      thinking: { type: 'string' },
+      resume: { type: 'boolean', default: false },
+      status: { type: 'boolean', default: false },
+      'dry-run': { type: 'boolean', default: false },
+      help: { type: 'boolean', default: false },
+    },
+  });
+  return normalizeNovaCliFlags(rawFlags, novaEnvironmentSnapshot());
+}
+
+function printHelp() {
+  console.error(`
+KubeClaw Swarm Pipeline — Deterministic Orchestrator
+
+Usage: node pipeline.ts [options]
+
+Pipeline commands:
+  --project <n>           Project name (or CURRENT_PROJECT env)
+  --repo <path>           Git repo root (or REPO_ROOT env; auto-detected if in repo)
+  --module <id>           Run a single module
+  --resume                Resume pipeline from current state
+  --model <id>            Runtime model override (beats project defaults and platform fallback_model)
+  --thinking <level>      Runtime thinking override: ${VALID_THINKING_LEVELS.join('|')}
+  --prompt "text"         Bounded operator remediation guidance for Forge prompts
+  --prompt-file <path>    Read bounded guidance from a repo-contained UTF-8 file
+  --nova-channel <id>     Discord channel id for action-required escalation
+  --status                Print current pipeline status as JSON
+  --dry-run               Show execution plan, spawn nothing
+
+Blueprint commands:
+  --blueprint <id>        Release a specific blueprint from architecture branch
+  --blueprint-list        List all available blueprints
+
+Exit codes:
+  0   Success / pipeline complete
+  1   Any non-success terminal status or configuration/system error
+  `);
+}
+
+async function handleReadOnlyCommand(flags: AnyRecord, config: AnyRecord, progress: AnyRecord, cleanup: () => void) {
+  if (flags.blueprintList) {
+    await cliOutput({ status: 'success', modules: listBlueprints(config) });
+    cleanup();
+    return PROCESS_SUCCESS_CODE;
+  }
+  if (flags.blueprint) {
+    const mod = progress.modules[flags.blueprint];
+    if (!mod) {
+      await cliOutput({ status: 'error', error: `Module '${flags.blueprint}' not in progress.json` });
+      cleanup();
+      return PROCESS_FAILURE_CODE;
+    }
+    await cliOutput(await releaseBlueprint(config, progress, flags.blueprint, mod.dir, blueprintStages(mod)));
+    cleanup();
+    return PROCESS_SUCCESS_CODE;
+  }
+  if (flags.status) {
+    prepareReadOnlyLifecycleContext(config);
+    printStatus(config, progress);
+    cleanup();
+    return PROCESS_SUCCESS_CODE;
+  }
+  if (flags.dryRun) {
+    prepareReadOnlyLifecycleContext(config);
+    dryRun(config, progress);
+    cleanup();
+    return PROCESS_SUCCESS_CODE;
+  }
+  return null;
+}
+
+async function executePipelineCommand(flags: AnyRecord, loaded: AnyRecord, tempManager: AnyRecord) {
+  const { config, progress, pluginRegistry } = loaded;
+  if (flags.resume) prepareResumeLifecycleContext(config);
+  const runtimeOverrides = runtimeOverridesFromFlags(flags);
+  const ctx = createPipelineContext({
+    config,
+    progress,
+    runId: cliRunId(config),
+    stats: createRunStats(),
+    novaChannel: flags.novaChannel,
+    pluginRegistry,
+    runtimeOverrides,
+  });
+  ctx.setTempDir(tempManager.dir);
+  setActiveContext(ctx);
+  config._resume = flags.resume;
+  initLogDir(config, ctx, { resume: flags.resume });
+  registerShutdownHooks(config);
+  const promptIngress = resolveNovaPromptIngress({
+    prompt: flags.prompt,
+    promptFile: flags.promptFile,
+    repoRoot: config.repo_root,
+  });
+  if (promptIngress.metadata) {
+    const meta = promptIngress.metadata;
+    cliLog('INFO', `Operator remediation directive accepted (source=${meta.source}, chars=${meta.chars}, bytes=${meta.bytes}${meta.prompt_file ? `, file=${meta.prompt_file}` : ''})`);
+  }
+  const exitCode = await runPipeline(config, progress, {
+    module: flags.module,
+    resume: flags.resume,
+    novaPrompt: promptIngress.prompt,
+    novaChannel: flags.novaChannel,
+  });
+  return { config, ctx, exitCode };
+}
+
+async function runConfiguredCommand(flags: AnyRecord, tempManager: AnyRecord) {
+  tempManager.init();
+  if (flags.runtimeThinking) validateThinkingLevel(flags.runtimeThinking, '--thinking');
+  const loaded = loadConfig(flags.project, { repoRoot: flags.repo });
+  const readOnlyExit = await handleReadOnlyCommand(flags, loaded.config, loaded.progress, () => tempManager.cleanup());
+  if (readOnlyExit !== null) return { exitCode: readOnlyExit, config: null, ctx: null };
+  const result = await executePipelineCommand(flags, loaded, tempManager);
+  tempManager.cleanup();
+  return result;
+}
+
 export async function main() {
   const tempManager = createTempManager();
-  const initTempDir = () => tempManager.init();
-  const cleanupTempDir = () => tempManager.cleanup();
+  let activeConfig: AnyRecord | null = null;
+  let activeContext: AnyRecord | null = null;
+  let flags: AnyRecord;
+  try {
+    flags = parseFlags();
+  } catch (error: any) {
+    const message = errorMessage(error);
+    cliLog('ERROR', message);
+    await cliOutput({ exit: PROCESS_FAILURE_CODE, error: message });
+    process.exitCode = PROCESS_FAILURE_CODE;
+    return PROCESS_FAILURE_CODE;
+  }
+  if (flags.help) {
+    printHelp();
+    process.exitCode = PROCESS_SUCCESS_CODE;
+    return PROCESS_SUCCESS_CODE;
+  }
+  if (!flags.novaChannel && !flags.status && !flags.dryRun && !flags.blueprint && !flags.blueprintList) {
+    console.error('ERROR: --nova-channel <id> is required (or set NOVA_CHANNEL env var).');
+    process.exitCode = PROCESS_FAILURE_CODE;
+    return PROCESS_FAILURE_CODE;
+  }
+  try {
+    const result = await runConfiguredCommand(flags, tempManager);
+    activeConfig = result.config;
+    activeContext = result.ctx;
+    process.exitCode = result.exitCode;
+    return result.exitCode;
+  } catch (error: any) {
+    cliLog('ERROR', errorMessage(error));
+    await cliOutput({ exit: PROCESS_FAILURE_CODE, error: errorMessage(error) });
+    tempManager.cleanup();
+    process.exitCode = PROCESS_FAILURE_CODE;
+    return PROCESS_FAILURE_CODE;
+  } finally {
+    await closeLogDir(activeConfig, activeContext);
+    clearActiveContext();
+  }
+}
+
+/*
   let output = (o: any) => new Promise((resolve: any) => {
     process.stdout.write(JSON.stringify(sanitizeJsonEgress(o, 'cli_output')) + '\n', () => {
       resolve(undefined);
@@ -286,6 +464,7 @@ Exit codes:
     }
   })();
 }
+*/
 
 // Also run directly if invoked as script
 if (__currentPath === __entryPath) {

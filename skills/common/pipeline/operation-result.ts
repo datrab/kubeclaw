@@ -14,7 +14,7 @@ export type OperationFailure = Readonly<{
   diagnostics: OperationDiagnostics;
 }>;
 
-export type OperationResult<T> = OperationSuccess<T> | OperationFailure;
+type OperationResult<T> = OperationSuccess<T> | OperationFailure;
 
 export type StructuredOperationErrorOptions = {
   kind?: OperationFailureKind;

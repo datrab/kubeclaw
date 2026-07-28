@@ -26,7 +26,7 @@ assertExcludes(busterShim, 'export * from', 'Buster executable shim must not reg
 
 const novaRootShim = read(sourceRoot, 'skills/nova/pipeline.ts');
 assertIncludes(novaRootShim, "export * from './pipeline/index.ts';", 'Nova root shim must re-export the narrow typed public API');
-assertIncludes(novaRootShim, "await import('./pipeline/cli.ts')", 'Nova root shim must delegate direct execution to the CLI facade');
+assertIncludes(novaRootShim, "await import('./skills/common/plugin-runtime/cli.ts')", 'Nova root shim must delegate direct execution to the CLI facade');
 assertExcludes(novaRootShim, './pipeline/runners/', 'Nova root shim must not import runner behavior directly');
 assertExcludes(novaRootShim, './pipeline/services/', 'Nova root shim must not import service behavior directly');
 

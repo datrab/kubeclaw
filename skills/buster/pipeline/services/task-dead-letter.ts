@@ -1,4 +1,4 @@
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import { safeErrorMessage } from './runtime-diagnostics.ts';
 import { createRedisEventBus } from './task-transport-contract.ts';
 import type { AnyTaskRecord, BusterTaskPayload, DeadLetterOptions, RedisTaskClient } from './task-contracts.ts';

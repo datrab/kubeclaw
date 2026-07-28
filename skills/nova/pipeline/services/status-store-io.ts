@@ -14,7 +14,7 @@ import {
 } from "./status-store-lifecycle.ts";
 import { projectModuleRuntimeState } from "./status-store-read-models.ts";
 import { selectDefinedValue, selectTruthyValue } from "../optional-absence.ts";
-import { objectRecord } from "./status-store-guard.ts";
+import { objectRecord } from "./status-store-values.ts";
 
 function requiredPath(value: string | null, label: string): string {
   if (value) return value;

@@ -113,7 +113,7 @@ export function emitPolicyAuditAppendWarning(config: any, policyLogPath: any, er
     detail: detailFromError(error, 'model policy audit append failed'),
     ...ioWarningContext(error, entry),
   }, {
-    emitter: 'nova/pipeline/core/policy',
+    emitter: 'nova/skills/common/plugin-runtime/core/policy',
   });
 }
 
@@ -128,7 +128,7 @@ export function emitPipelineLogAppendWarning(config: any, targetPath: any, error
     detail: detailFromError(error, 'pipeline JSONL append failed'),
     ...ioWarningContext(error, entry),
   }, {
-    emitter: 'nova/pipeline/core/logger',
+    emitter: 'nova/skills/common/plugin-runtime/core/logger',
   });
 }
 

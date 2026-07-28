@@ -47,6 +47,8 @@ Move an item from roadmap to current docs only after the implementation exists a
 
 ## Related Pages
 
+- `architecture/plugin-system-vision.md`
+- `architecture/plugin-system-implementation-plan.md`
 - `DOCUMENTATION_REBUILD_PLAN.md`
 - `future-implementation-ideas.md`
 - `open-issues.md`

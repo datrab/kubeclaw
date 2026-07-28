@@ -44,6 +44,40 @@ The init container runs before the main container. It sets up SSH, clones the co
 
 The same init flow writes `/runtime-config/kubeclaw-health.mjs`. Kubernetes probes call that script through exec probes. Startup/readiness verify the local runtime surface and required dependencies; liveness checks only local gateway health to avoid restart loops during external dependency outages.
 
+## Skills Bundle Contract
+
+Nova and Buster do not consume the repository root directly as their runtime
+skill tree. `scripts/package-agent-skill-bundle.sh` materializes the final
+`/app/skills` tree for each role:
+
+1. copy `skills/nova` or `skills/buster`
+2. overlay `skills/common`
+3. replace the agent-observability facade with the canonical checked-in
+   contract source
+4. publish the resulting tree and manifest as the role's immutable code bundle
+
+This order is part of the runtime contract. Common owns every intentionally
+shared path that collides with a role-local facade. The bundle must retain role
+entrypoints, required `SKILL.md` files, and all imports needed after the source
+directories have been flattened into `/app/skills`.
+
+The plugin-system migration must preserve this materialized runtime surface.
+Generic v2 infrastructure belongs in the planned Common plugin-runtime
+directory; shared packages belong in the planned Common plugin root; and
+concrete role packages belong in the planned Nova or Buster plugin root shown
+in the implementation plan. Top-level development trees are not deployable
+substitutes for these role-aware sources.
+
+Verify the contract with:
+
+```bash
+node tests/verification/runtime/check-agent-skill-bundles.mjs \
+  --source-root "$PWD"
+
+node tests/verification/runtime/check-runtime-collisions.mjs \
+  --source-root "$PWD"
+```
+
 ## Open Issues
 
 - LiteLLM and Prism preview still use temporary NodePorts.
@@ -53,6 +87,7 @@ The same init flow writes `/runtime-config/kubeclaw-health.mjs`. Kubernetes prob
 | Topology surface | Source of truth | Expected resource or file | Check |
 | --- | --- | --- | --- |
 | Agent pod shape | `charts/kubeclaw/templates/deployment.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml` | `Deployment/agent-nova`, `Deployment/agent-buster`, init container, gateway sidecar, main container, Buster pipeline container | `helm template agent-nova charts/kubeclaw -n kubeclaw -f my-values/nova-values.yaml` |
+| Agent skill bundles | `scripts/package-agent-skill-bundle.sh`; `skills/nova`; `skills/buster`; `skills/common` | role-first, Common-second immutable `/app/skills` bundle | `node tests/verification/runtime/check-agent-skill-bundles.mjs --source-root "$PWD"` |
 | Services and NodePorts | `charts/kubeclaw/templates/service.yaml`; `service-extra-nodeports.yaml`; values files | ClusterIP gateway/bridge Services plus explicit extra NodePorts such as Prism preview | `./scripts/deploy.sh status` |
 | Persistent runtime state | `charts/kubeclaw/templates/pvc.yaml`; `charts/kubeclaw/templates/deployment.yaml` | workspace and config PVCs mounted under `/home/node/.openclaw/workspace`, `/config`, and `/home/node/.openclaw-persisted` | `kubectl -n "$NAMESPACE" get pvc -o wide` |
 | Buster namespace broker | `charts/kubeclaw/templates/buster-namespace-*.yaml`; `my-values/infra/buster-namespace-fence.yaml` | `BusterNamespaceLease` CRD, lease client RBAC, controller Deployment, namespace fence policy | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |

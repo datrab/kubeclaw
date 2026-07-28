@@ -38,23 +38,26 @@ export function deepClone<T = unknown>(value: T): T {
 }
 
 export function deepFreeze<T>(value: T, seen: WeakSet<object> = new WeakSet()): T {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (seen.has(value)))) return value;
-  seen.add(value);
-  for (const entry of Object.values(value)) {
+  if (!value || typeof value !== 'object') return value;
+  const objectValue = value as object;
+  if (seen.has(objectValue)) return value;
+  seen.add(objectValue);
+  for (const entry of Object.values(objectValue)) {
     deepFreeze(entry, seen);
   }
-  return Object.freeze(value);
+  return Object.freeze(objectValue) as T;
 }
 
 export function cloneReadonlySnapshot(value: unknown, seen: WeakMap<object, unknown> = new WeakMap()): unknown {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return value;
+  if (value === undefined || value === null) return value;
   if (typeof value === 'function') return undefined;
   if (typeof value !== 'object') return value;
-  if (seen.has(value)) return seen.get(value);
+  const objectValue = value as object;
+  if (seen.has(objectValue)) return seen.get(objectValue);
 
   if (Array.isArray(value)) {
     const clone: unknown[] = [];
-    seen.set(value, clone);
+    seen.set(objectValue, clone);
     for (const entry of value) {
       const clonedEntry = cloneReadonlySnapshot(entry, seen);
       if (selectTruthyValue(() => (clonedEntry !== undefined), () => (entry === undefined))) {
@@ -67,8 +70,8 @@ export function cloneReadonlySnapshot(value: unknown, seen: WeakMap<object, unkn
   }
 
   const clone: Record<string, unknown> = {};
-  seen.set(value, clone);
-  for (const [key, entry] of Object.entries(value)) {
+  seen.set(objectValue, clone);
+  for (const [key, entry] of Object.entries(objectValue)) {
     const clonedEntry = cloneReadonlySnapshot(entry, seen);
     if (selectTruthyValue(() => (clonedEntry !== undefined), () => (entry === undefined))) {
       clone[key] = clonedEntry;

@@ -83,9 +83,19 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
   const errors: RegistryError[] = [];
   const normalizedConfig = normalizePluginConfig(pluginConfigInput, errors);
   const builtinModules = Array.isArray(opts.builtinModules) ? opts.builtinModules : getBuiltinPluginDefinitions();
-  const discoveredDefinitions: AnyRecord[] = [];
-  const discoveredModuleIds = new Set();
+  const { discoveredDefinitions, discoveredModuleIds } = discoverPluginDefinitions(builtinModules, errors);
+  validateConfiguredModuleIds(normalizedConfig, discoveredModuleIds, errors);
+  const records = buildPluginRecords(normalizedConfig, discoveredDefinitions, discoveredModuleIds, errors);
+  const registry = assemblePluginRegistry(normalizedConfig, records, errors);
+  if (opts.throwOnError !== false && errors.length > 0) {
+    throw new Error(formatPluginRegistryErrors(errors));
+  }
+  return { normalizedConfig, registry, errors };
+}
 
+function discoverPluginDefinitions(builtinModules: AnyRecord[], errors: RegistryError[]) {
+  const discoveredDefinitions: AnyRecord[] = [];
+  const discoveredModuleIds = new Set<string>();
   for (const definition of builtinModules) {
     validateManifest(definition, errors);
     if (!definition?.manifest?.moduleId) continue;
@@ -96,7 +106,14 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
     discoveredModuleIds.add(definition.manifest.moduleId);
     discoveredDefinitions.push(definition);
   }
+  return { discoveredDefinitions, discoveredModuleIds };
+}
 
+function validateConfiguredModuleIds(
+  normalizedConfig: AnyRecord,
+  discoveredModuleIds: Set<string>,
+  errors: RegistryError[],
+): void {
   for (const moduleId of Object.keys(normalizedConfig.modules)) {
     if (!discoveredModuleIds.has(moduleId)) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.modules.${moduleId} references a module that was not discovered at startup`);
@@ -108,7 +125,14 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.restrictedCapabilityAllowlist.${moduleId} references a module that was not discovered at startup`);
     }
   }
+}
 
+function buildPluginRecords(
+  normalizedConfig: AnyRecord,
+  discoveredDefinitions: AnyRecord[],
+  discoveredModuleIds: Set<string>,
+  errors: RegistryError[],
+): AnyRecord {
   const records: AnyRecord = createRegistryDictionary();
   for (const definition of discoveredDefinitions) {
     const manifest = cloneManifest(definition.manifest);
@@ -134,12 +158,19 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
       config: deepFreeze(resolvedModuleConfig),
     });
   }
+  return records;
+}
 
+function assemblePluginRegistry(
+  normalizedConfig: AnyRecord,
+  records: AnyRecord,
+  errors: RegistryError[],
+) {
   const stageOwners = buildStageOwnerIndex(normalizedConfig, records, errors);
   const gateTypes = buildGateTypeIndex(normalizedConfig, records, stageOwners, errors);
   const hookIndex = buildHookIndex(records);
 
-  const registry = deepFreeze({
+  return deepFreeze({
     contractVersion: PLUGIN_CONTRACT_VERSION,
     enabled: normalizedConfig.enabled,
     config: deepFreeze({ ...normalizedConfig }),
@@ -155,11 +186,6 @@ export function buildPluginRegistry(pluginConfigInput: any, opts: AnyRecord = {}
     }),
   });
 
-  if (opts.throwOnError !== false && errors.length > 0) {
-    throw new Error(formatPluginRegistryErrors(errors));
-  }
-
-  return { normalizedConfig, registry, errors };
 }
 
 export {

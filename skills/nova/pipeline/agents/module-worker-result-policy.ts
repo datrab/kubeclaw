@@ -7,6 +7,13 @@ const BUSTER_OUTPUT_ARTIFACT_FAILURES = new Set([
   'output_file_identity_mismatch',
   'output_file_missing',
 ]);
+const DIRECT_FAILURE_CLASSES = new Set([
+  'timeout',
+  'parse_corrupted',
+  'rate_limit_exhausted',
+  'agent_session_lifecycle_unstable',
+  'completion_archive_failed',
+]);
 
 function isOneOf(value: unknown, candidates: string[]) {
   return typeof value === 'string' && candidates.includes(value);
@@ -16,20 +23,24 @@ function textValue(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
+function normalizedFailureClass(value: unknown): string {
+  return textValue(value).trim().toLowerCase();
+}
+
+function recognizedFailureClass(reason: string): string | null {
+  return DIRECT_FAILURE_CLASSES.has(reason) || BUSTER_OUTPUT_ARTIFACT_FAILURES.has(reason) ? reason : null;
+}
+
 export function resolveModuleBusterFailureClass(pollResult: AnyRecord = {}) {
-  const explicit = typeof pollResult?.failure_class === 'string' ? pollResult.failure_class : null;
-  if (explicit?.trim()) return explicit.trim().toLowerCase();
-  const statusExplicit = typeof pollResult?.status?.failure_class === 'string' ? pollResult.status.failure_class : null;
-  if (statusExplicit?.trim()) return statusExplicit.trim().toLowerCase();
+  const explicit = normalizedFailureClass(pollResult?.failure_class);
+  if (explicit) return explicit;
+  const statusExplicit = normalizedFailureClass(pollResult?.status?.failure_class);
+  if (statusExplicit) return statusExplicit;
   const reason = typeof pollResult?.reason === 'string' ? pollResult.reason.trim().toLowerCase() : '';
-  if (['timeout', 'parse_corrupted', 'rate_limit_exhausted', 'agent_session_lifecycle_unstable', 'completion_archive_failed'].includes(reason)) return reason;
-  if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(reason)) return reason;
-  const redisReason = typeof pollResult?.status?._redis_entry?.reason === 'string'
-    ? pollResult.status._redis_entry.reason.trim().toLowerCase()
-    : '';
-  if (BUSTER_OUTPUT_ARTIFACT_FAILURES.has(redisReason)) return redisReason;
-  if (redisReason === 'completion_archive_failed') return redisReason;
-  return null;
+  const recognizedReason = recognizedFailureClass(reason);
+  if (recognizedReason) return recognizedReason;
+  const redisReason = normalizedFailureClass(pollResult?.status?._redis_entry?.reason);
+  return recognizedFailureClass(redisReason);
 }
 
 export function forgeControlForPollResult(pollResult: AnyRecord = {}) {

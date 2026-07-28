@@ -23,7 +23,8 @@ function checkArchModel(progress: any) {
 function checkModuleModels(progress: any) {
   const findings: any[] = [];
   for (const [moduleId, module] of Object.entries(progress?.modules || {}) as [string, AnyRecord][]) {
-    if (module.forge_model === undefined || module.forge_model === null) continue;
+    if (module.forge_model === undefined) continue;
+    if (module.forge_model === null) continue;
     if (typeof module.forge_model === 'string' && module.forge_model.trim()) continue;
     findings.push(malformedModelFinding(
       FINDING_CODES.MODULE_FORGE_MODEL_MALFORMED,
@@ -37,7 +38,8 @@ function checkModuleModels(progress: any) {
 function checkGateModels(progress: any) {
   const findings: any[] = [];
   for (const [gateId, gate] of Object.entries(progress?.gates || {}) as [string, AnyRecord][]) {
-    if (gate.model === undefined || gate.model === null) continue;
+    if (gate.model === undefined) continue;
+    if (gate.model === null) continue;
     if (typeof gate.model === 'string' && gate.model.trim()) continue;
     findings.push(malformedModelFinding(
       FINDING_CODES.GATE_MODEL_MALFORMED,

@@ -1,0 +1,136 @@
+{
+  "$id": "terminal.closure.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "cost": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "counts": {
+      "type": "object"
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "duration_ms": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_work_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "manifest_fingerprint": {
+      "type": "string"
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "observability": {
+      "enum": [
+        "complete",
+        "partial",
+        "degraded",
+        "unknown"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "success",
+        "failure",
+        "paused",
+        "cancelled",
+        "process_lost",
+        "abandoned",
+        "completed"
+      ]
+    },
+    "reason_code": {
+      "type": "string"
+    },
+    "references": {
+      "type": "array"
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "outcome",
+    "reason_code",
+    "manifest_fingerprint",
+    "observability"
+  ],
+  "type": "object"
+}

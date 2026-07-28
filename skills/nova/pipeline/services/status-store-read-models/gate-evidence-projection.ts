@@ -41,7 +41,7 @@ export const GATE_OUTPUT_FAIL_STATUS = "FAIL";
 const APPROVAL_GATE_TYPE = "approval";
 const PENDING_APPROVAL_STATUS = "PENDING_APPROVAL";
 
-export function textValue(value: any) {
+function textValue(value: any) {
   return typeof value === "string" ? value : "";
 }
 

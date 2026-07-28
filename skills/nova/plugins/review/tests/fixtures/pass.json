@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "critical_issues": [],
+  "deferred_issues": [],
+  "checked_contracts": [
+    "contracts/plugin.json"
+  ],
+  "opened_artifacts": [
+    "artifacts/lint-report.json"
+  ],
+  "failed_commands": [],
+  "unverified_requirements": [],
+  "summary": "The implementation satisfies the reviewed contract."
+}

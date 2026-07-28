@@ -6,7 +6,7 @@ import path from 'node:path';
 
 
 const { sourceRoot } = parseSourceRootArgs();
-const pluginRoot = path.join(sourceRoot, 'plugins/openclaw-agent-observer');
+const pluginRoot = path.join(sourceRoot, 'skills/common/plugins/openclaw-agent-observer');
 const plugin = await import(path.join(pluginRoot, 'src/index.ts'));
 const pluginConfig = await import(path.join(pluginRoot, 'src/config.ts'));
 const contract = await import(path.join(sourceRoot, 'skills/common/pipeline/agent-observability/src/index.ts'));
@@ -15,6 +15,13 @@ const packageJson = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'package.js
 assert.deepEqual(packageJson.openclaw.runtimeExtensions, ['./dist/index.js']);
 const pluginManifest = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'openclaw.plugin.json'), 'utf8'));
 assert.equal(pluginManifest.configSchema.properties.enabled.default, undefined, 'observer plugin manifest must not supply hidden runtime defaults');
+for (const contractFile of ['constants.ts', 'index.ts', 'mapping.ts', 'routing.ts', 'types.ts', 'validation.ts']) {
+  assert.equal(
+    fs.readFileSync(path.join(pluginRoot, 'src/agent-observability', contractFile), 'utf8'),
+    fs.readFileSync(path.join(sourceRoot, 'contracts/agent-observability/v1/src', contractFile), 'utf8'),
+    `dual-host observer contract snapshot drifted: ${contractFile}`,
+  );
+}
 
 const compactResolvedConfig = pluginConfig.resolveAgentObserverConfig({}, {
   SWARM_CONFIG: path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'),
@@ -31,8 +38,7 @@ for (const file of fs.readdirSync(path.join(pluginRoot, 'src'), { recursive: tru
   const text = fs.readFileSync(full, 'utf8');
   assert(!text.includes('skills/common'), `${file} must not import repo-local common skills`);
   const allowedProfileRead = String(file) === 'config.ts' && (
-    text.includes('/app/skills/pipeline/config-profiles/standard.json') ||
-    text.includes('/app/skills/pipeline/core/config-profiles/standard.json')
+    text.includes('/app/skills/pipeline/config-profiles/standard.json')
   );
   assert(
     !text.includes('/app/skills') || allowedProfileRead,

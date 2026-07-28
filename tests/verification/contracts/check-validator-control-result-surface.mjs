@@ -21,7 +21,10 @@ const constantsPath = path.join(sourceRoot, 'skills/nova/pipeline/core/constants
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 const moduleValidatorsSource = fs.readFileSync(moduleValidatorsPath, 'utf8');
 const lintSource = fs.readFileSync(lintPath, 'utf8');
-const schedulingSource = fs.readFileSync(schedulingPath, 'utf8');
+const schedulingSource = [
+  fs.readFileSync(schedulingPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling-results.ts'), 'utf8'),
+].join('\n');
 const registrySource = `${fs.readFileSync(registryPath, 'utf8')}\n${fs.readFileSync(registryBuiltinsPath, 'utf8')}`;
 const constantsSource = fs.readFileSync(constantsPath, 'utf8');
 
@@ -202,7 +205,7 @@ if (logPath) {
 }
 fs.writeFileSync(output, JSON.stringify({
   schema_version: 'pipeline_lint_report.v6',
-  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: configDigests, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: configDigests, effective_targets: Object.fromEntries(policy.tools.map((tool) => [tool.id, tool.targets])), baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'validator-control-contract',
   scope: requestedScope,
   tier: valueAfter('--tier') || 'pre-check',

@@ -12,7 +12,7 @@ Document the current GitHub Actions workflow for runtime images and agent skill 
 `.github/workflows/build-images.yaml` runs image publication on:
 
 - pushes to `main` that touch durable image inputs such as `docker/**`,
-  `plugins/openclaw-agent-observer/**`, or
+  `skills/common/plugins/openclaw-agent-observer/**`, or
   `cmd/buster-namespace-controller/**`
 - manual `workflow_dispatch`
 

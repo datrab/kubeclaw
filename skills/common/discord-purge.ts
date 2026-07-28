@@ -59,7 +59,7 @@ async function deepPurge(channelId: string, botToken: string): Promise<number> {
     const bulkIds = messages
       .filter(m => new Date(m.timestamp).getTime() > twoWeeksAgo)
       .map(m => m.id);
-    
+
     const oldMessagesCount = messages.length - bulkIds.length;
 
     if (bulkIds.length === 0) {
@@ -94,7 +94,7 @@ async function deepPurge(channelId: string, botToken: string): Promise<number> {
             const retryAfter = err.retry_after ?? 2;
             console.error(`[Purge] Rate limit (Bulk)! Waiting ${retryAfter}s...`);
             await new Promise(r => setTimeout(r, retryAfter * 1000));
-            continue; 
+            continue;
          }
          throw new Error(`Bulk Delete failed: ${bulkRes.status} ${await bulkRes.text()}`);
        }
@@ -103,10 +103,10 @@ async function deepPurge(channelId: string, botToken: string): Promise<number> {
 
     if (oldMessagesCount > 0) {
         console.error(`[Purge] ${oldMessagesCount} messages skipped (older than 14 days).`);
-        break; 
+        break;
     }
 
-    await new Promise(r => setTimeout(r, 1500)); 
+    await new Promise(r => setTimeout(r, 1500));
   }
   return totalDeleted;
 }
@@ -117,7 +117,7 @@ const entryPath = (process.argv[1] && fs.existsSync(process.argv[1])) ? fs.realp
 
 if (currentPath === entryPath) {
   const channel = process.argv[2] !== undefined ? process.argv[2] : process.env.DISCORD_CHANNEL;
-  const token = process.env.DISCORD_TOKEN; 
+  const token = process.env.DISCORD_TOKEN;
 
   if (!channel || !token) {
     console.log(JSON.stringify({ status: "error", error: "DISCORD_TOKEN and DISCORD_CHANNEL required." }));

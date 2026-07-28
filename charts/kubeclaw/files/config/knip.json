@@ -1,9 +1,9 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
-    "plugins/openclaw-agent-observer/src/index.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/index.ts",
     "contracts/agent-observability/v1/src/{mapping,validation}.ts*",
-    "plugins/openclaw-agent-observer/src/redis-transport.ts",
+    "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
     "scripts/**/*.mjs",
     "skills/buster/buster-pipeline.ts",
     "skills/buster/pipeline/runners/suite-runner.ts",
@@ -39,7 +39,7 @@
     "tests/**/*.mjs"
   ],
   "project": [
-    "plugins/openclaw-agent-observer/src/**/*.{ts,tsx}",
+    "skills/common/plugins/openclaw-agent-observer/src/**/*.{ts,tsx}",
     "scripts/**/*.{js,mjs,cjs}",
     "skills/{buster,common,nova}/**/*.{js,jsx,ts,tsx,mjs,cjs}",
     "tests/**/*.{js,mjs,cjs,ts}"

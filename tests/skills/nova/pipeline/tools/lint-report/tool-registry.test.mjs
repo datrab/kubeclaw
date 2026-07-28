@@ -208,7 +208,7 @@ test('semgrep requires the exact configured path', () => {
   );
 });
 
-test('semgrep scans only configured roots without network version checks', () => {
+test('semgrep scans the current project by default and supports custom roots', () => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'semgrep-scope-test-'));
   const binDir = path.join(tempRoot, 'bin');
   const configPath = path.join(tempRoot, 'semgrep.yml');
@@ -225,8 +225,12 @@ process.stdout.write(JSON.stringify({results:[],errors:[]}));
   process.env.PATH = `${binDir}${path.delimiter}${originalPath || ''}`;
   try {
     const semgrep = TOOL_REGISTRY.find(tool => tool.id === 'semgrep');
+    assert.equal(semgrep.run({ repoRoot: tempRoot, policyProject: { root: '.' }, modulePath: null, changedFilesRequested: false, changedFiles: [], tool: { config_path: configPath, timeout_ms: 1000, targets: ['.'], exclude: [] } }).errors, 0);
+    let call = JSON.parse(fs.readFileSync(callsPath, 'utf8'));
+    assert.deepEqual(call.args, ['scan', '--json', '--disable-version-check', '--metrics=off', '--config', configPath, '--quiet', tempRoot]);
+
     assert.equal(semgrep.run({ repoRoot: tempRoot, modulePath: null, changedFilesRequested: false, changedFiles: [], tool: { config_path: configPath, timeout_ms: 1000, targets: ['src'], exclude: ['unsupported.mjs'] } }).errors, 0);
-    const call = JSON.parse(fs.readFileSync(callsPath, 'utf8'));
+    call = JSON.parse(fs.readFileSync(callsPath, 'utf8'));
     assert.deepEqual(call.args, ['scan', '--json', '--disable-version-check', '--metrics=off', '--config', configPath, '--quiet', '--exclude', 'unsupported.mjs', path.join(tempRoot, 'src')]);
     assert.match(call.log, /^\/tmp\/kubeclaw-semgrep-\d+\.log$/);
   } finally {

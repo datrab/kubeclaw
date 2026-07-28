@@ -7,6 +7,53 @@ Audience: developer, maintainer
 
 Use this page to understand KubeClaw's pipeline extension points. The current extension model is a startup-frozen plugin registry with typed kinds, hook families, stage IDs, capabilities, and config schemas.
 
+The current manifest and configuration examples on this page describe the runtime that exists today. They are not the contract planned for the self-contained plugin architecture. See [Planned self-contained plugin model](#planned-self-contained-plugin-model) before designing a new long-lived plugin.
+
+## Planned Self-Contained Plugin Model
+
+KubeClaw is moving toward a generic stage engine in which core owns safe execution and plugins own concrete behavior. The planned model has these user-visible rules:
+
+> The target `pipeline-plugin-v2` contracts are being frozen under
+> [`skills/common/plugin-runtime/contracts/plugin-system/v2`](../../skills/common/plugin-runtime/contracts/plugin-system/v2/README.md).
+> They remain planned behavior until the registry and runtime cutover phases
+> are complete; the current runtime contract documented below remains active.
+
+- Stage types are open-ended strings registered by plugins. Core does not hardcode workers, gates, validators, Forge, Buster, or approval.
+- Every plugin lives in a self-contained package with its manifest, implementation, prompts, schemas, tests, fixtures, and documentation.
+- A package normally exposes one stage type. It may expose a small cohesive family only when the types share one feature, trust boundary, ownership, dependencies, and atomic release lifecycle.
+- Every stage registration declares its own configuration schema, input schema, result schema, executor, and `requiredCapabilities`.
+- All declared capabilities are mandatory and authorized per stage invocation. Missing authorization or adapters fail startup, and a stage never inherits sibling-stage permissions.
+- A cohesive package may also register immutable observers and capability adapters, but every registration keeps separate authority, failure, checkpoint/readiness, and shutdown boundaries.
+- Package identity controls provenance, trust, installation, and versioning. Core retains scheduling and lifecycle authority.
+- The canonical `plugin.json` manifest is inert data. Core validates provenance, integrity, schemas, ownership, and grants before importing executable modules.
+- Plugin-local durable state is append-only and replayable; mutable views are projections. Invocation contexts are revoked after completion, timeout, cancellation, or ownership loss.
+- Installation and grants are operator-controlled. Project configuration may select installed stage types but cannot install code, add roots, expand trust, or grant capabilities.
+- The initial public SDK has no lifecycle-affecting policy hooks. Use core policy, a stage, a capability adapter, schema validation, or an immutable observer instead.
+- Legacy package-level capabilities and kind-based contracts will be replaced atomically rather than retained as aliases or fallback paths.
+
+The planned canonical shape is:
+
+```json
+{
+  "id": "acme.example",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [{
+    "type": "acme.example-stage",
+    "module": "./dist/stages/example.js",
+    "export": "execute",
+    "requiredCapabilities": ["state.read", "artifacts.write"],
+    "configSchema": "./schemas/example-config.json",
+    "inputSchema": "./schemas/example-input.json",
+    "resultSchema": "./schemas/example-result.json"
+  }],
+  "observers": [],
+  "adapters": []
+}
+```
+
+This shape is not accepted by the current runtime yet. Do not copy it into production configuration until the migration is implemented and the page status changes. See [Plugin System Vision](../architecture/plugin-system-vision.md) for the decision map and [Plugin System Implementation Plan](../architecture/plugin-system-implementation-plan.md) for the phased migration.
+
 ## When To Use Each Mechanism
 
 - Worker plugin: use when a module phase needs a different work executor.
@@ -161,4 +208,4 @@ npm run docs:generate:check
 - `skills/nova/pipeline/core/registry/builtins.ts`
 - `skills/nova/pipeline/services/notification-contract.ts`
 - `skills/nova/pipeline/services/telemetry-sink-contract.ts`
-- `plugins/openclaw-agent-observer/`
+- `skills/common/plugins/openclaw-agent-observer/`

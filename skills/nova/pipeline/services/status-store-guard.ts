@@ -1,6 +1,14 @@
 import { selectDefinedValue, selectTruthyValue } from "../optional-absence.ts";
 import { getLifecycleModuleState } from "./status-store-lifecycle.ts";
 import { resolveModuleIdForDir } from "./status-store-io.ts";
+import {
+  firstTextValue,
+} from "./status-store-values.ts";
+export {
+  arrayValue,
+  firstTextValue,
+  objectRecord,
+} from "./status-store-values.ts";
 
 const STATUS_LIFECYCLE_GUARDED_FIELDS = Object.freeze([
   "status",
@@ -29,23 +37,6 @@ export const INITIAL_GUARDED_STATUS_VALUES: Record<string, any> = Object.freeze(
     phase_started_at: null,
   },
 );
-
-export function objectRecord(value: any) {
-  return value !== null && typeof value === "object" && !Array.isArray(value)
-    ? value
-    : {};
-}
-
-export function arrayValue(value: any) {
-  return Array.isArray(value) ? value : [];
-}
-
-export function firstTextValue(...values: any) {
-  for (const value of values) {
-    if (typeof value === "string" && value.trim()) return value.trim();
-  }
-  return null;
-}
 
 function stableGuardValue(value: any) {
   if (value === undefined) return null;

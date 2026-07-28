@@ -27,9 +27,17 @@ function ensureRegistryList(parent: AnyRecord, key: string): AnyRecord[] {
 export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecords: AnyRecord, errors: RegistryError[]) {
   if (normalizedConfig.enabled === false) return createRegistryDictionary();
 
+  const { candidatesByStage, decisionStages } = collectStageCandidates(resolvedRecords);
+  const stageOwners: AnyRecord = createRegistryDictionary();
+  applyExplicitStageOwners(normalizedConfig.stageOwners, resolvedRecords, stageOwners, errors);
+  applyImplicitStageOwners(candidatesByStage, stageOwners, errors);
+  validateDecisionStageOwners(decisionStages, stageOwners, errors);
+  return stageOwners;
+}
+
+function collectStageCandidates(resolvedRecords: AnyRecord) {
   const candidatesByStage: AnyRecord = createRegistryDictionary();
   const decisionStages: AnyRecord[] = [];
-
   for (const record of Object.values(resolvedRecords)) {
     if (!record.enabled) continue;
     for (const stageId of record.resolvedStageIds) {
@@ -39,9 +47,15 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
       if (!['notification', 'telemetry'].includes(record.manifest.kind)) decisionStages.push({ hookFamily, stageId });
     }
   }
+  return { candidatesByStage, decisionStages };
+}
 
-  const stageOwners: AnyRecord = createRegistryDictionary();
-  const explicitSelections = normalizedConfig.stageOwners;
+function applyExplicitStageOwners(
+  explicitSelections: AnyRecord,
+  resolvedRecords: AnyRecord,
+  stageOwners: AnyRecord,
+  errors: RegistryError[],
+): void {
   for (const [stageId, moduleIdValue] of Object.entries(explicitSelections)) {
     const moduleId = String(moduleIdValue);
     const ownerRecord = resolvedRecords[moduleId];
@@ -64,7 +78,13 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
     }
     ensureRegistryMap(stageOwners, hookFamily)[stageId] = ownerRecord;
   }
+}
 
+function applyImplicitStageOwners(
+  candidatesByStage: AnyRecord,
+  stageOwners: AnyRecord,
+  errors: RegistryError[],
+): void {
   for (const [hookFamily, stageMap] of Object.entries(candidatesByStage)) {
     const familyOwners = ensureRegistryMap(stageOwners, hookFamily);
     for (const [stageId, candidatesValue] of Object.entries(stageMap)) {
@@ -82,14 +102,18 @@ export function buildStageOwnerIndex(normalizedConfig: AnyRecord, resolvedRecord
       }
     }
   }
+}
 
+function validateDecisionStageOwners(
+  decisionStages: AnyRecord[],
+  stageOwners: AnyRecord,
+  errors: RegistryError[],
+): void {
   for (const { hookFamily, stageId } of decisionStages) {
     if (!stageOwners[hookFamily]?.[stageId]) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_OWNER_MISSING, `Stage '${stageId}' in hookFamily '${hookFamily}' ended startup with no enabled owner`);
     }
   }
-
-  return stageOwners;
 }
 
 export function buildHookIndex(resolvedRecords: AnyRecord) {

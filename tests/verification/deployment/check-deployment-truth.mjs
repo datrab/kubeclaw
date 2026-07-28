@@ -45,6 +45,8 @@ const packageSkillBundleScriptPath = path.join(sourceRoot, 'scripts', 'package-a
 const generalDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.general');
 const generalToolsPackagePath = path.join(sourceRoot, 'docker', 'general-tools', 'package.json');
 const generalToolsLockPath = path.join(sourceRoot, 'docker', 'general-tools', 'package-lock.json');
+const observerPackagePath = path.join(sourceRoot, 'skills', 'common', 'plugins', 'openclaw-agent-observer', 'package.json');
+const observerLockPath = path.join(sourceRoot, 'skills', 'common', 'plugins', 'openclaw-agent-observer', 'package-lock.json');
 const busterGatewayDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.buster-gateway');
 const busterPipelineDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.buster-pipeline');
 const busterPipelineEntrypointPath = path.join(sourceRoot, 'docker', 'buster-pipeline-entrypoint.sh');
@@ -72,6 +74,14 @@ function normalizedNonemptyLines(text) {
 function assertLine(text, needle, message) {
   const lines = normalizedNonemptyLines(text);
   assert(lines.includes(needle), `${message} (missing line: ${needle})`);
+}
+
+function assertOrdered(text, first, second, message) {
+  const firstIndex = text.indexOf(first);
+  const secondIndex = text.indexOf(second);
+  assert(firstIndex >= 0, `${message} (missing first marker: ${first})`);
+  assert(secondIndex >= 0, `${message} (missing second marker: ${second})`);
+  assert(firstIndex < secondIndex, `${message} (markers are out of order)`);
 }
 
 function assertMatchCountAtLeast(text, needle, expectedCount, message) {
@@ -432,13 +442,21 @@ const packageSkillBundleScript = fs.readFileSync(packageSkillBundleScriptPath, '
 const generalDockerfile = fs.readFileSync(generalDockerfilePath, 'utf8');
 const generalToolsPackage = JSON.parse(fs.readFileSync(generalToolsPackagePath, 'utf8'));
 const generalToolsLock = JSON.parse(fs.readFileSync(generalToolsLockPath, 'utf8'));
+const observerPackage = JSON.parse(fs.readFileSync(observerPackagePath, 'utf8'));
+const observerLock = JSON.parse(fs.readFileSync(observerLockPath, 'utf8'));
 const busterGatewayDockerfile = fs.readFileSync(busterGatewayDockerfilePath, 'utf8');
 const busterPipelineDockerfile = fs.readFileSync(busterPipelineDockerfilePath, 'utf8');
 const busterPipelineEntrypoint = fs.readFileSync(busterPipelineEntrypointPath, 'utf8');
 const busterGatewayRuntimeStage = busterGatewayDockerfile.split(/^FROM /m).at(-1);
+const busterGatewayRuntimeCommands = busterGatewayRuntimeStage
+  .split('\n')
+  .filter((line) => !line.trimStart().startsWith('#'))
+  .join('\n');
 const generalOpenClawBase = generalDockerfile.match(/^ARG OPENCLAW_BASE=(.+)$/m)?.[1];
 const busterOpenClawBase = busterGatewayDockerfile.match(/^ARG OPENCLAW_BASE=(.+)$/m)?.[1];
 const generalAptInstall = generalDockerfile.match(/apt-get install -y --no-install-recommends([\s\S]*?)&& rm -rf \/var\/lib\/apt\/lists\//)?.[1] ?? '';
+const busterGatewayAptInstall = busterGatewayRuntimeStage.match(/apt-get install -y --no-install-recommends([\s\S]*?)&& rm -rf \/var\/lib\/apt\/lists\//)?.[1] ?? '';
+const busterPipelineAptInstall = busterPipelineDockerfile.match(/apt-get install -y --no-install-recommends([\s\S]*?)&& rm -rf \/var\/lib\/apt\/lists\//)?.[1] ?? '';
 const namespaceControllerDockerfile = fs.readFileSync(namespaceControllerDockerfilePath, 'utf8');
 const rbacSandboxDocs = fs.readFileSync(rbacSandboxDocsPath, 'utf8');
 const deployScriptMode = fs.statSync(deployScriptPath).mode;
@@ -1316,7 +1334,7 @@ assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-buster-gateway', 'Ima
 assertIncludes(imageBuildWorkflow, 'docker/Dockerfile.namespace-controller', 'Image-build workflow must build the namespace controller image from docker/Dockerfile.namespace-controller');
 assertIncludes(imageBuildWorkflow, 'image_suffix: kubeclaw-namespace-controller', 'Image-build workflow must publish the kubeclaw-namespace-controller image');
 assertIncludes(imageBuildWorkflow, 'dorny/paths-filter@v3', 'Build workflow must detect image-affecting changes without suppressing bundle publication on unrelated pushes');
-assertIncludes(imageBuildWorkflow, 'plugins/openclaw-agent-observer/**', 'Build workflow change detection must include the baked observer plugin source');
+assertIncludes(imageBuildWorkflow, 'skills/common/plugins/openclaw-agent-observer/**', 'Build workflow change detection must include the baked observer plugin source');
 assert.equal(imageBuildWorkflow.includes("- 'skills/**'"), false, 'Image-build workflow must not rebuild runtime images for skill-only changes');
 assert.equal(imageBuildWorkflow.includes("- 'scripts/package-agent-skill-bundle.sh'"), false, 'Image-build workflow must not rebuild runtime images for bundle packager-only changes');
 assertIncludes(imageBuildWorkflow, 'Package & Publish Skill Bundles', 'Build workflow must include the durable skill-bundle publication job');
@@ -1326,13 +1344,16 @@ assertIncludes(imageBuildWorkflow, 'gh release upload "$BUNDLE_RELEASE_TAG"', 'B
 assertIncludes(imageBuildWorkflow, 'agent-code-bundles', 'Build workflow must use the stable bundle release tag');
 assertIncludes(packageSkillBundleScript, 'cp -R "${role_source}/." "$skills_root/"', 'Bundle packaging script must copy the role-specific skills surface first');
 assertIncludes(packageSkillBundleScript, 'cp -R "${common_source}/." "$skills_root/"', 'Bundle packaging script must overlay skills/common onto the role-specific bundle surface');
+assertIncludes(packageSkillBundleScript, 'cp -R "${agent_observability_contract_source}/." "${skills_root}/pipeline/agent-observability/src/"', 'Bundle packaging must materialize the canonical agent-observability contract');
+assertIncludes(packageSkillBundleScript, 'cp -R "${telemetry_contract_source}/." "${skills_root}/pipeline/contracts/telemetry/v1/"', 'Bundle packaging must materialize the canonical telemetry contract');
 assertIncludes(packageSkillBundleScript, '"runtimeSurface": "/app/skills"', 'Bundle packaging manifest must declare the /app/skills runtime surface');
 assertIncludes(packageSkillBundleScript, '"bundleKind": "app-skills-overlay"', 'Bundle packaging manifest must describe the overlay-style bundle contract');
 assertDockerInstallCommandsFailClosed(generalDockerfile, 'General Dockerfile');
 assertDockerInstallCommandsFailClosed(busterGatewayDockerfile, 'Buster gateway Dockerfile');
 assertDockerInstallCommandsFailClosed(busterPipelineDockerfile, 'Buster pipeline Dockerfile');
-assert.equal(generalDockerfile.includes('COPY skills/'), false, 'General runtime image must not bake fast-changing agent skills');
-assert.equal(busterGatewayDockerfile.includes('COPY skills/'), false, 'Buster gateway image must not bake fast-changing agent skills');
+const observerPluginCopy = 'COPY skills/common/plugins/openclaw-agent-observer/';
+assert.equal(generalDockerfile.replaceAll(observerPluginCopy, '').includes('COPY skills/'), false, 'General runtime image must not bake fast-changing agent skills');
+assert.equal(busterGatewayDockerfile.replaceAll(observerPluginCopy, '').includes('COPY skills/'), false, 'Buster gateway image must not bake fast-changing agent skills');
 assert.equal(busterPipelineDockerfile.includes('COPY skills/'), false, 'Buster pipeline image must not bake fast-changing agent skills');
 assertIncludes(generalDockerfile, 'ARG KUBECTL_VERSION=', 'General Dockerfile must pin kubectl for live Kubernetes verification');
 assertIncludes(generalDockerfile, 'ARG HELM_VERSION=', 'General Dockerfile must pin Helm for reproducible image builds');
@@ -1343,11 +1364,39 @@ assertIncludes(generalDockerfile, 'ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:'
 assertIncludes(generalDockerfile, '@sha256:', 'General Dockerfile must pin the OpenClaw base digest');
 assert.equal(generalOpenClawBase, busterOpenClawBase, 'OpenClaw-derived runtime images must share one version-and-digest-pinned base');
 assertIncludes(generalDockerfile, 'ARG DEBIAN_SNAPSHOT=', 'General Dockerfile must pin the Debian package snapshot');
+assertIncludes(busterGatewayDockerfile, 'ARG DEBIAN_SNAPSHOT=', 'Buster gateway Dockerfile must pin the Debian package snapshot');
+assertIncludes(busterPipelineDockerfile, 'ARG DEBIAN_SNAPSHOT=', 'Buster pipeline Dockerfile must pin the Debian package snapshot');
+for (const [label, dockerfile] of [
+  ['General', generalDockerfile],
+  ['Buster gateway', busterGatewayDockerfile],
+  ['Buster pipeline', busterPipelineDockerfile],
+]) {
+  assertOrdered(
+    dockerfile,
+    'test -s /etc/ssl/certs/ca-certificates.crt',
+    'URIs: https://snapshot.debian.org/archive/debian/',
+    `${label} must establish a CA trust bundle before contacting the HTTPS Debian snapshot`,
+  );
+  assertIncludes(dockerfile, 'Acquire::Retries=5', `${label} snapshot refresh must retry transient archive fetch failures`);
+  assertIncludes(dockerfile, 'APT::Update::Error-Mode=any', `${label} snapshot refresh must reject partial package indexes`);
+  assertIncludes(dockerfile, 'apt-cache show "${package}"', `${label} image build must verify every required apt package before installation`);
+}
+assertOrdered(
+  busterPipelineDockerfile,
+  'COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt',
+  'test -s /etc/ssl/certs/ca-certificates.crt',
+  'Buster pipeline must bootstrap CA trust from the already-required BuildKit image before validating it',
+);
+assert.equal(/\$\{[A-Z0-9_]+_VERSION\}/.test(busterGatewayAptInstall), false, 'Buster gateway apt packages must use the snapshot as their single version authority');
+assert.equal(/\$\{[A-Z0-9_]+_VERSION\}/.test(busterPipelineAptInstall), false, 'Buster pipeline apt packages must use the snapshot as their single version authority');
 assertIncludes(generalDockerfile, 'COPY docker/general-tools/package.json docker/general-tools/package-lock.json', 'General Dockerfile must install JavaScript tools from the committed lockfile');
 assert.deepEqual(generalToolsLock.packages?.['']?.dependencies, generalToolsPackage.dependencies, 'General JavaScript tool lock must match its direct dependency manifest');
 for (const [dependency, version] of Object.entries(generalToolsPackage.dependencies)) {
   assert.match(version, /^\d+\.\d+\.\d+$/, `General JavaScript tool ${dependency} must use an exact semantic version`);
 }
+assert.deepEqual(observerLock.packages?.['']?.devDependencies, observerPackage.devDependencies, 'Observer build-tool lock must match its direct development dependencies');
+assert.equal(observerPackage.devDependencies?.typescript, '5.9.3', 'Observer TypeScript compiler must use the canonical pinned version');
+assert.match(observerPackage.devDependencies?.['@types/node'] || '', /^24\.\d+\.\d+$/, 'Observer Node types must match the Node 24 gateway runtime');
 assertIncludes(generalDockerfile, 'https://get.helm.sh/${helm_archive}.sha256sum', 'General Dockerfile must checksum the pinned official Helm archive');
 assert.equal(generalDockerfile.includes('get-helm-3'), false, 'General Dockerfile must not depend on the mutable Helm convenience installer');
 assertIncludes(generalDockerfile, 'https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl', 'General Dockerfile must install architecture-aware kubectl from the pinned Kubernetes release');
@@ -1371,7 +1420,7 @@ assertIncludes(busterGatewayDockerfile, '/app/dist/extensions/kubeclaw-agent-obs
 assertIncludes(busterGatewayRuntimeStage, 'npm install -g ioredis', 'Buster gateway runtime must include the observer Redis transport dependency');
 for (const forbiddenRuntimeTool of ['eslint', 'playwright', 'lighthouse', 'semgrep', 'hadolint', 'kubeconform', 'kubectl', 'buildkit', 'k6']) {
   assert.equal(
-    busterGatewayRuntimeStage.toLowerCase().includes(forbiddenRuntimeTool),
+    busterGatewayRuntimeCommands.toLowerCase().includes(forbiddenRuntimeTool),
     false,
     `Buster gateway runtime must not contain pipeline-owned tool ${forbiddenRuntimeTool}`,
   );
@@ -1397,15 +1446,15 @@ assertLine(dockerignore, '!docker/Dockerfile.buster-pipeline', 'Docker build con
 assertLine(dockerignore, '!docker/buster-pipeline-entrypoint.sh', 'Docker build context must include the Buster pipeline entrypoint');
 assertLine(dockerignore, '!go.mod', 'Docker build context must include the Go module file');
 assertLine(dockerignore, '!cmd/buster-namespace-controller/**', 'Docker build context must include the Go namespace controller source');
-assert.equal(dockerignore.includes('!skills/'), false, 'Docker build context must not include agent skills; code bundles own /app/skills');
-assert.equal(dockerignore.includes('!skills/**'), false, 'Docker build context must not include agent skills recursively; code bundles own /app/skills');
-assertLine(dockerignore, '!plugins/openclaw-agent-observer/**', 'Docker build context must include observer plugin source');
+assert.equal(dockerignore.split('\n').includes('!skills/'), false, 'Docker build context must not include all agent skills; code bundles own /app/skills');
+assert.equal(dockerignore.split('\n').includes('!skills/**'), false, 'Docker build context must not include all agent skills recursively; code bundles own /app/skills');
+assertLine(dockerignore, '!skills/common/plugins/openclaw-agent-observer/**', 'Docker build context must include observer plugin source');
 assert.equal(dockerignore.includes('!scripts/buster-namespace-controller.mjs'), false, 'Docker build context must not include the removed JS namespace controller');
 assertLine(dockerignore, 'my-values/', 'Docker build context must exclude deployment values');
 assertLine(dockerignore, '.swarm/', 'Docker build context must exclude local swarm logs and state');
 assertLine(dockerignore, 'worktrees/', 'Docker build context must exclude local worktrees');
 assertLine(dockerignore, '**/node_modules/', 'Docker build context must exclude local dependencies');
-assertLine(dockerignore, 'plugins/openclaw-agent-observer/dist/', 'Docker build context must exclude generated observer plugin output');
+assertLine(dockerignore, 'skills/common/plugins/openclaw-agent-observer/dist/', 'Docker build context must exclude generated observer plugin output');
 assertLine(dockerignore, '**/*.key', 'Docker build context must exclude key-shaped files');
 assertLine(dockerignore, '**/*.pem', 'Docker build context must exclude PEM-shaped files');
 assertLine(dockerignore, '.env', 'Docker build context must exclude root env files');

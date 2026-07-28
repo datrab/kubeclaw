@@ -17,8 +17,15 @@ const sharedForgeFixCyclePath = path.join(sourceRoot, 'skills/nova/pipeline/runn
 const helperSource = fs.readFileSync(helperPath, 'utf8');
 const reviewSource = fs.readFileSync(reviewPath, 'utf8');
 const busterSource = fs.readFileSync(busterPath, 'utf8');
-const busterFixCycleSource = fs.readFileSync(busterFixCyclePath, 'utf8');
-const sharedForgeFixCycleSource = fs.readFileSync(sharedForgeFixCyclePath, 'utf8');
+const busterFixCycleSource = [
+  fs.readFileSync(busterFixCyclePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts'), 'utf8'),
+].join('\n');
+const sharedForgeFixCycleSource = [
+  fs.readFileSync(sharedForgeFixCyclePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/gate-forge-fix-context.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/gate-forge-fix-outcomes.ts'), 'utf8'),
+].join('\n');
 
 assert.equal(helperSource.includes('export async function startGateForgeFixCycleScaffold('), true, 'shared gate fix scaffold should export startGateForgeFixCycleScaffold');
 assert.equal(helperSource.includes('export async function finishGateForgeFixCycleScaffold('), true, 'shared gate fix scaffold should export finishGateForgeFixCycleScaffold');
@@ -33,7 +40,8 @@ assert.equal(sharedForgeFixCycleSource.includes("from '../services/gate-fix-scaf
 assert.equal(sharedForgeFixCycleSource.includes('startGateForgeFixCycleScaffold({'), true, 'shared Forge fix-cycle engine should call the shared fix scaffold start helper');
 assert.equal(sharedForgeFixCycleSource.includes('finishGateForgeFixCycleScaffold({'), true, 'shared Forge fix-cycle engine should call the shared fix scaffold finish helper');
 assert.equal(sharedForgeFixCycleSource.includes('gate_fix_git_persistence_degraded'), true, 'shared Forge fix-cycle engine should surface typed degraded Git persistence evidence');
-assert.equal(sharedForgeFixCycleSource.includes('degraded: gitPersistenceDegraded'), true, 'shared Forge fix-cycle engine should return degraded Git persistence state in the typed fix outcome');
+assert.equal(sharedForgeFixCycleSource.includes('gitPersistenceDegraded: degraded'), true, 'shared Forge fix-cycle engine should retain degraded Git persistence context');
+assert.equal(sharedForgeFixCycleSource.includes("return { mode: 're_evaluate', controlResult: nextControlResult, degraded }"), true, 'shared Forge fix-cycle engine should return degraded Git persistence state in the typed fix outcome');
 assert.equal(sharedForgeFixCycleSource.includes('callMaybe('), false, 'shared Forge fix-cycle engine should not use generic message fallback resolution');
 assert.equal(sharedForgeFixCycleSource.includes("throw new Error(`Gate fix-cycle message '"), true, 'shared Forge fix-cycle engine should fail when adapter-owned message fields are missing');
 for (const source of [busterFixCycleSource]) {

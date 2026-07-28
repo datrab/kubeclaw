@@ -6,7 +6,7 @@ import { log } from "../core/logger.ts";
 import { moduleLogDir } from "../core/paths.ts";
 import { copyTranscriptArtifact } from "../egress.ts";
 import { headHash, invalidateHeadHash } from "../integrations/git-worktree.ts";
-import { gatewayInvokePolicy } from "../core/session-policy.ts";
+import { sessionStatusGatewayPolicy } from "../core/session-policy.ts";
 import {
   createPipelineEventBus,
   waitForAny,
@@ -211,10 +211,7 @@ export function startAcpAdapter(state: any) {
       pollMs: state.interval,
       monitorOpts: {
         ...state.config,
-        gatewayStatusPolicy: gatewayInvokePolicy(
-          state.config,
-          "session_status",
-        ),
+        gatewayStatusPolicy: sessionStatusGatewayPolicy(state.config),
       },
       initialState: state.acpState,
       stopOnTerminal: false,

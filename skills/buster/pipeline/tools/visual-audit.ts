@@ -7,7 +7,7 @@ import { parseCliArgs } from '../cli-args.ts';
 import { BUSTER_CAPABILITIES, assertBusterCapabilities, parseCapabilitiesFromEnv } from '../services/capabilities.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-import { busterEnvironmentSnapshot, readBusterEnvironment } from '../runtime-environment.ts';
+import { busterEnvironmentSnapshot, readBusterEnvironment } from '../buster-environment.ts';
 // KEEP_TYPED_POLICY: injectable browser/fetch/output/capabilities stay as direct
 // caller adapter surface, CLI defaults to image while rejecting unknown modes,
 // capture warnings converge on canonical missing-file errors, Bot auth header

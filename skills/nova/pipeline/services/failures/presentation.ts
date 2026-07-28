@@ -3,7 +3,7 @@ import path from 'path';
 
 import { log, getActiveContext } from '../../core/logger.ts';
 import { getRunId } from '../../core/runtime.ts';
-import { gatewayInvokePolicy } from '../../core/session-policy.ts';
+import { sessionSendGatewayPolicy } from '../../core/session-policy.ts';
 import { getPipelineArtifactBundle } from '../artifact-bundle.ts';
 import {
   resolveStatusSessionKey,
@@ -252,7 +252,7 @@ async function deliverNovaHandoff(config: AnyRecord, context: AnyRecord, result:
   entry.intent_status = 'recorded';
   entry.delivery_content_known = true;
   try {
-    const sendPolicy = gatewayInvokePolicy(config, 'session_send');
+    const sendPolicy = sessionSendGatewayPolicy(config);
     const receipt = await sendAgentSessionHandoff({
       sessionKey: context.sessionTarget,
       message: buildNovaHandoffMessage(config, context, result),

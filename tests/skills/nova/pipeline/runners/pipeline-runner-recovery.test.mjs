@@ -3,7 +3,7 @@ import test from 'node:test';
 
 import {
   shouldPreserveTerminalModuleRecovery,
-} from '../../../../../skills/nova/pipeline/runners/pipeline-runner-recovery.ts';
+} from '../../../../../skills/nova/pipeline/runners/pipeline-runner-recovery-session.ts';
 
 test('terminal Buster module recovery preserves dispatch for phase polling', () => {
   assert.equal(shouldPreserveTerminalModuleRecovery({

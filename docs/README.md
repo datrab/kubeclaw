@@ -41,7 +41,7 @@ This is the active documentation home for KubeClaw. It separates current source-
 
 - Contribute docs or code: [Contributing](CONTRIBUTING.md) and [Developer guides](developers/README.md)
 - Add pipeline features or gates: [Developers](developers/README.md) -> [Adding pipeline features](developers/adding-pipeline-features.md) and [Adding gates](developers/adding-gates.md)
-- Add hooks, plugins, or runtime adapters: [Developers](developers/README.md) -> [Hooks and plugins](developers/hooks-and-plugins.md) and [Replacing agent runtime](developers/replacing-agent-runtime.md)
+- Add hooks, plugins, or runtime adapters: start with the [current hooks and plugins guide](developers/hooks-and-plugins.md), check the [planned self-contained plugin architecture](architecture/plugin-system-vision.md), then use [Replacing agent runtime](developers/replacing-agent-runtime.md) where applicable.
 - Add Buster suites, lint rules, or observability sinks: [Developers](developers/README.md) -> [Adding Buster suites](developers/adding-buster-suites.md), [Linting rules](developers/linting-rules.md), and [Adding observability sinks](developers/adding-observability-sinks.md)
 - Add verification: [Developers](developers/README.md) -> [Adding verification](developers/adding-verification.md)
 

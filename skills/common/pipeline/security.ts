@@ -140,7 +140,7 @@ function realpathForScope(candidate: string) {
 }
 
 function scopedBaseDir(options: ScopedPathOptions) {
-  return path.resolve(options.baseDir ?? options.scopeDir ?? process.cwd());
+  return path.resolve(options.baseDir ?? process.cwd());
 }
 
 function scopedRootDir(options: ScopedPathOptions, baseDir: string) {
@@ -224,6 +224,10 @@ export function tokenizeCommandString(command: unknown, label = 'command') {
     throw new Error(`${label}: shell metacharacters are not allowed; pass a direct executable and args only`);
   }
 
+  return parseCommandTokens(trimmed, label);
+}
+
+function parseCommandTokens(trimmed: string, label: string): string[] {
   const argv: string[] = [];
   let current = '';
   let quote: string | null = null;

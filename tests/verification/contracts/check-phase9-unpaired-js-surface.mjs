@@ -23,7 +23,7 @@ for (const retained of [
 
 const novaEntrypoint = fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline.ts'), 'utf8');
 assert.equal(novaEntrypoint.includes("export * from './pipeline/index.ts';"), true, 'Nova root entrypoint must delegate public exports to the typed index');
-assert.equal(novaEntrypoint.includes("import('./pipeline/cli.ts')"), true, 'Nova root entrypoint must delegate direct CLI execution to the typed CLI');
+assert.equal(novaEntrypoint.includes("import('./skills/common/plugin-runtime/cli.ts')"), true, 'Nova root entrypoint must delegate direct CLI execution to the typed CLI');
 
 quietConsole.restore();
 console.log(JSON.stringify({ ok: true, checked: 'zero-js-skills-surface' }));

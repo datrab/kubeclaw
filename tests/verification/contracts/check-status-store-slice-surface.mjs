@@ -69,12 +69,18 @@ const compatGateSource = fs.readFileSync(compatGatePath, 'utf8');
 const compatModuleSource = fs.readFileSync(compatModulePath, 'utf8');
 const compatModuleRuntimeSource = fs.readFileSync(compatModuleRuntimePath, 'utf8');
 const compatSource = [compatFacadeSource, compatCommonSource, compatGateSource, compatModuleSource, compatModuleRuntimeSource].join('\n');
-const completionAdjudicatorSource = fs.readFileSync(completionAdjudicatorPath, 'utf8');
+const completionAdjudicatorSource = [
+  fs.readFileSync(completionAdjudicatorPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/completion-identity.ts'), 'utf8'),
+].join('\n');
 const truthDriftSource = fs.readFileSync(truthDriftPath, 'utf8');
 const dependenciesSource = fs.readFileSync(dependenciesPath, 'utf8');
 const blueprintSource = fs.readFileSync(blueprintPath, 'utf8');
 const rateLimitExhaustionOptionsSource = fs.readFileSync(rateLimitExhaustionOptionsPath, 'utf8');
-const pollingSource = fs.readFileSync(pollingPath, 'utf8');
+const pollingSource = fs.readdirSync(path.dirname(pollingPath))
+  .filter((name) => name === 'polling.ts' || name.startsWith('polling-'))
+  .map((name) => fs.readFileSync(path.join(path.dirname(pollingPath), name), 'utf8'))
+  .join('\n');
 const pollingDualSource = fs.readFileSync(pollingDualPath, 'utf8');
 const busterCompletionControllerSource = fs.readFileSync(busterCompletionControllerPath, 'utf8');
 const moduleRunnerAttemptSource = fs.readFileSync(moduleRunnerAttemptPath, 'utf8');
@@ -194,22 +200,22 @@ assert.equal(moduleRunnerAttemptSource.includes('deps.loadStatus(config, dir)'),
 assert.equal(pipelineRunnerSharedSource.includes('projectModuleSchedulerState(config, moduleId, moduleConfig)'), true, 'pipeline scheduling must consume canonical module scheduler projections');
 assert.equal(pipelineRunnerSchedulingSource.includes('deps.loadStatus(config, mod.dir)'), false, 'pipeline scheduling must not consume legacy-shaped loadStatus snapshots');
 assert.equal(pipelineRunnerRecoverySource.includes('loadStatus(config, dir)'), true, 'recovery may consume lifecycle-backed loadStatus');
-assert.equal(pollingSource.includes('loadStatus(config, moduleDir)'), true, 'module polling may consume lifecycle-backed loadStatus');
+assert.equal(pollingSource.includes('loadStatus(state.config, state.moduleDir)'), true, 'module polling may consume lifecycle-backed loadStatus');
 assert.equal(pollingSource.includes('status || loadStatus(config, moduleDir)'), false, 'module polling must not re-read legacy-shaped loadStatus snapshots in one poll tick');
 assert.equal(pollingSource.includes("status || loadStatus(config, moduleDir) || { module_id: moduleDir, current_phase: 'forge' }"), false, 'module polling must not synthesize fallback forge status for ACP observability');
 assert.equal(pollingSource.includes('Lifecycle read models are the only local polling authority for module state.'), true, 'polling docs should describe lifecycle authority explicitly');
 
 assert.equal(completionAdjudicatorSource.includes("const LIFECYCLE_READ_MODEL_SOURCE = 'lifecycle_read_model'"), true, 'completion projection should name the local lifecycle authority source');
 assert.equal(
-  completionAdjudicatorSource.includes('source: selectDefinedValue(() => (mapCompletionSource(source, status._source)), () => (LIFECYCLE_READ_MODEL_SOURCE))'),
+  completionAdjudicatorSource.includes('() => mapCompletionSource(context.source, statusEntry._source)'),
   true,
   'completion projection should normalize local authority through the named lifecycle source',
 );
-assert.equal(completionAdjudicatorSource.includes("statusSource = 'lifecycle_read_model'"), true, 'completion adjudication should default local status source to lifecycle_read_model');
+assert.equal(completionAdjudicatorSource.includes("statusSource: 'lifecycle_read_model'"), true, 'completion adjudication should default local status source to lifecycle_read_model');
 assert.equal(completionAdjudicatorSource.includes('status_json_status'), false, 'completion adjudicator drift fields must not retain status_json wording');
 assert.equal(truthDriftSource.includes('function collectModuleArtifactRefs(') && truthDriftSource.includes('void moduleProjection;'), true, 'module truth drift artifacts must no longer expose removed status paths');
 
-assert.equal(pollingSource.includes("from './completion-adjudicator.ts'"), true, 'polling should import shared completion adjudication');
+assert.equal(pollingSource.includes('completion-adjudicator.ts'), true, 'polling should import shared completion adjudication');
 assert.equal(pollingSource.includes('projectCompletionState,') || pollingSource.includes('projectCompletionState\n'), true, 'polling should re-export centralized completion projection helpers');
 assert.equal(pollingDualSource.includes('waitForCompletion: waitForBusterCompletion'), true, 'pollDual should route Redis completions through the centralized Buster completion controller');
 assert.equal(busterCompletionControllerSource.includes('adjudicateCompletionEvidence({'), true, 'Buster completion controller should classify Redis completions through centralized arbitration');

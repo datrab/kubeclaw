@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["journalPath"],"properties":{"journalPath":{"type":"string","minLength":1},"maxEntryBytes":{"type":"integer","minimum":1,"default":1048576}}}

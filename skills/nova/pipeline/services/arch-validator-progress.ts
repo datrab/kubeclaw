@@ -1,5 +1,9 @@
 import { FINDING_CODES, firstTruthy, makeFinding, SCOPE, SEVERITY } from './arch-validator-values.ts';
 
+function hasProgressModules(progress: any) {
+  return Boolean(progress.modules) && typeof progress.modules === 'object';
+}
+
 type AnyRecord = Record<string, any>;
 const PROGRESS_FILE_LABEL = 'progress.json';
 
@@ -52,7 +56,7 @@ function requiredStructureFindings(progress: any, progressFile: string) {
       'Add at least one module ID to execution_order.',
     ));
   }
-  if (!progress.modules || typeof progress.modules !== 'object') {
+  if (!hasProgressModules(progress)) {
     findings.push(makeFinding(
       FINDING_CODES.PROGRESS_MISSING_FIELD,
       SEVERITY.BLOCKING,
@@ -237,7 +241,8 @@ function definitionFindings(progress: any, gates: AnyRecord, progressFile: strin
 export function checkProgress(progress: any, config: any) {
   const progressFile = progressFilePath(config);
   const required = requiredStructureFindings(progress, progressFile);
-  if (!Array.isArray(progress.execution_order) || !progress.modules || typeof progress.modules !== 'object') return required;
+  if (!Array.isArray(progress.execution_order)) return required;
+  if (!hasProgressModules(progress)) return required;
   const gates = progress.gates && typeof progress.gates === 'object' ? progress.gates : {};
   const execution = progress.execution_order
     .map((stepId: any, index: number) => executionEntryFinding(progress, gates, stepId, index, progressFile))

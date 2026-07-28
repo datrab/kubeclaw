@@ -20,7 +20,15 @@ const source = fs.readFileSync(pipelineHelpersPath, 'utf8');
 const discordSource = fs.readFileSync(discordPath, 'utf8');
 const taskLifecycleSource = fs.readFileSync(taskLifecyclePath, 'utf8');
 const taskLifecycleSessionSource = fs.readFileSync(taskLifecycleSessionPath, 'utf8');
-const implementationSurface = `${source}\n${discordSource}\n${taskLifecycleSource}\n${taskLifecycleSessionSource}`;
+const implementationSurface = [
+  source,
+  discordSource,
+  taskLifecycleSource,
+  taskLifecycleSessionSource,
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle/context.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle/execution.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/task-lifecycle/session-spawn.ts'), 'utf8'),
+].join('\n');
 
 const canonicalSurfaces = [
   'buildSuiteResultsEmbed',
@@ -58,10 +66,10 @@ for (const marker of retiredLegacySurfaces) {
   assert.equal(implementationSurface.includes(marker), false, `legacy Buster operator marker should be removed: ${marker}`);
 }
 
-assert.equal(countOccurrences(implementationSurface, 'discord(buildSuiteResultsEmbed('), 1, 'suite results should emit exactly one canonical Discord surface');
-assert.equal(countOccurrences(implementationSurface, 'discord(buildSessionSpawnEmbed('), 1, 'session spawn should emit exactly one canonical Discord surface');
+assert.equal(countOccurrences(implementationSurface, 'sendDiscord(buildSuiteResultsEmbed('), 1, 'suite results should emit exactly one canonical Discord surface');
+assert.equal(countOccurrences(implementationSurface, 'request.discord(buildSessionSpawnEmbed('), 1, 'session spawn should emit exactly one canonical Discord surface');
 assert.equal(countOccurrences(implementationSurface, 'discord(buildSessionCompleteEmbed('), 1, 'session completion should emit exactly one canonical Discord surface');
-assert.equal(countOccurrences(implementationSurface, 'discord(buildTaskFailureEmbed('), 1, 'task failure should emit exactly one canonical Discord surface');
+assert.equal(countOccurrences(implementationSurface, 'sendDiscord(buildTaskFailureEmbed('), 1, 'task failure should emit exactly one canonical Discord surface');
 assert.equal(countOccurrences(implementationSurface, 'discord(buildTimeoutEmbed('), 1, 'session timeout should emit exactly one canonical Discord surface');
 
 quietConsole.restore();

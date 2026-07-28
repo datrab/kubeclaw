@@ -1,0 +1,1 @@
+{"name":"@kubeclaw/plugin-architecture-validator","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","test":"npm run build && node tests/protocol.unit.test.mjs && node tests/live-function.test.mjs && node tests/package-boundary.test.mjs"}}

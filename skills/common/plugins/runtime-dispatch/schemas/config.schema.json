@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["targets"],
+  "properties": {
+    "targets": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["endpoint", "tokenSecret"],
+        "properties": {
+          "endpoint": { "type": "string", "format": "uri" },
+          "tokenSecret": { "type": "string", "minLength": 1 },
+          "maxRequestBytes": { "type": "integer", "minimum": 1, "maximum": 8388608, "default": 1048576 },
+          "maxResponseBytes": { "type": "integer", "minimum": 1, "maximum": 8388608, "default": 1048576 }
+        }
+      }
+    }
+  }
+}

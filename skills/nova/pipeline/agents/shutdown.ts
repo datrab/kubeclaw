@@ -1,6 +1,4 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { execFileSync } from 'child_process';
 import { appendPipelineLifecycleEvent, loadStatus, saveStatus } from '../services/status-store.ts';
 import { log } from '../core/logger.ts';
@@ -66,7 +64,7 @@ function parsePsTable(): PsRow[] | null {
   } catch (_error: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */ return null; }
 }
 function collectDescendants(rootPid: number, byParent: Map<number, PsRow[]>, acc: Set<number> = new Set()) {
-  const children = selectDefinedValue(() => (byParent.get(rootPid)), () => ([]));
+  const children = byParent.get(rootPid) ?? [];
   for (const child of children) {
     if (acc.has(child.pid)) continue;
     acc.add(child.pid);
@@ -95,7 +93,7 @@ function readProcEnv(pid: number): AnyRecord | null {
   }
 }
 function isTrackedAcpEnv(env: AnyRecord | null, project: string | null) {
-  if (selectTruthyValue(() => (!env), () => (env.OPENCLAW_SHELL !== 'acp'))) return false;
+  if (!env || env.OPENCLAW_SHELL !== 'acp') return false;
   if (project && env.CURRENT_PROJECT && env.CURRENT_PROJECT !== project) return false;
   return true;
 }
@@ -129,8 +127,9 @@ export function buildVictimSet(agentId: string | null, sessionKey: string, gatew
   const byPid = new Map<number, PsRow>();
   for (const row of table) {
     byPid.set(row.pid, row);
-    if (!byParent.has(row.ppid)) byParent.set(row.ppid, []);
-    byParent.get(row.ppid).push(row);
+    const siblings = byParent.get(row.ppid) ?? [];
+    siblings.push(row);
+    byParent.set(row.ppid, siblings);
   }
 
   const roots = table.filter((row: any) => {
@@ -199,63 +198,79 @@ async function stopTrackedSession(config: AnyRecord, label: string, entry: AnyRe
 async function performSignalShutdown(signal: string, stateConfig: AnyRecord | null, statusDir: string | null) {
   const gatewayUrl = resolveGatewayInvokeUrl();
   const gatewayToken = resolveGatewayToken();
-  const trackedAgents = listTrackedAgents();
+  await stopTrackedSessions(stateConfig, gatewayUrl, gatewayToken);
+  persistInterruptedModule(signal, stateConfig, statusDir);
+  persistPipelineCancellation(signal, stateConfig);
+  await closeShutdownTelemetry();
+}
 
-  if (trackedAgents.length > 0) {
-    for (const [label, entry] of trackedAgents) {
-      const sessionKey = firstDefined(entry?.sessionKey, entry);
-      if (!sessionKey) continue;
-      try {
-        const result = await stopTrackedSession(objectRecord(stateConfig), label, entry, gatewayUrl, gatewayToken);
-        log('INFO', `Shutdown: stop ${result.confirmed ? 'confirmed' : 'unconfirmed'} for session '${label}' (${sessionKey}, ${result.state})`);
-      } catch (e: any) {
-        log('WARN', `Shutdown: failed to stop session '${label}' (${sessionKey}): ${e.message}`);
-      }
+async function stopTrackedSessions(
+  stateConfig: AnyRecord | null,
+  gatewayUrl: string,
+  gatewayToken: string,
+): Promise<void> {
+  for (const [label, entry] of listTrackedAgents()) {
+    const sessionKey = firstDefined(entry?.sessionKey, entry);
+    if (!sessionKey) continue;
+    try {
+      const result = await stopTrackedSession(objectRecord(stateConfig), label, entry, gatewayUrl, gatewayToken);
+      log('INFO', `Shutdown: stop ${result.confirmed ? 'confirmed' : 'unconfirmed'} for session '${label}' (${sessionKey}, ${result.state})`);
+    } catch (error: unknown) {
+      log('WARN', `Shutdown: failed to stop session '${label}' (${sessionKey}): ${errorMessage(error)}`);
     }
   }
+}
 
-  if (stateConfig && statusDir) {
-    try {
-      const status = loadStatus(stateConfig, statusDir);
-      if (status && ![STATUS.PASS, STATUS.BLOCKED].includes(status.status)) {
-        const interruptedTransition = transitionModuleStatus(status, STATUS.FAIL, {
-          note: `Interrupted by ${signal}`,
-        });
-        saveStatus(stateConfig, statusDir, status, interruptedTransition);
-      }
-    } catch (e: any) {
-      log('WARN', `Shutdown: failed to persist interrupted module status: ${errorMessage(e)}`);
-    }
+function persistInterruptedModule(
+  signal: string,
+  stateConfig: AnyRecord | null,
+  statusDir: string | null,
+): void {
+  if (!stateConfig || !statusDir) return;
+  try {
+    const status = loadStatus(stateConfig, statusDir);
+    if (!status || [STATUS.PASS, STATUS.BLOCKED].includes(status.status)) return;
+    const transition = transitionModuleStatus(status, STATUS.FAIL, { note: `Interrupted by ${signal}` });
+    saveStatus(stateConfig, statusDir, status, transition);
+  } catch (error: unknown) {
+    log('WARN', `Shutdown: failed to persist interrupted module status: ${errorMessage(error)}`);
   }
+}
 
-  if (stateConfig) {
-    try {
-      appendPipelineLifecycleEvent(stateConfig, 'pipeline_run.halted', {
-        result: {
-          terminal_status: 'cancelled',
-          terminal_decision: {
-            reasonCode: `PIPELINE_CANCELLED_BY_${signalName(signal).toUpperCase()}`,
-          },
-          reason: `PIPELINE_CANCELLED_BY_${signalName(signal).toUpperCase()}`,
-        },
-        stepType: 'pipeline',
-        stepId: 'user_cancellation',
-        haltReason: `pipeline_cancelled_by_${signalName(signal).toLowerCase()}`,
-      });
-    } catch (e: any) {
-      log('WARN', `Shutdown: failed to persist pipeline cancellation lifecycle event: ${errorMessage(e)}`);
-    }
-    try {
-      finalizeEvidencePlane(stateConfig, { outcome:'cancelled', reason_code:`PIPELINE_CANCELLED_BY_${signalName(signal).toUpperCase()}`, duration_ms:null, progress:stateConfig._progress??null });
-    } catch (e:any) {
-      log('WARN', `Shutdown: failed to persist terminal closure: ${errorMessage(e)}`);
-    }
+function persistPipelineCancellation(signal: string, stateConfig: AnyRecord | null): void {
+  if (!stateConfig) return;
+  const signalCode = signalName(signal).toUpperCase();
+  try {
+    appendPipelineLifecycleEvent(stateConfig, 'pipeline_run.halted', {
+      result: {
+        terminal_status: 'cancelled',
+        terminal_decision: { reasonCode: `PIPELINE_CANCELLED_BY_${signalCode}` },
+        reason: `PIPELINE_CANCELLED_BY_${signalCode}`,
+      },
+      stepType: 'pipeline',
+      stepId: 'user_cancellation',
+      haltReason: `pipeline_cancelled_by_${signalName(signal).toLowerCase()}`,
+    });
+  } catch (error: unknown) {
+    log('WARN', `Shutdown: failed to persist pipeline cancellation lifecycle event: ${errorMessage(error)}`);
   }
+  try {
+    finalizeEvidencePlane(stateConfig, {
+      outcome: 'cancelled',
+      reason_code: `PIPELINE_CANCELLED_BY_${signalCode}`,
+      duration_ms: null,
+      progress: stateConfig._progress ?? null,
+    });
+  } catch (error: unknown) {
+    log('WARN', `Shutdown: failed to persist terminal closure: ${errorMessage(error)}`);
+  }
+}
 
+async function closeShutdownTelemetry(): Promise<void> {
   try {
     await closeTelemetryRedis();
-  } catch (e: any) {
-    log('DEBUG', `Shutdown: telemetry Redis close failed (non-critical): ${errorMessage(e)}`);
+  } catch (error: unknown) {
+    log('DEBUG', `Shutdown: telemetry Redis close failed (non-critical): ${errorMessage(error)}`);
   }
 }
 

@@ -1,6 +1,6 @@
 import { hostname } from 'os';
 import { createRedisClient, loadRedisCtor } from '../telemetry.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import { writeBusterRuntimeLog } from './logger.ts';
 import { loadBusterRuntimePolicy } from './runtime-policy.ts';
 import { reportBusterRuntimeDiagnostic, safeErrorMessage } from './runtime-diagnostics.ts';

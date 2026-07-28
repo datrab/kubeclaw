@@ -1,5 +1,5 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 // ═══════════════════════════════════════════════════════════════
 // Verdict Schema — Deterministic Test Suite Results
 // ═══════════════════════════════════════════════════════════════

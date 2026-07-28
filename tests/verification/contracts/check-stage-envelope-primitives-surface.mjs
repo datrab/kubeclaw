@@ -16,10 +16,20 @@ const pipelineSchedulingSnapshotsPath = path.join(sourceRoot, 'skills/nova/pipel
 const waitableGateEnginePath = path.join(sourceRoot, 'skills/nova/pipeline/runners/waitable-gate-engine.ts');
 
 const helperSource = fs.readFileSync(helperPath, 'utf8');
-const moduleSharedSource = fs.readFileSync(moduleSharedPath, 'utf8');
-const gateRunnerSource = fs.readFileSync(gateRunnerPath, 'utf8');
+const moduleSharedSource = [
+  fs.readFileSync(moduleSharedPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-plugin-contracts.ts'), 'utf8'),
+].join('\n');
+const gateRunnerSource = [
+  fs.readFileSync(gateRunnerPath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/runners/gate-run-input.ts'), 'utf8'),
+].join('\n');
 const waitableGateEngineSource = fs.readFileSync(waitableGateEnginePath, 'utf8');
-const pipelineSchedulingSource = [pipelineSchedulingPath, pipelineSchedulingSnapshotsPath]
+const pipelineSchedulingSource = [
+  pipelineSchedulingPath,
+  pipelineSchedulingSnapshotsPath,
+  path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling-inputs.ts'),
+]
   .map((filePath) => fs.readFileSync(filePath, 'utf8'))
   .join('\n');
 
@@ -74,6 +84,8 @@ assert.equal(waitableGateEngineSource.includes('finalizeGateCompatibilityResult(
 
 const helperMod = await import(pathToFileURL(helperPath).href);
 const moduleSharedMod = await import(pathToFileURL(moduleSharedPath).href);
+const moduleBusterInputMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-buster-input.ts')).href);
+const modulePluginContractsMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/runners/module-runner-plugin-contracts.ts')).href);
 const gateRunnerMod = await import(pathToFileURL(gateRunnerPath).href);
 const pipelineRunnerMod = await import(pathToFileURL(path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling.ts')).href);
 
@@ -82,8 +94,8 @@ for (const [mod, name] of [
   [helperMod, 'buildStagePluginInvocation'],
   [helperMod, 'collectExistingArtifactRefs'],
   [moduleSharedMod, 'buildModuleForgeRunInput'],
-  [moduleSharedMod, 'buildModuleBusterRunInput'],
-  [moduleSharedMod, 'buildModuleWorkerPluginInvocation'],
+  [moduleBusterInputMod, 'buildModuleBusterRunInput'],
+  [modulePluginContractsMod, 'buildModuleWorkerPluginInvocation'],
   [gateRunnerMod, 'runGate'],
   [pipelineRunnerMod, 'runScheduledGenerator'],
 ]) {

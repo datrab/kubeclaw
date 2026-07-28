@@ -72,6 +72,7 @@ function validateProjectTerraform(project: Record<string, any>, field: string, l
 
 function validateTool(input: unknown, field: string, policyDir: string): Record<string, any> {
   const tool = record(input, field);
+  const id = text(tool.id, `${field}.id`);
   const languages = stringList(tool.languages, `${field}.languages`);
   for (const language of languages) if (!LANGUAGES.has(language)) fail(`${field}.languages`, `unknown language '${language}'`);
   if (typeof tool.required !== 'boolean') fail(`${field}.required`, 'required boolean');
@@ -83,8 +84,10 @@ function validateTool(input: unknown, field: string, policyDir: string): Record<
   const configPath = tool.config_path === null || tool.config_path === undefined
     ? null
     : path.resolve(policyDir, text(tool.config_path, `${field}.config_path`));
+  const configuredTargets = stringList(tool.targets, `${field}.targets`)
+    .map((entry: any, index: any) => repoRelative(entry, `${field}.targets[${index}]`));
   return {
-    id: text(tool.id, `${field}.id`),
+    id,
     required: tool.required,
     category: tool.category,
     scope: tool.scope,
@@ -94,8 +97,8 @@ function validateTool(input: unknown, field: string, policyDir: string): Record<
     languages,
     config_path: configPath,
     arguments: tool.arguments === undefined ? [] : stringList(tool.arguments, `${field}.arguments`),
-    targets: stringList(tool.targets, `${field}.targets`)
-      .map((entry: any, index: any) => repoRelative(entry, `${field}.targets[${index}]`)),
+    configured_targets: configuredTargets,
+    targets: id === 'semgrep' && configuredTargets.length === 0 ? ['.'] : configuredTargets,
     include: stringList(tool.include, `${field}.include`),
     exclude: stringList(tool.exclude, `${field}.exclude`),
   };

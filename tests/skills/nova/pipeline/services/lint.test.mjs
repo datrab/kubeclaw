@@ -39,7 +39,7 @@ const modulePath = moduleIndex >= 0 ? process.argv[moduleIndex + 1] : 'full';
 
 fs.writeFileSync(output, JSON.stringify({
   schema_version: 'pipeline_lint_report.v6',
-  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, effective_targets: { shellcheck: ['.'] }, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   scope: modulePath,
   tier,
@@ -122,7 +122,7 @@ const modulePath = moduleIndex >= 0 ? process.argv[moduleIndex + 1] : 'full';
 
 fs.writeFileSync(output, JSON.stringify({
   schema_version: 'pipeline_lint_report.v6',
-  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, effective_targets: { shellcheck: ['.'] }, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   scope: modulePath,
   tier: 'pre-check',
@@ -205,7 +205,7 @@ const policyDigest = crypto.createHash('sha256').update(fs.readFileSync(policyPa
 
 fs.writeFileSync(output, JSON.stringify({
   schema_version: 'pipeline_lint_report.v6',
-  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, effective_targets: { shellcheck: ['.'] }, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   tier: valueAfter('--tier') || 'full',
   visibility: { debt: false, experimental: false },
@@ -279,7 +279,7 @@ fs.writeFileSync(counterPath, String(current + 1));
 
 fs.writeFileSync(output, JSON.stringify({
   schema_version: 'pipeline_lint_report.v6',
-  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
+  policy: { schema_version: 'pipeline_lint_policy.v6', digest: policyDigest, project: 'workspace', config_digests: {}, effective_targets: { shellcheck: ['.'] }, baseline_digest: 'c2fd9d8282ac7f3fd16ae1ba91a4919755edf28deee23919bc4239a319c48ea6' },
   project: 'fixture',
   scope: modulePath,
   tier: 'full',

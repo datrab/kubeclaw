@@ -109,4 +109,3 @@ export async function finalizeTerminalHalt(config: AnyRecord, progress: AnyRecor
   }
   return terminal.exitCode;
 }
-

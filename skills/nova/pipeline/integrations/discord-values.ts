@@ -146,7 +146,10 @@ function compactDiscordEmbed(embed: any = {}) {
     + textOrEmpty(compact.description).length
     + textOrEmpty(recordOrEmpty(compact.footer).text).length;
   for (const rawField of arrayOrEmpty(embedRecord.fields).slice(0, DISCORD_PAYLOAD_LIMITS.fields)) {
-    const name = truncateDiscordText(recordOrEmpty(rawField).name || 'Field', DISCORD_PAYLOAD_LIMITS.fieldName);
+    const name = truncateDiscordText(
+      selectTruthyValue(() => recordOrEmpty(rawField).name, () => 'Field'),
+      DISCORD_PAYLOAD_LIMITS.fieldName,
+    );
     const remaining = maxTotal - total - name.length;
     if (remaining <= 16) break;
     const value = truncateDiscordText(

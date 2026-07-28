@@ -23,7 +23,7 @@ export function normalizeCompletionIdentity(identity: any = {}) {
   return Object.fromEntries(Object.entries(normalized).filter(([, value]) => value !== null));
 }
 
-export function getMissingCompletionIdentityFields(identity: any = {}, requiredFields: readonly string[] = STRONG_COMPLETION_IDENTITY_FIELDS) {
+function getMissingCompletionIdentityFields(identity: any = {}, requiredFields: readonly string[] = STRONG_COMPLETION_IDENTITY_FIELDS) {
   const normalized = normalizeCompletionIdentity(identity);
   return requiredFields.filter((field) => !normalized[field]);
 }

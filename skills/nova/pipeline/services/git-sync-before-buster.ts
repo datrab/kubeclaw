@@ -48,53 +48,82 @@ export async function gitSyncBeforeBuster(config: AnyRecord, moduleDir: string, 
   log('STEP', 'Git sync: committing and pushing Forge output before Buster');
 
   try {
-    const diffEvidence = collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: selectTruthyValue(() => (status?.head_before), () => (null)) });
-    const scopedPaths = normalizeScopedGitPaths(diffEvidence?.paths);
-    const addPaths = scopedPaths.length > 0
-      ? scopedPaths
-      : [normalizeRepoRelativePath(relPath(config, projectSrcPath(config)))].filter(Boolean);
-
-    const message = `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`;
-    const result = isIsolatedModuleWorktree(config)
-      ? commitModuleWorktreeChanges(config, message, { addPaths, captureHash: true })
-      : await gitCommitAndPush(
-        config,
-        message,
-        { addPaths, conflictPaths: scopedPaths, captureHash: true, budget, signal },
-      );
-
-    if (!result.committed && !isIsolatedModuleWorktree(config)) {
-      log('INFO', 'No uncommitted changes (Forge already committed) — pushing existing commits');
-      gitPullBeforePush(config);
-      await gitPushWithRetry(config, { budget, signal });
-    }
-
-    const commitHash = commitHashAuthority(result, config);
-    const shortHash = commitHash.substring(0, 8);
-
-    status.forge_commit_hash = commitHash;
-
-    try {
-      status.forge_diff_stat = gitExec(config.repo_root, ['diff', '--stat', 'HEAD~1', 'HEAD']);
-    } catch (_error: any) {
-      status.forge_diff_stat = null;
-    }
-    const diff = gitExec(config.repo_root, ['diff', '--binary', `${status?.head_before || `${commitHash}^`}`, commitHash, '--', ...addPaths]);
-    const diffArtifact = publishArtifact({ ...config, pipeline_dir: config?.paths?.swarm_dir ? `${config.paths.swarm_dir}/logs/pipeline` : null }, {
-      logical_id: `git-diff/${status.module_id}/${commitHash}`,
-      kind: 'git-diff', media_type: 'text/x-diff', bytes: diff, producer: 'nova/git-sync', content_class: 'artifact',
-      correlation: { project: config.project, run_id: config._runId ?? config.run_id, work_id: status.module_id, work_type: 'module', attempt: status.attempt ?? status.fail_count + 1, source: 'pipeline', producer: 'nova/git-sync' },
-    });
-    appendEvaluationFact(config, { dimension:'git.workspace', work_id:status.module_id, attempt:status.attempt??status.fail_count+1, starting_commit:status?.head_before??null, final_commit:commitHash, files_touched:addPaths, diff_stat:status.forge_diff_stat, diff_reference:diffArtifact.reference, branch:gitExec(config.repo_root,['branch','--show-current']) });
-
-    const gitSyncTransition = transitionModuleStatus(status, STATUS.READY_FOR_TESTING, {
-      note: `Git sync complete (${shortHash})`,
-    });
-    log('OK', `Forge commit hash recorded: ${shortHash}`);
-
-    return { commitHash, lifecycleMutation: gitSyncTransition.lifecycleMutation };
+    return await performGitSyncBeforeBuster(config, moduleDir, status, { budget, signal });
   } catch (e: any) {
     throw new Error(`[${FAIL_PATTERNS.GIT_SYNC_FAILED}] Git sync failed before Buster handoff: ${errorMessage(e)}`);
+  }
+}
+
+async function performGitSyncBeforeBuster(
+  config: AnyRecord,
+  moduleDir: string,
+  status: AnyRecord,
+  opts: { budget?: any; signal?: any },
+) {
+  const diffEvidence = collectMeaningfulForgeDiffEvidence(config, moduleDir, { headBefore: status?.head_before ?? null });
+  const scopedPaths = normalizeScopedGitPaths(diffEvidence?.paths);
+  const addPaths = scopedPaths.length > 0
+    ? scopedPaths
+    : [normalizeRepoRelativePath(relPath(config, projectSrcPath(config)))].filter(Boolean);
+  const message = `[pipeline] Module ${status.module_id}: Forge output — ready for Buster`;
+  const isolated = isIsolatedModuleWorktree(config);
+  const result = isolated
+    ? commitModuleWorktreeChanges(config, message, { addPaths, captureHash: true })
+    : await gitCommitAndPush(config, message, {
+      addPaths,
+      conflictPaths: scopedPaths,
+      captureHash: true,
+      budget: opts.budget,
+      signal: opts.signal,
+    });
+  await pushExistingCommitWhenNeeded(config, result, isolated, opts);
+  return recordGitSyncEvidence(config, status, result, addPaths);
+}
+
+async function pushExistingCommitWhenNeeded(
+  config: AnyRecord,
+  result: AnyRecord,
+  isolated: boolean,
+  opts: { budget?: any; signal?: any },
+): Promise<void> {
+  if (result.committed || isolated) return;
+  log('INFO', 'No uncommitted changes (Forge already committed) — pushing existing commits');
+  gitPullBeforePush(config);
+  await gitPushWithRetry(config, opts);
+}
+
+function recordGitSyncEvidence(
+  config: AnyRecord,
+  status: AnyRecord,
+  result: AnyRecord,
+  addPaths: string[],
+) {
+  const commitHash = commitHashAuthority(result, config);
+  status.forge_commit_hash = commitHash;
+  status.forge_diff_stat = readForgeDiffStat(config);
+  const startingCommit = status?.head_before ?? `${commitHash}^`;
+  const diff = gitExec(config.repo_root, ['diff', '--binary', startingCommit, commitHash, '--', ...addPaths]);
+  const pipelineDir = config?.paths?.swarm_dir ? `${config.paths.swarm_dir}/logs/pipeline` : null;
+  if (!pipelineDir) throw new Error('git sync requires config.paths.swarm_dir');
+  const diffArtifact = publishArtifact({ ...config, pipeline_dir: pipelineDir }, {
+    logical_id: `git-diff/${status.module_id}/${commitHash}`,
+    kind: 'git-diff', media_type: 'text/x-diff', bytes: diff, producer: 'nova/git-sync', content_class: 'artifact',
+    correlation: { project: config.project, run_id: config._runId ?? config.run_id, work_id: status.module_id, work_type: 'module', attempt: status.attempt ?? status.fail_count + 1, source: 'pipeline', producer: 'nova/git-sync' },
+  });
+  appendEvaluationFact(config, { dimension:'git.workspace', work_id:status.module_id, attempt:status.attempt??status.fail_count+1, starting_commit:status?.head_before??null, final_commit:commitHash, files_touched:addPaths, diff_stat:status.forge_diff_stat, diff_reference:diffArtifact.reference, branch:gitExec(config.repo_root,['branch','--show-current']) });
+  const transition = transitionModuleStatus(status, STATUS.READY_FOR_TESTING, {
+    note: `Git sync complete (${commitHash.substring(0, 8)})`,
+  });
+  log('OK', `Forge commit hash recorded: ${commitHash.substring(0, 8)}`);
+  return { commitHash, lifecycleMutation: transition.lifecycleMutation };
+}
+
+function readForgeDiffStat(config: AnyRecord): string | null {
+  try {
+    return gitExec(config.repo_root, ['diff', '--stat', 'HEAD~1', 'HEAD']);
+  } catch (_error: unknown) {
+    // INTENTIONAL_NONCRITICAL(git_diff_stat_unavailable): commit evidence remains authoritative.
+    return null;
   }
 }
 

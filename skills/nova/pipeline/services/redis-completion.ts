@@ -10,6 +10,11 @@ import {
   firstDefinedCompletionValue as firstDefined,
   normalizeCompletionIdentityValue as normalizeIdentityValue,
 } from './completion-identity-values.ts';
+import {
+  archiveCompletionEntries,
+  scanCompletionTail,
+} from './redis-completion-stream.ts';
+type AnyRecord = Record<string, any>;
 
 export {
   REDIS_COMPLETION_OUTCOMES,
@@ -192,7 +197,7 @@ export function selectLatestCompletion(entries: any = [], moduleId: any, expecte
   const normalizedExpected = normalizeExpectedCompletionIdentity(expected);
   const matched = entries
     .map(([id, fields]: any) => {
-      const o = { _id: id };
+      const o: AnyRecord = { _id: id };
       for (let i = 0; i < fields.length; i += 2) o[fields[i]] = fields[i + 1];
       return o;
     })
@@ -218,146 +223,23 @@ export function selectLatestCompletion(entries: any = [], moduleId: any, expecte
   );
 }
 
-function decodeStreamEntry(id: any, fields: any) {
-  const entry = { _id: id };
-  for (let i = 0; i < fields.length; i += 2) entry[fields[i]] = fields[i + 1];
-  return entry;
-}
-
-function nextExclusiveStreamId(id: any) {
-  return `(${id}`;
-}
-
 export async function scanLatestCompletionFromTail(redis: any, streamKey: any, moduleId: any, expected: any = {}, opts: any = {}) {
-  const normalizedExpected = normalizeExpectedCompletionIdentity(expected);
-  const requireAgent = Object.keys(normalizedExpected).length > 0;
-  if (selectTruthyValue(() => (opts.batchSize === undefined), () => (opts.scanLimit === undefined))) {
-    throw new TypeError('scanLatestCompletionFromTail requires explicit batchSize and scanLimit');
-  }
-  const batchSize = Math.max(1, Number(opts.batchSize));
-  const scanLimit = Math.max(batchSize, Number(opts.scanLimit));
-  if (selectTruthyValue(() => (!Number.isFinite(batchSize)), () => (!Number.isFinite(scanLimit)))) {
-    throw new TypeError('scanLatestCompletionFromTail batchSize and scanLimit must be finite numbers');
-  }
-
-  let nextEnd = '+';
-  let scanned = 0;
-  let batches = 0;
-  let latestMatch = null;
-  const matched: any[] = [];
-
-  while (scanned < scanLimit) {
-    const remaining = Math.max(1, scanLimit - scanned);
-    const count = Math.min(batchSize, remaining);
-    const entries = await redis.xrevrange(streamKey, nextEnd, '-', 'COUNT', count);
-    batches += 1;
-
-    if (selectTruthyValue(() => (!Array.isArray(entries)), () => (entries.length === 0))) break;
-    scanned += entries.length;
-
-    for (const [id, fields] of entries) {
-      const entry = decodeStreamEntry(id, fields);
-      if (selectTruthyValue(() => (entry.type !== 'completion'), () => (!matchesCompletionTarget(entry, moduleId)))) continue;
-      if (!matchesCompletionIdentity(entry, normalizedExpected)) continue;
-
-      if (!isCurrentBusterPipelineCompletion(entry)) {
-        matched.push(entry);
-        continue;
-      }
-
-      const validated = validateMatchedCompletionEntry(entry, moduleId, normalizedExpected);
-      if (!validated.valid) {
-        return {
-          match: validated.invalid,
-          scanned,
-          batches,
-          truncated: false,
-          conflict: validated.invalid,
-        };
-      }
-
-      matched.push(entry);
-      if (!latestMatch) latestMatch = entry;
-      if (!requireAgent) {
-        return {
-          match: attachIgnoredCompletionSourceDiagnostics(entry, matched.filter((item: any) => !isCurrentBusterPipelineCompletion(item))),
-          scanned,
-          batches,
-          truncated: false,
-        };
-      }
-    }
-
-    if (entries.length < count) break;
-    nextEnd = nextExclusiveStreamId(entries[entries.length - 1][0]);
-  }
-
-  const selectable = matched.filter((entry: any) => isCurrentBusterPipelineCompletion(entry));
-  const ignored = matched.filter((entry: any) => !isCurrentBusterPipelineCompletion(entry));
-  const conflict = buildCompletionConflictEntry(selectable, moduleId, normalizedExpected);
-  const preferredMatch = firstDefined(selectable[0], latestMatch);
-
-  return {
-    match: firstDefined(conflict, attachIgnoredCompletionSourceDiagnostics(
-      attachSameOutcomeDuplicateDiagnostics(preferredMatch, selectable),
-      ignored,
-    )),
-    scanned,
-    batches,
-    truncated: scanned >= scanLimit,
-    conflict: selectTruthyValue(() => (conflict), () => (null)),
-  };
+  return scanCompletionTail(redis, streamKey, moduleId, expected, opts, streamDependencies);
 }
 
 export async function archiveCompletionsChunked(redis: any, streamKey: any, archiveStreamKey: any, moduleId: any, maxLen: any, opts: any = {}) {
-  if (selectTruthyValue(() => (maxLen === undefined), () => (opts.batchSize === undefined))) {
-    throw new TypeError('archiveCompletionsChunked requires explicit maxLen and batchSize');
-  }
-  const archiveMaxLen = Math.max(1, Number(maxLen));
-  const batchSize = Math.max(1, Number(opts.batchSize));
-  if (selectTruthyValue(() => (!Number.isFinite(archiveMaxLen)), () => (!Number.isFinite(batchSize)))) {
-    throw new TypeError('archiveCompletionsChunked maxLen and batchSize must be finite numbers');
-  }
-  const activeIdentity = normalizeExpectedCompletionIdentity(selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (opts.activeIdentity), () => (opts.expectedIdentity))), () => (opts.expected))), () => ({})));
-  const hasActiveIdentity = hasStrongExpectedCompletionIdentity(activeIdentity);
-  let nextStart = '-';
-  let scanned = 0;
-  let archived = 0;
-  let batches = 0;
-
-  while (true) {
-    const entries = await redis.xrange(streamKey, nextStart, '+', 'COUNT', batchSize);
-    batches += 1;
-
-    if (selectTruthyValue(() => (!Array.isArray(entries)), () => (entries.length === 0))) break;
-    scanned += entries.length;
-
-    const matching: any[] = [];
-    for (const [id, fields] of entries) {
-      const entry = decodeStreamEntry(id, fields);
-      if (selectTruthyValue(() => (entry.type !== 'completion'), () => (!matchesCompletionTarget(entry, moduleId)))) continue;
-      const isActiveIdentity = hasActiveIdentity && matchesCompletionIdentity(entry, activeIdentity);
-      if (!isActiveIdentity) matching.push([id, fields]);
-    }
-
-    if (matching.length > 0) {
-      const archivedAt = Date.now().toString();
-      const tx = redis.multi();
-      for (const [id, fields] of matching) {
-        tx.xadd(archiveStreamKey, '*', ...fields, 'archived_at', archivedAt);
-        tx.xdel(streamKey, id);
-      }
-      await tx.exec();
-      archived += matching.length;
-    }
-
-    if (entries.length < batchSize) break;
-    nextStart = nextExclusiveStreamId(entries[entries.length - 1][0]);
-  }
-
-  if (archiveMaxLen > 0) {
-    await redis.xtrim(archiveStreamKey, 'MAXLEN', '~', archiveMaxLen);
-  }
-
-  return { archived, scanned, batches, active_identity: activeIdentity, identity_scoped: hasActiveIdentity };
+  return archiveCompletionEntries(redis, streamKey, archiveStreamKey, moduleId, maxLen, opts, streamDependencies);
 }
+
+const streamDependencies = {
+  normalizeExpectedIdentity: normalizeExpectedCompletionIdentity,
+  hasStrongIdentity: hasStrongExpectedCompletionIdentity,
+  matchesTarget: matchesCompletionTarget,
+  matchesIdentity: matchesCompletionIdentity,
+  isCanonical: isCurrentBusterPipelineCompletion,
+  validate: validateMatchedCompletionEntry,
+  conflict: buildCompletionConflictEntry,
+  attachDuplicates: attachSameOutcomeDuplicateDiagnostics,
+  attachIgnored: attachIgnoredCompletionSourceDiagnostics,
+  firstDefined,
+};

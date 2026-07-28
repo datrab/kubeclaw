@@ -9,14 +9,14 @@ import {
   withSessionRateLimitRecovery,
 } from './rate-limit.ts';
 import { resolveResultAttempt } from './correlation.ts';
-import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import {
+  buildSummarySpawnOptions,
   buildSummaryDiscordCorrelation as buildPipelineReviewDiscordCorrelation,
   buildSummaryDiscordFields as buildPipelineReviewDiscordFields,
+  createSummarySessionCleanup,
   requirePositiveSummaryTimeout,
 } from './summary-session-values.ts';
 import { errorMessage } from './text-values.ts';
-import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { getReviewDefaultsConfig } from './runtime-defaults.ts';
 import { onSummaryStarted } from './telemetry.ts';
 import { writePipelineReviewInstructions } from './pipeline-review-instructions.ts';
@@ -88,30 +88,11 @@ function createReviewState(config: any, progress: any, opts: any): any {
 }
 
 function createCleanup(state: any) {
-  return createTrackedSummarySessionCleanup(state.deps, {
-    config: state.config,
-    sessionKey: () => state.sessionKey,
-    trackingKey: () => state.trackingKey,
-    runtime: () => state.runtime,
-    model: () => state.model,
-    agentId: () => state.agentId,
-    label: () => state.label,
-  }, { summaryType: 'pipeline_review' });
+  return createSummarySessionCleanup(state, 'pipeline_review');
 }
 
 function buildSpawnOptions(state: any) {
-  return {
-    ...sessionLifecyclePolicies(state.config),
-    runtime: state.runtime,
-    model: state.model,
-    agentId: state.agentId,
-    cwd: state.config.repo_root,
-    label: state.label,
-    thinking: state.review.thinking_level ?? null,
-    trackActive: false,
-    budget: state.opts.budget ?? null,
-    signal: state.opts.signal ?? null,
-  };
+  return buildSummarySpawnOptions(state, state.review.thinking_level ?? null);
 }
 
 async function notifyReviewSpawned(state: any) {

@@ -1,4 +1,4 @@
-// pipeline/core/constants.ts — Shared status and exit code constants
+// skills/common/plugin-runtime/core/constants.ts — Shared status and exit code constants
 
 export const STATUS = {
   PENDING:           'PENDING',

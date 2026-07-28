@@ -76,7 +76,7 @@ Raw embeds are rejected by the telemetry sink contract.
 | Redis telemetry | `skills/nova/pipeline/services/telemetry-sink-contract.ts` calling `emitTelemetryStreamEvent()` in `telemetry-stream.ts` | `validateTelemetrySinkInput()` requires run ID, run ref, primary ref, event type, object payload, and ISO timestamp | `pipeline:telemetry:<project>:<run_id>` |
 | Discord telemetry | `observeDiscordTelemetrySink()` in `telemetry-sink-contract.ts` | only `level`, `title`, `description`, and string `fields`; raw embeds rejected | webhook delivery and `discord.jsonl` audit evidence |
 | Structured notification artifact | `skills/nova/pipeline/services/notification-contract.ts` | lifecycle hook presentation events | run-scoped structured event artifacts |
-| OpenClaw agent observer | `plugins/openclaw-agent-observer/src/index.ts` and `redis-writer.ts` | normalized runtime agent events, OpenClaw hook events, and model usage diagnostics from `hook-normalizers.ts` | `pipeline:agent-observability:control:v1`, `pipeline:agent-observability:payload:v1`, and dead-letter attempts |
+| OpenClaw agent observer | `skills/common/plugins/openclaw-agent-observer/src/index.ts` and `redis-writer.ts` | normalized runtime agent events, OpenClaw hook events, and model usage diagnostics from `hook-normalizers.ts` | `pipeline:agent-observability:control:v1`, `pipeline:agent-observability:payload:v1`, and dead-letter attempts |
 
 Failure invariant: sink delivery never upgrades a module/gate to PASS or FAIL. It can only emit observability evidence or degrade/restored signals.
 

@@ -110,7 +110,7 @@ class LocalEvidenceAdapter {
     const key = `${spec.targetPath}\0${spec.watchPath}`;
     if (this.activeWatchKeys.has(key)) return;
     try {
-      const watcher = fs.watch(spec.watchPath, (_eventType, fileName) => this.handleWatchEvent(spec, fileName));
+      const watcher = fs.watch(spec.watchPath, (_eventType: string, fileName: string | Buffer | null) => this.handleWatchEvent(spec, fileName));
       watcher.on?.('error', (error: any) => this.emitFatal('watcher_error', spec.targetPath, error));
       this.activeWatchKeys.add(key);
       this.watchers.push(watcher);

@@ -1,0 +1,12 @@
+{
+  "name": "@kubeclaw/plugin-sdk",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing/index.ts"
+  }
+}

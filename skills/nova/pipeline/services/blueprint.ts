@@ -1,8 +1,5 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { spawnSync } from 'child_process';
 import { log } from '../core/logger.ts';
 import { projectModuleSchedulerState } from './status-store.ts';
@@ -13,6 +10,7 @@ import { discord } from '../integrations/discord.ts';
 import { gitExec } from '../integrations/git-worktree.ts';
 import { buildSubprocessEnv } from '../security.ts';
 import { getPipelineArtifactBundle } from './artifact-bundle.ts';
+import { syncControlFilesImplementation } from './blueprint-control-sync.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
@@ -45,11 +43,11 @@ function objectRecord(value: unknown): AnyRecord | null {
 }
 
 function modulesRecord(progress: AnyRecord): AnyRecord {
-  return selectDefinedValue(() => (objectRecord(progress?.modules)), () => ({}));
+  return objectRecord(progress?.modules) ?? {};
 }
 
 function gatesRecord(progress: AnyRecord): AnyRecord {
-  return selectDefinedValue(() => (objectRecord(progress?.gates)), () => ({}));
+  return objectRecord(progress?.gates) ?? {};
 }
 
 function gitFailureText(result: AnyRecord, fallback: string): string {
@@ -189,7 +187,7 @@ export async function releaseBlueprint(config: AnyRecord, progress: AnyRecord, m
   const branch = `${config.project}/architecture`;
   const branchRef = ensureRemoteBranchRef(config, branch, 'blueprint release');
   const targetPath = relPath(config, modulePath(config, moduleDir));
-  const moduleConfig = selectDefinedValue(() => (objectRecord(modulesRecord(progress)[moduleId])), () => ({}));
+  const moduleConfig = objectRecord(modulesRecord(progress)[moduleId]) ?? {};
 
   log('STEP', `Releasing blueprint for ${moduleId} from ${branch}`);
   const existingStatus = projectModuleSchedulerState(config, moduleId, moduleConfig);
@@ -291,86 +289,12 @@ export async function releaseGateFiles(config: AnyRecord, progress: AnyRecord) {
 }
 
 export async function syncControlFiles(config: AnyRecord, progress: AnyRecord) {
-  const branch = `${config.project}/architecture`;
-  let branchRef: string;
-  try { branchRef = ensureRemoteBranchRef(config, branch, 'control file sync'); }
-  catch (e: any) {
-    const degraded = [buildBlueprintDegradedEvidence('blueprint_control_fetch_failed', 'sync_control_files', e)];
-    log('WARN', `syncControlFiles: could not fetch architecture branch — skipping without local-cache fallback: ${errorMessage(e)}`);
-    return { synced: 0, files: [], degraded };
-  }
-
-  const swarmRel = relPath(config, swarmRoot(config));
-  const synced: SyncedControlFile[] = [];
-  const degraded: BlueprintDegradedEvidence[] = [];
-  function syncFile(archPath: string) {
-    try { gitExec(config.repo_root, ['cat-file', '-e', `${branchRef}:${archPath}`], { stdio: 'ignore' }); }
-    catch (_e: any) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */ return; }
-
-    let archContent;
-    try { archContent = gitExec(config.repo_root, ['show', `${branchRef}:${archPath}`]); } catch (e: any) { log('WARN', `[blueprint-sync] could not read declared architecture control file ${archPath}: ${errorMessage(e)}`); return; }
-    const localAbsPath = path.join(config.repo_root, archPath);
-    let localContent = null;
-    try { localContent = fs.readFileSync(localAbsPath, 'utf8'); } catch (e: any) { if ((e as AnyRecord)?.code !== 'ENOENT') log('DEBUG', `[blueprint-sync] could not read local ${archPath}: ${errorMessage(e)}`); }
-    if (localContent !== null && localContent.trim() === archContent.trim()) return;
-    try {
-      gitExec(config.repo_root, ['checkout', `origin/${branch}`, '--', archPath], { stdio: 'ignore' });
-      synced.push({ path: archPath, action: localContent === null ? 'created' : 'updated' });
-      log('OK', `[blueprint-sync] ${localContent === null ? 'created' : 'updated'}: ${archPath}`);
-    } catch (e: any) {
-      degraded.push(buildBlueprintDegradedEvidence('blueprint_control_checkout_failed', 'sync_control_files', e, { path: archPath }));
-      log('WARN', `[blueprint-sync] checkout failed for ${archPath}: ${errorMessage(e)}`);
-    }
-  }
-
-  for (const [moduleId, mod] of Object.entries(modulesRecord(progress)) as [string, AnyRecord][]) {
-    const status = projectModuleSchedulerState(config, moduleId, mod);
-    if (selectTruthyValue(() => (!status), () => (status.status === STATUS.PENDING))) continue;
-    const moduleRel = relPath(config, modulePath(config, mod.dir));
-    for (const file of BLUEPRINT_POLICY.include.moduleControlFiles) syncFile(`${moduleRel}/${file}`);
-    const moduleConfig = selectDefinedValue(() => (objectRecord(modulesRecord(progress)[moduleId])), () => ({}));
-    if (moduleConfig.substeps?.length) for (const stepId of moduleConfig.substeps) syncFile(`${moduleRel}/${stepId}/FORGE.md`);
-  }
-
-  const processedGateDirs = new Set<string>();
-  for (const gate of Object.values(gatesRecord(progress)) as AnyRecord[]) {
-    if (gate.instructions_file) {
-      syncFile(gateInstructionsPathRef(config, gate));
-      const gateDir = gateInstructionsTopLevelRef(config, gate);
-      if (!processedGateDirs.has(gateDir)) {
-        processedGateDirs.add(gateDir);
-        const extraFiles = selectDefinedValue(() => ((BLUEPRINT_POLICY.include.gateControlFilesByDir as AnyRecord)[gateDir]), () => ([]));
-        for (const file of extraFiles) syncFile(`${swarmRel}/${gateDir}/${file}`);
-      }
-    }
-  }
-
-  if (synced.length > 0) {
-    try {
-      commitSelectedPaths(config, `[blueprint-sync] Sync ${synced.length} control file(s) from architecture`, synced.map((file: any) => file.path));
-    } catch (e: any) {
-      degraded.push(buildBlueprintDegradedEvidence('blueprint_control_commit_failed', 'sync_control_files', e, { path: synced.map((file: any) => file.path).join(',') }));
-      log('WARN', `[blueprint-sync] commit/push failed (non-critical): ${errorMessage(e)}`);
-    }
-    await discord(config, 'INFO', 'Blueprint Sync', `${synced.length} control file(s) updated from architecture branch`, [
-      ...buildBlueprintDiscordFields({ run_id: getRunId(config) }),
-      { name: 'Files', value: synced.map((file: any) => `${file.action} ${file.path.split('/').pop()}`).join(', ').slice(0, 200) },
-    ]);
-  } else {
-    log('DEBUG', '[blueprint-sync] All control files up to date — no changes');
-  }
-
-  const artifacts = getPipelineArtifactBundle(config);
-  const syncOutputDir = blueprintSyncOutputDir(artifacts);
-  if (syncOutputDir) {
-    try {
-      fs.writeFileSync(path.join(syncOutputDir, 'blueprint-sync.json'), JSON.stringify({ ts: new Date().toISOString(), synced: synced.length, files: synced }, null, 2));
-    } catch (e: any) {
-      log('DEBUG', `[blueprint-sync] failed to write sync summary: ${errorMessage(e)}`);
-    }
-  }
-
-  return { synced: synced.length, files: synced, degraded };
+  return syncControlFilesImplementation(config, progress, {
+    policy: BLUEPRINT_POLICY,
+    ensureRemoteBranchRef,
+    commitSelectedPaths,
+    buildDegraded: buildBlueprintDegradedEvidence,
+  });
 }
 
 export const __blueprintTest = {

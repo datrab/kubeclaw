@@ -133,4 +133,4 @@ npm run docs:generate:check
 - sink throws and breaks pipeline control flow: incorrect, sinks must degrade without owning scheduler truth.
 - event appears in Redis but not external sink: inspect sink config, canonical artifacts, and quarantine evidence before changing telemetry builders.
 - sink output loses diagnostic values or violates size/shape bounds: block the sink until egress is fixed and covered by tests.
-- observer runtime capture changes should update `plugins/openclaw-agent-observer/src/index.ts`, `hook-normalizers.ts`, the status/self-test contract check, and the operator stream checks together.
+- observer runtime capture changes should update `skills/common/plugins/openclaw-agent-observer/src/index.ts`, `hook-normalizers.ts`, the status/self-test contract check, and the operator stream checks together.

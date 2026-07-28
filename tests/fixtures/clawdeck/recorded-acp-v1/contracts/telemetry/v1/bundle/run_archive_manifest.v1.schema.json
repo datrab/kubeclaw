@@ -1,0 +1,73 @@
+{
+  "$id": "run_archive_manifest.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "completeness": {
+      "enum": [
+        "complete",
+        "partial",
+        "degraded",
+        "unknown"
+      ]
+    },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "lifecycle": {
+      "type": "object"
+    },
+    "manifest_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repair_state": {
+      "enum": [
+        "verified",
+        "repair_required",
+        "repaired",
+        "unrecoverable"
+      ]
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "run_archive_manifest.v1"
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "sources": {
+      "type": "array"
+    },
+    "terminal_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "project",
+    "lifecycle",
+    "sources",
+    "manifest_reference",
+    "completeness",
+    "repair_state",
+    "sha256"
+  ],
+  "type": "object"
+}

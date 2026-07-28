@@ -38,7 +38,7 @@ function preTestResultIdentity(context: AnyRecord, prefix: string) {
   };
 }
 
-export async function handlePreTestEnvironmentFailure(context: AnyRecord, evidence: AnyRecord) {
+async function handlePreTestEnvironmentFailure(context: AnyRecord, evidence: AnyRecord) {
   const { config, moduleId, mod, dir, status, deps, runId, attempt, busterModel, statusName } = context;
   const classification = evidence.classification;
   const transition = transitionModuleStatus(status, 'READY_FOR_TESTING', {
@@ -87,7 +87,7 @@ function persistRepeatedPreTestFailure(context: AnyRecord, evidence: AnyRecord, 
   return metadata;
 }
 
-export async function handleRepeatedPreTestFailure(context: AnyRecord, evidence: AnyRecord) {
+async function handleRepeatedPreTestFailure(context: AnyRecord, evidence: AnyRecord) {
   const { config, moduleId, mod, dir, status, deps, runId, attempt, busterModel, statusName } = context;
   const identity = preTestResultIdentity(context, 'repeated pre-test result');
   log('ERROR', `Module ${moduleId}: repeated pre-test failure in ${evidence.failedSuites.join(',')} — escalating without another Forge cycle`);
@@ -112,7 +112,7 @@ export async function handleRepeatedPreTestFailure(context: AnyRecord, evidence:
   }) };
 }
 
-export async function handleCodePreTestFailure(context: AnyRecord, evidence: AnyRecord) {
+async function handleCodePreTestFailure(context: AnyRecord, evidence: AnyRecord) {
   const { config, moduleId, status, completionIdentity, completionGatewayLabel, terminalSessionKey, handleModuleFail, buildRetryResult, recalledMemoryIds, attempt } = context;
   log('INFO', 'Code-side pre-test failure — routing to Forge via handleFail');
   const failResult = await handleModuleFail(status, 'buster', evidence.reason, {

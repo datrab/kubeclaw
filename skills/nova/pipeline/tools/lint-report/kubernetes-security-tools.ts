@@ -12,7 +12,7 @@ import { failParse } from './report.ts';
 const CANONICAL_LINT_CONFIG_FALSE_POSITIVE = {
   code: 'KSV-0109',
   resource: 'ConfigMap:default:agent-nova-swarm-config',
-  document_sha256: '6e1860a5a1a01e896e694e954bd7af34850769ec13b09f48323d86d458c21528',
+  document_sha256: '150239a94757c523548895c7dbfe86016f6ded90f09641e096a0471f90557186',
   message: `ConfigMap 'agent-nova-swarm-config' in 'default' namespace stores secrets in key(s) or value(s) '{"              password ", "              secret ", "              token ", "          - pattern"}'`,
   owner: 'pipeline-maintainers',
   reason: 'Trivy reads Semgrep rule examples embedded as lint configuration as ConfigMap secret values; the exact canonical resource and config payload are not credentials.',
@@ -20,7 +20,7 @@ const CANONICAL_LINT_CONFIG_FALSE_POSITIVE = {
   expires: '2026-10-20',
   tracking: 'lint-calibration-phase-8',
   approved_by: 'pipeline-maintainers',
-  approved_on: '2026-07-21',
+  approved_on: '2026-07-26',
 };
 
 function issueMessage(issue: any) {

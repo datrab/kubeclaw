@@ -1,0 +1,50 @@
+{
+  "id": "kubeclaw.agent-observability",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [
+    {
+      "id": "ingester",
+      "module": "dist/observers.js",
+      "export": "ingest",
+      "subscriptions": [
+        "plugin.kubeclaw.openclaw-agent-events.agent-end",
+        "plugin.kubeclaw.openclaw-agent-events.llm-input",
+        "plugin.kubeclaw.openclaw-agent-events.llm-output",
+        "plugin.kubeclaw.openclaw-agent-events.subagent-spawned",
+        "plugin.kubeclaw.openclaw-agent-events.subagent-ended",
+        "plugin.kubeclaw.openclaw-agent-events.before-tool-call",
+        "plugin.kubeclaw.openclaw-agent-events.after-tool-call",
+        "plugin.kubeclaw.openclaw-agent-events.model-call-started",
+        "plugin.kubeclaw.openclaw-agent-events.model-call-ended",
+        "plugin.kubeclaw.openclaw-agent-events.session-start",
+        "plugin.kubeclaw.openclaw-agent-events.session-end"
+      ],
+      "delivery": "at_least_once",
+      "ordering": "per_run",
+      "failurePolicy": {"mode":"best_effort","maxAttempts":5,"backoffMs":1000,"timeoutMs":10000},
+      "requiredCapabilities": ["telemetry.emit"],
+      "configSchema": "schemas/config.schema.json",
+      "checkpointSchema": "schemas/checkpoint.schema.json"
+    },
+    {
+      "id": "evidence",
+      "module": "dist/observers.js",
+      "export": "recordEvidence",
+      "subscriptions": [
+        "plugin.kubeclaw.openclaw-agent-events.agent-end",
+        "plugin.kubeclaw.openclaw-agent-events.subagent-ended",
+        "plugin.kubeclaw.openclaw-agent-events.model-call-ended",
+        "plugin.kubeclaw.openclaw-agent-events.session-end"
+      ],
+      "delivery": "at_least_once",
+      "ordering": "per_run",
+      "failurePolicy": {"mode":"best_effort","maxAttempts":5,"backoffMs":1000,"timeoutMs":10000},
+      "requiredCapabilities": ["artifacts.write"],
+      "configSchema": "schemas/config.schema.json",
+      "checkpointSchema": "schemas/checkpoint.schema.json"
+    }
+  ],
+  "adapters": []
+}

@@ -33,6 +33,25 @@ function inferHookFamily(stageId: any = null, producerKind: any = null) {
   return null;
 }
 
+function normalizedValidationErrors(validationErrors: unknown): string[] {
+  const entries = Array.isArray(validationErrors) ? validationErrors : [validationErrors ?? 'missing_contract_validation_error'];
+  return entries.map((entry) => limitEgressText(String(entry), 500));
+}
+
+function diagnosticLabel(label: unknown, moduleId: unknown, stageId: unknown): string {
+  for (const candidate of [label, moduleId, stageId]) {
+    if (typeof candidate === 'string' && candidate.trim()) return candidate;
+  }
+  return 'Plugin';
+}
+
+function diagnosticContext(input: any): Record<string, unknown> {
+  return {
+    ids: sanitizeDiagnosticObject(input?.ids),
+    refs: sanitizeDiagnosticObject(input?.refs),
+  };
+}
+
 function buildContractInvalidDiagnostic({
   label = null,
   stageId = null,
@@ -47,17 +66,14 @@ function buildContractInvalidDiagnostic({
   invocation = null,
   message = null,
 }: any = {}) {
-  const normalizedErrors = Array.isArray(validationErrors)
-    ? validationErrors.map((entry: any) => limitEgressText(String(entry), 500))
-    : [limitEgressText(String(selectTruthyValue(() => (validationErrors), () => ('missing_contract_validation_error'))), 500)];
-  const ids = sanitizeDiagnosticObject(input?.ids);
-  const refs = sanitizeDiagnosticObject(input?.refs);
+  const normalizedErrors = normalizedValidationErrors(validationErrors);
+  const context = diagnosticContext(input);
   return {
     schemaVersion: 'v1',
     diagnosticType: 'plugin_contract_invalid',
     severity: 'error',
     retryable: false,
-    summary: limitEgressText(selectDefinedValue(() => (message), () => (`${selectDefinedValue(() => (selectDefinedValue(() => (selectDefinedValue(() => (label), () => (moduleId))), () => (stageId))), () => ('Plugin'))} returned invalid result`)), 500),
+    summary: limitEgressText(message ?? `${diagnosticLabel(label, moduleId, stageId)} returned invalid result`, 500),
     label,
     stageId,
     hookFamily: hookFamilyAuthority(hookFamily, stageId, producerKind),
@@ -65,8 +81,8 @@ function buildContractInvalidDiagnostic({
     producerKind,
     producerType,
     validationErrors: normalizedErrors,
-    ids,
-    refs,
+    ids: context.ids,
+    refs: context.refs,
     invocation: sanitizeDiagnosticObject(invocation),
     rawResultSummary: buildDiagnosticSummary(rawResult, 'rawResult'),
     coercedResultSummary: buildDiagnosticSummary(coercedResult, 'coercedResult'),
@@ -75,13 +91,18 @@ function buildContractInvalidDiagnostic({
 
 function hookFamilyAuthority(hookFamily: string | null | undefined, stageId: string | null | undefined, producerKind: string | null | undefined): string {
   if (hookFamily) return hookFamily;
-  return inferHookFamily(stageId, producerKind);
+  return inferHookFamily(stageId, producerKind) ?? 'unknown';
 }
 
 export function createContractInvalidError(message: any, options: any = {}) {
   const safeMessage = limitEgressText(String(selectDefinedValue(() => (message), () => ('Plugin returned invalid result'))), 500);
   const diagnostic = buildContractInvalidDiagnostic({ ...options, message: safeMessage });
-  const error = new Error(safeMessage);
+  const error = new Error(safeMessage) as Error & {
+    code: string;
+    contractInvalid: boolean;
+    diagnostics: Record<string, unknown>;
+    validationErrors: string[];
+  };
   error.name = 'PluginContractInvalidError';
   error.code = 'PLUGIN_CONTRACT_INVALID';
   error.contractInvalid = true;

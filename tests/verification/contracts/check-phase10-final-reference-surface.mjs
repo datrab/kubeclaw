@@ -9,7 +9,7 @@ import path from 'path';
 function collectActiveReferenceFiles(sourceRoot) {
   const files = [];
   const textExts = new Set(['.md', '.json', '.yaml', '.yml', '.mjs', '.js', '.ts']);
-  const roots = ['docs', 'skills', 'charts', 'my-values', 'plugins'];
+  const roots = ['docs', 'skills', 'charts', 'my-values'];
   for (const root of roots) {
     files.push(...walkFiles(path.join(sourceRoot, root), (absPath) => {
       const relativePath = toRepoPath(sourceRoot, absPath);

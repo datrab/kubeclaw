@@ -37,6 +37,17 @@ function requiredText(value: any, label: any) {
   return text;
 }
 
+function resolveLifecycleRunId(config: any) {
+  return selectTruthyValue(
+    () =>
+      selectTruthyValue(
+        () => config?._runId,
+        () => config?.run_id,
+      ),
+    () => getRunId(config) ?? null,
+  );
+}
+
 export function resolveModuleAttempt(
   status: any,
   mutation: any = {},
@@ -59,18 +70,7 @@ export function resolveModuleAttempt(
 }
 
 export function buildPipelineRefs(config: any) {
-  const runId = selectTruthyValue(
-    () =>
-      selectTruthyValue(
-        () =>
-          selectTruthyValue(
-            () => config?._runId,
-            () => config?.run_id,
-          ),
-        () => getRunId(config),
-      ),
-    () => null,
-  );
+  const runId = resolveLifecycleRunId(config);
   const runRef = runId ? `run:${runId}` : null;
   const project = firstText(config?.project);
   return {
@@ -111,18 +111,7 @@ export function buildModuleAttemptRefs(
 ) {
   const moduleId = requiredText(status?.module_id, "module_id");
   const attempt = resolveModuleAttempt(status, mutation, currentModuleState);
-  const runId = selectTruthyValue(
-    () =>
-      selectTruthyValue(
-        () =>
-          selectTruthyValue(
-            () => config?._runId,
-            () => config?.run_id,
-          ),
-        () => getRunId(config),
-      ),
-    () => null,
-  );
+  const runId = resolveLifecycleRunId(config);
   const runRef = runId ? `run:${runId}` : null;
   const project = firstText(config?.project);
   const moduleRef = moduleId ? `module:${moduleId}` : null;
@@ -148,18 +137,7 @@ export function buildGateEvaluationRefs(
   { gateId, gateType = "approval", attempt = 1 }: any = {},
 ) {
   const resolvedAttempt = positiveAttempt(attempt);
-  const runId = selectTruthyValue(
-    () =>
-      selectTruthyValue(
-        () =>
-          selectTruthyValue(
-            () => config?._runId,
-            () => config?.run_id,
-          ),
-        () => getRunId(config),
-      ),
-    () => null,
-  );
+  const runId = resolveLifecycleRunId(config);
   const runRef = runId ? `run:${runId}` : null;
   const project = firstText(config?.project);
   const gateRef = gateId ? `gate:${gateId}` : null;
@@ -256,18 +234,7 @@ export function buildCooldownRefs(
   { moduleId = null, gateId = null, gateType = null, attempt = null }: any = {},
 ) {
   if (moduleId) {
-    const runId = selectTruthyValue(
-      () =>
-        selectTruthyValue(
-          () =>
-            selectTruthyValue(
-              () => config?._runId,
-              () => config?.run_id,
-            ),
-          () => getRunId(config),
-        ),
-      () => null,
-    );
+    const runId = resolveLifecycleRunId(config);
     const resolvedAttempt = positiveAttempt(attempt);
     const runRef = runId ? `run:${runId}` : null;
     const moduleRef = `module:${moduleId}`;

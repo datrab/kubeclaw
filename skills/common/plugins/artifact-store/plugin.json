@@ -1,0 +1,15 @@
+{
+  "id": "kubeclaw.artifact-store",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [{
+    "id": "artifact-store",
+    "module": "dist/adapter.js",
+    "export": "activate",
+    "providesCapabilities": ["artifacts.read", "artifacts.write"],
+    "requiredCapabilities": [],
+    "configSchema": "schemas/config.schema.json"
+  }]
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$",
+      "maxLength": 128
+    },
+    "message": { "type": "string", "minLength": 1, "maxLength": 16384 },
+    "eventId": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "runId": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "stageId": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 512 },
+        { "type": "null" }
+      ]
+    },
+    "artifactId": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 512 },
+        { "type": "null" }
+      ]
+    },
+    "artifact": true,
+    "approvalId": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 16384 },
+    "signalType": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "authorizedIssuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "const": "operator" },
+        "id": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "expiresAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+  }
+}

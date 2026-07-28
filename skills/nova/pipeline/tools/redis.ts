@@ -9,6 +9,7 @@ import { createRedisEventBus } from '../services/task-transport-contract.ts';
 import { resolveRedisCompletionPolicy } from '../services/redis-completion-policy.ts';
 import { waitForRedisReady } from '../redis-transport.ts';
 import { readNovaEnvironment } from '../core/runtime-environment.ts';
+import { logRedisDispatchToDiscord } from './redis-discord-log.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // --- CONFIG ---
@@ -76,95 +77,9 @@ const WEBHOOK_URL = readNovaEnvironment('DISCORD_WEBHOOK');
 // If payload > 3500 chars, split across multiple embeds.
 // ═══════════════════════════════════════════════════════════════
 
-function normalizeDiscordFieldValue(value: any) {
-  if (selectTruthyValue(() => (selectTruthyValue(() => (value === undefined), () => (value === null))), () => (value === ''))) return null;
-  return String(value);
-}
-
-function buildRedisDispatchDiscordFields(payload: any = {}, iter: any = 1, extra: any = []) {
-  const fields: any[] = [];
-  const runId = normalizeDiscordFieldValue(payload.run_id);
-  const moduleId = normalizeDiscordFieldValue(payload.module_id);
-  const gateId = normalizeDiscordFieldValue(payload.gate_id);
-  const gateTitle = normalizeDiscordFieldValue(payload.gate_title);
-  const gateType = normalizeDiscordFieldValue(payload.gate_type);
-  const stageId = normalizeDiscordFieldValue(payload.stage_id);
-  const attempt = normalizeDiscordFieldValue(payload.attempt);
-  const dispatchId = normalizeDiscordFieldValue(payload.dispatch_id);
-  const sessionKey = normalizeDiscordFieldValue(payload.session_key);
-
-  if (runId) fields.push({ name: 'Run ID', value: runId, inline: true });
-  if (moduleId) fields.push({ name: 'Module', value: moduleId, inline: true });
-  if (gateId) fields.push({ name: 'Gate', value: gateTitle ? `${gateId} — ${gateTitle}` : gateId, inline: true });
-  if (gateType) fields.push({ name: 'Gate Type', value: gateType, inline: true });
-  if (stageId) fields.push({ name: 'Stage', value: stageId, inline: true });
-  if (attempt) fields.push({ name: 'Attempt', value: attempt, inline: true });
-  if (dispatchId) fields.push({ name: 'Dispatch', value: dispatchId, inline: true });
-  if (sessionKey) fields.push({ name: 'Session', value: sessionKey, inline: true });
-  return [...fields, ...extra];
-}
-
-function resolveRedisDiscordContext(payload: any = {}) {
-  const pipelineLogPath = normalizeDiscordFieldValue(payload.pipeline_log_path);
-  const pipelineRunLogPath = normalizeDiscordFieldValue(payload.pipeline_run_log_path);
-  const runId = normalizeDiscordFieldValue(payload.run_id);
-  const gateId = normalizeDiscordFieldValue(payload.gate_id);
-  return {
-    project: normalizeDiscordFieldValue(payload.project),
-    runId,
-    moduleId: gateId ? null : normalizeDiscordFieldValue(payload.module_id),
-    gateId,
-    gateType: normalizeDiscordFieldValue(payload.gate_type),
-    attempt: normalizeDiscordFieldValue(payload.attempt),
-    dispatchId: normalizeDiscordFieldValue(payload.dispatch_id),
-    sessionKey: normalizeDiscordFieldValue(payload.session_key),
-    globalDiscordPath: pipelineLogPath ? path.join(path.dirname(pipelineLogPath), 'discord.jsonl') : null,
-    runDiscordPath: pipelineRunLogPath ? path.join(path.dirname(pipelineRunLogPath), 'discord.jsonl') : null,
-  };
-}
-
 async function logToDiscord(sender: any, target: any, type: any, iter: any, payload: any) {
   try {
-    const [{ discordEmbeds }, { formatSummaryForDiscord, summarizePayloadForDiscord }] = await Promise.all([
-      import('../integrations/discord.ts'),
-      import('../egress.ts'),
-    ]);
-    const header = `**${sender}** → **${target}**\nType: \`${type}\` | Iter: \`${iter}\``;
-    const payloadSummary = summarizePayloadForDiscord(payload, 'task_payload');
-    const summaryFields: any[] = [];
-    if (payload && typeof payload === 'object') {
-      if (payload.project) summaryFields.push({ name: 'Project', value: String(payload.project), inline: true });
-      if (Array.isArray(payload.test_suites) && payload.test_suites.length) summaryFields.push({ name: 'Suites', value: payload.test_suites.join(', '), inline: true });
-      if (target === 'buster' && type === 'module_test') {
-        summaryFields.push({ name: 'Meaning', value: 'Queued for Buster only. This does not mean suites started or that a subagent exists yet.', inline: false });
-      }
-    }
-    summaryFields.push({ name: 'Payload', value: formatSummaryForDiscord(payloadSummary), inline: false });
-
-    const context = resolveRedisDiscordContext(payload);
-    await discordEmbeds({
-      project: context.project,
-      _runId: context.runId,
-      run_id: context.runId,
-      discord_webhook_url: WEBHOOK_URL,
-      telemetry: { enabled: Boolean(context.runId) },
-    }, [{
-      title: `⚡ Task: ${sender} → ${target}`,
-      color: 5763719,
-      description: `${header}\n\nPayload shown with bounded formatting.`,
-      fields: buildRedisDispatchDiscordFields(payload, iter, summaryFields),
-    }], {
-      level: 'INFO',
-      correlation: {
-        module_id: context.moduleId,
-        gate_id: context.gateId,
-        gate_type: context.gateType,
-        attempt: context.attempt,
-        dispatch_id: context.dispatchId,
-        session_key: context.sessionKey,
-      },
-      auditTargets: [context.globalDiscordPath, context.runDiscordPath],
-    });
+    await logRedisDispatchToDiscord(WEBHOOK_URL, sender, target, type, payload);
   } catch (e: any) { /* INTENTIONAL_NONCRITICAL(noncritical_side_effect_failed): this side effect is noncritical and the owning operation remains authoritative. */ /* ignore */ }
 }
 
@@ -337,8 +252,8 @@ const lib = {
 
 export default lib;
 
-async function main(args: any = process.argv.slice(2)) {
-  const flags = parseCliFlagValues(args, {
+function parseRedisToolFlags(args: any) {
+  return parseCliFlagValues(args, {
     flags: {
       action: { type: 'string', required: true },
       type: { type: 'string' },
@@ -352,65 +267,59 @@ async function main(args: any = process.argv.slice(2)) {
       'session-key': { type: 'string' },
     },
   });
-  const action = flags.action;
+}
 
+async function sendTaskAction(flags: any) {
+  const type = flags.type;
+  const payloadText = typeof flags.payload === 'string' ? flags.payload : '{}';
+  if (!type) throw new Error('Missing --type');
+  const result = await lib.publishTask('buster', type, JSON.parse(payloadText), flags.iteration);
+  console.log(JSON.stringify(result));
+}
+
+function completionIdentityFlags(flags: any) {
+  return {
+    run_id: flags['run-id'] || undefined,
+    attempt: flags.attempt || undefined,
+    dispatch_id: flags['dispatch-id'] || undefined,
+    session_key: flags['session-key'] || undefined,
+  };
+}
+
+async function readCompletionAction(flags: any) {
+  if (!flags.stream || !flags.module) throw new Error('Missing --stream or --module');
+  const identity = completionIdentityFlags(flags);
+  const missing = getMissingExpectedCompletionIdentityFields(identity);
+  const flagNames: Record<string, string> = {
+    run_id: '--run-id', attempt: '--attempt', dispatch_id: '--dispatch-id', session_key: '--session-key',
+  };
+  if (missing.length) {
+    throw new Error(`Missing completion identity fields: ${missing.map((field: string) => flagNames[field] || field).join(', ')}`);
+  }
+  console.log(JSON.stringify(await lib.readCompletion(flags.stream, flags.module, identity), null, 2));
+}
+
+async function archiveCompletionAction(flags: any) {
+  if (!flags.stream || !flags.module) throw new Error('Missing --stream or --module');
+  const policy = redisToolPolicy();
+  const result = await lib.archiveCompletions(
+    flags.stream,
+    `${flags.stream}:log`,
+    flags.module,
+    policy.archiveMaxLen,
+    completionIdentityFlags(flags),
+    { batchSize: policy.tailScanBatchSize },
+  );
+  console.log(JSON.stringify(result));
+}
+
+async function main(args: any = process.argv.slice(2)) {
+  const flags = parseRedisToolFlags(args);
   try {
-    if (action === 'send') {
-      const type = flags.type;
-      const iter = flags.iteration;
-      const payload = JSON.parse(selectDefinedValue(() => (flags.payload), () => ('{}')));
-      if (!type) throw new Error('Missing --type');
-
-      const res = await lib.publishTask('buster', type, payload, iter);
-      console.log(JSON.stringify(res));
-      return;
-    }
-
-    if (action === 'read-completion') {
-      const stream = flags.stream;
-      const module = flags.module;
-      if (selectTruthyValue(() => (!stream), () => (!module))) throw new Error('Missing --stream or --module');
-      const expectedIdentity = {
-        run_id: selectTruthyValue(() => (flags['run-id']), () => (undefined)),
-        attempt: selectTruthyValue(() => (flags.attempt), () => (undefined)),
-        dispatch_id: selectTruthyValue(() => (flags['dispatch-id']), () => (undefined)),
-        session_key: selectTruthyValue(() => (flags['session-key']), () => (undefined)),
-      };
-      const missingIdentity = getMissingExpectedCompletionIdentityFields(expectedIdentity);
-      if (missingIdentity.length) {
-        const flagNames = {
-          run_id: '--run-id',
-          attempt: '--attempt',
-          dispatch_id: '--dispatch-id',
-          session_key: '--session-key',
-        };
-        throw new Error(`Missing completion identity fields: ${missingIdentity.map((field: any) => {
-          if (Object.prototype.hasOwnProperty.call(flagNames, field)) return flagNames[field];
-          return field;
-        }).join(', ')}`);
-      }
-      const res = await lib.readCompletion(stream, module, expectedIdentity);
-      console.log(JSON.stringify(res, null, 2));
-      return;
-    }
-
-    if (action === 'archive-completions') {
-      const stream = flags.stream;
-      const module = flags.module;
-      if (selectTruthyValue(() => (!stream), () => (!module))) throw new Error('Missing --stream or --module');
-      const archiveStream = stream + ':log';
-      const policy = redisToolPolicy();
-      const res = await lib.archiveCompletions(stream, archiveStream, module, policy.archiveMaxLen, {
-        run_id: selectTruthyValue(() => (flags['run-id']), () => (undefined)),
-        attempt: selectTruthyValue(() => (flags.attempt), () => (undefined)),
-        dispatch_id: selectTruthyValue(() => (flags['dispatch-id']), () => (undefined)),
-        session_key: selectTruthyValue(() => (flags['session-key']), () => (undefined)),
-      }, { batchSize: policy.tailScanBatchSize });
-      console.log(JSON.stringify(res));
-      return;
-    }
-
-    throw new Error('Unknown action. Use --action send|read-completion|archive-completions');
+    if (flags.action === 'send') await sendTaskAction(flags);
+    else if (flags.action === 'read-completion') await readCompletionAction(flags);
+    else if (flags.action === 'archive-completions') await archiveCompletionAction(flags);
+    else throw new Error('Unknown action. Use --action send|read-completion|archive-completions');
   } finally {
     await lib.disconnect();
   }

@@ -11,7 +11,7 @@ export { parseBaselineRoutes } from './screenshot-routes.ts';
 export type { BaselineGenerationResult } from './screenshot-routes.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-import { busterEnvironmentSnapshot } from '../runtime-environment.ts';
+import { busterEnvironmentSnapshot } from '../buster-environment.ts';
 // KEEP_TYPED_POLICY: Docker and runtime-installed Playwright browser layouts are
 // both supported, local HTML previews are valid screenshot inputs, missing
 // Playwright becomes a clear tool error, browser close failures are nonblocking,

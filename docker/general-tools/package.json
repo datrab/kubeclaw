@@ -5,6 +5,8 @@
   "dependencies": {
     "@axe-core/playwright": "4.12.1",
     "@qdrant/js-client-rest": "1.18.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
     "dependency-cruiser": "18.1.0",
     "eslint": "10.7.0",
     "ioredis": "5.11.1",

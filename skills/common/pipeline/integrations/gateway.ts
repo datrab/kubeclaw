@@ -6,14 +6,22 @@ import {
 } from '../services/acp-gateway-contract.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-import { readCommonEnvironment } from '../runtime-environment.ts';
-declare const process: {
-  env: Record<string, string | undefined>;
-};
+import {
+  gatewayHeaders,
+  optionalGatewayHeaders,
+  resolveGatewayHealthUrl,
+  resolveGatewayInvokeUrl,
+  type GatewayHeaders,
+} from './gateway-config.ts';
+export {
+  LOCAL_DEVELOPMENT_GATEWAY_BASE_URL,
+  resolveGatewayBaseUrl,
+  resolveGatewayHealthUrl,
+  resolveGatewayInvokeUrl,
+  resolveGatewayToken,
+  resolveLocalDevelopmentGatewayBaseUrl,
+} from './gateway-config.ts';
 
-export const LOCAL_DEVELOPMENT_GATEWAY_BASE_URL = 'http://127.0.0.1:18789';
-
-type GatewayHeaders = Record<string, string>;
 type GatewayBody = Record<string, unknown>;
 
 type GatewayInvokeOptions = {
@@ -44,75 +52,6 @@ type NetworkLikeError = {
   message?: string;
 };
 
-function trimGatewayUrl(value: unknown) {
-  return String(selectDefinedValue(() => (value), () => (''))).trim().replace(/\/$/, '');
-}
-
-function stripInvokeSuffix(value: unknown) {
-  return trimGatewayUrl(value).replace(/\/tools\/invoke$/, '');
-}
-
-function configuredGatewayUrl(override?: string | null) {
-  const raw = override !== undefined && override !== null
-    ? override
-    : readCommonEnvironment('OPENCLAW_GATEWAY_URL');
-  const base = stripInvokeSuffix(raw);
-  if (!base) {
-    throw new Error('Gateway URL is required; provide gatewayUrl or OPENCLAW_GATEWAY_URL');
-  }
-  return base;
-}
-
-export function resolveLocalDevelopmentGatewayBaseUrl() {
-  return LOCAL_DEVELOPMENT_GATEWAY_BASE_URL;
-}
-
-export function resolveGatewayBaseUrl(override?: string | null) {
-  const raw = configuredGatewayUrl(override);
-  const base = stripInvokeSuffix(raw);
-  return base;
-}
-
-export function resolveGatewayInvokeUrl(override?: string | null) {
-  const raw = trimGatewayUrl(configuredGatewayUrl(override));
-  if (raw.endsWith('/tools/invoke')) return raw;
-  return `${stripInvokeSuffix(raw)}/tools/invoke`;
-}
-
-export function resolveGatewayHealthUrl(override?: string | null) {
-  const raw = trimGatewayUrl(configuredGatewayUrl(override));
-  return `${stripInvokeSuffix(raw)}/health`;
-}
-
-export function resolveGatewayToken(override?: string | null) {
-  if (override !== undefined && override !== null) return String(override);
-  const token = readCommonEnvironment('OPENCLAW_GATEWAY_TOKEN');
-  if (token === undefined) {
-    throw new Error('Gateway token policy is required; provide gatewayToken or OPENCLAW_GATEWAY_TOKEN');
-  }
-  return token;
-}
-
-function gatewayHeaders(gatewayToken: string | null | undefined, extraHeaders: GatewayHeaders = {}) {
-  const token = resolveGatewayToken(gatewayToken);
-  return {
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...extraHeaders,
-  };
-}
-
-function optionalGatewayHeaders(gatewayToken: string | null | undefined, extraHeaders: GatewayHeaders = {}) {
-  const token = gatewayToken !== undefined && gatewayToken !== null
-    ? String(gatewayToken)
-    : readCommonEnvironment('OPENCLAW_GATEWAY_TOKEN');
-  return {
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...extraHeaders,
-  };
-}
-
 function isNetworkError(err: unknown) {
   const error = err && typeof err === 'object' ? err as NetworkLikeError : {};
   if (error.httpStatus) return false;
@@ -139,6 +78,55 @@ function bridgeAbort(controller: AbortController, signal: AbortSignal | null | u
   return () => signal.removeEventListener('abort', onAbort);
 }
 
+function validateGatewayRetryPolicy(
+  timeoutMs: number | undefined,
+  maxRetries: number | undefined,
+  retryDelayMs: number | undefined,
+): void {
+  if (!Number.isFinite(timeoutMs) || Number(timeoutMs) < 0) {
+    throw new Error('Gateway invoke timeoutMs must be explicit and non-negative');
+  }
+  if (!Number.isInteger(maxRetries) || Number(maxRetries) < 1) {
+    throw new Error('Gateway invoke maxRetries must be explicit and at least 1');
+  }
+  if (!Number.isFinite(retryDelayMs) || Number(retryDelayMs) < 0) {
+    throw new Error('Gateway invoke retryDelayMs must be explicit and non-negative');
+  }
+}
+
+function createAttemptTimer(
+  controller: AbortController,
+  timeoutMs: number,
+  budget: TimeBudget | null,
+): ReturnType<typeof setTimeout> {
+  return setTimeout(() => {
+    if (budget?.remainingMs && budget.remainingMs() <= 0) {
+      controller.abort(new BudgetExhaustedError('Gateway invoke budget exhausted', {
+        deadlineMs: budget.deadlineMs,
+        remainingMs: 0,
+        reason: 'gateway_invoke_budget_exhausted',
+      }));
+      return;
+    }
+    controller.abort();
+  }, timeoutMs);
+}
+
+async function parseGatewayResponse(tool: string, response: Response): Promise<unknown> {
+  const text = await response.text();
+  if (!response.ok) {
+    throw buildGatewayInvokeHttpError(tool, response.status, response.statusText, text);
+  }
+  try {
+    return assertValidGatewayInvokeResult(normalizeGatewayInvokeResult(JSON.parse(text)));
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return assertValidGatewayInvokeResult(normalizeGatewayInvokeResult(text));
+    }
+    throw error;
+  }
+}
+
 async function invokeGatewayTool(tool: string, args: unknown, {
   gatewayUrl,
   gatewayToken,
@@ -150,15 +138,7 @@ async function invokeGatewayTool(tool: string, args: unknown, {
   budget = null,
   signal = null,
 }: GatewayInvokeOptions = {}) {
-  if (selectTruthyValue(() => (!Number.isFinite(timeoutMs)), () => (Number(timeoutMs) < 0))) {
-    throw new Error('Gateway invoke timeoutMs must be explicit and non-negative');
-  }
-  if (selectTruthyValue(() => (!Number.isInteger(maxRetries)), () => (Number(maxRetries) < 1))) {
-    throw new Error('Gateway invoke maxRetries must be explicit and at least 1');
-  }
-  if (selectTruthyValue(() => (!Number.isFinite(retryDelayMs)), () => (Number(retryDelayMs) < 0))) {
-    throw new Error('Gateway invoke retryDelayMs must be explicit and non-negative');
-  }
+  validateGatewayRetryPolicy(timeoutMs, maxRetries, retryDelayMs);
   const retryCount = Number(maxRetries);
   const retryDelay = Number(retryDelayMs);
   const url = resolveGatewayInvokeUrl(gatewayUrl);
@@ -169,17 +149,7 @@ async function invokeGatewayTool(tool: string, args: unknown, {
     const controller = new AbortController();
     const timeoutBudgetMs = budget?.remainingMs ? budget.remainingMs() : Infinity;
     const attemptTimeoutMs = Math.min(Number(timeoutMs), timeoutBudgetMs);
-    const timer = setTimeout(() => {
-      if (budget?.remainingMs && budget.remainingMs() <= 0) {
-        controller.abort(new BudgetExhaustedError('Gateway invoke budget exhausted', {
-          deadlineMs: budget.deadlineMs,
-          remainingMs: 0,
-          reason: 'gateway_invoke_budget_exhausted',
-        }));
-        return;
-      }
-      controller.abort();
-    }, attemptTimeoutMs);
+    const timer = createAttemptTimer(controller, attemptTimeoutMs, budget);
     const cleanupAbort = [bridgeAbort(controller, signal), bridgeAbort(controller, budget?.signal)];
     try {
       const response = await fetch(url, {
@@ -188,17 +158,7 @@ async function invokeGatewayTool(tool: string, args: unknown, {
         body: JSON.stringify({ tool, args, ...body }),
         signal: controller.signal,
       });
-      const text = await response.text();
-      if (!response.ok) {
-        throw buildGatewayInvokeHttpError(tool, response.status, response.statusText, text);
-      }
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(text);
-      } catch (_error) {
-        return assertValidGatewayInvokeResult(normalizeGatewayInvokeResult(text));
-      }
-      return assertValidGatewayInvokeResult(normalizeGatewayInvokeResult(parsed));
+      return parseGatewayResponse(tool, response);
     } catch (err) {
       const abortReason = controller.signal.reason;
       if (abortReason instanceof BudgetExhaustedError) throw abortReason;

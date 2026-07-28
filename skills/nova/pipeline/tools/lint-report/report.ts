@@ -207,6 +207,12 @@ async function runAllTools(ctx: any, toolRegistry: any) {
       digest: ctx.policyDigest,
       project: ctx.policyProject.id,
       config_digests: ctx.policy.config_digests,
+      effective_targets: Object.fromEntries(
+        (ctx.policy.tools || applicable).map((tool: any) => [
+          tool.id,
+          Array.isArray(tool.targets) && tool.targets.length > 0 ? tool.targets : ['.'],
+        ]),
+      ),
       baseline_digest: ctx.policy.baseline.digest,
     },
     project: reportProjectName(ctx),

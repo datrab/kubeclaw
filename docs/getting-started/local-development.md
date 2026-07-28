@@ -56,7 +56,7 @@ npm run docs:generate:check
 | Deployment script, values, chart, images | `scripts/deploy.sh`; `my-values/**`; `charts/kubeclaw/**`; `docker/**`; `.github/workflows/build-images.yaml` | Helm render; deployment truth; deployment-surface behavior area |
 | Nova pipeline | `skills/nova/pipeline/cli.ts`; `core/**`; `runners/**`; `services/**` | pipeline E2E behavior area; pipeline/status-store contract checks |
 | Buster worker | `skills/buster/buster-pipeline.ts`; `skills/buster/pipeline/services/**`; `skills/buster/pipeline/suites/**` | Buster contract check; focused Buster unit tests |
-| Telemetry and observer | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `plugins/openclaw-agent-observer/src/**` | telemetry-docs behavior area; telemetry contract check |
+| Telemetry and observer | `skills/nova/pipeline/services/telemetry*.ts`; `skills/common/pipeline/telemetry.ts`; `skills/common/plugins/openclaw-agent-observer/src/**` | telemetry-docs behavior area; telemetry contract check |
 
 ## Expected Artifacts
 

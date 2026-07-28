@@ -15,9 +15,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 //   Redis / Buster dispatch: supported when the Redis payload carries the
 //   thinking level through to the Buster session launch.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import { getActiveContext, log } from './logger.ts';
 import { getRunId } from './runtime.ts';
 import { pipelineLogDir } from './paths.ts';
@@ -49,6 +47,20 @@ function normalize(v: any) {
   return null;
 }
 
+function firstPolicyCandidate(candidates: Array<[any, string]>): { value: any; source: string } {
+  for (const [value, source] of candidates) {
+    if (value) return { value, source };
+  }
+  return { value: null, source: 'none' };
+}
+
+function selectThinkingPolicy(agentName: string, supported: boolean, dispatchPath: string | null, candidates: Array<[any, string]>) {
+  if (!supported) return { value: null, source: `not_supported_on_${dispatchPath}` };
+  const selected = firstPolicyCandidate(candidates);
+  if (selected.value) validateThinkingLevel(selected.value, `${agentName} ${selected.source} thinking`);
+  return selected;
+}
+
 export function resolvePolicy(config: any, progress: any, agentName: string, opts: any = {}) {
   const {
     scopeModel = null,
@@ -56,49 +68,35 @@ export function resolvePolicy(config: any, progress: any, agentName: string, opt
     dispatchPath = null,
   } = opts;
 
-  const runtimeOverrides = selectTruthyValue(() => (getActiveContext()?.runtimeOverrides), () => (null));
+  const runtimeOverrides =
+    (getActiveContext()?.runtimeOverrides as Record<string, any> | null)
+    ?? null;
   const runtimeModel   = selectDefinedValue(() => (runtimeOverrides?.model), () => (null));
   const runtimeThinking = selectDefinedValue(() => (runtimeOverrides?.thinking), () => (null));
 
   validateThinkingLevel(runtimeThinking,  'runtime --thinking');
   validateThinkingLevel(scopeThinking,    `${agentName} scope thinking`);
 
-  let model = null;
-  let model_source = 'none';
-
-  const modelCandidates = [
+  const modelCandidates: Array<[string | null, string]> = [
     [normalize(runtimeModel),                                     'runtime_override'],
     [normalize(scopeModel),                                       'scope_policy'],
     [normalize(progress?.defaults?.models?.[agentName]),          'project_default'],
     [normalize(config?.fallback_model),                           'platform_fallback'],
   ];
-  for (const [value, source] of modelCandidates) {
-    if (value) { model = value; model_source = source; break; }
-  }
-
-  let thinking = null;
-  let thinking_source = 'none';
+  const selectedModel = firstPolicyCandidate(modelCandidates);
   const thinking_supported = selectTruthyValue(() => (!dispatchPath), () => (!THINKING_UNSUPPORTED_PATHS.includes(dispatchPath)));
-
-  if (!thinking_supported) {
-    thinking_source = `not_supported_on_${dispatchPath}`;
-  } else {
-    const thinkingCandidates = [
-      [selectTruthyValue(() => (runtimeThinking), () => (null)),                                          'runtime_override'],
-      [selectTruthyValue(() => (scopeThinking), () => (null)),                                          'scope_policy'],
-      [selectTruthyValue(() => (progress?.defaults?.thinking?.[agentName]), () => (null)),                'project_default'],
-    ];
-    for (const [value, source] of thinkingCandidates) {
-      if (value) {
-        validateThinkingLevel(value, `${agentName} ${source} thinking`);
-        thinking = value;
-        thinking_source = source;
-        break;
-      }
-    }
-  }
-
-  return { model, thinking, model_source, thinking_source, thinking_supported };
+  const selectedThinking = selectThinkingPolicy(agentName, thinking_supported, dispatchPath, [
+    [runtimeThinking, 'runtime_override'],
+    [scopeThinking, 'scope_policy'],
+    [progress?.defaults?.thinking?.[agentName], 'project_default'],
+  ]);
+  return {
+    model: selectedModel.value,
+    thinking: selectedThinking.value,
+    model_source: selectedModel.source,
+    thinking_source: selectedThinking.source,
+    thinking_supported,
+  };
 }
 
 export function logEffectivePolicy(config: any, entry: any) {

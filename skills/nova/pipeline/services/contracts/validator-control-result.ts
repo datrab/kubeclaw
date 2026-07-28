@@ -27,19 +27,21 @@ function isPlainObject(value: unknown): value is UnknownRecord {
 }
 
 function validatorProducerType(value: unknown): string {
-  return selectDefinedValue(() => (textValue(value)), () => (VALIDATOR_PRODUCER_TYPE));
+  return textValue(value) ?? VALIDATOR_PRODUCER_TYPE;
 }
 
 function validationFailureSummary(item: UnknownRecord): string {
-  return selectDefinedValue(() => (firstTextValue(item.code, item.explanation, item.stage)), () => ('validation_failure'));
+  return firstTextValue(item.code, item.explanation, item.stage)
+    ?? 'validation_failure';
 }
 
 function normalizeStageId(stageId: string | null = null, producerType: string | null = null): string {
-  return selectDefinedValue(() => (textValue(stageId)), () => (`validator:${selectDefinedValue(() => (textValue(producerType)), () => (MISSING_PRODUCER_TYPE))}`));
+  return textValue(stageId)
+    ?? `validator:${textValue(producerType) ?? MISSING_PRODUCER_TYPE}`;
 }
 
 function validatorErrorLabel(label: unknown, stageId: string): string {
-  return selectDefinedValue(() => (firstTextValue(label, stageId)), () => (stageId));
+  return firstTextValue(label, stageId) ?? stageId;
 }
 
 function validatorScope(scope: unknown, moduleId: unknown): string {
@@ -57,7 +59,7 @@ function summarizeValidationFailures(failures: unknown[] = []): string | null {
 }
 
 function summarizeLintReport(report: unknown = null): string | null {
-  if (selectTruthyValue(() => (!isPlainObject(report)), () => (!isPlainObject(report.summary)))) return null;
+  if (!isPlainObject(report) || !isPlainObject(report.summary)) return null;
   const { total_errors: totalErrors = 0, total_warnings: totalWarnings = 0, tools_failed: toolsFailed = 0 } = report.summary;
   return `${totalErrors} error(s), ${totalWarnings} warning(s), ${toolsFailed} failed tool(s)`;
 }
@@ -93,7 +95,7 @@ function mapValidationFailureToFinding(failure: UnknownRecord = {}): UnknownReco
 }
 
 function mapLintReportToFindings(report: unknown = null): UnknownRecord[] {
-  if (selectTruthyValue(() => (!isPlainObject(report)), () => (!isPlainObject(report.tools)))) return [];
+  if (!isPlainObject(report) || !isPlainObject(report.tools)) return [];
   const findings: UnknownRecord[] = [];
   for (const [toolId, toolResult] of Object.entries(report.tools)) {
     if (!isPlainObject(toolResult)) continue;

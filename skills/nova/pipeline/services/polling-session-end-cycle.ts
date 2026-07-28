@@ -2,7 +2,7 @@ import { monitorStateFromAcpEvent } from "../agents/acp-monitor.ts";
 import { log } from "../core/logger.ts";
 import { sanitizeAcpTranscriptEvidence } from "../egress.ts";
 import { sendGatewaySessionMessage } from "../integrations/gateway.ts";
-import { gatewayInvokePolicy } from "../core/session-policy.ts";
+import { sessionSendGatewayPolicy } from "../core/session-policy.ts";
 import { isBudgetExhaustedError } from "../timing.ts";
 import { buildSessionProgressStateKey } from "./polling-identity.ts";
 import {
@@ -166,7 +166,7 @@ async function maybeNudge(state: any) {
     `[${state.logLabel}] Session at ${Math.round(elapsed * 100)}% of timeout — sending completion nudge`,
   );
   try {
-    const policy = gatewayInvokePolicy(state.config, "session_send");
+    const policy = sessionSendGatewayPolicy(state.config);
     await sendGatewaySessionMessage(
       state.sessionKey,
       `TIMEOUT WARNING: You have ~${remaining} minutes remaining. Complete your current task and write your output files now. Unfinished work will be lost.`,

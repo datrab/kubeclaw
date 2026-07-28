@@ -82,12 +82,12 @@ function normalizeStageOwners(stageOwnersInput: any, errors: RegistryError[]) {
   }
 
   const normalized: AnyRecord = createRegistryDictionary();
-  for (const [stageId, moduleId] of Object.entries(stageOwnersInput)) {
+  for (const [stageId, moduleId] of Object.entries(stageOwnersInput) as Array<[string, unknown]>) {
     if (isReservedRegistryKey(stageId)) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.stageOwners.${stageId} is reserved and cannot be used as a registry key`);
       continue;
     }
-    if (selectTruthyValue(() => (typeof moduleId !== 'string'), () => (!moduleId.trim()))) {
+    if (typeof moduleId !== 'string' || !moduleId.trim()) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.stageOwners.${stageId} must be a non-empty moduleId string`);
       continue;
     }

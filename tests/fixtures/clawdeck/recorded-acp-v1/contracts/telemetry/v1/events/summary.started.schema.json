@@ -1,0 +1,270 @@
+{
+  "$id": "summary.started.event.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "authority_class": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "causation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "cursor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "emitted_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extensions": {
+      "properties": {
+        "evidence_provenance": {
+          "enum": [
+            "production",
+            "recorded",
+            "synthetic"
+          ]
+        }
+      },
+      "required": [
+        "evidence_provenance"
+      ],
+      "type": "object"
+    },
+    "gate_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gate_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gateway_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "output_dir": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parent_session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parent_span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "producer": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "runtime": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": "telemetry_envelope.v1"
+    },
+    "seq": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "source_event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "summary_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "terminal_decision": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "terminal_status": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "trace_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "const": "summary.started"
+    },
+    "work_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "work_type": {
+      "enum": [
+        "pipeline",
+        "module",
+        "gate",
+        "generator",
+        "validator",
+        "pipeline_step",
+        null
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "event_id",
+    "source_event_id",
+    "type",
+    "occurred_at",
+    "emitted_at",
+    "seq",
+    "cursor",
+    "project",
+    "run_id",
+    "source",
+    "producer",
+    "authority_class",
+    "extensions",
+    "summary_type"
+  ],
+  "type": "object"
+}

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { buildSecretSetupInventory as buildSecretInventory } from './docs-secret-inventory.mjs';
+import { yamlFileInventory } from './docs-yaml-inventory.mjs';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
@@ -98,41 +100,8 @@ function parseDefaultAssignments(scriptText, names) {
   return defaults;
 }
 
-function topLevelKeys(yamlText) {
-  const keys = [];
-  const seen = new Set();
-  for (const line of yamlText.split('\n')) {
-    const match = line.match(/^([A-Za-z0-9_-]+):(?:\s|$)/);
-    if (match && !seen.has(match[1])) {
-      seen.add(match[1]);
-      keys.push(match[1]);
-    }
-  }
-  return keys;
-}
-
-function secretRefs(yamlText) {
-  const refs = [];
-  const lines = yamlText.split('\n');
-  for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i];
-    for (const key of ['existingSecret', 'secretName']) {
-      const match = line.match(new RegExp(`${key}:\\s*"?([^"#]+?)"?\\s*(?:#.*)?$`));
-      if (match && match[1].trim()) {
-        refs.push({ key, value: match[1].trim(), line: i + 1 });
-      }
-    }
-  }
-  return refs;
-}
-
 function fileInventory(relPath) {
-  const text = read(relPath);
-  return {
-    path: relPath,
-    topLevelKeys: topLevelKeys(text),
-    secretReferences: secretRefs(text),
-  };
+  return yamlFileInventory(relPath, read);
 }
 
 function buildDeployScriptInventory() {
@@ -166,123 +135,12 @@ function buildDeployScriptInventory() {
 }
 
 function buildSecretSetupInventory() {
-  const scriptPath = 'my-values/setup-secrets.sh';
-  const text = read(scriptPath);
-  const envNames = parseHeaderEnv(text).map((item) => item.name);
-  const secrets = [
-    {
-      name: 'openclaw-shared-secrets',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'always; litellmApiKey is required when KUBECLAW_DEPLOY_LITELLM is enabled',
-      keys: [
-        'gatewayToken-forge',
-        'gatewayToken-echo',
-        'gatewayToken-buster',
-        'gatewayToken-nova',
-        'anthropicApiKey',
-        'stitchApiKey',
-        'discordToken-forge',
-        'discordToken-echo',
-        'discordToken-buster',
-        'discordToken-nova',
-        'discordWebhook',
-        'litellmApiKey',
-      ],
-      setupFunction: 'setup_shared_secret',
-      evidenceLine: lineNumber(text, 'setup_shared_secret()'),
-    },
-    {
-      name: 'redis-secrets',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'always',
-      keys: ['redis-password'],
-      setupFunction: 'setup_redis_secret',
-      evidenceLine: lineNumber(text, 'setup_redis_secret()'),
-    },
-    {
-      name: 'postgresql-secrets',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'KUBECLAW_DEPLOY_POSTGRESQL is enabled',
-      keys: ['postgres-password', 'litellm-password'],
-      setupFunction: 'setup_postgresql_secret',
-      evidenceLine: lineNumber(text, 'setup_postgresql_secret()'),
-    },
-    {
-      name: 'litellm-secrets',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'KUBECLAW_DEPLOY_LITELLM is enabled',
-      keys: ['LITELLM_MASTER_KEY', 'DATABASE_URL'],
-      setupFunction: 'setup_litellm_secret',
-      evidenceLine: lineNumber(text, 'setup_litellm_secret()'),
-    },
-    {
-      name: 'google-sa-key',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'KUBECLAW_DEPLOY_LITELLM is enabled',
-      keys: ['credentials.json'],
-      setupFunction: 'setup_google_sa_key',
-      evidenceLine: lineNumber(text, 'setup_google_sa_key()'),
-    },
-    {
-      name: 'ghcr-secret',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'always when imagePullSecrets reference GHCR',
-      keys: ['.dockerconfigjson'],
-      setupFunction: 'setup_ghcr_secret',
-      evidenceLine: lineNumber(text, 'setup_ghcr_secret()'),
-    },
-    {
-      name: 'git-deploy-key-nova',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'Nova git checkout is enabled',
-      keys: ['id_rsa'],
-      setupFunction: 'setup_git_deploy_key git-deploy-key-nova Nova',
-      evidenceLine: lineNumber(text, 'setup_git_deploy_key git-deploy-key-nova Nova'),
-    },
-    {
-      name: 'git-deploy-key-buster',
-      namespace: 'NAMESPACE',
-      requiredWhen: 'Buster git checkout is enabled',
-      keys: ['id_rsa'],
-      setupFunction: 'setup_git_deploy_key git-deploy-key-buster Buster',
-      evidenceLine: lineNumber(text, 'setup_git_deploy_key git-deploy-key-buster Buster'),
-    },
-    {
-      name: 'operator-oauth',
-      namespace: 'TAILSCALE_OPERATOR_NAMESPACE',
-      requiredWhen: 'TAILSCALE_OPERATOR_ENABLED is enabled',
-      keys: ['client_id', 'client_secret'],
-      setupFunction: 'setup_tailscale_oauth_secret',
-      evidenceLine: lineNumber(text, 'setup_tailscale_oauth_secret()'),
-    },
-  ];
-
-  return {
-    generatedFrom: [scriptPath],
-    environment: parseHeaderEnv(text),
-    defaults: parseDefaultAssignments(text, envNames),
-    setupOrder: [
-      'setup_shared_secret',
-      'setup_redis_secret',
-      'setup_postgresql_secret when KUBECLAW_DEPLOY_POSTGRESQL is enabled',
-      'setup_litellm_secret when KUBECLAW_DEPLOY_LITELLM is enabled',
-      'rewrite_litellm_database_url_namespace when KUBECLAW_DEPLOY_LITELLM is enabled',
-      'setup_google_sa_key when KUBECLAW_DEPLOY_LITELLM is enabled',
-      'setup_ghcr_secret',
-      'setup_git_deploy_key git-deploy-key-nova Nova',
-      'setup_git_deploy_key git-deploy-key-buster Buster',
-      'setup_tailscale_oauth_secret',
-    ],
-    resolutionOrder: [
-      'reuse complete target Secret unless KUBECLAW_SECRETS_OVERWRITE is true',
-      'patch missing keys interactively when a target Secret exists and a TTY is available',
-      'create openclaw-shared-secrets from SOPS file when present',
-      'copy source namespace Secret from SRC_NS when present',
-      'prompt or generate values interactively when allowed',
-      'warn in noninteractive mode when required input is unavailable',
-    ],
-    secrets,
-  };
+  return buildSecretInventory({
+    read,
+    parseHeaderEnv,
+    parseDefaultAssignments,
+    lineNumber,
+  });
 }
 
 function buildHelmValuesInventory() {

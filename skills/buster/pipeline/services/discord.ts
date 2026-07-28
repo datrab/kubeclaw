@@ -10,7 +10,7 @@ import { sanitizeDiscordMessage } from '../egress.ts';
 import { postDiscordWebhook } from '../integrations/discord-webhook.ts';
 import { createObservabilityHealthState } from './observability-health.ts';
 import { loadBusterDiscordWebhookTimeoutMs, loadBusterPlatformConfig } from './runtime-policy.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import {
   appendDiscordCorrelation,
   persistDiscordArtifact,

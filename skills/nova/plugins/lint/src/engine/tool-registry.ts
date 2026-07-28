@@ -1,0 +1,16 @@
+import { registerTool } from './tool-registry-core.js';
+import './tool-registry-language-tools.js';
+import './tool-registry-dependency-tools.js';
+import './tool-registry-semgrep.js';
+import { registerContainerYamlTools } from './container-yaml-tools.js';
+import { registerKubernetesSecurityTools } from './kubernetes-security-tools.js';
+import { registerGoTools, registerTerraformTools } from './go-terraform-tools.js';
+import { registerArchitectureTools } from './architecture-tools.js';
+
+registerContainerYamlTools(registerTool);
+registerKubernetesSecurityTools(registerTool);
+registerArchitectureTools(registerTool);
+registerGoTools(registerTool);
+registerTerraformTools(registerTool);
+
+export { buildToolRegistry, TOOL_ADAPTERS, TOOL_ADAPTERS as TOOL_REGISTRY, uniqueTypeScriptFindings } from './tool-registry-core.js';

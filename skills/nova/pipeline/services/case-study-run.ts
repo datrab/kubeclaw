@@ -1,7 +1,5 @@
 import fs from 'fs';
-import path from 'path';
 import { log } from '../core/logger.ts';
-import { swarmRoot } from '../core/paths.ts';
 import { resolveRuntime } from '../agents/runtime.ts';
 import { getRunId } from '../core/runtime.ts';
 import {
@@ -11,14 +9,15 @@ import {
   withSessionRateLimitRecovery,
 } from './rate-limit.ts';
 import { resolveResultAttempt } from './correlation.ts';
-import { createTrackedSummarySessionCleanup } from './summary-session-cleanup.ts';
 import {
+  archiveSummaryTranscript,
+  buildSummarySpawnOptions,
   buildSummaryDiscordCorrelation as buildCaseStudyDiscordCorrelation,
   buildSummaryDiscordFields as buildCaseStudyDiscordFields,
+  createSummarySessionCleanup,
   requirePositiveSummaryTimeout,
 } from './summary-session-values.ts';
 import { errorMessage } from './text-values.ts';
-import { sessionLifecyclePolicies } from '../core/session-policy.ts';
 import { getCaseStudyConfig } from './runtime-defaults.ts';
 import { onSummaryStarted } from './telemetry.ts';
 import { writeCaseStudyInstructions } from './case-study-instructions.ts';
@@ -68,30 +67,11 @@ function createInitialState(config: any, progress: any, opts: any): any {
 }
 
 function createCleanup(state: any) {
-  return createTrackedSummarySessionCleanup(state.deps, {
-    config: state.config,
-    sessionKey: () => state.sessionKey,
-    trackingKey: () => state.trackingKey,
-    runtime: () => state.runtime,
-    model: () => state.model,
-    agentId: () => state.agentId,
-    label: () => state.label,
-  }, { summaryType: 'case_study' });
+  return createSummarySessionCleanup(state, 'case_study');
 }
 
 function buildSpawnOptions(state: any) {
-  return {
-    ...sessionLifecyclePolicies(state.config),
-    runtime: state.runtime,
-    model: state.model,
-    agentId: state.agentId,
-    cwd: state.config.repo_root,
-    label: state.label,
-    thinking: state.caseStudy.thinking_level ?? null,
-    trackActive: false,
-    budget: state.opts.budget ?? null,
-    signal: state.opts.signal ?? null,
-  };
+  return buildSummarySpawnOptions(state, state.caseStudy.thinking_level ?? null);
 }
 
 async function notifySpawned(state: any) {
@@ -240,19 +220,7 @@ async function pollCaseStudyOutput(state: any) {
 }
 
 function archiveCaseStudyTranscript(state: any) {
-  const archiveDir = path.join(swarmRoot(state.config), 'logs', 'case-study');
-  fs.mkdirSync(archiveDir, { recursive: true });
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  if (
-    state.runtime === 'acp'
-    && state.streamLogPath
-    && fs.existsSync(state.streamLogPath)
-  ) {
-    state.deps.copyTranscriptArtifact(
-      state.streamLogPath,
-      path.join(archiveDir, `case-study-transcript-${timestamp}.jsonl`)
-    );
-  }
+  archiveSummaryTranscript(state, 'case-study', 'case-study-transcript');
 }
 
 export async function runCaseStudy(config: any, progress: any, opts: any = {}) {

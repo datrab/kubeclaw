@@ -21,7 +21,7 @@ import {
 } from './support.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import { runMultiPath } from './visual-reg-multi.ts';
 import type { VisualPathEntry } from './visual-reg-multi.ts';
 import { deliverVisualResults, finalizeVisualReg, resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.ts';

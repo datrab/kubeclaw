@@ -26,7 +26,8 @@ function validateApprovalGate(gateId: string, gate: AnyRecord, validation: Confi
   } else if (!validTimeout.includes(gate.on_timeout)) {
     validation.errors.push(`progress.gates.${gateId}.on_timeout: '${gate.on_timeout}' not valid (${validTimeout.join(' | ')})`);
   }
-  if (gate.timeout_minutes === undefined || gate.timeout_minutes === null) return;
+  if (gate.timeout_minutes === undefined) return;
+  if (gate.timeout_minutes === null) return;
   const timeout = Number(gate.timeout_minutes);
   if (!Number.isFinite(timeout) || timeout <= 0) {
     validation.errors.push(`progress.gates.${gateId}.timeout_minutes: must be a positive number`);
@@ -63,7 +64,8 @@ function validateModuleDependencies(progress: AnyRecord, gates: AnyRecord, valid
     const module = moduleRaw as AnyRecord;
     if (!Array.isArray(module?.depends_on)) continue;
     for (const dependency of module.depends_on) {
-      if (typeof dependency !== 'string' || !dependency.startsWith('gate:')) continue;
+      if (typeof dependency !== 'string') continue;
+      if (!dependency.startsWith('gate:')) continue;
       const gateId = dependency.slice('gate:'.length);
       validation.safeIdentifier(gateId, `progress.modules.${moduleId}.depends_on gate reference`);
       if (!Object.prototype.hasOwnProperty.call(gates, gateId)) {

@@ -127,6 +127,7 @@ export function appendDurableOperatorAlert(config: any = {}, eventType: any, pay
   const errors: any[] = [];
 
   for (const target of targets) {
+    if (typeof target !== 'string' || !target) continue;
     try {
       fs.mkdirSync(path.dirname(target), { recursive: true });
       fs.appendFileSync(target, line);

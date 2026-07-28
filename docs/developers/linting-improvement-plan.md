@@ -113,7 +113,7 @@ Exit criteria:
 
 Implementation evidence:
 
-- `pipeline_lint_policy.v2` requires explicit targets for every tool; missing or escaping targets fail before execution.
+- `pipeline_lint_policy.v6` requires explicit targets for tools whose authority is narrower than the selected project. Semgrep is the deliberate exception: an omitted or empty target list means the complete selected project root. Optional custom Semgrep targets replace that default, remain project-relative, and fail validation when they escape or do not exist.
 - Seven TypeScript projects are named by exact `tsconfig.json` path. `tsc` runs once per affected configured project, including nested projects.
 - ESLint parses JS, JSX, TS, and TSX through the pinned `typescript-eslint` parser. Premature maintainability warnings were removed until Phase 6 admission and ratchet support.
 - The workspace currently has no Python source or Python project root, so Python is not enabled for this project. Ruff/mypy adapters remain available for a future explicit Python project rather than pretending `.` is a Python root.
@@ -122,7 +122,7 @@ Implementation evidence:
 - Helm lint owns the exact `charts/kubeclaw` chart. Kubeconform receives only deterministic `helm template --include-crds` output over stdin; raw templates are never inputs.
 - `format`, `lint`, `types`, and `manifests` are distinct report categories.
 
-Known typed debt is now visible rather than missed: six configured TypeScript projects currently fail strict checking, while `plugins/openclaw-agent-observer/tsconfig.json` is clean. Existing findings require the Phase 7 fingerprinted ratchet or a separately authorized type-migration effort; new project discovery is no longer heuristic.
+Known typed debt is now visible rather than missed: six configured TypeScript projects currently fail strict checking, while `skills/common/plugins/openclaw-agent-observer/tsconfig.json` is clean. Existing findings require the Phase 7 fingerprinted ratchet or a separately authorized type-migration effort; new project discovery is no longer heuristic.
 
 ## Phase 4: Go And Terraform (implemented July 20, 2026)
 
@@ -227,7 +227,7 @@ Implementation evidence:
 - ESLint is the single JavaScript/TypeScript owner for complexity 15, nesting depth 3, seven parameters, 60 logical function lines, 300 logical file lines, lowercase kebab-case filenames, direct environment access, environment-backed hardcoded defaults, fallback chains longer than two candidates, dynamic module loading, module-level mutable state, swallowed errors, and unstructured console output.
 - Exact environment and dynamic-loader boundaries live in the native ESLint settings file. Tests and fixtures are parsed but excluded from production maintainability budgets.
 - Gocyclo 0.6.0 is pinned in the general runtime and independently enforces complexity 10 over explicit Go module roots. Its text output, finding exits, and operational failures are normalized independently.
-- Semgrep no longer duplicates JavaScript/TypeScript swallowed-error, dynamic-loading, or console rules. The broad path-traversal rule was rejected after 340 false positives, and raw Helm-template scanning was removed after deterministic parser failures. Semgrep now scans every tracked production code and executable-script root through an explicit allowlist with focused security rules. A policy test fails when a supported production source file lacks a Semgrep root. The documentation-reference parser is the sole exact exclusion because Semgrep 1.170.0 only partially parses its regular-expression grammar; ESLint still covers it.
+- Semgrep no longer duplicates JavaScript/TypeScript swallowed-error, dynamic-loading, or console rules. The broad path-traversal rule was rejected after 340 false positives, and raw Helm-template scanning was removed after deterministic parser failures. Semgrep scans the selected current project by default with focused security rules; operators may replace that root with validated custom project-relative paths. Changed-file execution narrows the effective set without changing project authority. The documentation-reference parser is the sole exact exclusion because Semgrep 1.170.0 only partially parses its regular-expression grammar; ESLint still covers it.
 - Trivy scans deterministic Helm-rendered manifests for high and critical Kubernetes security misconfigurations. It replaces the removed raw-template Semgrep rules without confusing Helm syntax for YAML, and it runs with embedded checks plus update/version checks disabled.
 - Every tool blocks at warning severity. Existing Phase 6 debt is fingerprinted rather than emitted as advisory noise: 1,464 ESLint findings, 11 Hadolint findings, four Go complexity findings, one Semgrep finding, and three rendered Kubernetes security findings. Together with Phase 5, the baseline contains 2,352 fingerprints, all expiring October 20, 2026.
 - ESLint and Hadolint fingerprints include normalized source context and occurrence identity, so repeated same-code findings in one file cannot silently share one suppression.

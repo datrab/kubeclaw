@@ -45,6 +45,20 @@ test('tool targets are required explicit project-relative authority', () => {
   assert.throws(() => validateLintPolicy(policy({ targets: ['../outside'] }), '/tmp/lint-policy.json'), /repository-relative/);
 });
 
+test('Semgrep defaults to the selected project root and accepts custom relative paths', () => {
+  const defaulted = validateLintPolicy(policy({ id: 'semgrep', languages: [], targets: [] }), '/tmp/lint-policy.json');
+  assert.deepEqual(defaulted.tools[0].configured_targets, []);
+  assert.deepEqual(defaulted.tools[0].targets, ['.']);
+
+  const custom = validateLintPolicy(policy({ id: 'semgrep', languages: [], targets: ['src', 'scripts'] }), '/tmp/lint-policy.json');
+  assert.deepEqual(custom.tools[0].configured_targets, ['src', 'scripts']);
+  assert.deepEqual(custom.tools[0].targets, ['src', 'scripts']);
+  assert.throws(
+    () => validateLintPolicy(policy({ id: 'semgrep', languages: [], targets: ['../outside'] }), '/tmp/lint-policy.json'),
+    /repository-relative/,
+  );
+});
+
 test('inactive language adapters declare no fake project root', () => {
   const configured = policy({ id: 'terraform-fmt', languages: ['terraform'], targets: [], include: ['**/*.tf'] });
   const validated = validateLintPolicy(configured, '/tmp/lint-policy.json');
@@ -136,13 +150,13 @@ test('canonical repository policy has no advisory warning tier and owns calibrat
     groups.set(entry.tool, (groups.get(entry.tool) || 0) + 1);
     return groups;
   }, new Map()));
-  assert.equal(counts.eslint, 1464);
+  assert.equal(counts.eslint, 1423);
   assert.equal(counts.hadolint, 11);
   assert.equal(counts.gocyclo, 4);
   assert.equal(counts.semgrep, 1);
-  assert.equal(counts['trivy-kubernetes'], 3);
+  assert.equal(counts['trivy-kubernetes'], 2);
   assert.equal(counts.tsc, 4220);
-  assert.equal(configured.baseline.entries.length, 6572);
+  assert.equal(configured.baseline.entries.length, 6530);
   assert.ok(configured.tools.every(tool => tool.mode === 'blocking'));
   assert.equal(configured.rule_admission.rules.length, 14);
   assert.deepEqual(configured.tools.find(tool => tool.id === 'gocyclo').arguments, [
@@ -181,12 +195,9 @@ test('canonical repository policy has no advisory warning tier and owns calibrat
   }
 });
 
-test('canonical Semgrep roots cover every tracked production source file', () => {
+test('canonical Semgrep defaults to the complete selected project', () => {
   const configured = loadLintPolicy(path.resolve('charts/kubeclaw/files/config/lint-policy.json'));
   const semgrep = configured.tools.find(tool => tool.id === 'semgrep');
-  const tracked = execFileSync('git', ['ls-files'], { encoding: 'utf8' }).trim().split('\n');
-  const supported = tracked.filter(file => /\.(?:[cm]?[jt]sx?|py)$/.test(file));
-  const production = supported.filter(file => !file.startsWith('tests/') && file !== 'charts/kubeclaw/files/config/eslint.config.mjs');
-  const uncovered = production.filter(file => !semgrep.targets.some(target => file === target || file.startsWith(`${target}/`)));
-  assert.deepEqual(uncovered, []);
+  assert.deepEqual(semgrep.configured_targets, []);
+  assert.deepEqual(semgrep.targets, ['.']);
 });

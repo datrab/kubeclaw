@@ -1,5 +1,5 @@
 import { gitExec } from '../git-primitives.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import { logGit } from './git-workflow-contracts.ts';
 import type { GitLogger } from './git-workflow-contracts.ts';
 

@@ -54,6 +54,7 @@ function appendRedisArtifactRecord(config: any, record: any, fileName: any = 're
     const line = `${JSON.stringify(record)}\n`;
     const errors: any[] = [];
     for (const filePath of targets) {
+      if (typeof filePath !== 'string' || !filePath) continue;
       try {
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
         fs.appendFileSync(filePath, line);

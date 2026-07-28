@@ -21,10 +21,8 @@ import { buildModuleErrorTerminalResult } from './module-runner/terminal-results
 type AnyRecord = Record<string, any>;
 const STAGE_ID = 'worker:module_forge';
 
-function requiredText(value: unknown, field: string): string {
-  if (typeof value !== 'string') throw new Error(`${field}: required non-empty string`);
-  if (!value.trim()) throw new Error(`${field}: required non-empty string`);
-  return value.trim();
+function optionalText(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
 }
 
 function clearActiveAgent(context: AnyRecord) {
@@ -41,9 +39,9 @@ function executionFailure(context: AnyRecord, error: unknown) {
   const reason = `Module Forge worker execution failed: ${errorMessage(error)}`;
   log('ERROR', reason);
   const active = selectTruthyValue(() => context.status?.active_agent, () => ({}));
-  const dispatchId = requiredText(active.dispatch_id ?? resolveStatusDispatchId(context.status), 'forge.failure.dispatch_id');
-  const gatewayLabel = requiredText(active.gateway_label ?? resolveStatusGatewayLabel(context.status), 'forge.failure.gateway_label');
-  const sessionKey = requiredText(active.session_key ?? resolveStatusSessionKey(context.status), 'forge.failure.session_key');
+  const dispatchId = optionalText(active.dispatch_id ?? resolveStatusDispatchId(context.status));
+  const gatewayLabel = optionalText(active.gateway_label ?? resolveStatusGatewayLabel(context.status));
+  const sessionKey = optionalText(active.session_key ?? resolveStatusSessionKey(context.status));
   clearActiveAgent(context);
   emitTerminalModuleFailTelemetry({
     config: context.config, moduleId: context.moduleId, status: context.status, mod: context.mod,

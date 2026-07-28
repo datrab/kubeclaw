@@ -12,7 +12,7 @@ import { createRedisEventBus, createRedisTaskQueue } from '../services/task-tran
 import { sendDiscord } from '../services/discord.ts';
 import { waitForRedisReady as waitForRedisTransportReady } from '../redis-transport.ts';
 import { errorMessage } from '../value-boundary.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // DELETE_LEGACY: direct completion emission and implicit sender/consumer

@@ -1,0 +1,112 @@
+{
+  "$id": "artifact_published.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "byte_length": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "completeness": {
+      "enum": [
+        "full",
+        "truncated",
+        "summarized",
+        "transformed",
+        "unavailable",
+        "reference_only"
+      ]
+    },
+    "content_class": {
+      "enum": [
+        "metadata",
+        "payload",
+        "artifact",
+        "quarantined"
+      ]
+    },
+    "correlation": {
+      "$ref": "../correlation_identity.schema.json"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "kind": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "logical_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "media_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "original_byte_length": {
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "original_sha256": {
+      "oneOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "producer": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "published_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "reference": {
+      "pattern": "^blobs/sha256/[a-f0-9]{2}/[a-f0-9]{62}$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "artifact_published.v1"
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "transformation": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "logical_id",
+    "kind",
+    "media_type",
+    "byte_length",
+    "sha256",
+    "content_class",
+    "producer",
+    "reference",
+    "correlation",
+    "completeness",
+    "original_byte_length",
+    "original_sha256",
+    "published_at"
+  ],
+  "type": "object"
+}

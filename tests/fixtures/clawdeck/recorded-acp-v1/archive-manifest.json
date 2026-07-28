@@ -1,0 +1,83 @@
+{
+  "schema_version": "run_archive_manifest.v1",
+  "run_id": "real-parallel-observability-probe",
+  "project": "pipeline-observability",
+  "created_at": "2026-07-25T23:55:17.582Z",
+  "lifecycle": {
+    "event_count": 6,
+    "first_cursor": "lifecycle-pipeline-start",
+    "last_cursor": "lifecycle-pipeline-end"
+  },
+  "sources": [
+    {
+      "reference": "lifecycle/canonical-events.jsonl",
+      "byte_length": 3234,
+      "sha256": "062000135147ab260cc2a2daf6d85ccb28e80cfd12a09bef9eccb41d23736607"
+    },
+    {
+      "reference": "pipeline.jsonl",
+      "byte_length": 16444,
+      "sha256": "e55d09f13f17a9d384f97855d5368864c29f555ac5828cd0f1b4e19aa141ebbe"
+    },
+    {
+      "reference": "artifacts.jsonl",
+      "byte_length": 2490,
+      "sha256": "d86fd7e06b908e894daae144b8529d9d48c48b995de8bfdb754091e60d2d7fc5"
+    },
+    {
+      "reference": "run-manifest.json",
+      "byte_length": 3724,
+      "sha256": "3cb4bfe33f4f893a6f701d947e56a09f3a45766d81d6b6f7167d933bd1d3c04e"
+    },
+    {
+      "reference": "terminal-closure.json",
+      "byte_length": 530,
+      "sha256": "5dc18285af3fb6bd402ea4eaa85640086b06075851c99f47012fc01a34ef3df4"
+    },
+    {
+      "reference": "producer-health.json",
+      "byte_length": 810,
+      "sha256": "ce82ef25e66fb91bcced90fc309549b338ee90b10a9bb8215c8e38ef963c8190"
+    },
+    {
+      "reference": "evaluation-facts.jsonl",
+      "byte_length": 5378,
+      "sha256": "fa344f2d23e867ed8985f580bcc8b940402f8480d29a78a5257f45aff36c5561"
+    },
+    {
+      "reference": "contract-manifest.json",
+      "byte_length": 23670,
+      "sha256": "b07a40ef1d8a9126bc6a2b980958ab886682bb1fb3b3d36d6c3c64931aef7193"
+    },
+    {
+      "reference": "expected-source-facts.json",
+      "byte_length": 2078,
+      "sha256": "a079e01e7467fadfcb10ffbcee35bfb8aa5a18a9767165b4620e2daada690669"
+    },
+    {
+      "reference": "commands.jsonl",
+      "byte_length": 1406,
+      "sha256": "0d026646ec9f146b02a1e914cb059984175f232317b8ce2d33c5ede5245cccd8"
+    },
+    {
+      "reference": "runtime-logs.jsonl",
+      "byte_length": 318,
+      "sha256": "d283297adb2a7ab11e18903defe70aa1c5433b4ceb07caf3da98a19d73208d54"
+    },
+    {
+      "reference": "quarantine.jsonl",
+      "byte_length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "reference": "lifecycle/read-models.json",
+      "byte_length": 466,
+      "sha256": "eef9655e4f0543607f3cec3dc7a5bb63674c440aada602e736b94440d3a667ad"
+    }
+  ],
+  "manifest_reference": "run-manifest.json",
+  "terminal_reference": "terminal-closure.json",
+  "completeness": "complete",
+  "repair_state": "verified",
+  "sha256": "619ed8bb986f72245d63d501d973d9cbf70a067bc1f045ce3f078554d5d3a03d"
+}

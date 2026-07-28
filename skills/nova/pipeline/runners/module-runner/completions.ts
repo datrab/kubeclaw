@@ -49,4 +49,3 @@ export function applyModuleRunnerCompletion({
     metadata,
   });
 }
-

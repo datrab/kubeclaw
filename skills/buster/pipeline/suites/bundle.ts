@@ -23,7 +23,7 @@ import {
 import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
 import { buildSubprocessEnv, validateAllowedPath } from '../security.ts';
 import { createSuiteLog } from './support.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;

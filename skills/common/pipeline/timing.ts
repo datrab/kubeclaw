@@ -91,101 +91,112 @@ export function isBudgetExhaustedError(error: unknown) {
 } | null)?.code === 'BUDGET_EXHAUSTED'));
 }
 
-export function createBudget(input: BudgetInput = {}): TimeBudget {
-  let deadlineMs = toDeadlineMs(input);
-  const controller = new AbortController();
-  const upstream = input.signal ?? null;
-  const label = textValue(input.label) ?? DEFAULT_BUDGET_LABEL;
-  const extensions: Array<{ ms: number; reason: string; at: string }> = [];
-  let deadlineTimer: ReturnType<typeof setTimeout> | null = null;
-  let upstreamAbortHandler: (() => void) | null = null;
+class DeadlineBudget implements TimeBudget {
+  private deadline: number;
+  private readonly controller = new AbortController();
+  private readonly upstream: AbortSignal | null;
+  private readonly label: string;
+  private readonly extensionHistory: Array<{ ms: number; reason: string; at: string }> = [];
+  private deadlineTimer: ReturnType<typeof setTimeout> | null = null;
+  private upstreamAbortHandler: (() => void) | null = null;
 
-  function remainingMs() {
-    return Math.max(0, deadlineMs - Date.now());
+  constructor(input: BudgetInput) {
+    this.deadline = toDeadlineMs(input);
+    this.upstream = input.signal ?? null;
+    this.label = textValue(input.label) ?? DEFAULT_BUDGET_LABEL;
+    this.connectUpstream();
+    this.scheduleDeadlineAbort();
   }
 
-  function exhaustedError(reason = 'budget_exhausted') {
-    return new BudgetExhaustedError(`${label} exhausted`, {
-      deadlineMs,
-      remainingMs: remainingMs(),
+  get deadlineMs(): number { return this.deadline; }
+  get signal(): AbortSignal { return this.controller.signal; }
+  get extensions() { return this.extensionHistory.slice(); }
+
+  remainingMs(): number {
+    return Math.max(0, this.deadline - Date.now());
+  }
+
+  throwIfExhausted(reason = DEFAULT_BUDGET_REASON): void {
+    if (this.signal.aborted) throw abortSignalError(this.signal);
+    if (this.remainingMs() > 0) return;
+    const error = this.exhaustedError(reason);
+    this.abortIfNeeded(reason);
+    throw error;
+  }
+
+  extend(ms: number, meta: BudgetExtensionMeta = {}): number {
+    if (meta.authorized !== true || !meta.reason) {
+      throw new TypeError('Budget extension requires explicit authorization and reason');
+    }
+    const extensionMs = nonNegativeMs(ms);
+    this.deadline += extensionMs;
+    this.extensionHistory.push({ ms: extensionMs, reason: meta.reason, at: new Date().toISOString() });
+    this.scheduleDeadlineAbort();
+    return this.deadline;
+  }
+
+  extendForRateLimit(cooldownMs: number, meta: BudgetExtensionMeta = {}): number {
+    return this.extend(nonNegativeMs(cooldownMs) + nonNegativeMs(meta.bufferMs), {
+      authorized: true,
+      reason: textValue(meta.reason) ?? RATE_LIMIT_COOLDOWN_REASON,
+    });
+  }
+
+  async sleep(ms: number): Promise<void> {
+    return sleep(ms, { budget: this });
+  }
+
+  private exhaustedError(reason: string): BudgetExhaustedError {
+    return new BudgetExhaustedError(`${this.label} exhausted`, {
+      deadlineMs: this.deadline,
+      remainingMs: this.remainingMs(),
       reason,
     });
   }
 
-  function abortIfNeeded(reason = 'budget_exhausted') {
-    if (controller.signal.aborted) return;
-    if (deadlineTimer) clearTimeout(deadlineTimer);
-    deadlineTimer = null;
-    removeUpstreamAbortListener();
-    controller.abort(exhaustedError(reason));
+  private abortIfNeeded(reason = DEFAULT_BUDGET_REASON): void {
+    if (this.signal.aborted) return;
+    this.clearTimer();
+    this.removeUpstreamAbortListener();
+    this.controller.abort(this.exhaustedError(reason));
   }
 
-  function removeUpstreamAbortListener() {
-    if (!upstream || !upstreamAbortHandler) return;
-    upstream.removeEventListener('abort', upstreamAbortHandler);
-    upstreamAbortHandler = null;
+  private clearTimer(): void {
+    if (this.deadlineTimer) clearTimeout(this.deadlineTimer);
+    this.deadlineTimer = null;
   }
 
-  function scheduleDeadlineAbort() {
-    if (deadlineTimer) clearTimeout(deadlineTimer);
-    if (controller.signal.aborted) {
-      deadlineTimer = null;
+  private removeUpstreamAbortListener(): void {
+    if (!this.upstream || !this.upstreamAbortHandler) return;
+    this.upstream.removeEventListener('abort', this.upstreamAbortHandler);
+    this.upstreamAbortHandler = null;
+  }
+
+  private scheduleDeadlineAbort(): void {
+    this.clearTimer();
+    if (this.signal.aborted) return;
+    this.deadlineTimer = setTimeout(() => this.abortIfNeeded(), this.remainingMs());
+    (this.deadlineTimer as { unref?: () => void }).unref?.();
+  }
+
+  private connectUpstream(): void {
+    if (!this.upstream) return;
+    if (this.upstream.aborted) {
+      this.controller.abort(abortSignalError(this.upstream));
       return;
     }
-    deadlineTimer = setTimeout(() => abortIfNeeded(), remainingMs());
-    (deadlineTimer as any).unref?.();
+    this.upstreamAbortHandler = () => {
+      if (this.signal.aborted) return;
+      this.clearTimer();
+      this.removeUpstreamAbortListener();
+      this.controller.abort(abortSignalError(this.upstream));
+    };
+    this.upstream.addEventListener('abort', this.upstreamAbortHandler, { once: true });
   }
+}
 
-  if (upstream) {
-    if (upstream.aborted) controller.abort(abortSignalError(upstream));
-    else {
-      upstreamAbortHandler = () => {
-        if (controller.signal.aborted) return;
-        if (deadlineTimer) clearTimeout(deadlineTimer);
-        deadlineTimer = null;
-        removeUpstreamAbortListener();
-        controller.abort(abortSignalError(upstream));
-      };
-      upstream.addEventListener('abort', upstreamAbortHandler, { once: true });
-    }
-  }
-
-  const budget: TimeBudget = {
-    get deadlineMs() { return deadlineMs; },
-    get signal() { return controller.signal; },
-    get extensions() { return extensions.slice(); },
-    remainingMs,
-    throwIfExhausted(reason = 'budget_exhausted') {
-      if (controller.signal.aborted) throw abortSignalError(controller.signal);
-      if (remainingMs() <= 0) {
-        const error = exhaustedError(reason);
-        abortIfNeeded(reason);
-        throw error;
-      }
-    },
-    extend(ms: number, meta: BudgetExtensionMeta = {}) {
-      if (meta.authorized !== true || !meta.reason) {
-        throw new TypeError('Budget extension requires explicit authorization and reason');
-      }
-      const extensionMs = nonNegativeMs(ms);
-      deadlineMs += extensionMs;
-      extensions.push({ ms: extensionMs, reason: meta.reason, at: new Date().toISOString() });
-      scheduleDeadlineAbort();
-      return deadlineMs;
-    },
-    extendForRateLimit(cooldownMs: number, meta: BudgetExtensionMeta = {}) {
-      const bufferMs = nonNegativeMs(meta.bufferMs);
-      return budget.extend(nonNegativeMs(cooldownMs) + bufferMs, {
-        authorized: true,
-        reason: textValue(meta.reason) ?? RATE_LIMIT_COOLDOWN_REASON,
-      });
-    },
-    async sleep(ms: number) {
-      return sleep(ms, { budget });
-    },
-  };
-  scheduleDeadlineAbort();
-  return budget;
+export function createBudget(input: BudgetInput = {}): TimeBudget {
+  return new DeadlineBudget(input);
 }
 
 export function createBudgetFromMinutes(timeoutMinutes: number, options: Omit<BudgetInput, 'timeoutMs'> = {}) {

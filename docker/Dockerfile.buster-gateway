@@ -6,20 +6,18 @@ FROM ${OPENCLAW_BASE} AS gateway-assets
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG TYPESCRIPT_VERSION=5.9.3
-RUN npm install -g "typescript@${TYPESCRIPT_VERSION}"
-
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
-COPY plugins/openclaw-agent-observer/ /tmp/plugins/openclaw-agent-observer/
-WORKDIR /tmp/plugins/openclaw-agent-observer
-RUN node "$(npm root -g)/typescript/bin/tsc" -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
-    && node scripts/build.mjs --tsc "$(npm root -g)/typescript/bin/tsc" \
+COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
+WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
+RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+    && ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
+    && node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
     && mkdir -p /out/extensions/kubeclaw-agent-observer \
     && cp -R \
-      /tmp/plugins/openclaw-agent-observer/package.json \
-      /tmp/plugins/openclaw-agent-observer/openclaw.plugin.json \
-      /tmp/plugins/openclaw-agent-observer/src \
-      /tmp/plugins/openclaw-agent-observer/dist \
+      /tmp/skills/common/plugins/openclaw-agent-observer/package.json \
+      /tmp/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json \
+      /tmp/skills/common/plugins/openclaw-agent-observer/src \
+      /tmp/skills/common/plugins/openclaw-agent-observer/dist \
       /out/extensions/kubeclaw-agent-observer/
 
 ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
@@ -37,21 +35,30 @@ FROM ${OPENCLAW_BASE}
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG CA_CERTIFICATES_VERSION=20230311+deb12u1
-ARG CURL_VERSION=7.88.1-10+deb12u15
-ARG GIT_VERSION=1:2.39.5-0+deb12u3
-ARG OPENSSH_CLIENT_VERSION=1:9.2p1-2+deb12u10
-ARG JQ_VERSION=1.6-2.1+deb12u2
-ARG RIPGREP_VERSION=13.0.0-4+b2
-ARG TREE_VERSION=2.1.0-1
-RUN apt-get update && apt-get install -y --no-install-recommends \
-      ca-certificates=${CA_CERTIFICATES_VERSION} \
-      curl=${CURL_VERSION} \
-      git=${GIT_VERSION} \
-      openssh-client=${OPENSSH_CLIENT_VERSION} \
-      jq=${JQ_VERSION} \
-      ripgrep=${RIPGREP_VERSION} \
-      tree=${TREE_VERSION} \
+ARG DEBIAN_SNAPSHOT=20260713T000000Z
+RUN test -s /etc/ssl/certs/ca-certificates.crt \
+    && printf '%s\n' \
+      'Types: deb' \
+      "URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
+      'Suites: bookworm bookworm-updates' \
+      'Components: main' \
+      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+      '' \
+      'Types: deb' \
+      "URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
+      'Suites: bookworm-security' \
+      'Components: main' \
+      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+      > /etc/apt/sources.list.d/debian.sources \
+    && rm -f /etc/apt/sources.list \
+    && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
+
+# The snapshot pins the complete dependency graph coherently.
+# hadolint ignore=DL3008
+RUN packages=(ca-certificates curl git openssh-client jq ripgrep tree) \
+    && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
+    && for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
+    && apt-get install -y --no-install-recommends "${packages[@]}" \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /app/skills /root/.npm \
     && npm config set cache /root/.npm --global \

@@ -23,13 +23,29 @@ const busterGitWorkflowsPath = path.join(sourceRoot, 'skills/buster/pipeline/ser
 
 const timingSource = fs.readFileSync(timingPath, 'utf8');
 const shimSource = fs.readFileSync(novaShimPath, 'utf8');
-const pollingSource = fs.readFileSync(pollingPath, 'utf8');
-const sessionPollSource = fs.readFileSync(sessionPollPath, 'utf8');
-const rateLimitSource = fs.readFileSync(rateLimitPath, 'utf8');
+const serviceDir = path.dirname(pollingPath);
+const pollingSource = fs.readdirSync(serviceDir)
+  .filter((name) => name.endsWith('.ts') && (name === 'polling.ts' || name.startsWith('polling-')))
+  .map((name) => fs.readFileSync(path.join(serviceDir, name), 'utf8'))
+  .join('\n');
+const sessionPollSource = fs.readdirSync(serviceDir)
+  .filter((name) => name.endsWith('.ts') && (name === 'polling-session-end.ts' || name.startsWith('polling-session-end-')))
+  .map((name) => fs.readFileSync(path.join(serviceDir, name), 'utf8'))
+  .join('\n');
+const rateLimitSource = fs.readdirSync(serviceDir)
+  .filter((name) => name.endsWith('.ts') && (name === 'rate-limit.ts' || name.startsWith('rate-limit-')))
+  .map((name) => fs.readFileSync(path.join(serviceDir, name), 'utf8'))
+  .join('\n');
 const eventContractSource = fs.readFileSync(eventContractPath, 'utf8');
 const commonGatewaySource = fs.readFileSync(commonGatewayPath, 'utf8');
-const commonLifecycleSource = fs.readFileSync(commonLifecyclePath, 'utf8');
-const commonGitWorktreeSource = fs.readFileSync(commonGitWorktreePath, 'utf8');
+const commonLifecycleSource = [
+  fs.readFileSync(commonLifecyclePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/agents/session-spawn.ts'), 'utf8'),
+].join('\n');
+const commonGitWorktreeSource = [
+  fs.readFileSync(commonGitWorktreePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/common/pipeline/integrations/git-worktree-push.ts'), 'utf8'),
+].join('\n');
 const moduleRunnerSource = fs.readFileSync(moduleRunnerPath, 'utf8');
 const novaGitWorktreeSource = fs.readFileSync(novaGitWorktreePath, 'utf8');
 const busterGitWorkflowsSource = fs.readFileSync(busterGitWorkflowsPath, 'utf8');
@@ -49,16 +65,16 @@ assert.equal(pollingSource.includes('createBudgetFromMinutes'), true, 'pollGener
 assert.equal(pollingSource.includes('budget.throwIfExhausted()'), true, 'pollGeneric must consume budget strictly');
 assert.equal(pollingSource.includes('sleep(interval, { budget })'), true, 'pollGeneric sleep must be budget-aware');
 assert.equal(sessionPollSource.includes('createBudgetFromMinutes'), true, 'pollForSessionEnd must create/use shared budgets');
-assert.equal(sessionPollSource.includes('waitForAcpMonitorEvent(Math.min(interval, budget.remainingMs()))'), true, 'pollForSessionEnd housekeeping wait must be budget-aware through ACP event waits');
+assert.equal(sessionPollSource.includes('timeoutMs: Math.min(state.interval, state.budget.remainingMs())'), true, 'pollForSessionEnd housekeeping wait must be budget-aware through ACP event waits');
 assert.equal(sessionPollSource.includes('deadline += rateLimitStep.cooldownMs'), false, 'pollForSessionEnd must not mutate local deadlines for rate limits');
 assert.equal(sessionPollSource.includes('Transcript active') && sessionPollSource.includes('extending deadline'), false, 'pollForSessionEnd must not extend deadlines for transcript/internal polling activity');
-assert.equal(rateLimitSource.includes('budget.extendForRateLimit(cooldownMs'), true, 'rate-limit handling must explicitly authorize cooldown budget extension');
-assert.equal(rateLimitSource.includes("reason: 'authorized_rate_limit_cooldown'"), true, 'rate-limit budget extension must carry authorization reason');
+assert.equal(rateLimitSource.includes('budget?.extendForRateLimit?.(ctx.cooldownMs'), true, 'rate-limit handling must explicitly authorize cooldown budget extension');
+assert.equal(rateLimitSource.includes('reason: "authorized_rate_limit_cooldown"'), true, 'rate-limit budget extension must carry authorization reason');
 assert.equal(eventContractSource.includes('BudgetExhaustedError'), true, 'event waits must surface budget exhaustion');
 assert.equal(eventContractSource.includes('budget?.remainingMs'), true, 'event waits must bound waits by shared budget remaining time');
-assert.equal(commonGatewaySource.includes('await sleep(retryDelayMs, { budget, signal })'), true, 'gateway retry waits must be abortable and budget-aware');
+assert.equal(commonGatewaySource.includes('await sleep(retryDelay, { budget, signal })'), true, 'gateway retry waits must be abortable and budget-aware');
 assert.equal(commonGatewaySource.includes('throwIfCallerAborted(signal, budget)'), true, 'gateway retries must propagate caller aborts instead of retrying them');
-assert.equal(commonLifecycleSource.includes('await sleep(retryDelayMs, { budget, signal })'), true, 'session spawn retry waits must be abortable and budget-aware');
+assert.equal(commonLifecycleSource.includes('await sleep(context.policy.gateway.retryDelayMs, { budget: context.budget, signal: context.signal })'), true, 'session spawn retry waits must be abortable and budget-aware');
 assert.equal(
   moduleRunnerSource.includes('deps.sleep(5000, { budget: selectTruthyValue(() => (opts.budget), () => (null)), signal: selectTruthyValue(() => (opts.signal), () => (null)) })'),
   true,
@@ -66,7 +82,7 @@ assert.equal(
 );
 assert.equal(commonGitWorktreeSource.includes('await sleep(delayMs, { budget, signal })'), true, 'shared git push retry waits must be abortable and budget-aware');
 assert.equal(novaGitWorktreeSource.includes("export * from '../../../common/pipeline/integrations/git-worktree.ts';"), true, 'Nova git worktree must re-export the shared implementation authority');
-assert.equal(busterGitWorkflowsSource.includes('await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget, signal })'), true, 'Buster git retry backoff must use shared abortable sleep');
+assert.equal(busterGitWorkflowsSource.includes('await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget:'), true, 'Buster git retry backoff must use shared abortable sleep');
 assert.equal(busterGitWorkflowsSource.includes('new Promise(resolve => setTimeout'), false, 'Buster git retry backoff must not use raw fixed sleeps');
 
 const timingMod = await import(pathToFileURL(timingPath).href);

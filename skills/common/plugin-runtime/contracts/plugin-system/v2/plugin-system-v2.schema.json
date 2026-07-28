@@ -1,0 +1,804 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+  "title": "KubeClaw plugin system v2 contracts",
+  "$defs": {
+    "namespacedId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$",
+      "maxLength": 160
+    },
+    "localId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+      "maxLength": 96
+    },
+    "opaqueId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}$"
+    },
+    "relativeModulePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.(?:mjs|js)$",
+      "maxLength": 512
+    },
+    "relativeSchemaPath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.json$",
+      "maxLength": 512
+    },
+    "jsonObject": {
+      "type": "object"
+    },
+    "reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": { "$ref": "#/$defs/namespacedId" },
+        "message": { "type": "string", "minLength": 1, "maxLength": 4096 },
+        "details": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "packageIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pluginId", "apiVersion", "packageVersion", "contentDigest"],
+      "properties": {
+        "pluginId": { "$ref": "#/$defs/namespacedId" },
+        "apiVersion": { "const": "pipeline-plugin-v2" },
+        "packageVersion": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "packageResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pluginId", "apiVersion", "packageVersion", "contentDigest", "registrationId"],
+      "properties": {
+        "pluginId": { "$ref": "#/$defs/namespacedId" },
+        "apiVersion": { "const": "pipeline-plugin-v2" },
+        "packageVersion": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "registrationId": { "$ref": "#/$defs/localId" }
+      }
+    },
+    "stageRegistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "type", "module", "export", "requiredCapabilities",
+        "configSchema", "inputSchema", "resultSchema"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "type": { "$ref": "#/$defs/namespacedId" },
+        "module": { "$ref": "#/$defs/relativeModulePath" },
+        "export": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" },
+        "requiredCapabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/namespacedId" },
+          "uniqueItems": true
+        },
+        "configSchema": { "$ref": "#/$defs/relativeSchemaPath" },
+        "inputSchema": { "$ref": "#/$defs/relativeSchemaPath" },
+        "resultSchema": { "$ref": "#/$defs/relativeSchemaPath" }
+      }
+    },
+    "observerRegistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "module", "export", "subscriptions", "requiredCapabilities",
+        "configSchema", "checkpointSchema", "delivery", "ordering", "failurePolicy"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "module": { "$ref": "#/$defs/relativeModulePath" },
+        "export": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" },
+        "subscriptions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/namespacedId" }
+        },
+        "delivery": { "const": "at_least_once" },
+        "ordering": { "const": "per_run" },
+        "failurePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "maxAttempts", "backoffMs", "timeoutMs"],
+          "properties": {
+            "mode": { "enum": ["best_effort", "required"] },
+            "maxAttempts": { "type": "integer", "minimum": 1 },
+            "backoffMs": { "type": "integer", "minimum": 0 },
+            "timeoutMs": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "requiredCapabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/namespacedId" },
+          "uniqueItems": true
+        },
+        "configSchema": { "$ref": "#/$defs/relativeSchemaPath" },
+        "checkpointSchema": { "$ref": "#/$defs/relativeSchemaPath" }
+      }
+    },
+    "adapterRegistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "module", "export", "providesCapabilities",
+        "requiredCapabilities", "configSchema"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "module": { "$ref": "#/$defs/relativeModulePath" },
+        "export": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" },
+        "providesCapabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/namespacedId" }
+        },
+        "requiredCapabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/namespacedId" },
+          "uniqueItems": true
+        },
+        "configSchema": { "$ref": "#/$defs/relativeSchemaPath" }
+      }
+    },
+    "pluginManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "apiVersion", "packageVersion", "stages", "observers", "adapters"],
+      "properties": {
+        "id": { "$ref": "#/$defs/namespacedId" },
+        "apiVersion": { "const": "pipeline-plugin-v2" },
+        "packageVersion": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "stages": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stageRegistration" }
+        },
+        "observers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/observerRegistration" }
+        },
+        "adapters": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/adapterRegistration" }
+        }
+      },
+      "anyOf": [
+        { "properties": { "stages": { "type": "array", "minItems": 1 } } },
+        { "properties": { "observers": { "type": "array", "minItems": 1 } } },
+        { "properties": { "adapters": { "type": "array", "minItems": 1 } } }
+      ]
+    },
+    "stageDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "dependsOn", "config", "input", "execution"],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "type": { "$ref": "#/$defs/namespacedId" },
+        "dependsOn": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/localId" },
+          "uniqueItems": true
+        },
+        "config": { "$ref": "#/$defs/jsonObject" },
+        "input": { "$ref": "#/$defs/jsonObject" },
+        "execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maxAttempts", "maxRemediationCycles", "timeoutMs"],
+          "properties": {
+            "maxAttempts": { "type": "integer", "minimum": 1 },
+            "maxRemediationCycles": { "type": "integer", "minimum": 0 },
+            "orchestratorAfterAttempt": { "type": "integer", "minimum": 1 },
+            "timeoutMs": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "on": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "request_fix": { "$ref": "#/$defs/localId" }
+          }
+        }
+      }
+    },
+    "pipelineDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "id", "maxConcurrency", "stages"],
+      "properties": {
+        "schemaVersion": { "const": "pipeline-definition.v2" },
+        "id": { "$ref": "#/$defs/opaqueId" },
+        "maxConcurrency": { "type": "integer", "minimum": 1 },
+        "stages": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/stageDefinition" }
+        }
+      }
+    },
+    "attemptIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runId", "stageId", "attemptId", "attemptNumber"],
+      "properties": {
+        "runId": { "$ref": "#/$defs/opaqueId" },
+        "stageId": { "$ref": "#/$defs/localId" },
+        "attemptId": { "$ref": "#/$defs/opaqueId" },
+        "attemptNumber": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "stageAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "identity", "owner", "stageType", "leaseId",
+        "status", "retryBudgetUsed", "remediationBudgetUsed", "createdAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "stage-attempt.v2" },
+        "identity": { "$ref": "#/$defs/attemptIdentity" },
+        "owner": { "$ref": "#/$defs/packageResolution" },
+        "stageType": { "$ref": "#/$defs/namespacedId" },
+        "leaseId": { "$ref": "#/$defs/opaqueId" },
+        "status": {
+          "enum": ["created", "dispatched", "completed", "timed_out", "cancelled"]
+        },
+        "retryBudgetUsed": { "type": "integer", "minimum": 0 },
+        "remediationBudgetUsed": { "type": "integer", "minimum": 0 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "dispatchedAt": { "type": "string", "format": "date-time" },
+        "finishedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "namespace", "mediaType", "digest", "sizeBytes", "producer"],
+      "properties": {
+        "artifactId": { "$ref": "#/$defs/opaqueId" },
+        "namespace": { "$ref": "#/$defs/namespacedId" },
+        "mediaType": { "type": "string", "pattern": "^[a-z0-9!#$&^_.+-]+/[a-z0-9!#$&^_.+-]+$" },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "sizeBytes": { "type": "integer", "minimum": 0 },
+        "producer": { "$ref": "#/$defs/attemptIdentity" }
+      }
+    },
+    "resultBase": {
+      "type": "object",
+      "required": ["schemaVersion", "outcome", "artifacts"],
+      "properties": {
+        "schemaVersion": { "const": "stage-result.v2" },
+        "outcome": {
+          "enum": [
+            "passed", "retry", "request_fix", "wait", "orchestrator_required",
+            "blocked", "failed", "timed_out", "rate_limited", "cancelled"
+          ]
+        },
+        "reason": { "$ref": "#/$defs/reason" },
+        "artifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/artifactRef" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "stageResult": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/resultBase" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["schemaVersion", "outcome", "artifacts"],
+              "properties": {
+                "schemaVersion": { "const": "stage-result.v2" },
+                "outcome": { "const": "passed" },
+                "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifactRef" }, "uniqueItems": true }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/resultBase" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["schemaVersion", "outcome", "reason", "artifacts"],
+              "properties": {
+                "schemaVersion": { "const": "stage-result.v2" },
+                "outcome": { "enum": ["retry", "request_fix", "blocked", "failed", "timed_out", "cancelled"] },
+                "reason": { "$ref": "#/$defs/reason" },
+                "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifactRef" }, "uniqueItems": true }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/resultBase" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["schemaVersion", "outcome", "reason", "artifacts", "wait"],
+              "properties": {
+                "schemaVersion": { "const": "stage-result.v2" },
+                "outcome": { "enum": ["wait", "orchestrator_required"] },
+                "reason": { "$ref": "#/$defs/reason" },
+                "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifactRef" }, "uniqueItems": true },
+                "wait": { "$ref": "#/$defs/waitRequest" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/resultBase" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["schemaVersion", "outcome", "reason", "artifacts", "retryAt"],
+              "properties": {
+                "schemaVersion": { "const": "stage-result.v2" },
+                "outcome": { "const": "rate_limited" },
+                "reason": { "$ref": "#/$defs/reason" },
+                "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifactRef" }, "uniqueItems": true },
+                "retryAt": { "type": "string", "format": "date-time" }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "effectRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "effectId", "idempotencyKey", "attempt",
+        "capability", "operation", "resource", "payload", "requestedAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "effect-request.v2" },
+        "effectId": { "$ref": "#/$defs/opaqueId" },
+        "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "attempt": { "$ref": "#/$defs/attemptIdentity" },
+        "capability": { "$ref": "#/$defs/namespacedId" },
+        "operation": { "$ref": "#/$defs/localId" },
+        "resource": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "canonicalId"],
+          "properties": {
+            "type": { "$ref": "#/$defs/namespacedId" },
+            "canonicalId": { "$ref": "#/$defs/opaqueId" }
+          }
+        },
+        "payload": { "$ref": "#/$defs/jsonObject" },
+        "requestedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "effectReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "effectId", "idempotencyKey", "adapter",
+        "status", "recordedAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "effect-receipt.v2" },
+        "effectId": { "$ref": "#/$defs/opaqueId" },
+        "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "adapter": { "$ref": "#/$defs/packageResolution" },
+        "status": { "enum": ["accepted", "completed", "failed"] },
+        "result": { "$ref": "#/$defs/jsonObject" },
+        "error": { "$ref": "#/$defs/reason" },
+        "recordedAt": { "type": "string", "format": "date-time" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "failed" } }, "required": ["status"] },
+          "then": {
+            "properties": { "error": {} },
+            "required": ["error"],
+            "not": { "properties": { "result": {} }, "required": ["result"] }
+          }
+        },
+        {
+          "if": { "properties": { "status": { "const": "completed" } }, "required": ["status"] },
+          "then": { "not": { "properties": { "error": {} }, "required": ["error"] } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "accepted" } }, "required": ["status"] },
+          "then": {
+            "not": {
+              "anyOf": [
+                { "properties": { "result": {} }, "required": ["result"] },
+                { "properties": { "error": {} }, "required": ["error"] }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "waitRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "waitId", "kind", "signalType",
+        "authorizedIssuer", "expiresAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "wait-request.v2" },
+        "waitId": { "$ref": "#/$defs/opaqueId" },
+        "kind": { "enum": ["signal", "orchestrator"] },
+        "signalType": { "$ref": "#/$defs/namespacedId" },
+        "authorizedIssuer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "id"],
+          "properties": {
+            "type": { "enum": ["orchestrator", "operator", "adapter"] },
+            "id": { "$ref": "#/$defs/opaqueId" }
+          }
+        },
+        "expiresAt": {
+          "oneOf": [
+            { "type": "string", "format": "date-time" },
+            { "type": "null" }
+          ]
+        },
+        "request": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "resumeSignal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "signalId", "idempotencyKey", "waitId",
+        "signalType", "issuer", "issuedAt", "payload"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "resume-signal.v2" },
+        "signalId": { "$ref": "#/$defs/opaqueId" },
+        "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "waitId": { "$ref": "#/$defs/opaqueId" },
+        "signalType": { "$ref": "#/$defs/namespacedId" },
+        "issuer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "id"],
+          "properties": {
+            "type": { "enum": ["orchestrator", "operator", "adapter"] },
+            "id": { "$ref": "#/$defs/opaqueId" }
+          }
+        },
+        "issuedAt": { "type": "string", "format": "date-time" },
+        "payload": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "packageProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "package", "source", "canonicalPath",
+        "trustScope", "trustEvidence", "resolvedAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "package-provenance.v2" },
+        "package": { "$ref": "#/$defs/packageIdentity" },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "canonicalReference"],
+          "properties": {
+            "type": { "enum": ["builtin", "local", "git", "registry"] },
+            "canonicalReference": { "type": "string", "minLength": 1, "maxLength": 2048 }
+          }
+        },
+        "canonicalPath": { "type": "string", "pattern": "^/", "maxLength": 4096 },
+        "trustScope": { "enum": ["trusted_first_party", "isolated_external"] },
+        "trustEvidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["method", "verifier", "verifiedAt"],
+          "properties": {
+            "method": {
+              "enum": ["builtin_allowlist", "source_digest_allowlist", "publisher_attestation"]
+            },
+            "verifier": { "$ref": "#/$defs/opaqueId" },
+            "verifiedAt": { "type": "string", "format": "date-time" },
+            "attestationDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+          },
+          "allOf": [{
+            "if": {
+              "properties": { "method": { "const": "publisher_attestation" } },
+              "required": ["method"]
+            },
+            "then": {
+              "properties": { "attestationDigest": true },
+              "required": ["attestationDigest"]
+            }
+          }]
+        },
+        "resolvedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "registrationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "package", "surface", "registrationId"],
+      "properties": {
+        "schemaVersion": { "const": "registration-provenance.v2" },
+        "package": { "$ref": "#/$defs/packageProvenance" },
+        "surface": { "enum": ["stage", "observer", "adapter"] },
+        "registrationId": { "$ref": "#/$defs/localId" }
+      }
+    },
+    "capabilityGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "provider", "constraints"],
+      "properties": {
+        "capability": { "$ref": "#/$defs/namespacedId" },
+        "provider": { "$ref": "#/$defs/packageResolution" },
+        "constraints": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "invocationLease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "leaseId", "attempt", "registration", "status",
+        "grants", "limits", "issuedAt", "expiresAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "invocation-lease.v2" },
+        "leaseId": { "$ref": "#/$defs/opaqueId" },
+        "attempt": { "$ref": "#/$defs/attemptIdentity" },
+        "registration": { "$ref": "#/$defs/registrationProvenance" },
+        "status": { "enum": ["active", "revoked"] },
+        "grants": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/capabilityGrant" },
+          "uniqueItems": true
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["wallTimeMs", "memoryBytes", "cpuMillis"],
+          "properties": {
+            "wallTimeMs": { "type": "integer", "minimum": 1 },
+            "memoryBytes": { "type": "integer", "minimum": 1 },
+            "cpuMillis": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "issuedAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "revokedAt": { "type": "string", "format": "date-time" },
+        "revocationReason": { "$ref": "#/$defs/reason" }
+      },
+      "allOf": [{
+        "if": { "properties": { "status": { "const": "revoked" } }, "required": ["status"] },
+        "then": {
+          "properties": { "revokedAt": true, "revocationReason": true },
+          "required": ["revokedAt", "revocationReason"]
+        }
+      }]
+    },
+    "pluginContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "lease", "config", "input", "artifacts"],
+      "properties": {
+        "schemaVersion": { "const": "plugin-context.v2" },
+        "lease": { "$ref": "#/$defs/invocationLease" },
+        "config": { "$ref": "#/$defs/jsonObject" },
+        "input": { "$ref": "#/$defs/jsonObject" },
+        "guidance": { "$ref": "#/$defs/jsonObject" },
+        "artifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/artifactRef" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "eventIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runId"],
+      "properties": {
+        "runId": { "$ref": "#/$defs/opaqueId" },
+        "stageId": { "$ref": "#/$defs/localId" },
+        "attemptId": { "$ref": "#/$defs/opaqueId" },
+        "effectId": { "$ref": "#/$defs/opaqueId" },
+        "waitId": { "$ref": "#/$defs/opaqueId" },
+        "artifactId": { "$ref": "#/$defs/opaqueId" }
+      }
+    },
+    "lifecycleEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "eventId", "sequence", "type", "identity",
+        "occurredAt", "causationId", "payload"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "lifecycle-event.v2" },
+        "eventId": { "$ref": "#/$defs/opaqueId" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "type": {
+          "enum": [
+          "run.created", "run.started", "run.resumed", "run.waiting", "run.paused",
+            "run.succeeded", "run.failed", "run.blocked", "run.cancelled",
+            "stage.scheduled", "stage.started", "stage.waiting", "stage.retrying",
+            "stage.succeeded", "stage.failed", "stage.blocked", "stage.cancelled",
+            "attempt.created", "attempt.dispatched", "attempt.completed",
+            "attempt.timed_out", "attempt.cancelled",
+            "effect.requested", "effect.accepted", "effect.completed", "effect.failed",
+            "artifact.created", "wait.created", "wait.resolved",
+            "orchestrator.required"
+          ]
+        },
+        "identity": { "$ref": "#/$defs/eventIdentity" },
+        "occurredAt": { "type": "string", "format": "date-time" },
+        "causationId": {
+          "oneOf": [{ "$ref": "#/$defs/opaqueId" }, { "type": "null" }]
+        },
+        "payload": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "pluginDomainEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "eventId", "sequence", "type", "producer",
+        "identity", "occurredAt", "causationId", "payload"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "plugin-domain-event.v2" },
+        "eventId": { "$ref": "#/$defs/opaqueId" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "type": { "type": "string", "pattern": "^plugin\\.[a-z0-9]+(?:[._-][a-z0-9]+)+\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
+        "producer": { "$ref": "#/$defs/registrationProvenance" },
+        "identity": { "$ref": "#/$defs/eventIdentity" },
+        "occurredAt": { "type": "string", "format": "date-time" },
+        "causationId": {
+          "oneOf": [{ "$ref": "#/$defs/opaqueId" }, { "type": "null" }]
+        },
+        "payload": { "$ref": "#/$defs/jsonObject" }
+      }
+    },
+    "observerDelivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "deliveryId", "observer", "attemptNumber",
+        "event", "deliveredAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "observer-delivery.v2" },
+        "deliveryId": { "$ref": "#/$defs/opaqueId" },
+        "observer": { "$ref": "#/$defs/registrationProvenance" },
+        "attemptNumber": { "type": "integer", "minimum": 1 },
+        "event": {
+          "oneOf": [
+            { "$ref": "#/$defs/lifecycleEvent" },
+            { "$ref": "#/$defs/pluginDomainEvent" }
+          ]
+        },
+        "deliveredAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "observerCheckpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "observer", "runId", "sequence", "eventId", "updatedAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "observer-checkpoint.v2" },
+        "observer": { "$ref": "#/$defs/registrationProvenance" },
+        "runId": { "$ref": "#/$defs/opaqueId" },
+        "sequence": { "type": "integer", "minimum": 0 },
+        "eventId": {
+          "oneOf": [{ "$ref": "#/$defs/opaqueId" }, { "type": "null" }]
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "adapterLifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "provider", "status", "changedAt"],
+      "properties": {
+        "schemaVersion": { "const": "adapter-lifecycle.v2" },
+        "provider": { "$ref": "#/$defs/registrationProvenance" },
+        "status": { "enum": ["activating", "ready", "degraded", "stopping", "stopped", "failed"] },
+        "changedAt": { "type": "string", "format": "date-time" },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "allOf": [{
+        "if": {
+          "properties": { "status": { "enum": ["degraded", "failed"] } },
+          "required": ["status"]
+        },
+        "then": { "properties": { "reason": true }, "required": ["reason"] }
+      }]
+    },
+    "resourceLock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "lockId", "resource", "ownerLeaseId",
+        "fencingToken", "status", "acquiredAt", "expiresAt"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "resource-lock.v2" },
+        "lockId": { "$ref": "#/$defs/opaqueId" },
+        "resource": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "canonicalId"],
+          "properties": {
+            "type": { "$ref": "#/$defs/namespacedId" },
+            "canonicalId": { "$ref": "#/$defs/opaqueId" }
+          }
+        },
+        "ownerLeaseId": { "$ref": "#/$defs/opaqueId" },
+        "fencingToken": { "type": "integer", "minimum": 1 },
+        "status": { "enum": ["active", "released", "expired"] },
+        "acquiredAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "releasedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "pluginStateEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "entryId", "sequence", "namespace", "registration",
+        "entryType", "idempotencyKey", "occurredAt", "payload"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "plugin-state-entry.v2" },
+        "entryId": { "$ref": "#/$defs/opaqueId" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "namespace": { "$ref": "#/$defs/namespacedId" },
+        "registration": { "$ref": "#/$defs/registrationProvenance" },
+        "attempt": {
+          "oneOf": [{ "$ref": "#/$defs/attemptIdentity" }, { "type": "null" }]
+        },
+        "entryType": { "$ref": "#/$defs/namespacedId" },
+        "entrySchemaVersion": { "$ref": "#/$defs/namespacedId" },
+        "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "occurredAt": { "type": "string", "format": "date-time" },
+        "payload": { "$ref": "#/$defs/jsonObject" }
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": "run_manifest.v1",
+  "created_at": "2026-07-25T23:55:17.561Z",
+  "fingerprint": "e4b04c365901e6548b4dc14dd60790582b42dd2d0e73b1287e1efc27b89f46ec",
+  "schema_versions": {
+    "telemetry": "telemetry_envelope.v1",
+    "lifecycle": "pipeline_lifecycle.v1",
+    "manifest": "run_manifest.v1",
+    "contract_manifest": "telemetry_contract_manifest.v1"
+  },
+  "project": "pipeline-observability",
+  "run_id": "real-parallel-observability-probe",
+  "work_items": [
+    {
+      "work_type": "module",
+      "work_id": "contract-probe",
+      "depends_on": [],
+      "owner": "nova",
+      "configuration": {
+        "owner": "codex-acp",
+        "depends_on": []
+      }
+    },
+    {
+      "work_type": "module",
+      "work_id": "artifact-probe",
+      "depends_on": [],
+      "owner": "nova",
+      "configuration": {
+        "owner": "codex-acp",
+        "depends_on": []
+      }
+    }
+  ],
+  "execution_order": [],
+  "dependency_edges": [],
+  "runtime_policies": {
+    "project": "pipeline-observability",
+    "run_id": "real-parallel-observability-probe",
+    "repo_root": "/tmp/clawdeck-pin-final",
+    "paths": {
+      "swarm_dir": "/tmp/clawdeck-acp-recorded-source/.swarm"
+    }
+  },
+  "models": [],
+  "prompts": [
+    {
+      "id": "nova-prompt-forge",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/nova/pipeline/prompts/forge.ts",
+      "sha256": "3b7e107bcb41a48831f89df48ff953cd1e269fcd8fd3810c741826239e4b68dc"
+    },
+    {
+      "id": "nova-prompt-buster-module",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/nova/pipeline/prompts/buster-module.ts",
+      "sha256": "0334bae418858035732604bcbdbfe59adad157f0799e50d8fa20734dfdeacff8"
+    },
+    {
+      "id": "nova-prompt-buster-gate",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/nova/pipeline/prompts/buster-gate.ts",
+      "sha256": "0f6ffd6f8017c668442840185efe62f61ffe3fb3ce2d88ebe46784f7d2455196"
+    },
+    {
+      "id": "nova-prompt-review",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/nova/pipeline/prompts/review.ts",
+      "sha256": "fa2db046157f17d0b349f9de7151f89ad55e11ea2e762d06a7817af6782da9ae"
+    },
+    {
+      "id": "nova-prompt-gate-fix",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/nova/pipeline/prompts/gate-fix.ts",
+      "sha256": "4c7b710bb87dc2b4b25b5bffabb9e69825db481f2a6d6df32e594dabcaf6c168"
+    }
+  ],
+  "tools": [
+    {
+      "id": "node",
+      "version": "v24.16.0",
+      "source": "runtime"
+    }
+  ],
+  "skills": [
+    {
+      "id": "common",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/common",
+      "sha256": null
+    },
+    {
+      "id": "nova",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/nova",
+      "sha256": null
+    },
+    {
+      "id": "buster",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "skills/buster",
+      "sha256": null
+    }
+  ],
+  "plugins": [
+    {
+      "id": "openclaw-agent-observer",
+      "version": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+      "source": "plugins/openclaw-agent-observer",
+      "sha256": null
+    }
+  ],
+  "git": {
+    "repository": "git@github.com:Ravencrypt/ForgeStack.git",
+    "branch": "",
+    "commit": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+    "starting_commit": "80b591d394a6cbcf4c6351f4b038186103fe9fb7",
+    "dirty": false
+  },
+  "deployment": {
+    "image_digest": null,
+    "pod_uid": null,
+    "namespace": null
+  },
+  "versions": {
+    "node": "v24.16.0",
+    "pipeline": "80b591d394a6cbcf4c6351f4b038186103fe9fb7"
+  }
+}

@@ -1,0 +1,590 @@
+{
+  "schemaVersion": "plugin-system-inventory-rules-v1",
+  "classificationMode": "ordered-first-match",
+  "scan": {
+    "roots": [
+      "skills/nova/pipeline",
+      "skills/nova/plugins",
+      "skills/buster",
+      "skills/common/pipeline",
+      "skills/common/plugin-runtime",
+      "skills/common/plugins",
+      "tests/skills/nova/pipeline",
+      "tests/skills/buster",
+      "tests/skills/common/pipeline",
+      "contracts/agent-observability",
+      "contracts/telemetry"
+    ],
+    "files": [
+      "charts/kubeclaw/files/config/swarm.config.json",
+      "docs/ROADMAP.md",
+      "docs/architecture/plugin-system-vision.md",
+      "docs/architecture/plugin-system-implementation-plan.md",
+      "docs/architecture/plugin-system-migration-units.json",
+      "docs/architecture/plugin-system-parity-evidence.schema.json",
+      "docs/concepts/extensibility-model.md",
+      "docs/developers/hooks-and-plugins.md",
+      "docs/developers/adding-gates.md",
+      "docs/developers/adding-observability-sinks.md",
+      "docs/developers/adding-pipeline-features.md",
+      "docs/pipeline/configuration.md",
+      "docs/pipeline/modules-and-gates.md",
+      "docs/reference/swarm-config.md",
+      "tests/verification/contracts/check-gate-control-result-surface.mjs",
+      "tests/verification/contracts/check-generator-result-surface.mjs",
+      "tests/verification/contracts/check-module-runner-slice-surface.mjs",
+      "tests/verification/contracts/check-openclaw-agent-observer-plugin.mjs",
+      "tests/verification/contracts/check-pipeline-runner-slice-surface.mjs",
+      "tests/verification/contracts/check-validator-control-result-surface.mjs",
+      "tests/verification/contracts/check-worker-control-result-surface.mjs",
+      "scripts/check-plugin-system-migration-units.mjs",
+      "scripts/record-plugin-parity-evidence.mjs",
+      "scripts/verify-plugin-migration-baseline.mjs",
+      "scripts/verify-all-skill-tests.mjs"
+    ],
+    "excludeSuffixes": [
+      ".map",
+      ".pyc"
+    ],
+    "excludeSegments": [
+      "/node_modules/",
+      "/dist/"
+    ]
+  },
+  "classificationRules": [
+    {
+      "id": "v2-plugin-runtime-sdk-and-contracts",
+      "prefixes": [
+        "skills/common/plugin-runtime/sdk/",
+        "skills/common/plugin-runtime/contracts/"
+      ],
+      "target": {"kind": "plugin-sdk", "id": "pipeline-plugin-sdk"}
+    },
+    {
+      "id": "v2-plugin-runtime-registry",
+      "prefixes": ["skills/common/plugin-runtime/core/registry/"],
+      "target": {"kind": "core", "id": "pipeline-core-registry"}
+    },
+    {
+      "id": "v2-plugin-runtime-state",
+      "prefixes": [
+        "skills/common/plugin-runtime/core/state/",
+        "skills/common/plugin-runtime/core/lifecycle/"
+      ],
+      "target": {"kind": "core", "id": "pipeline-core-state"}
+    },
+    {
+      "id": "v2-plugin-runtime-telemetry",
+      "prefixes": ["skills/common/plugin-runtime/core/telemetry/"],
+      "target": {"kind": "core", "id": "pipeline-core-telemetry"}
+    },
+    {
+      "id": "v2-plugin-runtime-config",
+      "prefixes": ["skills/common/plugin-runtime/core/config/"],
+      "target": {"kind": "core", "id": "pipeline-core-config"}
+    },
+    {
+      "id": "v2-plugin-runtime-execution",
+      "prefixes": [
+        "skills/common/plugin-runtime/core/",
+        "skills/common/plugin-runtime/cli.ts",
+        "skills/common/plugin-runtime/package.json",
+        "skills/common/plugin-runtime/tsconfig.json"
+      ],
+      "target": {"kind": "core", "id": "pipeline-core-execution"}
+    },
+    {
+      "id": "plugin-package-root-documentation",
+      "prefixes": [
+        "skills/common/plugins/README.md",
+        "skills/nova/plugins/README.nova.md",
+        "skills/buster/plugins/README.buster.md"
+      ],
+      "target": {"kind": "plugin-sdk", "id": "pipeline-plugin-sdk"}
+    },
+    {
+      "id": "plugin-openclaw-agent-observer",
+      "prefixes": ["skills/common/plugins/openclaw-agent-observer/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.openclaw-agent-observer"}
+    },
+    {
+      "id": "plugin-openclaw-agent-events",
+      "prefixes": ["skills/common/plugins/openclaw-agent-events/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.openclaw-agent-events"}
+    },
+    {
+      "id": "plugin-agent-observability",
+      "prefixes": ["skills/common/plugins/agent-observability/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.agent-observability"}
+    },
+    {
+      "id": "plugin-transport-publisher",
+      "prefixes": ["skills/common/plugins/transport-publisher/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.transport-publisher"}
+    },
+    {
+      "id": "plugin-artifact-store",
+      "prefixes": ["skills/common/plugins/artifact-store/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.artifact-store"}
+    },
+    {
+      "id": "plugin-repository-adapter",
+      "prefixes": ["skills/nova/plugins/repository-adapter/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.repository-adapter"}
+    },
+    {
+      "id": "plugin-implementation-agent",
+      "prefixes": ["skills/nova/plugins/implementation-agent/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.implementation-agent"}
+    },
+    {
+      "id": "plugin-test-agent",
+      "prefixes": ["skills/buster/plugins/test-agent/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.test-agent"}
+    },
+    {
+      "id": "plugin-network-http",
+      "prefixes": ["skills/common/plugins/network-http/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.network-http"}
+    },
+    {
+      "id": "plugin-runtime-dispatch",
+      "prefixes": ["skills/common/plugins/runtime-dispatch/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.runtime-dispatch"}
+    },
+    {
+      "id": "plugin-secret-resolver",
+      "prefixes": ["skills/common/plugins/secret-resolver/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.secret-resolver"}
+    },
+    {
+      "id": "plugin-operator-messaging",
+      "prefixes": ["skills/common/plugins/operator-messaging/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.operator-messaging"}
+    },
+    {
+      "id": "plugin-wait-store",
+      "prefixes": ["skills/common/plugins/wait-store/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.wait-store"}
+    },
+    {
+      "id": "plugin-human-approval",
+      "prefixes": ["skills/nova/plugins/human-approval/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.human-approval"}
+    },
+    {
+      "id": "plugin-notification-observer",
+      "prefixes": ["skills/common/plugins/notification-observer/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.notification-observer"}
+    },
+    {
+      "id": "plugin-telemetry-observer",
+      "prefixes": ["skills/common/plugins/telemetry-observer/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.telemetry-observer"}
+    },
+    {
+      "id": "plugin-telemetry-store",
+      "prefixes": ["skills/common/plugins/telemetry-store/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.telemetry-store"}
+    },
+    {
+      "id": "plugin-command-runner",
+      "prefixes": ["skills/common/plugins/command-runner/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.command-runner"}
+    },
+    {
+      "id": "plugin-lint-package",
+      "prefixes": ["skills/nova/plugins/lint/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.lint"}
+    },
+    {
+      "id": "plugin-buster-quality-gate-package",
+      "prefixes": ["skills/nova/plugins/buster-quality-gate/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.buster-quality-gate"}
+    },
+    {
+      "id": "plugin-review-package",
+      "prefixes": ["skills/nova/plugins/review/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.review"}
+    },
+    {
+      "id": "plugin-blueprint-sync-package",
+      "prefixes": ["skills/nova/plugins/blueprint-sync/"],
+      "target": {"kind": "plugin", "id": "kubeclaw.blueprint-sync"}
+    },
+    {
+      "id": "plugin-state-store",
+      "prefixes": ["skills/common/plugins/state-store/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.state-store"}
+    },
+    {
+      "id": "plugin-git-workspace",
+      "prefixes": ["skills/common/plugins/git-workspace/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.git-workspace"}
+    },
+    {
+      "id": "plugin-agent-observability-ingester",
+      "includesAny": ["agent-observability-ingester"],
+      "target": {"kind": "plugin", "id": "kubeclaw.agent-observability-ingester"}
+    },
+    {
+      "id": "plugin-agent-observability-evidence",
+      "includesAny": ["agent-observability-evidence"],
+      "target": {"kind": "plugin", "id": "kubeclaw.agent-observability-evidence"}
+    },
+    {
+      "id": "shared-telemetry-contract",
+      "prefixes": ["contracts/telemetry/"],
+      "target": {"kind": "shared-library", "id": "kubeclaw.telemetry-contract"}
+    },
+    {
+      "id": "delete-builtin-registry-bridges",
+      "includesAny": [
+        "/core/registry/builtin",
+        "gate-control-adapter",
+        "module-runner-plugin-contracts",
+        "pipeline-runner-terminal-generators"
+      ],
+      "target": {"kind": "delete", "id": "legacy-plugin-bridges"}
+    },
+    {
+      "id": "core-registry",
+      "prefixes": ["skills/nova/pipeline/core/registry/", "tests/skills/nova/pipeline/core/"],
+      "target": {"kind": "core", "id": "pipeline-core-registry"}
+    },
+    {
+      "id": "shared-agent-observability-contract",
+      "includesAny": ["agent-observability", "observability-contract"],
+      "target": {"kind": "shared-library", "id": "kubeclaw.agent-observability-contract"}
+    },
+    {
+      "id": "plugin-pipeline-review",
+      "includesAny": ["pipeline-review"],
+      "target": {"kind": "plugin", "id": "kubeclaw.pipeline-review"}
+    },
+    {
+      "id": "plugin-case-study",
+      "includesAny": ["case-study"],
+      "target": {"kind": "plugin", "id": "kubeclaw.case-study"}
+    },
+    {
+      "id": "plugin-project-summary",
+      "includesAny": ["/summary", "project-summary"],
+      "target": {"kind": "plugin", "id": "kubeclaw.project-summary"}
+    },
+    {
+      "id": "plugin-architecture-validator",
+      "includesAny": ["arch-validator", "architecture-validator"],
+      "target": {"kind": "plugin", "id": "kubeclaw.architecture-validator"}
+    },
+    {
+      "id": "plugin-delivery-lint",
+      "includesAny": ["delivery-lint", "delivery_lint", "validation-delivery"],
+      "target": {"kind": "plugin", "id": "kubeclaw.delivery-lint"}
+    },
+    {
+      "id": "plugin-preflight-contract",
+      "includesAny": ["preflight-contract", "validation-blueprint"],
+      "target": {"kind": "plugin", "id": "kubeclaw.preflight-contract"}
+    },
+    {
+      "id": "delete-mixed-validation-contract",
+      "includesAny": ["/services/validation.ts", "/services/validation-contract.ts"],
+      "target": {"kind": "delete", "id": "legacy-mixed-validation-contract"}
+    },
+    {
+      "id": "delete-mixed-validator-facade",
+      "includesAny": ["module-validators"],
+      "target": {"kind": "delete", "id": "legacy-mixed-validator-facade"}
+    },
+    {
+      "id": "plugin-lint",
+      "includesAny": [
+        "/validation",
+        "/lint",
+        "lint-report",
+        "pre-check",
+        "full-lint"
+      ],
+      "target": {"kind": "plugin", "id": "kubeclaw.lint"}
+    },
+    {
+      "id": "plugin-approval",
+      "includesAny": ["approval-gate", "approval-signal"],
+      "target": {"kind": "plugin", "id": "kubeclaw.human-approval"}
+    },
+    {
+      "id": "plugin-review",
+      "includesAny": ["review-gate", "/prompts/review"],
+      "target": {"kind": "plugin", "id": "kubeclaw.review"}
+    },
+    {
+      "id": "plugin-buster-quality-gate",
+      "includesAny": ["buster-gate", "/prompts/buster-gate"],
+      "target": {"kind": "plugin", "id": "kubeclaw.buster-quality-gate"}
+    },
+    {
+      "id": "plugin-forge",
+      "includesAny": ["forge", "gate-fix-scaffold", "/prompts/gate-fix"],
+      "target": {"kind": "plugin", "id": "kubeclaw.forge"}
+    },
+    {
+      "id": "plugin-buster-worker",
+      "prefixes": ["skills/buster/", "tests/skills/buster/"],
+      "includesAny": [
+        "module-runner-buster",
+        "module-worker-buster",
+        "orchestration-buster",
+        "buster-completion",
+        "buster-dispatch",
+        "buster-config",
+        "git-sync-before-buster",
+        "/prompts/buster-"
+      ],
+      "match": "any",
+      "target": {"kind": "plugin", "id": "kubeclaw.buster-worker"}
+    },
+    {
+      "id": "delete-notification-registry-contract",
+      "includesAny": ["notification-contract"],
+      "target": {"kind": "delete", "id": "legacy-notification-registry-contract"}
+    },
+    {
+      "id": "observer-notifications",
+      "includesAny": [
+        "notification-observers",
+        "notification-values",
+        "discord-audit",
+        "durable-operator-alert",
+        "operator-alert",
+        "preview-delivery",
+        "preview-credential-format"
+      ],
+      "target": {"kind": "plugin", "id": "kubeclaw.notifications"}
+    },
+    {
+      "id": "plugin-blueprint-sync",
+      "includesAny": ["/services/blueprint", "blueprint-control-sync"],
+      "target": {"kind": "plugin", "id": "kubeclaw.blueprint-sync"}
+    },
+    {
+      "id": "shared-prompt-primitives",
+      "includesAny": ["/prompts/shared"],
+      "target": {"kind": "shared-library", "id": "kubeclaw.prompt-primitives"}
+    },
+    {
+      "id": "delete-telemetry-registry-contract",
+      "includesAny": ["telemetry-sink-contract", "telemetry-sink-constants", "telemetry-sink-validation"],
+      "target": {"kind": "delete", "id": "legacy-telemetry-registry-contract"}
+    },
+    {
+      "id": "observer-telemetry",
+      "includesAny": ["telemetry-stream", "/telemetry/sinks"],
+      "target": {"kind": "plugin", "id": "kubeclaw.telemetry-observers"}
+    },
+    {
+      "id": "core-telemetry-spine",
+      "includesAny": ["telemetry", "run-facts", "evidence-manifest", "notification-dispatch"],
+      "target": {"kind": "core", "id": "pipeline-core-telemetry"}
+    },
+    {
+      "id": "adapter-git",
+      "includesAny": ["git-worktree", "git-primitives", "git-workflow", "git-sync", "git-identity", "git-push"],
+      "target": {"kind": "adapter", "id": "kubeclaw.git"}
+    },
+    {
+      "id": "adapter-redis",
+      "includesAny": ["redis-", "redis.", "/redis", "task-queue", "task-transport"],
+      "target": {"kind": "adapter", "id": "kubeclaw.redis"}
+    },
+    {
+      "id": "adapter-runtime-dispatch",
+      "includesAny": [
+        "acp-",
+        "/agents/",
+        "/integrations/gateway",
+        "gateway-invoke",
+        "openclaw-plugin-runtime",
+        "runtime-policy",
+        "session-monitor"
+      ],
+      "target": {"kind": "adapter", "id": "kubeclaw.runtime-dispatch"}
+    },
+    {
+      "id": "adapter-artifacts",
+      "includesAny": ["agent-artifact", "artifact-", "portable-artifacts", "quality-artifacts"],
+      "target": {"kind": "adapter", "id": "kubeclaw.artifacts"}
+    },
+    {
+      "id": "adapter-operator",
+      "includesAny": ["discord", "operator"],
+      "target": {"kind": "adapter", "id": "kubeclaw.operator-messaging"}
+    },
+    {
+      "id": "adapter-command",
+      "includesAny": ["command-runtime", "command-lifecycle", "command-validation"],
+      "target": {"kind": "adapter", "id": "kubeclaw.command"}
+    },
+    {
+      "id": "delete-concrete-orchestrator-runners",
+      "includesAny": [
+        "/runners/gate-runner",
+        "/runners/module-runner",
+        "/runners/gate-forge-fix",
+        "/runners/remediable-gate-engine",
+        "/runners/waitable-gate-engine",
+        "/runners/scheduled-gate-invocation"
+      ],
+      "target": {"kind": "delete", "id": "legacy-kind-schedulers"}
+    },
+    {
+      "id": "plugin-sdk-contracts",
+      "includesAny": [
+        "/services/contracts/",
+        "plugin-context",
+        "/core/context",
+        "operation-result",
+        "value-boundary",
+        "pipeline-event-contract",
+        "rate-limit-contract",
+        "redis-message-contract",
+        "task-transport-contract",
+        "discord-fields-contract"
+      ],
+      "target": {"kind": "plugin-sdk", "id": "pipeline-plugin-sdk"}
+    },
+    {
+      "id": "core-state",
+      "includesAny": [
+        "status-store",
+        "lifecycle",
+        "completion-identity",
+        "completion-adjudicator",
+        "pipeline-checkpoint",
+        "session-authority",
+        "file-lock",
+        "correlation",
+        "serialization"
+      ],
+      "target": {"kind": "core", "id": "pipeline-core-state"}
+    },
+    {
+      "id": "core-execution",
+      "includesAny": [
+        "/scheduler",
+        "pipeline-runner",
+        "/core/",
+        "/cli",
+        "/index.ts",
+        "failure-semantics",
+        "/failures/",
+        "rate-limit",
+        "polling",
+        "remediation-handoff",
+        "dependencies",
+        "runtime-defaults",
+        "run-discovery",
+        "runtime-environment",
+        "runtime-state-paths",
+        "security",
+        "timing"
+      ],
+      "target": {"kind": "core", "id": "pipeline-core-execution"}
+    },
+    {
+      "id": "shared-pipeline-primitives",
+      "prefixes": ["skills/common/pipeline/", "contracts/"],
+      "target": {"kind": "shared-library", "id": "kubeclaw.pipeline-primitives"}
+    },
+    {
+      "id": "verification-core",
+      "prefixes": [
+        "tests/",
+        "scripts/check-plugin-system-migration-units.mjs",
+        "scripts/record-plugin-parity-evidence.mjs",
+        "scripts/verify-plugin-migration-baseline.mjs",
+        "scripts/verify-all-skill-tests.mjs"
+      ],
+      "target": {"kind": "core", "id": "pipeline-core-verification"}
+    },
+    {
+      "id": "documentation",
+      "prefixes": ["docs/"],
+      "target": {"kind": "shared-library", "id": "plugin-system-documentation"}
+    },
+    {
+      "id": "platform-config",
+      "prefixes": ["charts/"],
+      "target": {"kind": "core", "id": "pipeline-core-config"}
+    },
+    {
+      "id": "nova-core-fallback",
+      "prefixes": ["skills/nova/pipeline/"],
+      "target": {"kind": "core", "id": "pipeline-core-execution"}
+    }
+  ],
+  "effectMatchers": [
+    {"id": "filesystem.read", "adapter": "kubeclaw.artifacts", "pattern": "\\b(?:readFile|readFileSync|readdir|readdirSync|stat|statSync|existsSync)\\s*\\("},
+    {"id": "filesystem.write", "adapter": "kubeclaw.artifacts", "pattern": "\\b(?:writeFile|writeFileSync|appendFile|appendFileSync|rename|renameSync|mkdir|mkdirSync|unlink|unlinkSync|rm|rmSync)\\s*\\("},
+    {"id": "git.execute", "adapter": "kubeclaw.git", "pattern": "(?:['\\\"]git['\\\"]|\\bgit\\s+(?:status|diff|show|rev-parse|worktree|commit|push|merge|checkout|fetch)\\b)"},
+    {"id": "redis.execute", "adapter": "kubeclaw.redis", "pattern": "\\b(?:xadd|xread|xreadgroup|xack|publish|subscribe|createClient|redisCommand|execRedis)\\b"},
+    {"id": "runtime.dispatch", "adapter": "kubeclaw.runtime-dispatch", "pattern": "\\b(?:sessions_spawn|spawnSession|dispatchWorker|invokeGateway|gatewayInvoke|acp\\.spawn|acp\\.send)\\b"},
+    {"id": "network.http", "adapter": "kubeclaw.network", "pattern": "\\b(?:fetch|https?\\.request|requestHttp)\\s*\\("},
+    {"id": "secret.read", "adapter": "kubeclaw.secrets", "pattern": "\\bprocess\\.env(?:\\.|\\[)"},
+    {"id": "command.execute", "adapter": "kubeclaw.command", "pattern": "\\b(?:exec|execFile|execSync|execFileSync|spawn|spawnSync)\\s*\\("},
+    {"id": "operator.notify", "adapter": "kubeclaw.operator-messaging", "pattern": "\\b(?:sendDiscord|sendWebhook|notifyOperator|postDiscord|discordWebhook)\\b"},
+    {"id": "telemetry.emit", "adapter": "kubeclaw.telemetry-transport", "pattern": "\\b(?:emitTelemetry|publishTelemetry|telemetry\\.emit|writeTelemetry)\\b"}
+  ],
+  "targetAdapters": [
+    {"id": "kubeclaw.artifacts", "capabilities": ["artifacts.read", "artifacts.write"]},
+    {"id": "kubeclaw.git", "capabilities": ["git.repository.read", "git.workspace.create", "git.commit", "git.merge"]},
+    {"id": "kubeclaw.redis", "capabilities": ["transport.redis"]},
+    {"id": "kubeclaw.runtime-dispatch", "capabilities": ["runtime.dispatch"]},
+    {"id": "kubeclaw.network", "capabilities": ["network.http"]},
+    {"id": "kubeclaw.secrets", "capabilities": ["secrets.read"]},
+    {"id": "kubeclaw.command", "capabilities": ["command.execute"]},
+    {"id": "kubeclaw.operator-messaging", "capabilities": ["operator.request", "transport.publish"]},
+    {"id": "kubeclaw.telemetry-transport", "capabilities": ["transport.publish"]}
+  ],
+  "legacyContractMatchers": [
+    {"id": "result.needs_nova", "pattern": "\\bneeds_nova\\b"},
+    {"id": "result.action_required", "pattern": "\\baction_required\\b"},
+    {"id": "manifest.package-capabilities", "pattern": "\\bcapabilities\\s*:\\s*\\["},
+    {"id": "manifest.kind", "pattern": "\\bkind\\s*:\\s*['\\\"](?:worker|gate|validator|generator|notification|telemetry)['\\\"]"},
+    {"id": "manifest.hook-family", "pattern": "\\bhookFamily\\s*:\\s*['\\\"]"},
+    {"id": "manifest.contract-v1", "pattern": "pipeline-plugin-v1"}
+  ],
+  "hardcodingMatchers": [
+    {"id": "stage.worker-forge", "pattern": "worker:module_forge"},
+    {"id": "stage.worker-buster", "pattern": "worker:module_buster"},
+    {"id": "stage.gate-review", "pattern": "gate:review"},
+    {"id": "stage.gate-approval", "pattern": "gate:approval"},
+    {"id": "stage.gate-buster", "pattern": "gate:buster"},
+    {"id": "stage.validator", "pattern": "validator:(?:architecture|delivery_lint|pre_check|full_lint)"},
+    {"id": "stage.generator", "pattern": "generator:(?:project_summary|pipeline_review|case_study)"},
+    {"id": "kind.branch", "pattern": "(?:plugin|manifest|producer)\\.?kind\\s*===?\\s*['\\\"](?:worker|gate|validator|generator|notification|telemetry)['\\\"]"}
+  ],
+  "registrations": [
+    {"currentId": "builtin.worker.module_forge", "currentType": "worker", "currentStageId": "worker:module_forge", "entrypoint": "skills/nova/pipeline/core/registry/builtin-workers.ts", "targetPackage": "kubeclaw.forge", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.agent.implementation"},
+    {"currentId": "builtin.worker.module_buster", "currentType": "worker", "currentStageId": "worker:module_buster", "entrypoint": "skills/nova/pipeline/core/registry/builtin-workers.ts", "targetPackage": "kubeclaw.buster-worker", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.test.execution"},
+    {"currentId": "hardcoded.validator.preflight_contract", "currentType": "hardcoded-validator", "currentStageId": "preflight_contract", "entrypoint": "skills/nova/pipeline/services/validation.ts", "targetPackage": "kubeclaw.preflight-contract", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.validate.preflight-contract"},
+    {"currentId": "builtin.gate.review", "currentType": "gate", "currentStageId": "gate:review", "entrypoint": "skills/nova/pipeline/runners/review-gate-runner.ts", "targetPackage": "kubeclaw.review", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.decision.review"},
+    {"currentId": "builtin.gate.approval", "currentType": "gate", "currentStageId": "gate:approval", "entrypoint": "skills/nova/pipeline/runners/approval-gate-runner.ts", "targetPackage": "kubeclaw.human-approval", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.decision.human-approval"},
+    {"currentId": "builtin.gate.buster", "currentType": "gate", "currentStageId": "gate:buster", "entrypoint": "skills/nova/pipeline/runners/buster-gate-runner.ts", "targetPackage": "kubeclaw.buster-quality-gate", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.test.quality-evaluation"},
+    {"currentId": "builtin.validator.architecture", "currentType": "validator", "currentStageId": "validator:architecture", "entrypoint": "skills/nova/pipeline/services/arch-validator.ts", "targetPackage": "kubeclaw.architecture-validator", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.validate.architecture"},
+    {"currentId": "builtin.validator.delivery_lint", "currentType": "validator", "currentStageId": "validator:delivery_lint", "entrypoint": "skills/nova/pipeline/services/module-validators.ts", "targetPackage": "kubeclaw.delivery-lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.delivery"},
+    {"currentId": "builtin.validator.pre_check", "currentType": "validator", "currentStageId": "validator:pre_check", "entrypoint": "skills/nova/pipeline/services/module-validators.ts", "targetPackage": "kubeclaw.lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.pre-check"},
+    {"currentId": "builtin.validator.full_lint", "currentType": "validator", "currentStageId": "validator:full_lint", "entrypoint": "skills/nova/pipeline/services/module-validators.ts", "targetPackage": "kubeclaw.lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.full"},
+    {"currentId": "builtin.generator.project_summary", "currentType": "generator", "currentStageId": "generator:project_summary", "entrypoint": "skills/nova/pipeline/services/summary.ts", "targetPackage": "kubeclaw.project-summary", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.report.project-summary"},
+    {"currentId": "builtin.generator.pipeline_review", "currentType": "generator", "currentStageId": "generator:pipeline_review", "entrypoint": "skills/nova/pipeline/services/pipeline-review-run.ts", "targetPackage": "kubeclaw.pipeline-review", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.report.pipeline-review"},
+    {"currentId": "builtin.generator.case_study", "currentType": "generator", "currentStageId": "generator:case_study", "entrypoint": "skills/nova/pipeline/services/case-study.ts", "targetPackage": "kubeclaw.case-study", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.report.case-study"},
+    {"currentId": "builtin.notification.discord", "currentType": "notification", "currentStageId": "pipeline.started|pipeline.completed|module.started|module.completed|gate.started|gate.completed", "entrypoint": "skills/nova/pipeline/services/notification-observers.ts", "targetPackage": "kubeclaw.notifications", "targetSurface": "observer", "targetRegistrationId": "kubeclaw.observer.discord-notifications"},
+    {"currentId": "builtin.telemetry.redis", "currentType": "telemetry", "currentStageId": "telemetry.sink", "entrypoint": "skills/nova/pipeline/services/telemetry-sink-contract.ts", "targetPackage": "kubeclaw.telemetry-observers", "targetSurface": "observer", "targetRegistrationId": "kubeclaw.observer.redis-telemetry"},
+    {"currentId": "builtin.telemetry.discord", "currentType": "telemetry", "currentStageId": "telemetry.sink", "entrypoint": "skills/nova/pipeline/services/telemetry-sink-contract.ts", "targetPackage": "kubeclaw.notifications", "targetSurface": "observer", "targetRegistrationId": "kubeclaw.observer.discord-telemetry"},
+    {"currentId": "external.openclaw-agent-observer", "currentType": "external-observer", "currentStageId": "openclaw.hooks", "entrypoint": "skills/common/plugins/openclaw-agent-observer/src/index.ts", "targetPackage": "kubeclaw.openclaw-agent-observer", "targetSurface": "adapter", "targetRegistrationId": "kubeclaw.adapter.openclaw-agent-events"},
+    {"currentId": "hardcoded.agent-observability-ingester", "currentType": "stream-consumer", "currentStageId": "agent-observability.raw", "entrypoint": "skills/nova/pipeline/services/agent-observability-ingester/index.ts", "targetPackage": "kubeclaw.agent-observability-ingester", "targetSurface": "observer", "targetRegistrationId": "kubeclaw.observer.agent-observability-ingester"},
+    {"currentId": "hardcoded.agent-observability-evidence", "currentType": "evidence-processor", "currentStageId": "agent-observability.evidence", "entrypoint": "skills/nova/pipeline/services/agent-observability-evidence/index.ts", "targetPackage": "kubeclaw.agent-observability-evidence", "targetSurface": "observer", "targetRegistrationId": "kubeclaw.observer.agent-observability-evidence"},
+    {"currentId": "hardcoded.blueprint-sync", "currentType": "generator", "currentStageId": "blueprint.sync", "entrypoint": "skills/nova/pipeline/services/blueprint.ts", "targetPackage": "kubeclaw.blueprint-sync", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.generate.blueprint-sync"},
+    {"currentId": "hardcoded.preview-delivery", "currentType": "notification", "currentStageId": "preview.delivery", "entrypoint": "skills/nova/pipeline/services/preview-delivery.ts", "targetPackage": "kubeclaw.notifications", "targetSurface": "observer", "targetRegistrationId": "kubeclaw.observer.preview-delivery"}
+  ]
+}

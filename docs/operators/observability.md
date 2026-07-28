@@ -123,7 +123,7 @@ telemetry builder in skills/nova/pipeline/services/telemetry/builders.ts
   -> pipeline:telemetry:<project>:<run_id>
 ```
 
-OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Buster keeps the plugin enabled in gateway config for the gateway lifetime; its dedicated pipeline sidecar neither contains OpenClaw nor controls gateway plugins. Nova retains its pipeline-owned controller policy, while the Redis ingester remains configured through `agent_observability.ingester.*`.
+OpenClaw agent observability is separate from pipeline telemetry. The `kubeclaw-agent-observer` plugin registers OpenClaw hooks in `skills/common/plugins/openclaw-agent-observer/src/index.ts`, prefers the runtime agent event bus for live agent output, normalizes hook/model usage/runtime events in `hook-normalizers.ts`, and writes Redis events through `redis-writer.ts`. Buster keeps the plugin enabled in gateway config for the gateway lifetime; its dedicated pipeline sidecar neither contains OpenClaw nor controls gateway plugins. Nova retains its pipeline-owned controller policy, while the Redis ingester remains configured through `agent_observability.ingester.*`.
 
 The observer Gateway methods are:
 

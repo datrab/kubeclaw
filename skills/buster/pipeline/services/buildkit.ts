@@ -7,7 +7,7 @@ import path from 'path';
 import { promisify } from 'util';
 import { buildSubprocessEnv } from '../security.ts';
 import { validateImageReference } from './image-reference.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 type SuiteLog = (message: string) => void;
 type ExecFileAsync = (command: string, args: string[], options?: Record<string, unknown>) => Promise<{ stdout?: string; stderr?: string }>;

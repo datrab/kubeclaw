@@ -2,7 +2,7 @@ import { emitPluginEvent, closeTelemetry } from '../telemetry.ts';
 import { publishTaskCompletionWithArtifact } from '../task-completion.ts';
 import { getRedisClient } from '../task-queue.ts';
 import { runResourceCleanupStage } from './cleanup.ts';
-import { sendTaskCompletionSignal } from './completion-signal.ts';
+import { publishTaskCompletionSignal } from './completion-signal.ts';
 import { safeErrorMessage } from '../runtime-diagnostics.ts';
 import { notifyTaskFailure, type TaskRuntime } from './context.ts';
 
@@ -74,7 +74,7 @@ async function emitCompletionTelemetry(runtime: TaskRuntime, duration: number): 
 }
 
 async function emitCompletionSignal(runtime: TaskRuntime): Promise<void> {
-  await sendTaskCompletionSignal({
+  await publishTaskCompletionSignal({
     payload: runtime.payload, completionState: runtime.completionState,
     spawnedSubagent: runtime.spawnedSubagent, suitesInfo: runtime.suitesInfo,
     agentResultForCompletion: runtime.agentResultForCompletion,

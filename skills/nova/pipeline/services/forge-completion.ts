@@ -107,7 +107,7 @@ function normalizeForgeCompletionEnvelope(value: any, expected: any = {}) {
   if (selectTruthyValue(() => (selectTruthyValue(() => (!value), () => (typeof value !== 'object'))), () => (Array.isArray(value)))) {
     return { value, normalized: false, normalized_fields: [] };
   }
-  const expectedIdentity = normalizeExpectedIdentity(expected);
+  const expectedIdentity: Record<string, string | null> = normalizeExpectedIdentity(expected);
   const next = { ...value };
   const normalizedFields: any[] = [];
 
@@ -128,7 +128,7 @@ function normalizeForgeCompletionEnvelope(value: any, expected: any = {}) {
 
 function validateForgeCompletionIdentity(value: any, expected: any = {}) {
   const errors: any[] = [];
-  const expectedIdentity = normalizeExpectedIdentity(expected);
+  const expectedIdentity: Record<string, string | null> = normalizeExpectedIdentity(expected);
   for (const field of ['run_id', 'module_id', 'attempt']) {
     const expectedValue = expectedIdentity[field];
     if (!expectedValue) continue;

@@ -1,0 +1,33 @@
+export type RegistryErrorCode =
+  | 'REGISTRY_ROOT_INVALID'
+  | 'REGISTRY_MANIFEST_INVALID'
+  | 'REGISTRY_PACKAGE_DUPLICATE'
+  | 'REGISTRY_STAGE_OWNER_CONFLICT'
+  | 'REGISTRY_REGISTRATION_CONFLICT'
+  | 'REGISTRY_REGISTRATION_MISSING'
+  | 'REGISTRY_ADAPTER_PROVIDER_CONFLICT'
+  | 'REGISTRY_REFERENCE_FORBIDDEN'
+  | 'REGISTRY_REFERENCE_MISSING'
+  | 'REGISTRY_PACKAGE_UNTRUSTED'
+  | 'REGISTRY_EXECUTOR_INVALID'
+  | 'REGISTRY_ACTIVATION_FAILED'
+  | 'REGISTRY_CAPABILITY_FORBIDDEN'
+  | 'REGISTRY_CAPABILITY_UNKNOWN'
+  | 'REGISTRY_CAPABILITY_PROVIDER_INVALID'
+  | 'REGISTRY_CAPABILITY_PROVIDER_MISSING'
+  | 'REGISTRY_CAPABILITY_DENIED'
+  | 'REGISTRY_CAPABILITY_UNREQUESTED'
+  | 'REGISTRY_ADAPTER_CYCLE'
+  | 'REGISTRY_RESULT_INVALID';
+
+export class RegistryError extends Error {
+  readonly code: RegistryErrorCode;
+  readonly details: Readonly<Record<string, unknown>>;
+
+  constructor(code: RegistryErrorCode, message: string, details: Record<string, unknown> = {}) {
+    super(message);
+    this.name = 'RegistryError';
+    this.code = code;
+    this.details = Object.freeze({ ...details });
+  }
+}

@@ -74,7 +74,9 @@ export function buildSessionRateLimitExitResult(
   const resolved = exitBuildOptions(options);
   const status = resolveSessionRateLimitExhaustedStatus(result);
   if (!status) {
-    throw new Error("rate-limit status must be an object");
+    throw new Error(
+      "rate_limit_status is required for rate-limit exhaustion results",
+    );
   }
   if (typeof status !== "object") {
     throw new Error(

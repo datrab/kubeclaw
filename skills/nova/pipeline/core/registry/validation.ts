@@ -1,7 +1,5 @@
 import {
   PLUGIN_CONTRACT_VERSION,
-  PLUGIN_CONFIG_SCHEMA_TYPE,
-  PLUGIN_CONFIG_SCHEMA_VERSION,
   PLUGIN_KINDS,
   PLUGIN_ALLOWED_HOOK_FAMILIES,
   PLUGIN_HOOK_FAMILIES,
@@ -15,9 +13,13 @@ import {
   PLUGIN_SOURCE_TYPES,
 } from '../constants.ts';
 import { isPlainObject } from '../../services/validation.ts';
-import { cloneSerializable } from '../../services/serialization.ts';
 import { allKnownCapabilities } from './config-normalization.ts';
-import { createRegistryDictionary, isReservedRegistryKey } from './dictionary.ts';
+import { isReservedRegistryKey } from './dictionary.ts';
+import {
+  resolveModuleConfig,
+  validateManifestConfigSchema,
+} from './schema-validation.ts';
+export { resolveModuleConfig } from './schema-validation.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../../optional-absence.ts';
 type AnyRecord = Record<string, any>;
@@ -34,10 +36,6 @@ export const PLUGIN_METHOD_BY_KIND = Object.freeze({
 
 function pushError(errors: RegistryError[], code: string, message: string, details: AnyRecord = {}) {
   errors.push({ code, message, ...details });
-}
-
-function registryObject() {
-  return createRegistryDictionary();
 }
 
 function moduleLabel(manifest: AnyRecord): string {
@@ -80,120 +78,6 @@ function allowlistForModule(capabilityAllowlist: AnyRecord, manifest: AnyRecord,
     return new Set();
   }
   return new Set(configured);
-}
-
-function validateManifestConfigSchema(manifest: AnyRecord, errors: RegistryError[]) {
-  if (!isPlainObject(manifest.configSchema)) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' must declare an object configSchema envelope`);
-    return;
-  }
-  if (manifest.configSchema.schemaType !== PLUGIN_CONFIG_SCHEMA_TYPE) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' configSchema.schemaType must be '${PLUGIN_CONFIG_SCHEMA_TYPE}'`);
-  }
-  if (manifest.configSchema.schemaVersion !== PLUGIN_CONFIG_SCHEMA_VERSION) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' configSchema.schemaVersion must be '${PLUGIN_CONFIG_SCHEMA_VERSION}'`);
-  }
-  if (!isPlainObject(manifest.configSchema.schema)) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' configSchema.schema must be an object`);
-  } else if (manifest.configSchema.schema.type !== 'object') {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' configSchema.schema.type must be 'object'`);
-  }
-  if (manifest.configSchema.defaults !== undefined && !isPlainObject(manifest.configSchema.defaults)) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CONFIG_SCHEMA_INVALID, `Module '${manifest.moduleId}' configSchema.defaults must be an object when provided`);
-  }
-}
-
-function validateJsonSchemaValue(value: any, schema: any = {}, pathLabel: string, errors: RegistryError[]) {
-  if (!isPlainObject(schema)) return;
-
-  if (Array.isArray(schema.enum) && !schema.enum.some((entry: any) => Object.is(entry, value))) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be one of: ${schema.enum.map((entry: any) => JSON.stringify(entry)).join(', ')}`);
-    return;
-  }
-
-  switch (schema.type) {
-    case 'object': {
-      if (!isPlainObject(value)) {
-        pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be an object`);
-        return;
-      }
-      const properties = isPlainObject(schema.properties) ? schema.properties : createRegistryDictionary();
-      if (Array.isArray(schema.required)) {
-        for (const requiredKey of schema.required) {
-          if (typeof requiredKey !== 'string') continue;
-          if (!Object.prototype.hasOwnProperty.call(value, requiredKey)) {
-            pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel}.${requiredKey} is required`);
-          }
-        }
-      }
-      for (const [key, childValue] of Object.entries(value)) {
-        if (Object.prototype.hasOwnProperty.call(properties, key) && isPlainObject(properties[key])) {
-          validateJsonSchemaValue(childValue, properties[key], `${pathLabel}.${key}`, errors);
-          continue;
-        }
-        if (schema.additionalProperties === false) {
-          pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel}.${key} is not allowed by configSchema`);
-        } else if (isPlainObject(schema.additionalProperties)) {
-          validateJsonSchemaValue(childValue, schema.additionalProperties, `${pathLabel}.${key}`, errors);
-        }
-      }
-      return;
-    }
-    case 'array': {
-      if (!Array.isArray(value)) {
-        pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be an array`);
-        return;
-      }
-      if (isPlainObject(schema.items)) {
-        value.forEach((entry: any, index: number) => validateJsonSchemaValue(entry, schema.items, `${pathLabel}[${index}]`, errors));
-      }
-      return;
-    }
-    case 'string':
-      if (typeof value !== 'string') pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be a string`);
-      return;
-    case 'number':
-      if (selectTruthyValue(() => (typeof value !== 'number'), () => (!Number.isFinite(value)))) pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be a number`);
-      return;
-    case 'integer':
-      if (!Number.isInteger(value)) pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be an integer`);
-      return;
-    case 'boolean':
-      if (typeof value !== 'boolean') pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be a boolean`);
-      return;
-    case 'null':
-      if (value !== null) pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `${pathLabel} must be null`);
-      return;
-    default:
-      return;
-  }
-}
-
-export function resolveModuleConfig(moduleId: string, moduleConfig: any, manifest: AnyRecord, errors: RegistryError[]) {
-  const rawConfig = moduleConfig === undefined ? registryObject() : moduleConfig;
-  if (!isPlainObject(rawConfig)) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.modules.${moduleId}.config must be an object`);
-    return registryObject();
-  }
-  if (selectTruthyValue(() => (selectTruthyValue(() => (selectTruthyValue(() => (!isPlainObject(manifest.configSchema)), () => (manifest.configSchema.schemaType !== PLUGIN_CONFIG_SCHEMA_TYPE))), () => (manifest.configSchema.schemaVersion !== PLUGIN_CONFIG_SCHEMA_VERSION))), () => (!isPlainObject(manifest.configSchema.schema)))) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `Module '${moduleId}' cannot validate config because its configSchema is invalid`);
-    return registryObject();
-  }
-
-  const defaults = isPlainObject(manifest.configSchema.defaults)
-    ? cloneSerializable(manifest.configSchema.defaults)
-    : registryObject();
-  const clonedRawConfig = cloneSerializable(rawConfig);
-  if (!isPlainObject(clonedRawConfig)) {
-    pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MODULE_CONFIG_INVALID, `config.plugins.modules.${moduleId}.config could not be cloned into an object`);
-    return registryObject();
-  }
-  const resolved = {
-    ...defaults,
-    ...clonedRawConfig,
-  };
-  validateJsonSchemaValue(resolved, manifest.configSchema.schema, `config.plugins.modules.${moduleId}.config`, errors);
-  return resolved;
 }
 
 function validateGateTypes(manifest: AnyRecord, errors: RegistryError[]) {
@@ -242,49 +126,81 @@ export function validateCapabilities(manifest: AnyRecord, resolvedTrustTier: str
     return;
   }
 
-  const seen = new Set();
-  const knownCapabilities = allKnownCapabilities();
+  const seen = new Set<string>();
+  const knownCapabilities = allKnownCapabilities() as Set<string>;
   const forbiddenCapabilities = arrayForPolicyKind(PLUGIN_FORBIDDEN_CAPABILITIES as AnyRecord, manifest.kind, 'forbidden capabilities', manifest, errors);
   const requiredCapabilities = arrayForPolicyKind(PLUGIN_REQUIRED_CAPABILITIES as AnyRecord, manifest.kind, 'required capabilities', manifest, errors);
   const optionalCapabilities = arrayForPolicyKind(PLUGIN_OPTIONAL_CAPABILITIES as AnyRecord, manifest.kind, 'optional capabilities', manifest, errors);
-  if (selectTruthyValue(() => (selectTruthyValue(() => (!forbiddenCapabilities), () => (!requiredCapabilities))), () => (!optionalCapabilities))) return;
+  if (!forbiddenCapabilities || !requiredCapabilities || !optionalCapabilities) return;
+  validateDeclaredCapabilities(manifest, {
+    seen,
+    knownCapabilities,
+    forbiddenCapabilities,
+  }, errors);
+  validateRequiredCapabilities(manifest, requiredCapabilities, seen, errors);
+  if (resolvedTrustTier === 'restricted') {
+    validateRestrictedCapabilities(manifest, optionalCapabilities, seen, capabilityAllowlist, errors);
+  }
+}
+
+function validateDeclaredCapabilities(
+  manifest: AnyRecord,
+  policy: {
+    seen: Set<string>;
+    knownCapabilities: Set<string>;
+    forbiddenCapabilities: string[];
+  },
+  errors: RegistryError[],
+): void {
   for (const capability of manifest.capabilities) {
     if (selectTruthyValue(() => (typeof capability !== 'string'), () => (!capability.trim()))) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CAPABILITY_DECLARATION_INVALID, `Module '${manifest.moduleId}' declared an empty capability`);
       continue;
     }
-    if (seen.has(capability)) {
+    if (policy.seen.has(capability)) {
       pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_CAPABILITY_DECLARATION_INVALID, `Module '${manifest.moduleId}' declared duplicate capability '${capability}'`);
       continue;
     }
-    seen.add(capability);
-    if (!knownCapabilities.has(capability)) {
+    policy.seen.add(capability);
+    if (!policy.knownCapabilities.has(capability)) {
       pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_UNSUPPORTED, `Module '${manifest.moduleId}' declared unsupported capability '${capability}'`);
       continue;
     }
-    if (forbiddenCapabilities.includes(capability)) {
+    if (policy.forbiddenCapabilities.includes(capability)) {
       pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_FORBIDDEN_FOR_KIND, `Module '${manifest.moduleId}' kind '${manifest.kind}' cannot declare '${capability}'`);
       continue;
     }
   }
+}
 
+function validateRequiredCapabilities(
+  manifest: AnyRecord,
+  requiredCapabilities: string[],
+  seen: Set<string>,
+  errors: RegistryError[],
+): void {
   for (const required of requiredCapabilities) {
     if (!seen.has(required)) {
       pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_REQUIRED_MISSING, `Module '${manifest.moduleId}' must declare required capability '${required}'`);
     }
   }
+}
 
-  if (resolvedTrustTier === 'restricted') {
-    const allowlisted = allowlistForModule(capabilityAllowlist, manifest, errors);
-    for (const gated of optionalCapabilities) {
-      if (!seen.has(gated)) continue;
-      if (!allowlisted.has(gated)) {
-        pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_RESTRICTED_NOT_ALLOWLISTED, `Restricted module '${manifest.moduleId}' requested gated capability '${gated}' without allowlist approval`);
-      }
+function validateRestrictedCapabilities(
+  manifest: AnyRecord,
+  optionalCapabilities: string[],
+  seen: Set<string>,
+  capabilityAllowlist: AnyRecord,
+  errors: RegistryError[],
+): void {
+  const allowlisted = allowlistForModule(capabilityAllowlist, manifest, errors);
+  for (const gated of optionalCapabilities) {
+    if (seen.has(gated) && !allowlisted.has(gated)) {
+      pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_RESTRICTED_NOT_ALLOWLISTED, `Restricted module '${manifest.moduleId}' requested gated capability '${gated}' without allowlist approval`);
     }
-    if (seen.has('dispatch.worker_runtime')) {
-      pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_FORBIDDEN_FOR_TRUST_TIER, `Restricted module '${manifest.moduleId}' cannot declare 'dispatch.worker_runtime'`);
-    }
+  }
+  if (seen.has('dispatch.worker_runtime')) {
+    pushError(errors, PLUGIN_CAPABILITY_REJECTION_CODES.CAPABILITY_FORBIDDEN_FOR_TRUST_TIER, `Restricted module '${manifest.moduleId}' cannot declare 'dispatch.worker_runtime'`);
   }
 }
 
@@ -312,6 +228,15 @@ export function validateManifest(definition: AnyRecord, errors: RegistryError[])
     return false;
   }
 
+  validateManifestIdentity(manifest, errors);
+  validateManifestStageIds(manifest, errors);
+  validateManifestMetadata(manifest, errors);
+  validateGateTypes(manifest, errors);
+  validateManifestConfigSchema(manifest, errors);
+  return true;
+}
+
+function validateManifestIdentity(manifest: AnyRecord, errors: RegistryError[]): void {
   if (selectTruthyValue(() => (typeof manifest.moduleId !== 'string'), () => (!manifest.moduleId.trim()))) {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MANIFEST_INVALID, 'Discovered plugin definition is missing a non-empty moduleId');
   } else if (isReservedRegistryKey(manifest.moduleId)) {
@@ -329,6 +254,9 @@ export function validateManifest(definition: AnyRecord, errors: RegistryError[])
   if (PLUGIN_KINDS.has(manifest.kind) && !(PLUGIN_ALLOWED_HOOK_FAMILIES as AnyRecord)[manifest.kind]?.has(manifest.hookFamily)) {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_KIND_HOOK_MISMATCH, `Module '${moduleLabel(manifest)}' kind '${manifest.kind}' cannot use hookFamily '${manifest.hookFamily}'`);
   }
+}
+
+function validateManifestStageIds(manifest: AnyRecord, errors: RegistryError[]): void {
   if (selectTruthyValue(() => (!Array.isArray(manifest.stageIds)), () => (manifest.stageIds.length === 0))) {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_STAGE_ID_INVALID, `Module '${moduleLabel(manifest)}' must declare at least one stageId`);
   } else {
@@ -348,6 +276,9 @@ export function validateManifest(definition: AnyRecord, errors: RegistryError[])
       }
     }
   }
+}
+
+function validateManifestMetadata(manifest: AnyRecord, errors: RegistryError[]): void {
   if (!PLUGIN_SOURCE_TYPES.has(manifest.sourceType)) {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MANIFEST_INVALID, `Module '${moduleLabel(manifest)}' declared unsupported sourceType '${manifest.sourceType}'`);
   }
@@ -366,10 +297,6 @@ export function validateManifest(definition: AnyRecord, errors: RegistryError[])
   if (manifest.priority !== undefined && typeof manifest.priority !== 'number') {
     pushError(errors, PLUGIN_REJECTION_CODES.REGISTRY_MANIFEST_INVALID, `Module '${moduleLabel(manifest)}' priority must be a number`);
   }
-
-  validateGateTypes(manifest, errors);
-  validateManifestConfigSchema(manifest, errors);
-  return true;
 }
 
 export function validateImplementation(definition: AnyRecord, errors: RegistryError[]) {

@@ -1,10 +1,18 @@
 import { getRunId } from '../core/runtime.ts';
-import { PLUGIN_CONFIG_SCHEMA_ANY_OBJECT, PLUGIN_CONTRACT_VERSION } from '../core/constants.ts';
-import { discord, discordEmbeds } from '../integrations/discord.ts';
-import { appendStructuredEventMirror, recordObservabilityDegraded, recordObservabilityRestored } from './observability.ts';
-import { emitTelemetryStreamEvent } from './telemetry-stream.ts';
 import { deepClone } from './serialization.ts';
 import { canonicalExplicitRef, canonicalRef } from './contract-reference.ts';
+import {
+  isNotificationRecord as isRecord,
+  notificationRecord as recordOrEmpty,
+  optionalNotificationText as optionalText,
+  requiredNotificationText as requiredText,
+  firstNotificationText as firstText,
+} from './notification-values.ts';
+import {
+  getBuiltinNotificationPluginDefinitions as buildBuiltinNotificationPluginDefinitions,
+  observeDiscordNotification,
+} from './notification-observers.ts';
+export { observeDiscordNotification } from './notification-observers.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
@@ -18,61 +26,8 @@ const NOTIFICATION_HOOK_IDS: readonly string[] = Object.freeze([
   'gate.completed',
 ]);
 
-const NOTIFICATION_SINK_PRIORITIES: Record<string, number> = Object.freeze({
-  telemetry: 100,
-  structured_event_artifact: 200,
-  discord: 300,
-});
-function notificationSinkPriority(sinkId: string): number {
-  const priority = NOTIFICATION_SINK_PRIORITIES[sinkId];
-  if (typeof priority !== 'number') {
-    throw new Error(`Notification sink priority missing for '${sinkId}'`);
-  }
-  return priority;
-}
-function isRecord(value: unknown): value is UnknownRecord {
-  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
-}
-
-function recordOrEmpty(value: unknown): UnknownRecord {
-  return isRecord(value) ? value : {};
-}
-
 function cloneRecordOrEmpty(value: unknown): UnknownRecord {
   return deepClone(recordOrEmpty(value));
-}
-
-function optionalText(value: unknown): string | null {
-  if (selectTruthyValue(() => (value === undefined), () => (value === null))) return null;
-  const text = String(value).trim();
-  return text ? text : null;
-}
-
-function requiredText(value: unknown, label: string): string {
-  const text = optionalText(value);
-  if (!text) throw new Error(`${label}: required non-empty string`);
-  return text;
-}
-
-function firstText(...values: unknown[]): string | null {
-  for (const value of values) {
-    const text = optionalText(value);
-    if (text !== null) return text;
-  }
-  return null;
-}
-
-function eventPayload(input: UnknownRecord): UnknownRecord {
-  return recordOrEmpty(input?.event?.payload);
-}
-
-function canonicalNotificationEmitter(value: unknown): string {
-  return requiredText(value, 'notification.event.emitter');
-}
-
-async function readNotificationConfig(ctx: UnknownRecord = {}): Promise<UnknownRecord> {
-  if (typeof ctx?.coreRuntime?.readConfig === 'function') return ctx.coreRuntime.readConfig();
-  throw new Error('Notification plugin requires explicit coreRuntime config; public PluginContextV1 does not expose read.config()');
 }
 
 function normalizeNotificationIds(hookId: string, ctx: UnknownRecord = {}, envelope: UnknownRecord = {}): UnknownRecord {
@@ -213,38 +168,52 @@ export function validateNotificationEventInput(input: UnknownRecord = {}): strin
   if (!NOTIFICATION_HOOK_IDS.includes(hookId)) {
     errors.push(`notification hookId must be one of: ${NOTIFICATION_HOOK_IDS.join(', ')}`);
   }
-  if (selectTruthyValue(() => (!input?.ids?.stageId), () => (input.ids.stageId !== hookId))) {
+  validateNotificationIdentity(input, hookId, errors);
+  validateNotificationEnvelope(input, errors);
+  validateNotificationPresentation(input, errors);
+  return errors;
+}
+
+function validateNotificationIdentity(
+  input: UnknownRecord,
+  hookId: unknown,
+  errors: string[],
+): void {
+  if (!input?.ids?.stageId || input.ids.stageId !== hookId) {
     errors.push('notification stageId must match hookId');
   }
-  if (selectTruthyValue(() => (!input?.ids?.runId), () => (typeof input.ids.runId !== 'string'))) {
-    errors.push('notification ids.runId must be a non-empty string');
+  for (const [value, message] of [
+    [input?.ids?.runId, 'notification ids.runId must be a non-empty string'],
+    [input?.refs?.runRef, 'notification refs.runRef must be a non-empty string'],
+    [input?.refs?.primaryRef, 'notification refs.primaryRef must be a non-empty string'],
+  ]) {
+    if (!value || typeof value !== 'string') errors.push(message);
   }
-  if (selectTruthyValue(() => (!input?.refs?.runRef), () => (typeof input.refs.runRef !== 'string'))) {
-    errors.push('notification refs.runRef must be a non-empty string');
-  }
-  if (selectTruthyValue(() => (!input?.refs?.primaryRef), () => (typeof input.refs.primaryRef !== 'string'))) {
-    errors.push('notification refs.primaryRef must be a non-empty string');
-  }
-  if (selectTruthyValue(() => (!input?.occurredAt), () => (Number.isNaN(Date.parse(input.occurredAt))))) {
+}
+
+function validateNotificationEnvelope(input: UnknownRecord, errors: string[]): void {
+  if (!input?.occurredAt || Number.isNaN(Date.parse(input.occurredAt))) {
     errors.push('notification occurredAt must be an ISO-8601 timestamp');
   }
-  if (input?.event !== undefined && (selectTruthyValue(() => (typeof input.event !== 'object'), () => (Array.isArray(input.event))))) {
+  if (input.event !== undefined && !isRecord(input.event)) {
     errors.push('notification event must be an object when provided');
   }
-  if (input?.event && typeof input.event.type !== 'string') {
+  if (input.event && typeof input.event.type !== 'string') {
     errors.push('notification event.type must be a string when provided');
   }
-  if (input?.presentation !== undefined && (selectTruthyValue(() => (typeof input.presentation !== 'object'), () => (Array.isArray(input.presentation))))) {
+}
+
+function validateNotificationPresentation(input: UnknownRecord, errors: string[]): void {
+  if (input.presentation !== undefined && !isRecord(input.presentation)) {
     errors.push('notification presentation must be an object when provided');
   }
   if (input?.presentation?.discord !== undefined) {
-    if (selectTruthyValue(() => (typeof input.presentation.discord !== 'object'), () => (Array.isArray(input.presentation.discord)))) {
+    if (!isRecord(input.presentation.discord)) {
       errors.push('notification presentation.discord must be an object when provided');
     } else {
       errors.push(...validateDiscordOperatorPresentation(input.presentation.discord, recordOrEmpty(input.ids)));
     }
   }
-  return errors;
 }
 
 export function assertNotificationEventInput(input: UnknownRecord = {}): UnknownRecord {
@@ -255,150 +224,6 @@ export function assertNotificationEventInput(input: UnknownRecord = {}): Unknown
   return input;
 }
 
-async function observeTelemetryNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
-  const config = await readNotificationConfig(ctx);
-  const eventType = requiredText(firstText(input?.event?.type, input?.ids?.hookId), 'notification.event.type');
-  const payload = eventPayload(input);
-  const emitter = canonicalNotificationEmitter(input?.event?.emitter);
-  const result = await emitTelemetryStreamEvent(config, eventType, payload, {
-    emittedAt: input?.occurredAt,
-    emitter,
-    runId: input?.ids?.runId,
-  });
-  if (ctx?.notificationState) {
-    ctx.notificationState.telemetryResult = selectTruthyValue(() => (result), () => (null));
-    ctx.notificationState.telemetryEvent = selectTruthyValue(() => (result?.event), () => (null));
-  }
-  if (!result.ok && !result.skipped) {
-    const telemetryError = result?.error as Error | undefined;
-    await recordObservabilityDegraded({ config }, {
-      component: 'telemetry',
-      surface: 'redis_stream',
-      reason: 'redis_emit_failed',
-      detail: selectDefinedValue(() => (optionalText(telemetryError?.message)), () => ('redis_telemetry_error_message_missing')),
-      impacted_event_type: eventType,
-      stream_key: optionalText(result?.streamKey),
-    });
-    throw telemetrySinkFailureAuthority(telemetryError, eventType);
-  }
-
-  if (result.ok) {
-    await recordObservabilityRestored({ config }, {
-      component: 'telemetry',
-      surface: 'redis_stream',
-      reason: 'redis_emit_failed',
-      detail: 'redis telemetry emission restored',
-      impacted_event_type: eventType,
-      stream_key: selectTruthyValue(() => (result?.streamKey), () => (null)),
-    });
-  }
-}
-
-function telemetrySinkFailureAuthority(telemetryError: Error | undefined, eventType: string): Error {
-  if (telemetryError) return telemetryError;
-  return new Error(`telemetry sink failed for ${eventType}`);
-}
-
-async function observeStructuredEventNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
-  const config = await readNotificationConfig(ctx);
-  const eventType = requiredText(firstText(input?.event?.type, input?.ids?.hookId), 'notification.event.type');
-  const payload = eventPayload(input);
-  const telemetryEvent = selectDefinedValue(() => (ctx?.notificationState?.telemetryEvent), () => (null));
-  const ok = await appendStructuredEventMirror(config, eventType, {
-    ...(telemetryEvent?.seq == null ? {} : { seq: telemetryEvent.seq }),
-    ...payload,
-    ts: input?.occurredAt,
-    run_id: firstText(input?.ids?.runId, payload?.run_id),
-    project: requiredText(firstText(config?.project, payload?.project), 'notification.project'),
-    source: requiredText(payload?.source, 'notification.event.payload.source'),
-    emitter: canonicalNotificationEmitter(firstText(input?.event?.emitter, payload?.emitter)),
-  });
-  if (!ok) {
-    throw new Error(`structured event artifact sink failed for ${eventType}`);
-  }
-}
-
-export async function observeDiscordNotification(input: UnknownRecord, ctx: UnknownRecord = {}): Promise<void> {
-  const presentation = input?.presentation?.discord;
-  if (!presentation) return;
-  const config = await readNotificationConfig(ctx);
-  const correlation = {
-    run_id: selectTruthyValue(() => (input?.ids?.runId), () => (null)),
-    module_id: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
-    gate_id: selectTruthyValue(() => (input?.ids?.gateId), () => (null)),
-    gate_type: selectTruthyValue(() => (input?.ids?.gateType), () => (null)),
-    attempt: selectDefinedValue(() => (input?.ids?.attempt), () => (null)),
-  };
-  if (Array.isArray(presentation.embeds) && presentation.embeds.length) {
-    await discordEmbeds(config, presentation.embeds, { level: requiredText(presentation.level, 'notification.presentation.discord.level'), correlation });
-    return;
-  }
-  await discord(
-    config,
-    requiredText(presentation.level, 'notification.presentation.discord.level'),
-    requiredText(presentation.title, 'notification.presentation.discord.title'),
-    optionalText(presentation.description),
-    Array.isArray(presentation.fields) ? presentation.fields : [],
-    { correlation },
-  );
-}
-
-function sanitizeHookIdForModuleId(hookId: unknown): string {
-  return requiredText(hookId, 'notification.hookId').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-}
-
-function buildNotificationDefinition({ sinkId, hookId, displayName, description, defaultEnabled = true, capabilities = [], observe }: UnknownRecord): UnknownRecord {
-  const moduleSuffix = sanitizeHookIdForModuleId(hookId);
-  return {
-    manifest: {
-      moduleId: `builtin.notification.${sinkId}.${moduleSuffix}`,
-      contractVersion: PLUGIN_CONTRACT_VERSION,
-      kind: 'notification',
-      hookFamily: hookId,
-      stageIds: [hookId],
-      capabilities: ['read.state', 'emit.stream', ...capabilities],
-      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
-      sourceType: 'builtin',
-      trustTier: 'trusted',
-      displayName,
-      description,
-      defaultEnabled,
-      priority: notificationSinkPriority(sinkId),
-    },
-    implementation: { observe },
-  };
-}
-
 export function getBuiltinNotificationPluginDefinitions(): UnknownRecord[] {
-  const definitions: UnknownRecord[] = [];
-  for (const hookId of NOTIFICATION_HOOK_IDS) {
-    definitions.push(
-      buildNotificationDefinition({
-        sinkId: 'telemetry',
-        hookId,
-        displayName: `Built-in telemetry sink (${hookId})`,
-        description: 'Registry-driven Redis stream telemetry listener for canonical notification hooks.',
-        capabilities: ['emit.telemetry'],
-        observe: observeTelemetryNotification,
-      }),
-      buildNotificationDefinition({
-        sinkId: 'structured_event_artifact',
-        hookId,
-        displayName: `Built-in structured event artifact sink (${hookId})`,
-        description: 'Registry-driven pipeline.jsonl mirror listener for canonical notification hooks.',
-        capabilities: ['write.artifacts'],
-        observe: observeStructuredEventNotification,
-      }),
-      buildNotificationDefinition({
-        sinkId: 'discord',
-        hookId,
-        displayName: `Built-in Discord listener (${hookId})`,
-        description: 'Registry-driven Discord listener for canonical notification hooks. It only delivers when the hook envelope includes explicit Discord presentation metadata.',
-        defaultEnabled: true,
-        capabilities: ['write.artifacts', 'notify.operator'],
-        observe: observeDiscordNotification,
-      }),
-    );
-  }
-  return definitions;
+  return buildBuiltinNotificationPluginDefinitions(NOTIFICATION_HOOK_IDS);
 }

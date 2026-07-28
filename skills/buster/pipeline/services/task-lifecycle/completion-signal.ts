@@ -84,7 +84,7 @@ function logPublishedArtifacts(published: AnyRecord, logger: AnyRecord): void {
   });
 }
 
-export async function sendTaskCompletionSignal({
+export async function publishTaskCompletionSignal({
   payload,
   completionState,
   spawnedSubagent,

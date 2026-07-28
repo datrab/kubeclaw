@@ -56,6 +56,7 @@ export function main(argv: any = process.argv.slice(2)) {
     consultedContracts: values['consulted-contract'],
     implementationNotes: values['implementation-notes'],
   });
+  if (!values.context) throw new Error('Missing --context');
   publishAgentArtifact(values.context, payload);
 }
 

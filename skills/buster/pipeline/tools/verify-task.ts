@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { parseCliFlagValues } from '../cli-args.ts';
 import { getRepoRoot } from '../services/git-workflows.ts';
 import { errorMessage } from '../value-boundary.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import {
   buildSwarmScope,
   isGitPathInside,

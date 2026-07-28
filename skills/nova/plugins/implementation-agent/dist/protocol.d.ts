@@ -1,0 +1,21 @@
+export interface ImplementationInput {
+    readonly runId: string;
+    readonly moduleId: string;
+    readonly attempt: number;
+    readonly task: string;
+    readonly headBefore: string;
+}
+export interface ImplementationCompletion {
+    readonly status: 'ready_for_testing' | 'blocked';
+    readonly runId: string;
+    readonly moduleId: string;
+    readonly attempt: number;
+    readonly summary: string;
+    readonly changedPaths: readonly string[];
+    readonly checks: readonly {
+        readonly name: string;
+        readonly passed: boolean;
+    }[];
+}
+export declare function buildRequest(agent: string, input: ImplementationInput, helperPrompt?: string): Readonly<Record<string, unknown>>;
+export declare function parseCompletion(value: unknown, input: ImplementationInput): ImplementationCompletion;

@@ -1,0 +1,1027 @@
+{
+  "schemaVersion": "plugin-system-migration-units-v2",
+  "runtimeAuthority": "skills-role-bundles-v1",
+  "activationPolicy": "v1-remains-sole-active-runtime-until-all-required-units-pass-parity",
+  "surfaceDerivation": "inventory-files-exports-imports-effects-registrations-and-manifests",
+  "migrationStatuses": [
+    "baseline-retained",
+    "implementation-in-progress",
+    "parity-proven",
+    "cutover-complete"
+  ],
+  "units": [
+    {
+      "id": "foundation",
+      "roles": ["nova", "buster"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "core:pipeline-core-config",
+        "core:pipeline-core-execution",
+        "core:pipeline-core-state",
+        "core:pipeline-core-telemetry",
+        "core:pipeline-core-verification",
+        "plugin-sdk:pipeline-plugin-sdk",
+        "shared-library:kubeclaw.pipeline-primitives",
+        "shared-library:plugin-system-documentation"
+      ],
+      "discoveryHints": ["skills/common/pipeline", "skills/common/plugin-runtime/core", "skills/common/plugin-runtime/sdk"],
+      "targetPackages": [],
+      "replacementMappings": [
+        {
+          "id": "foundation-verification-to-core",
+          "legacyOwnerIds": ["core:pipeline-core-verification"],
+          "replacementOwnerIds": ["core:pipeline-core-execution"],
+          "status": "paired",
+          "rationale": "Verification orchestration becomes an execution-core responsibility while concrete checks remain independently owned evidence."
+        },
+        {
+          "id": "foundation-primitives-to-sdk",
+          "legacyOwnerIds": ["shared-library:kubeclaw.pipeline-primitives"],
+          "replacementOwnerIds": ["plugin-sdk:pipeline-plugin-sdk"],
+          "status": "paired",
+          "rationale": "Shared pipeline value contracts move to the public SDK contract surface."
+        },
+        {
+          "id": "core-config-to-v2-core-config",
+          "legacyOwnerIds": ["core:pipeline-core-config"],
+          "replacementOwnerIds": ["core:pipeline-core-config"],
+          "status": "paired",
+          "rationale": "Legacy configuration authority is replaced by the canonical v2 core configuration surface after exact parity evidence passes."
+        },
+        {
+          "id": "core-execution-to-v2-core-execution",
+          "legacyOwnerIds": ["core:pipeline-core-execution"],
+          "replacementOwnerIds": ["core:pipeline-core-execution"],
+          "status": "paired",
+          "rationale": "Legacy execution authority is replaced by the canonical v2 execution core after exact parity evidence passes."
+        },
+        {
+          "id": "core-state-to-v2-core-state",
+          "legacyOwnerIds": ["core:pipeline-core-state"],
+          "replacementOwnerIds": ["core:pipeline-core-state"],
+          "status": "paired",
+          "rationale": "Legacy state authority is replaced by the canonical v2 append-only state surface after exact parity evidence passes."
+        },
+        {
+          "id": "core-telemetry-to-v2-core-telemetry",
+          "legacyOwnerIds": ["core:pipeline-core-telemetry"],
+          "replacementOwnerIds": ["core:pipeline-core-telemetry"],
+          "status": "paired",
+          "rationale": "Legacy telemetry delivery is replaced by the canonical v2 lifecycle-event delivery surface after exact parity evidence passes."
+        },
+        {
+          "id": "plugin-sdk-to-v2-plugin-sdk",
+          "legacyOwnerIds": ["plugin-sdk:pipeline-plugin-sdk"],
+          "replacementOwnerIds": ["plugin-sdk:pipeline-plugin-sdk"],
+          "status": "paired",
+          "rationale": "Legacy plugin-facing contracts are replaced by the generated canonical v2 SDK after exact parity evidence passes."
+        },
+        {
+          "id": "plugin-system-docs-to-v2-docs",
+          "legacyOwnerIds": ["shared-library:plugin-system-documentation"],
+          "replacementOwnerIds": ["shared-library:plugin-system-documentation"],
+          "status": "paired",
+          "rationale": "Migration documentation is replaced in place by active v2 architecture and operator documentation only when its corresponding runtime cutovers complete."
+        }
+      ],
+      "parityBlockers": ["legacy and v2 core behavior are not yet paired at per-surface granularity"],
+      "scenarios": [
+        {
+          "id": "foundation-role-bundles",
+          "evidenceType": "replacement",
+          "level": "offline",
+          "path": "tests/verification/runtime/check-agent-skill-bundles.mjs",
+          "command": "node tests/verification/runtime/check-agent-skill-bundles.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "foundation-materialized-runtime",
+          "evidenceType": "replacement",
+          "level": "offline",
+          "path": "tests/verification/runtime/check-runtime-collisions.mjs",
+          "command": "node tests/verification/runtime/check-runtime-collisions.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "registry-and-legacy-bridges",
+      "roles": ["nova"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "core:pipeline-core-registry",
+        "delete:legacy-kind-schedulers",
+        "delete:legacy-plugin-bridges"
+      ],
+      "discoveryHints": ["skills/nova/pipeline/core/registry", "skills/nova/pipeline/runners"],
+      "targetPackages": [],
+      "replacementMappings": [
+        {
+          "id": "legacy-schedulers-to-registry",
+          "legacyOwnerIds": ["delete:legacy-kind-schedulers"],
+          "replacementOwnerIds": ["core:pipeline-core-registry"],
+          "status": "paired",
+          "rationale": "Generic registry registrations replace fixed-kind schedulers."
+        },
+        {
+          "id": "legacy-bridges-to-registry",
+          "legacyOwnerIds": ["delete:legacy-plugin-bridges"],
+          "replacementOwnerIds": ["core:pipeline-core-registry"],
+          "status": "paired",
+          "rationale": "Direct v2 discovery and activation replace compatibility bridges."
+        },
+        {
+          "id": "registry-to-v2-registry",
+          "legacyOwnerIds": ["core:pipeline-core-registry"],
+          "replacementOwnerIds": ["core:pipeline-core-registry"],
+          "status": "paired",
+          "rationale": "Legacy registry authority is replaced by inert discovery, frozen ownership, and transactional v2 activation after exact parity evidence passes."
+        }
+      ],
+      "parityBlockers": ["v2 registry consumers and legacy scheduler deletion are not implemented"],
+      "scenarios": [
+        {
+          "id": "registry-module-runner",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-module-runner-slice-surface.mjs",
+          "command": "node tests/verification/contracts/check-module-runner-slice-surface.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "registry-pipeline-runner",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-pipeline-runner-slice-surface.mjs",
+          "command": "node tests/verification/contracts/check-pipeline-runner-slice-surface.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "privileged-adapters",
+      "roles": ["nova", "buster"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "adapter:kubeclaw.artifacts",
+        "adapter:kubeclaw.command",
+        "adapter:kubeclaw.command-runner",
+        "adapter:kubeclaw.git",
+        "adapter:kubeclaw.git-workspace",
+        "adapter:kubeclaw.network-http",
+        "adapter:kubeclaw.operator-messaging",
+        "adapter:kubeclaw.redis",
+        "adapter:kubeclaw.runtime-dispatch",
+        "adapter:kubeclaw.secret-resolver",
+        "adapter:kubeclaw.state-store",
+        "adapter:kubeclaw.telemetry-store",
+        "adapter:kubeclaw.transport-publisher",
+        "adapter:kubeclaw.wait-store",
+        "plugin:kubeclaw.artifact-store"
+      ],
+      "discoveryHints": [
+        "skills/common/pipeline/integrations",
+        "skills/common/pipeline/redis-transport.ts",
+        "skills/nova/pipeline/integrations",
+        "skills/buster/pipeline/integrations"
+      ],
+      "targetPackages": [
+        "artifact-store",
+        "command-runner",
+        "git-workspace",
+        "network-http",
+        "operator-messaging",
+        "runtime-dispatch",
+        "secret-resolver",
+        "state-store",
+        "telemetry-store",
+        "transport-publisher",
+        "wait-store"
+      ],
+      "replacementMappings": [
+        {
+          "id": "artifacts-to-artifact-store",
+          "legacyOwnerIds": ["adapter:kubeclaw.artifacts"],
+          "replacementOwnerIds": ["plugin:kubeclaw.artifact-store"],
+          "status": "paired",
+          "rationale": "Artifact persistence moves to the canonical artifact-store adapter package."
+        },
+        {
+          "id": "operator-command-target-pending",
+          "legacyOwnerIds": ["adapter:kubeclaw.command"],
+          "replacementOwnerIds": [],
+          "status": "blocked",
+          "rationale": "The legacy surface is operator control-command validation, journaling, Redis consumption, and recovery; it is not subprocess execution and needs its own v2 owner."
+        },
+        {
+          "id": "command-runner-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.command-runner"],
+          "status": "new",
+          "rationale": "The bounded subprocess capability is new v2 foundation infrastructure; it does not claim to replace the unrelated legacy operator command lifecycle."
+        },
+        {
+          "id": "git-to-git-workspace",
+          "legacyOwnerIds": ["adapter:kubeclaw.git"],
+          "replacementOwnerIds": ["adapter:kubeclaw.git-workspace"],
+          "status": "paired",
+          "rationale": "Repository and worktree effects move to the git-workspace adapter."
+        },
+        {
+          "id": "redis-to-scoped-stores",
+          "legacyOwnerIds": ["adapter:kubeclaw.redis"],
+          "replacementOwnerIds": [
+            "adapter:kubeclaw.wait-store"
+          ],
+          "status": "paired",
+          "rationale": "The retained Redis wait subset is assigned to the candidate resource-scoped wait adapter; broader Redis transport parity remains blocked."
+        },
+        {
+          "id": "transport-publisher-http-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.transport-publisher"],
+          "status": "new",
+          "rationale": "Bounded target-scoped HTTP publication is new v2 foundation and does not claim Redis stream, queue, retry, or durable transport parity."
+        },
+        {
+          "id": "state-store-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.state-store"],
+          "status": "new",
+          "rationale": "The append-only plugin-state journal is new v2 foundation infrastructure and does not claim parity with the retained Redis transport or Nova status projections."
+        },
+        {
+          "id": "telemetry-store-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.telemetry-store"],
+          "status": "new",
+          "rationale": "The local append-only telemetry evidence journal is new v2 foundation and does not claim Redis stream, TTL, MAXLEN, or consumer-group parity."
+        },
+        {
+          "id": "network-http-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.network-http"],
+          "status": "new",
+          "rationale": "Bounded allowlisted HTTP is new generic v2 foundation and does not claim to replace agent dispatch, Discord presentation, or Redis transport."
+        },
+        {
+          "id": "secret-resolver-blocked",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.secret-resolver"],
+          "status": "new",
+          "rationale": "Secret resolution is new confidential v2 foundation; core invokes it transiently so values never enter durable effect requests, receipts, lifecycle events, or replay state."
+        },
+        {
+          "id": "legacy-operator-messaging-target-pending",
+          "legacyOwnerIds": ["adapter:kubeclaw.operator-messaging"],
+          "replacementOwnerIds": [],
+          "status": "blocked",
+          "rationale": "The retained Discord surface also owns presentation, compaction, gating, audit, rate-limit notices, and degraded/restored telemetry; the bounded operator.request transport alone is not its complete replacement."
+        },
+        {
+          "id": "operator-request-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["adapter:kubeclaw.operator-messaging"],
+          "status": "new",
+          "rationale": "Target-scoped operator.request delivery with confidential HMAC authentication is new v2 foundation and does not claim full legacy Discord presentation parity."
+        },
+        {
+          "id": "runtime-dispatch-to-v2-adapter",
+          "legacyOwnerIds": ["adapter:kubeclaw.runtime-dispatch"],
+          "replacementOwnerIds": ["adapter:kubeclaw.runtime-dispatch"],
+          "status": "paired",
+          "rationale": "Legacy runtime dispatch is replaced by its bounded v2 adapter after exact lifecycle and cancellation parity evidence passes."
+        }
+      ],
+      "parityBlockers": ["each privileged adapter still needs paired legacy and replacement behavioral tests"],
+      "scenarios": [
+        {
+          "id": "git-workspace-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "git-workspace",
+          "level": "live",
+          "path": "skills/common/plugins/git-workspace/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/git-workspace",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "artifact-store-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "artifact-store",
+          "level": "live",
+          "path": "skills/common/plugins/artifact-store/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/artifact-store",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "command-runner-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "command-runner",
+          "level": "live",
+          "path": "skills/common/plugins/command-runner/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/command-runner",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "state-store-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "state-store",
+          "level": "live",
+          "path": "skills/common/plugins/state-store/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/state-store",
+          "disposition": "new-v2-foundation",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "network-http-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "network-http",
+          "level": "live",
+          "path": "skills/common/plugins/network-http/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/network-http",
+          "disposition": "new-v2-foundation",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "telemetry-store-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "telemetry-store",
+          "level": "live",
+          "path": "skills/common/plugins/telemetry-store/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/telemetry-store",
+          "disposition": "new-v2-foundation",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "secret-resolver-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "secret-resolver",
+          "level": "live",
+          "path": "skills/common/plugins/secret-resolver/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/secret-resolver",
+          "disposition": "new-v2-foundation",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "operator-messaging-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "operator-messaging",
+          "level": "live",
+          "path": "skills/common/plugins/operator-messaging/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/operator-messaging",
+          "disposition": "new-v2-foundation",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "transport-publisher-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "transport-publisher",
+          "level": "live",
+          "path": "skills/common/plugins/transport-publisher/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/transport-publisher",
+          "disposition": "new-v2-foundation",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "adapters-git-worktree",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/common-git-worktree.test.mjs",
+          "command": "node --test tests/verification/common-git-worktree.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "adapters-live-redis",
+          "evidenceType": "live",
+          "level": "live",
+          "path": "tests/verification/live/redis-backend-smoke.mjs",
+          "command": "node tests/verification/live/redis-backend-smoke.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["cutover-complete"]
+        },
+        {
+          "id": "artifact-authority",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-artifact-authority-matrix-acceptance.mjs",
+          "command": "node tests/verification/contracts/check-artifact-authority-matrix-acceptance.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "artifact-real-evidence",
+          "evidenceType": "live",
+          "level": "live",
+          "path": "tests/verification/e2e/real-run-evidence.test.mjs",
+          "command": "node --test tests/verification/e2e/real-run-evidence.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "forge-and-implementation",
+      "roles": ["nova"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "plugin:kubeclaw.blueprint-sync",
+        "plugin:kubeclaw.forge",
+        "plugin:kubeclaw.implementation-agent",
+        "plugin:kubeclaw.repository-adapter"
+      ],
+      "discoveryHints": [
+        "skills/nova/pipeline/agents",
+        "skills/nova/pipeline/runners/module-runner",
+        "skills/nova/pipeline/services/polling-forge.ts"
+      ],
+      "targetPackages": [
+        "blueprint-sync",
+        "implementation-agent",
+        "repository-adapter"
+      ],
+      "replacementMappings": [
+        {
+          "id": "forge-to-implementation-runtime",
+          "legacyOwnerIds": ["plugin:kubeclaw.forge"],
+          "replacementOwnerIds": [
+            "plugin:kubeclaw.implementation-agent",
+            "plugin:kubeclaw.repository-adapter"
+          ],
+          "status": "paired",
+          "rationale": "Forge behavior is divided between the implementation stage and repository adapter."
+        },
+        {
+          "id": "blueprint-sync-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.blueprint-sync"],
+          "replacementOwnerIds": ["plugin:kubeclaw.blueprint-sync"],
+          "status": "paired",
+          "rationale": "Legacy blueprint synchronization is replaced by the self-contained v2 blueprint-sync stage after exact parity evidence passes."
+        }
+      ],
+      "parityBlockers": ["Forge and implementation plugins do not yet contain the complete legacy behavior or replacement tests"],
+      "scenarios": [
+        {
+          "id": "repository-adapter-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "repository-adapter",
+          "level": "live",
+          "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/nova/plugins/repository-adapter",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "forge-agent-tests",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/skills/nova/pipeline/agents",
+          "command": "node --test $(find tests/skills/nova/pipeline/agents -type f -name '*.test.mjs' -print | sort)",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "forge-real-workspace",
+          "evidenceType": "live",
+          "level": "live",
+          "path": "tests/verification/e2e/real-run-workspace.test.mjs",
+          "command": "node --test tests/verification/e2e/real-run-workspace.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "validation-and-lint",
+      "roles": ["nova"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "delete:legacy-mixed-validation-contract",
+        "delete:legacy-mixed-validator-facade",
+        "plugin:kubeclaw.architecture-validator",
+        "plugin:kubeclaw.delivery-lint",
+        "plugin:kubeclaw.lint",
+        "plugin:kubeclaw.preflight-contract"
+      ],
+      "discoveryHints": [
+        "skills/nova/pipeline/services/validation-delivery.ts",
+        "skills/nova/pipeline/tools/lint-report.ts",
+        "skills/nova/pipeline/services/arch-validator.ts"
+      ],
+      "targetPackages": [
+        "architecture-validator",
+        "delivery-lint",
+        "lint",
+        "preflight-contract"
+      ],
+      "replacementMappings": [
+        {
+          "id": "mixed-validation-contract-to-stages",
+          "legacyOwnerIds": ["delete:legacy-mixed-validation-contract"],
+          "replacementOwnerIds": [
+            "plugin:kubeclaw.delivery-lint",
+            "plugin:kubeclaw.lint",
+            "plugin:kubeclaw.preflight-contract"
+          ],
+          "status": "paired",
+          "rationale": "The mixed validation result contract is replaced by closed results on cohesive stages."
+        },
+        {
+          "id": "mixed-validator-facade-to-stages",
+          "legacyOwnerIds": ["delete:legacy-mixed-validator-facade"],
+          "replacementOwnerIds": [
+            "plugin:kubeclaw.architecture-validator",
+            "plugin:kubeclaw.delivery-lint",
+            "plugin:kubeclaw.lint",
+            "plugin:kubeclaw.preflight-contract"
+          ],
+          "status": "paired",
+          "rationale": "The mixed validator facade is split across independently registered validation stages."
+        },
+        {
+          "id": "architecture-validator-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.architecture-validator"],
+          "replacementOwnerIds": ["plugin:kubeclaw.architecture-validator"],
+          "status": "paired",
+          "rationale": "Legacy architecture validation is replaced by the self-contained v2 architecture-validator stage after exact parity evidence passes."
+        },
+        {
+          "id": "delivery-lint-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.delivery-lint"],
+          "replacementOwnerIds": ["plugin:kubeclaw.delivery-lint"],
+          "status": "paired",
+          "rationale": "Legacy delivery lint is replaced by the self-contained v2 delivery-lint stage after its package-local parity evidence passes."
+        },
+        {
+          "id": "lint-to-v2-stages",
+          "legacyOwnerIds": ["plugin:kubeclaw.lint"],
+          "replacementOwnerIds": ["plugin:kubeclaw.lint"],
+          "status": "paired",
+          "rationale": "Legacy pre-check and full lint behavior is replaced by the independently registered v2 lint stages after exact parity evidence passes."
+        },
+        {
+          "id": "preflight-contract-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.preflight-contract"],
+          "replacementOwnerIds": ["plugin:kubeclaw.preflight-contract"],
+          "status": "paired",
+          "rationale": "Legacy preflight contract validation is replaced by the self-contained v2 preflight stage after exact parity evidence passes."
+        }
+      ],
+      "parityBlockers": ["architecture target package lacks complete paired behavioral tests"],
+      "scenarios": [
+        {
+          "id": "validation-control-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-validator-control-result-surface.mjs",
+          "command": "node tests/verification/contracts/check-validator-control-result-surface.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "delivery-lint-replacement",
+          "evidenceType": "replacement",
+          "targetPackage": "delivery-lint",
+          "level": "live",
+          "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/nova/plugins/delivery-lint",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "lint-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "lint",
+          "level": "live",
+          "path": "skills/nova/plugins/lint/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/nova/plugins/lint",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "preflight-contract-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "preflight-contract",
+          "level": "live",
+          "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/nova/plugins/preflight-contract",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "review-approval-and-reporting",
+      "roles": ["nova"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "plugin:kubeclaw.case-study",
+        "plugin:kubeclaw.human-approval",
+        "plugin:kubeclaw.pipeline-review",
+        "plugin:kubeclaw.project-summary",
+        "plugin:kubeclaw.review"
+      ],
+      "discoveryHints": [
+        "skills/nova/pipeline/runners/approval-gate-runner.ts",
+        "skills/nova/pipeline/runners/review-gate-runner.ts",
+        "skills/nova/pipeline/tools/project-summary.ts"
+      ],
+      "targetPackages": [
+        "case-study",
+        "human-approval",
+        "pipeline-review",
+        "project-summary",
+        "review"
+      ],
+      "replacementMappings": [
+        {
+          "id": "case-study-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.case-study"],
+          "replacementOwnerIds": ["plugin:kubeclaw.case-study"],
+          "status": "paired",
+          "rationale": "Legacy case-study generation is replaced by the self-contained v2 case-study stage after exact parity evidence passes."
+        },
+        {
+          "id": "human-approval-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.human-approval"],
+          "replacementOwnerIds": ["plugin:kubeclaw.human-approval"],
+          "status": "paired",
+          "rationale": "Legacy human approval is replaced by the durable-wait v2 approval stage after exact signal and timeout parity evidence passes."
+        },
+        {
+          "id": "pipeline-review-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.pipeline-review"],
+          "replacementOwnerIds": ["plugin:kubeclaw.pipeline-review"],
+          "status": "paired",
+          "rationale": "Legacy pipeline review is replaced by the self-contained v2 pipeline-review stage after exact parity evidence passes."
+        },
+        {
+          "id": "project-summary-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.project-summary"],
+          "replacementOwnerIds": ["plugin:kubeclaw.project-summary"],
+          "status": "paired",
+          "rationale": "Legacy project summary generation is replaced by the self-contained v2 project-summary stage after exact artifact parity evidence passes."
+        },
+        {
+          "id": "review-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.review"],
+          "replacementOwnerIds": ["plugin:kubeclaw.review"],
+          "status": "paired",
+          "rationale": "Legacy module review is replaced by the self-contained v2 review stage after exact remediation and verdict parity evidence passes."
+        }
+      ],
+      "parityBlockers": ["review, approval, and reporting target packages lack complete paired behavioral tests"],
+      "scenarios": [
+        {
+          "id": "review-gate-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-gate-control-result-surface.mjs",
+          "command": "node tests/verification/contracts/check-gate-control-result-surface.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "review-real-evidence",
+          "evidenceType": "live",
+          "level": "live",
+          "path": "tests/verification/e2e/real-run-evidence.test.mjs",
+          "command": "node --test tests/verification/e2e/real-run-evidence.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["cutover-complete"]
+        },
+        {
+          "id": "review-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "review",
+          "level": "live",
+          "path": "skills/nova/plugins/review/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/nova/plugins/review",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "human-approval-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "human-approval",
+          "level": "live",
+          "path": "skills/nova/plugins/human-approval/tests/live-function.test.mjs",
+          "command": "npm test --prefix skills/nova/plugins/human-approval",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "buster-worker-and-suites",
+      "roles": ["buster"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "plugin:kubeclaw.buster-quality-gate",
+        "plugin:kubeclaw.buster-worker",
+        "plugin:kubeclaw.test-agent"
+      ],
+      "discoveryHints": [
+        "skills/buster/buster-pipeline.ts",
+        "skills/buster/pipeline/services",
+        "skills/buster/pipeline/suites"
+      ],
+      "targetPackages": [
+        "buster-quality-gate",
+        "test-agent"
+      ],
+      "replacementMappings": [
+        {
+          "id": "buster-worker-to-stage-packages",
+          "legacyOwnerIds": ["plugin:kubeclaw.buster-worker"],
+          "replacementOwnerIds": [
+            "plugin:kubeclaw.buster-quality-gate",
+            "plugin:kubeclaw.test-agent"
+          ],
+          "status": "paired",
+          "rationale": "The Buster worker is decomposed into test execution and quality-gate stages."
+        },
+        {
+          "id": "buster-quality-gate-to-v2-stage",
+          "legacyOwnerIds": ["plugin:kubeclaw.buster-quality-gate"],
+          "replacementOwnerIds": ["plugin:kubeclaw.buster-quality-gate"],
+          "status": "paired",
+          "rationale": "Legacy Buster quality-gate behavior is replaced by the self-contained v2 quality-gate stage after exact verdict parity evidence passes."
+        }
+      ],
+      "parityBlockers": ["Buster target packages do not yet contain the complete suite implementation or replacement tests"],
+      "scenarios": [
+        {
+          "id": "buster-legacy-suite",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/skills/buster",
+          "command": "node --test $(find tests/skills/buster -type f -name '*.test.mjs' -print | sort)",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "buster-simulator",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/e2e/buster-simulator.test.mjs",
+          "command": "node --test tests/verification/e2e/buster-simulator.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "buster-production-smoke",
+          "evidenceType": "live",
+          "level": "live",
+          "path": "tests/verification/live/buster-infra-production-smoke.test.mjs",
+          "command": "node tests/verification/live/buster-infra-production-smoke.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "observability-and-notifications",
+      "roles": ["nova", "buster"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "adapter:kubeclaw.openclaw-agent-events",
+        "delete:legacy-notification-registry-contract",
+        "delete:legacy-telemetry-registry-contract",
+        "plugin:kubeclaw.agent-observability",
+        "plugin:kubeclaw.agent-observability-evidence",
+        "plugin:kubeclaw.agent-observability-ingester",
+        "plugin:kubeclaw.notification-observer",
+        "plugin:kubeclaw.notifications",
+        "plugin:kubeclaw.openclaw-agent-observer",
+        "plugin:kubeclaw.telemetry-observer",
+        "plugin:kubeclaw.telemetry-observers",
+        "shared-library:kubeclaw.agent-observability-contract",
+        "shared-library:kubeclaw.telemetry-contract"
+      ],
+      "discoveryHints": [
+        "contracts/agent-observability",
+        "contracts/telemetry",
+        "skills/nova/pipeline/services/agent-observability-ingester",
+        "skills/common/pipeline/telemetry.ts"
+      ],
+      "targetPackages": [
+        "agent-observability",
+        "notification-observer",
+        "telemetry-observer"
+      ],
+      "targetExtensions": ["openclaw-agent-observer"],
+      "replacementMappings": [
+        {
+          "id": "notification-registry-to-observer",
+          "legacyOwnerIds": [
+            "delete:legacy-notification-registry-contract",
+            "plugin:kubeclaw.notifications"
+          ],
+          "replacementOwnerIds": ["plugin:kubeclaw.notification-observer"],
+          "status": "paired",
+          "rationale": "Notification registry and delivery behavior move to the notification observer."
+        },
+        {
+          "id": "telemetry-registry-to-observer",
+          "legacyOwnerIds": [
+            "delete:legacy-telemetry-registry-contract",
+            "plugin:kubeclaw.telemetry-observers",
+            "shared-library:kubeclaw.telemetry-contract"
+          ],
+          "replacementOwnerIds": ["plugin:kubeclaw.telemetry-observer"],
+          "status": "paired",
+          "rationale": "Telemetry registration and delivery move to the telemetry observer contract."
+        },
+        {
+          "id": "agent-observability-to-packages",
+          "legacyOwnerIds": [
+            "plugin:kubeclaw.agent-observability-evidence",
+            "plugin:kubeclaw.agent-observability-ingester",
+            "plugin:kubeclaw.openclaw-agent-observer",
+            "shared-library:kubeclaw.agent-observability-contract"
+          ],
+          "replacementOwnerIds": [
+            "adapter:kubeclaw.openclaw-agent-events",
+            "plugin:kubeclaw.agent-observability"
+          ],
+          "status": "paired",
+          "rationale": "Agent-event ingestion and evidence projection move to the event adapter and observer package."
+        }
+      ],
+      "parityBlockers": ["observer and notification replacement behavior lacks complete paired delivery/checkpoint tests"],
+      "scenarios": [
+        {
+          "id": "telemetry-observer-replacement-contract",
+          "evidenceType": "replacement",
+          "targetPackage": "telemetry-observer",
+          "level": "offline",
+          "path": "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+          "command": "npm test --prefix skills/common/plugins/telemetry-observer",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "agent-observability-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-agent-observability-contract.mjs",
+          "command": "node tests/verification/contracts/check-agent-observability-contract.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "observability-p0-contracts",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/contracts/check-observability-p0-contracts.mjs",
+          "command": "node tests/verification/contracts/check-observability-p0-contracts.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        }
+      ]
+    },
+    {
+      "id": "prompt-library",
+      "roles": ["nova", "buster"],
+      "status": "baseline-retained",
+      "evidenceRecord": null,
+      "targetOwnerIds": [
+        "shared-library:kubeclaw.prompt-primitives"
+      ],
+      "discoveryHints": [
+        "skills/nova/pipeline/prompts",
+        "skills/buster/pipeline/services/task-lifecycle/prompt.ts"
+      ],
+      "targetPackages": [],
+      "replacementMappings": [
+        {
+          "id": "prompt-library-target-pending",
+          "legacyOwnerIds": ["shared-library:kubeclaw.prompt-primitives"],
+          "replacementOwnerIds": [],
+          "status": "blocked",
+          "rationale": "No independently testable v2 prompt-library target exists yet."
+        }
+      ],
+      "parityBlockers": ["prompt ownership has no independently testable v2 target surface yet"],
+      "scenarios": [
+        {
+          "id": "prompt-real-pipeline-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
+          "command": "node --test tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        }
+      ]
+    }
+  ],
+  "parityGates": [
+    {
+      "id": "inventory",
+      "level": "offline",
+      "command": "npm run plugin-system:inventory:check",
+      "requiredBefore": ["implementation-in-progress", "parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "role-bundles",
+      "level": "offline",
+      "command": "node tests/verification/runtime/check-agent-skill-bundles.mjs",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "materialized-runtime",
+      "level": "offline",
+      "command": "node tests/verification/runtime/check-runtime-collisions.mjs",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "source-contracts",
+      "level": "offline",
+      "command": "npm run verify:contracts",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "unit-integration",
+      "level": "offline",
+      "command": "npm run verify:skills:all && npm run verify:pipeline",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "e2e-contract-tests",
+      "level": "offline",
+      "command": "node --test tests/verification/e2e/*.test.mjs",
+      "requiredBefore": ["cutover-complete"]
+    },
+    {
+      "id": "documentation",
+      "level": "offline",
+      "command": "npm run docs:check",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "deployment",
+      "level": "offline",
+      "command": "node tests/verification/deployment/check-deployment-truth.mjs",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "helm",
+      "level": "offline",
+      "command": "helm lint charts/kubeclaw -f my-values/nova-values.yaml && helm lint charts/kubeclaw -f my-values/buster-values.yaml",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "security-audit",
+      "level": "offline",
+      "command": "npm audit --audit-level=high",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "repository-hygiene",
+      "level": "offline",
+      "command": "git diff --check",
+      "requiredBefore": ["parity-proven", "cutover-complete"]
+    },
+    {
+      "id": "real-e2e-fast",
+      "level": "live",
+      "command": "node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode fast",
+      "requiredBefore": ["cutover-complete"]
+    },
+    {
+      "id": "real-e2e-full",
+      "level": "live",
+      "command": "node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full",
+      "requiredBefore": ["cutover-complete"]
+    },
+    {
+      "id": "failure-matrix",
+      "level": "live",
+      "command": "node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs --mode full --continue-on-failure",
+      "requiredBefore": ["cutover-complete"]
+    },
+    {
+      "id": "legacy-absence",
+      "level": "offline",
+      "command": "node tests/verification/contracts/check-plugin-system-legacy-absence.mjs",
+      "requiredBefore": ["cutover-complete"]
+    }
+  ]
+}

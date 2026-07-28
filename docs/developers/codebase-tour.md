@@ -30,7 +30,7 @@ The Helm chart under `charts/kubeclaw/` controls pod shape. `my-values/` provide
 - Nova lifecycle/state: use `skills/nova/pipeline/services/status-store.ts`, `services/status-store-lifecycle/**`, and `services/artifact-bundle.ts`; do not make Redis or Discord the scheduler authority.
 - Module/gate execution: use `skills/nova/pipeline/runners/module-runner.ts`, `buster-gate-runner.ts`, `review-gate-runner.ts`, and `approval-gate-runner.ts`.
 - Buster worker runtime: use `skills/buster/buster-pipeline.ts`, `pipeline/services/task-queue.ts`, `task-validation.ts`, `task-completion.ts`, and `pipeline/runners/suite-runner.ts`.
-- Observability: use `skills/nova/pipeline/services/telemetry*.ts` for pipeline events and `plugins/openclaw-agent-observer/src/**` for OpenClaw hook ingestion.
+- Observability: use `skills/nova/pipeline/services/telemetry*.ts` for pipeline events and `skills/common/plugins/openclaw-agent-observer/src/**` for OpenClaw hook ingestion.
 - Deployment shape: use `charts/kubeclaw/templates/deployment.yaml`, `pvc.yaml`, `configmap-swarm-config.yaml`, `my-values/nova-values.yaml`, `my-values/buster-values.yaml`, and `my-values/infra/network-policies.yaml`.
 
 Before extending one of these areas, find the matching verification surface. Common anchors are `tests/skills/nova/pipeline/core/config-plugin-registry.test.mjs`, `tests/skills/nova/pipeline/core/path-segments.test.mjs`, `tests/verification/contracts/check-status-store-slice-surface.mjs`, `tests/verification/contracts/check-buster-pipeline-slice-surface.mjs`, `tests/verification/contracts/check-telemetry-contract.mjs`, and `tests/verification/deployment/check-deployment-truth.mjs`.

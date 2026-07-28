@@ -24,7 +24,10 @@ const busterRedisToolPath = path.join(sourceRoot, 'skills/buster/pipeline/tools/
 const completionAdjudicatorPath = path.join(sourceRoot, 'skills/nova/pipeline/services/completion-adjudicator.ts');
 
 const redisToolSource = fs.readFileSync(redisToolPath, 'utf8');
-const completionServiceSource = fs.readFileSync(completionServicePath, 'utf8');
+const completionServiceSource = [
+  fs.readFileSync(completionServicePath, 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/nova/pipeline/services/redis-completion-stream.ts'), 'utf8'),
+].join('\n');
 const commonRedisContractSource = fs.readFileSync(commonRedisContractPath, 'utf8');
 const commonTaskTransportContractSource = fs.readFileSync(commonTaskTransportContractPath, 'utf8');
 const novaRedisContractShimSource = fs.readFileSync(novaRedisContractShimPath, 'utf8');

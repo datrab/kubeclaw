@@ -17,8 +17,14 @@ function countDynamicImports(source) {
 
 const { sourceRoot } = parseSourceRootArgs();
 
-const notificationSource = readSource(sourceRoot, 'skills/nova/pipeline/services/notification-contract.ts');
-const orchestrationSource = readSource(sourceRoot, 'skills/nova/pipeline/agents/orchestration.ts');
+const notificationSource = [
+  'skills/nova/pipeline/services/notification-contract.ts',
+  'skills/nova/pipeline/services/notification-observers.ts',
+].map((relativePath) => readSource(sourceRoot, relativePath)).join('\n');
+const orchestrationSource = [
+  'skills/nova/pipeline/agents/orchestration.ts',
+  'skills/nova/pipeline/agents/orchestration-buster-payload.ts',
+].map((relativePath) => readSource(sourceRoot, relativePath)).join('\n');
 const pollingRedisCompletionSource = readSource(sourceRoot, 'skills/nova/pipeline/services/polling-redis-completion.ts');
 const summarySource = [
   'skills/nova/pipeline/services/summary.ts',
@@ -30,7 +36,10 @@ const observabilitySource = [
   'skills/nova/pipeline/services/observability.ts',
   'skills/nova/pipeline/services/observability-usage.ts',
 ].map((relativePath) => readSource(sourceRoot, relativePath)).join('\n');
-const acpMonitorSource = readSource(sourceRoot, 'skills/common/pipeline/agents/acp-monitor.ts');
+const acpMonitorSource = [
+  'skills/common/pipeline/agents/acp-monitor.ts',
+  'skills/common/pipeline/agents/acp-monitor-state.ts',
+].map((relativePath) => readSource(sourceRoot, relativePath)).join('\n');
 const lifecycleSource = readSource(sourceRoot, 'skills/common/pipeline/agents/lifecycle.ts');
 const busterRedisSource = readSource(sourceRoot, 'skills/buster/pipeline/tools/redis.ts');
 

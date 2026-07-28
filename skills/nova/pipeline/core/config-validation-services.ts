@@ -3,7 +3,13 @@ import type { AnyRecord } from './config-validation-values.ts';
 
 function validateGateway(config: AnyRecord, validation: ConfigValidation) {
   const gateway = validation.object(config, 'gateway', 'config.gateway');
-  if (!gateway.invoke || typeof gateway.invoke !== 'object' || Array.isArray(gateway.invoke)) {
+  if (!gateway.invoke) {
+    validation.errors.push('config.gateway.invoke: required platform config object');
+    gateway.invoke = {};
+  } else if (typeof gateway.invoke !== 'object') {
+    validation.errors.push('config.gateway.invoke: required platform config object');
+    gateway.invoke = {};
+  } else if (Array.isArray(gateway.invoke)) {
     validation.errors.push('config.gateway.invoke: required platform config object');
     gateway.invoke = {};
   }
@@ -118,9 +124,6 @@ function validatePluginsAndMonitor(config: AnyRecord, validation: ConfigValidati
   validation.boolean(telemetry.enabled, 'config.telemetry.enabled');
   validation.number(telemetry, 'stream_max_len', 'config.telemetry.stream_max_len', { allowZero: false });
   validation.number(telemetry, 'sink_timeout_ms', 'config.telemetry.sink_timeout_ms', { allowZero: false });
-  if (telemetry.stream_key !== undefined) {
-    validation.errors.push('config.telemetry stream_key: removed; use config.telemetry.enabled and canonical run-scoped stream names');
-  }
 }
 
 export function validateServiceConfig(config: AnyRecord, validation: ConfigValidation) {

@@ -1,4 +1,3 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
 import { getActiveContext } from './logger.ts';
 import { sanitizeJsonEgress } from '../egress.ts';
@@ -36,7 +35,7 @@ export function createRunStats(startedAt: any = new Date().toISOString()) {
 }
 
 export function bindRunContext(config: Record<string, any> | null, ctx: RunContextLike | null) {
-  if (selectTruthyValue(() => (!config), () => (!ctx))) return ctx;
+  if (!config || !ctx) return ctx;
   config._runId = ctx.runId;
   config.run_id = ctx.runId;
   config._runStats = ctx.stats;

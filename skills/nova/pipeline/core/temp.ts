@@ -1,8 +1,5 @@
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import os from 'os';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 import { assertSafePathSegment } from './paths.ts';
 
@@ -20,6 +17,7 @@ export function createTempManager() {
     },
     file(prefix: string, moduleId: any = '', ext: any = '.tmp') {
       if (!_dir) manager.init();
+      if (!_dir) throw new Error('temporary directory initialization failed');
       const safePrefix = assertSafePathSegment(prefix, 'temp file prefix');
       const safeModuleId = assertSafePathSegment(moduleId, 'temp file module id', { allowEmpty: true });
       const safeExt = assertSafePathSegment(ext, 'temp file extension', { allowEmpty: true });

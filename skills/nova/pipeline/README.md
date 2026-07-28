@@ -65,7 +65,7 @@ helpers from their owned modules.
 
 ```js
 import { runPipeline, loadConfig, STATUS } from './pipeline/index.ts';
-import { createRunId, createRunStats } from './pipeline/core/runtime.ts';
+import { createRunId, createRunStats } from './skills/common/plugin-runtime/core/runtime.ts';
 import { pollGeneric } from './pipeline/services/polling.ts';
 ```
 

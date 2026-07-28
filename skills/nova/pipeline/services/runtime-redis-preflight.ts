@@ -83,7 +83,7 @@ async function preflightSurface(
     maxRetriesPerRequest: 1,
     retryStrategy: null,
     connectTimeout: surface.timeoutMs,
-  }, env);
+  }, env) as AnyRecord;
   let lastRedisError: unknown = null;
   const onRedisError = (error: unknown) => {
     lastRedisError = error;

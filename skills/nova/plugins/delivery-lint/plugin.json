@@ -1,0 +1,22 @@
+{
+  "id": "kubeclaw.delivery-lint",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "delivery-lint",
+      "type": "kubeclaw.lint.delivery",
+      "module": "dist/stage.js",
+      "export": "execute",
+      "requiredCapabilities": [
+        "git.repository.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

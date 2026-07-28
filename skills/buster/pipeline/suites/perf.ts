@@ -27,7 +27,7 @@ import {
   suiteObject as objectRecord,
   suiteObjectOrEmpty as objectRecordOrEmpty,
 } from './support.ts';
-import { readBusterEnvironment } from '../runtime-environment.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;

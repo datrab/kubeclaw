@@ -100,12 +100,17 @@ function controlContext(config: any, result: any, options: any) {
 export function buildArchitectureValidatorControlResult(config: any, result: any = {}, options: any = {}) {
   const context = controlContext(config, result, options);
   const metadata = controlMetadata(config, result, options, context);
+  const issueType = context.executionFailed
+    ? 'contract'
+    : context.contractInvalid
+      ? 'contract'
+      : 'code';
   return {
     schemaVersion: 'v1',
     producerKind: 'validator',
     producerType: context.validatorName,
     nextAction: context.blocked ? 'block' : 'pass',
-    ...(context.blocked ? { issueType: context.executionFailed || context.contractInvalid ? 'contract' : 'code' } : {}),
+    ...(context.blocked ? { issueType } : {}),
     diagnostics: {
       summary: context.summary,
       findings: context.findings.map(findingDiagnostic),

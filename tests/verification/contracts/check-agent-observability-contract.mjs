@@ -15,7 +15,7 @@ assert.equal(busterShim.AGENT_OBSERVABILITY_CONTROL_STREAM, contract.AGENT_OBSER
 assert.deepEqual([...novaShim.AGENT_OBSERVABILITY_HOOKS], [...contract.AGENT_OBSERVABILITY_HOOKS]);
 assert.deepEqual([...busterShim.AGENT_OBSERVABILITY_HOOKS], [...contract.AGENT_OBSERVABILITY_HOOKS]);
 assert.equal(
-  fs.readdirSync(path.join(sourceRoot, 'plugins/openclaw-agent-observer/src/agent-observability')).join(','),
+  fs.readdirSync(path.join(sourceRoot, 'skills/common/plugins/openclaw-agent-observer/src/agent-observability')).join(','),
   'index.ts',
   'observer source must contain only the neutral-contract development facade',
 );

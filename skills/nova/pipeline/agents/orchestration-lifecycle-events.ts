@@ -35,6 +35,23 @@ function buildSpawnTelemetryPayload({
   };
 }
 
+function optionalKillTelemetryFields(entry: AnyRecord | null): AnyRecord {
+  return {
+    gate_type: entry?.telemetry_gate_type ?? null,
+    session_key: entry?.sessionKey ?? null,
+    attempt: entry?.telemetry_attempt ?? null,
+    dispatch_id: entry?.telemetry_dispatch_id ?? null,
+  };
+}
+
+function killChangeFields(filesChanged: unknown, baselineTracked: boolean): AnyRecord {
+  if (filesChanged === undefined && !baselineTracked) return {};
+  return {
+    has_changes: baselineTracked ? filesChanged !== null : null,
+    files_changed: filesChanged,
+  };
+}
+
 function buildKillTelemetryPayload({
   entry = null,
   fallbackLabel = null,
@@ -43,23 +60,15 @@ function buildKillTelemetryPayload({
   filesChanged = undefined,
   baselineTracked = false,
 }: AnyRecord = {}) {
-  const label = entry?.gatewayLabel ? entry.gatewayLabel : fallbackLabel;
-  const moduleId = entry?.telemetry_module_id !== undefined && entry?.telemetry_module_id !== null
-    ? entry.telemetry_module_id
-    : fallbackModuleId;
-  const gateId = entry?.telemetry_gate_id ? entry.telemetry_gate_id : fallbackGateId;
-  const payload = {
+  const label = entry?.gatewayLabel ?? fallbackLabel;
+  const moduleId = entry?.telemetry_module_id ?? fallbackModuleId;
+  const gateId = entry?.telemetry_gate_id ?? fallbackGateId;
+  const payload: AnyRecord = {
     label,
     module_id: moduleId,
     gate_id: gateId,
-    gate_type: selectTruthyValue(() => (entry?.telemetry_gate_type), () => (null)),
-    session_key: selectTruthyValue(() => (entry?.sessionKey), () => (null)),
-    attempt: selectDefinedValue(() => (entry?.telemetry_attempt), () => (null)),
-    dispatch_id: selectTruthyValue(() => (entry?.telemetry_dispatch_id), () => (null)),
+    ...optionalKillTelemetryFields(entry),
+    ...killChangeFields(filesChanged, baselineTracked),
   };
-  if (selectTruthyValue(() => (filesChanged !== undefined), () => (baselineTracked))) {
-    payload.has_changes = baselineTracked ? (filesChanged !== null) : null;
-    payload.files_changed = filesChanged;
-  }
   return payload;
 }

@@ -54,7 +54,7 @@ Remaining generation opportunities:
 | OpenClaw and swarm config | `charts/kubeclaw/templates/configmap-gateway.yaml`; `charts/kubeclaw/files/config/swarm.config.json`; `charts/kubeclaw/templates/configmap-swarm-config.yaml`; `skills/nova/pipeline/core/config.ts` | manual with generation opportunity | config tests, deployment truth, docs check |
 | Pipeline state and artifacts | `skills/nova/pipeline/services/status-store.ts`; `skills/nova/pipeline/services/artifact-bundle.ts`; `skills/nova/pipeline/services/status-store-lifecycle/**` | manual | status-store and artifact authority contract checks |
 | Redis and Buster tasks | `skills/buster/pipeline/services/task-queue.ts`; `task-validation.ts`; `task-completion.ts`; `skills/common/pipeline/services/task-transport-contract.ts` | manual | Buster pipeline and Redis contract checks |
-| Telemetry and observability | `skills/nova/pipeline/services/telemetry/**`; `skills/common/pipeline/services/telemetry/payload-schema.ts`; `plugins/openclaw-agent-observer/src/index.ts` | manual | telemetry docs behavior area and telemetry contract check |
+| Telemetry and observability | `skills/nova/pipeline/services/telemetry/**`; `skills/common/pipeline/services/telemetry/payload-schema.ts`; `skills/common/plugins/openclaw-agent-observer/src/index.ts` | manual | telemetry docs behavior area and telemetry contract check |
 
 ## Maintenance Rules
 

@@ -29,20 +29,14 @@ function errorDetail(error: AnyRecord): string {
   return typeof error?.message === 'string' && error.message ? error.message : String(error);
 }
 
-export async function spawnReviewerAgent(
-  config: AnyRecord,
-  progress: AnyRecord,
-  gateId: string,
-  reviewer: AnyRecord,
-  instructions: string,
-  opts: AnyRecord = {},
-) {
+function reviewerSpawnContext(config: AnyRecord, progress: AnyRecord, gateId: string, reviewer: AnyRecord, opts: AnyRecord) {
   const trackingKey = `echo-${reviewer.label}-${gateId}`;
   const dispatchTs = Date.now();
   const gatewayLabel = `${trackingKey}-${dispatchTs}`;
   const runId = selectTruthyValue(() => (selectTruthyValue(() => (config?._runId), () => (config?.run_id))), () => (null));
   const dispatchId = selectDefinedValue(() => (opts.dispatch_id), () => (`${trackingKey}-dispatch-${dispatchTs}`));
   const model = resolvePolicy(config, progress, 'echo', { scopeModel: reviewer.model }).model;
+  if (!model) throw new Error(`Reviewer '${reviewer.label}' requires an explicit model`);
   const agentId = reviewerAgentId(model, reviewer, config);
   if (!agentId) throw new Error(`Reviewer '${reviewer.label}' requires explicit agent id in reviewer.agent_id or config.agents.echo.acp_agent_id`);
   const cwd = reviewerCwd(config);
@@ -53,91 +47,106 @@ export async function spawnReviewerAgent(
     runId, agentType: 'echo', moduleId: null, gateId,
     gateType: opts.gate_type, attempt: opts.attempt, dispatchId, gatewayLabel,
   }, opts.agentLifecycleReader);
+  return {
+    config, gateId, reviewer, opts, trackingKey, gatewayLabel, runId, dispatchId,
+    model, agentId, cwd, thinkingLevel, runtime, useSubagent, telemetryIdentity,
+    startupEvidenceReader,
+  };
+}
+
+async function recordReviewerSpawn(context: AnyRecord, sessionData: AnyRecord) {
+  const {
+    config, gateId, reviewer, opts, trackingKey, gatewayLabel, runId, dispatchId,
+    model, agentId, useSubagent, telemetryIdentity, startupEvidenceReader,
+  } = context;
+  log('OK', `Reviewer spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model, reviewer: reviewer.label, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
+  trackAgent(config, trackingKey, sessionData.childSessionKey, agentId, gatewayLabel, sessionData.streamLogPath, {
+    model,
+    runtime: useSubagent ? 'subagent' : 'acp',
+    moduleId: gateId,
+    run_id: runId,
+    attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
+    dispatch_id: dispatchId,
+    telemetry_module_id: null,
+    telemetry_gate_id: gateId,
+    telemetry_gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
+    telemetry_attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
+    telemetry_dispatch_id: dispatchId,
+    reviewer_label: selectTruthyValue(() => (reviewer.label), () => (null)),
+  });
+  const evidenceIdentity = { ...telemetryIdentity, session_key: sessionData.childSessionKey };
+  assertRequiredAgentStartupEvidence(await waitForRequiredAgentStartupEvidence(config, evidenceIdentity, {
+    reader: startupEvidenceReader,
+    timeoutMs: opts.agentObservabilityStartupTimeoutMs,
+  }), evidenceIdentity);
+  void discord(config, 'INFO', `🔬 Reviewer Spawned: ${reviewer.label}/${gateId}`, 'Echo reviewer is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
+    runId, gateId, gateType: opts.gate_type ?? null, attempt: opts.attempt ?? null,
+    dispatchId, gatewayLabel, sessionKey: sessionData.childSessionKey,
+  }, [
+    { name: 'Reviewer', value: reviewer.label, inline: true },
+    { name: 'Model', value: model, inline: true },
+    { name: 'Agent', value: agentId, inline: true },
+  ]), { correlation: {
+    run_id: runId, gate_id: gateId, gate_type: opts.gate_type ?? null,
+    attempt: opts.attempt ?? null, dispatch_id: dispatchId,
+    gateway_label: gatewayLabel, session_key: sessionData.childSessionKey,
+  } }).catch((error: any) => {
+    log('DEBUG', `Reviewer spawn Discord notice failed for ${gatewayLabel}: ${errorDetail(error)}`);
+  });
+  return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
+}
+
+function reportReviewerSpawnFailure(context: AnyRecord, error: AnyRecord): never {
+  const { config, gateId, reviewer, opts, gatewayLabel, runId, dispatchId, startupEvidenceReader } = context;
+  startupEvidenceReader.close?.();
+  void discord(
+    config,
+    'CRITICAL',
+    `❌ Reviewer Spawn Failed: ${gateId}`,
+    `${reviewer.label}: ${error.message?.split('\n')[0] ?? 'missing_error_message'}`,
+    buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
+      runId, gateId, gateType: opts.gate_type ?? null, attempt: opts.attempt ?? null,
+      dispatchId, gatewayLabel,
+    }),
+    { correlation: {
+      run_id: runId, gate_id: gateId, gate_type: opts.gate_type ?? null,
+      attempt: opts.attempt ?? null, dispatch_id: dispatchId, gateway_label: gatewayLabel,
+    } },
+  ).catch((discordError: any) => {
+    log('DEBUG', `Reviewer spawn failure Discord notice failed for ${gatewayLabel}: ${errorDetail(discordError)}`);
+  });
+  const wrapped: AnyRecord = new Error(`Failed to spawn reviewer '${gatewayLabel}': ${error.message}`);
+  wrapped.gateway_label = gatewayLabel;
+  throw wrapped;
+}
+
+export async function spawnReviewerAgent(
+  config: AnyRecord,
+  progress: AnyRecord,
+  gateId: string,
+  reviewer: AnyRecord,
+  instructions: string,
+  opts: AnyRecord = {},
+) {
+  const context = reviewerSpawnContext(config, progress, gateId, reviewer, opts);
   try {
     const sessionData = await spawnObservedAgentSession(
       config,
-      { model, runtime, agentId, cwd, label: gatewayLabel },
+      {
+        model: context.model,
+        runtime: context.runtime,
+        agentId: context.agentId,
+        cwd: context.cwd,
+        label: context.gatewayLabel,
+      },
       instructions,
       reviewer?.timeout_seconds,
-      telemetryIdentity,
-      { ...opts, thinking: thinkingLevel },
+      context.telemetryIdentity,
+      { ...opts, thinking: context.thinkingLevel },
     );
-    log('OK', `Reviewer spawned: ${gatewayLabel} → ${sessionData.childSessionKey}${sessionData.streamLogPath ? ` (stream: ${sessionData.streamLogPath})` : ''}`, { agent: agentId, model, reviewer: reviewer.label, sessionKey: sessionData.childSessionKey, runId: sessionData.runId, dispatchId, stream: sessionData.streamLogPath });
-    trackAgent(config, trackingKey, sessionData.childSessionKey, agentId, gatewayLabel, sessionData.streamLogPath, {
-      model,
-      runtime: useSubagent ? 'subagent' : 'acp',
-      moduleId: gateId,
-      run_id: runId,
-      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-      dispatch_id: dispatchId,
-      telemetry_module_id: null,
-      telemetry_gate_id: gateId,
-      telemetry_gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
-      telemetry_attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-      telemetry_dispatch_id: dispatchId,
-      reviewer_label: selectTruthyValue(() => (reviewer.label), () => (null)),
-    });
-    assertRequiredAgentStartupEvidence(await waitForRequiredAgentStartupEvidence(config, {
-      ...telemetryIdentity,
-      session_key: sessionData.childSessionKey,
-    }, {
-      reader: startupEvidenceReader,
-      timeoutMs: opts.agentObservabilityStartupTimeoutMs,
-    }), {
-      ...telemetryIdentity,
-      session_key: sessionData.childSessionKey,
-    });
-    const spawnDiscordCorrelation = {
-      run_id: runId,
-      gate_id: gateId,
-      gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
-      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-      dispatch_id: dispatchId,
-      gateway_label: gatewayLabel,
-      session_key: sessionData.childSessionKey,
-    };
-    discord(config, 'INFO', `🔬 Reviewer Spawned: ${reviewer.label}/${gateId}`, 'Echo reviewer is now working.', buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
-      runId,
-      gateId,
-      gateType: selectTruthyValue(() => (opts.gate_type), () => (null)),
-      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-      dispatchId,
-      gatewayLabel,
-      sessionKey: sessionData.childSessionKey,
-    }, [
-      { name: 'Reviewer', value: reviewer.label, inline: true },
-      { name: 'Model', value: model, inline: true },
-      { name: 'Agent', value: agentId, inline: true },
-    ]), { correlation: spawnDiscordCorrelation }).catch((e: any) => {
-      log('DEBUG', `Reviewer spawn Discord notice failed for ${gatewayLabel}: ${errorDetail(e)}`);
-    });
-    return { label: trackingKey, childSessionKey: sessionData.childSessionKey, runId, dispatchId, streamLogPath: sessionData.streamLogPath };
+    return await recordReviewerSpawn(context, sessionData);
   } catch (e: any) {
-    startupEvidenceReader.close?.();
-    const spawnFailureDiscordCorrelation = {
-      run_id: runId,
-      gate_id: gateId,
-      gate_type: selectTruthyValue(() => (opts.gate_type), () => (null)),
-      attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-      dispatch_id: dispatchId,
-      gateway_label: gatewayLabel,
-    };
-    discord(config, 'CRITICAL', `❌ Reviewer Spawn Failed: ${gateId}`, `${reviewer.label}: ${selectTruthyValue(() => (e.message?.split('\n')[0]), () => ('missing_error_message'))}`,
-      buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.LIFECYCLE, {
-        runId,
-        gateId,
-        gateType: selectTruthyValue(() => (opts.gate_type), () => (null)),
-        attempt: selectDefinedValue(() => (opts.attempt), () => (null)),
-        dispatchId,
-        gatewayLabel,
-      }),
-      { correlation: spawnFailureDiscordCorrelation },
-    ).catch((discordError: any) => {
-      log('DEBUG', `Reviewer spawn failure Discord notice failed for ${gatewayLabel}: ${errorDetail(discordError)}`);
-    });
-    const err: AnyRecord = new Error(`Failed to spawn reviewer '${gatewayLabel}': ${e.message}`);
-    err.gateway_label = gatewayLabel;
-    throw err;
+    return reportReviewerSpawnFailure(context, e);
   }
 }
 

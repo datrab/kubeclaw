@@ -135,7 +135,13 @@ const suiteFiles = [
   'visual-reg.ts',
 ];
 for (const file of suiteFiles) {
-  const source = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/suites', file), 'utf8');
+  const suiteDir = path.join(sourceRoot, 'skills/buster/pipeline/suites');
+  const source = file === 'k8s.ts'
+    ? fs.readdirSync(suiteDir)
+      .filter((candidate) => candidate === 'k8s.ts' || candidate.startsWith('k8s-'))
+      .map((candidate) => fs.readFileSync(path.join(suiteDir, candidate), 'utf8'))
+      .join('\n')
+    : fs.readFileSync(path.join(suiteDir, file), 'utf8');
   assert.equal(
     source.includes('resolveRepoScopedPath'),
     true,

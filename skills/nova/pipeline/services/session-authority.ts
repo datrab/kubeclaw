@@ -59,7 +59,10 @@ function hasAnySessionEvidence(identity: any = {}) {
   ].some((field: any) => normalizeText(identity[field]) !== null);
 }
 
-export function normalizeActiveSessionIdentity(identity: any = {}, defaults: any = {}) {
+export function normalizeActiveSessionIdentity(
+  identity: any = {},
+  defaults: any = {}
+): Record<string, string | null> {
   return {
     run_id: normalizeText(identity?.run_id),
     attempt: identityAttempt(identity, defaults),
@@ -118,6 +121,31 @@ function gatewayEvidenceConfirmed(gatewayEvidence: any) {
   return gatewayEvidence?.confirmed === true;
 }
 
+function authorityCode(hasLifecycle: boolean, requireGateway: boolean, gatewayConfirmed: boolean | null, diagnosticConfirmed: boolean | null): string {
+  if (!hasLifecycle) return 'no_lifecycle_active_session';
+  if (requireGateway && gatewayConfirmed !== true) return 'lifecycle_active_session_requires_gateway_confirmation';
+  if (diagnosticConfirmed === false) return 'diagnostic_active_session_identity_mismatch';
+  return 'lifecycle_active_session_authoritative';
+}
+
+function diagnosticEvidenceRole(hasEvidence: boolean, confirmed: boolean | null): string {
+  if (!hasEvidence) return ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT;
+  return confirmed
+    ? ACTIVE_SESSION_EVIDENCE_ROLES.CONFIRMED_DIAGNOSTIC_EVIDENCE
+    : ACTIVE_SESSION_EVIDENCE_ROLES.DIAGNOSTIC_EVIDENCE;
+}
+
+function authorityInputs(input: any) {
+  const lifecycle = normalizeActiveSessionIdentity(input.lifecycleActiveSession ?? {});
+  const evidence = normalizeActiveSessionIdentity(input.evidenceActiveSession ?? {});
+  const hasLifecycleEvidence = hasStrongActiveSessionIdentity(input.lifecycleActiveSession);
+  const hasDiagnosticEvidence = hasAnySessionEvidence(input.evidenceActiveSession);
+  const evidenceConfirmation = hasDiagnosticEvidence
+    ? buildActiveSessionConfirmation(lifecycle, evidence)
+    : null;
+  return { lifecycle, evidence, hasLifecycleEvidence, hasDiagnosticEvidence, evidenceConfirmation };
+}
+
 export function buildActiveSessionAuthorityPolicy({
   lifecycleActiveSession = null,
   evidenceActiveSession = null,
@@ -125,15 +153,12 @@ export function buildActiveSessionAuthorityPolicy({
   monitorEvidence = null,
   requireGatewayConfirmation = false,
 }: any = {}) {
-  const lifecycle = normalizeActiveSessionIdentity(selectDefinedValue(() => (lifecycleActiveSession), () => ({})));
-  const evidence = normalizeActiveSessionIdentity(selectDefinedValue(() => (evidenceActiveSession), () => ({})));
-  const hasLifecycleEvidence = hasStrongActiveSessionIdentity(lifecycleActiveSession);
-  const hasDiagnosticEvidence = hasAnySessionEvidence(evidenceActiveSession);
+  const { lifecycle, evidence, hasLifecycleEvidence, hasDiagnosticEvidence, evidenceConfirmation } = authorityInputs({
+    lifecycleActiveSession,
+    evidenceActiveSession,
+  });
   const missingLifecycleFields = getMissingActiveSessionIdentityFields(lifecycle);
   const lifecycleAuthoritative = hasLifecycleEvidence;
-  const evidenceConfirmation = hasDiagnosticEvidence
-    ? buildActiveSessionConfirmation(lifecycle, evidence)
-    : null;
   const identityConfirmed = lifecycleAuthoritative;
   const effectiveGatewayEvidence = selectTruthyValue(() => (selectTruthyValue(() => (gatewayEvidence), () => (monitorEvidence))), () => (null));
   const gatewayConfirmed = requireGatewayConfirmation
@@ -142,10 +167,8 @@ export function buildActiveSessionAuthorityPolicy({
   const confirmed = lifecycleAuthoritative
     && (selectTruthyValue(() => (!requireGatewayConfirmation), () => (gatewayConfirmed === true)));
 
-  let code = 'lifecycle_active_session_authoritative';
-  if (!hasLifecycleEvidence) code = 'no_lifecycle_active_session';
-  else if (requireGatewayConfirmation && gatewayConfirmed !== true) code = 'lifecycle_active_session_requires_gateway_confirmation';
-  else if (hasDiagnosticEvidence && evidenceConfirmation?.confirmed !== true) code = 'diagnostic_active_session_identity_mismatch';
+  const diagnosticConfirmed = hasDiagnosticEvidence ? evidenceConfirmation?.confirmed === true : null;
+  const code = authorityCode(lifecycleAuthoritative, requireGatewayConfirmation, gatewayConfirmed, diagnosticConfirmed);
 
   return {
     code,
@@ -164,11 +187,7 @@ export function buildActiveSessionAuthorityPolicy({
     lifecycle_active_session_role: lifecycleAuthoritative
       ? ACTIVE_SESSION_EVIDENCE_ROLES.LIFECYCLE_AUTHORITY
       : ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT,
-    diagnostic_active_session_role: hasDiagnosticEvidence
-      ? (evidenceConfirmation?.confirmed === true
-        ? ACTIVE_SESSION_EVIDENCE_ROLES.CONFIRMED_DIAGNOSTIC_EVIDENCE
-        : ACTIVE_SESSION_EVIDENCE_ROLES.DIAGNOSTIC_EVIDENCE)
-      : ACTIVE_SESSION_EVIDENCE_ROLES.ABSENT,
+    diagnostic_active_session_role: diagnosticEvidenceRole(hasDiagnosticEvidence, diagnosticConfirmed),
     authoritative_identity: lifecycleAuthoritative ? lifecycle : null,
     lifecycle_identity: lifecycle,
     evidence_identity: hasDiagnosticEvidence ? evidence : null,

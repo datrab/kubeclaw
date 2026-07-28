@@ -46,7 +46,11 @@ assert.equal(isGitPathInside('Projects/foo/src/app.js', scope.swarmRoot), false,
 assert.equal(isGitPathInside('Projects/foobar/src/.swarm/status.json', scope.projectRoot), false, 'sibling project must not match project prefix');
 assert.equal(isGitPathInside('Projects/foo-bar/src/.swarm/status.json', scope.projectRoot), false, 'hyphenated sibling project must not match project prefix');
 
-const source = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/tools/verify-task.ts'), 'utf8');
+const source = [
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/tools/verify-task.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/tools/verify-task-execution.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/tools/verify-task-scope.ts'), 'utf8'),
+].join('\n');
 assert.equal(source.includes("agentRole.includes('buster')"), false, 'verify-task must not authorize by buster substring');
 assert.equal(source.includes("agentRole.includes('forge')"), false, 'verify-task must not authorize by forge substring');
 assert.equal(source.includes("agentRole.includes('test')"), false, 'verify-task must not authorize by test substring');
@@ -55,7 +59,10 @@ assert.equal(source.includes("gitExec(repoRoot, ['add', swarmRoot]"), false, 've
 assert.equal(source.includes('addPaths: explicitAddPaths'), true, 'verify-task must pass validated explicit swarm pathspecs to gitPushWithRetry');
 assert.equal(source.includes('[SWARM-SCOPE]'), true, 'verify-task must report swarm scope violations');
 
-const workflowsSource = fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/git-workflows.ts'), 'utf8');
+const workflowsSource = [
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/git-workflows.ts'), 'utf8'),
+  fs.readFileSync(path.join(sourceRoot, 'skills/buster/pipeline/services/git-push-policy.ts'), 'utf8'),
+].join('\n');
 const gitSyncSource = workflowsSource.slice(
   workflowsSource.indexOf('export async function gitSync'),
   workflowsSource.indexOf('// ─── gitPushWithRetry'),

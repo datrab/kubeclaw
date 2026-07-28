@@ -1,13 +1,19 @@
 // Final-preview delivery is artifact-driven: Buster owns live verification and
 // records URLs in k8s verdict metadata; Nova only announces completed previews.
 
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import fs from 'fs';
-// @ts-expect-error Node built-in ambient types are not installed for this migration island.
 import path from 'path';
 
 import { discord as defaultDiscord } from '../integrations/discord.ts';
 import { buildDiscordIdentitySurfaceFields, DISCORD_IDENTITY_SURFACES } from './discord-fields.ts';
+import {
+  formatPreviewCredentialCommandForDiscord,
+  formatPreviewCredentialsForDiscord,
+} from './preview-credential-format.ts';
+export {
+  formatPreviewCredentialCommandForDiscord,
+  formatPreviewCredentialsForDiscord,
+} from './preview-credential-format.ts';
 
 type AnyRecord = Record<string, any>;
 
@@ -82,40 +88,6 @@ function k8sVerdictFromFile(filePath: string): AnyRecord | null {
   return null;
 }
 
-function previewCredentialLabel(key: string): string {
-  const normalized = String(key == null ? '' : key).toLowerCase();
-  if (/(?:user|login|email)/.test(normalized)) return 'Login ID';
-  if (/(?:pass|token|secret|api[_-]?key|key|code)/.test(normalized)) return 'Access Code';
-  const keyText = String(key == null ? '' : key).trim();
-  const label = keyText ? keyText : 'Credential';
-  return label
-    .replace(/[_-]+/g, ' ')
-    .replace(/\b\w/g, (char: any) => char.toUpperCase());
-}
-
-function truncateDiscordFieldValue(value: string, max: any = 950): string {
-  return value.length <= max ? value : `${value.slice(0, max - 1)}…`;
-}
-
-export function formatPreviewCredentialsForDiscord(credentials: AnyRecord | string | null | undefined): string | null {
-  if (!credentials) return null;
-  if (typeof credentials === 'string') {
-    const trimmed = credentials.trim();
-    return trimmed ? truncateDiscordFieldValue(trimmed) : null;
-  }
-  if (!isRecord(credentials)) return null;
-  const lines = Object.entries(credentials)
-    .filter(([, value]: any) => value != null && value !== '')
-    .map(([key, value]: any) => `${previewCredentialLabel(key)}: ${String(value)}`);
-  return lines.length ? truncateDiscordFieldValue(lines.join('\n')) : null;
-}
-
-export function formatPreviewCredentialCommandForDiscord(command: string | null | undefined): string | null {
-  if (typeof command !== 'string') return null;
-  const trimmed = command.trim();
-  return trimmed ? truncateDiscordFieldValue(`\`\`\`bash\n${trimmed}\n\`\`\``) : null;
-}
-
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
@@ -134,6 +106,10 @@ function credentialState({ credentials, command, ref, available }: AnyRecord): F
   return 'configured_unavailable';
 }
 
+function optionalString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
 function deliveryFromVerdict(gateId: string, sourceConfig: AnyRecord, verdict: AnyRecord): FinalPreviewDelivery {
   const metadata = isRecord(verdict.metadata) ? verdict.metadata : {};
   if (metadata.purpose !== 'final-preview') {
@@ -143,24 +119,20 @@ function deliveryFromVerdict(gateId: string, sourceConfig: AnyRecord, verdict: A
     });
   }
   const rawCredentials = metadata.preview_credentials;
-  const credentialsRef = typeof metadata.preview_credentials_ref === 'string' && metadata.preview_credentials_ref.trim()
-    ? metadata.preview_credentials_ref.trim()
-    : null;
-  const credentialsCommand = typeof metadata.preview_credentials_command === 'string' && metadata.preview_credentials_command.trim()
-    ? metadata.preview_credentials_command.trim()
-    : null;
+  const credentialsRef = optionalString(metadata.preview_credentials_ref);
+  const credentialsCommand = optionalString(metadata.preview_credentials_command);
   const credentialsAvailable = metadata.preview_credentials_available === true;
   const credentials = hasUsableCredentials(rawCredentials) ? rawCredentials : null;
   return {
     source_type: 'gate',
     module_id: '',
     gate_id: gateId,
-    title: typeof sourceConfig?.title === 'string' ? sourceConfig.title : null,
-    preview_url: typeof metadata.preview_url === 'string' && metadata.preview_url ? metadata.preview_url : null,
-    service_url: typeof metadata.service_url === 'string' && metadata.service_url ? metadata.service_url : null,
-    namespace: typeof metadata.test_namespace === 'string' ? metadata.test_namespace : null,
-    exposure_phase: typeof metadata.preview_exposure_phase === 'string' ? metadata.preview_exposure_phase : null,
-    exposure_hostname: typeof metadata.preview_exposure_hostname === 'string' ? metadata.preview_exposure_hostname : null,
+    title: optionalString(sourceConfig?.title),
+    preview_url: optionalString(metadata.preview_url),
+    service_url: optionalString(metadata.service_url),
+    namespace: optionalString(metadata.test_namespace),
+    exposure_phase: optionalString(metadata.preview_exposure_phase),
+    exposure_hostname: optionalString(metadata.preview_exposure_hostname),
     credentials_ref: credentialsRef,
     credentials_available: credentialsAvailable,
     credentials_command: credentialsCommand,
@@ -171,7 +143,7 @@ function deliveryFromVerdict(gateId: string, sourceConfig: AnyRecord, verdict: A
       ref: credentialsRef,
       available: credentialsAvailable,
     }),
-    cleanup_policy: typeof metadata.cleanup_policy === 'string' ? metadata.cleanup_policy : null,
+    cleanup_policy: optionalString(metadata.cleanup_policy),
     unavailable_reason: null,
   };
 }
@@ -274,54 +246,73 @@ function gateLabel(delivery: FinalPreviewDelivery): string {
   return delivery.title ? `${delivery.gate_id} - ${delivery.title}` : delivery.gate_id;
 }
 
+function previewDiscordSender(opts: AnyRecord) {
+  if (typeof opts.discord === 'function') return opts.discord;
+  if (typeof opts.deps?.pipelineRunner?.discord === 'function') {
+    return opts.deps.pipelineRunner.discord;
+  }
+  return defaultDiscord;
+}
+
+function previewDiscordFields(delivery: FinalPreviewDelivery, runId: string) {
+  const previewCredentials = formatPreviewCredentialsForDiscord(delivery.credentials);
+  const credentialCommand = formatPreviewCredentialCommandForDiscord(delivery.credentials_command);
+  const optionalFields = [
+    ['Preview Login', previewCredentials, false],
+    ['Credential Command', credentialCommand, false],
+    ['Exposure', delivery.exposure_phase, true],
+    ['Namespace', delivery.namespace, true],
+    ['Cleanup', delivery.cleanup_policy, true],
+    ['Credential Ref', delivery.credentials_ref, false],
+  ] as const;
+  return [
+    ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, {
+      run_id: runId,
+      module_id: null,
+      gate_id: delivery.gate_id,
+    }),
+    { name: 'Gate', value: gateLabel(delivery), inline: false },
+    { name: 'Preview URL', value: requirePreviewUrl(delivery), inline: false },
+    { name: 'Credential State', value: credentialStateLabel(delivery), inline: false },
+    ...optionalFields
+      .filter(([, value]) => Boolean(value))
+      .map(([name, value, inline]) => ({ name, value: value as string, inline })),
+  ];
+}
+
+async function sendFinalPreview(
+  sendDiscord: typeof defaultDiscord,
+  config: AnyRecord,
+  delivery: FinalPreviewDelivery,
+  runId: string,
+): Promise<void> {
+  try {
+    await sendDiscord(
+      config,
+      'OK',
+      `Final Preview Ready: ${optionalString(config.project) ?? delivery.gate_id}`,
+      'The final deployment is still running and is available on your tailnet.',
+      previewDiscordFields(delivery, runId),
+      { correlation: { run_id: runId, gate_id: delivery.gate_id } },
+    );
+  } catch (error: unknown) {
+    if (error instanceof FinalPreviewDeliveryError) throw error;
+    throw new FinalPreviewDeliveryError(`Final preview Discord delivery failed: ${errorMessage(error)}`, {
+      failureClass: 'final_preview_delivery_failed',
+      details: { gate_id: delivery.gate_id },
+      cause: error,
+    });
+  }
+}
+
 export async function deliverFinalPreviews(config: AnyRecord = {}, progress: AnyRecord = {}, opts: AnyRecord = {}): Promise<FinalPreviewDelivery[]> {
   const deliveries = collectFinalPreviewDeliveries(config, progress);
   if (!deliveries.length) return deliveries;
 
-  let sendDiscord = defaultDiscord;
-  if (typeof opts.deps?.pipelineRunner?.discord === 'function') {
-    sendDiscord = opts.deps.pipelineRunner.discord;
-  }
-  if (typeof opts.discord === 'function') {
-    sendDiscord = opts.discord;
-  }
+  const sendDiscord = previewDiscordSender(opts);
   const runId = requireRunId(config);
   for (const delivery of deliveries) {
-    const previewUrl = requirePreviewUrl(delivery);
-    const previewCredentials = formatPreviewCredentialsForDiscord(delivery.credentials);
-    const credentialCommand = formatPreviewCredentialCommandForDiscord(delivery.credentials_command);
-    const fields = [
-      ...buildDiscordIdentitySurfaceFields(DISCORD_IDENTITY_SURFACES.PIPELINE, {
-        run_id: runId,
-        module_id: null,
-        gate_id: delivery.gate_id,
-      }),
-      { name: 'Gate', value: gateLabel(delivery), inline: false },
-      { name: 'Preview URL', value: previewUrl, inline: false },
-      { name: 'Credential State', value: credentialStateLabel(delivery), inline: false },
-      ...(previewCredentials ? [{ name: 'Preview Login', value: previewCredentials, inline: false }] : []),
-      ...(credentialCommand ? [{ name: 'Credential Command', value: credentialCommand, inline: false }] : []),
-      ...(delivery.exposure_phase ? [{ name: 'Exposure', value: delivery.exposure_phase, inline: true }] : []),
-      ...(delivery.namespace ? [{ name: 'Namespace', value: delivery.namespace, inline: true }] : []),
-      ...(delivery.cleanup_policy ? [{ name: 'Cleanup', value: delivery.cleanup_policy, inline: true }] : []),
-      ...(delivery.credentials_ref ? [{ name: 'Credential Ref', value: delivery.credentials_ref, inline: false }] : []),
-    ];
-    try {
-      await sendDiscord(
-        config,
-        'OK',
-        `Final Preview Ready: ${typeof config.project === 'string' && config.project.trim() ? config.project.trim() : delivery.gate_id}`,
-        'The final deployment is still running and is available on your tailnet.',
-        fields,
-        { correlation: { run_id: runId, gate_id: delivery.gate_id } },
-      );
-    } catch (error: any) {
-      throw new FinalPreviewDeliveryError(`Final preview Discord delivery failed: ${errorMessage(error)}`, {
-        failureClass: 'final_preview_delivery_failed',
-        details: { gate_id: delivery.gate_id },
-        cause: error,
-      });
-    }
+    await sendFinalPreview(sendDiscord, config, delivery, runId);
   }
   return deliveries;
 }
