@@ -143,3 +143,42 @@ deletions, and atomic commits for the concrete plugin and adapter migration.
 - `npm test --prefix skills/nova/plugins/buster-quality-gate`
 - `node --test $(find tests/skills/buster -type f -name '*.test.mjs' -print | sort)`
 - `node --test tests/verification/e2e/buster-simulator.test.mjs`
+
+## Batch 5: Privileged Adapters
+
+### Findings
+
+- The existing Git adapter preserved worktree, commit, merge, and path-sync
+  behavior, but did not cover the observable fetch, rebase, and push surface.
+- Redis publication cannot honestly be represented by generic HTTP, local
+  telemetry, or plugin-state adapters. Authentication, Streams trimming,
+  atomic deduplication, and Redis entry receipts are provider semantics.
+- Operator request transport is a cohesive adapter boundary. Discord
+  presentation, notification policy, audit projection, and degraded/restored
+  notices remain observer behavior and are carried into Phase 10.
+- Generic session supervision belongs behind `runtime.dispatch`; domain stages
+  consume closed terminal session evidence and never receive host credentials
+  or raw session APIs.
+
+### Changes
+
+- Added bounded `fetch`, `rebase`, and `push` operations to `git.sync`.
+- Added real bare-remote Git tests for fetch, rebase, push, ref validation, and
+  option-injection denial.
+- Added `kubeclaw.redis-transport` with independent publication and telemetry
+  adapter registrations.
+- Implemented a bounded RESP transport with secret-based authentication,
+  TLS support, payload limits, timeout/cancellation, stream-name
+  canonicalization, approximate MAXLEN trimming, and an atomic Lua
+  deduplication/append transaction.
+- Added TypeScript package-boundary and local Redis-protocol tests.
+- Recorded one reuse/refactor/rewrite decision and one package-local
+  replacement scenario for every privileged adapter package.
+
+### Verification
+
+- `npm test --prefix skills/common/plugins/git-workspace`
+- `npm test --prefix skills/common/plugins/redis-transport`
+- All package-local privileged-adapter suites through the parity recorder
+- Real Redis backend smoke remains a Phase 12 cutover test; the Phase 9 test
+  proves the provider protocol locally without requiring external services.

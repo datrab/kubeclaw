@@ -349,6 +349,19 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         }
         return { synced, missing };
       }
+      if (request.capability === 'git.sync' && request.operation === 'fetch') {
+        const remote = gitToken(request.payload.remote ?? 'origin', 'remote');
+        return runner.run(workspace, ['fetch', '--prune', '--', remote], signal);
+      }
+      if (request.capability === 'git.sync' && request.operation === 'rebase') {
+        return runner.run(workspace, ['rebase', '--', gitRef(request.payload.upstreamRef, 'upstreamRef')], signal);
+      }
+      if (request.capability === 'git.sync' && request.operation === 'push') {
+        const remote = gitToken(request.payload.remote ?? 'origin', 'remote');
+        const localRef = gitRef(request.payload.localRef, 'localRef');
+        const remoteRef = gitRef(request.payload.remoteRef, 'remoteRef');
+        return runner.run(workspace, ['push', '--porcelain', '--', remote, `${localRef}:${remoteRef}`], signal);
+      }
       throw new Error(`GIT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
     },
     async shutdown() { await runner.shutdown(); },

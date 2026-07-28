@@ -3,13 +3,13 @@
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "rulesSource": "docs/architecture/plugin-system-inventory.rules.json",
   "summary": {
-    "files": 1461,
-    "runtimeFiles": 1145,
+    "files": 1469,
+    "runtimeFiles": 1153,
     "supportFiles": 316,
-    "exportedSurfaces": 3757,
+    "exportedSurfaces": 3759,
     "localImports": 3524,
-    "privilegedEffects": 1199,
-    "privilegedEffectReferences": 2337,
+    "privilegedEffects": 1214,
+    "privilegedEffectReferences": 2352,
     "runtimeLegacyContractHits": 107,
     "legacyContractHits": 181,
     "runtimeHardcodingHits": 71,
@@ -48,11 +48,15 @@
     },
     {
       "id": "adapter:kubeclaw.operator-messaging",
-      "count": 22
+      "count": 13
     },
     {
       "id": "adapter:kubeclaw.redis",
       "count": 27
+    },
+    {
+      "id": "adapter:kubeclaw.redis-transport",
+      "count": 8
     },
     {
       "id": "adapter:kubeclaw.runtime-dispatch",
@@ -188,7 +192,7 @@
     },
     {
       "id": "plugin:kubeclaw.notifications",
-      "count": 7
+      "count": 16
     },
     {
       "id": "plugin:kubeclaw.openclaw-agent-observer",
@@ -250,15 +254,15 @@
   "effectCounts": [
     {
       "id": "command.execute",
-      "count": 51
+      "count": 52
     },
     {
       "id": "filesystem.read",
-      "count": 512
+      "count": 515
     },
     {
       "id": "filesystem.write",
-      "count": 373
+      "count": 374
     },
     {
       "id": "git.execute",
@@ -274,7 +278,7 @@
     },
     {
       "id": "redis.execute",
-      "count": 102
+      "count": 107
     },
     {
       "id": "runtime.dispatch",
@@ -286,21 +290,21 @@
     },
     {
       "id": "telemetry.emit",
-      "count": 21
+      "count": 26
     }
   ],
   "effectReferenceCounts": [
     {
       "id": "command.execute",
-      "count": 82
+      "count": 83
     },
     {
       "id": "filesystem.read",
-      "count": 789
+      "count": 792
     },
     {
       "id": "filesystem.write",
-      "count": 942
+      "count": 943
     },
     {
       "id": "git.execute",
@@ -316,7 +320,7 @@
     },
     {
       "id": "redis.execute",
-      "count": 147
+      "count": 152
     },
     {
       "id": "runtime.dispatch",
@@ -328,7 +332,7 @@
     },
     {
       "id": "telemetry.emit",
-      "count": 21
+      "count": 26
     }
   ],
   "runtimeLegacyContractCounts": [
@@ -875,14 +879,14 @@
         "kubeclaw.observer.discord-telemetry",
         "kubeclaw.observer.preview-delivery"
       ],
-      "runtimeFileCount": 6,
+      "runtimeFileCount": 15,
       "supportFileCount": 1,
       "effectCounts": {
         "filesystem.read": 3,
         "filesystem.write": 6,
         "operator.notify": 4
       },
-      "outboundOwnerDependencies": 23,
+      "outboundOwnerDependencies": 35,
       "hardcodingCount": 0,
       "legacyContractCount": 5
     },
@@ -1278,39 +1282,10 @@
     },
     {
       "from": "adapter:kubeclaw.operator-messaging",
-      "to": "core:pipeline-core-execution",
-      "count": 12,
-      "samples": [
-        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts",
-        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts",
-        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts",
-        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/services/observability.ts",
-        "skills/nova/pipeline/integrations/discord-operator.ts -> skills/nova/pipeline/optional-absence.ts",
-        "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/egress.ts",
-        "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/optional-absence.ts",
-        "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/core/logger.ts",
-        "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/egress.ts",
-        "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/optional-absence.ts",
-        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/core/logger.ts",
-        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/optional-absence.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.operator-messaging",
-      "to": "core:pipeline-core-state",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts",
-        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.operator-messaging",
       "to": "plugin-sdk:pipeline-plugin-sdk",
-      "count": 2,
+      "count": 1,
       "samples": [
-        "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts",
-        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts"
+        "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts"
       ]
     },
     {
@@ -1318,24 +1293,15 @@
       "to": "plugin:kubeclaw.notifications",
       "count": 1,
       "samples": [
-        "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-audit.ts"
+        "tests/skills/nova/pipeline/integrations/discord.test.mjs -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
       "from": "adapter:kubeclaw.operator-messaging",
       "to": "shared-library:kubeclaw.pipeline-primitives",
-      "count": 2,
-      "samples": [
-        "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts",
-        "skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.redis",
-      "to": "adapter:kubeclaw.operator-messaging",
       "count": 1,
       "samples": [
-        "skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts"
+        "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts"
       ]
     },
     {
@@ -1390,6 +1356,14 @@
     },
     {
       "from": "adapter:kubeclaw.redis",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts"
+      ]
+    },
+    {
+      "from": "adapter:kubeclaw.redis",
       "to": "shared-library:kubeclaw.agent-observability-contract",
       "count": 1,
       "samples": [
@@ -1405,17 +1379,6 @@
         "skills/common/pipeline/services/redis-message-contract.ts -> skills/common/pipeline/optional-absence.ts",
         "skills/common/pipeline/services/redis-wait-recovery.ts -> skills/common/pipeline/optional-absence.ts",
         "skills/common/pipeline/services/task-transport-contract.ts -> skills/common/pipeline/optional-absence.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.runtime-dispatch",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 4,
-      "samples": [
-        "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -1486,6 +1449,17 @@
     },
     {
       "from": "adapter:kubeclaw.runtime-dispatch",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 4,
+      "samples": [
+        "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/discord-fields.ts"
+      ]
+    },
+    {
+      "from": "adapter:kubeclaw.runtime-dispatch",
       "to": "shared-library:kubeclaw.agent-observability-contract",
       "count": 3,
       "samples": [
@@ -1549,25 +1523,6 @@
         "skills/nova/pipeline/runners/pipeline-runner-module-batch.ts -> skills/nova/pipeline/integrations/git-worktree.ts",
         "skills/nova/pipeline/services/polling-session-end-runtime.ts -> skills/nova/pipeline/integrations/git-worktree.ts",
         "skills/nova/pipeline/services/polling-session-end-support.ts -> skills/nova/pipeline/integrations/git-worktree.ts"
-      ]
-    },
-    {
-      "from": "core:pipeline-core-execution",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 26,
-      "samples": [
-        "skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/services/failures/presentation.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/services/rate-limit-builders.ts -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
@@ -1761,10 +1716,20 @@
     {
       "from": "core:pipeline-core-execution",
       "to": "plugin:kubeclaw.notifications",
-      "count": 2,
+      "count": 28,
       "samples": [
+        "skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/discord-fields.ts",
         "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/preview-delivery.ts",
-        "skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
+        "skills/nova/pipeline/services/failures/presentation.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -2115,22 +2080,6 @@
     },
     {
       "from": "delete:legacy-kind-schedulers",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 9,
-      "samples": [
-        "skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner/preflight.ts -> skills/nova/pipeline/services/discord-fields.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-kind-schedulers",
       "to": "adapter:kubeclaw.runtime-dispatch",
       "count": 7,
       "samples": [
@@ -2261,6 +2210,22 @@
         "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/prompts/forge.ts",
         "skills/nova/pipeline/runners/module-runner/state-machine.ts -> skills/nova/pipeline/runners/module-runner-forge.ts",
         "tests/skills/nova/pipeline/runners/module-runner-worker-lifecycle.test.mjs -> skills/nova/pipeline/runners/module-runner-forge.ts"
+      ]
+    },
+    {
+      "from": "delete:legacy-kind-schedulers",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 9,
+      "samples": [
+        "skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner/preflight.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -2442,14 +2407,6 @@
     },
     {
       "from": "delete:legacy-telemetry-registry-contract",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-telemetry-registry-contract",
       "to": "core:pipeline-core-execution",
       "count": 5,
       "samples": [
@@ -2478,6 +2435,14 @@
     },
     {
       "from": "delete:legacy-telemetry-registry-contract",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts"
+      ]
+    },
+    {
+      "from": "delete:legacy-telemetry-registry-contract",
       "to": "plugin:kubeclaw.telemetry-observers",
       "count": 1,
       "samples": [
@@ -2490,14 +2455,6 @@
       "count": 1,
       "samples": [
         "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-      ]
-    },
-    {
-      "from": "plugin-sdk:pipeline-plugin-sdk",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
@@ -2557,6 +2514,14 @@
       "count": 1,
       "samples": [
         "skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/approval-signal-event-contract.ts"
+      ]
+    },
+    {
+      "from": "plugin-sdk:pipeline-plugin-sdk",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
@@ -2702,15 +2667,6 @@
     },
     {
       "from": "plugin:kubeclaw.blueprint-sync",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.blueprint-sync",
       "to": "core:pipeline-core-execution",
       "count": 10,
       "samples": [
@@ -2736,26 +2692,20 @@
       ]
     },
     {
+      "from": "plugin:kubeclaw.blueprint-sync",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 2,
+      "samples": [
+        "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts"
+      ]
+    },
+    {
       "from": "plugin:kubeclaw.buster-quality-gate",
       "to": "adapter:kubeclaw.git",
       "count": 1,
       "samples": [
         "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/git-worktree.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.buster-quality-gate",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 8,
-      "samples": [
-        "skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/buster-gate-terminal-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/buster-gate-terminal-pass.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/buster-gate-terminal-rate-limit.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -2863,6 +2813,21 @@
     },
     {
       "from": "plugin:kubeclaw.buster-quality-gate",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 8,
+      "samples": [
+        "skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/buster-gate-terminal-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/buster-gate-terminal-pass.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/buster-gate-terminal-rate-limit.ts -> skills/nova/pipeline/services/discord-fields.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.buster-quality-gate",
       "to": "shared-library:kubeclaw.prompt-primitives",
       "count": 1,
       "samples": [
@@ -2892,11 +2857,9 @@
     {
       "from": "plugin:kubeclaw.buster-worker",
       "to": "adapter:kubeclaw.operator-messaging",
-      "count": 3,
+      "count": 1,
       "samples": [
-        "skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts",
-        "skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts",
-        "skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts"
+        "skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts"
       ]
     },
     {
@@ -3022,6 +2985,15 @@
     },
     {
       "from": "plugin:kubeclaw.buster-worker",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 2,
+      "samples": [
+        "skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts",
+        "skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.buster-worker",
       "to": "shared-library:kubeclaw.agent-observability-contract",
       "count": 2,
       "samples": [
@@ -3056,14 +3028,6 @@
       "count": 1,
       "samples": [
         "skills/nova/pipeline/services/case-study-instructions.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.case-study",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
@@ -3126,6 +3090,14 @@
     },
     {
       "from": "plugin:kubeclaw.case-study",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.case-study",
       "to": "plugin:kubeclaw.project-summary",
       "count": 3,
       "samples": [
@@ -3141,17 +3113,6 @@
       "samples": [
         "skills/nova/pipeline/tools/write-forge-completion.ts -> skills/nova/pipeline/agent-artifact.ts",
         "tests/skills/nova/pipeline/tools/write-forge-completion.test.mjs -> skills/common/pipeline/agent-artifact.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.forge",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 4,
-      "samples": [
-        "skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/module-runner-forge-success.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -3260,6 +3221,17 @@
     },
     {
       "from": "plugin:kubeclaw.forge",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 4,
+      "samples": [
+        "skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/module-runner-forge-success.ts -> skills/nova/pipeline/services/discord-fields.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.forge",
       "to": "shared-library:kubeclaw.agent-observability-contract",
       "count": 3,
       "samples": [
@@ -3283,18 +3255,6 @@
       "count": 1,
       "samples": [
         "tests/skills/nova/pipeline/runners/approval-gate-runner.test.mjs -> skills/nova/pipeline/services/artifact-bundle.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.human-approval",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 5,
-      "samples": [
-        "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/approval-gate-timeout.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -3358,9 +3318,14 @@
     {
       "from": "plugin:kubeclaw.human-approval",
       "to": "plugin:kubeclaw.notifications",
-      "count": 1,
+      "count": 6,
       "samples": [
-        "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
+        "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts",
+        "skills/nova/pipeline/runners/approval-gate-timeout.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -3416,19 +3381,15 @@
     {
       "from": "plugin:kubeclaw.notifications",
       "to": "adapter:kubeclaw.operator-messaging",
-      "count": 5,
+      "count": 1,
       "samples": [
-        "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-observability.ts",
-        "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-values.ts",
-        "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/services/preview-delivery.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/services/preview-delivery.ts -> skills/nova/pipeline/services/discord-fields.ts"
+        "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-webhook.ts"
       ]
     },
     {
       "from": "plugin:kubeclaw.notifications",
       "to": "core:pipeline-core-execution",
-      "count": 14,
+      "count": 26,
       "samples": [
         "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/deps.ts",
         "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/logger.ts",
@@ -3436,20 +3397,30 @@
         "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/runtime.ts",
         "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/egress.ts",
         "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/optional-absence.ts",
-        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/core/logger.ts",
-        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/core/runtime.ts",
-        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/egress.ts",
-        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/noncritical-reporting.ts",
-        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/optional-absence.ts",
-        "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/core/constants.ts"
+        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts",
+        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts",
+        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts",
+        "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/services/observability.ts",
+        "skills/nova/pipeline/integrations/discord-operator.ts -> skills/nova/pipeline/optional-absence.ts",
+        "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/egress.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.notifications",
+      "to": "core:pipeline-core-state",
+      "count": 2,
+      "samples": [
+        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts",
+        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts"
       ]
     },
     {
       "from": "plugin:kubeclaw.notifications",
       "to": "plugin-sdk:pipeline-plugin-sdk",
-      "count": 1,
+      "count": 2,
       "samples": [
-        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts"
+        "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts",
+        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts"
       ]
     },
     {
@@ -3461,19 +3432,19 @@
       ]
     },
     {
+      "from": "plugin:kubeclaw.notifications",
+      "to": "shared-library:kubeclaw.pipeline-primitives",
+      "count": 1,
+      "samples": [
+        "skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts"
+      ]
+    },
+    {
       "from": "plugin:kubeclaw.pipeline-review",
       "to": "adapter:kubeclaw.artifacts",
       "count": 1,
       "samples": [
         "skills/nova/pipeline/services/pipeline-review-instructions.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.pipeline-review",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
@@ -3536,6 +3507,14 @@
     },
     {
       "from": "plugin:kubeclaw.pipeline-review",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.pipeline-review",
       "to": "plugin:kubeclaw.project-summary",
       "count": 4,
       "samples": [
@@ -3570,17 +3549,6 @@
         "skills/nova/pipeline/services/summary-writer.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
         "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
         "tests/skills/nova/pipeline/tools/project-summary.test.mjs -> skills/common/pipeline/portable-artifacts.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.project-summary",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 4,
-      "samples": [
-        "skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/tools/project-summary-runner.ts -> skills/nova/pipeline/integrations/discord.ts"
       ]
     },
     {
@@ -3649,6 +3617,17 @@
     },
     {
       "from": "plugin:kubeclaw.project-summary",
+      "to": "plugin:kubeclaw.notifications",
+      "count": 4,
+      "samples": [
+        "skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/tools/project-summary-runner.ts -> skills/nova/pipeline/integrations/discord.ts"
+      ]
+    },
+    {
+      "from": "plugin:kubeclaw.project-summary",
       "to": "plugin:kubeclaw.pipeline-review",
       "count": 2,
       "samples": [
@@ -3662,17 +3641,6 @@
       "count": 1,
       "samples": [
         "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/git-worktree.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.review",
-      "to": "adapter:kubeclaw.operator-messaging",
-      "count": 4,
-      "samples": [
-        "skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/discord-fields.ts"
       ]
     },
     {
@@ -3762,8 +3730,12 @@
     {
       "from": "plugin:kubeclaw.review",
       "to": "plugin:kubeclaw.notifications",
-      "count": 1,
+      "count": 5,
       "samples": [
+        "skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+        "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/discord-fields.ts",
         "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
       ]
     },
@@ -7129,7 +7101,7 @@
       "effects": [
         {
           "id": "git.execute",
-          "line": 1248,
+          "line": 1295,
           "evidence": "\"command\": \"git diff --check\",",
           "adapter": "kubeclaw.git"
         }
@@ -9642,6 +9614,7 @@
         "id": "kubeclaw.buster-worker",
         "ruleId": "plugin-buster-worker",
         "shadowedRuleIds": [
+          "observer-notifications",
           "adapter-operator",
           "plugin-sdk-contracts"
         ]
@@ -9669,6 +9642,7 @@
         "id": "kubeclaw.buster-worker",
         "ruleId": "plugin-buster-worker",
         "shadowedRuleIds": [
+          "observer-notifications",
           "adapter-operator"
         ]
       },
@@ -17979,10 +17953,11 @@
       "area": "skills/common/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "plugin-sdk-contracts",
           "shared-pipeline-primitives"
         ]
@@ -18011,10 +17986,11 @@
       "area": "skills/common/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "shared-pipeline-primitives"
         ]
       },
@@ -22663,121 +22639,139 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 124,
+          "line": 128,
           "evidence": "assert.equal(fs.existsSync(hookMarker), false);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 143,
+          "line": 171,
+          "evidence": "assert.equal(fs.readFileSync(path.join(workspace, 'remote.txt'), 'utf8'), 'upstream change\\n');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 185,
           "evidence": "assert.equal(fs.readFileSync(path.join(workspace, 'merge.txt'), 'utf8'), 'merged content\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 12,
+          "line": 13,
           "evidence": "fs.mkdirSync(repository);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 13,
+          "line": 14,
           "evidence": "fs.mkdirSync(workspaceRoot);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 14,
+          "line": 15,
           "evidence": "fs.mkdirSync(deniedRoot);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 36,
+          "line": 38,
           "evidence": "fs.writeFileSync(path.join(repository, 'selected.txt'), 'initial selected\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 37,
+          "line": 39,
           "evidence": "fs.writeFileSync(path.join(repository, 'unrelated.txt'), 'initial unrelated\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 38,
+          "line": 40,
           "evidence": "fs.writeFileSync(path.join(repository, 'merge.txt'), 'initial merge\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 107,
+          "line": 111,
           "evidence": "fs.mkdirSync(hookDir);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 109,
+          "line": 113,
           "evidence": "fs.writeFileSync(hook, `#!/bin/sh\\nprintf hook > ${JSON.stringify(hookMarker)}\\nexit 1\\n`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 113,
+          "line": 117,
           "evidence": "fs.writeFileSync(path.join(workspace, 'selected.txt'), 'committed selected\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 114,
+          "line": 118,
           "evidence": "fs.writeFileSync(path.join(workspace, 'unrelated.txt'), 'staged but unrelated\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 132,
+          "line": 153,
+          "evidence": "fs.writeFileSync(path.join(repository, 'remote.txt'), 'upstream change\\n');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 174,
           "evidence": "fs.writeFileSync(path.join(repository, 'merge.txt'), 'merged content\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 183,
+          "line": 233,
           "evidence": "fs.mkdirSync(outside);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 184,
+          "line": 234,
           "evidence": "fs.writeFileSync(path.join(outside, 'secret.txt'), 'secret');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 206,
+          "line": 256,
           "evidence": "fs.writeFileSync(file, `#!/bin/sh\\n${body}\\n`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 277,
+          "line": 327,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "git.execute",
-          "line": 15,
+          "line": 17,
           "evidence": "const gitExecutable = fs.realpathSync(execFileSync('/usr/bin/env', ['which', 'git'], { encoding: 'utf8' }).trim());",
           "adapter": "kubeclaw.git"
         },
         {
           "id": "command.execute",
-          "line": 15,
+          "line": 16,
+          "evidence": "execFileSync('/usr/bin/git', ['init', '--bare', remote]);",
+          "adapter": "kubeclaw.command"
+        },
+        {
+          "id": "command.execute",
+          "line": 17,
           "evidence": "const gitExecutable = fs.realpathSync(execFileSync('/usr/bin/env', ['which', 'git'], { encoding: 'utf8' }).trim());",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 18,
+          "line": 20,
           "evidence": "return execFileSync(gitExecutable, args, { cwd, encoding: 'utf8' }).trim();",
           "adapter": "kubeclaw.command"
         }
@@ -24874,6 +24868,278 @@
         "ruleId": "plugin-operator-messaging",
         "shadowedRuleIds": [
           "adapter-operator"
+        ]
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/README.md",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [
+        {
+          "id": "redis.execute",
+          "line": 3,
+          "evidence": "Replaceable Redis Streams providers for `transport.publish` and",
+          "adapter": "kubeclaw.redis"
+        },
+        {
+          "id": "telemetry.emit",
+          "line": 4,
+          "evidence": "`telemetry.emit`. The package owns Redis protocol, authentication, stream",
+          "adapter": "kubeclaw.telemetry-transport"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/package.json",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [
+        {
+          "id": "redis.execute",
+          "line": 1,
+          "evidence": "{\"id\":\"kubeclaw.redis-transport\",\"apiVersion\":\"pipeline-plugin-v2\",\"packageVersion\":\"1.0.0\",\"stages\":[],\"observers\":[],\"adapters\":[{\"id\":\"publisher\",\"module\":\"dist/adapter.js\",\"export\":\"activatePublisher\",\"providesCapabilities\":[\"transport.",
+          "adapter": "kubeclaw.redis"
+        },
+        {
+          "id": "telemetry.emit",
+          "line": 1,
+          "evidence": "{\"id\":\"kubeclaw.redis-transport\",\"apiVersion\":\"pipeline-plugin-v2\",\"packageVersion\":\"1.0.0\",\"stages\":[],\"observers\":[],\"adapters\":[{\"id\":\"publisher\",\"module\":\"dist/adapter.js\",\"export\":\"activatePublisher\",\"providesCapabilities\":[\"transport.",
+          "adapter": "kubeclaw.telemetry-transport"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [
+        "activatePublisher",
+        "activateTelemetry"
+      ],
+      "imports": [
+        {
+          "specifier": "@kubeclaw/plugin-sdk",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:net",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:tls",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "redis.execute",
+          "line": 130,
+          "evidence": "? { capability: 'transport.publish', operation: 'publish', resource: 'transport.target' }",
+          "adapter": "kubeclaw.redis"
+        },
+        {
+          "id": "telemetry.emit",
+          "line": 131,
+          "evidence": ": { capability: 'telemetry.emit', operation: 'append', resource: 'telemetry.event' };",
+          "adapter": "kubeclaw.telemetry-transport"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:net",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "redis.execute",
+          "line": 49,
+          "evidence": "assert.deepEqual(await invoke(publisher, 'transport.publish', 'publish', 'transport.target', 'audit'), {",
+          "adapter": "kubeclaw.redis"
+        },
+        {
+          "id": "telemetry.emit",
+          "line": 54,
+          "evidence": "assert.deepEqual(await invoke(telemetry, 'telemetry.emit', 'append', 'telemetry.event', 'pipeline.completed'), {",
+          "adapter": "kubeclaw.telemetry-transport"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
+        ]
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 3,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 6,
+          "evidence": "const source = fs.readFileSync('src/adapter.ts', 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "redis.execute",
+          "line": 5,
+          "evidence": "assert.deepEqual(manifest.adapters.map((entry) => entry.providesCapabilities), [['transport.publish'], ['telemetry.emit']]);",
+          "adapter": "kubeclaw.redis"
+        },
+        {
+          "id": "telemetry.emit",
+          "line": 5,
+          "evidence": "assert.deepEqual(manifest.adapters.map((entry) => entry.providesCapabilities), [['transport.publish'], ['telemetry.emit']]);",
+          "adapter": "kubeclaw.telemetry-transport"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tsconfig.json",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "adapter",
+        "id": "kubeclaw.redis-transport",
+        "ruleId": "plugin-redis-transport",
+        "shadowedRuleIds": [
+          "adapter-redis"
         ]
       },
       "exports": [],
@@ -30443,10 +30709,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "nova-core-fallback"
         ]
       },
@@ -30494,10 +30761,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "nova-core-fallback"
         ]
       },
@@ -30525,10 +30793,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "nova-core-fallback"
         ]
       },
@@ -30601,10 +30870,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "nova-core-fallback"
         ]
       },
@@ -42680,10 +42950,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "plugin-sdk-contracts",
           "nova-core-fallback"
         ]
@@ -42707,10 +42978,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "nova-core-fallback"
         ]
       },
@@ -47651,10 +47923,11 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.operator-messaging",
-        "ruleId": "adapter-operator",
+        "kind": "plugin",
+        "id": "kubeclaw.notifications",
+        "ruleId": "observer-notifications",
         "shadowedRuleIds": [
+          "adapter-operator",
           "core-execution",
           "nova-core-fallback"
         ]
@@ -62046,6 +62319,7 @@
         "id": "kubeclaw.buster-worker",
         "ruleId": "plugin-buster-worker",
         "shadowedRuleIds": [
+          "observer-notifications",
           "adapter-operator",
           "verification-core"
         ]

@@ -13,7 +13,7 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 
 | Files | Runtime/support | Exported surfaces | Local imports | Runtime effects | Legacy runtime/all | Hardcoding runtime/all | Registrations | Unclassified |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1461 | 1145 / 316 | 3757 | 3524 | 1199 | 107 / 181 | 71 / 205 | 20 | 0 |
+| 1469 | 1153 / 316 | 3759 | 3524 | 1214 | 107 / 181 | 71 / 205 | 20 | 0 |
 
 ## Target Ownership
 
@@ -26,8 +26,9 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 | adapter:kubeclaw.git-workspace | 8 |
 | adapter:kubeclaw.network-http | 8 |
 | adapter:kubeclaw.openclaw-agent-events | 8 |
-| adapter:kubeclaw.operator-messaging | 22 |
+| adapter:kubeclaw.operator-messaging | 13 |
 | adapter:kubeclaw.redis | 27 |
+| adapter:kubeclaw.redis-transport | 8 |
 | adapter:kubeclaw.runtime-dispatch | 63 |
 | adapter:kubeclaw.secret-resolver | 8 |
 | adapter:kubeclaw.state-store | 8 |
@@ -61,7 +62,7 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 | plugin:kubeclaw.implementation-agent | 12 |
 | plugin:kubeclaw.lint | 82 |
 | plugin:kubeclaw.notification-observer | 10 |
-| plugin:kubeclaw.notifications | 7 |
+| plugin:kubeclaw.notifications | 16 |
 | plugin:kubeclaw.openclaw-agent-observer | 26 |
 | plugin:kubeclaw.pipeline-review | 17 |
 | plugin:kubeclaw.preflight-contract | 13 |
@@ -148,16 +149,16 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 
 | Effect | Detected calls | Target adapter |
 | --- | --- | --- |
-| command.execute | 51 | kubeclaw.command |
-| filesystem.read | 512 | kubeclaw.artifacts |
-| filesystem.write | 373 | kubeclaw.artifacts |
+| command.execute | 52 | kubeclaw.command |
+| filesystem.read | 515 | kubeclaw.artifacts |
+| filesystem.write | 374 | kubeclaw.artifacts |
 | git.execute | 44 | kubeclaw.git |
 | network.http | 8 | kubeclaw.network |
 | operator.notify | 23 | kubeclaw.operator-messaging |
-| redis.execute | 102 | kubeclaw.redis |
+| redis.execute | 107 | kubeclaw.redis |
 | runtime.dispatch | 25 | kubeclaw.runtime-dispatch |
 | secret.read | 40 | kubeclaw.secrets |
-| telemetry.emit | 21 | kubeclaw.telemetry-transport |
+| telemetry.emit | 26 | kubeclaw.telemetry-transport |
 
 ## Legacy Contract Ledger
 
@@ -199,31 +200,28 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | adapter:kubeclaw.git | core:pipeline-core-execution | 11 | `skills/common/pipeline/git-primitives.ts -> skills/common/pipeline/runtime-environment.ts`<br>`skills/common/pipeline/git-primitives.ts -> skills/common/pipeline/security.ts`<br>`skills/common/pipeline/integrations/git-worktree-module-merge.ts -> skills/common/pipeline/security.ts` |
 | adapter:kubeclaw.git | plugin:kubeclaw.buster-worker | 2 | `tests/skills/nova/pipeline/integrations/git-worktree.test.mjs -> skills/buster/pipeline/services/task-lifecycle/git-sync.ts`<br>`tests/skills/nova/pipeline/integrations/git-worktree.test.mjs -> skills/nova/pipeline/services/git-sync-before-buster.ts` |
 | adapter:kubeclaw.git | shared-library:kubeclaw.pipeline-primitives | 11 | `skills/common/pipeline/git-primitives.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/git-primitives.ts -> skills/common/pipeline/platform-config.ts`<br>`skills/common/pipeline/integrations/git-worktree-module-merge.ts -> skills/common/pipeline/optional-absence.ts` |
-| adapter:kubeclaw.operator-messaging | core:pipeline-core-execution | 12 | `skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts`<br>`skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts` |
-| adapter:kubeclaw.operator-messaging | core:pipeline-core-state | 2 | `skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts` |
-| adapter:kubeclaw.operator-messaging | plugin-sdk:pipeline-plugin-sdk | 2 | `skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts`<br>`skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts` |
-| adapter:kubeclaw.operator-messaging | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-audit.ts` |
-| adapter:kubeclaw.operator-messaging | shared-library:kubeclaw.pipeline-primitives | 2 | `skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts` |
-| adapter:kubeclaw.redis | adapter:kubeclaw.operator-messaging | 1 | `skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts` |
+| adapter:kubeclaw.operator-messaging | plugin-sdk:pipeline-plugin-sdk | 1 | `skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts` |
+| adapter:kubeclaw.operator-messaging | plugin:kubeclaw.notifications | 1 | `tests/skills/nova/pipeline/integrations/discord.test.mjs -> skills/nova/pipeline/integrations/discord.ts` |
+| adapter:kubeclaw.operator-messaging | shared-library:kubeclaw.pipeline-primitives | 1 | `skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts` |
 | adapter:kubeclaw.redis | core:pipeline-core-execution | 20 | `skills/common/pipeline/services/redis-wait.ts -> skills/common/pipeline/timing.ts`<br>`skills/nova/pipeline/services/completion-redis-event-adapter.ts -> skills/nova/pipeline/core/paths.ts`<br>`skills/nova/pipeline/services/completion-redis-event-adapter.ts -> skills/nova/pipeline/services/event-adapter-support.ts` |
 | adapter:kubeclaw.redis | core:pipeline-core-state | 1 | `skills/nova/pipeline/services/redis-completion.ts -> skills/nova/pipeline/services/completion-identity-values.ts` |
 | adapter:kubeclaw.redis | core:pipeline-core-telemetry | 4 | `skills/nova/pipeline/services/completion-redis-event-adapter.ts -> skills/nova/pipeline/telemetry.ts`<br>`skills/nova/pipeline/services/polling-redis-completion.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/runtime-redis-preflight.ts -> skills/nova/pipeline/telemetry.ts` |
 | adapter:kubeclaw.redis | plugin-sdk:pipeline-plugin-sdk | 5 | `skills/common/pipeline/services/redis-message-contract.ts -> skills/common/pipeline/value-boundary.ts`<br>`skills/common/pipeline/services/redis-wait.ts -> skills/common/pipeline/services/pipeline-event-contract.ts`<br>`skills/common/pipeline/services/task-transport-contract.ts -> skills/common/pipeline/operation-result.ts` |
+| adapter:kubeclaw.redis | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | adapter:kubeclaw.redis | shared-library:kubeclaw.agent-observability-contract | 1 | `skills/nova/pipeline/services/runtime-redis-preflight.ts -> skills/nova/pipeline/services/agent-observability-config.ts` |
 | adapter:kubeclaw.redis | shared-library:kubeclaw.pipeline-primitives | 4 | `skills/common/pipeline/redis-transport.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/services/redis-message-contract.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/services/redis-wait-recovery.ts -> skills/common/pipeline/optional-absence.ts` |
-| adapter:kubeclaw.runtime-dispatch | adapter:kubeclaw.operator-messaging | 4 | `skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | adapter:kubeclaw.runtime-dispatch | core:pipeline-core-execution | 44 | `skills/common/pipeline/agents/acp-monitor-events.ts -> skills/common/pipeline/timing.ts`<br>`skills/common/pipeline/agents/acp-monitor-wait.ts -> skills/common/pipeline/timing.ts`<br>`skills/common/pipeline/agents/acpx-cleanup.ts -> skills/common/pipeline/security.ts` |
 | adapter:kubeclaw.runtime-dispatch | core:pipeline-core-state | 3 | `skills/nova/pipeline/agents/module-worker-support.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/agents/shutdown.ts -> skills/nova/pipeline/lifecycle-state.ts`<br>`skills/nova/pipeline/agents/shutdown.ts -> skills/nova/pipeline/services/status-store.ts` |
 | adapter:kubeclaw.runtime-dispatch | core:pipeline-core-telemetry | 3 | `skills/nova/pipeline/agents/orchestration-healthcheck.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/agents/shutdown.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/acp-observability.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | adapter:kubeclaw.runtime-dispatch | plugin-sdk:pipeline-plugin-sdk | 3 | `skills/common/pipeline/agents/acp-monitor-events.ts -> skills/common/pipeline/services/pipeline-event-contract.ts`<br>`skills/common/pipeline/agents/acp-monitor-wait.ts -> skills/common/pipeline/services/pipeline-event-contract.ts`<br>`skills/nova/pipeline/agents/module-worker-control-results.ts -> skills/nova/pipeline/services/contracts/worker-control-result.ts` |
 | adapter:kubeclaw.runtime-dispatch | plugin:kubeclaw.buster-worker | 2 | `skills/nova/pipeline/agents/module-workers.ts -> skills/nova/pipeline/agents/module-worker-buster.ts`<br>`skills/nova/pipeline/agents/orchestration.ts -> skills/nova/pipeline/agents/orchestration-buster-payload.ts` |
 | adapter:kubeclaw.runtime-dispatch | plugin:kubeclaw.forge | 1 | `skills/nova/pipeline/agents/module-workers.ts -> skills/nova/pipeline/agents/module-worker-forge.ts` |
+| adapter:kubeclaw.runtime-dispatch | plugin:kubeclaw.notifications | 4 | `skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | adapter:kubeclaw.runtime-dispatch | shared-library:kubeclaw.agent-observability-contract | 3 | `skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/agent-observability-required.ts`<br>`skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/agent-observability-required.ts`<br>`skills/nova/pipeline/agents/spawn-observability.ts -> skills/nova/pipeline/services/agent-observability-required.ts` |
 | adapter:kubeclaw.runtime-dispatch | shared-library:kubeclaw.pipeline-primitives | 18 | `skills/common/pipeline/agents/acp-monitor-events.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/agents/acp-monitor-state.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/agents/acp-monitor-transcript.ts -> skills/common/pipeline/optional-absence.ts` |
 | core:pipeline-core-execution | adapter:kubeclaw.artifacts | 14 | `skills/common/pipeline/run-discovery.ts -> skills/common/pipeline/portable-artifacts.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-degraded-evidence.ts -> skills/nova/pipeline/services/artifact-bundle.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-scheduling/snapshots.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
 | core:pipeline-core-execution | adapter:kubeclaw.command | 1 | `skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/command-runtime.ts` |
 | core:pipeline-core-execution | adapter:kubeclaw.git | 4 | `skills/nova/pipeline/core/git-context.ts -> skills/nova/pipeline/git-primitives.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-module-batch.ts -> skills/nova/pipeline/integrations/git-worktree.ts`<br>`skills/nova/pipeline/services/polling-session-end-runtime.ts -> skills/nova/pipeline/integrations/git-worktree.ts` |
-| core:pipeline-core-execution | adapter:kubeclaw.operator-messaging | 26 | `skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | core:pipeline-core-execution | adapter:kubeclaw.redis | 10 | `skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/services/runtime-redis-preflight.ts`<br>`skills/nova/pipeline/services/adapter-registry.ts -> skills/nova/pipeline/tools/redis.ts`<br>`skills/nova/pipeline/services/completion-event-adapters.ts -> skills/nova/pipeline/services/completion-redis-event-adapter.ts` |
 | core:pipeline-core-execution | adapter:kubeclaw.runtime-dispatch | 26 | `skills/nova/pipeline/cli.ts -> skills/nova/pipeline/agents/shutdown.ts`<br>`skills/nova/pipeline/core/policy.ts -> skills/nova/pipeline/agents/runtime.ts`<br>`skills/nova/pipeline/index.ts -> skills/nova/pipeline/agents/shutdown.ts` |
 | core:pipeline-core-execution | core:pipeline-core-config | 3 | `skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/core/config/platform.ts`<br>`skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/config/platform.ts`<br>`skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/config/platform.ts` |
@@ -238,7 +236,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | core:pipeline-core-execution | plugin:kubeclaw.buster-worker | 1 | `skills/nova/pipeline/services/polling-dual.ts -> skills/nova/pipeline/services/buster-completion-controller.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.forge | 3 | `skills/nova/pipeline/services/polling-wrappers.ts -> skills/nova/pipeline/services/polling-forge.ts`<br>`skills/nova/pipeline/services/polling.ts -> skills/nova/pipeline/services/polling-forge.ts`<br>`tests/skills/nova/pipeline/services/polling.test.mjs -> skills/nova/pipeline/services/forge-completion.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.lint | 1 | `skills/nova/pipeline/services/module-lint-validators.ts -> skills/nova/pipeline/services/lint.ts` |
-| core:pipeline-core-execution | plugin:kubeclaw.notifications | 2 | `skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/preview-delivery.ts`<br>`skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/durable-operator-alert.ts` |
+| core:pipeline-core-execution | plugin:kubeclaw.notifications | 28 | `skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.project-summary | 2 | `skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/services/summary.ts`<br>`skills/nova/pipeline/services/adapter-registry.ts -> skills/nova/pipeline/tools/project-summary.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.telemetry-observers | 3 | `skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/telemetry-stream.ts`<br>`skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/telemetry-stream.ts`<br>`skills/nova/pipeline/services/system-io-warning.ts -> skills/nova/pipeline/services/telemetry-stream.ts` |
 | core:pipeline-core-execution | shared-library:kubeclaw.agent-observability-contract | 1 | `skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts` |
@@ -271,7 +269,6 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | core:pipeline-core-verification | plugin:kubeclaw.buster-worker | 1 | `tests/skills/nova/pipeline/services/completion-event-adapters.test.mjs -> skills/nova/pipeline/services/buster-completion-controller.ts` |
 | core:pipeline-core-verification | shared-library:kubeclaw.pipeline-primitives | 3 | `tests/skills/common/pipeline/egress.test.mjs -> skills/common/pipeline/egress.ts`<br>`tests/skills/common/pipeline/noncritical-reporting.test.mjs -> skills/common/pipeline/noncritical-reporting.ts`<br>`tests/skills/common/pipeline/platform-config.test.mjs -> skills/common/pipeline/platform-config.ts` |
 | delete:legacy-kind-schedulers | adapter:kubeclaw.git | 1 | `skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/git-worktree.ts` |
-| delete:legacy-kind-schedulers | adapter:kubeclaw.operator-messaging | 9 | `skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | delete:legacy-kind-schedulers | adapter:kubeclaw.runtime-dispatch | 7 | `skills/nova/pipeline/runners/module-runner-shared.ts -> skills/nova/pipeline/agents/orchestration.ts`<br>`skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/agents/lifecycle.ts`<br>`skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/agents/orchestration.ts` |
 | delete:legacy-kind-schedulers | core:pipeline-core-execution | 82 | `skills/nova/pipeline/runners/gate-runner.ts -> skills/nova/pipeline/core/deps.ts`<br>`skills/nova/pipeline/runners/gate-runner.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/runners/gate-runner.ts -> skills/nova/pipeline/core/registry-access.ts` |
 | delete:legacy-kind-schedulers | core:pipeline-core-state | 24 | `skills/nova/pipeline/runners/gate-runner.ts -> skills/nova/pipeline/services/status-store.ts`<br>`skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/lifecycle-state.ts`<br>`skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/correlation.ts` |
@@ -282,6 +279,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | delete:legacy-kind-schedulers | plugin:kubeclaw.blueprint-sync | 1 | `skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/services/blueprint.ts` |
 | delete:legacy-kind-schedulers | plugin:kubeclaw.buster-worker | 7 | `skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/buster-dispatch-identity.ts`<br>`skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/core/buster-config.ts`<br>`skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/prompts/buster-module.ts` |
 | delete:legacy-kind-schedulers | plugin:kubeclaw.forge | 3 | `skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/prompts/forge.ts`<br>`skills/nova/pipeline/runners/module-runner/state-machine.ts -> skills/nova/pipeline/runners/module-runner-forge.ts`<br>`tests/skills/nova/pipeline/runners/module-runner-worker-lifecycle.test.mjs -> skills/nova/pipeline/runners/module-runner-forge.ts` |
+| delete:legacy-kind-schedulers | plugin:kubeclaw.notifications | 9 | `skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | delete:legacy-kind-schedulers | plugin:kubeclaw.review | 1 | `tests/skills/nova/pipeline/runners/gate-runner-control.test.mjs -> skills/nova/pipeline/runners/review-gate-control.ts` |
 | delete:legacy-mixed-validation-contract | core:pipeline-core-execution | 2 | `skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/optional-absence.ts` |
 | delete:legacy-mixed-validation-contract | plugin:kubeclaw.preflight-contract | 1 | `skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-blueprint.ts` |
@@ -302,18 +300,18 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | delete:legacy-plugin-bridges | plugin:kubeclaw.human-approval | 1 | `skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/runners/approval-gate-runner.ts` |
 | delete:legacy-plugin-bridges | plugin:kubeclaw.project-summary | 1 | `skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/summary.ts` |
 | delete:legacy-plugin-bridges | plugin:kubeclaw.review | 1 | `skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/runners/review-gate-runner.ts` |
-| delete:legacy-telemetry-registry-contract | adapter:kubeclaw.operator-messaging | 1 | `skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | delete:legacy-telemetry-registry-contract | core:pipeline-core-execution | 5 | `skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/core/runtime.ts`<br>`skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/optional-absence.ts` |
 | delete:legacy-telemetry-registry-contract | core:pipeline-core-state | 1 | `skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/services/serialization.ts` |
 | delete:legacy-telemetry-registry-contract | core:pipeline-core-telemetry | 1 | `tests/skills/nova/pipeline/services/telemetry-sink-contract.test.mjs -> skills/nova/pipeline/services/telemetry/dispatch.ts` |
+| delete:legacy-telemetry-registry-contract | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | delete:legacy-telemetry-registry-contract | plugin:kubeclaw.telemetry-observers | 1 | `skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/services/telemetry-stream.ts` |
 | plugin-sdk:pipeline-plugin-sdk | adapter:kubeclaw.artifacts | 1 | `skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
-| plugin-sdk:pipeline-plugin-sdk | adapter:kubeclaw.operator-messaging | 1 | `skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin-sdk:pipeline-plugin-sdk | adapter:kubeclaw.runtime-dispatch | 1 | `skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/acp-gateway-contract.ts` |
 | plugin-sdk:pipeline-plugin-sdk | core:pipeline-core-execution | 21 | `skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/timing.ts`<br>`skills/nova/pipeline/core/context.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/core/context.ts -> skills/nova/pipeline/core/registry-access.ts` |
 | plugin-sdk:pipeline-plugin-sdk | core:pipeline-core-state | 9 | `skills/nova/pipeline/core/context.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/core/context.ts -> skills/nova/pipeline/services/serialization.ts`<br>`skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/services/serialization.ts` |
 | plugin-sdk:pipeline-plugin-sdk | core:pipeline-core-telemetry | 1 | `tests/skills/common/pipeline/services/rate-limit-contract.test.mjs -> skills/common/pipeline/services/telemetry/payload-schema.ts` |
 | plugin-sdk:pipeline-plugin-sdk | plugin:kubeclaw.human-approval | 1 | `skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/approval-signal-event-contract.ts` |
+| plugin-sdk:pipeline-plugin-sdk | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin-sdk:pipeline-plugin-sdk | plugin:kubeclaw.telemetry-observers | 1 | `skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/services/telemetry-stream.ts` |
 | plugin-sdk:pipeline-plugin-sdk | shared-library:kubeclaw.pipeline-primitives | 4 | `skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/optional-absence.ts`<br>`skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/local-event-emitter.ts`<br>`skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/pipeline-event-errors.ts` |
 | plugin:kubeclaw.agent-observability-evidence | core:pipeline-core-execution | 1 | `skills/nova/pipeline/services/agent-observability-evidence/comparator.ts -> skills/nova/pipeline/optional-absence.ts` |
@@ -327,11 +325,10 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | plugin:kubeclaw.architecture-validator | core:pipeline-core-execution | 16 | `skills/nova/pipeline/services/arch-validator-agent.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/arch-validator-agent.ts -> skills/nova/pipeline/core/policy.ts`<br>`skills/nova/pipeline/services/arch-validator-agent.ts -> skills/nova/pipeline/core/session-policy.ts` |
 | plugin:kubeclaw.blueprint-sync | adapter:kubeclaw.artifacts | 2 | `skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/services/artifact-bundle.ts`<br>`skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
 | plugin:kubeclaw.blueprint-sync | adapter:kubeclaw.git | 2 | `skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/git-worktree.ts`<br>`skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/git-worktree.ts` |
-| plugin:kubeclaw.blueprint-sync | adapter:kubeclaw.operator-messaging | 2 | `skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.blueprint-sync | core:pipeline-core-execution | 10 | `skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/core/paths.ts` |
 | plugin:kubeclaw.blueprint-sync | core:pipeline-core-state | 2 | `skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/services/status-store.ts`<br>`skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/services/status-store.ts` |
+| plugin:kubeclaw.blueprint-sync | plugin:kubeclaw.notifications | 2 | `skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.buster-quality-gate | adapter:kubeclaw.git | 1 | `skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/git-worktree.ts` |
-| plugin:kubeclaw.buster-quality-gate | adapter:kubeclaw.operator-messaging | 8 | `skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.buster-quality-gate | adapter:kubeclaw.redis | 4 | `skills/nova/pipeline/runners/buster-gate-completion.ts -> skills/nova/pipeline/services/redis-completion-policy.ts`<br>`skills/nova/pipeline/runners/buster-gate-completion.ts -> skills/nova/pipeline/services/redis-completion.ts`<br>`skills/nova/pipeline/runners/buster-gate-completion.ts -> skills/nova/pipeline/services/redis-log.ts` |
 | plugin:kubeclaw.buster-quality-gate | adapter:kubeclaw.runtime-dispatch | 2 | `skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/agents/lifecycle.ts`<br>`skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/agents/orchestration.ts` |
 | plugin:kubeclaw.buster-quality-gate | core:pipeline-core-execution | 59 | `skills/nova/pipeline/prompts/buster-gate.ts -> skills/nova/pipeline/core/paths.ts`<br>`skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/core/logger.ts` |
@@ -341,10 +338,11 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | plugin:kubeclaw.buster-quality-gate | plugin-sdk:pipeline-plugin-sdk | 9 | `skills/nova/pipeline/runners/buster-gate-completion.ts -> skills/nova/pipeline/value-boundary.ts`<br>`skills/nova/pipeline/runners/buster-gate-control.ts -> skills/nova/pipeline/services/contracts/gate-control-result.ts`<br>`skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/value-boundary.ts` |
 | plugin:kubeclaw.buster-quality-gate | plugin:kubeclaw.buster-worker | 2 | `skills/nova/pipeline/runners/buster-gate-completion.ts -> skills/nova/pipeline/services/buster-completion-controller.ts`<br>`skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/core/buster-config.ts` |
 | plugin:kubeclaw.buster-quality-gate | plugin:kubeclaw.forge | 2 | `skills/nova/pipeline/runners/buster-gate-fix-cycle.ts -> skills/nova/pipeline/runners/gate-forge-fix-cycle.ts`<br>`skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/prompts/gate-fix.ts` |
+| plugin:kubeclaw.buster-quality-gate | plugin:kubeclaw.notifications | 8 | `skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.buster-quality-gate | shared-library:kubeclaw.prompt-primitives | 1 | `skills/nova/pipeline/prompts/buster-gate.ts -> skills/nova/pipeline/prompts/shared.ts` |
 | plugin:kubeclaw.buster-worker | adapter:kubeclaw.artifacts | 3 | `skills/buster/pipeline/agent-artifact.ts -> skills/common/pipeline/agent-artifact.ts`<br>`skills/buster/pipeline/portable-artifacts.ts -> skills/common/pipeline/portable-artifacts.ts`<br>`skills/nova/pipeline/agents/orchestration-buster-payload.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
 | plugin:kubeclaw.buster-worker | adapter:kubeclaw.git | 3 | `skills/buster/pipeline/git-primitives.ts -> skills/common/pipeline/git-primitives.ts`<br>`skills/buster/pipeline/integrations/git-worktree.ts -> skills/common/pipeline/integrations/git-worktree.ts`<br>`skills/nova/pipeline/services/git-sync-before-buster.ts -> skills/nova/pipeline/integrations/git-worktree.ts` |
-| plugin:kubeclaw.buster-worker | adapter:kubeclaw.operator-messaging | 3 | `skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts`<br>`skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts`<br>`skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts` |
+| plugin:kubeclaw.buster-worker | adapter:kubeclaw.operator-messaging | 1 | `skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts` |
 | plugin:kubeclaw.buster-worker | adapter:kubeclaw.redis | 6 | `skills/buster/pipeline/redis-transport.ts -> skills/common/pipeline/redis-transport.ts`<br>`skills/buster/pipeline/services/redis-message-contract.ts -> skills/common/pipeline/services/redis-message-contract.ts`<br>`skills/buster/pipeline/services/redis-wait.ts -> skills/common/pipeline/services/redis-wait.ts` |
 | plugin:kubeclaw.buster-worker | adapter:kubeclaw.runtime-dispatch | 22 | `skills/buster/pipeline/agents/acp-monitor.ts -> skills/common/pipeline/agents/acp-monitor.ts`<br>`skills/buster/pipeline/agents/lifecycle.ts -> skills/common/pipeline/agents/lifecycle.ts`<br>`skills/buster/pipeline/agents/runtime.ts -> skills/common/pipeline/agents/runtime.ts` |
 | plugin:kubeclaw.buster-worker | core:pipeline-core-execution | 38 | `skills/buster/pipeline/cli-args.ts -> skills/common/pipeline/cli-args.ts`<br>`skills/buster/pipeline/run-discovery.ts -> skills/common/pipeline/run-discovery.ts`<br>`skills/buster/pipeline/runtime-state-paths.ts -> skills/common/pipeline/runtime-state-paths.ts` |
@@ -354,19 +352,19 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | plugin:kubeclaw.buster-worker | delete:legacy-plugin-bridges | 1 | `skills/nova/pipeline/runners/module-runner-buster-worker.ts -> skills/nova/pipeline/runners/module-runner-plugin-contracts.ts` |
 | plugin:kubeclaw.buster-worker | plugin-sdk:pipeline-plugin-sdk | 6 | `skills/buster/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/pipeline-event-contract.ts`<br>`skills/buster/pipeline/services/rate-limit-contract.ts -> skills/common/pipeline/services/rate-limit-contract.ts`<br>`skills/buster/pipeline/value-boundary.ts -> skills/common/pipeline/value-boundary.ts` |
 | plugin:kubeclaw.buster-worker | plugin:kubeclaw.buster-quality-gate | 1 | `tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs -> skills/nova/pipeline/prompts/buster-gate.ts` |
+| plugin:kubeclaw.buster-worker | plugin:kubeclaw.notifications | 2 | `skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts`<br>`skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.buster-worker | shared-library:kubeclaw.agent-observability-contract | 2 | `skills/buster/pipeline/services/telemetry-artifacts.ts -> skills/buster/pipeline/observability-contract.ts`<br>`skills/nova/pipeline/services/git-sync-before-buster.ts -> skills/nova/pipeline/services/agent-observability-forge-completion.ts` |
 | plugin:kubeclaw.buster-worker | shared-library:kubeclaw.pipeline-primitives | 6 | `skills/buster/pipeline/completion.ts -> skills/common/pipeline/completion.ts`<br>`skills/buster/pipeline/egress.ts -> skills/common/pipeline/egress.ts`<br>`skills/buster/pipeline/noncritical-reporting.ts -> skills/common/pipeline/noncritical-reporting.ts` |
 | plugin:kubeclaw.buster-worker | shared-library:kubeclaw.prompt-primitives | 1 | `skills/nova/pipeline/prompts/buster-module.ts -> skills/nova/pipeline/prompts/shared.ts` |
 | plugin:kubeclaw.case-study | adapter:kubeclaw.artifacts | 1 | `skills/nova/pipeline/services/case-study-instructions.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
-| plugin:kubeclaw.case-study | adapter:kubeclaw.operator-messaging | 1 | `skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.case-study | adapter:kubeclaw.runtime-dispatch | 4 | `skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/agents/runtime.ts`<br>`skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/agents/lifecycle.ts`<br>`skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/agents/runtime.ts` |
 | plugin:kubeclaw.case-study | core:pipeline-core-execution | 15 | `skills/nova/pipeline/services/case-study-instructions.ts -> skills/nova/pipeline/core/paths.ts`<br>`skills/nova/pipeline/services/case-study-instructions.ts -> skills/nova/pipeline/egress.ts`<br>`skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/core/logger.ts` |
 | plugin:kubeclaw.case-study | core:pipeline-core-state | 2 | `skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/services/correlation.ts` |
 | plugin:kubeclaw.case-study | core:pipeline-core-telemetry | 4 | `skills/nova/pipeline/services/case-study-instructions.ts -> skills/nova/pipeline/services/run-facts.ts`<br>`skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | plugin:kubeclaw.case-study | plugin-sdk:pipeline-plugin-sdk | 1 | `skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/contracts/generator-result.ts` |
+| plugin:kubeclaw.case-study | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.case-study | plugin:kubeclaw.project-summary | 3 | `skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/summary-session-values.ts`<br>`skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/summary-session-values.ts`<br>`skills/nova/pipeline/tools/project-summary-case-study.ts -> skills/nova/pipeline/tools/project-summary-formatters-core.ts` |
 | plugin:kubeclaw.forge | adapter:kubeclaw.artifacts | 2 | `skills/nova/pipeline/tools/write-forge-completion.ts -> skills/nova/pipeline/agent-artifact.ts`<br>`tests/skills/nova/pipeline/tools/write-forge-completion.test.mjs -> skills/common/pipeline/agent-artifact.ts` |
-| plugin:kubeclaw.forge | adapter:kubeclaw.operator-messaging | 4 | `skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.forge | adapter:kubeclaw.runtime-dispatch | 9 | `skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-control-results.ts`<br>`skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-input.ts`<br>`skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-result-policy.ts` |
 | plugin:kubeclaw.forge | core:pipeline-core-execution | 56 | `skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/prompts/forge.ts -> skills/nova/pipeline/core/logger.ts` |
 | plugin:kubeclaw.forge | core:pipeline-core-state | 7 | `skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/lifecycle-state.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/correlation.ts` |
@@ -375,44 +373,45 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | plugin:kubeclaw.forge | delete:legacy-plugin-bridges | 1 | `skills/nova/pipeline/runners/module-runner-forge-worker.ts -> skills/nova/pipeline/runners/module-runner-plugin-contracts.ts` |
 | plugin:kubeclaw.forge | plugin-sdk:pipeline-plugin-sdk | 4 | `skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/contracts/pipeline-step-result.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/core/context.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-worker.ts -> skills/nova/pipeline/core/context.ts` |
 | plugin:kubeclaw.forge | plugin:kubeclaw.buster-worker | 1 | `skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-buster-status.ts` |
+| plugin:kubeclaw.forge | plugin:kubeclaw.notifications | 4 | `skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.forge | shared-library:kubeclaw.agent-observability-contract | 3 | `skills/nova/pipeline/services/polling-forge-artifact.ts -> skills/nova/pipeline/services/agent-observability-forge-completion.ts`<br>`skills/nova/pipeline/services/polling-forge-cycle.ts -> skills/nova/pipeline/services/agent-observability-forge-completion.ts`<br>`skills/nova/pipeline/services/polling-forge.ts -> skills/nova/pipeline/services/agent-observability-forge-completion.ts` |
 | plugin:kubeclaw.forge | shared-library:kubeclaw.prompt-primitives | 2 | `skills/nova/pipeline/prompts/forge.ts -> skills/nova/pipeline/prompts/shared.ts`<br>`skills/nova/pipeline/prompts/gate-fix.ts -> skills/nova/pipeline/prompts/shared.ts` |
 | plugin:kubeclaw.human-approval | adapter:kubeclaw.artifacts | 1 | `tests/skills/nova/pipeline/runners/approval-gate-runner.test.mjs -> skills/nova/pipeline/services/artifact-bundle.ts` |
-| plugin:kubeclaw.human-approval | adapter:kubeclaw.operator-messaging | 5 | `skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.human-approval | core:pipeline-core-execution | 27 | `skills/nova/pipeline/runners/approval-gate-control.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/optional-absence.ts` |
 | plugin:kubeclaw.human-approval | core:pipeline-core-state | 2 | `skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/status-store.ts`<br>`skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/status-store.ts` |
 | plugin:kubeclaw.human-approval | core:pipeline-core-telemetry | 5 | `skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/runners/approval-gate-telemetry.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | plugin:kubeclaw.human-approval | plugin-sdk:pipeline-plugin-sdk | 11 | `skills/nova/pipeline/runners/approval-gate-control.ts -> skills/nova/pipeline/services/contracts/gate-control-result.ts`<br>`skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/pipeline-event-contract.ts`<br>`skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/contracts/gate-control-result.ts` |
-| plugin:kubeclaw.human-approval | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts` |
+| plugin:kubeclaw.human-approval | plugin:kubeclaw.notifications | 6 | `skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.lint | core:pipeline-core-execution | 19 | `skills/nova/pipeline/services/lint-format.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/services/lint-scope.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/lint-scope.ts -> skills/nova/pipeline/core/paths.ts` |
 | plugin:kubeclaw.lint | delete:legacy-mixed-validation-contract | 1 | `tests/skills/nova/pipeline/services/validation.test.mjs -> skills/nova/pipeline/services/validation.ts` |
 | plugin:kubeclaw.lint | plugin-sdk:pipeline-plugin-sdk | 7 | `skills/nova/pipeline/services/lint-format.ts -> skills/nova/pipeline/value-boundary.ts`<br>`skills/nova/pipeline/services/lint-scope.ts -> skills/nova/pipeline/value-boundary.ts`<br>`skills/nova/pipeline/services/lint.ts -> skills/nova/pipeline/value-boundary.ts` |
 | plugin:kubeclaw.notifications | adapter:kubeclaw.artifacts | 2 | `skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/services/artifact-bundle.ts`<br>`skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
-| plugin:kubeclaw.notifications | adapter:kubeclaw.operator-messaging | 5 | `skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-observability.ts`<br>`skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-values.ts`<br>`skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/integrations/discord.ts` |
-| plugin:kubeclaw.notifications | core:pipeline-core-execution | 14 | `skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/deps.ts`<br>`skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/runtime-environment.ts` |
-| plugin:kubeclaw.notifications | plugin-sdk:pipeline-plugin-sdk | 1 | `skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts` |
+| plugin:kubeclaw.notifications | adapter:kubeclaw.operator-messaging | 1 | `skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-webhook.ts` |
+| plugin:kubeclaw.notifications | core:pipeline-core-execution | 26 | `skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/deps.ts`<br>`skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/runtime-environment.ts` |
+| plugin:kubeclaw.notifications | core:pipeline-core-state | 2 | `skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts` |
+| plugin:kubeclaw.notifications | plugin-sdk:pipeline-plugin-sdk | 2 | `skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts`<br>`skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts` |
 | plugin:kubeclaw.notifications | plugin:kubeclaw.telemetry-observers | 1 | `skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/services/telemetry-stream.ts` |
+| plugin:kubeclaw.notifications | shared-library:kubeclaw.pipeline-primitives | 1 | `skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts` |
 | plugin:kubeclaw.pipeline-review | adapter:kubeclaw.artifacts | 1 | `skills/nova/pipeline/services/pipeline-review-instructions.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
-| plugin:kubeclaw.pipeline-review | adapter:kubeclaw.operator-messaging | 1 | `skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.pipeline-review | adapter:kubeclaw.runtime-dispatch | 4 | `skills/nova/pipeline/services/pipeline-review-run.ts -> skills/nova/pipeline/agents/runtime.ts`<br>`skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/agents/lifecycle.ts`<br>`skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/agents/runtime.ts` |
 | plugin:kubeclaw.pipeline-review | core:pipeline-core-execution | 17 | `skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/services/rate-limit.ts`<br>`skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/services/text-values.ts` |
 | plugin:kubeclaw.pipeline-review | core:pipeline-core-state | 2 | `skills/nova/pipeline/services/pipeline-review-run.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/services/correlation.ts` |
 | plugin:kubeclaw.pipeline-review | core:pipeline-core-telemetry | 3 | `skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/pipeline-review-run.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/pipeline-review-success.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | plugin:kubeclaw.pipeline-review | plugin-sdk:pipeline-plugin-sdk | 2 | `skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/services/contracts/generator-result.ts`<br>`skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/services/contracts/generator-result.ts` |
+| plugin:kubeclaw.pipeline-review | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.pipeline-review | plugin:kubeclaw.project-summary | 4 | `skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/services/summary-session-values.ts`<br>`skills/nova/pipeline/services/pipeline-review-run.ts -> skills/nova/pipeline/services/summary-session-values.ts`<br>`skills/nova/pipeline/services/pipeline-review-success.ts -> skills/nova/pipeline/services/summary-session-values.ts` |
 | plugin:kubeclaw.preflight-contract | core:pipeline-core-execution | 1 | `skills/nova/pipeline/services/validation-blueprint.ts -> skills/nova/pipeline/core/paths.ts` |
 | plugin:kubeclaw.preflight-contract | delete:legacy-mixed-validation-contract | 1 | `skills/nova/pipeline/services/validation-blueprint.ts -> skills/nova/pipeline/services/validation-contract.ts` |
 | plugin:kubeclaw.project-summary | adapter:kubeclaw.artifacts | 4 | `skills/nova/pipeline/services/summary-persistence.ts -> skills/nova/pipeline/services/artifact-bundle.ts`<br>`skills/nova/pipeline/services/summary-writer.ts -> skills/nova/pipeline/services/artifact-bundle.ts`<br>`skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
-| plugin:kubeclaw.project-summary | adapter:kubeclaw.operator-messaging | 4 | `skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.project-summary | adapter:kubeclaw.runtime-dispatch | 1 | `skills/nova/pipeline/services/summary-session-cleanup.ts -> skills/nova/pipeline/services/acp-gateway-contract.ts` |
 | plugin:kubeclaw.project-summary | core:pipeline-core-execution | 43 | `skills/nova/pipeline/services/summary-persistence.ts -> skills/nova/pipeline/egress.ts`<br>`skills/nova/pipeline/services/summary-persistence.ts -> skills/nova/pipeline/services/evidence-plane.ts`<br>`skills/nova/pipeline/services/summary-persistence.ts -> skills/nova/pipeline/services/governance-context.ts` |
 | plugin:kubeclaw.project-summary | core:pipeline-core-state | 2 | `skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/lifecycle-state.ts`<br>`skills/nova/pipeline/tools/project-summary-pipeline.ts -> skills/nova/pipeline/lifecycle-state.ts` |
 | plugin:kubeclaw.project-summary | core:pipeline-core-telemetry | 3 | `skills/nova/pipeline/services/summary-writer.ts -> skills/nova/pipeline/services/run-facts.ts`<br>`skills/nova/pipeline/services/summary-writer.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | plugin:kubeclaw.project-summary | plugin-sdk:pipeline-plugin-sdk | 1 | `skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/services/contracts/generator-result.ts` |
 | plugin:kubeclaw.project-summary | plugin:kubeclaw.case-study | 3 | `skills/nova/pipeline/services/summary.ts -> skills/nova/pipeline/services/case-study.ts`<br>`skills/nova/pipeline/tools/project-summary-formatters.ts -> skills/nova/pipeline/tools/project-summary-case-study.ts`<br>`skills/nova/pipeline/tools/project-summary-markdown.ts -> skills/nova/pipeline/tools/project-summary-case-study.ts` |
+| plugin:kubeclaw.project-summary | plugin:kubeclaw.notifications | 4 | `skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts` |
 | plugin:kubeclaw.project-summary | plugin:kubeclaw.pipeline-review | 2 | `skills/nova/pipeline/services/summary.ts -> skills/nova/pipeline/services/pipeline-review-run.ts`<br>`skills/nova/pipeline/services/summary.ts -> skills/nova/pipeline/services/pipeline-review-values.ts` |
 | plugin:kubeclaw.review | adapter:kubeclaw.git | 1 | `skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/git-worktree.ts` |
-| plugin:kubeclaw.review | adapter:kubeclaw.operator-messaging | 4 | `skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.review | adapter:kubeclaw.runtime-dispatch | 2 | `skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/agents/lifecycle.ts`<br>`skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/agents/orchestration.ts` |
 | plugin:kubeclaw.review | core:pipeline-core-execution | 36 | `skills/nova/pipeline/prompts/review.ts -> skills/nova/pipeline/core/paths.ts`<br>`skills/nova/pipeline/runners/review-gate-config.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/runners/review-gate-config.ts -> skills/nova/pipeline/services/runtime-defaults.ts` |
 | plugin:kubeclaw.review | core:pipeline-core-state | 6 | `skills/nova/pipeline/runners/review-gate-preparation.ts -> skills/nova/pipeline/services/status-store-lifecycle/refs.ts`<br>`skills/nova/pipeline/runners/review-gate-publication.ts -> skills/nova/pipeline/services/correlation.ts`<br>`skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/correlation.ts` |
@@ -421,7 +420,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | plugin:kubeclaw.review | plugin-sdk:pipeline-plugin-sdk | 3 | `skills/nova/pipeline/runners/review-gate-control.ts -> skills/nova/pipeline/services/contracts/gate-control-result.ts`<br>`skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/value-boundary.ts`<br>`skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/contracts/gate-control-result.ts` |
 | plugin:kubeclaw.review | plugin:kubeclaw.buster-quality-gate | 1 | `skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/prompts/buster-gate.ts` |
 | plugin:kubeclaw.review | plugin:kubeclaw.lint | 1 | `skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/lint.ts` |
-| plugin:kubeclaw.review | plugin:kubeclaw.notifications | 1 | `skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/durable-operator-alert.ts` |
+| plugin:kubeclaw.review | plugin:kubeclaw.notifications | 5 | `skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts`<br>`skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.review | shared-library:kubeclaw.prompt-primitives | 1 | `skills/nova/pipeline/prompts/review.ts -> skills/nova/pipeline/prompts/shared.ts` |
 | plugin:kubeclaw.telemetry-observers | core:pipeline-core-execution | 3 | `skills/nova/pipeline/services/telemetry-stream.ts -> skills/nova/pipeline/egress.ts`<br>`skills/nova/pipeline/services/telemetry-stream.ts -> skills/nova/pipeline/noncritical-reporting.ts`<br>`skills/nova/pipeline/services/telemetry-stream.ts -> skills/nova/pipeline/optional-absence.ts` |
 | plugin:kubeclaw.telemetry-observers | core:pipeline-core-telemetry | 1 | `skills/nova/pipeline/services/telemetry-stream.ts -> skills/nova/pipeline/telemetry.ts` |
@@ -1276,18 +1275,18 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/pipeline/services/acp-gateway-contract.ts` | `validateSessionLifecycleRecord` | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch |
 | `skills/common/pipeline/services/acp-gateway-contract.ts` | `validateSessionTerminationResult` | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch |
 | `skills/common/pipeline/services/approval-signal-event-contract.ts` | `validateApprovalSignalEventPayload` | plugin:kubeclaw.human-approval | plugin-approval |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | `DISCORD_FIELD_SPECS` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | `DISCORD_IDENTITY_FIELD_SETS` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | `DISCORD_IDENTITY_SURFACES` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | `buildDiscordIdentityFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | `buildDiscordIdentitySurfaceFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | `buildSessionRateLimitDiscordFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields.ts` | `DISCORD_FIELD_SPECS` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_FIELD_SETS` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_SURFACES` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields.ts` | `buildDiscordIdentityFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields.ts` | `buildDiscordIdentitySurfaceFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/common/pipeline/services/discord-fields.ts` | `buildSessionRateLimitDiscordFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | `DISCORD_FIELD_SPECS` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | `DISCORD_IDENTITY_FIELD_SETS` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | `DISCORD_IDENTITY_SURFACES` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | `buildDiscordIdentityFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | `buildDiscordIdentitySurfaceFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | `buildSessionRateLimitDiscordFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields.ts` | `DISCORD_FIELD_SPECS` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_FIELD_SETS` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_SURFACES` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields.ts` | `buildDiscordIdentityFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields.ts` | `buildDiscordIdentitySurfaceFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/common/pipeline/services/discord-fields.ts` | `buildSessionRateLimitDiscordFields` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/common/pipeline/services/gateway-invoke-contract.ts` | `assertValidGatewayInvokeResult` | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch |
 | `skills/common/pipeline/services/gateway-invoke-contract.ts` | `buildGatewayInvokeHttpError` | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch |
 | `skills/common/pipeline/services/gateway-invoke-contract.ts` | `normalizeGatewayInvokeResult` | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch |
@@ -1734,6 +1733,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts` | `AgentObserverRedisWriterOptions` | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer |
 | `skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts` | `AgentObserverWriterStats` | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer |
 | `skills/common/plugins/operator-messaging/src/adapter.ts` | `activate` | adapter:kubeclaw.operator-messaging | plugin-operator-messaging |
+| `skills/common/plugins/redis-transport/src/adapter.ts` | `activatePublisher` | adapter:kubeclaw.redis-transport | plugin-redis-transport |
+| `skills/common/plugins/redis-transport/src/adapter.ts` | `activateTelemetry` | adapter:kubeclaw.redis-transport | plugin-redis-transport |
 | `skills/common/plugins/runtime-dispatch/src/adapter.ts` | `activate` | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch |
 | `skills/common/plugins/secret-resolver/src/adapter.ts` | `activate` | adapter:kubeclaw.secret-resolver | plugin-secret-resolver |
 | `skills/common/plugins/state-store/src/adapter.ts` | `activate` | adapter:kubeclaw.state-store | plugin-state-store |
@@ -2046,36 +2047,36 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/integrations/discord-audit.ts` | `discordWebhookDeliveryMuted` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/integrations/discord-audit.ts` | `incrementDiscordNotificationStats` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/integrations/discord-audit.ts` | `resolveInjectedDiscord` | plugin:kubeclaw.notifications | observer-notifications |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordAuditDegraded` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordAuditRestored` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordWebhookDegraded` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordWebhookMissing` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordWebhookRestored` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | `reportDiscordIncident` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-operator.ts` | `normalizeOperatorEmbed` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `AnyRecord` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `DiscordLevel` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `arrayOrEmpty` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `assertDiscordPayloadWithinLimits` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `buildCanonicalDiscordPayload` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `discordReceiptWebhookUrl` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `discordStyle` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `discordWebhookTimeoutMs` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `emptyDiscordCorrelation` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `isPlainRecord` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `mergeDiscordCorrelation` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `normalizeDiscordCorrelation` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `normalizeDiscordLevel` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `normalizedFieldName` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `optionalText` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `recordOrEmpty` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `requireSanitizedEmbeds` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `requiredBoolean` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `requiredText` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord-values.ts` | `textOrEmpty` | adapter:kubeclaw.operator-messaging | adapter-operator |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordAuditDegraded` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordAuditRestored` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordWebhookDegraded` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordWebhookMissing` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | `recordDiscordWebhookRestored` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | `reportDiscordIncident` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-operator.ts` | `normalizeOperatorEmbed` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `AnyRecord` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `DiscordLevel` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `arrayOrEmpty` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `assertDiscordPayloadWithinLimits` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `buildCanonicalDiscordPayload` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `discordReceiptWebhookUrl` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `discordStyle` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `discordWebhookTimeoutMs` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `emptyDiscordCorrelation` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `isPlainRecord` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `mergeDiscordCorrelation` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `normalizeDiscordCorrelation` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `normalizeDiscordLevel` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `normalizedFieldName` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `optionalText` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `recordOrEmpty` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `requireSanitizedEmbeds` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `requiredBoolean` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `requiredText` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord-values.ts` | `textOrEmpty` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/integrations/discord-webhook.ts` | `* from ../../../common/pipeline/integrations/discord-webhook.ts` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord.ts` | `discord` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/integrations/discord.ts` | `discordEmbeds` | adapter:kubeclaw.operator-messaging | adapter-operator |
+| `skills/nova/pipeline/integrations/discord.ts` | `discord` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/integrations/discord.ts` | `discordEmbeds` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/integrations/gateway.ts` | `* from ../../../common/pipeline/integrations/gateway.ts` | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch |
 | `skills/nova/pipeline/integrations/git-worktree.ts` | `* from ../../../common/pipeline/integrations/git-worktree.ts` | adapter:kubeclaw.git | adapter-git |
 | `skills/nova/pipeline/lifecycle-state.ts` | `* from ../../common/pipeline/lifecycle-state.ts` | core:pipeline-core-state | core-state |
@@ -2836,13 +2837,13 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/correlation.ts` | `resolveStatusGatewayLabel` | core:pipeline-core-state | core-state |
 | `skills/nova/pipeline/services/correlation.ts` | `resolveStatusSessionKey` | core:pipeline-core-state | core-state |
 | `skills/nova/pipeline/services/dependencies.ts` | `checkDependencies` | core:pipeline-core-execution | core-execution |
-| `skills/nova/pipeline/services/discord-fields-contract.ts` | `* from ../../../common/pipeline/services/discord-fields-contract.ts` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/services/discord-fields.ts` | `DISCORD_FIELD_SPECS` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_FIELD_SETS` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_SURFACES` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/services/discord-fields.ts` | `buildDiscordIdentityFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/services/discord-fields.ts` | `buildDiscordIdentitySurfaceFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
-| `skills/nova/pipeline/services/discord-fields.ts` | `buildSessionRateLimitDiscordFields` | adapter:kubeclaw.operator-messaging | adapter-operator |
+| `skills/nova/pipeline/services/discord-fields-contract.ts` | `* from ../../../common/pipeline/services/discord-fields-contract.ts` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/services/discord-fields.ts` | `DISCORD_FIELD_SPECS` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_FIELD_SETS` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/services/discord-fields.ts` | `DISCORD_IDENTITY_SURFACES` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/services/discord-fields.ts` | `buildDiscordIdentityFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/services/discord-fields.ts` | `buildDiscordIdentitySurfaceFields` | plugin:kubeclaw.notifications | observer-notifications |
+| `skills/nova/pipeline/services/discord-fields.ts` | `buildSessionRateLimitDiscordFields` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/services/durable-operator-alert.ts` | `appendDurableOperatorAlert` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/services/durable-operator-alert.ts` | `durableOperatorAlertTargets` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/services/event-adapter-support.ts` | `adapterErrorMessage` | core:pipeline-core-execution | nova-core-fallback |
@@ -3146,7 +3147,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/rate-limit-contract.ts` | `* from ../../../common/pipeline/services/rate-limit-contract.ts` | plugin-sdk:pipeline-plugin-sdk | plugin-sdk-contracts |
 | `skills/nova/pipeline/services/rate-limit-cooldown.ts` | `resolveRateLimitCooldown` | core:pipeline-core-execution | core-execution |
 | `skills/nova/pipeline/services/rate-limit-correlation.ts` | `buildRateLimitDiscordCorrelation` | core:pipeline-core-state | core-state |
-| `skills/nova/pipeline/services/rate-limit-discord-notifier.ts` | `createSessionRateLimitDiscordNotifier` | adapter:kubeclaw.operator-messaging | adapter-operator |
+| `skills/nova/pipeline/services/rate-limit-discord-notifier.ts` | `createSessionRateLimitDiscordNotifier` | plugin:kubeclaw.notifications | observer-notifications |
 | `skills/nova/pipeline/services/rate-limit-durable-cooldown.ts` | `resumeDurableCooldownForStep` | core:pipeline-core-execution | core-execution |
 | `skills/nova/pipeline/services/rate-limit-exit-builders.ts` | `buildGateTerminalOwnedRedisRateLimitExitResult` | core:pipeline-core-execution | core-execution |
 | `skills/nova/pipeline/services/rate-limit-exit-builders.ts` | `buildModuleTerminalOwnedRedisRateLimitExitResult` | core:pipeline-core-execution | core-execution |
@@ -4422,8 +4423,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/pipeline/security.ts` | runtime | core:pipeline-core-execution | core-execution | 6 | 0 | 0 | 0 |
 | `skills/common/pipeline/services/acp-gateway-contract.ts` | runtime | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch | 20 | 0 | 0 | 0 |
 | `skills/common/pipeline/services/approval-signal-event-contract.ts` | runtime | plugin:kubeclaw.human-approval | plugin-approval | 1 | 0 | 0 | 0 |
-| `skills/common/pipeline/services/discord-fields-contract.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 6 | 0 | 0 | 0 |
-| `skills/common/pipeline/services/discord-fields.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 6 | 0 | 0 | 0 |
+| `skills/common/pipeline/services/discord-fields-contract.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 6 | 0 | 0 | 0 |
+| `skills/common/pipeline/services/discord-fields.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 6 | 0 | 0 | 0 |
 | `skills/common/pipeline/services/gateway-invoke-contract.ts` | runtime | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch | 5 | 0 | 0 | 0 |
 | `skills/common/pipeline/services/local-event-emitter.ts` | runtime | shared-library:kubeclaw.pipeline-primitives | shared-pipeline-primitives | 1 | 0 | 0 | 0 |
 | `skills/common/pipeline/services/observability-health.ts` | runtime | shared-library:kubeclaw.pipeline-primitives | shared-pipeline-primitives | 1 | 0 | 0 | 0 |
@@ -4532,7 +4533,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/git-workspace/plugin.json` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/git-workspace/schemas/config.schema.json` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/git-workspace/src/adapter.ts` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 1 | 5 | 0 | 0 |
-| `skills/common/plugins/git-workspace/tests/live-function.test.ts` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 20 | 0 | 0 |
+| `skills/common/plugins/git-workspace/tests/live-function.test.ts` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 23 | 0 | 0 |
 | `skills/common/plugins/git-workspace/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 2 | 0 | 0 |
 | `skills/common/plugins/git-workspace/tsconfig.json` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/network-http/README.md` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
@@ -4596,6 +4597,14 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/operator-messaging/tests/live-function.test.ts` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 16 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 4 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/tsconfig.json` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 0 | 0 | 0 |
+| `skills/common/plugins/redis-transport/README.md` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 2 | 0 | 0 |
+| `skills/common/plugins/redis-transport/package.json` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 0 | 0 | 0 |
+| `skills/common/plugins/redis-transport/plugin.json` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 2 | 0 | 0 |
+| `skills/common/plugins/redis-transport/schemas/config.schema.json` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 0 | 0 | 0 |
+| `skills/common/plugins/redis-transport/src/adapter.ts` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 2 | 2 | 0 | 0 |
+| `skills/common/plugins/redis-transport/tests/live-function.test.ts` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 2 | 0 | 0 |
+| `skills/common/plugins/redis-transport/tests/package-boundary.test.ts` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 4 | 0 | 0 |
+| `skills/common/plugins/redis-transport/tsconfig.json` | runtime | adapter:kubeclaw.redis-transport | plugin-redis-transport | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/README.md` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/package.json` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/plugin.json` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
@@ -4729,11 +4738,11 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/git-primitives.ts` | runtime | adapter:kubeclaw.git | adapter-git | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/index.ts` | runtime | core:pipeline-core-execution | core-execution | 11 | 0 | 0 | 0 |
 | `skills/nova/pipeline/integrations/discord-audit.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 5 | 4 | 0 | 0 |
-| `skills/nova/pipeline/integrations/discord-observability.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 6 | 0 | 0 | 0 |
-| `skills/nova/pipeline/integrations/discord-operator.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 1 | 0 | 0 | 0 |
-| `skills/nova/pipeline/integrations/discord-values.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 20 | 0 | 0 | 0 |
+| `skills/nova/pipeline/integrations/discord-observability.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 6 | 0 | 0 | 0 |
+| `skills/nova/pipeline/integrations/discord-operator.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 1 | 0 | 0 | 0 |
+| `skills/nova/pipeline/integrations/discord-values.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 20 | 0 | 0 | 0 |
 | `skills/nova/pipeline/integrations/discord-webhook.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 1 | 0 | 0 | 0 |
-| `skills/nova/pipeline/integrations/discord.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 2 | 0 | 0 | 0 |
+| `skills/nova/pipeline/integrations/discord.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 2 | 0 | 0 | 0 |
 | `skills/nova/pipeline/integrations/gateway.ts` | runtime | adapter:kubeclaw.runtime-dispatch | adapter-runtime-dispatch | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/integrations/git-worktree.ts` | runtime | adapter:kubeclaw.git | adapter-git | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/lifecycle-state.ts` | runtime | core:pipeline-core-state | core-state | 1 | 0 | 0 | 0 |
@@ -4935,8 +4944,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/contracts/worker-control-result.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | plugin-sdk-contracts | 6 | 0 | 4 | 0 |
 | `skills/nova/pipeline/services/correlation.ts` | runtime | core:pipeline-core-state | core-state | 11 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/dependencies.ts` | runtime | core:pipeline-core-execution | core-execution | 1 | 0 | 0 | 0 |
-| `skills/nova/pipeline/services/discord-fields-contract.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 1 | 0 | 0 | 0 |
-| `skills/nova/pipeline/services/discord-fields.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 6 | 0 | 0 | 0 |
+| `skills/nova/pipeline/services/discord-fields-contract.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 1 | 0 | 0 | 0 |
+| `skills/nova/pipeline/services/discord-fields.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 6 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/durable-operator-alert.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 2 | 2 | 0 | 0 |
 | `skills/nova/pipeline/services/event-adapter-support.ts` | runtime | core:pipeline-core-execution | nova-core-fallback | 5 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/evidence-evaluation.ts` | runtime | core:pipeline-core-execution | nova-core-fallback | 1 | 2 | 0 | 0 |
@@ -5015,7 +5024,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/rate-limit-contract.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | plugin-sdk-contracts | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/rate-limit-cooldown.ts` | runtime | core:pipeline-core-execution | core-execution | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/rate-limit-correlation.ts` | runtime | core:pipeline-core-state | core-state | 1 | 0 | 0 | 0 |
-| `skills/nova/pipeline/services/rate-limit-discord-notifier.ts` | runtime | adapter:kubeclaw.operator-messaging | adapter-operator | 1 | 0 | 0 | 0 |
+| `skills/nova/pipeline/services/rate-limit-discord-notifier.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/rate-limit-durable-cooldown.ts` | runtime | core:pipeline-core-execution | core-execution | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/rate-limit-exit-builders.ts` | runtime | core:pipeline-core-execution | core-execution | 3 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/rate-limit-exit-finalizer.ts` | runtime | core:pipeline-core-execution | core-execution | 3 | 2 | 0 | 0 |

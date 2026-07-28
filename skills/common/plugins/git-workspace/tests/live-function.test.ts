@@ -7,11 +7,13 @@ import { pathToFileURL } from 'node:url';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-git-workspace-'));
 const repository = path.join(temporary, 'repository');
+const remote = path.join(temporary, 'origin.git');
 const workspaceRoot = path.join(temporary, 'workspaces');
 const deniedRoot = path.join(temporary, 'denied');
 fs.mkdirSync(repository);
 fs.mkdirSync(workspaceRoot);
 fs.mkdirSync(deniedRoot);
+execFileSync('/usr/bin/git', ['init', '--bare', remote]);
 const gitExecutable = fs.realpathSync(execFileSync('/usr/bin/env', ['which', 'git'], { encoding: 'utf8' }).trim());
 
 function git(cwd, args) {
@@ -38,6 +40,8 @@ fs.writeFileSync(path.join(repository, 'unrelated.txt'), 'initial unrelated\n');
 fs.writeFileSync(path.join(repository, 'merge.txt'), 'initial merge\n');
 git(repository, ['add', '.']);
 gitWithIdentity(repository, ['commit', '-m', 'initial']);
+git(repository, ['remote', 'add', 'origin', remote]);
+git(repository, ['push', '-u', 'origin', 'main']);
 
 const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
 function createAdapter(overrides = {}) {
@@ -127,6 +131,44 @@ try {
   assert.match(git(workspace, ['status', '--porcelain']), /^M  unrelated\.txt$/m);
   git(workspace, ['reset', 'HEAD', '--', 'unrelated.txt']);
   git(workspace, ['checkout', '--', 'unrelated.txt']);
+  const fetched = await invoke(
+    adapter,
+    'git.sync',
+    'fetch',
+    fs.realpathSync(workspace),
+    { remote: 'origin' },
+  );
+  assert.equal(fetched.exitCode, 0);
+  const pushed = await invoke(
+    adapter,
+    'git.sync',
+    'push',
+    fs.realpathSync(workspace),
+    { remote: 'origin', localRef: 'feature', remoteRef: 'feature' },
+  );
+  assert.equal(pushed.exitCode, 0);
+  assert.equal(git(repository, ['ls-remote', '--heads', 'origin', 'feature']).includes('refs/heads/feature'), true);
+
+  git(repository, ['checkout', 'main']);
+  fs.writeFileSync(path.join(repository, 'remote.txt'), 'upstream change\n');
+  git(repository, ['add', 'remote.txt']);
+  gitWithIdentity(repository, ['commit', '-m', 'upstream change']);
+  git(repository, ['push', 'origin', 'main']);
+  assert.equal((await invoke(
+    adapter,
+    'git.sync',
+    'fetch',
+    fs.realpathSync(workspace),
+    { remote: 'origin' },
+  )).exitCode, 0);
+  assert.equal((await invoke(
+    adapter,
+    'git.sync',
+    'rebase',
+    fs.realpathSync(workspace),
+    { upstreamRef: 'origin/main' },
+  )).exitCode, 0);
+  assert.equal(fs.readFileSync(path.join(workspace, 'remote.txt'), 'utf8'), 'upstream change\n');
 
   git(repository, ['checkout', '-b', 'merge-source']);
   fs.writeFileSync(path.join(repository, 'merge.txt'), 'merged content\n');
@@ -163,6 +205,14 @@ try {
   await assert.rejects(
     invoke(adapter, 'git.merge', 'merge', fs.realpathSync(workspace), { sourceRef: '--help' }),
     /GIT_VALUE_INVALID:sourceRef/,
+  );
+  await assert.rejects(
+    invoke(adapter, 'git.sync', 'push', fs.realpathSync(workspace), {
+      remote: '--upload-pack=evil',
+      localRef: 'feature',
+      remoteRef: 'feature',
+    }),
+    /GIT_VALUE_INVALID:remote/,
   );
   await assert.rejects(
     invoke(adapter, 'git.commit', 'commit', fs.realpathSync(workspace), {

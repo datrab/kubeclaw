@@ -126,6 +126,11 @@
       "target": {"kind": "adapter", "id": "kubeclaw.transport-publisher"}
     },
     {
+      "id": "plugin-redis-transport",
+      "prefixes": ["skills/common/plugins/redis-transport/"],
+      "target": {"kind": "adapter", "id": "kubeclaw.redis-transport"}
+    },
+    {
       "id": "plugin-artifact-store",
       "prefixes": ["skills/common/plugins/artifact-store/"],
       "target": {"kind": "plugin", "id": "kubeclaw.artifact-store"}
@@ -353,10 +358,16 @@
         "notification-observers",
         "notification-values",
         "discord-audit",
+        "discord-fields",
+        "discord-observability",
+        "discord-operator",
+        "discord-values",
+        "/integrations/discord.ts",
         "durable-operator-alert",
         "operator-alert",
         "preview-delivery",
-        "preview-credential-format"
+        "preview-credential-format",
+        "rate-limit-discord-notifier"
       ],
       "target": {"kind": "plugin", "id": "kubeclaw.notifications"}
     },

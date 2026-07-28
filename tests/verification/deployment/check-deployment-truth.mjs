@@ -1412,6 +1412,10 @@ assert.equal(generalDockerfile.includes('get-helm-3'), false, 'General Dockerfil
 assertIncludes(generalDockerfile, 'https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl', 'General Dockerfile must install architecture-aware kubectl from the pinned Kubernetes release');
 assertIncludes(generalDockerfile, 'kubectl.sha256', 'General Dockerfile must verify the kubectl release checksum');
 assertIncludes(generalDockerfile, 'install -m 0755 "$tmp/$kubectl_file" /usr/local/bin/kubectl', 'General Dockerfile must install verified kubectl in PATH');
+assertIncludes(busterPipelineDockerfile, 'ARG KUBECTL_SHA256_AMD64=', 'Buster pipeline must pin the amd64 kubectl checksum');
+assertIncludes(busterPipelineDockerfile, 'ARG KUBECTL_SHA256_ARM64=', 'Buster pipeline must pin the arm64 kubectl checksum');
+assertIncludes(busterPipelineDockerfile, '--retry 5 --retry-all-errors', 'Buster pipeline must retry transient kubectl download failures');
+assertIncludes(busterPipelineDockerfile, 'sha256sum -c -', 'Buster pipeline must verify kubectl before installation');
 assert.equal(/\bchromium\b/.test(generalAptInstall), false, 'General Dockerfile must not duplicate Playwright Chromium with the Debian browser package');
 assertIncludes(busterGatewayDockerfile, 'ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:', 'Buster gateway must share the pinned OpenClaw base version');
 assertIncludes(imageBuildWorkflow, 'Verify the pinned base is current', 'Image workflow must compare the pinned OpenClaw digest with the current release');

@@ -48,7 +48,7 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
   ),
   'git.commit': definition(['commit'], ['git.repository', 'git.workspace'], ['allowedRoots']),
   'git.merge': definition(['merge'], ['git.repository', 'git.workspace'], ['allowedRoots']),
-  'git.sync': definition(['sync_paths'], ['git.repository', 'git.workspace'], ['allowedRoots']),
+  'git.sync': definition(['sync_paths', 'fetch', 'rebase', 'push'], ['git.repository', 'git.workspace'], ['allowedRoots']),
   'signal.wait': definition(
     ['create', 'read'],
     ['signal.wait'],

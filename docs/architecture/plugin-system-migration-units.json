@@ -178,6 +178,7 @@
         "adapter:kubeclaw.network-http",
         "adapter:kubeclaw.operator-messaging",
         "adapter:kubeclaw.redis",
+        "adapter:kubeclaw.redis-transport",
         "adapter:kubeclaw.runtime-dispatch",
         "adapter:kubeclaw.secret-resolver",
         "adapter:kubeclaw.state-store",
@@ -198,6 +199,7 @@
         "git-workspace",
         "network-http",
         "operator-messaging",
+        "redis-transport",
         "runtime-dispatch",
         "secret-resolver",
         "state-store",
@@ -238,10 +240,11 @@
           "id": "redis-to-scoped-stores",
           "legacyOwnerIds": ["adapter:kubeclaw.redis"],
           "replacementOwnerIds": [
+            "adapter:kubeclaw.redis-transport",
             "adapter:kubeclaw.wait-store"
           ],
           "status": "paired",
-          "rationale": "The retained Redis wait subset is assigned to the candidate resource-scoped wait adapter; broader Redis transport parity remains blocked."
+          "rationale": "Durable waits move to the resource-scoped wait adapter while Redis Streams publication and telemetry move to a focused replaceable Redis provider."
         },
         {
           "id": "transport-publisher-http-new-foundation",
@@ -279,11 +282,11 @@
           "rationale": "Secret resolution is new confidential v2 foundation; core invokes it transiently so values never enter durable effect requests, receipts, lifecycle events, or replay state."
         },
         {
-          "id": "legacy-operator-messaging-target-pending",
+          "id": "legacy-operator-messaging-to-request-adapter",
           "legacyOwnerIds": ["adapter:kubeclaw.operator-messaging"],
-          "replacementOwnerIds": [],
-          "status": "blocked",
-          "rationale": "The retained Discord surface also owns presentation, compaction, gating, audit, rate-limit notices, and degraded/restored telemetry; the bounded operator.request transport alone is not its complete replacement."
+          "replacementOwnerIds": ["adapter:kubeclaw.operator-messaging"],
+          "status": "paired",
+          "rationale": "Bounded webhook/request transport moves to operator.request; Discord presentation, audit projection, rate-limit notices, and degraded/restored telemetry are separately inventoried as Phase 10 notification-observer behavior."
         },
         {
           "id": "operator-request-new-foundation",
@@ -300,7 +303,7 @@
           "rationale": "Legacy runtime dispatch is replaced by its bounded v2 adapter after exact lifecycle and cancellation parity evidence passes."
         }
       ],
-      "parityBlockers": ["each privileged adapter still needs paired legacy and replacement behavioral tests"],
+      "parityBlockers": [],
       "scenarios": [
         {
           "id": "git-workspace-replacement-live-function",
@@ -310,6 +313,7 @@
           "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/git-workspace",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"rewrite","legacyBehavior":"Git workspaces preserve scoped changes, commits, merges, fetch, rebase, push, conflicts, cancellation, and cleanup.","replacementBehavior":"The v2 Git adapter exposes those operations as bounded fenced capabilities with real-Git evidence.","rationale":"All Git mutation belongs in one transactional adapter rather than stage helpers.","complexityImpact":"Replaces distributed Git helpers with four capability reducers.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -320,6 +324,7 @@
           "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/artifact-store",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"refactor","legacyBehavior":"Artifacts are atomically persisted, content-addressed, namespaced, size-bounded, and integrity checked.","replacementBehavior":"The v2 artifact store preserves those guarantees behind explicit read/write grants and durable receipts.","rationale":"Artifact persistence is cohesive replaceable authority.","complexityImpact":"Removes direct artifact filesystem access from every stage.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -330,6 +335,7 @@
           "path": "skills/common/plugins/command-runner/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/command-runner",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"reuse","legacyBehavior":"Trusted code executes bounded subprocesses with exit, signal, output, timeout, cancellation, and cleanup evidence.","replacementBehavior":"The command adapter preserves the process contract with executable and working-root allowlists.","rationale":"The existing adapter is already the smallest safe subprocess boundary.","complexityImpact":"One process runner replaces shell helpers across plugins.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -340,6 +346,7 @@
           "path": "skills/common/plugins/state-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/state-store",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {"strategy":"reuse","legacyBehavior":"Legacy plugins mixed mutable status files and Redis projections.","replacementBehavior":"The v2 state provider offers append-only registration namespaces, monotonic sequence, idempotency, and deterministic replay.","rationale":"Append-only state is simpler and safer than preserving mutable stores.","complexityImpact":"Deletes mutable projection ownership from plugins.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -350,6 +357,7 @@
           "path": "skills/common/plugins/network-http/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/network-http",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {"strategy":"reuse","legacyBehavior":"Legacy integrations performed direct HTTP calls with service-specific policy.","replacementBehavior":"The v2 adapter centralizes bounded origin, method, header, size, timeout, cancellation, and redirect policy.","rationale":"Generic HTTP transport is independent of domain policy.","complexityImpact":"One allowlisted adapter replaces repeated request code.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -360,6 +368,7 @@
           "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/telemetry-store",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {"strategy":"refactor","legacyBehavior":"Telemetry could be persisted through mixed local and Redis paths.","replacementBehavior":"The local provider owns append-only evidence while Redis transport is a separate interchangeable provider.","rationale":"Storage transports must not be combined in one adapter.","complexityImpact":"Separates local durability from network transport.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -370,6 +379,7 @@
           "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/secret-resolver",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {"strategy":"reuse","legacyBehavior":"Legacy integrations read credentials directly from environment and configuration.","replacementBehavior":"The resolver provides allowlisted transient secret values that never enter durable requests, receipts, or events.","rationale":"Secret resolution is a distinct confidential authority.","complexityImpact":"Removes credential access from all consuming plugins.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -380,6 +390,7 @@
           "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/operator-messaging",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {"strategy":"refactor","legacyBehavior":"Operator messaging mixed transport, authentication, Discord presentation, and notification policy.","replacementBehavior":"The v2 adapter owns only authenticated target-scoped request/response transport; presentation remains observer authority.","rationale":"Transport and presentation have different grants and failure semantics.","complexityImpact":"Narrows the adapter to confidential delivery and correlation.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -390,6 +401,40 @@
           "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/transport-publisher",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {"strategy":"refactor","legacyBehavior":"Legacy publication was embedded in service-specific integrations.","replacementBehavior":"The HTTP publisher provides target-scoped authenticated idempotent publication without domain policy.","rationale":"HTTP publication is one replaceable provider, not a universal transport.","complexityImpact":"Consolidates signing, bounds, responses, and cancellation.","behaviorChanged":false,"approvalRef":null},
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "redis-transport-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "redis-transport",
+          "level": "live",
+          "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/redis-transport",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"rewrite","legacyBehavior":"Redis transport publishes stream entries with authentication, MAXLEN, idempotency, and durable correlation.","replacementBehavior":"The focused Redis provider atomically deduplicates and appends publication or telemetry entries through authenticated bounded RESP connections.","rationale":"Redis semantics belong in a provider rather than generic HTTP, state, or telemetry packages.","complexityImpact":"One small protocol client and Lua transaction replace domain Redis imports.","behaviorChanged":false,"approvalRef":null},
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "runtime-dispatch-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "runtime-dispatch",
+          "level": "live",
+          "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/runtime-dispatch",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"rewrite","legacyBehavior":"Agent dispatch owns authenticated session execution, liveness, terminal results, transcripts, cancellation, and confidential correlation.","replacementBehavior":"The runtime provider owns host session mechanics and returns closed terminal session evidence consumed by domain stages.","rationale":"Stages must not receive credentials or raw host session APIs.","complexityImpact":"Moves reusable session supervision behind one capability.","behaviorChanged":false,"approvalRef":null},
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "wait-store-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "wait-store",
+          "level": "live",
+          "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/wait-store",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"refactor","legacyBehavior":"Durable waits enforce typed signals, authorized issuers, expiry, duplicate and stale rejection, and restart.","replacementBehavior":"The wait adapter preserves storage and validation while core exclusively owns pause, claim, and resume lifecycle.","rationale":"Wait persistence and lifecycle state transitions are separate authorities.","complexityImpact":"Deletes duplicate watcher and resume paths.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -399,6 +444,7 @@
           "path": "tests/verification/common-git-worktree.test.mjs",
           "command": "node --test tests/verification/common-git-worktree.test.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"rewrite","legacyBehavior":"Git workspaces preserve scoped changes, commits, merges, synchronization, conflicts, cancellation, and cleanup.","replacementBehavior":"The v2 Git adapter preserves observable Git results through bounded fenced operations.","rationale":"All Git mutation belongs in one adapter.","complexityImpact":"Removes Git helpers from stages and core.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {
@@ -417,6 +463,7 @@
           "path": "tests/verification/contracts/check-artifact-authority-matrix-acceptance.mjs",
           "command": "node tests/verification/contracts/check-artifact-authority-matrix-acceptance.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {"strategy":"refactor","legacyBehavior":"Artifacts have one authoritative owner, stable identity, integrity, and bounded visibility.","replacementBehavior":"The v2 artifact store enforces that authority through namespaced capability grants.","rationale":"Artifact ownership remains equivalent while direct access is deleted.","complexityImpact":"Centralizes validation and persistence.","behaviorChanged":false,"approvalRef":null},
           "requiredBefore": ["parity-proven", "cutover-complete"]
         },
         {

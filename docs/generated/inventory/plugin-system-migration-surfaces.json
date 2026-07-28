@@ -2,9 +2,9 @@
   "schemaVersion": "plugin-system-migration-surfaces-v2",
   "generatedFrom": {
     "inventory": "docs/generated/inventory/plugin-system.json",
-    "inventoryDigest": "97fa7ca01ae29b203bdf816dce0cd114db9eeecb5c921d85b437928cd3092fed",
+    "inventoryDigest": "392687cf90b9e70ed70c545d1f4d53e9cd2b5d17fd6d9d35d31c9c4ff0027f33",
     "units": "docs/architecture/plugin-system-migration-units.json",
-    "unitsDigest": "480ef2b37fc66a13a78de2ae569e6621707919bfc660e2a570067ab049b95129"
+    "unitsDigest": "17b5351ba2273eaa162b53dea35e3135808c3367cfc6f4e3f46ec811b9406db5"
   },
   "units": [
     {
@@ -342,13 +342,8 @@
         "nova",
         "buster"
       ],
-      "parityBlockers": [
-        "each privileged adapter still needs paired legacy and replacement behavioral tests"
-      ],
-      "uncoveredReplacementPackages": [
-        "runtime-dispatch",
-        "wait-store"
-      ],
+      "parityBlockers": [],
+      "uncoveredReplacementPackages": [],
       "scenarios": [
         {
           "id": "git-workspace-replacement-live-function",
@@ -358,6 +353,15 @@
           "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/git-workspace",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Git workspaces preserve scoped changes, commits, merges, fetch, rebase, push, conflicts, cancellation, and cleanup.",
+            "replacementBehavior": "The v2 Git adapter exposes those operations as bounded fenced capabilities with real-Git evidence.",
+            "rationale": "All Git mutation belongs in one transactional adapter rather than stage helpers.",
+            "complexityImpact": "Replaces distributed Git helpers with four capability reducers.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -371,6 +375,15 @@
           "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/artifact-store",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Artifacts are atomically persisted, content-addressed, namespaced, size-bounded, and integrity checked.",
+            "replacementBehavior": "The v2 artifact store preserves those guarantees behind explicit read/write grants and durable receipts.",
+            "rationale": "Artifact persistence is cohesive replaceable authority.",
+            "complexityImpact": "Removes direct artifact filesystem access from every stage.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -384,6 +397,15 @@
           "path": "skills/common/plugins/command-runner/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/command-runner",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Trusted code executes bounded subprocesses with exit, signal, output, timeout, cancellation, and cleanup evidence.",
+            "replacementBehavior": "The command adapter preserves the process contract with executable and working-root allowlists.",
+            "rationale": "The existing adapter is already the smallest safe subprocess boundary.",
+            "complexityImpact": "One process runner replaces shell helpers across plugins.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -397,6 +419,15 @@
           "path": "skills/common/plugins/state-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/state-store",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Legacy plugins mixed mutable status files and Redis projections.",
+            "replacementBehavior": "The v2 state provider offers append-only registration namespaces, monotonic sequence, idempotency, and deterministic replay.",
+            "rationale": "Append-only state is simpler and safer than preserving mutable stores.",
+            "complexityImpact": "Deletes mutable projection ownership from plugins.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -410,6 +441,15 @@
           "path": "skills/common/plugins/network-http/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/network-http",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Legacy integrations performed direct HTTP calls with service-specific policy.",
+            "replacementBehavior": "The v2 adapter centralizes bounded origin, method, header, size, timeout, cancellation, and redirect policy.",
+            "rationale": "Generic HTTP transport is independent of domain policy.",
+            "complexityImpact": "One allowlisted adapter replaces repeated request code.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -423,6 +463,15 @@
           "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/telemetry-store",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Telemetry could be persisted through mixed local and Redis paths.",
+            "replacementBehavior": "The local provider owns append-only evidence while Redis transport is a separate interchangeable provider.",
+            "rationale": "Storage transports must not be combined in one adapter.",
+            "complexityImpact": "Separates local durability from network transport.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -436,6 +485,15 @@
           "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/secret-resolver",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Legacy integrations read credentials directly from environment and configuration.",
+            "replacementBehavior": "The resolver provides allowlisted transient secret values that never enter durable requests, receipts, or events.",
+            "rationale": "Secret resolution is a distinct confidential authority.",
+            "complexityImpact": "Removes credential access from all consuming plugins.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -449,6 +507,15 @@
           "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/operator-messaging",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Operator messaging mixed transport, authentication, Discord presentation, and notification policy.",
+            "replacementBehavior": "The v2 adapter owns only authenticated target-scoped request/response transport; presentation remains observer authority.",
+            "rationale": "Transport and presentation have different grants and failure semantics.",
+            "complexityImpact": "Narrows the adapter to confidential delivery and correlation.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -462,6 +529,81 @@
           "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/transport-publisher",
           "disposition": "new-v2-foundation",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Legacy publication was embedded in service-specific integrations.",
+            "replacementBehavior": "The HTTP publisher provides target-scoped authenticated idempotent publication without domain policy.",
+            "rationale": "HTTP publication is one replaceable provider, not a universal transport.",
+            "complexityImpact": "Consolidates signing, bounds, responses, and cancellation.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "redis-transport-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "redis-transport",
+          "level": "live",
+          "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/redis-transport",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Redis transport publishes stream entries with authentication, MAXLEN, idempotency, and durable correlation.",
+            "replacementBehavior": "The focused Redis provider atomically deduplicates and appends publication or telemetry entries through authenticated bounded RESP connections.",
+            "rationale": "Redis semantics belong in a provider rather than generic HTTP, state, or telemetry packages.",
+            "complexityImpact": "One small protocol client and Lua transaction replace domain Redis imports.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "runtime-dispatch-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "runtime-dispatch",
+          "level": "live",
+          "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/runtime-dispatch",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Agent dispatch owns authenticated session execution, liveness, terminal results, transcripts, cancellation, and confidential correlation.",
+            "replacementBehavior": "The runtime provider owns host session mechanics and returns closed terminal session evidence consumed by domain stages.",
+            "rationale": "Stages must not receive credentials or raw host session APIs.",
+            "complexityImpact": "Moves reusable session supervision behind one capability.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "wait-store-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "wait-store",
+          "level": "live",
+          "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/wait-store",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Durable waits enforce typed signals, authorized issuers, expiry, duplicate and stale rejection, and restart.",
+            "replacementBehavior": "The wait adapter preserves storage and validation while core exclusively owns pause, claim, and resume lifecycle.",
+            "rationale": "Wait persistence and lifecycle state transitions are separate authorities.",
+            "complexityImpact": "Deletes duplicate watcher and resume paths.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -474,6 +616,15 @@
           "path": "tests/verification/common-git-worktree.test.mjs",
           "command": "node --test tests/verification/common-git-worktree.test.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Git workspaces preserve scoped changes, commits, merges, synchronization, conflicts, cancellation, and cleanup.",
+            "replacementBehavior": "The v2 Git adapter preserves observable Git results through bounded fenced operations.",
+            "rationale": "All Git mutation belongs in one adapter.",
+            "complexityImpact": "Removes Git helpers from stages and core.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -497,6 +648,15 @@
           "path": "tests/verification/contracts/check-artifact-authority-matrix-acceptance.mjs",
           "command": "node tests/verification/contracts/check-artifact-authority-matrix-acceptance.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Artifacts have one authoritative owner, stable identity, integrity, and bounded visibility.",
+            "replacementBehavior": "The v2 artifact store enforces that authority through namespaced capability grants.",
+            "rationale": "Artifact ownership remains equivalent while direct access is deleted.",
+            "complexityImpact": "Centralizes validation and persistence.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -2133,16 +2293,7 @@
       ],
       "legacySourceFiles": [
         "skills/common/pipeline/integrations/discord-webhook.ts",
-        "skills/common/pipeline/services/discord-fields-contract.ts",
-        "skills/common/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/integrations/discord-observability.ts",
-        "skills/nova/pipeline/integrations/discord-operator.ts",
-        "skills/nova/pipeline/integrations/discord-values.ts",
         "skills/nova/pipeline/integrations/discord-webhook.ts",
-        "skills/nova/pipeline/integrations/discord.ts",
-        "skills/nova/pipeline/services/discord-fields-contract.ts",
-        "skills/nova/pipeline/services/discord-fields.ts",
-        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts",
         "tests/skills/common/pipeline/integrations/discord-webhook.test.mjs",
         "tests/skills/nova/pipeline/integrations/discord.test.mjs"
       ],
@@ -2159,258 +2310,46 @@
       ],
       "exports": [
         "* from ../../../common/pipeline/integrations/discord-webhook.ts",
-        "* from ../../../common/pipeline/services/discord-fields-contract.ts",
-        "AnyRecord",
-        "DISCORD_FIELD_SPECS",
-        "DISCORD_IDENTITY_FIELD_SETS",
-        "DISCORD_IDENTITY_SURFACES",
-        "DiscordLevel",
         "DiscordWebhookDeliveryError",
         "activate",
-        "arrayOrEmpty",
-        "assertDiscordPayloadWithinLimits",
-        "buildCanonicalDiscordPayload",
-        "buildDiscordIdentityFields",
-        "buildDiscordIdentitySurfaceFields",
-        "buildSessionRateLimitDiscordFields",
-        "createSessionRateLimitDiscordNotifier",
-        "discord",
-        "discordEmbeds",
-        "discordReceiptWebhookUrl",
-        "discordStyle",
-        "discordWebhookTimeoutMs",
-        "emptyDiscordCorrelation",
-        "isPlainRecord",
-        "mergeDiscordCorrelation",
-        "normalizeDiscordCorrelation",
-        "normalizeDiscordLevel",
-        "normalizeOperatorEmbed",
-        "normalizedFieldName",
-        "optionalText",
-        "postDiscordWebhook",
-        "recordDiscordAuditDegraded",
-        "recordDiscordAuditRestored",
-        "recordDiscordWebhookDegraded",
-        "recordDiscordWebhookMissing",
-        "recordDiscordWebhookRestored",
-        "recordOrEmpty",
-        "reportDiscordIncident",
-        "requireSanitizedEmbeds",
-        "requiredBoolean",
-        "requiredText",
-        "textOrEmpty"
+        "postDiscordWebhook"
       ],
       "currentConsumers": [
         {
-          "ownerId": "adapter:kubeclaw.redis",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "adapter:kubeclaw.runtime-dispatch",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
-          "ownerId": "core:pipeline-core-execution",
-          "count": 26,
-          "samples": [
-            "skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/services/failures/presentation.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/services/rate-limit-builders.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-kind-schedulers",
-          "count": 9,
-          "samples": [
-            "skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/preflight.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-telemetry-registry-contract",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin-sdk:pipeline-plugin-sdk",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.blueprint-sync",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.buster-quality-gate",
-          "count": 8,
-          "samples": [
-            "skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-terminal-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-terminal-pass.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-terminal-rate-limit.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "plugin:kubeclaw.buster-worker",
-          "count": 3,
-          "samples": [
-            "skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts",
-            "skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts",
-            "skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.case-study",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.forge",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner-forge-success.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.human-approval",
-          "count": 5,
-          "samples": [
-            "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/approval-gate-timeout.ts -> skills/nova/pipeline/services/discord-fields.ts"
+            "skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts"
           ]
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
-          "count": 5,
-          "samples": [
-            "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-observability.ts",
-            "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-values.ts",
-            "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/services/preview-delivery.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/services/preview-delivery.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.pipeline-review",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.project-summary",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/tools/project-summary-runner.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.review",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/discord-fields.ts"
+            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-webhook.ts"
           ]
         }
       ],
       "currentDependencies": [
         {
-          "ownerId": "core:pipeline-core-execution",
-          "count": 12,
-          "samples": [
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts",
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/services/observability.ts",
-            "skills/nova/pipeline/integrations/discord-operator.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/optional-absence.ts"
-          ]
-        },
-        {
-          "ownerId": "core:pipeline-core-state",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts"
-          ]
-        },
-        {
           "ownerId": "plugin-sdk:pipeline-plugin-sdk",
-          "count": 2,
+          "count": 1,
           "samples": [
-            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts"
+            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts"
           ]
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-audit.ts"
+            "tests/skills/nova/pipeline/integrations/discord.test.mjs -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
           "ownerId": "shared-library:kubeclaw.pipeline-primitives",
-          "count": 2,
+          "count": 1,
           "samples": [
-            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts",
-            "skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts"
+            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts"
           ]
         }
       ],
@@ -2455,8 +2394,7 @@
       "configurationPaths": [
         "skills/common/plugins/operator-messaging/schemas/config.schema.json",
         "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
-        "skills/common/plugins/operator-messaging/tsconfig.json",
-        "skills/nova/pipeline/integrations/discord-values.ts"
+        "skills/common/plugins/operator-messaging/tsconfig.json"
       ],
       "scenarioEvidence": [
         {
@@ -2479,16 +2417,7 @@
       "deletionCriteria": {
         "exactPaths": [
           "skills/common/pipeline/integrations/discord-webhook.ts",
-          "skills/common/pipeline/services/discord-fields-contract.ts",
-          "skills/common/pipeline/services/discord-fields.ts",
-          "skills/nova/pipeline/integrations/discord-observability.ts",
-          "skills/nova/pipeline/integrations/discord-operator.ts",
-          "skills/nova/pipeline/integrations/discord-values.ts",
           "skills/nova/pipeline/integrations/discord-webhook.ts",
-          "skills/nova/pipeline/integrations/discord.ts",
-          "skills/nova/pipeline/services/discord-fields-contract.ts",
-          "skills/nova/pipeline/services/discord-fields.ts",
-          "skills/nova/pipeline/services/rate-limit-discord-notifier.ts",
           "tests/skills/common/pipeline/integrations/discord-webhook.test.mjs",
           "tests/skills/nova/pipeline/integrations/discord.test.mjs"
         ],
@@ -2499,16 +2428,56 @@
       },
       "replacementPairings": [
         {
-          "id": "legacy-operator-messaging-target-pending",
-          "status": "blocked",
-          "rationale": "The retained Discord surface also owns presentation, compaction, gating, audit, rate-limit notices, and degraded/restored telemetry; the bounded operator.request transport alone is not its complete replacement.",
-          "replacementOwnerIds": []
+          "id": "legacy-operator-messaging-to-request-adapter",
+          "status": "paired",
+          "rationale": "Bounded webhook/request transport moves to operator.request; Discord presentation, audit projection, rate-limit notices, and degraded/restored telemetry are separately inventoried as Phase 10 notification-observer behavior.",
+          "replacementOwnerIds": [
+            "adapter:kubeclaw.operator-messaging"
+          ]
         }
       ],
-      "replacementOwnerIds": [],
-      "replacementFiles": [],
-      "replacementRegistrations": [],
+      "replacementOwnerIds": [
+        "adapter:kubeclaw.operator-messaging"
+      ],
+      "replacementFiles": [
+        "skills/common/plugins/operator-messaging/README.md",
+        "skills/common/plugins/operator-messaging/package.json",
+        "skills/common/plugins/operator-messaging/plugin.json",
+        "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+        "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+        "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs",
+        "skills/common/plugins/operator-messaging/tsconfig.json"
+      ],
+      "replacementRegistrations": [
+        {
+          "packageId": "kubeclaw.operator-messaging",
+          "packageRoot": "skills/common/plugins/operator-messaging",
+          "surface": "adapter",
+          "id": "operator",
+          "type": null,
+          "module": "dist/adapter.js",
+          "export": "activate",
+          "requiredCapabilities": [
+            "network.http",
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "operator.request"
+          ],
+          "configSchema": "schemas/config.schema.json"
+        }
+      ],
       "legacyPairings": [
+        {
+          "id": "legacy-operator-messaging-to-request-adapter",
+          "status": "paired",
+          "rationale": "Bounded webhook/request transport moves to operator.request; Discord presentation, audit projection, rate-limit notices, and degraded/restored telemetry are separately inventoried as Phase 10 notification-observer behavior.",
+          "legacyOwnerIds": [
+            "adapter:kubeclaw.operator-messaging"
+          ]
+        },
         {
           "id": "operator-request-new-foundation",
           "status": "new",
@@ -2516,8 +2485,15 @@
           "legacyOwnerIds": []
         }
       ],
-      "legacyOwnerIds": [],
-      "pairedLegacyFiles": []
+      "legacyOwnerIds": [
+        "adapter:kubeclaw.operator-messaging"
+      ],
+      "pairedLegacyFiles": [
+        "skills/common/pipeline/integrations/discord-webhook.ts",
+        "skills/nova/pipeline/integrations/discord-webhook.ts",
+        "tests/skills/common/pipeline/integrations/discord-webhook.test.mjs",
+        "tests/skills/nova/pipeline/integrations/discord.test.mjs"
+      ]
     },
     {
       "ownerId": "adapter:kubeclaw.redis",
@@ -2696,13 +2672,6 @@
       ],
       "currentDependencies": [
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
           "ownerId": "core:pipeline-core-execution",
           "count": 20,
           "samples": [
@@ -2746,6 +2715,13 @@
             "skills/common/pipeline/services/task-transport-contract.ts -> skills/common/pipeline/operation-result.ts",
             "skills/nova/pipeline/services/completion-redis-event-adapter.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/completion-redis-event-adapter.ts -> skills/nova/pipeline/services/pipeline-event-contract.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -2860,16 +2836,26 @@
         {
           "id": "redis-to-scoped-stores",
           "status": "paired",
-          "rationale": "The retained Redis wait subset is assigned to the candidate resource-scoped wait adapter; broader Redis transport parity remains blocked.",
+          "rationale": "Durable waits move to the resource-scoped wait adapter while Redis Streams publication and telemetry move to a focused replaceable Redis provider.",
           "replacementOwnerIds": [
+            "adapter:kubeclaw.redis-transport",
             "adapter:kubeclaw.wait-store"
           ]
         }
       ],
       "replacementOwnerIds": [
+        "adapter:kubeclaw.redis-transport",
         "adapter:kubeclaw.wait-store"
       ],
       "replacementFiles": [
+        "skills/common/plugins/redis-transport/README.md",
+        "skills/common/plugins/redis-transport/package.json",
+        "skills/common/plugins/redis-transport/plugin.json",
+        "skills/common/plugins/redis-transport/schemas/config.schema.json",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+        "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+        "skills/common/plugins/redis-transport/tsconfig.json",
         "skills/common/plugins/wait-store/README.md",
         "skills/common/plugins/wait-store/package.json",
         "skills/common/plugins/wait-store/plugin.json",
@@ -2880,6 +2866,38 @@
         "skills/common/plugins/wait-store/tsconfig.json"
       ],
       "replacementRegistrations": [
+        {
+          "packageId": "kubeclaw.redis-transport",
+          "packageRoot": "skills/common/plugins/redis-transport",
+          "surface": "adapter",
+          "id": "publisher",
+          "type": null,
+          "module": "dist/adapter.js",
+          "export": "activatePublisher",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "transport.publish"
+          ],
+          "configSchema": "schemas/config.schema.json"
+        },
+        {
+          "packageId": "kubeclaw.redis-transport",
+          "packageRoot": "skills/common/plugins/redis-transport",
+          "surface": "adapter",
+          "id": "telemetry",
+          "type": null,
+          "module": "dist/adapter.js",
+          "export": "activateTelemetry",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "telemetry.emit"
+          ],
+          "configSchema": "schemas/config.schema.json"
+        },
         {
           "packageId": "kubeclaw.wait-store",
           "packageRoot": "skills/common/plugins/wait-store",
@@ -2898,6 +2916,148 @@
       "legacyPairings": [],
       "legacyOwnerIds": [],
       "pairedLegacyFiles": []
+    },
+    {
+      "ownerId": "adapter:kubeclaw.redis-transport",
+      "unitId": "privileged-adapters",
+      "status": "baseline-retained",
+      "runtimeRoles": [
+        "nova",
+        "buster"
+      ],
+      "legacySourceFiles": [],
+      "targetFiles": [
+        "skills/common/plugins/redis-transport/README.md",
+        "skills/common/plugins/redis-transport/package.json",
+        "skills/common/plugins/redis-transport/plugin.json",
+        "skills/common/plugins/redis-transport/schemas/config.schema.json",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+        "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+        "skills/common/plugins/redis-transport/tsconfig.json"
+      ],
+      "exports": [
+        "activatePublisher",
+        "activateTelemetry"
+      ],
+      "currentConsumers": [],
+      "currentDependencies": [],
+      "privilegedEffects": [
+        {
+          "effect": "filesystem.read",
+          "targetAdapter": "kubeclaw.artifacts"
+        },
+        {
+          "effect": "redis.execute",
+          "targetAdapter": "kubeclaw.redis"
+        },
+        {
+          "effect": "telemetry.emit",
+          "targetAdapter": "kubeclaw.telemetry-transport"
+        }
+      ],
+      "currentRegistrations": [],
+      "targetRegistrations": [
+        {
+          "packageId": "kubeclaw.redis-transport",
+          "packageRoot": "skills/common/plugins/redis-transport",
+          "surface": "adapter",
+          "id": "publisher",
+          "type": null,
+          "module": "dist/adapter.js",
+          "export": "activatePublisher",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "transport.publish"
+          ],
+          "configSchema": "schemas/config.schema.json"
+        },
+        {
+          "packageId": "kubeclaw.redis-transport",
+          "packageRoot": "skills/common/plugins/redis-transport",
+          "surface": "adapter",
+          "id": "telemetry",
+          "type": null,
+          "module": "dist/adapter.js",
+          "export": "activateTelemetry",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "telemetry.emit"
+          ],
+          "configSchema": "schemas/config.schema.json"
+        }
+      ],
+      "configurationPaths": [
+        "skills/common/plugins/redis-transport/schemas/config.schema.json",
+        "skills/common/plugins/redis-transport/tsconfig.json"
+      ],
+      "scenarioEvidence": [
+        {
+          "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+          "disposition": "must-remain-equivalent"
+        }
+      ],
+      "deletionCriteria": {
+        "exactPaths": [],
+        "requiredStatus": "cutover-complete",
+        "requireNoImports": true,
+        "requireNoConfiguration": true,
+        "requireNoRuntimeResolution": true
+      },
+      "replacementPairings": [],
+      "replacementOwnerIds": [],
+      "replacementFiles": [],
+      "replacementRegistrations": [],
+      "legacyPairings": [
+        {
+          "id": "redis-to-scoped-stores",
+          "status": "paired",
+          "rationale": "Durable waits move to the resource-scoped wait adapter while Redis Streams publication and telemetry move to a focused replaceable Redis provider.",
+          "legacyOwnerIds": [
+            "adapter:kubeclaw.redis"
+          ]
+        }
+      ],
+      "legacyOwnerIds": [
+        "adapter:kubeclaw.redis"
+      ],
+      "pairedLegacyFiles": [
+        "skills/common/pipeline/redis-transport.ts",
+        "skills/common/pipeline/services/redis-message-contract.ts",
+        "skills/common/pipeline/services/redis-wait-recovery.ts",
+        "skills/common/pipeline/services/redis-wait-types.ts",
+        "skills/common/pipeline/services/redis-wait.ts",
+        "skills/common/pipeline/services/task-transport-contract.ts",
+        "skills/nova/pipeline/redis-transport.ts",
+        "skills/nova/pipeline/services/completion-redis-event-adapter.ts",
+        "skills/nova/pipeline/services/polling-redis-completion.ts",
+        "skills/nova/pipeline/services/redis-completion-policy.ts",
+        "skills/nova/pipeline/services/redis-completion-stream.ts",
+        "skills/nova/pipeline/services/redis-completion.ts",
+        "skills/nova/pipeline/services/redis-log.ts",
+        "skills/nova/pipeline/services/redis-message-contract.ts",
+        "skills/nova/pipeline/services/redis-wait.ts",
+        "skills/nova/pipeline/services/runtime-redis-preflight.ts",
+        "skills/nova/pipeline/services/task-transport-contract.ts",
+        "skills/nova/pipeline/tools/redis-discord-log.ts",
+        "skills/nova/pipeline/tools/redis.ts",
+        "tests/skills/common/pipeline/redis-ready-contract.mjs",
+        "tests/skills/common/pipeline/redis-transport.test.mjs",
+        "tests/skills/common/pipeline/services/redis-message-contract.test.mjs",
+        "tests/skills/common/pipeline/services/task-transport-contract.test.mjs",
+        "tests/skills/nova/pipeline/services/redis-completion.test.mjs",
+        "tests/skills/nova/pipeline/services/redis-log.test.mjs",
+        "tests/skills/nova/pipeline/services/runtime-redis-preflight.test.mjs",
+        "tests/skills/nova/pipeline/tools/redis.test.mjs"
+      ]
     },
     {
       "ownerId": "adapter:kubeclaw.runtime-dispatch",
@@ -3303,16 +3463,6 @@
       ],
       "currentDependencies": [
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "core:pipeline-core-execution",
           "count": 44,
           "samples": [
@@ -3370,6 +3520,16 @@
           "count": 1,
           "samples": [
             "skills/nova/pipeline/agents/module-workers.ts -> skills/nova/pipeline/agents/module-worker-forge.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 4,
+          "samples": [
+            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -4137,7 +4297,7 @@
         {
           "id": "redis-to-scoped-stores",
           "status": "paired",
-          "rationale": "The retained Redis wait subset is assigned to the candidate resource-scoped wait adapter; broader Redis transport parity remains blocked.",
+          "rationale": "Durable waits move to the resource-scoped wait adapter while Redis Streams publication and telemetry move to a focused replaceable Redis provider.",
           "legacyOwnerIds": [
             "adapter:kubeclaw.redis"
           ]
@@ -5161,24 +5321,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 12,
-          "samples": [
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts",
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/services/observability.ts",
-            "skills/nova/pipeline/integrations/discord-operator.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/optional-absence.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.redis",
           "count": 20,
           "samples": [
@@ -5533,7 +5675,7 @@
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
-          "count": 14,
+          "count": 26,
           "samples": [
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/deps.ts",
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/logger.ts",
@@ -5541,12 +5683,12 @@
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/runtime.ts",
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/egress.ts",
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/core/runtime.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/noncritical-reporting.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/core/constants.ts"
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts",
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts",
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts",
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/services/observability.ts",
+            "skills/nova/pipeline/integrations/discord-operator.ts -> skills/nova/pipeline/optional-absence.ts",
+            "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/egress.ts"
           ]
         },
         {
@@ -5684,24 +5826,6 @@
             "skills/nova/pipeline/runners/pipeline-runner-module-batch.ts -> skills/nova/pipeline/integrations/git-worktree.ts",
             "skills/nova/pipeline/services/polling-session-end-runtime.ts -> skills/nova/pipeline/integrations/git-worktree.ts",
             "skills/nova/pipeline/services/polling-session-end-support.ts -> skills/nova/pipeline/integrations/git-worktree.ts"
-          ]
-        },
-        {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 26,
-          "samples": [
-            "skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/services/failures/presentation.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/services/rate-limit-builders.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -5880,10 +6004,20 @@
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
-          "count": 2,
+          "count": 28,
           "samples": [
+            "skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/discord-fields.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/preview-delivery.ts",
-            "skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
+            "skills/nova/pipeline/services/failures/presentation.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -7188,14 +7322,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.redis",
           "count": 1,
           "samples": [
@@ -7361,6 +7487,14 @@
           "samples": [
             "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/status-store.ts",
             "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/status-store.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 2,
+          "samples": [
+            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts",
+            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts"
           ]
         },
         {
@@ -8606,21 +8740,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 9,
-          "samples": [
-            "skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner/preflight.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.runtime-dispatch",
           "count": 7,
           "samples": [
@@ -8742,6 +8861,21 @@
             "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/prompts/forge.ts",
             "skills/nova/pipeline/runners/module-runner/state-machine.ts -> skills/nova/pipeline/runners/module-runner-forge.ts",
             "tests/skills/nova/pipeline/runners/module-runner-worker-lifecycle.test.mjs -> skills/nova/pipeline/runners/module-runner-forge.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 9,
+          "samples": [
+            "skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/preflight.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -9559,13 +9693,6 @@
       ],
       "currentDependencies": [
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
           "ownerId": "core:pipeline-core-execution",
           "count": 5,
           "samples": [
@@ -9588,6 +9715,13 @@
           "count": 1,
           "samples": [
             "tests/skills/nova/pipeline/services/telemetry-sink-contract.test.mjs -> skills/nova/pipeline/services/telemetry/dispatch.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -9907,10 +10041,9 @@
       "currentConsumers": [
         {
           "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 2,
+          "count": 1,
           "samples": [
-            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts",
-            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts"
+            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/operation-result.ts"
           ]
         },
         {
@@ -10100,9 +10233,10 @@
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
-          "count": 1,
+          "count": 2,
           "samples": [
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts"
+            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts",
+            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts"
           ]
         },
         {
@@ -10150,13 +10284,6 @@
           "count": 1,
           "samples": [
             "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-          ]
-        },
-        {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -10211,6 +10338,13 @@
           "count": 1,
           "samples": [
             "skills/common/pipeline/services/pipeline-event-contract.ts -> skills/common/pipeline/services/approval-signal-event-contract.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -11500,14 +11634,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
           "ownerId": "core:pipeline-core-execution",
           "count": 10,
           "samples": [
@@ -11529,6 +11655,14 @@
           "samples": [
             "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/services/status-store.ts",
             "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/services/status-store.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 2,
+          "samples": [
+            "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         }
       ],
@@ -11792,20 +11926,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 8,
-          "samples": [
-            "skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-terminal-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-terminal-pass.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/buster-gate-terminal-rate-limit.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.redis",
           "count": 4,
           "samples": [
@@ -11897,6 +12017,20 @@
           "samples": [
             "skills/nova/pipeline/runners/buster-gate-fix-cycle.ts -> skills/nova/pipeline/runners/gate-forge-fix-cycle.ts",
             "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/prompts/gate-fix.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 8,
+          "samples": [
+            "skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-terminal-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-terminal-pass.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-terminal-rate-limit.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -13023,11 +13157,9 @@
         },
         {
           "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 3,
+          "count": 1,
           "samples": [
-            "skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts",
-            "skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts",
-            "skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts"
+            "skills/buster/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/integrations/discord-webhook.ts"
           ]
         },
         {
@@ -13140,6 +13272,14 @@
           "count": 1,
           "samples": [
             "tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs -> skills/nova/pipeline/prompts/buster-gate.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 2,
+          "samples": [
+            "skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts",
+            "skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -13734,13 +13874,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.runtime-dispatch",
           "count": 4,
           "samples": [
@@ -13791,6 +13924,13 @@
           "count": 1,
           "samples": [
             "skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/contracts/generator-result.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -14169,16 +14309,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/module-runner-forge-success.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.runtime-dispatch",
           "count": 9,
           "samples": [
@@ -14272,6 +14402,16 @@
           "count": 1,
           "samples": [
             "skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-buster-status.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 4,
+          "samples": [
+            "skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner-forge-success.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -14575,17 +14715,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 5,
-          "samples": [
-            "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/approval-gate-timeout.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "core:pipeline-core-execution",
           "count": 27,
           "samples": [
@@ -14641,9 +14770,14 @@
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
-          "count": 1,
+          "count": 6,
           "samples": [
-            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
+            "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts",
+            "skills/nova/pipeline/runners/approval-gate-timeout.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         }
       ],
@@ -15719,13 +15853,22 @@
         "plugin:kubeclaw.notifications"
       ],
       "pairedLegacyFiles": [
+        "skills/common/pipeline/services/discord-fields-contract.ts",
+        "skills/common/pipeline/services/discord-fields.ts",
         "skills/nova/pipeline/integrations/discord-audit.ts",
+        "skills/nova/pipeline/integrations/discord-observability.ts",
+        "skills/nova/pipeline/integrations/discord-operator.ts",
+        "skills/nova/pipeline/integrations/discord-values.ts",
+        "skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/services/discord-fields-contract.ts",
+        "skills/nova/pipeline/services/discord-fields.ts",
         "skills/nova/pipeline/services/durable-operator-alert.ts",
         "skills/nova/pipeline/services/notification-contract.ts",
         "skills/nova/pipeline/services/notification-observers.ts",
         "skills/nova/pipeline/services/notification-values.ts",
         "skills/nova/pipeline/services/preview-credential-format.ts",
         "skills/nova/pipeline/services/preview-delivery.ts",
+        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts",
         "tests/skills/nova/pipeline/services/notification-contract.test.mjs",
         "tests/skills/nova/pipeline/services/preview-delivery.test.mjs"
       ]
@@ -15739,54 +15882,127 @@
         "buster"
       ],
       "legacySourceFiles": [
+        "skills/common/pipeline/services/discord-fields-contract.ts",
+        "skills/common/pipeline/services/discord-fields.ts",
         "skills/nova/pipeline/integrations/discord-audit.ts",
+        "skills/nova/pipeline/integrations/discord-observability.ts",
+        "skills/nova/pipeline/integrations/discord-operator.ts",
+        "skills/nova/pipeline/integrations/discord-values.ts",
+        "skills/nova/pipeline/integrations/discord.ts",
+        "skills/nova/pipeline/services/discord-fields-contract.ts",
+        "skills/nova/pipeline/services/discord-fields.ts",
         "skills/nova/pipeline/services/durable-operator-alert.ts",
         "skills/nova/pipeline/services/notification-observers.ts",
         "skills/nova/pipeline/services/notification-values.ts",
         "skills/nova/pipeline/services/preview-credential-format.ts",
         "skills/nova/pipeline/services/preview-delivery.ts",
+        "skills/nova/pipeline/services/rate-limit-discord-notifier.ts",
         "tests/skills/nova/pipeline/services/preview-delivery.test.mjs"
       ],
       "targetFiles": [],
       "exports": [
+        "* from ../../../common/pipeline/services/discord-fields-contract.ts",
+        "AnyRecord",
+        "DISCORD_FIELD_SPECS",
+        "DISCORD_IDENTITY_FIELD_SETS",
+        "DISCORD_IDENTITY_SURFACES",
+        "DiscordLevel",
         "FinalPreviewDelivery",
         "FinalPreviewDeliveryError",
         "appendDiscordAuditEntries",
         "appendDiscordDeliveryReceipt",
         "appendDurableOperatorAlert",
+        "arrayOrEmpty",
+        "assertDiscordPayloadWithinLimits",
+        "buildCanonicalDiscordPayload",
+        "buildDiscordIdentityFields",
+        "buildDiscordIdentitySurfaceFields",
+        "buildSessionRateLimitDiscordFields",
         "canonicalNotificationEmitter",
         "collectFinalPreviewDeliveries",
+        "createSessionRateLimitDiscordNotifier",
         "deliverFinalPreviews",
+        "discord",
+        "discordEmbeds",
+        "discordReceiptWebhookUrl",
+        "discordStyle",
         "discordWebhookDeliveryMuted",
+        "discordWebhookTimeoutMs",
         "durableOperatorAlertTargets",
+        "emptyDiscordCorrelation",
         "firstNotificationText",
         "formatPreviewCredentialCommandForDiscord",
         "formatPreviewCredentialsForDiscord",
         "getBuiltinNotificationPluginDefinitions",
         "incrementDiscordNotificationStats",
         "isNotificationRecord",
+        "isPlainRecord",
+        "mergeDiscordCorrelation",
+        "normalizeDiscordCorrelation",
+        "normalizeDiscordLevel",
+        "normalizeOperatorEmbed",
+        "normalizedFieldName",
         "notificationEventPayload",
         "notificationRecord",
         "observeDiscordNotification",
         "optionalNotificationText",
+        "optionalText",
         "readNotificationConfig",
+        "recordDiscordAuditDegraded",
+        "recordDiscordAuditRestored",
+        "recordDiscordWebhookDegraded",
+        "recordDiscordWebhookMissing",
+        "recordDiscordWebhookRestored",
+        "recordOrEmpty",
+        "reportDiscordIncident",
+        "requireSanitizedEmbeds",
+        "requiredBoolean",
         "requiredNotificationText",
-        "resolveInjectedDiscord"
+        "requiredText",
+        "resolveInjectedDiscord",
+        "textOrEmpty"
       ],
       "currentConsumers": [
         {
           "ownerId": "adapter:kubeclaw.operator-messaging",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-audit.ts"
+            "tests/skills/nova/pipeline/integrations/discord.test.mjs -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "adapter:kubeclaw.redis",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/tools/redis-discord-log.ts -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "adapter:kubeclaw.runtime-dispatch",
+          "count": 4,
+          "samples": [
+            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/agents/orchestration-spawn.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/agents/reviewer-lifecycle.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 2,
+          "count": 28,
           "samples": [
+            "skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-architecture.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery-block.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-recovery.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/discord-fields.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/preview-delivery.ts",
-            "skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
+            "skills/nova/pipeline/services/failures/presentation.ts -> skills/nova/pipeline/services/discord-fields.ts"
           ]
         },
         {
@@ -15798,6 +16014,21 @@
           ]
         },
         {
+          "ownerId": "delete:legacy-kind-schedulers",
+          "count": 9,
+          "samples": [
+            "skills/nova/pipeline/runners/module-runner-prebuster.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/dispatch.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-crash.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/poll-failure-special.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-infrastructure.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/buster-phase/terminal-failure-pretest.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner/preflight.ts -> skills/nova/pipeline/services/discord-fields.ts"
+          ]
+        },
+        {
           "ownerId": "delete:legacy-notification-registry-contract",
           "count": 2,
           "samples": [
@@ -15806,16 +16037,103 @@
           ]
         },
         {
-          "ownerId": "plugin:kubeclaw.human-approval",
+          "ownerId": "delete:legacy-telemetry-registry-contract",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
+            "skills/nova/pipeline/services/telemetry-sink-contract.ts -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin-sdk:pipeline-plugin-sdk",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/core/plugin-context-surfaces.ts -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.blueprint-sync",
+          "count": 2,
+          "samples": [
+            "skills/nova/pipeline/services/blueprint-control-sync.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/services/blueprint.ts -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.buster-quality-gate",
+          "count": 8,
+          "samples": [
+            "skills/nova/pipeline/runners/buster-gate-attempt.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-fix-cycle-options.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-remediation-exhausted.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/buster-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-terminal-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-terminal-pass.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/buster-gate-terminal-rate-limit.ts -> skills/nova/pipeline/services/discord-fields.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.buster-worker",
+          "count": 2,
+          "samples": [
+            "skills/buster/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/services/discord-fields-contract.ts",
+            "skills/buster/pipeline/services/discord-fields.ts -> skills/common/pipeline/services/discord-fields.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.case-study",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.forge",
+          "count": 4,
+          "samples": [
+            "skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/module-runner-forge-success.ts -> skills/nova/pipeline/services/discord-fields.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.human-approval",
+          "count": 6,
+          "samples": [
+            "skills/nova/pipeline/runners/approval-gate-observation.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/approval-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/approval-gate-state.ts -> skills/nova/pipeline/services/durable-operator-alert.ts",
+            "skills/nova/pipeline/runners/approval-gate-timeout.ts -> skills/nova/pipeline/services/discord-fields.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.pipeline-review",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.project-summary",
+          "count": 4,
+          "samples": [
+            "skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/tools/project-summary-runner.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
           "ownerId": "plugin:kubeclaw.review",
-          "count": 1,
+          "count": 5,
           "samples": [
+            "skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/discord-fields.ts",
             "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
           ]
         }
@@ -15831,18 +16149,14 @@
         },
         {
           "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 5,
+          "count": 1,
           "samples": [
-            "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-observability.ts",
-            "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/integrations/discord-values.ts",
-            "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/services/preview-delivery.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/services/preview-delivery.ts -> skills/nova/pipeline/services/discord-fields.ts"
+            "skills/nova/pipeline/integrations/discord.ts -> skills/nova/pipeline/integrations/discord-webhook.ts"
           ]
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 14,
+          "count": 26,
           "samples": [
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/deps.ts",
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/logger.ts",
@@ -15850,19 +16164,28 @@
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/core/runtime.ts",
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/egress.ts",
             "skills/nova/pipeline/integrations/discord-audit.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/core/runtime.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/noncritical-reporting.ts",
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/optional-absence.ts",
-            "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/core/constants.ts"
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/core/logger.ts",
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/noncritical-reporting.ts",
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/optional-absence.ts",
+            "skills/nova/pipeline/integrations/discord-observability.ts -> skills/nova/pipeline/services/observability.ts",
+            "skills/nova/pipeline/integrations/discord-operator.ts -> skills/nova/pipeline/optional-absence.ts",
+            "skills/nova/pipeline/integrations/discord-values.ts -> skills/nova/pipeline/egress.ts"
+          ]
+        },
+        {
+          "ownerId": "core:pipeline-core-state",
+          "count": 2,
+          "samples": [
+            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/correlation.ts",
+            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/services/rate-limit-correlation.ts"
           ]
         },
         {
           "ownerId": "plugin-sdk:pipeline-plugin-sdk",
-          "count": 1,
+          "count": 2,
           "samples": [
-            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts"
+            "skills/nova/pipeline/services/durable-operator-alert.ts -> skills/nova/pipeline/value-boundary.ts",
+            "skills/nova/pipeline/services/rate-limit-discord-notifier.ts -> skills/nova/pipeline/value-boundary.ts"
           ]
         },
         {
@@ -15870,6 +16193,13 @@
           "count": 1,
           "samples": [
             "skills/nova/pipeline/services/notification-observers.ts -> skills/nova/pipeline/services/telemetry-stream.ts"
+          ]
+        },
+        {
+          "ownerId": "shared-library:kubeclaw.pipeline-primitives",
+          "count": 1,
+          "samples": [
+            "skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts"
           ]
         }
       ],
@@ -15918,6 +16248,7 @@
       ],
       "targetRegistrations": [],
       "configurationPaths": [
+        "skills/nova/pipeline/integrations/discord-values.ts",
         "skills/nova/pipeline/services/notification-values.ts"
       ],
       "scenarioEvidence": [
@@ -15928,12 +16259,21 @@
       ],
       "deletionCriteria": {
         "exactPaths": [
+          "skills/common/pipeline/services/discord-fields-contract.ts",
+          "skills/common/pipeline/services/discord-fields.ts",
           "skills/nova/pipeline/integrations/discord-audit.ts",
+          "skills/nova/pipeline/integrations/discord-observability.ts",
+          "skills/nova/pipeline/integrations/discord-operator.ts",
+          "skills/nova/pipeline/integrations/discord-values.ts",
+          "skills/nova/pipeline/integrations/discord.ts",
+          "skills/nova/pipeline/services/discord-fields-contract.ts",
+          "skills/nova/pipeline/services/discord-fields.ts",
           "skills/nova/pipeline/services/durable-operator-alert.ts",
           "skills/nova/pipeline/services/notification-observers.ts",
           "skills/nova/pipeline/services/notification-values.ts",
           "skills/nova/pipeline/services/preview-credential-format.ts",
           "skills/nova/pipeline/services/preview-delivery.ts",
+          "skills/nova/pipeline/services/rate-limit-discord-notifier.ts",
           "tests/skills/nova/pipeline/services/preview-delivery.test.mjs"
         ],
         "requiredStatus": "cutover-complete",
@@ -16388,13 +16728,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.runtime-dispatch",
           "count": 4,
           "samples": [
@@ -16445,6 +16778,13 @@
           "samples": [
             "skills/nova/pipeline/services/pipeline-review-failure.ts -> skills/nova/pipeline/services/contracts/generator-result.ts",
             "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/services/contracts/generator-result.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/pipeline-review-values.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -16983,16 +17323,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/tools/project-summary-runner.ts -> skills/nova/pipeline/integrations/discord.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.runtime-dispatch",
           "count": 1,
           "samples": [
@@ -17048,6 +17378,16 @@
             "skills/nova/pipeline/services/summary.ts -> skills/nova/pipeline/services/case-study.ts",
             "skills/nova/pipeline/tools/project-summary-formatters.ts -> skills/nova/pipeline/tools/project-summary-case-study.ts",
             "skills/nova/pipeline/tools/project-summary-markdown.ts -> skills/nova/pipeline/tools/project-summary-case-study.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 4,
+          "samples": [
+            "skills/nova/pipeline/services/summary-session-values.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/services/summary/project-summary.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/tools/project-summary-core.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/tools/project-summary-runner.ts -> skills/nova/pipeline/integrations/discord.ts"
           ]
         },
         {
@@ -17477,16 +17817,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
-            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
-            "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/discord-fields.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.runtime-dispatch",
           "count": 2,
           "samples": [
@@ -17564,8 +17894,12 @@
         },
         {
           "ownerId": "plugin:kubeclaw.notifications",
-          "count": 1,
+          "count": 5,
           "samples": [
+            "skills/nova/pipeline/runners/review-gate-result.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/integrations/discord.ts",
+            "skills/nova/pipeline/runners/review-gate-runner.ts -> skills/nova/pipeline/services/discord-fields.ts",
+            "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/discord-fields.ts",
             "skills/nova/pipeline/runners/review-gate-task.ts -> skills/nova/pipeline/services/durable-operator-alert.ts"
           ]
         },
@@ -19062,10 +19396,9 @@
         },
         {
           "ownerId": "adapter:kubeclaw.operator-messaging",
-          "count": 2,
+          "count": 1,
           "samples": [
-            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts",
-            "skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts"
+            "skills/common/pipeline/integrations/discord-webhook.ts -> skills/common/pipeline/optional-absence.ts"
           ]
         },
         {
@@ -19155,6 +19488,13 @@
             "skills/buster/pipeline/optional-absence.ts -> skills/common/pipeline/optional-absence.ts",
             "skills/buster/pipeline/platform-config.ts -> skills/common/pipeline/platform-config.ts",
             "skills/buster/pipeline/services/observability-health.ts -> skills/common/pipeline/services/observability-health.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.notifications",
+          "count": 1,
+          "samples": [
+            "skills/common/pipeline/services/discord-fields-contract.ts -> skills/common/pipeline/optional-absence.ts"
           ]
         }
       ],

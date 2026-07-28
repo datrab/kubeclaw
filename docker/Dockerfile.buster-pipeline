@@ -7,6 +7,8 @@ FROM node:24-bookworm-slim
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG KUBECTL_VERSION=1.35.6
+ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
+ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
 ARG TARGETARCH
 
 # The slim Node base intentionally omits CA certificates. Bootstrap the trust
@@ -56,19 +58,31 @@ COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl
 COPY --from=buildkit /usr/bin/buildkit-runc /usr/local/bin/buildkit-runc
 COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
 
-RUN arch="${TARGETARCH:-amd64}" \
-    && curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /usr/local/bin/kubectl \
-    && chmod +x /usr/local/bin/kubectl \
-    && npm install --prefix /app --no-audit --no-fund \
+RUN set -eux; \
+    arch="${TARGETARCH:-amd64}"; \
+    case "$arch" in \
+      amd64) kubectl_sha="$KUBECTL_SHA256_AMD64" ;; \
+      arm64) kubectl_sha="$KUBECTL_SHA256_ARM64" ;; \
+      *) echo "Unsupported kubectl architecture: $arch" >&2; exit 1 ;; \
+    esac; \
+    kubectl_tmp="$(mktemp)"; \
+    curl --fail --show-error --location \
+      --retry 5 --retry-all-errors --connect-timeout 15 --max-time 300 \
+      "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" \
+      -o "$kubectl_tmp"; \
+    printf '%s  %s\n' "$kubectl_sha" "$kubectl_tmp" | sha256sum -c -; \
+    install -m 0755 "$kubectl_tmp" /usr/local/bin/kubectl; \
+    rm -f "$kubectl_tmp"; \
+    npm install --prefix /app --no-audit --no-fund \
       ajv@8.20.0 ajv-formats@3.0.1 ioredis@5.11.1 js-yaml@5.2.2 uuid@14.0.1 typescript@5.9.3 eslint@10.7.0 \
       lighthouse@13.4.1 playwright@1.61.1 @axe-core/playwright@4.12.1 \
-      pixelmatch@7.2.0 pngjs@7.0.0 ws@8.21.1 \
-    && groupmod --new-name builder node \
-    && usermod --login builder --home /home/builder --move-home --shell /bin/bash node \
-    && printf 'builder:100000:65536\n' >> /etc/subuid \
-    && printf 'builder:100000:65536\n' >> /etc/subgid \
-    && mkdir -p /app/skills /home/builder/.openclaw /home/builder/.local/share/buildkit /run/user/1000/buildkit \
-    && chown -R builder:builder /app/skills /home/builder /run/user/1000
+      pixelmatch@7.2.0 pngjs@7.0.0 ws@8.21.1; \
+    groupmod --new-name builder node; \
+    usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \
+    printf 'builder:100000:65536\n' >> /etc/subuid; \
+    printf 'builder:100000:65536\n' >> /etc/subgid; \
+    mkdir -p /app/skills /home/builder/.openclaw /home/builder/.local/share/buildkit /run/user/1000/buildkit; \
+    chown -R builder:builder /app/skills /home/builder /run/user/1000
 
 RUN pip install --break-system-packages --no-cache-dir \
       ruff==0.15.22 mypy==2.3.0 pip-audit==2.10.1 semgrep==1.170.1
