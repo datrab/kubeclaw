@@ -54,6 +54,35 @@ export function moduleSpecifiers(filePath) {
   return found;
 }
 
+export function nonLiteralModuleLoads(filePath) {
+  const source = fs.readFileSync(filePath, 'utf8');
+  const sourceFile = ts.createSourceFile(
+    filePath,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    filePath.endsWith('.tsx') || filePath.endsWith('.jsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+  );
+  const found = [];
+  const visit = (node) => {
+    if (ts.isCallExpression(node) && node.arguments.length === 1) {
+      const dynamicImport = node.expression.kind === ts.SyntaxKind.ImportKeyword;
+      const requireCall = ts.isIdentifier(node.expression) && node.expression.text === 'require';
+      if ((dynamicImport || requireCall) && !ts.isStringLiteralLike(node.arguments[0])) {
+        const position = sourceFile.getLineAndCharacterOfPosition(node.arguments[0].getStart(sourceFile));
+        found.push({
+          kind: dynamicImport ? 'dynamic-import' : 'require',
+          line: position.line + 1,
+          column: position.character + 1,
+        });
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  return found;
+}
+
 export function resolveLocalModule(containingFile, specifier) {
   if (!specifier.startsWith('.') && !specifier.startsWith('/')) return null;
   const resolved = ts.resolveModuleName(

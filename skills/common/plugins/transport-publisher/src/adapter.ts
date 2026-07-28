@@ -145,7 +145,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     async ready() {
       if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
     },
-    async invoke({ request, signal }) {
+    async invoke({ request, signal, confidential, fence }) {
+      if (!confidential) fence.assertCurrent();
       if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
       if (request.capability !== 'transport.publish' || request.operation !== 'publish') {
         throw new Error('TRANSPORT_OPERATION_UNSUPPORTED');

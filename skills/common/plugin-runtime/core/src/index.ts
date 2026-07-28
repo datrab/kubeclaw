@@ -5,27 +5,42 @@ export {
   CAPABILITY_IDS,
   resolveCapabilityGrants,
 } from '../registry/capabilities.ts';
+export {
+  CAPABILITY_DEFINITIONS,
+  validateCapabilityConstraints,
+  validateCapabilityInvocationContract,
+} from '../registry/capability-vocabulary.ts';
 export { discoverPackages } from '../registry/discovery.ts';
+export { validateRuntimeRegistrationConfiguration } from '../registry/configuration.ts';
 export { RegistryError } from '../registry/errors.ts';
+export { validateContractValue } from '../registry/schema.ts';
 export { createPluginInvocationContext } from '../execution/context.ts';
 export { loadPlatformConfig } from '../config/platform.ts';
 export type { PlatformConfig } from '../config/platform.ts';
 export {
   loadPipelineDefinition,
+  recoverPipelineV2,
+  reopenBlockedPipelineV2,
   resumePipelineV2,
   runPipelineV2,
 } from '../execution/engine.ts';
+export type {
+  AdministrativeDecisionAuthenticator,
+  AuthenticatedAdministrativePrincipal,
+} from '../execution/engine.ts';
 export { AdapterRuntime } from '../execution/adapters.ts';
 export { RevocableLease } from '../execution/lease.ts';
-export { EffectCoordinator } from '../effects/coordinator.ts';
+export { EffectCoordinator, MemoryResourceLockManager } from '../effects/coordinator.ts';
 export {
   FileEffectJournal,
   MemoryEffectJournal,
 } from '../effects/journal.ts';
-export { ResourceLockManager } from '../effects/locks.ts';
+export { FileResourceLockManager } from '../effects/locks.ts';
 export { ExecutionGraph } from '../execution/graph.ts';
+export type { ExecutionGraphSnapshot } from '../execution/graph.ts';
 export { PipelineRunner } from '../execution/runner.ts';
 export type {
+  PipelineRunIdentity,
   PipelineRunnerOptions,
   PipelineRunResult,
 } from '../execution/runner.ts';
@@ -37,7 +52,8 @@ export type {
   ObserverFailure,
   ObserverRuntimeOptions,
 } from '../telemetry/observers.ts';
-export { WaitCoordinator } from '../state/waits.ts';
+export { PluginStateJournal } from '../state/plugins.ts';
+export type { PluginStateAppend } from '../state/plugins.ts';
 export { installExternalPackage, removeInstalledPackage } from '../packages/install.ts';
 export { invokeIsolated } from '../isolation/runner.ts';
 export { FileJournal } from '../state/journal.ts';

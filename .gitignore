@@ -32,9 +32,10 @@ active-run.lock.json
 
 # Node (if developing skills locally)
 node_modules/
-package-lock.json
-!docker/general-tools/package-lock.json
-!skills/common/plugins/openclaw-agent-observer/package-lock.json
+**/package-lock.json
+!/package-lock.json
+!/docker/general-tools/package-lock.json
+!/skills/common/plugins/openclaw-agent-observer/package-lock.json
 skills/common/plugins/openclaw-agent-observer/dist/
 skills/common/plugin-runtime/core/isolation/plugin-sandbox
 

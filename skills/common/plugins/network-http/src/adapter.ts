@@ -24,7 +24,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   const timeoutMs = positiveInteger(context.config.timeoutMs, 'timeoutMs', 30_000);
   return {
     async ready() {},
-    async invoke({ request, signal }) {
+    async invoke({ request, signal, confidential, fence }) {
+      if (!confidential) fence.assertCurrent();
       if (request.capability !== 'network.http' || request.operation !== 'request') {
         throw new Error('NETWORK_OPERATION_UNSUPPORTED');
       }

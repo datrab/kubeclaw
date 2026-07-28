@@ -17,7 +17,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "test": "npm run typecheck && node --experimental-strip-types tests/config.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {},
   "devDependencies": {

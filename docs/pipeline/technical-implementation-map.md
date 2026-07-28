@@ -105,7 +105,7 @@ Why: the scheduler does not execute arbitrary JSON entries. It executes typed st
 
 ### 10. Validators
 
-Source: `runners/pipeline-runner-scheduling.ts`, `services/arch-validator.ts`, `services/module-validators.ts`, `services/contracts/validator-control-result.ts`.
+Source: `runners/pipeline-runner-scheduling.ts`, `services/arch-validator.ts`, `services/module-lint-validators.ts`, `services/contracts/validator-control-result.ts`.
 
 Validators run as scheduled registry stages. They receive stage refs, state snapshots, config, and artifact refs. Results are normalized to validator control results and then pipeline step results.
 

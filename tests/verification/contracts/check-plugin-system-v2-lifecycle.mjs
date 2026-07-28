@@ -19,11 +19,11 @@ const stage = {
 };
 const graph = new core.ExecutionGraph([
   { ...stage, id: 'implement', type: 'example.implement', dependsOn: [], on: undefined },
-  { ...stage, id: 'fix', type: 'example.fix', dependsOn: [], on: undefined },
+  { ...stage, id: 'fix', type: 'example.fix', dependsOn: ['verify'], on: undefined },
   stage,
 ]);
-assert.deepEqual(graph.ready(new Set(), new Set()).map((entry) => entry.id), ['fix', 'implement']);
-assert.deepEqual(graph.ready(new Set(['implement']), new Set()).map((entry) => entry.id), ['fix', 'verify']);
+assert.deepEqual(graph.ready(new Set(), new Set()).map((entry) => entry.id), ['implement']);
+assert.deepEqual(graph.ready(new Set(['implement']), new Set()).map((entry) => entry.id), ['verify']);
 assert.throws(() => new core.ExecutionGraph([
   { ...stage, id: 'a', dependsOn: ['b'], on: undefined },
   { ...stage, id: 'b', dependsOn: ['a'], on: undefined },
@@ -32,6 +32,7 @@ assert.throws(() => new core.ExecutionGraph([
 const running = {
   stageId: 'verify',
   status: 'running',
+  attemptNumber: 0,
   attemptsUsed: 0,
   remediationCyclesUsed: 0,
 };

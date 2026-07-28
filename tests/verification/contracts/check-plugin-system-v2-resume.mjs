@@ -26,6 +26,7 @@ try {
     storageRoot: path.join(temporary, 'state'),
     shutdownTimeoutMs: 5000,
     orchestratorIssuerId: 'nova',
+    administrativeDecisionIssuers: [],
   };
   const definition = {
     schemaVersion: 'pipeline-definition.v2',
@@ -42,30 +43,47 @@ try {
   };
   const first = await runPipelineV2(platform, definition, 'run:resume-test');
   assert.equal(first.status, 'waiting');
-  assert.equal(first.stages.get('review')?.wait?.waitId, 'wait:test-resume');
-  const resumed = await resumePipelineV2(platform, definition, 'run:resume-test', {
+  const canonicalWait = first.stages.get('review')?.wait;
+  assert.match(canonicalWait?.waitId ?? '', /^wait:/);
+  assert.equal(canonicalWait?.signalType, 'core.orchestrator.resume');
+  assert.deepEqual(canonicalWait?.authorizedIssuer, { type: 'orchestrator', id: 'nova' });
+  assert.equal(first.stages.get('review')?.attemptsUsed, 1);
+  assert.equal(Object.isFrozen(first.stages.get('review')), true);
+  assert.equal(Object.isFrozen(first.stages.get('review')?.wait), true);
+  assert.equal(Object.isFrozen(first.stages.get('review')?.wait?.authorizedIssuer), true);
+  const signal = {
     schemaVersion: 'resume-signal.v2',
     signalId: 'signal:resume-test',
     idempotencyKey: 'signal-key:resume-test',
-    waitId: 'wait:test-resume',
-    signalType: 'test.resume.approved',
+    waitId: canonicalWait.waitId,
+    signalType: canonicalWait.signalType,
     issuer: { type: 'orchestrator', id: 'nova' },
     issuedAt: new Date().toISOString(),
     payload: { approved: true, helperPrompt: 'Continue with the reviewed approach.' },
+  };
+  const changedDefinition = structuredClone(definition);
+  changedDefinition.stages[0].execution.timeoutMs += 1;
+  await assert.rejects(
+    () => resumePipelineV2(platform, changedDefinition, 'run:resume-test', signal),
+    /RECOVERY_GRAPH_DIGEST_MISMATCH/,
+  );
+  const resumed = await resumePipelineV2(platform, definition, 'run:resume-test', {
+    ...signal,
   });
   assert.equal(resumed.status, 'succeeded');
+  assert.equal(resumed.stages.get('review')?.attemptsUsed, 2);
   await assert.rejects(
     () => resumePipelineV2(platform, definition, 'run:resume-test', {
       schemaVersion: 'resume-signal.v2',
       signalId: 'signal:duplicate',
       idempotencyKey: 'signal-key:duplicate',
-      waitId: 'wait:test-resume',
-      signalType: 'test.resume.approved',
+      waitId: canonicalWait.waitId,
+      signalType: canonicalWait.signalType,
       issuer: { type: 'orchestrator', id: 'nova' },
       issuedAt: new Date().toISOString(),
       payload: { approved: true },
     }),
-    /WAIT_UNKNOWN_OR_STALE|WAIT_ALREADY_RESOLVED/,
+    /WAIT_UNKNOWN_OR_STALE|WAIT_ALREADY_RESOLVED|WAIT_RUN_TERMINAL/,
   );
   console.log(JSON.stringify({ ok: true, contract: 'plugin-system-v2-resume' }));
 } finally {

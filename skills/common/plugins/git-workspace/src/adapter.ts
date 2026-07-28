@@ -294,7 +294,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   });
   return {
     async ready() {},
-    async invoke({ request, signal }) {
+    async invoke({ request, signal, confidential, fence }) {
+      if (!confidential) fence.assertCurrent();
       if (request.capability === 'git.workspace.create' && request.operation === 'create') {
         const repository = authorizedExistingDirectory(
           request.payload.repositoryRoot ?? request.resource.canonicalId,

@@ -22,7 +22,9 @@ export interface StageRuntimeState {
   readonly attemptsUsed: number;
   readonly remediationCyclesUsed: number;
   readonly wait?: WaitRequest;
+  readonly retryAt?: string;
   readonly remediationReturnTo?: string;
+  readonly remediationTarget?: string;
 }
 
 export type LifecycleAction =
@@ -53,47 +55,80 @@ export function applyStageResult(
 ): LifecycleDecision {
   if (current.status !== 'running') throw new Error(`STAGE_RESULT_ILLEGAL_STATE:${current.status}`);
   requiredReason(result);
+  const {
+    wait: _wait,
+    retryAt: _retryAt,
+    ...activeState
+  } = current;
+  const attempted = {
+    ...activeState,
+    attemptNumber: current.attemptNumber + 1,
+    attemptsUsed: current.attemptsUsed + 1,
+  };
   switch (result.outcome) {
     case 'passed':
-      return { state: { ...current, status: 'succeeded' }, action: { type: 'complete' } };
+      return { state: { ...attempted, status: 'succeeded' }, action: { type: 'complete' } };
     case 'retry': {
-      const attemptsUsed = current.attemptsUsed + 1;
+      const attemptsUsed = attempted.attemptsUsed;
       if (attemptsUsed >= definition.execution.maxAttempts) {
-        return { state: { ...current, attemptsUsed, status: 'blocked' }, action: { type: 'stop' } };
+        return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
       }
       if (definition.execution.orchestratorAfterAttempt === attemptsUsed) {
         return {
-          state: { ...current, attemptsUsed, status: 'waiting' },
+          state: { ...attempted, status: 'waiting' },
           action: { type: 'request_orchestrator', afterAttempt: attemptsUsed },
         };
       }
-      return { state: { ...current, attemptsUsed, status: 'retrying' }, action: { type: 'schedule_attempt' } };
+      return { state: { ...attempted, status: 'retrying' }, action: { type: 'schedule_attempt' } };
     }
     case 'request_fix': {
       const remediationCyclesUsed = current.remediationCyclesUsed + 1;
       const target = definition.on?.request_fix;
       if (!target) throw new Error(`STAGE_REMEDIATION_UNDECLARED:${definition.id}`);
-      if (remediationCyclesUsed > definition.execution.maxRemediationCycles) {
-        return { state: { ...current, remediationCyclesUsed, status: 'blocked' }, action: { type: 'stop' } };
+      if (
+        attempted.attemptsUsed >= definition.execution.maxAttempts
+        || remediationCyclesUsed > definition.execution.maxRemediationCycles
+      ) {
+        return {
+          state: { ...attempted, remediationCyclesUsed, status: 'blocked' },
+          action: { type: 'stop' },
+        };
       }
       return {
-        state: { ...current, remediationCyclesUsed, status: 'waiting' },
+        state: {
+          ...attempted,
+          remediationCyclesUsed,
+          status: 'waiting',
+          remediationTarget: target,
+        },
         action: { type: 'schedule_remediation', stageId: target },
       };
     }
     case 'wait':
-      return { state: { ...current, status: 'waiting', wait: result.wait }, action: { type: 'persist_wait', wait: result.wait } };
+      if (attempted.attemptsUsed >= definition.execution.maxAttempts) {
+        return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
+      }
+      return { state: { ...attempted, status: 'waiting', wait: result.wait }, action: { type: 'persist_wait', wait: result.wait } };
     case 'orchestrator_required':
-      return { state: { ...current, status: 'waiting', wait: result.wait }, action: { type: 'pause_for_orchestrator', wait: result.wait } };
+      if (attempted.attemptsUsed >= definition.execution.maxAttempts) {
+        return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
+      }
+      return { state: { ...attempted, status: 'waiting', wait: result.wait }, action: { type: 'pause_for_orchestrator', wait: result.wait } };
     case 'rate_limited':
-      return { state: { ...current, status: 'waiting' }, action: { type: 'cooldown', retryAt: result.retryAt } };
+      if (attempted.attemptsUsed >= definition.execution.maxAttempts) {
+        return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
+      }
+      return {
+        state: { ...attempted, status: 'waiting', retryAt: result.retryAt },
+        action: { type: 'cooldown', retryAt: result.retryAt },
+      };
     case 'blocked':
-      return { state: { ...current, status: 'blocked' }, action: { type: 'stop' } };
+      return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
     case 'failed':
     case 'timed_out':
-      return { state: { ...current, status: 'failed' }, action: { type: 'stop' } };
+      return { state: { ...attempted, status: 'failed' }, action: { type: 'stop' } };
     case 'cancelled':
-      return { state: { ...current, status: 'cancelled' }, action: { type: 'stop' } };
+      return { state: { ...attempted, status: 'cancelled' }, action: { type: 'stop' } };
     default: {
       const exhaustive: never = result;
       throw new Error(`STAGE_RESULT_UNKNOWN:${JSON.stringify(exhaustive)}`);

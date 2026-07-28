@@ -192,7 +192,7 @@ node --test tests/verification/e2e/*.test.mjs
 - `skills/nova/pipeline/tools/lint-report/go-terraform-tools.ts`
 - `skills/nova/pipeline/tools/lint-report/architecture-tools.ts`
 - `skills/nova/pipeline/services/lint.ts`
-- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/module-lint-validators.ts`
 
 ## Rule And Tool Contract
 
@@ -201,7 +201,7 @@ node --test tests/verification/e2e/*.test.mjs
 | CLI flags and exit behavior | `skills/nova/pipeline/tools/lint-report.ts`; `lint-report/output.ts` | exact repo, policy, policy-project, tier, project, module, changed-file, and output inputs; process exits nonzero on blocking findings or tool failures |
 | Policy authority | `charts/kubeclaw/files/config/lint-policy.json`; `lint-report/policy.ts` | versioned typed project, language, tool, scope, severity, exclusion, config, and architecture authority |
 | Report schema | `lint-report/report.ts`; `lint-report/report-contract.ts` | JSON summary with blocking/error/warning totals, policy/config digests, per-tool policy metadata, findings, duration, and diagnostics |
-| Pipeline consumption | `skills/nova/pipeline/services/lint.ts`; `module-validators.ts` | pre-check/full lint can request fixes, block, or provide evidence according to policy |
+| Pipeline consumption | `skills/nova/pipeline/services/lint.ts`; `module-lint-validators.ts` | pre-check/full lint can request fixes, block, or provide evidence according to policy |
 
 ## Failure Signals
 

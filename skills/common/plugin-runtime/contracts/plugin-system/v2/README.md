@@ -27,5 +27,8 @@ Rules:
 - Adapter locks carry monotonically increasing fencing tokens over canonical resource identities.
 - Plugin state is append-only, registration-owned, digest-pinned through provenance, and idempotency-keyed.
 - `needs_nova`, `action_required`, package-level `capabilities`, kinds, hook families, and fixed built-in stage identifiers are not part of this contract.
+- Blocked-run reopening uses the exact `administrative-reopen.v2` decision
+  contract with actor, reason, idempotency identity, and one declared
+  continuation (`retry`, `remediation`, or `cancel`).
 
 Cross-record invariants such as unique registration IDs, package/registration identity consistency, plugin-event namespace ownership, unique stage-type ownership, graph acyclicity, remediation-target existence, attempt timestamp ordering, capability completeness, lease expiry/revocation enforcement, signal authorization, digest availability, monotonic journal/checkpoint sequences, fencing-token progression, and effect receipt matching require registry or state-aware validation in addition to JSON Schema.

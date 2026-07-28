@@ -42,7 +42,9 @@ export function activate(context) {
         throw new Error('maxRecordBytes is invalid');
     return {
         async ready() { fs.mkdirSync(path.dirname(file), { recursive: true }); },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (request.capability !== 'telemetry.emit' || request.operation !== 'append')
                 throw new Error('TELEMETRY_OPERATION_UNSUPPORTED');
             if (signal.aborted)

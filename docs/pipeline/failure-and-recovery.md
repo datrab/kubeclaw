@@ -242,6 +242,6 @@ Escalate to a maintainer when:
 - `skills/nova/pipeline/services/failures/retry-policy.ts`
 - `skills/nova/pipeline/services/rate-limit.ts`
 - `skills/nova/pipeline/services/completion-adjudicator.ts`
-- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/module-lint-validators.ts`
 - `skills/buster/pipeline/services/task-queue.ts`
 - `skills/buster/pipeline/services/task-completion.ts`

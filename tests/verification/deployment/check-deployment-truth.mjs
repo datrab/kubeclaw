@@ -41,7 +41,10 @@ const litellmManifestPath = path.join(sourceRoot, 'my-values', 'infra', 'litellm
 const networkPoliciesPath = path.join(sourceRoot, 'my-values', 'infra', 'network-policies.yaml');
 const busterNamespaceFencePath = path.join(sourceRoot, 'my-values', 'infra', 'buster-namespace-fence.yaml');
 const imageBuildWorkflowPath = path.join(sourceRoot, '.github', 'workflows', 'build-images.yaml');
+const docsChecksWorkflowPath = path.join(sourceRoot, '.github', 'workflows', 'docs-checks.yaml');
 const packageSkillBundleScriptPath = path.join(sourceRoot, 'scripts', 'package-agent-skill-bundle.sh');
+const rootPackagePath = path.join(sourceRoot, 'package.json');
+const rootPackageLockPath = path.join(sourceRoot, 'package-lock.json');
 const generalDockerfilePath = path.join(sourceRoot, 'docker', 'Dockerfile.general');
 const generalToolsPackagePath = path.join(sourceRoot, 'docker', 'general-tools', 'package.json');
 const generalToolsLockPath = path.join(sourceRoot, 'docker', 'general-tools', 'package-lock.json');
@@ -438,7 +441,10 @@ const registryLocalManifest = fs.readFileSync(registryLocalManifestPath, 'utf8')
 const litellmManifest = fs.readFileSync(litellmManifestPath, 'utf8');
 const networkPolicies = fs.readFileSync(networkPoliciesPath, 'utf8');
 const imageBuildWorkflow = fs.readFileSync(imageBuildWorkflowPath, 'utf8');
+const docsChecksWorkflow = fs.readFileSync(docsChecksWorkflowPath, 'utf8');
 const packageSkillBundleScript = fs.readFileSync(packageSkillBundleScriptPath, 'utf8');
+const rootPackage = JSON.parse(fs.readFileSync(rootPackagePath, 'utf8'));
+const rootPackageLock = JSON.parse(fs.readFileSync(rootPackageLockPath, 'utf8'));
 const generalDockerfile = fs.readFileSync(generalDockerfilePath, 'utf8');
 const generalToolsPackage = JSON.parse(fs.readFileSync(generalToolsPackagePath, 'utf8'));
 const generalToolsLock = JSON.parse(fs.readFileSync(generalToolsLockPath, 'utf8'));
@@ -1342,6 +1348,10 @@ assertIncludes(imageBuildWorkflow, './scripts/package-agent-skill-bundle.sh nova
 assertIncludes(imageBuildWorkflow, './scripts/package-agent-skill-bundle.sh buster', 'Build workflow must package the Buster /app/skills bundle');
 assertIncludes(imageBuildWorkflow, 'gh release upload "$BUNDLE_RELEASE_TAG"', 'Build workflow must publish bundle assets to a GitHub release');
 assertIncludes(imageBuildWorkflow, 'agent-code-bundles', 'Build workflow must use the stable bundle release tag');
+assertIncludes(docsChecksWorkflow, 'cache: npm', 'Docs workflow must cache the committed root npm dependency graph');
+assertIncludes(docsChecksWorkflow, 'npm ci --ignore-scripts', 'Docs workflow must install the committed root dependency graph before running repository scripts');
+assert.deepEqual(rootPackageLock.packages?.['']?.devDependencies, rootPackage.devDependencies, 'Root npm lock must match the repository development dependencies');
+assert.equal(rootPackage.devDependencies?.typescript, '5.9.3', 'Repository analysis scripts must use the canonical pinned TypeScript compiler API');
 assertIncludes(packageSkillBundleScript, 'cp -R "${role_source}/." "$skills_root/"', 'Bundle packaging script must copy the role-specific skills surface first');
 assertIncludes(packageSkillBundleScript, 'cp -R "${common_source}/." "$skills_root/"', 'Bundle packaging script must overlay skills/common onto the role-specific bundle surface');
 assertIncludes(packageSkillBundleScript, 'cp -R "${agent_observability_contract_source}/." "${skills_root}/pipeline/agent-observability/src/"', 'Bundle packaging must materialize the canonical agent-observability contract');

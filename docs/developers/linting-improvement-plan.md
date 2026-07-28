@@ -342,7 +342,7 @@ Every phase must include:
 
 - `docs/developers/linting-improvement-audit.md`
 - `skills/nova/pipeline/services/lint.ts`
-- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/module-lint-validators.ts`
 - `skills/nova/pipeline/tools/lint-report.ts`
 - `skills/nova/pipeline/tools/lint-report/`
 - `docker/Dockerfile.general`

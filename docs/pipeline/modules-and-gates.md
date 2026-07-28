@@ -223,5 +223,5 @@ find Projects/my-project/src/.swarm/modules -name 'buster-output.json' -print
 - `skills/nova/pipeline/runners/review-gate-runner.ts`
 - `skills/nova/pipeline/runners/buster-gate-runner.ts`
 - `skills/nova/pipeline/runners/approval-gate-runner.ts`
-- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/module-lint-validators.ts`
 - `skills/nova/pipeline/core/paths.ts`

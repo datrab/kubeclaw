@@ -19,6 +19,10 @@ export interface PlatformConfig {
   readonly storageRoot: string;
   readonly shutdownTimeoutMs: number;
   readonly orchestratorIssuerId: string;
+  readonly administrativeDecisionIssuers: readonly Readonly<{
+    readonly type: 'operator' | 'administrator';
+    readonly id: string;
+  }>[];
 }
 
 const schema = JSON.parse(fs.readFileSync(new URL('./platform.schema.json', import.meta.url), 'utf8')) as object;
@@ -38,11 +42,17 @@ const ajv = new AjvConstructor({ allErrors: true, strict: true });
 installFormats(ajv);
 const validate = ajv.compile(schema);
 
+function deepFreeze<T>(value: T): T {
+  if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
+  for (const child of Object.values(value as Record<string, unknown>)) deepFreeze(child);
+  return Object.freeze(value);
+}
+
 function resolvePaths(config: PlatformConfig, directory: string): PlatformConfig {
-  return Object.freeze({
+  return deepFreeze({
     ...config,
-    installationRoots: Object.freeze(config.installationRoots.map((value) => path.resolve(directory, value))),
-    trustedBuiltinRoots: Object.freeze(config.trustedBuiltinRoots.map((value) => path.resolve(directory, value))),
+    installationRoots: config.installationRoots.map((value) => path.resolve(directory, value)),
+    trustedBuiltinRoots: config.trustedBuiltinRoots.map((value) => path.resolve(directory, value)),
     storageRoot: path.resolve(directory, config.storageRoot),
   });
 }

@@ -13,7 +13,7 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 
 | Files | Runtime/support | Exported surfaces | Local imports | Runtime effects | Legacy runtime/all | Hardcoding runtime/all | Registrations | Unclassified |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1444 | 1128 / 316 | 3720 | 3504 | 1112 | 110 / 184 | 75 / 211 | 21 | 0 |
+| 1461 | 1145 / 316 | 3757 | 3524 | 1199 | 107 / 181 | 71 / 205 | 20 | 0 |
 
 ## Target Ownership
 
@@ -35,14 +35,13 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 | adapter:kubeclaw.transport-publisher | 11 |
 | adapter:kubeclaw.wait-store | 8 |
 | core:pipeline-core-config | 4 |
-| core:pipeline-core-execution | 195 |
-| core:pipeline-core-registry | 20 |
+| core:pipeline-core-execution | 196 |
+| core:pipeline-core-registry | 25 |
 | core:pipeline-core-state | 69 |
 | core:pipeline-core-telemetry | 19 |
 | core:pipeline-core-verification | 19 |
 | delete:legacy-kind-schedulers | 31 |
 | delete:legacy-mixed-validation-contract | 2 |
-| delete:legacy-mixed-validator-facade | 1 |
 | delete:legacy-notification-registry-contract | 2 |
 | delete:legacy-plugin-bridges | 7 |
 | delete:legacy-telemetry-registry-contract | 4 |
@@ -53,25 +52,25 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 | plugin:kubeclaw.architecture-validator | 23 |
 | plugin:kubeclaw.artifact-store | 8 |
 | plugin:kubeclaw.blueprint-sync | 13 |
-| plugin:kubeclaw.buster-quality-gate | 30 |
+| plugin:kubeclaw.buster-quality-gate | 31 |
 | plugin:kubeclaw.buster-worker | 190 |
-| plugin:kubeclaw.case-study | 17 |
-| plugin:kubeclaw.delivery-lint | 11 |
+| plugin:kubeclaw.case-study | 18 |
+| plugin:kubeclaw.delivery-lint | 12 |
 | plugin:kubeclaw.forge | 21 |
 | plugin:kubeclaw.human-approval | 28 |
 | plugin:kubeclaw.implementation-agent | 12 |
-| plugin:kubeclaw.lint | 81 |
+| plugin:kubeclaw.lint | 82 |
 | plugin:kubeclaw.notification-observer | 10 |
 | plugin:kubeclaw.notifications | 7 |
-| plugin:kubeclaw.openclaw-agent-observer | 23 |
-| plugin:kubeclaw.pipeline-review | 16 |
-| plugin:kubeclaw.preflight-contract | 12 |
-| plugin:kubeclaw.project-summary | 32 |
+| plugin:kubeclaw.openclaw-agent-observer | 26 |
+| plugin:kubeclaw.pipeline-review | 17 |
+| plugin:kubeclaw.preflight-contract | 13 |
+| plugin:kubeclaw.project-summary | 34 |
 | plugin:kubeclaw.repository-adapter | 8 |
 | plugin:kubeclaw.review | 32 |
 | plugin:kubeclaw.telemetry-observer | 9 |
 | plugin:kubeclaw.telemetry-observers | 2 |
-| plugin:kubeclaw.test-agent | 11 |
+| plugin:kubeclaw.test-agent | 12 |
 | shared-library:kubeclaw.agent-observability-contract | 35 |
 | shared-library:kubeclaw.pipeline-primitives | 14 |
 | shared-library:kubeclaw.prompt-primitives | 1 |
@@ -89,9 +88,8 @@ Record the complete current ownership, dependency, effect, legacy-contract, and 
 | builtin.gate.approval | gate / gate:approval | `skills/nova/pipeline/runners/approval-gate-runner.ts` | kubeclaw.human-approval | stage | kubeclaw.decision.human-approval |
 | builtin.gate.buster | gate / gate:buster | `skills/nova/pipeline/runners/buster-gate-runner.ts` | kubeclaw.buster-quality-gate | stage | kubeclaw.test.quality-evaluation |
 | builtin.validator.architecture | validator / validator:architecture | `skills/nova/pipeline/services/arch-validator.ts` | kubeclaw.architecture-validator | stage | kubeclaw.validate.architecture |
-| builtin.validator.delivery_lint | validator / validator:delivery_lint | `skills/nova/pipeline/services/module-validators.ts` | kubeclaw.delivery-lint | stage | kubeclaw.lint.delivery |
-| builtin.validator.pre_check | validator / validator:pre_check | `skills/nova/pipeline/services/module-validators.ts` | kubeclaw.lint | stage | kubeclaw.lint.pre-check |
-| builtin.validator.full_lint | validator / validator:full_lint | `skills/nova/pipeline/services/module-validators.ts` | kubeclaw.lint | stage | kubeclaw.lint.full |
+| builtin.validator.pre_check | validator / validator:pre_check | `skills/nova/pipeline/services/module-lint-validators.ts` | kubeclaw.lint | stage | kubeclaw.lint.pre-check |
+| builtin.validator.full_lint | validator / validator:full_lint | `skills/nova/pipeline/services/module-lint-validators.ts` | kubeclaw.lint | stage | kubeclaw.lint.full |
 | builtin.generator.project_summary | generator / generator:project_summary | `skills/nova/pipeline/services/summary.ts` | kubeclaw.project-summary | stage | kubeclaw.report.project-summary |
 | builtin.generator.pipeline_review | generator / generator:pipeline_review | `skills/nova/pipeline/services/pipeline-review-run.ts` | kubeclaw.pipeline-review | stage | kubeclaw.report.pipeline-review |
 | builtin.generator.case_study | generator / generator:case_study | `skills/nova/pipeline/services/case-study.ts` | kubeclaw.case-study | stage | kubeclaw.report.case-study |
@@ -110,9 +108,9 @@ Decision: **confirm kubeclaw.delivery-lint** as the first reference extraction.
 
 - The delivery-lint decision is deterministic and exercises canonical passed, request_fix, and blocked outcomes.
 - Its target implementation does not require agent dispatch, durable waits, or network authority.
-- It has the lowest migration-risk score among current or discovered stage packages (28).
-- The current module-validators.ts facade mixes delivery, pre-check, and full-lint behavior and must be deleted after its exports are split; it must not be moved wholesale.
-- The extraction should produce a single-stage kubeclaw.delivery-lint package first. Pre-check and full-lint remain outside that package until independent cohesion evidence supports combining them.
+- It was selected as the lowest-risk deterministic reference package before extraction.
+- The mixed module-validators.ts facade and validation-delivery.ts implementation are deleted.
+- The single-stage kubeclaw.delivery-lint package is now the only behavior owner. Pre-check and full-lint remain independently owned.
 
 Evidence:
 
@@ -121,11 +119,11 @@ Evidence:
 | deterministicDomainEvaluation | true |
 | directRuntimeDispatch | false |
 | directNetwork | false |
-| classifiedRuntimeFileCount | 11 |
+| classifiedRuntimeFileCount | 0 |
 | classifiedSupportFileCount | 0 |
-| outboundOwnerDependencies | 3 |
-| currentMixedFacade | skills/nova/pipeline/services/module-validators.ts |
-| requiredPreparatorySplit | true |
+| outboundOwnerDependencies | 0 |
+| currentMixedFacade |  |
+| requiredPreparatorySplit | false |
 
 Candidate comparison (lower score means a smaller first-extraction blast radius):
 
@@ -133,33 +131,32 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 
 | Candidate package | Score | Registry-backed | Registrations | Runtime files | Cross-owner imports | Effect risk | Legacy | Hardcoding |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| kubeclaw.delivery-lint | 28 | true | 1 | 11 | 3 | 14 | 0 | 0 |
-| kubeclaw.preflight-contract | 60 | false | 1 | 12 | 2 | 21 | 0 | 0 |
+| kubeclaw.preflight-contract | 67 | false | 1 | 13 | 2 | 27 | 0 | 0 |
 | kubeclaw.forge | 141 | true | 1 | 18 | 103 | 13 | 1 | 2 |
 | kubeclaw.blueprint-sync | 146 | false | 1 | 12 | 18 | 91 | 0 | 0 |
 | kubeclaw.review | 146 | true | 1 | 29 | 59 | 49 | 3 | 0 |
-| kubeclaw.buster-quality-gate | 186 | true | 1 | 27 | 97 | 33 | 9 | 1 |
-| kubeclaw.project-summary | 187 | true | 1 | 28 | 63 | 96 | 0 | 0 |
+| kubeclaw.buster-quality-gate | 189 | true | 1 | 28 | 97 | 35 | 9 | 1 |
+| kubeclaw.project-summary | 191 | true | 1 | 30 | 63 | 98 | 0 | 0 |
 | kubeclaw.architecture-validator | 214 | true | 1 | 21 | 19 | 158 | 0 | 8 |
-| kubeclaw.pipeline-review | 229 | true | 1 | 16 | 34 | 179 | 0 | 0 |
-| kubeclaw.case-study | 230 | true | 1 | 17 | 31 | 182 | 0 | 0 |
+| kubeclaw.pipeline-review | 232 | true | 1 | 17 | 34 | 181 | 0 | 0 |
+| kubeclaw.case-study | 233 | true | 1 | 18 | 31 | 184 | 0 | 0 |
 | kubeclaw.human-approval | 236 | true | 1 | 26 | 52 | 131 | 9 | 0 |
-| kubeclaw.lint | 387 | true | 2 | 69 | 27 | 281 | 0 | 0 |
+| kubeclaw.lint | 391 | true | 2 | 70 | 27 | 284 | 0 | 0 |
 | kubeclaw.buster-worker | 1120 | true | 1 | 154 | 112 | 792 | 14 | 10 |
 
 ## Privileged Effect Ledger
 
 | Effect | Detected calls | Target adapter |
 | --- | --- | --- |
-| command.execute | 48 | kubeclaw.command |
-| filesystem.read | 479 | kubeclaw.artifacts |
-| filesystem.write | 329 | kubeclaw.artifacts |
-| git.execute | 43 | kubeclaw.git |
+| command.execute | 51 | kubeclaw.command |
+| filesystem.read | 512 | kubeclaw.artifacts |
+| filesystem.write | 373 | kubeclaw.artifacts |
+| git.execute | 44 | kubeclaw.git |
 | network.http | 8 | kubeclaw.network |
 | operator.notify | 23 | kubeclaw.operator-messaging |
-| redis.execute | 99 | kubeclaw.redis |
+| redis.execute | 102 | kubeclaw.redis |
 | runtime.dispatch | 25 | kubeclaw.runtime-dispatch |
-| secret.read | 37 | kubeclaw.secrets |
+| secret.read | 40 | kubeclaw.secrets |
 | telemetry.emit | 21 | kubeclaw.telemetry-transport |
 
 ## Legacy Contract Ledger
@@ -167,9 +164,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | Legacy contract | Runtime hits | All references |
 | --- | --- | --- |
 | manifest.contract-v1 | 1 | 4 |
-| manifest.hook-family | 31 | 49 |
-| manifest.kind | 20 | 29 |
-| manifest.package-capabilities | 22 | 44 |
+| manifest.hook-family | 30 | 48 |
+| manifest.kind | 19 | 28 |
+| manifest.package-capabilities | 21 | 43 |
 | result.action_required | 11 | 17 |
 | result.needs_nova | 25 | 41 |
 
@@ -181,7 +178,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | stage.gate-buster | 5 | 8 |
 | stage.gate-review | 5 | 24 |
 | stage.generator | 14 | 62 |
-| stage.validator | 33 | 74 |
+| stage.validator | 29 | 68 |
 | stage.worker-buster | 9 | 16 |
 | stage.worker-forge | 6 | 13 |
 
@@ -230,16 +227,17 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | core:pipeline-core-execution | adapter:kubeclaw.redis | 10 | `skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/services/runtime-redis-preflight.ts`<br>`skills/nova/pipeline/services/adapter-registry.ts -> skills/nova/pipeline/tools/redis.ts`<br>`skills/nova/pipeline/services/completion-event-adapters.ts -> skills/nova/pipeline/services/completion-redis-event-adapter.ts` |
 | core:pipeline-core-execution | adapter:kubeclaw.runtime-dispatch | 26 | `skills/nova/pipeline/cli.ts -> skills/nova/pipeline/agents/shutdown.ts`<br>`skills/nova/pipeline/core/policy.ts -> skills/nova/pipeline/agents/runtime.ts`<br>`skills/nova/pipeline/index.ts -> skills/nova/pipeline/agents/shutdown.ts` |
 | core:pipeline-core-execution | core:pipeline-core-config | 3 | `skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/core/config/platform.ts`<br>`skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/config/platform.ts`<br>`skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/config/platform.ts` |
-| core:pipeline-core-execution | core:pipeline-core-registry | 25 | `skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/activation.ts`<br>`skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts`<br>`skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts` |
-| core:pipeline-core-execution | core:pipeline-core-state | 75 | `skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts`<br>`skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts`<br>`skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts` |
+| core:pipeline-core-execution | core:pipeline-core-registry | 33 | `skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/activation.ts`<br>`skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts`<br>`skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts` |
+| core:pipeline-core-execution | core:pipeline-core-state | 77 | `skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts`<br>`skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts`<br>`skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts` |
 | core:pipeline-core-execution | core:pipeline-core-telemetry | 30 | `skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts`<br>`skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts`<br>`skills/nova/pipeline/runners/gate-runtime-error.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | core:pipeline-core-execution | delete:legacy-kind-schedulers | 2 | `skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/runners/gate-runner.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/runners/module-runner.ts` |
 | core:pipeline-core-execution | delete:legacy-plugin-bridges | 3 | `skills/nova/pipeline/core/registry.ts -> skills/nova/pipeline/core/registry/builtins.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts` |
-| core:pipeline-core-execution | plugin-sdk:pipeline-plugin-sdk | 68 | `skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/effects/coordinator.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/sdk/src/index.ts` |
+| core:pipeline-core-execution | plugin-sdk:pipeline-plugin-sdk | 69 | `skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/effects/coordinator.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/sdk/src/index.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.architecture-validator | 4 | `skills/nova/pipeline/runners/pipeline-runner-scheduling-results.ts -> skills/nova/pipeline/services/arch-validator.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-scheduling.ts -> skills/nova/pipeline/services/arch-validator.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-start.ts -> skills/nova/pipeline/services/arch-validator.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.blueprint-sync | 3 | `skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/blueprint.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/services/blueprint.ts`<br>`skills/nova/pipeline/runners/pipeline-runner-scheduling.ts -> skills/nova/pipeline/services/blueprint.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.buster-worker | 1 | `skills/nova/pipeline/services/polling-dual.ts -> skills/nova/pipeline/services/buster-completion-controller.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.forge | 3 | `skills/nova/pipeline/services/polling-wrappers.ts -> skills/nova/pipeline/services/polling-forge.ts`<br>`skills/nova/pipeline/services/polling.ts -> skills/nova/pipeline/services/polling-forge.ts`<br>`tests/skills/nova/pipeline/services/polling.test.mjs -> skills/nova/pipeline/services/forge-completion.ts` |
+| core:pipeline-core-execution | plugin:kubeclaw.lint | 1 | `skills/nova/pipeline/services/module-lint-validators.ts -> skills/nova/pipeline/services/lint.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.notifications | 2 | `skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/preview-delivery.ts`<br>`skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/durable-operator-alert.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.project-summary | 2 | `skills/nova/pipeline/runners/pipeline-runner-deps.ts -> skills/nova/pipeline/services/summary.ts`<br>`skills/nova/pipeline/services/adapter-registry.ts -> skills/nova/pipeline/tools/project-summary.ts` |
 | core:pipeline-core-execution | plugin:kubeclaw.telemetry-observers | 3 | `skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/telemetry-stream.ts`<br>`skills/nova/pipeline/services/observability.ts -> skills/nova/pipeline/services/telemetry-stream.ts`<br>`skills/nova/pipeline/services/system-io-warning.ts -> skills/nova/pipeline/services/telemetry-stream.ts` |
@@ -250,11 +248,12 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | core:pipeline-core-registry | core:pipeline-core-execution | 17 | `skills/common/plugin-runtime/core/registry/activation.ts -> skills/common/plugin-runtime/core/isolation/runner.ts`<br>`skills/nova/pipeline/core/registry/config-normalization.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/core/registry/config-normalization.ts -> skills/nova/pipeline/core/constants.ts` |
 | core:pipeline-core-registry | core:pipeline-core-state | 1 | `skills/nova/pipeline/core/registry/schema-validation.ts -> skills/nova/pipeline/services/serialization.ts` |
 | core:pipeline-core-registry | delete:legacy-mixed-validation-contract | 3 | `skills/nova/pipeline/core/registry/config-normalization.ts -> skills/nova/pipeline/services/validation.ts`<br>`skills/nova/pipeline/core/registry/schema-validation.ts -> skills/nova/pipeline/services/validation.ts`<br>`skills/nova/pipeline/core/registry/validation.ts -> skills/nova/pipeline/services/validation.ts` |
-| core:pipeline-core-registry | plugin-sdk:pipeline-plugin-sdk | 7 | `skills/common/plugin-runtime/core/registry/activation.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/registry/build.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/registry/capabilities.ts -> skills/common/plugin-runtime/sdk/src/index.ts` |
+| core:pipeline-core-registry | plugin-sdk:pipeline-plugin-sdk | 8 | `skills/common/plugin-runtime/core/registry/activation.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/registry/build.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/registry/capabilities.ts -> skills/common/plugin-runtime/sdk/src/index.ts` |
 | core:pipeline-core-registry | plugin:kubeclaw.buster-worker | 1 | `tests/skills/nova/pipeline/core/config-profiles.test.mjs -> skills/buster/pipeline/services/runtime-policy.ts` |
 | core:pipeline-core-state | adapter:kubeclaw.artifacts | 2 | `skills/nova/pipeline/services/status-store-io.ts -> skills/nova/pipeline/services/artifact-bundle.ts`<br>`skills/nova/pipeline/services/status-store-lifecycle/appenders-pipeline.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
 | core:pipeline-core-state | core:pipeline-core-execution | 54 | `skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/services/correlation.ts -> skills/nova/pipeline/optional-absence.ts` |
-| core:pipeline-core-state | plugin-sdk:pipeline-plugin-sdk | 7 | `skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/lifecycle/reducer.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/state/waits.ts -> skills/common/plugin-runtime/sdk/src/index.ts` |
+| core:pipeline-core-state | core:pipeline-core-registry | 2 | `skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts`<br>`skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/core/registry/schema.ts` |
+| core:pipeline-core-state | plugin-sdk:pipeline-plugin-sdk | 7 | `skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/lifecycle/reducer.ts -> skills/common/plugin-runtime/sdk/src/index.ts`<br>`skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/sdk/src/index.ts` |
 | core:pipeline-core-state | shared-library:kubeclaw.pipeline-primitives | 1 | `skills/common/pipeline/lifecycle-state.ts -> skills/common/pipeline/optional-absence.ts` |
 | core:pipeline-core-telemetry | adapter:kubeclaw.artifacts | 3 | `skills/nova/pipeline/services/evidence-manifest.ts -> skills/nova/pipeline/portable-artifacts.ts`<br>`skills/nova/pipeline/services/run-facts-evaluation.ts -> skills/nova/pipeline/portable-artifacts.ts`<br>`skills/nova/pipeline/services/run-facts.ts -> skills/nova/pipeline/services/artifact-bundle.ts` |
 | core:pipeline-core-telemetry | adapter:kubeclaw.redis | 1 | `skills/common/pipeline/telemetry.ts -> skills/common/pipeline/redis-transport.ts` |
@@ -285,22 +284,15 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | delete:legacy-kind-schedulers | plugin:kubeclaw.forge | 3 | `skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/prompts/forge.ts`<br>`skills/nova/pipeline/runners/module-runner/state-machine.ts -> skills/nova/pipeline/runners/module-runner-forge.ts`<br>`tests/skills/nova/pipeline/runners/module-runner-worker-lifecycle.test.mjs -> skills/nova/pipeline/runners/module-runner-forge.ts` |
 | delete:legacy-kind-schedulers | plugin:kubeclaw.review | 1 | `tests/skills/nova/pipeline/runners/gate-runner-control.test.mjs -> skills/nova/pipeline/runners/review-gate-control.ts` |
 | delete:legacy-mixed-validation-contract | core:pipeline-core-execution | 2 | `skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/optional-absence.ts` |
-| delete:legacy-mixed-validation-contract | plugin:kubeclaw.delivery-lint | 1 | `skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-delivery.ts` |
 | delete:legacy-mixed-validation-contract | plugin:kubeclaw.preflight-contract | 1 | `skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-blueprint.ts` |
-| delete:legacy-mixed-validator-facade | core:pipeline-core-execution | 4 | `skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/paths.ts`<br>`skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/runtime.ts` |
-| delete:legacy-mixed-validator-facade | core:pipeline-core-state | 1 | `skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/status-store-lifecycle/refs.ts` |
-| delete:legacy-mixed-validator-facade | delete:legacy-mixed-validation-contract | 1 | `skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/validation.ts` |
-| delete:legacy-mixed-validator-facade | plugin-sdk:pipeline-plugin-sdk | 1 | `skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/contracts/validator-control-result.ts` |
-| delete:legacy-mixed-validator-facade | plugin:kubeclaw.lint | 1 | `skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/lint.ts` |
 | delete:legacy-notification-registry-contract | core:pipeline-core-execution | 4 | `skills/nova/pipeline/services/notification-contract.ts -> skills/nova/pipeline/core/runtime.ts`<br>`skills/nova/pipeline/services/notification-contract.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/services/notification-contract.ts -> skills/nova/pipeline/services/contract-reference.ts` |
 | delete:legacy-notification-registry-contract | core:pipeline-core-state | 1 | `skills/nova/pipeline/services/notification-contract.ts -> skills/nova/pipeline/services/serialization.ts` |
 | delete:legacy-notification-registry-contract | core:pipeline-core-telemetry | 1 | `tests/skills/nova/pipeline/services/notification-contract.test.mjs -> skills/nova/pipeline/services/notification-dispatch.ts` |
 | delete:legacy-notification-registry-contract | plugin:kubeclaw.notifications | 2 | `skills/nova/pipeline/services/notification-contract.ts -> skills/nova/pipeline/services/notification-observers.ts`<br>`skills/nova/pipeline/services/notification-contract.ts -> skills/nova/pipeline/services/notification-values.ts` |
 | delete:legacy-plugin-bridges | adapter:kubeclaw.runtime-dispatch | 1 | `skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/agents/orchestration.ts` |
-| delete:legacy-plugin-bridges | core:pipeline-core-execution | 14 | `skills/nova/pipeline/core/registry/builtin-bridge.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/core/registry/builtin-case-study.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/optional-absence.ts` |
+| delete:legacy-plugin-bridges | core:pipeline-core-execution | 15 | `skills/nova/pipeline/core/registry/builtin-bridge.ts -> skills/nova/pipeline/optional-absence.ts`<br>`skills/nova/pipeline/core/registry/builtin-case-study.ts -> skills/nova/pipeline/core/constants.ts`<br>`skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/optional-absence.ts` |
 | delete:legacy-plugin-bridges | core:pipeline-core-state | 1 | `skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/services/correlation.ts` |
 | delete:legacy-plugin-bridges | delete:legacy-kind-schedulers | 1 | `skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/runners/module-runner-shared.ts` |
-| delete:legacy-plugin-bridges | delete:legacy-mixed-validator-facade | 1 | `skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-validators.ts` |
 | delete:legacy-plugin-bridges | delete:legacy-notification-registry-contract | 1 | `skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/notification-contract.ts` |
 | delete:legacy-plugin-bridges | delete:legacy-telemetry-registry-contract | 1 | `skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/telemetry-sink-contract.ts` |
 | delete:legacy-plugin-bridges | plugin-sdk:pipeline-plugin-sdk | 2 | `skills/nova/pipeline/runners/gate-control-adapter.ts -> skills/nova/pipeline/services/contracts/gate-control-result.ts`<br>`skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/services/contracts/worker-control-result.ts` |
@@ -373,8 +365,6 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | plugin:kubeclaw.case-study | core:pipeline-core-telemetry | 4 | `skills/nova/pipeline/services/case-study-instructions.ts -> skills/nova/pipeline/services/run-facts.ts`<br>`skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/telemetry.ts`<br>`skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/telemetry.ts` |
 | plugin:kubeclaw.case-study | plugin-sdk:pipeline-plugin-sdk | 1 | `skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/contracts/generator-result.ts` |
 | plugin:kubeclaw.case-study | plugin:kubeclaw.project-summary | 3 | `skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/summary-session-values.ts`<br>`skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/summary-session-values.ts`<br>`skills/nova/pipeline/tools/project-summary-case-study.ts -> skills/nova/pipeline/tools/project-summary-formatters-core.ts` |
-| plugin:kubeclaw.delivery-lint | core:pipeline-core-execution | 2 | `skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/logger.ts`<br>`skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/paths.ts` |
-| plugin:kubeclaw.delivery-lint | delete:legacy-mixed-validation-contract | 1 | `skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/services/validation-contract.ts` |
 | plugin:kubeclaw.forge | adapter:kubeclaw.artifacts | 2 | `skills/nova/pipeline/tools/write-forge-completion.ts -> skills/nova/pipeline/agent-artifact.ts`<br>`tests/skills/nova/pipeline/tools/write-forge-completion.test.mjs -> skills/common/pipeline/agent-artifact.ts` |
 | plugin:kubeclaw.forge | adapter:kubeclaw.operator-messaging | 4 | `skills/nova/pipeline/runners/gate-forge-fix-context.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-failures.ts -> skills/nova/pipeline/services/discord-fields.ts`<br>`skills/nova/pipeline/runners/module-runner-forge-setup.ts -> skills/nova/pipeline/services/discord-fields.ts` |
 | plugin:kubeclaw.forge | adapter:kubeclaw.runtime-dispatch | 9 | `skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-control-results.ts`<br>`skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-input.ts`<br>`skills/nova/pipeline/agents/module-worker-forge.ts -> skills/nova/pipeline/agents/module-worker-result-policy.ts` |
@@ -938,6 +928,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/buster/pipeline/tools/verify-task.ts` | `validateProjectSlug` | plugin:kubeclaw.buster-worker | plugin-buster-worker |
 | `skills/buster/pipeline/tools/visual-audit.ts` | `default` | plugin:kubeclaw.buster-worker | plugin-buster-worker |
 | `skills/buster/pipeline/value-boundary.ts` | `* from ../../common/pipeline/value-boundary.ts` | plugin:kubeclaw.buster-worker | plugin-buster-worker |
+| `skills/buster/plugins/test-agent/src/protocol.ts` | `CommandSuite` | plugin:kubeclaw.test-agent | plugin-test-agent |
+| `skills/buster/plugins/test-agent/src/protocol.ts` | `SuiteEvidence` | plugin:kubeclaw.test-agent | plugin-test-agent |
 | `skills/buster/plugins/test-agent/src/protocol.ts` | `TestInput` | plugin:kubeclaw.test-agent | plugin-test-agent |
 | `skills/buster/plugins/test-agent/src/protocol.ts` | `TestVerdict` | plugin:kubeclaw.test-agent | plugin-test-agent |
 | `skills/buster/plugins/test-agent/src/protocol.ts` | `buildRequest` | plugin:kubeclaw.test-agent | plugin-test-agent |
@@ -1411,20 +1403,28 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/effects/coordinator.ts` | `EffectAuditSink` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/effects/coordinator.ts` | `EffectCoordinator` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/effects/coordinator.ts` | `EffectInvocation` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/effects/coordinator.ts` | `EffectLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/effects/coordinator.ts` | `MemoryResourceLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/effects/journal.ts` | `FileEffectJournal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/effects/journal.ts` | `MemoryEffectJournal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
-| `skills/common/plugin-runtime/core/effects/locks.ts` | `ResourceLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/effects/locks.ts` | `FileResourceLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/adapters.ts` | `AdapterRuntime` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/adapters.ts` | `AdapterRuntimeOptions` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/authorization.ts` | `authorizeCapabilityInvocation` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/context.ts` | `CapabilityInvoker` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/context.ts` | `DomainEventAppender` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/context.ts` | `createPluginInvocationContext` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/execution/engine.ts` | `AdministrativeDecisionAuthenticator` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/execution/engine.ts` | `AuthenticatedAdministrativePrincipal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/engine.ts` | `loadPipelineDefinition` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/execution/engine.ts` | `recoverPipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/execution/engine.ts` | `reopenBlockedPipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/engine.ts` | `resumePipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/engine.ts` | `runPipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/graph.ts` | `ExecutionGraph` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/execution/graph.ts` | `ExecutionGraphSnapshot` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/lease.ts` | `RevocableLease` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/execution/runner.ts` | `PipelineRunIdentity` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/runner.ts` | `PipelineRunResult` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/runner.ts` | `PipelineRunner` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/execution/runner.ts` | `PipelineRunnerOptions` | core:pipeline-core-execution | v2-plugin-runtime-execution |
@@ -1450,11 +1450,23 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/registry/capabilities.ts` | `GrantedRegistry` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/capabilities.ts` | `isConfidentialCapability` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/capabilities.ts` | `resolveCapabilityGrants` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `CAPABILITY_DEFINITIONS` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `CAPABILITY_IDS` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `CapabilityId` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `isCoreOnlyCapability` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `isKnownCapability` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `validateCapabilityConstraints` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | `validateCapabilityInvocationContract` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/configuration.ts` | `ConfiguredStageRegistration` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/configuration.ts` | `RuntimeRegistrationConfiguration` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/configuration.ts` | `validateRuntimeRegistrationConfiguration` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/digest.ts` | `computePackageDigest` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/discovery.ts` | `discoverPackages` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/errors.ts` | `RegistryError` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/errors.ts` | `RegistryErrorCode` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/frozen-map.ts` | `FrozenMap` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/frozen-set.ts` | `FrozenSet` | core:pipeline-core-registry | v2-plugin-runtime-registry |
+| `skills/common/plugin-runtime/core/registry/import-audit.ts` | `auditTrustedRegistrationImports` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/schema.ts` | `parsePluginManifest` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/schema.ts` | `validateContractValue` | core:pipeline-core-registry | v2-plugin-runtime-registry |
 | `skills/common/plugin-runtime/core/registry/schema.ts` | `validateReferencedSchema` | core:pipeline-core-registry | v2-plugin-runtime-registry |
@@ -1469,6 +1481,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/src/index.ts` | `ActivatedRegistration` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `ActivatedRegistry` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `AdapterRuntime` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `AdministrativeDecisionAuthenticator` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `AuthenticatedAdministrativePrincipal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `CAPABILITY_DEFINITIONS` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `CAPABILITY_IDS` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `CapabilityId` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `CapabilityPolicy` | core:pipeline-core-execution | v2-plugin-runtime-execution |
@@ -1477,29 +1492,33 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/src/index.ts` | `DiscoveryOptions` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `EffectCoordinator` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `ExecutionGraph` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `ExecutionGraphSnapshot` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `FileEffectJournal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `FileJournal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `FileResourceLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `GrantedRegistry` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `JournalRecord` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `LifecycleAction` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `LifecycleDecision` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `MemoryEffectJournal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `MemoryResourceLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `ObserverDrainResult` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `ObserverFailure` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `ObserverRuntime` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `ObserverRuntimeOptions` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `PipelineRunIdentity` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `PipelineRunResult` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `PipelineRunner` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `PipelineRunnerOptions` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `PlatformConfig` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `PluginStateAppend` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `PluginStateJournal` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `RegistryError` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `RegistrySnapshot` | core:pipeline-core-execution | v2-plugin-runtime-execution |
-| `skills/common/plugin-runtime/core/src/index.ts` | `ResourceLockManager` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `RevocableLease` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `StageRuntimeState` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `StageStatus` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `TrustPolicy` | core:pipeline-core-execution | v2-plugin-runtime-execution |
-| `skills/common/plugin-runtime/core/src/index.ts` | `WaitCoordinator` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `activateRegistry` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `applyStageResult` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `buildRegistry` | core:pipeline-core-execution | v2-plugin-runtime-execution |
@@ -1510,21 +1529,28 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/src/index.ts` | `invokeIsolated` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `loadPipelineDefinition` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `loadPlatformConfig` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `recoverPipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `recoverStageStates` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `removeInstalledPackage` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `reopenBlockedPipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `resolveCapabilityGrants` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `resumePipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/src/index.ts` | `runPipelineV2` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `validateCapabilityConstraints` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `validateCapabilityInvocationContract` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `validateContractValue` | core:pipeline-core-execution | v2-plugin-runtime-execution |
+| `skills/common/plugin-runtime/core/src/index.ts` | `validateRuntimeRegistrationConfiguration` | core:pipeline-core-execution | v2-plugin-runtime-execution |
 | `skills/common/plugin-runtime/core/state/journal.ts` | `FileJournal` | core:pipeline-core-state | v2-plugin-runtime-state |
 | `skills/common/plugin-runtime/core/state/journal.ts` | `JournalRecord` | core:pipeline-core-state | v2-plugin-runtime-state |
-| `skills/common/plugin-runtime/core/state/waits.ts` | `WaitCoordinator` | core:pipeline-core-state | v2-plugin-runtime-state |
-| `skills/common/plugin-runtime/core/state/waits.ts` | `WaitSpecification` | core:pipeline-core-state | v2-plugin-runtime-state |
+| `skills/common/plugin-runtime/core/state/plugins.ts` | `PluginStateAppend` | core:pipeline-core-state | v2-plugin-runtime-state |
+| `skills/common/plugin-runtime/core/state/plugins.ts` | `PluginStateJournal` | core:pipeline-core-state | v2-plugin-runtime-state |
 | `skills/common/plugin-runtime/core/telemetry/observers.ts` | `ObserverDrainResult` | core:pipeline-core-telemetry | v2-plugin-runtime-telemetry |
 | `skills/common/plugin-runtime/core/telemetry/observers.ts` | `ObserverFailure` | core:pipeline-core-telemetry | v2-plugin-runtime-telemetry |
 | `skills/common/plugin-runtime/core/telemetry/observers.ts` | `ObserverRuntime` | core:pipeline-core-telemetry | v2-plugin-runtime-telemetry |
 | `skills/common/plugin-runtime/core/telemetry/observers.ts` | `ObserverRuntimeOptions` | core:pipeline-core-telemetry | v2-plugin-runtime-telemetry |
 | `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | `AdapterLifecycle` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | `AdapterRegistration` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
+| `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | `AdministrativeReopenDecision` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | `ArtifactRef` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | `AttemptIdentity` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | `CapabilityGrant` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
@@ -1576,8 +1602,11 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `AdapterFactory` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `AdapterInstance` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `AdapterInvocation` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
+| `skills/common/plugin-runtime/sdk/src/runtime.ts` | `AdapterResourceFence` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `CapabilityInvocation` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
+| `skills/common/plugin-runtime/sdk/src/runtime.ts` | `ConfidentialAdapterInvocation` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `EffectJournal` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
+| `skills/common/plugin-runtime/sdk/src/runtime.ts` | `FencedAdapterInvocation` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `ObserverHandler` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/runtime.ts` | `PluginInvocationContext` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
 | `skills/common/plugin-runtime/sdk/src/testing/index.ts` | `assertNever` | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts |
@@ -2907,9 +2936,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/lint.ts` | `formatLintReportForReviewer` | plugin:kubeclaw.lint | plugin-lint |
 | `skills/nova/pipeline/services/lint.ts` | `generateLintReport` | plugin:kubeclaw.lint | plugin-lint |
 | `skills/nova/pipeline/services/lint.ts` | `runPreCheck` | plugin:kubeclaw.lint | plugin-lint |
-| `skills/nova/pipeline/services/module-validators.ts` | `runDeliveryLintValidatorStage` | delete:legacy-mixed-validator-facade | delete-mixed-validator-facade |
-| `skills/nova/pipeline/services/module-validators.ts` | `runFullLintValidatorStage` | delete:legacy-mixed-validator-facade | delete-mixed-validator-facade |
-| `skills/nova/pipeline/services/module-validators.ts` | `runPreCheckValidatorStage` | delete:legacy-mixed-validator-facade | delete-mixed-validator-facade |
+| `skills/nova/pipeline/services/module-lint-validators.ts` | `runFullLintValidatorStage` | core:pipeline-core-execution | nova-core-fallback |
+| `skills/nova/pipeline/services/module-lint-validators.ts` | `runPreCheckValidatorStage` | core:pipeline-core-execution | nova-core-fallback |
 | `skills/nova/pipeline/services/notification-contract.ts` | `assertNotificationEventInput` | delete:legacy-notification-registry-contract | delete-notification-registry-contract |
 | `skills/nova/pipeline/services/notification-contract.ts` | `buildNotificationEventInput` | delete:legacy-notification-registry-contract | delete-notification-registry-contract |
 | `skills/nova/pipeline/services/notification-contract.ts` | `getBuiltinNotificationPluginDefinitions` | delete:legacy-notification-registry-contract | delete-notification-registry-contract |
@@ -3627,11 +3655,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/validation-blueprint.ts` | `readForgeBlueprint` | plugin:kubeclaw.preflight-contract | plugin-preflight-contract |
 | `skills/nova/pipeline/services/validation-contract.ts` | `VALIDATION_CODES` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
 | `skills/nova/pipeline/services/validation-contract.ts` | `validationFailure` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
-| `skills/nova/pipeline/services/validation-delivery.ts` | `runDeliveryLintValidation` | plugin:kubeclaw.delivery-lint | plugin-delivery-lint |
 | `skills/nova/pipeline/services/validation.ts` | `VALIDATION_CODES` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
 | `skills/nova/pipeline/services/validation.ts` | `formatValidationFailures` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
 | `skills/nova/pipeline/services/validation.ts` | `isPlainObject` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
-| `skills/nova/pipeline/services/validation.ts` | `runDeliveryLintValidation` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
 | `skills/nova/pipeline/services/validation.ts` | `runPreflightValidation` | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract |
 | `skills/nova/pipeline/telemetry.ts` | `* from ../../common/pipeline/telemetry.ts` | core:pipeline-core-telemetry | core-telemetry-spine |
 | `skills/nova/pipeline/timing.ts` | `* from ../../common/pipeline/timing.ts` | core:pipeline-core-execution | core-execution |
@@ -3848,6 +3874,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/tools/write-forge-completion.ts` | `buildForgeCompletionPayload` | plugin:kubeclaw.forge | plugin-forge |
 | `skills/nova/pipeline/tools/write-forge-completion.ts` | `main` | plugin:kubeclaw.forge | plugin-forge |
 | `skills/nova/pipeline/value-boundary.ts` | `* from ../../common/pipeline/value-boundary.ts` | plugin-sdk:pipeline-plugin-sdk | plugin-sdk-contracts |
+| `skills/nova/plugins/architecture-validator/src/output.ts` | `ArchitectureFinding` | plugin:kubeclaw.architecture-validator | plugin-architecture-validator |
 | `skills/nova/plugins/architecture-validator/src/output.ts` | `ArchitectureOutput` | plugin:kubeclaw.architecture-validator | plugin-architecture-validator |
 | `skills/nova/plugins/architecture-validator/src/output.ts` | `parseArchitectureOutput` | plugin:kubeclaw.architecture-validator | plugin-architecture-validator |
 | `skills/nova/plugins/architecture-validator/src/protocol.ts` | `ArchitectureInput` | plugin:kubeclaw.architecture-validator | plugin-architecture-validator |
@@ -4181,7 +4208,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `docs/pipeline/modules-and-gates.md` | documentation | shared-library:plugin-system-documentation | documentation | 0 | 0 | 1 | 7 |
 | `docs/reference/swarm-config.md` | documentation | shared-library:plugin-system-documentation | documentation | 0 | 0 | 0 | 0 |
 | `scripts/check-plugin-system-migration-units.mjs` | runtime | core:pipeline-core-verification | verification-core | 0 | 29 | 0 | 0 |
-| `scripts/record-plugin-parity-evidence.mjs` | runtime | core:pipeline-core-verification | verification-core | 0 | 22 | 0 | 0 |
+| `scripts/record-plugin-parity-evidence.mjs` | runtime | core:pipeline-core-verification | verification-core | 0 | 26 | 0 | 0 |
 | `scripts/verify-all-skill-tests.mjs` | runtime | core:pipeline-core-verification | verification-core | 0 | 2 | 0 | 0 |
 | `scripts/verify-plugin-migration-baseline.mjs` | runtime | core:pipeline-core-verification | verification-core | 0 | 3 | 0 | 0 |
 | `skills/buster/CONVENTIONS.md` | runtime | plugin:kubeclaw.buster-worker | plugin-buster-worker | 0 | 0 | 0 | 0 |
@@ -4333,10 +4360,11 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/buster/plugins/test-agent/schemas/config.schema.json` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 0 | 0 | 0 |
 | `skills/buster/plugins/test-agent/schemas/input.schema.json` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 0 | 0 | 0 |
 | `skills/buster/plugins/test-agent/schemas/result.schema.json` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 0 | 0 | 0 |
-| `skills/buster/plugins/test-agent/src/protocol.ts` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 4 | 0 | 0 | 0 |
+| `skills/buster/plugins/test-agent/src/protocol.ts` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 6 | 0 | 0 | 0 |
 | `skills/buster/plugins/test-agent/src/stage.ts` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 1 | 0 | 0 | 0 |
-| `skills/buster/plugins/test-agent/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 5 | 0 | 0 |
-| `skills/buster/plugins/test-agent/tests/protocol.test.mjs` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 0 | 0 | 0 |
+| `skills/buster/plugins/test-agent/tests/live-function.test.ts` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 7 | 0 | 0 |
+| `skills/buster/plugins/test-agent/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 2 | 0 | 0 |
+| `skills/buster/plugins/test-agent/tests/protocol.test.ts` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 0 | 0 | 0 |
 | `skills/buster/plugins/test-agent/tsconfig.json` | runtime | plugin:kubeclaw.test-agent | plugin-test-agent | 0 | 0 | 0 | 0 |
 | `skills/buster/tsconfig.json` | runtime | plugin:kubeclaw.buster-worker | plugin-buster-worker | 0 | 0 | 0 | 0 |
 | `skills/common/pipeline/agent-artifact.ts` | runtime | adapter:kubeclaw.artifacts | adapter-artifacts | 6 | 6 | 0 | 0 |
@@ -4421,19 +4449,19 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/config/platform.schema.json` | runtime | core:pipeline-core-config | v2-plugin-runtime-config | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/config/platform.ts` | runtime | core:pipeline-core-config | v2-plugin-runtime-config | 2 | 2 | 0 | 0 |
 | `skills/common/plugin-runtime/core/effects/README.md` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/effects/coordinator.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 3 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/effects/coordinator.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 5 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/effects/journal.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 2 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/effects/locks.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 1 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/effects/locks.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 1 | 28 | 0 | 0 |
+| `skills/common/plugin-runtime/core/execution/CAPABILITIES.md` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/execution/README.md` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/execution/adapters.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 2 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/execution/authorization.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 1 | 2 | 0 | 0 |
+| `skills/common/plugin-runtime/core/execution/authorization.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 1 | 4 | 0 | 0 |
 | `skills/common/plugin-runtime/core/execution/context.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 3 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/execution/engine.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 3 | 4 | 0 | 0 |
-| `skills/common/plugin-runtime/core/execution/graph.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 1 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/execution/engine.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 7 | 9 | 0 | 0 |
+| `skills/common/plugin-runtime/core/execution/graph.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 2 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/execution/lease.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 1 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/execution/runner.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 3 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/execution/runner.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 4 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/isolation/child.mjs` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/isolation/plugin-sandbox` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/isolation/runner.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 2 | 2 | 0 | 0 |
 | `skills/common/plugin-runtime/core/isolation/sandbox.c` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/lifecycle/README.md` | runtime | core:pipeline-core-state | v2-plugin-runtime-state | 0 | 0 | 0 | 0 |
@@ -4445,25 +4473,30 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugin-runtime/core/registry/README.md` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/activation.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 3 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/build.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 1 | 2 | 0 | 0 |
-| `skills/common/plugin-runtime/core/registry/capabilities.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 6 | 3 | 0 | 0 |
+| `skills/common/plugin-runtime/core/registry/capabilities.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 6 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/registry/capability-vocabulary.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 7 | 4 | 0 | 0 |
+| `skills/common/plugin-runtime/core/registry/configuration.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 3 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/digest.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 1 | 2 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/discovery.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 1 | 4 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/errors.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 2 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/frozen-map.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 1 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/registry/frozen-set.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 1 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/registry/import-audit-child.mjs` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 0 | 1 | 0 | 0 |
+| `skills/common/plugin-runtime/core/registry/import-audit.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 1 | 3 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/schema.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 4 | 1 | 0 | 0 |
 | `skills/common/plugin-runtime/core/registry/types.ts` | runtime | core:pipeline-core-registry | v2-plugin-runtime-registry | 7 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/src/index.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 49 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/src/index.ts` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 62 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/state/README.md` | runtime | core:pipeline-core-state | v2-plugin-runtime-state | 0 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/core/state/journal.ts` | runtime | core:pipeline-core-state | v2-plugin-runtime-state | 2 | 3 | 0 | 0 |
-| `skills/common/plugin-runtime/core/state/waits.ts` | runtime | core:pipeline-core-state | v2-plugin-runtime-state | 2 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/core/state/journal.ts` | runtime | core:pipeline-core-state | v2-plugin-runtime-state | 2 | 15 | 0 | 0 |
+| `skills/common/plugin-runtime/core/state/plugins.ts` | runtime | core:pipeline-core-state | v2-plugin-runtime-state | 2 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/telemetry/README.md` | runtime | core:pipeline-core-telemetry | v2-plugin-runtime-telemetry | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/core/telemetry/observers.ts` | runtime | core:pipeline-core-telemetry | v2-plugin-runtime-telemetry | 4 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/package.json` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/sdk/README.md` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/sdk/package.json` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 0 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 39 | 1 | 0 | 0 |
+| `skills/common/plugin-runtime/sdk/src/generated/contracts.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 40 | 1 | 0 | 0 |
 | `skills/common/plugin-runtime/sdk/src/index.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 10 | 0 | 0 | 0 |
-| `skills/common/plugin-runtime/sdk/src/runtime.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 8 | 0 | 0 | 0 |
+| `skills/common/plugin-runtime/sdk/src/runtime.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 11 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/sdk/src/testing/index.ts` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 1 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/sdk/tsconfig.build.json` | runtime | plugin-sdk:pipeline-plugin-sdk | v2-plugin-runtime-sdk-and-contracts | 0 | 0 | 0 | 0 |
 | `skills/common/plugin-runtime/tsconfig.json` | runtime | core:pipeline-core-execution | v2-plugin-runtime-execution | 0 | 0 | 0 | 0 |
@@ -4474,7 +4507,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/agent-observability/schemas/checkpoint.schema.json` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/agent-observability/schemas/config.schema.json` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/agent-observability/src/observers.ts` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 3 | 1 | 0 | 0 |
-| `skills/common/plugins/agent-observability/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 6 | 0 | 0 |
+| `skills/common/plugins/agent-observability/tests/live-function.test.ts` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 6 | 0 | 0 |
 | `skills/common/plugins/agent-observability/tests/observers.unit.test.mjs` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/agent-observability/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/agent-observability/tsconfig.json` | runtime | plugin:kubeclaw.agent-observability | plugin-agent-observability | 0 | 0 | 0 | 0 |
@@ -4482,8 +4515,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/artifact-store/package.json` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/artifact-store/plugin.json` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/artifact-store/schemas/config.schema.json` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 0 | 0 | 0 |
-| `skills/common/plugins/artifact-store/src/adapter.ts` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 1 | 6 | 0 | 0 |
-| `skills/common/plugins/artifact-store/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 2 | 0 | 0 |
+| `skills/common/plugins/artifact-store/src/adapter.ts` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 1 | 8 | 0 | 0 |
+| `skills/common/plugins/artifact-store/tests/live-function.test.ts` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 2 | 0 | 0 |
 | `skills/common/plugins/artifact-store/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/artifact-store/tsconfig.json` | runtime | plugin:kubeclaw.artifact-store | plugin-artifact-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/command-runner/README.md` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 0 | 0 | 0 |
@@ -4491,7 +4524,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/command-runner/plugin.json` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/command-runner/schemas/config.schema.json` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/command-runner/src/adapter.ts` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 1 | 3 | 0 | 0 |
-| `skills/common/plugins/command-runner/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 3 | 0 | 0 |
+| `skills/common/plugins/command-runner/tests/live-function.test.ts` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 6 | 0 | 0 |
 | `skills/common/plugins/command-runner/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/command-runner/tsconfig.json` | runtime | adapter:kubeclaw.command-runner | plugin-command-runner | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/git-workspace/README.md` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 0 | 0 | 0 |
@@ -4499,7 +4532,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/git-workspace/plugin.json` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/git-workspace/schemas/config.schema.json` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/git-workspace/src/adapter.ts` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 1 | 5 | 0 | 0 |
-| `skills/common/plugins/git-workspace/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 20 | 0 | 0 |
+| `skills/common/plugins/git-workspace/tests/live-function.test.ts` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 20 | 0 | 0 |
 | `skills/common/plugins/git-workspace/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 2 | 0 | 0 |
 | `skills/common/plugins/git-workspace/tsconfig.json` | runtime | adapter:kubeclaw.git-workspace | plugin-git-workspace | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/network-http/README.md` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
@@ -4507,7 +4540,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/network-http/plugin.json` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/network-http/schemas/config.schema.json` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/network-http/src/adapter.ts` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 1 | 1 | 0 | 0 |
-| `skills/common/plugins/network-http/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
+| `skills/common/plugins/network-http/tests/live-function.test.ts` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/network-http/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/network-http/tsconfig.json` | runtime | adapter:kubeclaw.network-http | plugin-network-http | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/notification-observer/README.md` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 0 | 0 | 0 |
@@ -4516,7 +4549,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/notification-observer/schemas/checkpoint.schema.json` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/notification-observer/schemas/config.schema.json` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/notification-observer/src/observer.ts` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 4 | 4 | 0 | 0 |
-| `skills/common/plugins/notification-observer/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 4 | 0 | 0 |
+| `skills/common/plugins/notification-observer/tests/live-function.test.ts` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 4 | 0 | 0 |
 | `skills/common/plugins/notification-observer/tests/observer.unit.test.mjs` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/notification-observer/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/notification-observer/tsconfig.json` | runtime | plugin:kubeclaw.notification-observer | plugin-notification-observer | 0 | 0 | 0 | 0 |
@@ -4525,7 +4558,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/openclaw-agent-events/plugin.json` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-events/schemas/config.schema.json` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-events/src/adapter.ts` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 4 | 1 | 0 | 0 |
-| `skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 0 | 3 | 0 | 0 |
+| `skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 0 | 3 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-events/tsconfig.json` | runtime | adapter:kubeclaw.openclaw-agent-events | plugin-openclaw-agent-events | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 0 | 0 | 0 | 0 |
@@ -4549,6 +4582,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 6 | 0 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 6 | 1 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 3 | 5 | 0 | 0 |
+| `skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 0 | 0 | 0 | 0 |
+| `skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 0 | 1 | 0 | 0 |
+| `skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 0 | 5 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-observer/tsconfig.build.json` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/openclaw-agent-observer/tsconfig.json` | runtime | plugin:kubeclaw.openclaw-agent-observer | plugin-openclaw-agent-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/README.md` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 0 | 0 | 0 |
@@ -4557,7 +4593,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/operator-messaging/schemas/config.schema.json` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/schemas/payload.schema.json` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/src/adapter.ts` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 1 | 1 | 0 | 0 |
-| `skills/common/plugins/operator-messaging/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 16 | 0 | 0 |
+| `skills/common/plugins/operator-messaging/tests/live-function.test.ts` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 16 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 4 | 0 | 0 |
 | `skills/common/plugins/operator-messaging/tsconfig.json` | runtime | adapter:kubeclaw.operator-messaging | plugin-operator-messaging | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/README.md` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
@@ -4565,7 +4601,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/runtime-dispatch/plugin.json` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/schemas/config.schema.json` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/src/adapter.ts` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 1 | 0 | 0 | 0 |
-| `skills/common/plugins/runtime-dispatch/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 2 | 0 | 0 |
+| `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 2 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/runtime-dispatch/tsconfig.json` | runtime | adapter:kubeclaw.runtime-dispatch | plugin-runtime-dispatch | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/secret-resolver/README.md` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 0 | 0 | 0 |
@@ -4573,7 +4609,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/secret-resolver/plugin.json` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/secret-resolver/schemas/config.schema.json` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/secret-resolver/src/adapter.ts` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 1 | 1 | 0 | 0 |
-| `skills/common/plugins/secret-resolver/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 4 | 0 | 0 |
+| `skills/common/plugins/secret-resolver/tests/live-function.test.ts` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 4 | 0 | 0 |
 | `skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/secret-resolver/tsconfig.json` | runtime | adapter:kubeclaw.secret-resolver | plugin-secret-resolver | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/state-store/README.md` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 0 | 0 | 0 |
@@ -4581,7 +4617,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/state-store/plugin.json` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/state-store/schemas/config.schema.json` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/state-store/src/adapter.ts` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 1 | 3 | 0 | 0 |
-| `skills/common/plugins/state-store/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 2 | 0 | 0 |
+| `skills/common/plugins/state-store/tests/live-function.test.ts` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 2 | 0 | 0 |
 | `skills/common/plugins/state-store/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/state-store/tsconfig.json` | runtime | adapter:kubeclaw.state-store | plugin-state-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/telemetry-observer/README.md` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 1 | 0 | 0 |
@@ -4590,7 +4626,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/telemetry-observer/schemas/config.schema.json` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/telemetry-observer/src/observer.ts` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 1 | 1 | 0 | 0 |
-| `skills/common/plugins/telemetry-observer/tests/observer.test.mjs` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 1 | 0 | 0 |
+| `skills/common/plugins/telemetry-observer/tests/live-function.test.ts` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/telemetry-observer/tsconfig.json` | runtime | plugin:kubeclaw.telemetry-observer | plugin-telemetry-observer | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/telemetry-store/README.md` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 0 | 0 | 0 |
@@ -4598,7 +4634,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/telemetry-store/plugin.json` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/telemetry-store/schemas/config.schema.json` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/telemetry-store/src/adapter.ts` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 1 | 4 | 0 | 0 |
-| `skills/common/plugins/telemetry-store/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 4 | 0 | 0 |
+| `skills/common/plugins/telemetry-store/tests/live-function.test.ts` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 4 | 0 | 0 |
 | `skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/telemetry-store/tsconfig.json` | runtime | adapter:kubeclaw.telemetry-store | plugin-telemetry-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/transport-publisher/README.md` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 1 | 0 | 0 |
@@ -4609,7 +4645,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/transport-publisher/schemas/receipt.schema.json` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/transport-publisher/src/adapter.ts` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 1 | 1 | 0 | 0 |
 | `skills/common/plugins/transport-publisher/tests/config-validation.test.mjs` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 0 | 0 | 0 |
-| `skills/common/plugins/transport-publisher/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 27 | 0 | 0 |
+| `skills/common/plugins/transport-publisher/tests/live-function.test.ts` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 27 | 0 | 0 |
 | `skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/transport-publisher/tsconfig.json` | runtime | adapter:kubeclaw.transport-publisher | plugin-transport-publisher | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/wait-store/README.md` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 0 | 0 | 0 |
@@ -4617,7 +4653,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/common/plugins/wait-store/plugin.json` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/wait-store/schemas/config.schema.json` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 0 | 0 | 0 |
 | `skills/common/plugins/wait-store/src/adapter.ts` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 1 | 5 | 0 | 0 |
-| `skills/common/plugins/wait-store/tests/live-function.test.mjs` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 3 | 0 | 0 |
+| `skills/common/plugins/wait-store/tests/live-function.test.ts` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 3 | 0 | 0 |
 | `skills/common/plugins/wait-store/tests/package-boundary.test.mjs` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 1 | 0 | 0 |
 | `skills/common/plugins/wait-store/tsconfig.json` | runtime | adapter:kubeclaw.wait-store | plugin-wait-store | 0 | 0 | 0 | 0 |
 | `skills/nova/pipeline/README.md` | runtime | core:pipeline-core-execution | nova-core-fallback | 0 | 0 | 0 | 0 |
@@ -4679,7 +4715,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/core/registry/builtin-bridge.ts` | runtime | delete:legacy-plugin-bridges | delete-builtin-registry-bridges | 4 | 1 | 0 | 0 |
 | `skills/nova/pipeline/core/registry/builtin-case-study.ts` | runtime | delete:legacy-plugin-bridges | delete-builtin-registry-bridges | 1 | 0 | 3 | 2 |
 | `skills/nova/pipeline/core/registry/builtin-workers.ts` | runtime | delete:legacy-plugin-bridges | delete-builtin-registry-bridges | 1 | 0 | 3 | 0 |
-| `skills/nova/pipeline/core/registry/builtins.ts` | runtime | delete:legacy-plugin-bridges | delete-builtin-registry-bridges | 1 | 0 | 27 | 21 |
+| `skills/nova/pipeline/core/registry/builtins.ts` | runtime | delete:legacy-plugin-bridges | delete-builtin-registry-bridges | 1 | 0 | 24 | 18 |
 | `skills/nova/pipeline/core/registry/config-normalization.ts` | runtime | core:pipeline-core-registry | core-registry | 2 | 0 | 0 | 0 |
 | `skills/nova/pipeline/core/registry/dictionary.ts` | runtime | core:pipeline-core-registry | core-registry | 3 | 0 | 0 | 0 |
 | `skills/nova/pipeline/core/registry/indexes.ts` | runtime | core:pipeline-core-registry | core-registry | 3 | 0 | 1 | 0 |
@@ -4931,7 +4967,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/lint-format.ts` | runtime | plugin:kubeclaw.lint | plugin-lint | 3 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/lint-scope.ts` | runtime | plugin:kubeclaw.lint | plugin-lint | 1 | 2 | 0 | 0 |
 | `skills/nova/pipeline/services/lint.ts` | runtime | plugin:kubeclaw.lint | plugin-lint | 3 | 6 | 0 | 0 |
-| `skills/nova/pipeline/services/module-validators.ts` | runtime | delete:legacy-mixed-validator-facade | delete-mixed-validator-facade | 3 | 2 | 0 | 4 |
+| `skills/nova/pipeline/services/module-lint-validators.ts` | runtime | core:pipeline-core-execution | nova-core-fallback | 2 | 2 | 0 | 3 |
 | `skills/nova/pipeline/services/notification-contract.ts` | runtime | delete:legacy-notification-registry-contract | delete-notification-registry-contract | 6 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/notification-dispatch.ts` | runtime | core:pipeline-core-telemetry | core-telemetry-spine | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/notification-observers.ts` | runtime | plugin:kubeclaw.notifications | observer-notifications | 2 | 0 | 5 | 0 |
@@ -5079,8 +5115,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/pipeline/services/truth-drift.ts` | runtime | core:pipeline-core-execution | nova-core-fallback | 2 | 0 | 0 | 0 |
 | `skills/nova/pipeline/services/validation-blueprint.ts` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 1 | 2 | 0 | 0 |
 | `skills/nova/pipeline/services/validation-contract.ts` | runtime | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract | 2 | 0 | 0 | 0 |
-| `skills/nova/pipeline/services/validation-delivery.ts` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 1 | 3 | 0 | 0 |
-| `skills/nova/pipeline/services/validation.ts` | runtime | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract | 5 | 0 | 0 | 0 |
+| `skills/nova/pipeline/services/validation.ts` | runtime | delete:legacy-mixed-validation-contract | delete-mixed-validation-contract | 4 | 0 | 0 | 0 |
 | `skills/nova/pipeline/telemetry.ts` | runtime | core:pipeline-core-telemetry | core-telemetry-spine | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/timing.ts` | runtime | core:pipeline-core-execution | core-execution | 1 | 0 | 0 | 0 |
 | `skills/nova/pipeline/tools/lint-report.ts` | runtime | plugin:kubeclaw.lint | plugin-lint | 8 | 2 | 0 | 0 |
@@ -5134,12 +5169,12 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/architecture-validator/schemas/config.schema.json` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/architecture-validator/schemas/input.schema.json` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/architecture-validator/schemas/result.schema.json` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 0 | 0 | 0 |
-| `skills/nova/plugins/architecture-validator/src/output.ts` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 2 | 0 | 0 | 0 |
+| `skills/nova/plugins/architecture-validator/src/output.ts` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 3 | 0 | 0 | 0 |
 | `skills/nova/plugins/architecture-validator/src/protocol.ts` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 2 | 0 | 0 | 0 |
 | `skills/nova/plugins/architecture-validator/src/stage.ts` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 1 | 0 | 0 | 0 |
-| `skills/nova/plugins/architecture-validator/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 4 | 0 | 2 |
+| `skills/nova/plugins/architecture-validator/tests/live-function.test.ts` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 4 | 0 | 2 |
 | `skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 2 | 0 | 0 |
-| `skills/nova/plugins/architecture-validator/tests/protocol.unit.test.mjs` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 0 | 0 | 0 |
+| `skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/architecture-validator/tsconfig.json` | runtime | plugin:kubeclaw.architecture-validator | plugin-architecture-validator | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/blueprint-sync/README.md` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/blueprint-sync/package.json` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 0 | 0 | 0 |
@@ -5148,7 +5183,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/blueprint-sync/schemas/input.schema.json` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/blueprint-sync/schemas/result.schema.json` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/blueprint-sync/src/stage.ts` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 2 | 0 | 0 | 0 |
-| `skills/nova/plugins/blueprint-sync/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 11 | 0 | 0 |
+| `skills/nova/plugins/blueprint-sync/tests/live-function.test.ts` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 11 | 0 | 0 |
 | `skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 1 | 0 | 0 |
 | `skills/nova/plugins/blueprint-sync/tsconfig.json` | runtime | plugin:kubeclaw.blueprint-sync | plugin-blueprint-sync-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/buster-quality-gate/README.md` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 0 | 0 | 0 |
@@ -5159,8 +5194,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/buster-quality-gate/schemas/result.schema.json` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/buster-quality-gate/src/protocol.ts` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 5 | 0 | 0 | 0 |
 | `skills/nova/plugins/buster-quality-gate/src/stage.ts` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 1 | 0 | 0 | 0 |
-| `skills/nova/plugins/buster-quality-gate/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 5 | 0 | 0 |
-| `skills/nova/plugins/buster-quality-gate/tests/protocol.test.mjs` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 0 | 0 | 0 |
+| `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 2 | 0 | 0 |
+| `skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/buster-quality-gate/tsconfig.json` | runtime | plugin:kubeclaw.buster-quality-gate | plugin-buster-quality-gate-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/case-study/README.md` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/case-study/package.json` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 0 | 0 | 0 |
@@ -5170,17 +5206,20 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/case-study/schemas/result.schema.json` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/case-study/src/protocol.ts` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 5 | 0 | 0 | 0 |
 | `skills/nova/plugins/case-study/src/stage.ts` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 1 | 0 | 0 | 0 |
-| `skills/nova/plugins/case-study/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/case-study/tests/live-function.test.ts` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/case-study/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 2 | 0 | 0 |
 | `skills/nova/plugins/case-study/tests/protocol.test.mjs` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/case-study/tsconfig.json` | runtime | plugin:kubeclaw.case-study | plugin-case-study | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/README.md` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
+| `skills/nova/plugins/delivery-lint/fixtures/passing.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
+| `skills/nova/plugins/delivery-lint/fixtures/remediation.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/package.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/plugin.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/schemas/config.schema.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/schemas/input.schema.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/schemas/result.schema.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/src/stage.ts` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 1 | 0 | 0 | 0 |
-| `skills/nova/plugins/delivery-lint/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/delivery-lint/tests/live-function.test.ts` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 6 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 3 | 0 | 0 |
 | `skills/nova/plugins/delivery-lint/tsconfig.json` | runtime | plugin:kubeclaw.delivery-lint | plugin-delivery-lint | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/human-approval/README.md` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 0 | 0 | 0 | 0 |
@@ -5192,7 +5231,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/human-approval/src/approval.ts` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 14 | 0 | 0 | 0 |
 | `skills/nova/plugins/human-approval/src/stage.ts` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 1 | 1 | 0 | 0 |
 | `skills/nova/plugins/human-approval/tests/approval.unit.test.mjs` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 0 | 0 | 0 | 0 |
-| `skills/nova/plugins/human-approval/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 0 | 12 | 0 | 0 |
+| `skills/nova/plugins/human-approval/tests/live-function.test.ts` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 0 | 12 | 0 | 0 |
 | `skills/nova/plugins/human-approval/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 0 | 4 | 0 | 0 |
 | `skills/nova/plugins/human-approval/tsconfig.json` | runtime | plugin:kubeclaw.human-approval | plugin-human-approval | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/implementation-agent/README.md` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 0 | 0 | 0 |
@@ -5203,9 +5242,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/implementation-agent/schemas/result.schema.json` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/implementation-agent/src/protocol.ts` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 4 | 0 | 0 | 0 |
 | `skills/nova/plugins/implementation-agent/src/stage.ts` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 1 | 0 | 0 | 0 |
-| `skills/nova/plugins/implementation-agent/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/implementation-agent/tests/live-function.test.ts` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 10 | 0 | 0 |
 | `skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 2 | 0 | 0 |
-| `skills/nova/plugins/implementation-agent/tests/protocol.test.mjs` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 0 | 0 | 0 |
+| `skills/nova/plugins/implementation-agent/tests/protocol.test.ts` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/implementation-agent/tsconfig.json` | runtime | plugin:kubeclaw.implementation-agent | plugin-implementation-agent | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/lint/README.md` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 1 | 0 | 0 |
 | `skills/nova/plugins/lint/package.json` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 0 | 0 | 0 |
@@ -5244,8 +5283,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/lint/src/support/optional-absence.ts` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 3 | 0 | 0 | 0 |
 | `skills/nova/plugins/lint/src/support/value-boundary.ts` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 12 | 0 | 0 | 0 |
 | `skills/nova/plugins/lint/tests/adapter-boundary.test.mjs` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 4 | 0 | 0 |
-| `skills/nova/plugins/lint/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 10 | 0 | 0 |
+| `skills/nova/plugins/lint/tests/live-function.test.ts` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 12 | 0 | 0 |
 | `skills/nova/plugins/lint/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 3 | 0 | 0 |
+| `skills/nova/plugins/lint/tests/parity.test.ts` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/lint/tests/stage.unit.test.mjs` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/lint/tsconfig.json` | runtime | plugin:kubeclaw.lint | plugin-lint-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/pipeline-review/README.md` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 0 | 0 | 0 |
@@ -5256,7 +5296,8 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/pipeline-review/schemas/result.schema.json` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/pipeline-review/src/protocol.ts` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 4 | 0 | 0 | 0 |
 | `skills/nova/plugins/pipeline-review/src/stage.ts` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 1 | 0 | 0 | 0 |
-| `skills/nova/plugins/pipeline-review/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/pipeline-review/tests/live-function.test.ts` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 2 | 0 | 0 |
 | `skills/nova/plugins/pipeline-review/tests/protocol.test.mjs` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/pipeline-review/tsconfig.json` | runtime | plugin:kubeclaw.pipeline-review | plugin-pipeline-review | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/preflight-contract/README.md` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 0 | 0 | 0 |
@@ -5267,8 +5308,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/preflight-contract/schemas/result.schema.json` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/preflight-contract/src/stage.ts` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 2 | 0 | 0 | 0 |
 | `skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 0 | 0 | 0 |
-| `skills/nova/plugins/preflight-contract/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 9 | 0 | 0 |
+| `skills/nova/plugins/preflight-contract/tests/live-function.test.ts` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 9 | 0 | 0 |
 | `skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 3 | 0 | 0 |
+| `skills/nova/plugins/preflight-contract/tests/parity.test.ts` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 3 | 0 | 0 |
 | `skills/nova/plugins/preflight-contract/tsconfig.json` | runtime | plugin:kubeclaw.preflight-contract | plugin-preflight-contract | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/project-summary/README.md` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/project-summary/package.json` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 0 | 0 | 0 |
@@ -5278,7 +5320,9 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/project-summary/schemas/result.schema.json` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/project-summary/src/stage.ts` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 1 | 0 | 0 | 0 |
 | `skills/nova/plugins/project-summary/src/summary.ts` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 3 | 0 | 0 | 0 |
-| `skills/nova/plugins/project-summary/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 2 | 0 | 0 |
+| `skills/nova/plugins/project-summary/tests/live-function.test.ts` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 2 | 0 | 0 |
+| `skills/nova/plugins/project-summary/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 2 | 0 | 0 |
+| `skills/nova/plugins/project-summary/tests/parity.test.ts` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/project-summary/tests/summary.test.mjs` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/project-summary/tsconfig.json` | runtime | plugin:kubeclaw.project-summary | plugin-project-summary | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/repository-adapter/README.md` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 0 | 0 | 0 |
@@ -5286,7 +5330,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/repository-adapter/plugin.json` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/repository-adapter/schemas/config.schema.json` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/repository-adapter/src/adapter.ts` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 1 | 4 | 0 | 0 |
-| `skills/nova/plugins/repository-adapter/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 5 | 0 | 0 |
+| `skills/nova/plugins/repository-adapter/tests/live-function.test.ts` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 5 | 0 | 0 |
 | `skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 1 | 0 | 0 |
 | `skills/nova/plugins/repository-adapter/tsconfig.json` | runtime | plugin:kubeclaw.repository-adapter | plugin-repository-adapter | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/review/README.md` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 0 | 0 | 0 |
@@ -5302,7 +5346,7 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `skills/nova/plugins/review/tests/fixtures/fail.json` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/review/tests/fixtures/malformed.json` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 0 | 0 | 0 |
 | `skills/nova/plugins/review/tests/fixtures/pass.json` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 0 | 0 | 0 |
-| `skills/nova/plugins/review/tests/live-function.test.mjs` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 3 | 0 | 0 |
+| `skills/nova/plugins/review/tests/live-function.test.ts` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 3 | 0 | 0 |
 | `skills/nova/plugins/review/tests/package-boundary.test.mjs` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 5 | 0 | 0 |
 | `skills/nova/plugins/review/tests/protocol.unit.test.mjs` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 1 | 0 | 0 |
 | `skills/nova/plugins/review/tests/review-output.unit.test.mjs` | runtime | plugin:kubeclaw.review | plugin-review-package | 0 | 1 | 0 | 0 |
@@ -5456,10 +5500,10 @@ The deterministic score is `runtime files + cross-owner imports + (legacy hits Ã
 | `tests/skills/nova/pipeline/tools/write-forge-completion.test.mjs` | test | plugin:kubeclaw.forge | plugin-forge | 0 | 2 | 0 | 0 |
 | `tests/verification/contracts/check-gate-control-result-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 17 | 5 | 2 |
 | `tests/verification/contracts/check-generator-result-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 9 | 1 | 3 |
-| `tests/verification/contracts/check-module-runner-slice-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 36 | 0 | 2 |
+| `tests/verification/contracts/check-module-runner-slice-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 36 | 0 | 1 |
 | `tests/verification/contracts/check-openclaw-agent-observer-plugin.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 11 | 0 | 0 |
 | `tests/verification/contracts/check-pipeline-runner-slice-surface.mjs` | test | core:pipeline-core-execution | core-execution | 0 | 24 | 0 | 1 |
-| `tests/verification/contracts/check-validator-control-result-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 26 | 3 | 18 |
+| `tests/verification/contracts/check-validator-control-result-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 26 | 3 | 17 |
 | `tests/verification/contracts/check-worker-control-result-surface.mjs` | test | core:pipeline-core-verification | verification-core | 0 | 14 | 0 | 1 |
 
 ## Verification

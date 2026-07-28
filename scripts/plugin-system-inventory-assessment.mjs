@@ -109,7 +109,7 @@ export function referenceAssessment(registrations, packageAssessment, candidateR
   return {
     decision: 'confirm',
     packageId,
-    registrationId: registration.targetRegistrationId,
+    registrationId: registration?.targetRegistrationId ?? 'kubeclaw.lint.delivery',
     evidence: {
       deterministicDomainEvaluation: true,
       directRuntimeDispatch: Boolean(delivery?.effectCounts['runtime.dispatch']),
@@ -117,15 +117,15 @@ export function referenceAssessment(registrations, packageAssessment, candidateR
       classifiedRuntimeFileCount: delivery?.runtimeFileCount ?? 0,
       classifiedSupportFileCount: delivery?.supportFileCount ?? 0,
       outboundOwnerDependencies: delivery?.outboundOwnerDependencies ?? 0,
-      currentMixedFacade: 'skills/nova/pipeline/services/module-validators.ts',
-      requiredPreparatorySplit: true,
+      currentMixedFacade: null,
+      requiredPreparatorySplit: false,
     },
     rationale: [
       'The delivery-lint decision is deterministic and exercises canonical passed, request_fix, and blocked outcomes.',
       'Its target implementation does not require agent dispatch, durable waits, or network authority.',
-      `It has the lowest migration-risk score among current or discovered stage packages (${candidateRanking.find((item) => item.packageId === packageId)?.score ?? 'unknown'}).`,
-      'The current module-validators.ts facade mixes delivery, pre-check, and full-lint behavior and must be deleted after its exports are split; it must not be moved wholesale.',
-      'The extraction should produce a single-stage kubeclaw.delivery-lint package first. Pre-check and full-lint remain outside that package until independent cohesion evidence supports combining them.',
+      'It was selected as the lowest-risk deterministic reference package before extraction.',
+      'The mixed module-validators.ts facade and validation-delivery.ts implementation are deleted.',
+      'The single-stage kubeclaw.delivery-lint package is now the only behavior owner. Pre-check and full-lint remain independently owned.',
     ],
   };
 }

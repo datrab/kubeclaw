@@ -47,7 +47,14 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "path", "targetPackage", "disposition", "pathDigest"],
+        "required": [
+          "id",
+          "path",
+          "targetPackage",
+          "disposition",
+          "implementationDecision",
+          "pathDigest"
+        ],
         "properties": {
           "id": { "type": "string", "minLength": 1 },
           "path": { "type": "string", "minLength": 1 },
@@ -58,8 +65,14 @@
             ]
           },
           "disposition": {
-            "enum": ["must-remain-equivalent", "intentionally-changed", "approved-obsolete"]
+            "enum": [
+              "must-remain-equivalent",
+              "intentionally-changed",
+              "approved-obsolete",
+              "new-v2-foundation"
+            ]
           },
+          "implementationDecision": { "$ref": "#/$defs/implementationDecision" },
           "pathDigest": { "$ref": "#/$defs/digest" }
         }
       }
@@ -84,6 +97,33 @@
   },
   "$defs": {
     "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "implementationDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "legacyBehavior",
+        "replacementBehavior",
+        "rationale",
+        "complexityImpact",
+        "behaviorChanged",
+        "approvalRef"
+      ],
+      "properties": {
+        "strategy": { "enum": ["reuse", "refactor", "rewrite"] },
+        "legacyBehavior": { "type": "string", "minLength": 1 },
+        "replacementBehavior": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "complexityImpact": { "type": "string", "minLength": 1 },
+        "behaviorChanged": { "type": "boolean" },
+        "approvalRef": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
     "files": {
       "type": "array",
       "items": {

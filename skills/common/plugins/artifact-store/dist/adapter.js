@@ -59,6 +59,24 @@ function appendCatalog(root, artifact) {
         fs.closeSync(descriptor);
     }
 }
+function catalogContains(root, artifactId, namespace, digest) {
+    const file = path.join(root, 'catalog.jsonl');
+    if (!fs.existsSync(file))
+        return false;
+    return fs.readFileSync(file, 'utf8').split('\n').some((line) => {
+        if (line.length === 0)
+            return false;
+        try {
+            const artifact = JSON.parse(line);
+            return artifact.artifactId === artifactId
+                && artifact.namespace === namespace
+                && artifact.digest === digest;
+        }
+        catch {
+            throw new Error('ARTIFACT_CATALOG_INVALID');
+        }
+    });
+}
 export function activate(context) {
     const configured = context.config.artifactRoot;
     if (typeof configured !== 'string' || configured.length === 0)
@@ -72,11 +90,17 @@ export function activate(context) {
         async ready() {
             fs.mkdirSync(path.join(root, 'blobs', 'sha256'), { recursive: true, mode: 0o700 });
         },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (signal.aborted)
                 throw new Error('ADAPTER_CANCELLED');
             if (request.capability === 'artifacts.read' && request.operation === 'get_json') {
                 const digest = digestValue(request.payload.digest);
+                const artifactId = requiredText(request.resource.canonicalId, 'ID');
+                const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
+                if (!catalogContains(root, artifactId, namespace, digest))
+                    throw new Error('ARTIFACT_NOT_FOUND');
                 const file = blobPath(root, digest);
                 if (!fs.existsSync(file))
                     throw new Error('ARTIFACT_NOT_FOUND');

@@ -2,10 +2,110 @@ import type {
   CapabilityGrant,
   CapabilityInvocation,
 } from '../../sdk/src/index.ts';
+import fs from 'node:fs';
+import path from 'node:path';
+import {
+  validateCapabilityConstraints,
+  validateCapabilityInvocationContract,
+} from '../registry/capability-vocabulary.ts';
 
-function stringArray(value: unknown, label: string): readonly string[] {
-  if (!Array.isArray(value) || !value.every((entry) => typeof entry === 'string')) {
-    throw new Error(`CAPABILITY_CONSTRAINT_INVALID:${label}`);
+function allowed(
+  constraints: Readonly<Record<string, readonly string[]>>,
+  key: string,
+): readonly string[] {
+  const value = constraints[key];
+  if (!value) throw new Error(`CAPABILITY_CONSTRAINT_INVALID:${key}`);
+  return value;
+}
+
+function withinScope(value: string, roots: readonly string[]): boolean {
+  return roots.some((root) =>
+    value === root
+    || value.startsWith(root.endsWith('/') ? root : `${root}/`),
+  );
+}
+
+function isCanonicalAbsolute(value: string): boolean {
+  return path.isAbsolute(value)
+    && path.normalize(value) === value
+    && !value.includes('\0')
+    && !/[\r\n]/u.test(value);
+}
+
+function canonicalExisting(value: string): string | undefined {
+  if (!isCanonicalAbsolute(value)) return undefined;
+  try {
+    return fs.realpathSync(value);
+  } catch {
+    return undefined;
+  }
+}
+
+function canonicalPotential(value: string): string | undefined {
+  if (!isCanonicalAbsolute(value)) return undefined;
+  let existing = value;
+  const suffix: string[] = [];
+  while (!fs.existsSync(existing)) {
+    const parent = path.dirname(existing);
+    if (parent === existing) return undefined;
+    suffix.unshift(path.basename(existing));
+    existing = parent;
+  }
+  try {
+    return path.join(fs.realpathSync(existing), ...suffix);
+  } catch {
+    return undefined;
+  }
+}
+
+function canonicalRoots(roots: readonly string[]): readonly string[] | undefined {
+  const canonical = roots.map(canonicalExisting);
+  return canonical.every((root): root is string => root !== undefined) ? canonical : undefined;
+}
+
+function withinCanonical(value: string, roots: readonly string[]): boolean {
+  return roots.some((root) => value === root || value.startsWith(`${root}${path.sep}`));
+}
+
+function withinExisting(value: string, roots: readonly string[]): boolean {
+  const canonicalValue = canonicalExisting(value);
+  const resolvedRoots = canonicalRoots(roots);
+  return canonicalValue !== undefined
+    && resolvedRoots !== undefined
+    && withinCanonical(canonicalValue, resolvedRoots);
+}
+
+function withinPotential(value: string, roots: readonly string[]): boolean {
+  const canonicalValue = canonicalPotential(value);
+  const resolvedRoots = canonicalRoots(roots);
+  return canonicalValue !== undefined
+    && resolvedRoots !== undefined
+    && withinCanonical(canonicalValue, resolvedRoots);
+}
+
+function isCanonicalRelative(value: string): boolean {
+  return value.length > 0
+    && !path.posix.isAbsolute(value)
+    && !/^[A-Za-z]:[\\/]/u.test(value)
+    && !value.includes('\\')
+    && !value.includes('\0')
+    && !/[\r\n]/u.test(value)
+    && !value.split('/').includes('..')
+    && path.posix.normalize(value) === value;
+}
+
+function withinRelative(value: string, prefixes: readonly string[]): boolean {
+  if (!isCanonicalRelative(value)) return false;
+  return prefixes.some((prefix) => {
+    const base = prefix.endsWith('/') ? prefix.slice(0, -1) : prefix;
+    return value === base || value.startsWith(`${base}/`);
+  });
+}
+
+function payloadText(request: CapabilityInvocation, key: string): string {
+  const value = request.payload[key];
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new Error(`CAPABILITY_REQUEST_INVALID:${key}`);
   }
   return value;
 }
@@ -14,11 +114,16 @@ export function authorizeCapabilityInvocation(
   grant: CapabilityGrant,
   request: CapabilityInvocation,
 ): void {
-  const constraints = grant.constraints;
+  const capability = validateCapabilityInvocationContract(grant.capability, request);
+  let constraints: Readonly<Record<string, readonly string[]>>;
+  try {
+    constraints = validateCapabilityConstraints(capability, grant.constraints);
+  } catch {
+    throw new Error(`CAPABILITY_CONSTRAINT_INVALID:${capability}`);
+  }
   switch (grant.capability) {
     case 'git.repository.read': {
-      const prefixes = stringArray(constraints.allowedPrefixes, 'allowedPrefixes');
-      if (!prefixes.some((prefix) => request.resource.canonicalId.startsWith(prefix))) {
+      if (!withinRelative(request.resource.canonicalId, allowed(constraints, 'allowedPrefixes'))) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
       return;
@@ -27,79 +132,114 @@ export function authorizeCapabilityInvocation(
     case 'git.commit':
     case 'git.merge':
     case 'git.sync': {
-      const roots = stringArray(constraints.allowedRoots, 'allowedRoots');
-      if (!roots.some((root) => request.resource.canonicalId.startsWith(root))) {
+      if (!withinExisting(request.resource.canonicalId, allowed(constraints, 'allowedRoots'))) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
+      }
+      if (grant.capability === 'git.workspace.create') {
+        const workspacePath = payloadText(request, 'workspacePath');
+        if (!withinPotential(workspacePath, allowed(constraints, 'allowedWorkspaceRoots'))) {
+          throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${workspacePath}`);
+        }
       }
       return;
     }
     case 'artifacts.read':
     case 'artifacts.write': {
-      const namespace = constraints.namespace;
-      if (typeof namespace !== 'string') throw new Error('CAPABILITY_CONSTRAINT_INVALID:namespace');
-      if (grant.capability === 'artifacts.write' && request.payload.namespace !== namespace) {
-        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${String(request.payload.namespace)}`);
+      const namespace = payloadText(request, 'namespace');
+      if (!allowed(constraints, 'allowedNamespaces').includes(namespace)) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${namespace}`);
       }
       return;
     }
     case 'runtime.dispatch': {
-      const agents = stringArray(constraints.allowedAgents, 'allowedAgents');
-      if (!agents.includes(request.resource.canonicalId)) {
+      if (!allowed(constraints, 'allowedAgents').includes(request.resource.canonicalId)) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
       return;
     }
     case 'network.http': {
-      const origins = stringArray(constraints.allowedOrigins, 'allowedOrigins');
-      const origin = new URL(request.resource.canonicalId).origin;
-      if (!origins.includes(origin)) throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${origin}`);
+      let origin: string;
+      try {
+        origin = new URL(request.resource.canonicalId).origin;
+      } catch {
+        throw new Error(`CAPABILITY_RESOURCE_INVALID:${grant.capability}`);
+      }
+      if (!allowed(constraints, 'allowedOrigins').includes(origin)) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${origin}`);
+      }
       return;
     }
     case 'secrets.read': {
-      const names = stringArray(constraints.allowedNames, 'allowedNames');
-      if (!names.includes(request.resource.canonicalId)) {
+      if (!allowed(constraints, 'allowedNames').includes(request.resource.canonicalId)) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
       return;
     }
     case 'command.execute': {
-      const executables = stringArray(constraints.allowedExecutables, 'allowedExecutables');
-      if (!executables.includes(request.resource.canonicalId)) {
+      if (!allowed(constraints, 'allowedExecutables').includes(request.resource.canonicalId)) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
+      }
+      const workingDirectory = payloadText(request, 'workingDirectory');
+      if (!withinExisting(workingDirectory, allowed(constraints, 'allowedWorkingRoots'))) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${workingDirectory}`);
+      }
+      return;
+    }
+    case 'lint.execute': {
+      const workingDirectory = payloadText(request, 'workingDirectory');
+      const policyPath = payloadText(request, 'policyPath');
+      if (
+        !withinExisting(workingDirectory, allowed(constraints, 'allowedRoots'))
+        || !allowed(constraints, 'allowedProjects').includes(request.resource.canonicalId)
+      ) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${workingDirectory}`);
+      }
+      if (!withinExisting(policyPath, allowed(constraints, 'allowedPolicyRoots'))) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${policyPath}`);
       }
       return;
     }
     case 'state.read':
     case 'state.append': {
-      const namespace = constraints.namespace;
-      if (typeof namespace !== 'string' || !request.resource.canonicalId.startsWith(namespace)) {
+      if (!withinScope(request.resource.canonicalId, allowed(constraints, 'allowedNamespaces'))) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
       return;
     }
     case 'operator.request':
     case 'transport.publish': {
-      const targets = stringArray(constraints.allowedTargets, 'allowedTargets');
-      if (!targets.includes(request.resource.canonicalId)) {
+      if (!allowed(constraints, 'allowedTargets').includes(request.resource.canonicalId)) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
       return;
     }
     case 'signal.wait': {
-      const signalTypes = stringArray(constraints.allowedSignalTypes, 'allowedSignalTypes');
-      if (!signalTypes.includes(String(request.payload.signalType))) {
+      const signalType = payloadText(request, 'signalType');
+      if (!allowed(constraints, 'allowedSignalTypes').includes(signalType)) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${String(request.payload.signalType)}`);
+      }
+      const issuer = request.payload.authorizedIssuer;
+      const issuerId = issuer && typeof issuer === 'object' && !Array.isArray(issuer)
+        ? (issuer as Record<string, unknown>).id
+        : undefined;
+      if (typeof issuerId !== 'string' || !allowed(constraints, 'allowedIssuerIds').includes(issuerId)) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${String(issuerId)}`);
       }
       return;
     }
     case 'telemetry.emit': {
-      const eventPrefixes = stringArray(constraints.allowedEventPrefixes, 'allowedEventPrefixes');
-      if (!eventPrefixes.some((prefix) => request.resource.canonicalId.startsWith(prefix))) {
+      if (!allowed(constraints, 'allowedEventPrefixes').some(
+        (prefix) => request.resource.canonicalId.startsWith(prefix),
+      )) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
       return;
     }
-    default:
+    case 'agent.events.subscribe': {
+      if (!allowed(constraints, 'allowedSources').includes(request.resource.canonicalId)) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
+      }
       return;
+    }
   }
 }

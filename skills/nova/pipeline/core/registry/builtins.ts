@@ -7,10 +7,9 @@ import { getReviewGateControlAdapter, runReviewGateStage } from '../../runners/r
 import { getApprovalGateControlAdapter, runApprovalGateStage } from '../../runners/approval-gate-runner.ts';
 import { runArchitectureValidatorStage } from '../../services/arch-validator.ts';
 import {
-  runDeliveryLintValidatorStage,
   runPreCheckValidatorStage,
   runFullLintValidatorStage,
-} from '../../services/module-validators.ts';
+} from '../../services/module-lint-validators.ts';
 import { generateProjectSummary, generatePipelineReview } from '../../services/summary.ts';
 import { getBuiltinNotificationPluginDefinitions } from '../../services/notification-contract.ts';
 import { getBuiltinTelemetrySinkPluginDefinitions } from '../../services/telemetry-sink-contract.ts';
@@ -149,34 +148,6 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
   },
   {
     manifest: {
-      moduleId: 'builtin.validator.delivery_lint',
-      contractVersion: PLUGIN_CONTRACT_VERSION,
-      kind: 'validator',
-      hookFamily: 'validator.run',
-      stageIds: ['validator:delivery_lint'],
-      capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],
-      configSchema: PLUGIN_CONFIG_SCHEMA_ANY_OBJECT,
-      sourceType: 'builtin',
-      trustTier: 'trusted',
-      displayName: 'Built-in delivery lint validator',
-      description: 'Core-owned delivery-lint policy executed through the validator registry seam.',
-      defaultEnabled: true,
-    },
-    implementation: {
-      run: async (input: AnyRecord = {}, ctx: AnyRecord = {}) => {
-        const [config, progress] = await Promise.all([readPluginConfig(ctx), readPluginProgress(ctx)]);
-        await emitBuiltinBridgeTrace(ctx, 'plugin.validator.delivery_lint.bridge_invoked', 'Invoking built-in delivery lint validator through PluginContextV1', {
-          stageId: 'validator:delivery_lint',
-          moduleId: selectTruthyValue(() => (input?.ids?.moduleId), () => (null)),
-        });
-        return runDeliveryLintValidatorStage(config, progress, input, { stageId: 'validator:delivery_lint', producerType: 'delivery_lint' });
-      },
-    },
-    sourceRef: 'builtin:services/module-validators.ts',
-    implementationRef: 'services/module-validators.ts#runDeliveryLintValidatorStage',
-  },
-  {
-    manifest: {
       moduleId: 'builtin.validator.pre_check',
       contractVersion: PLUGIN_CONTRACT_VERSION,
       kind: 'validator',
@@ -200,8 +171,8 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         return runPreCheckValidatorStage(config, progress, input, { stageId: 'validator:pre_check', producerType: 'pre_check' });
       },
     },
-    sourceRef: 'builtin:services/module-validators.ts',
-    implementationRef: 'services/module-validators.ts#runPreCheckValidatorStage',
+    sourceRef: 'builtin:services/module-lint-validators.ts',
+    implementationRef: 'services/module-lint-validators.ts#runPreCheckValidatorStage',
   },
   {
     manifest: {
@@ -228,8 +199,8 @@ export const BUILTIN_PLUGIN_DEFINITIONS = Object.freeze([
         return runFullLintValidatorStage(config, progress, input, { stageId: 'validator:full_lint', producerType: 'full_lint' });
       },
     },
-    sourceRef: 'builtin:services/module-validators.ts',
-    implementationRef: 'services/module-validators.ts#runFullLintValidatorStage',
+    sourceRef: 'builtin:services/module-lint-validators.ts',
+    implementationRef: 'services/module-lint-validators.ts#runFullLintValidatorStage',
   },
   {
     manifest: {

@@ -222,6 +222,7 @@ function validateEvidenceRecord(unit, recordPath) {
     path: scenario.path,
     targetPackage: scenario.targetPackage ?? null,
     disposition: scenario.disposition,
+    implementationDecision: scenario.implementationDecision,
     pathDigest: digestFileEntries(filesAtCommit(record.commit, pathsAtCommit(record.commit, scenario.path))),
   }));
   if (JSON.stringify(record.scenarios) !== JSON.stringify(expectedScenarios)
@@ -273,6 +274,37 @@ for (const unit of ledger.units) {
     if (!fs.existsSync(path.join(root, scenario.path))) fail(`${unit.id} scenario path is missing: ${scenario.path}`);
     if (!scenario.command?.trim() || !['offline', 'live'].includes(scenario.level)) fail(`${unit.id}/${scenario.id} is not executable`);
     if (!scenario.requiredBefore?.length) fail(`${unit.id}/${scenario.id} has no status boundary`);
+    if (![
+      'must-remain-equivalent',
+      'intentionally-changed',
+      'approved-obsolete',
+      'new-v2-foundation',
+    ].includes(scenario.disposition)) {
+      fail(`${unit.id}/${scenario.id} has an unsupported behavior disposition`);
+    }
+    if (['parity-proven', 'cutover-complete'].includes(unit.status)
+        && scenario.requiredBefore.includes(unit.status)) {
+      const decision = scenario.implementationDecision;
+      if (!decision
+          || !['reuse', 'refactor', 'rewrite'].includes(decision.strategy)
+          || !decision.legacyBehavior?.trim()
+          || !decision.replacementBehavior?.trim()
+          || !decision.rationale?.trim()
+          || !decision.complexityImpact?.trim()
+          || typeof decision.behaviorChanged !== 'boolean') {
+        fail(`${unit.id}/${scenario.id} lacks a complete implementation decision`);
+      }
+      const changed = ['intentionally-changed', 'approved-obsolete'].includes(scenario.disposition);
+      if (decision.behaviorChanged !== changed) {
+        fail(`${unit.id}/${scenario.id} behaviorChanged conflicts with disposition ${scenario.disposition}`);
+      }
+      if (changed && !decision.approvalRef?.trim()) {
+        fail(`${unit.id}/${scenario.id} changes behavior without an approval reference`);
+      }
+      if (!changed && decision.approvalRef !== null) {
+        fail(`${unit.id}/${scenario.id} equivalent behavior must use a null approval reference`);
+      }
+    }
   }
   for (const discoveryHint of unit.discoveryHints) {
     if (!fs.existsSync(path.join(root, discoveryHint))) fail(`${unit.id} references missing discovery hint ${discoveryHint}`);

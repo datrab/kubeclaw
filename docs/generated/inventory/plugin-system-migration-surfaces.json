@@ -2,9 +2,9 @@
   "schemaVersion": "plugin-system-migration-surfaces-v2",
   "generatedFrom": {
     "inventory": "docs/generated/inventory/plugin-system.json",
-    "inventoryDigest": "919f66b01033e87e04101a79cbfa304f3f3b93daec4dd6f4f86d7fe1c4df7b5b",
+    "inventoryDigest": "97fa7ca01ae29b203bdf816dce0cd114db9eeecb5c921d85b437928cd3092fed",
     "units": "docs/architecture/plugin-system-migration-units.json",
-    "unitsDigest": "35cb054fe7616f6e4139c7baa0a01ed366d5580cb5532bed6824c08d24f2fd54"
+    "unitsDigest": "480ef2b37fc66a13a78de2ae569e6621707919bfc660e2a570067ab049b95129"
   },
   "units": [
     {
@@ -13,13 +13,8 @@
       "runtimeRoles": [
         "buster"
       ],
-      "parityBlockers": [
-        "Buster target packages do not yet contain the complete suite implementation or replacement tests"
-      ],
-      "uncoveredReplacementPackages": [
-        "buster-quality-gate",
-        "test-agent"
-      ],
+      "parityBlockers": [],
+      "uncoveredReplacementPackages": [],
       "scenarios": [
         {
           "id": "buster-legacy-suite",
@@ -28,6 +23,15 @@
           "path": "tests/skills/buster",
           "command": "node --test $(find tests/skills/buster -type f -name '*.test.mjs' -print | sort)",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Buster selects and executes deterministic suites, supervises optional agent judgment, records evidence, and classifies assertion versus infrastructure failures.",
+            "replacementBehavior": "The v2 test stage executes bounded command suites through command.execute, combines their real results with supplied specialized-suite evidence, and accepts only a terminal identity-bound runtime verdict with transcript evidence.",
+            "rationale": "Suite policy stays in the test package while subprocesses and agent sessions remain replaceable capabilities.",
+            "complexityImpact": "Replaces the monolithic worker with one explicit execute-collect-judge reducer.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -40,6 +44,59 @@
           "path": "tests/verification/e2e/buster-simulator.test.mjs",
           "command": "node --test tests/verification/e2e/buster-simulator.test.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Nova consumes Buster evidence and distinguishes actionable test failure from contract, configuration, infrastructure, rate-limit, and timeout failure.",
+            "replacementBehavior": "The v2 quality gate retains the full closed failure-class matrix and maps it to pass, request-fix, or blocked outcomes.",
+            "rationale": "Evidence production and quality adjudication remain separate owners.",
+            "complexityImpact": "A strict verdict reducer replaces distributed worker/gate conditionals.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "test-agent-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "test-agent",
+          "level": "live",
+          "path": "skills/buster/plugins/test-agent/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/buster/plugins/test-agent",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Buster runs real suites, captures their output, supervises test judgment, and emits an identity-bound terminal verdict and evidence.",
+            "replacementBehavior": "The v2 package runs real bounded command suites, passes normalized evidence to runtime.dispatch, validates terminal session/transcript evidence, and writes a durable verdict artifact.",
+            "rationale": "This restores execution behavior without embedding subprocess or session authority in the stage.",
+            "complexityImpact": "One small state flow replaces the worker's scheduler, polling, and process internals.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "buster-quality-gate-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "buster-quality-gate",
+          "level": "live",
+          "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/nova/plugins/buster-quality-gate",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "The quality gate evaluates Buster evidence across every supported failure class and chooses pass, remediation, or terminal block.",
+            "replacementBehavior": "The v2 package keeps the complete failure-class matrix in one strict decoder and returns only typed core-owned control results.",
+            "rationale": "Nova must adjudicate Buster evidence so Buster cannot approve itself.",
+            "complexityImpact": "Centralizes verdict contradictions and removes worker scheduling from the gate.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -68,22 +125,26 @@
       "runtimeRoles": [
         "nova"
       ],
-      "parityBlockers": [
-        "Forge and implementation plugins do not yet contain the complete legacy behavior or replacement tests"
-      ],
-      "uncoveredReplacementPackages": [
-        "blueprint-sync",
-        "implementation-agent"
-      ],
+      "parityBlockers": [],
+      "uncoveredReplacementPackages": [],
       "scenarios": [
         {
           "id": "repository-adapter-replacement-live-function",
           "evidenceType": "replacement",
           "targetPackage": "repository-adapter",
           "level": "live",
-          "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
           "command": "npm test --prefix skills/nova/plugins/repository-adapter",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Forge reads bounded repository text while rejecting missing, non-file, oversized, traversal, and symlink-escape paths.",
+            "replacementBehavior": "The v2 repository adapter preserves those read-only outcomes behind one narrowly granted capability.",
+            "rationale": "The direct read-only adapter is already the smallest safe boundary.",
+            "complexityImpact": "Removes all Git mutation and agent lifecycle authority from repository reads.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -96,6 +157,59 @@
           "path": "tests/skills/nova/pipeline/agents",
           "command": "node --test $(find tests/skills/nova/pipeline/agents -type f -name '*.test.mjs' -print | sort)",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Forge starts and monitors implementation sessions, verifies identity and completion, captures handoff and transcript evidence, terminates sessions, and classifies retryable versus terminal failures.",
+            "replacementBehavior": "The implementation stage requires a closed runtime-owned session record with identity, timestamps, transcript digest, handoffs, termination, changed paths, and checks; core owns retries and lifecycle transitions.",
+            "rationale": "A strict session result removes polling and scheduler coupling from Forge while preserving observable completion evidence.",
+            "complexityImpact": "Replaces distributed polling state with one bounded runtime capability and one strict reducer.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "implementation-agent-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "implementation-agent",
+          "level": "live",
+          "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/nova/plugins/implementation-agent",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Forge executes an implementation task in a tracked session and only hands off code with verified checks and transcript evidence.",
+            "replacementBehavior": "The v2 package delegates session execution to runtime.dispatch and rejects completion without a terminal session, transcript digest, matching attempt identity, changed paths, and passing checks.",
+            "rationale": "Session mechanics are generic runtime authority; implementation policy and completion evidence remain package authority.",
+            "complexityImpact": "Keeps the stage as a strict request/result boundary instead of copying the legacy session supervisor.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "blueprint-sync-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "blueprint-sync",
+          "level": "live",
+          "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/nova/plugins/blueprint-sync",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Blueprint synchronization copies declared control files from the architecture branch, commits changed paths, records state, and reports missing controls for remediation.",
+            "replacementBehavior": "The v2 stage preserves the sequence through durable Git, state, and artifact effects and returns a typed remediation result for missing controls.",
+            "rationale": "The stage retains domain sequencing while adapters own every privileged mutation.",
+            "complexityImpact": "Removes direct Git and filesystem process orchestration.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -182,7 +296,7 @@
           "evidenceType": "replacement",
           "targetPackage": "telemetry-observer",
           "level": "offline",
-          "path": "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+          "path": "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/telemetry-observer",
           "disposition": "must-remain-equivalent",
           "requiredBefore": [
@@ -241,7 +355,7 @@
           "evidenceType": "replacement",
           "targetPackage": "git-workspace",
           "level": "live",
-          "path": "skills/common/plugins/git-workspace/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/git-workspace",
           "disposition": "must-remain-equivalent",
           "requiredBefore": [
@@ -254,7 +368,7 @@
           "evidenceType": "replacement",
           "targetPackage": "artifact-store",
           "level": "live",
-          "path": "skills/common/plugins/artifact-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/artifact-store",
           "disposition": "must-remain-equivalent",
           "requiredBefore": [
@@ -267,7 +381,7 @@
           "evidenceType": "replacement",
           "targetPackage": "command-runner",
           "level": "live",
-          "path": "skills/common/plugins/command-runner/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/command-runner/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/command-runner",
           "disposition": "must-remain-equivalent",
           "requiredBefore": [
@@ -280,7 +394,7 @@
           "evidenceType": "replacement",
           "targetPackage": "state-store",
           "level": "live",
-          "path": "skills/common/plugins/state-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/state-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/state-store",
           "disposition": "new-v2-foundation",
           "requiredBefore": [
@@ -293,7 +407,7 @@
           "evidenceType": "replacement",
           "targetPackage": "network-http",
           "level": "live",
-          "path": "skills/common/plugins/network-http/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/network-http/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/network-http",
           "disposition": "new-v2-foundation",
           "requiredBefore": [
@@ -306,7 +420,7 @@
           "evidenceType": "replacement",
           "targetPackage": "telemetry-store",
           "level": "live",
-          "path": "skills/common/plugins/telemetry-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/telemetry-store",
           "disposition": "new-v2-foundation",
           "requiredBefore": [
@@ -319,7 +433,7 @@
           "evidenceType": "replacement",
           "targetPackage": "secret-resolver",
           "level": "live",
-          "path": "skills/common/plugins/secret-resolver/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/secret-resolver",
           "disposition": "new-v2-foundation",
           "requiredBefore": [
@@ -332,7 +446,7 @@
           "evidenceType": "replacement",
           "targetPackage": "operator-messaging",
           "level": "live",
-          "path": "skills/common/plugins/operator-messaging/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/operator-messaging",
           "disposition": "new-v2-foundation",
           "requiredBefore": [
@@ -345,7 +459,7 @@
           "evidenceType": "replacement",
           "targetPackage": "transport-publisher",
           "level": "live",
-          "path": "skills/common/plugins/transport-publisher/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
           "command": "npm test --prefix skills/common/plugins/transport-publisher",
           "disposition": "new-v2-foundation",
           "requiredBefore": [
@@ -484,14 +598,8 @@
       "runtimeRoles": [
         "nova"
       ],
-      "parityBlockers": [
-        "review, approval, and reporting target packages lack complete paired behavioral tests"
-      ],
-      "uncoveredReplacementPackages": [
-        "case-study",
-        "pipeline-review",
-        "project-summary"
-      ],
+      "parityBlockers": [],
+      "uncoveredReplacementPackages": [],
       "scenarios": [
         {
           "id": "review-gate-contract",
@@ -500,6 +608,15 @@
           "path": "tests/verification/contracts/check-gate-control-result-surface.mjs",
           "command": "node tests/verification/contracts/check-gate-control-result-surface.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Review and approval gates produce closed pass, remediation, blocked, and wait outcomes while core owns lifecycle transitions.",
+            "replacementBehavior": "The v2 review and approval registrations return the same closed control outcomes through registration-scoped capabilities.",
+            "rationale": "Preserve domain decisions while deleting runner-specific lifecycle coupling.",
+            "complexityImpact": "One strict reducer per registration replaces mixed gate runner control flow.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -521,9 +638,18 @@
           "evidenceType": "replacement",
           "targetPackage": "review",
           "level": "live",
-          "path": "skills/nova/plugins/review/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/review/tests/live-function.test.ts",
           "command": "npm test --prefix skills/nova/plugins/review",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Review judges supplied evidence, rejects contradictory PASS verdicts, and requests remediation for actionable failures.",
+            "replacementBehavior": "The v2 review package strictly decodes the same evidence classes and returns typed pass or request-fix results.",
+            "rationale": "Keep review policy package-local and delegate agent transport and lifecycle to runtime.dispatch.",
+            "complexityImpact": "Removes hidden repository and session coupling from the decision stage.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -534,9 +660,84 @@
           "evidenceType": "replacement",
           "targetPackage": "human-approval",
           "level": "live",
-          "path": "skills/nova/plugins/human-approval/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
           "command": "npm test --prefix skills/nova/plugins/human-approval",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Approval sends an operator request, durably waits for an authorized approve or reject signal, and resumes once.",
+            "replacementBehavior": "The v2 stage constructs the message and typed wait while operator messaging, signal persistence, authorization, and resume attempts stay in their owning capabilities and core.",
+            "rationale": "The observable approval protocol remains intact without filesystem watchers or transport details in the stage.",
+            "complexityImpact": "Reduces approval to input validation, message/wait construction, and signal reduction.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "case-study-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "case-study",
+          "level": "live",
+          "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/nova/plugins/case-study",
+          "disposition": "intentionally-changed",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Case-study generation combined grounded document creation with optional publication and pipeline presentation concerns.",
+            "replacementBehavior": "The v2 package generates a strictly sectioned, identity-bound artifact from supplied facts; publication is a separate adapter concern.",
+            "rationale": "Generation and external delivery have different authority, failure, and replacement boundaries.",
+            "complexityImpact": "Deletes presentation and deployment side effects from the generator.",
+            "behaviorChanged": true,
+            "approvalRef": "discord:1531749860674637876"
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "pipeline-review-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "pipeline-review",
+          "level": "live",
+          "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/nova/plugins/pipeline-review",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Pipeline review synthesizes run-wide evidence into a retrospective report without changing lifecycle truth.",
+            "replacementBehavior": "The v2 reporting stage preserves grounded synthesis and required dimensions and can only write its report artifact.",
+            "rationale": "Retrospective reporting remains distinct from the actionable review decision stage.",
+            "complexityImpact": "Removes session polling and notification side effects from report generation.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "project-summary-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "project-summary",
+          "level": "live",
+          "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/nova/plugins/project-summary",
+          "disposition": "intentionally-changed",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "Project summary delegated formatting to a registered generator and mixed persistence, telemetry, and Discord delivery.",
+            "replacementBehavior": "The v2 package deterministically reduces validated run metrics and diagnostics into one stable Markdown artifact.",
+            "rationale": "A deterministic summary is cheaper, reproducible, and does not require agent judgment or notification authority.",
+            "complexityImpact": "Replaces a multi-service orchestration path with a pure reducer and one artifact effect.",
+            "behaviorChanged": true,
+            "approvalRef": "discord:1531749860674637876"
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -554,12 +755,8 @@
       "runtimeRoles": [
         "nova"
       ],
-      "parityBlockers": [
-        "architecture target package lacks complete paired behavioral tests"
-      ],
-      "uncoveredReplacementPackages": [
-        "architecture-validator"
-      ],
+      "parityBlockers": [],
+      "uncoveredReplacementPackages": [],
       "scenarios": [
         {
           "id": "validation-control-contract",
@@ -568,6 +765,58 @@
           "path": "tests/verification/contracts/check-validator-control-result-surface.mjs",
           "command": "node tests/verification/contracts/check-validator-control-result-surface.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Validators expose stable pass, remediation, block, reason, and finding control semantics to the scheduler.",
+            "replacementBehavior": "Cohesive v2 stages return the same scheduler-observable control semantics through the closed StageResult contract.",
+            "rationale": "The mixed validator facade is replaced by independently owned stages while core retains the generic lifecycle reducer.",
+            "complexityImpact": "Removes the cross-validator union and fixed-kind dispatch without changing observable control outcomes.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "architecture-legacy-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/skills/nova/pipeline/services/arch-validator.test.mjs",
+          "command": "node --test tests/skills/nova/pipeline/services/arch-validator-checks.test.mjs tests/skills/nova/pipeline/services/arch-validator.test.mjs",
+          "disposition": "intentionally-changed",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "The architecture validator combined software-architecture judgment with graph checks, file presence, runtime configuration validation, session spawning, monitoring, retry, and termination.",
+            "replacementBehavior": "The stage owns only software-architecture judgment and rich findings; generic graph validity belongs to core, required-file checks belong to deterministic preflight stages, configuration belongs to registry activation, and session lifecycle belongs to runtime.dispatch.",
+            "rationale": "Separating generic orchestration and deterministic validation from architecture judgment follows the target ownership model and avoids duplicating core guarantees.",
+            "complexityImpact": "Deletes stage-specific lifecycle and bookkeeping machinery while preserving architecture verdicts and structured findings.",
+            "behaviorChanged": true,
+            "approvalRef": "discord:1531749860674637876"
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "architecture-validator-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "architecture-validator",
+          "level": "live",
+          "path": "skills/nova/plugins/architecture-validator/tests",
+          "command": "npm test --prefix skills/nova/plugins/architecture-validator",
+          "disposition": "intentionally-changed",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Architecture judgment returned scoped findings and blocked on blocking or error severity while its service also owned generic runtime lifecycle work.",
+            "replacementBehavior": "The v2 package validates closed domain-model and integration-boundary findings and delegates all generic session lifecycle to the runtime capability.",
+            "rationale": "This keeps domain judgment package-local and moves reusable runtime behavior to its proper privileged adapter.",
+            "complexityImpact": "Reduces the stage to prompt, strict decoding, artifact evidence, and a typed result.",
+            "behaviorChanged": true,
+            "approvalRef": "discord:1531749860674637876"
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -578,9 +827,18 @@
           "evidenceType": "replacement",
           "targetPackage": "delivery-lint",
           "level": "live",
-          "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
           "command": "npm test --prefix skills/nova/plugins/delivery-lint",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Delivery lint validates Dockerfile/static delivery declarations and returns pass, remediation, or blocked outcomes with stable reports.",
+            "replacementBehavior": "The authoritative v2 delivery-lint package retains those outcomes, reason codes, repository reads, and report artifacts.",
+            "rationale": "Phase 8 already proved the direct deterministic implementation and deleted the legacy owner.",
+            "complexityImpact": "Keeps one small implementation and no compatibility facade.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -591,9 +849,18 @@
           "evidenceType": "replacement",
           "targetPackage": "lint",
           "level": "live",
-          "path": "skills/nova/plugins/lint/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
           "command": "npm test --prefix skills/nova/plugins/lint",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "reuse",
+            "legacyBehavior": "Pre-check and full lint discover applicable tools, execute the policy tier, normalize findings, and emit deterministic reports.",
+            "replacementBehavior": "The v2 lint package retains the proven data-driven engine behind separate pre-check and full registrations plus a bounded executor adapter.",
+            "rationale": "The engine complexity reflects supported tools and policies; rewriting it would add parity risk without reducing the small v2 orchestration boundary.",
+            "complexityImpact": "Removes legacy process orchestration while reusing the mature tool engine and stable fingerprints.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -604,9 +871,18 @@
           "evidenceType": "replacement",
           "targetPackage": "preflight-contract",
           "level": "live",
-          "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
           "command": "npm test --prefix skills/nova/plugins/preflight-contract",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Preflight verifies that owned Dockerfile and API artifacts are declared by Forge blueprints, including split-module blueprints.",
+            "replacementBehavior": "The v2 stage performs the same declaration checks through bounded repository reads and emits a closed result and report artifact.",
+            "rationale": "The rules remain intact while direct filesystem and logger dependencies are replaced by capabilities.",
+            "complexityImpact": "Reduces global configuration coupling and makes substep handling explicit.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -916,7 +1192,7 @@
         "skills/common/plugins/artifact-store/plugin.json",
         "skills/common/plugins/artifact-store/schemas/config.schema.json",
         "skills/common/plugins/artifact-store/src/adapter.ts",
-        "skills/common/plugins/artifact-store/tests/live-function.test.mjs",
+        "skills/common/plugins/artifact-store/tests/live-function.test.ts",
         "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs",
         "skills/common/plugins/artifact-store/tsconfig.json"
       ],
@@ -1089,7 +1365,7 @@
         "skills/common/plugins/command-runner/plugin.json",
         "skills/common/plugins/command-runner/schemas/config.schema.json",
         "skills/common/plugins/command-runner/src/adapter.ts",
-        "skills/common/plugins/command-runner/tests/live-function.test.mjs",
+        "skills/common/plugins/command-runner/tests/live-function.test.ts",
         "skills/common/plugins/command-runner/tests/package-boundary.test.mjs",
         "skills/common/plugins/command-runner/tsconfig.json"
       ],
@@ -1135,7 +1411,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/command-runner/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/command-runner/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -1434,7 +1710,7 @@
         "skills/common/plugins/git-workspace/plugin.json",
         "skills/common/plugins/git-workspace/schemas/config.schema.json",
         "skills/common/plugins/git-workspace/src/adapter.ts",
-        "skills/common/plugins/git-workspace/tests/live-function.test.mjs",
+        "skills/common/plugins/git-workspace/tests/live-function.test.ts",
         "skills/common/plugins/git-workspace/tests/package-boundary.test.mjs",
         "skills/common/plugins/git-workspace/tsconfig.json"
       ],
@@ -1476,7 +1752,7 @@
         "skills/common/plugins/git-workspace/plugin.json",
         "skills/common/plugins/git-workspace/schemas/config.schema.json",
         "skills/common/plugins/git-workspace/src/adapter.ts",
-        "skills/common/plugins/git-workspace/tests/live-function.test.mjs",
+        "skills/common/plugins/git-workspace/tests/live-function.test.ts",
         "skills/common/plugins/git-workspace/tests/package-boundary.test.mjs",
         "skills/common/plugins/git-workspace/tsconfig.json"
       ],
@@ -1529,7 +1805,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/git-workspace/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -1589,7 +1865,7 @@
         "skills/common/plugins/network-http/plugin.json",
         "skills/common/plugins/network-http/schemas/config.schema.json",
         "skills/common/plugins/network-http/src/adapter.ts",
-        "skills/common/plugins/network-http/tests/live-function.test.mjs",
+        "skills/common/plugins/network-http/tests/live-function.test.ts",
         "skills/common/plugins/network-http/tests/package-boundary.test.mjs",
         "skills/common/plugins/network-http/tsconfig.json"
       ],
@@ -1631,7 +1907,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/network-http/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/network-http/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -1676,7 +1952,7 @@
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
         "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
-        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
         "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-events/tsconfig.json"
       ],
@@ -1725,7 +2001,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -1807,6 +2083,9 @@
         "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
         "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts",
         "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.build.json",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.json",
         "skills/nova/pipeline/agent-observability/src/index.ts",
@@ -1874,7 +2153,7 @@
         "skills/common/plugins/operator-messaging/schemas/config.schema.json",
         "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
         "skills/common/plugins/operator-messaging/src/adapter.ts",
-        "skills/common/plugins/operator-messaging/tests/live-function.test.mjs",
+        "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
         "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs",
         "skills/common/plugins/operator-messaging/tsconfig.json"
       ],
@@ -2181,7 +2460,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/operator-messaging/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -2596,7 +2875,7 @@
         "skills/common/plugins/wait-store/plugin.json",
         "skills/common/plugins/wait-store/schemas/config.schema.json",
         "skills/common/plugins/wait-store/src/adapter.ts",
-        "skills/common/plugins/wait-store/tests/live-function.test.mjs",
+        "skills/common/plugins/wait-store/tests/live-function.test.ts",
         "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
         "skills/common/plugins/wait-store/tsconfig.json"
       ],
@@ -2691,7 +2970,7 @@
         "skills/common/plugins/runtime-dispatch/plugin.json",
         "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
         "skills/common/plugins/runtime-dispatch/src/adapter.ts",
-        "skills/common/plugins/runtime-dispatch/tests/live-function.test.mjs",
+        "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
         "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs",
         "skills/common/plugins/runtime-dispatch/tsconfig.json"
       ],
@@ -3180,7 +3459,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -3306,7 +3585,7 @@
         "skills/common/plugins/runtime-dispatch/plugin.json",
         "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
         "skills/common/plugins/runtime-dispatch/src/adapter.ts",
-        "skills/common/plugins/runtime-dispatch/tests/live-function.test.mjs",
+        "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
         "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs",
         "skills/common/plugins/runtime-dispatch/tsconfig.json"
       ],
@@ -3415,7 +3694,7 @@
         "skills/common/plugins/secret-resolver/plugin.json",
         "skills/common/plugins/secret-resolver/schemas/config.schema.json",
         "skills/common/plugins/secret-resolver/src/adapter.ts",
-        "skills/common/plugins/secret-resolver/tests/live-function.test.mjs",
+        "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
         "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs",
         "skills/common/plugins/secret-resolver/tsconfig.json"
       ],
@@ -3457,7 +3736,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/secret-resolver/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -3502,7 +3781,7 @@
         "skills/common/plugins/state-store/plugin.json",
         "skills/common/plugins/state-store/schemas/config.schema.json",
         "skills/common/plugins/state-store/src/adapter.ts",
-        "skills/common/plugins/state-store/tests/live-function.test.mjs",
+        "skills/common/plugins/state-store/tests/live-function.test.ts",
         "skills/common/plugins/state-store/tests/package-boundary.test.mjs",
         "skills/common/plugins/state-store/tsconfig.json"
       ],
@@ -3545,7 +3824,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/state-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/state-store/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -3590,7 +3869,7 @@
         "skills/common/plugins/telemetry-store/plugin.json",
         "skills/common/plugins/telemetry-store/schemas/config.schema.json",
         "skills/common/plugins/telemetry-store/src/adapter.ts",
-        "skills/common/plugins/telemetry-store/tests/live-function.test.mjs",
+        "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
         "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs",
         "skills/common/plugins/telemetry-store/tsconfig.json"
       ],
@@ -3636,7 +3915,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/telemetry-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -3684,7 +3963,7 @@
         "skills/common/plugins/transport-publisher/schemas/receipt.schema.json",
         "skills/common/plugins/transport-publisher/src/adapter.ts",
         "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs",
-        "skills/common/plugins/transport-publisher/tests/live-function.test.mjs",
+        "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
         "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs",
         "skills/common/plugins/transport-publisher/tsconfig.json"
       ],
@@ -3744,7 +4023,7 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/common/plugins/transport-publisher/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -3789,7 +4068,7 @@
         "skills/common/plugins/wait-store/plugin.json",
         "skills/common/plugins/wait-store/schemas/config.schema.json",
         "skills/common/plugins/wait-store/src/adapter.ts",
-        "skills/common/plugins/wait-store/tests/live-function.test.mjs",
+        "skills/common/plugins/wait-store/tests/live-function.test.ts",
         "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
         "skills/common/plugins/wait-store/tsconfig.json"
       ],
@@ -3835,7 +4114,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/wait-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -4102,6 +4381,7 @@
         "skills/nova/pipeline/services/gate-active-session.ts",
         "skills/nova/pipeline/services/git-soft-fail-observability.ts",
         "skills/nova/pipeline/services/governance-context.ts",
+        "skills/nova/pipeline/services/module-lint-validators.ts",
         "skills/nova/pipeline/services/observability-health.ts",
         "skills/nova/pipeline/services/observability-identity.ts",
         "skills/nova/pipeline/services/observability-snapshots.ts",
@@ -4179,6 +4459,7 @@
         "skills/common/plugin-runtime/core/effects/coordinator.ts",
         "skills/common/plugin-runtime/core/effects/journal.ts",
         "skills/common/plugin-runtime/core/effects/locks.ts",
+        "skills/common/plugin-runtime/core/execution/CAPABILITIES.md",
         "skills/common/plugin-runtime/core/execution/README.md",
         "skills/common/plugin-runtime/core/execution/adapters.ts",
         "skills/common/plugin-runtime/core/execution/authorization.ts",
@@ -4188,7 +4469,6 @@
         "skills/common/plugin-runtime/core/execution/lease.ts",
         "skills/common/plugin-runtime/core/execution/runner.ts",
         "skills/common/plugin-runtime/core/isolation/child.mjs",
-        "skills/common/plugin-runtime/core/isolation/plugin-sandbox",
         "skills/common/plugin-runtime/core/isolation/runner.ts",
         "skills/common/plugin-runtime/core/isolation/sandbox.c",
         "skills/common/plugin-runtime/core/package.json",
@@ -4238,8 +4518,11 @@
         "ActivatedRegistry",
         "AdapterRuntime",
         "AdapterRuntimeOptions",
+        "AdministrativeDecisionAuthenticator",
         "AnyRecord",
+        "AuthenticatedAdministrativePrincipal",
         "BudgetExhaustedError",
+        "CAPABILITY_DEFINITIONS",
         "CAPABILITY_IDS",
         "CapabilityId",
         "CapabilityInvoker",
@@ -4260,11 +4543,14 @@
         "EffectAuditSink",
         "EffectCoordinator",
         "EffectInvocation",
+        "EffectLockManager",
         "ExecutionGraph",
+        "ExecutionGraphSnapshot",
         "ExternalInstallRequest",
         "FAIL_PATTERNS",
         "FileEffectJournal",
         "FileJournal",
+        "FileResourceLockManager",
         "GrantedRegistry",
         "INVALID_LOCK_JSON_REASON",
         "InstalledPackage",
@@ -4274,6 +4560,7 @@
         "LifecycleDecision",
         "MONTH_INDEX_BY_LABEL",
         "MemoryEffectJournal",
+        "MemoryResourceLockManager",
         "NovaEnvironmentKey",
         "NumberRule",
         "ObserverDrainResult",
@@ -4302,13 +4589,15 @@
         "PLUGIN_TRUST_TIERS",
         "PROMPT_INGRESS_MAX_BYTES",
         "PROMPT_INGRESS_MAX_CHARS",
+        "PipelineRunIdentity",
         "PipelineRunResult",
         "PipelineRunner",
         "PipelineRunnerOptions",
         "PlatformConfig",
+        "PluginStateAppend",
+        "PluginStateJournal",
         "RegistryError",
         "RegistrySnapshot",
-        "ResourceLockManager",
         "RevocableLease",
         "STALE_RECOVERY_ACTIONS",
         "STATUS",
@@ -4320,7 +4609,6 @@
         "TrustPolicy",
         "UnknownAdapterError",
         "VALID_THINKING_LEVELS",
-        "WaitCoordinator",
         "_telemetryCtx",
         "abortSignalError",
         "acpRateLimitResult",
@@ -4686,6 +4974,7 @@
         "recordOrEmpty",
         "recordUnconfirmedRecoveryBlock",
         "recordUsageSnapshot",
+        "recoverPipelineV2",
         "recoverStageStates",
         "recoveryDispatchIdValue",
         "recoveryModuleDir",
@@ -4701,6 +4990,7 @@
         "removeDirectoryBestEffort",
         "removeFileIfPresent",
         "removeInstalledPackage",
+        "reopenBlockedPipelineV2",
         "reportFailureSurfaceIncident",
         "requireGateTypeOwner",
         "requireLatestRun",
@@ -4752,11 +5042,13 @@
         "reviewGateOutputDirRef",
         "reviewGateOutputPath",
         "runBatch",
+        "runFullLintValidatorStage",
         "runPipeline",
         "runPipelineLoop",
         "runPipelineModuleBatch",
         "runPipelineStateMachine",
         "runPipelineV2",
+        "runPreCheckValidatorStage",
         "runScheduledGenerator",
         "runScheduledValidator",
         "runSessionEndCycle",
@@ -4804,13 +5096,17 @@
         "updateAcpPollObservability",
         "validateAgentObservability",
         "validateAllowedPath",
+        "validateCapabilityConstraints",
+        "validateCapabilityInvocationContract",
         "validateConfig",
         "validateConfigBoundary",
+        "validateContractValue",
         "validateGateRemediationControlResult",
         "validateGateRemediationController",
         "validateGeneratorExecutionResult",
         "validateProgressAndRegistry",
         "validateRuntimeConfig",
+        "validateRuntimeRegistrationConfiguration",
         "validateSafePath",
         "validateServiceConfig",
         "validateThinkingLevel",
@@ -5015,16 +5311,6 @@
           ]
         },
         {
-          "ownerId": "delete:legacy-mixed-validator-facade",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/paths.ts",
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/runtime.ts",
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/optional-absence.ts"
-          ]
-        },
-        {
           "ownerId": "delete:legacy-notification-registry-contract",
           "count": 4,
           "samples": [
@@ -5036,20 +5322,20 @@
         },
         {
           "ownerId": "delete:legacy-plugin-bridges",
-          "count": 14,
+          "count": 15,
           "samples": [
             "skills/nova/pipeline/core/registry/builtin-bridge.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/core/registry/builtin-case-study.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/optional-absence.ts",
+            "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-lint-validators.ts",
             "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/runners/gate-control-adapter.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/runners/stage-envelope-primitives.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/paths.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/registry-access.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/runtime.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/optional-absence.ts"
+            "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/runtime.ts"
           ]
         },
         {
@@ -5189,14 +5475,6 @@
             "skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/runtime-defaults.ts",
             "skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/text-values.ts",
             "skills/nova/pipeline/services/case-study-values.ts -> skills/nova/pipeline/core/deps.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.delivery-lint",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/paths.ts"
           ]
         },
         {
@@ -5471,27 +5749,28 @@
         },
         {
           "ownerId": "core:pipeline-core-registry",
-          "count": 25,
+          "count": 33,
           "samples": [
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/schema.ts",
+            "skills/common/plugin-runtime/core/execution/authorization.ts -> skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/build.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
+            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/configuration.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/discovery.ts",
-            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/schema.ts",
-            "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
-            "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
-            "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
+            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
           ]
         },
         {
           "ownerId": "core:pipeline-core-state",
-          "count": 75,
+          "count": 77,
           "samples": [
             "skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts",
+            "skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/state/journal.ts",
@@ -5500,9 +5779,8 @@
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts",
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts",
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/journal.ts",
-            "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/waits.ts",
-            "skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/status-store.ts",
-            "skills/nova/pipeline/core/registry.ts -> skills/nova/pipeline/services/serialization.ts"
+            "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/plugins.ts",
+            "skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/status-store.ts"
           ]
         },
         {
@@ -5542,7 +5820,7 @@
         },
         {
           "ownerId": "plugin-sdk:pipeline-plugin-sdk",
-          "count": 68,
+          "count": 69,
           "samples": [
             "skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/effects/coordinator.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
@@ -5591,6 +5869,13 @@
             "skills/nova/pipeline/services/polling-wrappers.ts -> skills/nova/pipeline/services/polling-forge.ts",
             "skills/nova/pipeline/services/polling.ts -> skills/nova/pipeline/services/polling-forge.ts",
             "tests/skills/nova/pipeline/services/polling.test.mjs -> skills/nova/pipeline/services/forge-completion.ts"
+          ]
+        },
+        {
+          "ownerId": "plugin:kubeclaw.lint",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/module-lint-validators.ts -> skills/nova/pipeline/services/lint.ts"
           ]
         },
         {
@@ -5871,6 +6156,7 @@
           "skills/nova/pipeline/services/gate-active-session.ts",
           "skills/nova/pipeline/services/git-soft-fail-observability.ts",
           "skills/nova/pipeline/services/governance-context.ts",
+          "skills/nova/pipeline/services/module-lint-validators.ts",
           "skills/nova/pipeline/services/observability-health.ts",
           "skills/nova/pipeline/services/observability-identity.ts",
           "skills/nova/pipeline/services/observability-snapshots.ts",
@@ -5966,6 +6252,7 @@
         "skills/common/plugin-runtime/core/effects/coordinator.ts",
         "skills/common/plugin-runtime/core/effects/journal.ts",
         "skills/common/plugin-runtime/core/effects/locks.ts",
+        "skills/common/plugin-runtime/core/execution/CAPABILITIES.md",
         "skills/common/plugin-runtime/core/execution/README.md",
         "skills/common/plugin-runtime/core/execution/adapters.ts",
         "skills/common/plugin-runtime/core/execution/authorization.ts",
@@ -5975,7 +6262,6 @@
         "skills/common/plugin-runtime/core/execution/lease.ts",
         "skills/common/plugin-runtime/core/execution/runner.ts",
         "skills/common/plugin-runtime/core/isolation/child.mjs",
-        "skills/common/plugin-runtime/core/isolation/plugin-sandbox",
         "skills/common/plugin-runtime/core/isolation/runner.ts",
         "skills/common/plugin-runtime/core/isolation/sandbox.c",
         "skills/common/plugin-runtime/core/package.json",
@@ -6115,6 +6401,7 @@
         "skills/nova/pipeline/services/gate-active-session.ts",
         "skills/nova/pipeline/services/git-soft-fail-observability.ts",
         "skills/nova/pipeline/services/governance-context.ts",
+        "skills/nova/pipeline/services/module-lint-validators.ts",
         "skills/nova/pipeline/services/observability-health.ts",
         "skills/nova/pipeline/services/observability-identity.ts",
         "skills/nova/pipeline/services/observability-snapshots.ts",
@@ -6225,10 +6512,15 @@
         "skills/common/plugin-runtime/core/registry/activation.ts",
         "skills/common/plugin-runtime/core/registry/build.ts",
         "skills/common/plugin-runtime/core/registry/capabilities.ts",
+        "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/core/registry/configuration.ts",
         "skills/common/plugin-runtime/core/registry/digest.ts",
         "skills/common/plugin-runtime/core/registry/discovery.ts",
         "skills/common/plugin-runtime/core/registry/errors.ts",
         "skills/common/plugin-runtime/core/registry/frozen-map.ts",
+        "skills/common/plugin-runtime/core/registry/frozen-set.ts",
+        "skills/common/plugin-runtime/core/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/core/registry/import-audit.ts",
         "skills/common/plugin-runtime/core/registry/schema.ts",
         "skills/common/plugin-runtime/core/registry/types.ts"
       ],
@@ -6236,22 +6528,27 @@
         "ActivatedRegistration",
         "ActivatedRegistry",
         "AdapterRegistryEntry",
+        "CAPABILITY_DEFINITIONS",
         "CAPABILITY_IDS",
         "CapabilityId",
         "CapabilityPolicy",
+        "ConfiguredStageRegistration",
         "DiscoveredPackage",
         "DiscoveryOptions",
         "FrozenMap",
+        "FrozenSet",
         "GrantedRegistry",
         "ObserverRegistryEntry",
         "PLUGIN_METHOD_BY_KIND",
         "RegistryError",
         "RegistryErrorCode",
         "RegistrySnapshot",
+        "RuntimeRegistrationConfiguration",
         "StageRegistryEntry",
         "TrustPolicy",
         "activateRegistry",
         "allKnownCapabilities",
+        "auditTrustedRegistrationImports",
         "buildGateTypeIndex",
         "buildHookIndex",
         "buildRegistry",
@@ -6260,6 +6557,8 @@
         "createRegistryDictionary",
         "discoverPackages",
         "isConfidentialCapability",
+        "isCoreOnlyCapability",
+        "isKnownCapability",
         "isReservedRegistryKey",
         "normalizePluginConfig",
         "parsePluginManifest",
@@ -6267,31 +6566,42 @@
         "resolveCapabilityGrants",
         "resolveModuleConfig",
         "validateCapabilities",
+        "validateCapabilityConstraints",
+        "validateCapabilityInvocationContract",
         "validateContractValue",
         "validateImplementation",
         "validateManifest",
         "validateManifestConfigSchema",
         "validateReferencedSchema",
         "validateReferencedValue",
+        "validateRuntimeRegistrationConfiguration",
         "validateTrustPolicy"
       ],
       "currentConsumers": [
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 25,
+          "count": 33,
           "samples": [
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
             "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/schema.ts",
+            "skills/common/plugin-runtime/core/execution/authorization.ts -> skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/build.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
+            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/configuration.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/discovery.ts",
-            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/schema.ts",
-            "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
-            "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
-            "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
+            "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+          ]
+        },
+        {
+          "ownerId": "core:pipeline-core-state",
+          "count": 2,
+          "samples": [
+            "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
+            "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
           ]
         },
         {
@@ -6356,11 +6666,12 @@
         },
         {
           "ownerId": "plugin-sdk:pipeline-plugin-sdk",
-          "count": 7,
+          "count": 8,
           "samples": [
             "skills/common/plugin-runtime/core/registry/activation.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/build.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/capabilities.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
+            "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/discovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/schema.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/types.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
@@ -6376,6 +6687,10 @@
         }
       ],
       "privilegedEffects": [
+        {
+          "effect": "command.execute",
+          "targetAdapter": "kubeclaw.command"
+        },
         {
           "effect": "filesystem.read",
           "targetAdapter": "kubeclaw.artifacts"
@@ -6400,6 +6715,7 @@
       "currentRegistrations": [],
       "targetRegistrations": [],
       "configurationPaths": [
+        "skills/common/plugin-runtime/core/registry/configuration.ts",
         "skills/common/plugin-runtime/core/registry/schema.ts",
         "skills/nova/pipeline/core/registry/config-normalization.ts",
         "skills/nova/pipeline/core/registry/schema-validation.ts",
@@ -6464,10 +6780,15 @@
         "skills/common/plugin-runtime/core/registry/activation.ts",
         "skills/common/plugin-runtime/core/registry/build.ts",
         "skills/common/plugin-runtime/core/registry/capabilities.ts",
+        "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/core/registry/configuration.ts",
         "skills/common/plugin-runtime/core/registry/digest.ts",
         "skills/common/plugin-runtime/core/registry/discovery.ts",
         "skills/common/plugin-runtime/core/registry/errors.ts",
         "skills/common/plugin-runtime/core/registry/frozen-map.ts",
+        "skills/common/plugin-runtime/core/registry/frozen-set.ts",
+        "skills/common/plugin-runtime/core/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/core/registry/import-audit.ts",
         "skills/common/plugin-runtime/core/registry/schema.ts",
         "skills/common/plugin-runtime/core/registry/types.ts"
       ],
@@ -6633,7 +6954,7 @@
         "skills/common/plugin-runtime/core/lifecycle/reducer.ts",
         "skills/common/plugin-runtime/core/state/README.md",
         "skills/common/plugin-runtime/core/state/journal.ts",
-        "skills/common/plugin-runtime/core/state/waits.ts"
+        "skills/common/plugin-runtime/core/state/plugins.ts"
       ],
       "exports": [
         "* from ../../common/pipeline/lifecycle-state.ts",
@@ -6674,6 +6995,8 @@
         "PIPELINE_RUN_COMPLETED_REASON",
         "PIPELINE_RUN_COMPLETED_STATUS",
         "PIPELINE_RUN_HALTED_REASON",
+        "PluginStateAppend",
+        "PluginStateJournal",
         "READ_MODEL_SOURCE_CANONICAL_EVENTS",
         "READ_MODEL_SOURCE_PENDING",
         "RecordValue",
@@ -6684,8 +7007,6 @@
         "STRONG_COMPLETION_IDENTITY_FIELDS",
         "StageRuntimeState",
         "StageStatus",
-        "WaitCoordinator",
-        "WaitSpecification",
         "adjudicateCompletionEvidence",
         "anyTrue",
         "appendCooldownLifecycleEvent",
@@ -6892,9 +7213,10 @@
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 75,
+          "count": 77,
           "samples": [
             "skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts",
+            "skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts",
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/state/journal.ts",
@@ -6903,9 +7225,8 @@
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts",
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts",
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/journal.ts",
-            "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/waits.ts",
-            "skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/status-store.ts",
-            "skills/nova/pipeline/core/registry.ts -> skills/nova/pipeline/services/serialization.ts"
+            "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/plugins.ts",
+            "skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/status-store.ts"
           ]
         },
         {
@@ -6941,13 +7262,6 @@
             "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/services/correlation.ts",
             "skills/nova/pipeline/runners/module-runner/attempt.ts -> skills/nova/pipeline/services/status-store.ts",
             "skills/nova/pipeline/runners/module-runner/buster-phase.ts -> skills/nova/pipeline/services/completion-adjudicator.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-mixed-validator-facade",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/status-store-lifecycle/refs.ts"
           ]
         },
         {
@@ -7106,12 +7420,20 @@
           ]
         },
         {
+          "ownerId": "core:pipeline-core-registry",
+          "count": 2,
+          "samples": [
+            "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
+            "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+          ]
+        },
+        {
           "ownerId": "plugin-sdk:pipeline-plugin-sdk",
           "count": 7,
           "samples": [
             "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/lifecycle/reducer.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
-            "skills/common/plugin-runtime/core/state/waits.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
+            "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-base.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-modules.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-recovery.ts -> skills/nova/pipeline/value-boundary.ts",
@@ -7255,7 +7577,7 @@
         "skills/common/plugin-runtime/core/lifecycle/reducer.ts",
         "skills/common/plugin-runtime/core/state/README.md",
         "skills/common/plugin-runtime/core/state/journal.ts",
-        "skills/common/plugin-runtime/core/state/waits.ts"
+        "skills/common/plugin-runtime/core/state/plugins.ts"
       ],
       "replacementRegistrations": [],
       "legacyPairings": [
@@ -8071,6 +8393,7 @@
         "skills/common/plugin-runtime/core/effects/coordinator.ts",
         "skills/common/plugin-runtime/core/effects/journal.ts",
         "skills/common/plugin-runtime/core/effects/locks.ts",
+        "skills/common/plugin-runtime/core/execution/CAPABILITIES.md",
         "skills/common/plugin-runtime/core/execution/README.md",
         "skills/common/plugin-runtime/core/execution/adapters.ts",
         "skills/common/plugin-runtime/core/execution/authorization.ts",
@@ -8080,7 +8403,6 @@
         "skills/common/plugin-runtime/core/execution/lease.ts",
         "skills/common/plugin-runtime/core/execution/runner.ts",
         "skills/common/plugin-runtime/core/isolation/child.mjs",
-        "skills/common/plugin-runtime/core/isolation/plugin-sandbox",
         "skills/common/plugin-runtime/core/isolation/runner.ts",
         "skills/common/plugin-runtime/core/isolation/sandbox.c",
         "skills/common/plugin-runtime/core/package.json",
@@ -8526,10 +8848,15 @@
         "skills/common/plugin-runtime/core/registry/activation.ts",
         "skills/common/plugin-runtime/core/registry/build.ts",
         "skills/common/plugin-runtime/core/registry/capabilities.ts",
+        "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/core/registry/configuration.ts",
         "skills/common/plugin-runtime/core/registry/digest.ts",
         "skills/common/plugin-runtime/core/registry/discovery.ts",
         "skills/common/plugin-runtime/core/registry/errors.ts",
         "skills/common/plugin-runtime/core/registry/frozen-map.ts",
+        "skills/common/plugin-runtime/core/registry/frozen-set.ts",
+        "skills/common/plugin-runtime/core/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/core/registry/import-audit.ts",
         "skills/common/plugin-runtime/core/registry/schema.ts",
         "skills/common/plugin-runtime/core/registry/types.ts"
       ],
@@ -8554,7 +8881,6 @@
         "VALIDATION_CODES",
         "formatValidationFailures",
         "isPlainObject",
-        "runDeliveryLintValidation",
         "runPreflightValidation",
         "validationFailure"
       ],
@@ -8585,20 +8911,6 @@
           ]
         },
         {
-          "ownerId": "delete:legacy-mixed-validator-facade",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/validation.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.delivery-lint",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/services/validation-contract.ts"
-          ]
-        },
-        {
           "ownerId": "plugin:kubeclaw.lint",
           "count": 1,
           "samples": [
@@ -8620,13 +8932,6 @@
           "samples": [
             "skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/core/logger.ts",
             "skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/optional-absence.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.delivery-lint",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-delivery.ts"
           ]
         },
         {
@@ -8671,13 +8976,15 @@
       ],
       "replacementFiles": [
         "skills/nova/plugins/delivery-lint/README.md",
+        "skills/nova/plugins/delivery-lint/fixtures/passing.json",
+        "skills/nova/plugins/delivery-lint/fixtures/remediation.json",
         "skills/nova/plugins/delivery-lint/package.json",
         "skills/nova/plugins/delivery-lint/plugin.json",
         "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
         "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
         "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
         "skills/nova/plugins/delivery-lint/src/stage.ts",
-        "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
+        "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
         "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
         "skills/nova/plugins/delivery-lint/tsconfig.json",
         "skills/nova/plugins/lint/README.md",
@@ -8717,8 +9024,9 @@
         "skills/nova/plugins/lint/src/support/optional-absence.ts",
         "skills/nova/plugins/lint/src/support/value-boundary.ts",
         "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
-        "skills/nova/plugins/lint/tests/live-function.test.mjs",
+        "skills/nova/plugins/lint/tests/live-function.test.ts",
         "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/parity.test.ts",
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
         "skills/nova/plugins/lint/tsconfig.json",
         "skills/nova/plugins/preflight-contract/README.md",
@@ -8729,286 +9037,12 @@
         "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
         "skills/nova/plugins/preflight-contract/src/stage.ts",
         "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
-        "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/parity.test.ts",
         "skills/nova/plugins/preflight-contract/tsconfig.json"
       ],
       "replacementRegistrations": [
-        {
-          "packageId": "kubeclaw.delivery-lint",
-          "packageRoot": "skills/nova/plugins/delivery-lint",
-          "surface": "stage",
-          "id": "delivery-lint",
-          "type": "kubeclaw.lint.delivery",
-          "module": "dist/stage.js",
-          "export": "execute",
-          "requiredCapabilities": [
-            "git.repository.read",
-            "artifacts.write"
-          ],
-          "providedCapabilities": [],
-          "configSchema": "schemas/config.schema.json"
-        },
-        {
-          "packageId": "kubeclaw.lint",
-          "packageRoot": "skills/nova/plugins/lint",
-          "surface": "stage",
-          "id": "pre-check",
-          "type": "kubeclaw.lint.pre-check",
-          "module": "dist/stage.js",
-          "export": "executePreCheck",
-          "requiredCapabilities": [
-            "lint.execute",
-            "artifacts.write"
-          ],
-          "providedCapabilities": [],
-          "configSchema": "schemas/config.schema.json"
-        },
-        {
-          "packageId": "kubeclaw.lint",
-          "packageRoot": "skills/nova/plugins/lint",
-          "surface": "stage",
-          "id": "full",
-          "type": "kubeclaw.lint.full",
-          "module": "dist/stage.js",
-          "export": "executeFull",
-          "requiredCapabilities": [
-            "lint.execute",
-            "artifacts.write"
-          ],
-          "providedCapabilities": [],
-          "configSchema": "schemas/config.schema.json"
-        },
-        {
-          "packageId": "kubeclaw.lint",
-          "packageRoot": "skills/nova/plugins/lint",
-          "surface": "adapter",
-          "id": "executor",
-          "type": null,
-          "module": "dist/adapter.js",
-          "export": "activate",
-          "requiredCapabilities": [],
-          "providedCapabilities": [
-            "lint.execute"
-          ],
-          "configSchema": "schemas/adapter-config.schema.json"
-        },
-        {
-          "packageId": "kubeclaw.preflight-contract",
-          "packageRoot": "skills/nova/plugins/preflight-contract",
-          "surface": "stage",
-          "id": "validate",
-          "type": "kubeclaw.validate.preflight-contract",
-          "module": "dist/stage.js",
-          "export": "execute",
-          "requiredCapabilities": [
-            "git.repository.read",
-            "artifacts.write"
-          ],
-          "providedCapabilities": [],
-          "configSchema": "schemas/config.schema.json"
-        }
-      ],
-      "legacyPairings": [],
-      "legacyOwnerIds": [],
-      "pairedLegacyFiles": []
-    },
-    {
-      "ownerId": "delete:legacy-mixed-validator-facade",
-      "unitId": "validation-and-lint",
-      "status": "baseline-retained",
-      "runtimeRoles": [
-        "nova"
-      ],
-      "legacySourceFiles": [
-        "skills/nova/pipeline/services/module-validators.ts"
-      ],
-      "targetFiles": [],
-      "exports": [
-        "runDeliveryLintValidatorStage",
-        "runFullLintValidatorStage",
-        "runPreCheckValidatorStage"
-      ],
-      "currentConsumers": [
-        {
-          "ownerId": "delete:legacy-plugin-bridges",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-validators.ts"
-          ]
-        }
-      ],
-      "currentDependencies": [
-        {
-          "ownerId": "core:pipeline-core-execution",
-          "count": 4,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/paths.ts",
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/runtime.ts",
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/optional-absence.ts"
-          ]
-        },
-        {
-          "ownerId": "core:pipeline-core-state",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/status-store-lifecycle/refs.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-mixed-validation-contract",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/validation.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin-sdk:pipeline-plugin-sdk",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/contracts/validator-control-result.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.lint",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/lint.ts"
-          ]
-        }
-      ],
-      "privilegedEffects": [
-        {
-          "effect": "filesystem.write",
-          "targetAdapter": "kubeclaw.artifacts"
-        }
-      ],
-      "currentRegistrations": [],
-      "targetRegistrations": [],
-      "configurationPaths": [],
-      "scenarioEvidence": [],
-      "deletionCriteria": {
-        "exactPaths": [
-          "skills/nova/pipeline/services/module-validators.ts"
-        ],
-        "requiredStatus": "cutover-complete",
-        "requireNoImports": true,
-        "requireNoConfiguration": true,
-        "requireNoRuntimeResolution": true
-      },
-      "replacementPairings": [
-        {
-          "id": "mixed-validator-facade-to-stages",
-          "status": "paired",
-          "rationale": "The mixed validator facade is split across independently registered validation stages.",
-          "replacementOwnerIds": [
-            "plugin:kubeclaw.architecture-validator",
-            "plugin:kubeclaw.delivery-lint",
-            "plugin:kubeclaw.lint",
-            "plugin:kubeclaw.preflight-contract"
-          ]
-        }
-      ],
-      "replacementOwnerIds": [
-        "plugin:kubeclaw.architecture-validator",
-        "plugin:kubeclaw.delivery-lint",
-        "plugin:kubeclaw.lint",
-        "plugin:kubeclaw.preflight-contract"
-      ],
-      "replacementFiles": [
-        "skills/nova/plugins/architecture-validator/README.md",
-        "skills/nova/plugins/architecture-validator/package.json",
-        "skills/nova/plugins/architecture-validator/plugin.json",
-        "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
-        "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
-        "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
-        "skills/nova/plugins/architecture-validator/src/output.ts",
-        "skills/nova/plugins/architecture-validator/src/protocol.ts",
-        "skills/nova/plugins/architecture-validator/src/stage.ts",
-        "skills/nova/plugins/architecture-validator/tests/live-function.test.mjs",
-        "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.mjs",
-        "skills/nova/plugins/architecture-validator/tsconfig.json",
-        "skills/nova/plugins/delivery-lint/README.md",
-        "skills/nova/plugins/delivery-lint/package.json",
-        "skills/nova/plugins/delivery-lint/plugin.json",
-        "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
-        "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
-        "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
-        "skills/nova/plugins/delivery-lint/src/stage.ts",
-        "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
-        "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/delivery-lint/tsconfig.json",
-        "skills/nova/plugins/lint/README.md",
-        "skills/nova/plugins/lint/package.json",
-        "skills/nova/plugins/lint/plugin.json",
-        "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
-        "skills/nova/plugins/lint/schemas/config.schema.json",
-        "skills/nova/plugins/lint/schemas/input.schema.json",
-        "skills/nova/plugins/lint/schemas/result.schema.json",
-        "skills/nova/plugins/lint/src/adapter.ts",
-        "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
-        "skills/nova/plugins/lint/src/engine/constants.ts",
-        "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
-        "skills/nova/plugins/lint/src/engine/discovery.ts",
-        "skills/nova/plugins/lint/src/engine/execution.ts",
-        "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts",
-        "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
-        "skills/nova/plugins/lint/src/engine/go-tools.ts",
-        "skills/nova/plugins/lint/src/engine/helm-render.ts",
-        "skills/nova/plugins/lint/src/engine/index.ts",
-        "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts",
-        "skills/nova/plugins/lint/src/engine/lint-governance.ts",
-        "skills/nova/plugins/lint/src/engine/output.ts",
-        "skills/nova/plugins/lint/src/engine/parsers.ts",
-        "skills/nova/plugins/lint/src/engine/policy-validation.ts",
-        "skills/nova/plugins/lint/src/engine/policy.ts",
-        "skills/nova/plugins/lint/src/engine/report-contract.ts",
-        "skills/nova/plugins/lint/src/engine/report.ts",
-        "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
-        "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
-        "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
-        "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
-        "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
-        "skills/nova/plugins/lint/src/engine/tool-registry.ts",
-        "skills/nova/plugins/lint/src/engine/tool-summary.ts",
-        "skills/nova/plugins/lint/src/stage.ts",
-        "skills/nova/plugins/lint/src/support/optional-absence.ts",
-        "skills/nova/plugins/lint/src/support/value-boundary.ts",
-        "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
-        "skills/nova/plugins/lint/tests/live-function.test.mjs",
-        "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
-        "skills/nova/plugins/lint/tsconfig.json",
-        "skills/nova/plugins/preflight-contract/README.md",
-        "skills/nova/plugins/preflight-contract/package.json",
-        "skills/nova/plugins/preflight-contract/plugin.json",
-        "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
-        "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
-        "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
-        "skills/nova/plugins/preflight-contract/src/stage.ts",
-        "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
-        "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
-        "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/preflight-contract/tsconfig.json"
-      ],
-      "replacementRegistrations": [
-        {
-          "packageId": "kubeclaw.architecture-validator",
-          "packageRoot": "skills/nova/plugins/architecture-validator",
-          "surface": "stage",
-          "id": "architecture",
-          "type": "kubeclaw.validate.architecture",
-          "module": "dist/stage.js",
-          "export": "execute",
-          "requiredCapabilities": [
-            "runtime.dispatch",
-            "artifacts.write"
-          ],
-          "providedCapabilities": [],
-          "configSchema": "schemas/config.schema.json"
-        },
         {
           "packageId": "kubeclaw.delivery-lint",
           "packageRoot": "skills/nova/plugins/delivery-lint",
@@ -9204,7 +9238,7 @@
         "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/notification-observer/schemas/config.schema.json",
         "skills/common/plugins/notification-observer/src/observer.ts",
-        "skills/common/plugins/notification-observer/tests/live-function.test.mjs",
+        "skills/common/plugins/notification-observer/tests/live-function.test.ts",
         "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs",
         "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/notification-observer/tsconfig.json"
@@ -9320,20 +9354,20 @@
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 14,
+          "count": 15,
           "samples": [
             "skills/nova/pipeline/core/registry/builtin-bridge.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/core/registry/builtin-case-study.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/optional-absence.ts",
+            "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-lint-validators.ts",
             "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/runners/gate-control-adapter.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/runners/stage-envelope-primitives.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/paths.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/registry-access.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/runtime.ts",
-            "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/optional-absence.ts"
+            "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/runtime.ts"
           ]
         },
         {
@@ -9348,13 +9382,6 @@
           "count": 1,
           "samples": [
             "skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/runners/module-runner-shared.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-mixed-validator-facade",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-validators.ts"
           ]
         },
         {
@@ -9473,10 +9500,15 @@
         "skills/common/plugin-runtime/core/registry/activation.ts",
         "skills/common/plugin-runtime/core/registry/build.ts",
         "skills/common/plugin-runtime/core/registry/capabilities.ts",
+        "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/core/registry/configuration.ts",
         "skills/common/plugin-runtime/core/registry/digest.ts",
         "skills/common/plugin-runtime/core/registry/discovery.ts",
         "skills/common/plugin-runtime/core/registry/errors.ts",
         "skills/common/plugin-runtime/core/registry/frozen-map.ts",
+        "skills/common/plugin-runtime/core/registry/frozen-set.ts",
+        "skills/common/plugin-runtime/core/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/core/registry/import-audit.ts",
         "skills/common/plugin-runtime/core/registry/schema.ts",
         "skills/common/plugin-runtime/core/registry/types.ts"
       ],
@@ -9613,7 +9645,7 @@
         "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
         "skills/common/plugins/telemetry-observer/src/observer.ts",
-        "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+        "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
         "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/telemetry-observer/tsconfig.json"
       ],
@@ -9696,15 +9728,19 @@
         "AdapterInvocation",
         "AdapterLifecycle",
         "AdapterRegistration",
+        "AdapterResourceFence",
+        "AdministrativeReopenDecision",
         "ArtifactRef",
         "AttemptIdentity",
         "CapabilityGrant",
         "CapabilityInvocation",
+        "ConfidentialAdapterInvocation",
         "ControlResultNormalizeOptions",
         "EffectJournal",
         "EffectReceipt",
         "EffectRequest",
         "EventIdentity",
+        "FencedAdapterInvocation",
         "GATE_CONTROL_ACTIONS",
         "GATE_CONTROL_NEXT_ACTIONS",
         "GeneratorArtifactRef",
@@ -9899,7 +9935,7 @@
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 68,
+          "count": 69,
           "samples": [
             "skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/effects/coordinator.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
@@ -9917,11 +9953,12 @@
         },
         {
           "ownerId": "core:pipeline-core-registry",
-          "count": 7,
+          "count": 8,
           "samples": [
             "skills/common/plugin-runtime/core/registry/activation.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/build.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/capabilities.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
+            "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/discovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/schema.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/registry/types.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
@@ -9934,7 +9971,7 @@
           "samples": [
             "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/common/plugin-runtime/core/lifecycle/reducer.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
-            "skills/common/plugin-runtime/core/state/waits.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
+            "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-base.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-modules.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-recovery.ts -> skills/nova/pipeline/value-boundary.ts",
@@ -9977,13 +10014,6 @@
             "skills/nova/pipeline/runners/module-runner/buster-phase/spawn-failure.ts -> skills/nova/pipeline/services/contracts/worker-control-accessors.ts",
             "skills/nova/pipeline/runners/module-runner/terminal-results.ts -> skills/nova/pipeline/services/contracts/pipeline-step-result.ts",
             "skills/nova/pipeline/runners/module-runner/terminal-results.ts -> skills/nova/pipeline/services/contracts/terminal-decision.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-mixed-validator-facade",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/contracts/validator-control-result.ts"
           ]
         },
         {
@@ -10372,7 +10402,7 @@
         "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
         "skills/common/plugins/agent-observability/schemas/config.schema.json",
         "skills/common/plugins/agent-observability/src/observers.ts",
-        "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
         "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
         "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
         "skills/common/plugins/agent-observability/tsconfig.json"
@@ -10436,7 +10466,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -10522,6 +10552,9 @@
         "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
         "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts",
         "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.build.json",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.json",
         "skills/nova/pipeline/agent-observability/src/index.ts",
@@ -10668,7 +10701,7 @@
         "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
         "skills/common/plugins/agent-observability/schemas/config.schema.json",
         "skills/common/plugins/agent-observability/src/observers.ts",
-        "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
         "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
         "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
         "skills/common/plugins/agent-observability/tsconfig.json",
@@ -10677,7 +10710,7 @@
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
         "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
-        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
         "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-events/tsconfig.json"
       ],
@@ -10948,7 +10981,7 @@
         "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
         "skills/common/plugins/agent-observability/schemas/config.schema.json",
         "skills/common/plugins/agent-observability/src/observers.ts",
-        "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
         "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
         "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
         "skills/common/plugins/agent-observability/tsconfig.json",
@@ -10957,7 +10990,7 @@
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
         "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
-        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
         "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-events/tsconfig.json"
       ],
@@ -11038,12 +11071,13 @@
         "skills/nova/plugins/architecture-validator/src/output.ts",
         "skills/nova/plugins/architecture-validator/src/protocol.ts",
         "skills/nova/plugins/architecture-validator/src/stage.ts",
-        "skills/nova/plugins/architecture-validator/tests/live-function.test.mjs",
+        "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
         "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.mjs",
+        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
         "skills/nova/plugins/architecture-validator/tsconfig.json"
       ],
       "exports": [
+        "ArchitectureFinding",
         "ArchitectureInput",
         "ArchitectureOutput",
         "FINDING_CODES",
@@ -11182,7 +11216,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -11190,7 +11224,7 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.mjs",
+          "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -11243,9 +11277,9 @@
         "skills/nova/plugins/architecture-validator/src/output.ts",
         "skills/nova/plugins/architecture-validator/src/protocol.ts",
         "skills/nova/plugins/architecture-validator/src/stage.ts",
-        "skills/nova/plugins/architecture-validator/tests/live-function.test.mjs",
+        "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
         "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.mjs",
+        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
         "skills/nova/plugins/architecture-validator/tsconfig.json"
       ],
       "replacementRegistrations": [
@@ -11267,14 +11301,6 @@
       ],
       "legacyPairings": [
         {
-          "id": "mixed-validator-facade-to-stages",
-          "status": "paired",
-          "rationale": "The mixed validator facade is split across independently registered validation stages.",
-          "legacyOwnerIds": [
-            "delete:legacy-mixed-validator-facade"
-          ]
-        },
-        {
           "id": "architecture-validator-to-v2-stage",
           "status": "paired",
           "rationale": "Legacy architecture validation is replaced by the self-contained v2 architecture-validator stage after exact parity evidence passes.",
@@ -11284,7 +11310,6 @@
         }
       ],
       "legacyOwnerIds": [
-        "delete:legacy-mixed-validator-facade",
         "plugin:kubeclaw.architecture-validator"
       ],
       "pairedLegacyFiles": [
@@ -11296,7 +11321,6 @@
         "skills/nova/pipeline/services/arch-validator-progress.ts",
         "skills/nova/pipeline/services/arch-validator-values.ts",
         "skills/nova/pipeline/services/arch-validator.ts",
-        "skills/nova/pipeline/services/module-validators.ts",
         "tests/skills/nova/pipeline/services/arch-validator-checks.test.mjs",
         "tests/skills/nova/pipeline/services/arch-validator.test.mjs"
       ]
@@ -11316,7 +11340,7 @@
         "skills/common/plugins/artifact-store/plugin.json",
         "skills/common/plugins/artifact-store/schemas/config.schema.json",
         "skills/common/plugins/artifact-store/src/adapter.ts",
-        "skills/common/plugins/artifact-store/tests/live-function.test.mjs",
+        "skills/common/plugins/artifact-store/tests/live-function.test.ts",
         "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs",
         "skills/common/plugins/artifact-store/tsconfig.json"
       ],
@@ -11359,7 +11383,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/artifact-store/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -11426,7 +11450,7 @@
         "skills/nova/plugins/blueprint-sync/schemas/input.schema.json",
         "skills/nova/plugins/blueprint-sync/schemas/result.schema.json",
         "skills/nova/plugins/blueprint-sync/src/stage.ts",
-        "skills/nova/plugins/blueprint-sync/tests/live-function.test.mjs",
+        "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
         "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs",
         "skills/nova/plugins/blueprint-sync/tsconfig.json"
       ],
@@ -11564,7 +11588,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -11608,7 +11632,7 @@
         "skills/nova/plugins/blueprint-sync/schemas/input.schema.json",
         "skills/nova/plugins/blueprint-sync/schemas/result.schema.json",
         "skills/nova/plugins/blueprint-sync/src/stage.ts",
-        "skills/nova/plugins/blueprint-sync/tests/live-function.test.mjs",
+        "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
         "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs",
         "skills/nova/plugins/blueprint-sync/tsconfig.json"
       ],
@@ -11687,8 +11711,9 @@
         "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
         "skills/nova/plugins/buster-quality-gate/src/protocol.ts",
         "skills/nova/plugins/buster-quality-gate/src/stage.ts",
-        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.mjs",
-        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
         "skills/nova/plugins/buster-quality-gate/tsconfig.json"
       ],
       "exports": [
@@ -11936,11 +11961,15 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.mjs",
+          "path": "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -12005,8 +12034,9 @@
         "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
         "skills/nova/plugins/buster-quality-gate/src/protocol.ts",
         "skills/nova/plugins/buster-quality-gate/src/stage.ts",
-        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.mjs",
-        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
         "skills/nova/plugins/buster-quality-gate/tsconfig.json"
       ],
       "replacementRegistrations": [
@@ -13571,8 +13601,9 @@
         "skills/buster/plugins/test-agent/schemas/result.schema.json",
         "skills/buster/plugins/test-agent/src/protocol.ts",
         "skills/buster/plugins/test-agent/src/stage.ts",
-        "skills/buster/plugins/test-agent/tests/live-function.test.mjs",
-        "skills/buster/plugins/test-agent/tests/protocol.test.mjs",
+        "skills/buster/plugins/test-agent/tests/live-function.test.ts",
+        "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
+        "skills/buster/plugins/test-agent/tests/protocol.test.ts",
         "skills/buster/plugins/test-agent/tsconfig.json",
         "skills/nova/plugins/buster-quality-gate/README.md",
         "skills/nova/plugins/buster-quality-gate/package.json",
@@ -13582,8 +13613,9 @@
         "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
         "skills/nova/plugins/buster-quality-gate/src/protocol.ts",
         "skills/nova/plugins/buster-quality-gate/src/stage.ts",
-        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.mjs",
-        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
         "skills/nova/plugins/buster-quality-gate/tsconfig.json"
       ],
       "replacementRegistrations": [
@@ -13611,6 +13643,7 @@
           "module": "dist/stage.js",
           "export": "execute",
           "requiredCapabilities": [
+            "command.execute",
             "runtime.dispatch",
             "artifacts.write"
           ],
@@ -13646,7 +13679,8 @@
         "skills/nova/plugins/case-study/schemas/result.schema.json",
         "skills/nova/plugins/case-study/src/protocol.ts",
         "skills/nova/plugins/case-study/src/stage.ts",
-        "skills/nova/plugins/case-study/tests/live-function.test.mjs",
+        "skills/nova/plugins/case-study/tests/live-function.test.ts",
+        "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
         "skills/nova/plugins/case-study/tests/protocol.test.mjs",
         "skills/nova/plugins/case-study/tsconfig.json"
       ],
@@ -13824,7 +13858,11 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/case-study/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -13868,7 +13906,8 @@
         "skills/nova/plugins/case-study/schemas/result.schema.json",
         "skills/nova/plugins/case-study/src/protocol.ts",
         "skills/nova/plugins/case-study/src/stage.ts",
-        "skills/nova/plugins/case-study/tests/live-function.test.mjs",
+        "skills/nova/plugins/case-study/tests/live-function.test.ts",
+        "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
         "skills/nova/plugins/case-study/tests/protocol.test.mjs",
         "skills/nova/plugins/case-study/tsconfig.json"
       ],
@@ -13918,51 +13957,26 @@
       "runtimeRoles": [
         "nova"
       ],
-      "legacySourceFiles": [
-        "skills/nova/pipeline/services/validation-delivery.ts"
-      ],
+      "legacySourceFiles": [],
       "targetFiles": [
         "skills/nova/plugins/delivery-lint/README.md",
+        "skills/nova/plugins/delivery-lint/fixtures/passing.json",
+        "skills/nova/plugins/delivery-lint/fixtures/remediation.json",
         "skills/nova/plugins/delivery-lint/package.json",
         "skills/nova/plugins/delivery-lint/plugin.json",
         "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
         "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
         "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
         "skills/nova/plugins/delivery-lint/src/stage.ts",
-        "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
+        "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
         "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
         "skills/nova/plugins/delivery-lint/tsconfig.json"
       ],
       "exports": [
-        "execute",
-        "runDeliveryLintValidation"
+        "execute"
       ],
-      "currentConsumers": [
-        {
-          "ownerId": "delete:legacy-mixed-validation-contract",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-delivery.ts"
-          ]
-        }
-      ],
-      "currentDependencies": [
-        {
-          "ownerId": "core:pipeline-core-execution",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/logger.ts",
-            "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/paths.ts"
-          ]
-        },
-        {
-          "ownerId": "delete:legacy-mixed-validation-contract",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/services/validation-contract.ts"
-          ]
-        }
-      ],
+      "currentConsumers": [],
+      "currentDependencies": [],
       "privilegedEffects": [
         {
           "effect": "filesystem.read",
@@ -13973,17 +13987,7 @@
           "targetAdapter": "kubeclaw.artifacts"
         }
       ],
-      "currentRegistrations": [
-        {
-          "currentId": "builtin.validator.delivery_lint",
-          "currentType": "validator",
-          "currentStageId": "validator:delivery_lint",
-          "entrypoint": "skills/nova/pipeline/services/module-validators.ts",
-          "targetPackage": "kubeclaw.delivery-lint",
-          "targetSurface": "stage",
-          "targetRegistrationId": "kubeclaw.lint.delivery"
-        }
-      ],
+      "currentRegistrations": [],
       "targetRegistrations": [
         {
           "packageId": "kubeclaw.delivery-lint",
@@ -14009,7 +14013,15 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/delivery-lint/fixtures/passing.json",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/delivery-lint/fixtures/remediation.json",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -14018,56 +14030,16 @@
         }
       ],
       "deletionCriteria": {
-        "exactPaths": [
-          "skills/nova/pipeline/services/validation-delivery.ts"
-        ],
+        "exactPaths": [],
         "requiredStatus": "cutover-complete",
         "requireNoImports": true,
         "requireNoConfiguration": true,
         "requireNoRuntimeResolution": true
       },
-      "replacementPairings": [
-        {
-          "id": "delivery-lint-to-v2-stage",
-          "status": "paired",
-          "rationale": "Legacy delivery lint is replaced by the self-contained v2 delivery-lint stage after its package-local parity evidence passes.",
-          "replacementOwnerIds": [
-            "plugin:kubeclaw.delivery-lint"
-          ]
-        }
-      ],
-      "replacementOwnerIds": [
-        "plugin:kubeclaw.delivery-lint"
-      ],
-      "replacementFiles": [
-        "skills/nova/plugins/delivery-lint/README.md",
-        "skills/nova/plugins/delivery-lint/package.json",
-        "skills/nova/plugins/delivery-lint/plugin.json",
-        "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
-        "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
-        "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
-        "skills/nova/plugins/delivery-lint/src/stage.ts",
-        "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
-        "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/delivery-lint/tsconfig.json"
-      ],
-      "replacementRegistrations": [
-        {
-          "packageId": "kubeclaw.delivery-lint",
-          "packageRoot": "skills/nova/plugins/delivery-lint",
-          "surface": "stage",
-          "id": "delivery-lint",
-          "type": "kubeclaw.lint.delivery",
-          "module": "dist/stage.js",
-          "export": "execute",
-          "requiredCapabilities": [
-            "git.repository.read",
-            "artifacts.write"
-          ],
-          "providedCapabilities": [],
-          "configSchema": "schemas/config.schema.json"
-        }
-      ],
+      "replacementPairings": [],
+      "replacementOwnerIds": [],
+      "replacementFiles": [],
+      "replacementRegistrations": [],
       "legacyPairings": [
         {
           "id": "mixed-validation-contract-to-stages",
@@ -14076,33 +14048,13 @@
           "legacyOwnerIds": [
             "delete:legacy-mixed-validation-contract"
           ]
-        },
-        {
-          "id": "mixed-validator-facade-to-stages",
-          "status": "paired",
-          "rationale": "The mixed validator facade is split across independently registered validation stages.",
-          "legacyOwnerIds": [
-            "delete:legacy-mixed-validator-facade"
-          ]
-        },
-        {
-          "id": "delivery-lint-to-v2-stage",
-          "status": "paired",
-          "rationale": "Legacy delivery lint is replaced by the self-contained v2 delivery-lint stage after its package-local parity evidence passes.",
-          "legacyOwnerIds": [
-            "plugin:kubeclaw.delivery-lint"
-          ]
         }
       ],
       "legacyOwnerIds": [
-        "delete:legacy-mixed-validation-contract",
-        "delete:legacy-mixed-validator-facade",
-        "plugin:kubeclaw.delivery-lint"
+        "delete:legacy-mixed-validation-contract"
       ],
       "pairedLegacyFiles": [
-        "skills/nova/pipeline/services/module-validators.ts",
         "skills/nova/pipeline/services/validation-contract.ts",
-        "skills/nova/pipeline/services/validation-delivery.ts",
         "skills/nova/pipeline/services/validation.ts"
       ]
     },
@@ -14430,16 +14382,16 @@
         "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
         "skills/nova/plugins/implementation-agent/src/protocol.ts",
         "skills/nova/plugins/implementation-agent/src/stage.ts",
-        "skills/nova/plugins/implementation-agent/tests/live-function.test.mjs",
+        "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
         "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/implementation-agent/tests/protocol.test.mjs",
+        "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
         "skills/nova/plugins/implementation-agent/tsconfig.json",
         "skills/nova/plugins/repository-adapter/README.md",
         "skills/nova/plugins/repository-adapter/package.json",
         "skills/nova/plugins/repository-adapter/plugin.json",
         "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
         "skills/nova/plugins/repository-adapter/src/adapter.ts",
-        "skills/nova/plugins/repository-adapter/tests/live-function.test.mjs",
+        "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
         "skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs",
         "skills/nova/plugins/repository-adapter/tsconfig.json"
       ],
@@ -14513,7 +14465,7 @@
         "skills/nova/plugins/human-approval/src/approval.ts",
         "skills/nova/plugins/human-approval/src/stage.ts",
         "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs",
-        "skills/nova/plugins/human-approval/tests/live-function.test.mjs",
+        "skills/nova/plugins/human-approval/tests/live-function.test.ts",
         "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs",
         "skills/nova/plugins/human-approval/tsconfig.json"
       ],
@@ -14753,7 +14705,7 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/human-approval/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -14816,7 +14768,7 @@
         "skills/nova/plugins/human-approval/src/approval.ts",
         "skills/nova/plugins/human-approval/src/stage.ts",
         "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs",
-        "skills/nova/plugins/human-approval/tests/live-function.test.mjs",
+        "skills/nova/plugins/human-approval/tests/live-function.test.ts",
         "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs",
         "skills/nova/plugins/human-approval/tsconfig.json"
       ],
@@ -14886,9 +14838,9 @@
         "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
         "skills/nova/plugins/implementation-agent/src/protocol.ts",
         "skills/nova/plugins/implementation-agent/src/stage.ts",
-        "skills/nova/plugins/implementation-agent/tests/live-function.test.mjs",
+        "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
         "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/implementation-agent/tests/protocol.test.mjs",
+        "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
         "skills/nova/plugins/implementation-agent/tsconfig.json"
       ],
       "exports": [
@@ -14940,7 +14892,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -14948,7 +14900,7 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.mjs",
+          "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
           "disposition": "must-remain-equivalent"
         }
       ],
@@ -15087,8 +15039,9 @@
         "skills/nova/plugins/lint/src/support/optional-absence.ts",
         "skills/nova/plugins/lint/src/support/value-boundary.ts",
         "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
-        "skills/nova/plugins/lint/tests/live-function.test.mjs",
+        "skills/nova/plugins/lint/tests/live-function.test.ts",
         "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/parity.test.ts",
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
         "skills/nova/plugins/lint/tsconfig.json"
       ],
@@ -15201,10 +15154,10 @@
       ],
       "currentConsumers": [
         {
-          "ownerId": "delete:legacy-mixed-validator-facade",
+          "ownerId": "core:pipeline-core-execution",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/lint.ts"
+            "skills/nova/pipeline/services/module-lint-validators.ts -> skills/nova/pipeline/services/lint.ts"
           ]
         },
         {
@@ -15286,7 +15239,7 @@
           "currentId": "builtin.validator.pre_check",
           "currentType": "validator",
           "currentStageId": "validator:pre_check",
-          "entrypoint": "skills/nova/pipeline/services/module-validators.ts",
+          "entrypoint": "skills/nova/pipeline/services/module-lint-validators.ts",
           "targetPackage": "kubeclaw.lint",
           "targetSurface": "stage",
           "targetRegistrationId": "kubeclaw.lint.pre-check"
@@ -15295,7 +15248,7 @@
           "currentId": "builtin.validator.full_lint",
           "currentType": "validator",
           "currentStageId": "validator:full_lint",
-          "entrypoint": "skills/nova/pipeline/services/module-validators.ts",
+          "entrypoint": "skills/nova/pipeline/services/module-lint-validators.ts",
           "targetPackage": "kubeclaw.lint",
           "targetSurface": "stage",
           "targetRegistrationId": "kubeclaw.lint.full"
@@ -15360,11 +15313,15 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/lint/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
           "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/lint/tests/parity.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -15519,8 +15476,9 @@
         "skills/nova/plugins/lint/src/support/optional-absence.ts",
         "skills/nova/plugins/lint/src/support/value-boundary.ts",
         "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
-        "skills/nova/plugins/lint/tests/live-function.test.mjs",
+        "skills/nova/plugins/lint/tests/live-function.test.ts",
         "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/parity.test.ts",
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
         "skills/nova/plugins/lint/tsconfig.json"
       ],
@@ -15580,14 +15538,6 @@
           ]
         },
         {
-          "id": "mixed-validator-facade-to-stages",
-          "status": "paired",
-          "rationale": "The mixed validator facade is split across independently registered validation stages.",
-          "legacyOwnerIds": [
-            "delete:legacy-mixed-validator-facade"
-          ]
-        },
-        {
           "id": "lint-to-v2-stages",
           "status": "paired",
           "rationale": "Legacy pre-check and full lint behavior is replaced by the independently registered v2 lint stages after exact parity evidence passes.",
@@ -15598,14 +15548,12 @@
       ],
       "legacyOwnerIds": [
         "delete:legacy-mixed-validation-contract",
-        "delete:legacy-mixed-validator-facade",
         "plugin:kubeclaw.lint"
       ],
       "pairedLegacyFiles": [
         "skills/nova/pipeline/services/lint-format.ts",
         "skills/nova/pipeline/services/lint-scope.ts",
         "skills/nova/pipeline/services/lint.ts",
-        "skills/nova/pipeline/services/module-validators.ts",
         "skills/nova/pipeline/services/validation-contract.ts",
         "skills/nova/pipeline/services/validation.ts",
         "skills/nova/pipeline/tools/lint-report.ts",
@@ -15663,7 +15611,7 @@
         "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/notification-observer/schemas/config.schema.json",
         "skills/common/plugins/notification-observer/src/observer.ts",
-        "skills/common/plugins/notification-observer/tests/live-function.test.mjs",
+        "skills/common/plugins/notification-observer/tests/live-function.test.ts",
         "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs",
         "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/notification-observer/tsconfig.json"
@@ -15732,7 +15680,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/notification-observer/tests/live-function.test.mjs",
+          "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -16013,7 +15961,7 @@
         "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/notification-observer/schemas/config.schema.json",
         "skills/common/plugins/notification-observer/src/observer.ts",
-        "skills/common/plugins/notification-observer/tests/live-function.test.mjs",
+        "skills/common/plugins/notification-observer/tests/live-function.test.ts",
         "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs",
         "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/notification-observer/tsconfig.json"
@@ -16082,6 +16030,9 @@
         "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
         "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts",
         "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.build.json",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.json"
       ],
@@ -16227,10 +16178,24 @@
       "configurationPaths": [
         "skills/common/plugins/openclaw-agent-observer/src/config.ts",
         "skills/common/plugins/openclaw-agent-observer/src/hook-values.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.build.json",
         "skills/common/plugins/openclaw-agent-observer/tsconfig.json"
       ],
-      "scenarioEvidence": [],
+      "scenarioEvidence": [
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
+          "disposition": "must-remain-equivalent"
+        }
+      ],
       "deletionCriteria": {
         "exactPaths": [
           "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
@@ -16254,6 +16219,9 @@
           "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
           "skills/common/plugins/openclaw-agent-observer/src/redis-writer-types.ts",
           "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+          "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+          "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
           "skills/common/plugins/openclaw-agent-observer/tsconfig.build.json",
           "skills/common/plugins/openclaw-agent-observer/tsconfig.json"
         ],
@@ -16284,7 +16252,7 @@
         "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
         "skills/common/plugins/agent-observability/schemas/config.schema.json",
         "skills/common/plugins/agent-observability/src/observers.ts",
-        "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
         "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
         "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
         "skills/common/plugins/agent-observability/tsconfig.json",
@@ -16293,7 +16261,7 @@
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
         "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
-        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
         "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-events/tsconfig.json"
       ],
@@ -16368,7 +16336,8 @@
         "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
         "skills/nova/plugins/pipeline-review/src/protocol.ts",
         "skills/nova/plugins/pipeline-review/src/stage.ts",
-        "skills/nova/plugins/pipeline-review/tests/live-function.test.mjs",
+        "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+        "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
         "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
         "skills/nova/plugins/pipeline-review/tsconfig.json"
       ],
@@ -16544,7 +16513,11 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -16587,7 +16560,8 @@
         "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
         "skills/nova/plugins/pipeline-review/src/protocol.ts",
         "skills/nova/plugins/pipeline-review/src/stage.ts",
-        "skills/nova/plugins/pipeline-review/tests/live-function.test.mjs",
+        "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+        "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
         "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
         "skills/nova/plugins/pipeline-review/tsconfig.json"
       ],
@@ -16648,8 +16622,9 @@
         "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
         "skills/nova/plugins/preflight-contract/src/stage.ts",
         "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
-        "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/parity.test.ts",
         "skills/nova/plugins/preflight-contract/tsconfig.json"
       ],
       "exports": [
@@ -16732,11 +16707,15 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
           "path": "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/preflight-contract/tests/parity.test.ts",
           "disposition": "must-remain-equivalent"
         }
       ],
@@ -16771,8 +16750,9 @@
         "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
         "skills/nova/plugins/preflight-contract/src/stage.ts",
         "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
-        "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/parity.test.ts",
         "skills/nova/plugins/preflight-contract/tsconfig.json"
       ],
       "replacementRegistrations": [
@@ -16802,14 +16782,6 @@
           ]
         },
         {
-          "id": "mixed-validator-facade-to-stages",
-          "status": "paired",
-          "rationale": "The mixed validator facade is split across independently registered validation stages.",
-          "legacyOwnerIds": [
-            "delete:legacy-mixed-validator-facade"
-          ]
-        },
-        {
           "id": "preflight-contract-to-v2-stage",
           "status": "paired",
           "rationale": "Legacy preflight contract validation is replaced by the self-contained v2 preflight stage after exact parity evidence passes.",
@@ -16820,11 +16792,9 @@
       ],
       "legacyOwnerIds": [
         "delete:legacy-mixed-validation-contract",
-        "delete:legacy-mixed-validator-facade",
         "plugin:kubeclaw.preflight-contract"
       ],
       "pairedLegacyFiles": [
-        "skills/nova/pipeline/services/module-validators.ts",
         "skills/nova/pipeline/services/validation-blueprint.ts",
         "skills/nova/pipeline/services/validation-contract.ts",
         "skills/nova/pipeline/services/validation.ts"
@@ -16869,7 +16839,9 @@
         "skills/nova/plugins/project-summary/schemas/result.schema.json",
         "skills/nova/plugins/project-summary/src/stage.ts",
         "skills/nova/plugins/project-summary/src/summary.ts",
-        "skills/nova/plugins/project-summary/tests/live-function.test.mjs",
+        "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+        "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/project-summary/tests/parity.test.ts",
         "skills/nova/plugins/project-summary/tests/summary.test.mjs",
         "skills/nova/plugins/project-summary/tsconfig.json"
       ],
@@ -17149,7 +17121,15 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/project-summary/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/nova/plugins/project-summary/tests/parity.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -17224,7 +17204,9 @@
         "skills/nova/plugins/project-summary/schemas/result.schema.json",
         "skills/nova/plugins/project-summary/src/stage.ts",
         "skills/nova/plugins/project-summary/src/summary.ts",
-        "skills/nova/plugins/project-summary/tests/live-function.test.mjs",
+        "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+        "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/project-summary/tests/parity.test.ts",
         "skills/nova/plugins/project-summary/tests/summary.test.mjs",
         "skills/nova/plugins/project-summary/tsconfig.json"
       ],
@@ -17295,7 +17277,7 @@
         "skills/nova/plugins/repository-adapter/plugin.json",
         "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
         "skills/nova/plugins/repository-adapter/src/adapter.ts",
-        "skills/nova/plugins/repository-adapter/tests/live-function.test.mjs",
+        "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
         "skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs",
         "skills/nova/plugins/repository-adapter/tsconfig.json"
       ],
@@ -17337,7 +17319,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -17429,7 +17411,7 @@
         "skills/nova/plugins/review/tests/fixtures/fail.json",
         "skills/nova/plugins/review/tests/fixtures/malformed.json",
         "skills/nova/plugins/review/tests/fixtures/pass.json",
-        "skills/nova/plugins/review/tests/live-function.test.mjs",
+        "skills/nova/plugins/review/tests/live-function.test.ts",
         "skills/nova/plugins/review/tests/package-boundary.test.mjs",
         "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
         "skills/nova/plugins/review/tests/review-output.unit.test.mjs",
@@ -17670,7 +17652,7 @@
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/nova/plugins/review/tests/live-function.test.mjs",
+          "path": "skills/nova/plugins/review/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -17750,7 +17732,7 @@
         "skills/nova/plugins/review/tests/fixtures/fail.json",
         "skills/nova/plugins/review/tests/fixtures/malformed.json",
         "skills/nova/plugins/review/tests/fixtures/pass.json",
-        "skills/nova/plugins/review/tests/live-function.test.mjs",
+        "skills/nova/plugins/review/tests/live-function.test.ts",
         "skills/nova/plugins/review/tests/package-boundary.test.mjs",
         "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
         "skills/nova/plugins/review/tests/review-output.unit.test.mjs",
@@ -17818,7 +17800,7 @@
         "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
         "skills/common/plugins/telemetry-observer/src/observer.ts",
-        "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+        "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
         "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/telemetry-observer/tsconfig.json"
       ],
@@ -17861,7 +17843,7 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+          "path": "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -18190,7 +18172,7 @@
         "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
         "skills/common/plugins/telemetry-observer/src/observer.ts",
-        "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+        "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
         "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/telemetry-observer/tsconfig.json"
       ],
@@ -18231,11 +18213,14 @@
         "skills/buster/plugins/test-agent/schemas/result.schema.json",
         "skills/buster/plugins/test-agent/src/protocol.ts",
         "skills/buster/plugins/test-agent/src/stage.ts",
-        "skills/buster/plugins/test-agent/tests/live-function.test.mjs",
-        "skills/buster/plugins/test-agent/tests/protocol.test.mjs",
+        "skills/buster/plugins/test-agent/tests/live-function.test.ts",
+        "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
+        "skills/buster/plugins/test-agent/tests/protocol.test.ts",
         "skills/buster/plugins/test-agent/tsconfig.json"
       ],
       "exports": [
+        "CommandSuite",
+        "SuiteEvidence",
         "TestInput",
         "TestVerdict",
         "buildRequest",
@@ -18269,6 +18254,7 @@
           "module": "dist/stage.js",
           "export": "execute",
           "requiredCapabilities": [
+            "command.execute",
             "runtime.dispatch",
             "artifacts.write"
           ],
@@ -18284,11 +18270,15 @@
       ],
       "scenarioEvidence": [
         {
-          "path": "skills/buster/plugins/test-agent/tests/live-function.test.mjs",
+          "path": "skills/buster/plugins/test-agent/tests/live-function.test.ts",
           "disposition": "must-remain-equivalent"
         },
         {
-          "path": "skills/buster/plugins/test-agent/tests/protocol.test.mjs",
+          "path": "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "skills/buster/plugins/test-agent/tests/protocol.test.ts",
           "disposition": "must-remain-equivalent"
         }
       ],
@@ -18918,7 +18908,7 @@
         "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
         "skills/common/plugins/agent-observability/schemas/config.schema.json",
         "skills/common/plugins/agent-observability/src/observers.ts",
-        "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
         "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
         "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
         "skills/common/plugins/agent-observability/tsconfig.json",
@@ -18927,7 +18917,7 @@
         "skills/common/plugins/openclaw-agent-events/plugin.json",
         "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
         "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
-        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
         "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
         "skills/common/plugins/openclaw-agent-events/tsconfig.json"
       ],
@@ -19892,7 +19882,7 @@
         "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
         "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
         "skills/common/plugins/telemetry-observer/src/observer.ts",
-        "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+        "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
         "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
         "skills/common/plugins/telemetry-observer/tsconfig.json"
       ],

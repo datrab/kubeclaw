@@ -43,7 +43,9 @@ export function activate(context) {
             if (!fs.statSync(root).isDirectory())
                 throw new Error('repositoryRoot is not a directory');
         },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (signal.aborted)
                 throw new Error('ADAPTER_CANCELLED');
             if (request.capability !== 'git.repository.read' || request.operation !== 'read_text') {

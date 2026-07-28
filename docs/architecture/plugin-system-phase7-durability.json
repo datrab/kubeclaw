@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "plugin-system-phase-evidence.v1",
+  "phase": 7,
+  "status": "complete-v2-preparation",
+  "productionAuthority": "skills-role-bundles-v1",
+  "durability": {
+    "effects": {
+      "identity": "deterministic-sha256",
+      "transitions": ["requested", "accepted", "completed", "failed"],
+      "recovery": "adapter-receipt-required-before-repeat"
+    },
+    "waits": {
+      "signals": ["typed", "issuer-authorized", "unexpired", "fresh", "single-use"],
+      "resumeAttempt": "new-identity"
+    },
+    "packages": {
+      "recoveryPins": ["packageVersion", "contentDigest"]
+    },
+    "state": {
+      "storage": "append-only-hash-chained",
+      "namespace": "registration-owned",
+      "projection": "deterministic-reducer"
+    },
+    "observers": {
+      "checkpoints": "append-only",
+      "delivery": "journal-redelivery"
+    },
+    "locks": {
+      "storage": "file-backed",
+      "scope": "canonical-resource",
+      "fencing": "monotonic-token",
+      "adapterInvocation": "lock-envelope"
+    }
+  },
+  "deletedV2PreparationPaths": [
+    "skills/common/plugin-runtime/core/state/waits.ts",
+    "in-memory ResourceLockManager"
+  ],
+  "deferredFinalDeletion": "Phase 12 removes retained v1 authority after all parity phases pass"
+}

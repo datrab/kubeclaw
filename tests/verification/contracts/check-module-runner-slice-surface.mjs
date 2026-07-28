@@ -425,15 +425,10 @@ async function assertMalformedPreBusterValidatorPreservesDiagnostic({ stageId, p
 }
 
 await assertMalformedPreBusterValidatorPreservesDiagnostic({
-  stageId: 'validator:delivery_lint',
-  producerType: 'delivery_lint',
-  validation: { attempt: 1, delivery_lint_passed: false, pre_check_passed: false },
-});
-await assertMalformedPreBusterValidatorPreservesDiagnostic({
   stageId: 'validator:pre_check',
   producerType: 'pre_check',
   validation: { attempt: 1, delivery_lint_passed: true, pre_check_passed: false },
 });
 
 quietConsole.restore();
-console.log(JSON.stringify({ ok: true, checked: 112 }));
+console.log(JSON.stringify({ ok: true, checked: 111 }));

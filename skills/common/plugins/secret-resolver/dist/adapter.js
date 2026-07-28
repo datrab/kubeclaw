@@ -5,7 +5,9 @@ export function activate(context) {
     const names = Object.freeze({ ...mapping });
     return {
         async ready() { },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (request.capability !== 'secrets.read' || request.operation !== 'resolve') {
                 throw new Error('SECRET_OPERATION_UNSUPPORTED');
             }

@@ -1,1 +1,1 @@
-{"name":"@kubeclaw/plugin-implementation-agent","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","test":"npm run build && node tests/protocol.test.mjs && node tests/package-boundary.test.mjs && node tests/live-function.test.mjs"}}
+{"name":"@kubeclaw/plugin-implementation-agent","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","test":"npm run build && node --experimental-strip-types tests/protocol.test.ts && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts"}}

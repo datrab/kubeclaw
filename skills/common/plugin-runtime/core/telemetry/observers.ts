@@ -51,9 +51,16 @@ function checkpointKey(observerId: string, runId: string): string {
   return `${observerId}\u0000${runId}`;
 }
 
-function withTimeout<T>(promise: Promise<T>, milliseconds: number): Promise<T> {
+function withTimeout<T>(
+  promise: Promise<T>,
+  milliseconds: number,
+  onTimeout: () => void,
+): Promise<T> {
   return new Promise<T>((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error('OBSERVER_DELIVERY_TIMEOUT')), milliseconds);
+    const timer = setTimeout(() => {
+      onTimeout();
+      reject(new Error('OBSERVER_DELIVERY_TIMEOUT'));
+    }, milliseconds);
     timer.unref();
     promise.then(
       (value) => {
@@ -132,6 +139,7 @@ export class ObserverRuntime {
       expiresAt: new Date(this.#now().getTime() + timeoutMs).toISOString(),
     };
     const lease = new RevocableLease(leaseContract, this.#now);
+    const controller = new AbortController();
     const delivery: ObserverDelivery = {
       schemaVersion: 'observer-delivery.v2',
       deliveryId: `delivery:${observerId}:${event.eventId}`,
@@ -156,7 +164,7 @@ export class ObserverRuntime {
           attempt,
           `${delivery.deliveryId}:${capabilitySequence}`,
           { operation, resource, payload },
-          new AbortController().signal,
+          controller.signal,
         );
       },
     }, {
@@ -175,8 +183,13 @@ export class ObserverRuntime {
       },
     });
     try {
-      await withTimeout((activated.execute as ObserverHandler)(delivery, context), timeoutMs);
+      await withTimeout(
+        (activated.execute as ObserverHandler)(delivery, context),
+        timeoutMs,
+        () => controller.abort(new Error('OBSERVER_DELIVERY_TIMEOUT')),
+      );
     } finally {
+      controller.abort(new Error('OBSERVER_DELIVERY_COMPLETED'));
       lease.revoke({ code: 'core.observer_delivery_completed' }, this.#now());
     }
   }

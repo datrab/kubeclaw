@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "plugin-system-phase5-capabilities.v1",
+  "capabilities": {
+    "state.read": "kubeclaw.state-store:state",
+    "state.append": "kubeclaw.state-store:state",
+    "artifacts.read": "kubeclaw.artifact-store:artifact-store",
+    "artifacts.write": "kubeclaw.artifact-store:artifact-store",
+    "runtime.dispatch": "kubeclaw.runtime-dispatch:runtime",
+    "git.repository.read": "kubeclaw.repository-adapter:repository",
+    "git.workspace.create": "kubeclaw.git-workspace:git",
+    "git.commit": "kubeclaw.git-workspace:git",
+    "git.merge": "kubeclaw.git-workspace:git",
+    "git.sync": "kubeclaw.git-workspace:git",
+    "signal.wait": "kubeclaw.wait-store:waits",
+    "operator.request": "kubeclaw.operator-messaging:operator",
+    "telemetry.emit": "kubeclaw.telemetry-store:telemetry",
+    "secrets.read": "kubeclaw.secret-resolver:secrets",
+    "network.http": "kubeclaw.network-http:http",
+    "command.execute": "kubeclaw.command-runner:command",
+    "lint.execute": "kubeclaw.lint:executor",
+    "transport.publish": "kubeclaw.transport-publisher:publisher",
+    "agent.events.subscribe": "kubeclaw.openclaw-agent-events:source"
+  },
+  "inventoriedEffectMappings": {
+    "filesystem.read": [
+      "state.read",
+      "artifacts.read",
+      "git.repository.read"
+    ],
+    "filesystem.write": [
+      "state.append",
+      "artifacts.write"
+    ],
+    "git.execute": [
+      "git.repository.read",
+      "git.workspace.create",
+      "git.commit",
+      "git.merge",
+      "git.sync"
+    ],
+    "redis.execute": [
+      "state.read",
+      "state.append",
+      "signal.wait",
+      "telemetry.emit",
+      "transport.publish",
+      "agent.events.subscribe"
+    ],
+    "runtime.dispatch": [
+      "runtime.dispatch"
+    ],
+    "network.http": [
+      "network.http"
+    ],
+    "secret.read": [
+      "secrets.read"
+    ],
+    "command.execute": [
+      "command.execute",
+      "lint.execute"
+    ],
+    "operator.notify": [
+      "operator.request"
+    ],
+    "telemetry.emit": [
+      "telemetry.emit"
+    ]
+  },
+  "coreOnlyAuthority": [
+    "lifecycle.write",
+    "scheduler.advance",
+    "canonical_events.modify",
+    "registry.mutate"
+  ],
+  "deletionLedger": {
+    "status": "closed",
+    "scope": "v2 capability-runtime preparation",
+    "entries": [
+      {
+        "supersededSurface": "stage and observer direct privileged imports or globals",
+        "replacementSurface": "PluginInvocationContext.invoke through a granted adapter",
+        "status": "absent",
+        "verification": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs"
+      },
+      {
+        "supersededSurface": "package-wide authority union",
+        "replacementSurface": "registration-local required, granted, and available capability sets",
+        "status": "absent",
+        "verification": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs"
+      },
+      {
+        "supersededSurface": "unbounded or late capability calls",
+        "replacementSurface": "closed resource constraints and revocable stage, observer, and adapter contexts",
+        "status": "absent",
+        "verification": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs"
+      },
+      {
+        "supersededSurface": "unaudited privileged operations",
+        "replacementSurface": "effect audit events, including redacted confidential-operation evidence",
+        "status": "absent",
+        "verification": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs"
+      }
+    ],
+    "retainedLegacyAuthority": {
+      "status": "not-yet-superseded",
+      "deletionPhase": 12,
+      "reason": "V1 remains the sole production authority until the dependency-complete atomic cutover; retaining it here avoids a dual runtime or behavioral-loss bridge."
+    }
+  }
+}

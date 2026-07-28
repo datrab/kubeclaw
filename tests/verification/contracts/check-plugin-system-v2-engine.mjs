@@ -26,11 +26,21 @@ try {
     },
     grants: {
       'kubeclaw.delivery-lint:delivery-lint': {
-        'git.repository.read': { allowedPrefixes: [''] },
-        'artifacts.write': { namespace: 'kubeclaw.delivery-lint' },
+        'git.repository.read': { allowedPrefixes: ['Dockerfile'] },
+        'artifacts.write': { allowedNamespaces: ['kubeclaw.delivery-lint'] },
       },
       'kubeclaw.telemetry-observer:telemetry': {
-        'telemetry.emit': { allowedEventPrefixes: [''] },
+        'telemetry.emit': {
+          allowedEventPrefixes: [
+            'run.',
+            'stage.',
+            'attempt.',
+            'effect.',
+            'artifact.',
+            'wait.',
+            'orchestrator.',
+          ],
+        },
       },
     },
     adapters: {
@@ -45,6 +55,7 @@ try {
     storageRoot: path.join(temporary, 'state'),
     shutdownTimeoutMs: 5000,
     orchestratorIssuerId: 'nova',
+    administrativeDecisionIssuers: [],
   }, {
     schemaVersion: 'pipeline-definition.v2',
     id: 'test:delivery',
@@ -64,13 +75,23 @@ try {
     path.join(temporary, 'state', 'runs', 'run_engine-test', 'registry-snapshot.json'),
     'utf8',
   ));
-  assert.deepEqual(snapshot.packages.map(([id]) => id).sort(), [
+  const packageIds = snapshot.packages.map(([id]) => id).sort();
+  assert.equal(packageIds.length, 28, 'run snapshot must record the complete discovered registry');
+  for (const id of [
+    'kubeclaw.architecture-validator',
     'kubeclaw.artifact-store',
     'kubeclaw.delivery-lint',
     'kubeclaw.repository-adapter',
     'kubeclaw.telemetry-observer',
     'kubeclaw.telemetry-store',
-  ]);
+  ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
+  assert.equal(snapshot.registrations.stages.length, 13);
+  assert.equal(snapshot.registrations.observers.length, 5);
+  assert.equal(snapshot.registrations.adapters.length, 14);
+  assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
+  assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));
+  assert.ok(snapshot.selectedProviders.some(({ capability }) => capability === 'git.repository.read'));
+  assert.equal(snapshot.configuredStages[0].stageType, 'kubeclaw.lint.delivery');
   const telemetry = fs.readFileSync(path.join(temporary, 'telemetry.jsonl'), 'utf8')
     .split('\n')
     .filter(Boolean)

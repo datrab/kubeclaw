@@ -164,7 +164,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       fs.mkdirSync(path.dirname(file), { recursive: true });
       if (fs.existsSync(file) && fs.lstatSync(file).isSymbolicLink()) throw new Error('WAIT_JOURNAL_SYMLINK_DENIED');
     },
-    async invoke({ request, signal }) {
+    async invoke({ request, signal, confidential, fence }) {
+      if (!confidential) fence.assertCurrent();
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       if (request.capability !== 'signal.wait') throw new Error('WAIT_OPERATION_UNSUPPORTED');
       const existing = readRecords(file, maxEntryBytes);

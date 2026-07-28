@@ -33,7 +33,8 @@ function listFiles(directory) {
 
 function shouldExclude(relPath, scan) {
   const normalized = `/${relPath}`;
-  return scan.excludeSuffixes.some((suffix) => relPath.endsWith(suffix))
+  return scan.excludePaths.includes(relPath)
+    || scan.excludeSuffixes.some((suffix) => relPath.endsWith(suffix))
     || scan.excludeSegments.some((segment) => normalized.includes(segment));
 }
 

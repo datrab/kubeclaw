@@ -12,7 +12,7 @@ const { sourceRoot } = parseSourceRootArgs();
 const compactSwarmConfig = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'charts/kubeclaw/files/config/swarm.config.json'), 'utf8'));
 const expandedStandardConfig = expandSwarmConfig(compactSwarmConfig);
 const helperPath = path.join(sourceRoot, 'skills/nova/pipeline/services/contracts/validator-control-result.ts');
-const moduleValidatorsPath = path.join(sourceRoot, 'skills/nova/pipeline/services/module-validators.ts');
+const moduleValidatorsPath = path.join(sourceRoot, 'skills/nova/pipeline/services/module-lint-validators.ts');
 const lintPath = path.join(sourceRoot, 'skills/nova/pipeline/services/lint.ts');
 const schedulingPath = path.join(sourceRoot, 'skills/nova/pipeline/runners/pipeline-runner-scheduling.ts');
 const registryPath = path.join(sourceRoot, 'skills/nova/pipeline/core/registry.ts');
@@ -58,7 +58,6 @@ for (const marker of [
 }
 
 for (const marker of [
-  'export function runDeliveryLintValidatorStage(',
   'export async function runPreCheckValidatorStage(',
   'export function runFullLintValidatorStage(',
   'buildModuleValidatorControlResult(',
@@ -67,10 +66,8 @@ for (const marker of [
 }
 
 for (const marker of [
-  "moduleId: 'builtin.validator.delivery_lint'",
   "moduleId: 'builtin.validator.pre_check'",
   "moduleId: 'builtin.validator.full_lint'",
-  'runDeliveryLintValidatorStage(config, progress, input',
   'runPreCheckValidatorStage(config, progress, input',
   'runFullLintValidatorStage(config, progress, input',
 ]) {
@@ -94,7 +91,6 @@ for (const exportName of [
 }
 
 for (const exportName of [
-  'runDeliveryLintValidatorStage',
   'runPreCheckValidatorStage',
   'runFullLintValidatorStage',
 ]) {
@@ -139,17 +135,6 @@ assert.deepEqual(
   [],
   'typed validator controls should validate from schema/action fields without compatibility-authority helpers',
 );
-
-const deliveryPass = moduleValidatorsMod.runDeliveryLintValidatorStage(
-  { ...expandedStandardConfig, project: 'validator-control-contract', _runId: 'run-validator-control-contract-1', paths: { ...expandedStandardConfig.paths, modules_dir: '/tmp' }, repo_root: '/tmp' },
-  { modules: { '01': { test_config: {} } } },
-  {
-    ids: { runId: 'run-validator-control-contract-1', moduleId: '01', stageId: 'validator:delivery_lint', producerType: 'delivery_lint' },
-    executionContext: { moduleDir: '01' },
-  },
-);
-assert.equal(deliveryPass.producerType, 'delivery_lint');
-assert.equal(deliveryPass.nextAction, 'pass');
 
 const preCheckPass = await moduleValidatorsMod.runPreCheckValidatorStage(
   { ...expandedStandardConfig, project: 'validator-control-contract', _runId: 'run-validator-control-contract-1', pre_check: { ...expandedStandardConfig.pre_check, enabled: false }, paths: { ...expandedStandardConfig.paths, modules_dir: '/tmp' }, repo_root: '/tmp' },

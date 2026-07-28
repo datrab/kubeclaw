@@ -18,7 +18,7 @@ This is more important than minimizing physical line count. A shorter implementa
 The audit covered:
 
 - `skills/nova/pipeline/services/lint.ts`
-- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/module-lint-validators.ts`
 - `skills/nova/pipeline/tools/lint-report.ts`
 - `skills/nova/pipeline/tools/lint-report/`
 - `charts/kubeclaw/files/config/eslint.config.mjs`
@@ -495,7 +495,7 @@ The linting improvement is complete only when:
 ## Sources
 
 - `skills/nova/pipeline/services/lint.ts`
-- `skills/nova/pipeline/services/module-validators.ts`
+- `skills/nova/pipeline/services/module-lint-validators.ts`
 - `skills/nova/pipeline/tools/lint-report.ts`
 - `skills/nova/pipeline/tools/lint-report/discovery.ts`
 - `skills/nova/pipeline/tools/lint-report/report.ts`

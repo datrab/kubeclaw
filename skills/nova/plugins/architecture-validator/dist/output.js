@@ -7,6 +7,43 @@ function strings(value, label) {
         return entry.trim();
     });
 }
+function nonEmpty(value, label, max = 8192) {
+    if (typeof value !== 'string' || !value.trim() || value.length > max || /[\0\r]/u.test(value)) {
+        throw new Error(`${label} must be a non-empty safe string`);
+    }
+    return value.trim();
+}
+function findings(value) {
+    if (!Array.isArray(value))
+        throw new Error('findings must be an array');
+    if (value.length > 128)
+        throw new Error('findings exceeds the maximum item count');
+    return value.map((entry, index) => {
+        if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+            throw new Error(`findings[${index}] must be an object`);
+        }
+        const finding = entry;
+        const allowed = new Set(['id', 'severity', 'scope', 'paths', 'explanation', 'remediation']);
+        for (const key of Object.keys(finding)) {
+            if (!allowed.has(key))
+                throw new Error(`findings[${index}] contains unknown field: ${key}`);
+        }
+        if (!['blocking', 'error', 'warn', 'info'].includes(String(finding.severity))) {
+            throw new Error(`findings[${index}] severity is invalid`);
+        }
+        if (!['domain_model', 'integration_boundary'].includes(String(finding.scope))) {
+            throw new Error(`findings[${index}] scope is invalid`);
+        }
+        return {
+            id: nonEmpty(finding.id, `findings[${index}].id`, 256),
+            severity: finding.severity,
+            scope: finding.scope,
+            paths: strings(finding.paths, `findings[${index}].paths`),
+            explanation: nonEmpty(finding.explanation, `findings[${index}].explanation`),
+            remediation: nonEmpty(finding.remediation, `findings[${index}].remediation`),
+        };
+    });
+}
 export function parseArchitectureOutput(response) {
     const raw = response.result;
     if (!raw || typeof raw !== 'object' || Array.isArray(raw))
@@ -23,7 +60,7 @@ export function parseArchitectureOutput(response) {
     const output = {
         verdict: value.verdict,
         summary: value.summary.trim(),
-        findings: strings(value.findings, 'findings'),
+        findings: findings(value.findings),
         checkedFiles: strings(value.checkedFiles, 'checkedFiles'),
     };
     if (output.verdict === 'passed' && output.findings.length > 0)
@@ -32,5 +69,11 @@ export function parseArchitectureOutput(response) {
         throw new Error('passed verdict requires checked files');
     if (output.verdict === 'request_fix' && output.findings.length === 0)
         throw new Error('request_fix requires findings');
+    if (output.verdict === 'request_fix' && output.findings.some((finding) => ['blocking', 'error'].includes(finding.severity))) {
+        throw new Error('request_fix contradicts blocking findings');
+    }
+    if (output.verdict === 'blocked' && !output.findings.some((finding) => ['blocking', 'error'].includes(finding.severity))) {
+        throw new Error('blocked verdict requires a blocking or error finding');
+    }
     return output;
 }

@@ -2,6 +2,8 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { PluginInvocationContext } from '../../sdk/src/index.ts';
 import { invokeIsolated } from '../isolation/runner.ts';
+import { auditTrustedRegistrationImports } from './import-audit.ts';
+import { computePackageDigest } from './digest.ts';
 import { RegistryError } from './errors.ts';
 import { FrozenMap } from './frozen-map.ts';
 import type { RegistrySnapshot } from './types.ts';
@@ -15,6 +17,25 @@ export interface ActivatedRegistry {
   readonly stages: ReadonlyMap<string, ActivatedRegistration>;
   readonly observers: ReadonlyMap<string, ActivatedRegistration>;
   readonly adapters: ReadonlyMap<string, ActivatedRegistration>;
+}
+
+function assertPackageIntegrity(
+  packages: Iterable<RegistrySnapshot['packages'] extends ReadonlyMap<string, infer V> ? V : never>,
+): void {
+  for (const pkg of packages) {
+    const currentDigest = computePackageDigest(pkg.root);
+    if (currentDigest !== pkg.provenance.package.contentDigest) {
+      throw new RegistryError(
+        'REGISTRY_PACKAGE_INTEGRITY_MISMATCH',
+        `Plugin package changed after discovery: ${pkg.manifest.id}`,
+        {
+          pluginId: pkg.manifest.id,
+          expectedDigest: pkg.provenance.package.contentDigest,
+          actualDigest: currentDigest,
+        },
+      );
+    }
+  }
 }
 
 async function load(
@@ -74,6 +95,21 @@ export async function activateRegistry(
   snapshot: RegistrySnapshot,
   enabledRegistrations: ReadonlySet<string>,
 ): Promise<ActivatedRegistry> {
+  const enabledPackages = new Map<string, RegistrySnapshot['packages'] extends ReadonlyMap<string, infer V> ? V : never>();
+  const enabledEntries = [
+    ...[...snapshot.stages].filter(([, entry]) => enabledRegistrations.has(`${entry.package.manifest.id}:${entry.registration.id}`)),
+    ...[...snapshot.observers].filter(([id]) => enabledRegistrations.has(id)),
+    ...[...snapshot.adapters].filter(([id]) => enabledRegistrations.has(id)),
+  ];
+  for (const [, entry] of enabledEntries) enabledPackages.set(entry.package.manifest.id, entry.package);
+  const packageEntries = [
+    ...snapshot.stages,
+    ...snapshot.observers,
+    ...snapshot.adapters,
+  ].filter(([, entry]) => enabledPackages.has(entry.package.manifest.id));
+  assertPackageIntegrity(enabledPackages.values());
+  auditTrustedRegistrationImports(packageEntries.map(([, entry]) => entry));
+  assertPackageIntegrity(enabledPackages.values());
   const stageEntries = await Promise.all([...snapshot.stages]
     .filter(([, entry]) => enabledRegistrations.has(`${entry.package.manifest.id}:${entry.registration.id}`))
     .map(async ([id, entry]) => [id, await load('stage', entry)] as const));

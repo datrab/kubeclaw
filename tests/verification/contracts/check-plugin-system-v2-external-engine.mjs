@@ -83,6 +83,7 @@ try {
     storageRoot: path.join(temporary, 'state'),
     shutdownTimeoutMs: 5000,
     orchestratorIssuerId: 'nova',
+    administrativeDecisionIssuers: [],
   }, {
     schemaVersion: 'pipeline-definition.v2',
     id: 'test:external',

@@ -48,7 +48,9 @@ export function activate(context) {
     const policyRoots = configuredRoots(context.config, 'allowedPolicyRoots');
     return {
         async ready() { },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (signal.aborted)
                 throw new Error('ADAPTER_CANCELLED');
             if (request.capability !== 'lint.execute' || request.operation !== 'run_report') {

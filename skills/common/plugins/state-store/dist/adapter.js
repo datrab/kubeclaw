@@ -47,7 +47,9 @@ export function activate(context) {
         throw new Error('maxEntryBytes is invalid');
     return {
         async ready() { fs.mkdirSync(root, { recursive: true }); },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (signal.aborted)
                 throw new Error('ADAPTER_CANCELLED');
             const namespace = request.resource.canonicalId;

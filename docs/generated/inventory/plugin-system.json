@@ -3,18 +3,18 @@
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "rulesSource": "docs/architecture/plugin-system-inventory.rules.json",
   "summary": {
-    "files": 1444,
-    "runtimeFiles": 1128,
+    "files": 1461,
+    "runtimeFiles": 1145,
     "supportFiles": 316,
-    "exportedSurfaces": 3720,
-    "localImports": 3504,
-    "privilegedEffects": 1112,
-    "privilegedEffectReferences": 2250,
-    "runtimeLegacyContractHits": 110,
-    "legacyContractHits": 184,
-    "runtimeHardcodingHits": 75,
-    "hardcodingHits": 211,
-    "registrations": 21,
+    "exportedSurfaces": 3757,
+    "localImports": 3524,
+    "privilegedEffects": 1199,
+    "privilegedEffectReferences": 2337,
+    "runtimeLegacyContractHits": 107,
+    "legacyContractHits": 181,
+    "runtimeHardcodingHits": 71,
+    "hardcodingHits": 205,
+    "registrations": 20,
     "unclassified": 0
   },
   "ownerCounts": [
@@ -84,11 +84,11 @@
     },
     {
       "id": "core:pipeline-core-execution",
-      "count": 195
+      "count": 196
     },
     {
       "id": "core:pipeline-core-registry",
-      "count": 20
+      "count": 25
     },
     {
       "id": "core:pipeline-core-state",
@@ -109,10 +109,6 @@
     {
       "id": "delete:legacy-mixed-validation-contract",
       "count": 2
-    },
-    {
-      "id": "delete:legacy-mixed-validator-facade",
-      "count": 1
     },
     {
       "id": "delete:legacy-notification-registry-contract",
@@ -156,7 +152,7 @@
     },
     {
       "id": "plugin:kubeclaw.buster-quality-gate",
-      "count": 30
+      "count": 31
     },
     {
       "id": "plugin:kubeclaw.buster-worker",
@@ -164,11 +160,11 @@
     },
     {
       "id": "plugin:kubeclaw.case-study",
-      "count": 17
+      "count": 18
     },
     {
       "id": "plugin:kubeclaw.delivery-lint",
-      "count": 11
+      "count": 12
     },
     {
       "id": "plugin:kubeclaw.forge",
@@ -184,7 +180,7 @@
     },
     {
       "id": "plugin:kubeclaw.lint",
-      "count": 81
+      "count": 82
     },
     {
       "id": "plugin:kubeclaw.notification-observer",
@@ -196,19 +192,19 @@
     },
     {
       "id": "plugin:kubeclaw.openclaw-agent-observer",
-      "count": 23
+      "count": 26
     },
     {
       "id": "plugin:kubeclaw.pipeline-review",
-      "count": 16
+      "count": 17
     },
     {
       "id": "plugin:kubeclaw.preflight-contract",
-      "count": 12
+      "count": 13
     },
     {
       "id": "plugin:kubeclaw.project-summary",
-      "count": 32
+      "count": 34
     },
     {
       "id": "plugin:kubeclaw.repository-adapter",
@@ -228,7 +224,7 @@
     },
     {
       "id": "plugin:kubeclaw.test-agent",
-      "count": 11
+      "count": 12
     },
     {
       "id": "shared-library:kubeclaw.agent-observability-contract",
@@ -254,19 +250,19 @@
   "effectCounts": [
     {
       "id": "command.execute",
-      "count": 48
+      "count": 51
     },
     {
       "id": "filesystem.read",
-      "count": 479
+      "count": 512
     },
     {
       "id": "filesystem.write",
-      "count": 329
+      "count": 373
     },
     {
       "id": "git.execute",
-      "count": 43
+      "count": 44
     },
     {
       "id": "network.http",
@@ -278,7 +274,7 @@
     },
     {
       "id": "redis.execute",
-      "count": 99
+      "count": 102
     },
     {
       "id": "runtime.dispatch",
@@ -286,7 +282,7 @@
     },
     {
       "id": "secret.read",
-      "count": 37
+      "count": 40
     },
     {
       "id": "telemetry.emit",
@@ -296,19 +292,19 @@
   "effectReferenceCounts": [
     {
       "id": "command.execute",
-      "count": 79
+      "count": 82
     },
     {
       "id": "filesystem.read",
-      "count": 756
+      "count": 789
     },
     {
       "id": "filesystem.write",
-      "count": 898
+      "count": 942
     },
     {
       "id": "git.execute",
-      "count": 71
+      "count": 72
     },
     {
       "id": "network.http",
@@ -320,7 +316,7 @@
     },
     {
       "id": "redis.execute",
-      "count": 144
+      "count": 147
     },
     {
       "id": "runtime.dispatch",
@@ -328,7 +324,7 @@
     },
     {
       "id": "secret.read",
-      "count": 204
+      "count": 207
     },
     {
       "id": "telemetry.emit",
@@ -342,15 +338,15 @@
     },
     {
       "id": "manifest.hook-family",
-      "count": 31
+      "count": 30
     },
     {
       "id": "manifest.kind",
-      "count": 20
+      "count": 19
     },
     {
       "id": "manifest.package-capabilities",
-      "count": 22
+      "count": 21
     },
     {
       "id": "result.action_required",
@@ -368,15 +364,15 @@
     },
     {
       "id": "manifest.hook-family",
-      "count": 49
+      "count": 48
     },
     {
       "id": "manifest.kind",
-      "count": 29
+      "count": 28
     },
     {
       "id": "manifest.package-capabilities",
-      "count": 44
+      "count": 43
     },
     {
       "id": "result.action_required",
@@ -406,7 +402,7 @@
     },
     {
       "id": "stage.validator",
-      "count": 33
+      "count": 29
     },
     {
       "id": "stage.worker-buster",
@@ -436,7 +432,7 @@
     },
     {
       "id": "stage.validator",
-      "count": 74
+      "count": 68
     },
     {
       "id": "stage.worker-buster",
@@ -585,19 +581,10 @@
       "targetRegistrationId": "kubeclaw.validate.architecture"
     },
     {
-      "currentId": "builtin.validator.delivery_lint",
-      "currentType": "validator",
-      "currentStageId": "validator:delivery_lint",
-      "entrypoint": "skills/nova/pipeline/services/module-validators.ts",
-      "targetPackage": "kubeclaw.delivery-lint",
-      "targetSurface": "stage",
-      "targetRegistrationId": "kubeclaw.lint.delivery"
-    },
-    {
       "currentId": "builtin.validator.pre_check",
       "currentType": "validator",
       "currentStageId": "validator:pre_check",
-      "entrypoint": "skills/nova/pipeline/services/module-validators.ts",
+      "entrypoint": "skills/nova/pipeline/services/module-lint-validators.ts",
       "targetPackage": "kubeclaw.lint",
       "targetSurface": "stage",
       "targetRegistrationId": "kubeclaw.lint.pre-check"
@@ -606,7 +593,7 @@
       "currentId": "builtin.validator.full_lint",
       "currentType": "validator",
       "currentStageId": "validator:full_lint",
-      "entrypoint": "skills/nova/pipeline/services/module-validators.ts",
+      "entrypoint": "skills/nova/pipeline/services/module-lint-validators.ts",
       "targetPackage": "kubeclaw.lint",
       "targetSurface": "stage",
       "targetRegistrationId": "kubeclaw.lint.full"
@@ -778,10 +765,10 @@
       "registrations": [
         "kubeclaw.test.quality-evaluation"
       ],
-      "runtimeFileCount": 27,
+      "runtimeFileCount": 28,
       "supportFileCount": 3,
       "effectCounts": {
-        "filesystem.read": 7,
+        "filesystem.read": 9,
         "filesystem.write": 5,
         "secret.read": 2
       },
@@ -817,30 +804,15 @@
       "registrations": [
         "kubeclaw.report.case-study"
       ],
-      "runtimeFileCount": 17,
+      "runtimeFileCount": 18,
       "supportFileCount": 0,
       "effectCounts": {
-        "filesystem.read": 4,
+        "filesystem.read": 6,
         "filesystem.write": 6,
         "runtime.dispatch": 3,
         "secret.read": 2
       },
       "outboundOwnerDependencies": 31,
-      "hardcodingCount": 0,
-      "legacyContractCount": 0
-    },
-    {
-      "packageId": "kubeclaw.delivery-lint",
-      "registrations": [
-        "kubeclaw.lint.delivery"
-      ],
-      "runtimeFileCount": 11,
-      "supportFileCount": 0,
-      "effectCounts": {
-        "filesystem.read": 8,
-        "filesystem.write": 3
-      },
-      "outboundOwnerDependencies": 3,
       "hardcodingCount": 0,
       "legacyContractCount": 0
     },
@@ -882,12 +854,12 @@
         "kubeclaw.lint.full",
         "kubeclaw.lint.pre-check"
       ],
-      "runtimeFileCount": 69,
+      "runtimeFileCount": 70,
       "supportFileCount": 12,
       "effectCounts": {
         "command.execute": 6,
-        "filesystem.read": 72,
-        "filesystem.write": 28,
+        "filesystem.read": 73,
+        "filesystem.write": 29,
         "git.execute": 1,
         "redis.execute": 1,
         "secret.read": 1
@@ -919,13 +891,13 @@
       "registrations": [
         "kubeclaw.adapter.openclaw-agent-events"
       ],
-      "runtimeFileCount": 23,
+      "runtimeFileCount": 26,
       "supportFileCount": 0,
       "effectCounts": {
         "command.execute": 1,
-        "filesystem.read": 4,
+        "filesystem.read": 9,
         "filesystem.write": 2,
-        "redis.execute": 12
+        "redis.execute": 13
       },
       "outboundOwnerDependencies": 0,
       "hardcodingCount": 0,
@@ -936,10 +908,10 @@
       "registrations": [
         "kubeclaw.report.pipeline-review"
       ],
-      "runtimeFileCount": 16,
+      "runtimeFileCount": 17,
       "supportFileCount": 0,
       "effectCounts": {
-        "filesystem.read": 5,
+        "filesystem.read": 7,
         "filesystem.write": 4,
         "runtime.dispatch": 3,
         "secret.read": 2
@@ -953,11 +925,11 @@
       "registrations": [
         "kubeclaw.validate.preflight-contract"
       ],
-      "runtimeFileCount": 12,
+      "runtimeFileCount": 13,
       "supportFileCount": 0,
       "effectCounts": {
         "filesystem.read": 7,
-        "filesystem.write": 7
+        "filesystem.write": 10
       },
       "outboundOwnerDependencies": 2,
       "hardcodingCount": 0,
@@ -968,11 +940,11 @@
       "registrations": [
         "kubeclaw.report.project-summary"
       ],
-      "runtimeFileCount": 28,
+      "runtimeFileCount": 30,
       "supportFileCount": 4,
       "effectCounts": {
         "command.execute": 1,
-        "filesystem.read": 22,
+        "filesystem.read": 24,
         "filesystem.write": 12,
         "git.execute": 3
       },
@@ -1013,24 +985,13 @@
   ],
   "referenceCandidateRanking": [
     {
-      "packageId": "kubeclaw.delivery-lint",
-      "score": 28,
-      "currentRegistryBacked": true,
-      "registrationCount": 1,
-      "runtimeFileCount": 11,
-      "outboundOwnerDependencies": 3,
-      "effectRisk": 14,
-      "legacyContractCount": 0,
-      "hardcodingCount": 0
-    },
-    {
       "packageId": "kubeclaw.preflight-contract",
-      "score": 60,
+      "score": 67,
       "currentRegistryBacked": false,
       "registrationCount": 1,
-      "runtimeFileCount": 12,
+      "runtimeFileCount": 13,
       "outboundOwnerDependencies": 2,
-      "effectRisk": 21,
+      "effectRisk": 27,
       "legacyContractCount": 0,
       "hardcodingCount": 0
     },
@@ -1069,23 +1030,23 @@
     },
     {
       "packageId": "kubeclaw.buster-quality-gate",
-      "score": 186,
+      "score": 189,
       "currentRegistryBacked": true,
       "registrationCount": 1,
-      "runtimeFileCount": 27,
+      "runtimeFileCount": 28,
       "outboundOwnerDependencies": 97,
-      "effectRisk": 33,
+      "effectRisk": 35,
       "legacyContractCount": 9,
       "hardcodingCount": 1
     },
     {
       "packageId": "kubeclaw.project-summary",
-      "score": 187,
+      "score": 191,
       "currentRegistryBacked": true,
       "registrationCount": 1,
-      "runtimeFileCount": 28,
+      "runtimeFileCount": 30,
       "outboundOwnerDependencies": 63,
-      "effectRisk": 96,
+      "effectRisk": 98,
       "legacyContractCount": 0,
       "hardcodingCount": 0
     },
@@ -1102,23 +1063,23 @@
     },
     {
       "packageId": "kubeclaw.pipeline-review",
-      "score": 229,
+      "score": 232,
       "currentRegistryBacked": true,
       "registrationCount": 1,
-      "runtimeFileCount": 16,
+      "runtimeFileCount": 17,
       "outboundOwnerDependencies": 34,
-      "effectRisk": 179,
+      "effectRisk": 181,
       "legacyContractCount": 0,
       "hardcodingCount": 0
     },
     {
       "packageId": "kubeclaw.case-study",
-      "score": 230,
+      "score": 233,
       "currentRegistryBacked": true,
       "registrationCount": 1,
-      "runtimeFileCount": 17,
+      "runtimeFileCount": 18,
       "outboundOwnerDependencies": 31,
-      "effectRisk": 182,
+      "effectRisk": 184,
       "legacyContractCount": 0,
       "hardcodingCount": 0
     },
@@ -1135,12 +1096,12 @@
     },
     {
       "packageId": "kubeclaw.lint",
-      "score": 387,
+      "score": 391,
       "currentRegistryBacked": true,
       "registrationCount": 2,
-      "runtimeFileCount": 69,
+      "runtimeFileCount": 70,
       "outboundOwnerDependencies": 27,
-      "effectRisk": 281,
+      "effectRisk": 284,
       "legacyContractCount": 0,
       "hardcodingCount": 0
     },
@@ -1164,18 +1125,18 @@
       "deterministicDomainEvaluation": true,
       "directRuntimeDispatch": false,
       "directNetwork": false,
-      "classifiedRuntimeFileCount": 11,
+      "classifiedRuntimeFileCount": 0,
       "classifiedSupportFileCount": 0,
-      "outboundOwnerDependencies": 3,
-      "currentMixedFacade": "skills/nova/pipeline/services/module-validators.ts",
-      "requiredPreparatorySplit": true
+      "outboundOwnerDependencies": 0,
+      "currentMixedFacade": null,
+      "requiredPreparatorySplit": false
     },
     "rationale": [
       "The delivery-lint decision is deterministic and exercises canonical passed, request_fix, and blocked outcomes.",
       "Its target implementation does not require agent dispatch, durable waits, or network authority.",
-      "It has the lowest migration-risk score among current or discovered stage packages (28).",
-      "The current module-validators.ts facade mixes delivery, pre-check, and full-lint behavior and must be deleted after its exports are split; it must not be moved wholesale.",
-      "The extraction should produce a single-stage kubeclaw.delivery-lint package first. Pre-check and full-lint remain outside that package until independent cohesion evidence supports combining them."
+      "It was selected as the lowest-risk deterministic reference package before extraction.",
+      "The mixed module-validators.ts facade and validation-delivery.ts implementation are deleted.",
+      "The single-stage kubeclaw.delivery-lint package is now the only behavior owner. Pre-check and full-lint remain independently owned."
     ]
   },
   "dependencyGraph": [
@@ -1658,28 +1619,29 @@
     {
       "from": "core:pipeline-core-execution",
       "to": "core:pipeline-core-registry",
-      "count": 25,
+      "count": 33,
       "samples": [
         "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
         "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
         "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
         "skills/common/plugin-runtime/core/execution/adapters.ts -> skills/common/plugin-runtime/core/registry/schema.ts",
+        "skills/common/plugin-runtime/core/execution/authorization.ts -> skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/build.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
+        "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/configuration.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/discovery.ts",
-        "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/schema.ts",
-        "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/activation.ts",
-        "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/capabilities.ts",
-        "skills/common/plugin-runtime/core/execution/runner.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+        "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
+        "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
       ]
     },
     {
       "from": "core:pipeline-core-execution",
       "to": "core:pipeline-core-state",
-      "count": 75,
+      "count": 77,
       "samples": [
         "skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts",
+        "skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts",
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/state/journal.ts",
@@ -1688,9 +1650,8 @@
         "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/lifecycle/recovery.ts",
         "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/lifecycle/reducer.ts",
         "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/journal.ts",
-        "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/waits.ts",
-        "skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/status-store.ts",
-        "skills/nova/pipeline/core/registry.ts -> skills/nova/pipeline/services/serialization.ts"
+        "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/state/plugins.ts",
+        "skills/nova/pipeline/cli.ts -> skills/nova/pipeline/services/status-store.ts"
       ]
     },
     {
@@ -1734,7 +1695,7 @@
     {
       "from": "core:pipeline-core-execution",
       "to": "plugin-sdk:pipeline-plugin-sdk",
-      "count": 68,
+      "count": 69,
       "samples": [
         "skills/common/plugin-runtime/cli.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/effects/coordinator.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
@@ -1787,6 +1748,14 @@
         "skills/nova/pipeline/services/polling-wrappers.ts -> skills/nova/pipeline/services/polling-forge.ts",
         "skills/nova/pipeline/services/polling.ts -> skills/nova/pipeline/services/polling-forge.ts",
         "tests/skills/nova/pipeline/services/polling.test.mjs -> skills/nova/pipeline/services/forge-completion.ts"
+      ]
+    },
+    {
+      "from": "core:pipeline-core-execution",
+      "to": "plugin:kubeclaw.lint",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/module-lint-validators.ts -> skills/nova/pipeline/services/lint.ts"
       ]
     },
     {
@@ -1897,11 +1866,12 @@
     {
       "from": "core:pipeline-core-registry",
       "to": "plugin-sdk:pipeline-plugin-sdk",
-      "count": 7,
+      "count": 8,
       "samples": [
         "skills/common/plugin-runtime/core/registry/activation.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/registry/build.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/registry/capabilities.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/registry/discovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/registry/schema.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/registry/types.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
@@ -1946,12 +1916,21 @@
     },
     {
       "from": "core:pipeline-core-state",
+      "to": "core:pipeline-core-registry",
+      "count": 2,
+      "samples": [
+        "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
+        "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+      ]
+    },
+    {
+      "from": "core:pipeline-core-state",
       "to": "plugin-sdk:pipeline-plugin-sdk",
       "count": 7,
       "samples": [
         "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/common/plugin-runtime/core/lifecycle/reducer.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
-        "skills/common/plugin-runtime/core/state/waits.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/sdk/src/index.ts",
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-base.ts -> skills/nova/pipeline/value-boundary.ts",
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-modules.ts -> skills/nova/pipeline/value-boundary.ts",
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-recovery.ts -> skills/nova/pipeline/value-boundary.ts",
@@ -2303,61 +2282,10 @@
     },
     {
       "from": "delete:legacy-mixed-validation-contract",
-      "to": "plugin:kubeclaw.delivery-lint",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-delivery.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-mixed-validation-contract",
       "to": "plugin:kubeclaw.preflight-contract",
       "count": 1,
       "samples": [
         "skills/nova/pipeline/services/validation.ts -> skills/nova/pipeline/services/validation-blueprint.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-mixed-validator-facade",
-      "to": "core:pipeline-core-execution",
-      "count": 4,
-      "samples": [
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/logger.ts",
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/paths.ts",
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/core/runtime.ts",
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/optional-absence.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-mixed-validator-facade",
-      "to": "core:pipeline-core-state",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/status-store-lifecycle/refs.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-mixed-validator-facade",
-      "to": "delete:legacy-mixed-validation-contract",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/validation.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-mixed-validator-facade",
-      "to": "plugin-sdk:pipeline-plugin-sdk",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/contracts/validator-control-result.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-mixed-validator-facade",
-      "to": "plugin:kubeclaw.lint",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/module-validators.ts -> skills/nova/pipeline/services/lint.ts"
       ]
     },
     {
@@ -2407,20 +2335,20 @@
     {
       "from": "delete:legacy-plugin-bridges",
       "to": "core:pipeline-core-execution",
-      "count": 14,
+      "count": 15,
       "samples": [
         "skills/nova/pipeline/core/registry/builtin-bridge.ts -> skills/nova/pipeline/optional-absence.ts",
         "skills/nova/pipeline/core/registry/builtin-case-study.ts -> skills/nova/pipeline/core/constants.ts",
         "skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/optional-absence.ts",
         "skills/nova/pipeline/core/registry/builtin-workers.ts -> skills/nova/pipeline/core/constants.ts",
         "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/optional-absence.ts",
+        "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-lint-validators.ts",
         "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/core/constants.ts",
         "skills/nova/pipeline/runners/gate-control-adapter.ts -> skills/nova/pipeline/optional-absence.ts",
         "skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/runners/stage-envelope-primitives.ts",
         "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/paths.ts",
         "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/registry-access.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/runtime.ts",
-        "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/optional-absence.ts"
+        "skills/nova/pipeline/runners/pipeline-runner-terminal-generators.ts -> skills/nova/pipeline/core/runtime.ts"
       ]
     },
     {
@@ -2437,14 +2365,6 @@
       "count": 1,
       "samples": [
         "skills/nova/pipeline/runners/module-runner-plugin-contracts.ts -> skills/nova/pipeline/runners/module-runner-shared.ts"
-      ]
-    },
-    {
-      "from": "delete:legacy-plugin-bridges",
-      "to": "delete:legacy-mixed-validator-facade",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/core/registry/builtins.ts -> skills/nova/pipeline/services/module-validators.ts"
       ]
     },
     {
@@ -3212,23 +3132,6 @@
         "skills/nova/pipeline/services/case-study-outcomes.ts -> skills/nova/pipeline/services/summary-session-values.ts",
         "skills/nova/pipeline/services/case-study-run.ts -> skills/nova/pipeline/services/summary-session-values.ts",
         "skills/nova/pipeline/tools/project-summary-case-study.ts -> skills/nova/pipeline/tools/project-summary-formatters-core.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.delivery-lint",
-      "to": "core:pipeline-core-execution",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/logger.ts",
-        "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/core/paths.ts"
-      ]
-    },
-    {
-      "from": "plugin:kubeclaw.delivery-lint",
-      "to": "delete:legacy-mixed-validation-contract",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/validation-delivery.ts -> skills/nova/pipeline/services/validation-contract.ts"
       ]
     },
     {
@@ -7167,7 +7070,7 @@
       "effects": [
         {
           "id": "redis.execute",
-          "line": 682,
+          "line": 725,
           "evidence": "target-scoped HTTP `transport.publish` foundation. It owns closed",
           "adapter": "kubeclaw.redis"
         }
@@ -7175,37 +7078,37 @@
       "legacyContracts": [
         {
           "id": "result.needs_nova",
-          "line": 513,
-          "evidence": "- [ ] Replace `needs_nova` with `orchestrator_required` everywhere."
+          "line": 541,
+          "evidence": "- [x] Reject `needs_nova` and `action_required` throughout the v2 contract and executable surface."
         },
         {
           "id": "result.needs_nova",
-          "line": 966,
+          "line": 1019,
           "evidence": "Every result variant has an exact schema and lifecycle mapping. Observer and adapter registrations have explicit identity, subscription/provision, authority, ordering, error, timeout, replay/readiness, cancellation, and shutdown contracts. "
         },
         {
           "id": "result.needs_nova",
-          "line": 1150,
+          "line": 1207,
           "evidence": "- replace `needs_nova` with `orchestrator_required`"
         },
         {
           "id": "result.action_required",
-          "line": 514,
-          "evidence": "- [ ] Remove `action_required` as a plugin-control synonym."
+          "line": 541,
+          "evidence": "- [x] Reject `needs_nova` and `action_required` throughout the v2 contract and executable surface."
         },
         {
           "id": "result.action_required",
-          "line": 966,
+          "line": 1019,
           "evidence": "Every result variant has an exact schema and lifecycle mapping. Observer and adapter registrations have explicit identity, subscription/provision, authority, ordering, error, timeout, replay/readiness, cancellation, and shutdown contracts. "
         },
         {
           "id": "result.action_required",
-          "line": 1151,
+          "line": 1208,
           "evidence": "- remove `action_required` as a plugin-control synonym"
         },
         {
           "id": "manifest.contract-v1",
-          "line": 968,
+          "line": 1021,
           "evidence": "The new manifest API version is `pipeline-plugin-v2`. The cutover rejects existing `pipeline-plugin-v1` manifests; core does not adapt or load both versions."
         }
       ],
@@ -7226,7 +7129,7 @@
       "effects": [
         {
           "id": "git.execute",
-          "line": 999,
+          "line": 1248,
           "evidence": "\"command\": \"git diff --check\",",
           "adapter": "kubeclaw.git"
         }
@@ -7688,37 +7591,37 @@
         },
         {
           "id": "filesystem.read",
-          "line": 242,
+          "line": 243,
           "evidence": "if (!fs.existsSync(output) || digest(fs.readFileSync(output)) !== result.outputDigest) {",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 273,
+          "line": 274,
           "evidence": "if (!fs.existsSync(path.join(root, scenario.path))) fail(`${unit.id} scenario path is missing: ${scenario.path}`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 278,
+          "line": 310,
           "evidence": "if (!fs.existsSync(path.join(root, discoveryHint))) fail(`${unit.id} references missing discovery hint ${discoveryHint}`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 481,
+          "line": 513,
           "evidence": "inventoryDigest: digest(fs.readFileSync(inventoryPath)),",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 483,
+          "line": 515,
           "evidence": "unitsDigest: digest(fs.readFileSync(ledgerPath)),",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 492,
+          "line": 524,
           "evidence": "} else if (!fs.existsSync(surfaceLedgerPath) || fs.readFileSync(surfaceLedgerPath, 'utf8') !== expected) {",
           "adapter": "kubeclaw.artifacts"
         },
@@ -7730,13 +7633,13 @@
         },
         {
           "id": "filesystem.write",
-          "line": 490,
+          "line": 522,
           "evidence": "fs.mkdirSync(path.dirname(surfaceLedgerPath), { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 491,
+          "line": 523,
           "evidence": "fs.writeFileSync(surfaceLedgerPath, expected);",
           "adapter": "kubeclaw.artifacts"
         },
@@ -7893,61 +7796,67 @@
         },
         {
           "id": "filesystem.read",
-          "line": 109,
+          "line": 145,
           "evidence": "bundleDigests[role] = digest(fs.readFileSync(archive));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 117,
+          "line": 153,
           "evidence": ".filter((file) => fs.statSync(file).isFile())",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 130,
+          "line": 167,
           "evidence": "const previous = fs.existsSync(evidenceDirectory)",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 133,
+          "line": 170,
           "evidence": ".map((file) => ({ file, record: JSON.parse(fs.readFileSync(file, 'utf8')) }))",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 157,
+          "line": 194,
           "evidence": "previousEvidenceDigest: previous ? digest(fs.readFileSync(previous.file)) : null,",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 112,
+          "line": 125,
+          "evidence": "fs.mkdirSync(pinnedRoot);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 148,
           "evidence": "fs.rmSync(tempRoot, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 139,
+          "line": 176,
           "evidence": "fs.mkdirSync(outputDirectory, { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 142,
+          "line": 179,
           "evidence": "fs.writeFileSync(path.join(root, relativeOutput), entry.output, { flag: 'wx' });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 167,
+          "line": 204,
           "evidence": "fs.mkdirSync(evidenceDirectory, { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 169,
+          "line": 206,
           "evidence": "fs.writeFileSync(outputPath, `${JSON.stringify(record, null, 2)}\\n`, { flag: 'wx' });",
           "adapter": "kubeclaw.artifacts"
         },
@@ -7964,6 +7873,12 @@
           "adapter": "kubeclaw.git"
         },
         {
+          "id": "git.execute",
+          "line": 126,
+          "evidence": "const archive = execFileSync('git', ['archive', '--format=tar', commit], {",
+          "adapter": "kubeclaw.git"
+        },
+        {
           "id": "command.execute",
           "line": 53,
           "evidence": "if (execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim()) {",
@@ -7977,13 +7892,25 @@
         },
         {
           "id": "command.execute",
-          "line": 84,
+          "line": 109,
           "evidence": "const result = spawnSync('bash', ['-lc', command.command], {",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 101,
+          "line": 126,
+          "evidence": "const archive = execFileSync('git', ['archive', '--format=tar', commit], {",
+          "adapter": "kubeclaw.command"
+        },
+        {
+          "id": "command.execute",
+          "line": 130,
+          "evidence": "const extract = spawnSync('tar', ['-xf', '-', '-C', pinnedRoot], {",
+          "adapter": "kubeclaw.command"
+        },
+        {
+          "id": "command.execute",
+          "line": 137,
           "evidence": "execFileSync('bash', [",
           "adapter": "kubeclaw.command"
         }
@@ -15194,6 +15121,8 @@
         ]
       },
       "exports": [
+        "CommandSuite",
+        "SuiteEvidence",
         "TestInput",
         "TestVerdict",
         "buildRequest",
@@ -15236,7 +15165,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/buster/plugins/test-agent/tests/live-function.test.mjs",
+      "path": "skills/buster/plugins/test-agent/tests/live-function.test.ts",
       "area": "skills/buster",
       "scope": "runtime",
       "target": {
@@ -15251,6 +15180,11 @@
       "imports": [
         {
           "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:crypto",
           "resolved": null,
           "external": true
         },
@@ -15283,32 +15217,44 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 24,
-          "evidence": "assert.equal((await runner.run('run:test-agent')).status,'succeeded');assert.match(fs.readFileSync(path.join(temporary,'artifacts','catalog.jsonl'),'utf8'),/test-verdict:task-1:1/);",
+          "line": 138,
+          "evidence": "assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'), /test-verdict:task-1:1/u);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 25,
-          "evidence": "assert.equal(fs.readFileSync(effectsPath,'utf8').includes('test-secret'),false);",
+          "line": 139,
+          "evidence": "assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(temporary, 'transcript.log'))).digest('hex'), transcriptDigest);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 140,
+          "evidence": "assert.equal(fs.readFileSync(effectsPath, 'utf8').includes('test-secret'), false);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 27,
-          "evidence": "}finally{delete process.env[secret];await new Promise((resolve)=>server.close(resolve));fs.rmSync(temporary,{recursive:true,force:true});}",
+          "line": 21,
+          "evidence": "fs.writeFileSync(path.join(temporary, 'transcript.log'), transcript);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 147,
+          "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "secret.read",
-          "line": 6,
-          "evidence": "const origin=`http://127.0.0.1:${address.port}`;const secret='KUBECLAW_TEST_AGENT_TOKEN';process.env[secret]='test-secret';",
+          "line": 45,
+          "evidence": "process.env[secret] = 'test-secret';",
           "adapter": "kubeclaw.secrets"
         },
         {
           "id": "secret.read",
-          "line": 27,
-          "evidence": "}finally{delete process.env[secret];await new Promise((resolve)=>server.close(resolve));fs.rmSync(temporary,{recursive:true,force:true});}",
+          "line": 145,
+          "evidence": "delete process.env[secret];",
           "adapter": "kubeclaw.secrets"
         }
       ],
@@ -15316,7 +15262,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/buster/plugins/test-agent/tests/protocol.test.mjs",
+      "path": "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
       "area": "skills/buster",
       "scope": "runtime",
       "target": {
@@ -15330,8 +15276,55 @@
       "exports": [],
       "imports": [
         {
-          "specifier": "../dist/protocol.js",
-          "resolved": "skills/buster/plugins/test-agent/dist/protocol.js",
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 5,
+          "evidence": "const source = fs.readFileSync(path.resolve('src/stage.ts'), 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 10,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/buster/plugins/test-agent/tests/protocol.test.ts",
+      "area": "skills/buster",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.test-agent",
+        "ruleId": "plugin-test-agent",
+        "shadowedRuleIds": [
+          "plugin-buster-worker"
+        ]
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "../src/protocol.ts",
+          "resolved": "skills/buster/plugins/test-agent/src/protocol.ts",
           "external": false
         },
         {
@@ -18779,7 +18772,7 @@
       "effects": [
         {
           "id": "git.execute",
-          "line": 519,
+          "line": 578,
           "evidence": "\"type\": { \"enum\": [\"builtin\", \"local\", \"git\", \"registry\"] },",
           "adapter": "kubeclaw.git"
         }
@@ -18903,13 +18896,13 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 24,
+          "line": 28,
           "evidence": "const schema = JSON.parse(fs.readFileSync(new URL('./platform.schema.json', import.meta.url), 'utf8')) as object;",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 52,
+          "line": 62,
           "evidence": "const value = JSON.parse(fs.readFileSync(canonical, 'utf8')) as unknown;",
           "adapter": "kubeclaw.artifacts"
         }
@@ -18950,7 +18943,9 @@
       "exports": [
         "EffectAuditSink",
         "EffectCoordinator",
-        "EffectInvocation"
+        "EffectInvocation",
+        "EffectLockManager",
+        "MemoryResourceLockManager"
       ],
       "imports": [
         {
@@ -19013,7 +19008,7 @@
         ]
       },
       "exports": [
-        "ResourceLockManager"
+        "FileResourceLockManager"
       ],
       "imports": [
         {
@@ -19022,11 +19017,213 @@
           "external": false
         },
         {
+          "specifier": "../state/journal.ts",
+          "resolved": "skills/common/plugin-runtime/core/state/journal.ts",
+          "external": false
+        },
+        {
           "specifier": "node:crypto",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
           "resolved": null,
           "external": true
         }
       ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 87,
+          "evidence": "owner = JSON.parse(fs.readFileSync(guardFile, 'utf8')) as {",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 121,
+          "evidence": "const owner = JSON.parse(fs.readFileSync(guardFile, 'utf8')) as { token?: unknown };",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 163,
+          "evidence": "const parsed = JSON.parse(fs.readFileSync(ownerFile, 'utf8')) as unknown;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 170,
+          "evidence": "&& this.#now().getTime() - fs.statSync(lockDirectory).mtimeMs < this.#provisionalTtlMs",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 228,
+          "evidence": "const claim = JSON.parse(fs.readFileSync(claimFile, 'utf8')) as { token?: unknown };",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 253,
+          "evidence": "const owner = JSON.parse(fs.readFileSync(ownerFile, 'utf8')) as LockOwner;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 291,
+          "evidence": "const owner = JSON.parse(fs.readFileSync(ownerFile, 'utf8')) as unknown;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 307,
+          "evidence": "const current = JSON.parse(fs.readFileSync(ownerFile, 'utf8')) as LockOwner;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 63,
+          "evidence": "fs.mkdirSync(this.#root, { recursive: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 73,
+          "evidence": "fs.writeFileSync(",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 80,
+          "evidence": "fs.unlinkSync(temporary);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 83,
+          "evidence": "fs.rmSync(temporary, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 94,
+          "evidence": "fs.renameSync(guardFile, corrupt);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 99,
+          "evidence": "fs.rmSync(corrupt, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 109,
+          "evidence": "fs.renameSync(guardFile, stale);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 114,
+          "evidence": "fs.rmSync(stale, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 122,
+          "evidence": "if (owner.token === token) fs.unlinkSync(guardFile);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 152,
+          "evidence": "fs.mkdirSync(lockDirectory);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 153,
+          "evidence": "fs.writeFileSync(",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 188,
+          "evidence": "fs.renameSync(lockDirectory, tombstone);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 199,
+          "evidence": "fs.rmSync(tombstone, { recursive: true, force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 219,
+          "evidence": "fs.writeFileSync(",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 231,
+          "evidence": "fs.renameSync(lockDirectory, tombstone);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 232,
+          "evidence": "fs.rmSync(tombstone, { recursive: true, force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 261,
+          "evidence": "fs.writeFileSync(",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 266,
+          "evidence": "fs.renameSync(temporary, ownerFile);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 316,
+          "evidence": "fs.renameSync(lockDirectory, tombstone);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 317,
+          "evidence": "fs.rmSync(tombstone, { recursive: true, force: true });",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugin-runtime/core/execution/CAPABILITIES.md",
+      "area": "skills/common/plugin-runtime",
+      "scope": "runtime",
+      "target": {
+        "kind": "core",
+        "id": "pipeline-core-execution",
+        "ruleId": "v2-plugin-runtime-execution",
+        "shadowedRuleIds": [
+          "core-execution"
+        ]
+      },
+      "exports": [],
+      "imports": [],
       "effects": [],
       "legacyContracts": [],
       "hardcodings": []
@@ -19146,18 +19343,45 @@
           "specifier": "../../sdk/src/index.ts",
           "resolved": "skills/common/plugin-runtime/sdk/src/index.ts",
           "external": false
+        },
+        {
+          "specifier": "../registry/capability-vocabulary.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
         }
       ],
       "effects": [
         {
+          "id": "filesystem.read",
+          "line": 48,
+          "evidence": "while (!fs.existsSync(existing)) {",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
           "id": "redis.execute",
-          "line": 81,
+          "line": 210,
           "evidence": "case 'transport.publish': {",
           "adapter": "kubeclaw.redis"
         },
         {
+          "id": "redis.execute",
+          "line": 238,
+          "evidence": "case 'agent.events.subscribe': {",
+          "adapter": "kubeclaw.redis"
+        },
+        {
           "id": "telemetry.emit",
-          "line": 95,
+          "line": 230,
           "evidence": "case 'telemetry.emit': {",
           "adapter": "kubeclaw.telemetry-transport"
         }
@@ -19216,7 +19440,11 @@
         ]
       },
       "exports": [
+        "AdministrativeDecisionAuthenticator",
+        "AuthenticatedAdministrativePrincipal",
         "loadPipelineDefinition",
+        "recoverPipelineV2",
+        "reopenBlockedPipelineV2",
         "resumePipelineV2",
         "runPipelineV2"
       ],
@@ -19239,6 +19467,11 @@
         {
           "specifier": "../effects/journal.ts",
           "resolved": "skills/common/plugin-runtime/core/effects/journal.ts",
+          "external": false
+        },
+        {
+          "specifier": "../effects/locks.ts",
+          "resolved": "skills/common/plugin-runtime/core/effects/locks.ts",
           "external": false
         },
         {
@@ -19267,8 +19500,18 @@
           "external": false
         },
         {
+          "specifier": "../registry/configuration.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/configuration.ts",
+          "external": false
+        },
+        {
           "specifier": "../registry/discovery.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/discovery.ts",
+          "external": false
+        },
+        {
+          "specifier": "../registry/frozen-map.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/frozen-map.ts",
           "external": false
         },
         {
@@ -19289,6 +19532,11 @@
         {
           "specifier": "./adapters.ts",
           "resolved": "skills/common/plugin-runtime/core/execution/adapters.ts",
+          "external": false
+        },
+        {
+          "specifier": "./graph.ts",
+          "resolved": "skills/common/plugin-runtime/core/execution/graph.ts",
           "external": false
         },
         {
@@ -19315,26 +19563,56 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 43,
+          "line": 111,
           "evidence": "const value = JSON.parse(fs.readFileSync(fs.realpathSync(file), 'utf8')) as unknown;",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 182,
-          "evidence": "const stored = JSON.parse(fs.readFileSync(file, 'utf8')) as {",
+          "line": 273,
+          "evidence": "const stored = JSON.parse(fs.readFileSync(file, 'utf8')) as unknown;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 330,
+          "evidence": "const stored = JSON.parse(fs.readFileSync(file, 'utf8')) as ExecutionGraphSnapshot;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 351,
+          "evidence": "if (fs.existsSync(graphFile) || fs.existsSync(registryFile)) {",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 235,
+          "line": 80,
+          "evidence": "fs.mkdirSync(path.dirname(key), { recursive: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 356,
+          "evidence": "fs.writeFileSync(graphFile, `${JSON.stringify(graph, null, 2)}\\n`, { flag: 'wx' });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 358,
+          "evidence": "fs.writeFileSync(registryFile, `${JSON.stringify(registry, null, 2)}\\n`, { flag: 'wx' });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 363,
+          "evidence": "fs.unlinkSync(file);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 454,
           "evidence": "fs.mkdirSync(runRoot, { recursive: true });",
-          "adapter": "kubeclaw.artifacts"
-        },
-        {
-          "id": "filesystem.write",
-          "line": 236,
-          "evidence": "fs.writeFileSync(",
           "adapter": "kubeclaw.artifacts"
         }
       ],
@@ -19354,13 +19632,24 @@
         ]
       },
       "exports": [
-        "ExecutionGraph"
+        "ExecutionGraph",
+        "ExecutionGraphSnapshot"
       ],
       "imports": [
         {
           "specifier": "../../sdk/src/index.ts",
           "resolved": "skills/common/plugin-runtime/sdk/src/index.ts",
           "external": false
+        },
+        {
+          "specifier": "../registry/frozen-map.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/frozen-map.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:crypto",
+          "resolved": null,
+          "external": true
         }
       ],
       "effects": [],
@@ -19406,6 +19695,7 @@
         ]
       },
       "exports": [
+        "PipelineRunIdentity",
         "PipelineRunResult",
         "PipelineRunner",
         "PipelineRunnerOptions"
@@ -19429,6 +19719,11 @@
         {
           "specifier": "../registry/capabilities.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/capabilities.ts",
+          "external": false
+        },
+        {
+          "specifier": "../registry/frozen-map.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/frozen-map.ts",
           "external": false
         },
         {
@@ -19511,24 +19806,6 @@
           "external": true
         }
       ],
-      "effects": [],
-      "legacyContracts": [],
-      "hardcodings": []
-    },
-    {
-      "path": "skills/common/plugin-runtime/core/isolation/plugin-sandbox",
-      "area": "skills/common/plugin-runtime",
-      "scope": "runtime",
-      "target": {
-        "kind": "core",
-        "id": "pipeline-core-execution",
-        "ruleId": "v2-plugin-runtime-execution",
-        "shadowedRuleIds": [
-          "core-execution"
-        ]
-      },
-      "exports": [],
-      "imports": [],
       "effects": [],
       "legacyContracts": [],
       "hardcodings": []
@@ -19657,6 +19934,11 @@
         {
           "specifier": "../../sdk/src/index.ts",
           "resolved": "skills/common/plugin-runtime/sdk/src/index.ts",
+          "external": false
+        },
+        {
+          "specifier": "../registry/frozen-map.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/frozen-map.ts",
           "external": false
         },
         {
@@ -19914,6 +20196,11 @@
           "external": false
         },
         {
+          "specifier": "./digest.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/digest.ts",
+          "external": false
+        },
+        {
           "specifier": "./errors.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/errors.ts",
           "external": false
@@ -19921,6 +20208,11 @@
         {
           "specifier": "./frozen-map.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/frozen-map.ts",
+          "external": false
+        },
+        {
+          "specifier": "./import-audit.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/import-audit.ts",
           "external": false
         },
         {
@@ -20041,6 +20333,11 @@
           "external": false
         },
         {
+          "specifier": "./capability-vocabulary.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+          "external": false
+        },
+        {
           "specifier": "./errors.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/errors.ts",
           "external": false
@@ -20051,31 +20348,134 @@
           "external": false
         },
         {
+          "specifier": "./frozen-set.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/frozen-set.ts",
+          "external": false
+        },
+        {
           "specifier": "./types.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/types.ts",
           "external": false
         }
       ],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+      "area": "skills/common/plugin-runtime",
+      "scope": "runtime",
+      "target": {
+        "kind": "core",
+        "id": "pipeline-core-registry",
+        "ruleId": "v2-plugin-runtime-registry",
+        "shadowedRuleIds": [
+          "v2-plugin-runtime-execution",
+          "core-execution"
+        ]
+      },
+      "exports": [
+        "CAPABILITY_DEFINITIONS",
+        "CAPABILITY_IDS",
+        "CapabilityId",
+        "isCoreOnlyCapability",
+        "isKnownCapability",
+        "validateCapabilityConstraints",
+        "validateCapabilityInvocationContract"
+      ],
+      "imports": [
+        {
+          "specifier": "../../sdk/src/index.ts",
+          "resolved": "skills/common/plugin-runtime/sdk/src/index.ts",
+          "external": false
+        },
+        {
+          "specifier": "./errors.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/errors.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
       "effects": [
         {
           "id": "redis.execute",
-          "line": 27,
-          "evidence": "'transport.publish',",
+          "line": 57,
+          "evidence": "'operator.request': definition(['publish'], ['operator.target'], ['allowedTargets']),",
           "adapter": "kubeclaw.redis"
         },
         {
           "id": "redis.execute",
-          "line": 28,
-          "evidence": "'agent.events.subscribe',",
+          "line": 71,
+          "evidence": "'transport.publish': definition(['publish'], ['transport.target'], ['allowedTargets']),",
+          "adapter": "kubeclaw.redis"
+        },
+        {
+          "id": "redis.execute",
+          "line": 72,
+          "evidence": "'agent.events.subscribe': definition(['status'], ['agent.events'], ['allowedSources']),",
           "adapter": "kubeclaw.redis"
         },
         {
           "id": "telemetry.emit",
-          "line": 22,
-          "evidence": "'telemetry.emit',",
+          "line": 58,
+          "evidence": "'telemetry.emit': definition(['append'], ['telemetry.event'], ['allowedEventPrefixes']),",
           "adapter": "kubeclaw.telemetry-transport"
         }
       ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugin-runtime/core/registry/configuration.ts",
+      "area": "skills/common/plugin-runtime",
+      "scope": "runtime",
+      "target": {
+        "kind": "core",
+        "id": "pipeline-core-registry",
+        "ruleId": "v2-plugin-runtime-registry",
+        "shadowedRuleIds": [
+          "v2-plugin-runtime-execution",
+          "core-execution"
+        ]
+      },
+      "exports": [
+        "ConfiguredStageRegistration",
+        "RuntimeRegistrationConfiguration",
+        "validateRuntimeRegistrationConfiguration"
+      ],
+      "imports": [
+        {
+          "specifier": "./errors.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/errors.ts",
+          "external": false
+        },
+        {
+          "specifier": "./schema.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/schema.ts",
+          "external": false
+        },
+        {
+          "specifier": "./types.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/types.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [],
       "legacyContracts": [],
       "hardcodings": []
     },
@@ -20208,8 +20608,8 @@
         },
         {
           "id": "filesystem.read",
-          "line": 117,
-          "evidence": "const manifest = parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath);",
+          "line": 159,
+          "evidence": "parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath),",
           "adapter": "kubeclaw.artifacts"
         }
       ],
@@ -20256,6 +20656,125 @@
       ],
       "imports": [],
       "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugin-runtime/core/registry/frozen-set.ts",
+      "area": "skills/common/plugin-runtime",
+      "scope": "runtime",
+      "target": {
+        "kind": "core",
+        "id": "pipeline-core-registry",
+        "ruleId": "v2-plugin-runtime-registry",
+        "shadowedRuleIds": [
+          "v2-plugin-runtime-execution",
+          "core-execution"
+        ]
+      },
+      "exports": [
+        "FrozenSet"
+      ],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugin-runtime/core/registry/import-audit-child.mjs",
+      "area": "skills/common/plugin-runtime",
+      "scope": "runtime",
+      "target": {
+        "kind": "core",
+        "id": "pipeline-core-registry",
+        "ruleId": "v2-plugin-runtime-registry",
+        "shadowedRuleIds": [
+          "v2-plugin-runtime-execution",
+          "core-execution"
+        ]
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:module",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "secret.read",
+          "line": 117,
+          "evidence": "|| Object.entries(envBefore).some(([name, value]) => process.env[name] !== value)",
+          "adapter": "kubeclaw.secrets"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugin-runtime/core/registry/import-audit.ts",
+      "area": "skills/common/plugin-runtime",
+      "scope": "runtime",
+      "target": {
+        "kind": "core",
+        "id": "pipeline-core-registry",
+        "ruleId": "v2-plugin-runtime-registry",
+        "shadowedRuleIds": [
+          "v2-plugin-runtime-execution",
+          "core-execution"
+        ]
+      },
+      "exports": [
+        "auditTrustedRegistrationImports"
+      ],
+      "imports": [
+        {
+          "specifier": "./errors.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/errors.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:child_process",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "secret.read",
+          "line": 43,
+          "evidence": "PATH: process.env.PATH,",
+          "adapter": "kubeclaw.secrets"
+        },
+        {
+          "id": "secret.read",
+          "line": 44,
+          "evidence": "NODE_PATH: process.env.NODE_PATH,",
+          "adapter": "kubeclaw.secrets"
+        },
+        {
+          "id": "command.execute",
+          "line": 30,
+          "evidence": "const result = spawnSync(",
+          "adapter": "kubeclaw.command"
+        }
+      ],
       "legacyContracts": [],
       "hardcodings": []
     },
@@ -20365,6 +20884,9 @@
         "ActivatedRegistration",
         "ActivatedRegistry",
         "AdapterRuntime",
+        "AdministrativeDecisionAuthenticator",
+        "AuthenticatedAdministrativePrincipal",
+        "CAPABILITY_DEFINITIONS",
         "CAPABILITY_IDS",
         "CapabilityId",
         "CapabilityPolicy",
@@ -20373,29 +20895,33 @@
         "DiscoveryOptions",
         "EffectCoordinator",
         "ExecutionGraph",
+        "ExecutionGraphSnapshot",
         "FileEffectJournal",
         "FileJournal",
+        "FileResourceLockManager",
         "GrantedRegistry",
         "JournalRecord",
         "LifecycleAction",
         "LifecycleDecision",
         "MemoryEffectJournal",
+        "MemoryResourceLockManager",
         "ObserverDrainResult",
         "ObserverFailure",
         "ObserverRuntime",
         "ObserverRuntimeOptions",
+        "PipelineRunIdentity",
         "PipelineRunResult",
         "PipelineRunner",
         "PipelineRunnerOptions",
         "PlatformConfig",
+        "PluginStateAppend",
+        "PluginStateJournal",
         "RegistryError",
         "RegistrySnapshot",
-        "ResourceLockManager",
         "RevocableLease",
         "StageRuntimeState",
         "StageStatus",
         "TrustPolicy",
-        "WaitCoordinator",
         "activateRegistry",
         "applyStageResult",
         "buildRegistry",
@@ -20406,11 +20932,17 @@
         "invokeIsolated",
         "loadPipelineDefinition",
         "loadPlatformConfig",
+        "recoverPipelineV2",
         "recoverStageStates",
         "removeInstalledPackage",
+        "reopenBlockedPipelineV2",
         "resolveCapabilityGrants",
         "resumePipelineV2",
-        "runPipelineV2"
+        "runPipelineV2",
+        "validateCapabilityConstraints",
+        "validateCapabilityInvocationContract",
+        "validateContractValue",
+        "validateRuntimeRegistrationConfiguration"
       ],
       "imports": [
         {
@@ -20504,6 +21036,16 @@
           "external": false
         },
         {
+          "specifier": "../registry/capability-vocabulary.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/capability-vocabulary.ts",
+          "external": false
+        },
+        {
+          "specifier": "../registry/configuration.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/configuration.ts",
+          "external": false
+        },
+        {
           "specifier": "../registry/discovery.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/discovery.ts",
           "external": false
@@ -20511,6 +21053,11 @@
         {
           "specifier": "../registry/errors.ts",
           "resolved": "skills/common/plugin-runtime/core/registry/errors.ts",
+          "external": false
+        },
+        {
+          "specifier": "../registry/schema.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/schema.ts",
           "external": false
         },
         {
@@ -20524,8 +21071,8 @@
           "external": false
         },
         {
-          "specifier": "../state/waits.ts",
-          "resolved": "skills/common/plugin-runtime/core/state/waits.ts",
+          "specifier": "../state/plugins.ts",
+          "resolved": "skills/common/plugin-runtime/core/state/plugins.ts",
           "external": false
         },
         {
@@ -20594,20 +21141,92 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 31,
+          "line": 42,
           "evidence": "if (!fs.existsSync(this.#file)) return [];",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 32,
+          "line": 43,
           "evidence": "const lines = fs.readFileSync(this.#file, 'utf8').split('\\n').filter(Boolean);",
           "adapter": "kubeclaw.artifacts"
         },
         {
+          "id": "filesystem.read",
+          "line": 80,
+          "evidence": "owner = JSON.parse(fs.readFileSync(lockFile, 'utf8')) as {",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 170,
+          "evidence": "const owner = JSON.parse(fs.readFileSync(lock.file, 'utf8')) as { token?: unknown };",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
           "id": "filesystem.write",
-          "line": 26,
+          "line": 37,
           "evidence": "fs.mkdirSync(path.dirname(this.#file), { recursive: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 66,
+          "evidence": "fs.writeFileSync(",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 73,
+          "evidence": "fs.unlinkSync(temporary);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 76,
+          "evidence": "fs.rmSync(temporary, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 87,
+          "evidence": "fs.renameSync(lockFile, tombstone);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 92,
+          "evidence": "fs.rmSync(tombstone, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 109,
+          "evidence": "fs.renameSync(lockFile, tombstone);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 114,
+          "evidence": "fs.rmSync(tombstone, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 125,
+          "evidence": "fs.renameSync(lockFile, tombstone);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 130,
+          "evidence": "fs.rmSync(tombstone, { force: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 172,
+          "evidence": "fs.unlinkSync(lock.file);",
           "adapter": "kubeclaw.artifacts"
         }
       ],
@@ -20615,7 +21234,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugin-runtime/core/state/waits.ts",
+      "path": "skills/common/plugin-runtime/core/state/plugins.ts",
       "area": "skills/common/plugin-runtime",
       "scope": "runtime",
       "target": {
@@ -20628,13 +21247,23 @@
         ]
       },
       "exports": [
-        "WaitCoordinator",
-        "WaitSpecification"
+        "PluginStateAppend",
+        "PluginStateJournal"
       ],
       "imports": [
         {
           "specifier": "../../sdk/src/index.ts",
           "resolved": "skills/common/plugin-runtime/sdk/src/index.ts",
+          "external": false
+        },
+        {
+          "specifier": "../registry/schema.ts",
+          "resolved": "skills/common/plugin-runtime/core/registry/schema.ts",
+          "external": false
+        },
+        {
+          "specifier": "./journal.ts",
+          "resolved": "skills/common/plugin-runtime/core/state/journal.ts",
           "external": false
         },
         {
@@ -20814,6 +21443,7 @@
       "exports": [
         "AdapterLifecycle",
         "AdapterRegistration",
+        "AdministrativeReopenDecision",
         "ArtifactRef",
         "AttemptIdentity",
         "CapabilityGrant",
@@ -20856,7 +21486,7 @@
       "effects": [
         {
           "id": "git.execute",
-          "line": 310,
+          "line": 341,
           "evidence": "type: 'builtin' | 'local' | 'git' | 'registry';",
           "adapter": "kubeclaw.git"
         }
@@ -20919,8 +21549,11 @@
         "AdapterFactory",
         "AdapterInstance",
         "AdapterInvocation",
+        "AdapterResourceFence",
         "CapabilityInvocation",
+        "ConfidentialAdapterInvocation",
         "EffectJournal",
+        "FencedAdapterInvocation",
         "ObserverHandler",
         "PluginInvocationContext"
       ],
@@ -21136,7 +21769,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/agent-observability/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -21427,13 +22060,25 @@
         },
         {
           "id": "filesystem.read",
-          "line": 83,
+          "line": 74,
+          "evidence": "if (!fs.existsSync(file)) return false;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 75,
+          "evidence": "return fs.readFileSync(file, 'utf8').split('\\n').some((line) => {",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 108,
           "evidence": "if (!fs.existsSync(file)) throw new Error('ARTIFACT_NOT_FOUND');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 84,
+          "line": 109,
           "evidence": "const bytes = fs.readFileSync(file);",
           "adapter": "kubeclaw.artifacts"
         },
@@ -21451,7 +22096,7 @@
         },
         {
           "id": "filesystem.write",
-          "line": 76,
+          "line": 97,
           "evidence": "fs.mkdirSync(path.join(root, 'blobs', 'sha256'), { recursive: true, mode: 0o700 });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -21460,7 +22105,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/artifact-store/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -21502,13 +22147,13 @@
       "effects": [
         {
           "id": "filesystem.write",
-          "line": 67,
+          "line": 71,
           "evidence": "fs.writeFileSync(blob, '{}');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 97,
+          "line": 103,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -21689,7 +22334,7 @@
         },
         {
           "id": "command.execute",
-          "line": 98,
+          "line": 99,
           "evidence": "const child = spawn(executable, args, {",
           "adapter": "kubeclaw.command"
         }
@@ -21698,7 +22343,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/command-runner/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/command-runner/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -21737,6 +22382,18 @@
       ],
       "effects": [
         {
+          "id": "filesystem.read",
+          "line": 136,
+          "evidence": "for (let attempt = 0; attempt < 100 && !fs.existsSync(shutdownReady); attempt += 1) {",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 139,
+          "evidence": "assert.equal(fs.existsSync(shutdownReady), true, 'shutdown fixture must install its SIGTERM handler');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
           "id": "filesystem.write",
           "line": 10,
           "evidence": "fs.mkdirSync(workingRoot);",
@@ -21750,7 +22407,13 @@
         },
         {
           "id": "filesystem.write",
-          "line": 140,
+          "line": 134,
+          "evidence": "`process.on(\"SIGTERM\", () => {});require(\"node:fs\").writeFileSync(${JSON.stringify(shutdownReady)}, \"ready\");setInterval(() => {}, 10_000)`,",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 146,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -21934,7 +22597,7 @@
         },
         {
           "id": "filesystem.read",
-          "line": 344,
+          "line": 345,
           "evidence": "const local = fs.existsSync(destination) ? fs.readFileSync(destination, 'utf8') : undefined;",
           "adapter": "kubeclaw.artifacts"
         },
@@ -21955,7 +22618,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/git-workspace/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -22000,13 +22663,13 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 122,
+          "line": 124,
           "evidence": "assert.equal(fs.existsSync(hookMarker), false);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 141,
+          "line": 143,
           "evidence": "assert.equal(fs.readFileSync(path.join(workspace, 'merge.txt'), 'utf8'), 'merged content\\n');",
           "adapter": "kubeclaw.artifacts"
         },
@@ -22048,55 +22711,55 @@
         },
         {
           "id": "filesystem.write",
-          "line": 105,
+          "line": 107,
           "evidence": "fs.mkdirSync(hookDir);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 107,
+          "line": 109,
           "evidence": "fs.writeFileSync(hook, `#!/bin/sh\\nprintf hook > ${JSON.stringify(hookMarker)}\\nexit 1\\n`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 111,
+          "line": 113,
           "evidence": "fs.writeFileSync(path.join(workspace, 'selected.txt'), 'committed selected\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 112,
+          "line": 114,
           "evidence": "fs.writeFileSync(path.join(workspace, 'unrelated.txt'), 'staged but unrelated\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 130,
+          "line": 132,
           "evidence": "fs.writeFileSync(path.join(repository, 'merge.txt'), 'merged content\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 181,
+          "line": 183,
           "evidence": "fs.mkdirSync(outside);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 182,
+          "line": 184,
           "evidence": "fs.writeFileSync(path.join(outside, 'secret.txt'), 'secret');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 204,
+          "line": 206,
           "evidence": "fs.writeFileSync(file, `#!/bin/sh\\n${body}\\n`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 275,
+          "line": 277,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
@@ -22265,7 +22928,7 @@
       "effects": [
         {
           "id": "network.http",
-          "line": 54,
+          "line": 55,
           "evidence": "response = await fetch(url, {",
           "adapter": "kubeclaw.network"
         }
@@ -22274,7 +22937,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/network-http/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/network-http/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -22493,7 +23156,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/notification-observer/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -22753,7 +23416,7 @@
       "effects": [
         {
           "id": "redis.execute",
-          "line": 103,
+          "line": 104,
           "evidence": "if (request.capability !== 'agent.events.subscribe' || request.operation !== 'status') {",
           "adapter": "kubeclaw.redis"
         }
@@ -22762,7 +23425,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -22802,13 +23465,13 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 58,
+          "line": 59,
           "evidence": "assert.doesNotMatch(fs.readFileSync(journalPath, 'utf8'), /must-not-survive/);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 80,
+          "line": 81,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
@@ -23713,6 +24376,140 @@
       "hardcodings": []
     },
     {
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.openclaw-agent-observer",
+        "ruleId": "plugin-openclaw-agent-observer",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.openclaw-agent-observer",
+        "ruleId": "plugin-openclaw-agent-observer",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "redis.execute",
+          "line": 65,
+          "evidence": "async xadd(...args) {",
+          "adapter": "kubeclaw.redis"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.openclaw-agent-observer",
+        "ruleId": "plugin-openclaw-agent-observer",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 5,
+          "evidence": "for (const name of fs.readdirSync(path.resolve('src'))) {",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 7,
+          "evidence": "if (!fs.statSync(file).isFile() || !/\\.[cm]?[jt]s$/.test(file)) continue;",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 8,
+          "evidence": "const source = fs.readFileSync(file, 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 12,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('openclaw.plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 14,
+          "evidence": "assert.equal(fs.existsSync('plugin.json'), false);",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
       "path": "skills/common/plugins/openclaw-agent-observer/tsconfig.build.json",
       "area": "skills/common/plugins",
       "scope": "runtime",
@@ -23873,7 +24670,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/operator-messaging/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -24179,7 +24976,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -24375,7 +25172,7 @@
       "effects": [
         {
           "id": "secret.read",
-          "line": 16,
+          "line": 17,
           "evidence": "const value = process.env[environmentName];",
           "adapter": "kubeclaw.secrets"
         }
@@ -24384,7 +25181,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/secret-resolver/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -24426,13 +25223,13 @@
         },
         {
           "id": "secret.read",
-          "line": 36,
+          "line": 38,
           "evidence": "delete process.env.KUBECLAW_TEST_SECRET;",
           "adapter": "kubeclaw.secrets"
         },
         {
           "id": "secret.read",
-          "line": 37,
+          "line": 39,
           "evidence": "delete process.env.KUBECLAW_EMPTY_SECRET;",
           "adapter": "kubeclaw.secrets"
         }
@@ -24608,7 +25405,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/state-store/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/state-store/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -24648,13 +25445,13 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 45,
+          "line": 47,
           "evidence": "assert.equal(fs.statSync(path.join(root, 'plugin.test__run.jsonl')).mode & 0o777, 0o600);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 79,
+          "line": 83,
           "evidence": "fs.rmSync(root, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -24850,7 +25647,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/telemetry-observer/tests/observer.test.mjs",
+      "path": "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -25076,7 +25873,7 @@
         },
         {
           "id": "telemetry.emit",
-          "line": 54,
+          "line": 55,
           "evidence": "if (request.capability !== 'telemetry.emit' || request.operation !== 'append') throw new Error('TELEMETRY_OPERATION_UNSUPPORTED');",
           "adapter": "kubeclaw.telemetry-transport"
         }
@@ -25085,7 +25882,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/telemetry-store/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -25127,25 +25924,25 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 38,
+          "line": 40,
           "evidence": "const records = fs.readFileSync(journalPath, 'utf8').trim().split('\\n').map((line) => JSON.parse(line));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 42,
+          "line": 44,
           "evidence": "assert.equal(fs.statSync(journalPath).mode & 0o777, 0o600);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 49,
+          "line": 51,
           "evidence": "fs.rmSync(root, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "telemetry.emit",
-          "line": 22,
+          "line": 24,
           "evidence": "capability: 'telemetry.emit',",
           "adapter": "kubeclaw.telemetry-transport"
         }
@@ -25345,7 +26142,7 @@
       "effects": [
         {
           "id": "redis.execute",
-          "line": 150,
+          "line": 151,
           "evidence": "if (request.capability !== 'transport.publish' || request.operation !== 'publish') {",
           "adapter": "kubeclaw.redis"
         }
@@ -25386,7 +26183,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -25785,7 +26582,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/common/plugins/wait-store/tests/live-function.test.mjs",
+      "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
       "area": "skills/common/plugins",
       "scope": "runtime",
       "target": {
@@ -25825,19 +26622,19 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 49,
+          "line": 51,
           "evidence": "assert.equal(fs.statSync(journalPath).mode & 0o777, 0o600);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 81,
+          "line": 84,
           "evidence": "fs.appendFileSync(journalPath, `${JSON.stringify({",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 97,
+          "line": 100,
           "evidence": "fs.rmSync(root, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -28793,8 +29590,8 @@
           "external": false
         },
         {
-          "specifier": "../../services/module-validators.ts",
-          "resolved": "skills/nova/pipeline/services/module-validators.ts",
+          "specifier": "../../services/module-lint-validators.ts",
+          "resolved": "skills/nova/pipeline/services/module-lint-validators.ts",
           "external": false
         },
         {
@@ -28837,244 +29634,214 @@
       "legacyContracts": [
         {
           "id": "manifest.package-capabilities",
-          "line": 34,
+          "line": 33,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'notify.operator'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 69,
+          "line": 68,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'notify.operator', 'request.wait', 'request.signal'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 100,
+          "line": 99,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts', 'notify.operator'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 130,
+          "line": 129,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 157,
+          "line": 156,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 185,
+          "line": 184,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 213,
-          "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'emit.telemetry', 'write.artifacts'],"
-        },
-        {
-          "id": "manifest.package-capabilities",
-          "line": 241,
+          "line": 212,
           "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'write.artifacts', 'emit.telemetry', 'notify.operator'],"
         },
         {
           "id": "manifest.package-capabilities",
-          "line": 268,
-          "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'write.artifacts', 'emit.telemetry', 'notify.operator'],"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 30,
-          "evidence": "kind: 'gate',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 65,
-          "evidence": "kind: 'gate',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 96,
-          "evidence": "kind: 'gate',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 127,
-          "evidence": "kind: 'validator',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 154,
-          "evidence": "kind: 'validator',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 182,
-          "evidence": "kind: 'validator',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 210,
-          "evidence": "kind: 'validator',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 238,
-          "evidence": "kind: 'generator',"
-        },
-        {
-          "id": "manifest.kind",
-          "line": 265,
-          "evidence": "kind: 'generator',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 31,
-          "evidence": "hookFamily: 'gate.execute',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 66,
-          "evidence": "hookFamily: 'gate.execute',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 97,
-          "evidence": "hookFamily: 'gate.execute',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 128,
-          "evidence": "hookFamily: 'validator.run',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 155,
-          "evidence": "hookFamily: 'validator.run',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 183,
-          "evidence": "hookFamily: 'validator.run',"
-        },
-        {
-          "id": "manifest.hook-family",
-          "line": 211,
-          "evidence": "hookFamily: 'validator.run',"
-        },
-        {
-          "id": "manifest.hook-family",
           "line": 239,
+          "evidence": "capabilities: ['read.state', 'read.artifacts', 'emit.stream', 'write.artifacts', 'emit.telemetry', 'notify.operator'],"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 29,
+          "evidence": "kind: 'gate',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 64,
+          "evidence": "kind: 'gate',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 95,
+          "evidence": "kind: 'gate',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 126,
+          "evidence": "kind: 'validator',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 153,
+          "evidence": "kind: 'validator',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 181,
+          "evidence": "kind: 'validator',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 209,
+          "evidence": "kind: 'generator',"
+        },
+        {
+          "id": "manifest.kind",
+          "line": 236,
+          "evidence": "kind: 'generator',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 30,
+          "evidence": "hookFamily: 'gate.execute',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 65,
+          "evidence": "hookFamily: 'gate.execute',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 96,
+          "evidence": "hookFamily: 'gate.execute',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 127,
+          "evidence": "hookFamily: 'validator.run',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 154,
+          "evidence": "hookFamily: 'validator.run',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 182,
+          "evidence": "hookFamily: 'validator.run',"
+        },
+        {
+          "id": "manifest.hook-family",
+          "line": 210,
           "evidence": "hookFamily: 'generator.run',"
         },
         {
           "id": "manifest.hook-family",
-          "line": 266,
+          "line": 237,
           "evidence": "hookFamily: 'generator.run',"
         }
       ],
       "hardcodings": [
         {
           "id": "stage.gate-review",
-          "line": 33,
+          "line": 32,
           "evidence": "stageIds: ['gate:review'],"
         },
         {
           "id": "stage.gate-review",
-          "line": 46,
+          "line": 45,
           "evidence": "stageId: 'gate:review',"
         },
         {
           "id": "stage.gate-approval",
-          "line": 68,
+          "line": 67,
           "evidence": "stageIds: ['gate:approval'],"
         },
         {
           "id": "stage.gate-approval",
-          "line": 81,
+          "line": 80,
           "evidence": "stageId: 'gate:approval',"
         },
         {
           "id": "stage.gate-buster",
-          "line": 99,
+          "line": 98,
           "evidence": "stageIds: ['gate:buster'],"
         },
         {
           "id": "stage.gate-buster",
-          "line": 112,
+          "line": 111,
           "evidence": "stageId: 'gate:buster',"
         },
         {
           "id": "stage.validator",
-          "line": 129,
+          "line": 128,
           "evidence": "stageIds: ['validator:architecture'],"
         },
         {
           "id": "stage.validator",
-          "line": 142,
+          "line": 141,
           "evidence": "stageId: 'validator:architecture',"
         },
         {
           "id": "stage.validator",
-          "line": 156,
-          "evidence": "stageIds: ['validator:delivery_lint'],"
-        },
-        {
-          "id": "stage.validator",
-          "line": 169,
-          "evidence": "stageId: 'validator:delivery_lint',"
-        },
-        {
-          "id": "stage.validator",
-          "line": 172,
-          "evidence": "return runDeliveryLintValidatorStage(config, progress, input, { stageId: 'validator:delivery_lint', producerType: 'delivery_lint' });"
-        },
-        {
-          "id": "stage.validator",
-          "line": 184,
+          "line": 155,
           "evidence": "stageIds: ['validator:pre_check'],"
         },
         {
           "id": "stage.validator",
-          "line": 197,
+          "line": 168,
           "evidence": "stageId: 'validator:pre_check',"
         },
         {
           "id": "stage.validator",
-          "line": 200,
+          "line": 171,
           "evidence": "return runPreCheckValidatorStage(config, progress, input, { stageId: 'validator:pre_check', producerType: 'pre_check' });"
         },
         {
           "id": "stage.validator",
-          "line": 212,
+          "line": 183,
           "evidence": "stageIds: ['validator:full_lint'],"
         },
         {
           "id": "stage.validator",
-          "line": 225,
+          "line": 196,
           "evidence": "stageId: 'validator:full_lint',"
         },
         {
           "id": "stage.validator",
-          "line": 228,
+          "line": 199,
           "evidence": "return runFullLintValidatorStage(config, progress, input, { stageId: 'validator:full_lint', producerType: 'full_lint' });"
         },
         {
           "id": "stage.generator",
-          "line": 240,
+          "line": 211,
           "evidence": "stageIds: ['generator:project_summary'],"
         },
         {
           "id": "stage.generator",
-          "line": 253,
+          "line": 224,
           "evidence": "stageId: 'generator:project_summary',"
         },
         {
           "id": "stage.generator",
-          "line": 267,
+          "line": 238,
           "evidence": "stageIds: ['generator:pipeline_review'],"
         },
         {
           "id": "stage.generator",
-          "line": 280,
+          "line": 251,
           "evidence": "stageId: 'generator:pipeline_review',"
         }
       ]
@@ -43877,19 +44644,16 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/pipeline/services/module-validators.ts",
+      "path": "skills/nova/pipeline/services/module-lint-validators.ts",
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "delete",
-        "id": "legacy-mixed-validator-facade",
-        "ruleId": "delete-mixed-validator-facade",
-        "shadowedRuleIds": [
-          "nova-core-fallback"
-        ]
+        "kind": "core",
+        "id": "pipeline-core-execution",
+        "ruleId": "nova-core-fallback",
+        "shadowedRuleIds": []
       },
       "exports": [
-        "runDeliveryLintValidatorStage",
         "runFullLintValidatorStage",
         "runPreCheckValidatorStage"
       ],
@@ -43930,11 +44694,6 @@
           "external": false
         },
         {
-          "specifier": "./validation.ts",
-          "resolved": "skills/nova/pipeline/services/validation.ts",
-          "external": false
-        },
-        {
           "specifier": "fs",
           "resolved": null,
           "external": true
@@ -43948,13 +44707,13 @@
       "effects": [
         {
           "id": "filesystem.write",
-          "line": 98,
+          "line": 96,
           "evidence": "fs.mkdirSync(lintDir, { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 99,
+          "line": 97,
           "evidence": "fs.writeFileSync(archivePath, JSON.stringify(report, null, 2));",
           "adapter": "kubeclaw.artifacts"
         }
@@ -43963,22 +44722,17 @@
       "hardcodings": [
         {
           "id": "stage.validator",
-          "line": 16,
-          "evidence": "const DELIVERY_LINT_STAGE_ID = 'validator:delivery_lint';"
-        },
-        {
-          "id": "stage.validator",
-          "line": 17,
+          "line": 15,
           "evidence": "const PRE_CHECK_STAGE_ID = 'validator:pre_check';"
         },
         {
           "id": "stage.validator",
-          "line": 18,
+          "line": 16,
           "evidence": "const FULL_LINT_STAGE_ID = 'validator:full_lint';"
         },
         {
           "id": "stage.validator",
-          "line": 88,
+          "line": 86,
           "evidence": "function archiveFullLintReport(config: any, report: any = null, input: any = {}, moduleDir: any = null, stageId: any = 'validator:full_lint') {"
         }
       ]
@@ -51745,72 +52499,6 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/pipeline/services/validation-delivery.ts",
-      "area": "skills/nova/pipeline",
-      "scope": "runtime",
-      "target": {
-        "kind": "plugin",
-        "id": "kubeclaw.delivery-lint",
-        "ruleId": "plugin-delivery-lint",
-        "shadowedRuleIds": [
-          "plugin-lint",
-          "nova-core-fallback"
-        ]
-      },
-      "exports": [
-        "runDeliveryLintValidation"
-      ],
-      "imports": [
-        {
-          "specifier": "../core/logger.ts",
-          "resolved": "skills/nova/pipeline/core/logger.ts",
-          "external": false
-        },
-        {
-          "specifier": "../core/paths.ts",
-          "resolved": "skills/nova/pipeline/core/paths.ts",
-          "external": false
-        },
-        {
-          "specifier": "./validation-contract.ts",
-          "resolved": "skills/nova/pipeline/services/validation-contract.ts",
-          "external": false
-        },
-        {
-          "specifier": "fs",
-          "resolved": null,
-          "external": true
-        },
-        {
-          "specifier": "path",
-          "resolved": null,
-          "external": true
-        }
-      ],
-      "effects": [
-        {
-          "id": "filesystem.read",
-          "line": 39,
-          "evidence": "if (fs.existsSync(candidatePath)) resolveRepoRealPath(config, staticPath, 'test_config.serve.static_path');",
-          "adapter": "kubeclaw.artifacts"
-        },
-        {
-          "id": "filesystem.read",
-          "line": 50,
-          "evidence": "if (!fs.existsSync(candidatePath)) {",
-          "adapter": "kubeclaw.artifacts"
-        },
-        {
-          "id": "filesystem.read",
-          "line": 60,
-          "evidence": "return { content: fs.readFileSync(realPath, 'utf8') };",
-          "adapter": "kubeclaw.artifacts"
-        }
-      ],
-      "legacyContracts": [],
-      "hardcodings": []
-    },
-    {
       "path": "skills/nova/pipeline/services/validation.ts",
       "area": "skills/nova/pipeline",
       "scope": "runtime",
@@ -51827,7 +52515,6 @@
         "VALIDATION_CODES",
         "formatValidationFailures",
         "isPlainObject",
-        "runDeliveryLintValidation",
         "runPreflightValidation"
       ],
       "imports": [
@@ -51849,11 +52536,6 @@
         {
           "specifier": "./validation-contract.ts",
           "resolved": "skills/nova/pipeline/services/validation-contract.ts",
-          "external": false
-        },
-        {
-          "specifier": "./validation-delivery.ts",
-          "resolved": "skills/nova/pipeline/services/validation-delivery.ts",
           "external": false
         },
         {
@@ -54920,6 +55602,7 @@
         "shadowedRuleIds": []
       },
       "exports": [
+        "ArchitectureFinding",
         "ArchitectureOutput",
         "parseArchitectureOutput"
       ],
@@ -54982,7 +55665,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -55110,7 +55793,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.mjs",
+      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -55279,7 +55962,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -55590,7 +56273,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -55668,7 +56351,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.mjs",
+      "path": "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -55680,8 +56363,53 @@
       "exports": [],
       "imports": [
         {
-          "specifier": "../dist/protocol.js",
-          "resolved": "skills/nova/plugins/buster-quality-gate/dist/protocol.js",
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 5,
+          "evidence": "const source = fs.readFileSync(path.resolve('src/stage.ts'), 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 10,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.buster-quality-gate",
+        "ruleId": "plugin-buster-quality-gate-package",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "../src/protocol.ts",
+          "resolved": "skills/nova/plugins/buster-quality-gate/src/protocol.ts",
           "external": false
         },
         {
@@ -55858,7 +56586,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/case-study/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -55936,6 +56664,51 @@
       "hardcodings": []
     },
     {
+      "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.case-study",
+        "ruleId": "plugin-case-study",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 5,
+          "evidence": "const source = fs.readFileSync(path.resolve('src/stage.ts'), 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 10,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
       "path": "skills/nova/plugins/case-study/tests/protocol.test.mjs",
       "area": "skills/nova/plugins",
       "scope": "runtime",
@@ -55980,6 +56753,38 @@
     },
     {
       "path": "skills/nova/plugins/delivery-lint/README.md",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.delivery-lint",
+        "ruleId": "plugin-delivery-lint",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/fixtures/passing.json",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.delivery-lint",
+        "ruleId": "plugin-delivery-lint",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/fixtures/remediation.json",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -56099,7 +56904,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -56139,13 +56944,13 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 88,
+          "line": 101,
           "evidence": "const events = fs.readFileSync(journalPath, 'utf8').trim().split('\\n').map(JSON.parse);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 112,
+          "line": 139,
           "evidence": "const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8').trim().split('\\n');",
           "adapter": "kubeclaw.artifacts"
         },
@@ -56163,7 +56968,13 @@
         },
         {
           "id": "filesystem.write",
-          "line": 115,
+          "line": 134,
+          "evidence": "afterAdaptersStart: () => fs.mkdirSync(path.join(unusableArtifactRoot, 'catalog.jsonl')),",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 142,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -56435,7 +57246,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/human-approval/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -56485,49 +57296,49 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 141,
+          "line": 147,
           "evidence": "const records = fs.readFileSync(journalPath, 'utf8').trim().split('\\n').map(JSON.parse);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 161,
+          "line": 167,
           "evidence": "assert.equal(fs.existsSync(waitJournal), false);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 171,
+          "line": 177,
           "evidence": "assert.equal(fs.existsSync(waitJournal), false);",
-          "adapter": "kubeclaw.artifacts"
-        },
-        {
-          "id": "filesystem.read",
-          "line": 195,
-          "evidence": "const waits = fs.readFileSync(waitJournal, 'utf8').trim().split('\\n').map(JSON.parse);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
           "line": 201,
+          "evidence": "const waits = fs.readFileSync(waitJournal, 'utf8').trim().split('\\n').map(JSON.parse);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 207,
           "evidence": "const effectJournals = fs.readdirSync(temporary)",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 203,
+          "line": 209,
           "evidence": ".map((entry) => fs.readFileSync(path.join(temporary, entry), 'utf8'))",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 214,
+          "line": 220,
           "evidence": "assert.equal(fs.readFileSync(waitJournal, 'utf8').trim().split('\\n').length, 1);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 219,
+          "line": 225,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
@@ -56545,13 +57356,13 @@
         },
         {
           "id": "secret.read",
-          "line": 217,
+          "line": 223,
           "evidence": "if (previousSecret === undefined) delete process.env[secretEnvironmentName];",
           "adapter": "kubeclaw.secrets"
         },
         {
           "id": "secret.read",
-          "line": 218,
+          "line": 224,
           "evidence": "else process.env[secretEnvironmentName] = previousSecret;",
           "adapter": "kubeclaw.secrets"
         }
@@ -56779,7 +57590,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -56792,6 +57603,11 @@
       "imports": [
         {
           "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:crypto",
           "resolved": null,
           "external": true
         },
@@ -56824,31 +57640,61 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 49,
+          "line": 65,
+          "evidence": "assert.equal(fs.readFileSync(path.join(agentWorkspace, 'src/api.ts'), 'utf8'), 'export const ready = true;\\n');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 67,
+          "evidence": "crypto.createHash('sha256').update(fs.readFileSync(path.join(agentWorkspace, 'transcript.log'))).digest('hex'),",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 70,
           "evidence": "assert.match(fs.readFileSync(path.join(temporary,'artifacts','catalog.jsonl'),'utf8'),/implementation:api:1/);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 50,
+          "line": 71,
           "evidence": "assert.equal(fs.readFileSync(effectsPath,'utf8').includes('implementation-secret'),false);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 53,
+          "line": 12,
+          "evidence": "fs.mkdirSync(path.join(agentWorkspace, 'src'), { recursive: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 16,
+          "evidence": "fs.writeFileSync(path.join(agentWorkspace, 'src/api.ts'), 'export const ready = true;\\n');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 17,
+          "evidence": "fs.writeFileSync(path.join(agentWorkspace, 'transcript.log'), transcript);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 74,
           "evidence": "delete process.env[secret]; await new Promise((resolve)=>server.close(resolve)); fs.rmSync(temporary,{recursive:true,force:true});",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "secret.read",
-          "line": 18,
+          "line": 34,
           "evidence": "const secret = 'KUBECLAW_IMPLEMENTATION_TEST_TOKEN'; process.env[secret] = 'implementation-secret';",
           "adapter": "kubeclaw.secrets"
         },
         {
           "id": "secret.read",
-          "line": 53,
+          "line": 74,
           "evidence": "delete process.env[secret]; await new Promise((resolve)=>server.close(resolve)); fs.rmSync(temporary,{recursive:true,force:true});",
           "adapter": "kubeclaw.secrets"
         }
@@ -56897,7 +57743,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.mjs",
+      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -56909,8 +57755,8 @@
       "exports": [],
       "imports": [
         {
-          "specifier": "../dist/protocol.js",
-          "resolved": "skills/nova/plugins/implementation-agent/dist/protocol.js",
+          "specifier": "../src/protocol.ts",
+          "resolved": "skills/nova/plugins/implementation-agent/src/protocol.ts",
           "external": false
         },
         {
@@ -58761,7 +59607,7 @@
         },
         {
           "id": "filesystem.write",
-          "line": 72,
+          "line": 75,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -58770,7 +59616,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/lint/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -58818,19 +59664,25 @@
         },
         {
           "id": "filesystem.read",
-          "line": 146,
+          "line": 167,
           "evidence": "console.error(fs.readFileSync(path.join(temporary, 'clean-events.jsonl'), 'utf8'));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 147,
+          "line": 168,
           "evidence": "console.error(fs.readFileSync(path.join(temporary, 'clean-effects.jsonl'), 'utf8'));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 159,
+          "line": 195,
+          "evidence": "const events = fs.readFileSync(path.join(temporary, `${id}-events.jsonl`), 'utf8')",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 202,
           "evidence": "const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8').trim().split('\\n');",
           "adapter": "kubeclaw.artifacts"
         },
@@ -58866,7 +59718,13 @@
         },
         {
           "id": "filesystem.write",
-          "line": 162,
+          "line": 191,
+          "evidence": "afterAdaptersStart: () => fs.mkdirSync(path.join(unusableArtifactRoot, 'catalog.jsonl')),",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 205,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -58924,6 +59782,40 @@
           "adapter": "kubeclaw.artifacts"
         }
       ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/parity.test.ts",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.lint",
+        "ruleId": "plugin-lint-package",
+        "shadowedRuleIds": [
+          "plugin-lint"
+        ]
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [],
       "legacyContracts": [],
       "hardcodings": []
     },
@@ -59126,7 +60018,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -59198,6 +60090,51 @@
           "line": 41,
           "evidence": "}finally{delete process.env[secret];await new Promise((resolve)=>server.close(resolve));fs.rmSync(temporary,{recursive:true,force:true});}",
           "adapter": "kubeclaw.secrets"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.pipeline-review",
+        "ruleId": "plugin-pipeline-review",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 5,
+          "evidence": "const source = fs.readFileSync(path.resolve('src/stage.ts'), 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 10,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
         }
       ],
       "legacyContracts": [],
@@ -59405,7 +60342,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -59445,13 +60382,13 @@
       "effects": [
         {
           "id": "filesystem.read",
-          "line": 88,
+          "line": 98,
           "evidence": "const records = fs.readFileSync(journalPath, 'utf8').trim().split('\\n').map(JSON.parse);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 117,
+          "line": 127,
           "evidence": "const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8').trim().split('\\n');",
           "adapter": "kubeclaw.artifacts"
         },
@@ -59493,7 +60430,7 @@
         },
         {
           "id": "filesystem.write",
-          "line": 120,
+          "line": 130,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -59546,6 +60483,67 @@
           "id": "filesystem.read",
           "line": 9,
           "evidence": "const source = fs.readFileSync(file, 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/parity.test.ts",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.preflight-contract",
+        "ruleId": "plugin-preflight-contract",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:os",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:url",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.write",
+          "line": 19,
+          "evidence": "fs.mkdirSync(path.join(modules, moduleDir), { recursive: true });",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 20,
+          "evidence": "fs.writeFileSync(path.join(modules, moduleDir, 'FORGE.md'), content);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.write",
+          "line": 81,
+          "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
       ],
@@ -59714,7 +60712,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/project-summary/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -59765,6 +60763,78 @@
           "adapter": "kubeclaw.artifacts"
         }
       ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.project-summary",
+        "ruleId": "plugin-project-summary",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:fs",
+          "resolved": null,
+          "external": true
+        },
+        {
+          "specifier": "node:path",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [
+        {
+          "id": "filesystem.read",
+          "line": 5,
+          "evidence": "const source = fs.readFileSync(path.resolve('src/stage.ts'), 'utf8');",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 11,
+          "evidence": "const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));",
+          "adapter": "kubeclaw.artifacts"
+        }
+      ],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/parity.test.ts",
+      "area": "skills/nova/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "plugin",
+        "id": "kubeclaw.project-summary",
+        "ruleId": "plugin-project-summary",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "../src/summary.ts",
+          "resolved": "skills/nova/plugins/project-summary/src/summary.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [],
       "legacyContracts": [],
       "hardcodings": []
     },
@@ -59920,13 +60990,13 @@
         },
         {
           "id": "filesystem.read",
-          "line": 52,
+          "line": 53,
           "evidence": "const size = fs.statSync(file).size;",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 54,
+          "line": 55,
           "evidence": "const content = fs.readFileSync(file, 'utf8');",
           "adapter": "kubeclaw.artifacts"
         }
@@ -59935,7 +61005,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -59999,7 +61069,7 @@
         },
         {
           "id": "filesystem.write",
-          "line": 56,
+          "line": 58,
           "evidence": "fs.rmSync(temporary, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -60302,7 +61372,7 @@
       "hardcodings": []
     },
     {
-      "path": "skills/nova/plugins/review/tests/live-function.test.mjs",
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
       "area": "skills/nova/plugins",
       "scope": "runtime",
       "target": {
@@ -74921,11 +75991,6 @@
         {
           "id": "stage.validator",
           "line": 428,
-          "evidence": "stageId: 'validator:delivery_lint',"
-        },
-        {
-          "id": "stage.validator",
-          "line": 433,
           "evidence": "stageId: 'validator:pre_check',"
         }
       ]
@@ -75338,109 +76403,109 @@
         },
         {
           "id": "filesystem.read",
-          "line": 195,
+          "line": 180,
           "evidence": "const policySource = fs.readFileSync(policyPath);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 200,
+          "line": 185,
           "evidence": "return [tool.id, crypto.createHash('sha256').update(fs.readFileSync(configPath)).digest('hex')];",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 227,
+          "line": 212,
           "evidence": "const beforePreCheckTmp = new Set(fs.readdirSync('/tmp'));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 237,
+          "line": 222,
           "evidence": "assert.equal(fs.existsSync(path.join(lintDir, 'precheck-trace-attempt-1.jsonl')), true, 'missing fail_count should produce attempt-1 trace path');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 238,
+          "line": 223,
           "evidence": "assert.equal(fs.existsSync(path.join(lintDir, 'precheck-attempt-1.json')), true, 'missing fail_count should produce attempt-1 report path');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 239,
+          "line": 224,
           "evidence": "assert.equal(fs.readdirSync(lintDir).some((name) => name.includes('NaN')), false, 'pre-check lint artifacts must not contain attempt-NaN');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 241,
+          "line": 226,
           "evidence": "fs.readdirSync('/tmp').filter((name) => name.startsWith(`swarm-pipeline-lint-pre-check-${moduleDir}-`) && !beforePreCheckTmp.has(name)),",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 246,
+          "line": 231,
           "evidence": "const beforeFullLintTmp = new Set(fs.readdirSync('/tmp'));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 260,
+          "line": 245,
           "evidence": "const fullLintArtifacts = fs.existsSync(gateLintDir) ? fs.readdirSync(gateLintDir).filter((name) => name.startsWith('full-lint-') && name.endsWith('.json')) : [];",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 264,
+          "line": 249,
           "evidence": "fs.readdirSync('/tmp').filter((name) => name.startsWith('swarm-pipeline-lint-full-review-') && !beforeFullLintTmp.has(name)),",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 170,
+          "line": 155,
           "evidence": "fs.writeFileSync(path.join(lintAttemptRoot, 'lint-baseline.json'), '{\"schema_version\":\"pipeline_lint_baseline.v2\",\"groups\":[]}\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 171,
+          "line": 156,
           "evidence": "fs.writeFileSync(lintPolicyPath, JSON.stringify({",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 181,
+          "line": 166,
           "evidence": "fs.writeFileSync(lintReportPath, `",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 203,
+          "line": 188,
           "evidence": "fs.mkdirSync(path.dirname(logPath), { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 204,
+          "line": 189,
           "evidence": "fs.writeFileSync(logPath, JSON.stringify({ event: 'trace' }) + '\\\\n');",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 206,
+          "line": 191,
           "evidence": "fs.writeFileSync(output, JSON.stringify({",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 226,
+          "line": 211,
           "evidence": "fs.mkdirSync(path.join(modulesDir, moduleDir), { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 269,
+          "line": 254,
           "evidence": "fs.rmSync(lintAttemptRoot, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         }
@@ -75448,24 +76513,24 @@
       "legacyContracts": [
         {
           "id": "manifest.package-capabilities",
-          "line": 280,
+          "line": 265,
           "evidence": "capabilities: [],"
         },
         {
           "id": "manifest.kind",
-          "line": 277,
+          "line": 262,
           "evidence": "kind: 'validator',"
         },
         {
           "id": "manifest.hook-family",
-          "line": 278,
+          "line": 263,
           "evidence": "hookFamily: 'validator.run',"
         }
       ],
       "hardcodings": [
         {
           "id": "stage.gate-review",
-          "line": 256,
+          "line": 241,
           "evidence": "executionContext: { scheduleKey: 'mandatory:before:gate:review:validator:full_lint' },"
         },
         {
@@ -75485,72 +76550,67 @@
         },
         {
           "id": "stage.validator",
-          "line": 106,
+          "line": 102,
           "evidence": "producerType: 'pre_check', stageId: 'validator:pre_check', moduleId: '01', moduleDir: '/workspace/modules/01', nextAction: 'pass', outcomeClass: 'passed',"
         },
         {
           "id": "stage.validator",
-          "line": 119,
+          "line": 115,
           "evidence": "producerType: 'delivery_lint', stageId: 'validator:delivery_lint', moduleId: '01', nextAction: 'request_fix', issueType: 'code', outcomeClass: 'validation_failed',"
         },
         {
           "id": "stage.validator",
-          "line": 126,
+          "line": 122,
           "evidence": "producerType: 'full_lint', stageId: 'validator:full_lint', executionFailed: true, nextAction: 'block', issueType: 'environment', outcomeClass: 'execution_failed',"
         },
         {
           "id": "stage.validator",
-          "line": 147,
-          "evidence": "ids: { runId: 'run-validator-control-contract-1', moduleId: '01', stageId: 'validator:delivery_lint', producerType: 'delivery_lint' },"
-        },
-        {
-          "id": "stage.validator",
-          "line": 158,
+          "line": 143,
           "evidence": "ids: { runId: 'run-validator-control-contract-1', moduleId: '01', stageId: 'validator:pre_check', producerType: 'pre_check' },"
         },
         {
           "id": "stage.validator",
-          "line": 255,
+          "line": 240,
           "evidence": "ids: { runId: 'run-validator-control-contract-lint-attempt', gateId: 'review', stageId: 'validator:full_lint', producerType: 'full_lint' },"
         },
         {
           "id": "stage.validator",
-          "line": 256,
+          "line": 241,
           "evidence": "executionContext: { scheduleKey: 'mandatory:before:gate:review:validator:full_lint' },"
         },
         {
           "id": "stage.validator",
-          "line": 279,
+          "line": 264,
           "evidence": "stageIds: ['validator:architecture'],"
         },
         {
           "id": "stage.validator",
-          "line": 293,
+          "line": 278,
           "evidence": "'validator:architecture': record,"
         },
         {
           "id": "stage.validator",
-          "line": 320,
+          "line": 305,
           "evidence": "}, { modules: {}, gates: {}, execution_order: [] }, 'validator:architecture');"
         },
         {
           "id": "stage.validator",
-          "line": 327,
+          "line": 312,
           "evidence": "{ stageId: 'validator:architecture' },"
         },
         {
           "id": "stage.validator",
-          "line": 352,
+          "line": 337,
           "evidence": "}, { stageId: 'validator:architecture' });"
         },
         {
           "id": "stage.validator",
-          "line": 373,
+          "line": 358,
           "evidence": "}, { stageId: 'validator:architecture' });"
         },
         {
           "id": "stage.validator",
-          "line": 394,
+          "line": 379,
           "evidence": "}, { stageId: 'validator:delivery_lint' });"
         }
       ]

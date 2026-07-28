@@ -3,7 +3,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { moduleSpecifiers, packageName, resolveLocalModule, walkModuleFiles } from '../lib/module-graph.mjs';
+import {
+  BUILTINS,
+  moduleSpecifiers,
+  nonLiteralModuleLoads,
+  packageName,
+  resolveLocalModule,
+  walkModuleFiles,
+} from '../lib/module-graph.mjs';
 
 function allFiles(root) {
   if (!fs.existsSync(root)) return [];
@@ -34,6 +41,108 @@ function inside(candidate, root) {
   return candidate === root || candidate?.startsWith(`${root}${path.sep}`);
 }
 
+const privilegedRuntimeModules = new Set([
+  'node:child_process',
+  'node:cluster',
+  'node:dgram',
+  'node:dns',
+  'node:fs',
+  'node:fs/promises',
+  'node:http',
+  'node:https',
+  'node:module',
+  'node:net',
+  'node:process',
+  'node:tls',
+  'node:worker_threads',
+  'axios',
+  'execa',
+  'ioredis',
+  'redis',
+  'undici',
+]);
+const safeRegistrationBuiltins = new Set(['node:path', 'path']);
+const safeRegistrationPackages = new Set(['@kubeclaw/plugin-sdk']);
+for (const specifier of [...privilegedRuntimeModules]) {
+  if (specifier.startsWith('node:')) privilegedRuntimeModules.add(specifier.slice('node:'.length));
+}
+const privilegedRuntimeGlobals = [
+  /\bprocess\b/u,
+  /\bfetch\b/u,
+  /\bglobalThis\b/u,
+  /\bglobal\b/u,
+  /\beval\b/u,
+  /\bFunction\b/u,
+  /\bDeno\./u,
+  /\bBun\.(?:spawn|spawnSync|file|write)\b/u,
+];
+
+function assertNoDirectPrivilegedAccess(file, surface) {
+  for (const reference of moduleSpecifiers(file)) {
+    assert(
+      !/^[A-Za-z][A-Za-z0-9+.-]*:/u.test(reference.specifier)
+      || reference.specifier.startsWith('node:'),
+      `${surface} cannot load URL or scheme-based modules: ${file}:${reference.line} -> ${reference.specifier}`,
+    );
+    assert(
+      !BUILTINS.has(reference.specifier)
+      || safeRegistrationBuiltins.has(reference.specifier),
+      `${surface} must use a capability adapter instead of Node built-in import: ${file}:${reference.line} -> ${reference.specifier}`,
+    );
+    assert(
+      !privilegedRuntimeModules.has(packageName(reference.specifier))
+      && !privilegedRuntimeModules.has(reference.specifier),
+      `${surface} must use a capability adapter instead of privileged import: ${file}:${reference.line} -> ${reference.specifier}`,
+    );
+    if (
+      !reference.specifier.startsWith('.')
+      && !reference.specifier.startsWith('/')
+      && !BUILTINS.has(reference.specifier)
+    ) {
+      assert(
+        safeRegistrationPackages.has(packageName(reference.specifier)),
+        `${surface} cannot import an unapproved runtime package: ${file}:${reference.line} -> ${reference.specifier}`,
+      );
+    }
+  }
+  for (const reference of nonLiteralModuleLoads(file)) {
+    assert.fail(
+      `${surface} module loads must use string literals: ${file}:${reference.line} -> ${reference.kind}`,
+    );
+  }
+  const source = fs.readFileSync(file, 'utf8');
+  for (const pattern of privilegedRuntimeGlobals) {
+    assert(
+      !pattern.test(source),
+      `${surface} must use a capability adapter instead of privileged global access: ${file} -> ${pattern}`,
+    );
+  }
+}
+
+function assertRegistrationGraphHasNoPrivilegedAccess(entrypoint, packageRoot, surface) {
+  const pending = [entrypoint];
+  const visited = new Set();
+  while (pending.length > 0) {
+    const file = pending.pop();
+    if (!file || visited.has(file)) continue;
+    visited.add(file);
+    assert(
+      path.extname(file) !== '.cjs',
+      `${surface} executable graphs must use ESM, not CommonJS: ${file}`,
+    );
+    assertNoDirectPrivilegedAccess(file, surface);
+    for (const reference of moduleSpecifiers(file)) {
+      const resolved = resolvedReference(file, reference.specifier);
+      if (!resolved) continue;
+      assert(
+        inside(resolved, packageRoot),
+        `${surface} executable graph cannot import outside its package: ${file}:${reference.line} -> ${reference.specifier}`,
+      );
+      pending.push(resolved);
+    }
+  }
+}
+
 const parserFixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-module-parser-'));
 try {
   const parserFixture = path.join(parserFixtureRoot, 'fixture.ts');
@@ -50,6 +159,111 @@ try {
     { specifier: './c.cjs', kind: 'require', typeOnly: false },
     { specifier: './d.mjs', kind: 'dynamic-import', typeOnly: false },
   ]);
+  const privilegedFixture = path.join(parserFixtureRoot, 'privileged-stage.ts');
+  fs.writeFileSync(privilegedFixture, "import fs from 'node:fs';\nfs.readFileSync('/tmp/value');\n");
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(privilegedFixture, 'stage'),
+    /must use a capability adapter/,
+    'stage direct privileged imports must fail boundary verification',
+  );
+  const barePrivilegedFixture = path.join(parserFixtureRoot, 'bare-privileged-stage.ts');
+  fs.writeFileSync(barePrivilegedFixture, "import fs from 'fs';\nfs.readFileSync('/tmp/value');\n");
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(barePrivilegedFixture, 'stage'),
+    /must use a capability adapter/,
+    'bare Node built-in imports must fail boundary verification',
+  );
+  const processAliasFixture = path.join(parserFixtureRoot, 'process-alias-stage.ts');
+  fs.writeFileSync(processAliasFixture, "import { env } from 'node:process';\nexport const value = env.SECRET;\n");
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(processAliasFixture, 'stage'),
+    /must use a capability adapter/,
+    'Node process imports must not bypass secrets.read',
+  );
+  const vmFixture = path.join(parserFixtureRoot, 'vm-stage.ts');
+  fs.writeFileSync(vmFixture, "import vm from 'node:vm';\nexport const value = vm.runInThisContext('1');\n");
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(vmFixture, 'stage'),
+    /Node built-in import/,
+    'Node VM imports must not bypass capability adapters',
+  );
+  const computedImportFixture = path.join(parserFixtureRoot, 'computed-import-stage.ts');
+  fs.writeFileSync(
+    computedImportFixture,
+    "export const value = import(['node', 'fs'].join(':'));\n",
+  );
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(computedImportFixture, 'stage'),
+    /module loads must use string literals/,
+    'computed dynamic imports must not bypass capability adapters',
+  );
+  const dataImportFixture = path.join(parserFixtureRoot, 'data-import-stage.ts');
+  fs.writeFileSync(
+    dataImportFixture,
+    "export const value = import('data:text/javascript,export default process.env.SECRET');\n",
+  );
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(dataImportFixture, 'stage'),
+    /cannot load URL or scheme-based modules/,
+    'URL module imports must not bypass the package boundary',
+  );
+  const packageImportFixture = path.join(parserFixtureRoot, 'package-import-stage.ts');
+  fs.writeFileSync(
+    packageImportFixture,
+    "import client from 'some-http-client';\nexport const value = client.get('/secret');\n",
+  );
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(packageImportFixture, 'stage'),
+    /cannot import an unapproved runtime package/,
+    'unapproved third-party packages must not bypass capability adapters',
+  );
+  const computedGlobalFixture = path.join(parserFixtureRoot, 'computed-global-stage.ts');
+  fs.writeFileSync(
+    computedGlobalFixture,
+    "export const value = globalThis['process']['env']['SECRET'];\n",
+  );
+  assert.throws(
+    () => assertNoDirectPrivilegedAccess(computedGlobalFixture, 'stage'),
+    /must use a capability adapter/,
+    'computed global access must not bypass capability adapters',
+  );
+  const cleanSource = path.join(parserFixtureRoot, 'source.ts');
+  const fixtureDist = path.join(parserFixtureRoot, 'dist');
+  const fixtureShared = path.join(parserFixtureRoot, 'shared');
+  fs.mkdirSync(fixtureDist);
+  fs.mkdirSync(fixtureShared);
+  const unsafeDist = path.join(fixtureDist, 'stage.js');
+  const unsafeShared = path.join(fixtureShared, 'unsafe.js');
+  fs.writeFileSync(cleanSource, 'export const execute = () => ({});\n');
+  fs.writeFileSync(unsafeDist, "export { execute } from '../shared/unsafe.js';\n");
+  fs.writeFileSync(unsafeShared, "import fs from 'node:fs';\nexport const execute = () => fs.readFileSync('/tmp/value');\n");
+  assert.doesNotThrow(
+    () => assertRegistrationGraphHasNoPrivilegedAccess(cleanSource, parserFixtureRoot, 'stage'),
+  );
+  assert.throws(
+    () => assertRegistrationGraphHasNoPrivilegedAccess(unsafeDist, parserFixtureRoot, 'stage'),
+    /must use a capability adapter/,
+    'the executable dist registration graph must be scanned independently from source',
+  );
+  const isolatedPackage = path.join(parserFixtureRoot, 'isolated-package');
+  fs.mkdirSync(isolatedPackage);
+  const escapingEntrypoint = path.join(isolatedPackage, 'stage.js');
+  fs.writeFileSync(escapingEntrypoint, "export { execute } from '../shared/unsafe.js';\n");
+  assert.throws(
+    () => assertRegistrationGraphHasNoPrivilegedAccess(escapingEntrypoint, isolatedPackage, 'stage'),
+    /cannot import outside its package/,
+    'registration graphs must reject imports outside the package boundary',
+  );
+  const commonJsEntrypoint = path.join(isolatedPackage, 'stage.cjs');
+  fs.writeFileSync(
+    commonJsEntrypoint,
+    "module.exports.execute = () => module.require('node:fs').readFileSync('/tmp/value');\n",
+  );
+  assert.throws(
+    () => assertRegistrationGraphHasNoPrivilegedAccess(commonJsEntrypoint, isolatedPackage, 'stage'),
+    /must use ESM, not CommonJS/,
+    'CommonJS loader globals must not bypass capability adapters',
+  );
 } finally {
   fs.rmSync(parserFixtureRoot, { recursive: true, force: true });
 }
@@ -126,7 +340,8 @@ for (const packageRoot of isolatedPackageRoots) {
     const manifest = JSON.parse(fs.readFileSync(pipelineManifestPath, 'utf8'));
     if (manifest.apiVersion !== 'pipeline-plugin-v2') continue;
   }
-  const ownPackageName = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8')).name;
+  const packageMetadata = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+  const ownPackageName = packageMetadata.name;
   for (const file of files(packageRoot)) {
     for (const reference of moduleSpecifiers(file)) {
       if (!reference.specifier.startsWith('.') && !reference.specifier.startsWith('/')) {
@@ -143,6 +358,40 @@ for (const packageRoot of isolatedPackageRoots) {
         inside(resolved, path.resolve(packageRoot)),
         `v2 plugin cannot import outside its package: ${file}:${reference.line} -> ${reference.specifier}`,
       );
+    }
+  }
+  if (fs.existsSync(pipelineManifestPath)) {
+    const manifest = JSON.parse(fs.readFileSync(pipelineManifestPath, 'utf8'));
+    if ((manifest.stages?.length ?? 0) > 0 || (manifest.observers?.length ?? 0) > 0) {
+      assert.equal(
+        packageMetadata.type,
+        'module',
+        `stage and observer packages must use ESM so CommonJS loader globals are unavailable: ${packageRoot}`,
+      );
+    }
+    for (const [surface, registrations] of [
+      ['stage', manifest.stages ?? []],
+      ['observer', manifest.observers ?? []],
+    ]) {
+      for (const registration of registrations) {
+        const sourceRelative = registration.module
+          .replace(/^dist\//u, 'src/')
+          .replace(/\.js$/u, '.ts');
+        const sourceEntrypoint = path.join(packageRoot, sourceRelative);
+        const executableEntrypoint = path.join(packageRoot, registration.module);
+        assert(fs.existsSync(sourceEntrypoint), `${surface} source entrypoint must exist: ${sourceEntrypoint}`);
+        assert(fs.existsSync(executableEntrypoint), `${surface} executable entrypoint must exist: ${executableEntrypoint}`);
+        assertRegistrationGraphHasNoPrivilegedAccess(
+          sourceEntrypoint,
+          path.resolve(packageRoot),
+          surface,
+        );
+        assertRegistrationGraphHasNoPrivilegedAccess(
+          executableEntrypoint,
+          path.resolve(packageRoot),
+          surface,
+        );
+      }
     }
   }
 }

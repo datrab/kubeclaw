@@ -61,6 +61,7 @@
       "commandAndActionRefs": [
         "git diff --check",
         "node scripts/docs-check.mjs",
+        "npm ci --ignore-scripts",
         "npm run docs:check:coverage",
         "npm run docs:check:generated",
         "npm run docs:check:refs",

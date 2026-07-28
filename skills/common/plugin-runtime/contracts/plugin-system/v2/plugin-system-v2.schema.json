@@ -501,6 +501,65 @@
         "payload": { "$ref": "#/$defs/jsonObject" }
       }
     },
+    "administrativeReopenDecision": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion", "decisionId", "idempotencyKey", "runId", "stageId",
+            "actor", "reason", "continuation", "remediationStageId", "decidedAt"
+          ],
+          "properties": {
+            "schemaVersion": { "const": "administrative-reopen.v2" },
+            "decisionId": { "$ref": "#/$defs/opaqueId" },
+            "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+            "runId": { "$ref": "#/$defs/opaqueId" },
+            "stageId": { "$ref": "#/$defs/localId" },
+            "actor": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "id"],
+              "properties": {
+                "type": { "enum": ["operator", "administrator"] },
+                "id": { "$ref": "#/$defs/opaqueId" }
+              }
+            },
+            "reason": { "$ref": "#/$defs/reason" },
+            "continuation": { "const": "remediation" },
+            "remediationStageId": { "$ref": "#/$defs/localId" },
+            "decidedAt": { "type": "string", "format": "date-time" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schemaVersion", "decisionId", "idempotencyKey", "runId", "stageId",
+            "actor", "reason", "continuation", "decidedAt"
+          ],
+          "properties": {
+            "schemaVersion": { "const": "administrative-reopen.v2" },
+            "decisionId": { "$ref": "#/$defs/opaqueId" },
+            "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+            "runId": { "$ref": "#/$defs/opaqueId" },
+            "stageId": { "$ref": "#/$defs/localId" },
+            "actor": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "id"],
+              "properties": {
+                "type": { "enum": ["operator", "administrator"] },
+                "id": { "$ref": "#/$defs/opaqueId" }
+              }
+            },
+            "reason": { "$ref": "#/$defs/reason" },
+            "continuation": { "enum": ["retry", "cancel"] },
+            "decidedAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      ]
+    },
     "packageProvenance": {
       "type": "object",
       "additionalProperties": false,

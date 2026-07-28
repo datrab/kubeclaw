@@ -1,11 +1,7 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
-// services/validation.ts — Preflight contract and delivery lint validation
+// services/validation.ts — Retained v1 preflight contract validation
 //
-// Two validation stages:
-//   preflight_contract  — before Forge spawn: checks test_config file references
-//                         are declared in the module FORGE.md blueprint
-//   delivery_lint       — after Forge output, before Buster: checks produced
-//                         artifacts are internally consistent
+// Delivery lint is owned exclusively by skills/nova/plugins/delivery-lint.
 //
 // Both functions return { passed: boolean, failures: ValidationFailure[] }
 //
@@ -20,10 +16,8 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 import path from 'path';
 import { log } from '../core/logger.ts';
 import { readForgeBlueprint } from './validation-blueprint.ts';
-import { runDeliveryLintValidation } from './validation-delivery.ts';
 import { VALIDATION_CODES } from './validation-contract.ts';
 export { VALIDATION_CODES } from './validation-contract.ts';
-export { runDeliveryLintValidation } from './validation-delivery.ts';
 
 export function isPlainObject(value: any) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -108,19 +102,6 @@ export function runPreflightValidation(mod: any, moduleDir: any, config: any) {
   return { passed: failures.length === 0, failures };
 }
 
-/**
- * Run delivery lint validation after Forge output exists, before Buster dispatch.
- *
- * Checks that produced delivery artifacts are internally consistent. The
- * Dockerfile check is contextual: modules without test_config.serve.dockerfile
- * skip delivery lint, while declared Dockerfiles must be repository-relative,
- * realpath-jailed inside config.repo_root, present, and readable.
- *
- * @param {object} mod       - Module config entry from progress.json
- * @param {string} moduleDir - Module directory name
- * @param {object} config    - Pipeline config (must have repo_root)
- * @returns {{ passed: boolean, failures: object[] }}
- */
 /**
  * Format an array of validation failures into an operator-facing summary string.
  *

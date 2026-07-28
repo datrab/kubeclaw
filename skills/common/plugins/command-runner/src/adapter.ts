@@ -73,7 +73,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       for (const executable of executables) canonicalExecutable(executable);
       for (const root of roots) canonicalDirectory(root);
     },
-    async invoke({ request, signal }) {
+    async invoke({ request, signal, confidential, fence }) {
+      if (!confidential) fence.assertCurrent();
       if (stopping) throw new Error('ADAPTER_SHUTTING_DOWN');
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       if (request.capability !== 'command.execute' || request.operation !== 'run') {

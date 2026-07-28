@@ -79,7 +79,9 @@ export function activate(context) {
             if (shuttingDown)
                 throw new Error('ADAPTER_SHUTTING_DOWN');
         },
-        async invoke({ request, signal }) {
+        async invoke({ request, signal, confidential, fence }) {
+            if (!confidential)
+                fence.assertCurrent();
             if (shuttingDown)
                 throw new Error('ADAPTER_SHUTTING_DOWN');
             if (signal.aborted)

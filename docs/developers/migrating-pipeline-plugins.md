@@ -19,6 +19,27 @@ and consumers can be named precisely. If the behavior requires a capability
 that does not yet exist, implement and verify its adapter registration before
 claiming stage parity.
 
+Behavior, not source structure, is the migration contract. Preserve every
+observable legacy input, result, effect, artifact, lifecycle transition,
+failure mode, retry, cancellation, and recovery guarantee unless a deliberately
+changed contract is demonstrably simpler or more effective. Do not copy a
+module line for line merely because it exists. Before implementation, answer:
+
+1. What exact behavior must remain equivalent?
+2. Which code is accidental complexity rather than part of that behavior?
+3. Can the replacement use a smaller direct domain function or capability
+   boundary?
+4. Would a focused rewrite produce a clearer or safer result than adapting the
+   legacy module?
+5. If behavior changes, what is better, who accepted the change, and which
+   legacy and replacement tests prove the difference?
+
+Choose `reuse`, `refactor`, or `rewrite` explicitly for every parity scenario.
+`reuse` is not preferred by default. A rewrite is correct when it preserves the
+declared behavior with less complexity; an intentional behavior change is
+correct only when its old expectation, new expectation, rationale, complexity
+impact, and approval are recorded. Undocumented behavior drift fails parity.
+
 One cutover unit may contain multiple registrations when they share one domain
 implementation. Each registration still has independent configuration,
 capabilities, lifecycle, and evidence.
@@ -138,7 +159,9 @@ deterministic logic has not been migrated.
 
 Run all of the following:
 
-- package unit tests over real domain functions;
+- TypeScript package unit tests over real domain functions for TypeScript
+  plugins, or tests in the implementation's native language for non-TypeScript
+  plugins;
 - package/core integration tests through the actual v2 registry, grants,
   adapters, lifecycle, and artifact/state boundaries;
 - live function tests using real local tools or infrastructure adapters;
@@ -147,9 +170,23 @@ Run all of the following:
 - package boundary, schema, capability-denial, cancellation, and failure tests;
 - documentation, inventory, security, and repository-hygiene checks.
 
+The canonical package gate must discover every package root that contains
+either `plugin.json` or `openclaw.plugin.json` and run that package's declared
+test suite. Dual-host packages are not exempt from package-local boundary
+evidence merely because one of their manifests belongs to OpenClaw rather than
+the pipeline runtime. Every TypeScript plugin must expose a package-local
+TypeScript live-function suite; JavaScript-renamed live suites are rejected.
+
 Mocks may test an isolated error branch, but mock-only tests cannot establish
 parity. At least one authoritative replacement scenario per registration must
 execute the real implementation and real adapter boundary.
+
+Registry availability is not behavior parity. A package being discoverable,
+valid, grant-resolved, activatable, or independently executable does not
+authorize switching a production consumer. The final authority cutover occurs
+only after every retained workflow behavior has recomputable replacement
+evidence. Until then v1 remains the sole production authority; no forwarding
+bridge or dual registry is introduced.
 
 For deterministic stages, use two complementary layers: package-local unit
 tests for exhaustive domain decisions and a live-function test through the

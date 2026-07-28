@@ -62,6 +62,31 @@ const targetFiles = fileEntries(unitSurfaces.flatMap((surface) => surface.target
 const requiredScenarios = unit.scenarios
   .filter((scenario) => scenario.requiredBefore.includes(status))
   .sort((a, b) => a.id.localeCompare(b.id));
+for (const scenario of requiredScenarios) {
+  const decision = scenario.implementationDecision;
+  // Baseline scenarios intentionally omit this until a migration author makes
+  // the required reuse/refactor/rewrite decision. Evidence must not be
+  // recordable before that decision is committed to the migration ledger.
+  if (!decision
+      || !['reuse', 'refactor', 'rewrite'].includes(decision.strategy)
+      || !decision.legacyBehavior?.trim()
+      || !decision.replacementBehavior?.trim()
+      || !decision.rationale?.trim()
+      || !decision.complexityImpact?.trim()
+      || typeof decision.behaviorChanged !== 'boolean') {
+    fail(`${scenario.id} lacks a complete implementationDecision in the migration ledger`);
+  }
+  const changed = ['intentionally-changed', 'approved-obsolete'].includes(scenario.disposition);
+  if (decision.behaviorChanged !== changed) {
+    fail(`${scenario.id} behaviorChanged conflicts with disposition ${scenario.disposition}`);
+  }
+  if (changed && !decision.approvalRef?.trim()) {
+    fail(`${scenario.id} changes behavior without an approval reference`);
+  }
+  if (!changed && decision.approvalRef !== null) {
+    fail(`${scenario.id} unchanged or new behavior must use a null approval reference`);
+  }
+}
 if (['parity-proven', 'cutover-complete'].includes(status)) {
   const requiredTargets = [...new Set([...(unit.targetPackages || []), ...(unit.targetExtensions || [])])].sort();
   const coveredTargets = requiredScenarios
@@ -94,18 +119,29 @@ for (const command of commands) {
 }
 
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-plugin-parity-'));
+const pinnedRoot = path.join(tempRoot, 'pinned');
 const bundleDigests = {};
 try {
+  fs.mkdirSync(pinnedRoot);
+  const archive = execFileSync('git', ['archive', '--format=tar', commit], {
+    cwd: root,
+    maxBuffer: 512 * 1024 * 1024,
+  });
+  const extract = spawnSync('tar', ['-xf', '-', '-C', pinnedRoot], {
+    input: archive,
+    maxBuffer: 512 * 1024 * 1024,
+  });
+  if (extract.status !== 0) fail(`cannot extract pinned evidence commit ${commit}`);
   for (const role of ['nova', 'buster']) {
     const archive = path.join(tempRoot, `${role}.tgz`);
     execFileSync('bash', [
-      path.join(root, 'scripts/package-agent-skill-bundle.sh'),
+      path.join(pinnedRoot, 'scripts/package-agent-skill-bundle.sh'),
       role,
       archive,
       commit,
       'v1',
       '1970-01-01T00:00:00Z',
-    ], { cwd: root, stdio: 'pipe' });
+    ], { cwd: pinnedRoot, stdio: 'pipe' });
     bundleDigests[role] = digest(fs.readFileSync(archive));
   }
 } finally {
@@ -122,6 +158,7 @@ const scenarios = requiredScenarios.map((scenario) => {
     path: scenario.path,
     targetPackage: scenario.targetPackage ?? null,
     disposition: scenario.disposition,
+    implementationDecision: scenario.implementationDecision,
     pathDigest: entriesDigest(entries),
   };
 });

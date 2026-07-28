@@ -1,4 +1,4 @@
-import type { ArtifactRef, EffectRequest, EffectReceipt, EventIdentity, ObserverDelivery, PluginContext, RegistrationProvenance } from './generated/contracts.ts';
+import type { ArtifactRef, EffectRequest, EffectReceipt, EventIdentity, ObserverDelivery, PluginContext, RegistrationProvenance, ResourceLock } from './generated/contracts.ts';
 export interface CapabilityInvocation {
     readonly operation: string;
     readonly resource: {
@@ -13,13 +13,29 @@ export interface PluginInvocationContext {
     emit(type: string, identity: EventIdentity, payload: Readonly<Record<string, unknown>>): Promise<void>;
     artifact(id: string): ArtifactRef | undefined;
 }
-export interface AdapterInvocation {
+export interface AdapterResourceFence {
+    readonly contract: ResourceLock;
+    assertCurrent(): ResourceLock;
+}
+export interface FencedAdapterInvocation {
     readonly request: EffectRequest;
     readonly signal: AbortSignal;
+    readonly confidential?: false;
+    readonly lock: ResourceLock;
+    readonly fence: AdapterResourceFence;
 }
+export interface ConfidentialAdapterInvocation {
+    readonly request: EffectRequest;
+    readonly signal: AbortSignal;
+    readonly confidential: true;
+    readonly lock?: never;
+    readonly fence?: never;
+}
+export type AdapterInvocation = FencedAdapterInvocation | ConfidentialAdapterInvocation;
 export interface AdapterInstance {
     ready(): Promise<void>;
     invoke(invocation: AdapterInvocation): Promise<Readonly<Record<string, unknown>>>;
+    receipt?(request: EffectRequest): Promise<Readonly<Record<string, unknown>> | undefined>;
     shutdown(signal: AbortSignal): Promise<void>;
 }
 export interface AdapterActivationContext {

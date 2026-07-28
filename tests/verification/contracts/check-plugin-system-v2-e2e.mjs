@@ -31,13 +31,18 @@ const granted = core.resolveCapabilityGrants(snapshot, {
   ]),
   grants: new Map([
     ['kubeclaw.delivery-lint:delivery-lint', new Map([
-      ['git.repository.read', { allowedPrefixes: [''] }],
-      ['artifacts.write', { namespace: 'kubeclaw.delivery-lint' }],
+      ['git.repository.read', { allowedPrefixes: ['Dockerfile'] }],
+      ['artifacts.write', { allowedNamespaces: ['kubeclaw.delivery-lint'] }],
     ])],
   ]),
 });
 const activated = await core.activateRegistry(snapshot, new Set(granted.grants.keys()));
-const effects = new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')));
+const effects = new core.EffectCoordinator(
+  new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),
+  undefined,
+  undefined,
+  new core.MemoryResourceLockManager(),
+);
 const adapters = new core.AdapterRuntime({
   granted,
   activated,

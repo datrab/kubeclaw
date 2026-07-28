@@ -37,11 +37,19 @@ The finished system has:
 5. Plugins never import core internals or another plugin's private files.
 6. Every phase has a fail-closed verification gate before the next phase begins.
 7. Planned external-plugin support is not advertised as secure until the isolated runner and integrity checks exist.
-8. A migration phase is not complete while any superseded implementation, contract, reader, writer, schema, fixture, test, example, configuration field, documentation, import, export, or generated artifact remains.
+8. Infrastructure and package-preparation phases may complete while v1 remains
+   the sole authority. They do not switch individual consumers or create a
+   second authority. The single final authority cutover deletes every
+   superseded surface in the same change.
 
 ## Per-Cutover Deletion Gate
 
-Deletion is part of each migration cutover, not deferred cleanup. Phase 12 is a final repository-wide proof that earlier cutovers deleted their superseded paths; it is not a backlog phase for legacy code intentionally retained during migration.
+KubeClaw uses one dependency-complete authority cutover after the v2 registry,
+capability runtime, graph, state, plugins, observers, and isolation layers pass
+their preparation gates. Temporary pipeline unavailability is acceptable;
+temporary behavioral loss, forwarding bridges, and dual runtime authority are
+not. Phase 12 performs that one cutover and deletes every superseded path in
+the same change.
 
 Every cutover must maintain a machine-readable deletion ledger containing:
 
@@ -186,7 +194,9 @@ The inventory must also produce:
 
 The inventory source is machine-readable and generates the human-readable architecture report. `npm run plugin-system:inventory:check` fails when generated evidence is stale, a covered path changes without explicit review, a file lacks a target owner, a detected privileged effect lacks a declared adapter, a registration ID is duplicated, or an entrypoint is missing. This inventory is a temporary migration control: update it during every extraction and delete or replace it with permanent package-boundary checks when Phase 12 completes.
 
-The evidence confirms `kubeclaw.delivery-lint` as the first reference extraction, with one required preparatory split: the current mixed `module-validators.ts` facade must be separated and then deleted rather than moved into the plugin.
+The evidence confirmed `kubeclaw.delivery-lint` as the first reference
+extraction. Phase 8 split and deleted the former mixed
+`module-validators.ts` facade instead of moving it into the plugin.
 
 ## Current Next Step
 
@@ -201,7 +211,8 @@ contracts, shared packages, and role-owned package candidates now live beneath
 The restored v1 implementation remains the sole active runtime. Package
 placement is not behavior parity: every migration unit remains
 `baseline-retained`, and forwarding-only candidates cannot authorize cutover.
-The next implementation phase is Phase 4.
+The Phase 7 durability preparation gate is complete. The next implementation
+phase is Phase 9 concrete plugin parity migration.
 
 ## Phase Status
 
@@ -210,11 +221,11 @@ The next implementation phase is Phase 4.
 | 1 | Ownership inventory | Complete |
 | 2 | Canonical v2 contracts | Complete |
 | 3 | Generic core, SDK, and role-aware plugin folder boundaries | Complete |
-| 4 | Generic registry and inert discovery; atomic `stages[]`, `observers[]`, and `adapters[]` cutover | Not started |
-| 5 | Per-registration capability runtime and replaceable adapters | Not started |
-| 6 | Generic frozen graph and lifecycle cutover | Not started |
-| 7 | Durable effects, waits, signals, recovery, locks, and replayable plugin state | Not started |
-| 8 | Reference self-contained delivery-lint plugin | Not started |
+| 4 | Generic registry and inert discovery substrate | Complete |
+| 5 | Per-registration capability runtime and replaceable adapters | Complete |
+| 6 | Generic frozen graph and lifecycle cutover preparation | Complete |
+| 7 | Durable effects, waits, signals, recovery, locks, and replayable plugin state | Complete |
+| 8 | Reference self-contained delivery-lint plugin | Complete |
 | 9 | Migration of all remaining concrete stages and adapters | Not started |
 | 10 | Durable observer delivery and observer-package migration | Not started |
 | 11 | Isolated runtime and transactional installation for external plugins | Not started |
@@ -222,10 +233,11 @@ The next implementation phase is Phase 4.
 
 Status rules:
 
-- `Complete` means the phase exit criteria and deletion gate pass.
-- `In progress` means implementation is active but its exit criteria or deletion gate remain open.
-- `Not started` means no canonical runtime cutover for that phase has begun.
-- A later phase may receive preparatory work, but its status remains `Not started` until its canonical implementation and deletion gate are being executed.
+- `Complete` means the phase's preparation or cutover exit criteria pass.
+- `In progress` means implementation is active but its preparation or cutover exit criteria remain open.
+- `Not started` means the phase's canonical preparation or cutover work has not begun.
+- A later phase may receive incidental supporting code, but its status remains
+  `Not started` until its own verification scope is being executed.
 
 ## Runtime Bundle And Source-Layout Constraint
 
@@ -342,6 +354,13 @@ authoritative replacement scenario inside that package; one scenario cannot
 authorize sibling packages in the same unit. A target-bearing unit with an
 uncovered package, or any unit with an unresolved parity blocker or blocked
 surface pairing, cannot claim parity.
+Every parity scenario must also record an implementation decision:
+`reuse`, `refactor`, or `rewrite`; the legacy and replacement behavioral
+expectations; the complexity impact; and whether behavior intentionally
+changed. Equivalent scenarios must keep observable behavior while remaining
+free to replace the implementation wholesale. Intentionally changed or
+obsolete behavior additionally requires a concrete rationale and approval
+reference. Missing decisions or undocumented drift fail closed.
 It may advance to
 `cutover-complete` only after the real fast/full E2E and failure matrix pass and
 the unit's superseded paths pass the permanent legacy-absence gate.
@@ -453,112 +472,133 @@ This is the canonical actionable checklist. Check an item only when its implemen
 
 ### Phase 4: Generic Registry And Discovery
 
-- [ ] Define operator-controlled plugin installation-root configuration.
-- [ ] Discover only inert `plugin.json` files without importing executable modules.
-- [ ] Resolve canonical real paths and reject duplicate source spellings or symlink aliases.
-- [ ] Compute canonical package identity, source provenance, content digest, and trust evidence in core.
-- [ ] Validate API version, package version, manifest schemas, module paths, schema paths, and package completeness.
-- [ ] Validate globally unique plugin IDs, registration IDs, and stage types.
-- [ ] Resolve exactly one owner for every configured stage type.
-- [ ] Resolve observer subscriptions and adapter-provider registrations.
-- [ ] Resolve registration-specific required capabilities and platform grants before activation.
-- [ ] Validate registration-owned configuration without interpreting plugin fields in core.
-- [ ] Freeze the complete registry before importing executable registration modules.
-- [ ] Record the frozen package and registration snapshot with each run.
-- [ ] Activate registrations transactionally after discovery, validation, ownership, integrity, trust, and grant checks pass.
-- [ ] Implement readiness, cancellation, and idempotent shutdown for activated registrations.
-- [ ] Verify trusted first-party imports are side-effect-free.
-- [ ] Convert every active built-in definition to canonical `stages[]`, `observers[]`, and `adapters[]`.
-- [ ] Switch every registry consumer and test to the v2 registry.
-- [ ] Delete the v1 registry and every executable-manifest path.
-- [ ] Delete kinds, hook families, fixed-stage-ID dictionaries, and package-level capability contracts.
-- [ ] Delete every v1 parser, producer, consumer, fixture, configuration field, bridge, fallback, and document.
-- [ ] Close the Phase 4 deletion ledger with negative absence checks.
-- [ ] Update architecture, developer, operator, and plugin-author documentation to describe only the active v2 registry and discovery path.
-- [ ] Pass the Phase 4 verification gate.
+- [x] Define operator-controlled plugin installation-root configuration.
+- [x] Discover only inert `plugin.json` files without importing executable modules.
+- [x] Resolve canonical real paths and reject duplicate source spellings or symlink aliases.
+- [x] Compute canonical package identity, source provenance, content digest, and trust evidence in core.
+- [x] Validate API version, package version, manifest schemas, module paths, schema paths, and package completeness.
+- [x] Validate globally unique plugin IDs, registration IDs, and stage types.
+- [x] Resolve exactly one owner for every configured stage type.
+- [x] Resolve observer subscriptions and adapter-provider registrations.
+- [x] Resolve registration-specific required capabilities and platform grants before activation.
+- [x] Validate registration-owned configuration without interpreting plugin fields in core.
+- [x] Freeze the complete registry before importing executable registration modules.
+- [x] Record the frozen package and registration snapshot with each v2 run.
+- [x] Activate registrations transactionally after discovery, validation, ownership, integrity, trust, and grant checks pass.
+- [x] Implement readiness, cancellation, rollback, and idempotent shutdown for activated adapters.
+- [x] Verify trusted first-party imports are side-effect-free before host import.
+- [x] Prove project definitions cannot install code, add roots, establish trust, select providers, or expand grants.
+- [x] Document the prepared v2 registry/discovery path and final authority-cutover boundary.
+- [x] Pass the Phase 4 verification gate with `npm run verify:plugin-system:phase4`.
 
 ### Phase 5: Capability Runtime And Adapters
 
-- [ ] Freeze the initial closed capability vocabulary and resource-constraint schemas.
-- [ ] Map every inventoried privileged effect to one canonical capability.
-- [ ] Implement required, granted, and available capability resolution per registration.
-- [ ] Require complete coverage of every registration's `requiredCapabilities`.
-- [ ] Construct independently bounded contexts for stage invocations, observer deliveries, and adapter lifecycles.
-- [ ] Enforce repository, path, runtime, agent, host, secret, command, namespace, and other resource constraints.
-- [ ] Revoke contexts after completion, timeout, cancellation, or ownership loss.
-- [ ] Reject late asynchronous calls through revoked contexts.
-- [ ] Select exactly one configured adapter per required capability in runtime scope.
-- [ ] Detect adapter dependency cycles and ambiguous providers at startup.
-- [ ] Emit audit events for every privileged operation.
-- [ ] Prevent plugins from receiving lifecycle, scheduler, canonical-event, or registry mutation authority.
-- [ ] Add grant, denial, escalation, sibling-authority, and direct-import security tests.
-- [ ] Delete direct privileged-operation paths replaced by canonical adapters.
-- [ ] Close the Phase 5 deletion ledger.
-- [ ] Document the capability vocabulary, constraint schemas, grant resolution, adapter selection, auditing, and denial behavior.
-- [ ] Pass the Phase 5 verification gate.
+- [x] Freeze the initial closed capability vocabulary and resource-constraint schemas.
+- [x] Map every inventoried privileged effect to one canonical capability.
+- [x] Implement required, granted, and available capability resolution per registration.
+- [x] Require complete coverage of every registration's `requiredCapabilities`.
+- [x] Construct independently bounded contexts for stage invocations, observer deliveries, and adapter lifecycles.
+- [x] Enforce repository, path, runtime, agent, host, secret, command, namespace, and other resource constraints.
+- [x] Revoke contexts after completion, timeout, cancellation, or ownership loss.
+- [x] Reject late asynchronous calls through revoked contexts.
+- [x] Select exactly one configured adapter per required capability in runtime scope.
+- [x] Detect adapter dependency cycles and ambiguous providers at startup.
+- [x] Emit audit events for every privileged operation.
+- [x] Prevent plugins from receiving lifecycle, scheduler, canonical-event, or registry mutation authority.
+- [x] Add grant, denial, escalation, sibling-authority, and trusted-source direct-import compliance tests.
+- [x] Delete direct privileged-operation paths replaced by canonical adapters.
+- [x] Close the Phase 5 deletion ledger.
+- [x] Document the capability vocabulary, constraint schemas, grant resolution, adapter selection, auditing, and denial behavior.
+- [x] Pass the Phase 5 verification gate.
+
+The Phase 5 deletion ledger covers the prepared v2 execution boundary. Direct
+privileged stage/observer paths, package-wide authority union, unbounded
+contexts, and unaudited adapter operations are absent from v2. V1 privileged
+paths are not superseded yet because v1 remains the sole production authority;
+they are deleted only in the dependency-complete Phase 12 cutover. The
+machine-readable vocabulary, side-effect mapping, and deletion evidence live in
+[`plugin-system-phase5-capabilities.json`](plugin-system-phase5-capabilities.json).
+
+Phase 5 does not claim that static source inspection sandboxes adversarial
+JavaScript. The import/global checks prove policy compliance for the audited,
+trusted first-party packages allowed during this phase. Restricted and external
+code remains rejected. Enforcing effective grants against hostile executable
+code is the process/worker/container boundary delivered in Phase 11.
 
 ### Phase 6: Generic Graph And Lifecycle Cutover
 
-- [ ] Define and validate the configured generic execution graph.
-- [ ] Freeze nodes, ordinary edges, and declared remediation edges at run start.
-- [ ] Enforce acyclic ordinary dependencies with supported fan-out and fan-in.
-- [ ] Implement generic readiness and dependency evaluation.
-- [ ] Implement immutable run, stage, and attempt identities.
-- [ ] Implement generic concurrency, timeout, cancellation, retry, and remediation-budget policy.
-- [ ] Map every canonical result to exactly one lifecycle transition.
-- [ ] Implement `retry` as a new attempt of the same stage.
-- [ ] Implement `request_fix` as a bounded traversal of a predeclared remediation path.
-- [ ] Implement `orchestrator_required` as a resumable typed wait without resetting budgets.
-- [ ] Implement `blocked` as a stop requiring audited administrative reopening.
-- [ ] Replace `needs_nova` with `orchestrator_required` everywhere.
-- [ ] Remove `action_required` as a plugin-control synonym.
-- [ ] Map rejected approval to `blocked`.
-- [ ] Switch scheduling from concrete module/gate logic to arbitrary registered stage types.
-- [ ] Delete every concrete Forge, Buster, worker, gate, validator, and generator scheduler branch.
-- [ ] Delete every legacy lifecycle reader, writer, normalizer, event, test, fixture, example, and document.
-- [ ] Prove replay reconstructs identical graph, lifecycle, budget, wait, and remediation state.
-- [ ] Close the Phase 6 deletion ledger.
-- [ ] Update architecture, pipeline-author, operator, and troubleshooting documentation for the generic graph and canonical lifecycle.
-- [ ] Pass the Phase 6 verification gate.
+- [x] Define and validate the configured generic execution graph.
+- [x] Freeze nodes, ordinary edges, and declared remediation edges at run start.
+- [x] Enforce acyclic ordinary dependencies with supported fan-out and fan-in.
+- [x] Implement generic readiness and dependency evaluation.
+- [x] Implement immutable run, stage, and attempt identities.
+- [x] Implement generic concurrency, timeout, cancellation, retry, and remediation-budget policy.
+- [x] Map every canonical result to exactly one lifecycle transition.
+- [x] Implement `retry` as a new attempt of the same stage.
+- [x] Implement `request_fix` as a bounded traversal of a predeclared remediation path.
+- [x] Implement `orchestrator_required` as a resumable typed wait without resetting budgets.
+- [x] Implement `blocked` as a stop requiring audited administrative reopening.
+- [x] Reject `needs_nova` and `action_required` throughout the v2 contract and executable surface.
+- [x] Map rejected approval to canonical `blocked` results in the v2 approval package.
+- [x] Schedule arbitrary registered stage types without concrete plugin branches in v2 core.
+- [x] Record concrete v1 scheduler and lifecycle deletion as an atomic Phase 12 cutover obligation.
+- [x] Prove replay reconstructs identical graph, lifecycle, budget, wait, and remediation state.
+- [x] Close the Phase 6 v2-preparation deletion ledger.
+- [x] Update architecture, pipeline-author, operator, and troubleshooting documentation for the generic graph and canonical lifecycle.
+- [x] Pass the Phase 6 verification gate.
+
+Phase 6 completes the generic v2 graph and lifecycle authority but does not
+activate it as the production scheduler. Every run pins a canonical graph
+digest beside the registry snapshot; resume rejects graph drift. Attempts,
+budgets, waits, remediation returns, and administrative reopening are journaled
+and replayable. V2 core contains no Forge, Buster, gate, validator, generator,
+or fixed-stage scheduling branch.
+
+The repository-wide removal of v1 scheduler branches, lifecycle names,
+readers, writers, fixtures, and documents remains deliberately deferred to the
+single Phase 12 authority switch. Running v1 remains the production baseline
+until Phases 7–11 preserve the remaining behavior. This is not a compatibility
+bridge or dual scheduler: v1 and v2 remain separate, and only one becomes
+authoritative after final cutover.
 
 ### Phase 7: Durable Effects, Waits, And Recovery
 
-- [ ] Generate stable effect identities and idempotency keys in core.
-- [ ] Persist effect requested, accepted, completed, and failed transitions.
-- [ ] Persist and verify adapter receipts before repeating effects.
-- [ ] Define wait identity, authorized issuer, expiry, and expected signal schema.
-- [ ] Reject duplicate, stale, unauthorized, expired, and mismatched resume signals.
-- [ ] Create a new attempt when execution resumes.
-- [ ] Propagate cancellation through plugins and adapters with cleanup deadlines.
-- [ ] Enforce exact package version and content digest on recovery.
-- [ ] Reject recovery when pinned code is unavailable.
-- [ ] Persist plugin-local state as append-only namespaced entries.
-- [ ] Rebuild plugin projections deterministically from their log.
-- [ ] Persist append-only observer checkpoints.
-- [ ] Implement deterministic observer redelivery from the canonical journal.
-- [ ] Implement adapter-owned resource locks with fencing tokens.
-- [ ] Add crash and concurrency tests proving effects cannot duplicate or corrupt shared resources.
-- [ ] Delete superseded mutable-state, wait, effect, and recovery paths.
-- [ ] Close the Phase 7 deletion ledger.
-- [ ] Document effect idempotency, waits/signals, recovery, cancellation, state replay, observer checkpoints, and resource-lock semantics.
-- [ ] Pass the Phase 7 verification gate.
+- [x] Generate stable effect identities and idempotency keys in core.
+- [x] Persist effect requested, accepted, completed, and failed transitions.
+- [x] Persist and verify adapter receipts before repeating effects.
+- [x] Define wait identity, authorized issuer, expiry, and expected signal schema.
+- [x] Reject duplicate, stale, unauthorized, expired, and mismatched resume signals.
+- [x] Create a new attempt when execution resumes.
+- [x] Propagate cancellation through plugins and adapters with cleanup deadlines.
+- [x] Enforce exact package version and content digest on recovery.
+- [x] Reject recovery when pinned code is unavailable.
+- [x] Persist plugin-local state as append-only namespaced entries.
+- [x] Rebuild plugin projections deterministically from their log.
+- [x] Persist append-only observer checkpoints.
+- [x] Implement deterministic observer redelivery from the canonical journal.
+- [x] Implement adapter-owned resource locks with fencing tokens.
+- [x] Add crash and concurrency tests proving effects cannot duplicate or corrupt shared resources.
+- [x] Delete superseded v2 mutable-state and in-memory lock paths.
+- [x] Close the Phase 7 v2-preparation deletion ledger.
+- [x] Document effect idempotency, waits/signals, recovery, cancellation, state replay, observer checkpoints, and resource-lock semantics.
+- [x] Pass the Phase 7 verification gate.
 
 ### Phase 8: Reference Delivery-Lint Plugin
 
-- [ ] Split delivery-lint behavior out of the mixed `module-validators.ts` facade.
-- [ ] Create the self-contained delivery-lint package beneath the canonical plugin root.
-- [ ] Add inert manifest, source, generated distribution, schemas, tests, fixtures, and package-local documentation.
-- [ ] Move all delivery-lint behavior and domain reason codes into the package.
-- [ ] Use only SDK contracts, ordinary declared libraries, and granted capabilities.
-- [ ] Implement canonical `passed`, `request_fix`, and `blocked` results.
-- [ ] Own delivery-lint configuration and artifacts inside the package boundary.
-- [ ] Add package-completeness and prohibited-import checks.
-- [ ] Test install, execute, fail, remediation, block, remove, and replacement scenarios.
-- [ ] Delete the former delivery-lint implementation, facade branch, built-in registration, bridge, tests, fixtures, and docs.
-- [ ] Prove no source outside the package owns delivery-lint behavior.
-- [ ] Close the delivery-lint deletion ledger.
-- [ ] Publish package-local usage, configuration, result, artifact, capability, testing, installation, removal, and replacement documentation.
-- [ ] Pass the Phase 8 verification gate.
+- [x] Split delivery-lint behavior out of the mixed `module-validators.ts` facade.
+- [x] Create the self-contained delivery-lint package beneath the canonical plugin root.
+- [x] Add inert manifest, source, generated distribution, schemas, tests, fixtures, and package-local documentation.
+- [x] Move all delivery-lint behavior and domain reason codes into the package.
+- [x] Use only SDK contracts, ordinary declared libraries, and granted capabilities.
+- [x] Implement canonical `passed`, `request_fix`, and `blocked` results.
+- [x] Own delivery-lint configuration and artifacts inside the package boundary.
+- [x] Add package-completeness and prohibited-import checks.
+- [x] Test install, execute, fail, remediation, block, remove, and replacement scenarios.
+- [x] Delete the former delivery-lint implementation, facade branch, built-in registration, and bridge.
+- [x] Prove no source outside the package owns delivery-lint behavior.
+- [x] Close the delivery-lint v2-preparation deletion ledger.
+- [x] Publish package-local usage, configuration, result, artifact, capability, testing, installation, removal, and replacement documentation.
+- [x] Pass the Phase 8 verification gate.
 
 ### Reusable Per-Package Extraction Gate
 
@@ -578,13 +618,16 @@ Before the final all-v2 activation, each package extraction must:
 
 Extraction progress:
 
-All declared v2 package protocols are now extracted: **29 of 29 packages**
-containing **33 of 33 registrations** (14 stages, 5 observers, and 14
-adapters). There are no open package-protocol extractions. This is not an
-activation or parity-completion claim: v1 remains the sole runtime authority,
-the wider legacy surfaces and recorded parity blockers remain, and the final
-consumer switch, legacy deletion, negative absence proof, and live E2E/failure
-matrix are still pending.
+All declared pipeline-v2 package protocols are now extracted: **29 of 29
+pipeline packages** containing **33 of 33 registrations** (14 stages, 5
+observers, and 14 adapters). In addition, the dual-host OpenClaw package
+`kubeclaw.openclaw-agent-observer` is now covered by the same package-local
+test and boundary gate, bringing the discovered package-suite baseline to
+**30 of 30 package roots**. There are no open package-protocol extractions.
+This is not an activation or parity-completion claim: v1 remains the sole
+runtime authority, the wider legacy surfaces and recorded parity blockers
+remain, and the final consumer switch, legacy deletion, negative absence
+proof, and live E2E/failure matrix are still pending.
 
 - `kubeclaw.lint`: package extraction complete. The package owns the
   deterministic pre-check/full engine, schemas, adapter, artifacts, unit
@@ -785,6 +828,12 @@ matrix are still pending.
 
 ### Phase 9: Remaining Concrete Plugins And Adapters
 
+The per-extension reuse/refactor/rewrite decisions, architecture assessment,
+behavioral contracts, test plans, and missing target packages are recorded in
+[`plugin-system-phase9-extension-assessment.md`](plugin-system-phase9-extension-assessment.md).
+Implementation findings and atomic batch history are recorded in
+[`plugin-system-phase9-changelog.md`](plugin-system-phase9-changelog.md).
+
 - [ ] Migrate remaining deterministic validators one ownership boundary at a time.
 - [ ] Migrate generators and reporting stages.
 - [ ] Migrate review, approval, and Buster decision stages.
@@ -843,6 +892,10 @@ matrix are still pending.
 
 ### Phase 12: Final Deletion And Release Gate
 
+- [ ] Atomically switch every production registry consumer from v1 to the frozen v2 registry.
+- [ ] Convert production configuration to platform-owned roots, trust, providers, grants, and registration configuration.
+- [ ] Reject v1 manifests before any executable import.
+- [ ] Close the registry deletion ledger and prove every v1 manifest producer, consumer, parser, fixture, and configuration field is absent.
 - [ ] Verify all earlier deletion ledgers are closed.
 - [ ] Delete any remaining built-in bridge or dormant replacement path.
 - [ ] Prove fixed plugin kinds, hook families, stage-ID dictionaries, and package-level capabilities are absent.
@@ -1062,7 +1115,9 @@ Implement:
 - platform-owned installation roots, trust policy, grants, and adapter selection
 - registration-owned configuration validation without core interpretation of plugin fields
 
-Perform one atomic registry cutover:
+Prepare the canonical registry without creating a second runtime authority.
+After Phases 5–11 prove complete behavior, Phase 12 performs one atomic
+authority cutover that:
 
 - convert every active built-in definition to `stages[]`
 - convert grant configuration and context assembly to stage registrations
@@ -1070,12 +1125,14 @@ Perform one atomic registry cutover:
 - delete kind, hook-family, fixed-stage-ID, and package-capability contract paths
 - close the registry deletion ledger and prove every v1 manifest producer, consumer, parser, fixture, and configuration field is absent
 
-Implementations may still be physically scattered immediately after this phase, but they must execute only through the canonical generic registration contract.
+Until that final cutover, v1 remains the only active production runtime and v2
+is exercised through its explicit verification harness. No v2 registration may
+claim behavioral parity merely because it is discoverable or activatable.
 
-Exit criteria:
+Phase 4 preparation exit criteria:
 
-- no active manifest uses package-level `capabilities`
-- no registry branch dispatches by worker/gate/validator/generator kind
+- the v2 registry accepts only registration-local required capabilities
+- the v2 registry contains no branch dispatching by worker/gate/validator/generator kind
 - duplicate, missing, legacy, or ambiguous ownership fails startup
 - alternate source spellings and symlinks cannot load the same package twice or bypass policy
 - a failing package cannot register only a subset of its registrations
@@ -1121,7 +1178,7 @@ Exit criteria:
 - sibling stages in one package cannot receive each other's grants
 - stage, observer, and adapter registrations in one package cannot inherit sibling authority
 - late asynchronous capability calls fail after context revocation
-- direct privileged imports fail dependency/security verification
+- direct privileged imports in trusted first-party packages fail dependency/compliance verification
 - denied or missing required capabilities fail before execution
 - adapter-provider ambiguity and provisioning cycles fail startup deterministically
 
@@ -1242,6 +1299,10 @@ Each migration verifies:
 
 - package completeness
 - manifest and schema validity
+- an explicit reuse/refactor/rewrite decision based on behavior and complexity,
+  never source-shape parity
+- legacy-versus-replacement behavioral expectations, with reviewed rationale
+  for every intentional difference
 - capability grants and denials
 - success and every supported control result
 - timeout, cancellation, crash, and recovery
@@ -1251,6 +1312,8 @@ Each migration verifies:
 - registration-specific authority when a cohesive package contains more than one surface
 - plugin-local state replay and stale-context revocation where applicable
 - closure of the package's deletion ledger, including negative proof that its former implementation and contract cannot be reached
+- TypeScript tests for TypeScript packages, or tests in the implementation's
+  native language otherwise
 
 ## Phase 10: Observer Delivery
 

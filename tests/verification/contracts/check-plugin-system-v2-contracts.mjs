@@ -159,6 +159,31 @@ valid('resumeSignal', {
   issuedAt: '2026-07-25T21:05:00Z',
   payload: { helperPrompt: 'Inspect artifact artifact:01.' },
 });
+const administrativeReopen = {
+  schemaVersion: 'administrative-reopen.v2',
+  decisionId: 'decision:01',
+  idempotencyKey: 'decision-key:01',
+  runId: 'run:01',
+  stageId: 'delivery-lint',
+  actor: { type: 'administrator', id: 'admin:01' },
+  reason: { code: 'operator.retry_authorized' },
+  continuation: 'retry',
+  decidedAt: '2026-07-25T21:06:00Z',
+};
+valid('administrativeReopenDecision', administrativeReopen);
+valid('administrativeReopenDecision', {
+  ...administrativeReopen,
+  continuation: 'remediation',
+  remediationStageId: 'fix-delivery',
+});
+invalid('administrativeReopenDecision', {
+  ...administrativeReopen,
+  continuation: 'remediation',
+}, 'remediation without declared target');
+invalid('administrativeReopenDecision', {
+  ...administrativeReopen,
+  remediationStageId: 'fix-delivery',
+}, 'retry with remediation target');
 
 const packageResolution = {
   pluginId: 'kubeclaw.delivery-lint',

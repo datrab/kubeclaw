@@ -98,7 +98,8 @@ export function activateWithSdk(context: AdapterActivationContext, sdk: OpenClaw
         throw error;
       }
     },
-    async invoke({ request, signal }) {
+    async invoke({ request, signal, confidential, fence }) {
+      if (!confidential) fence.assertCurrent();
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       if (request.capability !== 'agent.events.subscribe' || request.operation !== 'status') {
         throw new Error('AGENT_EVENT_SOURCE_OPERATION_UNSUPPORTED');

@@ -30,6 +30,35 @@ function packageDirectories(root: string): string[] {
     .filter((candidate) => fs.existsSync(path.join(candidate, 'plugin.json')));
 }
 
+function deepFreeze<T>(value: T): T {
+  if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value;
+  for (const child of Object.values(value as Record<string, unknown>)) deepFreeze(child);
+  return Object.freeze(value);
+}
+
+function canonicalRoots(values: readonly string[], label: string): readonly string[] {
+  const canonical = values.map(canonicalRoot);
+  const seen = new Map<string, string>();
+  for (let index = 0; index < canonical.length; index += 1) {
+    const resolved = canonical[index]!;
+    const original = values[index]!;
+    const previous = seen.get(resolved);
+    if (previous !== undefined) {
+      throw new RegistryError(
+        'REGISTRY_PACKAGE_DUPLICATE',
+        `${label} contains duplicate canonical roots: ${previous} and ${original}`,
+        { canonicalRoot: resolved, sourceRoots: [previous, original] },
+      );
+    }
+    seen.set(resolved, original);
+  }
+  return Object.freeze(canonical);
+}
+
+function isWithin(candidate: string, root: string): boolean {
+  return candidate === root || candidate.startsWith(`${root}${path.sep}`);
+}
+
 function identity(manifest: PluginManifest, digest: string): PackageIdentity {
   return {
     pluginId: manifest.id,
@@ -47,7 +76,7 @@ function trustedProvenance(
 ): PackageProvenance {
   const now = (options.now ?? (() => new Date()))().toISOString();
   const builtin = options.trustPolicy.trustedBuiltinRoots.some(
-    (trustedRoot) => root.startsWith(`${fs.realpathSync(trustedRoot)}${path.sep}`),
+    (trustedRoot) => isWithin(root, fs.realpathSync(trustedRoot)),
   );
   const reference = `local:${root}`;
   if (builtin) {
@@ -105,7 +134,19 @@ function trustedProvenance(
 }
 
 export function discoverPackages(options: DiscoveryOptions): readonly DiscoveredPackage[] {
-  const roots = [...new Set(options.installationRoots.map(canonicalRoot))];
+  const roots = canonicalRoots(options.installationRoots, 'installationRoots');
+  const trustedRoots = canonicalRoots(
+    options.trustPolicy.trustedBuiltinRoots,
+    'trustedBuiltinRoots',
+  );
+  const normalizedOptions: DiscoveryOptions = {
+    ...options,
+    installationRoots: roots,
+    trustPolicy: {
+      ...options.trustPolicy,
+      trustedBuiltinRoots: trustedRoots,
+    },
+  };
   const seenPaths = new Set<string>();
   return roots.flatMap(packageDirectories).sort().map((candidate) => {
     const root = fs.realpathSync(candidate);
@@ -114,13 +155,15 @@ export function discoverPackages(options: DiscoveryOptions): readonly Discovered
     }
     seenPaths.add(root);
     const manifestPath = path.join(root, 'plugin.json');
-    const manifest = parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath);
+    const manifest = deepFreeze(
+      parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath),
+    );
     const digest = computePackageDigest(root);
-    return Object.freeze({
+    return deepFreeze({
       root,
       manifestPath,
-      manifest: Object.freeze(manifest),
-      provenance: Object.freeze(trustedProvenance(manifest, root, digest, options)),
+      manifest,
+      provenance: trustedProvenance(manifest, root, digest, normalizedOptions),
     });
   });
 }

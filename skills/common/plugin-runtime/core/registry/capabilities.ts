@@ -1,47 +1,23 @@
 import type { CapabilityGrant, PackageResolution } from '../../sdk/src/index.ts';
 import { RegistryError } from './errors.ts';
 import { FrozenMap } from './frozen-map.ts';
+import { FrozenSet } from './frozen-set.ts';
+import {
+  CAPABILITY_IDS,
+  isCoreOnlyCapability,
+  isKnownCapability,
+  validateCapabilityConstraints,
+} from './capability-vocabulary.ts';
 import type {
   AdapterRegistryEntry,
   RegistrySnapshot,
 } from './types.ts';
 
-export const CAPABILITY_IDS = Object.freeze([
-  'state.read',
-  'state.append',
-  'artifacts.read',
-  'artifacts.write',
-  'runtime.dispatch',
-  'git.repository.read',
-  'git.workspace.create',
-  'git.commit',
-  'git.merge',
-  'git.sync',
-  'signal.wait',
-  'operator.request',
-  'telemetry.emit',
-  'secrets.read',
-  'network.http',
-  'command.execute',
-  'lint.execute',
-  'transport.publish',
-  'agent.events.subscribe',
-] as const);
-
-export type CapabilityId = typeof CAPABILITY_IDS[number];
-const knownCapabilities = new Set<string>(CAPABILITY_IDS);
 const CONFIDENTIAL_CAPABILITIES = new Set<string>(['secrets.read']);
 
 export function isConfidentialCapability(capability: string): boolean {
   return CONFIDENTIAL_CAPABILITIES.has(capability);
 }
-
-const CORE_ONLY_CAPABILITIES = new Set([
-  'lifecycle.write',
-  'scheduler.advance',
-  'canonical_events.modify',
-  'registry.mutate',
-]);
 
 export interface CapabilityPolicy {
   readonly enabledRegistrations: ReadonlySet<string>;
@@ -53,6 +29,7 @@ export interface GrantedRegistry {
   readonly snapshot: RegistrySnapshot;
   readonly grants: ReadonlyMap<string, readonly CapabilityGrant[]>;
   readonly selectedProviders: ReadonlyMap<string, AdapterRegistryEntry>;
+  readonly availableCapabilities: ReadonlyMap<string, ReadonlySet<string>>;
   readonly enabledRegistrations: ReadonlySet<string>;
 }
 
@@ -78,19 +55,40 @@ function registrationRequirements(snapshot: RegistrySnapshot): Array<readonly [s
 function validateVocabulary(snapshot: RegistrySnapshot): void {
   for (const [, requirements] of registrationRequirements(snapshot)) {
     for (const capability of requirements) {
-      if (CORE_ONLY_CAPABILITIES.has(capability)) {
+      if (isCoreOnlyCapability(capability)) {
         throw new RegistryError('REGISTRY_CAPABILITY_FORBIDDEN', `Core-only capability cannot be granted: ${capability}`);
       }
-      if (!knownCapabilities.has(capability)) {
+      if (!isKnownCapability(capability)) {
         throw new RegistryError('REGISTRY_CAPABILITY_UNKNOWN', `Unknown capability: ${capability}`);
       }
     }
   }
   for (const [, adapter] of snapshot.adapters) {
     for (const capability of adapter.registration.providesCapabilities) {
-      if (!knownCapabilities.has(capability)) {
+      if (!isKnownCapability(capability)) {
         throw new RegistryError('REGISTRY_CAPABILITY_UNKNOWN', `Adapter provides unknown capability: ${capability}`);
       }
+    }
+  }
+}
+
+function validateProviderPolicy(
+  snapshot: RegistrySnapshot,
+  policy: CapabilityPolicy,
+): void {
+  for (const [capability, providerId] of policy.providers) {
+    if (!isKnownCapability(capability)) {
+      throw new RegistryError(
+        'REGISTRY_CAPABILITY_UNKNOWN',
+        `Provider policy references unknown capability: ${capability}`,
+      );
+    }
+    const adapter = snapshot.adapters.get(providerId);
+    if (!adapter || !adapter.registration.providesCapabilities.includes(capability)) {
+      throw new RegistryError(
+        'REGISTRY_CAPABILITY_PROVIDER_INVALID',
+        `Invalid provider '${providerId}' for '${capability}'`,
+      );
     }
   }
 }
@@ -102,6 +100,13 @@ function selectedProvider(
 ): AdapterRegistryEntry {
   const providerId = policy.providers.get(capability);
   if (!providerId) {
+    const candidates = snapshot.capabilityProviders.get(capability) ?? [];
+    if (candidates.length > 1) {
+      throw new RegistryError(
+        'REGISTRY_CAPABILITY_PROVIDER_AMBIGUOUS',
+        `Required capability has multiple providers and no configured selection: ${capability}`,
+      );
+    }
     throw new RegistryError(
       'REGISTRY_CAPABILITY_PROVIDER_MISSING',
       `Required capability has no selected provider: ${capability}`,
@@ -146,6 +151,7 @@ export function resolveCapabilityGrants(
   policy: CapabilityPolicy,
 ): GrantedRegistry {
   validateVocabulary(snapshot);
+  validateProviderPolicy(snapshot, policy);
   const allRequirements = new Map(registrationRequirements(snapshot));
   const enabled = new Set(policy.enabledRegistrations);
   for (const registrationId of enabled) {
@@ -181,12 +187,13 @@ export function resolveCapabilityGrants(
       if (!constraints) {
         throw new RegistryError('REGISTRY_CAPABILITY_DENIED', `Required capability denied: ${registrationId} -> ${capability}`);
       }
+      const normalizedConstraints = validateCapabilityConstraints(capability, constraints);
       const provider = providers.get(capability);
       if (!provider) throw new RegistryError('REGISTRY_CAPABILITY_PROVIDER_MISSING', `Required capability has no selected provider: ${capability}`);
       grants.push(Object.freeze({
         capability,
         provider: packageResolution(provider),
-        constraints,
+        constraints: normalizedConstraints,
       }));
     }
     if (configured) {
@@ -205,10 +212,20 @@ export function resolveCapabilityGrants(
   }
   const frozenProviders = new FrozenMap(providers);
   assertNoAdapterCycles(snapshot, frozenProviders);
+  const available = new FrozenMap(
+    resolved.map(([registrationId, grants]) => [
+      registrationId,
+      new FrozenSet(grants.map((grant) => grant.capability)),
+    ] as const),
+  );
   return Object.freeze({
     snapshot,
     grants: new FrozenMap(resolved),
     selectedProviders: frozenProviders,
-    enabledRegistrations: Object.freeze(new Set(enabled)),
+    availableCapabilities: available,
+    enabledRegistrations: new FrozenSet(enabled),
   });
 }
+
+export { CAPABILITY_IDS } from './capability-vocabulary.ts';
+export type { CapabilityId } from './capability-vocabulary.ts';

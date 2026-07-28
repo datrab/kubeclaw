@@ -46,6 +46,9 @@
       ".map",
       ".pyc"
     ],
+    "excludePaths": [
+      "skills/common/plugin-runtime/core/isolation/plugin-sandbox"
+    ],
     "excludeSegments": [
       "/node_modules/",
       "/dist/"
@@ -279,7 +282,7 @@
     },
     {
       "id": "plugin-delivery-lint",
-      "includesAny": ["delivery-lint", "delivery_lint", "validation-delivery"],
+      "includesAny": ["delivery-lint", "delivery_lint"],
       "target": {"kind": "plugin", "id": "kubeclaw.delivery-lint"}
     },
     {
@@ -291,11 +294,6 @@
       "id": "delete-mixed-validation-contract",
       "includesAny": ["/services/validation.ts", "/services/validation-contract.ts"],
       "target": {"kind": "delete", "id": "legacy-mixed-validation-contract"}
-    },
-    {
-      "id": "delete-mixed-validator-facade",
-      "includesAny": ["module-validators"],
-      "target": {"kind": "delete", "id": "legacy-mixed-validator-facade"}
     },
     {
       "id": "plugin-lint",
@@ -572,9 +570,8 @@
     {"currentId": "builtin.gate.approval", "currentType": "gate", "currentStageId": "gate:approval", "entrypoint": "skills/nova/pipeline/runners/approval-gate-runner.ts", "targetPackage": "kubeclaw.human-approval", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.decision.human-approval"},
     {"currentId": "builtin.gate.buster", "currentType": "gate", "currentStageId": "gate:buster", "entrypoint": "skills/nova/pipeline/runners/buster-gate-runner.ts", "targetPackage": "kubeclaw.buster-quality-gate", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.test.quality-evaluation"},
     {"currentId": "builtin.validator.architecture", "currentType": "validator", "currentStageId": "validator:architecture", "entrypoint": "skills/nova/pipeline/services/arch-validator.ts", "targetPackage": "kubeclaw.architecture-validator", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.validate.architecture"},
-    {"currentId": "builtin.validator.delivery_lint", "currentType": "validator", "currentStageId": "validator:delivery_lint", "entrypoint": "skills/nova/pipeline/services/module-validators.ts", "targetPackage": "kubeclaw.delivery-lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.delivery"},
-    {"currentId": "builtin.validator.pre_check", "currentType": "validator", "currentStageId": "validator:pre_check", "entrypoint": "skills/nova/pipeline/services/module-validators.ts", "targetPackage": "kubeclaw.lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.pre-check"},
-    {"currentId": "builtin.validator.full_lint", "currentType": "validator", "currentStageId": "validator:full_lint", "entrypoint": "skills/nova/pipeline/services/module-validators.ts", "targetPackage": "kubeclaw.lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.full"},
+    {"currentId": "builtin.validator.pre_check", "currentType": "validator", "currentStageId": "validator:pre_check", "entrypoint": "skills/nova/pipeline/services/module-lint-validators.ts", "targetPackage": "kubeclaw.lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.pre-check"},
+    {"currentId": "builtin.validator.full_lint", "currentType": "validator", "currentStageId": "validator:full_lint", "entrypoint": "skills/nova/pipeline/services/module-lint-validators.ts", "targetPackage": "kubeclaw.lint", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.lint.full"},
     {"currentId": "builtin.generator.project_summary", "currentType": "generator", "currentStageId": "generator:project_summary", "entrypoint": "skills/nova/pipeline/services/summary.ts", "targetPackage": "kubeclaw.project-summary", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.report.project-summary"},
     {"currentId": "builtin.generator.pipeline_review", "currentType": "generator", "currentStageId": "generator:pipeline_review", "entrypoint": "skills/nova/pipeline/services/pipeline-review-run.ts", "targetPackage": "kubeclaw.pipeline-review", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.report.pipeline-review"},
     {"currentId": "builtin.generator.case_study", "currentType": "generator", "currentStageId": "generator:case_study", "entrypoint": "skills/nova/pipeline/services/case-study.ts", "targetPackage": "kubeclaw.case-study", "targetSurface": "stage", "targetRegistrationId": "kubeclaw.report.case-study"},

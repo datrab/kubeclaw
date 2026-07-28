@@ -1,0 +1,12 @@
+{
+  "input": {
+    "moduleId": "example",
+    "repositoryPath": "Dockerfile",
+    "serve": {
+      "dockerfile": "Dockerfile",
+      "staticPath": "/app/public"
+    }
+  },
+  "dockerfile": "COPY public /app/public\n",
+  "expectedOutcome": "passed"
+}

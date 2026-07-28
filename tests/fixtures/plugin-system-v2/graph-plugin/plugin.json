@@ -1,0 +1,1 @@
+{"id":"test.graph-plugin","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"generic","type":"test.generic","module":"dist/stage.js","export":"execute","requiredCapabilities":[],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],"observers":[],"adapters":[]}

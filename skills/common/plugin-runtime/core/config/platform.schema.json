@@ -14,7 +14,8 @@
     "observers",
     "storageRoot",
     "shutdownTimeoutMs",
-    "orchestratorIssuerId"
+    "orchestratorIssuerId",
+    "administrativeDecisionIssuers"
   ],
   "properties": {
     "schemaVersion": { "const": "pipeline-platform.v2" },
@@ -86,6 +87,19 @@
     },
     "storageRoot": { "type": "string", "minLength": 1 },
     "shutdownTimeoutMs": { "type": "integer", "minimum": 1 },
-    "orchestratorIssuerId": { "type": "string", "minLength": 1 }
+    "orchestratorIssuerId": { "type": "string", "minLength": 1 },
+    "administrativeDecisionIssuers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "id"],
+        "properties": {
+          "type": { "enum": ["operator", "administrator"] },
+          "id": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
   }
 }

@@ -39,11 +39,12 @@ const request = {
     tier: 'pre-check',
   },
 };
+const fenced = { fence: { assertCurrent() {} } };
 
 try {
   await adapter.ready();
   await assert.rejects(
-    adapter.invoke({ request, signal: new AbortController().signal }),
+    adapter.invoke({ ...fenced, request, signal: new AbortController().signal }),
     /LINT_WORKING_DIRECTORY_DENIED/,
   );
 
@@ -51,6 +52,7 @@ try {
   cancelled.abort();
   await assert.rejects(
     adapter.invoke({
+      ...fenced,
       request: {
         ...request,
         payload: { ...request.payload, workingDirectory: repositoryRoot },
@@ -62,6 +64,7 @@ try {
 
   await assert.rejects(
     adapter.invoke({
+      ...fenced,
       request: { ...request, capability: 'command.execute' },
       signal: new AbortController().signal,
     }),

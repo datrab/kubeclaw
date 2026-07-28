@@ -73,6 +73,36 @@ export type EffectReceipt = {
   error?: Reason;
   recordedAt: string;
 };
+export type AdministrativeReopenDecision =
+  | {
+      schemaVersion: 'administrative-reopen.v2';
+      decisionId: OpaqueId;
+      idempotencyKey: OpaqueId;
+      runId: OpaqueId;
+      stageId: LocalId;
+      actor: {
+        type: 'operator' | 'administrator';
+        id: OpaqueId;
+      };
+      reason: Reason;
+      continuation: 'remediation';
+      remediationStageId: LocalId;
+      decidedAt: string;
+    }
+  | {
+      schemaVersion: 'administrative-reopen.v2';
+      decisionId: OpaqueId;
+      idempotencyKey: OpaqueId;
+      runId: OpaqueId;
+      stageId: LocalId;
+      actor: {
+        type: 'operator' | 'administrator';
+        id: OpaqueId;
+      };
+      reason: Reason;
+      continuation: 'retry' | 'cancel';
+      decidedAt: string;
+    };
 export type InvocationLease = {
   [k: string]: any;
 } & {
@@ -119,6 +149,7 @@ export interface PluginSystemV2 {
   effectReceipt?: EffectReceipt;
   waitRequest?: WaitRequest;
   resumeSignal?: ResumeSignal;
+  administrativeReopenDecision?: AdministrativeReopenDecision;
   packageProvenance?: PackageProvenance;
   registrationProvenance?: RegistrationProvenance;
   capabilityGrant?: CapabilityGrant;

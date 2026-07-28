@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const source = fs.readFileSync(path.resolve('src/stage.ts'), 'utf8');
+assert.doesNotMatch(source, /skills\/nova\/pipeline|project-summary-stage/);
+assert.doesNotMatch(source, /context\.invoke\('runtime\.dispatch'/);
+assert.match(source, /buildSummary/);
+assert.match(source, /context\.invoke\('artifacts\.write'/);
+
+const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
+assert.deepEqual(manifest.stages[0].requiredCapabilities, ['artifacts.write']);
+assert.equal(manifest.stages[0].module, 'dist/stage.js');
+
+console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.project-summary', suite: 'package-boundary' }));

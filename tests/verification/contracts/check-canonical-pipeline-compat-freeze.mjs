@@ -174,7 +174,7 @@ const highRiskOrLimits = {
   'skills/nova/pipeline/services/gate-active-session.ts': 9,
   'skills/nova/pipeline/services/gate-fix-scaffold.ts': 4,
   'skills/nova/pipeline/services/governance-context.ts': 6,
-  'skills/nova/pipeline/services/module-validators.ts': 13,
+  'skills/nova/pipeline/services/module-lint-validators.ts': 12,
   'skills/nova/pipeline/services/notification-contract.ts': 15,
   'skills/nova/pipeline/services/notification-dispatch.ts': 1,
   'skills/nova/pipeline/services/observability.ts': 5,

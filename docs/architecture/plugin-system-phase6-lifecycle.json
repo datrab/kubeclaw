@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "plugin-system-phase6-lifecycle.v1",
+  "status": "complete-v2-preparation",
+  "productionAuthority": "skills-role-bundles-v1",
+  "nextPhase": 7,
+  "graph": {
+    "snapshotSchemaVersion": "execution-graph-snapshot.v2",
+    "pinnedFields": [
+      "pipelineId",
+      "maxConcurrency",
+      "nodes",
+      "ordinaryEdges",
+      "remediationEdges",
+      "digest"
+    ],
+    "rules": [
+      "ordinary dependencies are acyclic",
+      "fan-out and fan-in are supported",
+      "remediation targets are declared and bounded",
+      "plugins cannot mutate the frozen graph",
+      "resume requires the pinned graph digest"
+    ]
+  },
+  "lifecycle": {
+    "canonicalResults": [
+      "passed",
+      "retry",
+      "request_fix",
+      "wait",
+      "orchestrator_required",
+      "blocked",
+      "failed",
+      "timed_out",
+      "rate_limited",
+      "cancelled"
+    ],
+    "rejectedV2Aliases": [
+      "needs_nova",
+      "action_required"
+    ],
+    "budgets": {
+      "attempts": "consumed by every stage execution and never reset on resume",
+      "remediationCycles": "consumed by request_fix traversal and never reset on resume"
+    },
+    "blockedReopening": {
+      "schemaVersion": "administrative-reopen.v2",
+      "continuations": [
+        "retry",
+        "remediation",
+        "cancel"
+      ],
+      "auditRequired": true
+    }
+  },
+  "v2DeletionEvidence": [
+    "no concrete plugin IDs or fixed stage IDs in the generic scheduler",
+    "no Forge or Buster scheduler branch in v2 core",
+    "no needs_nova or action_required executable v2 lifecycle producer",
+    "no plugin-controlled graph mutation surface"
+  ],
+  "phase12AtomicDeletionObligations": [
+    "v1 concrete scheduler branches",
+    "v1 lifecycle readers and writers",
+    "v1 needs_nova and action_required producers and consumers",
+    "v1 lifecycle normalizers, fixtures, examples, tests, and documentation"
+  ]
+}
