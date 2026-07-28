@@ -2,9 +2,9 @@
   "schemaVersion": "plugin-system-migration-surfaces-v2",
   "generatedFrom": {
     "inventory": "docs/generated/inventory/plugin-system.json",
-    "inventoryDigest": "392687cf90b9e70ed70c545d1f4d53e9cd2b5d17fd6d9d35d31c9c4ff0027f33",
+    "inventoryDigest": "3ca57b4896c9a4eae80225f5092e7446da8c931591d725b69af16958b0498ae1",
     "units": "docs/architecture/plugin-system-migration-units.json",
-    "unitsDigest": "17b5351ba2273eaa162b53dea35e3135808c3367cfc6f4e3f46ec811b9406db5"
+    "unitsDigest": "99c438a2312cd7c9d4a677bea7c52cb658097dd61d8e9d12267ebd071c66edbf"
   },
   "units": [
     {
@@ -687,18 +687,68 @@
         "nova",
         "buster"
       ],
-      "parityBlockers": [
-        "prompt ownership has no independently testable v2 target surface yet"
-      ],
+      "parityBlockers": [],
       "uncoveredReplacementPackages": [],
       "scenarios": [
         {
-          "id": "prompt-real-pipeline-contract",
+          "id": "prompt-contract-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "prompt-contract",
+          "level": "live",
+          "path": "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/prompt-contract",
+          "disposition": "intentionally-changed",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "One shared module assembled role-specific prose, filesystem paths, shell commands, completion artifacts, and compatibility shims and performed artifact-context writes while building prompts.",
+            "replacementBehavior": "A dependency-only library creates versioned deterministic data envelopes, rejects unsafe or lossy JSON values, enforces size/depth/entry limits, and owns no domain instructions or effects.",
+            "rationale": "Shared prompt infrastructure should standardize safe data and response boundaries, while each stage package owns its domain language and completion semantics.",
+            "complexityImpact": "Deletes global role coupling and prompt-time filesystem effects instead of porting the large helper surface.",
+            "behaviorChanged": true,
+            "approvalRef": "discord:1531749860674637876"
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "prompt-forge-legacy-contract",
           "evidenceType": "legacy",
           "level": "offline",
-          "path": "tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
-          "command": "node --test tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
+          "path": "tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs",
+          "command": "node --test tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Forge prompts bind task identity, Git context, completion evidence, and exact output instructions.",
+            "replacementBehavior": "Implementation-agent owns the equivalent domain protocol and terminal session/evidence contract while shared serialization is data-only.",
+            "rationale": "Domain prompt behavior remains with the implementation extension instead of a global helper.",
+            "complexityImpact": "Moves policy to one owner and removes compatibility shims.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": [
+            "parity-proven",
+            "cutover-complete"
+          ]
+        },
+        {
+          "id": "prompt-buster-legacy-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs",
+          "command": "node --test tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Buster prompts bind suite instructions, workspace rules, output schema, and completion ordering.",
+            "replacementBehavior": "Test-agent and quality-gate own their equivalent execution and verdict protocols while shared serialization is data-only.",
+            "rationale": "Testing policy belongs to the Buster extensions rather than global prompt infrastructure.",
+            "complexityImpact": "Separates execution policy from generic safe serialization.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": [
             "parity-proven",
             "cutover-complete"
@@ -754,7 +804,7 @@
     },
     {
       "id": "review-approval-and-reporting",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -911,7 +961,7 @@
     },
     {
       "id": "validation-and-lint",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -1117,14 +1167,6 @@
       ],
       "currentConsumers": [
         {
-          "ownerId": "adapter:kubeclaw.command",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/portable-artifacts.ts",
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-          ]
-        },
-        {
           "ownerId": "core:pipeline-core-execution",
           "count": 14,
           "samples": [
@@ -1144,8 +1186,10 @@
         },
         {
           "ownerId": "core:pipeline-core-state",
-          "count": 2,
+          "count": 4,
           "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/portable-artifacts.ts",
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
             "skills/nova/pipeline/services/status-store-io.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-pipeline.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
           ]
@@ -1378,139 +1422,6 @@
       "pairedLegacyFiles": []
     },
     {
-      "ownerId": "adapter:kubeclaw.command",
-      "unitId": "privileged-adapters",
-      "status": "baseline-retained",
-      "runtimeRoles": [
-        "nova",
-        "buster"
-      ],
-      "legacySourceFiles": [
-        "skills/nova/pipeline/services/command-lifecycle.ts",
-        "skills/nova/pipeline/services/command-runtime.ts",
-        "skills/nova/pipeline/services/command-validation.ts",
-        "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs"
-      ],
-      "targetFiles": [],
-      "exports": [
-        "commandControlEnabled",
-        "consumeCommandOnce",
-        "processCommand",
-        "startCommandRuntime",
-        "validateCommand"
-      ],
-      "currentConsumers": [
-        {
-          "ownerId": "core:pipeline-core-execution",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/command-runtime.ts"
-          ]
-        }
-      ],
-      "currentDependencies": [
-        {
-          "ownerId": "adapter:kubeclaw.artifacts",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/portable-artifacts.ts",
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-          ]
-        },
-        {
-          "ownerId": "core:pipeline-core-execution",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/core/paths.ts",
-            "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/core/runtime-environment.ts"
-          ]
-        },
-        {
-          "ownerId": "core:pipeline-core-state",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/status-store.ts"
-          ]
-        },
-        {
-          "ownerId": "core:pipeline-core-telemetry",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/telemetry/dispatch.ts",
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/telemetry.ts"
-          ]
-        },
-        {
-          "ownerId": "plugin:kubeclaw.human-approval",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/approval-signal-event-adapter.ts"
-          ]
-        },
-        {
-          "ownerId": "shared-library:kubeclaw.agent-observability-contract",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/observability-contract.ts",
-            "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/observability-contract.ts"
-          ]
-        }
-      ],
-      "privilegedEffects": [
-        {
-          "effect": "filesystem.read",
-          "targetAdapter": "kubeclaw.artifacts"
-        },
-        {
-          "effect": "filesystem.write",
-          "targetAdapter": "kubeclaw.artifacts"
-        },
-        {
-          "effect": "redis.execute",
-          "targetAdapter": "kubeclaw.redis"
-        },
-        {
-          "effect": "secret.read",
-          "targetAdapter": "kubeclaw.secrets"
-        }
-      ],
-      "currentRegistrations": [],
-      "targetRegistrations": [],
-      "configurationPaths": [],
-      "scenarioEvidence": [
-        {
-          "path": "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs",
-          "disposition": "must-remain-equivalent"
-        }
-      ],
-      "deletionCriteria": {
-        "exactPaths": [
-          "skills/nova/pipeline/services/command-lifecycle.ts",
-          "skills/nova/pipeline/services/command-runtime.ts",
-          "skills/nova/pipeline/services/command-validation.ts",
-          "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs"
-        ],
-        "requiredStatus": "cutover-complete",
-        "requireNoImports": true,
-        "requireNoConfiguration": true,
-        "requireNoRuntimeResolution": true
-      },
-      "replacementPairings": [
-        {
-          "id": "operator-command-target-pending",
-          "status": "blocked",
-          "rationale": "The legacy surface is operator control-command validation, journaling, Redis consumption, and recovery; it is not subprocess execution and needs its own v2 owner.",
-          "replacementOwnerIds": []
-        }
-      ],
-      "replacementOwnerIds": [],
-      "replacementFiles": [],
-      "replacementRegistrations": [],
-      "legacyPairings": [],
-      "legacyOwnerIds": [],
-      "pairedLegacyFiles": []
-    },
-    {
       "ownerId": "adapter:kubeclaw.command-runner",
       "unitId": "privileged-adapters",
       "status": "baseline-retained",
@@ -1594,7 +1505,7 @@
         {
           "id": "command-runner-new-foundation",
           "status": "new",
-          "rationale": "The bounded subprocess capability is new v2 foundation infrastructure; it does not claim to replace the unrelated legacy operator command lifecycle.",
+          "rationale": "The bounded subprocess capability is new v2 foundation infrastructure. Legacy operator command lifecycle files are correctly inventoried as core authority, not as a command adapter.",
           "legacyOwnerIds": []
         }
       ],
@@ -4515,6 +4426,8 @@
         "skills/nova/pipeline/scheduler.ts",
         "skills/nova/pipeline/security.ts",
         "skills/nova/pipeline/services/adapter-registry.ts",
+        "skills/nova/pipeline/services/command-runtime.ts",
+        "skills/nova/pipeline/services/command-validation.ts",
         "skills/nova/pipeline/services/completion-event-adapters.ts",
         "skills/nova/pipeline/services/completion-local-event-adapter.ts",
         "skills/nova/pipeline/services/contract-diagnostics.ts",
@@ -4870,6 +4783,7 @@
         "collectExistingArtifactRefs",
         "collectReadyBatch",
         "collectReadyItems",
+        "commandControlEnabled",
         "commonEnvironmentSnapshot",
         "completePipeline",
         "completionStreamKey",
@@ -5236,6 +5150,7 @@
         "sleep",
         "stageTypeFromStageId",
         "startAcpAdapter",
+        "startCommandRuntime",
         "startPipelineRun",
         "statusLogValue",
         "statusPollAgentType",
@@ -5258,6 +5173,7 @@
         "validateAllowedPath",
         "validateCapabilityConstraints",
         "validateCapabilityInvocationContract",
+        "validateCommand",
         "validateConfig",
         "validateConfigBoundary",
         "validateContractValue",
@@ -5293,14 +5209,6 @@
             "skills/nova/pipeline/services/artifact-plugin.ts -> skills/nova/pipeline/core/runtime.ts",
             "skills/nova/pipeline/services/artifact-summary.ts -> skills/nova/pipeline/core/paths.ts",
             "skills/nova/pipeline/services/artifact-summary.ts -> skills/nova/pipeline/core/runtime.ts"
-          ]
-        },
-        {
-          "ownerId": "adapter:kubeclaw.command",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/core/paths.ts",
-            "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/core/runtime-environment.ts"
           ]
         },
         {
@@ -5376,8 +5284,9 @@
         },
         {
           "ownerId": "core:pipeline-core-state",
-          "count": 54,
+          "count": 55,
           "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/command-validation.ts",
             "skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/services/correlation.ts -> skills/nova/pipeline/optional-absence.ts",
@@ -5388,8 +5297,7 @@
             "skills/nova/pipeline/services/session-authority.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/core/logger.ts",
             "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/core/paths.ts",
-            "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/optional-absence.ts"
+            "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/egress.ts"
           ]
         },
         {
@@ -5812,13 +5720,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.command",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/command-runtime.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.git",
           "count": 4,
           "samples": [
@@ -5891,7 +5792,7 @@
         },
         {
           "ownerId": "core:pipeline-core-state",
-          "count": 77,
+          "count": 79,
           "samples": [
             "skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts",
             "skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts",
@@ -5909,7 +5810,7 @@
         },
         {
           "ownerId": "core:pipeline-core-telemetry",
-          "count": 30,
+          "count": 31,
           "samples": [
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts",
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts",
@@ -5920,9 +5821,9 @@
             "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/telemetry.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal-results.ts -> skills/nova/pipeline/services/telemetry.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/telemetry.ts",
+            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/telemetry.ts",
             "skills/nova/pipeline/services/evidence-finalization.ts -> skills/nova/pipeline/services/evidence-manifest.ts",
-            "skills/nova/pipeline/services/evidence-plane.ts -> skills/nova/pipeline/services/evidence-manifest.ts",
-            "skills/nova/pipeline/services/failures/retry-automatic.ts -> skills/nova/pipeline/services/telemetry.ts"
+            "skills/nova/pipeline/services/evidence-plane.ts -> skills/nova/pipeline/services/evidence-manifest.ts"
           ]
         },
         {
@@ -5996,6 +5897,13 @@
           ]
         },
         {
+          "ownerId": "plugin:kubeclaw.human-approval",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/approval-signal-event-adapter.ts"
+          ]
+        },
+        {
           "ownerId": "plugin:kubeclaw.lint",
           "count": 1,
           "samples": [
@@ -6039,9 +5947,10 @@
         },
         {
           "ownerId": "shared-library:kubeclaw.agent-observability-contract",
-          "count": 1,
+          "count": 2,
           "samples": [
-            "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts"
+            "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts",
+            "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/observability-contract.ts"
           ]
         },
         {
@@ -6264,6 +6173,8 @@
           "skills/nova/pipeline/scheduler.ts",
           "skills/nova/pipeline/security.ts",
           "skills/nova/pipeline/services/adapter-registry.ts",
+          "skills/nova/pipeline/services/command-runtime.ts",
+          "skills/nova/pipeline/services/command-validation.ts",
           "skills/nova/pipeline/services/completion-event-adapters.ts",
           "skills/nova/pipeline/services/completion-local-event-adapter.ts",
           "skills/nova/pipeline/services/contract-diagnostics.ts",
@@ -6509,6 +6420,8 @@
         "skills/nova/pipeline/scheduler.ts",
         "skills/nova/pipeline/security.ts",
         "skills/nova/pipeline/services/adapter-registry.ts",
+        "skills/nova/pipeline/services/command-runtime.ts",
+        "skills/nova/pipeline/services/command-validation.ts",
         "skills/nova/pipeline/services/completion-event-adapters.ts",
         "skills/nova/pipeline/services/completion-local-event-adapter.ts",
         "skills/nova/pipeline/services/contract-diagnostics.ts",
@@ -7021,6 +6934,7 @@
         "skills/common/pipeline/lifecycle-state.ts",
         "skills/common/pipeline/lifecycle-transition-fields.ts",
         "skills/nova/pipeline/lifecycle-state.ts",
+        "skills/nova/pipeline/services/command-lifecycle.ts",
         "skills/nova/pipeline/services/completion-adjudicator.ts",
         "skills/nova/pipeline/services/completion-identity-values.ts",
         "skills/nova/pipeline/services/completion-identity.ts",
@@ -7077,6 +6991,7 @@
         "skills/nova/pipeline/services/status-store-values.ts",
         "skills/nova/pipeline/services/status-store.ts",
         "tests/skills/nova/pipeline/lifecycle-test-fixtures.mjs",
+        "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs",
         "tests/skills/nova/pipeline/services/completion-adjudicator.test.mjs",
         "tests/skills/nova/pipeline/services/serialization.test.mjs",
         "tests/skills/nova/pipeline/services/status-store-lifecycle.test.mjs",
@@ -7194,6 +7109,8 @@
         "cloneReadonlySnapshot",
         "cloneSerializable",
         "closeLogDir",
+        "commandControlEnabled",
+        "consumeCommandOnce",
         "cooldownIdentity",
         "createDefaultLifecycleReadModels",
         "createReadonlySnapshot",
@@ -7257,6 +7174,7 @@
         "objectRecord",
         "pipelineProgressGates",
         "pipelineProgressModules",
+        "processCommand",
         "projectApprovalGateReadModel",
         "projectCompletionState",
         "projectGateCompletionState",
@@ -7310,17 +7228,11 @@
         "syncRuntimeSnapshotToReadModels",
         "textValue",
         "transitionModuleStatus",
+        "validateCommand",
         "withLifecycleAppendLock",
         "writeJsonAtomic"
       ],
       "currentConsumers": [
-        {
-          "ownerId": "adapter:kubeclaw.command",
-          "count": 1,
-          "samples": [
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/status-store.ts"
-          ]
-        },
         {
           "ownerId": "adapter:kubeclaw.redis",
           "count": 1,
@@ -7339,7 +7251,7 @@
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 77,
+          "count": 79,
           "samples": [
             "skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts",
             "skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts",
@@ -7529,16 +7441,19 @@
       "currentDependencies": [
         {
           "ownerId": "adapter:kubeclaw.artifacts",
-          "count": 2,
+          "count": 4,
           "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/portable-artifacts.ts",
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
             "skills/nova/pipeline/services/status-store-io.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-pipeline.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
           ]
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 54,
+          "count": 55,
           "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/command-validation.ts",
             "skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/core/constants.ts",
             "skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/services/correlation.ts -> skills/nova/pipeline/optional-absence.ts",
@@ -7549,8 +7464,7 @@
             "skills/nova/pipeline/services/session-authority.ts -> skills/nova/pipeline/optional-absence.ts",
             "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/core/logger.ts",
             "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/core/paths.ts",
-            "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/egress.ts",
-            "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/optional-absence.ts"
+            "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/egress.ts"
           ]
         },
         {
@@ -7559,6 +7473,13 @@
           "samples": [
             "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
             "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+          ]
+        },
+        {
+          "ownerId": "core:pipeline-core-telemetry",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/telemetry/dispatch.ts"
           ]
         },
         {
@@ -7572,6 +7493,13 @@
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-modules.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-recovery.ts -> skills/nova/pipeline/value-boundary.ts",
             "skills/nova/pipeline/services/status-store-lifecycle/appenders-waits.ts -> skills/nova/pipeline/value-boundary.ts"
+          ]
+        },
+        {
+          "ownerId": "shared-library:kubeclaw.agent-observability-contract",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/observability-contract.ts"
           ]
         },
         {
@@ -7590,6 +7518,14 @@
         {
           "effect": "filesystem.write",
           "targetAdapter": "kubeclaw.artifacts"
+        },
+        {
+          "effect": "redis.execute",
+          "targetAdapter": "kubeclaw.redis"
+        },
+        {
+          "effect": "secret.read",
+          "targetAdapter": "kubeclaw.secrets"
         }
       ],
       "currentRegistrations": [],
@@ -7602,6 +7538,10 @@
       "scenarioEvidence": [
         {
           "path": "tests/skills/nova/pipeline/lifecycle-test-fixtures.mjs",
+          "disposition": "must-remain-equivalent"
+        },
+        {
+          "path": "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs",
           "disposition": "must-remain-equivalent"
         },
         {
@@ -7626,6 +7566,7 @@
           "skills/common/pipeline/lifecycle-state.ts",
           "skills/common/pipeline/lifecycle-transition-fields.ts",
           "skills/nova/pipeline/lifecycle-state.ts",
+          "skills/nova/pipeline/services/command-lifecycle.ts",
           "skills/nova/pipeline/services/completion-adjudicator.ts",
           "skills/nova/pipeline/services/completion-identity-values.ts",
           "skills/nova/pipeline/services/completion-identity.ts",
@@ -7682,6 +7623,7 @@
           "skills/nova/pipeline/services/status-store-values.ts",
           "skills/nova/pipeline/services/status-store.ts",
           "tests/skills/nova/pipeline/lifecycle-test-fixtures.mjs",
+          "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs",
           "tests/skills/nova/pipeline/services/completion-adjudicator.test.mjs",
           "tests/skills/nova/pipeline/services/serialization.test.mjs",
           "tests/skills/nova/pipeline/services/status-store-lifecycle.test.mjs",
@@ -7731,6 +7673,7 @@
         "skills/common/pipeline/lifecycle-state.ts",
         "skills/common/pipeline/lifecycle-transition-fields.ts",
         "skills/nova/pipeline/lifecycle-state.ts",
+        "skills/nova/pipeline/services/command-lifecycle.ts",
         "skills/nova/pipeline/services/completion-adjudicator.ts",
         "skills/nova/pipeline/services/completion-identity-values.ts",
         "skills/nova/pipeline/services/completion-identity.ts",
@@ -7787,6 +7730,7 @@
         "skills/nova/pipeline/services/status-store-values.ts",
         "skills/nova/pipeline/services/status-store.ts",
         "tests/skills/nova/pipeline/lifecycle-test-fixtures.mjs",
+        "tests/skills/nova/pipeline/services/command-lifecycle.test.mjs",
         "tests/skills/nova/pipeline/services/completion-adjudicator.test.mjs",
         "tests/skills/nova/pipeline/services/serialization.test.mjs",
         "tests/skills/nova/pipeline/services/status-store-lifecycle.test.mjs",
@@ -7908,14 +7852,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.command",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/telemetry/dispatch.ts",
-            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/telemetry.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.redis",
           "count": 4,
           "samples": [
@@ -7936,7 +7872,7 @@
         },
         {
           "ownerId": "core:pipeline-core-execution",
-          "count": 30,
+          "count": 31,
           "samples": [
             "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts",
             "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts",
@@ -7947,9 +7883,16 @@
             "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/telemetry.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal-results.ts -> skills/nova/pipeline/services/telemetry.ts",
             "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/telemetry.ts",
+            "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/telemetry.ts",
             "skills/nova/pipeline/services/evidence-finalization.ts -> skills/nova/pipeline/services/evidence-manifest.ts",
-            "skills/nova/pipeline/services/evidence-plane.ts -> skills/nova/pipeline/services/evidence-manifest.ts",
-            "skills/nova/pipeline/services/failures/retry-automatic.ts -> skills/nova/pipeline/services/telemetry.ts"
+            "skills/nova/pipeline/services/evidence-plane.ts -> skills/nova/pipeline/services/evidence-manifest.ts"
+          ]
+        },
+        {
+          "ownerId": "core:pipeline-core-state",
+          "count": 1,
+          "samples": [
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/telemetry/dispatch.ts"
           ]
         },
         {
@@ -9002,7 +8945,7 @@
     {
       "ownerId": "delete:legacy-mixed-validation-contract",
       "unitId": "validation-and-lint",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -11179,7 +11122,7 @@
     {
       "ownerId": "plugin:kubeclaw.architecture-validator",
       "unitId": "validation-and-lint",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -13798,7 +13741,7 @@
     {
       "ownerId": "plugin:kubeclaw.case-study",
       "unitId": "review-approval-and-reporting",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -14093,7 +14036,7 @@
     {
       "ownerId": "plugin:kubeclaw.delivery-lint",
       "unitId": "validation-and-lint",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -14573,7 +14516,7 @@
     {
       "ownerId": "plugin:kubeclaw.human-approval",
       "unitId": "review-approval-and-reporting",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -14685,7 +14628,7 @@
       ],
       "currentConsumers": [
         {
-          "ownerId": "adapter:kubeclaw.command",
+          "ownerId": "core:pipeline-core-execution",
           "count": 1,
           "samples": [
             "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/approval-signal-event-adapter.ts"
@@ -15089,7 +15032,7 @@
     {
       "ownerId": "plugin:kubeclaw.lint",
       "unitId": "validation-and-lint",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -16656,7 +16599,7 @@
     {
       "ownerId": "plugin:kubeclaw.pipeline-review",
       "unitId": "review-approval-and-reporting",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -16946,7 +16889,7 @@
     {
       "ownerId": "plugin:kubeclaw.preflight-contract",
       "unitId": "validation-and-lint",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -17143,7 +17086,7 @@
     {
       "ownerId": "plugin:kubeclaw.project-summary",
       "unitId": "review-approval-and-reporting",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -17718,7 +17661,7 @@
     {
       "ownerId": "plugin:kubeclaw.review",
       "unitId": "review-approval-and-reporting",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -18994,14 +18937,6 @@
           ]
         },
         {
-          "ownerId": "adapter:kubeclaw.command",
-          "count": 2,
-          "samples": [
-            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/observability-contract.ts",
-            "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/observability-contract.ts"
-          ]
-        },
-        {
           "ownerId": "adapter:kubeclaw.redis",
           "count": 1,
           "samples": [
@@ -19019,9 +18954,17 @@
         },
         {
           "ownerId": "core:pipeline-core-execution",
+          "count": 2,
+          "samples": [
+            "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts",
+            "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/observability-contract.ts"
+          ]
+        },
+        {
+          "ownerId": "core:pipeline-core-state",
           "count": 1,
           "samples": [
-            "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts"
+            "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/observability-contract.ts"
           ]
         },
         {
@@ -19598,6 +19541,79 @@
       "pairedLegacyFiles": []
     },
     {
+      "ownerId": "shared-library:kubeclaw.prompt-contract",
+      "unitId": "prompt-library",
+      "status": "baseline-retained",
+      "runtimeRoles": [
+        "nova",
+        "buster"
+      ],
+      "legacySourceFiles": [],
+      "targetFiles": [
+        "skills/common/plugins/prompt-contract/README.md",
+        "skills/common/plugins/prompt-contract/package.json",
+        "skills/common/plugins/prompt-contract/src/index.ts",
+        "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+        "skills/common/plugins/prompt-contract/tsconfig.json"
+      ],
+      "exports": [
+        "PROMPT_CONTRACT_VERSION",
+        "PromptEnvelope",
+        "PromptEnvelopeInput",
+        "PromptLimits",
+        "createPromptEnvelope",
+        "serializePromptEnvelope",
+        "stablePromptJson"
+      ],
+      "currentConsumers": [],
+      "currentDependencies": [],
+      "privilegedEffects": [],
+      "currentRegistrations": [],
+      "targetRegistrations": [],
+      "configurationPaths": [
+        "skills/common/plugins/prompt-contract/tsconfig.json"
+      ],
+      "scenarioEvidence": [
+        {
+          "path": "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+          "disposition": "must-remain-equivalent"
+        }
+      ],
+      "deletionCriteria": {
+        "exactPaths": [],
+        "requiredStatus": "cutover-complete",
+        "requireNoImports": true,
+        "requireNoConfiguration": true,
+        "requireNoRuntimeResolution": true
+      },
+      "replacementPairings": [],
+      "replacementOwnerIds": [],
+      "replacementFiles": [],
+      "replacementRegistrations": [],
+      "legacyPairings": [
+        {
+          "id": "prompt-primitives-to-data-contract",
+          "status": "paired",
+          "rationale": "Global role-coupled prompt assembly is replaced by a dependency-only deterministic data contract; domain prompt instructions remain owned and tested inside each stage package.",
+          "legacyOwnerIds": [
+            "shared-library:kubeclaw.prompt-primitives"
+          ]
+        },
+        {
+          "id": "prompt-contract-new-foundation",
+          "status": "new",
+          "rationale": "Closed deterministic prompt envelopes and strict safe serialization are new shared v2 foundation with no runtime authority.",
+          "legacyOwnerIds": []
+        }
+      ],
+      "legacyOwnerIds": [
+        "shared-library:kubeclaw.prompt-primitives"
+      ],
+      "pairedLegacyFiles": [
+        "skills/nova/pipeline/prompts/shared.ts"
+      ]
+    },
+    {
       "ownerId": "shared-library:kubeclaw.prompt-primitives",
       "unitId": "prompt-library",
       "status": "baseline-retained",
@@ -19683,14 +19699,24 @@
       },
       "replacementPairings": [
         {
-          "id": "prompt-library-target-pending",
-          "status": "blocked",
-          "rationale": "No independently testable v2 prompt-library target exists yet.",
-          "replacementOwnerIds": []
+          "id": "prompt-primitives-to-data-contract",
+          "status": "paired",
+          "rationale": "Global role-coupled prompt assembly is replaced by a dependency-only deterministic data contract; domain prompt instructions remain owned and tested inside each stage package.",
+          "replacementOwnerIds": [
+            "shared-library:kubeclaw.prompt-contract"
+          ]
         }
       ],
-      "replacementOwnerIds": [],
-      "replacementFiles": [],
+      "replacementOwnerIds": [
+        "shared-library:kubeclaw.prompt-contract"
+      ],
+      "replacementFiles": [
+        "skills/common/plugins/prompt-contract/README.md",
+        "skills/common/plugins/prompt-contract/package.json",
+        "skills/common/plugins/prompt-contract/src/index.ts",
+        "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+        "skills/common/plugins/prompt-contract/tsconfig.json"
+      ],
       "replacementRegistrations": [],
       "legacyPairings": [],
       "legacyOwnerIds": [],

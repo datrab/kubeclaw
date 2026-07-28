@@ -111,6 +111,11 @@
       "target": {"kind": "plugin", "id": "kubeclaw.openclaw-agent-observer"}
     },
     {
+      "id": "shared-prompt-contract-v2",
+      "prefixes": ["skills/common/plugins/prompt-contract/"],
+      "target": {"kind": "shared-library", "id": "kubeclaw.prompt-contract"}
+    },
+    {
       "id": "plugin-openclaw-agent-events",
       "prefixes": ["skills/common/plugins/openclaw-agent-events/"],
       "target": {"kind": "adapter", "id": "kubeclaw.openclaw-agent-events"}
@@ -428,11 +433,6 @@
       "id": "adapter-operator",
       "includesAny": ["discord", "operator"],
       "target": {"kind": "adapter", "id": "kubeclaw.operator-messaging"}
-    },
-    {
-      "id": "adapter-command",
-      "includesAny": ["command-runtime", "command-lifecycle", "command-validation"],
-      "target": {"kind": "adapter", "id": "kubeclaw.command"}
     },
     {
       "id": "delete-concrete-orchestrator-runners",

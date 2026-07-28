@@ -76,7 +76,7 @@ try {
     'utf8',
   ));
   const packageIds = snapshot.packages.map(([id]) => id).sort();
-  assert.equal(packageIds.length, 28, 'run snapshot must record the complete discovered registry');
+  assert.equal(packageIds.length, 29, 'run snapshot must record the complete discovered registry');
   for (const id of [
     'kubeclaw.architecture-validator',
     'kubeclaw.artifact-store',
@@ -87,7 +87,7 @@ try {
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
   assert.equal(snapshot.registrations.stages.length, 13);
   assert.equal(snapshot.registrations.observers.length, 5);
-  assert.equal(snapshot.registrations.adapters.length, 14);
+  assert.equal(snapshot.registrations.adapters.length, 16);
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.selectedProviders.some(({ capability }) => capability === 'git.repository.read'));

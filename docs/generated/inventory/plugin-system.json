@@ -3,13 +3,13 @@
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "rulesSource": "docs/architecture/plugin-system-inventory.rules.json",
   "summary": {
-    "files": 1469,
-    "runtimeFiles": 1153,
+    "files": 1474,
+    "runtimeFiles": 1158,
     "supportFiles": 316,
-    "exportedSurfaces": 3759,
-    "localImports": 3524,
-    "privilegedEffects": 1214,
-    "privilegedEffectReferences": 2352,
+    "exportedSurfaces": 3766,
+    "localImports": 3525,
+    "privilegedEffects": 1215,
+    "privilegedEffectReferences": 2353,
     "runtimeLegacyContractHits": 107,
     "legacyContractHits": 181,
     "runtimeHardcodingHits": 71,
@@ -21,10 +21,6 @@
     {
       "id": "adapter:kubeclaw.artifacts",
       "count": 12
-    },
-    {
-      "id": "adapter:kubeclaw.command",
-      "count": 4
     },
     {
       "id": "adapter:kubeclaw.command-runner",
@@ -88,7 +84,7 @@
     },
     {
       "id": "core:pipeline-core-execution",
-      "count": 196
+      "count": 198
     },
     {
       "id": "core:pipeline-core-registry",
@@ -96,7 +92,7 @@
     },
     {
       "id": "core:pipeline-core-state",
-      "count": 69
+      "count": 71
     },
     {
       "id": "core:pipeline-core-telemetry",
@@ -239,6 +235,10 @@
       "count": 14
     },
     {
+      "id": "shared-library:kubeclaw.prompt-contract",
+      "count": 5
+    },
+    {
       "id": "shared-library:kubeclaw.prompt-primitives",
       "count": 1
     },
@@ -258,7 +258,7 @@
     },
     {
       "id": "filesystem.read",
-      "count": 515
+      "count": 516
     },
     {
       "id": "filesystem.write",
@@ -300,7 +300,7 @@
     },
     {
       "id": "filesystem.read",
-      "count": 792
+      "count": 793
     },
     {
       "id": "filesystem.write",
@@ -1184,58 +1184,6 @@
       ]
     },
     {
-      "from": "adapter:kubeclaw.command",
-      "to": "adapter:kubeclaw.artifacts",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/portable-artifacts.ts",
-        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.command",
-      "to": "core:pipeline-core-execution",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/core/paths.ts",
-        "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/core/runtime-environment.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.command",
-      "to": "core:pipeline-core-state",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/status-store.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.command",
-      "to": "core:pipeline-core-telemetry",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/telemetry/dispatch.ts",
-        "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/telemetry.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.command",
-      "to": "plugin:kubeclaw.human-approval",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/approval-signal-event-adapter.ts"
-      ]
-    },
-    {
-      "from": "adapter:kubeclaw.command",
-      "to": "shared-library:kubeclaw.agent-observability-contract",
-      "count": 2,
-      "samples": [
-        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/observability-contract.ts",
-        "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/observability-contract.ts"
-      ]
-    },
-    {
       "from": "adapter:kubeclaw.git",
       "to": "core:pipeline-core-execution",
       "count": 11,
@@ -1508,14 +1456,6 @@
     },
     {
       "from": "core:pipeline-core-execution",
-      "to": "adapter:kubeclaw.command",
-      "count": 1,
-      "samples": [
-        "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/command-runtime.ts"
-      ]
-    },
-    {
-      "from": "core:pipeline-core-execution",
       "to": "adapter:kubeclaw.git",
       "count": 4,
       "samples": [
@@ -1593,7 +1533,7 @@
     {
       "from": "core:pipeline-core-execution",
       "to": "core:pipeline-core-state",
-      "count": 77,
+      "count": 79,
       "samples": [
         "skills/common/plugin-runtime/core/effects/journal.ts -> skills/common/plugin-runtime/core/state/journal.ts",
         "skills/common/plugin-runtime/core/effects/locks.ts -> skills/common/plugin-runtime/core/state/journal.ts",
@@ -1612,7 +1552,7 @@
     {
       "from": "core:pipeline-core-execution",
       "to": "core:pipeline-core-telemetry",
-      "count": 30,
+      "count": 31,
       "samples": [
         "skills/common/plugin-runtime/core/execution/engine.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts",
         "skills/common/plugin-runtime/core/src/index.ts -> skills/common/plugin-runtime/core/telemetry/observers.ts",
@@ -1623,9 +1563,9 @@
         "skills/nova/pipeline/runners/pipeline-runner-terminal-halt.ts -> skills/nova/pipeline/services/telemetry.ts",
         "skills/nova/pipeline/runners/pipeline-runner-terminal-results.ts -> skills/nova/pipeline/services/telemetry.ts",
         "skills/nova/pipeline/runners/pipeline-runner-terminal.ts -> skills/nova/pipeline/services/telemetry.ts",
+        "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/telemetry.ts",
         "skills/nova/pipeline/services/evidence-finalization.ts -> skills/nova/pipeline/services/evidence-manifest.ts",
-        "skills/nova/pipeline/services/evidence-plane.ts -> skills/nova/pipeline/services/evidence-manifest.ts",
-        "skills/nova/pipeline/services/failures/retry-automatic.ts -> skills/nova/pipeline/services/telemetry.ts"
+        "skills/nova/pipeline/services/evidence-plane.ts -> skills/nova/pipeline/services/evidence-manifest.ts"
       ]
     },
     {
@@ -1707,6 +1647,14 @@
     },
     {
       "from": "core:pipeline-core-execution",
+      "to": "plugin:kubeclaw.human-approval",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/command-runtime.ts -> skills/nova/pipeline/services/approval-signal-event-adapter.ts"
+      ]
+    },
+    {
+      "from": "core:pipeline-core-execution",
       "to": "plugin:kubeclaw.lint",
       "count": 1,
       "samples": [
@@ -1754,9 +1702,10 @@
     {
       "from": "core:pipeline-core-execution",
       "to": "shared-library:kubeclaw.agent-observability-contract",
-      "count": 1,
+      "count": 2,
       "samples": [
-        "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts"
+        "skills/nova/pipeline/runners/pipeline-runner.ts -> skills/nova/pipeline/services/agent-observability-runtime.ts",
+        "skills/nova/pipeline/services/command-validation.ts -> skills/nova/pipeline/observability-contract.ts"
       ]
     },
     {
@@ -1854,8 +1803,10 @@
     {
       "from": "core:pipeline-core-state",
       "to": "adapter:kubeclaw.artifacts",
-      "count": 2,
+      "count": 4,
       "samples": [
+        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/portable-artifacts.ts",
+        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
         "skills/nova/pipeline/services/status-store-io.ts -> skills/nova/pipeline/services/artifact-bundle.ts",
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-pipeline.ts -> skills/nova/pipeline/services/artifact-bundle.ts"
       ]
@@ -1863,8 +1814,9 @@
     {
       "from": "core:pipeline-core-state",
       "to": "core:pipeline-core-execution",
-      "count": 54,
+      "count": 55,
       "samples": [
+        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/command-validation.ts",
         "skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/core/constants.ts",
         "skills/nova/pipeline/services/completion-adjudicator.ts -> skills/nova/pipeline/optional-absence.ts",
         "skills/nova/pipeline/services/correlation.ts -> skills/nova/pipeline/optional-absence.ts",
@@ -1875,8 +1827,7 @@
         "skills/nova/pipeline/services/session-authority.ts -> skills/nova/pipeline/optional-absence.ts",
         "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/core/logger.ts",
         "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/core/paths.ts",
-        "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/egress.ts",
-        "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/optional-absence.ts"
+        "skills/nova/pipeline/services/status-store-artifacts.ts -> skills/nova/pipeline/egress.ts"
       ]
     },
     {
@@ -1886,6 +1837,14 @@
       "samples": [
         "skills/common/plugin-runtime/core/lifecycle/recovery.ts -> skills/common/plugin-runtime/core/registry/frozen-map.ts",
         "skills/common/plugin-runtime/core/state/plugins.ts -> skills/common/plugin-runtime/core/registry/schema.ts"
+      ]
+    },
+    {
+      "from": "core:pipeline-core-state",
+      "to": "core:pipeline-core-telemetry",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/services/telemetry/dispatch.ts"
       ]
     },
     {
@@ -1900,6 +1859,14 @@
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-modules.ts -> skills/nova/pipeline/value-boundary.ts",
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-recovery.ts -> skills/nova/pipeline/value-boundary.ts",
         "skills/nova/pipeline/services/status-store-lifecycle/appenders-waits.ts -> skills/nova/pipeline/value-boundary.ts"
+      ]
+    },
+    {
+      "from": "core:pipeline-core-state",
+      "to": "shared-library:kubeclaw.agent-observability-contract",
+      "count": 1,
+      "samples": [
+        "skills/nova/pipeline/services/command-lifecycle.ts -> skills/nova/pipeline/observability-contract.ts"
       ]
     },
     {
@@ -7101,7 +7068,7 @@
       "effects": [
         {
           "id": "git.execute",
-          "line": 1295,
+          "line": 1348,
           "evidence": "\"command\": \"git diff --check\",",
           "adapter": "kubeclaw.git"
         }
@@ -7539,151 +7506,157 @@
         },
         {
           "id": "filesystem.read",
-          "line": 152,
+          "line": 154,
           "evidence": "result[role] = digest(fs.readFileSync(output));",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 161,
+          "line": 163,
           "evidence": "if (!fs.existsSync(evidenceRoot)) return [];",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 164,
+          "line": 166,
           "evidence": ".map((file) => ({ file, record: readJson(file), rawDigest: digest(fs.readFileSync(file)) }))",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 173,
+          "line": 175,
           "evidence": "if (!fs.existsSync(absolute)) fail(`${unit.id} evidence record is missing: ${recordPath}`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 243,
+          "line": 245,
           "evidence": "if (!fs.existsSync(output) || digest(fs.readFileSync(output)) !== result.outputDigest) {",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 274,
+          "line": 276,
           "evidence": "if (!fs.existsSync(path.join(root, scenario.path))) fail(`${unit.id} scenario path is missing: ${scenario.path}`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 310,
+          "line": 312,
           "evidence": "if (!fs.existsSync(path.join(root, discoveryHint))) fail(`${unit.id} references missing discovery hint ${discoveryHint}`);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 513,
+          "line": 325,
+          "evidence": "if (!fs.existsSync(path.join(root, library.root))) fail(`${unit.id} target library ${library.name} is missing`);",
+          "adapter": "kubeclaw.artifacts"
+        },
+        {
+          "id": "filesystem.read",
+          "line": 528,
           "evidence": "inventoryDigest: digest(fs.readFileSync(inventoryPath)),",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 515,
+          "line": 530,
           "evidence": "unitsDigest: digest(fs.readFileSync(ledgerPath)),",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.read",
-          "line": 524,
+          "line": 539,
           "evidence": "} else if (!fs.existsSync(surfaceLedgerPath) || fs.readFileSync(surfaceLedgerPath, 'utf8') !== expected) {",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 157,
+          "line": 159,
           "evidence": "fs.rmSync(tempRoot, { recursive: true, force: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 522,
+          "line": 537,
           "evidence": "fs.mkdirSync(path.dirname(surfaceLedgerPath), { recursive: true });",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "filesystem.write",
-          "line": 523,
+          "line": 538,
           "evidence": "fs.writeFileSync(surfaceLedgerPath, expected);",
           "adapter": "kubeclaw.artifacts"
         },
         {
           "id": "git.execute",
-          "line": 90,
+          "line": 92,
           "evidence": "content = execFileSync('git', ['show', `${commit}:${relativePath}`], {",
           "adapter": "kubeclaw.git"
         },
         {
           "id": "git.execute",
-          "line": 102,
+          "line": 104,
           "evidence": "return execFileSync('git', ['show', `${commit}:${relativePath}`], {",
           "adapter": "kubeclaw.git"
         },
         {
           "id": "git.execute",
-          "line": 116,
+          "line": 118,
           "evidence": "output = execFileSync('git', ['ls-tree', '-r', '--name-only', commit, '--', relativePath], {",
           "adapter": "kubeclaw.git"
         },
         {
           "id": "git.execute",
-          "line": 135,
+          "line": 137,
           "evidence": "const archive = execFileSync('git', ['archive', '--format=tar', commit], {",
           "adapter": "kubeclaw.git"
         },
         {
           "id": "git.execute",
-          "line": 180,
+          "line": 182,
           "evidence": "execFileSync('git', ['merge-base', '--is-ancestor', record.commit, 'HEAD'], { cwd: root, stdio: 'ignore' });",
           "adapter": "kubeclaw.git"
         },
         {
           "id": "command.execute",
-          "line": 90,
+          "line": 92,
           "evidence": "content = execFileSync('git', ['show', `${commit}:${relativePath}`], {",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 102,
+          "line": 104,
           "evidence": "return execFileSync('git', ['show', `${commit}:${relativePath}`], {",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 116,
+          "line": 118,
           "evidence": "output = execFileSync('git', ['ls-tree', '-r', '--name-only', commit, '--', relativePath], {",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 135,
+          "line": 137,
           "evidence": "const archive = execFileSync('git', ['archive', '--format=tar', commit], {",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 139,
+          "line": 141,
           "evidence": "const extract = spawnSync('tar', ['-xf', '-', '-C', tempRoot], { input: archive, maxBuffer: 512 * 1024 * 1024 });",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 144,
+          "line": 146,
           "evidence": "execFileSync('bash', [",
           "adapter": "kubeclaw.command"
         },
         {
           "id": "command.execute",
-          "line": 180,
+          "line": 182,
           "evidence": "execFileSync('git', ['merge-base', '--is-ancestor', record.commit, 'HEAD'], { cwd: root, stdio: 'ignore' });",
           "adapter": "kubeclaw.command"
         }
@@ -24877,6 +24850,107 @@
       "hardcodings": []
     },
     {
+      "path": "skills/common/plugins/prompt-contract/README.md",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "shared-library",
+        "id": "kubeclaw.prompt-contract",
+        "ruleId": "shared-prompt-contract-v2",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/package.json",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "shared-library",
+        "id": "kubeclaw.prompt-contract",
+        "ruleId": "shared-prompt-contract-v2",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/src/index.ts",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "shared-library",
+        "id": "kubeclaw.prompt-contract",
+        "ruleId": "shared-prompt-contract-v2",
+        "shadowedRuleIds": [
+          "core-execution"
+        ]
+      },
+      "exports": [
+        "PROMPT_CONTRACT_VERSION",
+        "PromptEnvelope",
+        "PromptEnvelopeInput",
+        "PromptLimits",
+        "createPromptEnvelope",
+        "serializePromptEnvelope",
+        "stablePromptJson"
+      ],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "shared-library",
+        "id": "kubeclaw.prompt-contract",
+        "ruleId": "shared-prompt-contract-v2",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [
+        {
+          "specifier": "../src/index.ts",
+          "resolved": "skills/common/plugins/prompt-contract/src/index.ts",
+          "external": false
+        },
+        {
+          "specifier": "node:assert/strict",
+          "resolved": null,
+          "external": true
+        }
+      ],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/tsconfig.json",
+      "area": "skills/common/plugins",
+      "scope": "runtime",
+      "target": {
+        "kind": "shared-library",
+        "id": "kubeclaw.prompt-contract",
+        "ruleId": "shared-prompt-contract-v2",
+        "shadowedRuleIds": []
+      },
+      "exports": [],
+      "imports": [],
+      "effects": [],
+      "legacyContracts": [],
+      "hardcodings": []
+    },
+    {
       "path": "skills/common/plugins/redis-transport/README.md",
       "area": "skills/common/plugins",
       "scope": "runtime",
@@ -41828,11 +41902,10 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.command",
-        "ruleId": "adapter-command",
+        "kind": "core",
+        "id": "pipeline-core-state",
+        "ruleId": "core-state",
         "shadowedRuleIds": [
-          "core-state",
           "nova-core-fallback"
         ]
       },
@@ -41925,12 +41998,10 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.command",
-        "ruleId": "adapter-command",
-        "shadowedRuleIds": [
-          "nova-core-fallback"
-        ]
+        "kind": "core",
+        "id": "pipeline-core-execution",
+        "ruleId": "nova-core-fallback",
+        "shadowedRuleIds": []
       },
       "exports": [
         "startCommandRuntime"
@@ -41983,12 +42054,10 @@
       "area": "skills/nova/pipeline",
       "scope": "runtime",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.command",
-        "ruleId": "adapter-command",
-        "shadowedRuleIds": [
-          "nova-core-fallback"
-        ]
+        "kind": "core",
+        "id": "pipeline-core-execution",
+        "ruleId": "nova-core-fallback",
+        "shadowedRuleIds": []
       },
       "exports": [
         "commandControlEnabled",
@@ -71215,11 +71284,10 @@
       "area": "tests/skills/nova/pipeline",
       "scope": "test",
       "target": {
-        "kind": "adapter",
-        "id": "kubeclaw.command",
-        "ruleId": "adapter-command",
+        "kind": "core",
+        "id": "pipeline-core-state",
+        "ruleId": "core-state",
         "shadowedRuleIds": [
-          "core-state",
           "verification-core"
         ]
       },

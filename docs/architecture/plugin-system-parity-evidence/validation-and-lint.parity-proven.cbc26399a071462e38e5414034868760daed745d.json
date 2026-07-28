@@ -1,0 +1,759 @@
+{
+  "schemaVersion": "plugin-system-parity-evidence-v2",
+  "unitId": "validation-and-lint",
+  "status": "parity-proven",
+  "commit": "cbc26399a071462e38e5414034868760daed745d",
+  "recordedAt": "2026-07-28T21:04:11.932Z",
+  "previousEvidenceDigest": null,
+  "sourceFiles": [
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-agent.ts",
+      "digest": "bec513863b852013b99521bc777eec0f6caa2719756b9d806a0e080a54bafc65"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-artifacts.ts",
+      "digest": "b6e194a180b76223a18f4496004c25a2dc49053479197721f052ad97d56d725f"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-checks.ts",
+      "digest": "32f1c6ac1b8b11132d38e4e8610af431e61edc3e963132ccdeed31ba3f03695b"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-control.ts",
+      "digest": "f467b4672e805eb7ce6dfa261a93e6fcd08d5bad7a6ff851f05d3bcf4750462e"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-models.ts",
+      "digest": "1e035e07ca21573a4b7cb2eecb3da649b81e57bd3b8c1f1fda5aa8b4825b571a"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-progress.ts",
+      "digest": "338ca4a6af789d864797355e7a0e66ff0a474707c92fbac4eba7ac2b6c1f66a2"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator-values.ts",
+      "digest": "b62b546cd5883584bf9be7d64370d6fccb4c25c4783846eeb6b0711156a6c660"
+    },
+    {
+      "path": "skills/nova/pipeline/services/arch-validator.ts",
+      "digest": "326d93d5aceee6075d91ab15cc0f931d9008caccd2f0af40006792d1a685c8a5"
+    },
+    {
+      "path": "skills/nova/pipeline/services/lint-format.ts",
+      "digest": "d1c1559d137fc823d0f7765b3d53c0e3fe8ded10e5b24832679eeab5bcf14bcb"
+    },
+    {
+      "path": "skills/nova/pipeline/services/lint-scope.ts",
+      "digest": "d236f4303f02c736a18c4811778edbb83226377174b8c5f44274eaf2ebe3d1f5"
+    },
+    {
+      "path": "skills/nova/pipeline/services/lint.ts",
+      "digest": "6bb61729c389206b1afae7f0957feb40f534613c714a0ddc3175656efb8848bf"
+    },
+    {
+      "path": "skills/nova/pipeline/services/validation-blueprint.ts",
+      "digest": "3e1fd4110344070acb31438d2d390578cdb486d8717b37711b250f5251bebdb6"
+    },
+    {
+      "path": "skills/nova/pipeline/services/validation-contract.ts",
+      "digest": "f603d00a5372c217ae9b14e20b7334592df9a804926cdbbdd91c89745e108d1d"
+    },
+    {
+      "path": "skills/nova/pipeline/services/validation.ts",
+      "digest": "77884c85a7c570a9752b8992ef56e92f994e3bd6ecba12c83e8a7f223b354741"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report.ts",
+      "digest": "c81279353eaf90bd92285526ef82aadec8038cf4f3ca120a64e694a2f03fd2f3"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/architecture-tools.ts",
+      "digest": "b9ef9ddb164d1e98e419a85ca5c81da8fffcf3ad0bc083f1c4c2112bc654481d"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/constants.ts",
+      "digest": "136a46cafa52e7a7e9e485e66ed2e84985dfac6a9bda2781949b3bd68e9b170c"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/container-yaml-tools.ts",
+      "digest": "31042a85f9ea4503b0c1a92257bbe4a89c3fb7874a7fe417bf9cccb95a5db30a"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/discovery.ts",
+      "digest": "b507bdd5745e107bb97fcf9fab1d96a8a8dd12faad036714b86d37c2e7f6a220"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/execution.ts",
+      "digest": "8925149e698c0b8e262b834707ddf6236148e31b3461f800fb189886dc1410d0"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/finding-fingerprints.ts",
+      "digest": "67c2d21eee559e35944096501f28cc26f4d5f4116cdc749ed97dca5bc9251fc2"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/go-terraform-tools.ts",
+      "digest": "559229928d17cd3eff2c201eae78e705eb36b4d5c9f231a15faab2b917b00a9d"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/go-tools.ts",
+      "digest": "d0bf60a20371a9197c83a143a62dcc0b3aeed2f4df34e167d6c5c128de32321b"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/helm-render.ts",
+      "digest": "8b181ba49814317d0160bb89dc7ad0587008ab789a4f4098609ebd478e1627d5"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/kubernetes-security-tools.ts",
+      "digest": "29a8e735a279a4240d254c49bc0c4dbdc704af1613f3f8f3a30db9d6da043e0b"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/lint-governance.ts",
+      "digest": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/output.ts",
+      "digest": "9a93ec1462b05b83b255e32c1ca28f6f3b237ff75a9bb822fa795153391885e2"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/parsers.ts",
+      "digest": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/policy-validation.ts",
+      "digest": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/policy.ts",
+      "digest": "ec168fc687e98863f037784a31b18890ebf491cc2630df641162f4d0d5f1acd8"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/report-contract.ts",
+      "digest": "9d6cd3403aa468a231b6dce56ba4c2966b437accad9bc311f62a4cd08b2eec26"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/report.ts",
+      "digest": "fed6c1c33c1a71783241388e7fe340371feb857e52a9d235f6f4a590def1c281"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/terraform-tools.ts",
+      "digest": "67feea10fa8caf1e4623b4bb04bfd1c416651299402791464a6525f368beb570"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/tool-registry-core.ts",
+      "digest": "ac07e88c2dfc9df34213d0b98de19a73aceae595846680e142cc5f06cad05447"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/tool-registry-dependency-tools.ts",
+      "digest": "f8557fe0f3e87c08d2cc111701ec512d6c11c70604217ee35e1a32ccd48c2c2e"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/tool-registry-language-tools.ts",
+      "digest": "8fca88a6a2c717c51114ff6da7aaebadadcd7ed288d9d125f8a1b9f09ae4de48"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/tool-registry-semgrep.ts",
+      "digest": "1d869293963467c931507d7b7fb6d88e4fe67aae2bb71258a095185c6b1175a7"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/tool-registry.ts",
+      "digest": "9de23f83b441a436de737326be033cc092030c52e421f11520066dcb1109c6a3"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/lint-report/tool-summary.ts",
+      "digest": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/arch-validator-checks.test.mjs",
+      "digest": "683706f1efb33d99765bef18cda6e5f62c9fb923ea56d03829ed0f292d9dec69"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/arch-validator.test.mjs",
+      "digest": "f366a6eebea5d6505d70ff91ac6926001c2ffecbafb994285ab9f5840518360c"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/lint.test.mjs",
+      "digest": "df94f528b955635d79983a707de2c65876d097186f9f2edccc171a09832d8f25"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/validation.test.mjs",
+      "digest": "74f139f91d56c6a923bd92b5c6c4e7a9bc1e05fa2f31d72a0c18a920c918dfaf"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/architecture-tools.test.mjs",
+      "digest": "8e29861f8b67fe79091cab68f0f64334f1cf17119b3b82b5174eb81dd93dd409"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/baseline-update.test.mjs",
+      "digest": "ef936becc715cc04a9c7a21afa6d1d8f780b82c9bbeae5761619a5ba90b4b955"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/container-yaml-tools.test.mjs",
+      "digest": "52a173c06d037d294d5a8baa92d868752be26243c7f6f87e0336ec58348ccd29"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/discovery.test.mjs",
+      "digest": "be252ebcc2aab4cee6f43b8b035ca4c88f65e9c14588e292db5be7af90371ce6"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/eslint-discipline.test.mjs",
+      "digest": "a0581cc5d4ef706dfe0070e3950c84d513d0d52693eecef60998dab9e9a4adc5"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/execution.test.mjs",
+      "digest": "0ccb7b38f643fe7f56efbedfc213939a52a30679c21fcbd5ee3b4483d385f1d6"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/go-terraform-tools.test.mjs",
+      "digest": "fad640ab27427311079505321ada4c0336a0f4157d653a7e17b5d9554ab253e5"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/policy.test.mjs",
+      "digest": "1186cd376fa2e9b435e195f37025af9a55ad4c205a82153794ce33bb79f86b20"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/report.test.mjs",
+      "digest": "34cb22a1e9577dc24480b467e0eb378af333d21addc38e6879320eff16389aad"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/lint-report/tool-registry.test.mjs",
+      "digest": "7e0ece046c363bc3b96a1cfab6cbb7e517465a31a5939b5c927b58369f0b339a"
+    }
+  ],
+  "sourceDigest": "905051e976ced931da5ad8bfb39142ec389c3df46ad60c3f9c0a26dd3548d388",
+  "targetFiles": [
+    {
+      "path": "skills/nova/plugins/architecture-validator/README.md",
+      "digest": "b518a4562c6b975da505dae101447445931c9e7d0cbc2c331cbdbbf36da522f4"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/package.json",
+      "digest": "26dcb7fa4baf058a8609e7207c6917ddd7841875cef3fd4517fb57b8b09da614"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "digest": "3f743d17ddda231bb0400aa4f16e230299e60a8384b2949b471c82ab550511bb"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "digest": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "digest": "d8ac46655b79b7d4ad811b7266c357d404cce28e3361d8a63673ce4428eaa18c"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/output.ts",
+      "digest": "5981c005c419ee8426538c93a867b58d8663c6b505b245c6529143404228f948"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/protocol.ts",
+      "digest": "2cdbbf2e37591da05fd58254fe01e173962268ffc99e5a652f7f999dfe732d9f"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+      "digest": "7291b8f8aca1249c21fd87dcb669c9ff70133138e2a7711bffa848a3aa716035"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "digest": "335e69994fb0f1e8a8125e58e04f28dab6b1ad1ed761457fae93a3edd38f8f6b"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+      "digest": "f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
+      "digest": "131ebc01e46da2cab4fe515e306f0e7d54a8478e5158256415e0ffffcbffcfbf"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tsconfig.json",
+      "digest": "cc892e8b06c2c895a31e60d267d9b589e477a672e6dd89cc4c6a6548ea10943a"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/README.md",
+      "digest": "bb141a5e474865d58a492834d6ead84682e6fc7051651c942de7ee31f21d5256"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/fixtures/passing.json",
+      "digest": "0b6b7fdacad7d5a07e705de97e08cf0e1741f100e600698d10e1fd4ae61eeaa9"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/fixtures/remediation.json",
+      "digest": "850685a04e5864d147af02745e4b869a6ba20bfd7f9553c26f47206aad6b86cf"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/package.json",
+      "digest": "81be3eb08a6c3aa11df11d8b28bc5ec6d839a5b1229d87033aa4e6cf1ffc6af4"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/plugin.json",
+      "digest": "255eaaacd192519f2e8ae2a29c48c9c01664d82624d3ab9bcf9ca31fb6960603"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+      "digest": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
+      "digest": "57a650703fe82e66f611097bf32652425a70d4be8ee5cd6cc63788f983a65ce4"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
+      "digest": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+      "digest": "5309639e449842fdbea203ee986567edfd4161205865a20eb9c77217e5e40486"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+      "digest": "68312ab42f6ef6b4743673d9a60f8f08fbfbaa66981196e5df921dccafcd0a55"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
+      "digest": "0412c909963efe22217d41c5af3eea13f37976b99966d6a3923b25ef1824e894"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tsconfig.json",
+      "digest": "350dbd30ec196da44faed8408a6c5fce3d90fdb2c38437f9eb8337d7d3a6e380"
+    },
+    {
+      "path": "skills/nova/plugins/lint/README.md",
+      "digest": "1074446acdae77db39ef7e2d8968329f4e578e9548c02f95f6b73298c80e22f8"
+    },
+    {
+      "path": "skills/nova/plugins/lint/package.json",
+      "digest": "5491acb6e3ea653eb8d59bae959a4a58cec5d42b9daa962a200520f94849ec56"
+    },
+    {
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "digest": "3035f20fe6802a10a90920c6524507b835605dede50ad858904b48afacd3ea79"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "digest": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+      "digest": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/input.schema.json",
+      "digest": "7179e5bc304ddbddc1dd1958b43dfac2357d70a06b4d03b62b99dafa87976a99"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/adapter.ts",
+      "digest": "e94abba41035ea1ec9b792c5188d4cbd1ccb84de1e61de65f4358ee91407e1b5"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
+      "digest": "4598da7ba174af5ce106e168a95732c1a6211a623039abcf6cbcd997890ad5b0"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/constants.ts",
+      "digest": "136a46cafa52e7a7e9e485e66ed2e84985dfac6a9bda2781949b3bd68e9b170c"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+      "digest": "700e1e904251fcf7b9dc6930bd50e2491c5c548af28b60484b02b35d73d18d32"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/discovery.ts",
+      "digest": "21d46b31cb3556e80b211cf8737cb5353847a985bb7e35c54b1be7bc3d285783"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/execution.ts",
+      "digest": "cbeb24d28db09818e63abe05cd26e40f7e553de2a0fbf23e08171741e0316321"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts",
+      "digest": "67c2d21eee559e35944096501f28cc26f4d5f4116cdc749ed97dca5bc9251fc2"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
+      "digest": "dcbde236e8585f6a4693dfb73e330c10ef58099433828cfb4c96229d968de104"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/go-tools.ts",
+      "digest": "7d487dc055f0fa35a40c3c51a7a00f8519c80ee6913fd3611957d1d211a3438f"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/helm-render.ts",
+      "digest": "7bf98c31b58497dcc75ac4c4f7aa1d52494f9366ca4acc80347960824783859f"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/index.ts",
+      "digest": "bcb73ab09a1e573aae37c56c3b470649e0c91299e570a61f818ea382ae07cc77"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts",
+      "digest": "6d116abbdef3067fc0f455abb8dd5803d8f7629513b4ae0547b32df623439cb1"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/lint-governance.ts",
+      "digest": "3382edbd699a5fbe2928d724f9365c11dc0c93297f84cc6ad25c8646d562599b"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/output.ts",
+      "digest": "77ecbe70d7b650478b114fe7016e241ceafc38e4bc5a8f97761338a6ab10e11d"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/parsers.ts",
+      "digest": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+      "digest": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "digest": "d69509e4dba8e88a5501c6f120c8df20e8c25ed7b409cdc370acceb160802607"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report-contract.ts",
+      "digest": "405beb8fb0bf35d84a34f37ae9d82514da50a3cf23c822a1e8abbbe135a6d310"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report.ts",
+      "digest": "cac8067fd662f3fc456ee47b24fd335c3fbede1e8d3564fac92bde195f0b004b"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
+      "digest": "645473fd147fda1a6a3278043976180352e72099dabf4669977b8c476f52bd7c"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
+      "digest": "5eb4b056184711d26100caace1d56155896cdc9277defda7403cfa61357939e6"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
+      "digest": "ff59e5162829d348fbe008f0ec079e8eb433960ec4d20f8952c0094fb13c6c4a"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+      "digest": "3904b1b411a7619f256f32b331954d275ec9babedd5623416f7a0bad18cdb111"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
+      "digest": "a049e5187bbdf6f643379a35e2eb8925a2831c147b9a37e18161344744d7e2b6"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+      "digest": "88e9b4b4c993d5372140d8a429474342312c9762fa7600a72496fe73781f4597"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-summary.ts",
+      "digest": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/stage.ts",
+      "digest": "2ddba0cba890d30cbdb072362245101397f42ecb695d75384419f308c13cd59b"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/support/optional-absence.ts",
+      "digest": "1e9a0a0ef141a66c25b4d5b9502bd5cb4192236399534f0f314b46baeaa56fc1"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/support/value-boundary.ts",
+      "digest": "afd874551c5cb6f4b57522aee4c8e1d3db66717bdee230989d7da758a44dc438"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
+      "digest": "ea52eca5258e19063e279840bf771a73e4fdfac2b3d892315e7b3f076d1f8d41"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
+      "digest": "4e5426a04ce0e51d74364d4d396bd774441ee2cde63193360635923c02f0b627"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+      "digest": "fc4776dfb08679b5813b6b69b9506f488d833d40cebf8939b5dfaa838777524b"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/parity.test.ts",
+      "digest": "314eb014c1e8cb460cf7afb20b5a82616d9c7173250ce7e880a12cf98041a374"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
+      "digest": "f64cf17399ef88ac90d4b00e681025b9998efab0304e0b554fc3c800dc6a0d31"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tsconfig.json",
+      "digest": "cc892e8b06c2c895a31e60d267d9b589e477a672e6dd89cc4c6a6548ea10943a"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/README.md",
+      "digest": "28128e8d07c00a423a0dc404dde3a8832ada978661f68414d7ebac8605271ccf"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/package.json",
+      "digest": "8b3f2b10e8e542c19ffe861005de0876ff5169265ca163ed83c8b49201be3aa1"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/plugin.json",
+      "digest": "e47ecdee973071e66697ffa6233c6e9f9422456b1b9b8834c072e6d0a00bd6a6"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+      "digest": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
+      "digest": "eaf263b43e77b55cdeadf0d009e89186f28d4a50672e7f358a9106d0561758dc"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+      "digest": "342cc4028847399642697654c3a2cb3a3ef11cecd9714f456729863dad3e168d"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
+      "digest": "b1c6c197b458eacfbbf8d85abd037537acbd95105a9c6b598a3565f580fc0bc2"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+      "digest": "7f7250364885ffa2a9b8056879d6149fda9af688169ec44baea7a4fe71747e10"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+      "digest": "e69ac5aafe81a5cf40b90c302fb6299289c168ec63cd005d4501b322ebc0e526"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/parity.test.ts",
+      "digest": "13f4e77c54a4ad770ebbc377592353e6a0b165dd653d1f152bb98694a0fa46fa"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tsconfig.json",
+      "digest": "cc892e8b06c2c895a31e60d267d9b589e477a672e6dd89cc4c6a6548ea10943a"
+    }
+  ],
+  "targetDigest": "97a76758e1daade4241bb9015c55aabb2fec5cf4d9abc783bf8278dcfb9c3805",
+  "bundleDigests": {
+    "nova": "1182b500f74ad7f924d577bdba0b5bbe3ae29c808b4f9b8bc8af2b3edabca630",
+    "buster": "05750b2570617a19faaf00ef1fdf1f649407eaeecf6e572475f563db24df4768"
+  },
+  "scenarios": [
+    {
+      "id": "architecture-legacy-contract",
+      "path": "tests/skills/nova/pipeline/services/arch-validator.test.mjs",
+      "targetPackage": null,
+      "disposition": "intentionally-changed",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "The architecture validator combined software-architecture judgment with graph checks, file presence, runtime configuration validation, session spawning, monitoring, retry, and termination.",
+        "replacementBehavior": "The stage owns only software-architecture judgment and rich findings; generic graph validity belongs to core, required-file checks belong to deterministic preflight stages, configuration belongs to registry activation, and session lifecycle belongs to runtime.dispatch.",
+        "rationale": "Separating generic orchestration and deterministic validation from architecture judgment follows the target ownership model and avoids duplicating core guarantees.",
+        "complexityImpact": "Deletes stage-specific lifecycle and bookkeeping machinery while preserving architecture verdicts and structured findings.",
+        "behaviorChanged": true,
+        "approvalRef": "discord:1531749860674637876"
+      },
+      "pathDigest": "036a298d27a3d3273b65555c309c94e77a27560e726077debab7e8278c83f107"
+    },
+    {
+      "id": "architecture-validator-replacement-live-function",
+      "path": "skills/nova/plugins/architecture-validator/tests",
+      "targetPackage": "architecture-validator",
+      "disposition": "intentionally-changed",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Architecture judgment returned scoped findings and blocked on blocking or error severity while its service also owned generic runtime lifecycle work.",
+        "replacementBehavior": "The v2 package validates closed domain-model and integration-boundary findings and delegates all generic session lifecycle to the runtime capability.",
+        "rationale": "This keeps domain judgment package-local and moves reusable runtime behavior to its proper privileged adapter.",
+        "complexityImpact": "Reduces the stage to prompt, strict decoding, artifact evidence, and a typed result.",
+        "behaviorChanged": true,
+        "approvalRef": "discord:1531749860674637876"
+      },
+      "pathDigest": "61719832ee3396f3cb58e82573726a72715b0dcbc8ab2eb9ddb5233203f29527"
+    },
+    {
+      "id": "delivery-lint-replacement",
+      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+      "targetPackage": "delivery-lint",
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "reuse",
+        "legacyBehavior": "Delivery lint validates Dockerfile/static delivery declarations and returns pass, remediation, or blocked outcomes with stable reports.",
+        "replacementBehavior": "The authoritative v2 delivery-lint package retains those outcomes, reason codes, repository reads, and report artifacts.",
+        "rationale": "Phase 8 already proved the direct deterministic implementation and deleted the legacy owner.",
+        "complexityImpact": "Keeps one small implementation and no compatibility facade.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "6859a533c5343b5b51727e190f3c1eecec11498414a0258a62a2bb7e1d929acf"
+    },
+    {
+      "id": "lint-replacement-live-function",
+      "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
+      "targetPackage": "lint",
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "reuse",
+        "legacyBehavior": "Pre-check and full lint discover applicable tools, execute the policy tier, normalize findings, and emit deterministic reports.",
+        "replacementBehavior": "The v2 lint package retains the proven data-driven engine behind separate pre-check and full registrations plus a bounded executor adapter.",
+        "rationale": "The engine complexity reflects supported tools and policies; rewriting it would add parity risk without reducing the small v2 orchestration boundary.",
+        "complexityImpact": "Removes legacy process orchestration while reusing the mature tool engine and stable fingerprints.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "75cec1202c7fbb54b752585c695d8d283632b7f03d1e5b6184f9f75127bcbe4f"
+    },
+    {
+      "id": "preflight-contract-replacement-live-function",
+      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+      "targetPackage": "preflight-contract",
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Preflight verifies that owned Dockerfile and API artifacts are declared by Forge blueprints, including split-module blueprints.",
+        "replacementBehavior": "The v2 stage performs the same declaration checks through bounded repository reads and emits a closed result and report artifact.",
+        "rationale": "The rules remain intact while direct filesystem and logger dependencies are replaced by capabilities.",
+        "complexityImpact": "Reduces global configuration coupling and makes substep handling explicit.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "7b263fe1bef92220d33fc508df1ad5d426d491db0cd6cef23b429f03e59f26e7"
+    },
+    {
+      "id": "validation-control-contract",
+      "path": "tests/verification/contracts/check-validator-control-result-surface.mjs",
+      "targetPackage": null,
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Validators expose stable pass, remediation, block, reason, and finding control semantics to the scheduler.",
+        "replacementBehavior": "Cohesive v2 stages return the same scheduler-observable control semantics through the closed StageResult contract.",
+        "rationale": "The mixed validator facade is replaced by independently owned stages while core retains the generic lifecycle reducer.",
+        "complexityImpact": "Removes the cross-validator union and fixed-kind dispatch without changing observable control outcomes.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "d50446b0b10c8830e8b35644b10f092faf33bca02aa75162b35e055fd953c979"
+    }
+  ],
+  "scenarioDispositionDigest": "cd27099c7af71627f6d2fe1322d1d063f283a18ae28ed659d2dfe18ef19e32eb",
+  "results": [
+    {
+      "gateId": "deployment",
+      "command": "node tests/verification/deployment/check-deployment-truth.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.deployment.log",
+      "outputDigest": "b81fd461e73551612c643f457e254c3f5b37f64c3b984cf7abd59727549de60b"
+    },
+    {
+      "gateId": "documentation",
+      "command": "npm run docs:check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.documentation.log",
+      "outputDigest": "e71c4c1f7f8e96816e167a4bc4664e891cc636214079277e24f9d121bcd2f4e5"
+    },
+    {
+      "gateId": "helm",
+      "command": "helm lint charts/kubeclaw -f my-values/nova-values.yaml && helm lint charts/kubeclaw -f my-values/buster-values.yaml",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.helm.log",
+      "outputDigest": "92dfddbf957ceb8e10a8367ee202ee2fc8c4473f1f49deeaaa4b972692ae8412"
+    },
+    {
+      "gateId": "inventory",
+      "command": "npm run plugin-system:inventory:check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.inventory.log",
+      "outputDigest": "c0cdf803ab5489b35ee66315a02f52cee9c0e98813aa7a18c839c83a38ebdc60"
+    },
+    {
+      "gateId": "materialized-runtime",
+      "command": "node tests/verification/runtime/check-runtime-collisions.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.materialized-runtime.log",
+      "outputDigest": "251b5b6bdc5c4529db2486e7e3b81b589884c21e8124f903767e42c8e57546cb"
+    },
+    {
+      "gateId": "repository-hygiene",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.repository-hygiene.log",
+      "outputDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "gateId": "role-bundles",
+      "command": "node tests/verification/runtime/check-agent-skill-bundles.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.role-bundles.log",
+      "outputDigest": "d507b0f44793d327e0529199df1570eeafb62db4eca25bd7d8b6009e7efac176"
+    },
+    {
+      "gateId": "scenario:architecture-legacy-contract",
+      "command": "node --test tests/skills/nova/pipeline/services/arch-validator-checks.test.mjs tests/skills/nova/pipeline/services/arch-validator.test.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.scenario-architecture-legacy-contract.log",
+      "outputDigest": "ec21946118ef4073574e370aad2d3ea8d5527568ab525286fcd076ed7e48420c"
+    },
+    {
+      "gateId": "scenario:architecture-validator-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/architecture-validator",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.scenario-architecture-validator-replacement-live-function.log",
+      "outputDigest": "1b1128742f343aead38e5032f0c2b4a0e78ea45f04c31b3b0c3bd6a2bb864daf"
+    },
+    {
+      "gateId": "scenario:delivery-lint-replacement",
+      "command": "npm test --prefix skills/nova/plugins/delivery-lint",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.scenario-delivery-lint-replacement.log",
+      "outputDigest": "674041504e391d1072fe0262c6208110304083b0df1948969d01c39651cdb3c9"
+    },
+    {
+      "gateId": "scenario:lint-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/lint",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.scenario-lint-replacement-live-function.log",
+      "outputDigest": "54f5bbd2c145f0846c18001b849e61aca8bc12abcbf400fbc3a745b2cc5dfaa4"
+    },
+    {
+      "gateId": "scenario:preflight-contract-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/preflight-contract",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.scenario-preflight-contract-replacement-live-function.log",
+      "outputDigest": "4a427c9e860a9c89f8497f47831dc2ef1509bf79c6f8b0bc798c1265f3897da1"
+    },
+    {
+      "gateId": "scenario:validation-control-contract",
+      "command": "node tests/verification/contracts/check-validator-control-result-surface.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.scenario-validation-control-contract.log",
+      "outputDigest": "dc57967d333a2861a10b4291ac7ae17b1937e223f775aae3e3b3c47a4ed4f5e3"
+    },
+    {
+      "gateId": "security-audit",
+      "command": "npm audit --audit-level=high",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.security-audit.log",
+      "outputDigest": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+    },
+    {
+      "gateId": "source-contracts",
+      "command": "npm run verify:contracts",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.source-contracts.log",
+      "outputDigest": "d1c561c55dc128cc3ee3123cfb8d69a2f400faa551e3a12bcc887871b916b8d2"
+    },
+    {
+      "gateId": "unit-integration",
+      "command": "npm run verify:skills:all && npm run verify:pipeline",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.unit-integration.log",
+      "outputDigest": "b4a4a1d9a1d4cfcc7afccd5503dcffc431d37a383ba59b747783d87a22f0cc9d"
+    }
+  ]
+}

@@ -182,3 +182,54 @@ deletions, and atomic commits for the concrete plugin and adapter migration.
 - All package-local privileged-adapter suites through the parity recorder
 - Real Redis backend smoke remains a Phase 12 cutover test; the Phase 9 test
   proves the provider protocol locally without requiring external services.
+
+## Batch 6: Prompt Ownership
+
+### Findings
+
+- The legacy shared prompt module is not a cohesive reusable library. It mixes
+  role-specific prose, filesystem paths, shell commands, artifact-context
+  writes, completion schemas, and compatibility shims.
+- Prompt serialization has no runtime authority and therefore must not invent a
+  stage, observer, adapter, capability, or inert registration merely to fit the
+  plugin manifest.
+- Domain prompt language and contradiction rules belong to their stage
+  packages. Only deterministic safe data transport is genuinely shared.
+
+### Changes
+
+- Added `@kubeclaw/prompt-contract` as a dependency-only TypeScript library.
+- Added versioned closed task envelopes and deterministic key ordering.
+- Added rejection for cycles, sparse arrays, non-finite numbers, unsupported
+  values, class instances, prototype-sensitive keys, excessive depth, entry
+  counts, and serialized size.
+- Extended the migration ledger so dependency-only libraries are first-class
+  replacement targets with package-local evidence, without granting them
+  runtime authority.
+- Replaced the model-consuming prompt parity scenario with deterministic legacy
+  Forge/Buster contracts plus native TypeScript replacement tests.
+- Recorded the approved responsibility split: common safe serialization is
+  shared; domain instructions stay package-local; prompt-time filesystem
+  effects and compatibility shims are deleted at cutover.
+
+### Verification
+
+- `npm test --prefix skills/common/plugins/prompt-contract`
+- `node --test tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs`
+- `node --test tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs`
+
+## Workflow Corrections
+
+- Rejected the proposed `kubeclaw.operator-control` registration after applying
+  the architecture question. Lifecycle decisions are core authority and
+  operator command reception is host ingress; neither belongs to a pipeline
+  plugin.
+- Reclassified Discord presentation, audit projection, rate-limit notices, and
+  degraded/restored reporting into the Phase 10 notification-observer owner.
+  The Phase 9 operator adapter now proves only bounded request transport.
+- Added dependency-only library support to the migration ledger so code with no
+  runtime authority no longer needs a fake registration.
+- Kept the review questionnaire compact in the per-extension assessment:
+  implementation decision, architecture boundary, and complete behavioral
+  proof, with authority/durability/security details recorded only where they
+  change the decision.

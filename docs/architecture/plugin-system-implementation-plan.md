@@ -226,7 +226,7 @@ phase is Phase 9 concrete plugin parity migration.
 | 6 | Generic frozen graph and lifecycle cutover preparation | Complete |
 | 7 | Durable effects, waits, signals, recovery, locks, and replayable plugin state | Complete |
 | 8 | Reference self-contained delivery-lint plugin | Complete |
-| 9 | Migration of all remaining concrete stages and adapters | Not started |
+| 9 | Migration of all remaining concrete stages and adapters | In progress |
 | 10 | Durable observer delivery and observer-package migration | Not started |
 | 11 | Isolated runtime and transactional installation for external plugins | Not started |
 | 12 | Repository-wide legacy absence proof and release gate | Not started |
@@ -618,12 +618,12 @@ Before the final all-v2 activation, each package extraction must:
 
 Extraction progress:
 
-All declared pipeline-v2 package protocols are now extracted: **29 of 29
-pipeline packages** containing **33 of 33 registrations** (14 stages, 5
-observers, and 14 adapters). In addition, the dual-host OpenClaw package
+All declared pipeline-v2 package protocols are now extracted: **30 of 30
+pipeline packages** containing **35 of 35 registrations** (14 stages, 5
+observers, and 16 adapters). In addition, the dual-host OpenClaw package
 `kubeclaw.openclaw-agent-observer` is now covered by the same package-local
 test and boundary gate, bringing the discovered package-suite baseline to
-**30 of 30 package roots**. There are no open package-protocol extractions.
+**31 of 31 package roots**. There are no open package-protocol extractions.
 This is not an activation or parity-completion claim: v1 remains the sole
 runtime authority, the wider legacy surfaces and recorded parity blockers
 remain, and the final consumer switch, legacy deletion, negative absence

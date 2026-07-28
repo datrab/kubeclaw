@@ -1265,6 +1265,8 @@ assert.equal(deploymentTemplate.includes("if (containerRole === 'buster-pipeline
 assertIncludes(deploymentTemplate, "containerRole !== 'buster-pipeline'", 'Deployment liveness must keep Buster pipeline liveness local-only');
 assert.equal(deploymentTemplate.includes('git pull origin main || echo'), false, 'Deployment init must not swallow git pull failures');
 assertIncludes(deploymentTemplate, 'git clone "$GIT_REPO_URL" "$REPO_DIR"', 'Deployment init must fail closed on first clone failure');
+assertIncludes(deploymentTemplate, 'git config --global --add safe.directory "$REPO_DIR"', 'Deployment init must trust the exact persisted checkout after its UID ownership handoff');
+assertOrdered(deploymentTemplate, 'git config --global --add safe.directory "$REPO_DIR"', 'git diff --quiet && git diff --cached --quiet', 'Deployment init must trust the persisted checkout before inspecting it');
 assertIncludes(deploymentTemplate, 'git diff --quiet && git diff --cached --quiet', 'Deployment init must preserve existing workspace local edits');
 assertIncludes(deploymentTemplate, 'git fetch origin main', 'Deployment init must fetch before non-destructive workspace sync');
 assertIncludes(deploymentTemplate, 'git merge --ff-only origin/main', 'Deployment init must only fast-forward clean existing workspaces');

@@ -171,7 +171,6 @@
       "evidenceRecord": null,
       "targetOwnerIds": [
         "adapter:kubeclaw.artifacts",
-        "adapter:kubeclaw.command",
         "adapter:kubeclaw.command-runner",
         "adapter:kubeclaw.git",
         "adapter:kubeclaw.git-workspace",
@@ -216,18 +215,11 @@
           "rationale": "Artifact persistence moves to the canonical artifact-store adapter package."
         },
         {
-          "id": "operator-command-target-pending",
-          "legacyOwnerIds": ["adapter:kubeclaw.command"],
-          "replacementOwnerIds": [],
-          "status": "blocked",
-          "rationale": "The legacy surface is operator control-command validation, journaling, Redis consumption, and recovery; it is not subprocess execution and needs its own v2 owner."
-        },
-        {
           "id": "command-runner-new-foundation",
           "legacyOwnerIds": [],
           "replacementOwnerIds": ["adapter:kubeclaw.command-runner"],
           "status": "new",
-          "rationale": "The bounded subprocess capability is new v2 foundation infrastructure; it does not claim to replace the unrelated legacy operator command lifecycle."
+          "rationale": "The bounded subprocess capability is new v2 foundation infrastructure. Legacy operator command lifecycle files are correctly inventoried as core authority, not as a command adapter."
         },
         {
           "id": "git-to-git-workspace",
@@ -608,8 +600,8 @@
     {
       "id": "validation-and-lint",
       "roles": ["nova"],
-      "status": "baseline-retained",
-      "evidenceRecord": null,
+      "status": "parity-proven",
+      "evidenceRecord": "docs/architecture/plugin-system-parity-evidence/validation-and-lint.parity-proven.cbc26399a071462e38e5414034868760daed745d.json",
       "targetOwnerIds": [
         "delete:legacy-mixed-validation-contract",
         "plugin:kubeclaw.architecture-validator",
@@ -781,8 +773,8 @@
     {
       "id": "review-approval-and-reporting",
       "roles": ["nova"],
-      "status": "baseline-retained",
-      "evidenceRecord": null,
+      "status": "parity-proven",
+      "evidenceRecord": "docs/architecture/plugin-system-parity-evidence/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.json",
       "targetOwnerIds": [
         "plugin:kubeclaw.case-study",
         "plugin:kubeclaw.human-approval",
@@ -1198,6 +1190,7 @@
       "status": "baseline-retained",
       "evidenceRecord": null,
       "targetOwnerIds": [
+        "shared-library:kubeclaw.prompt-contract",
         "shared-library:kubeclaw.prompt-primitives"
       ],
       "discoveryHints": [
@@ -1205,24 +1198,84 @@
         "skills/buster/pipeline/services/task-lifecycle/prompt.ts"
       ],
       "targetPackages": [],
-      "replacementMappings": [
+      "targetLibraries": [
         {
-          "id": "prompt-library-target-pending",
-          "legacyOwnerIds": ["shared-library:kubeclaw.prompt-primitives"],
-          "replacementOwnerIds": [],
-          "status": "blocked",
-          "rationale": "No independently testable v2 prompt-library target exists yet."
+          "name": "prompt-contract",
+          "ownerId": "shared-library:kubeclaw.prompt-contract",
+          "root": "skills/common/plugins/prompt-contract"
         }
       ],
-      "parityBlockers": ["prompt ownership has no independently testable v2 target surface yet"],
+      "replacementMappings": [
+        {
+          "id": "prompt-primitives-to-data-contract",
+          "legacyOwnerIds": ["shared-library:kubeclaw.prompt-primitives"],
+          "replacementOwnerIds": ["shared-library:kubeclaw.prompt-contract"],
+          "status": "paired",
+          "rationale": "Global role-coupled prompt assembly is replaced by a dependency-only deterministic data contract; domain prompt instructions remain owned and tested inside each stage package."
+        },
+        {
+          "id": "prompt-contract-new-foundation",
+          "legacyOwnerIds": [],
+          "replacementOwnerIds": ["shared-library:kubeclaw.prompt-contract"],
+          "status": "new",
+          "rationale": "Closed deterministic prompt envelopes and strict safe serialization are new shared v2 foundation with no runtime authority."
+        }
+      ],
+      "parityBlockers": [],
       "scenarios": [
         {
-          "id": "prompt-real-pipeline-contract",
+          "id": "prompt-contract-replacement-live-function",
+          "evidenceType": "replacement",
+          "targetPackage": "prompt-contract",
+          "level": "live",
+          "path": "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+          "command": "npm test --prefix skills/common/plugins/prompt-contract",
+          "disposition": "intentionally-changed",
+          "implementationDecision": {
+            "strategy": "rewrite",
+            "legacyBehavior": "One shared module assembled role-specific prose, filesystem paths, shell commands, completion artifacts, and compatibility shims and performed artifact-context writes while building prompts.",
+            "replacementBehavior": "A dependency-only library creates versioned deterministic data envelopes, rejects unsafe or lossy JSON values, enforces size/depth/entry limits, and owns no domain instructions or effects.",
+            "rationale": "Shared prompt infrastructure should standardize safe data and response boundaries, while each stage package owns its domain language and completion semantics.",
+            "complexityImpact": "Deletes global role coupling and prompt-time filesystem effects instead of porting the large helper surface.",
+            "behaviorChanged": true,
+            "approvalRef": "discord:1531749860674637876"
+          },
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "prompt-forge-legacy-contract",
           "evidenceType": "legacy",
           "level": "offline",
-          "path": "tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
-          "command": "node --test tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
+          "path": "tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs",
+          "command": "node --test tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs",
           "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Forge prompts bind task identity, Git context, completion evidence, and exact output instructions.",
+            "replacementBehavior": "Implementation-agent owns the equivalent domain protocol and terminal session/evidence contract while shared serialization is data-only.",
+            "rationale": "Domain prompt behavior remains with the implementation extension instead of a global helper.",
+            "complexityImpact": "Moves policy to one owner and removes compatibility shims.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
+          "requiredBefore": ["parity-proven", "cutover-complete"]
+        },
+        {
+          "id": "prompt-buster-legacy-contract",
+          "evidenceType": "legacy",
+          "level": "offline",
+          "path": "tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs",
+          "command": "node --test tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs",
+          "disposition": "must-remain-equivalent",
+          "implementationDecision": {
+            "strategy": "refactor",
+            "legacyBehavior": "Buster prompts bind suite instructions, workspace rules, output schema, and completion ordering.",
+            "replacementBehavior": "Test-agent and quality-gate own their equivalent execution and verdict protocols while shared serialization is data-only.",
+            "rationale": "Testing policy belongs to the Buster extensions rather than global prompt infrastructure.",
+            "complexityImpact": "Separates execution policy from generic safe serialization.",
+            "behaviorChanged": false,
+            "approvalRef": null
+          },
           "requiredBefore": ["parity-proven", "cutover-complete"]
         }
       ]

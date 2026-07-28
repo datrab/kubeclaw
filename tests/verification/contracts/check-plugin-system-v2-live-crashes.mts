@@ -16,8 +16,28 @@ const pluginRoots = ['common', 'nova', 'buster']
 function schemaValue(schema) {
   if (schema.const !== undefined) return schema.const;
   if (Array.isArray(schema.enum) && schema.enum.length > 0) return schema.enum[0];
-  if (Array.isArray(schema.oneOf) && schema.oneOf.length > 0) return schemaValue(schema.oneOf[0]);
-  if (Array.isArray(schema.anyOf) && schema.anyOf.length > 0) return schemaValue(schema.anyOf[0]);
+  const variant = Array.isArray(schema.oneOf) && schema.oneOf.length > 0
+    ? schema.oneOf[0]
+    : Array.isArray(schema.anyOf) && schema.anyOf.length > 0
+      ? schema.anyOf[0]
+      : null;
+  if (variant) {
+    const { oneOf: _oneOf, anyOf: _anyOf, ...base } = schema;
+    const mergedProperties = { ...(base.properties ?? {}) };
+    for (const [key, value] of Object.entries(variant.properties ?? {})) {
+      mergedProperties[key] = {
+        ...(base.properties?.[key] ?? {}),
+        ...value,
+      };
+    }
+    const merged = {
+      ...base,
+      ...variant,
+      required: [...new Set([...(base.required ?? []), ...(variant.required ?? [])])],
+    };
+    if (Object.keys(mergedProperties).length > 0) merged.properties = mergedProperties;
+    return schemaValue(merged);
+  }
   if (schema.default !== undefined) return schema.default;
   if (schema.type === 'null') return null;
   if (schema.type === 'boolean') return false;
@@ -49,6 +69,7 @@ function schemaValue(schema) {
     if (schema.format && formatCandidates[schema.format]) return formatCandidates[schema.format];
     const candidates = [
       'value',
+      'redis://127.0.0.1:6379',
       'a'.repeat(64),
       `sha256:${'a'.repeat(64)}`,
       'artifact:test',

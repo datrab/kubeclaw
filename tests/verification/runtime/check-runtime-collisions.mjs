@@ -90,7 +90,7 @@ function runtimePackages(image, sourceRoot, overlayRoot) {
     ? path.join(overlayRoot, 'docker/Dockerfile.buster-pipeline')
     : path.join(sourceRoot, 'docker/Dockerfile.buster-pipeline');
   const dockerfile = fs.readFileSync(dockerfilePath, 'utf8');
-  const install = dockerfile.match(/npm install --prefix \/app[\s\S]*?\\\n\s*&& groupmod/)?.[0] || '';
+  const install = dockerfile.match(/npm install --prefix \/app[\s\S]*?;\s*\\\n\s*groupmod/)?.[0] || '';
   return [
     ...[...install.matchAll(/(?:^|\s)((?:@[^/\s]+\/)?[^@\s\\]+)@[^\s\\]+/gm)].map((match) => match[1]),
   ];

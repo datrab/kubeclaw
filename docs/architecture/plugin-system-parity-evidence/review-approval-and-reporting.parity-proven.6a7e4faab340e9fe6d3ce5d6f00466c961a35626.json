@@ -1,0 +1,747 @@
+{
+  "schemaVersion": "plugin-system-parity-evidence-v2",
+  "unitId": "review-approval-and-reporting",
+  "status": "parity-proven",
+  "commit": "6a7e4faab340e9fe6d3ce5d6f00466c961a35626",
+  "recordedAt": "2026-07-28T21:09:08.335Z",
+  "previousEvidenceDigest": null,
+  "sourceFiles": [
+    {
+      "path": "skills/common/pipeline/services/approval-signal-event-contract.ts",
+      "digest": "e606834d00ff124cd34b68df95a5d37192ca360f3be4f6aad953a0d7ce076d97"
+    },
+    {
+      "path": "skills/nova/pipeline/prompts/review.ts",
+      "digest": "fa2db046157f17d0b349f9de7151f89ad55e11ea2e762d06a7817af6782da9ae"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-control.ts",
+      "digest": "46de8d1bafa211791cd790caef1592c2b76e18b327d176aae2419cfe2156d048"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-observation.ts",
+      "digest": "e55f009ef0373c234edd146f524feecd74d31c6268e09e47abb8746f4b137722"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-presentation.ts",
+      "digest": "40607e2380dc6dc9cccdb025fd6cd694c3d2994ee11679e02a40e20ce8c709b0"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-runner.ts",
+      "digest": "d88efa6ed3b4206bd5ea22153b1934cbf0e47ad51591418d46255f3ac500fcd4"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-shared.ts",
+      "digest": "e3431fd2ecf0fe635f7ee6b5404ffbca724e2fac08c3465cd816de208db676f6"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-state.ts",
+      "digest": "43204ce7d670b63e5870b21c2fee2d5bc5545f47cfa34813f4d62c18864d3079"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-telemetry.ts",
+      "digest": "5de6e27b6de209d7c217584109ef375a85cf9876b6995b6c58a90dfc810f58d5"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-timeout.ts",
+      "digest": "506c5c5e045dda39b0651a237c335961aaa63f7305bb4ac6e7fe94b209539275"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/approval-gate-wait.ts",
+      "digest": "aa2689f06a410afd2bbe60053539b4b062706bcc3709f2c7184d3e2059598362"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-config.ts",
+      "digest": "9fadfcb7ab9b3d8893c5e2591e057ded8314bcba932a72d4a1272aedcd8e40a3"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-control.ts",
+      "digest": "6180294df8063c28138df103fd4ac05553ac23989a0b388a4635e6184853ec86"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-output.ts",
+      "digest": "6731cc4ceb76782284132a2669fe604cb8612ae06d57d054c2f27688a9354d84"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-preparation.ts",
+      "digest": "d3006a662525f91dff9b5f2734bccb18e2c4b1917fa8d319d9dfe7c3f8eaf000"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-publication.ts",
+      "digest": "3ebdba5e3a3be28e8926150017b72325b91137f9c46fefcf13a2595c23a1109d"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-result.ts",
+      "digest": "60c28ecb587577417484ff71a8485438436658af99cad413d811fd394ec7ea0b"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-reviewer-session.ts",
+      "digest": "0ea7b1bca2ccdc540088f32dffdc1d522eb010060313090f97f31b770842d21a"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-runner.ts",
+      "digest": "db9e973b58cb8d93d38c13e1e9b80f425562a52c44a714c737e40552751f3c85"
+    },
+    {
+      "path": "skills/nova/pipeline/runners/review-gate-task.ts",
+      "digest": "2b5cd08b1dcd41b54d8a04b79b95a21dd848cca0818dd4321a96db7a0cb9f6be"
+    },
+    {
+      "path": "skills/nova/pipeline/services/approval-signal-event-adapter.ts",
+      "digest": "e34f7797c584ee881b08d5193af3b0fe0bb68dab96d8e9ab22881b6336ff7a44"
+    },
+    {
+      "path": "skills/nova/pipeline/services/approval-signal-event.ts",
+      "digest": "712c731f5c72c184ad3a4a4b1790c0b42bb63082225a9c25d3a8f58081c56bac"
+    },
+    {
+      "path": "skills/nova/pipeline/services/approval-signal-local-event-adapter.ts",
+      "digest": "b4e28e4dcbbe033635f709358d4fdf19c3b980688c4969eff296debc81c509fd"
+    },
+    {
+      "path": "skills/nova/pipeline/services/approval-signal-redis-event-adapter.ts",
+      "digest": "e3a92dc4e197b858e52d11be342e7a159f57204c301ee0f9ebed4003174d9be7"
+    },
+    {
+      "path": "skills/nova/pipeline/services/case-study-instructions.ts",
+      "digest": "fec2ca625080ff37663ba25b323d9c954a19c3f1ce922180909b55fe216fd226"
+    },
+    {
+      "path": "skills/nova/pipeline/services/case-study-outcomes.ts",
+      "digest": "684d4b59dc050dbd0ba38d6aa991d47158a6cd90f6f7c353f251a03f47901d2b"
+    },
+    {
+      "path": "skills/nova/pipeline/services/case-study-run.ts",
+      "digest": "ad8ef71db423d9a0b10d9bffde0332311cf25a66adb369f51772697e0d497c02"
+    },
+    {
+      "path": "skills/nova/pipeline/services/case-study-values.ts",
+      "digest": "62a76481e3a26a5af291d309c03f2fec23b366072919a3c8f8570df064b246b4"
+    },
+    {
+      "path": "skills/nova/pipeline/services/case-study.ts",
+      "digest": "0e4869bce3020781ff071ee6d4cb5f0a4bba98a32fe506788cb5ec102cc08ee7"
+    },
+    {
+      "path": "skills/nova/pipeline/services/pipeline-review-failure.ts",
+      "digest": "c88a03c01861a9c5fcad60efa1d660ce3d4702d7673acd9a5e2ac91c428d2c1a"
+    },
+    {
+      "path": "skills/nova/pipeline/services/pipeline-review-instructions.ts",
+      "digest": "85d5c42d862ac8375fb282ca769e8268add79d9bfaba2aad1adf6f1c611cbcff"
+    },
+    {
+      "path": "skills/nova/pipeline/services/pipeline-review-run.ts",
+      "digest": "9be0e36b51d7e48780f7e59d54207b3d6bd7f7eb01a032b98d8b35d680338ba0"
+    },
+    {
+      "path": "skills/nova/pipeline/services/pipeline-review-success.ts",
+      "digest": "467df00fe15adf9978b056bb568115c147f7875d1bab9888759a2da313f4aec6"
+    },
+    {
+      "path": "skills/nova/pipeline/services/pipeline-review-values.ts",
+      "digest": "d2f4db33e1f8d792a23c9c5a1b968bec568591b73ff300fbd24b7037583dee04"
+    },
+    {
+      "path": "skills/nova/pipeline/services/summary-persistence.ts",
+      "digest": "23fd7633d664a9f57e378ef9b124432248e92ca5eb18da588b6b08731cffae8c"
+    },
+    {
+      "path": "skills/nova/pipeline/services/summary-session-cleanup.ts",
+      "digest": "7d251bbe0d46277c9be11e54ac778863e10118d2164728d09a5e456de34d8191"
+    },
+    {
+      "path": "skills/nova/pipeline/services/summary-session-values.ts",
+      "digest": "44c5065bed2aef9bf07ea5b2584d5730ace5db926f91247c5c4cfb3b90476256"
+    },
+    {
+      "path": "skills/nova/pipeline/services/summary-writer.ts",
+      "digest": "f029348f6c375fac18ffb89ff8d6ab8552332d3ce36572893f309b87faf8df24"
+    },
+    {
+      "path": "skills/nova/pipeline/services/summary.ts",
+      "digest": "25abd1460514557b1c67e6a7fb8c818b9b80ef6c899ad92d766c342946dc54f6"
+    },
+    {
+      "path": "skills/nova/pipeline/services/summary/project-summary.ts",
+      "digest": "d99923d68bbce8d431feffeeb46892c9d21d987dce0b56434c5cdc467762f4d1"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-agents.ts",
+      "digest": "fbedd61364b738d7d8624c2f2f5bce10da7c9deb99e24a8a7fc97e9640a8229c"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-case-study.ts",
+      "digest": "fe85749e7b88b4571e0751494694e53822348d9296e3c250cbf1ad78703b8e42"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-code.ts",
+      "digest": "c56889d1f956b0fedee5a399785c19fdbc581cc5968836ded1e6fb0542b254c9"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-core.ts",
+      "digest": "e3feaf555900d08f96172e8343334e4a462447607e8ea3856a7b782064eb260f"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-discord.ts",
+      "digest": "79485429e87878b264cd250a6caf1f38053018370073be618cd1e631175731bb"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-formatters-core.ts",
+      "digest": "308b1c2b9158fdfe8a7c2131d3e6d2f104d4aaff2c687a794f4787440d6e1566"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-formatters.ts",
+      "digest": "2074c41b1cda4d2d462657f1b56b52ea9c72034eb00d2485039979cea2017fb5"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-lifecycle.ts",
+      "digest": "8796a8831927e4773eac090b2f8ec99cbc52db3cfda09270193752fea6893fbc"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-markdown.ts",
+      "digest": "3112ba3e36c097c0ba59c6ee28e74092f78f5f011355d623000d3269dbd375bd"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-pipeline.ts",
+      "digest": "fd1e137dd15073c8fffbc05bb06f9b781b1f394480216433ff190b63d66e23a6"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary-runner.ts",
+      "digest": "acec775544f40676862a40e736f97685f5da852b4608c938b9f9cacc8649c874"
+    },
+    {
+      "path": "skills/nova/pipeline/tools/project-summary.ts",
+      "digest": "a389841fb5d624f0ad1dbce145180c278e5dd46ada3cacaa2085809404e9e299"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/runners/approval-gate-runner.test.mjs",
+      "digest": "62340a5eccbe1bca9a132637ad7e8164a106d52cca3cbd570eb9bd67a4d91ef6"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/runners/review-gate-output.test.mjs",
+      "digest": "05932efa515c25961eb3adfcb9f4c05b85f5fc9c77542d4e59d9995941ef5259"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/runners/review-gate-runner.test.mjs",
+      "digest": "27094fab3689cec75dff8f2c2e85fe13530c1319e2a06319ff154a39f17f2612"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/runners/review-gate-task.test.mjs",
+      "digest": "d9134bddf4c06f8a812553d1a2a6968226a1f05d2856b09e884de30accd74108"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/approval-signal-event-adapter.test.mjs",
+      "digest": "9e90861665eb4fbae37b8abd215490fcd86f6f477d2b5ac489d440efac4d4e2c"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/summary-session-cleanup.test.mjs",
+      "digest": "4276a00a9332b4a679af12dbf67332eb1a6e3de4bee50c38b7a4ce3c4a5d7757"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/services/summary.test.mjs",
+      "digest": "4f4cd4c9ee3cea7e0de818f685f959ec006230fdac41b39d490c60cf8f1aa973"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/project-summary-formatters.test.mjs",
+      "digest": "74f5e6f9f285c35d892718710492cc763bbcdeb4fb041646e4cbf4462471d2c7"
+    },
+    {
+      "path": "tests/skills/nova/pipeline/tools/project-summary.test.mjs",
+      "digest": "6fc8fde32ccecd739838b8d6735a6de7bb8b2b3aa585f05a86e47c5e4c40fd4c"
+    }
+  ],
+  "sourceDigest": "223c809f4cc2159fbcfbfbb6d154ac852ada44ea0f13ebc1db5b179f76caa854",
+  "targetFiles": [
+    {
+      "path": "skills/nova/plugins/case-study/README.md",
+      "digest": "dca3514395403d5253602cde0f1bf8337a4c7d2728e6d2dd9be46f9309464e5f"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/package.json",
+      "digest": "a8c083a642bbba24db2448b0b1e25c32bc91c71b3fbb24c2707cfd8d625c4302"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "digest": "81ebd81f60e3dca5e7a0842519b59aefbb60668b57af9066c97b2dfb0d3fc5cf"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/config.schema.json",
+      "digest": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/input.schema.json",
+      "digest": "9202e840f26bfda6a6fc8bee92cad44728737f8b8a00e8a1cf1e112a3c500d49"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/src/protocol.ts",
+      "digest": "1d4a91c7fd56dfca87ba752a9ff93ac35eceae37036e772dc7bc308055deedb7"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/src/stage.ts",
+      "digest": "54a1671e83614cb742d342348f49864d845a6ec53f578e6a6489a46ac7b0daac"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
+      "digest": "e1e2b08089744dba57231d14e6354748a7e04d266f95d0cdf1df969058727f03"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+      "digest": "3da873252822ca8b666f315b556fa340b85f5d1987cf9fc507e1457eec116636"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/protocol.test.mjs",
+      "digest": "52be698e978b846cd4c2abff65ecbf3913cbdcc9b12605c78f19327d80fbcfbf"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tsconfig.json",
+      "digest": "f1b68c2a56612819263a0c8c11233fef4e54e325bf61b6e089c5ac0287b5817b"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/README.md",
+      "digest": "dec35e5caa2fd9eccb1273a6a912abcd19c3ab7354693a5695f6f0c6009d476d"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/package.json",
+      "digest": "699f6c66c7049139cbaf053d7c6355e43829221675066fc3b96fff35ca28da05"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/plugin.json",
+      "digest": "4d11a5087ab64e615a69d29f4d85760cf1ff2b7e384c9f83b89f063595b77ddf"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/config.schema.json",
+      "digest": "79d88c1dacd4093c6d0fc85ae0397b9b2f7f8a80d2923f5db5dd942e2621f9e7"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/input.schema.json",
+      "digest": "f4c7e20a48803202f36269ff3b04d3d8b4b4cea8dfdad4816fdddd5c063b3e2f"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/approval.ts",
+      "digest": "97499067dd03ce9a4d55fe462ab4510892035805fe43f28f93da528de014c492"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/stage.ts",
+      "digest": "cb0394d795ee4ff25dfffb78b3346687d9efe7d68a22959cc9213e90e3b31b33"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs",
+      "digest": "3caf2959502e9dd55ed733b26f4b92790cf55b89054944053830132878afc397"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+      "digest": "bad464d03fe645b13654fcffa329b5f63386e8cae77a2bd1f12fc0f1e2132540"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs",
+      "digest": "0552597f42346566e287bdead06b37cb574bd3faf46b3190e59d5875f86c87d1"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tsconfig.json",
+      "digest": "157dd48f98984ccc0e705119fcbd0952335ac4552b91cf4a886ebadbe96a223f"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/README.md",
+      "digest": "7ff92cfd861be2abd078b4e2e9466b30f6d7c7fec3dfa9a201127fcb05217b31"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/package.json",
+      "digest": "b5dd5dce522109bc8301de7629eb212d8466019feb2975d679d5c891f617d040"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "digest": "bf4ba03f5f67f84123c1ba4d67d4f66e848ab58686d85cb688dbac9837fba606"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "digest": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "digest": "cdd47296b6f947367b5b5a8c2d1bba4789fcfada4cb44542fe3e453e5d41d37c"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/protocol.ts",
+      "digest": "a691ab50e2ffcb7b43b6e849aac333c80ea9b15b34bf42cdbc2ebad9eda51d22"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+      "digest": "864ece025c98f57a979e4ee6efbe876407b90cfec4a69be44b24569ce30a02ca"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "digest": "df3c4f5318a63077d08b3f87caf25b22819a85867803391fac5f9629f57c2c89"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+      "digest": "642f15ae3a5cb355fd908835fdd9f1b328290aca267cf44fde054290377b2f34"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
+      "digest": "d108bbb7e630dfe0d15fb76069dbb792e36589952fc1c1457c55f58dd9671baf"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tsconfig.json",
+      "digest": "f1b68c2a56612819263a0c8c11233fef4e54e325bf61b6e089c5ac0287b5817b"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/README.md",
+      "digest": "69dc90222f35dc21afa4c9edc15286842c28bfeaaf2881cc0eddb4b2c64619e5"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/package.json",
+      "digest": "353fcdcb02210c9f0ac7b4f62dd5d82bd0fde164b54a746470a22757404020af"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "digest": "8eb5d5311da900a4cfcb00cb5c8ef23f14a10f59eaccac1b96240b423595abf8"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "digest": "6257dab7d91308de6c3bcf8178bc8fe82f62f5d74453648bde3f91703cb3d4d8"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "digest": "eea5e90e0037367fbfb0bf3f3f84faded88fb2ada6463f8d9f6756df09d11079"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/stage.ts",
+      "digest": "fade84850cb07868246aa51070a76f6b29e485e33ba48f09721ba5bb0f87eb12"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/summary.ts",
+      "digest": "1f89760d5b5a894aa85212b216f1341d5363b181becf6afc5701800a8c23eb4b"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "digest": "050f4d088586aad1764fc505c55ce8a8a7dca377a3934682151cb401dc11ebe2"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+      "digest": "1f35b4c0293ecd64f944587a3880d4a27586a5c92f72719991687c68e83893e7"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/parity.test.ts",
+      "digest": "19f7a476a679c395dbf37e77891805edde63ba14f56d090d6b21b1328947d60b"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/summary.test.mjs",
+      "digest": "9547f977ac50013e6d83404c0e97badaac571dfdac4830950bf6a867c2a73c96"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tsconfig.json",
+      "digest": "f1b68c2a56612819263a0c8c11233fef4e54e325bf61b6e089c5ac0287b5817b"
+    },
+    {
+      "path": "skills/nova/plugins/review/README.md",
+      "digest": "0c3e0297bf77db391d277f5dc903742ce5e277805f5276167f9369f2e68a9225"
+    },
+    {
+      "path": "skills/nova/plugins/review/package.json",
+      "digest": "ae6cb4f6fdeaa275c4f275f819e669aff0278c443ee47534eacadda6e6dc2f60"
+    },
+    {
+      "path": "skills/nova/plugins/review/plugin.json",
+      "digest": "45b277a65fa2c33c949520c3ef8d3c8e1d43ce33391c99a7412912e3c998ea19"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/config.schema.json",
+      "digest": "16fbfd41be47d8dfe16ef6ba63c7875637c994dc44400d99680c1e2972196d9c"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/input.schema.json",
+      "digest": "0f729ef593baa65a4c1b591dcebdf44357de90bf030d95243523b140dd170c23"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/result.schema.json",
+      "digest": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/reviewer-output.schema.json",
+      "digest": "f072d34dc025453babce238475660a5c4c1a161e6ee85176515df8e620a2b6cb"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/protocol.ts",
+      "digest": "bf107a7b56d13b3a468828bc4203399c8d1135a3111405c0b2378ddbcb7b22a4"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-output.ts",
+      "digest": "87ccbefb71ca039d96ede0c000da5dd7d721cf9853727fffc7ea862f9499fc19"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/stage.ts",
+      "digest": "8382d0473519992d6406814116e152e4781d230e54eec1c622cc9c6cb41428a9"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/fail.json",
+      "digest": "1c724ea6be34e7ba001e80da1335be957cd5bffbd404c25d73299858ca94d66d"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/malformed.json",
+      "digest": "a7092491668e13a065e995a1f7b1f13916f951fd9ac23478427db57b29ad6abd"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/pass.json",
+      "digest": "90c6d26ae86e588a70f06bff9a910dcbfafc9fcf8457c6e6afd0d69b0a6d5f53"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "digest": "19ce29436d10809e1da933da37731c50f9372cdd60deadd68e269bc78fe39d1b"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/package-boundary.test.mjs",
+      "digest": "b2cf58b9392d55c62029e4f375daf433745349cbe862017d016094d7a7235951"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
+      "digest": "9ce79e3a118b3d29c6b86a8335bdc496d6970f04223719cb4859aa6aa481f9d8"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-output.unit.test.mjs",
+      "digest": "8aa08f023c0c3cb12f0e0365f13ecd99e69eadc5151c48444256667deaec932e"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/stage.unit.test.mjs",
+      "digest": "9e8267730b57909cf47cf5d76a747754b8f5bbba5cafc53b4178d8e897e48b46"
+    },
+    {
+      "path": "skills/nova/plugins/review/tsconfig.json",
+      "digest": "cc892e8b06c2c895a31e60d267d9b589e477a672e6dd89cc4c6a6548ea10943a"
+    }
+  ],
+  "targetDigest": "2208b65c78d90417b5db9cb360c97a28715cda7fe78e6cdb9db5f685df465bcb",
+  "bundleDigests": {
+    "nova": "0c5a322a9f984d9f17055c1ddf10be84eb35121f38ff8352cdea76878fde9fbf",
+    "buster": "eb4c9d2ff579b35aac72ad6e6b5e7f1460d400002210fa641205582f4469ac28"
+  },
+  "scenarios": [
+    {
+      "id": "case-study-replacement-live-function",
+      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
+      "targetPackage": "case-study",
+      "disposition": "intentionally-changed",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Case-study generation combined grounded document creation with optional publication and pipeline presentation concerns.",
+        "replacementBehavior": "The v2 package generates a strictly sectioned, identity-bound artifact from supplied facts; publication is a separate adapter concern.",
+        "rationale": "Generation and external delivery have different authority, failure, and replacement boundaries.",
+        "complexityImpact": "Deletes presentation and deployment side effects from the generator.",
+        "behaviorChanged": true,
+        "approvalRef": "discord:1531749860674637876"
+      },
+      "pathDigest": "d1f6275083a37104d1ecfb9d9c5e48ff2388403b4624a7ec6bb4e0981226d5e4"
+    },
+    {
+      "id": "human-approval-replacement-live-function",
+      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+      "targetPackage": "human-approval",
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Approval sends an operator request, durably waits for an authorized approve or reject signal, and resumes once.",
+        "replacementBehavior": "The v2 stage constructs the message and typed wait while operator messaging, signal persistence, authorization, and resume attempts stay in their owning capabilities and core.",
+        "rationale": "The observable approval protocol remains intact without filesystem watchers or transport details in the stage.",
+        "complexityImpact": "Reduces approval to input validation, message/wait construction, and signal reduction.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "746fd4542a940d0ba617dc72da9995a61d36f054a2ec534e4904f98137f18ed2"
+    },
+    {
+      "id": "pipeline-review-replacement-live-function",
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "targetPackage": "pipeline-review",
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Pipeline review synthesizes run-wide evidence into a retrospective report without changing lifecycle truth.",
+        "replacementBehavior": "The v2 reporting stage preserves grounded synthesis and required dimensions and can only write its report artifact.",
+        "rationale": "Retrospective reporting remains distinct from the actionable review decision stage.",
+        "complexityImpact": "Removes session polling and notification side effects from report generation.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "8d4b5b07a0fbdb1fffaea1bd303b9ae9f12ee717418a8ebd8cbc0f316bae2047"
+    },
+    {
+      "id": "project-summary-replacement-live-function",
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "targetPackage": "project-summary",
+      "disposition": "intentionally-changed",
+      "implementationDecision": {
+        "strategy": "rewrite",
+        "legacyBehavior": "Project summary delegated formatting to a registered generator and mixed persistence, telemetry, and Discord delivery.",
+        "replacementBehavior": "The v2 package deterministically reduces validated run metrics and diagnostics into one stable Markdown artifact.",
+        "rationale": "A deterministic summary is cheaper, reproducible, and does not require agent judgment or notification authority.",
+        "complexityImpact": "Replaces a multi-service orchestration path with a pure reducer and one artifact effect.",
+        "behaviorChanged": true,
+        "approvalRef": "discord:1531749860674637876"
+      },
+      "pathDigest": "d011d3efbe9d6682e9dec7f34365012ced9db59d4aa1e7d4001701300a3ccc68"
+    },
+    {
+      "id": "review-gate-contract",
+      "path": "tests/verification/contracts/check-gate-control-result-surface.mjs",
+      "targetPackage": null,
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Review and approval gates produce closed pass, remediation, blocked, and wait outcomes while core owns lifecycle transitions.",
+        "replacementBehavior": "The v2 review and approval registrations return the same closed control outcomes through registration-scoped capabilities.",
+        "rationale": "Preserve domain decisions while deleting runner-specific lifecycle coupling.",
+        "complexityImpact": "One strict reducer per registration replaces mixed gate runner control flow.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "f89cfab430676a6b4fe7bd5d95cddc20074425d795d5d9e2efe3f4dbed1f1ea1"
+    },
+    {
+      "id": "review-replacement-live-function",
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "targetPackage": "review",
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Review judges supplied evidence, rejects contradictory PASS verdicts, and requests remediation for actionable failures.",
+        "replacementBehavior": "The v2 review package strictly decodes the same evidence classes and returns typed pass or request-fix results.",
+        "rationale": "Keep review policy package-local and delegate agent transport and lifecycle to runtime.dispatch.",
+        "complexityImpact": "Removes hidden repository and session coupling from the decision stage.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "e7bd2ec3bad68c597b8c6372ee7f59c5dedc35b15931a3e81061ea1356b85148"
+    }
+  ],
+  "scenarioDispositionDigest": "c1d3ee4baf177c4f0f2b12f8da0bb130e98891104907ce6476ca2201fceec8b8",
+  "results": [
+    {
+      "gateId": "deployment",
+      "command": "node tests/verification/deployment/check-deployment-truth.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.deployment.log",
+      "outputDigest": "b81fd461e73551612c643f457e254c3f5b37f64c3b984cf7abd59727549de60b"
+    },
+    {
+      "gateId": "documentation",
+      "command": "npm run docs:check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.documentation.log",
+      "outputDigest": "e71c4c1f7f8e96816e167a4bc4664e891cc636214079277e24f9d121bcd2f4e5"
+    },
+    {
+      "gateId": "helm",
+      "command": "helm lint charts/kubeclaw -f my-values/nova-values.yaml && helm lint charts/kubeclaw -f my-values/buster-values.yaml",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.helm.log",
+      "outputDigest": "92dfddbf957ceb8e10a8367ee202ee2fc8c4473f1f49deeaaa4b972692ae8412"
+    },
+    {
+      "gateId": "inventory",
+      "command": "npm run plugin-system:inventory:check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.inventory.log",
+      "outputDigest": "c0cdf803ab5489b35ee66315a02f52cee9c0e98813aa7a18c839c83a38ebdc60"
+    },
+    {
+      "gateId": "materialized-runtime",
+      "command": "node tests/verification/runtime/check-runtime-collisions.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.materialized-runtime.log",
+      "outputDigest": "251b5b6bdc5c4529db2486e7e3b81b589884c21e8124f903767e42c8e57546cb"
+    },
+    {
+      "gateId": "repository-hygiene",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.repository-hygiene.log",
+      "outputDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "gateId": "role-bundles",
+      "command": "node tests/verification/runtime/check-agent-skill-bundles.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.role-bundles.log",
+      "outputDigest": "d507b0f44793d327e0529199df1570eeafb62db4eca25bd7d8b6009e7efac176"
+    },
+    {
+      "gateId": "scenario:case-study-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/case-study",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.scenario-case-study-replacement-live-function.log",
+      "outputDigest": "4314265d9fc6ecfccc6e32f9dcbfff11f976d6035926e3334e1a9941fb90e395"
+    },
+    {
+      "gateId": "scenario:human-approval-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/human-approval",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.scenario-human-approval-replacement-live-function.log",
+      "outputDigest": "44b6c2380ad08710fd3182122f54ba086e396cecbb3dbfdd7e8a7e2c162ad5b2"
+    },
+    {
+      "gateId": "scenario:pipeline-review-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/pipeline-review",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.scenario-pipeline-review-replacement-live-function.log",
+      "outputDigest": "960605b68cdc4c2fac773a95cb1d2eea4e394121f118722e396748daff09c29e"
+    },
+    {
+      "gateId": "scenario:project-summary-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/project-summary",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.scenario-project-summary-replacement-live-function.log",
+      "outputDigest": "202ae247156db9bb74309526be34d5b7a4b517b78b9b846b2d76fc866b56809a"
+    },
+    {
+      "gateId": "scenario:review-gate-contract",
+      "command": "node tests/verification/contracts/check-gate-control-result-surface.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.scenario-review-gate-contract.log",
+      "outputDigest": "284c7d80beb5a07665505ddadcea403b089c58d3591560fab7d20092dbe3a844"
+    },
+    {
+      "gateId": "scenario:review-replacement-live-function",
+      "command": "npm test --prefix skills/nova/plugins/review",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.scenario-review-replacement-live-function.log",
+      "outputDigest": "48cbd048c43fdd0223afe9883a2d69411923cc03a62304aeb1fa290d78b834cc"
+    },
+    {
+      "gateId": "security-audit",
+      "command": "npm audit --audit-level=high",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.security-audit.log",
+      "outputDigest": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+    },
+    {
+      "gateId": "source-contracts",
+      "command": "npm run verify:contracts",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.source-contracts.log",
+      "outputDigest": "65ccfcf6ddaff4abf1ecf4c9bd0646e7df15956c95f912776fc3762e97fe2cc7"
+    },
+    {
+      "gateId": "unit-integration",
+      "command": "npm run verify:skills:all && npm run verify:pipeline",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/review-approval-and-reporting.parity-proven.6a7e4faab340e9fe6d3ce5d6f00466c961a35626.unit-integration.log",
+      "outputDigest": "5f10d0643b62bb4915c141dca35369124d736556219aca7ba8ba8e383cf18697"
+    }
+  ]
+}

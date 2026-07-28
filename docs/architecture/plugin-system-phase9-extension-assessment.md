@@ -560,21 +560,26 @@ recorded now so Phase 9 does not create incompatible assumptions.
 
 ## Required Extensions Missing From The Current Package Set
 
-### New `kubeclaw.operator-control` package
+### Rejected `kubeclaw.operator-control` plugin boundary
 
-- **Decision — write a new cohesive extension.** The legacy operator command
-  surface is validation, authorization, journaling, consumption, recovery, and
-  decisions; it is not `command.execute`. Implement that protocol directly
-  rather than adapting the legacy service graph.
-- **Architecture.** Use an input adapter/observer for authorized commands and a
-  core administrative-decision API. It must not gain subprocess authority or
-  mutate lifecycle stores directly.
-- **Behavior to preserve.** Pause/cancel/retry/remediate/approval-style commands,
-  issuer authorization, idempotency, audit, Redis or alternate transport
-  consumption, restart, and operator correlation.
-- **Proof.** Paired legacy/v2 command corpus; every command, invalid/unauthorized
-  input, duplicate/conflict, stale target, terminal run, crash before/after
-  journal, concurrent commands, replay, transport failure, and redaction.
+- **Decision — do not create this plugin.** The initial assessment proposed an
+  operator-control extension, but implementation review showed that its useful
+  work is either generic core authority or host ingress. Making it a pipeline
+  plugin would let a plugin request or commit lifecycle transitions and would
+  violate the goal architecture.
+- **Architecture.** Core already owns the authenticated, idempotent,
+  hash-journaled administrative reopen protocol and typed signal resume.
+  Operator-message transport remains a replaceable adapter. A CLI, API, or
+  OpenClaw command surface may authenticate and call those core APIs, but that
+  host wiring is not a stage/observer/adapter registration and is completed at
+  the Phase 12 consumer cutover.
+- **Behavior to preserve.** Authorized retry, remediation, cancellation, and
+  approval/rejection signals; conflict detection; stale/terminal target
+  rejection; audit identity; replay; and operator correlation.
+- **Proof.** Phase 6/7 core lifecycle and recovery suites prove administrative
+  decisions, signal authorization, idempotency, crash recovery, concurrency,
+  and replay. Operator-messaging live tests prove only transport. Phase 12
+  proves the selected host ingress against the authoritative v2 core.
 
 ### New Redis transport providers
 

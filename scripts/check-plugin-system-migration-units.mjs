@@ -71,11 +71,13 @@ function packageInventory() {
 function packageByName(packages, packageName) {
   return [...packages.values()].find((entry) => entry.name === packageName);
 }
-function canonicalTargetRoots(targetOwnerId, packages) {
+function canonicalTargetRoots(targetOwnerId, packages, unit) {
   const [kind, id] = targetOwnerId.split(/:(.*)/s);
   const roots = [];
   const exactPackage = packages.get(id);
   if (exactPackage) roots.push(exactPackage.root);
+  const exactLibrary = (unit.targetLibraries || []).find((library) => library.ownerId === targetOwnerId);
+  if (exactLibrary) roots.push(exactLibrary.root);
   if (kind === 'core' && id.startsWith('pipeline-core-')) roots.push('skills/common/plugin-runtime/core');
   if (kind === 'plugin-sdk') roots.push('skills/common/plugin-runtime/sdk');
   if (id === 'plugin-system-documentation') {
@@ -313,7 +315,20 @@ for (const unit of ledger.units) {
   for (const packageName of declaredPackages) {
     if (!packageByName(packages, packageName)) fail(`${unit.id} target package ${packageName} is missing`);
   }
-  const declaredReplacementPackages = new Set([...(unit.targetPackages || []), ...(unit.targetExtensions || [])]);
+  const targetLibraries = unit.targetLibraries || [];
+  assertUnique(targetLibraries.map((library) => library.name), `${unit.id} target library name`);
+  assertUnique(targetLibraries.map((library) => library.ownerId), `${unit.id} target library owner`);
+  for (const library of targetLibraries) {
+    if (!library.name?.trim() || !library.ownerId?.startsWith('shared-library:') || !library.root?.trim()) {
+      fail(`${unit.id} has an invalid target library`);
+    }
+    if (!fs.existsSync(path.join(root, library.root))) fail(`${unit.id} target library ${library.name} is missing`);
+  }
+  const declaredReplacementPackages = new Set([
+    ...(unit.targetPackages || []),
+    ...(unit.targetExtensions || []),
+    ...targetLibraries.map((library) => library.name),
+  ]);
   const replacementScenarioPackages = new Set();
   for (const scenario of unit.scenarios) {
     if (scenario.targetPackage === undefined) continue;
@@ -328,7 +343,7 @@ for (const unit of ledger.units) {
     const targetRoot = targetPackage?.root
       ?? (scenario.targetPackage === 'openclaw-agent-observer'
         ? 'skills/common/plugins/openclaw-agent-observer'
-        : null);
+        : targetLibraries.find((library) => library.name === scenario.targetPackage)?.root ?? null);
     if (!targetRoot || !inside(scenario.path, targetRoot)) {
       fail(`${unit.id}/${scenario.id} replacement scenario must live inside ${scenario.targetPackage}`);
     }
@@ -349,7 +364,7 @@ for (const unit of ledger.units) {
   for (const targetOwnerId of unit.targetOwnerIds) {
     const files = inventory.files.filter((file) => ownerId(file) === targetOwnerId);
     if (files.length === 0) fail(`${unit.id} owner ${targetOwnerId} has no inventory files`);
-    const targetRoots = canonicalTargetRoots(targetOwnerId, packages);
+    const targetRoots = canonicalTargetRoots(targetOwnerId, packages, unit);
     const targetFiles = files.map((file) => file.path).filter((file) => targetRoots.some((targetRoot) => inside(file, targetRoot))).sort();
     const legacySourceFiles = files.map((file) => file.path).filter((file) => !targetFiles.includes(file)).sort();
     const exactPackage = packages.get(targetOwnerId.slice(targetOwnerId.indexOf(':') + 1));
