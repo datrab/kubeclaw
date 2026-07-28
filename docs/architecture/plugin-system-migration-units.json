@@ -167,8 +167,8 @@
     {
       "id": "privileged-adapters",
       "roles": ["nova", "buster"],
-      "status": "baseline-retained",
-      "evidenceRecord": null,
+      "status": "parity-proven",
+      "evidenceRecord": "docs/architecture/plugin-system-parity-evidence/privileged-adapters.parity-proven.f42103227c947d1233cb390b199001070d1d0fe6.json",
       "targetOwnerIds": [
         "adapter:kubeclaw.artifacts",
         "adapter:kubeclaw.command-runner",
@@ -472,8 +472,8 @@
     {
       "id": "forge-and-implementation",
       "roles": ["nova"],
-      "status": "baseline-retained",
-      "evidenceRecord": null,
+      "status": "parity-proven",
+      "evidenceRecord": "docs/architecture/plugin-system-parity-evidence/forge-and-implementation.parity-proven.c9892f95150c2792daa04386bcbcab3b96c9ecf6.json",
       "targetOwnerIds": [
         "plugin:kubeclaw.blueprint-sync",
         "plugin:kubeclaw.forge",
@@ -960,8 +960,8 @@
     {
       "id": "buster-worker-and-suites",
       "roles": ["buster"],
-      "status": "baseline-retained",
-      "evidenceRecord": null,
+      "status": "parity-proven",
+      "evidenceRecord": "docs/architecture/plugin-system-parity-evidence/buster-worker-and-suites.parity-proven.a9626ae5768e3dbe6b9881f838e752a1fe46748f.json",
       "targetOwnerIds": [
         "plugin:kubeclaw.buster-quality-gate",
         "plugin:kubeclaw.buster-worker",
@@ -1187,8 +1187,8 @@
     {
       "id": "prompt-library",
       "roles": ["nova", "buster"],
-      "status": "baseline-retained",
-      "evidenceRecord": null,
+      "status": "parity-proven",
+      "evidenceRecord": "docs/architecture/plugin-system-parity-evidence/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.json",
       "targetOwnerIds": [
         "shared-library:kubeclaw.prompt-contract",
         "shared-library:kubeclaw.prompt-primitives"

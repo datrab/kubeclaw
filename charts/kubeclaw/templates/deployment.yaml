@@ -101,7 +101,9 @@ spec:
               REPO_DIR="/workspace/git-repo"
               CURRENT_AGENT="${AGENT_NAME:-unknown}"
               AGENT_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${CURRENT_AGENT:0:1})${CURRENT_AGENT:1}"
-              git config --global --add safe.directory "$REPO_DIR"
+              export GIT_CONFIG_COUNT=1
+              export GIT_CONFIG_KEY_0=safe.directory
+              export GIT_CONFIG_VALUE_0="$REPO_DIR"
               if [ ! -d "$REPO_DIR/.git" ]; then
                 echo "    Cloning repository..."
                 git clone "$GIT_REPO_URL" "$REPO_DIR"

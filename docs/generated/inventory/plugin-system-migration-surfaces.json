@@ -4,12 +4,12 @@
     "inventory": "docs/generated/inventory/plugin-system.json",
     "inventoryDigest": "3ca57b4896c9a4eae80225f5092e7446da8c931591d725b69af16958b0498ae1",
     "units": "docs/architecture/plugin-system-migration-units.json",
-    "unitsDigest": "99c438a2312cd7c9d4a677bea7c52cb658097dd61d8e9d12267ebd071c66edbf"
+    "unitsDigest": "7d658488058f389b91d8b6584d2fe38dea3af2f27d15e47a1d1c06ff16dc54cb"
   },
   "units": [
     {
       "id": "buster-worker-and-suites",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "buster"
       ],
@@ -121,7 +121,7 @@
     },
     {
       "id": "forge-and-implementation",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -337,7 +337,7 @@
     },
     {
       "id": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -682,7 +682,7 @@
     },
     {
       "id": "prompt-library",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -1109,7 +1109,7 @@
     {
       "ownerId": "adapter:kubeclaw.artifacts",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -1424,7 +1424,7 @@
     {
       "ownerId": "adapter:kubeclaw.command-runner",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -1515,7 +1515,7 @@
     {
       "ownerId": "adapter:kubeclaw.git",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -1811,7 +1811,7 @@
     {
       "ownerId": "adapter:kubeclaw.git-workspace",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -1924,7 +1924,7 @@
     {
       "ownerId": "adapter:kubeclaw.network-http",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -2197,7 +2197,7 @@
     {
       "ownerId": "adapter:kubeclaw.operator-messaging",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -2409,7 +2409,7 @@
     {
       "ownerId": "adapter:kubeclaw.redis",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -2831,7 +2831,7 @@
     {
       "ownerId": "adapter:kubeclaw.redis-transport",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -2973,7 +2973,7 @@
     {
       "ownerId": "adapter:kubeclaw.runtime-dispatch",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -3753,7 +3753,7 @@
     {
       "ownerId": "adapter:kubeclaw.secret-resolver",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -3840,7 +3840,7 @@
     {
       "ownerId": "adapter:kubeclaw.state-store",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -3928,7 +3928,7 @@
     {
       "ownerId": "adapter:kubeclaw.telemetry-store",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -4019,7 +4019,7 @@
     {
       "ownerId": "adapter:kubeclaw.transport-publisher",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -4127,7 +4127,7 @@
     {
       "ownerId": "adapter:kubeclaw.wait-store",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -11405,7 +11405,7 @@
     {
       "ownerId": "plugin:kubeclaw.artifact-store",
       "unitId": "privileged-adapters",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -11510,7 +11510,7 @@
     {
       "ownerId": "plugin:kubeclaw.blueprint-sync",
       "unitId": "forge-and-implementation",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -11754,7 +11754,7 @@
     {
       "ownerId": "plugin:kubeclaw.buster-quality-gate",
       "unitId": "buster-worker-and-suites",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "buster"
       ],
@@ -12370,7 +12370,7 @@
     {
       "ownerId": "plugin:kubeclaw.buster-worker",
       "unitId": "buster-worker-and-suites",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "buster"
       ],
@@ -14144,7 +14144,7 @@
     {
       "ownerId": "plugin:kubeclaw.forge",
       "unitId": "forge-and-implementation",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -14901,7 +14901,7 @@
     {
       "ownerId": "plugin:kubeclaw.implementation-agent",
       "unitId": "forge-and-implementation",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -17549,7 +17549,7 @@
     {
       "ownerId": "plugin:kubeclaw.repository-adapter",
       "unitId": "forge-and-implementation",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova"
       ],
@@ -18476,7 +18476,7 @@
     {
       "ownerId": "plugin:kubeclaw.test-agent",
       "unitId": "buster-worker-and-suites",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "buster"
       ],
@@ -19543,7 +19543,7 @@
     {
       "ownerId": "shared-library:kubeclaw.prompt-contract",
       "unitId": "prompt-library",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"
@@ -19616,7 +19616,7 @@
     {
       "ownerId": "shared-library:kubeclaw.prompt-primitives",
       "unitId": "prompt-library",
-      "status": "baseline-retained",
+      "status": "parity-proven",
       "runtimeRoles": [
         "nova",
         "buster"

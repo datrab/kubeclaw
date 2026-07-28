@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "plugin-system-parity-evidence-v2",
+  "unitId": "prompt-library",
+  "status": "parity-proven",
+  "commit": "4b88682015aa5438d68764acfb807652445e6948",
+  "recordedAt": "2026-07-28T21:24:50.264Z",
+  "previousEvidenceDigest": null,
+  "sourceFiles": [
+    {
+      "path": "skills/nova/pipeline/prompts/shared.ts",
+      "digest": "624483dfe87ab5a4af095ef5bff48372b3f55b9937cef2485a1f1fe2298ac749"
+    }
+  ],
+  "sourceDigest": "6a5f05a6105c28702f14f79d34e4b69e3cdb27de1ab4ff277f8f18ce0f191609",
+  "targetFiles": [
+    {
+      "path": "skills/common/plugins/prompt-contract/README.md",
+      "digest": "267486960a54081a8620c35823eeb704a4eb5704b1c6a6d1ba0e79aaa139152a"
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/package.json",
+      "digest": "b94304d0b7395e1d4d55f6edc0d705b64e88690ec712355329dfd9106969324b"
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/src/index.ts",
+      "digest": "13da05e31eb20a9648950204dae45a733d66dfbfa0e50ae293810165ceffb7cd"
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+      "digest": "0b37061273f10813ba4be42103ee7272e69f1e76f001d496562c1f8c14f0200f"
+    },
+    {
+      "path": "skills/common/plugins/prompt-contract/tsconfig.json",
+      "digest": "a0333ff94400922339328bc7160f6ea58fbd115826429aaa6d77e7f26d15152f"
+    }
+  ],
+  "targetDigest": "c597bac7e6a7992e0f9aaeab35055e1b767a4afe7996268b5acec2479f697161",
+  "bundleDigests": {
+    "nova": "d20964a833f27fb7c2d654841325a80bed5c7c578611e6d0c673dc0769fbcfc3",
+    "buster": "0a4e99a3a60da9c160c6abe3495a151ad1dd34b21baeabdabff1e137f80c4f2d"
+  },
+  "scenarios": [
+    {
+      "id": "prompt-buster-legacy-contract",
+      "path": "tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs",
+      "targetPackage": null,
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Buster prompts bind suite instructions, workspace rules, output schema, and completion ordering.",
+        "replacementBehavior": "Test-agent and quality-gate own their equivalent execution and verdict protocols while shared serialization is data-only.",
+        "rationale": "Testing policy belongs to the Buster extensions rather than global prompt infrastructure.",
+        "complexityImpact": "Separates execution policy from generic safe serialization.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "2eb4cd26befec4f3b074eb95eaf551108530dc9a5f381732013d2427c874b873"
+    },
+    {
+      "id": "prompt-contract-replacement-live-function",
+      "path": "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+      "targetPackage": "prompt-contract",
+      "disposition": "intentionally-changed",
+      "implementationDecision": {
+        "strategy": "rewrite",
+        "legacyBehavior": "One shared module assembled role-specific prose, filesystem paths, shell commands, completion artifacts, and compatibility shims and performed artifact-context writes while building prompts.",
+        "replacementBehavior": "A dependency-only library creates versioned deterministic data envelopes, rejects unsafe or lossy JSON values, enforces size/depth/entry limits, and owns no domain instructions or effects.",
+        "rationale": "Shared prompt infrastructure should standardize safe data and response boundaries, while each stage package owns its domain language and completion semantics.",
+        "complexityImpact": "Deletes global role coupling and prompt-time filesystem effects instead of porting the large helper surface.",
+        "behaviorChanged": true,
+        "approvalRef": "discord:1531749860674637876"
+      },
+      "pathDigest": "cde70008a8c0a25ee5de01cabdd9b78f9b2fcf368f5217beb4ba9e63992d8db4"
+    },
+    {
+      "id": "prompt-forge-legacy-contract",
+      "path": "tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs",
+      "targetPackage": null,
+      "disposition": "must-remain-equivalent",
+      "implementationDecision": {
+        "strategy": "refactor",
+        "legacyBehavior": "Forge prompts bind task identity, Git context, completion evidence, and exact output instructions.",
+        "replacementBehavior": "Implementation-agent owns the equivalent domain protocol and terminal session/evidence contract while shared serialization is data-only.",
+        "rationale": "Domain prompt behavior remains with the implementation extension instead of a global helper.",
+        "complexityImpact": "Moves policy to one owner and removes compatibility shims.",
+        "behaviorChanged": false,
+        "approvalRef": null
+      },
+      "pathDigest": "ed60f437c8069aa754ada937d5c55e3710adfa9ced1092bffffbbe331dc5bd15"
+    }
+  ],
+  "scenarioDispositionDigest": "5631dcaf3057f82893af9e43118bda6f432f29ec253f69c89e9f448d252d0be9",
+  "results": [
+    {
+      "gateId": "deployment",
+      "command": "node tests/verification/deployment/check-deployment-truth.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.deployment.log",
+      "outputDigest": "b81fd461e73551612c643f457e254c3f5b37f64c3b984cf7abd59727549de60b"
+    },
+    {
+      "gateId": "documentation",
+      "command": "npm run docs:check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.documentation.log",
+      "outputDigest": "e71c4c1f7f8e96816e167a4bc4664e891cc636214079277e24f9d121bcd2f4e5"
+    },
+    {
+      "gateId": "helm",
+      "command": "helm lint charts/kubeclaw -f my-values/nova-values.yaml && helm lint charts/kubeclaw -f my-values/buster-values.yaml",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.helm.log",
+      "outputDigest": "92dfddbf957ceb8e10a8367ee202ee2fc8c4473f1f49deeaaa4b972692ae8412"
+    },
+    {
+      "gateId": "inventory",
+      "command": "npm run plugin-system:inventory:check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.inventory.log",
+      "outputDigest": "c0cdf803ab5489b35ee66315a02f52cee9c0e98813aa7a18c839c83a38ebdc60"
+    },
+    {
+      "gateId": "materialized-runtime",
+      "command": "node tests/verification/runtime/check-runtime-collisions.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.materialized-runtime.log",
+      "outputDigest": "251b5b6bdc5c4529db2486e7e3b81b589884c21e8124f903767e42c8e57546cb"
+    },
+    {
+      "gateId": "repository-hygiene",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.repository-hygiene.log",
+      "outputDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "gateId": "role-bundles",
+      "command": "node tests/verification/runtime/check-agent-skill-bundles.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.role-bundles.log",
+      "outputDigest": "d507b0f44793d327e0529199df1570eeafb62db4eca25bd7d8b6009e7efac176"
+    },
+    {
+      "gateId": "scenario:prompt-buster-legacy-contract",
+      "command": "node --test tests/skills/nova/pipeline/prompts/buster-prompts.test.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.scenario-prompt-buster-legacy-contract.log",
+      "outputDigest": "7da79038bb0c1586cbbb2dffb455c539a2ee0f84c0dd7f749d90cf73308a5842"
+    },
+    {
+      "gateId": "scenario:prompt-contract-replacement-live-function",
+      "command": "npm test --prefix skills/common/plugins/prompt-contract",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.scenario-prompt-contract-replacement-live-function.log",
+      "outputDigest": "b955937b9249fb640841df15db5a946e1381fc73e593a75a8ee6dbba760f0083"
+    },
+    {
+      "gateId": "scenario:prompt-forge-legacy-contract",
+      "command": "node --test tests/skills/nova/pipeline/prompts/forge-prompts.test.mjs",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.scenario-prompt-forge-legacy-contract.log",
+      "outputDigest": "dc4dae84026af9a96c5aa5756a9cb42d5a7be3c91662369121301647001c243c"
+    },
+    {
+      "gateId": "security-audit",
+      "command": "npm audit --audit-level=high",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.security-audit.log",
+      "outputDigest": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+    },
+    {
+      "gateId": "source-contracts",
+      "command": "npm run verify:contracts",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.source-contracts.log",
+      "outputDigest": "48bfc7810efe62a464b073b328bbe7e633dd3fcf6eb67273e97363e27dcc17e3"
+    },
+    {
+      "gateId": "unit-integration",
+      "command": "npm run verify:skills:all && npm run verify:pipeline",
+      "exitCode": 0,
+      "outputPath": "docs/architecture/plugin-system-parity-evidence/outputs/prompt-library.parity-proven.4b88682015aa5438d68764acfb807652445e6948.unit-integration.log",
+      "outputDigest": "8978721717a6405af8e17939475bd4ded5e960907dca10574fb43b4ef0203c66"
+    }
+  ]
+}
