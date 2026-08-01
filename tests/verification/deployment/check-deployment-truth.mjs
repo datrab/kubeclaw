@@ -71,6 +71,7 @@ for (const relativePath of [
 }
 
 for (const buildInput of [
+  'tsconfig.base.json',
   'docker/Dockerfile.buster-runtime',
   'docker/buster-runtime-entrypoint.sh',
   'skills/buster/plugins/buster-suite-runtime/**',
@@ -83,6 +84,17 @@ for (const buildInput of [
   );
 }
 
+for (const [label, dockerfile] of [
+  ['general image', generalDockerfile],
+  ['Buster gateway image', read('docker/Dockerfile.buster-gateway')],
+]) {
+  assert.match(
+    dockerfile,
+    /COPY tsconfig\.base\.json \/tmp\/tsconfig\.base\.json/,
+    `${label} must copy the shared TypeScript configuration before compiling the observer`,
+  );
+}
+
 assert.match(
   chart,
   /plugin-runtime|common\/plugins|nova\/plugins|buster\/plugins/,
@@ -92,6 +104,11 @@ assert.match(
   workflow,
   /image_inputs:\s*\n\s+- '\.dockerignore'/,
   'Docker context policy changes must trigger image builds',
+);
+assert.match(
+  workflow,
+  /image_inputs:[\s\S]*- 'tsconfig\.base\.json'/,
+  'shared TypeScript configuration changes must trigger image builds',
 );
 assert.doesNotMatch(chart, /execution-buildkit|execution-api-token|executionRuntime/);
 assert.doesNotMatch(values, /executionRuntime|moby\/buildkit/);

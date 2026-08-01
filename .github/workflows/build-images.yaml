@@ -27,6 +27,7 @@ jobs:
           filters: |
             image_inputs:
               - '.dockerignore'
+              - 'tsconfig.base.json'
               - 'docker/**'
               - 'go.mod'
               - 'cmd/buster-namespace-controller/**'

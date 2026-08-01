@@ -9,6 +9,8 @@
 !docker/Dockerfile.namespace-controller
 !docker/buster-runtime-entrypoint.sh
 
+!tsconfig.base.json
+
 !go.mod
 !cmd/
 !cmd/buster-namespace-controller/

@@ -6,6 +6,7 @@ FROM ${OPENCLAW_BASE} AS gateway-assets
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+COPY tsconfig.base.json /tmp/tsconfig.base.json
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
 COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
 WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer

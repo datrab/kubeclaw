@@ -194,6 +194,7 @@ RUN set -eux; \
 RUN mkdir -p /app/skills /opt/terraform-provider-mirror
 
 # The observer is self-contained and must not import from /app/skills.
+COPY tsconfig.base.json /tmp/tsconfig.base.json
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
 COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
 WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
