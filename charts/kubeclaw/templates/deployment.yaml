@@ -437,22 +437,6 @@ spec:
                 return JSON.parse(fs.readFileSync(startupStatusPath, 'utf8'));
               }
 
-              let cachedSwarmConfig = null;
-              async function readSwarmConfig() {
-                if (cachedSwarmConfig) return cachedSwarmConfig;
-                const swarmConfigPath = process.env.SWARM_CONFIG;
-                if (!swarmConfigPath) throw new Error('SWARM_CONFIG is required');
-                const { expandSwarmConfig } = await import('/app/skills/pipeline/platform-config.ts');
-                cachedSwarmConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(swarmConfigPath, 'utf8')));
-                return cachedSwarmConfig;
-              }
-
-              async function busterHeartbeatPath() {
-                const path = (await readSwarmConfig())?.buster?.runtime?.heartbeat_path;
-                if (typeof path === 'string' && path.trim()) return path.trim();
-                throw new Error('config.buster.runtime.heartbeat_path is required');
-              }
-
               function baseUrl(raw) {
                 return String(raw || '').trim().replace(/\/tools\/invoke$/, '').replace(/\/v1$/, '').replace(/\/$/, '');
               }
@@ -562,15 +546,6 @@ spec:
                 }
               }
 
-              async function checkBusterHeartbeat() {
-                if (agent !== 'buster' || !enabled('KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT', true)) return;
-                const path = await busterHeartbeatPath();
-                const maxAgeMs = Number.parseInt(process.env.KUBECLAW_HEALTH_BUSTER_HEARTBEAT_MAX_AGE_MS || '120000', 10);
-                const stat = fs.statSync(path);
-                const age = Date.now() - stat.mtimeMs;
-                if (age > maxAgeMs) throw new Error(`${path} age ${Math.round(age)}ms exceeds ${maxAgeMs}ms`);
-              }
-
               function checkCodeBundle() {
                 if (!enabled('KUBECLAW_CODE_BUNDLE_ENABLED', false)) return;
                 const manifest = readBundleManifest();
@@ -609,7 +584,6 @@ spec:
                   await check('startup verification status', checkStartupVerificationStatus);
                   if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
                   if (enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)) await check('redis ping', checkRedis);
-                  await check('buster heartbeat', checkBusterHeartbeat);
                 }
               }
 
@@ -1084,10 +1058,6 @@ spec:
               value: {{ .Values.probes.dependencies.registries.enabled | quote }}
             - name: KUBECLAW_HEALTH_REGISTRIES
               value: {{ join "," (.Values.probes.dependencies.registries.endpoints | default list) | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT
-              value: {{ .Values.probes.dependencies.busterHeartbeat.enabled | quote }}
-            - name: KUBECLAW_HEALTH_BUSTER_HEARTBEAT_MAX_AGE_MS
-              value: {{ mul (.Values.probes.dependencies.busterHeartbeat.maxAgeSeconds | default 120 | int) 1000 | quote }}
             {{- if .Values.agent.project }}
             - name: CURRENT_PROJECT
               value: {{ .Values.agent.project | quote }}

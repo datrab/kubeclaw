@@ -129,6 +129,18 @@ assert.match(
 );
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 assert.match(busterValues, /containerPort:\s*18891/);
+for (const probe of ['startupProbe', 'readinessProbe', 'livenessProbe']) {
+  assert.match(
+    busterValues,
+    new RegExp(`${probe}:[\\s\\S]*path:\\s*/healthz[\\s\\S]*port:\\s*buster-v2`),
+    `the Buster v2 runtime must define its own ${probe}`,
+  );
+}
+assert.doesNotMatch(
+  chart,
+  /busterHeartbeat|kubeclaw-buster-heartbeat|skills\/pipeline\/platform-config/,
+  'gateway probes must not retain the deleted v1 Buster heartbeat contract',
+);
 assert.match(
   busterValues,
   /BUSTER_V2_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/jobs[\s\S]*name:\s*buster-v2-state[\s\S]*mountPath:\s*\/var\/lib\/buster-v2/,

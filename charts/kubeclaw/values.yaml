@@ -320,10 +320,6 @@ probes:
       endpoints:
         - "http://registry-local.kubeclaw.svc.cluster.local:5001"
         - "http://registry-mirror.kubeclaw.svc.cluster.local:5000"
-    busterHeartbeat:
-      enabled: true
-      maxAgeSeconds: 120
-
 # =============================================================================
 # SHUTDOWN
 # =============================================================================
