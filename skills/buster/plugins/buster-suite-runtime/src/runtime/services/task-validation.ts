@@ -1,13 +1,13 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/task-validation.ts — Buster task identity validation helpers
 // Keeps untrusted Redis payload normalization outside the task orchestrator.
 
 import path from 'path';
-import { normalizeBusterCapabilities, unsupportedBusterCapabilities } from './capabilities.js';
-import { getRepoRoot, gitExec } from './git-workflows.js';
-import { resolveScopedPath } from '../security.js';
-import { validateImageReference } from './image-reference.js';
-import type { AnyTaskRecord, BusterTaskIdentity, TaskIdentityCandidate } from './task-contracts.js';
+import { normalizeBusterCapabilities, unsupportedBusterCapabilities } from './capabilities.ts';
+import { getRepoRoot, gitExec } from './git-workflows.ts';
+import { resolveScopedPath } from '../security.ts';
+import { validateImageReference } from './image-reference.ts';
+import type { AnyTaskRecord, BusterTaskIdentity, TaskIdentityCandidate } from './task-contracts.ts';
 
 export const PIPELINE_TASK_TYPES = ['module_test', 'gate_test'] as const;
 

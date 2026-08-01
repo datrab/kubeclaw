@@ -1,10 +1,10 @@
-import { getAcpMonitorConfig } from '../agents/acp-monitor.js';
-import { terminateSession } from '../agents/session-termination.js';
+import { getAcpMonitorConfig } from '../agents/acp-monitor.ts';
+import { terminateSession } from '../agents/session-termination.ts';
 import {
   createMonitorRuntime, emitMonitorState, enforceHardTimeout, handleMonitorRateLimit,
   startMonitorAdapter, stopMonitorAdapter, syncGatewayHealth, terminalOutcome, waitForMonitorState,
-} from './session-monitor-runtime.js';
-import type { MonitorRuntime } from './session-monitor-runtime.js';
+} from './session-monitor-runtime.ts';
+import type { MonitorRuntime } from './session-monitor-runtime.ts';
 
 type AnyRecord = Record<string, any>;
 

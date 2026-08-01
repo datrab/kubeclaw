@@ -5,14 +5,14 @@ import {
   resolveGatewayBaseUrl,
   resolveGatewayToken,
   sendGatewaySessionMessage,
-} from '../integrations/gateway.js';
-import { parseSessionState, isStoppedSessionState } from './session-semantics.js';
-import { resolveRuntime } from './runtime.js';
-import { sleep } from '../timing.js';
+} from '../integrations/gateway.ts';
+import { parseSessionState, isStoppedSessionState } from './session-semantics.ts';
+import { resolveRuntime } from './runtime.ts';
+import { sleep } from '../timing.ts';
 import {
   assertValidKillSessionResult,
-} from '../services/acp-gateway-contract.js';
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+} from '../services/acp-gateway-contract.ts';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 import {
   type AnyRecord,
   isCallerAbort,
@@ -22,8 +22,8 @@ import {
   sessionErrorMessage as errorMessage,
   sessionLifecycleLog as log,
   throwIfCallerAbort,
-} from './session-gateway-support.js';
-import { acpxCleanup } from './acpx-cleanup.js';
+} from './session-gateway-support.ts';
+import { acpxCleanup } from './acpx-cleanup.ts';
 import {
   clearActiveSession,
   getActiveSession,
@@ -31,22 +31,22 @@ import {
   resolveSpawnTranscriptPath,
   resolveSubagentTranscriptPath,
   setActiveSession,
-} from './session-state.js';
-export { spawnSession } from './session-spawn.js';
-export { acpxCleanup } from './acpx-cleanup.js';
+} from './session-state.ts';
+export { spawnSession } from './session-spawn.ts';
+export { acpxCleanup } from './acpx-cleanup.ts';
 export {
   clearActiveSession,
   getActiveSession,
   resolveSpawnTranscriptPath,
   resolveSubagentTranscriptPath,
-} from './session-state.js';
+} from './session-state.ts';
 export {
   getTrackedAgent,
   getTrackedAgentCount,
   listTrackedAgents,
   trackAgent,
   untrackAgent,
-} from './tracked-agents.js';
+} from './tracked-agents.ts';
 
 async function readSessionLifecycleState(
   childSessionKey: any,

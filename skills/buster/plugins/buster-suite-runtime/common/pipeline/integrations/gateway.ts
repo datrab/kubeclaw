@@ -1,18 +1,18 @@
-import { abortSignalError, BudgetExhaustedError, sleep, type TimeBudget } from '../timing.js';
+import { abortSignalError, BudgetExhaustedError, sleep, type TimeBudget } from '../timing.ts';
 import {
   assertValidGatewayInvokeResult,
   buildGatewayInvokeHttpError,
   normalizeGatewayInvokeResult,
-} from '../services/acp-gateway-contract.js';
+} from '../services/acp-gateway-contract.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 import {
   gatewayHeaders,
   optionalGatewayHeaders,
   resolveGatewayHealthUrl,
   resolveGatewayInvokeUrl,
   type GatewayHeaders,
-} from './gateway-config.js';
+} from './gateway-config.ts';
 export {
   LOCAL_DEVELOPMENT_GATEWAY_BASE_URL,
   resolveGatewayBaseUrl,
@@ -20,7 +20,7 @@ export {
   resolveGatewayInvokeUrl,
   resolveGatewayToken,
   resolveLocalDevelopmentGatewayBaseUrl,
-} from './gateway-config.js';
+} from './gateway-config.ts';
 
 type GatewayBody = Record<string, unknown>;
 

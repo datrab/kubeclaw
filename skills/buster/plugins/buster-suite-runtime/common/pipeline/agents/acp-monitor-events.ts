@@ -1,14 +1,14 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { isBudgetExhaustedError, sleep } from '../timing.js';
-import { createPipelineEventBus } from '../services/pipeline-event-contract.js';
-import { assertValidAcpSessionStateEventPayload, assertValidAcpTranscriptDeltaEventPayload } from '../services/acp-gateway-contract.js';
-import { getAcpMonitorState, getDirectAcpMonitorState } from './acp-monitor-state.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { isBudgetExhaustedError, sleep } from '../timing.ts';
+import { createPipelineEventBus } from '../services/pipeline-event-contract.ts';
+import { assertValidAcpSessionStateEventPayload, assertValidAcpTranscriptDeltaEventPayload } from '../services/acp-gateway-contract.ts';
+import { getAcpMonitorState, getDirectAcpMonitorState } from './acp-monitor-state.ts';
 import {
   errorMessage,
   getAcpMonitorConfig,
   objectRecord,
   objectRecordOrEmpty,
-} from './acp-monitor-transcript.js';
+} from './acp-monitor-transcript.ts';
 type AnyRecord = Record<string, any>;
 type AnyFunction = (...args: any[]) => any;
 

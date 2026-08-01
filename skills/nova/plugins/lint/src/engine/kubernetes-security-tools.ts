@@ -3,11 +3,11 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { configuredTargetPaths } from './discovery.js';
-import { requireToolExecution, safeExec } from './execution.js';
-import { renderChart } from './helm-render.js';
-import { tryParseJson } from './parsers.js';
-import { failParse } from './report.js';
+import { configuredTargetPaths } from './discovery.ts';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { renderChart } from './helm-render.ts';
+import { tryParseJson } from './parsers.ts';
+import { failParse } from './report.ts';
 
 const CANONICAL_LINT_CONFIG_FALSE_POSITIVE = {
   code: 'KSV-0109',

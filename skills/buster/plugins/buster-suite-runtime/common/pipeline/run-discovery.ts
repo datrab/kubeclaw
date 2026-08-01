@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { canonicalFingerprint } from './portable-artifacts.js';
+import { canonicalFingerprint } from './portable-artifacts.ts';
 
 function lines(file:string){return fs.existsSync(file)?fs.readFileSync(file,'utf8').trim().split('\n').filter(Boolean).map((line,index)=>{try{return JSON.parse(line);}catch{throw new Error(`${file}:${index+1}: invalid run catalog record`);}}):[];}
 function safe(root:string,reference:string){const target=path.resolve(root,reference);if(!target.startsWith(`${path.resolve(root)}${path.sep}`))throw new Error(`unsafe run catalog reference: ${reference}`);return target;}

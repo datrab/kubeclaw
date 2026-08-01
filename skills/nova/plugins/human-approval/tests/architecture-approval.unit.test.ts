@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
-import { execute } from '../dist/architecture-approval.js';
+import { execute } from '../src/architecture-approval.ts';
 
 function context(findings: readonly Readonly<Record<string, unknown>>[]) {
   const calls: Array<{ capability: string; request: Readonly<Record<string, unknown>> }> = [];

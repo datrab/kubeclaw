@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/lifecycle-state.js';
+export * from '../../common/pipeline/lifecycle-state.ts';

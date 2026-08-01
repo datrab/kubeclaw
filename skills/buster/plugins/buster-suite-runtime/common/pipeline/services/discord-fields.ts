@@ -5,4 +5,4 @@ export {
   buildDiscordIdentityFields,
   buildDiscordIdentitySurfaceFields,
   buildSessionRateLimitDiscordFields,
-} from './discord-fields-contract.js';
+} from './discord-fields-contract.ts';

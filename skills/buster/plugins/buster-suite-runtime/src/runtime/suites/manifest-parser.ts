@@ -1,5 +1,5 @@
 import { createRequire } from 'module';
-import { suiteArray as arrayValue, suiteNonEmptyString as nonEmptyString, suiteObjectOrEmpty as objectRecordOrEmpty } from './support.js';
+import { suiteArray as arrayValue, suiteNonEmptyString as nonEmptyString, suiteObjectOrEmpty as objectRecordOrEmpty } from './support.ts';
 
 type AnyRecord = Record<string, any>;
 

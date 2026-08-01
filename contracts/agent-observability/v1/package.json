@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "files": ["dist"],
+  "files": ["src"],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+    ".": "./src/index.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

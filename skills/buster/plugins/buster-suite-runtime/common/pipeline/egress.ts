@@ -4,7 +4,7 @@
 import crypto from 'crypto';
 import fs from 'fs';
 
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 
 type JsonObject = Record<string, any>;
 

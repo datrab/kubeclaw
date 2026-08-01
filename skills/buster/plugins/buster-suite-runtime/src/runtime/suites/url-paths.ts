@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 function normalizeLocalhostPort(port: unknown): number {
   const normalizedPort = typeof port === 'string' && /^\d+$/.test(port)
     ? Number(port)

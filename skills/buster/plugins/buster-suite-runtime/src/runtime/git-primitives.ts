@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/git-primitives.js';
+export * from '../../common/pipeline/git-primitives.ts';

@@ -1,4 +1,4 @@
-import { selectTruthyValue } from '../optional-absence.js';
+import { selectTruthyValue } from '../optional-absence.ts';
 // KEEP_TYPED_POLICY: Kubernetes defaults define bounded ephemeral deployment;
 // safe namespace prefixes prevent broad targeting; production manifests are
 // adapted to the ephemeral namespace/image; temp cleanup and readiness
@@ -8,12 +8,12 @@ import { selectTruthyValue } from '../optional-absence.js';
 
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import { getRepoRoot } from '../services/git-workflows.js';
-import { buildCleanupKubernetesLabels } from '../services/resource-cleanup.js';
-import { dumpYamlDocuments, loadYamlDocuments } from './manifest.js';
-import { parseSecretNameFromRef } from './k8s-credentials.js';
-import { busterEnvironmentSnapshot, readBusterEnvironment } from '../buster-environment.js';
-import type { BusterEnvironmentKey } from '../buster-environment.js';
+import { getRepoRoot } from '../services/git-workflows.ts';
+import { buildCleanupKubernetesLabels } from '../services/resource-cleanup.ts';
+import { dumpYamlDocuments, loadYamlDocuments } from './manifest.ts';
+import { parseSecretNameFromRef } from './k8s-credentials.ts';
+import { busterEnvironmentSnapshot, readBusterEnvironment } from '../buster-environment.ts';
+import type { BusterEnvironmentKey } from '../buster-environment.ts';
 
 export type AnyRecord = Record<string, any>;
 export type SuiteLog = (msg: string) => void;

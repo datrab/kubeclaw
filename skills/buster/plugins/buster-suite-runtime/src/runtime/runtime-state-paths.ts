@@ -1,1 +1,1 @@
-export { isRuntimeStatePath } from '../../common/pipeline/runtime-state-paths.js';
+export { isRuntimeStatePath } from '../../common/pipeline/runtime-state-paths.ts';

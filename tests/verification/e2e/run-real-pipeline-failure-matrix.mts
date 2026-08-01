@@ -149,13 +149,13 @@ for (const scenario of selected) {
     const resultPath = path.join(resultRoot, `${Date.now()}-${scenario.id}.json`);
     const command = scenario.id === 'success'
       ? [
-          process.execPath, '--experimental-strip-types',
+          process.execPath,
           'tests/verification/e2e/run-real-pipeline-e2e.mts',
           '--mode', mode,
           '--result-path', resultPath,
         ]
       : [
-          process.execPath, '--experimental-strip-types',
+          process.execPath,
           'tests/verification/e2e/scenario-proof.mts', scenario.id,
         ];
     const result = spawnSync(command[0], command.slice(1), {

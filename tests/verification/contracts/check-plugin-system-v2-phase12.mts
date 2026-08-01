@@ -59,7 +59,7 @@ assert.match(entrypoint, /common\/plugin-runtime\/cli\.ts/u);
 assert.doesNotMatch(entrypoint, /pipeline\/cli\.ts|compatib/u);
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
-assert.equal(packageJson.scripts.pipeline, 'node --experimental-strip-types skills/nova/pipeline.ts');
+assert.equal(packageJson.scripts.pipeline, 'node skills/nova/pipeline.ts');
 
 const effectEvent = (attemptId: string): LifecycleEvent => ({
   schemaVersion: 'lifecycle-event.v2',

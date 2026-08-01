@@ -1,5 +1,5 @@
-import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.js';
-import type { BusterTelemetryContext, TelemetryOptions, TelemetryRecord } from './telemetry-contracts.js';
+import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
+import type { BusterTelemetryContext, TelemetryOptions, TelemetryRecord } from './telemetry-contracts.ts';
 
 declare const process: { stderr: { write(text: string): void } };
 const MISSING_AUTHORITY = 'not_emitted';

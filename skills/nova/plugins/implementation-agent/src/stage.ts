@@ -1,5 +1,5 @@
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
-import { buildRequest, parseCompletion, type ImplementationInput } from './protocol.js';
+import { buildRequest, parseCompletion, type ImplementationInput } from './protocol.ts';
 export async function execute(input: ImplementationInput, context: PluginInvocationContext): Promise<StageResult> {
   const agent = context.contract.config.agent;
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('implementation agent is not configured');

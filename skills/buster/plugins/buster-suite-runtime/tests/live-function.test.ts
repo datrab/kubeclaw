@@ -3,7 +3,7 @@ import { execFileSync, spawn } from 'node:child_process';
 import fs from 'node:fs';
 import net from 'node:net';
 import path from 'node:path';
-import { activate } from '../dist/src/adapter.js';
+import { activate } from '../src/adapter.ts';
 
 const repository = path.resolve(import.meta.dirname, '../../../../..');
 const root = path.join(repository, '.swarm', 'tests', `buster-suite-v2-${process.pid}`);
@@ -63,7 +63,7 @@ try {
 
   const port = await availablePort();
   const endpoint = `http://127.0.0.1:${port}`;
-  const worker = spawn(process.execPath, [path.join(repository, 'skills/buster/plugins/buster-suite-runtime/dist/src/worker.js')], {
+  const worker = spawn(process.execPath, [path.join(repository, 'skills/buster/plugins/buster-suite-runtime/src/worker.ts')], {
     env: {
       ...process.env,
       BUSTER_V2_PORT: String(port),

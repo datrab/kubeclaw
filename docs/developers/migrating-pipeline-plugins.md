@@ -76,6 +76,27 @@ them persist data. Record the new authority independently unless the legacy
 producer, consumer, ordering, replay, retention, and failure contracts are
 actually reproduced.
 
+## TypeScript Source Contract
+
+First-party TypeScript is directly executable by the repository's Node 24
+runtime. Every source `tsconfig.json` extends the root `tsconfig.base.json`,
+which enforces `erasableSyntaxOnly`, explicit TypeScript extensions, and
+relative-extension rewriting for optional JavaScript emission.
+
+- Use `.ts` or `.mts` in relative source imports.
+- Resolve cross-package imports through npm workspace package exports. Do not
+  add compiler-only `baseUrl` or `paths` aliases.
+- Point first-party `plugin.json` registrations at `src/*.ts` entrypoints.
+- Run package tests directly from source with `node`.
+- Never commit `dist/`. `npm run plugin-system:plugins:build` emits every v2
+  plugin into an isolated temporary directory and deletes it after validation.
+- Emit JavaScript only inside an image, archive, or other distribution build
+  whose consumer cannot execute erasable TypeScript directly.
+
+External plugins may still register `.js`, `.mjs`, `.ts`, or `.mts` modules;
+the source-only rule applies to first-party packages, not to the neutral plugin
+protocol.
+
 Network adapters require real local-server tests for origin, method, header,
 redirect, timeout, cancellation, body-size, response-size, content-type, and
 error semantics. A generic HTTP capability is new foundation unless it

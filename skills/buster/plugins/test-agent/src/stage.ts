@@ -1,5 +1,5 @@
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
-import { buildRequest, parseVerdict, type SuiteEvidence, type TestInput } from './protocol.js';
+import { buildRequest, parseVerdict, type SuiteEvidence, type TestInput } from './protocol.ts';
 
 interface BusterSuiteResult {
   readonly suite: string;

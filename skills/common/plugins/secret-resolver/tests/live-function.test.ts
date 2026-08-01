@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 
 process.env.KUBECLAW_TEST_SECRET = 'private-value';
 process.env.KUBECLAW_EMPTY_SECRET = '';
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
   config: { environment: { 'runtime.token': 'KUBECLAW_TEST_SECRET', empty: 'KUBECLAW_EMPTY_SECRET' } },

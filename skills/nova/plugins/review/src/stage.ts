@@ -2,11 +2,11 @@ import type { PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk'
 import {
   buildReviewDispatchRequest,
   type ReviewInput,
-} from './protocol.js';
+} from './protocol.ts';
 import {
   parseReviewDispatchResponse,
   reviewOutputToStageResult,
-} from './review-output.js';
+} from './review-output.ts';
 
 export async function execute(
   input: ReviewInput,

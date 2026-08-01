@@ -9,7 +9,7 @@ import {
   pendingApprovalResult,
   resultForApprovalGuidance,
   validateCreatedWait,
-} from '../dist/approval.js';
+} from '../src/approval.ts';
 
 assert.deepEqual(parseApprovalInput({ summary: '  Deploy release  ' }), {
   summary: 'Deploy release',

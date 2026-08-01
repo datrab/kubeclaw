@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export function modelToHarness(modelId: any) {
   if (!modelId) return null;
   const m = String(modelId).toLowerCase();

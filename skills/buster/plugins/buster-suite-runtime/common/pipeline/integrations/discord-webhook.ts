@@ -1,5 +1,5 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { StructuredOperationError } from '../operation-result.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { StructuredOperationError } from '../operation-result.ts';
 const MAX_ERROR_BODY_PREVIEW = 500;
 const DISCORD_WEBHOOK_DELIVERY_FAILED = 'discord webhook delivery failed';
 

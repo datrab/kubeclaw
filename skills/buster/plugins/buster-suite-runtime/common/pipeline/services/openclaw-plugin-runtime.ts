@@ -1,5 +1,5 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { writeRuntimeLog } from '../runtime-log.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { writeRuntimeLog } from '../runtime-log.ts';
 // Shared OpenClaw plugin runtime control for Nova and Buster entrypoints.
 
 import { spawnSync } from 'child_process';

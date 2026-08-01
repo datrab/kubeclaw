@@ -3,7 +3,7 @@
 // suite runner's guaranteed runtime cleanup path.
 import { spawn } from 'child_process';
 import net from 'net';
-import type { K8sCommandEnv } from './k8s-command-env.js';
+import type { K8sCommandEnv } from './k8s-command-env.ts';
 
 type SuiteLog = (message: string) => void;
 

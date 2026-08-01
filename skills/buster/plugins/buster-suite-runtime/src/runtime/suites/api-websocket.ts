@@ -1,7 +1,7 @@
-import { selectTruthyValue } from '../optional-absence.js';
-import { suiteErrorMessage as errorMessage, suiteObjectOrEmpty as objectRecordOrEmpty } from './support.js';
-import { getByPath, interpolate, interpolateObject } from './api-values.js';
-import type { AnyRecord, ApiTestResult } from './api-values.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { suiteErrorMessage as errorMessage, suiteObjectOrEmpty as objectRecordOrEmpty } from './support.ts';
+import { getByPath, interpolate, interpolateObject } from './api-values.ts';
+import type { AnyRecord, ApiTestResult } from './api-values.ts';
 import WebSocket from 'ws';
 
 type Log = (message: string) => void;

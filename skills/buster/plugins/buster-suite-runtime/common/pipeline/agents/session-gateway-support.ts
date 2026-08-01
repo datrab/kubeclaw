@@ -1,7 +1,7 @@
-import { isBudgetExhaustedError } from '../timing.js';
-import type { TimeBudget } from '../timing.js';
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { writeRuntimeLog } from '../runtime-log.js';
+import { isBudgetExhaustedError } from '../timing.ts';
+import type { TimeBudget } from '../timing.ts';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { writeRuntimeLog } from '../runtime-log.ts';
 
 export type AnyRecord = Record<string, any>;
 export type AnyFunction = (...args: any[]) => any;

@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const { telemetryEnvelope } = await import(pathToFileURL(path.resolve('dist/observer.js')).href);
+const { telemetryEnvelope } = await import(pathToFileURL(path.resolve('src/observer.ts')).href);
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 const subscriptions = manifest.observers[0].subscriptions;
 for (const [index, type] of subscriptions.entries()) {

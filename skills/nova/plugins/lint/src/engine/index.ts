@@ -1,16 +1,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { detectProjectTypes, resolveScope, takeDiscoveryDiagnostics } from './discovery.js';
-import { runAllTools as runToolsForRegistry } from './report.js';
-import { validateLintReport } from './report-contract.js';
+import { detectProjectTypes, resolveScope, takeDiscoveryDiagnostics } from './discovery.ts';
+import { runAllTools as runToolsForRegistry } from './report.ts';
+import { validateLintReport } from './report-contract.ts';
 import {
   loadLintPolicy,
   policyDigest,
   selectPolicyProject,
   validatePolicyTargetPaths,
-} from './policy.js';
-import { buildToolRegistry } from './tool-registry.js';
+} from './policy.ts';
+import { buildToolRegistry } from './tool-registry.ts';
 
 export interface LintExecutionRequest {
   readonly workingDirectory: string;

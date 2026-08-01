@@ -67,7 +67,7 @@ function parseArgs(argv: readonly string[]): ParsedApprovalOperatorArgs {
 }
 
 function usage(): string {
-  return 'Usage: node --experimental-strip-types tests/verification/e2e/approval-operator.mts --state-path <path> [--decision approve|deny|commentary]\n';
+  return 'Usage: node tests/verification/e2e/approval-operator.mts --state-path <path> [--decision approve|deny|commentary]\n';
 }
 
 function delay(ms: number): Promise<void> {

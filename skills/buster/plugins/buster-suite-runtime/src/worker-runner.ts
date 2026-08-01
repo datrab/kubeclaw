@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { materializeRepositoryValues, parseJob, RESULT_SCHEMA } from './protocol.js';
-import { runSuites } from './runtime/runners/suite-runner.js';
+import { materializeRepositoryValues, parseJob, RESULT_SCHEMA } from './protocol.ts';
+import { runSuites } from './runtime/runners/suite-runner.ts';
 
 async function main(): Promise<void> {
   const [jobFile, repositoryRoot] = process.argv.slice(2);
@@ -17,8 +17,8 @@ async function main(): Promise<void> {
       test_config: testConfig,
       capabilities: job.capabilities,
     },
-    moduleId: job.moduleId,
-    attempt: job.attempt,
+    ...(job.moduleId === undefined ? {} : { moduleId: job.moduleId }),
+    ...(job.attempt === undefined ? {} : { attempt: job.attempt }),
     capabilities: job.capabilities,
   });
   fs.writeFileSync(3, `${JSON.stringify({

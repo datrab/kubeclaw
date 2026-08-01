@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export type AnyRecord = Record<string, any>;
 export type TestCredentialSpec = { secretName: string; keys: string[]; purpose: string | null };
 

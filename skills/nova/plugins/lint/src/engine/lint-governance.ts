@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { fail, isoDate, record, stringList, text } from './policy-validation.js';
+import { fail, isoDate, record, stringList, text } from './policy-validation.ts';
 
 function suppressionEntries(baseline: Record<string, any>, today: string): Record<string, any>[] {
   return baseline.groups.flatMap((entry: unknown, index: number) => {

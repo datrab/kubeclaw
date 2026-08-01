@@ -5,7 +5,7 @@ import {
   parseJob,
   relocateRepositoryValues,
   sha256,
-} from '../dist/src/protocol.js';
+} from '../src/protocol.ts';
 
 const archive = Buffer.from('archive');
 const job = {

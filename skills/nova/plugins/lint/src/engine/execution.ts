@@ -2,8 +2,8 @@ import { execFileSync } from 'child_process';
 import os from 'node:os';
 import path from 'node:path';
 
-import { DEFAULT_TOOL_TIMEOUT } from './constants.js';
-import { selectDefinedValue } from '../support/optional-absence.js';
+import { DEFAULT_TOOL_TIMEOUT } from './constants.ts';
+import { selectDefinedValue } from '../support/optional-absence.ts';
 
 const SUBPROCESS_ENV_KEYS = Object.freeze([
   'PATH',

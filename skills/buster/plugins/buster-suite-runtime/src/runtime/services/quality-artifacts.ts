@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { publishArtifact } from '../portable-artifacts.js';
+import { publishArtifact } from '../portable-artifacts.ts';
 
 export function publishSuiteArtifacts(telemetry:any,{moduleId,gateId,suiteName,result,attempt}:any){
   const pipelineRunLogPath=telemetry?.pipelineRunLogPath;

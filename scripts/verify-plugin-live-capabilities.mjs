@@ -32,7 +32,7 @@ for (const packageRoot of packages) {
   const manifest = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
   assert.match(
     manifest.scripts?.test ?? '',
-    /--experimental-strip-types tests\/live-function\.test\.ts/,
+    /node tests\/live-function\.test\.ts/,
     `Plugin package test script does not execute its live capability test: ${path.relative(root, packageRoot)}`,
   );
 }
@@ -47,7 +47,7 @@ if (packageResult.status !== 0) process.exit(packageResult.status ?? 1);
 for (const packageRoot of packages) {
   const liveResult = spawnSync(
     'node',
-    ['--experimental-strip-types', 'tests/live-function.test.ts'],
+    ['tests/live-function.test.ts'],
     {
       cwd: packageRoot,
       env: process.env,
@@ -59,7 +59,7 @@ for (const packageRoot of packages) {
 
 const crashResult = spawnSync(
   'node',
-  ['--experimental-strip-types', 'tests/verification/contracts/check-plugin-system-v2-live-crashes.mts'],
+  ['tests/verification/contracts/check-plugin-system-v2-live-crashes.mts'],
   { cwd: root, env: process.env, stdio: 'inherit' },
 );
 if (crashResult.status !== 0) process.exit(crashResult.status ?? 1);

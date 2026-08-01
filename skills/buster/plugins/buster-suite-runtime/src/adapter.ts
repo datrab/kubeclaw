@@ -15,7 +15,7 @@ import {
   sha256,
   stringList,
   SUPPORTED_SUITES,
-} from './protocol.js';
+} from './protocol.ts';
 
 const exec = promisify(execFile);
 

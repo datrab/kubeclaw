@@ -1,1 +1,26 @@
-{"id":"kubeclaw.implementation-agent","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"implementation","type":"kubeclaw.agent.implementation","module":"dist/stage.js","export":"execute","requiredCapabilities":["runtime.dispatch","git.workspace.create","git.workspace.remove","git.commit","git.merge","artifacts.write"],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],"observers":[],"adapters":[]}
+{
+  "id": "kubeclaw.implementation-agent",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "implementation",
+      "type": "kubeclaw.agent.implementation",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "git.workspace.create",
+        "git.workspace.remove",
+        "git.commit",
+        "git.merge",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

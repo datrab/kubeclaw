@@ -1,5 +1,5 @@
-import { LINT_POLICY_SCHEMA_VERSION } from './policy.js';
-import { accumulateToolSummary, createToolSummary } from './tool-summary.js';
+import { LINT_POLICY_SCHEMA_VERSION } from './policy.ts';
+import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
 const LINT_REPORT_SCHEMA_VERSION = 'pipeline_lint_report.v6';
 const TOOL_STATUSES = new Set(['ok', 'error', 'not_applicable']);

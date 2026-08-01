@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const { validateDeclarations } = await import(pathToFileURL(path.resolve('dist/stage.js')).href);
+const { validateDeclarations } = await import(pathToFileURL(path.resolve('src/stage.ts')).href);
 const base = {
   moduleId: 'web',
   modulePath: 'modules/web',

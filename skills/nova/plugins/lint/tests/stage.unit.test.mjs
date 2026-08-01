@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
 
-const { resultForReport } = await import(pathToFileURL(path.resolve('dist/stage.js')).href);
+const { resultForReport } = await import(pathToFileURL(path.resolve('src/stage.ts')).href);
 const artifact = {
   artifactId: 'lint:test',
   namespace: 'kubeclaw.lint',

@@ -70,18 +70,8 @@ ENV PATH="/app/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 RUN playwright install --with-deps chromium && chown -R builder:builder /ms-playwright
 
-COPY skills/buster/plugins/buster-suite-runtime /build/skills/buster/plugins/buster-suite-runtime
-COPY skills/common/plugin-runtime/sdk /build/skills/common/plugin-runtime/sdk
-WORKDIR /build/skills/buster/plugins/buster-suite-runtime
-RUN ln -s /app/node_modules /build/node_modules \
-    && /app/node_modules/.bin/tsc -p tsconfig.json \
-    && mv /build/skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime \
-    && rm -rf \
-      /app/buster-suite-runtime/src \
-      /app/buster-suite-runtime/common \
-      /app/buster-suite-runtime/contracts \
-      /app/buster-suite-runtime/tests \
-    && rm -rf /build \
+COPY skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime
+RUN rm -rf /app/buster-suite-runtime/tests \
     && chown -R builder:builder /app/buster-suite-runtime
 
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint

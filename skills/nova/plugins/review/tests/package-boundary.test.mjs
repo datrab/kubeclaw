@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 
-for (const directory of ['src', 'dist']) {
+for (const directory of ['src']) {
   for (const name of fs.readdirSync(path.resolve(directory), { recursive: true })) {
     const file = path.resolve(directory, name);
     if (!fs.statSync(file).isFile() || !/\.[cm]?[jt]s$/.test(file)) continue;
@@ -15,7 +15,7 @@ for (const directory of ['src', 'dist']) {
 
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 assert.deepEqual(manifest.stages[0].requiredCapabilities, ['runtime.dispatch']);
-assert.equal(manifest.stages[0].module, 'dist/stage.js');
+assert.equal(manifest.stages[0].module, 'src/stage.ts');
 
 const schema = JSON.parse(fs.readFileSync(
   'schemas/reviewer-output.schema.json',

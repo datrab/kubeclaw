@@ -1,5 +1,5 @@
 import type { PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
-import { execute as executeApproval } from './stage.js';
+import { execute as executeApproval } from './stage.ts';
 
 interface ArchitectureApprovalInput {
   readonly summary: string;

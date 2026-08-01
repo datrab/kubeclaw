@@ -152,8 +152,8 @@ function validatePackage(root: string, request: ExternalInstallRequest): {
   }]);
   for (const registration of [...manifest.stages, ...manifest.observers]) {
     const modulePath = path.join(root, registration.module);
-    if (!/\.(?:mjs|js)$/.test(modulePath)) {
-      throw new Error(`PLUGIN_INSTALL_PREBUILT_MODULE_REQUIRED:${registration.module}`);
+    if (!/\.(?:mjs|mts|js|ts)$/.test(modulePath)) {
+      throw new Error(`PLUGIN_INSTALL_MODULE_FORMAT_INVALID:${registration.module}`);
     }
     const checked = spawnSync(process.execPath, ['--check', modulePath], {
       cwd: root,

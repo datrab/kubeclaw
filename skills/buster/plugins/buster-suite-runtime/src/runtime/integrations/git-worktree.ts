@@ -3,4 +3,4 @@
 // Runtime image packaging overlays the shared canonical implementation on this
 // path so package-local imports stay under /app/skills/pipeline.
 
-export * from '../../../common/pipeline/integrations/git-worktree.js';
+export * from '../../../common/pipeline/integrations/git-worktree.ts';

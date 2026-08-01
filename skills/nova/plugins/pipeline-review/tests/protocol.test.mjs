@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {buildRequest,parseReport} from '../dist/protocol.js';
+import {buildRequest,parseReport} from '../src/protocol.ts';
 const input={runId:'run-1',attempt:1,task:'Review.',evidence:[{kind:'summary',digest:`sha256:${'a'.repeat(64)}`}]};
 assert.equal(buildRequest('reviewer',input).protocol,'kubeclaw.pipeline-review.v2');
 const observations=['architecture','agents','prompts','tests','configuration'].map((dimension)=>({dimension,finding:`${dimension} reviewed`,priority:'low'}));

@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
-import { log } from './output.js';
-import { matchesPolicyPattern, policyIncludesFile } from './policy.js';
+import { log } from './output.ts';
+import { matchesPolicyPattern, policyIncludesFile } from './policy.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
 const discoveryDiagnostics: any[] = [];
 const LINT_POLICY_IGNORED_PATH_SEGMENTS = [
   '/node_modules/',

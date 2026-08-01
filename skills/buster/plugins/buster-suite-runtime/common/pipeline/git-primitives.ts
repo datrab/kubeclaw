@@ -1,11 +1,11 @@
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { buildSubprocessEnv } from './security.js';
-import { expandSwarmConfig } from './platform-config.js';
-import { readCommonEnvironment } from './runtime-environment.js';
+import { buildSubprocessEnv } from './security.ts';
+import { expandSwarmConfig } from './platform-config.ts';
+import { readCommonEnvironment } from './runtime-environment.ts';
 
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: any;
 
 type AnyRecord = Record<string, any>;

@@ -5,27 +5,27 @@ import {
   createFinding,
   STATUS,
   SEVERITY,
-} from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { resolveDiscordWebhookUrl } from '../services/runtime.js';
-import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.js';
-import { deliverySkippedCapability } from './visual-reg-discord.js';
-import type { VisualDiscordDeliveryResult } from './visual-reg-discord.js';
-import { BUSTER_CAPABILITIES, resolveContextCapabilities } from '../services/capabilities.js';
+} from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { resolveDiscordWebhookUrl } from '../services/runtime.ts';
+import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.ts';
+import { deliverySkippedCapability } from './visual-reg-discord.ts';
+import type { VisualDiscordDeliveryResult } from './visual-reg-discord.ts';
+import { BUSTER_CAPABILITIES, resolveContextCapabilities } from '../services/capabilities.ts';
 import {
   createSuiteLog,
   suiteErrorMessage as errorMessage,
   suiteNonEmptyString as nonEmptyString,
   suiteObject as objectRecord,
   suiteObjectOrEmpty as objectRecordOrEmpty,
-} from './support.js';
+} from './support.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { readBusterEnvironment } from '../buster-environment.js';
-import { runMultiPath } from './visual-reg-multi.js';
-import type { VisualPathEntry } from './visual-reg-multi.js';
-import { deliverVisualResults, finalizeVisualReg, resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.js';
-export { resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
+import { runMultiPath } from './visual-reg-multi.ts';
+import type { VisualPathEntry } from './visual-reg-multi.ts';
+import { deliverVisualResults, finalizeVisualReg, resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.ts';
+export { resolveVisualRegOverallStatus, summarizeDiscordDelivery } from './visual-reg-delivery.ts';
 // DELETE_LEGACY: visual-reg requires explicit reviewed baseline metadata in
 // paths.json plus per-route baseline PNGs. Legacy baseline path config,
 // HTML auto-generation, missing-baseline SKIP, and implicit single-path mode

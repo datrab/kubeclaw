@@ -19,7 +19,7 @@
     },
     "relativeModulePath": {
       "type": "string",
-      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.(?:mjs|js)$",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.(?:mjs|mts|js|ts)$",
       "maxLength": 512
     },
     "relativeSchemaPath": {

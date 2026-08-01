@@ -1,9 +1,9 @@
 // pipeline/services/gateway-health.ts — Buster gateway readiness and health monitor
 // Keeps gateway liveness policy outside the main Buster pipeline entrypoint.
 
-import { checkGatewayHealth as checkCommonGatewayHealth } from '../integrations/gateway.js';
-import { loadBusterGatewayHealthPolicy } from './runtime-policy.js';
-import { writeBusterRuntimeLog } from './logger.js';
+import { checkGatewayHealth as checkCommonGatewayHealth } from '../integrations/gateway.ts';
+import { loadBusterGatewayHealthPolicy } from './runtime-policy.ts';
+import { writeBusterRuntimeLog } from './logger.ts';
 
 export async function checkGatewayHealth() {
   const policy = loadBusterGatewayHealthPolicy();

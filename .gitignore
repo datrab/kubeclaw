@@ -37,7 +37,7 @@ node_modules/
 !/package-lock.json
 !/docker/general-tools/package-lock.json
 !/skills/common/plugins/openclaw-agent-observer/package-lock.json
-skills/common/plugins/openclaw-agent-observer/dist/
+**/dist/
 skills/common/plugin-runtime/core/isolation/plugin-sandbox
 
 # Ansible (if using infrastructure layer)

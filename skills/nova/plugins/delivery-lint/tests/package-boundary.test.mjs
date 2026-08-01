@@ -12,7 +12,6 @@ function collect(directory) {
   }
 }
 collect(path.join(root, 'src'));
-collect(path.join(root, 'dist'));
 
 for (const file of files) {
   const source = fs.readFileSync(file, 'utf8');

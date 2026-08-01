@@ -2,8 +2,8 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
-import { validateBaseline, validateRuleAdmission } from './lint-governance.js';
-import { LintPolicyError, fail, isoDate, record, repoRelative, stringList, text } from './policy-validation.js';
+import { validateBaseline, validateRuleAdmission } from './lint-governance.ts';
+import { LintPolicyError, fail, isoDate, record, repoRelative, stringList, text } from './policy-validation.ts';
 
 const LINT_POLICY_SCHEMA_VERSION = 'pipeline_lint_policy.v6';
 const LANGUAGES = new Set(['javascript', 'typescript', 'python', 'shell', 'docker', 'helm', 'yaml', 'go', 'terraform']);

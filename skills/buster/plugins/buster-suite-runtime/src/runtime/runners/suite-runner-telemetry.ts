@@ -1,8 +1,8 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { emitEvent, emitPluginEvent } from '../services/telemetry.js';
-import { publishSuiteArtifacts } from '../services/quality-artifacts.js';
-import { STATUS } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { emitEvent, emitPluginEvent } from '../services/telemetry.ts';
+import { publishSuiteArtifacts } from '../services/quality-artifacts.ts';
+import { STATUS } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
 
 function optionalNumber(value: unknown): number | null { return typeof value === 'number' && Number.isFinite(value) ? value : null; }
 function optionalBoolean(value: unknown): boolean | null { return typeof value === 'boolean' ? value : null; }

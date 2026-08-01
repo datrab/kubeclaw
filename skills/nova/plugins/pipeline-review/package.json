@@ -1,1 +1,12 @@
-{"name":"@kubeclaw/plugin-pipeline-review","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","test":"npm run build && node tests/protocol.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs"}}
+{
+  "name": "@kubeclaw/plugin-pipeline-review",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

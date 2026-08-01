@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: manifest — Kubernetes Manifest Validation
 // ═══════════════════════════════════════════════════════════════
@@ -15,19 +15,19 @@ import {
   createFinding,
   STATUS,
   SEVERITY,
-} from '../services/verdict-schema.js';
-import type { Finding, SuiteVerdict } from '../services/verdict-schema.js';
-import { resolveRepoScopedPath } from './repo-paths.js';
+} from '../services/verdict-schema.ts';
+import type { Finding, SuiteVerdict } from '../services/verdict-schema.ts';
+import { resolveRepoScopedPath } from './repo-paths.ts';
 import {
   createSuiteLog,
   suiteErrorMessage as errorMessage,
   suiteObject as objectRecord,
   suiteObjectOrEmpty as objectRecordOrEmpty,
-} from './support.js';
-import { dumpYamlDocuments, extractFromParsedDocs, loadYamlDocuments, parseSecretYaml } from './manifest-parser.js';
-import type { ManifestData, SecretInfo } from './manifest-parser.js';
+} from './support.ts';
+import { dumpYamlDocuments, extractFromParsedDocs, loadYamlDocuments, parseSecretYaml } from './manifest-parser.ts';
+import type { ManifestData, SecretInfo } from './manifest-parser.ts';
 
-export { dumpYamlDocuments, loadYamlDocuments } from './manifest-parser.js';
+export { dumpYamlDocuments, loadYamlDocuments } from './manifest-parser.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;

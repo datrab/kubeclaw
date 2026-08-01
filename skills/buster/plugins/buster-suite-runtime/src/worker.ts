@@ -14,7 +14,7 @@ import {
   type BusterSuiteResult,
   type BusterSuiteJob,
   type JobState,
-} from './protocol.js';
+} from './protocol.ts';
 
 interface Status {
   readonly schemaVersion: typeof STATUS_SCHEMA;
@@ -33,7 +33,8 @@ const token = fs.readFileSync(0, 'utf8').trim();
 const maxArchiveBytes = Number(process.env.BUSTER_V2_MAX_ARCHIVE_BYTES ?? 67_108_864);
 const maxExtractedBytes = Number(process.env.BUSTER_V2_MAX_EXTRACTED_BYTES ?? 536_870_912);
 const maxRequestBytes = Math.ceil(maxArchiveBytes * 1.4) + 1_048_576;
-const runner = fileURLToPath(new URL('./worker-runner.js', import.meta.url));
+const runnerModule = `./worker-runner${path.extname(import.meta.filename)}`;
+const runner = fileURLToPath(new URL(runnerModule, import.meta.url));
 const resultRoot = path.resolve(
   process.env.BUSTER_V2_RESULT_ROOT ?? '/workspace/git-repo/.swarm/runtime-results',
 );
@@ -316,7 +317,7 @@ function start(job: BusterSuiteJob, requestDigest: string): void {
     path.join(directory, 'job.json'),
     repository,
   ];
-  const child = spawn(testMode ? isolatedRunnerArgs[0] : '/usr/bin/setpriv', testMode
+  const child = spawn(testMode ? process.execPath : '/usr/bin/setpriv', testMode
     ? isolatedRunnerArgs.slice(1)
     : [
         `--reuid=${runnerUid}`,
@@ -341,7 +342,7 @@ function start(job: BusterSuiteJob, requestDigest: string): void {
     env: runnerEnvironment(job, directory, jobGid),
     stdio: ['ignore', 'ignore', 'pipe', 'pipe'],
     detached: true,
-  });
+  }) as ChildProcess;
   running.set(job.jobId, child);
   const stderr: Buffer[] = [];
   const resultChunks: Buffer[] = [];
@@ -475,7 +476,9 @@ const server = http.createServer(async (request, response) => {
     }
     const resultMatch = request.url?.match(/^\/v2\/runtime-results\/([a-f0-9-]{36}\.json)$/u);
     if (request.method === 'GET' && resultMatch) {
-      const file = path.join(resultRoot, resultMatch[1]);
+      const resultFile = resultMatch[1];
+      if (!resultFile) throw new Error('BUSTER_RUNTIME_RESULT_PATH_INVALID');
+      const file = path.join(resultRoot, resultFile);
       if (!fs.existsSync(file) || !fs.lstatSync(file).isFile()) {
         send(response, 404, { error: 'not found' });
         return;
@@ -523,12 +526,16 @@ const server = http.createServer(async (request, response) => {
     }
     const match = request.url?.match(/^\/v2\/jobs\/([a-z0-9._:-]+)$/u);
     if (match && request.method === 'GET') {
-      const status = readStatus(match[1]);
+      const jobId = match[1];
+      if (!jobId) throw new Error('BUSTER_JOB_ID_INVALID');
+      const status = readStatus(jobId);
       send(response, status ? 200 : 404, status ?? { error: 'not found' });
       return;
     }
     if (match && request.method === 'DELETE') {
-      const status = readStatus(match[1]);
+      const jobId = match[1];
+      if (!jobId) throw new Error('BUSTER_JOB_ID_INVALID');
+      const status = readStatus(jobId);
       if (!status) {
         send(response, 404, { error: 'not found' });
         return;
@@ -537,10 +544,10 @@ const server = http.createServer(async (request, response) => {
         send(response, 200, status);
         return;
       }
-      const child = running.get(match[1]);
-      if (child) terminate(match[1], child);
-      queued.delete(match[1]);
-      const cancelled = writeStatus(match[1], {
+      const child = running.get(jobId);
+      if (child) terminate(jobId, child);
+      queued.delete(jobId);
+      const cancelled = writeStatus(jobId, {
         state: 'cancelled',
         requestDigest: status.requestDigest,
         error: 'cancelled by caller',

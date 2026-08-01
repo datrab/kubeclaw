@@ -1,15 +1,15 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/orphan-recovery.ts — Buster startup active-session evidence check
 // Persisted active-session files are read-only diagnostics. Startup must not
 // hydrate local state or kill sessions from file evidence without lifecycle
 // read-model authority plus gateway confirmation.
 
 import fs from 'fs';
-import { getRepoRoot } from './git-workflows.js';
-import { resolveBusterActiveSessionPath } from './pipeline-helpers.js';
+import { getRepoRoot } from './git-workflows.ts';
+import { resolveBusterActiveSessionPath } from './pipeline-helpers.ts';
 import {
   reportBusterRuntimeDiagnostic,
-} from './runtime-diagnostics.js';
+} from './runtime-diagnostics.ts';
 
 type OrphanRecoveryOptions = { activeStatePath?: string; cwd?: string };
 

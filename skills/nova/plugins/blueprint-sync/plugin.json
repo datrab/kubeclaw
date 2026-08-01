@@ -1,1 +1,24 @@
-{"id":"kubeclaw.blueprint-sync","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"sync","type":"kubeclaw.generate.blueprint-sync","module":"dist/stage.js","export":"execute","requiredCapabilities":["git.sync","git.commit","state.append","artifacts.write"],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],"observers":[],"adapters":[]}
+{
+  "id": "kubeclaw.blueprint-sync",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "sync",
+      "type": "kubeclaw.generate.blueprint-sync",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "git.sync",
+        "git.commit",
+        "state.append",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

@@ -1148,7 +1148,6 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     decision = 'approve',
     reason = 'Approved by canonical real E2E operator controller.',
   }) => trackChild(spawn(process.execPath, [
-    '--experimental-strip-types',
     path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'approval-operator.mts'),
     '--state-path',
     path.join(workspace.swarmDir, stateFile),

@@ -1,5 +1,5 @@
 import type { ArtifactRef,PluginInvocationContext,StageResult } from '@kubeclaw/plugin-sdk';
-import {buildRequest,parseReport,type ReviewInput} from './protocol.js';
+import {buildRequest,parseReport,type ReviewInput} from './protocol.ts';
 export async function execute(input:ReviewInput,context:PluginInvocationContext):Promise<StageResult>{
   const agent=context.contract.config.agent;
   if(typeof agent!=='string'||!agent.trim()) throw new Error('pipeline review agent is not configured');

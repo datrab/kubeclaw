@@ -1,12 +1,11 @@
 {
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "noEmit": true,
-    "strict": true,
-    "target": "ESNext",
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
-  "include": ["*.mts"]
+  "include": [
+    "*.mts"
+  ]
 }

@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/agent-artifact.js';
+export * from '../../common/pipeline/agent-artifact.ts';

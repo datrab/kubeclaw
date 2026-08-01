@@ -13,7 +13,7 @@ fs.writeFileSync(path.join(repository, 'large.txt'), 'x'.repeat(65));
 fs.writeFileSync(outside, 'outside');
 fs.symlinkSync(outside, path.join(repository, 'escape.txt'));
 
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
   config: { repositoryRoot: repository, maxFileBytes: 64 },

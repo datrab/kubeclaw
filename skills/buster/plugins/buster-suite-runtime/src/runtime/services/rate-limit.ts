@@ -1,14 +1,14 @@
-import { getAcpMonitorState } from '../agents/acp-monitor.js';
-import { emitEvent } from './telemetry.js';
+import { getAcpMonitorState } from '../agents/acp-monitor.ts';
+import { emitEvent } from './telemetry.ts';
 import {
   buildRateLimitDetectedPayload,
   resolveRateLimitRecoveryAction,
-} from './rate-limit-contract.js';
-import { sendRateLimitEmbed } from './rate-limit-discord.js';
-import { sleep } from '../timing.js';
-import { writeBusterRuntimeLog } from './logger.js';
+} from './rate-limit-contract.ts';
+import { sendRateLimitEmbed } from './rate-limit-discord.ts';
+import { sleep } from '../timing.ts';
+import { writeBusterRuntimeLog } from './logger.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 interface RateLimitConfig {
   maxPauses?: number | string | null;
   initialCooldownS?: number | string | null;

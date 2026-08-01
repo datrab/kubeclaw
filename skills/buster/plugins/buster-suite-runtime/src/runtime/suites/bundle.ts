@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: bundle — Build Output Size Check
 // ═══════════════════════════════════════════════════════════════
@@ -19,11 +19,11 @@ import {
   createFinding,
   STATUS,
   SEVERITY,
-} from '../services/verdict-schema.js';
-import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.js';
-import { buildSubprocessEnv, validateAllowedPath } from '../security.js';
-import { createSuiteLog } from './support.js';
-import { readBusterEnvironment } from '../buster-environment.js';
+} from '../services/verdict-schema.ts';
+import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
+import { buildSubprocessEnv, validateAllowedPath } from '../security.ts';
+import { createSuiteLog } from './support.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;

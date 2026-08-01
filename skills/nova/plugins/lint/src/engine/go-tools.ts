@@ -2,11 +2,11 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { configuredTargetPaths, findFiles } from './discovery.js';
-import { requireToolExecution, safeExec } from './execution.js';
-import { tryParseJson } from './parsers.js';
-import { policyIncludesFile } from './policy.js';
-import { failConfigMissing, failParse, notApplicable } from './report.js';
+import { configuredTargetPaths, findFiles } from './discovery.ts';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { tryParseJson } from './parsers.ts';
+import { policyIncludesFile } from './policy.ts';
+import { failConfigMissing, failParse, notApplicable } from './report.ts';
 
 function commandOutput(result: any) {
   return [result.stdout, result.stderr].filter(Boolean).join('\n');

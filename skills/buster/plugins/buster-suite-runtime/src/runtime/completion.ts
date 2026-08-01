@@ -1,3 +1,3 @@
 // Repo-local common facade for the production /app/skills/pipeline surface.
 // Canonical implementation lives in skills/common/pipeline and materializes at this path in bundles.
-export * from '../../common/pipeline/completion.js';
+export * from '../../common/pipeline/completion.ts';

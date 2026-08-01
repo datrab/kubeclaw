@@ -7,32 +7,23 @@ import process from 'node:process';
 
 const pluginRoot = path.resolve(import.meta.dirname, '..');
 const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-observer-build-'));
-const stagedPlugin = path.join(temporaryRoot, 'plugin');
+const output = path.join(temporaryRoot, 'dist');
 const tscIndex = process.argv.indexOf('--tsc');
 const tsc = tscIndex >= 0 ? process.argv[tscIndex + 1] : 'tsc';
 let compilerExitCode = 0;
 
 try {
-  fs.cpSync(pluginRoot, stagedPlugin, {
-    recursive: true,
-    filter: (source) => !['dist', 'node_modules'].includes(path.basename(source)),
-  });
-  const dependencyRoot = path.join(pluginRoot, 'node_modules');
-  if (!fs.existsSync(dependencyRoot)) {
-    throw new Error('Observer build dependencies are not installed; run npm ci first');
-  }
-  fs.symlinkSync(dependencyRoot, path.join(stagedPlugin, 'node_modules'), 'junction');
   const command = tsc.endsWith('.js') ? process.execPath : tsc;
   const args = tsc.endsWith('.js')
-    ? [tsc, '-p', path.join(stagedPlugin, 'tsconfig.build.json')]
-    : ['-p', path.join(stagedPlugin, 'tsconfig.build.json')];
-  const result = spawnSync(command, args, { stdio: 'inherit' });
+    ? [tsc, '-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output]
+    : ['-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output];
+  const result = spawnSync(command, args, { cwd: pluginRoot, stdio: 'inherit' });
   if (result.error) throw result.error;
   compilerExitCode = result.status ?? 1;
 
   if (compilerExitCode === 0) {
     fs.rmSync(path.join(pluginRoot, 'dist'), { recursive: true, force: true });
-    fs.cpSync(path.join(stagedPlugin, 'dist'), path.join(pluginRoot, 'dist'), { recursive: true });
+    fs.cpSync(output, path.join(pluginRoot, 'dist'), { recursive: true });
   }
 } finally {
   fs.rmSync(temporaryRoot, { recursive: true, force: true });

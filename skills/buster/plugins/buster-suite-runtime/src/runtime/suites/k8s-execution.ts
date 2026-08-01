@@ -1,13 +1,13 @@
-import { selectTruthyValue } from '../optional-absence.js';
-import { buildAndPushImage, copyAndPushImage } from '../services/buildkit.js';
-import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.js';
-import { withServicePortForward } from './k8s-port-forward.js';
-import { previewCredentialsRefAuthority, previewExposureHostname, finalPreviewLeaseStatus, makeCheck, errorOutput, trimOut } from './k8s-base.js';
-import type { AnyRecord, NamespaceLeaseStatus } from './k8s-base.js';
-import { readTestCredentials, requestNamespaceLease, runNamespaceControllerPreflight, verifyCopiedSecrets, waitForNamespaceLeaseReady, waitForPreviewUrl } from './k8s-lease.js';
-import { applyManifests, getPodStatus, retryHttpHealthCheck, retryHttpTextCheck, shouldUsePortForwardHealthCheck, waitForPods } from './k8s-runtime.js';
-import type { K8sPlan } from './k8s-plan.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { buildAndPushImage, copyAndPushImage } from '../services/buildkit.ts';
+import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
+import { withServicePortForward } from './k8s-port-forward.ts';
+import { previewCredentialsRefAuthority, previewExposureHostname, finalPreviewLeaseStatus, makeCheck, errorOutput, trimOut } from './k8s-base.ts';
+import type { AnyRecord, NamespaceLeaseStatus } from './k8s-base.ts';
+import { readTestCredentials, requestNamespaceLease, runNamespaceControllerPreflight, verifyCopiedSecrets, waitForNamespaceLeaseReady, waitForPreviewUrl } from './k8s-lease.ts';
+import { applyManifests, getPodStatus, retryHttpHealthCheck, retryHttpTextCheck, shouldUsePortForwardHealthCheck, waitForPods } from './k8s-runtime.ts';
+import type { K8sPlan } from './k8s-plan.ts';
 
 interface ExecutionState {
   plan: K8sPlan; leaseStatus: NamespaceLeaseStatus | null; previewLeaseStatus: NamespaceLeaseStatus | null;

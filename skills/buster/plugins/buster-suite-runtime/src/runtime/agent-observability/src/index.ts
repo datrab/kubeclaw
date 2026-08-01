@@ -1,1 +1,1 @@
-export * from '../../../../common/pipeline/agent-observability/src/index.js';
+export * from '../../../../common/pipeline/agent-observability/src/index.ts';

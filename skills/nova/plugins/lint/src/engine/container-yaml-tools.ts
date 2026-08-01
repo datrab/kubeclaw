@@ -1,13 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-import { requireToolExecution, safeExec } from './execution.js';
-import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.js';
-import { renderChart } from './helm-render.js';
-import { tryParseJson } from './parsers.js';
-import { failParse } from './report.js';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.ts';
+import { renderChart } from './helm-render.ts';
+import { tryParseJson } from './parsers.ts';
+import { failParse } from './report.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
 function jsonResourceItems(data: any) {
   if (Array.isArray(data)) return data;
   return [];

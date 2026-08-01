@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-import { selectDefinedValue } from '../optional-absence.js';
-import { createFinding, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { Finding, SuiteStatus } from '../services/verdict-schema.js';
-import { takeScreenshotBatch } from '../tools/screenshot.js';
-import type { ScreenshotBatchTarget, ScreenshotResult } from '../tools/screenshot.js';
-import { suiteErrorMessage as errorMessage, suiteNonEmptyString as nonEmptyString } from './support.js';
-import { compareImages } from './visual-reg-image.js';
+import { selectDefinedValue } from '../optional-absence.ts';
+import { createFinding, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { Finding, SuiteStatus } from '../services/verdict-schema.ts';
+import { takeScreenshotBatch } from '../tools/screenshot.ts';
+import type { ScreenshotBatchTarget, ScreenshotResult } from '../tools/screenshot.ts';
+import { suiteErrorMessage as errorMessage, suiteNonEmptyString as nonEmptyString } from './support.ts';
+import { compareImages } from './visual-reg-image.ts';
 
 type AnyRecord = Record<string, any>;
 type Log = (message: string) => void;

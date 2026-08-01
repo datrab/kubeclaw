@@ -1,8 +1,8 @@
-import { spawnGatewaySession, resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.js';
-import { canonicalizeModelId } from './runtime.js';
-import { sleep } from '../timing.js';
-import type { TimeBudget } from '../timing.js';
-import { assertValidSessionLifecycleRecord } from '../services/acp-gateway-contract.js';
+import { spawnGatewaySession, resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.ts';
+import { canonicalizeModelId } from './runtime.ts';
+import { sleep } from '../timing.ts';
+import type { TimeBudget } from '../timing.ts';
+import { assertValidSessionLifecycleRecord } from '../services/acp-gateway-contract.ts';
 import {
   type AnyRecord,
   isCallerAbort,
@@ -13,12 +13,12 @@ import {
   requiredNonEmptyString,
   sessionErrorMessage,
   sessionLifecycleLog,
-} from './session-gateway-support.js';
+} from './session-gateway-support.ts';
 import {
   resolveActiveSessionStatePath,
   resolveSpawnTranscriptPath,
   setActiveSession,
-} from './session-state.js';
+} from './session-state.ts';
 
 type SpawnPolicy = {
   gateway: AnyRecord;

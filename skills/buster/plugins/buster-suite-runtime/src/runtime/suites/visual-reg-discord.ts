@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { Buffer } from 'buffer';
-import { STATUS } from '../services/verdict-schema.js';
-import type { SuiteStatus } from '../services/verdict-schema.js';
-import { deliverDiscordWebhookRequest } from '../services/discord.js';
+import { STATUS } from '../services/verdict-schema.ts';
+import type { SuiteStatus } from '../services/verdict-schema.ts';
+import { deliverDiscordWebhookRequest } from '../services/discord.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // KEEP_TYPED_POLICY: Discord media upload is optional, noncritical, and bounded
 // to Discord-friendly embed/file limits. Delivery failures must not replace the
 // visual-reg verdict authority.

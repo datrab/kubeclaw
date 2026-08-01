@@ -3,13 +3,13 @@ import {
   AGENT_OBSERVABILITY_CONTROL_STREAM,
   AGENT_OBSERVABILITY_PAYLOAD_STREAM,
   AGENT_OBSERVABILITY_PAYLOAD_TOO_LARGE_REASON,
-} from './constants.js';
+} from './constants.ts';
 import type {
   AgentObservabilityIngressEventType,
   AgentObservabilityIngressEventV1,
   AgentObservabilityPayloadSizeCheckV1,
   AgentObservabilityStreamKind,
-} from './types.js';
+} from './types.ts';
 
 const PAYLOAD_STREAM_EVENTS = Object.freeze([
   'openclaw.llm.input',

@@ -1,12 +1,12 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import type { TestCredentialSpec } from './k8s-credentials.js';
-import { execFileWithInput } from './k8s-command-env.js';
-import type { K8sCommandEnv } from './k8s-command-env.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import type { TestCredentialSpec } from './k8s-credentials.ts';
+import { execFileWithInput } from './k8s-command-env.ts';
+import type { K8sCommandEnv } from './k8s-command-env.ts';
 import {
   BUSTER_LEASE_API_GROUP, KUBECLAW_NS, assertKubectlOutputNotHtml, buildBusterNamespaceLease,
   errorMessage, errorOutput, execFileAsync, isNonEmptyString, parseKubectlJson, trimOut,
-} from './k8s-base.js';
-import type { AnyRecord, NamespaceLeaseStatus, SuiteLog } from './k8s-base.js';
+} from './k8s-base.ts';
+import type { AnyRecord, NamespaceLeaseStatus, SuiteLog } from './k8s-base.ts';
 
 async function assertCanUseBusterNamespaceLease(verb: string, env: K8sCommandEnv): Promise<void> {
   const resource = `busternamespaceleases.${BUSTER_LEASE_API_GROUP}`;

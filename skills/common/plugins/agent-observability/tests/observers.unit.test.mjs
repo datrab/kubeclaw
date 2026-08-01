@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const { projectAgentEvent } = await import(pathToFileURL(path.resolve('dist/observers.js')).href);
+const { projectAgentEvent } = await import(pathToFileURL(path.resolve('src/observers.ts')).href);
 const delivery = {
   deliveryId: 'delivery:1', attemptNumber: 2,
   event: {

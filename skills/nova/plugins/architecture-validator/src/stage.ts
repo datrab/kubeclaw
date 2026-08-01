@@ -1,6 +1,6 @@
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
-import { buildArchitectureRequest, type ArchitectureInput } from './protocol.js';
-import { parseArchitectureOutput } from './output.js';
+import { buildArchitectureRequest, type ArchitectureInput } from './protocol.ts';
+import { parseArchitectureOutput } from './output.ts';
 export async function execute(input: ArchitectureInput, context: PluginInvocationContext): Promise<StageResult> {
   const agent = context.contract.config.agent;
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('architecture validator agent is not configured');

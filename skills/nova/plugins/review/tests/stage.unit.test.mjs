@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-import { execute } from '../dist/stage.js';
+import { execute } from '../src/stage.ts';
 
 const pass = JSON.parse(fs.readFileSync(
   new URL('./fixtures/pass.json', import.meta.url),

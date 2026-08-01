@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const { observe } = await import(pathToFileURL(path.resolve('dist/observer.js')).href);
+const { observe } = await import(pathToFileURL(path.resolve('src/observer.ts')).href);
 const calls = [];
 const delivery = {
   schemaVersion: 'observer-delivery.v2',

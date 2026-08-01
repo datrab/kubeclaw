@@ -1,7 +1,7 @@
 import path from 'path';
 
-import { requireToolExecution, safeExec } from './execution.js';
-import { failParse } from './report.js';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { failParse } from './report.ts';
 
 function renderChart(ctx: any, chartDir: any) {
   const release = `lint-${path.basename(chartDir).toLowerCase().replace(/[^a-z0-9-]/g, '-')}`;

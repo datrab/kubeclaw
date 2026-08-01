@@ -1,13 +1,13 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { buildSubprocessEnv } from '../security.js';
-import type { K8sCommandEnv } from './k8s-command-env.js';
+import { buildSubprocessEnv } from '../security.ts';
+import type { K8sCommandEnv } from './k8s-command-env.ts';
 import {
   errorMessage, errorOutput, execFileAsync, isSuccessfulHttpStatus, parseKubectlJson,
   renderManifestForK8sSuiteWithStats, trimOut,
-} from './k8s-base.js';
-import type { AnyRecord, SuiteLog } from './k8s-base.js';
+} from './k8s-base.ts';
+import type { AnyRecord, SuiteLog } from './k8s-base.ts';
 
 export async function applyManifests(manifestPaths: string[], imageName: string, registryTag: string, targetNs: string, timeoutMs: number, log: SuiteLog, env: K8sCommandEnv): Promise<void> {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'k8s-suite-'));

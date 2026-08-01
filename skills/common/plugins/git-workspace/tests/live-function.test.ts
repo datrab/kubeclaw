@@ -43,7 +43,7 @@ gitWithIdentity(repository, ['commit', '-m', 'initial']);
 git(repository, ['remote', 'add', 'origin', remote]);
 git(repository, ['push', '-u', 'origin', 'main']);
 
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 function createAdapter(overrides = {}) {
   return activate({
     registration: {},

@@ -1,4 +1,4 @@
-import assert from'node:assert/strict';import{buildRequest,parseCaseStudy,requiredSections}from'../dist/protocol.js';
+import assert from'node:assert/strict';import{buildRequest,parseCaseStudy,requiredSections}from'../src/protocol.ts';
 const input={projectId:'api',runId:'run-1',task:'Write.',facts:[{label:'Tests',value:'10 passed'}]};
 assert.equal(buildRequest('writer',input).facts.length,1);
 const markdown=requiredSections.map((section)=>`## ${section}\n\nEvidence.`).join('\n\n');

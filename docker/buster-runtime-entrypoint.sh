@@ -47,6 +47,6 @@ done
 chgrp 1002 "$address"
 chmod 0660 "$address"
 
-printf '%s' "$worker_token" | node /app/buster-suite-runtime/dist/src/worker.js &
+printf '%s' "$worker_token" | node /app/buster-suite-runtime/src/worker.ts &
 worker_pid=$!
 wait "$worker_pid"

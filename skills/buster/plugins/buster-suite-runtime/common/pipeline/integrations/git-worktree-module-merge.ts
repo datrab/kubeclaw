@@ -1,8 +1,8 @@
-import { selectTruthyValue } from '../optional-absence.js';
-import { buildSubprocessEnv } from '../security.js';
-import { gitExec, invalidateHeadHash } from '../git-primitives.js';
-import { normalizeScopedGitPaths, resolveDefaultGitAddPaths } from './git-worktree-scope.js';
-import { restoreRuntimeStateStash } from './git-worktree-sync.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { buildSubprocessEnv } from '../security.ts';
+import { gitExec, invalidateHeadHash } from '../git-primitives.ts';
+import { normalizeScopedGitPaths, resolveDefaultGitAddPaths } from './git-worktree-scope.ts';
+import { restoreRuntimeStateStash } from './git-worktree-sync.ts';
 import {
   type AnyRecord,
   type GitCommitPushOptions,
@@ -19,7 +19,7 @@ import {
   partitionRuntimeStateEntries,
   textValue,
   uniqueTextValues,
-} from './git-worktree-support.js';
+} from './git-worktree-support.ts';
 
 function collectRuntimeOnlyStash(config: AnyRecord, label: string): RuntimeStashState {
   let entries = parseProjectScopedPorcelainEntries(config);

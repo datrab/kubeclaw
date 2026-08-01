@@ -14,6 +14,6 @@ assert.ok(
 
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 assert.deepEqual(manifest.stages[0].requiredCapabilities, ['command.execute', 'test.suite.execute', 'runtime.dispatch', 'artifacts.write']);
-assert.equal(manifest.stages[0].module, 'dist/stage.js');
+assert.equal(manifest.stages[0].module, 'src/stage.ts');
 
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.test-agent', suite: 'package-boundary' }));

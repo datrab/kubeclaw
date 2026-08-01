@@ -1,6 +1,6 @@
-import { sendDiscord } from './discord.js';
-import { buildSessionRateLimitDiscordFields } from './discord-fields.js';
-import { formatRateLimitEmbed } from './rate-limit-contract.js';
+import { sendDiscord } from './discord.ts';
+import { buildSessionRateLimitDiscordFields } from './discord-fields.ts';
+import { formatRateLimitEmbed } from './rate-limit-contract.ts';
 
 type LogFn = (label: string, message: string) => void;
 

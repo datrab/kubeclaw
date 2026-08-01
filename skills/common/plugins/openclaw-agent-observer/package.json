@@ -5,8 +5,12 @@
   "version": "0.0.0",
   "description": "OpenClaw hook observer that writes kubeclaw agent-observability Redis streams",
   "openclaw": {
-    "extensions": ["./src/index.ts"],
-    "runtimeExtensions": ["./dist/index.js"],
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "runtimeExtensions": [
+      "./dist/index.js"
+    ],
     "compat": {
       "pluginApi": ">=2026.5.7",
       "minGatewayVersion": "2026.5.7"
@@ -18,7 +22,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "node scripts/build.mjs",
-    "test": "npm run typecheck && node --experimental-strip-types tests/config.test.mjs && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+    "test": "npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {},
   "devDependencies": {

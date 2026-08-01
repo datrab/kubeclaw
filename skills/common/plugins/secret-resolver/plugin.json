@@ -1,1 +1,19 @@
-{"id":"kubeclaw.secret-resolver","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"secrets","module":"dist/adapter.js","export":"activate","providesCapabilities":["secrets.read"],"requiredCapabilities":[],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.secret-resolver",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "secrets",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "secrets.read"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

@@ -992,7 +992,7 @@ The inert `plugin.json` manifest uses one shape:
   "packageVersion": "1.0.0",
   "stages": [{
     "type": "acme.example-stage",
-    "module": "./dist/stages/example.js",
+    "module": "./src/stages/example.ts",
     "export": "execute",
     "requiredCapabilities": ["state.read"],
     "configSchema": "./schemas/example-config.json",
@@ -1237,7 +1237,6 @@ skills/
     plugins/
       delivery-lint/
         plugin.json
-        dist/
         src/
         schemas/
         tests/

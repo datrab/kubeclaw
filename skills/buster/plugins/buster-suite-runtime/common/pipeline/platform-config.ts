@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: {
   env: Record<string, string | undefined>;
 };

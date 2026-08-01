@@ -1,6 +1,6 @@
-import { selectTruthyValue } from '../optional-absence.js';
-import { createRunnerVerdict } from './verdict-schema.js';
-import { displayValue, firstNonEmptyString, truncatedDisplay } from './pipeline-display.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { createRunnerVerdict } from './verdict-schema.ts';
+import { displayValue, firstNonEmptyString, truncatedDisplay } from './pipeline-display.ts';
 
 type AnyRecord = Record<string, any>;
 const EMBED_FOOTER = { text: 'Buster Pipeline v2.0' };

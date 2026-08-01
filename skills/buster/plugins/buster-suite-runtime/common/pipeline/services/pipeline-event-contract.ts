@@ -1,10 +1,10 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { LocalEventEmitter } from './local-event-emitter.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { LocalEventEmitter } from './local-event-emitter.ts';
 import {
   isNonEmptyText as isNonEmptyString,
   isValueRecord as isPlainObject,
   normalizeOptionalString as normalizeValue,
-} from '../value-boundary.js';
+} from '../value-boundary.ts';
 // Shared in-process pipeline event contract.
 // Edge adapters emit normalized events; orchestration waits on this contract
 // instead of owning transport-specific polling loops.
@@ -13,23 +13,23 @@ type UnknownRecord = Record<string, any>;
 
 const NO_REMAINING_BUDGET_MS = 0;
 
-import { BudgetExhaustedError } from '../timing.js';
+import { BudgetExhaustedError } from '../timing.ts';
 import {
   validateAcpSessionStateEventPayload,
   validateAcpTranscriptDeltaEventPayload,
-} from './acp-gateway-contract.js';
-import { validateApprovalSignalEventPayload } from './approval-signal-event-contract.js';
-export { validateApprovalSignalEventPayload } from './approval-signal-event-contract.js';
+} from './acp-gateway-contract.ts';
+import { validateApprovalSignalEventPayload } from './approval-signal-event-contract.ts';
+export { validateApprovalSignalEventPayload } from './approval-signal-event-contract.ts';
 import {
   PipelineEventContractError,
   PipelineEventWaitAbortedError,
   PipelineEventWaitTimeoutError,
-} from './pipeline-event-errors.js';
+} from './pipeline-event-errors.ts';
 export {
   PipelineEventContractError,
   PipelineEventWaitAbortedError,
   PipelineEventWaitTimeoutError,
-} from './pipeline-event-errors.js';
+} from './pipeline-event-errors.ts';
 
 export const PIPELINE_EVENT_SCHEMA_VERSION = 'v1';
 

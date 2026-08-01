@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 // Common timing primitives for wait/retry loops.
 // No runtime authority or lifecycle semantics live here.
 

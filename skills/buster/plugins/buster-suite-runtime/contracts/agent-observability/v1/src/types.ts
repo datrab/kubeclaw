@@ -2,7 +2,7 @@ import type {
   AGENT_OBSERVABILITY_DIAGNOSTICS,
   AGENT_OBSERVABILITY_HOOKS,
   AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES,
-} from './constants.js';
+} from './constants.ts';
 
 export type AgentObservabilityIngressEventType = (typeof AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES)[number];
 export type AgentObservabilityHook = (typeof AGENT_OBSERVABILITY_HOOKS)[number];

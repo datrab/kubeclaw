@@ -188,7 +188,7 @@ git diff --check
 | Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | \`node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"\` |
 | Documentation surface links and generated docs expectations stay valid | \`npm run docs:check\` |
 | Restart, recovery, retry, crash, and resume behavior remain source-backed | \`node tests/verification/contracts/check-plugin-system-v2-phase7.mjs\`; \`node tests/verification/contracts/check-plugin-system-v2-resume.mjs\` |
-| The complete real model-backed workflow works | \`node --experimental-strip-types tests/verification/e2e/run-real-pipeline-e2e.mts --mode full\` |
+| The complete real model-backed workflow works | \`node tests/verification/e2e/run-real-pipeline-e2e.mts --mode full\` |
 | Proposed doc edits have no whitespace errors | \`git diff --check\` |
 | Referenced source paths/config keys exist | Use a targeted \`test -e\`/ \`rg -q\` sanity check for newly cited paths and keys before closing the docs pass. |
 

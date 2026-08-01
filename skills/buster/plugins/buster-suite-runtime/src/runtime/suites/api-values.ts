@@ -1,5 +1,5 @@
-import { selectTruthyValue } from '../optional-absence.js';
-import { suiteObjectOrEmpty as objectRecordOrEmpty } from './support.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { suiteObjectOrEmpty as objectRecordOrEmpty } from './support.ts';
 
 export type AnyRecord = Record<string, any>;
 export interface ApiTestResult { passed: boolean; failures: string[]; status: number | null; elapsed: number }

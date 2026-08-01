@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/run-discovery.js';
+export * from '../../common/pipeline/run-discovery.ts';

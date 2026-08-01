@@ -24,7 +24,7 @@ await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 const address = server.address();
 if (!address || typeof address === 'string') throw new Error('test server did not bind');
 const origin = `http://127.0.0.1:${address.port}`;
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
   config: {

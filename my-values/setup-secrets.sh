@@ -173,7 +173,7 @@ load_secret_key() {
   local out_var="$4"
   local encoded
 
-  if encoded=$(kubectl get secret "$name" -n "$namespace" -o "go-template={{ index .data \"$key\" }}" 2>&1); then
+  if encoded=$(kubectl get secret "$name" -n "$namespace" -o "go-template={{ with index .data \"$key\" }}{{ . }}{{ end }}" 2>&1); then
     if [[ -z $encoded ]]; then
       return 1
     fi
@@ -196,7 +196,7 @@ secret_key_present() {
   local key="$3"
   local encoded
 
-  if encoded=$(kubectl get secret "$name" -n "$namespace" -o "go-template={{ index .data \"$key\" }}" 2>&1); then
+  if encoded=$(kubectl get secret "$name" -n "$namespace" -o "go-template={{ with index .data \"$key\" }}{{ . }}{{ end }}" 2>&1); then
     [[ -n $encoded ]]
     return
   fi
@@ -989,51 +989,59 @@ setup_tailscale_oauth_secret() {
   log "Created: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}"
 }
 
-echo "Setting up secrets for namespace: $NAMESPACE"
-echo ""
+main() {
+  local tailscale_secret_list
 
-require_command kubectl
-create_namespace_if_needed "$NAMESPACE"
+  echo "Setting up secrets for namespace: $NAMESPACE"
+  echo ""
 
-if interactive_enabled; then
-  info "Interactive secret setup enabled. Existing Secrets are reused unless KUBECLAW_SECRETS_OVERWRITE=true."
-else
-  info "Interactive secret setup disabled. Using SOPS/source copies/env bootstrap only."
-fi
+  require_command kubectl
+  create_namespace_if_needed "$NAMESPACE"
 
-setup_shared_secret
-setup_redis_secret
+  if interactive_enabled; then
+    info "Interactive secret setup enabled. Existing Secrets are reused unless KUBECLAW_SECRETS_OVERWRITE=true."
+  else
+    info "Interactive secret setup disabled. Using SOPS/source copies/env bootstrap only."
+  fi
 
-if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
-  setup_postgresql_secret
-else
-  warn "Skipping optional postgresql-secrets by KUBECLAW_DEPLOY_POSTGRESQL=$KUBECLAW_DEPLOY_POSTGRESQL"
-fi
+  setup_shared_secret
+  setup_redis_secret
 
-if component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
-  setup_litellm_secret
-  rewrite_litellm_database_url_namespace
-  setup_google_sa_key
-else
-  warn "Skipping optional LiteLLM/Google secrets by KUBECLAW_DEPLOY_LITELLM=$KUBECLAW_DEPLOY_LITELLM"
-fi
+  if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
+    setup_postgresql_secret
+  else
+    warn "Skipping optional postgresql-secrets by KUBECLAW_DEPLOY_POSTGRESQL=$KUBECLAW_DEPLOY_POSTGRESQL"
+  fi
 
-setup_ghcr_secret
-setup_git_deploy_key git-deploy-key-nova Nova
-setup_git_deploy_key git-deploy-key-buster Buster
-setup_tailscale_oauth_secret
+  if component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
+    setup_litellm_secret
+    rewrite_litellm_database_url_namespace
+    setup_google_sa_key
+  else
+    warn "Skipping optional LiteLLM/Google secrets by KUBECLAW_DEPLOY_LITELLM=$KUBECLAW_DEPLOY_LITELLM"
+  fi
 
-echo ""
-log "Done. Secrets in $NAMESPACE:"
-kubectl get secrets -n "$NAMESPACE" --no-headers | awk '{print "  " $1}'
-echo ""
-info "Tailscale operator secrets in $TAILSCALE_OPERATOR_NAMESPACE:"
-if tailscale_secret_list=$(kubectl get secrets -n "$TAILSCALE_OPERATOR_NAMESPACE" --no-headers 2>&1); then
-  echo "$tailscale_secret_list" | awk '{print "  " $1}'
-elif is_not_found_error "$tailscale_secret_list"; then
-  warn "No Tailscale operator namespace found; operator install will be skipped unless the OAuth secret is created later."
-else
-  err "Failed to list Tailscale operator secrets in namespace '$TAILSCALE_OPERATOR_NAMESPACE'"
-  echo "$tailscale_secret_list" >&2
-  exit 1
+  setup_ghcr_secret
+  setup_git_deploy_key git-deploy-key-nova Nova
+  setup_git_deploy_key git-deploy-key-buster Buster
+  setup_tailscale_oauth_secret
+
+  echo ""
+  log "Done. Secrets in $NAMESPACE:"
+  kubectl get secrets -n "$NAMESPACE" --no-headers | awk '{print "  " $1}'
+  echo ""
+  info "Tailscale operator secrets in $TAILSCALE_OPERATOR_NAMESPACE:"
+  if tailscale_secret_list=$(kubectl get secrets -n "$TAILSCALE_OPERATOR_NAMESPACE" --no-headers 2>&1); then
+    echo "$tailscale_secret_list" | awk '{print "  " $1}'
+  elif is_not_found_error "$tailscale_secret_list"; then
+    warn "No Tailscale operator namespace found; operator install will be skipped unless the OAuth secret is created later."
+  else
+    err "Failed to list Tailscale operator secrets in namespace '$TAILSCALE_OPERATOR_NAMESPACE'"
+    echo "$tailscale_secret_list" >&2
+    return 1
+  fi
+}
+
+if [[ ${BASH_SOURCE[0]} == "$0" ]]; then
+  main "$@"
 fi

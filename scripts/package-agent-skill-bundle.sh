@@ -42,9 +42,10 @@ mkdir -p "$skills_root"
 cp -R "${role_source}/." "$skills_root/"
 cp -R "${common_source}/." "$skills_root/"
 # Package-local tests remain beside their plugin sources in Git, but are not
-# runtime payload. The role bundle carries manifests, schemas, docs, source and
-# built output only.
+# runtime payload. The role bundle carries manifests, schemas, docs, and
+# directly executable erasable TypeScript source only.
 find "${skills_root}/plugins" -mindepth 2 -maxdepth 2 -type d -name tests -prune -exec rm -rf {} + 2>/dev/null || true
+find "${skills_root}" -type d -name dist -prune -exec rm -rf {} +
 # The repository facade points at the neutral top-level contract. Runtime
 # bundles materialize that same source at the stable /app/skills facade path.
 rm -rf "${skills_root}/pipeline/agent-observability/src"

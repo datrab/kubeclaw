@@ -1,8 +1,8 @@
 import fs from 'fs';
-import { gitExec } from '../git-primitives.js';
-import { isRuntimeStatePath } from '../runtime-state-paths.js';
-import { parsePorcelainEntries } from './git-porcelain.js';
-import type { PorcelainEntry } from './git-porcelain.js';
+import { gitExec } from '../git-primitives.ts';
+import { isRuntimeStatePath } from '../runtime-state-paths.ts';
+import { parsePorcelainEntries } from './git-porcelain.ts';
+import type { PorcelainEntry } from './git-porcelain.ts';
 
 type AnyRecord = Record<string, any>;
 type StructuredGitError = Error & { code: string; gitSync: AnyRecord };

@@ -1,21 +1,21 @@
 import path from 'path';
-import { selectDefinedValue } from '../optional-absence.js';
-import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { buildCleanupKubernetesLabels, trackRuntimeResources } from '../services/resource-cleanup.js';
-import { buildPreviewCredentialCommand, normalizeTestCredentialSpecs } from './k8s-credentials.js';
-import type { TestCredentialSpec } from './k8s-credentials.js';
-import { buildK8sCommandEnv } from './k8s-command-env.js';
-import type { K8sCommandEnv } from './k8s-command-env.js';
-import { resolveRepoScopedPath } from './repo-paths.js';
-import { normalizeK8sConfig } from './k8s-config.js';
+import { selectDefinedValue } from '../optional-absence.ts';
+import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { buildCleanupKubernetesLabels, trackRuntimeResources } from '../services/resource-cleanup.ts';
+import { buildPreviewCredentialCommand, normalizeTestCredentialSpecs } from './k8s-credentials.ts';
+import type { TestCredentialSpec } from './k8s-credentials.ts';
+import { buildK8sCommandEnv } from './k8s-command-env.ts';
+import type { K8sCommandEnv } from './k8s-command-env.ts';
+import { resolveRepoScopedPath } from './repo-paths.ts';
+import { normalizeK8sConfig } from './k8s-config.ts';
 import {
   SAFE_NAMESPACE_PREFIXES, buildBusterNamespaceLease, buildK8sSuiteNamespace, k8sRepoRoot,
   makeCheck, previewCredentialSecretAuthority, resolveK8sLocalRegistry, sanitizeDnsLabel,
   shortId, validateK8sNamespacePrefix, validateK8sServicePort,
-} from './k8s-base.js';
-import type { AnyRecord, Check, K8sContext, SuiteLog } from './k8s-base.js';
-import { uniqueStrings } from './k8s-lease.js';
+} from './k8s-base.ts';
+import type { AnyRecord, Check, K8sContext, SuiteLog } from './k8s-base.ts';
+import { uniqueStrings } from './k8s-lease.ts';
 
 export interface K8sPlan {
   context: K8sContext; payload: AnyRecord; moduleId: string | undefined; startTime: number; log: SuiteLog;

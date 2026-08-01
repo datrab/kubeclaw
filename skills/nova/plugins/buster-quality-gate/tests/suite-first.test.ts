@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execute } from '../dist/stage.js';
+import { execute } from '../src/stage.ts';
 
 const input = {
   runId: 'run-1',

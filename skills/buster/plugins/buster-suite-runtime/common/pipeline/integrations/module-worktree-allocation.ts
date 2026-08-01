@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { gitExec } from '../git-primitives.js';
+import { gitExec } from '../git-primitives.ts';
 
 type AnyRecord = Record<string, any>;
 type StructuredGitError = Error & { code: string; gitSync: AnyRecord };

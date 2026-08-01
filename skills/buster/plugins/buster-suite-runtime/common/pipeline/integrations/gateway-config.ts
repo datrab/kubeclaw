@@ -1,4 +1,4 @@
-import { readCommonEnvironment } from '../runtime-environment.js';
+import { readCommonEnvironment } from '../runtime-environment.ts';
 
 export const LOCAL_DEVELOPMENT_GATEWAY_BASE_URL = 'http://127.0.0.1:18789';
 

@@ -1,23 +1,23 @@
 // Suite Runner — deterministic registry and public orchestration boundary.
-import a11ySuite from '../suites/a11y.js';
-import apiSuite from '../suites/api.js';
-import buildSuite from '../suites/build.js';
-import bundleSuite from '../suites/bundle.js';
-import e2eSuite from '../suites/e2e.js';
-import healthSuite from '../suites/health.js';
-import k8sSuite from '../suites/k8s.js';
-import manifestSuite from '../suites/manifest.js';
-import perfSuite from '../suites/perf.js';
-import securitySuite from '../suites/security.js';
-import tailscalePreviewSuite from '../suites/tailscale-preview.js';
-import unitSuite from '../suites/unit.js';
-import { runVisualReg } from '../suites/visual-reg.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { createSuiteRunnerValidationError } from './suite-runner-contracts.js';
-import type { SuiteContext, SuiteFunction, SuiteResult, SuiteRunnerOptions } from './suite-runner-contracts.js';
-import { resolveSuiteResultsDir } from './suite-runner-artifacts.js';
-import { runSuiteWithTimeout } from './suite-runner-execution.js';
-import { applyBuildRuntimePort, buildDetailedSuiteSummary, collectReadySuites as collectReady, executeSuites } from './suite-runner-graph.js';
+import a11ySuite from '../suites/a11y.ts';
+import apiSuite from '../suites/api.ts';
+import buildSuite from '../suites/build.ts';
+import bundleSuite from '../suites/bundle.ts';
+import e2eSuite from '../suites/e2e.ts';
+import healthSuite from '../suites/health.ts';
+import k8sSuite from '../suites/k8s.ts';
+import manifestSuite from '../suites/manifest.ts';
+import perfSuite from '../suites/perf.ts';
+import securitySuite from '../suites/security.ts';
+import tailscalePreviewSuite from '../suites/tailscale-preview.ts';
+import unitSuite from '../suites/unit.ts';
+import { runVisualReg } from '../suites/visual-reg.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { createSuiteRunnerValidationError } from './suite-runner-contracts.ts';
+import type { SuiteContext, SuiteFunction, SuiteResult, SuiteRunnerOptions } from './suite-runner-contracts.ts';
+import { resolveSuiteResultsDir } from './suite-runner-artifacts.ts';
+import { runSuiteWithTimeout } from './suite-runner-execution.ts';
+import { applyBuildRuntimePort, buildDetailedSuiteSummary, collectReadySuites as collectReady, executeSuites } from './suite-runner-graph.ts';
 
 const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
   a11y: a11ySuite, api: apiSuite, build: buildSuite, bundle: bundleSuite, e2e: e2eSuite,

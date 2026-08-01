@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 
 const COMPLETION_STATUSES = Object.freeze(['PASS', 'FAIL', 'BLOCKED', 'ERROR']);
 const COMPLETION_AUTHORITY_KINDS = Object.freeze([

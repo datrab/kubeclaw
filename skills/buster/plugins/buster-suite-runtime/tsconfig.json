@@ -1,18 +1,7 @@
 {
+  "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
-    "outDir": "dist",
-    "rootDir": ".",
-    "declaration": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@kubeclaw/plugin-sdk": ["../../../common/plugin-runtime/sdk/dist/index.d.ts"]
-    }
+    "rootDir": "."
   },
   "include": [
     "src/adapter.ts",

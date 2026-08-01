@@ -1,4 +1,4 @@
-import { StructuredOperationError, type OperationDiagnostics } from '../operation-result.js';
+import { StructuredOperationError, type OperationDiagnostics } from '../operation-result.ts';
 
 export type PipelineEventDiagnostics = OperationDiagnostics;
 

@@ -1,1 +1,23 @@
-{"id":"kubeclaw.buster-quality-gate","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"quality","type":"kubeclaw.test.quality-evaluation","module":"dist/stage.js","export":"execute","requiredCapabilities":["test.suite.execute","runtime.dispatch","artifacts.write"],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],"observers":[],"adapters":[]}
+{
+  "id": "kubeclaw.buster-quality-gate",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "quality",
+      "type": "kubeclaw.test.quality-evaluation",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "test.suite.execute",
+        "runtime.dispatch",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

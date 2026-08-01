@@ -1,1 +1,19 @@
-{"id":"kubeclaw.network-http","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"http","module":"dist/adapter.js","export":"activate","providesCapabilities":["network.http"],"requiredCapabilities":[],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.network-http",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "http",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "network.http"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

@@ -2,8 +2,8 @@ declare const process: {
   env: Record<string, string | undefined>;
 };
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { readBusterEnvironment } from '../buster-environment.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 function normalizeDiscordWebhookUrl(value: unknown): string | null {
   if (typeof value !== 'string') return null;

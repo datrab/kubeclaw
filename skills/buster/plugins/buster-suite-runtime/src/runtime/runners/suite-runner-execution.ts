@@ -1,11 +1,11 @@
-import { selectDefinedValue } from '../optional-absence.js';
-import { BusterCapabilityDeniedError, assertBusterCapabilities, requiredCapabilitiesForSuite } from '../services/capabilities.js';
-import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { emitPluginEvent } from '../services/telemetry.js';
-import { emitSuiteCompleted } from './suite-runner-telemetry.js';
-import { createSuiteRunnerValidationError } from './suite-runner-contracts.js';
-import type { CapabilityDeniedLike, SuiteContext, SuiteFunction, SuiteResult } from './suite-runner-contracts.js';
+import { selectDefinedValue } from '../optional-absence.ts';
+import { BusterCapabilityDeniedError, assertBusterCapabilities, requiredCapabilitiesForSuite } from '../services/capabilities.ts';
+import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { emitPluginEvent } from '../services/telemetry.ts';
+import { emitSuiteCompleted } from './suite-runner-telemetry.ts';
+import { createSuiteRunnerValidationError } from './suite-runner-contracts.ts';
+import type { CapabilityDeniedLike, SuiteContext, SuiteFunction, SuiteResult } from './suite-runner-contracts.ts';
 
 function stringArray(value: unknown): string[] { return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : []; }
 

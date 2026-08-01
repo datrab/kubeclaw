@@ -59,7 +59,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         response = await fetch(url, {
           method,
           headers,
-          body,
+          ...(body === undefined ? {} : { body }),
           signal: AbortSignal.any([signal, timeout]),
           redirect: 'manual',
         });

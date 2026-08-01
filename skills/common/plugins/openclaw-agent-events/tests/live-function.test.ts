@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const { activateWithSdk, normalizeAgentEvent } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activateWithSdk, normalizeAgentEvent } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
 assert.equal(normalizeAgentEvent({}), undefined);

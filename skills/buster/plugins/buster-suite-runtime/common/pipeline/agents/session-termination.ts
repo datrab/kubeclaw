@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type AnyRecord = Record<string, any>;
 type AnyFunction = (...args: any[]) => any;
 
@@ -6,10 +6,10 @@ import {
   clearActiveSession,
   getActiveSession,
   killSession,
-} from './lifecycle.js';
+} from './lifecycle.ts';
 import {
   assertValidSessionTerminationResult,
-} from '../services/acp-gateway-contract.js';
+} from '../services/acp-gateway-contract.ts';
 
 const GRACE_EXPIRED = Symbol('sessionTerminationGraceExpired');
 

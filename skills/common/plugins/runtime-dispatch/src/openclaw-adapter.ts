@@ -1,5 +1,5 @@
 import type { AdapterActivationContext, AdapterInstance, EffectRequest } from '@kubeclaw/plugin-sdk';
-import { dispatchOpenClaw, type OpenClawTarget } from './openclaw.js';
+import { dispatchOpenClaw, type OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
 

@@ -38,7 +38,7 @@ function faultSurfaceAllowed(surface, allowedSurfaces) {
 
 const { sourceRoot } = parseSourceRootArgs();
 const knownMutationChannels = new Set([
-  'buster-simulator',
+  'buster-worker-api',
   'cleanup-blocker',
   'config',
   'crash-controller',

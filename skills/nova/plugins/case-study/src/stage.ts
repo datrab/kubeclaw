@@ -1,5 +1,5 @@
 import type{ArtifactRef,PluginInvocationContext,StageResult}from'@kubeclaw/plugin-sdk';
-import{buildRequest,parseCaseStudy,type CaseStudyInput}from'./protocol.js';
+import{buildRequest,parseCaseStudy,type CaseStudyInput}from'./protocol.ts';
 export async function execute(input:CaseStudyInput,context:PluginInvocationContext):Promise<StageResult>{
   const agent=context.contract.config.agent;if(typeof agent!=='string'||!agent.trim())throw new Error('case study agent is not configured');
   let study;

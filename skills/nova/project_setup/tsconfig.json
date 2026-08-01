@@ -1,22 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true,
-    "allowImportingTsExtensions": true,
-    "erasableSyntaxOnly": true,
-    "verbatimModuleSyntax": true,
-    "rewriteRelativeImportExtensions": true,
-    "skipLibCheck": true,
-    "noEmit": true
-  },
+  "extends": "../../../tsconfig.base.json",
   "include": [
     "tools/**/*.ts",
     "types/**/*.d.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  }
 }

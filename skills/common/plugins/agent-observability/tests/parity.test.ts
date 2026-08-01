@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const { projectAgentEvent } = await import(pathToFileURL(path.resolve('dist/observers.js')).href);
+const { projectAgentEvent } = await import(pathToFileURL(path.resolve('src/observers.ts')).href);
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 const subscriptions = new Set(manifest.observers.flatMap((entry) => entry.subscriptions));
 for (const [index, type] of [...subscriptions].entries()) {

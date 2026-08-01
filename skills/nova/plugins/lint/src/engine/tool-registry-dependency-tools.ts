@@ -1,22 +1,22 @@
 import path from 'path';
 
-import { requireToolExecution, safeExec } from './execution.js';
-import { configuredTargetPaths } from './discovery.js';
-import { tryParseJson } from './parsers.js';
-import { failParse } from './report.js';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { configuredTargetPaths } from './discovery.ts';
+import { tryParseJson } from './parsers.ts';
+import { failParse } from './report.ts';
 import {
   objectRecord as recordValue,
   selectPresentValue,
   textValue,
-} from '../support/value-boundary.js';
-import { selectTruthyValue } from '../support/optional-absence.js';
+} from '../support/value-boundary.ts';
+import { selectTruthyValue } from '../support/optional-absence.ts';
 import {
   isJavaScriptOrTypeScriptProject,
   LINT_VULNERABILITY_FOUND,
   npmAuditSeverity,
   registerTool,
   requireString,
-} from './tool-registry-core.js';
+} from './tool-registry-core.ts';
 
 // ── npm audit (Dependency security) ──
 registerTool({

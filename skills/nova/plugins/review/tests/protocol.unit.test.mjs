@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {
   buildReviewDispatchRequest,
   buildReviewTask,
-} from '../dist/protocol.js';
+} from '../src/protocol.ts';
 
 const evidence = JSON.parse(fs.readFileSync(
   new URL('./fixtures/pass.json', import.meta.url),

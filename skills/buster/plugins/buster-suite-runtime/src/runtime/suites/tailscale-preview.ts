@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Suite: tailscale-preview — final-preview exposure and served-content evidence.
 //
 // KEEP_TYPED_POLICY: preview reachability uses an explicit source contract:
@@ -8,9 +8,9 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
 // DELETE_LEGACY: this suite does not infer preview URLs from unrelated fields.
 
 import dns from 'dns/promises';
-import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { createSuiteLog } from './support.js';
+import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { createSuiteLog } from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type Check = { name: string; passed: boolean; detail: string };

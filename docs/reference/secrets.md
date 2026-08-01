@@ -43,8 +43,8 @@ Generated from: `my-values/setup-secrets.sh`
 | `litellm-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `LITELLM_MASTER_KEY`, `DATABASE_URL` | setup_litellm_secret, line 702 |
 | `google-sa-key` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `credentials.json` | setup_google_sa_key, line 801 |
 | `ghcr-secret` | `NAMESPACE` | always when imagePullSecrets reference GHCR | `.dockerconfigjson` | setup_ghcr_secret, line 836 |
-| `git-deploy-key-nova` | `NAMESPACE` | Nova git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-nova Nova, line 1022 |
-| `git-deploy-key-buster` | `NAMESPACE` | Buster git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-buster Buster, line 1023 |
+| `git-deploy-key-nova` | `NAMESPACE` | Nova git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-nova Nova, line 1025 |
+| `git-deploy-key-buster` | `NAMESPACE` | Buster git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-buster Buster, line 1026 |
 | `operator-oauth` | `TAILSCALE_OPERATOR_NAMESPACE` | TAILSCALE_OPERATOR_ENABLED is enabled | `client_id`, `client_secret` | setup_tailscale_oauth_secret, line 923 |
 
 
@@ -69,7 +69,7 @@ kubectl -n tailscale get secret operator-oauth
 | Secret group | Created or reused by | Consumed by | Failure signal |
 | --- | --- | --- | --- |
 | shared OpenClaw credentials | `my-values/setup-secrets.sh`; chart values using `openclaw-shared-secrets` | gateway config, agent env, Discord/webhook wiring, provider credentials | missing key warning, gateway auth failure, Discord/provider credential failure |
-| Redis | `my-values/setup-secrets.sh`; `my-values/infra/redis-values.yaml` | agent and Buster Redis clients | Redis auth/connection failure, Buster task queue idle with connection errors |
+| Redis | `my-values/setup-secrets.sh`; `my-values/infra/redis-values.yaml` | optional telemetry transport and agent-observability ingestion | Redis auth/connection failure or delayed live telemetry; pipeline and Buster job authority remain independent |
 | PostgreSQL and LiteLLM | `my-values/setup-secrets.sh`; LiteLLM infra manifests | optional PostgreSQL chart and LiteLLM deployment | LiteLLM rollout failure, invalid `DATABASE_URL`, missing `LITELLM_MASTER_KEY` |
 | GHCR and Git deploy keys | `my-values/setup-secrets.sh`; agent values | image pull and init-container Git clone | `ImagePullBackOff`, missing `/secrets/ssh/id_rsa`, Git clone failure |
 | Tailscale OAuth | `my-values/setup-secrets.sh`; Tailscale operator values | official Tailscale Kubernetes Operator | missing `IngressClass/tailscale`, no final-preview URL, operator auth errors |

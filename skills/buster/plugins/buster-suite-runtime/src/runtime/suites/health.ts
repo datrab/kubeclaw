@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: health — HTTP Health Check
 // ═══════════════════════════════════════════════════════════════
@@ -13,17 +13,17 @@ import {
   createFinding,
   STATUS,
   SEVERITY,
-} from '../services/verdict-schema.js';
-import type { Finding, SuiteVerdict } from '../services/verdict-schema.js';
-import { sleep } from '../timing.js';
-import { buildLocalhostSuiteUrl } from './url-paths.js';
+} from '../services/verdict-schema.ts';
+import type { Finding, SuiteVerdict } from '../services/verdict-schema.ts';
+import { sleep } from '../timing.ts';
+import { buildLocalhostSuiteUrl } from './url-paths.ts';
 import {
   createSuiteLog,
   suiteErrorMessage as errorMessage,
   suiteNonEmptyString as nonEmptyString,
   suiteObject as objectRecord,
   suiteObjectOrEmpty as objectRecordOrEmpty,
-} from './support.js';
+} from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;

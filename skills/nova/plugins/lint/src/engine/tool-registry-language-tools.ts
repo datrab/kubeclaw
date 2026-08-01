@@ -1,13 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-import { requireToolExecution, safeExec } from './execution.js';
-import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.js';
-import { tryParseJson } from './parsers.js';
-import { failConfigMissing, failParse, notApplicable } from './report.js';
-import { log } from './output.js';
-import { arrayValue, selectPresentValue, textValue } from '../support/value-boundary.js';
-import { selectTruthyValue } from '../support/optional-absence.js';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.ts';
+import { tryParseJson } from './parsers.ts';
+import { failConfigMissing, failParse, notApplicable } from './report.ts';
+import { log } from './output.ts';
+import { arrayValue, selectPresentValue, textValue } from '../support/value-boundary.ts';
+import { selectTruthyValue } from '../support/optional-absence.ts';
 import {
   affectedTypeScriptConfigs,
   eslintFindingSeed,
@@ -17,7 +17,7 @@ import {
   requireString,
   TOOL_OUTPUT_PREVIEW_MISSING,
   uniqueTypeScriptFindings,
-} from './tool-registry-core.js';
+} from './tool-registry-core.ts';
 
 // ── tsc (TypeScript type checking) ──
 registerTool({

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc --noEmit -p tsconfig.json"
   },
   "exports": {
     ".": "./src/index.ts",

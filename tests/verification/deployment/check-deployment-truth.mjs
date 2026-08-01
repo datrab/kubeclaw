@@ -336,6 +336,41 @@ if (helm.status === 0 && kubeconform.status === 0) {
   );
 }
 
+const secretProbe = spawnSync(
+  'bash',
+  [
+    '-c',
+    `source "$SOURCE_ROOT/my-values/setup-secrets.sh"
+kubectl() {
+  if [[ "$*" == *"with index"* && "$*" == *"present"* ]]; then
+    printf 'c2VjcmV0'
+  elif [[ "$*" == *"with index"* && "$*" == *"busterV2Token"* ]]; then
+    printf ''
+  else
+    printf '<no value>'
+  fi
+}
+if secret_key_present test shared busterV2Token; then
+  echo 'missing busterV2Token was reported present' >&2
+  exit 1
+fi
+mapfile -t missing < <(secret_missing_keys test shared present busterV2Token)
+[[ \${#missing[@]} == 1 && \${missing[0]} == busterV2Token ]]
+load_secret_key test shared present decoded
+[[ $decoded == secret ]]`,
+  ],
+  {
+    cwd: sourceRoot,
+    encoding: 'utf8',
+    env: { ...process.env, SOURCE_ROOT: sourceRoot },
+  },
+);
+assert.equal(
+  secretProbe.status,
+  0,
+  `Secret key reconciliation probe failed:\n${secretProbe.stdout}\n${secretProbe.stderr}`,
+);
+
 console.log(
   JSON.stringify({
     ok: true,

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { VERSION } from './constants.js';
+import { VERSION } from './constants.ts';
 
 const lintOutputState: { logPath: string | null } = { logPath: null }; // Set via --log-path CLI arg — dual-write execution trace
 

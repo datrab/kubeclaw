@@ -151,16 +151,19 @@ export async function observe(delivery: ObserverDelivery, context: PluginInvocat
   if (Array.isArray(suppressed) && suppressed.includes(delivery.event.type)) return;
   const maximum = context.contract.config.maxMessageChars;
   const stageLabels = context.contract.config.stageLabels;
+  const pipelineLabel = configuredText(context.contract.config, 'pipelineLabel', 256);
+  const modelLabel = configuredText(context.contract.config, 'modelLabel', 256);
+  const configuredStageLabels = stageLabels && typeof stageLabels === 'object' && !Array.isArray(stageLabels)
+    ? stageLabels as Readonly<Record<string, unknown>>
+    : undefined;
   await publish(
     lifecycleNotification(
       delivery,
       typeof maximum === 'number' ? maximum : 8_192,
       {
-        pipelineLabel: configuredText(context.contract.config, 'pipelineLabel', 256),
-        modelLabel: configuredText(context.contract.config, 'modelLabel', 256),
-        stageLabels: stageLabels && typeof stageLabels === 'object' && !Array.isArray(stageLabels)
-          ? stageLabels as Readonly<Record<string, unknown>>
-          : undefined,
+        ...(pipelineLabel === undefined ? {} : { pipelineLabel }),
+        ...(modelLabel === undefined ? {} : { modelLabel }),
+        ...(configuredStageLabels === undefined ? {} : { stageLabels: configuredStageLabels }),
       },
     ),
     context,

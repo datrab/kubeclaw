@@ -1,8 +1,8 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { getGatewaySessionStatus, resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.js';
-import { ACP_MONITOR_REASONS, parseSessionState, isSessionTerminalState, isStoppedSessionState, isUnreachableSessionState } from './session-semantics.js';
-import { getTrackedAgent } from './tracked-agents.js';
-import { assertValidAcpMonitorState } from '../services/acp-gateway-contract.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { getGatewaySessionStatus, resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.ts';
+import { ACP_MONITOR_REASONS, parseSessionState, isSessionTerminalState, isStoppedSessionState, isUnreachableSessionState } from './session-semantics.ts';
+import { getTrackedAgent } from './tracked-agents.ts';
+import { assertValidAcpMonitorState } from '../services/acp-gateway-contract.ts';
 import {
   assertGatewayStatusPolicy,
   getAcpMonitorConfig,
@@ -12,7 +12,7 @@ import {
   readAcpTranscriptState,
   readGatewayStatusPolicy,
   transcriptShowsProgress,
-} from './acp-monitor-transcript.js';
+} from './acp-monitor-transcript.ts';
 type AnyRecord = Record<string, any>;
 
 export async function fetchSessionStatus(sessionKey: any, gatewayUrl: any, gatewayToken: any, opts: AnyRecord = {}) {

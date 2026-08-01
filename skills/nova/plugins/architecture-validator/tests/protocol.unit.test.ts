@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const { buildArchitectureRequest } = await import(pathToFileURL(path.resolve('dist/protocol.js')).href);
-const { parseArchitectureOutput } = await import(pathToFileURL(path.resolve('dist/output.js')).href);
+const { buildArchitectureRequest } = await import(pathToFileURL(path.resolve('src/protocol.ts')).href);
+const { parseArchitectureOutput } = await import(pathToFileURL(path.resolve('src/output.ts')).href);
 const request = buildArchitectureRequest('architect', { task: 'validate' }, null);
 assert.equal(request.protocol, 'kubeclaw.architecture-validation.v2');
 assert.match(request.task, /Judge only software architecture/);

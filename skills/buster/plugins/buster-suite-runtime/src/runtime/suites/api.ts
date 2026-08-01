@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: api — API Test Runner (JSON-Spec)
 // ═══════════════════════════════════════════════════════════════
@@ -20,18 +20,18 @@ import {
   createFinding,
   STATUS,
   SEVERITY,
-} from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.js';
+} from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.ts';
 import {
   createSuiteLog,
   suiteErrorMessage as errorMessage,
   suiteNonEmptyString as nonEmptyString,
   suiteObject as objectRecord,
   suiteObjectOrEmpty as objectRecordOrEmpty,
-} from './support.js';
-import type { AnyRecord } from './api-values.js';
-import { buildApiVerdict, executeApiTests } from './api-runner.js';
+} from './support.ts';
+import type { AnyRecord } from './api-values.ts';
+import { buildApiVerdict, executeApiTests } from './api-runner.ts';
 
 type LogSink = (entry: Record<string, unknown>) => void;
 

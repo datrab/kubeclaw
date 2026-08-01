@@ -1,1 +1,33 @@
-{"id":"kubeclaw.redis-transport","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"publisher","module":"dist/adapter.js","export":"activatePublisher","providesCapabilities":["transport.publish"],"requiredCapabilities":["secrets.read"],"configSchema":"schemas/config.schema.json"},{"id":"telemetry","module":"dist/adapter.js","export":"activateTelemetry","providesCapabilities":["telemetry.emit"],"requiredCapabilities":["secrets.read"],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.redis-transport",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "publisher",
+      "module": "src/adapter.ts",
+      "export": "activatePublisher",
+      "providesCapabilities": [
+        "transport.publish"
+      ],
+      "requiredCapabilities": [
+        "secrets.read"
+      ],
+      "configSchema": "schemas/config.schema.json"
+    },
+    {
+      "id": "telemetry",
+      "module": "src/adapter.ts",
+      "export": "activateTelemetry",
+      "providesCapabilities": [
+        "telemetry.emit"
+      ],
+      "requiredCapabilities": [
+        "secrets.read"
+      ],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import type { AgentObservabilityTelemetryMappingV1 } from './types.js';
+import type { AgentObservabilityTelemetryMappingV1 } from './types.ts';
 
 export const AGENT_OBSERVABILITY_TELEMETRY_MAPPINGS = Object.freeze([
   {

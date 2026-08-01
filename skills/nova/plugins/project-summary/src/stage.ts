@@ -1,5 +1,5 @@
 import type {ArtifactRef,PluginInvocationContext,StageResult} from '@kubeclaw/plugin-sdk';
-import {buildSummary,type SummaryInput} from './summary.js';
+import {buildSummary,type SummaryInput} from './summary.ts';
 export async function execute(input:SummaryInput,context:PluginInvocationContext):Promise<StageResult>{
   let summary;
   try{summary=buildSummary(input);}catch(error){

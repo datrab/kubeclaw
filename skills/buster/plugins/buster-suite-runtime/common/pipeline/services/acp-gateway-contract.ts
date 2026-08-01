@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 type UnknownRecord = Record<string, any>;
 
 function isPlainObject(value: unknown): value is UnknownRecord {
@@ -45,7 +45,7 @@ export {
   normalizeGatewayInvokeResult,
   validateGatewayInvokeError,
   validateGatewayInvokeResult,
-} from './gateway-invoke-contract.js';
+} from './gateway-invoke-contract.ts';
 
 export function validateAcpTranscriptState(state: unknown = {}): string[] {
   const errors: string[] = [];

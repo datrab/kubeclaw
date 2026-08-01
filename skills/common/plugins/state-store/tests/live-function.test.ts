@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-state-store-'));
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
   config: { root, maxEntryBytes: 512 },

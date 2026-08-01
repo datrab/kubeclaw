@@ -246,7 +246,6 @@ try {
     ],
   });
   const execution = spawnSync(process.execPath, [
-    '--experimental-strip-types',
     path.join(repositoryRoot, 'skills', 'nova', 'pipeline.ts'),
     '--platform', platformPath,
     '--pipeline', pipelinePath,

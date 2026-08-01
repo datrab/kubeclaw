@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Buster Logger — Structured JSON dual-write (stdout + JSONL file)
 // ═══════════════════════════════════════════════════════════════
@@ -17,7 +17,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
 
 import { appendFileSync, mkdirSync } from 'fs';
 import { dirname } from 'path';
-import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError, sanitizeNonBlockingErrorDetail } from '../noncritical-reporting.js';
+import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError, sanitizeNonBlockingErrorDetail } from '../noncritical-reporting.ts';
 
 declare const process: {
   stderr: { write(text: string): void };

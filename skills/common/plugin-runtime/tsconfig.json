@@ -1,18 +1,12 @@
 {
+  "extends": "../../../tsconfig.base.json",
+  "include": [
+    "core/**/*.ts",
+    "sdk/**/*.ts",
+    "cli.ts"
+  ],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
     "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "erasableSyntaxOnly": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true
-  },
-  "include": ["core/**/*.ts", "sdk/**/*.ts", "cli.ts"]
+    "noUncheckedIndexedAccess": true
+  }
 }

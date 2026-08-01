@@ -609,7 +609,7 @@ const MUTATION_CHANNELS_BY_SURFACE = Object.freeze({
   baseline: Object.freeze(['operator-controller']),
   'architecture-validator': Object.freeze(['progress']),
   forge: Object.freeze(['progress', 'malformed-output']),
-  'module-buster': Object.freeze(['progress', 'buster-simulator', 'fixture-contract']),
+  'module-buster': Object.freeze(['progress', 'buster-worker-api', 'fixture-contract']),
   'module-review': Object.freeze(['progress', 'malformed-output']),
   'operator-approval': Object.freeze(['progress', 'operator-controller']),
   'pipeline-review': Object.freeze(['progress', 'config']),

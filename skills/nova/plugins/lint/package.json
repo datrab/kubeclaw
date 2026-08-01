@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node --experimental-strip-types tests/adapter-boundary.test.mjs && node --experimental-strip-types tests/live-function.test.ts"
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/live-function.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
   }
 }

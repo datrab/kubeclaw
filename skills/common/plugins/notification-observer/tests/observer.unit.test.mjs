@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const { lifecycleNotification, previewNotification } = await import(pathToFileURL(path.resolve('dist/observer.js')).href);
+const { lifecycleNotification, previewNotification } = await import(pathToFileURL(path.resolve('src/observer.ts')).href);
 const base = {
   event: {
     eventId: 'event:1', type: 'run.failed', identity: { runId: 'run:1', stageId: 'stage:1' },

@@ -1,6 +1,6 @@
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import { buildSubprocessEnv } from '../security.js';
+import { buildSubprocessEnv } from '../security.ts';
 import {
   type AnyRecord,
   isCallerAbort,
@@ -8,7 +8,7 @@ import {
   resolveAbortSignal,
   sessionLifecycleLog,
   throwIfCallerAbort,
-} from './session-gateway-support.js';
+} from './session-gateway-support.ts';
 
 type ExecFileAsync = (command: string, args: string[], options?: Record<string, unknown>) => Promise<unknown>;
 const execFileAsync = promisify(execFile) as ExecFileAsync;

@@ -1,1 +1,1 @@
-export * from '../../../common/pipeline/agents/session-termination.js';
+export * from '../../../common/pipeline/agents/session-termination.ts';

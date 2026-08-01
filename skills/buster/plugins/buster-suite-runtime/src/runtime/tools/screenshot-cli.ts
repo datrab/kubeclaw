@@ -1,6 +1,6 @@
 import path from 'path';
 import process from 'process';
-import { parseCliArgs } from '../cli-args.js';
+import { parseCliArgs } from '../cli-args.ts';
 
 type ScreenshotFn = (target: string, output: string, options: Record<string, unknown>) => Promise<{ ok: boolean }>;
 type BaselineFn = (html: string, output: string, options: Record<string, unknown>) => Promise<{ ok: boolean }>;

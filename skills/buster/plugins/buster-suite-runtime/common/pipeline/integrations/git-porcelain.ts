@@ -1,4 +1,4 @@
-import { gitExec } from '../git-primitives.js';
+import { gitExec } from '../git-primitives.ts';
 
 export type PorcelainEntry = {
   raw: string;

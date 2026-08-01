@@ -1,4 +1,4 @@
-import type { SuiteVerdict } from '../services/verdict-schema.js';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
 
 export type SuiteFunction = (context: SuiteContext) => Promise<SuiteVerdict> | SuiteVerdict;
 type LogSink = (entry: Record<string, unknown>) => void;

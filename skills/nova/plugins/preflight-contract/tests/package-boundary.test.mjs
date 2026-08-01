@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 
-for (const directory of ['src', 'dist']) {
+for (const directory of ['src']) {
   for (const name of fs.readdirSync(path.resolve(directory), { recursive: true })) {
     const file = path.resolve(directory, name);
     if (!fs.statSync(file).isFile() || !/\.[cm]?[jt]s$/.test(file)) continue;

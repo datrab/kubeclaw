@@ -38,5 +38,5 @@
       }
     ]
   },
-  "operator_interpretation": "Buster owns the active phase. Inspect Buster logs, Redis tasks/completions, and the module buster-output.json before forcing a rerun."
+  "operator_interpretation": "Buster owns the active phase. Inspect the Buster worker job receipt, Nova effect journal, and module test artifacts before forcing a rerun."
 }

@@ -1,4 +1,0 @@
-export * from './generated/contracts.ts';
-export type { CapabilityInvocation, AdapterActivationContext, AdapterFactory, AdapterInstance, AdapterInvocation, EffectJournal, ObserverHandler, PluginInvocationContext, } from './runtime.ts';
-export declare const PLUGIN_API_VERSION: "pipeline-plugin-v2";
-//# sourceMappingURL=index.d.ts.map

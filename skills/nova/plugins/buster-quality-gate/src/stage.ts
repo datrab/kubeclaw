@@ -1,4 +1,4 @@
-import type{ArtifactRef,PluginInvocationContext,StageResult}from'@kubeclaw/plugin-sdk';import{buildRequest,parseVerdict,type GateInput}from'./protocol.js';
+import type{ArtifactRef,PluginInvocationContext,StageResult}from'@kubeclaw/plugin-sdk';import{buildRequest,parseVerdict,type GateInput}from'./protocol.ts';
 function validateSuiteReceipt(response:Readonly<Record<string,unknown>>){
  const receipt=response.receipt as Readonly<Record<string,unknown>>|undefined;
  if(!receipt||typeof receipt!=='object'||Array.isArray(receipt)||receipt.schemaVersion!=='test-suite-receipt.v1'||

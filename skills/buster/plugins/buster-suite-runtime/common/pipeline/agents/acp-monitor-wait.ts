@@ -1,11 +1,11 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.js';
-import { createBudget, isBudgetExhaustedError } from '../timing.js';
-import { createPipelineEventBus, waitForAny } from '../services/pipeline-event-contract.js';
-import { isSessionTerminalState, isUnreachableSessionState } from './session-semantics.js';
-import { createAcpMonitorEventAdapter, buildAcpEventIdentity, monitorStateFromAcpEvent } from './acp-monitor-events.js';
-import { getAcpMonitorConfig, objectRecordOrEmpty, transcriptShowsProgress } from './acp-monitor-transcript.js';
-import { writeRuntimeLog } from '../runtime-log.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { resolveGatewayBaseUrl, resolveGatewayToken } from '../integrations/gateway.ts';
+import { createBudget, isBudgetExhaustedError } from '../timing.ts';
+import { createPipelineEventBus, waitForAny } from '../services/pipeline-event-contract.ts';
+import { isSessionTerminalState, isUnreachableSessionState } from './session-semantics.ts';
+import { createAcpMonitorEventAdapter, buildAcpEventIdentity, monitorStateFromAcpEvent } from './acp-monitor-events.ts';
+import { getAcpMonitorConfig, objectRecordOrEmpty, transcriptShowsProgress } from './acp-monitor-transcript.ts';
+import { writeRuntimeLog } from '../runtime-log.ts';
 type AnyRecord = Record<string, any>;
 function log(level: any, msg: any) { writeRuntimeLog(String(level).toLowerCase() as 'debug' | 'info' | 'warn' | 'error', 'common/acp-monitor', String(msg)); }
 

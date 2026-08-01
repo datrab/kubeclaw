@@ -8,7 +8,7 @@ const {
   lifecycleNotification,
   observe,
   previewNotification,
-} = await import(pathToFileURL(path.resolve('dist/observer.js')).href);
+} = await import(pathToFileURL(path.resolve('src/observer.ts')).href);
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 const notification = manifest.observers.find((entry) => entry.id === 'notifications');
 const labels = new Map([

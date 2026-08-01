@@ -1,4 +1,4 @@
-import { selectDefinedValue } from '../optional-absence.js';
+import { selectDefinedValue } from '../optional-absence.ts';
 
 export type AnyRecord = Record<string, any>;
 export interface NormalizedK8sSuiteConfig extends AnyRecord {

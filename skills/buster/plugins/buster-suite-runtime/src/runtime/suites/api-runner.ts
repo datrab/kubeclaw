@@ -1,11 +1,11 @@
-import { selectDefinedValue } from '../optional-absence.js';
-import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.js';
-import { suiteNonEmptyString as nonEmptyString } from './support.js';
-import { missingTemplateVarsForTest } from './api-values.js';
-import type { AnyRecord, ApiTestResult } from './api-values.js';
-import { runHttpTest } from './api-http.js';
-import { runWsTest } from './api-websocket.js';
+import { selectDefinedValue } from '../optional-absence.ts';
+import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
+import { suiteNonEmptyString as nonEmptyString } from './support.ts';
+import { missingTemplateVarsForTest } from './api-values.ts';
+import type { AnyRecord, ApiTestResult } from './api-values.ts';
+import { runHttpTest } from './api-http.ts';
+import { runWsTest } from './api-websocket.ts';
 
 type Log = (message: string) => void;
 export interface ApiRunContext {

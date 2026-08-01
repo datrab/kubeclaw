@@ -1,1 +1,1 @@
-export * from '../../../common/pipeline/agents/tracked-agents.js';
+export * from '../../../common/pipeline/agents/tracked-agents.ts';

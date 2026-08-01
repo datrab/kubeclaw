@@ -1,7 +1,7 @@
-import { selectTruthyValue } from '../optional-absence.js';
-import { suiteErrorMessage as errorMessage, suiteNonEmptyString as nonEmptyString, suiteObjectOrEmpty as objectRecordOrEmpty } from './support.js';
-import { getByPath, interpolate, interpolateObject } from './api-values.js';
-import type { AnyRecord, ApiTestResult } from './api-values.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { suiteErrorMessage as errorMessage, suiteNonEmptyString as nonEmptyString, suiteObjectOrEmpty as objectRecordOrEmpty } from './support.ts';
+import { getByPath, interpolate, interpolateObject } from './api-values.ts';
+import type { AnyRecord, ApiTestResult } from './api-values.ts';
 
 async function responseBody(response: Response, expect: AnyRecord): Promise<any> {
   if (!selectTruthyValue(() => selectTruthyValue(() => expect.body_type, () => expect.body_contains), () => expect.body_min_length != null)) return null;

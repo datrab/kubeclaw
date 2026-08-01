@@ -1,8 +1,8 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { assertValidSessionLifecycleRecord } from '../services/acp-gateway-contract.js';
-import { resolveRuntime } from './runtime.js';
+import { assertValidSessionLifecycleRecord } from '../services/acp-gateway-contract.ts';
+import { resolveRuntime } from './runtime.ts';
 
 type AnyRecord = Record<string, any>;
 

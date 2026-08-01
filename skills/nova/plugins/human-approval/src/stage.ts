@@ -8,7 +8,7 @@ import {
   pendingApprovalResult,
   resultForApprovalGuidance,
   validateCreatedWait,
-} from './approval.js';
+} from './approval.ts';
 
 export async function execute(
   rawInput: unknown,

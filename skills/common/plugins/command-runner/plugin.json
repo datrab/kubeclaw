@@ -1,1 +1,19 @@
-{"id":"kubeclaw.command-runner","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"command","module":"dist/adapter.js","export":"activate","providesCapabilities":["command.execute"],"requiredCapabilities":[],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.command-runner",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "command",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "command.execute"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

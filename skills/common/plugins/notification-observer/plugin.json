@@ -6,7 +6,7 @@
   "observers": [
     {
       "id": "notifications",
-      "module": "dist/observer.js",
+      "module": "src/observer.ts",
       "export": "observe",
       "subscriptions": [
         "run.started",
@@ -32,15 +32,19 @@
         "backoffMs": 1000,
         "timeoutMs": 10000
       },
-      "requiredCapabilities": ["operator.request"],
+      "requiredCapabilities": [
+        "operator.request"
+      ],
       "configSchema": "schemas/config.schema.json",
       "checkpointSchema": "schemas/checkpoint.schema.json"
     },
     {
       "id": "preview-delivery",
-      "module": "dist/observer.js",
+      "module": "src/observer.ts",
       "export": "deliverPreview",
-      "subscriptions": ["artifact.created"],
+      "subscriptions": [
+        "artifact.created"
+      ],
       "delivery": "at_least_once",
       "ordering": "per_run",
       "failurePolicy": {
@@ -49,13 +53,15 @@
         "backoffMs": 1000,
         "timeoutMs": 10000
       },
-      "requiredCapabilities": ["operator.request"],
+      "requiredCapabilities": [
+        "operator.request"
+      ],
       "configSchema": "schemas/config.schema.json",
       "checkpointSchema": "schemas/checkpoint.schema.json"
     },
     {
       "id": "audit",
-      "module": "dist/observer.js",
+      "module": "src/observer.ts",
       "export": "recordAudit",
       "subscriptions": [
         "run.created",
@@ -94,7 +100,9 @@
         "backoffMs": 250,
         "timeoutMs": 10000
       },
-      "requiredCapabilities": ["artifacts.write"],
+      "requiredCapabilities": [
+        "artifacts.write"
+      ],
       "configSchema": "schemas/config.schema.json",
       "checkpointSchema": "schemas/checkpoint.schema.json"
     }

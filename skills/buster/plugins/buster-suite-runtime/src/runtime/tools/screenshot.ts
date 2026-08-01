@@ -3,15 +3,15 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import process from 'process';
-import { runScreenshotCli } from './screenshot-cli.js';
-import { parseBaselineRoutes } from './screenshot-routes.js';
-import type { BaselineGenerationResult, BaselineRoute, BaselineRouteResult } from './screenshot-routes.js';
+import { runScreenshotCli } from './screenshot-cli.ts';
+import { parseBaselineRoutes } from './screenshot-routes.ts';
+import type { BaselineGenerationResult, BaselineRoute, BaselineRouteResult } from './screenshot-routes.ts';
 
-export { parseBaselineRoutes } from './screenshot-routes.js';
-export type { BaselineGenerationResult } from './screenshot-routes.js';
+export { parseBaselineRoutes } from './screenshot-routes.ts';
+export type { BaselineGenerationResult } from './screenshot-routes.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { busterEnvironmentSnapshot } from '../buster-environment.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { busterEnvironmentSnapshot } from '../buster-environment.ts';
 // KEEP_TYPED_POLICY: Docker and runtime-installed Playwright browser layouts are
 // both supported, local HTML previews are valid screenshot inputs, missing
 // Playwright becomes a clear tool error, browser close failures are nonblocking,

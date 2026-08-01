@@ -1,16 +1,16 @@
-import { resolveDiscordWebhookUrl } from './runtime.js';
-import { requireTelemetryStreamMaxLenFromConfig } from '../telemetry.js';
+import { resolveDiscordWebhookUrl } from './runtime.ts';
+import { requireTelemetryStreamMaxLenFromConfig } from '../telemetry.ts';
 import {
   createTelemetryContext,
   emitEvent,
   closeTelemetry,
-} from './telemetry.js';
-import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.js';
-import { sanitizeDiscordMessage } from '../egress.js';
-import { postDiscordWebhook } from '../integrations/discord-webhook.js';
-import { createObservabilityHealthState } from './observability-health.js';
-import { loadBusterDiscordWebhookTimeoutMs, loadBusterPlatformConfig } from './runtime-policy.js';
-import { readBusterEnvironment } from '../buster-environment.js';
+} from './telemetry.ts';
+import { buildNonBlockingIncidentKey, reportClassifiedNonBlockingError } from '../noncritical-reporting.ts';
+import { sanitizeDiscordMessage } from '../egress.ts';
+import { postDiscordWebhook } from '../integrations/discord-webhook.ts';
+import { createObservabilityHealthState } from './observability-health.ts';
+import { loadBusterDiscordWebhookTimeoutMs, loadBusterPlatformConfig } from './runtime-policy.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 import {
   appendDiscordCorrelation,
   persistDiscordArtifact,
@@ -18,10 +18,10 @@ import {
   persistDiscordDeliveryReceipt,
   resolveDiscordAuditTargets,
   resolveDiscordDeliveryReceiptTargets,
-} from './discord-artifacts.js';
-import type { DiscordCorrelation as CorrelationContext, DiscordEmbed, DiscordPayload } from './discord-artifacts.js';
+} from './discord-artifacts.ts';
+import type { DiscordCorrelation as CorrelationContext, DiscordEmbed, DiscordPayload } from './discord-artifacts.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 declare const process: { stderr: { write(text: string): void } };
 
 type AnyRecord = Record<string, any>;

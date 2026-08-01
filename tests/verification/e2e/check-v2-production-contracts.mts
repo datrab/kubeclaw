@@ -33,7 +33,6 @@ if (forbiddenHits.length > 0) {
 const workspace = await createRealE2ERunWorkspace({ mode: 'full', scenarioId: 'success' });
 try {
   const execution = spawnSync(process.execPath, [
-    '--experimental-strip-types',
     path.join(repositoryRoot, 'tests/verification/e2e/run-v2-production-pipeline.mts'),
     '--project', workspace.projectName,
     '--repo', workspace.worktreePath,

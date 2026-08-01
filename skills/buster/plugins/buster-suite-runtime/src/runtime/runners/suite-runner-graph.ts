@@ -1,13 +1,13 @@
 import path from 'path';
-import { resolveContextCapabilities } from '../services/capabilities.js';
-import { buildDependencyGraph, collectReadyItems, runBatch } from '../scheduler.js';
-import { createSuiteVerdict, STATUS } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { createSuiteLogSink, cleanupSuiteResources, initializeSuiteResultsDir, RESULTS_DIR, writeSuiteResults } from './suite-runner-artifacts.js';
-import { createSuiteRunnerValidationError } from './suite-runner-contracts.js';
-import type { SuiteContext, SuiteFunction, SuiteResult, SuiteRunnerOptions, SuiteRunnerPayload } from './suite-runner-contracts.js';
-import { runOneSuite } from './suite-runner-execution.js';
-import { emitSuiteCompleted } from './suite-runner-telemetry.js';
+import { resolveContextCapabilities } from '../services/capabilities.ts';
+import { buildDependencyGraph, collectReadyItems, runBatch } from '../scheduler.ts';
+import { createSuiteVerdict, STATUS } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { createSuiteLogSink, cleanupSuiteResources, initializeSuiteResultsDir, RESULTS_DIR, writeSuiteResults } from './suite-runner-artifacts.ts';
+import { createSuiteRunnerValidationError } from './suite-runner-contracts.ts';
+import type { SuiteContext, SuiteFunction, SuiteResult, SuiteRunnerOptions, SuiteRunnerPayload } from './suite-runner-contracts.ts';
+import { runOneSuite } from './suite-runner-execution.ts';
+import { emitSuiteCompleted } from './suite-runner-telemetry.ts';
 
 export interface SuiteGraphAuthority {
   registry: Readonly<Record<string, SuiteFunction>>; dependencies: Record<string, string[]>; executionOrder: string[];

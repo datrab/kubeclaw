@@ -1,4 +1,4 @@
-import { selectTruthyValue } from '../optional-absence.js';
+import { selectTruthyValue } from '../optional-absence.ts';
 
 export function normalizeIdentityValue(value: unknown): string | null {
   if (value === undefined || value === null || value === '') return null;

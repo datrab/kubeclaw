@@ -1,1 +1,22 @@
-{"id":"kubeclaw.operator-messaging","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"operator","module":"dist/adapter.js","export":"activate","providesCapabilities":["operator.request"],"requiredCapabilities":["network.http","secrets.read"],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.operator-messaging",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "operator",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "operator.request"
+      ],
+      "requiredCapabilities": [
+        "network.http",
+        "secrets.read"
+      ],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

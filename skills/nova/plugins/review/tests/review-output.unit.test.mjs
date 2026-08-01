@@ -5,7 +5,7 @@ import {
   parseReviewDispatchResponse,
   parseReviewOutput,
   reviewOutputToStageResult,
-} from '../dist/review-output.js';
+} from '../src/review-output.ts';
 
 function fixture(name) {
   return fs.readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8');

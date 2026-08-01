@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/portable-artifacts.js';
+export * from '../../common/pipeline/portable-artifacts.ts';

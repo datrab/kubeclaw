@@ -82,9 +82,9 @@ The run itself uses an expanded run-scoped `SWARM_CONFIG` only to isolate stream
 The generated E2E module and final Buster gate use a bounded internal timeout by
 default (`REAL_E2E_MODULE_TIMEOUT_MINUTES`, default `10`, and
 `REAL_E2E_BUSTER_GATE_TIMEOUT_MINUTES`, defaulting to the module timeout). The
-matrix scenario timeout remains an outer guard only. This keeps Buster's normal
-session monitor, `buster-output.json` writer, Git push, and Redis completion
-signal as the single canonical authority for Buster terminal results.
+matrix scenario timeout remains an outer guard only. The Buster suite worker
+owns deterministic execution and its authenticated terminal receipt; Nova's
+effect and lifecycle journals remain the canonical pipeline authority.
 
 ## Post-Run Evidence Contract
 
@@ -99,7 +99,7 @@ A zero exit from the Nova process is not enough. After the production process re
 - Case-study and pipeline summary artifacts.
 - Canonical pipeline lifecycle events with typed run, module, gate, ordering, and terminal success evidence.
 - Discord audit log and `discord-deliveries.jsonl` receipt with a Discord-accepted webhook response message id.
-- Buster task stream entries for both module and gate work, decoded from the canonical Redis task envelope.
+- Buster suite-job receipts for both module and gate work, correlated with Nova's canonical effect and lifecycle journals.
 - Pipeline telemetry stream entries decoded from typed Redis `data` envelopes.
 - Agent observability success evidence from promoted `agent.*` events in the canonical pipeline event spine; raw observer Redis streams are ingress diagnostics.
 - The run-relative canonical observability bundle passes the pipeline-owned verifier and offline lifecycle replay with zero projection mismatches.

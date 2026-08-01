@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
-import { executeLintReport, type LintExecutionRequest } from './engine/index.js';
+import { executeLintReport, type LintExecutionRequest } from './engine/index.ts';
 
 function configuredRoots(config: Readonly<Record<string, unknown>>, key: string): string[] {
   const value = config[key];

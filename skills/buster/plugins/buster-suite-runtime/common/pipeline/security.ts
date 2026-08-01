@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
-import { commonEnvironmentSnapshot } from './runtime-environment.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
+import { commonEnvironmentSnapshot } from './runtime-environment.ts';
 declare const process: {
   env: Record<string, string | undefined>;
   cwd(): string;

@@ -13,7 +13,7 @@ const server = net.createServer((socket) => {
 await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 const address = server.address();
 if (!address || typeof address === 'string') throw new Error('redis test server unavailable');
-const module = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const module = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const context = {
   registration: {},
   config: {

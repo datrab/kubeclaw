@@ -1,7 +1,7 @@
 import fs from 'node:fs';
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { assertValidAcpTranscriptState } from '../services/acp-gateway-contract.js';
-import { writeRuntimeLog } from '../runtime-log.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { assertValidAcpTranscriptState } from '../services/acp-gateway-contract.ts';
+import { writeRuntimeLog } from '../runtime-log.ts';
 declare const Buffer: any;
 type AnyRecord = Record<string, any>;
 type AnyFunction = (...args: any[]) => any;

@@ -1,13 +1,13 @@
 import path from 'path';
 
-import { commandExists } from './execution.js';
-import { log } from './output.js';
-import { LINT_REPORT_SCHEMA_VERSION } from './report-contract.js';
-import { policyIncludesFile } from './policy.js';
-import { normalizeFindings } from './finding-fingerprints.js';
-import { accumulateToolSummary, createToolSummary } from './tool-summary.js';
+import { commandExists } from './execution.ts';
+import { log } from './output.ts';
+import { LINT_REPORT_SCHEMA_VERSION } from './report-contract.ts';
+import { policyIncludesFile } from './policy.ts';
+import { normalizeFindings } from './finding-fingerprints.ts';
+import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
 const FULL_REPORT_SCOPE = 'full';
 const NO_OUTPUT_CAPTURED = 'no output captured';
 

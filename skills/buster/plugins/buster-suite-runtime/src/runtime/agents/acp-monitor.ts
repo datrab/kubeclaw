@@ -1,1 +1,1 @@
-export * from '../../../common/pipeline/agents/acp-monitor.js';
+export * from '../../../common/pipeline/agents/acp-monitor.ts';

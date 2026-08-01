@@ -1,13 +1,13 @@
-import { sleep } from '../timing.js';
-import { gitExec, invalidateHeadHash } from '../git-primitives.js';
-import { normalizeScopedGitPaths, resolveDefaultGitAddPaths } from './git-worktree-scope.js';
+import { sleep } from '../timing.ts';
+import { gitExec, invalidateHeadHash } from '../git-primitives.ts';
+import { normalizeScopedGitPaths, resolveDefaultGitAddPaths } from './git-worktree-scope.ts';
 import {
   _gitPullCore,
   collectOutOfScopeWorktreeStash,
   collectRuntimeStateStash,
   restoreOutOfScopeWorktreeStash,
   restoreRuntimeStateStash,
-} from './git-worktree-sync.js';
+} from './git-worktree-sync.ts';
 import {
   type AnyRecord,
   type GitCommitPushOptions,
@@ -23,7 +23,7 @@ import {
   requireNumber,
   selectPresentValue,
   textValue,
-} from './git-worktree-support.js';
+} from './git-worktree-support.ts';
 
 function gitPushPolicy(config: AnyRecord): { maxRetries: number; delayMs: number; timeoutMs: number } {
   const push = config?.git?.push;

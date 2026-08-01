@@ -1,5 +1,5 @@
-import { sendGatewaySessionMessage } from '../integrations/gateway.js';
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { sendGatewaySessionMessage } from '../integrations/gateway.ts';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
 type AnyRecord = Record<string, any>;
 type SessionMessageSender = (sessionKey: string, message: string, timeoutMs: number, opts?: AnyRecord) => Promise<any>;

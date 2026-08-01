@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
 type AnyRecord = Record<string, any>;
 type DependencyReader = (id: string) => unknown[];

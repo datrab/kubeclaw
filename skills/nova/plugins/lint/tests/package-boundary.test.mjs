@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const packageRoot = path.resolve('.');
-const productionRoots = ['src', 'dist'];
+const productionRoots = ['src'];
 const prohibited = [
   {
     pattern: /skills\/nova\/pipeline|nova\/pipeline\/tools\/lint-report/,

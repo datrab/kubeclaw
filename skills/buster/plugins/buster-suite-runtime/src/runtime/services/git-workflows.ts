@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Buster Git Workflows — repo synchronization and push policy
 // ═══════════════════════════════════════════════════════════════
@@ -9,14 +9,14 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { getRepoRoot, gitExec, getCurrentBranch } from '../git-primitives.js';
-import { sleep } from '../timing.js';
-import { isRuntimeStatePath } from '../runtime-state-paths.js';
-import { busterEnvironmentSnapshot } from '../buster-environment.js';
-import { ensureGitIdentity, hasScopedStagedChanges } from './git-identity.js';
-import { logGit } from './git-workflow-contracts.js';
-import type { GitLogger, GitPushOptions, GitWorkflowOptions } from './git-workflow-contracts.js';
-import { normalizeNonNegativeNumber, normalizePositiveInteger, normalizePushBranch, normalizeScopedAddPaths } from './git-push-policy.js';
+import { getRepoRoot, gitExec, getCurrentBranch } from '../git-primitives.ts';
+import { sleep } from '../timing.ts';
+import { isRuntimeStatePath } from '../runtime-state-paths.ts';
+import { busterEnvironmentSnapshot } from '../buster-environment.ts';
+import { ensureGitIdentity, hasScopedStagedChanges } from './git-identity.ts';
+import { logGit } from './git-workflow-contracts.ts';
+import type { GitLogger, GitPushOptions, GitWorkflowOptions } from './git-workflow-contracts.ts';
+import { normalizeNonNegativeNumber, normalizePositiveInteger, normalizePushBranch, normalizeScopedAddPaths } from './git-push-policy.ts';
 
 export { getRepoRoot, gitExec, getCurrentBranch };
 

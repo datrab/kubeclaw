@@ -4,12 +4,16 @@
   "packageVersion": "1.0.0",
   "stages": [],
   "observers": [],
-  "adapters": [{
-    "id": "repository",
-    "module": "dist/adapter.js",
-    "export": "activate",
-    "providesCapabilities": ["git.repository.read"],
-    "requiredCapabilities": [],
-    "configSchema": "schemas/config.schema.json"
-  }]
+  "adapters": [
+    {
+      "id": "repository",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "git.repository.read"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
 }

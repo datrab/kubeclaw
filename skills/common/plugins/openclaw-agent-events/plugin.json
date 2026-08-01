@@ -1,1 +1,19 @@
-{"id":"kubeclaw.openclaw-agent-events","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"source","module":"dist/adapter.js","export":"activate","providesCapabilities":["agent.events.subscribe"],"requiredCapabilities":[],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.openclaw-agent-events",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "source",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "agent.events.subscribe"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

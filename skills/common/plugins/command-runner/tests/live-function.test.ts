@@ -11,7 +11,7 @@ fs.mkdirSync(workingRoot);
 fs.mkdirSync(deniedRoot);
 const executable = fs.realpathSync(process.execPath);
 
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 function createAdapter(overrides = {}) {
   return activate({
     registration: {},

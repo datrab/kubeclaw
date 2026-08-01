@@ -1,9 +1,9 @@
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 import {
   applyCompletionFields,
   applyLifecycleTimestamps,
   applyPhaseTransition,
-} from './lifecycle-transition-fields.js';
+} from './lifecycle-transition-fields.ts';
 type AnyRecord = Record<string, any>;
 
 type LifecycleMutation = AnyRecord | null;

@@ -1,9 +1,9 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/runtime-policy.ts — required Buster runtime policy from swarm.config.json
 
 import fs from 'fs';
-import { expandSwarmConfig } from '../platform-config.js';
-import { readBusterEnvironment } from '../buster-environment.js';
+import { expandSwarmConfig } from '../platform-config.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 declare const process: {
   env: Record<string, string | undefined>;

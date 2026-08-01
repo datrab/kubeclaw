@@ -1,1 +1,21 @@
-{"id":"kubeclaw.review","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"review","type":"kubeclaw.decision.review","module":"dist/stage.js","export":"execute","requiredCapabilities":["runtime.dispatch"],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],"observers":[],"adapters":[]}
+{
+  "id": "kubeclaw.review",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "review",
+      "type": "kubeclaw.decision.review",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "runtime.dispatch"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

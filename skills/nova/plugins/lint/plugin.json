@@ -6,9 +6,12 @@
     {
       "id": "pre-check",
       "type": "kubeclaw.lint.pre-check",
-      "module": "dist/stage.js",
+      "module": "src/stage.ts",
       "export": "executePreCheck",
-      "requiredCapabilities": ["lint.execute", "artifacts.write"],
+      "requiredCapabilities": [
+        "lint.execute",
+        "artifacts.write"
+      ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",
       "resultSchema": "schemas/result.schema.json"
@@ -16,9 +19,12 @@
     {
       "id": "full",
       "type": "kubeclaw.lint.full",
-      "module": "dist/stage.js",
+      "module": "src/stage.ts",
       "export": "executeFull",
-      "requiredCapabilities": ["lint.execute", "artifacts.write"],
+      "requiredCapabilities": [
+        "lint.execute",
+        "artifacts.write"
+      ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",
       "resultSchema": "schemas/result.schema.json"
@@ -28,9 +34,11 @@
   "adapters": [
     {
       "id": "executor",
-      "module": "dist/adapter.js",
+      "module": "src/adapter.ts",
       "export": "activate",
-      "providesCapabilities": ["lint.execute"],
+      "providesCapabilities": [
+        "lint.execute"
+      ],
       "requiredCapabilities": [],
       "configSchema": "schemas/adapter-config.schema.json"
     }

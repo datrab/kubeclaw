@@ -1,1 +1,1 @@
-export * from '../../../common/pipeline/agents/session-semantics.js';
+export * from '../../../common/pipeline/agents/session-semantics.ts';

@@ -1,1 +1,1 @@
-export * from '../../../common/pipeline/agents/lifecycle.js';
+export * from '../../../common/pipeline/agents/lifecycle.ts';

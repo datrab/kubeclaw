@@ -12,7 +12,7 @@ fs.mkdirSync(repositoryRoot, { recursive: true });
 fs.mkdirSync(policyRoot, { recursive: true });
 fs.mkdirSync(outsideRoot, { recursive: true });
 
-const { activate } = await import(pathToFileURL(path.resolve('dist/adapter.js')).href);
+const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registrationId: 'kubeclaw.lint:executor',
   packageIdentity: {

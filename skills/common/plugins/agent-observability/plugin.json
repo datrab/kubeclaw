@@ -6,7 +6,7 @@
   "observers": [
     {
       "id": "ingester",
-      "module": "dist/observers.js",
+      "module": "src/observers.ts",
       "export": "ingest",
       "subscriptions": [
         "plugin.kubeclaw.openclaw-agent-events.agent-end",
@@ -23,14 +23,21 @@
       ],
       "delivery": "at_least_once",
       "ordering": "per_run",
-      "failurePolicy": {"mode":"best_effort","maxAttempts":5,"backoffMs":1000,"timeoutMs":10000},
-      "requiredCapabilities": ["telemetry.emit"],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "requiredCapabilities": [
+        "telemetry.emit"
+      ],
       "configSchema": "schemas/config.schema.json",
       "checkpointSchema": "schemas/checkpoint.schema.json"
     },
     {
       "id": "evidence",
-      "module": "dist/observers.js",
+      "module": "src/observers.ts",
       "export": "recordEvidence",
       "subscriptions": [
         "plugin.kubeclaw.openclaw-agent-events.agent-end",
@@ -40,8 +47,15 @@
       ],
       "delivery": "at_least_once",
       "ordering": "per_run",
-      "failurePolicy": {"mode":"best_effort","maxAttempts":5,"backoffMs":1000,"timeoutMs":10000},
-      "requiredCapabilities": ["artifacts.write"],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "requiredCapabilities": [
+        "artifacts.write"
+      ],
       "configSchema": "schemas/config.schema.json",
       "checkpointSchema": "schemas/checkpoint.schema.json"
     }

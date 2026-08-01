@@ -1,14 +1,14 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { requireToolExecution, safeExec } from './execution.js';
-import { configuredTargetPaths } from './discovery.js';
-import { tryParseJson } from './parsers.js';
-import { failConfigMissing, failParse } from './report.js';
-import { log } from './output.js';
-import { arrayValue, selectPresentValue } from '../support/value-boundary.js';
-import { selectTruthyValue } from '../support/optional-absence.js';
-import { registerTool, requireString } from './tool-registry-core.js';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { configuredTargetPaths } from './discovery.ts';
+import { tryParseJson } from './parsers.ts';
+import { failConfigMissing, failParse } from './report.ts';
+import { log } from './output.ts';
+import { arrayValue, selectPresentValue } from '../support/value-boundary.ts';
+import { selectTruthyValue } from '../support/optional-absence.ts';
+import { registerTool, requireString } from './tool-registry-core.ts';
 
 function semgrepArgs(ctx: any, config: any) {
   const exclusions = (ctx.tool.exclude ?? []).flatMap(

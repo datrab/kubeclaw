@@ -1,1 +1,22 @@
-{"id":"kubeclaw.transport-publisher","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"publisher","module":"dist/adapter.js","export":"activate","providesCapabilities":["transport.publish"],"requiredCapabilities":["network.http","secrets.read"],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.transport-publisher",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "publisher",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "transport.publish"
+      ],
+      "requiredCapabilities": [
+        "network.http",
+        "secrets.read"
+      ],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

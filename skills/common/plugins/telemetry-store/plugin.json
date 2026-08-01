@@ -1,1 +1,19 @@
-{"id":"kubeclaw.telemetry-store","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[],"adapters":[{"id":"telemetry","module":"dist/adapter.js","export":"activate","providesCapabilities":["telemetry.emit"],"requiredCapabilities":[],"configSchema":"schemas/config.schema.json"}]}
+{
+  "id": "kubeclaw.telemetry-store",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "telemetry",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "telemetry.emit"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

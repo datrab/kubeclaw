@@ -1,11 +1,11 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/runtime-diagnostics.ts — sanitized process diagnostic helpers
 // Owns non-blocking diagnostics for malformed tasks and process/runtime health.
 
 import fs from 'fs';
 import { join } from 'path';
-import { sanitizeNonBlockingErrorDetail } from '../noncritical-reporting.js';
-import { normalizeRequiredIdentity } from './task-validation.js';
+import { sanitizeNonBlockingErrorDetail } from '../noncritical-reporting.ts';
+import { normalizeRequiredIdentity } from './task-validation.ts';
 
 declare const process: {
   env: Record<string, string | undefined>;

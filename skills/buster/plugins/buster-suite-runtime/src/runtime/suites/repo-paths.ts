@@ -1,9 +1,9 @@
 
 import path from 'path';
-import { isPathInside, resolveScopedPath } from '../security.js';
-import { getRepoRoot } from '../git-primitives.js';
+import { isPathInside, resolveScopedPath } from '../security.ts';
+import { getRepoRoot } from '../git-primitives.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export { isPathInside };
 
 export function resolveRepoDir(startDir: unknown = null): string {

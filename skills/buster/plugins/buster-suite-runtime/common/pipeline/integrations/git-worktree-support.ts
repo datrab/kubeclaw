@@ -1,15 +1,15 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
-import { writeRuntimeLog } from '../runtime-log.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
+import { writeRuntimeLog } from '../runtime-log.ts';
 // integrations/git-worktree.ts — Shared pipeline Git worktree policy
 
 import fs from 'fs';
 import path from 'path';
-import { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.js';
-import { sleep } from '../timing.js';
-import { buildSubprocessEnv } from '../security.js';
-import { isRuntimeStatePath } from '../runtime-state-paths.js';
-import { MODULE_WORKTREE_DIRTY } from './module-worktree-maintenance.js';
-import { parsePorcelainEntries, type PorcelainEntry } from './git-porcelain.js';
+import { getRepoRoot, gitExec, headHash, invalidateHeadHash, setGitRuntimePolicy, setRepoRoot } from '../git-primitives.ts';
+import { sleep } from '../timing.ts';
+import { buildSubprocessEnv } from '../security.ts';
+import { isRuntimeStatePath } from '../runtime-state-paths.ts';
+import { MODULE_WORKTREE_DIRTY } from './module-worktree-maintenance.ts';
+import { parsePorcelainEntries, type PorcelainEntry } from './git-porcelain.ts';
 import {
   filterProjectScopedPaths,
   isPathWithinProjectScope,
@@ -18,7 +18,7 @@ import {
   pathMatchesScopedPathspec,
   projectScopedStatusArgs,
   resolveDefaultGitAddPaths,
-} from './git-worktree-scope.js';
+} from './git-worktree-scope.ts';
 
 export type AnyRecord = Record<string, any>;
 export type StashEntry = { ref: string; sha: string; subject: string };

@@ -142,7 +142,7 @@ deletions, and atomic commits for the concrete plugin and adapter migration.
 - `npm test --prefix skills/buster/plugins/test-agent`
 - `npm test --prefix skills/nova/plugins/buster-quality-gate`
 - `node --test $(find tests/skills/buster -type f -name '*.test.mjs' -print | sort)`
-- `node --test tests/verification/e2e/buster-simulator.test.mjs`
+- Package-local Buster suite protocol and live-function tests
 
 ## Batch 5: Privileged Adapters
 

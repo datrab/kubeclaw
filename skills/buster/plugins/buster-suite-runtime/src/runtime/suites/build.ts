@@ -1,16 +1,16 @@
-import { selectDefinedValue } from '../optional-absence.js';
+import { selectDefinedValue } from '../optional-absence.ts';
 // The build suite is a thin adapter over the canonical BuildKit + leased
 // namespace k8s suite. It never runs workloads in the Buster pod.
 import fs from 'fs';
 import path from 'path';
-import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { validateImageReference } from '../services/image-reference.js';
-import k8sSuite from './k8s.js';
-import { startServicePortForward } from './k8s-port-forward.js';
-import { buildK8sCommandEnv } from './k8s-command-env.js';
-import { resolveRepoScopedPath } from './repo-paths.js';
-import { createSuiteLog } from './support.js';
+import { createFinding, createSuiteVerdict, SEVERITY, STATUS } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { validateImageReference } from '../services/image-reference.ts';
+import k8sSuite from './k8s.ts';
+import { startServicePortForward } from './k8s-port-forward.ts';
+import { buildK8sCommandEnv } from './k8s-command-env.ts';
+import { resolveRepoScopedPath } from './repo-paths.ts';
+import { createSuiteLog } from './support.ts';
 
 type AnyRecord = Record<string, any>;
 type BuildContext = {

@@ -4,12 +4,17 @@
   "packageVersion": "1.0.0",
   "stages": [],
   "observers": [],
-  "adapters": [{
-    "id": "artifact-store",
-    "module": "dist/adapter.js",
-    "export": "activate",
-    "providesCapabilities": ["artifacts.read", "artifacts.write"],
-    "requiredCapabilities": [],
-    "configSchema": "schemas/config.schema.json"
-  }]
+  "adapters": [
+    {
+      "id": "artifact-store",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
 }

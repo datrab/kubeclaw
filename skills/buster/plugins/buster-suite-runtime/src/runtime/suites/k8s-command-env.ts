@@ -1,5 +1,5 @@
 import { execFile } from 'child_process';
-import { buildSubprocessEnv } from '../security.js';
+import { buildSubprocessEnv } from '../security.ts';
 
 export type K8sCommandEnv = Record<string, string | undefined>;
 

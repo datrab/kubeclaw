@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from './optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 declare const process: {
   stderr: { write(text: string): void };
 };

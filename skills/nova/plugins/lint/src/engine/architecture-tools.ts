@@ -2,10 +2,10 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { configuredTargetPaths } from './discovery.js';
-import { requireToolExecution, safeExec } from './execution.js';
-import { tryParseJson } from './parsers.js';
-import { failConfigMissing, failParse } from './report.js';
+import { configuredTargetPaths } from './discovery.ts';
+import { requireToolExecution, safeExec } from './execution.ts';
+import { tryParseJson } from './parsers.ts';
+import { failConfigMissing, failParse } from './report.ts';
 
 function findingsResult(findings: any) {
   return { errors: findings.length, warnings: 0, findings };

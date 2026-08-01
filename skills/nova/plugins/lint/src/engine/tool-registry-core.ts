@@ -2,22 +2,22 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { requireToolExecution, safeExec } from './execution.js';
+import { requireToolExecution, safeExec } from './execution.ts';
 import {
   configuredTargetPaths,
   findFiles,
   listConfiguredTargetFiles,
-} from './discovery.js';
-import { tryParseJson } from './parsers.js';
+} from './discovery.ts';
+import { tryParseJson } from './parsers.ts';
 import {
   failConfigMissing,
   failParse,
   notApplicable,
-} from './report.js';
-import { log } from './output.js';
-import { arrayValue, objectRecord as recordValue, selectPresentValue, textValue } from '../support/value-boundary.js';
+} from './report.ts';
+import { log } from './output.ts';
+import { arrayValue, objectRecord as recordValue, selectPresentValue, textValue } from '../support/value-boundary.ts';
 
-import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
 export const TOOL_ADAPTERS: any[] = [];
 const TOOL_OUTPUT_EMPTY = '';
 export const TOOL_OUTPUT_PREVIEW_MISSING = 'no output captured';

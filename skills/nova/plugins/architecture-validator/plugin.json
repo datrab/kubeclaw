@@ -1,1 +1,22 @@
-{"id":"kubeclaw.architecture-validator","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"architecture","type":"kubeclaw.validate.architecture","module":"dist/stage.js","export":"execute","requiredCapabilities":["runtime.dispatch","artifacts.write"],"configSchema":"schemas/config.schema.json","inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],"observers":[],"adapters":[]}
+{
+  "id": "kubeclaw.architecture-validator",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "architecture",
+      "type": "kubeclaw.validate.architecture",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

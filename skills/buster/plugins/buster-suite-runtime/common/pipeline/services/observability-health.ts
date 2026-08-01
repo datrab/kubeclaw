@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export function createObservabilityHealthState() {
   const health = new Map<string, Record<string, any>>();
   const observedAt = (value: any, field: string) => {

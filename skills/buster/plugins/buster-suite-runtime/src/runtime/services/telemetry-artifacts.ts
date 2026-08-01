@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { sanitizeTelemetryPayload } from '../egress.js';
-import { buildCanonicalEnvelope, sha256 } from '../observability-contract.js';
-import { reportBusterTelemetryIncident } from './telemetry-incidents.js';
-import type { BusterTelemetryContext, TelemetryRecord } from './telemetry-contracts.js';
+import { sanitizeTelemetryPayload } from '../egress.ts';
+import { buildCanonicalEnvelope, sha256 } from '../observability-contract.ts';
+import { reportBusterTelemetryIncident } from './telemetry-incidents.ts';
+import type { BusterTelemetryContext, TelemetryRecord } from './telemetry-contracts.ts';
 
 function authority(...values: unknown[]): any {
   for (const value of values) if (value !== undefined && value !== null && value !== '') return value;

@@ -1,5 +1,5 @@
 import path from 'path';
-import { selectTruthyValue } from '../optional-absence.js';
+import { selectTruthyValue } from '../optional-absence.ts';
 
 type AnyRecord = Record<string, any>;
 

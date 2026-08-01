@@ -1,18 +1,11 @@
 {
+  "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
-    "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true,
-    "outDir": "dist",
     "rootDir": "src",
-    "declaration": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {"@kubeclaw/plugin-sdk":["../../../common/plugin-runtime/sdk/dist/index.d.ts"]}
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }

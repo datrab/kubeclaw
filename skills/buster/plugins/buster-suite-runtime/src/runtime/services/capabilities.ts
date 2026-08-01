@@ -1,12 +1,12 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // pipeline/services/capabilities.ts — Buster task capability contract
 // Default-deny execution boundary for destructive/tool-heavy Buster surfaces.
 
 import fs from 'fs';
 import path from 'path';
-import { sanitizeTelemetryPayload } from '../egress.js';
-import { resolveScopedPath } from '../security.js';
-import { arrayValue, objectRecord, selectPresentValue, textValue } from '../value-boundary.js';
+import { sanitizeTelemetryPayload } from '../egress.ts';
+import { resolveScopedPath } from '../security.ts';
+import { arrayValue, objectRecord, selectPresentValue, textValue } from '../value-boundary.ts';
 
 export const BUSTER_CAPABILITIES = Object.freeze({
   IMAGE_BUILD: 'image_build',

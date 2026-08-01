@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export const ACP_MONITOR_REASONS = Object.freeze({
   RATE_LIMITED: 'rate_limited',
   TRANSCRIPT_ERROR: 'transcript_error',

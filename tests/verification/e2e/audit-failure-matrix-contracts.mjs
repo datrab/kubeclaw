@@ -228,9 +228,9 @@ function invariantFailures({ materialized, scenarioId }) {
       });
     }
     const mutationContract = scenarioMutationContractForScenario(scenarioId);
-    if (!mutationContract.allowed_mutation_channels.includes('buster-simulator')
+    if (!mutationContract.allowed_mutation_channels.includes('buster-worker-api')
       && materialized.scenario.expectedEvidence === 'buster_invalid_completion_identity') {
-      push('module_buster_identity_mutation_channel_mismatch', 'Buster output identity scenario must mutate through the Buster simulator channel', {
+      push('module_buster_identity_mutation_channel_mismatch', 'Buster output identity scenario must mutate through the Buster worker API channel', {
         allowed_mutation_channels: mutationContract.allowed_mutation_channels,
       });
     }

@@ -1,9 +1,9 @@
-import { emitPluginEvent } from '../services/telemetry.js';
-import { createSuiteVerdict, STATUS } from '../services/verdict-schema.js';
-import type { SuiteStatus, SuiteVerdict } from '../services/verdict-schema.js';
-import { discordSingle, discordSummary } from './visual-reg-discord.js';
-import type { VisualDiscordDeliveryResult } from './visual-reg-discord.js';
-import type { MultiPathResult, PageResult } from './visual-reg-multi.js';
+import { emitPluginEvent } from '../services/telemetry.ts';
+import { createSuiteVerdict, STATUS } from '../services/verdict-schema.ts';
+import type { SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
+import { discordSingle, discordSummary } from './visual-reg-discord.ts';
+import type { VisualDiscordDeliveryResult } from './visual-reg-discord.ts';
+import type { MultiPathResult, PageResult } from './visual-reg-multi.ts';
 
 type Log = (message: string) => void;
 

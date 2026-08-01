@@ -1,7 +1,7 @@
 import path from 'path';
 
-import { getRepoRoot } from './git-workflows.js';
-import { CLEANUP_POLICY, cleanupRuntimeResources } from './resource-cleanup.js';
+import { getRepoRoot } from './git-workflows.ts';
+import { CLEANUP_POLICY, cleanupRuntimeResources } from './resource-cleanup.ts';
 export {
   buildPreTestVerdict,
   buildSessionCompleteEmbed,
@@ -10,7 +10,7 @@ export {
   buildSuiteResultsEmbed,
   buildTaskFailureEmbed,
   buildTimeoutEmbed,
-} from './pipeline-embeds.js';
+} from './pipeline-embeds.ts';
 
 const ACTIVE_SESSION_STATE_FILE = path.join('.swarm', 'logs', 'buster', 'active-session.json');
 type AnyRecord = Record<string, any>;
@@ -22,7 +22,7 @@ export {
   resolveBusterOutputFilePath,
   resolveBusterRateLimitMaxPauses,
   writeBusterOutputFile,
-} from './buster-output.js';
+} from './buster-output.ts';
 export function resolveBusterActiveSessionPath(cwd: string = getRepoRoot()): string {
   return path.join(path.resolve(cwd), ACTIVE_SESSION_STATE_FILE);
 }

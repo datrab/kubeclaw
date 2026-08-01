@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/platform-config.js';
+export * from '../../common/pipeline/platform-config.ts';

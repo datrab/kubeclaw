@@ -1,4 +1,4 @@
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // ═══════════════════════════════════════════════════════════════
 // Suite: unit — Unit Test Runner
 // ═══════════════════════════════════════════════════════════════
@@ -18,12 +18,12 @@ import {
   createFinding,
   STATUS,
   SEVERITY,
-} from '../services/verdict-schema.js';
-import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.js';
-import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.js';
-import { buildSubprocessEnv, tokenizeCommandString, validateAllowedPath } from '../security.js';
-import { createSuiteLog } from './support.js';
-import { extractFailures, firstOutputLine, parseOutput } from './unit-output.js';
+} from '../services/verdict-schema.ts';
+import type { Finding, SuiteStatus, SuiteVerdict } from '../services/verdict-schema.ts';
+import { REPO_DIR, resolveRepoScopedPath } from './repo-paths.ts';
+import { buildSubprocessEnv, tokenizeCommandString, validateAllowedPath } from '../security.ts';
+import { createSuiteLog } from './support.ts';
+import { extractFailures, firstOutputLine, parseOutput } from './unit-output.ts';
 
 type AnyRecord = Record<string, any>;
 type LogSink = (entry: Record<string, unknown>) => void;

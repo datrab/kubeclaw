@@ -111,7 +111,7 @@ A plugin manifest contains inert registration metadata. The same registration sh
   "packageVersion": "1.0.0",
   "stages": [{
     "type": "decision.human-approval",
-    "module": "./dist/stages/human-approval.js",
+    "module": "./src/stages/human-approval.ts",
     "export": "execute",
     "requiredCapabilities": [
       "state.read",

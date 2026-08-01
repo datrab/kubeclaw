@@ -1,16 +1,16 @@
 import fs from 'fs';
 import path from 'path';
-import { selectTruthyValue } from '../optional-absence.js';
-import { buildSubprocessEnv } from '../security.js';
-import { gitExec, invalidateHeadHash } from '../git-primitives.js';
-import { isRuntimeStatePath } from '../runtime-state-paths.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { buildSubprocessEnv } from '../security.ts';
+import { gitExec, invalidateHeadHash } from '../git-primitives.ts';
+import { isRuntimeStatePath } from '../runtime-state-paths.ts';
 import {
   filterProjectScopedPaths,
   normalizeRepoRelativePath,
   normalizeScopedGitPaths,
   pathMatchesScopedPathspec,
   resolveDefaultGitAddPaths,
-} from './git-worktree-scope.js';
+} from './git-worktree-scope.ts';
 import {
   type AnyRecord,
   type PreservationStashState,
@@ -32,7 +32,7 @@ import {
   parseProjectScopedPorcelainEntries,
   resolveStashRefBySha,
   selectPresentValue,
-} from './git-worktree-support.js';
+} from './git-worktree-support.ts';
 
 export function collectRuntimeStateStash(config: AnyRecord): RuntimeStashState {
   const entries = parseProjectScopedPorcelainEntries(config);

@@ -1,1 +1,1 @@
-export * from '../../../common/pipeline/agents/runtime.js';
+export * from '../../../common/pipeline/agents/runtime.ts';

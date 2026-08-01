@@ -6,7 +6,7 @@
     {
       "id": "delivery-lint",
       "type": "kubeclaw.lint.delivery",
-      "module": "dist/stage.js",
+      "module": "src/stage.ts",
       "export": "execute",
       "requiredCapabilities": [
         "git.repository.read",

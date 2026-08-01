@@ -1,4 +1,4 @@
-import type { TimeBudget } from '../timing.js';
+import type { TimeBudget } from '../timing.ts';
 
 export interface GitLogger { info?: (tag: string, msg: string) => void; warn?: (tag: string, msg: string) => void }
 export interface GitWorkflowOptions { logger?: GitLogger | null }

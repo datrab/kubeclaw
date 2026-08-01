@@ -1,7 +1,7 @@
-import { gitExec } from '../git-primitives.js';
-import { readBusterEnvironment } from '../buster-environment.js';
-import { logGit } from './git-workflow-contracts.js';
-import type { GitLogger } from './git-workflow-contracts.js';
+import { gitExec } from '../git-primitives.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
+import { logGit } from './git-workflow-contracts.ts';
+import type { GitLogger } from './git-workflow-contracts.ts';
 
 function titleCaseAgent(value: string): string {
   const normalized = value.trim().replace(/[-_]+/g, ' ');

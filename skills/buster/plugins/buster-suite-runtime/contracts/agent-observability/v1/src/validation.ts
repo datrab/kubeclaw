@@ -3,14 +3,14 @@ import {
   AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES,
   AGENT_OBSERVABILITY_SCHEMA_VERSION,
   AGENT_OBSERVABILITY_SOURCE,
-} from './constants.js';
+} from './constants.ts';
 import type {
   AgentObservabilityHistoryMessageV1,
   AgentObservabilityIngressEventType,
   AgentObservabilityIngressEventV1,
   AgentObservabilityJsonValue,
   AgentObservabilityValidationResult,
-} from './types.js';
+} from './types.ts';
 
 const TYPE_TO_HOOK: Record<AgentObservabilityIngressEventType, string> = Object.freeze({
   'openclaw.agent.ended': 'agent_end',

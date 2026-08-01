@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { selectTruthyValue } from '../optional-absence.js';
-import { emitEvent } from '../services/telemetry.js';
-import { createRunnerVerdict } from '../services/verdict-schema.js';
-import type { SuiteVerdict } from '../services/verdict-schema.js';
-import { writeBusterRuntimeLog } from '../services/logger.js';
-import { readBusterEnvironment } from '../buster-environment.js';
+import { selectTruthyValue } from '../optional-absence.ts';
+import { emitEvent } from '../services/telemetry.ts';
+import { createRunnerVerdict } from '../services/verdict-schema.ts';
+import type { SuiteVerdict } from '../services/verdict-schema.ts';
+import { writeBusterRuntimeLog } from '../services/logger.ts';
+import { readBusterEnvironment } from '../buster-environment.ts';
 
 export const RESULTS_DIR = readBusterEnvironment('BUSTER_RESULTS_DIR') ?? '/home/builder/.openclaw/results';
 

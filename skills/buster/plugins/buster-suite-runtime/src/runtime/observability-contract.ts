@@ -1,1 +1,1 @@
-export * from '../../common/pipeline/observability-contract.js';
+export * from '../../common/pipeline/observability-contract.ts';

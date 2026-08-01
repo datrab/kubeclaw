@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { getRepoRoot } from './git-workflows.js';
-import { resolveScopedPath } from '../security.js';
-import { firstNonEmptyString, normalizeIdentityValue } from './pipeline-display.js';
-import { selectDefinedValue, selectTruthyValue } from '../optional-absence.js';
+import { getRepoRoot } from './git-workflows.ts';
+import { resolveScopedPath } from '../security.ts';
+import { firstNonEmptyString, normalizeIdentityValue } from './pipeline-display.ts';
+import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 
 type AnyRecord = Record<string, any>;
 interface CompletionKeyInput { runId?: unknown; attempt?: unknown; dispatchId?: unknown; sessionKey?: unknown }
