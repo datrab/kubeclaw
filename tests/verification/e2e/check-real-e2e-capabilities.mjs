@@ -5,14 +5,14 @@ import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
-import { installQuietRuntimeConsole } from '../lib/verification-console.mjs';
-import { verifyLaunchReachability } from '../runtime/session-launch-lib.mjs';
+import { withRealE2ERedisClient } from './redis-test-client.mjs';
+import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
 
 const execFileAsync = promisify(execFile);
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');
 const OPENCLAW_CONFIG_PATH = process.env.OPENCLAW_CONFIG || '/home/node/.openclaw/openclaw.json';
-const DEFAULT_REAL_E2E_MODEL = 'gpt-5.3-codex-spark';
+const DEFAULT_REAL_E2E_MODEL = 'openai/gpt-5.3-codex-spark';
 const DEFAULT_CONFIG_PROBE_PROJECT = 'pipeline-smoke-landing';
 
 function parseArgs(argv) {
@@ -245,26 +245,71 @@ async function checkGatewayStatus() {
 async function checkConfiguredCodexSpawn() {
   const target = resolveProductionCodexLaunchTarget();
   const labelPrefix = `real-e2e-${target.runtime}-${Date.now()}`;
-  const quietConsole = installQuietRuntimeConsole({ label: `real-e2e/${target.runtime}-capability` });
+  const config = readOpenClawConfig();
+  const token = process.env.OPENCLAW_GATEWAY_TOKEN || config?.gateway?.auth?.token;
+  if (!token) return { ok: false, reason: 'INFRA_MISSING_OPENCLAW_GATEWAY_TOKEN', ...target };
+  const endpoint = process.env.OPENCLAW_GATEWAY_TOOLS_URL || 'http://127.0.0.1:18789/tools/invoke';
+  const invoke = async (tool, args) => {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ tool, args }),
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!response.ok) throw new Error(`OPENCLAW_TOOL_FAILED:${tool}:${response.status}`);
+    const body = await response.json();
+    return body?.output ?? body?.result ?? body;
+  };
+  let sessionKey = null;
   try {
-    const result = await verifyLaunchReachability({
+    const spawned = await invoke('sessions_spawn', {
       runtime: target.runtime,
       model: target.model,
       agentId: target.agentId,
       cwd: REPO_ROOT,
-      timeoutSeconds: Number(process.env.REAL_E2E_ACP_TIMEOUT_SECONDS || 120),
-      pollAttempts: Number(process.env.REAL_E2E_ACP_POLL_ATTEMPTS || 10),
-      pollMs: Number(process.env.REAL_E2E_ACP_POLL_MS || 1000),
-      keepSession: false,
-      prompt: 'Reply with REAL_E2E_ACP_OK and stop.',
+      mode: 'run',
+      cleanup: 'keep',
+      thread: false,
+      task: 'Reply with REAL_E2E_SPARK_OK and stop.',
       label: labelPrefix,
-      allowTerminalAfterLaunch: true,
-      allowStoppedCleanup: true,
     });
-    if (!result.ok) return { ok: false, reason: 'INFRA_CODEX_SPAWN_FAILED', ...target, result };
-    return { ok: true, ...target, runtime: result.runtime || target.runtime, session_key: result.session_key || result.sessionKey || null, result };
+    const source = spawned?.details ?? spawned?.output ?? spawned;
+    sessionKey = source?.childSessionKey ?? source?.sessionKey ?? source?.session_key;
+    if (!sessionKey) return { ok: false, reason: 'INFRA_CODEX_SPAWN_RESULT_INVALID', ...target };
+    for (let attempt = 0; attempt < Number(process.env.REAL_E2E_ACP_POLL_ATTEMPTS || 30); attempt += 1) {
+      const listed = await invoke('subagents', { action: 'list', recentMinutes: 10 });
+      const listing = listed?.details ?? listed;
+      const state = [...(listing?.active ?? []), ...(listing?.recent ?? [])]
+        .find((entry) => entry?.sessionKey === sessionKey || entry?.session_key === sessionKey);
+      const status = String(state?.status ?? state?.state ?? '').toLowerCase();
+      if (['completed', 'done', 'succeeded', 'failed', 'error', 'cancelled', 'canceled'].includes(status)) {
+        return {
+          ok: status === 'completed' || status === 'done' || status === 'succeeded',
+          reason: ['failed', 'error', 'cancelled', 'canceled'].includes(status)
+            ? 'INFRA_CODEX_SPAWN_FAILED'
+            : null,
+          ...target,
+          session_key: sessionKey,
+          status,
+        };
+      }
+      await new Promise((resolve) => setTimeout(
+        resolve,
+        Number(process.env.REAL_E2E_ACP_POLL_MS || 1_000),
+      ));
+    }
+    return { ok: false, reason: 'INFRA_CODEX_SPAWN_TIMEOUT', ...target, session_key: sessionKey };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: 'INFRA_CODEX_SPAWN_FAILED',
+      ...target,
+      error: error?.message || String(error),
+    };
   } finally {
-    quietConsole.restore();
+    if (sessionKey) {
+      await invoke('subagents', { action: 'kill', target: sessionKey }).catch(() => {});
+    }
   }
 }
 
@@ -279,8 +324,14 @@ export function resolveProductionCodexLaunchTarget({
   if (!['acp', 'subagent'].includes(runtime)) {
     throw new Error(`production codex runtime must be acp or subagent in ${configPath}`);
   }
-  const model = env.REAL_E2E_MODEL || reviewer?.model || config?.defaults?.models?.forge || DEFAULT_REAL_E2E_MODEL;
-  const agentId = env.REAL_E2E_AGENT_ID || reviewer?.agent_id || 'codex';
+  const requestedModel = env.REAL_E2E_MODEL || DEFAULT_REAL_E2E_MODEL;
+  if (requestedModel !== DEFAULT_REAL_E2E_MODEL) {
+    throw new Error(`REAL_E2E_MODEL_MUST_BE_SPARK:${requestedModel}`);
+  }
+  const model = DEFAULT_REAL_E2E_MODEL;
+  const agentId = env.REAL_E2E_AGENT_ID
+    || (runtime === 'subagent' ? 'main' : reviewer?.agent_id)
+    || 'codex';
   return {
     runtime,
     model,
@@ -291,13 +342,11 @@ export function resolveProductionCodexLaunchTarget({
 }
 
 async function checkProductionNovaConfig() {
-  const result = await execCapture(process.execPath, [
-    path.join(REPO_ROOT, 'skills', 'nova', 'pipeline.ts'),
-    '--project',
-    process.env.REAL_E2E_CONFIG_PROBE_PROJECT || DEFAULT_CONFIG_PROBE_PROJECT,
-    '--repo',
-    REPO_ROOT,
-    '--dry-run',
+  const result = await execCapture('npx', [
+    'tsc',
+    '-p',
+    path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'tsconfig.json'),
+    '--noEmit',
   ], {
     timeout: 60000,
     maxBuffer: 8 * 1024 * 1024,
@@ -319,36 +368,29 @@ async function checkRedisRoundTrip() {
     return { ok: false, reason: 'INFRA_MISSING_REDIS_HOST', remediation: 'Set REDIS_HOST for the real E2E verification pod.' };
   }
   const stream = `${process.env.REAL_E2E_REDIS_PREFIX || 'verification'}:capability:${Date.now()}:${process.pid}`;
-  const redisTool = (await import('../../../skills/nova/pipeline/tools/redis.ts')).default;
-  const redis = redisTool.client;
   try {
-    if (redis.status !== 'ready') await new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Redis ready timeout')), 10000);
-      redis.once('ready', () => { clearTimeout(timeout); resolve(); });
-      redis.once('error', reject);
+    return await withRealE2ERedisClient(async (redis) => {
+      await redis.ping();
+      const id = await redis.xadd(stream, '*', 'run_id', stream, 'status', 'capability_probe');
+      const read = await redis.xread('COUNT', 1, 'STREAMS', stream, '0-0');
+      const record = Array.isArray(read)
+        ? read.find(([readStream]) => readStream === stream)?.[1]?.find(([entryId]) => entryId === id)
+        : null;
+      const fields = Array.isArray(record?.[1]) ? record[1] : [];
+      const decoded = {};
+      for (let index = 0; index < fields.length; index += 2) decoded[String(fields[index])] = fields[index + 1];
+      const found = Boolean(record) && decoded.run_id === stream && decoded.status === 'capability_probe';
+      await redis.del(stream);
+      return {
+        ok: found,
+        reason: found ? null : 'INFRA_REDIS_STREAM_ROUNDTRIP_FAILED',
+        stream,
+        id,
+        decoded,
+      };
     });
-    await redis.ping();
-    const id = await redis.xadd(stream, '*', 'run_id', stream, 'status', 'capability_probe');
-    const read = await redis.xread('COUNT', 1, 'STREAMS', stream, '0-0');
-    const record = Array.isArray(read)
-      ? read.find(([readStream]) => readStream === stream)?.[1]?.find(([entryId]) => entryId === id)
-      : null;
-    const fields = Array.isArray(record?.[1]) ? record[1] : [];
-    const decoded = {};
-    for (let index = 0; index < fields.length; index += 2) decoded[String(fields[index])] = fields[index + 1];
-    const found = Boolean(record) && decoded.run_id === stream && decoded.status === 'capability_probe';
-    await redis.del(stream);
-    return {
-      ok: found,
-      reason: found ? null : 'INFRA_REDIS_STREAM_ROUNDTRIP_FAILED',
-      stream,
-      id,
-      decoded,
-    };
   } catch (error) {
     return { ok: false, reason: 'INFRA_REDIS_FAILED', error: error?.message || String(error), stream };
-  } finally {
-    await redisTool.disconnect?.();
   }
 }
 
@@ -392,43 +434,29 @@ async function checkDiscordDelivery(openclawConfig) {
     };
   }
 
-  const { discord } = await import('../../../skills/nova/pipeline/integrations/discord.ts');
   const runId = `real-e2e-discord-capability-${Date.now()}-${process.pid}`;
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-discord-'));
-  const config = {
-    project: 'real-e2e-discord-capability',
-    repo_root: root,
-    paths: {
-      swarm_dir: path.join(root, '.swarm'),
-    },
-    _runId: runId,
-    run_id: runId,
-    discord_webhook_url: withDiscordWebhookWait(webhook),
-    discord: {
-      webhook_timeout_ms: Number(process.env.REAL_E2E_DISCORD_TIMEOUT_MS || 10000),
-    },
-    discord_alerts: {
-      info: true,
-      warn: true,
-      critical: true,
-      ok: true,
-    },
-  };
-
   try {
-    await discord(config, 'INFO', 'Real E2E Discord capability probe', `run_id=${runId}`, [
-      { name: 'Run', value: runId, inline: false },
-      { name: 'Mode', value: 'capability', inline: true },
-    ], { run_id: runId });
-    const receiptPath = path.join(config.paths.swarm_dir, 'logs', 'pipeline', 'runs', runId, 'discord-deliveries.jsonl');
-    const receipts = readJsonLines(receiptPath);
-    const delivered = receipts.find((entry) => entry.run_id === runId && entry.ok === true && entry.message_id && entry.channel_id && entry.webhook_message_returned === true);
-    return delivered
+    const response = await fetch(withDiscordWebhookWait(webhook), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        username: 'KubeClaw E2E',
+        embeds: [{
+          title: '🔭 KubeClaw · Capability probe',
+          description: `Production delivery proof for \`${runId}\`.`,
+          color: 5_763_719,
+          fields: [{ name: 'Model', value: `\`${DEFAULT_REAL_E2E_MODEL}\``, inline: true }],
+        }],
+      }),
+      signal: AbortSignal.timeout(Number(process.env.REAL_E2E_DISCORD_TIMEOUT_MS || 10_000)),
+    });
+    const delivered = response.ok ? await response.json() : null;
+    return delivered?.id && delivered?.channel_id
       ? {
         ok: true,
         configured_target: target,
         run_id: runId,
-        message_id: delivered.message_id,
+        message_id: delivered.id,
         channel_id: delivered.channel_id,
       }
       : {
@@ -436,7 +464,7 @@ async function checkDiscordDelivery(openclawConfig) {
         reason: 'INFRA_DISCORD_DELIVERY_RECEIPT_MISSING',
         configured_target: target,
         run_id: runId,
-        receipt_count: receipts.length,
+        status: response.status,
       };
   } catch (error) {
     return {
@@ -446,8 +474,6 @@ async function checkDiscordDelivery(openclawConfig) {
       run_id: runId,
       error: error?.message || String(error),
     };
-  } finally {
-    fs.rmSync(root, { recursive: true, force: true });
   }
 }
 
@@ -457,6 +483,36 @@ async function checkKubectlAvailable() {
   }
   const version = await execCapture('kubectl', ['version', '--client=true', '-o', 'json'], { timeout: 20000 });
   return { ok: version.ok, reason: version.ok ? null : 'INFRA_KUBECTL_FAILED', result: version };
+}
+
+async function checkBusterV2Worker() {
+  let endpoint;
+  try {
+    endpoint = resolveProviderCapability(
+      parseCapabilityProviders(),
+      'buster',
+      'test.suite.execute',
+    ).endpoint;
+  } catch {
+    return { ok: false, reason: 'INFRA_MISSING_TEST_SUITE_PROVIDER' };
+  }
+  try {
+    const response = await fetch(`${endpoint.replace(/\/+$/u, '')}/healthz`, {
+      signal: AbortSignal.timeout(20_000),
+    });
+    const body = await response.json();
+    const ok = response.ok
+      && body?.schemaVersion === 'buster-suite-worker-health.v2'
+      && body?.ready === true;
+    return { ok, reason: ok ? null : 'INFRA_BUSTER_V2_WORKER_UNREADY', endpoint, body };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: 'INFRA_BUSTER_V2_WORKER_UNREACHABLE',
+      endpoint,
+      error: error?.message || String(error),
+    };
+  }
 }
 
 async function checkKubernetesApi() {
@@ -541,7 +597,13 @@ async function checkTailscaleOauthSecret() {
   const namespace = process.env.TAILSCALE_OPERATOR_NAMESPACE || 'tailscale';
   const secret = process.env.TAILSCALE_OAUTH_SECRET_NAME || 'operator-oauth';
   const result = await execCapture('kubectl', ['-n', namespace, 'get', 'secret', secret, '-o', 'json'], { timeout: 20000 });
-  return { ok: result.ok, reason: result.ok ? null : 'INFRA_MISSING_TAILSCALE_OAUTH_SECRET', namespace, secret, result };
+  return {
+    ok: result.ok,
+    reason: result.ok ? null : 'INFRA_MISSING_TAILSCALE_OAUTH_SECRET',
+    namespace,
+    secret,
+    ...(result.ok ? {} : { result }),
+  };
 }
 
 export async function runCapabilityProbe({ mode = 'full' } = {}) {
@@ -555,6 +617,7 @@ export async function runCapabilityProbe({ mode = 'full' } = {}) {
   await runCheck(checks, 'Git branch roundtrip', 'git_branch_roundtrip', checkGitBranchRoundTrip);
   await runCheck(checks, 'Discord production delivery receipt', 'discord_delivery', () => checkDiscordDelivery(openclawConfig));
   await runCheck(checks, 'kubectl available', 'kubectl', checkKubectlAvailable);
+  await runCheck(checks, 'Buster v2 worker available', 'buster-v2', checkBusterV2Worker);
   await runCheck(checks, 'Kubernetes API reachable', 'kubernetes_api', checkKubernetesApi);
   await runCheck(checks, 'BusterNamespaceLease CRD', 'buster_lease_crd', checkBusterLeaseCrd);
   await runCheck(checks, 'Buster namespace controller ready', 'buster_namespace_controller', checkBusterNamespaceController);

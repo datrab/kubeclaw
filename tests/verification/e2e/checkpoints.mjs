@@ -6,7 +6,7 @@ import {
   checkpointContractForScenario,
 } from './failure-scenarios.mjs';
 
-export const CHECKPOINT_SCHEMA_VERSION = 'real_e2e_checkpoint.v1';
+export const CHECKPOINT_SCHEMA_VERSION = 'real_e2e_checkpoint.v2';
 export const CHECKPOINT_SEED_SCENARIO = 'success';
 export { DEFAULT_CHECKPOINT_FIXTURE_FAMILY };
 
@@ -33,6 +33,7 @@ export const CHECKPOINT_NAMES = Object.freeze([
 ]);
 
 export const CHECKPOINT_AGENT_PHASES = Object.freeze([
+  'architecture',
   'forge',
   'git-sync',
   'module-buster',
@@ -67,16 +68,9 @@ export const CHECKPOINT_FAULT_SURFACES = Object.freeze([
   'crash-resume.*',
 ]);
 
-const MODULE = '01-nginx';
 const MODULES = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
-const MODULE_FORGE_OUTPUTS = Object.freeze(MODULES.map((moduleId) => `modules/${moduleId}/forge-completion.json`));
-const MODULE_BUSTER_OUTPUTS = Object.freeze(MODULES.map((moduleId) => `modules/${moduleId}/buster-output.json`));
-const MODULE_REVIEW_OUTPUT = 'logs/echo-review/MODULE-REVIEW.json';
-const APPROVAL_DECISION = 'logs/gates/operator-approval/approval-decision.json';
-const FINAL_BUSTER_OUTPUT = 'buster-test/FINAL-BUSTER-RESULT.json';
-const FINAL_REVIEW_OUTPUT = 'logs/echo-review/FINAL-REVIEW.json';
-const PIPELINE_SUMMARY_OUTPUT = 'logs/pipeline/summary.json';
-const PIPELINE_LATEST_OUTPUT = 'logs/pipeline/latest.json';
+const FORGE_STAGES = Object.freeze(MODULES.map((moduleId) => `forge-${moduleId}`));
+const BUSTER_STAGES = Object.freeze(MODULES.map((moduleId) => `buster-${moduleId}`));
 const CAPTURE_CHECKPOINTS = Object.freeze(CHECKPOINT_NAMES.filter((name) => name !== 'fresh'));
 
 function remainingPhases(skippedAgentPhases) {
@@ -91,253 +85,124 @@ function freezeArray(values = []) {
 function defineHook({
   name,
   skippedAgentPhases = [],
-  requiredSwarmPaths = ['progress.json'],
-  forbiddenSwarmPaths = [],
-  requiredModuleStatuses = {},
+  requiredPassedStages = [],
+  requiredStartedStages = [],
+  forbiddenStartedStages = [],
+  requiredRunStatus = null,
   allowedFaultSurfaces = CHECKPOINT_FAULT_SURFACES,
   fixtureFamilies = [DEFAULT_CHECKPOINT_FIXTURE_FAMILY],
 }) {
+  const effectiveSkippedAgentPhases = name === 'fresh'
+    ? skippedAgentPhases
+    : [...new Set(['architecture', ...skippedAgentPhases])];
   return Object.freeze({
     name,
     phase_boundary: name,
     fixture_families: freezeArray(fixtureFamilies),
     required_state: Object.freeze({
-      swarm_paths: freezeArray(requiredSwarmPaths),
+      v2_run_files: freezeArray(name === 'fresh' ? [] : ['events.jsonl', 'effects.jsonl']),
     }),
     forbidden_state: Object.freeze({
-      swarm_paths: freezeArray(forbiddenSwarmPaths),
+      v2_run_files: freezeArray([]),
     }),
     required_lifecycle_state: Object.freeze({
-      module_statuses: Object.freeze(Object.fromEntries(
-        Object.entries(requiredModuleStatuses).map(([moduleId, statuses]) => [moduleId, freezeArray(statuses)]),
-      )),
+      passed_stages: freezeArray(requiredPassedStages),
+      started_stages: freezeArray(requiredStartedStages),
+      forbidden_started_stages: freezeArray(forbiddenStartedStages),
+      run_status: requiredRunStatus,
     }),
-    skipped_agent_phases: freezeArray(skippedAgentPhases),
-    remaining_phases: freezeArray(remainingPhases(skippedAgentPhases)),
+    skipped_agent_phases: freezeArray(effectiveSkippedAgentPhases),
+    remaining_phases: freezeArray(remainingPhases(effectiveSkippedAgentPhases)),
     allowed_fault_surfaces: freezeArray(allowedFaultSurfaces),
   });
 }
 
-const ALL_MODULE_PASS_STATUSES = Object.freeze(Object.fromEntries(
-  MODULES.map((moduleId) => [moduleId, Object.freeze(['PASS'])]),
-));
-
 const CHECKPOINT_HOOK_CONTRACTS = Object.freeze({
   fresh: defineHook({
     name: 'fresh',
-    forbiddenSwarmPaths: [
-      `modules/${MODULE}/forge-completion.json`,
-      `modules/${MODULE}/buster-output.json`,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
+    forbiddenStartedStages: ['architecture'],
   }),
   'pre-forge': defineHook({
     name: 'pre-forge',
-    forbiddenSwarmPaths: [
-      `modules/${MODULE}/forge-completion.json`,
-      `modules/${MODULE}/buster-output.json`,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
+    requiredPassedStages: ['architecture'],
+    forbiddenStartedStages: FORGE_STAGES,
   }),
   'post-forge': defineHook({
     name: 'post-forge',
     skippedAgentPhases: ['forge'],
-    requiredSwarmPaths: [
-      'progress.json',
-      `modules/${MODULE}/forge-completion.json`,
-    ],
-    forbiddenSwarmPaths: [
-      `modules/${MODULE}/buster-output.json`,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: { [MODULE]: ['READY_FOR_TESTING'] },
+    requiredPassedStages: ['architecture', FORGE_STAGES[0]],
+    forbiddenStartedStages: [BUSTER_STAGES[0]],
     allowedFaultSurfaces: ['git-sync', 'crash-resume.*'],
   }),
   'pre-module-buster': defineHook({
     name: 'pre-module-buster',
     skippedAgentPhases: ['forge', 'git-sync'],
-    requiredSwarmPaths: [
-      'progress.json',
-      `modules/${MODULE}/forge-completion.json`,
-    ],
-    forbiddenSwarmPaths: [
-      `modules/${MODULE}/buster-output.json`,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: { [MODULE]: ['READY_FOR_TESTING'] },
+    requiredPassedStages: ['architecture', FORGE_STAGES[0]],
+    forbiddenStartedStages: [BUSTER_STAGES[0]],
     allowedFaultSurfaces: ['module-buster', 'crash-resume.*'],
   }),
   'during-module-buster-wait': defineHook({
     name: 'during-module-buster-wait',
     skippedAgentPhases: ['forge', 'git-sync'],
-    requiredSwarmPaths: [
-      'progress.json',
-      `modules/${MODULE}/forge-completion.json`,
-    ],
-    forbiddenSwarmPaths: [
-      `modules/${MODULE}/buster-output.json`,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: { [MODULE]: ['TESTING'] },
+    requiredPassedStages: ['architecture', FORGE_STAGES[0]],
+    requiredStartedStages: [BUSTER_STAGES[0]],
+    forbiddenStartedStages: ['module-review'],
     allowedFaultSurfaces: ['module-buster', 'crash-resume.*'],
   }),
   'pre-module-review': defineHook({
     name: 'pre-module-review',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster'],
-    requiredSwarmPaths: ['progress.json', ...MODULE_FORGE_OUTPUTS, ...MODULE_BUSTER_OUTPUTS],
-    forbiddenSwarmPaths: [
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES],
+    forbiddenStartedStages: ['module-review'],
     allowedFaultSurfaces: ['module-review'],
   }),
   'post-module-review': defineHook({
     name: 'post-module-review',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-    ],
-    forbiddenSwarmPaths: [
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review'],
+    forbiddenStartedStages: ['operator-approval'],
     allowedFaultSurfaces: ['operator-approval'],
   }),
   'post-approval': defineHook({
     name: 'post-approval',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review', 'approval'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-    ],
-    forbiddenSwarmPaths: [
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review', 'operator-approval'],
+    forbiddenStartedStages: ['final-buster'],
     allowedFaultSurfaces: ['pipeline-review'],
   }),
   'pre-final-buster': defineHook({
     name: 'pre-final-buster',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review', 'approval'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-    ],
-    forbiddenSwarmPaths: [
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review', 'operator-approval'],
+    forbiddenStartedStages: ['final-buster'],
     allowedFaultSurfaces: ['final-buster'],
   }),
   'pre-final-review': defineHook({
     name: 'pre-final-review',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review', 'approval', 'final-buster'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-    ],
-    forbiddenSwarmPaths: [
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review', 'operator-approval', 'final-buster'],
+    forbiddenStartedStages: ['final-review'],
     allowedFaultSurfaces: ['final-review'],
   }),
   'post-final-review': defineHook({
     name: 'post-final-review',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review', 'approval', 'final-buster', 'final-review'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-    ],
-    forbiddenSwarmPaths: [
-      PIPELINE_SUMMARY_OUTPUT,
-      PIPELINE_LATEST_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review', 'operator-approval', 'final-buster', 'final-review'],
+    forbiddenStartedStages: ['summary'],
     allowedFaultSurfaces: ['pipeline-summary', 'crash-resume.*'],
   }),
   'pre-terminal-delivery': defineHook({
     name: 'pre-terminal-delivery',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review', 'approval', 'final-buster', 'final-review', 'pipeline-summary'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-      PIPELINE_LATEST_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review', 'operator-approval', 'final-buster', 'final-review', 'summary'],
+    requiredRunStatus: 'succeeded',
     allowedFaultSurfaces: ['observability.discord', 'pipeline-review', 'crash-resume.*'],
   }),
   'during-cleanup': defineHook({
     name: 'during-cleanup',
     skippedAgentPhases: ['forge', 'git-sync', 'module-buster', 'module-review', 'approval', 'final-buster', 'final-review', 'pipeline-summary', 'pipeline-review', 'terminal-delivery'],
-    requiredSwarmPaths: [
-      'progress.json',
-      ...MODULE_FORGE_OUTPUTS,
-      ...MODULE_BUSTER_OUTPUTS,
-      MODULE_REVIEW_OUTPUT,
-      APPROVAL_DECISION,
-      FINAL_BUSTER_OUTPUT,
-      FINAL_REVIEW_OUTPUT,
-      PIPELINE_SUMMARY_OUTPUT,
-      PIPELINE_LATEST_OUTPUT,
-    ],
-    requiredModuleStatuses: ALL_MODULE_PASS_STATUSES,
+    requiredPassedStages: ['architecture', ...FORGE_STAGES, ...BUSTER_STAGES, 'module-review', 'operator-approval', 'final-buster', 'final-review', 'summary'],
+    requiredRunStatus: 'succeeded',
     allowedFaultSurfaces: ['cleanup', 'crash-resume.*'],
   }),
 });
@@ -347,8 +212,8 @@ export function checkpointDefinition(name) {
   if (!contract) throw new Error(`unknown real E2E checkpoint: ${name || '<missing>'}`);
   return {
     name,
-    required_swarm_paths: [...contract.required_state.swarm_paths],
-    forbidden_swarm_paths: [...contract.forbidden_state.swarm_paths],
+    required_v2_run_files: [...contract.required_state.v2_run_files],
+    forbidden_v2_run_files: [...contract.forbidden_state.v2_run_files],
   };
 }
 
@@ -360,16 +225,16 @@ export function checkpointHookContract(name) {
     phase_boundary: contract.phase_boundary,
     fixture_families: [...contract.fixture_families],
     required_state: {
-      swarm_paths: [...contract.required_state.swarm_paths],
+      v2_run_files: [...contract.required_state.v2_run_files],
     },
     forbidden_state: {
-      swarm_paths: [...contract.forbidden_state.swarm_paths],
+      v2_run_files: [...contract.forbidden_state.v2_run_files],
     },
     required_lifecycle_state: {
-      module_statuses: Object.fromEntries(
-        Object.entries(contract.required_lifecycle_state.module_statuses)
-          .map(([moduleId, statuses]) => [moduleId, [...statuses]]),
-      ),
+      passed_stages: [...contract.required_lifecycle_state.passed_stages],
+      started_stages: [...contract.required_lifecycle_state.started_stages],
+      forbidden_started_stages: [...contract.required_lifecycle_state.forbidden_started_stages],
+      run_status: contract.required_lifecycle_state.run_status,
     },
     skipped_agent_phases: [...contract.skipped_agent_phases],
     remaining_phases: [...contract.remaining_phases],
@@ -385,7 +250,14 @@ export function checkpointRemainingAgentPhases(name) {
   return [...checkpointHookContract(name).remaining_phases];
 }
 
-export function checkpointForScenario(scenarioId) {
+export function checkpointForScenario(scenarioId, options = {}) {
+  const requested = options.checkpoint;
+  if (requested !== undefined) {
+    if (!CHECKPOINT_NAMES.includes(requested)) {
+      throw new Error(`unknown real E2E checkpoint: ${requested || '<missing>'}`);
+    }
+    return requested;
+  }
   return checkpointContractForScenario(scenarioId).required_hook;
 }
 
@@ -428,35 +300,60 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function checkpointJsonStatus(swarmDir, relativePath) {
-  const filePath = swarmPath(swarmDir, relativePath);
-  if (!fs.existsSync(filePath)) return null;
-  try {
-    const value = readJson(filePath);
-    return String(value?.status || value?.verdict || value?.result?.status || '').toUpperCase() || null;
-  } catch {
-    return 'INVALID_JSON';
-  }
-}
-
 function lifecycleRunDirs(swarmDir) {
-  const runsDir = path.join(swarmDir, 'logs', 'pipeline', 'runs');
+  const runsDir = path.join(swarmDir, 'v2-runtime', 'runs');
   if (!fs.existsSync(runsDir)) return [];
   return fs.readdirSync(runsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => path.join(runsDir, entry.name));
 }
 
+function readV2Events(runDir) {
+  const eventsPath = path.join(runDir, 'events.jsonl');
+  if (!fs.existsSync(eventsPath)) return [];
+  const content = fs.readFileSync(eventsPath, 'utf8');
+  const lines = content.split(/\r?\n/);
+  if (content.length > 0 && !content.endsWith('\n')) {
+    // The checkpoint watcher may snapshot the append-only journal between the
+    // writer's bytes and terminating newline. Ignore only that active trailing
+    // fragment; malformed newline-terminated records still fail closed.
+    lines.pop();
+  }
+  return lines.filter(Boolean).map((line) => JSON.parse(line).entry);
+}
+
+function v2LifecycleProjection(runDir) {
+  const events = readV2Events(runDir);
+  const startedStages = new Set();
+  const passedStages = new Set();
+  let runStatus = null;
+  for (const event of events) {
+    const stageId = event?.identity?.stageId;
+    if (event?.type === 'stage.started' && stageId) startedStages.add(stageId);
+    if (event?.type === 'attempt.completed' && stageId && event?.payload?.outcome === 'passed') {
+      passedStages.add(stageId);
+    }
+    if (event?.type === 'run.succeeded') runStatus = 'succeeded';
+    if (event?.type === 'run.failed') runStatus = 'failed';
+    if (event?.type === 'run.blocked') runStatus = 'blocked';
+    if (event?.type === 'run.cancelled') runStatus = 'cancelled';
+  }
+  return { events, startedStages, passedStages, runStatus };
+}
+
 function validateCheckpointLifecycle({ checkpoint, swarmDir }) {
-  if (checkpoint === 'fresh' || checkpoint === 'pre-forge') return { ok: true, run_dirs: [] };
+  if (checkpoint === 'fresh') {
+    const runDirs = lifecycleRunDirs(swarmDir);
+    return { ok: runDirs.length === 0, run_dirs: runDirs, reason: runDirs.length === 0 ? null : 'CHECKPOINT_V2_RUN_UNEXPECTED' };
+  }
   const runDirs = lifecycleRunDirs(swarmDir);
   const complete = runDirs
     .map((runDir) => ({
       run_dir: runDir,
-      events_path: path.join(runDir, 'lifecycle', 'canonical-events.jsonl'),
-      read_models_path: path.join(runDir, 'lifecycle', 'read-models.json'),
+      events_path: path.join(runDir, 'events.jsonl'),
+      effects_path: path.join(runDir, 'effects.jsonl'),
     }))
-    .filter((entry) => fs.existsSync(entry.events_path) && fs.existsSync(entry.read_models_path));
+    .filter((entry) => fs.existsSync(entry.events_path) && fs.existsSync(entry.effects_path));
   if (complete.length === 0) {
     return {
       ok: false,
@@ -470,41 +367,27 @@ function validateCheckpointLifecycle({ checkpoint, swarmDir }) {
 function validateCheckpointSemantics({ checkpoint, swarmDir }) {
   const failures = [];
   const hookContract = checkpointHookContract(checkpoint);
-  const requirePass = (relativePath) => {
-    const status = checkpointJsonStatus(swarmDir, relativePath);
-    if (status !== 'PASS') failures.push({ path: relativePath, expected: 'PASS', actual: status || 'missing' });
-  };
-  const requireLifecycleModuleStatus = (moduleId, expectedStatuses) => {
-    const lifecycle = validateCheckpointLifecycle({ checkpoint, swarmDir });
-    const statuses = (lifecycle.complete || [])
-      .map((entry) => {
-        try {
-          return String(readJson(entry.read_models_path)?.modules?.[moduleId]?.status || '').toUpperCase() || null;
-        } catch {
-          return 'INVALID_JSON';
-        }
-      })
-      .filter(Boolean);
-    if (!expectedStatuses.some((status) => statuses.includes(status))) {
-      failures.push({
-        path: `lifecycle.modules.${moduleId}.status`,
-        expected: expectedStatuses.length === 1 ? expectedStatuses[0] : expectedStatuses,
-        actual: statuses.at(-1) || 'missing',
-      });
+  const lifecycle = validateCheckpointLifecycle({ checkpoint, swarmDir });
+  if (!lifecycle.ok || checkpoint === 'fresh') return { ok: lifecycle.ok, failures };
+  const projection = v2LifecycleProjection(lifecycle.complete.at(-1).run_dir);
+  for (const stageId of hookContract.required_lifecycle_state.passed_stages) {
+    if (!projection.passedStages.has(stageId)) {
+      failures.push({ path: `v2.stages.${stageId}`, expected: 'passed', actual: 'not-passed' });
     }
-  };
-  const expectedModuleStatusesById = hookContract.required_lifecycle_state.module_statuses;
-  for (const [moduleId, expectedStatuses] of Object.entries(expectedModuleStatusesById)) {
-    requireLifecycleModuleStatus(moduleId, expectedStatuses);
   }
-
-  for (const relativePath of hookContract.required_state.swarm_paths) {
-    if (/^modules\/[^/]+\/buster-output\.json$/.test(relativePath)
-      || relativePath === MODULE_REVIEW_OUTPUT
-      || relativePath === FINAL_BUSTER_OUTPUT
-      || relativePath === FINAL_REVIEW_OUTPUT) {
-      requirePass(relativePath);
+  for (const stageId of hookContract.required_lifecycle_state.started_stages) {
+    if (!projection.startedStages.has(stageId)) {
+      failures.push({ path: `v2.stages.${stageId}`, expected: 'started', actual: 'not-started' });
     }
+  }
+  for (const stageId of hookContract.required_lifecycle_state.forbidden_started_stages) {
+    if (projection.startedStages.has(stageId)) {
+      failures.push({ path: `v2.stages.${stageId}`, expected: 'not-started', actual: 'started' });
+    }
+  }
+  const expectedRunStatus = hookContract.required_lifecycle_state.run_status;
+  if (expectedRunStatus && projection.runStatus !== expectedRunStatus) {
+    failures.push({ path: 'v2.run.status', expected: expectedRunStatus, actual: projection.runStatus || 'running' });
   }
 
   return {
@@ -515,10 +398,12 @@ function validateCheckpointSemantics({ checkpoint, swarmDir }) {
 
 export function validateCheckpointState({ checkpoint, swarmDir }) {
   const definition = checkpointDefinition(checkpoint);
-  const missing = definition.required_swarm_paths
-    .filter((relativePath) => !pathExists(swarmPath(swarmDir, relativePath)));
-  const forbidden_present = definition.forbidden_swarm_paths
-    .filter((relativePath) => pathExists(swarmPath(swarmDir, relativePath)));
+  const lifecycle = validateCheckpointLifecycle({ checkpoint, swarmDir });
+  const runDir = lifecycle.complete?.at(-1)?.run_dir || null;
+  const missing = definition.required_v2_run_files
+    .filter((relativePath) => !runDir || !pathExists(path.join(runDir, relativePath)));
+  const forbidden_present = definition.forbidden_v2_run_files
+    .filter((relativePath) => runDir && pathExists(path.join(runDir, relativePath)));
   const progressPath = swarmPath(swarmDir, 'progress.json');
   let progressScenario = null;
   let progressError = null;
@@ -528,7 +413,6 @@ export function validateCheckpointState({ checkpoint, swarmDir }) {
   } catch (error) {
     progressError = error?.message || String(error);
   }
-  const lifecycle = validateCheckpointLifecycle({ checkpoint, swarmDir });
   const semantics = validateCheckpointSemantics({ checkpoint, swarmDir });
   const ok = missing.length === 0 && forbidden_present.length === 0 && !progressError && lifecycle.ok && semantics.ok;
   return {
@@ -567,20 +451,16 @@ export function checkpointBundlePath({ checkpointRoot, checkpoint, seedId = 'can
   return path.join(checkpointRoot, safeName(seedId), safeName(checkpoint));
 }
 
-function readJsonIfPresent(filePath) {
-  try {
-    if (!fs.existsSync(filePath)) return null;
-    return readJson(filePath);
-  } catch {
-    return null;
-  }
-}
-
 function checkpointPipelineRunId(swarmDir) {
-  const latest = readJsonIfPresent(path.join(swarmDir, 'logs', 'pipeline', 'latest.json'));
-  if (typeof latest?.run_id === 'string' && latest.run_id.trim()) return latest.run_id.trim();
   const runDirs = lifecycleRunDirs(swarmDir)
-    .map((runDir) => path.basename(runDir))
+    .map((runDir) => {
+      try {
+        const created = readV2Events(runDir).find((event) => event?.type === 'run.created');
+        return created?.identity?.runId || null;
+      } catch {
+        return null;
+      }
+    })
     .filter(Boolean);
   return runDirs.length === 1 ? runDirs[0] : null;
 }
@@ -608,26 +488,9 @@ export function writeCheckpointManifest({ checkpointDir, checkpoint, workspace, 
   return manifest;
 }
 
-function prunableLateCheckpointState({ checkpoint, state }) {
-  if (checkpoint !== 'post-final-review') return false;
-  if (!state || state.progress_error || state.missing?.length) return false;
-  const forbidden = Array.isArray(state.forbidden_present) ? state.forbidden_present : [];
-  const prunable = new Set(checkpointHookContract('post-final-review').forbidden_state.swarm_paths);
-  return forbidden.length > 0 && forbidden.every((relativePath) => prunable.has(relativePath));
-}
-
-function removeSwarmPaths(swarmDir, relativePaths = []) {
-  for (const relativePath of relativePaths) {
-    fs.rmSync(path.join(swarmDir, relativePath), { recursive: true, force: true });
-  }
-}
-
 export function captureCheckpoint({ checkpointRoot, checkpoint, workspace, seedId = 'canonical' }) {
   const sourceState = validateCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
-  const pruneForbiddenPaths = prunableLateCheckpointState({ checkpoint, state: sourceState })
-    ? [...sourceState.forbidden_present]
-    : [];
-  if (!sourceState.ok && pruneForbiddenPaths.length === 0) assertValidCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
+  if (!sourceState.ok) assertValidCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
   const checkpointDir = checkpointBundlePath({ checkpointRoot, checkpoint, seedId });
   const checkpointTmpDir = `${checkpointDir}.tmp-${process.pid}-${Date.now()}`;
   fs.rmSync(checkpointTmpDir, { recursive: true, force: true });
@@ -635,19 +498,11 @@ export function captureCheckpoint({ checkpointRoot, checkpoint, workspace, seedI
   fs.mkdirSync(path.dirname(checkpointProjectSrc), { recursive: true });
   try {
     fs.cpSync(workspace.projectSrc || path.join(workspace.worktreePath, 'Projects', workspace.projectName, 'src'), checkpointProjectSrc, { recursive: true });
-    if (pruneForbiddenPaths.length > 0) {
-      removeSwarmPaths(path.join(checkpointProjectSrc, '.swarm'), pruneForbiddenPaths);
-    }
     if (workspace.runConfigPath && fs.existsSync(workspace.runConfigPath)) {
       fs.mkdirSync(checkpointTmpDir, { recursive: true });
       fs.copyFileSync(workspace.runConfigPath, path.join(checkpointTmpDir, path.basename(workspace.runConfigPath)));
     }
     const manifest = writeCheckpointManifest({ checkpointDir: checkpointTmpDir, checkpoint, workspace, seedId });
-    if (pruneForbiddenPaths.length > 0) {
-      manifest.pruned_forbidden_swarm_paths = pruneForbiddenPaths;
-      fs.writeFileSync(path.join(checkpointTmpDir, 'checkpoint-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
-      assertValidCheckpointState({ checkpoint, swarmDir: path.join(checkpointProjectSrc, '.swarm') });
-    }
     fs.rmSync(checkpointDir, { recursive: true, force: true });
     fs.renameSync(checkpointTmpDir, checkpointDir);
     return { checkpoint, checkpoint_dir: checkpointDir, manifest };
@@ -666,7 +521,7 @@ export function captureAvailableCheckpoints({ checkpointRoot, workspace, seedId 
   const skipped = [];
   for (const checkpoint of checkpoints) {
     const state = validateCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
-    if (!state.ok && !prunableLateCheckpointState({ checkpoint, state })) {
+    if (!state.ok) {
       skipped.push({ checkpoint, state });
       continue;
     }
@@ -815,97 +670,6 @@ function replaceTextFile(filePath, replacements) {
   if (after !== before) fs.writeFileSync(filePath, after);
 }
 
-const RESTORED_CHECKPOINT_COMMIT_FIELDS = new Set([
-  'commit_hash',
-  'forge_commit_hash',
-  'buster_commit_hash',
-  'commitHash',
-]);
-
-function clearCommitFields(value) {
-  if (!value || typeof value !== 'object') return false;
-  let changed = false;
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      if (clearCommitFields(item)) changed = true;
-    }
-    return changed;
-  }
-  for (const [key, nested] of Object.entries(value)) {
-    if (RESTORED_CHECKPOINT_COMMIT_FIELDS.has(key) && typeof nested === 'string' && nested.length > 0) {
-      value[key] = null;
-      changed = true;
-    } else if (clearCommitFields(nested)) {
-      changed = true;
-    }
-  }
-  return changed;
-}
-
-export function clearRestoredCheckpointReadModelCommits(swarmDir) {
-  const cleared = [];
-  const runsDir = path.join(swarmDir, 'logs', 'pipeline', 'runs');
-  if (!fs.existsSync(runsDir)) return cleared;
-  for (const runDir of lifecycleRunDirs(swarmDir)) {
-    const readModelsPath = path.join(runDir, 'lifecycle', 'read-models.json');
-    if (!fs.existsSync(readModelsPath)) continue;
-    const readModels = readJson(readModelsPath);
-    if (!clearCommitFields(readModels)) continue;
-    fs.writeFileSync(readModelsPath, `${JSON.stringify(readModels, null, 2)}\n`);
-    cleared.push(path.relative(swarmDir, readModelsPath));
-  }
-  return cleared;
-}
-
-function normalizePreTerminalDeliveryLifecycle(swarmDir) {
-  const normalized = [];
-  for (const runDir of lifecycleRunDirs(swarmDir)) {
-    const lifecycleDir = path.join(runDir, 'lifecycle');
-    const eventsPath = path.join(lifecycleDir, 'canonical-events.jsonl');
-    const readModelsPath = path.join(lifecycleDir, 'read-models.json');
-    if (fs.existsSync(eventsPath)) {
-      const lines = fs.readFileSync(eventsPath, 'utf8').split(/\r?\n/);
-      const kept = [];
-      let removed = false;
-      for (const line of lines) {
-        if (!line.trim()) continue;
-        try {
-          const event = JSON.parse(line);
-          if (event?.type === 'pipeline_run.completed') {
-            removed = true;
-            continue;
-          }
-        } catch {
-          // Preserve unreadable lines; checkpoint validation will report them through normal paths.
-        }
-        kept.push(line);
-      }
-      if (removed) {
-        fs.writeFileSync(eventsPath, `${kept.join('\n')}${kept.length ? '\n' : ''}`);
-        normalized.push(path.relative(swarmDir, eventsPath));
-      }
-    }
-    if (fs.existsSync(readModelsPath)) {
-      const readModels = readJson(readModelsPath);
-      if (readModels?.pipeline?.status === 'COMPLETED' || readModels?.pipeline?.terminal_status === 'succeeded') {
-        readModels.pipeline = {
-          ...readModels.pipeline,
-          status: 'RUNNING',
-          completed_at: null,
-          terminal_status: null,
-          terminal_decision: null,
-          reason_code: null,
-          halt_reason: null,
-          latest_event_type: 'pipeline.checkpoint',
-        };
-        fs.writeFileSync(readModelsPath, `${JSON.stringify(readModels, null, 2)}\n`);
-        normalized.push(path.relative(swarmDir, readModelsPath));
-      }
-    }
-  }
-  return normalized;
-}
-
 export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, workspace, scenarioId = null }) {
   const validation = validateCheckpointBundle({ checkpointDir, checkpoint, scenarioId });
   if (!validation.ok) {
@@ -930,9 +694,9 @@ export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, work
   const sourcePipelineRunId = validation.manifest.source?.pipeline_run_id || checkpointPipelineRunId(workspace.swarmDir);
   const runIdToMove = sourcePipelineRunId || sourceRunId;
   if (runIdToMove && runIdToMove !== workspace.runId) {
-    const runsDir = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs');
-    const sourceRunDir = path.join(runsDir, runIdToMove);
-    const targetRunDir = path.join(runsDir, workspace.runId);
+    const runsDir = path.join(workspace.swarmDir, 'v2-runtime', 'runs');
+    const sourceRunDir = path.join(runsDir, runIdToMove.replaceAll(':', '_'));
+    const targetRunDir = path.join(runsDir, workspace.runId.replaceAll(':', '_'));
     if (fs.existsSync(sourceRunDir)) {
       fs.rmSync(targetRunDir, { recursive: true, force: true });
       fs.renameSync(sourceRunDir, targetRunDir);
@@ -956,11 +720,6 @@ export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, work
       // binary fixture appears, leave it byte-for-byte from the seed checkpoint.
     }
   }
-  clearRestoredCheckpointReadModelCommits(workspace.swarmDir);
-  const boundaryNormalized = checkpoint === 'pre-terminal-delivery'
-    ? normalizePreTerminalDeliveryLifecycle(workspace.swarmDir)
-    : [];
-
   assertValidCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
   return {
     checkpoint,
@@ -969,7 +728,7 @@ export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, work
     source: validation.manifest.source,
     restored_project: workspace.projectName,
     restored_run_id: workspace.runId,
-    boundary_normalized: boundaryNormalized,
+    boundary_normalized: [],
   };
 }
 
@@ -990,7 +749,7 @@ export function startCheckpointCaptureController({
     try {
       for (const checkpoint of [...pending]) {
         const state = validateCheckpointState({ checkpoint, swarmDir: workspace.swarmDir });
-        if (!state.ok && !prunableLateCheckpointState({ checkpoint, state })) continue;
+        if (!state.ok) continue;
         try {
           captured.push(captureCheckpoint({ checkpointRoot, checkpoint, workspace, seedId }));
         } catch (error) {
@@ -1007,10 +766,9 @@ export function startCheckpointCaptureController({
   const timer = setInterval(captureReady, intervalMs);
   const watchRoots = [
     workspace.swarmDir,
-    path.join(workspace.swarmDir, 'modules', MODULE),
-    path.join(workspace.swarmDir, 'logs', 'echo-review'),
-    path.join(workspace.swarmDir, 'logs', 'gates', 'operator-approval'),
-    path.join(workspace.swarmDir, 'buster-test'),
+    path.join(workspace.swarmDir, 'v2-runtime'),
+    path.join(workspace.swarmDir, 'v2-runtime', 'runs'),
+    path.join(workspace.swarmDir, 'artifacts', 'v2'),
   ];
   const watchers = watchRoots
     .filter((dir) => fs.existsSync(dir))

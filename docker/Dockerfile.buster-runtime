@@ -1,0 +1,106 @@
+# Buster's v2 suite worker and colocated rootless image builder.
+FROM moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c AS buildkit
+FROM node:24-bookworm-slim
+
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ARG DEBIAN_SNAPSHOT=20260713T000000Z
+ARG TARGETARCH
+ARG KUBECTL_VERSION=1.35.6
+ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
+ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
+
+COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+# The dated Debian snapshot pins the complete dependency graph coherently.
+# hadolint ignore=DL3008
+RUN printf '%s\n' \
+      'Types: deb' \
+      "URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
+      'Suites: bookworm bookworm-updates' \
+      'Components: main' \
+      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+      '' \
+      'Types: deb' \
+      "URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
+      'Suites: bookworm-security' \
+      'Components: main' \
+      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+      > /etc/apt/sources.list.d/debian.sources \
+    && rm -f /etc/apt/sources.list \
+    && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot \
+    && packages=(bash ca-certificates curl git openssh-client jq python3 python3-pip uidmap libcap2-bin fuse-overlayfs iproute2 iptables tini util-linux build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap) \
+    && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
+    && apt-get install -y --no-install-recommends "${packages[@]}" \
+    && rm -rf /var/lib/apt/lists/* \
+    && chmod 0755 /usr/bin/newuidmap /usr/bin/newgidmap \
+    && setcap cap_setuid=ep /usr/bin/newuidmap \
+    && setcap cap_setgid=ep /usr/bin/newgidmap
+
+COPY --from=buildkit /usr/bin/buildkitd /usr/local/bin/buildkitd
+COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl
+COPY --from=buildkit /usr/bin/buildkit-runc /usr/local/bin/buildkit-runc
+COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
+
+RUN set -eux; \
+    arch="${TARGETARCH:-amd64}"; \
+    case "$arch" in amd64) kubectl_sha="$KUBECTL_SHA256_AMD64" ;; arm64) kubectl_sha="$KUBECTL_SHA256_ARM64" ;; *) exit 1 ;; esac; \
+    curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /tmp/kubectl; \
+    printf '%s  %s\n' "$kubectl_sha" /tmp/kubectl | sha256sum -c -; \
+    install -m 0755 /tmp/kubectl /usr/local/bin/kubectl; \
+    rm /tmp/kubectl; \
+    npm install --prefix /app --no-audit --no-fund \
+      ajv@8.20.0 ajv-formats@3.0.1 js-yaml@5.2.2 uuid@14.0.1 \
+      lighthouse@13.4.1 playwright@1.61.1 @axe-core/playwright@4.12.1 \
+      pixelmatch@7.2.0 pngjs@7.0.0 ws@8.21.1 typescript@5.9.3; \
+    groupmod --new-name builder node; \
+    usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \
+    groupadd --gid 1001 buster-suite; \
+    groupadd --gid 1002 buster-buildkit; \
+    useradd --uid 1001 --gid 1001 --no-create-home --shell /usr/sbin/nologin buster-suite; \
+    usermod --append --groups buster-suite,buster-buildkit builder; \
+    printf 'builder:100000:65536\n' >> /etc/subuid; \
+    printf 'builder:100000:65536\n' >> /etc/subgid; \
+    mkdir -p /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /run/user/1000/buildkit; \
+    chown -R builder:builder /app /home/builder /run/user/1000
+
+RUN pip install --break-system-packages --no-cache-dir \
+      ruff==0.15.22 mypy==2.3.0 pip-audit==2.10.1 semgrep==1.170.1
+
+ENV PATH="/app/node_modules/.bin:${PATH}" \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN playwright install --with-deps chromium && chown -R builder:builder /ms-playwright
+
+COPY skills/buster/plugins/buster-suite-runtime /build/skills/buster/plugins/buster-suite-runtime
+COPY skills/common/plugin-runtime/sdk /build/skills/common/plugin-runtime/sdk
+WORKDIR /build/skills/buster/plugins/buster-suite-runtime
+RUN ln -s /app/node_modules /build/node_modules \
+    && /app/node_modules/.bin/tsc -p tsconfig.json \
+    && mv /build/skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime \
+    && rm -rf \
+      /app/buster-suite-runtime/src \
+      /app/buster-suite-runtime/common \
+      /app/buster-suite-runtime/contracts \
+      /app/buster-suite-runtime/tests \
+    && rm -rf /build \
+    && chown -R builder:builder /app/buster-suite-runtime
+
+COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
+RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
+
+ENV HOME=/home/builder \
+    XDG_RUNTIME_DIR=/run/user/1000 \
+    NODE_PATH=/app/node_modules \
+    BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
+    BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
+    BUSTER_V2_STATE_DIR=/home/builder/.openclaw/v2-jobs \
+    BUSTER_V2_RUN_DIR=/tmp/buster-v2-runs \
+    BUSTER_V2_MAX_EXTRACTED_BYTES=536870912 \
+    BUSTER_V2_PORT=18891
+
+USER 1000:1000
+EXPOSE 18891
+WORKDIR /home/builder
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-runtime-entrypoint"]
+
+LABEL org.opencontainers.image.title="KubeClaw Buster v2 Runtime"
+LABEL org.opencontainers.image.description="Authenticated v2 suite worker with colocated rootless BuildKit"

@@ -129,13 +129,14 @@ export function authorizeCapabilityInvocation(
       return;
     }
     case 'git.workspace.create':
+    case 'git.workspace.remove':
     case 'git.commit':
     case 'git.merge':
     case 'git.sync': {
       if (!withinExisting(request.resource.canonicalId, allowed(constraints, 'allowedRoots'))) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${request.resource.canonicalId}`);
       }
-      if (grant.capability === 'git.workspace.create') {
+      if (grant.capability === 'git.workspace.create' || grant.capability === 'git.workspace.remove') {
         const workspacePath = payloadText(request, 'workspacePath');
         if (!withinPotential(workspacePath, allowed(constraints, 'allowedWorkspaceRoots'))) {
           throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${workspacePath}`);
@@ -196,6 +197,24 @@ export function authorizeCapabilityInvocation(
       }
       if (!withinExisting(policyPath, allowed(constraints, 'allowedPolicyRoots'))) {
         throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${policyPath}`);
+      }
+      return;
+    }
+    case 'test.suite.execute': {
+      const repositoryRoot = payloadText(request, 'repositoryRoot');
+      if (!withinExisting(repositoryRoot, allowed(constraints, 'allowedRoots'))) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:${repositoryRoot}`);
+      }
+      const suites = request.payload.suites;
+      if (
+        !Array.isArray(suites)
+        || suites.length === 0
+        || suites.some(
+          (suite) => typeof suite !== 'string'
+            || !allowed(constraints, 'allowedSuites').includes(suite),
+        )
+      ) {
+        throw new Error(`CAPABILITY_RESOURCE_DENIED:${grant.capability}:suites`);
       }
       return;
     }

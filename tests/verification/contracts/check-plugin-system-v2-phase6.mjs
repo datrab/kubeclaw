@@ -125,10 +125,40 @@ assert.throws(() => new core.ExecutionGraph([
     },
   }),
 ]), /GRAPH_ORCHESTRATOR_THRESHOLD_INVALID/);
+assert.throws(() => new core.ExecutionGraph([
+  stage('conditional', [], {
+    activation: {
+      sourceStage: 'missing',
+      fact: 'test.review',
+      equals: 'required',
+    },
+  }),
+]), /GRAPH_ACTIVATION_SOURCE_MISSING/);
+assert.throws(() => new core.ExecutionGraph([
+  stage('source'),
+  stage('conditional', [], {
+    activation: {
+      sourceStage: 'source',
+      fact: 'test.review',
+      equals: 'required',
+    },
+  }),
+]), /GRAPH_ACTIVATION_SOURCE_NOT_ANCESTOR/);
+assert.throws(() => new core.ExecutionGraph([
+  stage('review', [], { on: { request_fix: 'fix' } }),
+  stage('fix', ['review'], {
+    activation: {
+      sourceStage: 'review',
+      fact: 'test.review',
+      equals: 'required',
+    },
+  }),
+]), /GRAPH_ACTIVATION_ON_REMEDIATION_TARGET/);
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-phase6-'));
 try {
   const fixtureRoot = path.resolve('tests/fixtures/plugin-system-v2');
+  const observerJournal = path.join(temporary, 'observer.jsonl');
   const platform = {
     schemaVersion: 'pipeline-platform.v2',
     installationRoots: [fixtureRoot],
@@ -141,7 +171,9 @@ try {
     grants: {},
     adapters: {},
     activeAdapters: [],
-    observers: {},
+    observers: {
+      'test.graph-plugin:lifecycle-recorder': { journalPath: observerJournal },
+    },
     storageRoot: path.join(temporary, 'state'),
     shutdownTimeoutMs: 5_000,
     orchestratorIssuerId: 'nova',
@@ -150,10 +182,146 @@ try {
     ],
   };
   const authenticateAdministrativeDecision = async (decision) => decision.actor;
+  const conditionalDefinition = (review) => ({
+    schemaVersion: 'pipeline-definition.v2',
+    id: `pipeline:conditional:${review}`,
+    maxConcurrency: 1,
+    stages: [
+      stage('architecture', [], {
+        input: {
+          mode: 'passed',
+          facts: { 'architecture.review': review },
+        },
+      }),
+      stage('architecture-approval', ['architecture'], {
+        activation: {
+          sourceStage: 'architecture',
+          fact: 'architecture.review',
+          equals: 'approval_required',
+        },
+      }),
+      stage('forge', ['architecture-approval']),
+    ],
+  });
+  const cleanConditional = conditionalDefinition('clean');
+  const cleanConditionalResult = await core.runPipelineV2(
+    platform,
+    cleanConditional,
+    'run:conditional-clean',
+  );
+  assert.equal(cleanConditionalResult.status, 'succeeded');
+  assert.equal(cleanConditionalResult.stages.get('architecture').facts['architecture.review'], 'clean');
+  assert.equal(cleanConditionalResult.stages.get('architecture-approval').status, 'skipped');
+  assert.equal(cleanConditionalResult.stages.get('architecture-approval').attemptsUsed, 0);
+  assert.equal(cleanConditionalResult.stages.get('forge').status, 'succeeded');
+  const cleanConditionalRoot = path.join(
+    temporary,
+    'state',
+    'runs',
+    'run_conditional-clean',
+  );
+  const cleanConditionalLines = fs.readFileSync(
+    path.join(cleanConditionalRoot, 'events.jsonl'),
+    'utf8',
+  ).trim().split('\n');
+  const cleanConditionalEvents = cleanConditionalLines.map((line) => JSON.parse(line).entry);
+  assert.equal(
+    cleanConditionalEvents.some((event) =>
+      event.type === 'stage.skipped'
+      && event.identity.stageId === 'architecture-approval'),
+    true,
+  );
+  assert.equal(
+    cleanConditionalEvents.some((event) =>
+      event.type === 'stage.started'
+      && event.identity.stageId === 'architecture-approval'),
+    false,
+    'a false activation condition must not create an attempt or invoke the plugin',
+  );
+  assert.deepEqual(
+    [...core.recoverStageStates(
+      cleanConditional,
+      new core.FileJournal(path.join(cleanConditionalRoot, 'events.jsonl')).records(),
+      'run:conditional-clean',
+      'nova',
+    )],
+    [...cleanConditionalResult.stages],
+  );
+
+  const approvalConditional = conditionalDefinition('approval_required');
+  const approvalConditionalResult = await core.runPipelineV2(
+    platform,
+    approvalConditional,
+    'run:conditional-approval',
+  );
+  assert.equal(approvalConditionalResult.status, 'succeeded');
+  assert.equal(approvalConditionalResult.stages.get('architecture-approval').status, 'succeeded');
+  assert.equal(approvalConditionalResult.stages.get('architecture-approval').attemptsUsed, 1);
+
+  const recoveryPlatformForActivation = {
+    ...platform,
+    storageRoot: path.join(temporary, 'activation-recovery-state'),
+  };
+  await core.runPipelineV2(
+    recoveryPlatformForActivation,
+    cleanConditional,
+    'run:conditional-recovery',
+  );
+  const activationRecoveryRoot = path.join(
+    recoveryPlatformForActivation.storageRoot,
+    'runs',
+    'run_conditional-recovery',
+  );
+  const activationRecoveryEventsFile = path.join(activationRecoveryRoot, 'events.jsonl');
+  const activationRecoveryLines = fs.readFileSync(
+    activationRecoveryEventsFile,
+    'utf8',
+  ).trim().split('\n');
+  const skippedLine = activationRecoveryLines.findIndex((line) => {
+    const event = JSON.parse(line).entry;
+    return event.type === 'stage.skipped'
+      && event.identity.stageId === 'architecture-approval';
+  });
+  assert(skippedLine >= 0);
+  fs.writeFileSync(
+    activationRecoveryEventsFile,
+    `${activationRecoveryLines.slice(0, skippedLine + 1).join('\n')}\n`,
+  );
+  fs.writeFileSync(path.join(activationRecoveryRoot, 'observer-checkpoints.jsonl'), '');
+  fs.writeFileSync(path.join(activationRecoveryRoot, 'observer-deliveries.jsonl'), '');
+  const conditionalRecovery = await core.recoverPipelineV2(
+    recoveryPlatformForActivation,
+    cleanConditional,
+    'run:conditional-recovery',
+  );
+  assert.equal(conditionalRecovery.status, 'succeeded');
+  assert.equal(conditionalRecovery.stages.get('architecture-approval').status, 'skipped');
+  assert.equal(conditionalRecovery.stages.get('architecture-approval').attemptsUsed, 0);
+  assert.equal(conditionalRecovery.stages.get('forge').status, 'succeeded');
+
   const definition = structuredClone(graphDefinition);
-  definition.stages.find(({ id }) => id === 'left').input.delayMs = 20;
-  definition.stages.find(({ id }) => id === 'right').input.delayMs = 20;
-  const result = await core.runPipelineV2(platform, definition, 'run:phase6');
+  definition.stages.find(({ id }) => id === 'left').input.delayMs = 200;
+  definition.stages.find(({ id }) => id === 'right').input.delayMs = 200;
+  let runSettled = false;
+  const runPromise = core.runPipelineV2(platform, definition, 'run:phase6')
+    .finally(() => {
+      runSettled = true;
+    });
+  const observerDeadline = Date.now() + 2_000;
+  while (
+    Date.now() < observerDeadline
+    && (!fs.existsSync(observerJournal)
+      || !fs.readFileSync(observerJournal, 'utf8').includes('"type":"stage.started"'))
+  ) {
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  assert.equal(
+    fs.readFileSync(observerJournal, 'utf8').includes('"type":"stage.started"'),
+    true,
+    'observers receive lifecycle events while the run is active',
+  );
+  assert.equal(runSettled, false, 'incremental observer delivery precedes terminal execution');
+  const result = await runPromise;
   assert.equal(result.status, 'succeeded');
   assert.equal(Object.isFrozen(result), true);
   assert.equal('set' in result.stages, false);
@@ -243,6 +411,8 @@ try {
     recoveryEventsFile,
     `${recoveryLines.slice(0, recoveryTerminalLine + 1).join('\n')}\n`,
   );
+  fs.writeFileSync(path.join(path.dirname(recoveryEventsFile), 'observer-checkpoints.jsonl'), '');
+  fs.writeFileSync(path.join(path.dirname(recoveryEventsFile), 'observer-deliveries.jsonl'), '');
   const recoveredExecution = await core.recoverPipelineV2(
     recoveryPlatform,
     definition,

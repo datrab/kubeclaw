@@ -69,6 +69,10 @@ export interface AdapterActivationContext {
     capability: string,
     request: CapabilityInvocation,
   ): Promise<Readonly<Record<string, unknown>>>;
+  invokeConfidential(
+    capability: string,
+    request: CapabilityInvocation,
+  ): Promise<Readonly<Record<string, unknown>>>;
   emit(
     type: string,
     identity: EventIdentity,

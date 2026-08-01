@@ -3,10 +3,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { ensureTaskConsumerGroup, processOneQueuedTask, disconnectRedisClient, getRedisClient } from '../../../skills/buster/pipeline/services/task-queue.ts';
-import { processTask } from '../../../skills/buster/pipeline/services/task-lifecycle.ts';
-import { publishTaskCompletionWithArtifact } from '../../../skills/buster/pipeline/services/task-completion.ts';
-import { resolveBusterOutputFilePath } from '../../../skills/buster/pipeline/services/pipeline-helpers.ts';
+import {
+  ensureTaskConsumerGroup,
+  processOneQueuedTask,
+  disconnectRedisClient,
+  getRedisClient,
+} from '../../../skills/buster/plugins/buster-suite-runtime/dist/src/runtime/services/task-queue.js';
+import { processTask } from '../../../skills/buster/plugins/buster-suite-runtime/dist/src/runtime/services/task-lifecycle.js';
+import { publishTaskCompletionWithArtifact } from '../../../skills/buster/plugins/buster-suite-runtime/dist/src/runtime/services/task-completion.js';
+import { resolveBusterOutputFilePath } from '../../../skills/buster/plugins/buster-suite-runtime/dist/src/runtime/services/pipeline-helpers.js';
 import { assertScenarioMutationChannel } from './failure-scenarios.mjs';
 
 function parseArgs(argv) {

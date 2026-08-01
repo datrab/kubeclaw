@@ -1,0 +1,9 @@
+{
+  "name": "@kubeclaw/plugin-buster-suite-runtime",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "test": "npm run build && node --experimental-strip-types tests/protocol.test.ts && node --experimental-strip-types tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+  }
+}

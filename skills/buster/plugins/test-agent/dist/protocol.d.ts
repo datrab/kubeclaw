@@ -9,6 +9,13 @@ export interface SuiteEvidence {
     readonly passed: boolean;
     readonly summary: string;
 }
+export interface TestSuitePlan {
+    readonly repositoryRoot: string;
+    readonly suites: readonly string[];
+    readonly testConfig: Readonly<Record<string, unknown>>;
+    readonly task: Readonly<Record<string, unknown>>;
+    readonly moduleId?: string;
+}
 export interface TestInput {
     readonly runId: string;
     readonly taskId: string;
@@ -16,6 +23,7 @@ export interface TestInput {
     readonly task: string;
     readonly suiteEvidence: readonly SuiteEvidence[];
     readonly commandSuites?: readonly CommandSuite[];
+    readonly suitePlan: TestSuitePlan;
 }
 export interface TestVerdict {
     readonly verdict: 'PASS' | 'FAIL';

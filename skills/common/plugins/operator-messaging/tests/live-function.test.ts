@@ -9,8 +9,10 @@ const core = await import(pathToFileURL(
   path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts'),
 ).href);
 const secretEnvironmentName = 'KUBECLAW_OPERATOR_MESSAGING_TEST_TOKEN';
+const endpointEnvironmentName = 'KUBECLAW_OPERATOR_MESSAGING_TEST_ENDPOINT';
 const secretValue = 'operator-test-secret-that-must-not-be-journaled';
 const previousSecret = process.env[secretEnvironmentName];
+const previousEndpoint = process.env[endpointEnvironmentName];
 process.env[secretEnvironmentName] = secretValue;
 const deliveries = [];
 const server = http.createServer((request, response) => {
@@ -52,6 +54,8 @@ await new Promise((resolve, reject) => {
 const address = server.address();
 if (!address || typeof address === 'string') throw new Error('test server address is unavailable');
 const origin = `http://127.0.0.1:${address.port}`;
+const confidentialEndpoint = `${origin}/confidential-discord`;
+process.env[endpointEnvironmentName] = confidentialEndpoint;
 
 const roots = [
   path.join(repository, 'skills/common/plugins'),
@@ -78,12 +82,12 @@ const granted = core.resolveCapabilityGrants(snapshot, {
   grants: new Map([
     ['kubeclaw.notification-observer:notifications', new Map([
       ['operator.request', {
-        allowedTargets: ['operators', 'failing', 'unconfigured'],
+        allowedTargets: ['operators', 'discord', 'confidential-discord', 'failing', 'unconfigured'],
       }],
     ])],
     ['kubeclaw.operator-messaging:operator', new Map([
       ['network.http', { allowedOrigins: [origin] }],
-      ['secrets.read', { allowedNames: ['operator.webhook'] }],
+      ['secrets.read', { allowedNames: ['operator.webhook', 'operator.endpoint'] }],
     ])],
   ]),
 });
@@ -105,6 +109,18 @@ const adapters = new core.AdapterRuntime({
           tokenSecret: 'operator.webhook',
           maxPayloadBytes: 512,
         },
+        discord: {
+          endpoint: `${origin}/discord`,
+          tokenSecret: 'operator.webhook',
+          format: 'discord_webhook',
+          maxPayloadBytes: 4_096,
+        },
+        'confidential-discord': {
+          endpointOrigin: origin,
+          endpointSecret: 'operator.endpoint',
+          format: 'discord_webhook',
+          maxPayloadBytes: 4_096,
+        },
         slow: {
           endpoint: `${origin}/slow`,
           tokenSecret: 'operator.webhook',
@@ -125,7 +141,10 @@ const adapters = new core.AdapterRuntime({
       timeoutMs: 1_000,
     }],
     ['kubeclaw.secret-resolver:secrets', {
-      environment: { 'operator.webhook': secretEnvironmentName },
+      environment: {
+        'operator.webhook': secretEnvironmentName,
+        'operator.endpoint': endpointEnvironmentName,
+      },
     }],
   ]),
   effects: new core.EffectCoordinator(effectJournal, undefined, undefined, new core.MemoryResourceLockManager()),
@@ -197,14 +216,54 @@ try {
     `v1=${expectedSignature}`,
   );
 
+  const discordAccepted = await publish('discord', {
+    type: 'stage.succeeded',
+    runId: 'run:discord',
+    stageId: 'architecture',
+    severity: 'success',
+    title: 'Architecture Validator passed',
+    summary: 'Architecture validation passed.',
+    fields: [{ name: 'Model', value: 'gpt-5.3-codex-spark', inline: true }],
+    footer: 'KubeClaw Pipeline · run:discord',
+    occurredAt: '2026-07-29T07:00:00.000Z',
+  }, {
+    idempotencyKey: 'operator:discord-delivery',
+  });
+  assert.equal(discordAccepted.accepted, true);
+  const discordBody = JSON.parse(deliveries.at(-1).body);
+  assert.equal(discordBody.embeds[0].title, '✅ Architecture Validator passed');
+  assert.equal(discordBody.embeds[0].fields[0].value, 'gpt-5.3-codex-spark');
+  assert.equal(discordBody.embeds[0].footer.text, 'KubeClaw Pipeline · run:discord');
+
+  const confidentialAccepted = await publish('confidential-discord', {
+    type: 'run.started',
+    runId: 'run:confidential',
+    severity: 'info',
+    title: 'Pipeline started',
+    summary: 'Confidential endpoint delivery.',
+  }, {
+    idempotencyKey: 'operator:confidential-discord-delivery',
+  });
+  assert.equal(confidentialAccepted.accepted, true);
+  assert.equal(deliveries.at(-1).url, '/confidential-discord');
+
   const repeated = await publish('operators', payload, {
     idempotencyKey: 'operator:stable-delivery',
   });
   assert.deepEqual(repeated, accepted);
-  assert.equal(deliveries.length, 1, 'completed effect must be idempotent');
+  assert.equal(deliveries.length, 3, 'completed effect must be idempotent');
 
   const journalText = JSON.stringify(effectJournal.entries());
+  assert.equal(
+    effectJournal.entries().every((request) =>
+      request.attempt.runId === attempt.runId
+      && request.attempt.stageId === attempt.stageId
+      && request.attempt.attemptId === attempt.attemptId),
+    true,
+    'nested adapter effects retain the originating invocation identity',
+  );
   assert.doesNotMatch(journalText, new RegExp(secretValue));
+  assert.doesNotMatch(journalText, new RegExp(confidentialEndpoint.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.doesNotMatch(journalText, /authorization/i);
   assert.match(journalText, /operator:stable-delivery/);
   assert.match(journalText, /x-kubeclaw-signature/);
@@ -260,6 +319,8 @@ try {
   await new Promise((resolve) => server.close(resolve));
   if (previousSecret === undefined) delete process.env[secretEnvironmentName];
   else process.env[secretEnvironmentName] = previousSecret;
+  if (previousEndpoint === undefined) delete process.env[endpointEnvironmentName];
+  else process.env[endpointEnvironmentName] = previousEndpoint;
 }
 
 console.log(JSON.stringify({

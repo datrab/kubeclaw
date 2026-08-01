@@ -85,6 +85,54 @@ function catalogContains(
   });
 }
 
+function latestArtifact(
+  root: string,
+  artifactId: string,
+  namespace: string,
+  runId: string,
+): ArtifactRef {
+  const file = path.join(root, 'catalog.jsonl');
+  if (!fs.existsSync(file)) throw new Error('ARTIFACT_NOT_FOUND');
+  let latest: ArtifactRef | undefined;
+  for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
+    if (line.length === 0) continue;
+    let artifact: ArtifactRef;
+    try {
+      artifact = JSON.parse(line) as ArtifactRef;
+    } catch {
+      throw new Error('ARTIFACT_CATALOG_INVALID');
+    }
+    if (
+      artifact.artifactId === artifactId
+      && artifact.namespace === namespace
+      && artifact.producer.runId === runId
+    ) {
+      latest = artifact;
+    }
+  }
+  if (!latest) throw new Error('ARTIFACT_NOT_FOUND');
+  return latest;
+}
+
+function readArtifact(root: string, artifact: ArtifactRef): {
+  readonly value: unknown;
+  readonly digest: string;
+  readonly sizeBytes: number;
+  readonly artifact: ArtifactRef;
+} {
+  const file = blobPath(root, artifact.digest);
+  if (!fs.existsSync(file)) throw new Error('ARTIFACT_NOT_FOUND');
+  const bytes = fs.readFileSync(file);
+  const actual = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
+  if (actual !== artifact.digest) throw new Error('ARTIFACT_INTEGRITY_FAILED');
+  return {
+    value: JSON.parse(bytes.toString('utf8')),
+    digest: artifact.digest,
+    sizeBytes: bytes.byteLength,
+    artifact,
+  };
+}
+
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const configured = context.config.artifactRoot;
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('artifactRoot is required');
@@ -104,12 +152,25 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         const artifactId = requiredText(request.resource.canonicalId, 'ID');
         const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
         if (!catalogContains(root, artifactId, namespace, digest)) throw new Error('ARTIFACT_NOT_FOUND');
-        const file = blobPath(root, digest);
-        if (!fs.existsSync(file)) throw new Error('ARTIFACT_NOT_FOUND');
-        const bytes = fs.readFileSync(file);
-        const actual = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-        if (actual !== digest) throw new Error('ARTIFACT_INTEGRITY_FAILED');
-        return { value: JSON.parse(bytes.toString('utf8')), digest, sizeBytes: bytes.byteLength };
+        const { value, digest: storedDigest, sizeBytes } = readArtifact(root, {
+          artifactId,
+          namespace,
+          mediaType: 'application/json',
+          digest,
+          sizeBytes: 0,
+          producer: request.attempt,
+        });
+        return { value, digest: storedDigest, sizeBytes };
+      }
+      if (request.capability === 'artifacts.read' && request.operation === 'get_latest_json') {
+        const artifactId = requiredText(request.resource.canonicalId, 'ID');
+        const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
+        return readArtifact(root, latestArtifact(
+          root,
+          artifactId,
+          namespace,
+          request.attempt.runId,
+        ));
       }
       if (request.capability !== 'artifacts.write' || request.operation !== 'put_json') {
         throw new Error(`ARTIFACT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);

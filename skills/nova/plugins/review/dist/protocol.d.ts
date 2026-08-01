@@ -12,6 +12,7 @@ export interface ReviewDispatchRequest {
         readonly evidence: Readonly<Record<string, unknown>>;
         readonly allowedStatuses: readonly ['PASS', 'FAIL'];
     };
+    readonly outputContract: Readonly<Record<string, unknown>>;
 }
 export declare function buildReviewTask(input: ReviewInput, helperPrompt: unknown): string;
 export declare function buildReviewDispatchRequest(agent: string, input: ReviewInput, helperPrompt: unknown): ReviewDispatchRequest;

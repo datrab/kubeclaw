@@ -236,13 +236,12 @@ function invariantFailures({ materialized, scenarioId }) {
     }
   }
   if (materialized.scenario.expectedEvidence === 'forge_malformed_output') {
-    const terminal = expectedFailureContractForScenario(materialized.scenario).terminal;
-    if (terminal.step_type !== 'pipeline' || terminal.step_id !== 'degraded_evidence') {
-      push('forge_malformed_terminal_contract_stale', 'retryable Forge malformed output must not expect a module-terminal invalid-contract failure', {
+    const failure = expectedFailureContractForScenario(materialized.scenario);
+    if (failure.expectedStageId !== 'forge-01-nginx') {
+      push('forge_malformed_v2_failure_contract_stale', 'Forge malformed output must be attributed to the canonical v2 Forge stage', {
         actual: {
-          step_type: terminal.step_type,
-          step_id: terminal.step_id,
-          failure_class: terminal.failure_class,
+          expected_stage_id: failure.expectedStageId,
+          allowed_stage_events: failure.allowedStageEventTypes,
         },
       });
     }

@@ -1,1 +1,103 @@
-{"id":"kubeclaw.notification-observer","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[],"observers":[{"id":"notifications","module":"dist/observer.js","export":"observe","subscriptions":["run.started","run.succeeded","run.failed","run.blocked","run.cancelled","stage.blocked","orchestrator.required"],"delivery":"at_least_once","ordering":"per_run","failurePolicy":{"mode":"best_effort","maxAttempts":5,"backoffMs":1000,"timeoutMs":10000},"requiredCapabilities":["operator.request"],"configSchema":"schemas/config.schema.json","checkpointSchema":"schemas/checkpoint.schema.json"},{"id":"preview-delivery","module":"dist/observer.js","export":"deliverPreview","subscriptions":["artifact.created"],"delivery":"at_least_once","ordering":"per_run","failurePolicy":{"mode":"best_effort","maxAttempts":5,"backoffMs":1000,"timeoutMs":10000},"requiredCapabilities":["operator.request"],"configSchema":"schemas/config.schema.json","checkpointSchema":"schemas/checkpoint.schema.json"}],"adapters":[]}
+{
+  "id": "kubeclaw.notification-observer",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.1.0",
+  "stages": [],
+  "observers": [
+    {
+      "id": "notifications",
+      "module": "dist/observer.js",
+      "export": "observe",
+      "subscriptions": [
+        "run.started",
+        "run.succeeded",
+        "run.failed",
+        "run.blocked",
+        "run.cancelled",
+        "stage.started",
+        "stage.skipped",
+        "stage.succeeded",
+        "stage.failed",
+        "stage.blocked",
+        "stage.cancelled",
+        "stage.retrying",
+        "stage.waiting",
+        "orchestrator.required"
+      ],
+      "delivery": "at_least_once",
+      "ordering": "per_run",
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "requiredCapabilities": ["operator.request"],
+      "configSchema": "schemas/config.schema.json",
+      "checkpointSchema": "schemas/checkpoint.schema.json"
+    },
+    {
+      "id": "preview-delivery",
+      "module": "dist/observer.js",
+      "export": "deliverPreview",
+      "subscriptions": ["artifact.created"],
+      "delivery": "at_least_once",
+      "ordering": "per_run",
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "requiredCapabilities": ["operator.request"],
+      "configSchema": "schemas/config.schema.json",
+      "checkpointSchema": "schemas/checkpoint.schema.json"
+    },
+    {
+      "id": "audit",
+      "module": "dist/observer.js",
+      "export": "recordAudit",
+      "subscriptions": [
+        "run.created",
+        "run.started",
+        "run.succeeded",
+        "run.failed",
+        "run.blocked",
+        "run.cancelled",
+        "stage.started",
+        "stage.waiting",
+        "stage.retrying",
+        "stage.skipped",
+        "stage.succeeded",
+        "stage.failed",
+        "stage.blocked",
+        "stage.cancelled",
+        "attempt.created",
+        "attempt.dispatched",
+        "attempt.completed",
+        "attempt.timed_out",
+        "attempt.cancelled",
+        "effect.requested",
+        "effect.accepted",
+        "effect.completed",
+        "effect.failed",
+        "artifact.created",
+        "wait.created",
+        "wait.resolved",
+        "orchestrator.required"
+      ],
+      "delivery": "at_least_once",
+      "ordering": "per_run",
+      "failurePolicy": {
+        "mode": "required",
+        "maxAttempts": 3,
+        "backoffMs": 250,
+        "timeoutMs": 10000
+      },
+      "requiredCapabilities": ["artifacts.write"],
+      "configSchema": "schemas/config.schema.json",
+      "checkpointSchema": "schemas/checkpoint.schema.json"
+    }
+  ],
+  "adapters": []
+}

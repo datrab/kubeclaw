@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["targets"],
+  "properties": {
+    "targets": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "endpoint", "tokenSecret", "runtime", "model", "cwd", "repositoryRoot", "resultPathPrefix"
+        ],
+        "properties": {
+          "endpoint": { "type": "string", "format": "uri" },
+          "tokenSecret": { "type": "string", "minLength": 1 },
+          "runtime": { "enum": ["acp", "subagent"] },
+          "agentId": { "type": "string", "minLength": 1 },
+          "agentRole": { "type": "string", "minLength": 1 },
+          "model": { "type": "string", "minLength": 1 },
+          "thinking": { "type": "string", "minLength": 1 },
+          "cwd": { "type": "string", "pattern": "^/" },
+          "repositoryRoot": { "type": "string", "pattern": "^/" },
+          "pollMs": { "type": "integer", "minimum": 10, "default": 1000 },
+          "maxPollMs": { "type": "integer", "minimum": 10, "default": 15000 },
+          "maxPolls": { "type": "integer", "minimum": 1, "default": 1800 },
+          "sessionTimeoutMs": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 86400000,
+            "default": 1800000
+          },
+          "resultPathPrefix": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+          },
+          "resultEndpoint": { "type": "string", "format": "uri" },
+          "resultTokenSecret": { "type": "string", "minLength": 1 }
+        },
+        "dependentRequired": {
+          "resultEndpoint": ["resultTokenSecret"],
+          "resultTokenSecret": ["resultEndpoint"]
+        }
+      }
+    }
+  }
+}

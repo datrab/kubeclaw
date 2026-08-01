@@ -2,6 +2,7 @@
 # KubeClaw General — Root Environment for Nova, Forge, Echo
 # =============================================================================
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.7.1@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c
+FROM moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c AS buildkit-client
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE}
 
@@ -43,6 +44,11 @@ RUN packages=( \
     && for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
     && apt-get install -y --no-install-recommends "${packages[@]}" \
     && rm -rf /var/lib/apt/lists/*
+
+# Image builds are deterministic suite effects owned by the v2 command
+# adapter. The daemon is an isolated rootless sidecar; the authoritative Nova
+# runtime receives only its bounded Unix-socket client.
+COPY --from=buildkit-client /usr/bin/buildctl /usr/local/bin/buildctl
 
 # Locked JavaScript runtime and verification tools.
 COPY docker/general-tools/package.json docker/general-tools/package-lock.json /opt/kubeclaw-tools/

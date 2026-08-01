@@ -7,22 +7,49 @@ export function buildRequest(agent, input, helperPrompt) {
     return {
         protocol: 'kubeclaw.implementation.v2', agent,
         identity: { runId: input.runId, moduleId: input.moduleId, attempt: input.attempt },
-        headBefore: input.headBefore, task: input.task, helperPrompt: helperPrompt ?? null,
-        requiredCompletion: { status: ['ready_for_testing', 'blocked'], fields: ['runId', 'moduleId', 'attempt', 'summary', 'changedPaths', 'checks', 'session'] },
+        headBefore: input.headBefore,
+        task: [
+            input.task,
+            helperPrompt?.trim() || 'No additional implementation guidance was supplied.',
+            'Return only the agent-owned output object described by outputContract.',
+            'Do not copy protocol, agent, identity, headBefore, task, or outputContract into the output.',
+            'Runtime/core attach invocation identity and session evidence.',
+        ].join('\n\n'),
+        outputContract: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['status', 'summary', 'changedPaths', 'checks'],
+            properties: {
+                status: { enum: ['ready_for_testing', 'blocked'] },
+                summary: { type: 'string' },
+                changedPaths: {
+                    type: 'array',
+                    description: 'Changed file paths relative to the Git repository root, never relative to a nested project or current working directory.',
+                    items: { type: 'string' },
+                },
+                checks: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        additionalProperties: false,
+                        required: ['name', 'passed'],
+                        properties: { name: { type: 'string' }, passed: { type: 'boolean' } },
+                    },
+                },
+            },
+        },
     };
 }
 export function parseCompletion(value, input) {
     if (!value || typeof value !== 'object' || Array.isArray(value))
         throw new Error('completion must be an object');
     const source = value;
-    const allowed = new Set(['status', 'runId', 'moduleId', 'attempt', 'summary', 'changedPaths', 'checks', 'session']);
+    const allowed = new Set(['status', 'summary', 'changedPaths', 'checks', 'session']);
     if (Object.keys(source).some((key) => !allowed.has(key)))
         throw new Error('completion has unknown fields');
     const status = source.status;
     if (status !== 'ready_for_testing' && status !== 'blocked')
         throw new Error('completion status is invalid');
-    if (source.runId !== input.runId || source.moduleId !== input.moduleId || source.attempt !== input.attempt)
-        throw new Error('completion identity does not match the active attempt');
     if (!Array.isArray(source.changedPaths) || source.changedPaths.length > 512)
         throw new Error('changedPaths is invalid');
     const changedPaths = source.changedPaths.map((item) => {
@@ -37,7 +64,8 @@ export function parseCompletion(value, input) {
         if (!item || typeof item !== 'object' || Array.isArray(item))
             throw new Error('check is invalid');
         const check = item;
-        if (Object.keys(check).some((key) => key !== 'name' && key !== 'passed') || typeof check.passed !== 'boolean')
+        if (Object.keys(check).some((key) => !['name', 'passed'].includes(key))
+            || typeof check.passed !== 'boolean')
             throw new Error('check is invalid');
         return { name: text(check.name, 'check name', 256), passed: check.passed };
     });

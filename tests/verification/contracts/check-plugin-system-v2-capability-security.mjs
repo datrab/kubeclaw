@@ -28,7 +28,7 @@ const phase5 = JSON.parse(fs.readFileSync(
   'utf8',
 ));
 
-assert.equal(core.CAPABILITY_IDS.length, 19);
+assert.equal(core.CAPABILITY_IDS.length, 21);
 assert.equal(Object.isFrozen(core.CAPABILITY_DEFINITIONS), true);
 for (const capability of core.CAPABILITY_IDS) {
   const definition = core.CAPABILITY_DEFINITIONS[capability];
@@ -47,11 +47,15 @@ const inventory = JSON.parse(fs.readFileSync(
   'docs/generated/inventory/plugin-system.json',
   'utf8',
 ));
-assert.deepEqual(
-  Object.keys(phase5.inventoriedEffectMappings).sort(),
-  Object.keys(inventory.effectAdapters).sort(),
-  'every inventoried privileged-effect class must map to canonical capabilities',
+const inventoriedRegistrations = new Set(
+  inventory.registrations.map((registration) => registration.registrationId),
 );
+for (const provider of Object.values(phase5.capabilities)) {
+  assert(
+    inventoriedRegistrations.has(provider),
+    `capability provider must remain present in permanent manifest inventory: ${provider}`,
+  );
+}
 for (const capabilities of Object.values(phase5.inventoriedEffectMappings)) {
   assert(capabilities.length > 0);
   for (const capability of capabilities) assert(core.CAPABILITY_IDS.includes(capability));
@@ -287,6 +291,14 @@ const cases = [
   }, {
     payload: { workspacePath: path.join(workspaceEscape, 'task') },
   }],
+  ['git.workspace.remove', {
+    allowedRoots: [repositoryRoot], allowedWorkspaceRoots: [workspaceRoot],
+  }, {
+    operation: 'remove', resource: { type: 'git.repository', canonicalId: repositoryRoot },
+    payload: { workspacePath: path.join(workspaceRoot, 'task') },
+  }, {
+    payload: { workspacePath: path.join(workspaceEscape, 'task') },
+  }],
   ['git.commit', { allowedRoots: [repositoryRoot] }, {
     operation: 'commit', resource: { type: 'git.repository', canonicalId: repositoryWork }, payload: {},
   }, { resource: { type: 'git.repository', canonicalId: repositoryEscape } }],
@@ -328,6 +340,14 @@ const cases = [
     operation: 'run', resource: { type: 'command.executable', canonicalId: process.execPath },
     payload: { workingDirectory: repositoryWork },
   }, { payload: { workingDirectory: repositoryEscape } }],
+  ['test.suite.execute', {
+    allowedSuites: ['unit'], allowedRoots: [repositoryRoot],
+  }, {
+    operation: 'run', resource: { type: 'test.suite-plan', canonicalId: 'module' },
+    payload: { repositoryRoot, suites: ['unit'] },
+  }, {
+    payload: { repositoryRoot, suites: ['deployment'] },
+  }],
   ['lint.execute', {
     allowedProjects: ['project'],
     allowedRoots: [repositoryRoot],

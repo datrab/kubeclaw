@@ -149,14 +149,25 @@ export function recoverStageStates(
           : {}),
       });
     } else if (event.type === 'stage.succeeded') {
+      const facts = event.payload.facts;
       states.set(stageId, {
         ...current,
         ...budgets,
         status: 'succeeded',
+        ...(facts && typeof facts === 'object' && !Array.isArray(facts)
+          ? {
+              facts: Object.freeze({
+                ...(facts as Record<string, string | number | boolean | null>),
+              }),
+            }
+          : {}),
         ...(typeof event.payload.remediationReturnTo === 'string'
           ? { remediationReturnTo: event.payload.remediationReturnTo }
           : {}),
       });
+    }
+    else if (event.type === 'stage.skipped') {
+      states.set(stageId, { ...current, ...budgets, status: 'skipped' });
     }
     else if (event.type === 'stage.blocked') states.set(stageId, { ...current, ...budgets, status: 'blocked' });
     else if (event.type === 'stage.failed') states.set(stageId, { ...current, ...budgets, status: 'failed' });

@@ -26,10 +26,12 @@ jobs:
         with:
           filters: |
             image_inputs:
+              - '.dockerignore'
               - 'docker/**'
               - 'go.mod'
               - 'cmd/buster-namespace-controller/**'
               - 'skills/common/plugins/openclaw-agent-observer/**'
+              - 'skills/buster/plugins/buster-suite-runtime/**'
               - 'contracts/agent-observability/v1/**'
   check-base-image:
     name: Check pinned OpenClaw base
@@ -139,9 +141,9 @@ jobs:
           - name: buster-gateway
             dockerfile: docker/Dockerfile.buster-gateway
             image_suffix: kubeclaw-buster-gateway
-          - name: buster-pipeline
-            dockerfile: docker/Dockerfile.buster-pipeline
-            image_suffix: kubeclaw-buster-pipeline
+          - name: buster-runtime
+            dockerfile: docker/Dockerfile.buster-runtime
+            image_suffix: kubeclaw-buster-runtime
           - name: namespace-controller
             dockerfile: docker/Dockerfile.namespace-controller
             image_suffix: kubeclaw-namespace-controller

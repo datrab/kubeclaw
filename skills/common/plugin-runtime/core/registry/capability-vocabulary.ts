@@ -37,12 +37,17 @@ function definition(
 export const CAPABILITY_DEFINITIONS = Object.freeze({
   'state.read': definition(['read'], ['state.namespace'], ['allowedNamespaces']),
   'state.append': definition(['append'], ['state.namespace'], ['allowedNamespaces']),
-  'artifacts.read': definition(['get_json'], ['artifact.object'], ['allowedNamespaces']),
+  'artifacts.read': definition(['get_json', 'get_latest_json'], ['artifact.object'], ['allowedNamespaces']),
   'artifacts.write': definition(['put_json'], ['artifact.object'], ['allowedNamespaces']),
   'runtime.dispatch': definition(['dispatch'], ['runtime.agent'], ['allowedAgents']),
   'git.repository.read': definition(['read_text'], ['git.repository.path'], ['allowedPrefixes']),
   'git.workspace.create': definition(
     ['create'],
+    ['git.repository'],
+    ['allowedRoots', 'allowedWorkspaceRoots'],
+  ),
+  'git.workspace.remove': definition(
+    ['remove'],
     ['git.repository'],
     ['allowedRoots', 'allowedWorkspaceRoots'],
   ),
@@ -67,6 +72,11 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
     ['run_report'],
     ['lint.project'],
     ['allowedProjects', 'allowedRoots', 'allowedPolicyRoots'],
+  ),
+  'test.suite.execute': definition(
+    ['run'],
+    ['test.suite-plan'],
+    ['allowedSuites', 'allowedRoots'],
   ),
   'transport.publish': definition(['publish'], ['transport.target'], ['allowedTargets']),
   'agent.events.subscribe': definition(['status'], ['agent.events'], ['allowedSources']),

@@ -16,50 +16,20 @@ const PRODUCTION_IGNORES = [
 
 const CONSOLE_BOUNDARIES = [
   'scripts/**/*.mjs',
-  'skills/buster/buster-pipeline.ts',
-  'skills/buster/pipeline/suites/support.ts',
-  'skills/buster/pipeline/tools/screenshot.ts',
-  'skills/buster/pipeline/tools/visual-audit.ts',
-  'skills/buster/pipeline/tools/redis.ts',
-  'skills/buster/pipeline/tools/verify-task.ts',
-  'skills/nova/pipeline/cli.ts',
-  'skills/nova/pipeline/core/logger.ts',
-  'skills/nova/pipeline/tools/lint-report.ts',
-  'skills/nova/pipeline/tools/lint-report/output.ts',
-  'skills/nova/pipeline/tools/project-summary.ts',
-  'skills/nova/pipeline/tools/project-summary-runner.ts',
-  'skills/nova/pipeline/tools/redis.ts',
-  'skills/nova/pipeline/tools/write-forge-completion.ts',
-  'skills/common/pipeline/runtime-log.ts',
-  'skills/nova/pipeline/core/runtime.ts',
-  'skills/nova/pipeline/services/system-io-warning.ts',
+  'skills/common/plugin-runtime/cli.ts',
   'skills/nova/project_setup/tools/progress-scaffold.ts',
 ];
 
 const ENVIRONMENT_BOUNDARIES = [
   'scripts/clawpatch-pipeline-light.mjs',
   'skills/common/plugins/openclaw-agent-observer/src/config.ts',
-  'skills/buster/pipeline/runtime-environment.ts',
-  'skills/buster/pipeline/services/runtime-diagnostics.ts',
-  'skills/buster/pipeline/services/runtime-policy.ts',
-  'skills/common/pipeline/platform-config.ts',
-  'skills/common/pipeline/redis-transport.ts',
-  'skills/common/pipeline/runtime-environment.ts',
-  'skills/nova/pipeline/core/config.ts',
-  'skills/nova/pipeline/core/runtime-environment.ts',
-  'skills/nova/pipeline/services/agent-observability-ingester/config.ts',
-  'skills/nova/pipeline/services/agent-observability-runtime.ts',
-  'skills/nova/pipeline/services/runtime-redis-preflight.ts',
+  'skills/common/plugin-runtime/core/config/platform.ts',
 ];
 
 const DYNAMIC_MODULE_BOUNDARIES = [
   'skills/nova/pipeline.ts',
-  'skills/nova/pipeline/tools/redis.ts',
-  'skills/buster/pipeline/suites/a11y.ts',
-  'skills/buster/pipeline/suites/api.ts',
-  'skills/buster/pipeline/suites/visual-reg.ts',
-  'skills/buster/pipeline/tools/screenshot.ts',
-  'skills/buster/pipeline/tools/visual-audit.ts',
+  'skills/common/plugin-runtime/core/isolation/runner.ts',
+  'skills/common/plugin-runtime/core/registry/activation.ts',
 ];
 
 function propertyName(node) {

@@ -10,7 +10,14 @@ const base = {
 };
 assert.deepEqual(lifecycleNotification(base), {
   type: 'run.failed', eventId: 'event:1', runId: 'run:1', stageId: 'stage:1',
+  severity: 'error', title: 'Pipeline run failed',
   summary: 'failed because tests failed',
+  reasonCode: null,
+  fields: [
+    { name: 'Run ID', value: 'run:1', inline: false },
+    { name: 'Stage', value: 'stage:1', inline: true },
+  ],
+  footer: 'KubeClaw Pipeline · run:1',
 });
 const preview = previewNotification({
   event: {

@@ -6,7 +6,7 @@ const core=await import(pathToFileURL(path.join(repository,'skills/common/plugin
 const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-pipeline-review-'));
 const observations=['architecture','agents','prompts','tests','configuration'].map((dimension)=>({dimension,finding:`${dimension} reviewed`,priority:'low'}));
 const server=http.createServer((_request,response)=>{response.writeHead(200,{'content-type':'application/json'});
-  response.end(JSON.stringify({result:{status:'reviewed',runId:'run-1',attempt:1,summary:'Complete.',observations}}));});
+  response.end(JSON.stringify({result:{status:'reviewed',summary:'Complete.',observations}}));});
 await new Promise((resolve)=>server.listen(0,'127.0.0.1',resolve));
 const address=server.address(); if(!address||typeof address==='string') throw new Error('server unavailable');
 const origin=`http://127.0.0.1:${address.port}`; const secret='KUBECLAW_PIPELINE_REVIEW_TOKEN'; process.env[secret]='review-secret';

@@ -16,6 +16,10 @@
       "maxLength": 1024,
       "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])\\S(?:[\\s\\S]*\\S)?$"
     },
+    "agentRole": {
+      "type": "string",
+      "minLength": 1
+    },
     "timeoutMinutes": {
       "type": "integer",
       "minimum": 1,

@@ -10,6 +10,7 @@ export type StageStatus =
   | 'running'
   | 'waiting'
   | 'retrying'
+  | 'skipped'
   | 'succeeded'
   | 'failed'
   | 'blocked'
@@ -21,6 +22,7 @@ export interface StageRuntimeState {
   readonly attemptNumber: number;
   readonly attemptsUsed: number;
   readonly remediationCyclesUsed: number;
+  readonly facts?: Readonly<Record<string, string | number | boolean | null>>;
   readonly wait?: WaitRequest;
   readonly retryAt?: string;
   readonly remediationReturnTo?: string;
@@ -40,6 +42,12 @@ export type LifecycleAction =
 export interface LifecycleDecision {
   readonly state: StageRuntimeState;
   readonly action: LifecycleAction;
+}
+
+function frozenFacts(
+  facts: Readonly<Record<string, string | number | boolean | null>>,
+): Readonly<Record<string, string | number | boolean | null>> {
+  return Object.freeze({ ...facts });
 }
 
 function requiredReason(result: StageResult): void {
@@ -67,7 +75,14 @@ export function applyStageResult(
   };
   switch (result.outcome) {
     case 'passed':
-      return { state: { ...attempted, status: 'succeeded' }, action: { type: 'complete' } };
+      return {
+        state: {
+          ...attempted,
+          status: 'succeeded',
+          ...(result.facts ? { facts: frozenFacts(result.facts) } : {}),
+        },
+        action: { type: 'complete' },
+      };
     case 'retry': {
       const attemptsUsed = attempted.attemptsUsed;
       if (attemptsUsed >= definition.execution.maxAttempts) {

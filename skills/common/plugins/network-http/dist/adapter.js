@@ -50,6 +50,10 @@ export function activate(context) {
                 }
                 headers[normalized] = value;
             }
+            // The adapter owns a finite invocation lifecycle. Reusing an implicit
+            // process-global fetch pool would keep short-lived pipeline CLIs alive
+            // after every registered adapter has shut down.
+            headers.connection = 'close';
             const body = request.payload.body === undefined ? undefined : JSON.stringify(request.payload.body);
             if (body && Buffer.byteLength(body, 'utf8') > maxRequestBytes)
                 throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');

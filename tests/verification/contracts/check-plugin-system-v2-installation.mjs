@@ -46,10 +46,19 @@ fs.writeFileSync(path.join(source, 'plugin.json'), JSON.stringify({
 
 try {
   const digest = computePackageDigest(source);
+  const canonicalSource = 'https://plugins.kubeclaw.dev/external.install-test/1.0.0';
+  const policy = {
+    operatorIds: new Set(['operator:test']),
+    allowedSourceDigests: new Map([[canonicalSource, [digest]]]),
+    verifiedAttestations: new Map(),
+  };
   const installed = core.installExternalPackage({
+    actorId: 'operator:test',
+    canonicalSource,
     sourceRoot: source,
     installationRoot,
     expectedDigest: digest,
+    policy,
     trustEvidence: {
       method: 'source_digest_allowlist',
       verifier: 'test:installer',
@@ -57,9 +66,12 @@ try {
   });
   assert.equal(installed.contentDigest, digest);
   assert.equal(core.installExternalPackage({
+    actorId: 'operator:test',
+    canonicalSource,
     sourceRoot: source,
     installationRoot,
     expectedDigest: digest,
+    policy,
     trustEvidence: {
       method: 'source_digest_allowlist',
       verifier: 'test:installer',
@@ -72,9 +84,12 @@ try {
     scripts: { prepare: 'touch compromised' },
   }));
   assert.throws(() => core.installExternalPackage({
+    actorId: 'operator:test',
+    canonicalSource,
     sourceRoot: source,
     installationRoot,
     expectedDigest: computePackageDigest(source),
+    policy,
     trustEvidence: {
       method: 'source_digest_allowlist',
       verifier: 'test:installer',

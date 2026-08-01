@@ -11,6 +11,12 @@ const ALLOWED_PAYLOAD_KEYS = new Set([
     'artifact',
     'approvalId',
     'summary',
+    'fields',
+    'footer',
+    'occurredAt',
+    'severity',
+    'title',
+    'reasonCode',
     'signalType',
     'authorizedIssuer',
     'expiresAt',
@@ -81,6 +87,31 @@ function parsePayload(raw, maxPayloadBytes) {
     boundedString(raw.artifactId, 'artifactId', 512, true);
     boundedString(raw.approvalId, 'approvalId', 512);
     boundedString(raw.summary, 'summary', 16_384);
+    boundedString(raw.footer, 'footer', 2_048);
+    boundedString(raw.severity, 'severity', 32);
+    boundedString(raw.title, 'title', 512);
+    boundedString(raw.reasonCode, 'reasonCode', 256, true);
+    if (raw.occurredAt !== undefined) {
+        const occurredAt = boundedString(raw.occurredAt, 'occurredAt', 64);
+        if (!occurredAt || Number.isNaN(Date.parse(occurredAt))) {
+            throw new Error('OPERATOR_PAYLOAD_INVALID:occurredAt');
+        }
+    }
+    if (raw.fields !== undefined) {
+        if (!Array.isArray(raw.fields) || raw.fields.length > 25) {
+            throw new Error('OPERATOR_PAYLOAD_INVALID:fields');
+        }
+        raw.fields.forEach((field, index) => {
+            if (!isRecord(field))
+                throw new Error(`OPERATOR_PAYLOAD_INVALID:fields[${index}]`);
+            exactKeys(field, new Set(['name', 'value', 'inline']), 'OPERATOR_PAYLOAD_UNKNOWN_FIELD_ITEM');
+            boundedString(field.name, `fields[${index}].name`, 256);
+            boundedString(field.value, `fields[${index}].value`, 1_024);
+            if (field.inline !== undefined && typeof field.inline !== 'boolean') {
+                throw new Error(`OPERATOR_PAYLOAD_INVALID:fields[${index}].inline`);
+            }
+        });
+    }
     boundedString(raw.signalType, 'signalType', 256);
     if (raw.expiresAt !== undefined) {
         const expiresAt = boundedString(raw.expiresAt, 'expiresAt', 64);
@@ -112,32 +143,68 @@ function parseConfig(config) {
     for (const [targetId, raw] of Object.entries(config.targets)) {
         if (!TARGET_ID.test(targetId) || !isRecord(raw))
             throw new Error(`OPERATOR_CONFIG_INVALID:target:${targetId}`);
-        exactKeys(raw, new Set(['endpoint', 'tokenSecret', 'maxPayloadBytes']), 'OPERATOR_CONFIG_UNKNOWN_TARGET_FIELD');
-        if (typeof raw.endpoint !== 'string')
-            throw new Error(`OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
+        exactKeys(raw, new Set(['endpoint', 'endpointOrigin', 'endpointSecret', 'tokenSecret', 'maxPayloadBytes', 'format']), 'OPERATOR_CONFIG_UNKNOWN_TARGET_FIELD');
+        const usesSecretEndpoint = raw.endpointSecret !== undefined || raw.endpointOrigin !== undefined;
+        if (usesSecretEndpoint === (raw.endpoint !== undefined)) {
+            throw new Error(`OPERATOR_CONFIG_INVALID:endpoint_mode:${targetId}`);
+        }
         let endpoint;
-        try {
-            endpoint = new URL(raw.endpoint);
+        let endpointOrigin;
+        if (usesSecretEndpoint) {
+            if (typeof raw.endpointSecret !== 'string'
+                || !TARGET_ID.test(raw.endpointSecret))
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpointSecret:${targetId}`);
+            if (typeof raw.endpointOrigin !== 'string') {
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpointOrigin:${targetId}`);
+            }
+            try {
+                endpointOrigin = new URL(raw.endpointOrigin);
+            }
+            catch {
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpointOrigin:${targetId}`);
+            }
+            if (!['http:', 'https:'].includes(endpointOrigin.protocol)
+                || endpointOrigin.username
+                || endpointOrigin.password
+                || endpointOrigin.hash
+                || endpointOrigin.pathname !== '/'
+                || endpointOrigin.search)
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpointOrigin:${targetId}`);
         }
-        catch {
-            throw new Error(`OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
+        else {
+            if (typeof raw.endpoint !== 'string')
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
+            try {
+                endpoint = new URL(raw.endpoint);
+            }
+            catch {
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
+            }
+            if (!['http:', 'https:'].includes(endpoint.protocol)
+                || endpoint.username
+                || endpoint.password
+                || endpoint.hash)
+                throw new Error(`OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
+            if (typeof raw.tokenSecret !== 'string'
+                || !TARGET_ID.test(raw.tokenSecret))
+                throw new Error(`OPERATOR_CONFIG_INVALID:tokenSecret:${targetId}`);
         }
-        if (!['http:', 'https:'].includes(endpoint.protocol)
-            || endpoint.username
-            || endpoint.password
-            || endpoint.hash)
-            throw new Error(`OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
-        if (typeof raw.tokenSecret !== 'string'
-            || !TARGET_ID.test(raw.tokenSecret))
-            throw new Error(`OPERATOR_CONFIG_INVALID:tokenSecret:${targetId}`);
         const maxPayloadBytes = raw.maxPayloadBytes ?? 65_536;
         if (!Number.isSafeInteger(maxPayloadBytes) || Number(maxPayloadBytes) < 1 || Number(maxPayloadBytes) > 1_048_576) {
             throw new Error(`OPERATOR_CONFIG_INVALID:maxPayloadBytes:${targetId}`);
         }
+        const format = raw.format ?? 'json';
+        if (format !== 'json' && format !== 'discord_webhook') {
+            throw new Error(`OPERATOR_CONFIG_INVALID:format:${targetId}`);
+        }
         targets.set(targetId, Object.freeze({
-            endpoint: endpoint.href,
-            tokenSecret: raw.tokenSecret,
+            ...(endpoint ? { endpoint: endpoint.href, tokenSecret: raw.tokenSecret } : {}),
+            ...(endpointOrigin ? {
+                endpointOrigin: endpointOrigin.origin,
+                endpointSecret: raw.endpointSecret,
+            } : {}),
             maxPayloadBytes: Number(maxPayloadBytes),
+            format,
         }));
     }
     return targets;
@@ -165,6 +232,49 @@ function assertRequest(request) {
     if (!TARGET_ID.test(request.resource.canonicalId))
         throw new Error('OPERATOR_TARGET_INVALID');
 }
+const DISCORD_COLORS = Object.freeze({
+    info: 0x3498db,
+    success: 0x2ecc71,
+    warning: 0xf1c40f,
+    error: 0xe74c3c,
+});
+const DISCORD_ICONS = Object.freeze({
+    info: 'ℹ️',
+    success: '✅',
+    warning: '⚠️',
+    error: '❌',
+});
+function discordWebhookPayload(payload) {
+    const severity = typeof payload.severity === 'string' ? payload.severity : 'info';
+    const title = typeof payload.title === 'string' ? payload.title : String(payload.type);
+    const summary = typeof payload.summary === 'string'
+        ? payload.summary
+        : typeof payload.message === 'string'
+            ? payload.message
+            : title;
+    const fields = Array.isArray(payload.fields)
+        ? payload.fields
+        : [];
+    const reasonCode = typeof payload.reasonCode === 'string' ? payload.reasonCode : null;
+    return Object.freeze({
+        allowed_mentions: Object.freeze({ parse: Object.freeze([]) }),
+        embeds: Object.freeze([Object.freeze({
+                title: `${DISCORD_ICONS[severity] ?? 'ℹ️'} ${title}`.slice(0, 256),
+                description: summary.slice(0, 4_096),
+                color: DISCORD_COLORS[severity] ?? DISCORD_COLORS.info,
+                fields: Object.freeze([
+                    ...fields,
+                    ...(reasonCode ? [{ name: 'Reason', value: reasonCode, inline: false }] : []),
+                ].slice(0, 25)),
+                ...(typeof payload.footer === 'string'
+                    ? { footer: Object.freeze({ text: payload.footer.slice(0, 2_048) }) }
+                    : {}),
+                ...(typeof payload.occurredAt === 'string'
+                    ? { timestamp: payload.occurredAt }
+                    : {}),
+            })]),
+    });
+}
 export function activate(context) {
     const targets = parseConfig(context.config);
     let shuttingDown = false;
@@ -186,22 +296,46 @@ export function activate(context) {
             if (!target)
                 throw new Error(`OPERATOR_TARGET_DENIED:${targetId}`);
             const payload = parsePayload(request.payload, target.maxPayloadBytes);
-            const body = JSON.stringify(payload);
+            const transportPayload = target.format === 'discord_webhook'
+                ? discordWebhookPayload(payload)
+                : payload;
+            const body = JSON.stringify(transportPayload);
+            const secretName = target.endpointSecret ?? target.tokenSecret;
+            if (!secretName)
+                throw new Error('OPERATOR_SECRET_UNAVAILABLE');
             const resolved = await context.invoke('secrets.read', {
                 operation: 'resolve',
-                resource: { type: 'secret.name', canonicalId: target.tokenSecret },
+                resource: { type: 'secret.name', canonicalId: secretName },
                 payload: {},
             });
             if (signal.aborted)
                 throw new Error('ADAPTER_CANCELLED');
             const secret = secretValue(resolved);
+            let endpoint = target.endpoint;
+            if (target.endpointSecret) {
+                let resolvedEndpoint;
+                try {
+                    resolvedEndpoint = new URL(secret);
+                }
+                catch {
+                    throw new Error('OPERATOR_SECRET_ENDPOINT_INVALID');
+                }
+                if (resolvedEndpoint.origin !== target.endpointOrigin
+                    || resolvedEndpoint.username
+                    || resolvedEndpoint.password
+                    || resolvedEndpoint.hash)
+                    throw new Error('OPERATOR_SECRET_ENDPOINT_DENIED');
+                endpoint = resolvedEndpoint.href;
+            }
+            if (!endpoint)
+                throw new Error('OPERATOR_ENDPOINT_UNAVAILABLE');
             const signature = crypto
                 .createHmac('sha256', secret)
                 .update(`${request.idempotencyKey}.${body}`, 'utf8')
                 .digest('hex');
-            const response = await context.invoke('network.http', {
+            const networkRequest = {
                 operation: 'request',
-                resource: { type: 'network.url', canonicalId: target.endpoint },
+                resource: { type: 'network.url', canonicalId: endpoint },
                 payload: {
                     method: 'POST',
                     headers: {
@@ -209,9 +343,12 @@ export function activate(context) {
                         'idempotency-key': request.idempotencyKey,
                         'x-kubeclaw-signature': `v1=${signature}`,
                     },
-                    body: payload,
+                    body: transportPayload,
                 },
-            });
+            };
+            const response = target.endpointSecret
+                ? await context.invokeConfidential('network.http', networkRequest)
+                : await context.invoke('network.http', networkRequest);
             if (signal.aborted)
                 throw new Error('ADAPTER_CANCELLED');
             if (!Number.isSafeInteger(response.status) || Number(response.status) < 200 || Number(response.status) > 299) {

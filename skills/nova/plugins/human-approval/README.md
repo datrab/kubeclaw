@@ -1,6 +1,14 @@
 # Human approval
 
-Deterministic v2 approval stage.
+Deterministic v2 approval package with two independently granted stage
+registrations:
+
+- `approval` is the ordinary explicit approval gate.
+- `architecture-approval` is conditionally activated only when the architecture
+  result publishes `architecture.review=approval_required`. It reads the latest
+  run-scoped architecture artifact and delegates to the same durable operator
+  request and wait implementation. A defensive clean-artifact check remains,
+  but the canonical graph skips the stage without creating an attempt.
 
 The package owns:
 
@@ -29,6 +37,5 @@ Terminal guidance must contain:
 
 `rejected` guidance may additionally contain a non-empty `reason`.
 
-This extraction does not claim complete migration of the legacy signal
-transport, persisted approval transitions, timeout resolution, or resume
-orchestration. Those remain final-cutover dependencies.
+Both registrations use only the canonical v2 signal, wait, and resume
+contracts. They contain no legacy transport or compatibility fallback.

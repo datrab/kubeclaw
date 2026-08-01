@@ -1,16 +1,16 @@
 const dimensions = ['architecture', 'agents', 'prompts', 'tests', 'configuration'];
 export function buildRequest(agent, input) {
     return { protocol: 'kubeclaw.pipeline-review.v2', agent, identity: { runId: input.runId, attempt: input.attempt },
-        task: input.task, evidence: input.evidence, requiredDimensions: dimensions };
+        task: [input.task, 'Return only the agent-owned output object described by outputContract.', 'Do not copy protocol, agent, identity, task, evidence, requiredDimensions, or outputContract into the output.', 'Runtime/core bind run and attempt identity.'].join('\n\n'),
+        evidence: input.evidence, requiredDimensions: dimensions,
+        outputContract: { type: 'object', additionalProperties: false, required: ['status', 'summary', 'observations'], properties: { status: { const: 'reviewed' }, summary: { type: 'string' }, observations: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['dimension', 'finding', 'priority'], properties: { dimension: { enum: dimensions }, finding: { type: 'string' }, priority: { enum: ['low', 'medium', 'high'] } } } } } } };
 }
 export function parseReport(value, input) {
     if (!value || typeof value !== 'object' || Array.isArray(value))
         throw new Error('review report must be an object');
     const report = value;
-    if (Object.keys(report).some((key) => !['status', 'runId', 'attempt', 'summary', 'observations'].includes(key)) || report.status !== 'reviewed')
+    if (Object.keys(report).some((key) => !['status', 'summary', 'observations'].includes(key)) || report.status !== 'reviewed')
         throw new Error('review report shape is invalid');
-    if (report.runId !== input.runId || report.attempt !== input.attempt)
-        throw new Error('review identity mismatch');
     if (typeof report.summary !== 'string' || !report.summary.trim() || report.summary.length > 8192)
         throw new Error('review summary is invalid');
     if (!Array.isArray(report.observations) || report.observations.length < dimensions.length || report.observations.length > 128)

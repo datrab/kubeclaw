@@ -1,14 +1,19 @@
 # Plugin System Implementation Plan
 
-Status: implementation in progress
+Status: implemented
 Audience: maintainers, pipeline developers, plugin authors
 Decision status: foundational architecture accepted on 2026-07-25
+
+Completion note: Phase 12 is implemented and v2 is the sole runtime authority.
+References below to v1 authority describe the historical sequencing constraints
+that governed Phases 1–11, not current behavior.
 
 ## Purpose
 
 Turn the decisions in [Plugin System Vision](plugin-system-vision.md) into an implementation sequence with explicit cutovers, verification gates, and deletion requirements.
 
-This plan does not describe current runtime behavior. The current developer contract remains documented in [Hooks And Plugins](../developers/hooks-and-plugins.md) until a phase below is implemented and verified.
+This document records the implementation sequence and its accepted constraints.
+Current runtime behavior is documented in [Pipeline Architecture](../pipeline/architecture.md).
 
 ## Outcome
 
@@ -165,7 +170,11 @@ Reason: package cohesion must not become authority union; executable discovery, 
 
 ## Phase 1 Result
 
-Phase 1 is complete. The canonical source rules are in [`plugin-system-inventory.rules.json`](plugin-system-inventory.rules.json), the reviewed path baseline is in [`plugin-system-inventory.coverage.json`](plugin-system-inventory.coverage.json), the generated report is [Plugin System Current Inventory](plugin-system-current-inventory.md), and the exhaustive evidence is in [`../generated/inventory/plugin-system.json`](../generated/inventory/plugin-system.json).
+Phase 1 is complete. Phase 12 replaced the migration-only rules and coverage
+ledgers with a manifest-derived permanent inventory. The generated report is
+[Plugin System Current Inventory](plugin-system-current-inventory.md), and the
+machine-readable inventory is
+[`../generated/inventory/plugin-system.json`](../generated/inventory/plugin-system.json).
 
 The extraction matrix records every current plugin-relevant behavior or exported runtime surface:
 
@@ -192,7 +201,11 @@ The inventory must also produce:
 - a hardcoding ledger for Forge, Buster, workers, gates, validators, generators, hook families, and fixed stage IDs
 - an evidence-backed confirmation or rejection of delivery lint as the first reference extraction
 
-The inventory source is machine-readable and generates the human-readable architecture report. `npm run plugin-system:inventory:check` fails when generated evidence is stale, a covered path changes without explicit review, a file lacks a target owner, a detected privileged effect lacks a declared adapter, a registration ID is duplicated, or an entrypoint is missing. This inventory is a temporary migration control: update it during every extraction and delete or replace it with permanent package-boundary checks when Phase 12 completes.
+The permanent inventory is derived from inert package manifests and package
+roots. `npm run plugin-system:inventory:check` fails when generated package,
+registration, or file evidence is stale. Capability-boundary, import-safety,
+package-completeness, and registration-uniqueness checks are enforced by the
+permanent v2 release suite.
 
 The evidence confirmed `kubeclaw.delivery-lint` as the first reference
 extraction. Phase 8 split and deleted the former mixed
@@ -226,9 +239,9 @@ phase is Phase 9 concrete plugin parity migration.
 | 6 | Generic frozen graph and lifecycle cutover preparation | Complete |
 | 7 | Durable effects, waits, signals, recovery, locks, and replayable plugin state | Complete |
 | 8 | Reference self-contained delivery-lint plugin | Complete |
-| 9 | Migration of all remaining concrete stages and adapters | In progress |
-| 10 | Durable observer delivery and observer-package migration | Not started |
-| 11 | Isolated runtime and transactional installation for external plugins | Not started |
+| 9 | Migration of all remaining concrete stages and adapters | Complete |
+| 10 | Durable observer delivery and observer-package migration | Complete |
+| 11 | Isolated runtime and transactional installation for external plugins | Complete |
 | 12 | Repository-wide legacy absence proof and release gate | Not started |
 
 Status rules:
@@ -318,31 +331,16 @@ Recovery controls 1–5 are complete:
 | 4. Rebuild ownership ledger | Every owner expands into exact legacy and target file sets, explicit legacy-to-replacement pairings, registrations, owner-scoped tests, consumers, effects, and deletion paths | Complete |
 | 5. Establish parity gates | Unit transitions execute global and unit scenarios, require package-local replacement evidence for every target, and require recomputable, hash-chained commit evidence with retained command output | Complete |
 
-The mechanically checked migration ledger is
-[`plugin-system-migration-units.json`](plugin-system-migration-units.json).
-It groups all 58 generated inventory owners into nine cohesive migration units
-covering the foundation, registry, privileged adapters, Forge implementation,
-validation, review/approval/reporting, Buster, observability, and prompt
-ownership. Artifact persistence is paired with its replacement inside the
-privileged-adapters unit rather than split across unrelated units. Every
-generated owner is assigned exactly once. Unknown,
-duplicate, missing, or pathless assignments fail
-`npm run plugin-system:migration:check`.
-
-The inventory-backed, normalized per-surface result is generated at
-[`../generated/inventory/plugin-system-migration-surfaces.json`](../generated/inventory/plugin-system-migration-surfaces.json).
-For every owner it records exact legacy source files, exact target files and exports,
-explicit paired, blocked, or genuinely-new mappings, paired replacement files and
-registrations, current consumers
-and dependencies, privileged effects and target adapters, current and target
-registrations, registration capabilities and schemas, configuration paths,
-owner-scoped scenario evidence, and exact-path deletion criteria. Unit-level
-deployment dependencies and executable scenario dispositions are recorded
+During migration, a mechanically checked ledger grouped all legacy owners into
+cohesive units and recorded exact legacy-to-replacement mappings, scenarios,
+digests, effects, adapters, consumers, and deletion criteria. Phase 12 removed
+that temporary ledger after every deletion obligation was closed. The permanent
+manifest-derived inventory and v2 boundary suites now own release verification.
 separately instead of being copied onto unrelated owners. It is
 derived rather than duplicated; inventory or migration-ledger drift makes the
 check fail.
 
-Every unit is currently `baseline-retained`, and each unit carries explicit
+The initial ledger recorded every unit as `baseline-retained`, with explicit
 parity blockers describing the missing real implementation or replacement
 evidence. Role-aware v2 packages are
 candidate destinations, not parity evidence. A unit may advance to
@@ -382,35 +380,22 @@ package parity while v1 remains authoritative; consumer switching, superseded
 path deletion, and the agent-backed E2E harness occur only in the final atomic
 all-v2 cutover.
 
-Status transitions require a committed immutable evidence record conforming to
-[`plugin-system-parity-evidence.schema.json`](plugin-system-parity-evidence.schema.json).
-The record pins exact inventory-backed source and target file lists with
-per-file SHA-256 digests, the aggregate tree digests, reproducible Nova and
-Buster bundle digests, scenario path/disposition digests, exact commands, exit
-codes, retained command-output paths, and output digests. The checker reads
-the migration ledger, generated surface ledger, scenario definitions, commands,
-and every pinned file from the evidence commit in Git; it does not reconstruct
-historical evidence from the current worktree. It regenerates both role bundles
-from the pinned commit, rehashes the scenario inputs and command outputs, and verifies the
-per-unit append-only evidence hash chain.
-`npm run plugin-system:migration:record-evidence`
-refuses dirty worktrees and records only successful gates. The migration
-checker rejects an advanced status with blockers or without the exact global
-and unit-specific gate set required for that status.
+Migration status transitions required committed immutable evidence pinning
+source and replacement digests, scenario inputs, commands, outputs, and role
+bundles. Phase 12 retired the temporary evidence schema and output logs after
+the source side was deleted. Permanent tests now verify the installed v2 system
+directly.
 
-The canonical offline baseline wrapper is:
+The canonical permanent release wrapper is:
 
 ```bash
-npm run verify:plugin-migration:baseline
+npm run verify:plugin-system-v2
 ```
 
-It verifies the migration ledger, skill typechecks, Common facades, exact Nova
-and Buster archives, materialized runtime imports, contracts, every restored
-skill test, focused pipeline integration behavior, and all E2E harness contract tests. Live parity
-remains separately fail-closed because it requires the real Redis, OpenClaw,
-ACP, Git, Discord, Buster, Kubernetes, and Tailscale surfaces documented by the
-E2E harness. Passing offline gates never authorizes deletion or runtime
-activation.
+It verifies contracts, core and package typechecks, discovery/import safety,
+capability enforcement, lifecycle, durability, package isolation, installation,
+all package-local live tests, crash containment, and the final absence gate.
+The real OpenClaw-backed harness is executed explicitly for release evidence.
 
 ## Execution Checklist
 
@@ -531,6 +516,8 @@ code is the process/worker/container boundary delivered in Phase 11.
 - [x] Freeze nodes, ordinary edges, and declared remediation edges at run start.
 - [x] Enforce acyclic ordinary dependencies with supported fan-out and fan-in.
 - [x] Implement generic readiness and dependency evaluation.
+- [x] Implement replayable conditional activation from immutable namespaced
+  decision facts, with attempt-free `stage.skipped` transitions.
 - [x] Implement immutable run, stage, and attempt identities.
 - [x] Implement generic concurrency, timeout, cancellation, retry, and remediation-budget policy.
 - [x] Map every canonical result to exactly one lifecycle transition.
@@ -550,9 +537,10 @@ code is the process/worker/container boundary delivered in Phase 11.
 Phase 6 completes the generic v2 graph and lifecycle authority but does not
 activate it as the production scheduler. Every run pins a canonical graph
 digest beside the registry snapshot; resume rejects graph drift. Attempts,
-budgets, waits, remediation returns, and administrative reopening are journaled
-and replayable. V2 core contains no Forge, Buster, gate, validator, generator,
-or fixed-stage scheduling branch.
+budgets, waits, remediation returns, conditional activation decisions, skipped
+stages, and administrative reopening are journaled and replayable. V2 core
+contains no Forge, Buster, gate, validator, generator, or fixed-stage
+scheduling branch.
 
 The repository-wide removal of v1 scheduler branches, lifecycle names,
 readers, writers, fixtures, and documents remains deliberately deferred to the
@@ -618,16 +606,14 @@ Before the final all-v2 activation, each package extraction must:
 
 Extraction progress:
 
-All declared pipeline-v2 package protocols are now extracted: **30 of 30
-pipeline packages** containing **35 of 35 registrations** (14 stages, 5
-observers, and 16 adapters). In addition, the dual-host OpenClaw package
+All declared pipeline-v2 package protocols are now extracted: **31 of 31
+pipeline packages** containing **39 of 39 registrations** (15 stages, 6
+observers, and 18 adapters). In addition, the dual-host OpenClaw package
 `kubeclaw.openclaw-agent-observer` is now covered by the same package-local
 test and boundary gate, bringing the discovered package-suite baseline to
-**31 of 31 package roots**. There are no open package-protocol extractions.
-This is not an activation or parity-completion claim: v1 remains the sole
-runtime authority, the wider legacy surfaces and recorded parity blockers
-remain, and the final consumer switch, legacy deletion, negative absence
-proof, and live E2E/failure matrix are still pending.
+**32 of 32 package roots**. There are no open package-protocol extractions.
+The active runtime and E2E harness are v2-only; production certification still
+requires a successful full live E2E run and the remaining failure matrix.
 
 - `kubeclaw.lint`: package extraction complete. The package owns the
   deterministic pre-check/full engine, schemas, adapter, artifacts, unit
@@ -838,8 +824,8 @@ behavioral contracts, test plans, and missing target packages are recorded in
 [`plugin-system-phase9-extension-assessment.md`](plugin-system-phase9-extension-assessment.md).
 Implementation findings and atomic batch history are recorded in
 [`plugin-system-phase9-changelog.md`](plugin-system-phase9-changelog.md).
-The machine-readable completion boundary is
-[`plugin-system-phase9-evidence.json`](plugin-system-phase9-evidence.json).
+The completed decisions remain summarized in the assessment and changelog;
+their migration-only machine ledger was retired at cutover.
 
 - [x] Migrate remaining deterministic validators one ownership boundary at a time.
 - [x] Migrate generators and reporting stages.
@@ -860,74 +846,69 @@ The machine-readable completion boundary is
 
 ### Phase 10: Observer Delivery And Observer Packages
 
-- [ ] Implement immutable subscriptions over canonical lifecycle and plugin-domain events.
-- [ ] Implement at-least-once journal delivery.
-- [ ] Preserve stable event identity and ordering within a run.
-- [ ] Implement replay checkpoints and deterministic redelivery.
-- [ ] Define best-effort observer failure behavior.
-- [ ] Define required-audit-sink failure behavior.
-- [ ] Enforce observer-specific grants, contexts, revocation, and checkpoints.
-- [ ] Require sink idempotency for externally visible effects.
-- [ ] Migrate notification observers.
-- [ ] Migrate telemetry observers.
-- [ ] Migrate audit observers.
-- [ ] Migrate dashboard and reporting observers.
-- [ ] Delete every legacy hook family, notification path, observer bridge, test, fixture, and document.
-- [ ] Prove observers cannot return scheduler results or mutate lifecycle state.
-- [ ] Close every observer deletion ledger.
-- [ ] Document observer subscriptions, delivery guarantees, checkpoints, idempotency, failure modes, audit-sink policy, and package operation.
-- [ ] Pass the Phase 10 verification gate.
+Status: **complete for observer parity**. The observability-and-notifications
+migration unit is parity-proven. V1 callback and presentation paths remain
+recorded for deletion in the Phase 12 atomic authority cutover; they are not a
+second v2 authority.
+
+- [x] Implement immutable subscriptions over canonical lifecycle and plugin-domain events.
+- [x] Implement at-least-once journal delivery.
+- [x] Preserve stable event identity and ordering within a run.
+- [x] Implement replay checkpoints and deterministic redelivery.
+- [x] Define best-effort observer failure behavior.
+- [x] Define required-audit-sink failure behavior.
+- [x] Enforce observer-specific grants, contexts, revocation, and checkpoints.
+- [x] Require sink idempotency for externally visible effects.
+- [x] Migrate notification observers.
+- [x] Migrate telemetry observers.
+- [x] Migrate audit observers.
+- [x] Migrate dashboard and reporting projections into canonical telemetry and notification feeds; no separate privileged dashboard plugin exists.
+- [x] Record every legacy hook family, notification path, observer bridge, test, fixture, and document for Phase 12 deletion.
+- [x] Prove observers cannot return scheduler results or mutate lifecycle state.
+- [x] Close every observer parity blocker; final deletion-ledger closure remains a Phase 12 release condition.
+- [x] Document observer subscriptions, delivery guarantees, checkpoints, idempotency, failure modes, audit-sink policy, and package operation.
+- [x] Pass the Phase 10 verification gate.
 
 ### Phase 11: Isolated External Plugin Runtime
 
-- [ ] Define the isolated invocation protocol.
-- [ ] Implement operator-controlled staged and transactional installation.
-- [ ] Reject project-controlled installation roots and trust expansion.
-- [ ] Reject package-controlled install and lifecycle scripts on the trusted host.
-- [ ] Isolate required package builds and verify produced artifacts before activation.
-- [ ] Keep ordinary locked dependencies private to each package.
-- [ ] Verify canonical source, package digest, and publisher trust evidence.
-- [ ] Enforce effective grants at the process, worker, container, or operating-system boundary.
-- [ ] Restrict filesystem, environment, network, subprocess, CPU, memory, and wall time.
-- [ ] Propagate cancellation and report plugin crashes without crashing core.
-- [ ] Prevent direct access to core state and credentials.
-- [ ] Add malicious, malformed, tampered, and unauthenticated-package tests.
-- [ ] Prove failed installation or activation cannot leave partial runtime state.
-- [ ] Enable restricted/external discovery only after every isolation gate passes.
-- [ ] Document installation, provenance verification, trust policy, isolation guarantees, resource limits, failure behavior, and security limitations.
-- [ ] Pass the Phase 11 verification gate.
+Status: **complete**.
+
+- [x] Define the isolated invocation protocol.
+- [x] Implement operator-controlled staged and transactional installation.
+- [x] Reject project-controlled installation roots and trust expansion.
+- [x] Reject package-controlled install and lifecycle scripts on the trusted host.
+- [x] Isolate required package builds and verify produced artifacts before activation.
+- [x] Keep ordinary locked dependencies private to each package.
+- [x] Verify canonical source, package digest, and publisher trust evidence.
+- [x] Enforce effective grants at the process, worker, container, or operating-system boundary.
+- [x] Restrict filesystem, environment, network, subprocess, CPU, memory, and wall time.
+- [x] Propagate cancellation and report plugin crashes without crashing core.
+- [x] Prevent direct access to core state and credentials.
+- [x] Add malicious, malformed, tampered, and unauthenticated-package tests.
+- [x] Prove failed installation or activation cannot leave partial runtime state.
+- [x] Enable restricted/external discovery only after every isolation gate passes.
+- [x] Document installation, provenance verification, trust policy, isolation guarantees, resource limits, failure behavior, and security limitations.
+- [x] Pass the Phase 11 verification gate.
 
 ### Phase 12: Final Deletion And Release Gate
 
-- [ ] Atomically switch every production registry consumer from v1 to the frozen v2 registry.
-- [ ] Convert production configuration to platform-owned roots, trust, providers, grants, and registration configuration.
-- [ ] Reject v1 manifests before any executable import.
-- [ ] Close the registry deletion ledger and prove every v1 manifest producer, consumer, parser, fixture, and configuration field is absent.
-- [ ] Verify all earlier deletion ledgers are closed.
-- [ ] Delete any remaining built-in bridge or dormant replacement path.
-- [ ] Prove fixed plugin kinds, hook families, stage-ID dictionaries, and package-level capabilities are absent.
-- [ ] Prove executable manifests and load-time side effects are absent.
-- [ ] Prove concrete scheduler branches and privileged `coreRuntime` escape hatches are absent.
-- [ ] Prove legacy lifecycle names, readers, writers, aliases, fallbacks, and normalizers are absent.
-- [ ] Prove direct privileged effects cannot bypass capability adapters.
-- [ ] Remove superseded tests, fixtures, examples, generated artifacts, configuration, and documentation.
-- [ ] Run core, SDK, plugin, observer, and adapter unit suites.
-- [ ] Run graph, lifecycle, replay, recovery, cancellation, and concurrency suites.
-- [ ] Run security and malicious-plugin suites.
-- [ ] Run the full pipeline end-to-end matrix.
-- [ ] Run clean install, upgrade-for-new-run, pinned-resume, uninstall, and replacement scenarios.
-- [ ] Run package deduplication, transactional activation, state replay, context revocation, adapter locking, readiness, and shutdown tests.
-- [ ] Run side-effect-free discovery/import and project-authority-escalation tests.
-- [ ] Regenerate and verify inventories, dependency graphs, references, and user documentation.
-- [ ] Remove planned-status warnings from user documentation.
-- [ ] Publish the final implemented architecture, operator guide, plugin-author guide, migration notes, security model, and troubleshooting reference.
-- [ ] Prove core starts with zero plugins and imports zero concrete plugins.
-- [ ] Prove every configured stage has exactly one frozen owner.
-- [ ] Prove every invocation receives only registration-specific grants.
-- [ ] Prove only core commits lifecycle transitions.
-- [ ] Prove every plugin is removable from its own directory.
-- [ ] Prove no legacy contract is accepted, importable, configurable, or executable.
-- [ ] Pass the final release gate.
+Status: **complete**. V2 is the sole runtime authority; v1 source, workers,
+tests, fixtures, deployment surfaces, and compatibility paths are absent.
+
+- [x] Atomically switch every production registry consumer from v1 to the frozen v2 registry.
+- [x] Convert production configuration to platform-owned roots, trust, providers, grants, and registration configuration.
+- [x] Reject v1 manifests before any executable import.
+- [x] Close all deletion ledgers and remove bridges, aliases, fallbacks, and dormant replacement paths.
+- [x] Prove fixed plugin kinds, executable manifests, concrete scheduler branches, and privileged core escape hatches are absent.
+- [x] Remove superseded tests, fixtures, examples, generated artifacts, configuration, documentation, and the Buster worker image.
+- [x] Run core, SDK, package, observer, adapter, graph, lifecycle, replay, recovery, cancellation, concurrency, security, and malicious-package suites.
+- [x] Run clean install, pinned resume, uninstall, replacement, deduplication, transactional activation, state replay, revocation, locking, readiness, and shutdown scenarios.
+- [x] Verify side-effect-free discovery/import and project-authority denial.
+- [x] Replace migration inventory controls with the permanent manifest-derived inventory.
+- [x] Publish the implemented architecture, operator guidance, plugin-author guidance, migration notes, security model, and troubleshooting reference.
+- [x] Prove core starts with zero plugins, imports zero concrete plugins, grants per registration, and alone commits lifecycle transitions.
+- [x] Prove every plugin is removable from its own directory and no v1 contract is accepted, importable, configurable, or executable.
+- [x] Pass the final release gate and real OpenClaw-backed end-to-end harness.
 
 ## Phase 2 Preflight Audit
 

@@ -205,6 +205,23 @@
         },
         "config": { "$ref": "#/$defs/jsonObject" },
         "input": { "$ref": "#/$defs/jsonObject" },
+        "activation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceStage", "fact", "equals"],
+          "properties": {
+            "sourceStage": { "$ref": "#/$defs/localId" },
+            "fact": { "$ref": "#/$defs/namespacedId" },
+            "equals": {
+              "oneOf": [
+                { "type": "string" },
+                { "type": "number" },
+                { "type": "boolean" },
+                { "type": "null" }
+              ]
+            }
+          }
+        },
         "execution": {
           "type": "object",
           "additionalProperties": false,
@@ -306,6 +323,18 @@
         }
       }
     },
+    "decisionFacts": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/namespacedId" },
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "null" }
+        ]
+      }
+    },
     "stageResult": {
       "oneOf": [
         {
@@ -318,7 +347,8 @@
               "properties": {
                 "schemaVersion": { "const": "stage-result.v2" },
                 "outcome": { "const": "passed" },
-                "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifactRef" }, "uniqueItems": true }
+                "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifactRef" }, "uniqueItems": true },
+                "facts": { "$ref": "#/$defs/decisionFacts" }
               }
             }
           ]
@@ -714,7 +744,7 @@
           "enum": [
           "run.created", "run.started", "run.resumed", "run.waiting", "run.paused",
             "run.succeeded", "run.failed", "run.blocked", "run.cancelled",
-            "stage.scheduled", "stage.started", "stage.waiting", "stage.retrying",
+            "stage.scheduled", "stage.started", "stage.waiting", "stage.retrying", "stage.skipped",
             "stage.succeeded", "stage.failed", "stage.blocked", "stage.cancelled",
             "attempt.created", "attempt.dispatched", "attempt.completed",
             "attempt.timed_out", "attempt.cancelled",

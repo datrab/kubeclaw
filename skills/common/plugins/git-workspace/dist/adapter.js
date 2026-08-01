@@ -297,6 +297,30 @@ export function activate(context) {
                     throw new Error(`GIT_PATH_DENIED:${canonical}`);
                 return { workspace: canonical };
             }
+            if (request.capability === 'git.workspace.remove' && request.operation === 'remove') {
+                const repository = authorizedExistingDirectory(request.payload.repositoryRoot ?? request.resource.canonicalId, roots, 'repositoryRoot');
+                if (request.resource.canonicalId !== repository)
+                    throw new Error('GIT_RESOURCE_MISMATCH');
+                const workspaceValue = request.payload.workspacePath;
+                if (typeof workspaceValue !== 'string'
+                    || !path.isAbsolute(workspaceValue)
+                    || path.resolve(workspaceValue) !== workspaceValue
+                    || !inside(workspaceValue, workspaceRoot)
+                    || workspaceValue === workspaceRoot)
+                    throw new Error(`GIT_PATH_DENIED:${String(workspaceValue)}`);
+                const branch = request.payload.branch === undefined
+                    ? undefined
+                    : gitToken(request.payload.branch, 'branch');
+                const existed = fs.existsSync(workspaceValue);
+                if (existed) {
+                    const workspace = authorizedExistingDirectory(workspaceValue, [workspaceRoot], 'workspacePath');
+                    await runner.run(repository, ['worktree', 'remove', '--force', '--', workspace], signal);
+                }
+                if (branch !== undefined) {
+                    await runner.run(repository, ['branch', '-D', '--', branch], signal);
+                }
+                return { removed: existed, branchRemoved: branch !== undefined };
+            }
             const workspace = authorizedExistingDirectory(request.resource.canonicalId, [workspaceRoot, ...roots], 'workspace');
             if (request.capability === 'git.commit' && request.operation === 'commit') {
                 const paths = scopedPaths(request.payload.paths, workspace);

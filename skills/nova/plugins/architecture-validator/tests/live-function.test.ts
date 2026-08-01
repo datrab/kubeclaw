@@ -10,7 +10,17 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-architecture-'
 const server = http.createServer((_request, response) => {
   response.writeHead(200, { 'content-type': 'application/json' });
   response.end(JSON.stringify({ result: {
-    verdict: 'passed', summary: 'Architecture is valid.', findings: [], checkedFiles: ['docs/architecture.md'],
+    verdict: 'passed',
+    summary: 'Architecture requires operator review.',
+    findings: [{
+      id: 'ARCHITECTURE_BOUNDARY_RISK',
+      severity: 'warn',
+      scope: 'integration_boundary',
+      paths: ['src/api.ts'],
+      explanation: 'The integration boundary needs operator confirmation.',
+      remediation: 'Confirm the API owner before implementation.',
+    }],
+    checkedFiles: ['docs/architecture.md'],
   } }));
 });
 await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -84,6 +94,10 @@ try {
     });
     const result = await runner.run('run:architecture');
     assert.equal(result.status, 'succeeded');
+    assert.equal(
+      result.stages.get('architecture')?.facts?.['architecture.review'],
+      'approval_required',
+    );
     assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'), /architecture-validation/);
   } finally { await adapters.shutdown(); }
 } finally {

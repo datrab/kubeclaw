@@ -16,7 +16,7 @@ codeBundle:
   enabled: false
   archiveUrl: ""
   expectedCommit: ""
-  contractVersion: "v1"
+  contractVersion: "v2"
   auth:
     existingSecret: "github-bundle-reader"
     existingSecretKey: "token"
@@ -79,6 +79,31 @@ service:
       targetPort: 3456
       nodePort: 30456
 
+capabilityProviders:
+  buster:
+    agentRole: buster
+    capabilities:
+      runtime.dispatch:
+        adapter: openclaw
+        port: 18789
+      test.suite.execute:
+        adapter: buster-suite-v2
+        port: 18891
+
+extraEnv:
+  - name: BUSTER_V2_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: openclaw-shared-secrets
+        key: busterV2Token
+  - name: BUSTER_GATEWAY_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: openclaw-shared-secrets
+        key: gatewayToken-buster
+  - name: BUSTER_GATEWAY_REPOSITORY_ROOT
+    value: "/home/node/.openclaw/workspace/git-repo"
+
 resources:
   requests: { cpu: 1000m, memory: 12288Mi }
   limits: { cpu: 3000m, memory: 24576Mi }
@@ -132,7 +157,7 @@ workspace:
   agents: |
     ## Swarm
     Forge (code writer) — ACP subagent, spawned by pipeline as thread-bound session
-    Buster (tester) — separate pod, receives tasks via Redis
+    Buster (tester) — separate pod, receives typed v2 suite jobs and runs them against its local BuildKit
     Echo (reviewer) — ACP subagent, spawned by pipeline for gate reviews
     You are the only coordination point. Agents never contact each other directly.
 
@@ -140,7 +165,7 @@ workspace:
     ```
     node /app/skills/pipeline.ts --project $CURRENT_PROJECT --resume
     ```
-    The pipeline handles everything autonomously: blueprint release → Forge (ACP) → git sync → Buster (Redis) → PASS/FAIL → memory feedback → next module. Forge and Echo sessions are spawned and killed by the pipeline — you don't manage them manually.
+    The pipeline handles everything autonomously: blueprint release → Forge (ACP) → git sync → Buster (v2 worker) → PASS/FAIL → memory feedback → next module. Forge, Buster, and Echo sessions are dispatched through their owning gateways and bounded by the v2 runtime.
 
     ## Pipeline Exit Codes
     0  = success → pipeline auto-advances to next module
@@ -173,10 +198,9 @@ workspace:
     pipeline.ts --project <P> [--resume] [--module <ID>] [--prompt "text"] [--prompt-file <path>]
                                [--status] [--dry-run] [--blueprint <ID>] [--blueprint-list]
 
-    ## Redis (Nova → Buster only)
-    redis.ts --action send --type <TYPE> --payload '<JSON>'
-    redis.ts --action read-completion --stream <key> --module <ID>
-    redis.ts --action archive-completions --stream <key> --module <ID>
+    ## Buster
+    Buster execution is available only through the v2 pipeline capability. Do not
+    call a queue, Redis tool, or worker endpoint manually.
 
     Confidence: ★★★ ≥0.75 (validated), ★★☆ 0.45-0.74 (neutral), ★☆☆ <0.45 (unverified).
     Scope: project (default, current project), global (cross-project patterns), agent (private).

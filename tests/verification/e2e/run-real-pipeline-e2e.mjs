@@ -33,6 +33,7 @@ import {
 } from './failure-scenarios.mjs';
 import { malformedOutputScenarioConfig } from './malformed-output-publisher.mjs';
 import {
+  appendStreamCapture,
   captureChildOutput,
   childOutputDiagnostics,
   createChildOutputCapture,
@@ -45,7 +46,7 @@ import {
 import { rateLimitCooldownDetails } from './rate-limit-output.mjs';
 
 const OPENCLAW_CONFIG_PATH = '/home/node/.openclaw/openclaw.json';
-const RESULT_SCHEMA_VERSION = 'real_pipeline_e2e_result.v1';
+const RESULT_SCHEMA_VERSION = 'real_pipeline_e2e_result.v2';
 const REAL_E2E_CRASH_SIGNAL = 'SIGKILL';
 const execFileAsync = promisify(execFile);
 const DEFAULT_RATE_LIMIT_TIMEOUT_EXTENSION_MS = Number(
@@ -167,6 +168,7 @@ export function createResultRecord(args) {
     exit_code: null,
     result_path: args.resultPath,
     mode: args.mode,
+    model: validateRealE2EModel(process.env.REAL_E2E_MODEL || DEFAULT_REAL_E2E_MODEL),
     scenario: {
       id: args.scenarioConfig.id,
       description: args.scenarioConfig.description || null,
@@ -221,10 +223,6 @@ export function summarizeCleanupVerification(cleanup, { keepArtifacts = false, c
   const gitArchitectureBranchDelete = step('git_architecture_branch_delete');
   const gitBranchOk = gitBranchDelete?.ok === true || (cleanupFailureObserved && gitBranchDeleteAfterBlocker?.ok === true);
   const surfaces = {
-    redis: {
-      ok: step('redis_run_keys_delete')?.ok === true,
-      detail: stepDetail('redis_run_keys_delete'),
-    },
     kubernetes: {
       ok: step('kubernetes_run_resources_delete')?.ok === true,
       detail: stepDetail('kubernetes_run_resources_delete'),
@@ -315,10 +313,7 @@ function runnerErrorRecord(error) {
 
 export function artifactPathsForWorkspace(workspace) {
   if (!workspace) return null;
-  const pipelineRunId = discoverPipelineRunId(workspace);
   const progressPath = path.join(workspace.swarmDir, 'progress.json');
-  const progress = readJsonIfPresent(progressPath);
-  const moduleIds = Object.keys(progress?.modules || { '01-nginx': {} });
   return {
     artifact_root: workspace.artifactRoot,
     worktree: workspace.worktreePath,
@@ -327,31 +322,10 @@ export function artifactPathsForWorkspace(workspace) {
     swarm_config: workspace.runConfigPath,
     cleanup_manifest: workspace.cleanupManifestPath,
     progress: progressPath,
-    lifecycle_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'lifecycle', 'canonical-events.jsonl'),
-    pipeline_events: path.join(workspace.swarmDir, 'logs', 'pipeline', 'pipeline.jsonl'),
-    discord_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord.jsonl'),
-    run_discord_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'discord.jsonl'),
-    discord_deliveries_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'discord-deliveries.jsonl'),
-    run_discord_deliveries_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'discord-deliveries.jsonl'),
-    nova_injections_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'nova-injections.jsonl'),
-    run_nova_injections_jsonl: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'nova-injections.jsonl'),
-    pipeline_summary: path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'),
-    pipeline_run_summary: path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', pipelineRunId, 'summary.json'),
-    pipeline_case_study: path.join(workspace.swarmDir, 'logs', 'pipeline', 'case-study.md'),
-    pipeline_case_study_base: path.join(workspace.swarmDir, 'logs', 'pipeline', 'case-study.base.json'),
-    pipeline_latest: path.join(workspace.swarmDir, 'logs', 'pipeline', 'latest.json'),
-    pipeline_review_json: path.join(workspace.swarmDir, 'logs', 'pipeline-review', 'PIPELINE-REVIEW.json'),
-    pipeline_review_markdown: path.join(workspace.swarmDir, 'logs', 'pipeline-review', 'PIPELINE-REVIEW.md'),
-    module_buster_output: path.join(workspace.swarmDir, 'modules', '01-nginx', 'buster-output.json'),
-    module_buster_outputs: Object.fromEntries(moduleIds.map((moduleId) => [
-      moduleId,
-      path.join(workspace.swarmDir, 'modules', moduleId, 'buster-output.json'),
-    ])),
-    final_buster_output: path.join(workspace.swarmDir, 'buster-test', 'FINAL-BUSTER-RESULT.json'),
-    approval_decision: path.join(workspace.swarmDir, 'logs', 'gates', 'operator-approval', 'approval-decision.json'),
-    module_echo_review: path.join(workspace.swarmDir, 'logs', 'echo-review', 'MODULE-REVIEW.json'),
-    final_echo_review: path.join(workspace.swarmDir, 'logs', 'echo-review', 'FINAL-REVIEW.json'),
-    architecture_validator_results: path.join(workspace.swarmDir, 'logs', 'architecture-validator', 'results.json'),
+    v2_result: path.join(workspace.swarmDir, 'real-production-result.json'),
+    v2_runtime: path.join(workspace.swarmDir, 'v2-runtime'),
+    v2_artifacts: path.join(workspace.swarmDir, 'artifacts', 'v2'),
+    runtime_results: path.join(workspace.worktreePath, '.swarm', 'runtime-results'),
   };
 }
 
@@ -380,34 +354,11 @@ function copyResultArtifactValue(sourceValue, targetRoot, label) {
   return Object.keys(copied).length > 0 ? copied : null;
 }
 
-function artifactMissingStatus(label, copied = {}) {
-  const notReachedAfterModuleReview = new Set([
-    'approval_decision',
-    'final_buster_output',
-    'final_echo_review',
-    'pipeline_review_json',
-    'pipeline_review_markdown',
-    'pipeline_summary',
-    'pipeline_run_summary',
-    'pipeline_case_study',
-    'pipeline_case_study_base',
-  ]);
-  const notReachedAfterFinalBuster = new Set([
-    'final_echo_review',
-    'pipeline_review_json',
-    'pipeline_review_markdown',
-    'pipeline_summary',
-    'pipeline_run_summary',
-    'pipeline_case_study',
-    'pipeline_case_study_base',
-  ]);
-  if (!copied.module_buster_output && !copied.module_buster_outputs && label !== 'module_buster_output' && label !== 'module_buster_outputs') return 'not_reached';
-  if (label === 'module_echo_review' && !copied.module_echo_review) {
-    return copied.approval_decision || copied.final_buster_output ? 'missing' : 'not_reached';
-  }
-  if (!copied.module_echo_review && notReachedAfterModuleReview.has(label)) return 'not_reached';
-  if (!copied.final_buster_output && notReachedAfterFinalBuster.has(label)) return 'not_reached';
-  return 'missing';
+function copyResultArtifactDirectory(sourcePath, targetRoot, label) {
+  if (!sourcePath || !fs.existsSync(sourcePath) || !fs.statSync(sourcePath).isDirectory()) return null;
+  const targetPath = path.join(targetRoot, safePathSegment(label));
+  fs.cpSync(sourcePath, targetPath, { recursive: true, force: true });
+  return targetPath;
 }
 
 export function snapshotResultArtifacts({ args, workspace }) {
@@ -420,39 +371,23 @@ export function snapshotResultArtifacts({ args, workspace }) {
   const missing = [];
   const copyLabels = [
     'progress',
-    'lifecycle_events',
-    'pipeline_events',
-    'discord_jsonl',
-    'run_discord_jsonl',
-    'discord_deliveries_jsonl',
-    'run_discord_deliveries_jsonl',
-    'nova_injections_jsonl',
-    'run_nova_injections_jsonl',
-    'pipeline_summary',
-    'pipeline_run_summary',
-    'pipeline_case_study',
-    'pipeline_case_study_base',
-    'pipeline_latest',
-    'pipeline_review_json',
-    'pipeline_review_markdown',
-    'module_buster_output',
-    'module_buster_outputs',
-    'final_buster_output',
-    'approval_decision',
-    'module_echo_review',
-    'final_echo_review',
-    'architecture_validator_results',
+    'v2_result',
   ];
   for (const label of copyLabels) {
     const copiedPath = copyResultArtifactValue(sourcePaths?.[label], bundleRoot, label);
     if (copiedPath) {
       copied[label] = copiedPath;
     } else {
-      missing.push({ label, status: artifactMissingStatus(label, copied), source_path: sourcePaths?.[label] || null });
+      missing.push({ label, status: 'missing', source_path: sourcePaths?.[label] || null });
     }
   }
+  for (const label of ['v2_runtime', 'v2_artifacts', 'runtime_results']) {
+    const copiedPath = copyResultArtifactDirectory(sourcePaths?.[label], bundleRoot, label);
+    if (copiedPath) copied[label] = copiedPath;
+    else missing.push({ label, status: 'missing', source_path: sourcePaths?.[label] || null });
+  }
   const manifest = {
-    schema_version: 'real_e2e_result_artifact_bundle.v1',
+    schema_version: 'real_e2e_result_artifact_bundle.v2',
     run_id: workspace.runId,
     project: workspace.projectName,
     created_at: new Date().toISOString(),
@@ -483,23 +418,6 @@ function readJsonIfPresent(filePath) {
   }
 }
 
-function discoverPipelineRunId(workspace) {
-  const summary = readJsonIfPresent(path.join(workspace.swarmDir, 'logs', 'pipeline', 'summary.json'));
-  const latest = readJsonIfPresent(path.join(workspace.swarmDir, 'logs', 'pipeline', 'latest.json'));
-  for (const candidate of [summary?.run_id, latest?.run_id, workspace.pipelineRunId, workspace.actualRunId, workspace.runId]) {
-    if (typeof candidate !== 'string' || !candidate.trim()) continue;
-    const runId = candidate.trim();
-    if (
-      fs.existsSync(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', runId, 'lifecycle', 'canonical-events.jsonl'))
-      || fs.existsSync(path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', runId, 'pipeline.jsonl'))
-      || runId === workspace.runId
-    ) {
-      return runId;
-    }
-  }
-  return workspace.runId;
-}
-
 function safeCheckpointPoint(value) {
   return String(value || '')
     .trim()
@@ -509,11 +427,48 @@ function safeCheckpointPoint(value) {
 }
 
 function runLifecycleEventsPath(workspace) {
-  return path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'lifecycle', 'canonical-events.jsonl');
+  return path.join(
+    workspace.swarmDir,
+    'v2-runtime',
+    'runs',
+    workspace.runId.replaceAll(':', '_'),
+    'events.jsonl',
+  );
 }
 
-function pipelineRunLockPath(workspace) {
-  return path.join(workspace.swarmDir, 'logs', 'pipeline', 'active-run.lock.json');
+function crashInjectionJournalPath(workspace) {
+  return path.join(
+    workspace.swarmDir,
+    'v2-runtime',
+    'runs',
+    workspace.runId.replaceAll(':', '_'),
+    'harness-crash-injections.jsonl',
+  );
+}
+
+function v2LifecycleEntries(workspace) {
+  return readJsonlIfPresent(runLifecycleEventsPath(workspace))
+    .map((record) => record?.entry)
+    .filter(Boolean);
+}
+
+function checkpointEventForPoint(workspace, requestedPoint) {
+  const point = safeCheckpointPoint(requestedPoint);
+  const events = v2LifecycleEntries(workspace);
+  const match = (type, stageId = null, outcome = null) => events.findLast((event) =>
+    event?.type === type
+    && (stageId === null || event?.identity?.stageId === stageId)
+    && (outcome === null || event?.payload?.outcome === outcome));
+  const checkpoints = {
+    before_buster_handoff: () => match('attempt.completed', 'forge-01-nginx', 'passed'),
+    after_buster_task_enqueue: () => match('stage.started', 'buster-01-nginx'),
+    during_buster_wait: () => match('attempt.dispatched', 'buster-01-nginx'),
+    after_failed_gate_before_retry: () => match('stage.retrying'),
+    during_git_operation: () => match('effect.requested', 'forge-01-nginx'),
+    after_final_review_before_summary: () => match('attempt.completed', 'final-review', 'passed'),
+    during_cleanup: () => match('run.succeeded'),
+  };
+  return checkpoints[point]?.() ?? null;
 }
 
 async function commitRestoredCheckpointWorkspace(workspace) {
@@ -583,9 +538,16 @@ function readJsonlIfPresent(filePath) {
 
 function writeExternalCrashMarker({ workspace, scenario, checkpoint }) {
   const point = safeCheckpointPoint(scenario.crashPoint);
-  const markerPath = path.join(workspace.swarmDir, 'logs', 'pipeline', 'runs', workspace.runId, 'real-e2e-crash-injection', `${point}.json`);
+  const markerPath = path.join(
+    workspace.swarmDir,
+    'v2-runtime',
+    'runs',
+    workspace.runId.replaceAll(':', '_'),
+    'harness-crash-injections',
+    `${point}.json`,
+  );
   writeJsonAtomic(markerPath, {
-    schema_version: 'real_e2e_crash_injection.v1',
+    schema_version: 'real_e2e_crash_injection.v2',
     artifact_type: 'real_e2e_crash_injection',
     point,
     requested_point: scenario.crashPoint,
@@ -595,39 +557,32 @@ function writeExternalCrashMarker({ workspace, scenario, checkpoint }) {
     crashed_at: new Date().toISOString(),
     signal: REAL_E2E_CRASH_SIGNAL,
     trigger: 'external_e2e_harness',
-    checkpoint_event_id: checkpoint?.event_id || null,
-    details: checkpoint?.data?.details || {},
+    checkpoint_event_id: checkpoint?.eventId || null,
+    details: checkpoint?.payload || {},
   });
   return markerPath;
 }
 
 function appendExternalCrashEvent({ workspace, scenario, checkpoint }) {
-  const eventsPath = runLifecycleEventsPath(workspace);
+  const eventsPath = crashInjectionJournalPath(workspace);
   fs.mkdirSync(path.dirname(eventsPath), { recursive: true });
-  const details = checkpoint?.data?.details || {};
+  const details = checkpoint?.payload || {};
   const event = {
-    schemaVersion: 'v1',
-    event_id: `event-real-e2e-crash-${process.pid}-${Date.now()}`,
+    schemaVersion: 'real-e2e-crash-injection.v2',
+    eventId: `event-real-e2e-crash-${process.pid}-${Date.now()}`,
     type: 'real_e2e.crash_injected',
-    occurred_at: new Date().toISOString(),
-    recorded_at: new Date().toISOString(),
-    refs: {
-      primary_ref: { kind: 'pipeline_run', id: `run:${workspace.runId}` },
-      run_id: workspace.runId,
-      run_ref: `run:${workspace.runId}`,
-      module_id: details.module_id || null,
-      gate_id: details.gate_id || null,
+    occurredAt: new Date().toISOString(),
+    identity: {
+      runId: workspace.runId,
+      stageId: checkpoint?.identity?.stageId || null,
     },
-    data: {
+    payload: {
       point: safeCheckpointPoint(scenario.crashPoint),
-      crash_signal: REAL_E2E_CRASH_SIGNAL,
+      crashSignal: REAL_E2E_CRASH_SIGNAL,
       scenario: scenario.id,
-      step_type: details.step_type || null,
-      step_id: details.step_id || null,
       attempt: details.attempt ?? null,
-      dispatch_id: details.dispatch_id || null,
       trigger: 'external_e2e_harness',
-      checkpoint_event_id: checkpoint?.event_id || null,
+      checkpointEventId: checkpoint?.eventId || null,
     },
   };
   fs.appendFileSync(eventsPath, `${JSON.stringify(event)}\n`);
@@ -650,13 +605,12 @@ function startExternalCrashController({ workspace, scenario, child }) {
   };
   const timer = setInterval(() => {
     if (state.observed || child.exitCode !== null || child.signalCode !== null) return;
-    const checkpoint = readJsonlIfPresent(runLifecycleEventsPath(workspace))
-      .find((entry) => entry?.type === 'pipeline.checkpoint' && entry?.data?.point === point);
+    const checkpoint = checkpointEventForPoint(workspace, point);
     if (!checkpoint) return;
     state.observed = true;
     state.marker_path = writeExternalCrashMarker({ workspace, scenario, checkpoint });
     const event = appendExternalCrashEvent({ workspace, scenario, checkpoint });
-    state.event_id = event.event_id;
+    state.event_id = event.eventId;
     state.signal = REAL_E2E_CRASH_SIGNAL;
     child.kill(state.signal);
   }, 250);
@@ -670,9 +624,7 @@ function startExternalCrashController({ workspace, scenario, child }) {
 
 function readCrashCheckpoint(workspace, scenario) {
   if (!scenario?.crashPoint) return null;
-  const point = safeCheckpointPoint(scenario.crashPoint);
-  return readJsonlIfPresent(runLifecycleEventsPath(workspace))
-    .find((entry) => entry?.type === 'pipeline.checkpoint' && entry?.data?.point === point) || null;
+  return checkpointEventForPoint(workspace, scenario.crashPoint);
 }
 
 function injectCleanupCrash({ workspace, scenario, state }) {
@@ -682,7 +634,7 @@ function injectCleanupCrash({ workspace, scenario, state }) {
   state.observed = true;
   state.marker_path = writeExternalCrashMarker({ workspace, scenario, checkpoint });
   const event = appendExternalCrashEvent({ workspace, scenario, checkpoint });
-  state.event_id = event.event_id;
+  state.event_id = event.eventId;
   state.signal = REAL_E2E_CRASH_SIGNAL;
   state.harness_phase = 'cleanup';
   return true;
@@ -703,12 +655,11 @@ function startCheckpointCancellationController({ workspace, scenario, child }) {
   };
   const timer = setInterval(() => {
     if (state.observed || child.exitCode !== null || child.signalCode !== null) return;
-    const checkpoint = readJsonlIfPresent(runLifecycleEventsPath(workspace))
-      .find((entry) => entry?.type === 'pipeline.checkpoint' && entry?.data?.point === point);
+    const checkpoint = checkpointEventForPoint(workspace, point);
     if (!checkpoint) return;
     state.observed = true;
     state.signal = 'SIGTERM';
-    state.checkpoint_event_id = checkpoint?.event_id || null;
+    state.checkpoint_event_id = checkpoint?.eventId || null;
     child.kill(state.signal);
   }, 250);
   return {
@@ -848,33 +799,6 @@ function installTerminationResultHandler({ persist, resultRecordRef }) {
     process.off('SIGTERM', handler);
     process.off('SIGINT', handler);
   };
-}
-
-export function pipelineRunLockLeaseWaitMaxMs(workspace, { bufferMs = 250 } = {}) {
-  const config = readJson(workspace.runConfigPath);
-  const leaseMs = Number(config?.locks?.pipeline_run?.lease_ms);
-  if (!Number.isFinite(leaseMs) || leaseMs <= 0) {
-    throw new Error('real E2E crash resume lock wait requires config.locks.pipeline_run.lease_ms');
-  }
-  return Math.ceil(leaseMs + bufferMs);
-}
-
-async function waitForPipelineRunLockLeaseExpiry(workspace, { bufferMs = 250, maxWaitMs = null } = {}) {
-  const lock = readJsonIfPresent(pipelineRunLockPath(workspace));
-  if (!lock) return { waited_ms: 0, reason: 'lock_absent' };
-  const expiresAt = Date.parse(String(lock.lease_expires_at || ''));
-  if (!Number.isFinite(expiresAt)) {
-    throw new Error('real E2E crash resume lock wait requires active-run.lock.json lease_expires_at');
-  }
-  const effectiveMaxWaitMs = maxWaitMs == null
-    ? pipelineRunLockLeaseWaitMaxMs(workspace, { bufferMs })
-    : maxWaitMs;
-  const waitMs = Math.max(0, expiresAt - Date.now() + bufferMs);
-  if (waitMs > effectiveMaxWaitMs) {
-    throw new Error(`real E2E crash resume lock wait exceeds maxWaitMs: ${waitMs}`);
-  }
-  if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
-  return { waited_ms: waitMs, reason: 'lease_expired', lease_expires_at: lock.lease_expires_at };
 }
 
 export function busterSimulatorTimeoutMsForPipeline({
@@ -1109,7 +1033,8 @@ export function buildRealE2EPipelineEnv({ workspace, scenario, baseEnv = process
     KUBECLAW_LOCAL_REGISTRY: baseEnv.KUBECLAW_LOCAL_REGISTRY || `registry-local.${kubeclawNamespace}.svc.cluster.local:5001`,
     REPO_ROOT: workspace.worktreePath,
     SWARM_CONFIG: workspace.runConfigPath,
-    AGENT_NAME: 'buster-real-e2e',
+    AGENT_ROLE: baseEnv.AGENT_ROLE || 'nova',
+    REAL_E2E_RUN_ID: workspace.runId,
     REAL_E2E_SCENARIO: scenario.id,
   };
   return withGitFaultShimEnv({ env, workspace, scenario });
@@ -1196,7 +1121,10 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     };
   }
 
-  const env = buildRealE2EPipelineEnv({ workspace, scenario });
+  const env = {
+    ...buildRealE2EPipelineEnv({ workspace, scenario }),
+    REAL_E2E_V2_RUNTIME: '1',
+  };
   const pipelineTimeoutMs = Number(process.env.REAL_E2E_PIPELINE_TIMEOUT_MS || (mode === 'fast' ? 45 * 60 * 1000 : 2 * 60 * 60 * 1000));
   const rateLimitTimeoutExtensionMs = Number(
     process.env.REAL_E2E_RATE_LIMIT_TIMEOUT_EXTENSION_MS
@@ -1212,23 +1140,16 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     rateLimitTimeoutExtensionMs,
   }));
 
-  const simulator = trackChild(spawn(process.execPath, [
-    path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'buster-simulator.mjs'),
-    '--timeout-ms',
-    String(simulatorTimeoutMs),
-  ], {
-    cwd: REPO_ROOT,
-    env,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  }), 'real-e2e-buster');
-  const simulatorOutput = captureChildOutput(simulator, { label: 'real-e2e-buster' });
+  const simulator = null;
+  const simulatorOutput = createChildOutputCapture({ label: 'real-e2e-buster-v2-in-process' });
 
   const startApprovalOperator = ({
     stateFile,
     decision = 'approve',
     reason = 'Approved by canonical real E2E operator controller.',
   }) => trackChild(spawn(process.execPath, [
-    path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'approval-operator.mjs'),
+    '--experimental-strip-types',
+    path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'approval-operator.mts'),
     '--state-path',
     path.join(workspace.swarmDir, stateFile),
     '--decision',
@@ -1289,7 +1210,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
   const pipelineAttempts = [];
   const spawnPipelineAttempt = ({ resume = false, label = 'real-e2e-nova' } = {}) => {
     const args = [
-      path.join(REPO_ROOT, 'skills', 'nova', 'pipeline.ts'),
+      path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'run-v2-production-pipeline.mts'),
       '--project',
       workspace.projectName,
       '--repo',
@@ -1323,6 +1244,21 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
     childOutput: firstPipelineAttempt.output,
     rateLimitTimeoutExtensionMs,
   });
+  if (
+    firstPipelineAttempt.exit.code === 0
+    && !fs.existsSync(path.join(workspace.swarmDir, 'real-production-result.json'))
+  ) {
+    firstPipelineAttempt.exit = {
+      ...firstPipelineAttempt.exit,
+      code: 1,
+      empty_success_rejected: true,
+      reason: 'REAL_E2E_PIPELINE_RESULT_MISSING',
+    };
+    appendStreamCapture(
+      firstPipelineAttempt.output.stderr,
+      'REAL_E2E_PIPELINE_RESULT_MISSING: child exited zero without canonical v2 result\n',
+    );
+  }
   externalCrash.stop();
   cancellation.stop();
   if (scenario.crashResume && safeCheckpointPoint(scenario.crashPoint) === 'during_cleanup') {
@@ -1356,7 +1292,6 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
       resume_exit: null,
     };
     if (initialCrashObserved) {
-      const lockWait = await waitForPipelineRunLockLeaseExpiry(workspace);
       const resumePipelineAttempt = spawnPipelineAttempt({ resume: true, label: 'real-e2e-nova-resume' });
       resumePipelineAttempt.exit = await waitForChildWithTimeout(resumePipelineAttempt.child, resumePipelineAttempt.label, pipelineTimeoutMs, {
         childOutput: resumePipelineAttempt.output,
@@ -1368,7 +1303,7 @@ async function runProductionPipeline({ workspace, mode, scenario, resumeFromChec
         ...crashResume,
         resumed: true,
         resume_exit: resumePipelineAttempt.exit,
-        lock_wait: lockWait,
+        lock_recovery: 'resource-lock.v2',
       };
     }
   }

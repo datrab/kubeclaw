@@ -132,6 +132,10 @@ const confidential = await confidentialEffects.invokeConfidential(
   {
     ...invocation,
     capability: 'secrets.read',
+    resource: {
+      type: 'secret.name',
+      canonicalId: 'confidential-resource-must-not-survive',
+    },
     payload: { resolvedValue: 'audit-request-secret-must-not-survive' },
   },
   new AbortController().signal,
@@ -141,11 +145,16 @@ assert.equal(await confidentialJournal.request('effect:01'), undefined);
 assert.equal(await confidentialJournal.receipt('effect:01'), undefined);
 assert.deepEqual(confidentialAudit.map(([type]) => type), ['requested', 'accepted', 'completed']);
 assert.deepEqual(confidentialAudit[0][1].payload, { confidential: true });
+assert.deepEqual(confidentialAudit[0][1].resource, {
+  type: 'secret.name',
+  canonicalId: '[confidential]',
+});
 assert.deepEqual(confidentialAudit[1][1].payload, { confidential: true });
 assert.deepEqual(confidentialAudit[2][1].payload, { confidential: true });
 assert.deepEqual(confidentialAudit[2][2].result, { confidential: true });
 assert.doesNotMatch(JSON.stringify(confidentialAudit), /do-not-persist/);
 assert.doesNotMatch(JSON.stringify(confidentialAudit), /audit-request-secret-must-not-survive/);
+assert.doesNotMatch(JSON.stringify(confidentialAudit), /confidential-resource-must-not-survive/);
 const confidentialFailureAudit = [];
 const confidentialFailureEffects = new core.EffectCoordinator(
   new core.MemoryEffectJournal(),
@@ -452,8 +461,52 @@ const stalledRuntime = new core.AdapterRuntime({
   shutdownTimeoutMs: 20,
   async emitDomainEvent() {},
 });
-void stalledRuntime.start();
+const stalledStart = stalledRuntime.start();
 await stalledReadyEntered;
-await assert.rejects(stalledRuntime.shutdown(), /ADAPTER_SHUTDOWN_TIMEOUT/);
+await assert.rejects(stalledStart, /ADAPTER_START_TIMEOUT:example\.first:first:ready/);
+assert.equal(stalledShutdowns, 1, 'ready timeout immediately tears down the constructed adapter');
+await stalledRuntime.shutdown();
 assert.equal(stalledShutdowns, 1, 'shutdown attempts teardown once while startup remains stalled');
+
+let resolveLateFactory;
+let lateShutdowns = 0;
+const lateRuntime = new core.AdapterRuntime({
+  granted: {
+    snapshot: {
+      adapters: new Map([[firstId, adapterRegistration('example.first', 'first')]]),
+    },
+    enabledRegistrations: new Set([firstId]),
+    selectedProviders: new Map(),
+    grants: new Map([[firstId, []]]),
+  },
+  activated: {
+    adapters: new Map([[
+      firstId,
+      {
+        execute: () => new Promise((resolve) => {
+          resolveLateFactory = () => resolve({
+            async ready() {},
+            async invoke() { return {}; },
+            async shutdown() { lateShutdowns += 1; },
+          });
+        }),
+      },
+    ]]),
+  },
+  configs: new Map(),
+  effects: new core.EffectCoordinator(
+    new core.MemoryEffectJournal(),
+    undefined,
+    undefined,
+    new core.MemoryResourceLockManager(),
+  ),
+  shutdownTimeoutMs: 20,
+  async emitDomainEvent() {},
+});
+await assert.rejects(lateRuntime.start(), /ADAPTER_START_TIMEOUT:example\.first:first:activate/);
+resolveLateFactory();
+await new Promise((resolve) => setTimeout(resolve, 10));
+assert.equal(lateShutdowns, 1, 'an adapter resolving after activation timeout is shut down exactly once');
+await lateRuntime.shutdown();
+assert.equal(lateShutdowns, 1, 'runtime shutdown does not double-close late activation');
 console.log(JSON.stringify({ ok: true, contract: 'plugin-system-v2-capability-runtime' }));

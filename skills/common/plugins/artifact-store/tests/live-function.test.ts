@@ -50,6 +50,57 @@ try {
     signal,
   });
   assert.deepEqual(read.value, { a: ['stable'], z: 1 });
+  const latest = await adapter.invoke({
+    ...fenced,
+    request: {
+      requestId: 'request:latest',
+      idempotencyKey: 'latest',
+      attempt,
+      capability: 'artifacts.read',
+      operation: 'get_latest_json',
+      resource: { type: 'artifact.object', canonicalId: first.artifact.artifactId },
+      payload: { namespace: 'kubeclaw.test' },
+    },
+    signal,
+  });
+  assert.deepEqual(latest.value, { a: ['stable'], z: 1 });
+  assert.equal(latest.artifact.digest, first.artifact.digest);
+  const foreignAttempt = {
+    ...attempt,
+    runId: 'run:foreign',
+    attemptId: 'attempt:foreign',
+  };
+  await adapter.invoke({
+    ...fenced,
+    request: {
+      requestId: 'request:foreign-write',
+      idempotencyKey: 'foreign-write',
+      attempt: foreignAttempt,
+      capability: 'artifacts.write',
+      operation: 'put_json',
+      resource: { type: 'artifact.object', canonicalId: first.artifact.artifactId },
+      payload: {
+        namespace: 'kubeclaw.test',
+        mediaType: 'application/json',
+        value: { foreign: true },
+      },
+    },
+    signal,
+  });
+  const runScopedLatest = await adapter.invoke({
+    ...fenced,
+    request: {
+      requestId: 'request:run-scoped-latest',
+      idempotencyKey: 'run-scoped-latest',
+      attempt,
+      capability: 'artifacts.read',
+      operation: 'get_latest_json',
+      resource: { type: 'artifact.object', canonicalId: first.artifact.artifactId },
+      payload: { namespace: 'kubeclaw.test' },
+    },
+    signal,
+  });
+  assert.deepEqual(runScopedLatest.value, { a: ['stable'], z: 1 });
 
   await assert.rejects(write({ value: 'x'.repeat(2048) }), /ARTIFACT_SIZE_EXCEEDED/);
   await assert.rejects(adapter.invoke({

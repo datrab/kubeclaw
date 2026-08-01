@@ -7,6 +7,17 @@ Uses agentRole to differentiate between agent instances.
 {{- end -}}
 
 {{/*
+Resolve the canonical Service name for a configured agent role.
+*/}}
+{{- define "kubeclaw.agentServiceName" -}}
+{{- $role := required "capability provider agentRole is required" . -}}
+{{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$" $role) -}}
+{{- fail "capability provider agentRole must be a DNS label" -}}
+{{- end -}}
+{{- printf "agent-%s" $role | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Common labels applied to all resources.
 */}}
 {{- define "kubeclaw.labels" -}}

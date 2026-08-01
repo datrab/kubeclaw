@@ -68,6 +68,7 @@ try {
   await adapters.start();
   const observers = new core.ObserverRuntime({
     registry: granted, activated, adapters, events, checkpoints, configs: new Map(),
+    deliveries: new core.FileJournal(path.join(temporary, 'deliveries.jsonl')),
     now: () => new Date('2026-07-26T00:00:01Z'),
     wait: async () => {},
   });

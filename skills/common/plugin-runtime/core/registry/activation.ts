@@ -9,7 +9,11 @@ import { FrozenMap } from './frozen-map.ts';
 import type { RegistrySnapshot } from './types.ts';
 
 export interface ActivatedRegistration {
-  readonly execute: (...args: readonly unknown[]) => unknown;
+  readonly execute: (
+    argument: unknown,
+    context: unknown,
+    signal?: AbortSignal,
+  ) => unknown;
 }
 
 export interface ActivatedRegistry {
@@ -53,7 +57,7 @@ async function load(
       );
     }
     return Object.freeze({
-      execute: (argument: unknown, context: unknown) => {
+      execute: (argument: unknown, context: unknown, signal?: AbortSignal) => {
         if (
           !context
           || typeof context !== 'object'
@@ -72,6 +76,7 @@ async function load(
           surface,
           argument,
           context: context as PluginInvocationContext,
+          ...(signal === undefined ? {} : { signal }),
         });
       },
     });

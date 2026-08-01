@@ -238,8 +238,6 @@ append_image_override_file() {
   local disable_pull_secrets="$4"
   local controller_image_repo="${5:-}"
   local controller_image_tag="${6:-}"
-  local pipeline_image_repo="${7:-}"
-  local pipeline_image_tag="${8:-}"
 
   if [[ -n $image_repo || -n $image_tag ]]; then
     echo "image:" >>"$output_path"
@@ -267,16 +265,6 @@ append_image_override_file() {
     fi
   fi
 
-  if [[ -n $pipeline_image_repo || -n $pipeline_image_tag ]]; then
-    echo "busterPipeline:" >>"$output_path"
-    echo "  image:" >>"$output_path"
-    if [[ -n $pipeline_image_repo ]]; then
-      echo "    repository: \"$pipeline_image_repo\"" >>"$output_path"
-    fi
-    if [[ -n $pipeline_image_tag ]]; then
-      echo "    tag: \"$pipeline_image_tag\"" >>"$output_path"
-    fi
-  fi
 }
 
 append_code_bundle_override_file() {
@@ -544,12 +532,12 @@ bundle_env_for_role() {
   case "$role:$field" in
     nova:archive_url) echo "${NOVA_CODE_BUNDLE_ARCHIVE_URL:-}" ;;
     nova:expected_commit) echo "${NOVA_CODE_BUNDLE_EXPECTED_COMMIT:-}" ;;
-    nova:contract_version) echo "${NOVA_CODE_BUNDLE_CONTRACT_VERSION:-v1}" ;;
+    nova:contract_version) echo "${NOVA_CODE_BUNDLE_CONTRACT_VERSION:-v2}" ;;
     nova:auth_secret) echo "${NOVA_CODE_BUNDLE_AUTH_SECRET:-}" ;;
     nova:auth_key) echo "${NOVA_CODE_BUNDLE_AUTH_SECRET_KEY:-token}" ;;
     buster:archive_url) echo "${BUSTER_CODE_BUNDLE_ARCHIVE_URL:-}" ;;
     buster:expected_commit) echo "${BUSTER_CODE_BUNDLE_EXPECTED_COMMIT:-}" ;;
-    buster:contract_version) echo "${BUSTER_CODE_BUNDLE_CONTRACT_VERSION:-v1}" ;;
+    buster:contract_version) echo "${BUSTER_CODE_BUNDLE_CONTRACT_VERSION:-v2}" ;;
     buster:auth_secret) echo "${BUSTER_CODE_BUNDLE_AUTH_SECRET:-}" ;;
     buster:auth_key) echo "${BUSTER_CODE_BUNDLE_AUTH_SECRET_KEY:-token}" ;;
     *) return 1 ;;
@@ -1057,8 +1045,6 @@ deploy_agent() {
   local image_tag=""
   local controller_image_repo=""
   local controller_image_tag=""
-  local pipeline_image_repo=""
-  local pipeline_image_tag=""
   local bundle_archive_url=""
   local bundle_expected_commit=""
   local bundle_contract_version=""
@@ -1081,8 +1067,6 @@ deploy_agent() {
     buster)
       image_repo="${BUSTER_GATEWAY_IMAGE_REPOSITORY:-}"
       image_tag="${BUSTER_GATEWAY_IMAGE_TAG:-}"
-      pipeline_image_repo="${BUSTER_PIPELINE_IMAGE_REPOSITORY:-}"
-      pipeline_image_tag="${BUSTER_PIPELINE_IMAGE_TAG:-}"
       controller_image_repo="${BUSTER_CONTROLLER_IMAGE_REPOSITORY:-${NAMESPACE_CONTROLLER_IMAGE_REPOSITORY:-}}"
       controller_image_tag="${BUSTER_CONTROLLER_IMAGE_TAG:-${NAMESPACE_CONTROLLER_IMAGE_TAG:-}}"
       ;;
@@ -1129,28 +1113,13 @@ deploy_agent() {
     verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
   fi
 
-  if [[ $role == "buster" && $mode == "image" ]]; then
-    local pipeline_preflight_repo="${pipeline_image_repo:-$(yaml_get_nested_section_key "$values_file" busterPipeline image repository)}"
-    local pipeline_preflight_tag="${pipeline_image_tag:-$(yaml_get_nested_section_key "$values_file" busterPipeline image tag)}"
-    local pipeline_preflight_image="${pipeline_preflight_repo}"
-    local pipeline_preflight_pull_secret
-    pipeline_preflight_pull_secret="$(yaml_get_first_named_list_item "$values_file" imagePullSecrets)"
-    if [[ $disable_pull_secrets == "1" ]]; then
-      pipeline_preflight_pull_secret=""
-    fi
-    if [[ $pipeline_preflight_image != *@* ]]; then
-      pipeline_preflight_image="${pipeline_preflight_image}:${pipeline_preflight_tag:-latest}"
-    fi
-    cmd_buildkit_preflight "$pipeline_preflight_image" "$pipeline_preflight_pull_secret"
-  fi
-
-  if [[ -n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || -n $pipeline_image_repo || -n $pipeline_image_tag || $disable_pull_secrets == "1" || $mode == "code" ]]; then
+  if [[ -n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || $disable_pull_secrets == "1" || $mode == "code" ]]; then
     override_file="$(mktemp)"
     : >"$override_file"
   fi
 
-  if [[ -n $override_file && (-n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || -n $pipeline_image_repo || -n $pipeline_image_tag || $disable_pull_secrets == "1") ]]; then
-    append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag" "$pipeline_image_repo" "$pipeline_image_tag"
+  if [[ -n $override_file && (-n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || $disable_pull_secrets == "1") ]]; then
+    append_image_override_file "$override_file" "$image_repo" "$image_tag" "$disable_pull_secrets" "$controller_image_repo" "$controller_image_tag"
   fi
 
   if [[ -n $override_file && $mode == "code" ]]; then

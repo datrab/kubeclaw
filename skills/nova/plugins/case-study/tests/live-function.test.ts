@@ -2,7 +2,7 @@ import assert from'node:assert/strict';import fs from'node:fs';import http from'
 const repository=path.resolve('../../../..');const core=await import(pathToFileURL(path.join(repository,'skills/common/plugin-runtime/core/src/index.ts')).href);
 const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-case-study-'));
 const markdown=['Context','Challenge','Approach','Implementation','Verification','Outcome'].map((section)=>`## ${section}\n\nEvidence.`).join('\n\n');
-const server=http.createServer((_request,response)=>{response.writeHead(200,{'content-type':'application/json'});response.end(JSON.stringify({result:{status:'generated',projectId:'api',runId:'run-1',markdown}}));});
+const server=http.createServer((_request,response)=>{response.writeHead(200,{'content-type':'application/json'});response.end(JSON.stringify({result:{status:'generated',markdown}}));});
 await new Promise((resolve)=>server.listen(0,'127.0.0.1',resolve));const address=server.address();if(!address||typeof address==='string')throw new Error('server unavailable');
 const origin=`http://127.0.0.1:${address.port}`;const secret='KUBECLAW_CASE_STUDY_TOKEN';process.env[secret]='case-secret';
 const roots=['common','nova','buster'].map((role)=>path.join(repository,`skills/${role}/plugins`));

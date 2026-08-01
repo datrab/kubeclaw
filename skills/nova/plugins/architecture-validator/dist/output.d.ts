@@ -1,5 +1,5 @@
 export interface ArchitectureOutput {
-    readonly verdict: 'passed' | 'request_fix' | 'blocked';
+    readonly verdict: 'passed' | 'blocked';
     readonly summary: string;
     readonly findings: readonly ArchitectureFinding[];
     readonly checkedFiles: readonly string[];

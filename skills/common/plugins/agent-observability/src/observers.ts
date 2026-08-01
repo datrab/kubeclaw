@@ -16,7 +16,6 @@ export function projectAgentEvent(delivery: ObserverDelivery): Readonly<Record<s
   return Object.freeze({
     schemaVersion: 'agent-observability-event.v2',
     deliveryId: delivery.deliveryId,
-    deliveryAttempt: delivery.attemptNumber,
     eventId: delivery.event.eventId,
     eventType: delivery.event.type,
     sequence: delivery.event.sequence,

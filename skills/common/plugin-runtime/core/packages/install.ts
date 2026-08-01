@@ -1,12 +1,25 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { computePackageDigest } from '../registry/digest.ts';
+import { buildRegistry } from '../registry/build.ts';
 import { parsePluginManifest } from '../registry/schema.ts';
 
+export interface ExternalInstallPolicy {
+  readonly operatorIds: ReadonlySet<string>;
+  readonly allowedSourceDigests: ReadonlyMap<string, readonly string[]>;
+  readonly verifiedAttestations: ReadonlyMap<string, string>;
+  readonly maxFiles?: number;
+  readonly maxBytes?: number;
+}
+
 export interface ExternalInstallRequest {
+  readonly actorId: string;
+  readonly canonicalSource: string;
   readonly sourceRoot: string;
   readonly installationRoot: string;
   readonly expectedDigest: string;
+  readonly policy: ExternalInstallPolicy;
   readonly trustEvidence: Readonly<{
     method: 'source_digest_allowlist' | 'publisher_attestation';
     verifier: string;
@@ -21,7 +34,12 @@ export interface InstalledPackage {
   readonly root: string;
 }
 
-function entries(root: string, relative = ''): readonly string[] {
+interface PackageEntry {
+  readonly relative: string;
+  readonly bytes: number;
+}
+
+function entries(root: string, relative = ''): readonly PackageEntry[] {
   return fs.readdirSync(path.join(root, relative), { withFileTypes: true }).flatMap((entry) => {
     const child = path.join(relative, entry.name);
     if (entry.isSymbolicLink()) throw new Error(`PLUGIN_INSTALL_SYMLINK_FORBIDDEN:${child}`);
@@ -32,7 +50,7 @@ function entries(root: string, relative = ''): readonly string[] {
       return entries(root, child);
     }
     if (!entry.isFile()) throw new Error(`PLUGIN_INSTALL_FILE_TYPE_FORBIDDEN:${child}`);
-    return [child];
+    return [{ relative: child, bytes: fs.statSync(path.join(root, child)).size }];
   });
 }
 
@@ -53,7 +71,7 @@ function safeName(value: string): string {
 
 function copyPackage(source: string, destination: string): void {
   fs.mkdirSync(destination, { recursive: false, mode: 0o755 });
-  for (const relative of entries(source)) {
+  for (const { relative } of entries(source)) {
     const target = path.join(destination, relative);
     fs.mkdirSync(path.dirname(target), { recursive: true, mode: 0o755 });
     fs.copyFileSync(path.join(source, relative), target, fs.constants.COPYFILE_EXCL);
@@ -61,23 +79,99 @@ function copyPackage(source: string, destination: string): void {
   }
 }
 
-export function installExternalPackage(request: ExternalInstallRequest): InstalledPackage {
-  const source = fs.realpathSync(request.sourceRoot);
-  const installationRoot = fs.realpathSync(request.installationRoot);
-  rejectLifecycleScripts(source);
-  entries(source);
-  const manifestPath = path.join(source, 'plugin.json');
+function assertPolicy(request: ExternalInstallRequest, digest: string): void {
+  if (!request.policy.operatorIds.has(request.actorId)) {
+    throw new Error(`PLUGIN_INSTALL_OPERATOR_UNAUTHORIZED:${request.actorId}`);
+  }
+  if (
+    !request.canonicalSource
+    || request.canonicalSource.startsWith('local:')
+    || request.canonicalSource.startsWith('file:')
+  ) {
+    throw new Error('PLUGIN_INSTALL_CANONICAL_SOURCE_INVALID');
+  }
+  const allowed = request.policy.allowedSourceDigests.get(request.canonicalSource) ?? [];
+  const attestation = request.policy.verifiedAttestations.get(digest);
+  if (request.trustEvidence.method === 'source_digest_allowlist') {
+    if (!allowed.includes(digest)) throw new Error('PLUGIN_INSTALL_SOURCE_DIGEST_UNTRUSTED');
+  } else if (
+    !request.trustEvidence.attestationDigest
+    || request.trustEvidence.attestationDigest !== attestation
+  ) {
+    throw new Error('PLUGIN_INSTALL_ATTESTATION_UNVERIFIED');
+  }
+}
+
+function validatePackage(root: string, request: ExternalInstallRequest): {
+  readonly manifest: ReturnType<typeof parsePluginManifest>;
+  readonly digest: string;
+} {
+  rejectLifecycleScripts(root);
+  const packageEntries = entries(root);
+  const maxFiles = request.policy.maxFiles ?? 4096;
+  const maxBytes = request.policy.maxBytes ?? 128 * 1024 * 1024;
+  const totalBytes = packageEntries.reduce((total, entry) => total + entry.bytes, 0);
+  if (packageEntries.length > maxFiles) throw new Error('PLUGIN_INSTALL_FILE_COUNT_LIMIT');
+  if (totalBytes > maxBytes) throw new Error('PLUGIN_INSTALL_SIZE_LIMIT');
+  const manifestPath = path.join(root, 'plugin.json');
   const manifest = parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath);
-  const digest = computePackageDigest(source);
+  if (manifest.adapters.length > 0) {
+    throw new Error('PLUGIN_INSTALL_EXTERNAL_ADAPTER_UNSUPPORTED');
+  }
+  const digest = computePackageDigest(root);
   if (digest !== request.expectedDigest) {
     throw new Error(`PLUGIN_INSTALL_DIGEST_MISMATCH:${digest}`);
   }
-  if (
-    request.trustEvidence.method === 'publisher_attestation'
-    && !request.trustEvidence.attestationDigest
-  ) {
-    throw new Error('PLUGIN_INSTALL_ATTESTATION_REQUIRED');
+  assertPolicy(request, digest);
+  const provenance = {
+    schemaVersion: 'package-provenance.v2' as const,
+    package: {
+      pluginId: manifest.id,
+      apiVersion: manifest.apiVersion,
+      packageVersion: manifest.packageVersion,
+      contentDigest: digest,
+    },
+    source: { type: 'registry' as const, canonicalReference: request.canonicalSource },
+    canonicalPath: root,
+    trustScope: 'isolated_external' as const,
+    trustEvidence: {
+      method: request.trustEvidence.method,
+      verifier: request.trustEvidence.verifier,
+      verifiedAt: new Date().toISOString(),
+      ...(request.trustEvidence.attestationDigest === undefined
+        ? {}
+        : { attestationDigest: request.trustEvidence.attestationDigest }),
+    },
+    resolvedAt: new Date().toISOString(),
+  };
+  buildRegistry([{
+    root,
+    manifestPath,
+    manifest,
+    provenance,
+  }]);
+  for (const registration of [...manifest.stages, ...manifest.observers]) {
+    const modulePath = path.join(root, registration.module);
+    if (!/\.(?:mjs|js)$/.test(modulePath)) {
+      throw new Error(`PLUGIN_INSTALL_PREBUILT_MODULE_REQUIRED:${registration.module}`);
+    }
+    const checked = spawnSync(process.execPath, ['--check', modulePath], {
+      cwd: root,
+      env: { NODE_NO_WARNINGS: '1' },
+      encoding: 'utf8',
+      timeout: 30_000,
+    });
+    if (checked.status !== 0) {
+      throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${registration.module}`);
+    }
   }
+  return { manifest, digest };
+}
+
+export function installExternalPackage(request: ExternalInstallRequest): InstalledPackage {
+  const source = fs.realpathSync(request.sourceRoot);
+  const installationRoot = fs.realpathSync(request.installationRoot);
+  const { manifest, digest } = validatePackage(source, request);
   const name = [
     safeName(manifest.id),
     safeName(manifest.packageVersion),
@@ -101,9 +195,7 @@ export function installExternalPackage(request: ExternalInstallRequest): Install
   try {
     const packageRoot = path.join(staging, 'package');
     copyPackage(source, packageRoot);
-    if (computePackageDigest(packageRoot) !== digest) {
-      throw new Error('PLUGIN_INSTALL_STAGED_DIGEST_MISMATCH');
-    }
+    validatePackage(packageRoot, request);
     fs.renameSync(packageRoot, target);
   } finally {
     fs.rmSync(staging, { recursive: true, force: true });

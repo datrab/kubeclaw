@@ -1,22 +1,7 @@
 import { normalizeAgentObservabilityMaxEventBytes } from './agent-observability/index.ts';
-import fs from 'node:fs';
 
 declare const process: { env: Record<string, unknown> };
 
-const STANDARD_PROFILE_NAME = 'standard';
-const STANDARD_FEATURES: UnknownRecord = {
-  observability: true,
-  buster: true,
-  discord_alerts: true,
-};
-const STANDARD_TUNING: UnknownRecord = {
-  safety_margins: 'high',
-  retention: 'high',
-  alerts: 'rich',
-  logs: 'verbose',
-  checks: 'strict',
-  determinism: 'strict',
-};
 const TRUE_VALUES = new Set(['1', 'true', 'yes', 'on', 'enabled']);
 
 type UnknownRecord = Record<string, unknown>;
@@ -43,115 +28,6 @@ export interface AgentObserverConfig {
 
 function asRecord(value: unknown): UnknownRecord {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as UnknownRecord : {};
-}
-
-function cloneJson(value: unknown): UnknownRecord {
-  return JSON.parse(JSON.stringify(value));
-}
-
-function assertExactObject(input: unknown, expected: UnknownRecord, label: string) {
-  const record = asRecord(input);
-  if (!Object.keys(record).length) {
-    throw new Error(`${label}: required object`);
-  }
-  for (const key of Object.keys(record)) {
-    if (!Object.prototype.hasOwnProperty.call(expected, key)) {
-      throw new Error(`${label}.${key}: unknown key for ${STANDARD_PROFILE_NAME} profile`);
-    }
-  }
-  for (const [key, expectedValue] of Object.entries(expected)) {
-    if (record[key] !== expectedValue) {
-      throw new Error(`${label}.${key}: ${STANDARD_PROFILE_NAME} profile requires ${JSON.stringify(expectedValue)}`);
-    }
-  }
-}
-
-function loadStandardProfile(env: UnknownRecord): UnknownRecord {
-  const candidates = [
-    stringValue(env.KUBECLAW_SWARM_STANDARD_PROFILE),
-    '/app/skills/pipeline/config-profiles/standard.json',
-    new URL('../../../pipeline/config-profiles/standard.json', import.meta.url),
-  ].filter(Boolean) as Array<string | URL>;
-  for (const candidate of candidates) {
-    try {
-      if (!fs.existsSync(candidate)) continue;
-      return JSON.parse(fs.readFileSync(candidate, 'utf8'));
-    } catch (_error) {
-      continue;
-    }
-  }
-  throw new Error('standard swarm config profile must be available to resolve compact swarm config');
-}
-
-function assertOverrideTargets(base: UnknownRecord, overrides: UnknownRecord, pathParts: string[] = []) {
-  for (const [key, value] of Object.entries(overrides)) {
-    const nextPath = [...pathParts, key];
-    const label = `overrides.${nextPath.join('.')}`;
-    if (!Object.prototype.hasOwnProperty.call(base, key)) {
-      throw new Error(`${label}: unknown effective config path`);
-    }
-    if (Object.keys(asRecord(value)).length) {
-      const baseValue = asRecord(base[key]);
-      if (!Object.keys(baseValue).length) {
-        throw new Error(`${label}: cannot merge object into non-object effective config value`);
-      }
-      assertOverrideTargets(baseValue, asRecord(value), nextPath);
-    }
-  }
-}
-
-function mergeKnownOverrides(target: UnknownRecord, overrides: UnknownRecord): UnknownRecord {
-  for (const [key, value] of Object.entries(overrides)) {
-    if (Object.keys(asRecord(value)).length) {
-      target[key] = mergeKnownOverrides({ ...asRecord(target[key]) }, asRecord(value));
-    } else {
-      target[key] = value;
-    }
-  }
-  return target;
-}
-
-function expandPlatformConfigForObserver(platformConfig: UnknownRecord, env: UnknownRecord): UnknownRecord {
-  if (platformConfig.profile !== STANDARD_PROFILE_NAME) return platformConfig;
-
-  assertExactObject(platformConfig.features, STANDARD_FEATURES, 'config.features');
-  assertExactObject(platformConfig.tuning, STANDARD_TUNING, 'config.tuning');
-  const overrides = asRecord(platformConfig.overrides);
-  const expanded = cloneJson(loadStandardProfile(env));
-  assertOverrideTargets(expanded, overrides);
-  mergeKnownOverrides(expanded, overrides);
-  return expanded;
-}
-
-function loadSwarmAgentObserverConfig(env: UnknownRecord): UnknownRecord {
-  const configPath = stringValue(env.SWARM_CONFIG);
-  if (!configPath) return {};
-  try {
-    const platformConfig = expandPlatformConfigForObserver(JSON.parse(fs.readFileSync(configPath, 'utf8')), env);
-    const agentObservability = asRecord(platformConfig?.agent_observability);
-    const plugin = asRecord(agentObservability.plugin);
-    const payload = asRecord(agentObservability.payload);
-    const ingester = asRecord(agentObservability.ingester);
-    const streamPolicy = asRecord(agentObservability.streams);
-    const hookPolicy = asRecord(plugin.hook);
-    const controlWritePolicy = asRecord(plugin.control_write);
-    return {
-      enabled: plugin.enabled,
-      maxEventBytes: payload.max_event_bytes,
-      maxQueuePerStream: plugin.max_queue_per_stream,
-      redisCommandTimeoutMs: ingester.redis_command_timeout_ms,
-      streamMaxLen: streamPolicy.stream_max_len,
-      deadLetterMaxLen: streamPolicy.dead_letter_max_len,
-      controlWriteMaxAttempts: controlWritePolicy.max_attempts,
-      controlWriteRetryBaseMs: controlWritePolicy.retry_base_ms,
-      controlWriteRetryMaxMs: controlWritePolicy.retry_max_ms,
-      hookPriority: hookPolicy.priority,
-      hookTimeoutMs: hookPolicy.timeout_ms,
-      redisNetworkIsolation: ingester.redisNetworkIsolation,
-    };
-  } catch (_error) {
-    return {};
-  }
 }
 
 function boolValue(value: unknown, fallback = false): boolean {
@@ -214,8 +90,7 @@ function configuredValue(
 }
 
 export function resolveAgentObserverConfig(pluginConfig: unknown = {}, env: UnknownRecord = process.env): AgentObserverConfig {
-  const swarmConfig = loadSwarmAgentObserverConfig(env);
-  const config = { ...swarmConfig, ...asRecord(pluginConfig) };
+  const config = asRecord(pluginConfig);
   return {
     enabled: requiredBooleanValue(configuredValue(config, env, 'enabled', 'OPENCLAW_AGENT_OBSERVER_ENABLED'), 'enabled'),
     redisHost: stringValue(configuredValue(config, env, 'redisHost', 'REDIS_HOST')),

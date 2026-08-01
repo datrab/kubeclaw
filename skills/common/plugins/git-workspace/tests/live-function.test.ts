@@ -131,6 +131,21 @@ try {
   assert.match(git(workspace, ['status', '--porcelain']), /^M  unrelated\.txt$/m);
   git(workspace, ['reset', 'HEAD', '--', 'unrelated.txt']);
   git(workspace, ['checkout', '--', 'unrelated.txt']);
+
+  const nestedProject = path.join(workspace, 'Projects', 'nested', 'src');
+  fs.mkdirSync(nestedProject, { recursive: true });
+  fs.writeFileSync(path.join(nestedProject, 'nested.txt'), 'nested content\n');
+  const nestedPath = 'Projects/nested/src/nested.txt';
+  const nestedCommit = await invoke(
+    adapter,
+    'git.commit',
+    'commit',
+    fs.realpathSync(workspace),
+    { paths: [nestedPath], message: 'nested project commit' },
+  );
+  assert.equal(nestedCommit.exitCode, 0);
+  assert.equal(git(workspace, ['show', `HEAD:${nestedPath}`]), 'nested content');
+
   const fetched = await invoke(
     adapter,
     'git.sync',

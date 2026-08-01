@@ -42,23 +42,26 @@ function createCheckpointBundle({ checkpoint = 'pre-module-buster', seedId = 'se
     project: projectName,
     real_e2e: { scenario_id: 'success' },
   }, null, 2));
-  write(path.join(swarmDir, 'logs', 'pipeline', 'runs', 'seed-run-1', 'lifecycle', 'canonical-events.jsonl'), [
-    JSON.stringify({ type: 'pipeline_run.started', refs: { run_id: 'seed-run-1' }, data: { project: projectName } }),
-    '',
-  ].join('\n'));
-  write(path.join(swarmDir, 'logs', 'pipeline', 'runs', 'seed-run-1', 'lifecycle', 'read-models.json'), JSON.stringify({
-    schema_version: 'pipeline_lifecycle_read_models.v1',
-    pipeline: { run_id: 'seed-run-1', status: 'running' },
-    modules: {
-      '01-nginx': {
-        module_id: '01-nginx',
-        status: checkpoint === 'during-module-buster-wait' ? 'TESTING' : 'READY_FOR_TESTING',
-      },
-    },
-  }, null, 2));
-  for (const relativePath of checkpointDefinition(checkpoint).required_swarm_paths) {
-    if (relativePath === 'progress.json') continue;
-    write(path.join(swarmDir, relativePath));
+  const runDir = path.join(swarmDir, 'v2-runtime', 'runs', 'seed-run-1');
+  const events = [
+    { entry: { type: 'run.created', identity: { runId: 'seed-run-1' } } },
+    { entry: { type: 'stage.started', identity: { runId: 'seed-run-1', stageId: 'architecture' } } },
+    { entry: { type: 'attempt.completed', identity: { runId: 'seed-run-1', stageId: 'architecture' }, payload: { outcome: 'passed' } } },
+  ];
+  if (checkpoint !== 'pre-forge') {
+    events.push(
+      { entry: { type: 'stage.started', identity: { runId: 'seed-run-1', stageId: 'forge-01-nginx' } } },
+      { entry: { type: 'attempt.completed', identity: { runId: 'seed-run-1', stageId: 'forge-01-nginx' }, payload: { outcome: 'passed' } } },
+    );
+  }
+  if (checkpoint === 'during-module-buster-wait') {
+    events.push({ entry: { type: 'stage.started', identity: { runId: 'seed-run-1', stageId: 'buster-01-nginx' } } });
+  }
+  write(path.join(runDir, 'events.jsonl'), `${events.map((entry) => JSON.stringify(entry)).join('\n')}\n`);
+  write(path.join(runDir, 'effects.jsonl'));
+  for (const relativePath of checkpointDefinition(checkpoint).required_v2_run_files) {
+    const requiredFile = path.join(runDir, relativePath);
+    if (!fs.existsSync(requiredFile)) write(requiredFile);
   }
   const checkpointRoot = defaultCheckpointRoot(root);
   const captured = captureCheckpoint({
@@ -361,8 +364,8 @@ test('failure matrix seed mode runs the canonical checkpoint seed child only', a
   assert.equal(matrix.checkpoint_summary.checkpoint_seed_count, 1);
 });
 
-test('failure matrix reuse mode starts suite cases from valid checkpoints', async () => {
-  const { checkpointRoot, seedId, captured } = createCheckpointBundle({ checkpoint: 'pre-forge' });
+test('canonical full-pipeline-smoke always starts fresh even in reuse mode', async () => {
+  const { checkpointRoot, seedId } = createCheckpointBundle({ checkpoint: 'pre-forge' });
   const calls = [];
   const args = {
     mode: 'full',
@@ -376,6 +379,44 @@ test('failure matrix reuse mode starts suite cases from valid checkpoints', asyn
   };
 
   const matrix = await runFailureMatrix(args, {
+    runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
+    runScenarioImpl: async ({ scenario, checkpoint, checkpointPlan }) => {
+      calls.push({ scenario, checkpoint, checkpointPlan });
+      return {
+        scenario,
+        ok: true,
+        exit: { code: 0, signal: null },
+        result_path: `/tmp/${scenario}.json`,
+        result: { ok: true },
+        result_read_failure: null,
+        checkpoint,
+      };
+    },
+  });
+
+  assert.deepEqual(calls.map((call) => call.scenario), ['success']);
+  assert.equal(calls[0].checkpoint, null);
+  assert.equal(calls[0].checkpointPlan.checkpoint, 'fresh');
+  assert.equal(calls[0].checkpointPlan.hook_contract.name, 'fresh');
+  assert.deepEqual(calls[0].checkpointPlan.estimated_skipped_agent_phases, []);
+  assert.equal(calls[0].checkpointPlan.agent_phases_to_run[0], 'architecture');
+  assert.equal(matrix.checkpoint_summary.checkpoint_reused_count, 0);
+  assert.equal(matrix.checkpoint_summary.full_lifecycle_count, 1);
+});
+
+test('canonical full-pipeline-smoke auto mode does not launch a checkpoint seed run', async () => {
+  const calls = [];
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'real-e2e-full-smoke-auto-'));
+  const matrix = await runFailureMatrix({
+    mode: 'full',
+    suites: ['full-pipeline-smoke'],
+    keepArtifacts: false,
+    continueOnFailure: false,
+    reportPath: null,
+    checkpointMode: 'auto',
+    checkpointRoot: root,
+    checkpointSeedId: 'canonical',
+  }, {
     runCapabilityProbeImpl: async () => ({ ok: true, checks: [], failures: [] }),
     runScenarioImpl: async ({ scenario, checkpoint }) => {
       calls.push({ scenario, checkpoint });
@@ -391,11 +432,8 @@ test('failure matrix reuse mode starts suite cases from valid checkpoints', asyn
     },
   });
 
-  assert.deepEqual(calls.map((call) => call.scenario), ['success']);
-  assert.equal(calls[0].checkpoint.mode, 'reuse');
-  assert.equal(calls[0].checkpoint.name, 'pre-forge');
-  assert.equal(calls[0].checkpoint.restore_dir, captured.checkpoint_dir);
-  assert.equal(matrix.checkpoint_summary.checkpoint_reused_count, 1);
+  assert.deepEqual(calls, [{ scenario: 'success', checkpoint: null }]);
+  assert.equal(matrix.checkpoint_seed.reason, 'canonical_full_smoke_must_start_fresh');
 });
 
 test('failure matrix suite Discord presentation and receipt use suite identity', () => {
@@ -614,7 +652,7 @@ test('runScenario stamps typed harness-aborted result when child exits before pi
     const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
     fs.mkdirSync(path.dirname(resultPath), { recursive: true });
     fs.writeFileSync(resultPath, JSON.stringify({
-      schema_version: 'real_pipeline_e2e_result.v1',
+      schema_version: 'real_pipeline_e2e_result.v2',
       ok: false,
       scenario: { id: 'retry-fix-malformed-output' },
       phases: [{ phase: 'workspace-created', ok: true }]
@@ -649,7 +687,7 @@ test('runScenario passes suite boundary and disables terminal extras outside ful
     const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
     fs.mkdirSync(path.dirname(resultPath), { recursive: true });
     fs.writeFileSync(resultPath, JSON.stringify({
-      schema_version: 'real_pipeline_e2e_result.v1',
+      schema_version: 'real_pipeline_e2e_result.v2',
       ok: true,
       scenario: { id: 'retry-buster-pass-echo-rejects' },
       pipeline: { phase: 'pipeline-run' },
@@ -685,7 +723,7 @@ test('runScenario does not mute Discord webhooks for the Discord-unavailable sce
     const resultPath = process.argv[process.argv.indexOf('--result-path') + 1];
     fs.mkdirSync(path.dirname(resultPath), { recursive: true });
     fs.writeFileSync(resultPath, JSON.stringify({
-      schema_version: 'real_pipeline_e2e_result.v1',
+      schema_version: 'real_pipeline_e2e_result.v2',
       ok: true,
       scenario: { id: 'discord-unavailable' },
       pipeline: { phase: 'pipeline-run' },

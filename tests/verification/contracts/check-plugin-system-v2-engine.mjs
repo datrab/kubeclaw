@@ -85,9 +85,9 @@ try {
     'kubeclaw.telemetry-observer',
     'kubeclaw.telemetry-store',
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
-  assert.equal(snapshot.registrations.stages.length, 13);
-  assert.equal(snapshot.registrations.observers.length, 5);
-  assert.equal(snapshot.registrations.adapters.length, 16);
+  assert.equal(snapshot.registrations.stages.length, 14);
+  assert.equal(snapshot.registrations.observers.length, 6);
+  assert.equal(snapshot.registrations.adapters.length, 17);
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.selectedProviders.some(({ capability }) => capability === 'git.repository.read'));
@@ -97,6 +97,15 @@ try {
     .filter(Boolean)
     .map((line) => JSON.parse(line));
   assert.ok(telemetry.some((entry) => entry.payload?.event?.type === 'run.succeeded'));
+  const lifecycle = fs.readFileSync(
+    path.join(temporary, 'state', 'runs', 'run_engine-test', 'events.jsonl'),
+    'utf8',
+  ).split('\n').filter(Boolean).map((line) => JSON.parse(line));
+  assert.equal(
+    lifecycle.some((event) => event.identity?.attemptId?.startsWith('observer:')),
+    false,
+    'observer transport plumbing must not inflate the lifecycle stream',
+  );
   console.log(JSON.stringify({ ok: true, contract: 'plugin-system-v2-engine' }));
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

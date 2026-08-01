@@ -67,6 +67,12 @@ Confidential operations are audited with a redacted completion marker while
 their returned values are never written to the effect journal, lifecycle
 journal, or receipt.
 
+Trusted adapter registrations may also use their adapter-only
+`invokeConfidential` context method when a granted downstream operation must
+carry a credential-bearing resource, such as a Discord webhook URL. Ordinary
+grant and authorization checks still apply, while request and response data
+are represented only by redacted audit markers.
+
 Stage and observer module graphs are statically rejected when they import
 filesystem, subprocess, network, worker, Redis, or module-loading authority, or
 use direct environment/network globals. Only adapter registrations may own

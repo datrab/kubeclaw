@@ -23,12 +23,20 @@ export async function execute(input, context) {
         payload: { namespace: 'kubeclaw.architecture-validator', mediaType: 'application/json', value: output },
     });
     const artifacts = [report.artifact];
-    if (output.verdict === 'passed')
-        return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts };
+    if (output.verdict === 'passed') {
+        return {
+            schemaVersion: 'stage-result.v2',
+            outcome: 'passed',
+            artifacts,
+            facts: {
+                'architecture.review': output.findings.length > 0 ? 'approval_required' : 'clean',
+            },
+        };
+    }
     return {
-        schemaVersion: 'stage-result.v2', outcome: output.verdict === 'blocked' ? 'blocked' : 'request_fix',
+        schemaVersion: 'stage-result.v2', outcome: 'blocked',
         reason: {
-            code: output.verdict === 'blocked' ? 'architecture.blocked' : 'architecture.findings',
+            code: 'architecture.blocked',
             message: output.summary, details: { findings: output.findings, checkedFiles: output.checkedFiles },
         },
         artifacts,

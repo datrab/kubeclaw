@@ -12,7 +12,7 @@ This page keeps future direction separate from current operator behavior. Items 
 1. Keep current docs aligned with source and generated inventory; expand automated references where exact contracts remain manually maintained.
 2. Redeploy the latest code bundles and use ClawDeck as the first production project built by the validated pipeline.
 3. Use that real project to identify operational and extension-boundary pressure rather than inventing abstractions in isolation.
-4. Establish a real separation between core platform contracts and optional extensions, as described by the extensibility model.
+4. Exercise third-party plugin installation, replacement, and removal against real operator workloads.
 5. Complete the deeper operator/reference documentation pass after the first production workload exposes the remaining practical gaps.
 6. Finish clean-cluster bootstrap verification before promising a one-command first deployment.
 
@@ -21,7 +21,7 @@ This page keeps future direction separate from current operator behavior. Items 
 These are candidate roadmap themes, not current behavior claims:
 
 - ClawDeck as the first real pipeline-built project and as richer platform/pipeline visibility.
-- Explicit core-versus-extension packaging, ownership, configuration, and verification boundaries.
+- A broader ecosystem of independently installed extensions using the implemented core/package boundary.
 - Design agent and design flow for design-aware application delivery.
 - Improved linting with more configurable rules and clearer failure output.
 - Code mapping and autoreview features that help agents reason about ownership and risk.
@@ -49,6 +49,5 @@ Move an item from roadmap to current docs only after the implementation exists a
 
 - `architecture/plugin-system-vision.md`
 - `architecture/plugin-system-implementation-plan.md`
-- `DOCUMENTATION_REBUILD_PLAN.md`
-- `future-implementation-ideas.md`
-- `open-issues.md`
+- `architecture/plugin-system-phase12-changelog.md`
+- `operators/external-pipeline-plugins.md`

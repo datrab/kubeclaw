@@ -27,28 +27,24 @@ Generated from: `scripts/deploy.sh`
 ## Local Documentation And Deployment Checks
 
 ```bash
-./tests/verification/run-fast-verification.sh
-./tests/verification/run-full-verification.sh
+npm run verify:plugin-system-v2
+npm run typecheck:skills
 npm run docs:inventory:check
 npm run docs:generate:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 git diff --check
 ```
 
-The fast/full verification wrappers are silent on clean passes. Passing warning output prints warning lines. Failed steps print the failed step name plus buffered output. Use `--verbose` or `VERIFICATION_VERBOSE=1` to stream step banners and passing output.
-
 ## Claim-To-Test Map
 
 | Claim class | Source or verifier |
 | --- | --- |
 | Documentation inventory and generated references are current | `npm run docs:inventory:check`; `npm run docs:generate:check`; `node scripts/docs-check.mjs` |
-| Fast local runtime, contract, docs, and canonical E2E checks pass | `./tests/verification/run-fast-verification.sh` |
-| Exhaustive local verification surfaces pass | `./tests/verification/run-full-verification.sh` |
+| Core, package, capability, lifecycle, recovery, isolation, and malicious-package checks pass | `npm run verify:plugin-system-v2` |
 | Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | `node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"` |
 | Documentation surface links and generated docs expectations stay valid | `npm run docs:check` |
-| Telemetry docs match the event envelope and sink contracts | `node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"` |
-| Restart, recovery, retry, crash, and resume behavior remain source-backed | `node --test tests/verification/e2e/*.test.mjs`; `node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full` |
-| Status store lifecycle, artifacts, and Buster task settlement contracts stay stable | `node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"`; `node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"` |
+| Restart, recovery, retry, crash, and resume behavior remain source-backed | `node tests/verification/contracts/check-plugin-system-v2-phase7.mjs`; `node tests/verification/contracts/check-plugin-system-v2-resume.mjs` |
+| The complete real model-backed workflow works | `node --experimental-strip-types tests/verification/e2e/run-real-pipeline-e2e.mts --mode full` |
 | Proposed doc edits have no whitespace errors | `git diff --check` |
 | Referenced source paths/config keys exist | Use a targeted `test -e`/ `rg -q` sanity check for newly cited paths and keys before closing the docs pass. |
 

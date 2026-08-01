@@ -1,5 +1,5 @@
 export interface ArchitectureOutput {
-  readonly verdict: 'passed' | 'request_fix' | 'blocked';
+  readonly verdict: 'passed' | 'blocked';
   readonly summary: string;
   readonly findings: readonly ArchitectureFinding[];
   readonly checkedFiles: readonly string[];
@@ -64,7 +64,7 @@ export function parseArchitectureOutput(response: Readonly<Record<string, unknow
   const value = raw as Record<string, unknown>;
   const allowed = new Set(['verdict', 'summary', 'findings', 'checkedFiles']);
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`architecture response contains unknown field: ${key}`);
-  if (!['passed', 'request_fix', 'blocked'].includes(String(value.verdict))) throw new Error('architecture verdict is invalid');
+  if (!['passed', 'blocked'].includes(String(value.verdict))) throw new Error('architecture verdict is invalid');
   if (typeof value.summary !== 'string' || !value.summary.trim()) throw new Error('architecture summary is required');
   const output: ArchitectureOutput = {
     verdict: value.verdict as ArchitectureOutput['verdict'],
@@ -72,14 +72,12 @@ export function parseArchitectureOutput(response: Readonly<Record<string, unknow
     findings: findings(value.findings),
     checkedFiles: strings(value.checkedFiles, 'checkedFiles'),
   };
-  if (output.verdict === 'passed' && output.findings.length > 0) throw new Error('passed verdict contradicts findings');
   if (output.verdict === 'passed' && output.checkedFiles.length === 0) throw new Error('passed verdict requires checked files');
-  if (output.verdict === 'request_fix' && output.findings.length === 0) throw new Error('request_fix requires findings');
-  if (output.verdict === 'request_fix' && output.findings.some((finding) => ['blocking', 'error'].includes(finding.severity))) {
-    throw new Error('request_fix contradicts blocking findings');
+  if (output.verdict === 'passed' && output.findings.some((finding) => finding.severity === 'blocking')) {
+    throw new Error('passed verdict contradicts blocking findings');
   }
-  if (output.verdict === 'blocked' && !output.findings.some((finding) => ['blocking', 'error'].includes(finding.severity))) {
-    throw new Error('blocked verdict requires a blocking or error finding');
+  if (output.verdict === 'blocked' && !output.findings.some((finding) => finding.severity === 'blocking')) {
+    throw new Error('blocked verdict requires a blocking finding');
   }
   return output;
 }

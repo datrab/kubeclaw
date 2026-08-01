@@ -1,1 +1,1 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent"],"properties":{"agent":{"type":"string","minLength":1}}}
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent"],"properties":{"agent":{"type":"string","minLength":1},"agentRole":{"type":"string","minLength":1}}}

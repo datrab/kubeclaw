@@ -21,11 +21,18 @@ import { FileEffectJournal } from '../effects/journal.ts';
 import { EffectCoordinator } from '../effects/coordinator.ts';
 import { FileResourceLockManager } from '../effects/locks.ts';
 import { FileJournal } from '../state/journal.ts';
-import { ObserverRuntime } from '../telemetry/observers.ts';
+import {
+  ObserverRuntime,
+  type ObserverDeliveryRecord,
+} from '../telemetry/observers.ts';
 import { recoverStageStates } from '../lifecycle/recovery.ts';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
 import { AdapterRuntime } from './adapters.ts';
-import { PipelineRunner, type PipelineRunResult } from './runner.ts';
+import {
+  PipelineRunner,
+  type PipelineRunResult,
+  validatePipelineDefinitionAgainstRegistry,
+} from './runner.ts';
 import { ExecutionGraph, type ExecutionGraphSnapshot } from './graph.ts';
 import { FrozenMap } from '../registry/frozen-map.ts';
 
@@ -175,17 +182,43 @@ async function prepareRuntime(
   };
 }
 
+export async function validatePipelineRuntimeV2(
+  platform: PlatformConfig,
+  definitionInput: PipelineDefinition,
+): Promise<Readonly<{
+  packageCount: number;
+  stageCount: number;
+  observerCount: number;
+  adapterCount: number;
+}>> {
+  const definition = deepFreeze(structuredClone(definitionInput));
+  const runtime = await prepareRuntime(platform, definition);
+  validatePipelineDefinitionAgainstRegistry(definition, runtime.granted);
+  return Object.freeze({
+    packageCount: runtime.snapshot.packages.size,
+    stageCount: runtime.activated.stages.size,
+    observerCount: runtime.activated.observers.size,
+    adapterCount: runtime.activated.adapters.size,
+  });
+}
+
 function createAdapterRuntime(
   platform: PlatformConfig,
   runRoot: string,
   runtime: PreparedRuntime,
   events: FileJournal<LifecycleEvent | PluginDomainEvent>,
 ): AdapterRuntime {
+  const isObserverDeliveryEffect = (request: EffectRequest): boolean =>
+    request.attempt.attemptId.startsWith('observer:');
   const appendEffectEvent = (
     type: 'effect.requested' | 'effect.accepted' | 'effect.completed' | 'effect.failed',
     request: EffectRequest,
     payload: Readonly<Record<string, unknown>>,
   ): void => {
+    // Observer delivery already has its own durable attempt/checkpoint journal.
+    // Keeping its adapter plumbing out of the lifecycle journal prevents the
+    // observer transport from becoming new observable pipeline work.
+    if (isObserverDeliveryEffect(request)) return;
     events.append({
       schemaVersion: 'lifecycle-event.v2',
       eventId: `event:${crypto.randomUUID()}`,
@@ -263,9 +296,24 @@ async function drainObservers(
     adapters,
     events,
     checkpoints: new FileJournal<ObserverCheckpoint>(path.join(runRoot, 'observer-checkpoints.jsonl')),
+    deliveries: new FileJournal<ObserverDeliveryRecord>(path.join(runRoot, 'observer-deliveries.jsonl')),
     configs: objectMap(platform.observers),
   });
   await observers.drain();
+}
+
+function serializedObserverDrainer(
+  platform: PlatformConfig,
+  runRoot: string,
+  runtime: PreparedRuntime,
+  adapters: AdapterRuntime,
+  events: FileJournal<LifecycleEvent | PluginDomainEvent>,
+): () => Promise<void> {
+  let pending = Promise.resolve();
+  return () => {
+    pending = pending.then(() => drainObservers(platform, runRoot, runtime, adapters, events));
+    return pending;
+  };
 }
 
 function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime): void {
@@ -457,6 +505,7 @@ export async function runPipelineV2(
   const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'));
   const adapters = createAdapterRuntime(platform, runRoot, runtime, events);
   await adapters.start();
+  const flushObservers = serializedObserverDrainer(platform, runRoot, runtime, adapters, events);
   try {
     const runner = new PipelineRunner({
       definition,
@@ -466,12 +515,15 @@ export async function runPipelineV2(
       journal: events,
       orchestratorIssuerId: platform.orchestratorIssuerId,
       signal: signal ? AbortSignal.any([signal, leaseSignal]) : leaseSignal,
+      onEventsCommitted: flushObservers,
     });
-    const result = await runner.run(effectiveRunId);
-    await drainObservers(platform, runRoot, runtime, adapters, events);
-    return result;
+    return await runner.run(effectiveRunId);
   } finally {
-    await adapters.shutdown();
+    try {
+      await flushObservers();
+    } finally {
+      await adapters.shutdown();
+    }
   }
   });
 }
@@ -525,6 +577,7 @@ export async function recoverPipelineV2(
   }
   const adapters = createAdapterRuntime(platform, runRoot, runtime, events);
   await adapters.start();
+  const flushObservers = serializedObserverDrainer(platform, runRoot, runtime, adapters, events);
   try {
     const runner = new PipelineRunner({
       definition,
@@ -537,12 +590,15 @@ export async function recoverPipelineV2(
       resume: true,
       resumePayload: { recovery: 'journal' },
       signal: leaseSignal,
+      onEventsCommitted: flushObservers,
     });
-    const result = await runner.run(runId);
-    await drainObservers(platform, runRoot, runtime, adapters, events);
-    return result;
+    return await runner.run(runId);
   } finally {
-    await adapters.shutdown();
+    try {
+      await flushObservers();
+    } finally {
+      await adapters.shutdown();
+    }
   }
   });
 }
@@ -649,6 +705,7 @@ export async function resumePipelineV2(
   }
   const adapters = createAdapterRuntime(platform, runRoot, runtime, events);
   await adapters.start();
+  const flushObservers = serializedObserverDrainer(platform, runRoot, runtime, adapters, events);
   try {
     const runner = new PipelineRunner({
       definition,
@@ -661,12 +718,15 @@ export async function resumePipelineV2(
       resumeGuidance: new Map([[waiting.stageId, signal.payload]]),
       resume: true,
       signal: leaseSignal,
+      onEventsCommitted: flushObservers,
     });
-    const result = await runner.run(runId);
-    await drainObservers(platform, runRoot, runtime, adapters, events);
-    return result;
+    return await runner.run(runId);
   } finally {
-    await adapters.shutdown();
+    try {
+      await flushObservers();
+    } finally {
+      await adapters.shutdown();
+    }
   }
   });
 }
@@ -870,7 +930,8 @@ export async function reopenBlockedPipelineV2(
     const administrativeAttemptOverrides = new Set<string>();
     if (decision.continuation === 'retry') {
       const decisionAlreadyTerminal = (
-        hasDecisionEvent('stage.succeeded', decision.stageId)
+        hasDecisionEvent('stage.skipped', decision.stageId)
+        || hasDecisionEvent('stage.succeeded', decision.stageId)
         || hasDecisionEvent('stage.failed', decision.stageId)
         || hasDecisionEvent('stage.blocked', decision.stageId)
         || hasDecisionEvent('stage.cancelled', decision.stageId)
@@ -934,6 +995,7 @@ export async function reopenBlockedPipelineV2(
 
     const adapters = createAdapterRuntime(platform, runRoot, runtime, events);
     await adapters.start();
+    const flushObservers = serializedObserverDrainer(platform, runRoot, runtime, adapters, events);
     try {
       const runner = new PipelineRunner({
         definition,
@@ -949,12 +1011,15 @@ export async function reopenBlockedPipelineV2(
         resumeCausationId: decision.decisionId,
         resumePayload: auditPayload,
         administrativeAttemptOverrides,
+        onEventsCommitted: flushObservers,
       });
-      const result = await runner.run(runId);
-      await drainObservers(platform, runRoot, runtime, adapters, events);
-      return result;
+      return await runner.run(runId);
     } finally {
-      await adapters.shutdown();
+      try {
+        await flushObservers();
+      } finally {
+        await adapters.shutdown();
+      }
     }
   });
 }

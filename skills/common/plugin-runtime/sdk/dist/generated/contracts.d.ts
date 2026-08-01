@@ -34,6 +34,7 @@ export type StageResult = (ResultBase & {
     schemaVersion: 'stage-result.v2';
     outcome: 'passed';
     artifacts: ArtifactRef[];
+    facts?: DecisionFacts;
 }) | (ResultBase & {
     schemaVersion: 'stage-result.v2';
     outcome: 'retry' | 'request_fix' | 'blocked' | 'failed' | 'timed_out' | 'cancelled';
@@ -132,6 +133,7 @@ export interface PluginSystemV2 {
     attemptIdentity?: AttemptIdentity;
     stageAttempt?: StageAttempt;
     artifactRef?: ArtifactRef;
+    decisionFacts?: DecisionFacts;
     stageResult?: StageResult;
     effectRequest?: EffectRequest;
     effectReceipt?: EffectReceipt;
@@ -212,6 +214,11 @@ export interface StageDefinition {
     dependsOn: LocalId[];
     config: JsonObject;
     input: JsonObject;
+    activation?: {
+        sourceStage: LocalId;
+        fact: NamespacedId;
+        equals: string | number | boolean | null;
+    };
     execution: {
         maxAttempts: number;
         maxRemediationCycles: number;
@@ -260,6 +267,9 @@ export interface ArtifactRef {
     digest: string;
     sizeBytes: number;
     producer: AttemptIdentity;
+}
+export interface DecisionFacts {
+    [k: string]: string | number | boolean | null;
 }
 export interface ResultBase {
     schemaVersion: 'stage-result.v2';
@@ -357,7 +367,7 @@ export interface LifecycleEvent {
     schemaVersion: 'lifecycle-event.v2';
     eventId: OpaqueId;
     sequence: number;
-    type: 'run.created' | 'run.started' | 'run.resumed' | 'run.waiting' | 'run.paused' | 'run.succeeded' | 'run.failed' | 'run.blocked' | 'run.cancelled' | 'stage.scheduled' | 'stage.started' | 'stage.waiting' | 'stage.retrying' | 'stage.succeeded' | 'stage.failed' | 'stage.blocked' | 'stage.cancelled' | 'attempt.created' | 'attempt.dispatched' | 'attempt.completed' | 'attempt.timed_out' | 'attempt.cancelled' | 'effect.requested' | 'effect.accepted' | 'effect.completed' | 'effect.failed' | 'artifact.created' | 'wait.created' | 'wait.resolved' | 'orchestrator.required';
+    type: 'run.created' | 'run.started' | 'run.resumed' | 'run.waiting' | 'run.paused' | 'run.succeeded' | 'run.failed' | 'run.blocked' | 'run.cancelled' | 'stage.scheduled' | 'stage.started' | 'stage.waiting' | 'stage.retrying' | 'stage.skipped' | 'stage.succeeded' | 'stage.failed' | 'stage.blocked' | 'stage.cancelled' | 'attempt.created' | 'attempt.dispatched' | 'attempt.completed' | 'attempt.timed_out' | 'attempt.cancelled' | 'effect.requested' | 'effect.accepted' | 'effect.completed' | 'effect.failed' | 'artifact.created' | 'wait.created' | 'wait.resolved' | 'orchestrator.required';
     identity: EventIdentity;
     occurredAt: string;
     causationId: OpaqueId | null;

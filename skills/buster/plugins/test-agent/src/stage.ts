@@ -1,11 +1,105 @@
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import { buildRequest, parseVerdict, type SuiteEvidence, type TestInput } from './protocol.js';
 
+interface BusterSuiteResult {
+  readonly suite: string;
+  readonly status: string;
+  readonly reason?: string;
+  readonly error?: string;
+  readonly findings?: readonly { readonly message?: string }[];
+}
+
+function validateSuiteReceipt(result: Readonly<Record<string, unknown>>): void {
+  const receipt = result.receipt as Readonly<Record<string, unknown>> | undefined;
+  if (
+    !receipt
+    || typeof receipt !== 'object'
+    || Array.isArray(receipt)
+    || receipt.schemaVersion !== 'test-suite-receipt.v1'
+    || typeof receipt.provider !== 'string'
+    || receipt.provider.length === 0
+    || typeof receipt.jobId !== 'string'
+    || receipt.jobId.length === 0
+    || typeof receipt.completedAt !== 'string'
+    || !Number.isFinite(Date.parse(receipt.completedAt))
+    || typeof receipt.resultDigest !== 'string'
+    || !/^[a-f0-9]{64}$/u.test(receipt.resultDigest)
+  ) {
+    throw new Error('TEST_SUITE_RECEIPT_INVALID');
+  }
+}
+
+function busterSummary(result: BusterSuiteResult): string {
+  const findings = Array.isArray(result.findings)
+    ? result.findings
+      .map((finding) => finding?.message)
+      .filter((message): message is string => typeof message === 'string' && message.length > 0)
+    : [];
+  return [
+    `status=${result.status}`,
+    result.reason,
+    result.error,
+    ...findings,
+  ].filter((entry): entry is string => typeof entry === 'string' && entry.length > 0)
+    .join('\n')
+    .slice(0, 2_048);
+}
+
+async function executeTestSuitePlan(
+  input: TestInput,
+  context: PluginInvocationContext,
+): Promise<Readonly<{ evidence: readonly SuiteEvidence[]; execution: unknown | null }>> {
+  const result = await context.invoke('test.suite.execute', {
+    operation: 'run',
+    resource: {
+      type: 'test.suite-plan',
+      canonicalId: `${input.runId}:${input.taskId}:${input.attempt}`,
+    },
+    payload: {
+      repositoryRoot: input.suitePlan.repositoryRoot,
+      suites: input.suitePlan.suites,
+      testConfig: input.suitePlan.testConfig,
+      task: input.suitePlan.task,
+      moduleId: input.suitePlan.moduleId,
+      attempt: input.attempt,
+    },
+  });
+  validateSuiteReceipt(result);
+  if (!Array.isArray(result.results) || result.results.length === 0) {
+    throw new Error('BUSTER_SUITE_RESULT_INVALID');
+  }
+  const evidence = result.results.map((value) => {
+    if (
+      !value
+      || typeof value !== 'object'
+      || Array.isArray(value)
+      || typeof value.suite !== 'string'
+      || typeof value.status !== 'string'
+    ) {
+      throw new Error('BUSTER_SUITE_RESULT_INVALID');
+    }
+    const suiteResult = value as BusterSuiteResult;
+    return Object.freeze({
+      suite: suiteResult.suite,
+      passed: suiteResult.status === 'PASS',
+      summary: busterSummary(suiteResult),
+    });
+  });
+  return { evidence, execution: result };
+}
+
 async function executeCommandSuites(
   input: TestInput,
   context: PluginInvocationContext,
-): Promise<readonly SuiteEvidence[]> {
-  const evidence: SuiteEvidence[] = [...input.suiteEvidence];
+): Promise<Readonly<{
+  evidence: readonly SuiteEvidence[];
+  suiteExecution: unknown | null;
+}>> {
+  const buster = await executeTestSuitePlan(input, context);
+  const evidence: SuiteEvidence[] = [
+    ...input.suiteEvidence,
+    ...buster.evidence,
+  ];
   for (const suite of input.commandSuites ?? []) {
     const result = await context.invoke('command.execute', {
       operation: 'run',
@@ -25,15 +119,20 @@ async function executeCommandSuites(
     });
   }
   if (evidence.length === 0) throw new Error('TEST_SUITES_REQUIRED');
-  return evidence;
+  return { evidence, suiteExecution: buster.execution };
 }
 
 export async function execute(input:TestInput,context:PluginInvocationContext):Promise<StageResult>{
   const agent=context.contract.config.agent;
   if(typeof agent!=='string'||!agent.trim())throw new Error('test agent is not configured');
   let verdict;
+  let executionEvidence: unknown | null = null;
+  let finalSuiteEvidence: readonly SuiteEvidence[] = input.suiteEvidence;
   try {
-    const suiteEvidence = await executeCommandSuites(input, context);
+    const executed = await executeCommandSuites(input, context);
+    const suiteEvidence = executed.evidence;
+    finalSuiteEvidence = suiteEvidence;
+    executionEvidence = executed.suiteExecution;
     const judgedInput = { ...input, suiteEvidence };
     const response=await context.invoke('runtime.dispatch',{
       operation:'dispatch',
@@ -52,7 +151,11 @@ export async function execute(input:TestInput,context:PluginInvocationContext):P
   const stored=await context.invoke('artifacts.write',{
     operation:'put_json',
     resource:{type:'artifact.object',canonicalId:`test-verdict:${input.taskId}:${input.attempt}`},
-    payload:{namespace:'kubeclaw.test-agent',mediaType:'application/json',value:verdict},
+    payload:{namespace:'kubeclaw.test-agent',mediaType:'application/json',value:{
+      verdict,
+      suiteEvidence: finalSuiteEvidence,
+      suiteExecution: executionEvidence,
+    }},
   });
   const artifacts=[stored.artifact as ArtifactRef];
   return verdict.verdict==='PASS'

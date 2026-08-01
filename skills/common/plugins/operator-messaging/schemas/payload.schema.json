@@ -27,6 +27,30 @@
     "artifact": true,
     "approvalId": { "type": "string", "minLength": 1, "maxLength": 512 },
     "summary": { "type": "string", "minLength": 1, "maxLength": 16384 },
+    "severity": { "type": "string", "minLength": 1, "maxLength": 32 },
+    "title": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "reasonCode": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 256 },
+        { "type": "null" }
+      ]
+    },
+    "fields": {
+      "type": "array",
+      "maxItems": 25,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "value"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "value": { "type": "string", "minLength": 1, "maxLength": 1024 },
+          "inline": { "type": "boolean" }
+        }
+      }
+    },
+    "footer": { "type": "string", "minLength": 1, "maxLength": 2048 },
+    "occurredAt": { "type": "string", "format": "date-time", "maxLength": 64 },
     "signalType": { "type": "string", "minLength": 1, "maxLength": 256 },
     "authorizedIssuer": {
       "type": "object",

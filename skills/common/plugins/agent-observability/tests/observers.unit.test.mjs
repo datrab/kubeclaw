@@ -11,7 +11,7 @@ const delivery = {
   },
 };
 const projected = projectAgentEvent(delivery);
-assert.equal(projected.deliveryAttempt, 2);
+assert.equal(projected.deliveryAttempt, undefined);
 assert.equal(projected.payload.token, '[redacted]');
 assert.equal(projected.payload.nested.authorization, '[redacted]');
 assert.equal(projected.payload.nested.value, 1);

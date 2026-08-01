@@ -90,6 +90,16 @@ export class ExecutionGraph {
         dependents.set(dependency, [...(dependents.get(dependency) ?? []), stage.id]);
         ordinaryEdges.push(Object.freeze({ from: dependency, to: stage.id }));
       }
+      if (stage.activation) {
+        if (!byId.has(stage.activation.sourceStage)) {
+          throw new Error(
+            `GRAPH_ACTIVATION_SOURCE_MISSING:${stage.id}:${stage.activation.sourceStage}`,
+          );
+        }
+        if (stage.activation.sourceStage === stage.id) {
+          throw new Error(`GRAPH_SELF_ACTIVATION:${stage.id}`);
+        }
+      }
       const remediation = stage.on?.request_fix;
       if (remediation !== undefined && !byId.has(remediation)) {
         throw new Error(`GRAPH_REMEDIATION_MISSING:${stage.id}:${remediation}`);
@@ -147,6 +157,19 @@ export class ExecutionGraph {
             `GRAPH_REMEDIATION_PREREQUISITE_DEADLOCK:${requester}:${target}:${prerequisite}`,
           );
         }
+      }
+    }
+    for (const stage of byId.values()) {
+      if (
+        stage.activation
+        && !transitivelyDependsOn(stage.id, stage.activation.sourceStage)
+      ) {
+        throw new Error(
+          `GRAPH_ACTIVATION_SOURCE_NOT_ANCESTOR:${stage.id}:${stage.activation.sourceStage}`,
+        );
+      }
+      if (stage.activation && remediationRequesterByTarget.has(stage.id)) {
+        throw new Error(`GRAPH_ACTIVATION_ON_REMEDIATION_TARGET:${stage.id}`);
       }
     }
     this.#remediationOnlyTargets = new Set(
@@ -210,6 +233,10 @@ export class ExecutionGraph {
 
   isRemediationOnlyTarget(id: string): boolean {
     return this.#remediationOnlyTargets.has(id);
+  }
+
+  activation(id: string): StageDefinition['activation'] {
+    return this.stage(id).activation;
   }
 
   snapshot(pipelineId: string, maxConcurrency: number): ExecutionGraphSnapshot {

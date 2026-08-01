@@ -265,7 +265,7 @@ async function waitForChildWithTimeout(child, timeoutMs, {
         continue;
       }
     } else if (Number(rateLimitTimeoutExtensionMs) > 0 && rateLimitCooldownEvidence(childOutput)) {
-      const extensionKey = 'legacy-rate-limit-evidence';
+      const extensionKey = 'rate-limit-evidence';
       if (!rateLimitExtensionKeys.has(extensionKey)) {
         rateLimitExtensionKeys.add(extensionKey);
         rateLimitTimeoutExtensions += 1;
@@ -393,7 +393,7 @@ function failedMatrixChildBase({ mode, scenario, exit, diagnostics, existingResu
   const base = existingResult && typeof existingResult === 'object' && !Array.isArray(existingResult)
     ? existingResult
     : {
-        schema_version: 'real_pipeline_e2e_result.v1',
+        schema_version: 'real_pipeline_e2e_result.v2',
         artifact_type: 'real_pipeline_e2e_result',
         created_at: now,
         mode,
@@ -471,7 +471,7 @@ function writeCapabilityFailureSuiteResult({ mode, suite, capabilityProbe }) {
   const resultPath = resultPathForSuite(suite);
   const suiteConfig = resolveFailureMatrixSuite(suite);
   const record = {
-    schema_version: 'real_e2e_failure_matrix_suite_result.v1',
+    schema_version: 'real_e2e_failure_matrix_suite_result.v2',
     ok: false,
     mode,
     suite,
@@ -503,7 +503,7 @@ function writeGlobalBlockerSkippedSuiteResult({ mode, suite, blocker }) {
   const resultPath = resultPathForSuite(suite);
   const suiteConfig = resolveFailureMatrixSuite(suite);
   const record = {
-    schema_version: 'real_e2e_failure_matrix_suite_result.v1',
+    schema_version: 'real_e2e_failure_matrix_suite_result.v2',
     artifact_type: 'real_e2e_failure_matrix_suite_result',
     created_at: now,
     mode,
@@ -743,7 +743,7 @@ function suiteResultRecord({ mode, suite, cases, requestedScenarios = null }) {
   const failures = requestedCases.filter((entry) => suiteCaseStatus(entry) !== 'passed');
   const completedCases = requestedCases.filter((entry) => suiteCaseStatus(entry) !== 'not_run');
   return {
-    schema_version: 'real_e2e_failure_matrix_suite_result.v1',
+    schema_version: 'real_e2e_failure_matrix_suite_result.v2',
     artifact_type: 'real_e2e_failure_matrix_suite_result',
     created_at: new Date().toISOString(),
     mode,
@@ -797,7 +797,7 @@ async function runSuite({
     });
     let result;
     try {
-      const checkpointRun = checkpointRunOptionsForScenario(args, scenario);
+      const checkpointRun = checkpointRunOptionsForScenario(args, scenario, suite);
       result = await runScenarioImpl({
         mode: args.mode,
         suite,
@@ -810,6 +810,7 @@ async function runSuite({
         rateLimitTimeoutExtensionMs: args.rateLimitTimeoutExtensionMs,
         muteExpectedFailureWebhooks: args.muteExpectedFailureWebhooks,
         checkpoint: checkpointRun.run,
+        checkpointPlan: checkpointRun.plan,
       });
       result.checkpoint ||= checkpointRun.run ? {
         mode: checkpointRun.run.mode,
@@ -894,7 +895,15 @@ function validCheckpointBundleForPlan(args, plan) {
   return validation.ok ? { checkpointDir, validation } : null;
 }
 
-function checkpointRunOptionsForScenario(args, scenario) {
+function checkpointRunOptionsForScenario(args, scenario, suite = null) {
+  if (suite === 'full-pipeline-smoke') {
+    const plan = checkpointPlanForScenario(scenario, { checkpoint: 'fresh' });
+    return {
+      mode: 'full',
+      plan,
+      run: null,
+    };
+  }
   if (args.checkpointMode === 'full' || args.checkpointMode === 'seed') {
     return {
       mode: args.checkpointMode,
@@ -927,6 +936,18 @@ function checkpointRunOptionsForScenario(args, scenario) {
 
 async function ensureMatrixCheckpoints(args, { runScenarioImpl, capabilityProbe, discordDeliveryResult }) {
   if (!['seed', 'auto'].includes(args.checkpointMode)) return null;
+  const requestedSuites = requestedSuitesForArgs(args);
+  if (
+    args.checkpointMode === 'auto'
+    && requestedSuites.length === 1
+    && requestedSuites[0] === 'full-pipeline-smoke'
+  ) {
+    return {
+      skipped: true,
+      reason: 'canonical_full_smoke_must_start_fresh',
+      seed_id: args.checkpointSeedId,
+    };
+  }
   const requiredPlans = suiteCasesForArgs(args)
     .map((scenario) => checkpointPlanForScenario(scenario));
   const needsSeed = args.forceRefreshCheckpoints
@@ -1905,7 +1926,6 @@ export async function createMatrixSuiteNotifier(args) {
     return { mode: 'muted', reason: 'webhook_missing', notify: async () => ({ status: 'muted', reason: 'webhook_missing' }) };
   }
 
-  const { discord } = await import('../../../skills/nova/pipeline/integrations/discord.ts');
   const runId = `real-e2e-matrix-${Date.now()}-${process.pid}`;
   const config = {
     project: 'real-e2e-failure-matrix',
@@ -1934,15 +1954,45 @@ export async function createMatrixSuiteNotifier(args) {
     notify: async (event) => {
       const before = collectMatrixDiscordReceipts(config).length;
       const presentation = buildMatrixSuiteDiscordPresentation(event);
-      await discord(config, presentation.level, presentation.title, presentation.description, presentation.fields, {
-        correlation: {
-          run_id: runId,
-          gate_id: event.phase?.startsWith?.('failure-suite-case-')
-            ? `${event.suite || 'unknown'}:${event.scenario || 'unknown'}`
-            : (event.suite || event.scenario || null),
-          gate_type: 'real-e2e-suite',
-        },
+      const correlation = {
+        run_id: runId,
+        gate_id: event.phase?.startsWith?.('failure-suite-case-')
+          ? `${event.suite || 'unknown'}:${event.scenario || 'unknown'}`
+          : (event.suite || event.scenario || null),
+        gate_type: 'real-e2e-suite',
+      };
+      const colors = { INFO: 5_763_719, OK: 5_766_719, WARN: 16_696_832, CRITICAL: 15_558_174 };
+      const response = await fetch(config.discord_webhook_url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          username: 'KubeClaw E2E',
+          embeds: [{
+            title: presentation.title,
+            description: presentation.description,
+            color: colors[presentation.level] ?? colors.INFO,
+            fields: presentation.fields,
+            footer: { text: `${config.project} · ${runId}` },
+          }],
+        }),
+        signal: AbortSignal.timeout(config.discord.webhook_timeout_ms),
       });
+      const delivered = response.ok ? await response.json() : null;
+      if (!delivered?.id || !delivered?.channel_id) {
+        throw new Error(`Matrix Discord delivery failed with status ${response.status}`);
+      }
+      const receiptPath = matrixDiscordReceiptPaths(config)[0];
+      fs.mkdirSync(path.dirname(receiptPath), { recursive: true });
+      fs.appendFileSync(receiptPath, `${JSON.stringify({
+        schema_version: 'discord_delivery_receipt.v2',
+        run_id: runId,
+        ok: true,
+        message_id: delivered.id,
+        channel_id: delivered.channel_id,
+        webhook_message_returned: true,
+        correlation,
+        delivered_at: new Date().toISOString(),
+      })}\n`);
       const receipts = collectMatrixDiscordReceipts(config).slice(before);
       if (!hasMatrixDiscordReceipt(receipts, runId, event)) {
         throw new Error(`Matrix Discord delivery receipt missing for suite '${event.suite || event.scenario || 'unknown'}'`);
@@ -1966,7 +2016,7 @@ function publicMatrixResultEntry({ result, ...entry }) {
 
 export function matrixSummaryRecord({ args, matrix, matrixSuiteNotifier, summaryPath }) {
   return {
-    schema_version: 'real_e2e_failure_matrix_summary.v1',
+    schema_version: 'real_e2e_failure_matrix_summary.v2',
     ok: matrix.ok,
     status: matrix.ok ? 'PASS' : 'FAIL',
     mode: args.mode,

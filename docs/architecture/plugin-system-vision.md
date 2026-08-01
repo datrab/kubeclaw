@@ -209,11 +209,20 @@ Core lifecycle uses only generic states.
 
 ```text
 Run:     created -> running -> waiting/paused -> succeeded/failed/blocked/cancelled
-Stage:   pending -> scheduled -> running -> waiting/retrying -> succeeded/failed/blocked/cancelled
+Stage:   pending -> skipped/scheduled -> running -> waiting/retrying -> succeeded/failed/blocked/cancelled
 Attempt: created -> dispatched -> completed/timed_out/cancelled
 ```
 
 Plugin-local phases may be recorded in the plugin's namespaced state and events, but they are not core scheduler states.
+
+A passed stage may publish immutable, scalar, namespaced decision facts. A
+downstream stage may declare an activation comparison against a fact produced
+by an ordinary ancestor. Core evaluates the comparison only after dependencies
+are complete. A false comparison commits `stage.skipped` without creating an
+attempt or granting an invocation context; skipped conditional stages satisfy
+ordinary downstream dependencies. The fact, activation declaration, and skip
+event are pinned in the graph and lifecycle journals, so replay makes the same
+decision without rerunning the producer.
 
 The canonical control outcomes are:
 
@@ -253,6 +262,11 @@ timeout -> timed_out or blocked, according to the plugin's declared policy
 ### Frozen Graph And Declared Remediation
 
 The complete execution graph is validated and frozen at run start. Plugins cannot insert arbitrary stages while a run is active. A `request_fix` result follows a remediation stage or subflow declared in the graph, then returns to the evaluating path. Missing or ambiguous remediation targets fail validation.
+
+Conditional activation is distinct from remediation. It decides whether a
+predeclared ordinary stage is applicable; it never adds a node or redirects a
+failed result. The activation source must be an ordinary ancestor, and
+conditional activation is forbidden on remediation-only targets.
 
 Example:
 

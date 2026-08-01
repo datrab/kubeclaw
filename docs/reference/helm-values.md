@@ -15,9 +15,9 @@ Generated from: `charts/kubeclaw/values.yaml`, `my-values/nova-values.yaml`, `my
 
 | File | Top-level keys | Secret references |
 | --- | --- | --- |
-| `charts/kubeclaw/values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `codeBundle`, `runtimeInfrastructure`, `gateway`, `busterPipeline`, `replicaCount`, `auth`, `litellm`, `anthropic`, `stitch`, `discord`, `discordWebhook`, `agent`, `redis`, `qdrant`, `workspace`, `service`, `persistence`, `resources`, `runAsRoot`, `probes`, `shutdown`, `serviceAccount`, `busterNamespaceBroker`, `commands`, `swarmConfig`, `swarmConfigJson`, `semgrepConfigYaml`, `eslintConfigMjs`, `customSkills`, `nodeSelector`, `tolerations`, `podAnnotations`, `extraEnv`, `extraContainers`, `extraVolumes`, `extraVolumeMounts` | `secretName: redis-secrets` at line 200 |
-| `my-values/nova-values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `codeBundle`, `auth`, `anthropic`, `stitch`, `litellm`, `discord`, `discordWebhook`, `commands`, `agent`, `serviceAccount`, `busterNamespaceBroker`, `service`, `resources`, `extraContainers`, `workspace` | `existingSecret: github-bundle-reader` at line 21<br>`existingSecret: openclaw-shared-secrets` at line 25<br>`existingSecret: openclaw-shared-secrets` at line 29<br>`existingSecret: openclaw-shared-secrets` at line 33<br>`existingSecret: openclaw-shared-secrets` at line 37<br>`existingSecret: openclaw-shared-secrets` at line 42<br>`secretName: openclaw-shared-secrets` at line 47<br>`secretName: git-deploy-key-nova` at line 61 |
-| `my-values/buster-values.yaml` | `agentRole`, `anthropic`, `busterPipeline`, `gateway`, `image`, `imagePullSecrets`, `codeBundle`, `auth`, `litellm`, `discord`, `commands`, `discordWebhook`, `probes`, `agent`, `serviceAccount`, `busterNamespaceBroker`, `resources`, `workspace` | `existingSecret: openclaw-shared-secrets` at line 11<br>`existingSecret: github-bundle-reader` at line 46<br>`existingSecret: openclaw-shared-secrets` at line 50<br>`existingSecret: openclaw-shared-secrets` at line 54<br>`existingSecret: openclaw-shared-secrets` at line 59<br>`secretName: openclaw-shared-secrets` at line 73<br>`secretName: git-deploy-key-buster` at line 89 |
+| `charts/kubeclaw/values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `codeBundle`, `runtimeInfrastructure`, `gateway`, `capabilityProviders`, `replicaCount`, `auth`, `litellm`, `anthropic`, `stitch`, `discord`, `discordWebhook`, `agent`, `redis`, `qdrant`, `workspace`, `service`, `persistence`, `resources`, `runAsRoot`, `probes`, `shutdown`, `serviceAccount`, `busterNamespaceBroker`, `commands`, `swarmConfig`, `swarmConfigJson`, `semgrepConfigYaml`, `eslintConfigMjs`, `customSkills`, `nodeSelector`, `tolerations`, `podAnnotations`, `extraEnv`, `extraContainers`, `extraVolumes`, `extraVolumeMounts` | `secretName: redis-secrets` at line 197 |
+| `my-values/nova-values.yaml` | `agentRole`, `image`, `imagePullSecrets`, `codeBundle`, `auth`, `anthropic`, `stitch`, `litellm`, `discord`, `discordWebhook`, `commands`, `agent`, `serviceAccount`, `busterNamespaceBroker`, `service`, `capabilityProviders`, `extraEnv`, `resources`, `extraContainers`, `workspace` | `existingSecret: github-bundle-reader` at line 21<br>`existingSecret: openclaw-shared-secrets` at line 25<br>`existingSecret: openclaw-shared-secrets` at line 29<br>`existingSecret: openclaw-shared-secrets` at line 33<br>`existingSecret: openclaw-shared-secrets` at line 37<br>`existingSecret: openclaw-shared-secrets` at line 42<br>`secretName: openclaw-shared-secrets` at line 47<br>`secretName: git-deploy-key-nova` at line 61 |
+| `my-values/buster-values.yaml` | `agentRole`, `anthropic`, `gateway`, `image`, `imagePullSecrets`, `codeBundle`, `auth`, `litellm`, `discord`, `commands`, `discordWebhook`, `agent`, `serviceAccount`, `service`, `extraContainers`, `extraVolumes`, `busterNamespaceBroker`, `resources`, `workspace` | `existingSecret: openclaw-shared-secrets` at line 6<br>`existingSecret: github-bundle-reader` at line 27<br>`existingSecret: openclaw-shared-secrets` at line 31<br>`existingSecret: openclaw-shared-secrets` at line 35<br>`existingSecret: openclaw-shared-secrets` at line 40<br>`secretName: openclaw-shared-secrets` at line 54<br>`secretName: git-deploy-key-buster` at line 61 |
 | `my-values/infra/redis-values.yaml` | `architecture`, `auth`, `master` | `existingSecret: redis-secrets` at line 4 |
 | `my-values/infra/postgresql-values.yaml` | `architecture`, `auth`, `primary` | `existingSecret: postgresql-secrets` at line 5 |
 | `my-values/infra/qdrant-values.yaml` | `replicaCount`, `persistence`, `resources` |  |
@@ -35,8 +35,7 @@ Generated from: `charts/kubeclaw/values.yaml`, `my-values/nova-values.yaml`, `my
 
 ## Used by
 
-- `../deployment/helm-chart.md`
-- `../deployment/values-files.md`
+- `../deployment/README.md`
 - `../deployment/secrets.md`
 - `../deployment/agent-deployments.md`
 
@@ -46,10 +45,10 @@ Generated from: `charts/kubeclaw/values.yaml`, `my-values/nova-values.yaml`, `my
 | --- | --- | --- |
 | image and pull secrets | selects agent and sidecar images, tags, pull policy, and GHCR pull Secret | rendered Deployments include expected image refs and `imagePullSecrets` |
 | auth/provider/Discord/Stitch/LiteLLM | selects direct values or existing Secret name/key references | rendered env refs point to expected Secret keys and generated secrets reference lists those keys |
-| persistence and Buster worker | creates workspace/config PVCs plus pipeline-only BuildKit/result mounts | rendered PVCs, dedicated worker image, security contexts, and Buster volumes match production values |
+| persistence | creates workspace/config PVCs for gateway and plugin-runtime state | rendered PVCs and security contexts match production values |
 | service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
 | buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
-| probes, startup doctor, and dependency checks | configures runtime health script for gateway, Redis, Redis stream, LiteLLM, and Buster heartbeat checks; `gateway.startupDoctor` runs `openclaw doctor --fix` once after gateway health | rendered env vars, startup hook, and smoke commands exercise the health and doctor surfaces |
+| probes, startup doctor, and dependency checks | configures gateway, Redis, and LiteLLM health checks; `gateway.startupDoctor` runs `openclaw doctor --fix` once after gateway health | rendered env vars, startup hook, and smoke commands exercise the health and doctor surfaces |
 
 ## Failure Signals
 

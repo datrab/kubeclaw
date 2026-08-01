@@ -13,6 +13,7 @@ export interface ReviewDispatchRequest {
     readonly evidence: Readonly<Record<string, unknown>>;
     readonly allowedStatuses: readonly ['PASS', 'FAIL'];
   };
+  readonly outputContract: Readonly<Record<string, unknown>>;
 }
 
 function stableValue(value: unknown): unknown {
@@ -77,6 +78,18 @@ export function buildReviewDispatchRequest(
   input: ReviewInput,
   helperPrompt: unknown,
 ): ReviewDispatchRequest {
+  const issueContract = {
+    type: 'object',
+    additionalProperties: false,
+    required: ['source', 'description', 'affected_files', 'recommended_fix'],
+    properties: {
+      source: { type: 'string' },
+      description: { type: 'string' },
+      affected_files: { type: 'array', items: { type: 'string' } },
+      recommended_fix: { type: 'string' },
+    },
+  } as const;
+
   return {
     protocol: 'kubeclaw.review.v2',
     agent,
@@ -85,6 +98,30 @@ export function buildReviewDispatchRequest(
       subject: input.task,
       evidence: input.evidence ?? {},
       allowedStatuses: ['PASS', 'FAIL'],
+    },
+    outputContract: {
+      type: 'object',
+      additionalProperties: false,
+      required: [
+        'status',
+        'critical_issues',
+        'deferred_issues',
+        'checked_contracts',
+        'opened_artifacts',
+        'failed_commands',
+        'unverified_requirements',
+        'summary',
+      ],
+      properties: {
+        status: { enum: ['PASS', 'FAIL'] },
+        critical_issues: { type: 'array', items: issueContract },
+        deferred_issues: { type: 'array', items: issueContract },
+        checked_contracts: { type: 'array', items: { type: 'string' } },
+        opened_artifacts: { type: 'array', items: { type: 'string' } },
+        failed_commands: { type: 'array', items: { type: 'string' } },
+        unverified_requirements: { type: 'array', items: { type: 'string' } },
+        summary: { type: 'string' },
+      },
     },
   };
 }

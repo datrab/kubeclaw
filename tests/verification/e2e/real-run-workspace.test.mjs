@@ -44,13 +44,13 @@ function withEnv(key, value, fn) {
   }
 }
 
-test('generated real e2e config defaults to advertised gpt-5.3-codex-spark with thinking none', () => {
+test('generated real e2e config defaults to provider-qualified gpt-5.3-codex-spark with thinking none', () => {
   const progress = buildProgress({ projectName: 'unit-model-defaults' });
 
-  assert.equal(progress.defaults.models.forge, 'gpt-5.3-codex-spark');
-  assert.equal(progress.defaults.models.buster, 'gpt-5.3-codex-spark');
-  assert.equal(progress.defaults.models.echo, 'gpt-5.3-codex-spark');
-  assert.equal(progress.defaults.models.arch_validator, 'gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.forge, 'openai/gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.buster, 'openai/gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.echo, 'openai/gpt-5.3-codex-spark');
+  assert.equal(progress.defaults.models.arch_validator, 'openai/gpt-5.3-codex-spark');
   assert.equal(progress.defaults.thinking.forge, 'none');
   assert.equal(progress.defaults.thinking.buster, 'none');
   assert.equal(progress.defaults.thinking.echo, 'none');
@@ -72,10 +72,10 @@ test('generated real e2e seed requires publishable case study output', () => {
   });
 
   assert.equal(config.case_study.enabled, true);
-  assert.equal(config.case_study.model, 'gpt-5.3-codex-spark');
+  assert.equal(config.case_study.model, 'openai/gpt-5.3-codex-spark');
   assert.equal(config.case_study.thinking_level, 'none');
   assert.equal(config.case_study.agent_id, 'codex');
-  assert.equal(config.case_study.output_file, 'logs/pipeline/case-study.md');
+  assert.equal(config.case_study.output_file, '.swarm/artifacts/v2/reports/case-study.md');
   assert.equal(config.case_study.timeout_minutes, 30);
 });
 
@@ -237,17 +237,17 @@ test('run config runtime normalization refreshes terminal generator models', () 
       },
     });
 
-    assert.equal(config.fallback_model, 'gpt-5.3-codex-spark');
+    assert.equal(config.fallback_model, 'openai/gpt-5.3-codex-spark');
     assert.equal(config.case_study.enabled, true);
-    assert.equal(config.case_study.model, 'gpt-5.3-codex-spark');
+    assert.equal(config.case_study.model, 'openai/gpt-5.3-codex-spark');
     assert.equal(config.case_study.thinking_level, 'none');
-    assert.equal(config.case_study.output_file, 'logs/pipeline/case-study.md');
+    assert.equal(config.case_study.output_file, '.swarm/artifacts/v2/reports/case-study.md');
     assert.equal(config.case_study.timeout_minutes, 30);
     assert.equal(config.pipeline_review.enabled, true);
-    assert.equal(config.pipeline_review.model, 'gpt-5.3-codex-spark');
+    assert.equal(config.pipeline_review.model, 'openai/gpt-5.3-codex-spark');
     assert.equal(config.pipeline_review.thinking_level, 'none');
-    assert.equal(config.pipeline_review.output_file, 'logs/pipeline-review/PIPELINE-REVIEW.md');
-    assert.equal(config.pipeline_review.json_output_file, 'logs/pipeline-review/PIPELINE-REVIEW.json');
+    assert.equal(config.pipeline_review.output_file, '.swarm/artifacts/v2/reports/pipeline-review.md');
+    assert.equal(config.pipeline_review.json_output_file, '.swarm/artifacts/v2/reports/pipeline-review.json');
     assert.equal(config.pipeline_review.timeout_minutes, 10);
   }));
 });
@@ -338,9 +338,16 @@ test('generated real e2e seed declares explicit static serving and module-owned 
   assert.equal(progress.modules['03-nginx'].auto_retry_threshold, 2);
 });
 
-test('real e2e model preflight accepts advertised GPT-5.4 ids', () => {
-  assert.equal(validateRealE2EModel('gpt-5.4'), 'gpt-5.4');
-  assert.equal(validateRealE2EModel('gpt-5.4/low'), 'gpt-5.4/low');
+test('real e2e model preflight permits only the canonical Spark model', () => {
+  assert.equal(
+    validateRealE2EModel('openai/gpt-5.3-codex-spark'),
+    'openai/gpt-5.3-codex-spark',
+  );
+  assert.throws(() => validateRealE2EModel('gpt-5.4'), /REAL_E2E_MODEL_MUST_BE_SPARK/);
+  assert.throws(
+    () => validateRealE2EModel('openai/gpt-5.4/xhigh'),
+    /REAL_E2E_MODEL_MUST_BE_SPARK/,
+  );
 });
 
 test('generated real e2e module and Buster gate use bounded internal timeouts', () => {
@@ -375,7 +382,7 @@ test('checkpoint restore normalization refreshes harness-owned runtime defaults 
 
   const normalized = normalizeRealE2ERuntimeDefaults(progress);
 
-  assert.equal(normalized.defaults.models.forge, 'gpt-5.3-codex-spark');
+  assert.equal(normalized.defaults.models.forge, 'openai/gpt-5.3-codex-spark');
   assert.equal(normalized.defaults.thinking.forge, 'none');
   assert.equal(normalized.modules['01-nginx'].timeout_minutes, 10);
   assert.equal(normalized.modules['02-nginx'].timeout_minutes, 10);
@@ -383,7 +390,7 @@ test('checkpoint restore normalization refreshes harness-owned runtime defaults 
   assert.equal(normalized.modules['04-nginx'].timeout_minutes, 10);
   assert.equal(normalized.modules['02-nginx'].thinking_level, 'none');
   assert.equal(normalized.gates['final-buster'].timeout_minutes, 10);
-  assert.equal(normalized.gates['final-buster'].model, 'gpt-5.3-codex-spark');
+  assert.equal(normalized.gates['final-buster'].model, 'openai/gpt-5.3-codex-spark');
   assert.equal(normalized.pipeline_review, undefined);
 
   const { progress: scenarioProgress } = applyRealE2EScenario(normalized, 'forge-timeout');
@@ -646,14 +653,14 @@ test('success seed uses a four-module DAG with sequential and parallel module wo
     assert.equal(progress.modules['03-nginx'].test_config.serve.dockerfile.endsWith('/Dockerfile'), true);
     assert.deepEqual(progress.contracts.module_outputs['02-nginx'].consumes, ['.swarm/contracts/module-outputs/01-foundation.json']);
     assert.deepEqual(progress.contracts.module_outputs['03-nginx'].consumes, ['.swarm/contracts/module-outputs/01-foundation.json']);
-    assert.deepEqual(progress.contracts.module_outputs['01-nginx'].provides, ['foundation-runtime-static-serving.v1']);
-    assert.deepEqual(progress.contracts.module_outputs['02-nginx'].consumed_surfaces, ['foundation-runtime-static-serving.v1']);
-    assert.deepEqual(progress.contracts.module_outputs['02-nginx'].provides, ['branch-a-static-content.v1']);
+    assert.deepEqual(progress.contracts.module_outputs['01-nginx'].provides, ['foundation-runtime-static-serving.v2']);
+    assert.deepEqual(progress.contracts.module_outputs['02-nginx'].consumed_surfaces, ['foundation-runtime-static-serving.v2']);
+    assert.deepEqual(progress.contracts.module_outputs['02-nginx'].provides, ['branch-a-static-content.v2']);
     assert.deepEqual(progress.contracts.module_outputs['02-nginx'].provided_surfaces, ['src/content/branch-a.html']);
-    assert.deepEqual(progress.contracts.module_outputs['03-nginx'].provides, ['branch-b-static-asset.v1']);
+    assert.deepEqual(progress.contracts.module_outputs['03-nginx'].provides, ['branch-b-static-asset.v2']);
     assert.deepEqual(progress.contracts.module_outputs['03-nginx'].provided_surfaces, ['src/assets/branch-b.css']);
     assert.deepEqual(progress.contracts.module_outputs['04-nginx'].consumed_surfaces, [
-      'foundation-runtime-static-serving.v1',
+      'foundation-runtime-static-serving.v2',
       'src/content/branch-a.html',
       'src/assets/branch-b.css',
     ]);
@@ -689,18 +696,17 @@ test('expected-failure scenarios use the smallest canonical module scope', async
   }
 });
 
-test('generated real e2e run config uses repo-local profile tool paths', async () => {
+test('generated real e2e run config excludes the deleted Buster queue contract', async () => {
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
     const config = JSON.parse(fs.readFileSync(workspace.runConfigPath, 'utf8'));
 
-    assert.equal(config.pre_check.lint_report_path, path.join(workspace.worktreePath, 'skills', 'nova', 'pipeline', 'tools', 'lint-report.ts'));
-    assert.equal(config.agents.buster.redis_js_path, path.join(REPO_ROOT, 'skills', 'nova', 'pipeline', 'tools', 'redis.ts'));
-    assert.equal(config.fallback_model, 'gpt-5.3-codex-spark');
-    assert.doesNotMatch(config.pre_check.lint_report_path, /^\/app\/skills\//);
-    assert.doesNotMatch(config.agents.buster.redis_js_path, /^\/app\/skills\//);
-    assert.equal(config.agents.buster.redis_js_path.startsWith(workspace.worktreePath), false);
+    assert.equal(config.pre_check.lint_report_path, '/app/skills/pipeline/tools/lint-report.ts');
+    assert.equal(config.fallback_model, 'openai/gpt-5.3-codex-spark');
+    assert.equal(config.agents.buster.redis_js_path, undefined);
+    assert.equal(config.agents.buster.dispatch, undefined);
+    assert.equal(config.buster.runtime.task_stream, undefined);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -917,19 +923,16 @@ test('real e2e runner auto-approves architecture findings through a separate gat
   assert.match(runner, /real-e2e-architecture-approval/);
 });
 
-test('generated final review does not require post-final-review terminal artifacts', async () => {
+test('generated final review does not require post-final-review v2 report artifacts', async () => {
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
     const finalReview = fs.readFileSync(path.join(workspace.swarmDir, 'echo-review', 'FINAL-REVIEW-INSTRUCTIONS.md'), 'utf8');
 
     assert.match(finalReview, /Review the pre-completion run artifacts/);
-    assert.match(finalReview, /do not require post-final-review terminal artifacts/);
-    assert.match(finalReview, /logs\/pipeline\/summary\.json/);
-    assert.match(finalReview, /logs\/pipeline\/runs\/<run_id>\/summary\.json/);
-    assert.match(finalReview, /logs\/pipeline-review\/PIPELINE-REVIEW\.\{md,json\}/);
-    assert.match(finalReview, /non-running `logs\/pipeline\/latest\.json`/);
-    assert.match(finalReview, /non-PENDING final-review read model/);
+    assert.match(finalReview, /do not require post-final-review v2 report artifacts/);
+    assert.doesNotMatch(finalReview, /logs\/pipeline/);
+    assert.doesNotMatch(finalReview, /read model/);
     assert.match(finalReview, /final Buster produced deployment and preview evidence/);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);

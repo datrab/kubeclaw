@@ -200,6 +200,7 @@ try {
       adapters: { async invoke() { throw new Error('UNEXPECTED_CAPABILITY_INVOCATION'); } },
       events,
       checkpoints: new core.FileJournal(path.join(temporary, `${observerId}-checkpoints.jsonl`)),
+      deliveries: new core.FileJournal(path.join(temporary, `${observerId}-deliveries.jsonl`)),
       configs: new Map([[observerId, referencedValue(entry, 'configSchema')]]),
       wait: async () => {},
     });

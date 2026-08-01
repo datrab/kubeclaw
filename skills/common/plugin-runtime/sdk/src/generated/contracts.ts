@@ -40,6 +40,7 @@ export type StageResult =
       schemaVersion: 'stage-result.v2';
       outcome: 'passed';
       artifacts: ArtifactRef[];
+      facts?: DecisionFacts;
     })
   | (ResultBase & {
       schemaVersion: 'stage-result.v2';
@@ -144,6 +145,7 @@ export interface PluginSystemV2 {
   attemptIdentity?: AttemptIdentity;
   stageAttempt?: StageAttempt;
   artifactRef?: ArtifactRef;
+  decisionFacts?: DecisionFacts;
   stageResult?: StageResult;
   effectRequest?: EffectRequest;
   effectReceipt?: EffectReceipt;
@@ -224,6 +226,11 @@ export interface StageDefinition {
   dependsOn: LocalId[];
   config: JsonObject;
   input: JsonObject;
+  activation?: {
+    sourceStage: LocalId;
+    fact: NamespacedId;
+    equals: string | number | boolean | null;
+  };
   execution: {
     maxAttempts: number;
     maxRemediationCycles: number;
@@ -272,6 +279,9 @@ export interface ArtifactRef {
   digest: string;
   sizeBytes: number;
   producer: AttemptIdentity;
+}
+export interface DecisionFacts {
+  [k: string]: string | number | boolean | null;
 }
 export interface ResultBase {
   schemaVersion: 'stage-result.v2';
@@ -393,6 +403,7 @@ export interface LifecycleEvent {
     | 'stage.started'
     | 'stage.waiting'
     | 'stage.retrying'
+    | 'stage.skipped'
     | 'stage.succeeded'
     | 'stage.failed'
     | 'stage.blocked'

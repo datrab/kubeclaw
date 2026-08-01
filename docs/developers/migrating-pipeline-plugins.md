@@ -4,13 +4,11 @@ Status: canonical migration workflow
 
 ## Purpose
 
-Use this workflow to turn one retained pipeline behavior into a self-contained
-v2 package without introducing forwarding wrappers, dual production
-registries, or premature legacy deletion.
-
-The current v1 runtime remains the sole active authority until every required
-v2 package and the generic runtime have parity. The final consumer switch and
-legacy deletion are system-wide and atomic.
+Use this workflow to turn retained or newly imported behavior into a
+self-contained v2 package without introducing forwarding wrappers or parallel
+runtime authority. The repository completed its v1-to-v2 authority cutover in
+Phase 12; these rules remain the contract for future extension migrations and
+replacements.
 
 ## Select A Cohesive Unit
 
@@ -183,10 +181,9 @@ execute the real implementation and real adapter boundary.
 
 Registry availability is not behavior parity. A package being discoverable,
 valid, grant-resolved, activatable, or independently executable does not
-authorize switching a production consumer. The final authority cutover occurs
-only after every retained workflow behavior has recomputable replacement
-evidence. Until then v1 remains the sole production authority; no forwarding
-bridge or dual registry is introduced.
+authorize switching a production consumer. Replacement authority moves only
+after every retained workflow behavior has recomputable evidence; no
+forwarding bridge or dual registry is introduced.
 
 For deterministic stages, use two complementary layers: package-local unit
 tests for exhaustive domain decisions and a live-function test through the

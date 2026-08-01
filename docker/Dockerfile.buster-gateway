@@ -1,5 +1,5 @@
 # Buster's OpenClaw gateway and native/ACP agent runtime. Deterministic test,
-# image-build, and Kubernetes tooling belongs exclusively to buster-pipeline.
+# image-build and Kubernetes tooling are reached through bounded v2 adapters.
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.7.1@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS gateway-assets

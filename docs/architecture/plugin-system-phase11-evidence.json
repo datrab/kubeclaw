@@ -1,0 +1,65 @@
+{
+  "schema_version": "plugin_system_phase11_evidence.v1",
+  "phase": 11,
+  "status": "complete",
+  "runtime": {
+    "boundary": "linux_process",
+    "launcher": "skills/common/plugin-runtime/core/isolation/plugin-sandbox",
+    "protocol": "newline-delimited-json-rpc",
+    "supported_surfaces": [
+      "stage",
+      "observer"
+    ],
+    "external_adapters": "rejected_until_persistent_isolated_adapter_lifecycle_exists"
+  },
+  "installation": {
+    "authority": "operator_allowlist",
+    "canonical_source_required": true,
+    "trust": [
+      "canonical_source_and_digest_allowlist",
+      "verified_publisher_attestation"
+    ],
+    "host_lifecycle_scripts": "rejected",
+    "host_builds": "rejected_prebuilt_modules_only",
+    "symlinks": "rejected",
+    "transaction": "validate_staging_then_atomic_rename",
+    "partial_activation": "impossible"
+  },
+  "isolation": {
+    "filesystem": "package_read_only",
+    "environment": "empty_allowlist",
+    "network": "denied_by_node_permission_and_seccomp",
+    "subprocess": "denied_by_node_permission",
+    "native_addons": "denied",
+    "credentials": "not_inherited",
+    "limits": [
+      "wall_time",
+      "cpu",
+      "memory",
+      "open_files",
+      "process_count",
+      "protocol_bytes"
+    ],
+    "cancellation": "immediate_sigkill",
+    "crash_reporting": "typed_isolated_plugin_exit"
+  },
+  "verification": {
+    "command": "npm run verify:plugin-system:phase11",
+    "typescript_contract": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+    "assertions": [
+      "operator_controlled_install",
+      "canonical_source_validation",
+      "digest_and_provenance_validation",
+      "transactional_install",
+      "tamper_rejection",
+      "module_containment",
+      "filesystem_denial",
+      "network_denial",
+      "subprocess_denial",
+      "credential_non_inheritance",
+      "cancellation",
+      "crash_containment",
+      "external_adapter_rejection"
+    ]
+  }
+}

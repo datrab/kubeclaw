@@ -35,7 +35,7 @@ codeBundle:
   # Concrete archive download URL resolved by deploy tooling or CI.
   archiveUrl: ""
   expectedCommit: ""
-  contractVersion: "v1"
+  contractVersion: "v2"
   auth:
     existingSecret: ""
     existingSecretKey: "token"
@@ -71,25 +71,22 @@ gateway:
   bridgePort: 18790
   resources: {}
 
-busterPipeline:
-  enabled: false
-  image:
-    repository: ghcr.io/datrab/kubeclaw-buster-pipeline
-    tag: "latest"
-    pullPolicy: Always
-  platformCapabilities:
-    - rootless_buildkit
-  # Rootless BuildKit retains intermediate layers in this bounded emptyDir.
-  storageSize: "50Gi"
-  resources:
-    requests:
-      cpu: "2"
-      memory: "8Gi"
-      ephemeral-storage: "8Gi"
-    limits:
-      cpu: "8"
-      memory: "24Gi"
-      ephemeral-storage: "60Gi"
+# =============================================================================
+# CAPABILITY PROVIDERS
+# =============================================================================
+
+# Remote agent roles that provide capabilities to this deployment. Provider
+# Services follow the chart's canonical `agent-<role>` naming contract.
+capabilityProviders: {}
+  # buster:
+  #   agentRole: buster
+  #   capabilities:
+  #     runtime.dispatch:
+  #       adapter: openclaw
+  #       port: 18789
+  #     test.suite.execute:
+  #       adapter: buster-suite-v2
+  #       port: 18891
 
 # -- Replica count (always 1 per agent — agents are stateful)
 replicaCount: 1

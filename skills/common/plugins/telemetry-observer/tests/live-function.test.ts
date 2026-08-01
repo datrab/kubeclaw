@@ -18,7 +18,7 @@ const delivery = {
     identity: { runId: 'run:1' },
     occurredAt: '2026-07-26T00:00:00.000Z',
     causationId: 'event:0',
-    payload: { status: 'succeeded' },
+    payload: { status: 'succeeded', token: 'must-not-survive' },
   },
 };
 await observe(delivery, {
@@ -38,9 +38,10 @@ assert.deepEqual(calls[0].invocation.payload.event, {
   identity: { runId: 'run:1' },
   occurredAt: '2026-07-26T00:00:00.000Z',
   causationId: 'event:0',
-  payload: { status: 'succeeded' },
+  payload: { status: 'succeeded', token: '[redacted]' },
 });
-assert.equal(calls[0].invocation.payload.deliveryAttempt, 2);
+assert.equal(calls[0].invocation.payload.deliveryAttempt, undefined);
+assert.doesNotMatch(JSON.stringify(calls[0]), /must-not-survive/);
 await assert.rejects(
   observe(delivery, {
     contract: {},

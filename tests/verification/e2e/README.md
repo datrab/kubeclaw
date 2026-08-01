@@ -7,7 +7,10 @@ The harness must prove the pipeline by running real infrastructure and productio
 ## Canonical Entrypoint
 
 - `run-real-pipeline-e2e.mjs`
-- `approval-operator.mjs`
+- `approval-operator.mts` — v2-only typed approval controller; it rejects non-v2 invocation.
+- `check-v2-production-contracts.mts` — constructs the real 15-stage graph and
+  validates every package, registration, grant, provider, configuration, stage
+  input, and stage schema without dispatching an agent or running the pipeline.
 
 Both fast and full verification must call this harness. Fast mode may use a smaller production-shaped scenario, but it must not use a fake runner, mocked success path, alternate Buster completion hook, or separate lifecycle model.
 
@@ -29,7 +32,7 @@ The root wrappers call this harness directly:
 - `tests/verification/run-full-verification.sh` uses `--mode full`
 - `tests/verification/e2e/run-real-pipeline-failure-matrix.mjs` runs negative scenarios by invoking the same canonical runner with `--scenario`
 
-If production config or infrastructure is missing, these wrappers fail before running legacy contract/behavior checks.
+If production config or infrastructure is missing, these wrappers fail before starting v2 lifecycle execution.
 
 ## Required Real Surfaces
 
@@ -126,15 +129,15 @@ Each scenario declares one checkpoint `fault_injection_surface` and the harness
 derives concrete `allowed_mutation_channels` from that surface. Progress,
 config, source-file, environment, Git-shim, malformed-output, crash/cancel, and
 cleanup-blocker entrypoints assert that contract before mutating anything.
-There is no checkpoint fallback path: every matrix scenario must have a
+There is no alternate checkpoint path: every matrix scenario must have a
 declared hook contract, and invalid or missing checkpoint bundles fail before
 the scenario runs.
 
 The checkpoint contract itself is root-verified by
 `tests/verification/contracts/check-checkpoint-hook-contracts.mjs`. That guard
 checks all matrix scenarios for explicit hooks, fixture families, fault
-surfaces, expected terminal authority, mutation channels, and deleted legacy
-full-lifecycle fallback symbols. It also enforces compact matrix stdout and
+surfaces, expected terminal authority, mutation channels, and absence of
+non-v2 lifecycle symbols. It also enforces compact matrix stdout and
 file-backed full child logs. Matrix execution is not the structural contract
 authority; it only proves live behavior after those contracts are already valid.
 
@@ -199,8 +202,8 @@ Supported scenarios:
 The active failure matrix is the executable scenario registry except for the
 canonical `success` run. Duplicated or overly broad scenarios are deleted from
 the runner and covered by smaller contract tests where needed. Root
-`verify:contracts` fails if a second pruned-scenario registry or full-lifecycle
-fallback is reintroduced.
+`verify:contracts` fails if a second pruned-scenario registry or alternate
+full-lifecycle authority is introduced.
 
 `run-real-pipeline-failure-matrix.mjs` executes required negative scenarios by
 shelling back into `run-real-pipeline-e2e.mjs`; it has no separate pipeline
@@ -213,7 +216,7 @@ structured reasons, artifact paths, and diagnostic tails. Use
 
 Report rendering is regression-tested from structured result objects. If
 durable report fixtures are added, they should be exact captured
-`real_pipeline_e2e_result.v1` outputs from real runs, not anonymized or
+`real_pipeline_e2e_result.v2` outputs from real runs, not anonymized or
 hand-shaped substitutes. The final Markdown review is human output; the
 captured result JSON remains the machine-readable source of truth.
 

@@ -1,5 +1,5 @@
 {
-  "schema_version": "real_e2e_integration_map.v1",
+  "schema_version": "real_e2e_integration_map.v2",
   "integration_module": "04-nginx",
   "consumes": [
     "02-nginx",

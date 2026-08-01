@@ -156,7 +156,7 @@ const moduleChecks = {
     check('asset branch stylesheet composition', () => assertContains(html, '<link rel="stylesheet" href="/assets/branch-b.css">', 'asset branch stylesheet composition'));
     check('content branch composition source', () => assertContains(html, 'data-source="/content/branch-a.html"', 'content branch composition source'));
     check('integration branch composition inputs', () => assertContains(html, 'data-composes="/content/branch-a.html,/assets/branch-b.css"', 'integration branch composition inputs'));
-    check('integration schema', () => assertEqual(integrationMap.schema_version, 'real_e2e_integration_map.v1', 'integration schema'));
+    check('integration schema', () => assertEqual(integrationMap.schema_version, 'real_e2e_integration_map.v2', 'integration schema'));
     check('integration module id', () => assertEqual(integrationMap.integration_module, '04-nginx', 'integration module id'));
     check('integration branch inputs', () => assertDeepEqual(integrationMap.consumes, ['02-nginx', '03-nginx'], 'integration branch inputs'));
     check('integration content surface', () => assertDeepEqual(integrationMap.consumed_surfaces[0], {

@@ -5,9 +5,9 @@
 !docker/
 !docker/Dockerfile.general
 !docker/Dockerfile.buster-gateway
-!docker/Dockerfile.buster-pipeline
-!docker/buster-pipeline-entrypoint.sh
+!docker/Dockerfile.buster-runtime
 !docker/Dockerfile.namespace-controller
+!docker/buster-runtime-entrypoint.sh
 
 !go.mod
 !cmd/
@@ -15,6 +15,15 @@
 !cmd/buster-namespace-controller/**
 
 !plugins/
+!skills/
+!skills/buster/
+!skills/buster/plugins/
+!skills/buster/plugins/buster-suite-runtime/
+!skills/buster/plugins/buster-suite-runtime/**
+!skills/common/
+!skills/common/plugin-runtime/
+!skills/common/plugin-runtime/sdk/
+!skills/common/plugin-runtime/sdk/**
 !skills/common/plugins/openclaw-agent-observer/
 !skills/common/plugins/openclaw-agent-observer/**
 !contracts/

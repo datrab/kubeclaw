@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
@@ -9,6 +10,12 @@ import { pathToFileURL } from 'node:url';
 const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-test-agent-'));
+fs.writeFileSync(path.join(temporary, 'fixture.txt'), 'fixture\n');
+execFileSync('git', ['init', '-q'], { cwd: temporary });
+execFileSync('git', ['config', 'user.name', 'KubeClaw Test'], { cwd: temporary });
+execFileSync('git', ['config', 'user.email', 'test@kubeclaw.invalid'], { cwd: temporary });
+execFileSync('git', ['add', '.'], { cwd: temporary });
+execFileSync('git', ['commit', '-qm', 'fixture'], { cwd: temporary });
 const transcript = 'start buster\nexecute unit\ncollect exit=0\njudge PASS\nterminate\n';
 const transcriptDigest = crypto.createHash('sha256').update(transcript).digest('hex');
 const server = http.createServer((request, response) => {
@@ -16,16 +23,39 @@ const server = http.createServer((request, response) => {
   request.setEncoding('utf8');
   request.on('data', (chunk) => { body += chunk; });
   request.on('end', () => {
-    const payload = JSON.parse(body);
+    const payload = body ? JSON.parse(body) : {};
+    if (request.method === 'POST' && request.url === '/v2/jobs') {
+      response.writeHead(202, { 'content-type': 'application/json' });
+      response.end(JSON.stringify({ jobId: payload.jobId, state: 'accepted' }));
+      return;
+    }
+    if (request.method === 'GET' && request.url?.startsWith('/v2/jobs/')) {
+      const jobId = request.url.slice('/v2/jobs/'.length);
+      response.writeHead(200, { 'content-type': 'application/json' });
+      response.end(JSON.stringify({
+        schemaVersion: 'buster-suite-status.v2',
+        jobId,
+        state: 'completed',
+        result: {
+          schemaVersion: 'buster-suite-result.v2',
+          jobId,
+          results: [{ suite: 'unit', status: 'PASS' }],
+          suiteSummary: 'unit passed',
+          suiteDetailSummary: 'unit passed',
+          criticalFailed: false,
+          completedAt: '2026-07-28T00:00:00.000Z',
+        },
+      }));
+      return;
+    }
+    assert.equal(request.url, '/dispatch');
     assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'real-unit' && suite.passed === true), true);
+    assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'unit' && suite.passed === true), true);
     fs.writeFileSync(path.join(temporary, 'transcript.log'), transcript);
     response.writeHead(200, { 'content-type': 'application/json' });
     response.end(JSON.stringify({ result: {
       verdict: 'PASS',
-      runId: 'run-1',
-      taskId: 'task-1',
-      attempt: 1,
-      summary: 'Good.',
+      summary: 'All supplied suites passed.',
       findings: [],
       session: {
         sessionId: 'session:buster:run-1:task-1:1',
@@ -42,7 +72,8 @@ const address = server.address();
 if (!address || typeof address === 'string') throw new Error('server unavailable');
 const origin = `http://127.0.0.1:${address.port}`;
 const secret = 'KUBECLAW_TEST_AGENT_TOKEN';
-process.env[secret] = 'test-secret';
+const token = `test-${'a'.repeat(48)}`;
+process.env[secret] = token;
 const nodeExecutable = fs.realpathSync(process.execPath);
 const roots = ['common', 'nova', 'buster'].map((role) => path.join(repository, `skills/${role}/plugins`));
 
@@ -62,6 +93,7 @@ try {
     enabledRegistrations: enabled,
     providers: new Map([
       ['command.execute', 'kubeclaw.command-runner:command'],
+      ['test.suite.execute', 'kubeclaw.buster-suite-runtime:suite'],
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
@@ -70,12 +102,17 @@ try {
     grants: new Map([
       ['kubeclaw.test-agent:test', new Map([
         ['command.execute', { allowedExecutables: [nodeExecutable], allowedWorkingRoots: [temporary] }],
+        ['test.suite.execute', { allowedSuites: ['unit'], allowedRoots: [temporary] }],
         ['runtime.dispatch', { allowedAgents: ['buster'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.test-agent'] }],
       ])],
       ['kubeclaw.runtime-dispatch:runtime', new Map([
         ['network.http', { allowedOrigins: [origin] }],
         ['secrets.read', { allowedNames: ['buster.agent'] }],
+      ])],
+      ['kubeclaw.buster-suite-runtime:suite', new Map([
+        ['network.http', { allowedOrigins: [origin] }],
+        ['secrets.read', { allowedNames: ['buster.worker'] }],
       ])],
     ]),
   });
@@ -92,9 +129,20 @@ try {
         maxExecutionMs: 5_000,
         terminationGraceMs: 100,
       }],
+      ['kubeclaw.buster-suite-runtime:suite', {
+        endpoint: origin,
+        tokenSecret: 'buster.worker',
+        allowedRepositoryRoots: [temporary],
+        allowedSuites: ['unit'],
+        suiteCapabilities: ['image_build'],
+        gitExecutable: fs.realpathSync(execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim()),
+        maxArchiveBytes: 8_388_608,
+        maxSuiteTimeoutMs: 5_000,
+        pollMs: 100,
+      }],
       ['kubeclaw.runtime-dispatch:runtime', { targets: { buster: { endpoint: `${origin}/dispatch`, tokenSecret: 'buster.agent' } } }],
-      ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
-      ['kubeclaw.secret-resolver:secrets', { environment: { 'buster.agent': secret } }],
+      ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST', 'GET', 'DELETE'], allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
+      ['kubeclaw.secret-resolver:secrets', { environment: { 'buster.agent': secret, 'buster.worker': secret } }],
       ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
     ]),
     effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()),
@@ -119,6 +167,12 @@ try {
             attempt: 1,
             task: 'Assess.',
             suiteEvidence: [],
+            suitePlan: {
+              repositoryRoot: temporary,
+              suites: ['unit'],
+              testConfig: { suite_timeout_ms: 5_000 },
+              task: {},
+            },
             commandSuites: [{
               suite: 'real-unit',
               executable: nodeExecutable,
@@ -137,7 +191,7 @@ try {
     assert.equal((await runner.run('run:test-agent')).status, 'succeeded');
     assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'), /test-verdict:task-1:1/u);
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(temporary, 'transcript.log'))).digest('hex'), transcriptDigest);
-    assert.equal(fs.readFileSync(effectsPath, 'utf8').includes('test-secret'), false);
+    assert.equal(fs.readFileSync(effectsPath, 'utf8').includes(token), false);
   } finally {
     await adapters.shutdown();
   }

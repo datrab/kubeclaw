@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "declaration": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@kubeclaw/plugin-sdk": ["../../../common/plugin-runtime/sdk/dist/index.d.ts"]
+    }
+  },
+  "include": [
+    "src/adapter.ts",
+    "src/protocol.ts",
+    "src/worker.ts",
+    "src/worker-runner.ts",
+    "src/runtime/optional-modules.d.ts"
+  ]
+}

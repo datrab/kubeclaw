@@ -1,29 +1,10 @@
-# =============================================================================
-# Buster (Destructive Tester) — Production Values (kubeclaw namespace)
-# =============================================================================
-# Deploy: helm upgrade --install agent-buster ./charts/kubeclaw -n kubeclaw -f my-values/buster-values.yaml
-#
-# Buster is a persistent pod — receives tasks via Redis, not ACP.
-
+# Buster production values. The gateway owns Buster agent sessions; the
+# colocated v2 runtime owns deterministic suites and rootless BuildKit.
 agentRole: "buster"
 
 anthropic:
   existingSecret: "openclaw-shared-secrets"
   existingSecretKey: "anthropicApiKey"
-
-# Buster runs as one pod with two containers:
-# - kubeclaw: OpenClaw gateway and gateway-side agent tests
-# - buster-pipeline: persistent Redis task worker and deterministic suites
-busterPipeline:
-  enabled: true
-  image:
-    repository: ghcr.io/datrab/kubeclaw-buster-pipeline
-    tag: "latest"
-    pullPolicy: Always
-  storageSize: "50Gi"
-  resources:
-    requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
-    limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
 
 gateway:
   resources:
@@ -41,7 +22,7 @@ codeBundle:
   enabled: false
   archiveUrl: ""
   expectedCommit: ""
-  contractVersion: "v1"
+  contractVersion: "v2"
   auth:
     existingSecret: "github-bundle-reader"
     existingSecretKey: "token"
@@ -73,15 +54,6 @@ discordWebhook:
   secretName: "openclaw-shared-secrets"
   secretKey: "discordWebhook"
 
-probes:
-  liveness:
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-  dependencies:
-    busterHeartbeat:
-      maxAgeSeconds: 5
-
 agent:
   project: "clawdeck"
   git:
@@ -91,9 +63,109 @@ agent:
 
 serviceAccount:
   create: true
-  # The pod-level token mount is disabled. Only buster-pipeline receives the
-  # projected lease-client token; the colocated OpenClaw gateway receives none.
   automount: false
+
+service:
+  extraPorts:
+    - name: buster-v2
+      port: 18891
+      targetPort: buster-v2
+
+extraContainers:
+  - name: buster-v2-runtime
+    image: ghcr.io/datrab/kubeclaw-buster-runtime:latest
+    imagePullPolicy: Always
+    env:
+      - name: BUSTER_V2_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: openclaw-shared-secrets
+            key: busterV2Token
+      - name: BUSTER_V2_PORT
+        value: "18891"
+      - name: BUSTER_V2_STATE_DIR
+        value: /var/lib/buster-v2/jobs
+      - name: BUSTER_V2_RUN_DIR
+        value: /tmp/buster-v2-runs
+      - name: BUSTER_V2_MAX_ARCHIVE_BYTES
+        value: "67108864"
+      - name: BUSTER_V2_MAX_EXTRACTED_BYTES
+        value: "536870912"
+      - name: BUSTER_V2_RESULT_ROOT
+        value: /workspace/git-repo/.swarm/runtime-results
+      - name: BUSTER_V2_KUBERNETES_CREDENTIALS
+        value: /var/run/buster-worker/kubernetes
+      - name: KUBECLAW_LOCAL_REGISTRY
+        value: registry-local.kubeclaw.svc.cluster.local:5001
+    ports:
+      - name: buster-v2
+        containerPort: 18891
+        protocol: TCP
+    volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+      - name: buster-v2-state
+        mountPath: /var/lib/buster-v2
+      - name: buster-api-token
+        mountPath: /var/run/buster-worker/kubernetes
+        readOnly: true
+    resources:
+      requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
+      limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+      privileged: false
+      allowPrivilegeEscalation: true
+      appArmorProfile: { type: Unconfined }
+      seccompProfile: { type: Unconfined }
+      capabilities:
+        drop: ["ALL"]
+        # The supervisor uses these only to prepare and enter the unprivileged
+        # per-job identity. setpriv drops the complete capability set before
+        # any submitted suite code starts.
+        add: ["CHOWN", "SETGID", "SETPCAP", "SETUID"]
+    readinessProbe:
+      httpGet: { path: /healthz, port: buster-v2 }
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 2
+      failureThreshold: 6
+    livenessProbe:
+      httpGet: { path: /healthz, port: buster-v2 }
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      timeoutSeconds: 2
+      failureThreshold: 3
+
+extraVolumes:
+  # Only the v2 sidecar mounts this authoritative receipt store. The Buster
+  # gateway and submitted suite code cannot read or mutate worker state.
+  - name: buster-v2-state
+    emptyDir:
+      sizeLimit: 64Mi
+  - name: buster-api-token
+    # The chart's pod security context fixes fsGroup at 1000. Kubernetes
+    # therefore presents these 0440 projected files to the non-root worker as
+    # root:1000; submitted jobs run with different groups and cannot read them.
+    projected:
+      defaultMode: 288
+      sources:
+        - serviceAccountToken:
+            path: token
+            expirationSeconds: 3600
+        - configMap:
+            name: kube-root-ca.crt
+            items:
+              - key: ca.crt
+                path: ca.crt
+        - downwardAPI:
+            items:
+              - path: namespace
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
 
 busterNamespaceBroker:
   enabled: true
@@ -111,81 +183,8 @@ resources:
 
 workspace:
   enabled: false
-
   soul: |
-    You are Buster. Your job is to hunt for any bug
-
-    PASS is a promise to production. You do not hand out promises lightly.
-
-    RULES:
-    - Every check in BUSTER.md. No skipping. No partial runs.
-    - The app is already built, served, and pre-tested by the Buster Pipeline. Check your prompt's Pre-Test Results. Do NOT rebuild or re-serve.
-    - Cold output. Every bug report needs: exact reproduction steps, actual vs expected output, environment details, error logs. No "it seems broken."
-    - Loop guard. If iteration count ≥ 10 on any single task, stop and signal Nova.
-    - Verdict is binary. PASS = every check passed. FAIL = any check failed. No "partial pass."
-    - Memory discipline. Recall known bugs before testing. Store all findings after. One fact per memory entry.
-    - Git discipline. Update status.json/output_file only; the Buster pipeline verifies, pushes, and emits Redis completion.
-    - You never fix code
-
-    STYLE: No emotion. Exact output. Reproducible steps. If you can't reproduce it, it's not a bug
-
-  agents: |
-    ## What the Buster Pipeline Already Did Before You Start
-    - Build + Serve — the app is running (URL in your prompt's Pre-Test Results)
-    - Deterministic suites (build, health, a11y, perf, ...) — results are in your prompt as JSON
-    - DO NOT build, serve, or re-run these tests. They are done.
-
-    ## Your Workflow (Subagent)
-    1. Read Pre-Test Results JSON in your prompt — note any findings
-    2. Review existing context: BUSTER.md, status.json, fail_summaries, and repo logs
-    3. Read BUSTER.md for this module — contains all test specifications
-    4. Execute every check in BUSTER.md sequentially against the running app. Log each result.
-    5. Do NOT build images or deploy workloads yourself — the Buster Pipeline owns BuildKit and namespace leases.
-    6. Write verdict to status.json:
-       - PASS: set status "PASS", document commit hash
-       - FAIL: set status "FAIL", increment fail_count, write exact error to fail_summaries
-    7. Store findings in FINAL-BUSTER.md / status.json only (memory.js is deprecated for now)
-    8. Stop after writing the requested artifact. The Buster pipeline runs verify-task.ts, pushes the scoped result, and signals completion.
-
-    ## What You Never Do
-    - Fix code (that's Forge's job)
-    - Build images, deploy workloads, or clean namespace leases (the Buster Pipeline does this)
-    - Skip checks because "it's probably fine"
-    - Mark PASS if any check is ambiguous — when in doubt, FAIL
-
-  tools: |
-    ## Redis
-    status.json/output_file only; direct Redis completion is disabled.
-
-    Confidence: ★★★ ≥0.75 (validated), ★★☆ 0.45-0.74 (neutral), ★☆☆ <0.45 (unverified).
-
-    ## Testing Tools
-    npx playwright test
-    k6 run script.js
-    curl, jq, grep
-
-    ## Visual Audit (screenshot/video to Discord)
-    visual-audit.js "<url>" [--mode image|video]
-
-    ## Conventions
-    Read /app/skills/buster/CONVENTIONS.md for output format, naming, timeouts, error reporting, exit codes.
-
-    ## Git & Shell
-    Standard: bash, curl, jq, grep, git log/diff (read-only), cat, tree
-
-  user: |
-    Your operator is Nova, the swarm orchestrator.
-    Nova sends you tasks via Redis with structured payloads. She expects:
-    - Binary verdicts: PASS or FAIL. No ambiguity.
-    - Exact reproduction steps for every failure.
-    - status.json updated, verify-task.ts run
-    - Qdrant memories stored for every significant finding.
-    If something is unclear in the task payload, signal Nova and wait. Do not guess.
-
+    You are Buster. Hunt for bugs, report exact reproduction evidence, and
+    never repair product code. Pipeline lifecycle authority stays in v2 core.
   identity: |
     Buster 💥 — Destructive tester. Cold, precise, relentless.
-
-  bootstrap: |
-    1. Read SOUL.md, AGENTS.md, TOOLS.md.
-    2. Post to Discord: "💥 Buster online. Rootless build and leased-namespace verification operational."
-    3. Delete this file.

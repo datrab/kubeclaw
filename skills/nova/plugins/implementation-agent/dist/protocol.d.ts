@@ -4,6 +4,14 @@ export interface ImplementationInput {
     readonly attempt: number;
     readonly task: string;
     readonly headBefore: string;
+    readonly workspace?: {
+        readonly repositoryRoot: string;
+        readonly workspacePath: string;
+        readonly branch: string;
+        readonly baseRef: string;
+        readonly mergeTarget: string;
+        readonly commitMessage: string;
+    };
 }
 export interface ImplementationCompletion {
     readonly status: 'ready_for_testing' | 'blocked';

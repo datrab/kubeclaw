@@ -1,0 +1,23 @@
+import type { TestCredentialSpec } from './k8s-credentials.js';
+import type { K8sCommandEnv } from './k8s-command-env.js';
+import type { AnyRecord, NamespaceLeaseStatus, SuiteLog } from './k8s-base.js';
+export declare function runNamespaceControllerPreflight(lease: AnyRecord, env: K8sCommandEnv): Promise<string>;
+export declare function requestNamespaceLease({ leaseName, namespaceName, namespacePrefix, serviceName, secretsToCopy, payload, ttlSeconds, cleanupPolicy, purpose, exposure, log, env }: {
+    leaseName: string;
+    namespaceName: string;
+    namespacePrefix: string;
+    serviceName: string;
+    secretsToCopy: string[];
+    payload: AnyRecord;
+    ttlSeconds: number;
+    cleanupPolicy: string;
+    purpose: string;
+    exposure: AnyRecord;
+    log: SuiteLog;
+    env: K8sCommandEnv;
+}): Promise<void>;
+export declare function uniqueStrings(values: string[]): string[];
+export declare function readTestCredentials(specs: TestCredentialSpec[], namespace: string, env: K8sCommandEnv): Promise<AnyRecord[]>;
+export declare function waitForNamespaceLeaseReady(leaseName: string, timeoutSeconds: number, log: SuiteLog, env: K8sCommandEnv): Promise<NamespaceLeaseStatus>;
+export declare function verifyCopiedSecrets(names: string[], targetNamespace: string, env: K8sCommandEnv): Promise<void>;
+export declare function waitForPreviewUrl(leaseName: string, timeoutSeconds: number, log: SuiteLog, env: K8sCommandEnv): Promise<NamespaceLeaseStatus>;

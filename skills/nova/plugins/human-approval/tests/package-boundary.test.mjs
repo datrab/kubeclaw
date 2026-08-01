@@ -5,10 +5,16 @@ import path from 'node:path';
 const root = path.resolve('.');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'plugin.json'), 'utf8'));
 const registration = manifest.stages[0];
+const architectureRegistration = manifest.stages[1];
 
 assert.equal(manifest.id, 'kubeclaw.human-approval');
 assert.deepEqual(registration.requiredCapabilities, ['operator.request', 'signal.wait']);
 assert.equal(registration.type, 'kubeclaw.decision.human-approval');
+assert.equal(architectureRegistration.type, 'kubeclaw.decision.architecture-approval');
+assert.deepEqual(
+  architectureRegistration.requiredCapabilities,
+  ['artifacts.read', 'operator.request', 'signal.wait'],
+);
 assert.deepEqual(manifest.observers, []);
 assert.deepEqual(manifest.adapters, []);
 

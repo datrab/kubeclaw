@@ -325,6 +325,10 @@ export class EffectCoordinator {
     };
     const auditRequest: EffectRequest = {
       ...request,
+      resource: {
+        type: request.resource.type,
+        canonicalId: '[confidential]',
+      },
       payload: { confidential: true },
     };
     this.#audit?.requested(auditRequest);

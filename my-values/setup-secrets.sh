@@ -448,6 +448,7 @@ create_shared_secret_from_sops() {
     --from-literal="gatewayToken-forge=$(sops_get openclaw_gateway_token_forge)"
     --from-literal="gatewayToken-echo=$(sops_get openclaw_gateway_token_echo)"
     --from-literal="gatewayToken-buster=$(sops_get openclaw_gateway_token_buster)"
+    --from-literal="busterV2Token=$(sops_get buster_v2_token)"
     --from-literal="gatewayToken-nova=$(sops_get openclaw_gateway_token_nova)"
     --from-literal="anthropicApiKey=$(sops_get_first anthropic_api_key claude_code_oauth_token anthropicApiKey)"
     --from-literal="stitchApiKey=$(sops_get_first stitch_api_key stitchApiKey)"
@@ -468,7 +469,7 @@ create_shared_secret_from_sops() {
 }
 
 create_shared_secret_interactive() {
-  local gateway_forge gateway_echo gateway_buster gateway_nova
+  local gateway_forge gateway_echo gateway_buster gateway_nova buster_v2_token
   local anthropic_api_key stitch_api_key litellm_api_key
   local discord_forge discord_echo discord_buster discord_nova discord_webhook
 
@@ -478,6 +479,7 @@ create_shared_secret_interactive() {
   prompt_secret_or_generate "OpenClaw gateway token for Forge" gateway_forge
   prompt_secret_or_generate "OpenClaw gateway token for Echo" gateway_echo
   prompt_secret_or_generate "OpenClaw gateway token for Buster" gateway_buster
+  prompt_secret_or_generate "Buster v2 worker token" buster_v2_token
   prompt_secret_or_generate "OpenClaw gateway token for Nova" gateway_nova
   prompt_secret_required "Anthropic/Claude credential for agents" anthropic_api_key
   prompt_secret_required "Stitch API key" stitch_api_key
@@ -497,6 +499,7 @@ create_shared_secret_interactive() {
     --from-literal="gatewayToken-forge=$gateway_forge" \
     --from-literal="gatewayToken-echo=$gateway_echo" \
     --from-literal="gatewayToken-buster=$gateway_buster" \
+    --from-literal="busterV2Token=$buster_v2_token" \
     --from-literal="gatewayToken-nova=$gateway_nova" \
     --from-literal="anthropicApiKey=$anthropic_api_key" \
     --from-literal="stitchApiKey=$stitch_api_key" \
@@ -521,6 +524,7 @@ patch_shared_secret_interactive() {
       gatewayToken-forge) prompt_secret_or_generate "OpenClaw gateway token for Forge" value ;;
       gatewayToken-echo) prompt_secret_or_generate "OpenClaw gateway token for Echo" value ;;
       gatewayToken-buster) prompt_secret_or_generate "OpenClaw gateway token for Buster" value ;;
+      busterV2Token) prompt_secret_or_generate "Buster v2 worker token" value ;;
       gatewayToken-nova) prompt_secret_or_generate "OpenClaw gateway token for Nova" value ;;
       anthropicApiKey) prompt_secret_required "Anthropic/Claude credential for agents" value ;;
       stitchApiKey) prompt_secret_required "Stitch API key" value ;;
@@ -546,6 +550,7 @@ setup_shared_secret() {
     gatewayToken-forge
     gatewayToken-echo
     gatewayToken-buster
+    busterV2Token
     gatewayToken-nova
     anthropicApiKey
     stitchApiKey

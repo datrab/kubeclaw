@@ -7,7 +7,7 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 role="${1:-}"
 output_path="${2:-}"
 commit="${3:-${GITHUB_SHA:-}}"
-contract_version="${4:-v1}"
+contract_version="${4:-v2}"
 built_at="${5:-$(date -u +"%Y-%m-%dT%H:%M:%SZ")}"
 
 if [[ -z $role || -z $output_path ]]; then

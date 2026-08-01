@@ -1,0 +1,17 @@
+{
+  "id": "kubeclaw.buster-suite-runtime",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "suite",
+      "module": "dist/src/adapter.js",
+      "export": "activate",
+      "providesCapabilities": ["test.suite.execute"],
+      "requiredCapabilities": ["network.http", "secrets.read"],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

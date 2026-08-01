@@ -2,7 +2,9 @@
 
 Prism generates HTML preview files for frontend modules. These previews serve as **design references** and as the **source of truth for visual regression baselines**.
 
-The baseline generator (`skills/buster/pipeline/tools/screenshot.ts --generate-baselines` in repo source, `/app/skills/pipeline/tools/screenshot.ts --generate-baselines` in the Buster runtime image) reads the preview, extracts routes, screenshots every page, and writes `paths.json` + baseline PNGs. For this to work, every preview must follow two conventions.
+The visual-regression plugin reads the preview, extracts routes, screenshots
+every page, and writes `paths.json` plus baseline PNGs. For this to work, every
+preview must follow two conventions.
 
 ## Convention 1: Route Manifest (`data-routes`)
 

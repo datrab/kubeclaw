@@ -1,7 +1,6 @@
 # Authoring v2 plugin pipelines
 
-Status: target v2 authoring contract. V1 remains production authority until the
-Phase 12 atomic cutover.
+Status: implemented authoring contract
 
 A pipeline definition contains only generic stage nodes. Each node selects an
 installed plugin-defined `type`, declares ordinary dependencies, supplies

@@ -1,7 +1,6 @@
 # Operating the v2 plugin lifecycle
 
-Status: target v2 operating model. Use the current v1 runbooks until the Phase
-12 authority switch.
+Status: implemented operating model
 
 Every v2 run stores:
 
@@ -23,9 +22,8 @@ continuations are one authorized retry, the already-declared remediation edge,
 or cancellation. The actor must be present in the platform
 `administrativeDecisionIssuers` allowlist. Administrative mutations are
 also authenticated by the trusted host boundary; a caller-provided actor claim
-alone is rejected. Mutations are single-flight within one host runtime in Phase
-6; durable cross-process leases, stale-owner recovery, and fencing are Phase 7
-responsibilities.
+alone is rejected. Mutations use durable cross-process leases, stale-owner
+recovery, and fencing.
 
 Troubleshooting signals:
 

@@ -12,12 +12,36 @@
         "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["endpoint", "tokenSecret"],
+          "anyOf": [
+            {
+              "properties": {
+                "endpoint": {},
+                "tokenSecret": {}
+              },
+              "required": ["endpoint", "tokenSecret"]
+            },
+            {
+              "properties": {
+                "endpointOrigin": {},
+                "endpointSecret": {}
+              },
+              "required": ["endpointOrigin", "endpointSecret"]
+            }
+          ],
           "properties": {
             "endpoint": {
               "type": "string",
               "format": "uri",
               "pattern": "^https?://"
+            },
+            "endpointOrigin": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://[^/?#]+/?$"
+            },
+            "endpointSecret": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
             },
             "tokenSecret": {
               "type": "string",
@@ -28,6 +52,11 @@
               "minimum": 1,
               "maximum": 1048576,
               "default": 65536
+            },
+            "format": {
+              "type": "string",
+              "enum": ["json", "discord_webhook"],
+              "default": "json"
             }
           }
         }

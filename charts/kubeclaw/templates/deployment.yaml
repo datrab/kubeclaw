@@ -591,13 +591,9 @@ spec:
               if (mode === 'startup-status') {
                 await check('startup verification status', checkStartupVerificationStatus);
               } else if (mode === 'liveness') {
-                if (containerRole !== 'buster-pipeline' && enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) {
-                  await check('gateway', checkGateway);
-                }
+                if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
               } else {
-                if (containerRole !== 'buster-pipeline') {
-                  await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
-                }
+                await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
                 await check('runtime swarm config', () => requirePath(process.env.SWARM_CONFIG, 'file'));
                 await check('code bundle', checkCodeBundle);
                 await check('skills', () => requirePath('/app/skills', 'dir'));
@@ -834,7 +830,7 @@ spec:
               fi
               protected_skill_overlay() {
                 case "$1" in
-                  pipeline|pipeline/*|pipeline.ts|common|common/*|nova/pipeline|nova/pipeline/*|buster/pipeline|buster/pipeline/*|redis.ts|buster-pipeline.ts|verify-task.ts)
+                  pipeline.ts|common/plugin-runtime|common/plugin-runtime/*|common/plugins|common/plugins/*|nova/plugins|nova/plugins/*|buster/plugins|buster/plugins/*)
                     return 0
                     ;;
                 esac
@@ -869,6 +865,8 @@ spec:
           env:
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
+            - name: AGENT_ROLE
+              value: {{ .Values.agentRole | default "default" | quote }}
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
             - name: OVERRIDE_WORKSPACE
@@ -882,7 +880,7 @@ spec:
             - name: CODE_BUNDLE_EXPECTED_COMMIT
               value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
             - name: CODE_BUNDLE_CONTRACT_VERSION
-              value: {{ .Values.codeBundle.contractVersion | default "v1" | quote }}
+              value: {{ .Values.codeBundle.contractVersion | default "v2" | quote }}
             - name: CODE_BUNDLE_ARCHIVE_PATH
               value: "/tmp/code-bundle/bundle.tgz"
             {{- if .Values.codeBundle.auth.existingSecret }}
@@ -965,8 +963,10 @@ spec:
               value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
+            - name: AGENT_ROLE
+              value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
-              value: {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }} "gateway"{{- else }} "agent"{{- end }}
+              value: "agent"
             - name: KUBECLAW_CODE_BUNDLE_ENABLED
               value: {{ .Values.codeBundle.enabled | default false | quote }}
             - name: KUBECLAW_CODE_BUNDLE_AGENT
@@ -974,7 +974,7 @@ spec:
             - name: KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT
               value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
             - name: KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION
-              value: {{ .Values.codeBundle.contractVersion | default "v1" | quote }}
+              value: {{ .Values.codeBundle.contractVersion | default "v2" | quote }}
             - name: KUBECLAW_CODE_BUNDLE_MANIFEST
               value: "/runtime-config/code-bundle-manifest.json"
             - name: GIT_REPO_URL
@@ -1000,6 +1000,35 @@ spec:
               value: {{ default (printf "http://127.0.0.1:%v" .Values.gateway.port) .Values.gateway.url | quote }}
             - name: OPENCLAW_GATEWAY_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
+            {{- if .Values.capabilityProviders }}
+            {{- $catalog := dict }}
+            {{- range $providerId, $provider := .Values.capabilityProviders }}
+            {{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$" $providerId) }}
+            {{- fail "capability provider id must be a DNS label" }}
+            {{- end }}
+            {{- $agentRole := required (printf "capabilityProviders.%s.agentRole is required" $providerId) $provider.agentRole }}
+            {{- $service := include "kubeclaw.agentServiceName" $agentRole }}
+            {{- $capabilities := required (printf "capabilityProviders.%s.capabilities is required" $providerId) $provider.capabilities }}
+            {{- $routes := dict }}
+            {{- range $capability, $route := $capabilities }}
+            {{- if not (regexMatch "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$" $capability) }}
+            {{- fail (printf "capabilityProviders.%s capability name is invalid" $providerId) }}
+            {{- end }}
+            {{- $adapter := required (printf "capabilityProviders.%s.capabilities.%s.adapter is required" $providerId $capability) $route.adapter }}
+            {{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$" $adapter) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.adapter must be a DNS label" $providerId $capability) }}
+            {{- end }}
+            {{- $port := int (required (printf "capabilityProviders.%s.capabilities.%s.port is required" $providerId $capability) $route.port) }}
+            {{- if or (lt $port 1) (gt $port 65535) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.port must be between 1 and 65535" $providerId $capability) }}
+            {{- end }}
+            {{- $_ := set $routes $capability (dict "adapter" $adapter "endpoint" (printf "http://%s:%d" $service $port)) }}
+            {{- end }}
+            {{- $_ := set $catalog $providerId (dict "agentRole" $agentRole "capabilities" $routes) }}
+            {{- end }}
+            - name: KUBECLAW_CAPABILITY_PROVIDERS
+              value: {{ toJson $catalog | quote }}
+            {{- end }}
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
             {{- if .Values.anthropic.existingSecret }}
@@ -1056,7 +1085,7 @@ spec:
             - name: KUBECLAW_HEALTH_REGISTRIES
               value: {{ join "," (.Values.probes.dependencies.registries.endpoints | default list) | quote }}
             - name: KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT
-              value: {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }} "false"{{- else }} {{ .Values.probes.dependencies.busterHeartbeat.enabled | quote }}{{- end }}
+              value: {{ .Values.probes.dependencies.busterHeartbeat.enabled | quote }}
             - name: KUBECLAW_HEALTH_BUSTER_HEARTBEAT_MAX_AGE_MS
               value: {{ mul (.Values.probes.dependencies.busterHeartbeat.maxAgeSeconds | default 120 | int) 1000 | quote }}
             {{- if .Values.agent.project }}
@@ -1171,225 +1200,6 @@ spec:
             failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
           {{- end }}
 
-        {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }}
-        # ── Buster Pipeline Worker ──
-        - name: buster-pipeline
-          image: "{{ .Values.busterPipeline.image.repository }}:{{ .Values.busterPipeline.image.tag }}"
-          imagePullPolicy: {{ .Values.busterPipeline.image.pullPolicy }}
-
-          env:
-            - name: HOME
-              value: "/home/builder"
-            - name: NODE_PATH
-              value: "/app/node_modules"
-            - name: AGENT_NAME
-              value: {{ .Values.agentRole | default "default" | quote }}
-            - name: KUBECLAW_CONTAINER_ROLE
-              value: "buster-pipeline"
-            - name: KUBECLAW_CODE_BUNDLE_ENABLED
-              value: {{ .Values.codeBundle.enabled | default false | quote }}
-            - name: KUBECLAW_CODE_BUNDLE_AGENT
-              value: {{ .Values.agentRole | default "default" | quote }}
-            - name: KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT
-              value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
-            - name: KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION
-              value: {{ .Values.codeBundle.contractVersion | default "v1" | quote }}
-            - name: KUBECLAW_CODE_BUNDLE_MANIFEST
-              value: "/runtime-config/code-bundle-manifest.json"
-            - name: BUSTER_PLATFORM_CAPABILITIES
-              value: {{ join "," (.Values.busterPipeline.platformCapabilities | default list) | quote }}
-            - name: GIT_REPO_URL
-              value: {{ .Values.agent.git.repoUrl | quote }}
-            - name: REPO_ROOT
-              value: "/workspace/git-repo"
-            - name: REDIS_HOST
-              value: {{ .Values.redis.host | quote }}
-            - name: REDIS_PORT
-              value: {{ .Values.redis.port | default "6379" | quote }}
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.redis.secretName }}
-                  key: {{ .Values.redis.secretKey | default "redis-password" }}
-            - name: KUBECLAW_LOCAL_REGISTRY
-              value: {{ .Values.runtimeInfrastructure.localRegistry | quote }}
-            - name: XDG_RUNTIME_DIR
-              value: "/run/user/1000"
-            - name: BUILDKIT_HOST
-              value: "unix:///run/user/1000/buildkit/buildkitd.sock"
-            - name: BUSTER_RESULTS_DIR
-              value: "/home/builder/.openclaw/results"
-            - name: QDRANT_URL
-              value: {{ .Values.qdrant.url | quote }}
-            - name: LITELLM_URL
-              value: {{ .Values.litellm.endpoint | trimSuffix "/v1" | quote }}
-            - name: OPENCLAW_GATEWAY_URL
-              value: {{ default (printf "http://127.0.0.1:%v" .Values.gateway.port) .Values.gateway.url | quote }}
-            - name: OPENCLAW_GATEWAY_TOKEN
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
-            - name: LITELLM_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
-            {{- if .Values.anthropic.existingSecret }}
-            - name: CLAUDE_CODE_OAUTH_TOKEN
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            - name: ANTHROPIC_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
-            {{- if .Values.discord.enabled }}
-            - name: DISCORD_TOKEN
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
-            - name: DISCORD_CHANNEL
-              value: {{ .Values.discord.channelId | default "" | quote }}
-            {{- end }}
-            {{- if .Values.discordWebhook.secretName }}
-            - name: DISCORD_WEBHOOK
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.discordWebhook.secretName }}
-                  key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }}
-            {{- end }}
-            - name: SWARM_CONFIG
-              value: "/home/builder/.openclaw/swarm.config.json"
-            - name: GATEWAY_PORT
-              value: {{ .Values.gateway.port | quote }}
-            - name: KUBECLAW_DRAIN_FILE
-              value: {{ .Values.shutdown.drainFile | default "/tmp/kubeclaw-draining" | quote }}
-            - name: KUBECLAW_PRESTOP_DRAIN_SECONDS
-              value: {{ .Values.shutdown.preStopDrainSeconds | default 5 | quote }}
-            - name: KUBECLAW_HEALTH_TIMEOUT_MS
-              value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
-            - name: KUBECLAW_HEALTH_STARTUP_STATUS_PATH
-              value: "/home/builder/.openclaw/logs/startup-verification.json"
-            - name: KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH
-              value: "/home/builder/.openclaw/logs/startup-verification.jsonl"
-            - name: KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER
-              value: "true"
-            - name: KUBECLAW_HEALTH_CHECK_GATEWAY
-              value: {{ .Values.probes.dependencies.gateway.enabled | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_REDIS
-              value: {{ .Values.probes.dependencies.redis.enabled | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_REDIS_STREAM
-              value: {{ .Values.probes.dependencies.redisStream.enabled | quote }}
-            - name: KUBECLAW_HEALTH_REDIS_STREAM
-              value: {{ .Values.probes.dependencies.redisStream.stream | default "" | quote }}
-            - name: KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN
-              value: {{ .Values.probes.dependencies.redisStream.maxLen | default 1000 | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_LITELLM
-              value: {{ .Values.probes.dependencies.litellm.enabled | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_QDRANT
-              value: {{ .Values.probes.dependencies.qdrant.enabled | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_REGISTRIES
-              value: {{ .Values.probes.dependencies.registries.enabled | quote }}
-            - name: KUBECLAW_HEALTH_REGISTRIES
-              value: {{ join "," (.Values.probes.dependencies.registries.endpoints | default list) | quote }}
-            - name: KUBECLAW_HEALTH_CHECK_BUSTER_HEARTBEAT
-              value: {{ .Values.probes.dependencies.busterHeartbeat.enabled | quote }}
-            - name: KUBECLAW_HEALTH_BUSTER_HEARTBEAT_MAX_AGE_MS
-              value: {{ mul (.Values.probes.dependencies.busterHeartbeat.maxAgeSeconds | default 120 | int) 1000 | quote }}
-            {{- if .Values.agent.project }}
-            - name: CURRENT_PROJECT
-              value: {{ .Values.agent.project | quote }}
-            {{- end }}
-            {{- with .Values.extraEnv }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
-
-          volumeMounts:
-            - name: runtime-config
-              mountPath: /home/builder/.openclaw/swarm.config.json
-              subPath: swarm.config.json
-              readOnly: true
-            - name: runtime-config
-              mountPath: /runtime-config
-              readOnly: true
-            - name: workspace
-              mountPath: /workspace
-            - name: ssh-home-vol
-              mountPath: /home/builder/.ssh
-            - name: skills-merged
-              mountPath: /app/skills
-            - name: buildkit-state
-              mountPath: /home/builder/.local/share/buildkit
-            - name: buildkit-runtime
-              mountPath: /run/user/1000
-            - name: buster-results
-              mountPath: /home/builder/.openclaw/results
-            - name: buster-api-token
-              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-              readOnly: true
-            {{- with .Values.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
-
-          resources: {{- toYaml (.Values.busterPipeline.resources | default .Values.resources) | nindent 12 }}
-
-          lifecycle:
-            preStop:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - |
-                    DRAIN_FILE="${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}"
-                    mkdir -p "$(dirname "$DRAIN_FILE")"
-                    date -Iseconds > "$DRAIN_FILE"
-                    sleep "${KUBECLAW_PRESTOP_DRAIN_SECONDS:-5}"
-
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            appArmorProfile:
-              type: Unconfined
-            privileged: false
-            seccompProfile:
-              type: Unconfined
-            # Debian's uidmap helpers carry only their exact file capabilities.
-            # Keep those capabilities in the container bounding set while the
-            # worker remains non-root and non-privileged.
-            allowPrivilegeEscalation: true
-            capabilities:
-              drop: ["ALL"]
-              add: ["SETUID", "SETGID"]
-
-          {{- if .Values.probes.startup.enabled }}
-          startupProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null && node /runtime-config/kubeclaw-health.mjs startup
-            initialDelaySeconds: {{ .Values.probes.startup.initialDelaySeconds }}
-            periodSeconds: {{ .Values.probes.startup.periodSeconds }}
-            timeoutSeconds: {{ .Values.probes.startup.timeoutSeconds }}
-            failureThreshold: {{ .Values.probes.startup.failureThreshold }}
-          {{- end }}
-          {{- if .Values.probes.readiness.enabled }}
-          readinessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null && node /runtime-config/kubeclaw-health.mjs readiness
-            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
-            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
-            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
-          {{- end }}
-          {{- if .Values.probes.liveness.enabled }}
-          livenessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null && node /runtime-config/kubeclaw-health.mjs liveness
-            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
-            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
-            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
-          {{- end }}
-        {{- end }}
-
         {{- with .Values.extraContainers }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -1438,33 +1248,6 @@ spec:
           emptyDir: {}
         - name: tmp
           emptyDir: {}
-        {{- if and (eq (.Values.agentRole | default "") "buster") (.Values.busterPipeline.enabled | default false) }}
-        - name: buildkit-state
-          emptyDir:
-            sizeLimit: {{ .Values.busterPipeline.storageSize | default "50Gi" }}
-        - name: buildkit-runtime
-          emptyDir: {}
-        - name: buster-results
-          emptyDir:
-            sizeLimit: "2Gi"
-        - name: buster-api-token
-          projected:
-            defaultMode: 0400
-            sources:
-              - serviceAccountToken:
-                  path: token
-                  expirationSeconds: 3600
-              - configMap:
-                  name: kube-root-ca.crt
-                  items:
-                    - key: ca.crt
-                      path: ca.crt
-              - downwardAPI:
-                  items:
-                    - path: namespace
-                      fieldRef:
-                        fieldPath: metadata.namespace
-        {{- end }}
         - name: init-swarm-config
           configMap:
             name: {{ include "kubeclaw.fullname" . }}-swarm-config

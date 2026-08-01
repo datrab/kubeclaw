@@ -35,6 +35,43 @@ function requestDigest(request: CapabilityInvocation): string {
   return crypto.createHash('sha256').update(canonical(request)).digest('hex');
 }
 
+async function withAdapterStartupTimeout<T>(
+  adapterId: string,
+  phase: 'activate' | 'ready',
+  timeoutMs: number,
+  operation: () => T | PromiseLike<T>,
+  onTimeout: (error: Error) => void,
+): Promise<T> {
+  let timer: NodeJS.Timeout | undefined;
+  const timeout = new Promise<never>((_resolve, reject) => {
+    timer = setTimeout(() => {
+      const error = new Error(`ADAPTER_START_TIMEOUT:${adapterId}:${phase}`);
+      onTimeout(error);
+      reject(error);
+    }, timeoutMs);
+  });
+  try {
+    return await Promise.race([Promise.resolve().then(operation), timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function shutdownLateAdapter(instance: AdapterInstance, timeoutMs: number): Promise<void> {
+  const controller = new AbortController();
+  const timer = setTimeout(
+    () => controller.abort(new Error('ADAPTER_LATE_ACTIVATION_SHUTDOWN_TIMEOUT')),
+    timeoutMs,
+  );
+  try {
+    await instance.shutdown(controller.signal);
+  } catch {
+    // The startup timeout remains authoritative; late cleanup is best effort.
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export interface AdapterRuntimeOptions {
   readonly granted: GrantedRegistry;
   readonly activated: ActivatedRegistry;
@@ -63,7 +100,10 @@ function owner(
 
 export class AdapterRuntime {
   readonly #options: AdapterRuntimeOptions;
-  readonly #invocationSignals = new AsyncLocalStorage<AbortSignal>();
+  readonly #invocationContext = new AsyncLocalStorage<Readonly<{
+    signal: AbortSignal;
+    attempt: AttemptIdentity;
+  }>>();
   #instances: ReadonlyMap<string, AdapterInstance> = new FrozenMap([]);
   #lifecycleControllers: ReadonlyMap<string, AbortController> = new FrozenMap([]);
   readonly #pendingLifecycleControllers = new Map<string, AbortController>();
@@ -131,6 +171,60 @@ export class AdapterRuntime {
         if (!dependency) throw new Error(`ADAPTER_DEPENDENCY_MISSING:${adapterId}:${capability}`);
         await start(`${dependency.package.manifest.id}:${dependency.registration.id}`);
       }
+      const invokeDependency = async (
+        capability: string,
+        request: CapabilityInvocation,
+        forceConfidential: boolean,
+      ): Promise<Readonly<Record<string, unknown>>> => {
+        assertActive();
+        const parentInvocation = this.#invocationContext.getStore();
+        const signal = parentInvocation
+          ? AbortSignal.any([parentInvocation.signal, lifecycle.signal])
+          : lifecycle.signal;
+        if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+        const grant = this.#options.granted.grants.get(adapterId)?.find(
+          (candidate) => candidate.capability === capability,
+        );
+        if (!grant) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
+        authorizeCapabilityInvocation(grant, request);
+        const dependency = this.#options.granted.selectedProviders.get(capability);
+        if (!dependency) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
+        const dependencyId = `${dependency.package.manifest.id}:${dependency.registration.id}`;
+        const adapter = await start(dependencyId);
+        const attempt: AttemptIdentity = parentInvocation?.attempt ?? {
+          runId: `adapter:${adapterId}`,
+          stageId: 'adapter-activation',
+          attemptId: `adapter:${adapterId}`,
+          attemptNumber: 1,
+        };
+        const invocation = {
+          idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}`,
+          attempt,
+          capability,
+          operation: request.operation,
+          resource: request.resource,
+          payload: request.payload,
+        };
+        if (forceConfidential || isConfidentialCapability(capability)) {
+          const result = await this.#options.effects.invokeConfidential(
+            adapter,
+            owner(this.#options, dependencyId),
+            invocation,
+            signal,
+          );
+          assertActive();
+          return result;
+        }
+        const receipt = await this.#options.effects.invoke(
+          adapter,
+          owner(this.#options, dependencyId),
+          invocation,
+          signal,
+        );
+        if (receipt.status !== 'completed') throw new Error(receipt.error?.message ?? 'adapter dependency failed');
+        assertActive();
+        return receipt.result ?? {};
+      };
       const context: AdapterActivationContext = Object.freeze({
         registration: entry.provenance,
         config,
@@ -145,66 +239,47 @@ export class AdapterRuntime {
           await this.#options.emitDomainEvent(entry.provenance, type, identity, payload);
           assertActive();
         },
-        invoke: async (capability: string, request: CapabilityInvocation) => {
-          assertActive();
-          const invocationSignal = this.#invocationSignals.getStore();
-          const signal = invocationSignal
-            ? AbortSignal.any([invocationSignal, lifecycle.signal])
-            : lifecycle.signal;
-          if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-          const grant = this.#options.granted.grants.get(adapterId)?.find(
-            (candidate) => candidate.capability === capability,
-          );
-          if (!grant) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
-          authorizeCapabilityInvocation(grant, request);
-          const dependency = this.#options.granted.selectedProviders.get(capability);
-          if (!dependency) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
-          const dependencyId = `${dependency.package.manifest.id}:${dependency.registration.id}`;
-          const adapter = await start(dependencyId);
-          const attempt: AttemptIdentity = {
-            runId: `adapter:${adapterId}`,
-            stageId: 'adapter-activation',
-            attemptId: `adapter:${adapterId}`,
-            attemptNumber: 1,
-          };
-          const invocation = {
-            idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}`,
-            attempt,
-            capability,
-            operation: request.operation,
-            resource: request.resource,
-            payload: request.payload,
-          };
-          if (isConfidentialCapability(capability)) {
-            const result = await this.#options.effects.invokeConfidential(
-              adapter,
-              owner(this.#options, dependencyId),
-              invocation,
-              signal,
-            );
-            assertActive();
-            return result;
-          }
-          const receipt = await this.#options.effects.invoke(
-            adapter,
-            owner(this.#options, dependencyId),
-            invocation,
-            signal,
-          );
-          if (receipt.status !== 'completed') throw new Error(receipt.error?.message ?? 'adapter dependency failed');
-          assertActive();
-          return receipt.result ?? {};
-        },
+        invoke: (capability: string, request: CapabilityInvocation) =>
+          invokeDependency(capability, request, false),
+        invokeConfidential: (capability: string, request: CapabilityInvocation) =>
+          invokeDependency(capability, request, true),
       });
       const factory = activated.execute as AdapterFactory;
-      const raw = await factory(context);
+      const factoryResult = Promise.resolve().then(() => factory(context));
+      let activationTimedOut = false;
+      let raw: AdapterInstance;
+      try {
+        raw = await withAdapterStartupTimeout(
+          adapterId,
+          'activate',
+          this.#options.shutdownTimeoutMs,
+          () => factoryResult,
+          (error) => {
+            activationTimedOut = true;
+            lifecycle.abort(error);
+          },
+        );
+      } catch (error) {
+        if (activationTimedOut) {
+          void factoryResult.then(
+            (late) => shutdownLateAdapter(late, this.#options.shutdownTimeoutMs),
+            () => {
+              // The factory rejected after its owning startup timeout.
+            },
+          );
+        }
+        throw error;
+      }
       const invocationSignal = (signal: AbortSignal): AbortSignal =>
         AbortSignal.any([signal, lifecycle.signal]);
       const instance: AdapterInstance = {
         ready: () => raw.ready(),
         invoke: (invocation) => {
           const signal = invocationSignal(invocation.signal);
-          return this.#invocationSignals.run(signal, () => raw.invoke({ ...invocation, signal }));
+          return this.#invocationContext.run(
+            { signal, attempt: invocation.request.attempt },
+            () => raw.invoke({ ...invocation, signal }),
+          );
         },
         ...(raw.receipt ? { receipt: (request) => raw.receipt!(request) } : {}),
         shutdown: (signal) => raw.shutdown(signal),
@@ -212,7 +287,34 @@ export class AdapterRuntime {
       instances.set(adapterId, instance);
       this.#pendingInstances.set(adapterId, instance);
       if (this.#stopping || lifecycle.signal.aborted) throw new Error('ADAPTER_RUNTIME_STOPPING');
-      await instance.ready();
+      try {
+        await withAdapterStartupTimeout(
+          adapterId,
+          'ready',
+          this.#options.shutdownTimeoutMs,
+          () => instance.ready(),
+          (error) => lifecycle.abort(error),
+        );
+      } catch (error) {
+        lifecycle.abort(error);
+        instances.delete(adapterId);
+        lifecycleControllers.delete(adapterId);
+        this.#pendingInstances.delete(adapterId);
+        this.#pendingLifecycleControllers.delete(adapterId);
+        const shutdownController = new AbortController();
+        const shutdownTimer = setTimeout(
+          () => shutdownController.abort(),
+          this.#options.shutdownTimeoutMs,
+        );
+        try {
+          await this.#shutdownInstance(instance, shutdownController.signal);
+        } catch {
+          // Preserve the readiness failure after bounded teardown.
+        } finally {
+          clearTimeout(shutdownTimer);
+        }
+        throw error;
+      }
       if (this.#stopping || lifecycle.signal.aborted) throw new Error('ADAPTER_RUNTIME_STOPPING');
       starting.delete(adapterId);
       return instance;

@@ -57,6 +57,28 @@ export interface PipelineRunnerOptions {
   readonly administrativeAttemptOverrides?: ReadonlySet<string>;
   readonly signal?: AbortSignal;
   readonly now?: () => Date;
+  readonly onEventsCommitted?: () => Promise<void>;
+}
+
+export function validatePipelineDefinitionAgainstRegistry(
+  definition: PipelineDefinition,
+  registry: GrantedRegistry,
+): void {
+  ExecutionGraph.fromDefinition(definition);
+  for (const stage of definition.stages) {
+    const owner = registry.snapshot.stages.get(stage.type);
+    if (!owner) {
+      throw new Error(`PIPELINE_STAGE_OWNER_MISSING:${stage.type}`);
+    }
+    validateReferencedValue(
+      fs.realpathSync(path.join(owner.package.root, owner.registration.configSchema)),
+      stage.config,
+    );
+    validateReferencedValue(
+      fs.realpathSync(path.join(owner.package.root, owner.registration.inputSchema)),
+      stage.input,
+    );
+  }
 }
 
 export class PipelineRunner {
@@ -69,6 +91,7 @@ export class PipelineRunner {
 
   constructor(options: PipelineRunnerOptions) {
     this.#options = options;
+    validatePipelineDefinitionAgainstRegistry(options.definition, options.registry);
     this.#graph = ExecutionGraph.fromDefinition(options.definition);
     this.#graphSnapshot = this.#graph.snapshot(
       options.definition.id,
@@ -77,20 +100,6 @@ export class PipelineRunner {
     this.#maxConcurrency = options.definition.maxConcurrency;
     this.#administrativeAttemptOverrides = new Set(options.administrativeAttemptOverrides);
     this.#now = options.now ?? (() => new Date());
-    for (const stage of options.definition.stages) {
-      const owner = options.registry.snapshot.stages.get(stage.type);
-      if (!owner) {
-        throw new Error(`PIPELINE_STAGE_OWNER_MISSING:${stage.type}`);
-      }
-      validateReferencedValue(
-        fs.realpathSync(path.join(owner.package.root, owner.registration.configSchema)),
-        stage.config,
-      );
-      validateReferencedValue(
-        fs.realpathSync(path.join(owner.package.root, owner.registration.inputSchema)),
-        stage.input,
-      );
-    }
   }
 
   graphSnapshot(): ExecutionGraphSnapshot {
@@ -130,6 +139,10 @@ export class PipelineRunner {
     };
     this.#options.journal.append(event);
     return event;
+  }
+
+  async #flushEvents(): Promise<void> {
+    await this.#options.onEventsCommitted?.();
   }
 
   async #executeStage(
@@ -241,7 +254,7 @@ export class PipelineRunner {
     let timeoutHandle: NodeJS.Timeout | undefined;
     try {
       result = await Promise.race([
-        activated.execute(definition.input, context) as Promise<StageResult>,
+        activated.execute(definition.input, context, controller.signal) as Promise<StageResult>,
         cancellation,
         new Promise<never>((_, reject) => {
           timeoutHandle = setTimeout(
@@ -329,6 +342,7 @@ export class PipelineRunner {
       this.#append('run.created', { runId }, { runIdentity });
       this.#append('run.started', { runId });
     }
+    await this.#flushEvents();
     const forced: string[] = [];
     const forcedStageIds = new Set<string>();
     const force = (stageId: string): void => {
@@ -374,7 +388,9 @@ export class PipelineRunner {
     for (;;) {
       if (this.#options.signal?.aborted) {
         for (const [stageId, state] of states) {
-          if (['succeeded', 'failed', 'blocked', 'cancelled'].includes(state.status)) continue;
+          if (['skipped', 'succeeded', 'failed', 'blocked', 'cancelled'].includes(state.status)) {
+            continue;
+          }
           states.set(stageId, { ...state, status: 'cancelled' });
           this.#append('stage.cancelled', { runId, stageId }, {
             attemptsUsed: state.attemptsUsed,
@@ -382,10 +398,19 @@ export class PipelineRunner {
           });
         }
         this.#append('run.cancelled', { runId });
+        await this.#flushEvents();
         return this.#result(runIdentity, 'cancelled', states);
       }
-      const completed = new Set([...states].filter(([, state]) => state.status === 'succeeded').map(([id]) => id));
-      const active = new Set([...states].filter(([, state]) => !['pending', 'succeeded'].includes(state.status)).map(([id]) => id));
+      const completed = new Set(
+        [...states]
+          .filter(([, state]) => state.status === 'succeeded' || state.status === 'skipped')
+          .map(([id]) => id),
+      );
+      const active = new Set(
+        [...states]
+          .filter(([, state]) => !['pending', 'skipped', 'succeeded'].includes(state.status))
+          .map(([id]) => id),
+      );
       const forcedStageId = nextForced();
       let ready: readonly StageDefinition[];
       if (forcedStageId) {
@@ -402,7 +427,44 @@ export class PipelineRunner {
       } else {
         ready = this.#graph.ready(completed, active);
       }
-      if (ready.length === 0) break;
+      const skipped = ready.filter((definition) => {
+        const activation = this.#graph.activation(definition.id);
+        if (!activation) return false;
+        const source = states.get(activation.sourceStage);
+        return !source?.facts
+          || !Object.is(source.facts[activation.fact], activation.equals);
+      });
+      for (const definition of skipped) {
+        const current = states.get(definition.id)!;
+        const activation = this.#graph.activation(definition.id)!;
+        const source = states.get(activation.sourceStage);
+        const observed = source?.facts?.[activation.fact];
+        states.set(definition.id, { ...current, status: 'skipped' });
+        this.#append('stage.skipped', { runId, stageId: definition.id }, {
+          stageType: definition.type,
+          reason: {
+            code: 'core.activation_condition_not_met',
+            details: {
+              sourceStage: activation.sourceStage,
+              fact: activation.fact,
+              equals: activation.equals,
+              factPresent: observed !== undefined,
+              ...(observed !== undefined ? { observed } : {}),
+            },
+          },
+          attemptsUsed: current.attemptsUsed,
+          remediationCyclesUsed: current.remediationCyclesUsed,
+        });
+      }
+      if (skipped.length > 0) {
+        const skippedIds = new Set(skipped.map(({ id }) => id));
+        ready = ready.filter(({ id }) => !skippedIds.has(id));
+        await this.#flushEvents();
+      }
+      if (ready.length === 0) {
+        if (skipped.length > 0) continue;
+        break;
+      }
       const batch = ready.slice(0, this.#maxConcurrency);
       const decisions = await Promise.all(batch.map(async (definition) => {
         const current = states.get(definition.id)!;
@@ -429,8 +491,13 @@ export class PipelineRunner {
         }
         states.set(definition.id, { ...current, status: 'running' });
         this.#append('stage.started', { runId, stageId: definition.id }, {
+          stageType: definition.type,
+          ...(typeof definition.config.agentRole === 'string'
+            ? { agentRole: definition.config.agentRole }
+            : {}),
           ...(administrativeOverride ? { administrativeOverride: true } : {}),
         });
+        await this.#flushEvents();
         const decision = await this.#executeStage(
           runId,
           current,
@@ -579,14 +646,26 @@ export class PipelineRunner {
             : decision.state.status === 'cancelled' ? 'cancelled'
               : 'failed';
           this.#append(`stage.${status}` as LifecycleEvent['type'], { runId, stageId: definition.id }, {
+            stageType: definition.type,
+            ...(typeof definition.config.agentRole === 'string'
+              ? { agentRole: definition.config.agentRole }
+              : {}),
+            outcome: decision.result.outcome,
+            reason: decision.result.reason,
             attemptsUsed: decision.state.attemptsUsed,
             remediationCyclesUsed: decision.state.remediationCyclesUsed,
           });
           recordTerminalStatus(status);
         } else {
           this.#append('stage.succeeded', { runId, stageId: definition.id }, {
+            stageType: definition.type,
+            ...(typeof definition.config.agentRole === 'string'
+              ? { agentRole: definition.config.agentRole }
+              : {}),
+            outcome: decision.result.outcome,
             attemptsUsed: decision.state.attemptsUsed,
             remediationCyclesUsed: decision.state.remediationCyclesUsed,
+            ...(decision.state.facts ? { facts: decision.state.facts } : {}),
             ...(decision.state.remediationReturnTo
               ? { remediationReturnTo: decision.state.remediationReturnTo }
               : {}),
@@ -610,15 +689,21 @@ export class PipelineRunner {
           }
         }
       }
+      await this.#flushEvents();
       if (batchTerminalStatus) {
         this.#append(`run.${batchTerminalStatus}` as LifecycleEvent['type'], { runId });
+        await this.#flushEvents();
         return this.#result(runIdentity, batchTerminalStatus, states);
       }
-      if (batchPaused) return this.#result(runIdentity, 'waiting', states);
+      if (batchPaused) {
+        await this.#flushEvents();
+        return this.#result(runIdentity, 'waiting', states);
+      }
     }
     const statuses = [...states.values()].map(({ status }) => status);
     const ordinaryExecutionComplete = [...states].every(([stageId, state]) =>
       state.status === 'succeeded'
+      || state.status === 'skipped'
       || (
         state.status === 'pending'
         && this.#graph.isRemediationOnlyTarget(stageId)
@@ -635,8 +720,12 @@ export class PipelineRunner {
             : statuses.includes('waiting')
               ? 'waiting'
             : 'failed';
-    if (finalStatus === 'waiting') return this.#result(runIdentity, 'waiting', states);
+    if (finalStatus === 'waiting') {
+      await this.#flushEvents();
+      return this.#result(runIdentity, 'waiting', states);
+    }
     this.#append(`run.${finalStatus}` as LifecycleEvent['type'], { runId });
+    await this.#flushEvents();
     return this.#result(runIdentity, finalStatus, states);
   }
 }

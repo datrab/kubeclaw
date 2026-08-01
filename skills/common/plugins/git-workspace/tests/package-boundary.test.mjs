@@ -4,7 +4,7 @@ import fs from 'node:fs';
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 assert.deepEqual(
   manifest.adapters[0].providesCapabilities,
-  ['git.workspace.create', 'git.commit', 'git.merge', 'git.sync'],
+  ['git.workspace.create', 'git.workspace.remove', 'git.commit', 'git.merge', 'git.sync'],
 );
 
 for (const file of ['src/adapter.ts', 'dist/adapter.js']) {

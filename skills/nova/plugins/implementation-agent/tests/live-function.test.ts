@@ -5,6 +5,7 @@ import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
 const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-implementation-'));
@@ -16,8 +17,10 @@ const server = http.createServer((_request, response) => {
   fs.writeFileSync(path.join(agentWorkspace, 'src/api.ts'), 'export const ready = true;\n');
   fs.writeFileSync(path.join(agentWorkspace, 'transcript.log'), transcript);
   response.writeHead(200, { 'content-type': 'application/json' });
-  response.end(JSON.stringify({ result: { status: 'ready_for_testing', runId: 'run-1', moduleId: 'api', attempt: 1,
-    summary: 'Implemented.', changedPaths: ['src/api.ts'], checks: [{ name: 'unit', passed: true }],
+  response.end(JSON.stringify({ result: {
+    status: 'ready_for_testing',
+    summary: 'Implemented.', changedPaths: ['src/api.ts'],
+    checks: [{ name: 'node smoke.test.mjs', passed: true }],
     session: {
       sessionId: 'session:forge:run-1:api:1',
       startedAt: '2026-07-28T00:00:00.000Z',
@@ -40,9 +43,12 @@ try {
   const enabled = new Set(['kubeclaw.implementation-agent:implementation']);
   const granted = core.resolveCapabilityGrants(snapshot, {
     enabledRegistrations: enabled,
-    providers: new Map([['runtime.dispatch','kubeclaw.runtime-dispatch:runtime'],['network.http','kubeclaw.network-http:http'],['secrets.read','kubeclaw.secret-resolver:secrets'],['artifacts.write','kubeclaw.artifact-store:artifact-store']]),
+    providers: new Map([['runtime.dispatch','kubeclaw.runtime-dispatch:runtime'],['network.http','kubeclaw.network-http:http'],['secrets.read','kubeclaw.secret-resolver:secrets'],['artifacts.write','kubeclaw.artifact-store:artifact-store'],
+      ['git.workspace.create','kubeclaw.git-workspace:git'],['git.workspace.remove','kubeclaw.git-workspace:git'],['git.commit','kubeclaw.git-workspace:git'],['git.merge','kubeclaw.git-workspace:git']]),
     grants: new Map([
-      ['kubeclaw.implementation-agent:implementation', new Map([['runtime.dispatch',{allowedAgents:['forge']}],['artifacts.write',{allowedNamespaces:['kubeclaw.implementation-agent']}]])],
+      ['kubeclaw.implementation-agent:implementation', new Map([['runtime.dispatch',{allowedAgents:['forge']}],['artifacts.write',{allowedNamespaces:['kubeclaw.implementation-agent']}],
+        ['git.workspace.create',{allowedRoots:[temporary],allowedWorkspaceRoots:[temporary]}],['git.workspace.remove',{allowedRoots:[temporary],allowedWorkspaceRoots:[temporary]}],
+        ['git.commit',{allowedRoots:[temporary]}],['git.merge',{allowedRoots:[temporary]}]])],
       ['kubeclaw.runtime-dispatch:runtime', new Map([['network.http',{allowedOrigins:[origin]}],['secrets.read',{allowedNames:['forge.agent']} ]])],
     ]),
   });
@@ -53,6 +59,9 @@ try {
     ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['content-type','idempotency-key','x-kubeclaw-signature']}],
     ['kubeclaw.secret-resolver:secrets',{environment:{'forge.agent':secret}}],
     ['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(temporary,'artifacts')}],
+    ['kubeclaw.git-workspace:git',{allowedRepositoryRoots:[temporary],workspaceRoot:path.join(temporary,'worktrees'),
+      gitExecutable:fs.realpathSync(execFileSync('sh',['-lc','command -v git'],{encoding:'utf8'}).trim()),
+      authorName:'KubeClaw Test',authorEmail:'test@kubeclaw.invalid',maxExecutionMs:5000,maxOutputBytes:65536,terminationGraceMs:100}],
   ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
   await adapters.start();
   try {

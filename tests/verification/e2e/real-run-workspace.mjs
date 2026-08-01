@@ -11,13 +11,13 @@ import {
   realE2EScenarioModuleIds,
   validateRealE2EScenarioSetup,
 } from './failure-scenarios.mjs';
-import { expandSwarmConfig } from '../../../skills/nova/pipeline/core/platform-config.ts';
+import { expandSwarmConfig } from '../../../skills/buster/plugins/buster-suite-runtime/dist/common/pipeline/platform-config.js';
 
 const execFileAsync = promisify(execFile);
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');
-export const DEFAULT_REAL_E2E_MODEL = 'gpt-5.3-codex-spark';
+export const DEFAULT_REAL_E2E_MODEL = 'openai/gpt-5.3-codex-spark';
 export const DEFAULT_REAL_E2E_THINKING = 'none';
 export const DEFAULT_REAL_E2E_MODULE_TIMEOUT_MINUTES = 10;
 export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 10;
@@ -39,7 +39,7 @@ const REAL_E2E_CONTRACT_PATHS = Object.freeze({
   moduleReview: '.swarm/contracts/module-review.json',
   previewInfrastructure: '.swarm/contracts/preview-infrastructure.json',
 });
-const FOUNDATION_RUNTIME_INTERFACE = 'foundation-runtime-static-serving.v1';
+const FOUNDATION_RUNTIME_INTERFACE = 'foundation-runtime-static-serving.v2';
 const REAL_E2E_MODULE_SURFACES = Object.freeze({
   '01-nginx': Object.freeze({
     role: 'foundation',
@@ -58,7 +58,7 @@ const REAL_E2E_MODULE_SURFACES = Object.freeze({
     output_contract: '.swarm/contracts/module-outputs/02-content.json',
     consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),
     consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),
-    provides: Object.freeze(['branch-a-static-content.v1']),
+    provides: Object.freeze(['branch-a-static-content.v2']),
     provided_surfaces: Object.freeze(['src/content/branch-a.html']),
     summary: 'Parallel content branch that owns static content input only.',
   }),
@@ -68,7 +68,7 @@ const REAL_E2E_MODULE_SURFACES = Object.freeze({
     output_contract: '.swarm/contracts/module-outputs/03-assets.json',
     consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),
     consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),
-    provides: Object.freeze(['branch-b-static-asset.v1']),
+    provides: Object.freeze(['branch-b-static-asset.v2']),
     provided_surfaces: Object.freeze(['src/assets/branch-b.css']),
     summary: 'Parallel asset branch that owns presentation asset input only.',
   }),
@@ -143,7 +143,7 @@ function buildModuleOutputContracts(moduleIds) {
   return Object.fromEntries(canonicalModuleIds(moduleIds).map((moduleId) => {
     const surface = moduleSurface(moduleId);
     return [moduleId, {
-      schema_version: 'real_e2e_module_output_contract.v1',
+      schema_version: 'real_e2e_module_output_contract.v2',
       artifact_type: 'module_output_contract',
       module_id: moduleId,
       role: surface.role,
@@ -166,7 +166,7 @@ function buildModuleOutputContracts(moduleIds) {
 function buildDeployableArtifactContract({ projectName, projectSrc, releaseCandidateImage, moduleIds = [REAL_E2E_MODULE_ID] }) {
   const modules = canonicalModuleIds(moduleIds);
   return {
-    schema_version: 'real_e2e_deployable_artifact_contract.v1',
+    schema_version: 'real_e2e_deployable_artifact_contract.v2',
     artifact_type: 'deployable_artifact_contract',
     project: projectName,
     producer_modules: modules,
@@ -220,7 +220,7 @@ function buildRuntimeConfigContract({ projectName, moduleIds = [REAL_E2E_MODULE_
     },
   ].filter((surface) => modules.includes(surface.producer_module) && modules.includes(surface.consumer_module));
   return {
-    schema_version: 'real_e2e_runtime_config_contract.v1',
+    schema_version: 'real_e2e_runtime_config_contract.v2',
     artifact_type: 'runtime_config_contract',
     project: projectName,
     module_ids: modules,
@@ -251,7 +251,7 @@ function buildModuleReviewContract({ projectName, moduleIds = [REAL_E2E_MODULE_I
   const sourcePaths = modules.flatMap((moduleId) => moduleSurface(moduleId).source_paths.map((sourcePath) => `Projects/${projectName}/src/${sourcePath}`));
   const outputContracts = modules.map((moduleId) => moduleSurface(moduleId).output_contract);
   return {
-    schema_version: 'real_e2e_module_review_contract.v1',
+    schema_version: 'real_e2e_module_review_contract.v2',
     artifact_type: 'module_review_contract',
     project: projectName,
     module_ids: modules,
@@ -281,7 +281,7 @@ function buildModuleReviewContract({ projectName, moduleIds = [REAL_E2E_MODULE_I
 
 function buildPreviewInfrastructureContract({ projectName }) {
   return {
-    schema_version: 'real_e2e_preview_infrastructure_contract.v1',
+    schema_version: 'real_e2e_preview_infrastructure_contract.v2',
     artifact_type: 'preview_infrastructure_contract',
     project: projectName,
     gate_id: 'final-buster',
@@ -338,8 +338,10 @@ function isSafeE2ENamespaceName(workspace, namespaceName) {
 
 export function validateRealE2EModel(model) {
   const normalized = String(model || '').trim();
-  if (/^(?:openai\/)?gpt-5\.4(?:\/(?:low|medium|high|xhigh))?$/i.test(normalized)) return normalized;
-  return normalized;
+  if (normalized !== DEFAULT_REAL_E2E_MODEL) {
+    throw new Error(`REAL_E2E_MODEL_MUST_BE_SPARK:${normalized}`);
+  }
+  return DEFAULT_REAL_E2E_MODEL;
 }
 
 function e2eModel() {
@@ -603,7 +605,7 @@ export function normalizeRealE2ERunConfigDefaults(config) {
     model,
     thinking_level: thinking,
     agent_id: 'codex',
-    output_file: 'logs/pipeline/case-study.md',
+    output_file: '.swarm/artifacts/v2/reports/case-study.md',
     timeout_minutes: 30,
   };
   config.pipeline_review = {
@@ -613,8 +615,8 @@ export function normalizeRealE2ERunConfigDefaults(config) {
     thinking_level: thinking,
     agent_id: 'codex',
     instructions_file: 'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md',
-    output_file: 'logs/pipeline-review/PIPELINE-REVIEW.md',
-    json_output_file: 'logs/pipeline-review/PIPELINE-REVIEW.json',
+    output_file: '.swarm/artifacts/v2/reports/pipeline-review.md',
+    json_output_file: '.swarm/artifacts/v2/reports/pipeline-review.json',
     timeout_minutes: 10,
     agent_max_attempts: 2,
   };
@@ -1126,7 +1128,7 @@ function instructionFiles(progress) {
       '# Final Review',
       '',
       'Review the pre-completion run artifacts, gates, final Buster result, deployment evidence, and summary readiness.',
-      'During this final-review gate, do not require post-final-review terminal artifacts such as `logs/pipeline/summary.json`, `logs/pipeline/runs/<run_id>/summary.json`, `logs/pipeline-review/PIPELINE-REVIEW.{md,json}`, a non-running `logs/pipeline/latest.json`, or a non-PENDING final-review read model; those are written only after final-review passes.',
+      'During this final-review gate, do not require post-final-review v2 report artifacts; those are written only after final-review passes.',
       'Do require production evidence that all earlier gates completed, final Buster produced deployment and preview evidence, and there is no missing pre-completion artifact needed to decide readiness.',
       `Require final Buster to promote and deploy the ${deployableHandoff} deployable artifact contract from \`.swarm/contracts/deployable-artifact.json\`; do not accept a separate final-gate rebuild as equivalent evidence.`,
       'Accept the final Buster k8s suite `image_promotion` / `source_image_id` / `registry_image_digest` metadata as the immutable provenance link proving the deployed registry image was promoted from the Module Buster release-candidate source image.',
@@ -1385,26 +1387,8 @@ export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) 
   compactConfig.run_id = runId;
   compactConfig.overrides = {
     ...(compactConfig.overrides || {}),
-    pre_check: {
-      ...((compactConfig.overrides || {}).pre_check || {}),
-      lint_report_path: `${worktreePath}/skills/nova/pipeline/tools/lint-report.ts`,
-    },
-    buster: {
-      ...((compactConfig.overrides || {}).buster || {}),
-      runtime: {
-        ...(((compactConfig.overrides || {}).buster || {}).runtime || {}),
-        task_stream: `verification:e2e:${runId}:buster:tasks`,
-        task_poll_interval_ms: 1000,
-        task_pending_reclaim_idle_ms: 30000,
-        task_stream_max_len: 500,
-      },
-    },
     agents: {
       ...((compactConfig.overrides || {}).agents || {}),
-      buster: {
-        ...(((compactConfig.overrides || {}).agents || {}).buster || {}),
-        redis_js_path: path.join(REPO_ROOT, 'skills', 'nova', 'pipeline', 'tools', 'redis.ts'),
-      },
       forge: {
         ...(((compactConfig.overrides || {}).agents || {}).forge || {}),
         cwd: worktreePath,
@@ -1416,6 +1400,18 @@ export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) 
     },
   };
   let config = normalizeRealE2ERunConfigDefaults(expandSwarmConfig(compactConfig));
+  if (config?.agents?.buster) {
+    delete config.agents.buster.dispatch;
+    delete config.agents.buster.redis_js_path;
+  }
+  if (config?.buster?.runtime) {
+    delete config.buster.runtime.task_stream;
+    delete config.buster.runtime.task_poll_interval_ms;
+    delete config.buster.runtime.task_pending_reclaim_idle_ms;
+    delete config.buster.runtime.task_stream_max_len;
+    delete config.buster.runtime.completion_event_block_ms;
+    delete config.buster.runtime.completion_recovery_scan_interval_ms;
+  }
   config.run_id = runId;
   config.discord_webhook_url = withDiscordWebhookWait(process.env.DISCORD_WEBHOOK || config.discord_webhook_url || '');
   config.gateway.health.timeout_ms = Math.min(Number(config.gateway.health.timeout_ms || 120000), 120000);
@@ -1531,52 +1527,11 @@ export async function createRealE2EGitCleanupBlocker(workspace) {
   return blockerPath;
 }
 
-function isRedisCleanupUnavailable(error) {
-  const message = error?.message || String(error);
-  return /ECONNREFUSED|Redis ready timeout|max retries per request/i.test(message);
-}
-
 export async function cleanupRealE2ERunWorkspace(workspace, { keepArtifacts = false } = {}) {
   const cleanup = { ok: true, steps: [] };
   const record = (step, ok, detail = null) => cleanup.steps.push({ step, ok, detail });
   if (!workspace) return cleanup;
   const gitConflictOriginalOrigin = workspace.gitConflictFixture?.original_origin_url || null;
-
-  try {
-    const redisTool = (await import('../../../skills/nova/pipeline/tools/redis.ts')).default;
-    const redis = redisTool.client;
-    if (redis.status !== 'ready') {
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('Redis ready timeout')), 10000);
-        redis.once('ready', () => { clearTimeout(timeout); resolve(); });
-        redis.once('error', reject);
-      });
-    }
-    const keys = new Set();
-    const taskStream = readJson(workspace.runConfigPath)?.buster?.runtime?.task_stream;
-    if (taskStream) keys.add(taskStream);
-    let cursor = '0';
-    do {
-      const result = await redis.scan(cursor, 'MATCH', `*${workspace.runId}*`, 'COUNT', 100);
-      cursor = result[0];
-      for (const key of result[1] || []) keys.add(key);
-    } while (cursor !== '0');
-    if (keys.size > 0) await redis.del(...keys);
-    await redisTool.disconnect?.();
-    record('redis_run_keys_delete', true, { deleted: [...keys] });
-  } catch (error) {
-    if (isRedisCleanupUnavailable(error)) {
-      record('redis_run_keys_delete', true, {
-        deleted: [],
-        diagnostic_only: true,
-        unavailable: true,
-        detail: error?.message || String(error),
-      });
-    } else {
-      cleanup.ok = false;
-      record('redis_run_keys_delete', false, error?.message || String(error));
-    }
-  }
 
   try {
     const kubeclawNamespace = process.env.KUBECLAW_NAMESPACE || 'kubeclaw';

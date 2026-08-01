@@ -1,6 +1,0 @@
-{
-  "event_id": "invalid",
-  "schema_version": "telemetry_envelope.v1",
-  "source_event_id": "invalid",
-  "type": "pipeline.started"
-}

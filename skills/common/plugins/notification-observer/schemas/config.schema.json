@@ -1,1 +1,23 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["target"],"properties":{"target":{"type":"string","minLength":1}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "target": { "type": "string", "minLength": 1 },
+    "pipelineLabel": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "modelLabel": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "stageLabels": {
+      "type": "object",
+      "maxProperties": 256,
+      "propertyNames": { "type": "string", "minLength": 1, "maxLength": 512 },
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 256 }
+    },
+    "maxMessageChars": { "type": "integer", "minimum": 256, "maximum": 8192 },
+    "suppressEventTypes": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+    }
+  }
+}

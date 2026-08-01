@@ -42,6 +42,21 @@ assert.equal(core.applyStageResult(stage, running, {
   outcome: 'passed',
   artifacts: [],
 }).state.status, 'succeeded');
+const passedWithFacts = core.applyStageResult(stage, running, {
+  schemaVersion: 'stage-result.v2',
+  outcome: 'passed',
+  artifacts: [],
+  facts: { 'example.review': 'approval_required' },
+});
+assert.deepEqual(passedWithFacts.state.facts, { 'example.review': 'approval_required' });
+assert.equal(Object.isFrozen(passedWithFacts.state.facts), true);
+assert.throws(() => core.validateContractValue('stageResult', {
+  schemaVersion: 'stage-result.v2',
+  outcome: 'blocked',
+  reason,
+  artifacts: [],
+  facts: { 'example.review': 'approval_required' },
+}), /Value failed canonical contract stageResult/);
 assert.equal(core.applyStageResult(stage, running, {
   schemaVersion: 'stage-result.v2',
   outcome: 'retry',

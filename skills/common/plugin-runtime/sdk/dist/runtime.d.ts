@@ -42,6 +42,7 @@ export interface AdapterActivationContext {
     readonly registration: RegistrationProvenance;
     readonly config: Readonly<Record<string, unknown>>;
     invoke(capability: string, request: CapabilityInvocation): Promise<Readonly<Record<string, unknown>>>;
+    invokeConfidential(capability: string, request: CapabilityInvocation): Promise<Readonly<Record<string, unknown>>>;
     emit(type: string, identity: EventIdentity, payload: Readonly<Record<string, unknown>>): Promise<void>;
 }
 export type AdapterFactory = (context: AdapterActivationContext) => Promise<AdapterInstance> | AdapterInstance;

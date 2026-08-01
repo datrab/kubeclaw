@@ -23,6 +23,7 @@ export {
   reopenBlockedPipelineV2,
   resumePipelineV2,
   runPipelineV2,
+  validatePipelineRuntimeV2,
 } from '../execution/engine.ts';
 export type {
   AdministrativeDecisionAuthenticator,
@@ -38,7 +39,10 @@ export {
 export { FileResourceLockManager } from '../effects/locks.ts';
 export { ExecutionGraph } from '../execution/graph.ts';
 export type { ExecutionGraphSnapshot } from '../execution/graph.ts';
-export { PipelineRunner } from '../execution/runner.ts';
+export {
+  PipelineRunner,
+  validatePipelineDefinitionAgainstRegistry,
+} from '../execution/runner.ts';
 export type {
   PipelineRunIdentity,
   PipelineRunnerOptions,
@@ -49,6 +53,7 @@ export { recoverStageStates } from '../lifecycle/recovery.ts';
 export { ObserverRuntime } from '../telemetry/observers.ts';
 export type {
   ObserverDrainResult,
+  ObserverDeliveryRecord,
   ObserverFailure,
   ObserverRuntimeOptions,
 } from '../telemetry/observers.ts';

@@ -1,25 +1,10 @@
-# Buster production-style example.
-# Deploy: helm upgrade --install agent-buster ./charts/kubeclaw -f examples/buster-values.yaml
-
+# Buster v2 gateway example.
 agentRole: buster
 
 image:
-  repository: ghcr.io/datrab/kubeclaw-general
+  repository: ghcr.io/datrab/kubeclaw-buster-gateway
   tag: latest
   pullPolicy: Always
-
-busterPipeline:
-  enabled: true
-  image:
-    repository: ghcr.io/datrab/kubeclaw-buster-pipeline
-    tag: latest
-    pullPolicy: Always
-  platformCapabilities:
-    - rootless_buildkit
-  storageSize: 50Gi
-  resources:
-    requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
-    limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
 
 auth:
   existingSecret: kubeclaw-shared-secrets
@@ -35,10 +20,6 @@ discord:
   existingSecretKey: discordToken-buster
   channelId: ""
 
-discordWebhook:
-  secretName: kubeclaw-shared-secrets
-  secretKey: discordWebhook
-
 agent:
   project: kubecommand
   git:
@@ -46,12 +27,10 @@ agent:
     secretName: git-deploy-key-buster
     repoUrl: ""
 
-redis:
-  secretName: redis-secrets
-
 serviceAccount:
   create: true
   name: agent-buster
+  automount: false
 
 busterNamespaceBroker:
   enabled: true
@@ -60,9 +39,5 @@ workspace:
   enabled: true
 
 resources:
-  requests:
-    cpu: 500m
-    memory: 4Gi
-  limits:
-    cpu: "4"
-    memory: 16Gi
+  requests: { cpu: 500m, memory: 4Gi }
+  limits: { cpu: "4", memory: 16Gi }

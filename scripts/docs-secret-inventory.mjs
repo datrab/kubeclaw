@@ -7,6 +7,7 @@ const SECRET_SPECS = [
       'gatewayToken-forge',
       'gatewayToken-echo',
       'gatewayToken-buster',
+      'busterV2Token',
       'gatewayToken-nova',
       'anthropicApiKey',
       'stitchApiKey',

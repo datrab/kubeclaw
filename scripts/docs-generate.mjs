@@ -55,8 +55,7 @@ ${table(['File', 'Top-level keys', 'Secret references'], helm.files.map((file) =
 ${generatedEnd()}
 ## Used by
 
-- \`../deployment/helm-chart.md\`
-- \`../deployment/values-files.md\`
+- \`../deployment/README.md\`
 - \`../deployment/secrets.md\`
 - \`../deployment/agent-deployments.md\`
 
@@ -66,10 +65,10 @@ ${generatedEnd()}
 | --- | --- | --- |
 | image and pull secrets | selects agent and sidecar images, tags, pull policy, and GHCR pull Secret | rendered Deployments include expected image refs and \`imagePullSecrets\` |
 | auth/provider/Discord/Stitch/LiteLLM | selects direct values or existing Secret name/key references | rendered env refs point to expected Secret keys and generated secrets reference lists those keys |
-| persistence and Buster worker | creates workspace/config PVCs plus pipeline-only BuildKit/result mounts | rendered PVCs, dedicated worker image, security contexts, and Buster volumes match production values |
+| persistence | creates workspace/config PVCs for gateway and plugin-runtime state | rendered PVCs and security contexts match production values |
 | service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
 | buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
-| probes, startup doctor, and dependency checks | configures runtime health script for gateway, Redis, Redis stream, LiteLLM, and Buster heartbeat checks; \`gateway.startupDoctor\` runs \`openclaw doctor --fix\` once after gateway health | rendered env vars, startup hook, and smoke commands exercise the health and doctor surfaces |
+| probes, startup doctor, and dependency checks | configures gateway, Redis, and LiteLLM health checks; \`gateway.startupDoctor\` runs \`openclaw doctor --fix\` once after gateway health | rendered env vars, startup hook, and smoke commands exercise the health and doctor surfaces |
 
 ## Failure Signals
 
@@ -172,28 +171,24 @@ ${generatedEnd()}
 ## Local Documentation And Deployment Checks
 
 \`\`\`bash
-./tests/verification/run-fast-verification.sh
-./tests/verification/run-full-verification.sh
+npm run verify:plugin-system-v2
+npm run typecheck:skills
 npm run docs:inventory:check
 npm run docs:generate:check
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 git diff --check
 \`\`\`
 
-The fast/full verification wrappers are silent on clean passes. Passing warning output prints warning lines. Failed steps print the failed step name plus buffered output. Use \`--verbose\` or \`VERIFICATION_VERBOSE=1\` to stream step banners and passing output.
-
 ## Claim-To-Test Map
 
 | Claim class | Source or verifier |
 | --- | --- |
 | Documentation inventory and generated references are current | \`npm run docs:inventory:check\`; \`npm run docs:generate:check\`; \`node scripts/docs-check.mjs\` |
-| Fast local runtime, contract, docs, and canonical E2E checks pass | \`./tests/verification/run-fast-verification.sh\` |
-| Exhaustive local verification surfaces pass | \`./tests/verification/run-full-verification.sh\` |
+| Core, package, capability, lifecycle, recovery, isolation, and malicious-package checks pass | \`npm run verify:plugin-system-v2\` |
 | Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | \`node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"\` |
 | Documentation surface links and generated docs expectations stay valid | \`npm run docs:check\` |
-| Telemetry docs match the event envelope and sink contracts | \`node tests/verification/contracts/check-telemetry-contract.mjs --source-root "$PWD"\` |
-| Restart, recovery, retry, crash, and resume behavior remain source-backed | \`node --test tests/verification/e2e/*.test.mjs\`; \`node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full\` |
-| Status store lifecycle, artifacts, and Buster task settlement contracts stay stable | \`node tests/verification/contracts/check-status-store-slice-surface.mjs --source-root "$PWD"\`; \`node tests/verification/contracts/check-buster-pipeline-slice-surface.mjs --source-root "$PWD"\` |
+| Restart, recovery, retry, crash, and resume behavior remain source-backed | \`node tests/verification/contracts/check-plugin-system-v2-phase7.mjs\`; \`node tests/verification/contracts/check-plugin-system-v2-resume.mjs\` |
+| The complete real model-backed workflow works | \`node --experimental-strip-types tests/verification/e2e/run-real-pipeline-e2e.mts --mode full\` |
 | Proposed doc edits have no whitespace errors | \`git diff --check\` |
 | Referenced source paths/config keys exist | Use a targeted \`test -e\`/ \`rg -q\` sanity check for newly cited paths and keys before closing the docs pass. |
 

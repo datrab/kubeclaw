@@ -1,13 +1,22 @@
 import assert from 'node:assert/strict';
 import { buildRequest, parseVerdict } from '../src/protocol.ts';
 
-const input = { runId: 'run-1', taskId: 'task-1', attempt: 1, task: 'Assess.', suiteEvidence: [{ suite: 'unit', passed: true, summary: 'ok' }] };
-assert.equal(buildRequest('buster', input).protocol, 'kubeclaw.buster-test-judgment.v2');
-const valid = {
-  verdict: 'PASS' as const,
+const input = {
   runId: 'run-1',
   taskId: 'task-1',
   attempt: 1,
+  task: 'Assess.',
+  suiteEvidence: [{ suite: 'unit', passed: true, summary: 'ok' }],
+  suitePlan: {
+    repositoryRoot: '/repo',
+    suites: ['unit'],
+    testConfig: {},
+    task: {},
+  },
+};
+assert.equal(buildRequest('buster', input).protocol, 'kubeclaw.buster-test-judgment.v2');
+const valid = {
+  verdict: 'PASS' as const,
   summary: 'Good.',
   findings: [],
   session: {
@@ -18,9 +27,10 @@ const valid = {
     termination: 'completed' as const,
   },
 };
-assert.deepEqual(parseVerdict(valid, input), valid);
+assert.deepEqual(parseVerdict(valid, input), { ...valid, runId: 'run-1', taskId: 'task-1', attempt: 1 });
 for (const bad of [
-  { ...valid, taskId: 'stale' },
+  { ...valid, protocol: 'kubeclaw.buster-test-judgment.v2' },
+  { ...valid, identity: { runId: 'run-1', taskId: 'task-1', attempt: 1 } },
   { ...valid, findings: ['bad'] },
   { ...valid, extra: true },
   { ...valid, verdict: 'FAIL' },

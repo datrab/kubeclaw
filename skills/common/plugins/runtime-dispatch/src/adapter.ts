@@ -46,7 +46,9 @@ function config(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, Tar
   const targets = new Map<string, Target>();
   for (const [id, value] of Object.entries(raw.targets)) {
     if (!ID.test(id) || !record(value)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
-    exact(value, new Set(['endpoint', 'tokenSecret', 'maxRequestBytes', 'maxResponseBytes']), 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
+    exact(value, new Set([
+      'endpoint', 'tokenSecret', 'maxRequestBytes', 'maxResponseBytes',
+    ]), 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
     if (typeof value.endpoint !== 'string') throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);
     const endpoint = new URL(value.endpoint);
     if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.hash) {
@@ -63,7 +65,12 @@ function config(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, Tar
     if (!Number.isSafeInteger(maxResponseBytes) || maxResponseBytes < 1 || maxResponseBytes > 8_388_608) {
       throw new Error(`RUNTIME_CONFIG_INVALID:maxResponseBytes:${id}`);
     }
-    targets.set(id, { endpoint: endpoint.href, tokenSecret: value.tokenSecret, maxRequestBytes, maxResponseBytes });
+    targets.set(id, {
+      endpoint: endpoint.href,
+      tokenSecret: value.tokenSecret,
+      maxRequestBytes,
+      maxResponseBytes,
+    });
   }
   return targets;
 }
@@ -94,7 +101,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       json(request.payload);
       const body = JSON.stringify(request.payload);
       if (Buffer.byteLength(body, 'utf8') > target.maxRequestBytes) throw new Error('RUNTIME_REQUEST_SIZE_EXCEEDED');
-      const secret = await context.invoke('secrets.read', {
+      const secret = await context.invokeConfidential('secrets.read', {
         operation: 'resolve',
         resource: { type: 'secret.name', canonicalId: target.tokenSecret },
         payload: {},
@@ -105,7 +112,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         .createHmac('sha256', secret.value)
         .update(`${request.idempotencyKey}.${body}`, 'utf8')
         .digest('hex');
-      const response = await context.invoke('network.http', {
+      const response = await context.invokeConfidential('network.http', {
         operation: 'request',
         resource: { type: 'network.url', canonicalId: target.endpoint },
         payload: {

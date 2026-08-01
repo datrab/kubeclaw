@@ -45,6 +45,15 @@ test('configured Codex capability probe follows production smoke dispatch', () =
     },
   });
   assert.equal(target.runtime, 'subagent');
-  assert.equal(target.agentId, 'codex');
-  assert.equal(target.model, 'codex-5.4');
+  assert.equal(target.agentId, 'main');
+  assert.equal(target.model, 'openai/gpt-5.3-codex-spark');
+});
+
+test('configured capability probe rejects non-Spark model overrides', () => {
+  assert.throws(() => resolveProductionCodexLaunchTarget({
+    env: {
+      REAL_E2E_CONFIG_PROBE_PROJECT: 'pipeline-smoke-landing',
+      REAL_E2E_MODEL: 'openai/gpt-5.4',
+    },
+  }), /REAL_E2E_MODEL_MUST_BE_SPARK/);
 });

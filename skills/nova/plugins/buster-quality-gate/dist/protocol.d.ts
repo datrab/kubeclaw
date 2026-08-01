@@ -1,3 +1,10 @@
+export interface TestSuitePlan {
+    readonly repositoryRoot: string;
+    readonly suites: readonly string[];
+    readonly testConfig: Readonly<Record<string, unknown>>;
+    readonly task: Readonly<Record<string, unknown>>;
+    readonly moduleId?: string;
+}
 export interface GateInput {
     readonly runId: string;
     readonly gateId: string;
@@ -8,6 +15,7 @@ export interface GateInput {
         readonly passed: boolean;
         readonly summary: string;
     }[];
+    readonly suitePlan: TestSuitePlan;
 }
 export type GateOutcome = 'passed' | 'request_fix' | 'blocked';
 export interface GateVerdict {
