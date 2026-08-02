@@ -515,6 +515,28 @@ async function checkBusterV2Worker() {
   }
 }
 
+async function checkNovaBuildkitProof() {
+  const result = await execCapture(process.execPath, [
+    path.join(REPO_ROOT, 'tests/verification/e2e/nova-buildkit-production-preflight.mts'),
+  ], { timeout: 1_080_000, maxBuffer: 16 * 1024 * 1024 });
+  if (!result.ok) return { ok: false, reason: 'INFRA_NOVA_BUILDKIT_PROOF_FAILED', result };
+  try {
+    const proof = JSON.parse(result.stdout);
+    const ok = proof?.ok === true
+      && proof?.schemaVersion === 'nova-buildkit-preflight.v2'
+      && proof?.status === 'succeeded'
+      && proof?.stageStatus === 'succeeded';
+    return { ok, reason: ok ? null : 'INFRA_NOVA_BUILDKIT_PROOF_INVALID', proof };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: 'INFRA_NOVA_BUILDKIT_PROOF_NON_JSON',
+      error: error?.message || String(error),
+      result,
+    };
+  }
+}
+
 async function checkKubernetesApi() {
   if (!commandExists('kubectl')) return { ok: false, reason: 'INFRA_MISSING_KUBECTL' };
   const result = await execCapture('kubectl', ['get', '--raw=/version'], { timeout: 20000 });
@@ -618,6 +640,7 @@ export async function runCapabilityProbe({ mode = 'full' } = {}) {
   await runCheck(checks, 'Discord production delivery receipt', 'discord_delivery', () => checkDiscordDelivery(openclawConfig));
   await runCheck(checks, 'kubectl available', 'kubectl', checkKubectlAvailable);
   await runCheck(checks, 'Buster v2 worker available', 'buster-v2', checkBusterV2Worker);
+  await runCheck(checks, 'Nova → Buster real BuildKit image proof', 'nova_buildkit_proof', checkNovaBuildkitProof);
   await runCheck(checks, 'Kubernetes API reachable', 'kubernetes_api', checkKubernetesApi);
   await runCheck(checks, 'BusterNamespaceLease CRD', 'buster_lease_crd', checkBusterLeaseCrd);
   await runCheck(checks, 'Buster namespace controller ready', 'buster_namespace_controller', checkBusterNamespaceController);

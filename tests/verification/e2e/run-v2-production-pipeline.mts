@@ -334,14 +334,19 @@ async function main(): Promise<void> {
     'echo.final-review': runtimeTarget(gatewayEndpoint, repo, repo, model, thinking, roles.echo, '.swarm/runtime-results'),
   };
   for (const moduleId of moduleIds) {
+    const workspacePath = path.join(workspaces, moduleId);
+    const workspaceResultPrefix = path.relative(
+      repo,
+      path.join(workspacePath, '.swarm', 'runtime-results'),
+    ).split(path.sep).join('/');
     targets[`forge.${moduleId}`] = runtimeTarget(
       gatewayEndpoint,
-      path.join(workspaces, moduleId),
+      workspacePath,
       repo,
       model,
       thinking,
       roles.forge,
-      '.swarm/runtime-results',
+      workspaceResultPrefix,
     );
     targets[`buster.${moduleId}`] = runtimeTarget(
       busterGatewayEndpoint,

@@ -103,6 +103,16 @@ assert.match(
   'the chart must materialize the v2 core and plugin roots',
 );
 assert.match(
+  deploy,
+  /nova-buildkit-preflight[\s\S]*kubectl exec[\s\S]*deployment\/agent-nova[\s\S]*nova-buildkit-production-preflight\.mts/,
+  'the live BuildKit proof must execute from Nova through the v2 capability graph',
+);
+assert.doesNotMatch(
+  deploy,
+  /tests\/verification\/live\/buster-buildkit-production-smoke\.mjs/,
+  'the BuildKit command must not reference the retired direct-container smoke script',
+);
+assert.match(
   workflow,
   /image_inputs:\s*\n\s+- '\.dockerignore'/,
   'Docker context policy changes must trigger image builds',
@@ -153,8 +163,8 @@ assert.match(
 );
 assert.match(
   read('skills/buster/plugins/buster-suite-runtime/src/worker.ts'),
-  /--pid[\s\S]*--kill-child=SIGKILL[\s\S]*--mount-proc/,
-  'suite jobs must run in a killable private PID namespace',
+  /--reuid[\s\S]*--clear-groups[\s\S]*\/usr\/bin\/unshare[\s\S]*--pid[\s\S]*--kill-child=SIGKILL[\s\S]*--mount-proc[\s\S]*\/usr\/bin\/setpriv[\s\S]*--no-new-privs[\s\S]*--bounding-set=-all/,
+  'suite jobs must switch identity before entering a killable namespace and drop all authority inside it',
 );
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 assert.match(busterValues, /containerPort:\s*18891/);

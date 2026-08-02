@@ -45,6 +45,9 @@ If production config or infrastructure is missing, these wrappers fail before st
 - real architecture validator, deterministic checks, and validator agent path
 - real Buster gate, Echo gate, approval gate, pipeline review agent, and pipeline summary
 - real Buster namespace lease and Kubernetes deployment path
+- a real Nova → Buster `test.suite.execute` job that builds and pushes an image
+  with rootless BuildKit, deploys it, health-checks it, and verifies the OCI
+  manifest digest from Nova
 - real Tailscale preview URL reachability when the operator is installed
 
 ## Only Allowed Simulated Boundary
@@ -68,10 +71,11 @@ Examples:
 - failed configured Codex spawn: `INFRA_CODEX_SPAWN_FAILED`
 - failed Redis stream write/read: `INFRA_REDIS_FAILED`
 - stale runtime swarm config: `PRODUCTION_CONFIG_CONTRACT_INVALID`
+- failed Nova-owned BuildKit proof: `INFRA_NOVA_BUILDKIT_PROOF_FAILED`
 
 ## Production Config Contract
 
-The capability probe runs the real Nova CLI against the deployed runtime config path before creating any isolated E2E workspace. If `/home/node/.openclaw/swarm.config.json` is stale, compact-profile expansion is broken, or required runtime keys are absent, the E2E run is blocked with `PRODUCTION_CONFIG_CONTRACT_INVALID`.
+The capability probe runs the real Nova CLI against the deployed runtime config path before creating any isolated E2E workspace. It also executes `nova-buildkit-production-preflight.mts`, which creates a disposable committed image fixture and proves the complete v2 BuildKit route before the application graph starts. If `/home/node/.openclaw/swarm.config.json` is stale, compact-profile expansion is broken, or required runtime keys are absent, the E2E run is blocked with `PRODUCTION_CONFIG_CONTRACT_INVALID`.
 
 The same probe sends a real production-path Discord message through Nova's Discord integration with webhook wait mode enabled. Verification requires Discord to return a concrete message id and channel id. This is the accepted proof level for the canonical E2E: Discord accepted the webhook delivery and returned the created message object. The harness does not claim independent bot/API channel readback unless a real readback credential is added later.
 

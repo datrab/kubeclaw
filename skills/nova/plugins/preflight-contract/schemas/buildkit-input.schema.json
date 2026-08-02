@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["repositoryRoot", "testConfig", "task", "moduleId", "attempt"],
+  "properties": {
+    "repositoryRoot": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "testConfig": { "type": "object" },
+    "task": { "type": "object" },
+    "moduleId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "attempt": { "type": "integer", "minimum": 1 }
+  }
+}

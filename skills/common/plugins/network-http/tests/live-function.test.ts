@@ -6,6 +6,7 @@ import { pathToFileURL } from 'node:url';
 const server = http.createServer((request, response) => {
   if (request.url === '/json') {
     response.setHeader('content-type', 'application/json');
+    response.setHeader('docker-content-digest', `sha256:${'a'.repeat(64)}`);
     response.end(JSON.stringify({ method: request.method, idempotency: request.headers['idempotency-key'] }));
   } else if (request.url === '/text') {
     response.setHeader('content-type', 'text/plain');
@@ -62,6 +63,7 @@ try {
   await adapter.ready();
   const json = await invoke('/json', { method: 'POST', headers: { 'idempotency-key': 'key' }, body: { ok: true } });
   assert.deepEqual(json.body, { method: 'POST', idempotency: 'key' });
+  assert.equal(json.headers['docker-content-digest'], `sha256:${'a'.repeat(64)}`);
   assert.equal((await invoke('/text')).body, 'plain');
   await assert.rejects(invoke('/redirect'), /NETWORK_REDIRECT_DENIED/);
   await assert.rejects(invoke('/large'), /NETWORK_RESPONSE_SIZE_EXCEEDED/);

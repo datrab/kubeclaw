@@ -10,7 +10,7 @@
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
-#   ./deploy.sh buster-buildkit-smoke Exercise BuildKit directly inside the deployed Buster pipeline container
+#   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name> [--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy
@@ -1274,12 +1274,12 @@ cmd_smoke() {
   done
 }
 
-cmd_buster_buildkit_smoke() {
-  header "Buster BuildKit Production Smoke"
+cmd_nova_buildkit_preflight() {
+  header "Nova → Buster BuildKit Production Preflight"
   require_command kubectl
-  require_command node
-  node "$REPO_DIR/tests/verification/live/buster-buildkit-production-smoke.mjs"
-  log "Buster BuildKit production smoke passed"
+  kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    node /home/node/.openclaw/workspace/git-repo/tests/verification/e2e/nova-buildkit-production-preflight.mts
+  log "Nova → Buster BuildKit production preflight passed"
 }
 
 cmd_buster_infra_smoke() {
@@ -1466,7 +1466,11 @@ case "${1:-}" in
     cmd_buildkit_preflight
     ;;
   buster-buildkit-smoke)
-    cmd_buster_buildkit_smoke
+    warn "buster-buildkit-smoke is retained as an alias; use nova-buildkit-preflight."
+    cmd_nova_buildkit_preflight
+    ;;
+  nova-buildkit-preflight)
+    cmd_nova_buildkit_preflight
     ;;
   buster-infra-smoke)
     cmd_buster_infra_smoke
@@ -1524,7 +1528,8 @@ case "${1:-}" in
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
     echo "  buildkit-preflight Verify rootless BuildKit support with a temporary pod"
-    echo "  buster-buildkit-smoke Directly test BuildKit in the deployed Buster pipeline container"
+    echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
+    echo "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight"
     echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
     echo "  agent <name> [--with-code]  Deploy single agent using image/runtime values"

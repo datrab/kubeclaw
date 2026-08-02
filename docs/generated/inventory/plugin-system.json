@@ -4,11 +4,11 @@
   "summary": {
     "packages": 31,
     "packageRoots": 32,
-    "stages": 15,
+    "stages": 16,
     "observers": 6,
     "adapters": 18,
-    "registrations": 39,
-    "files": 632
+    "registrations": 40,
+    "files": 636
   },
   "runtime": {
     "root": "skills/common/plugin-runtime",
@@ -1054,10 +1054,14 @@
         "skills/nova/plugins/preflight-contract/package.json",
         "skills/nova/plugins/preflight-contract/plugin.json",
         "skills/nova/plugins/preflight-contract/README.md",
+        "skills/nova/plugins/preflight-contract/schemas/buildkit-config.schema.json",
+        "skills/nova/plugins/preflight-contract/schemas/buildkit-input.schema.json",
         "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
         "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
         "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+        "skills/nova/plugins/preflight-contract/src/buildkit.ts",
         "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "skills/nova/plugins/preflight-contract/tests/buildkit.test.ts",
         "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
         "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
@@ -1067,6 +1071,10 @@
         {
           "kind": "stage",
           "id": "validate"
+        },
+        {
+          "kind": "stage",
+          "id": "buildkit"
         }
       ]
     },
@@ -1372,6 +1380,12 @@
       "id": "validate",
       "packageId": "kubeclaw.preflight-contract",
       "registrationId": "kubeclaw.preflight-contract:validate"
+    },
+    {
+      "kind": "stage",
+      "id": "buildkit",
+      "packageId": "kubeclaw.preflight-contract",
+      "registrationId": "kubeclaw.preflight-contract:buildkit"
     },
     {
       "kind": "stage",
@@ -1977,10 +1991,14 @@
     "skills/nova/plugins/preflight-contract/README.md",
     "skills/nova/plugins/preflight-contract/package.json",
     "skills/nova/plugins/preflight-contract/plugin.json",
+    "skills/nova/plugins/preflight-contract/schemas/buildkit-config.schema.json",
+    "skills/nova/plugins/preflight-contract/schemas/buildkit-input.schema.json",
     "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
     "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
     "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+    "skills/nova/plugins/preflight-contract/src/buildkit.ts",
     "skills/nova/plugins/preflight-contract/src/stage.ts",
+    "skills/nova/plugins/preflight-contract/tests/buildkit.test.ts",
     "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
     "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
     "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",

@@ -78,7 +78,10 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const contentType = response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase();
       return {
         status: response.status,
-        headers: { 'content-type': contentType ?? null },
+        headers: {
+          'content-type': contentType ?? null,
+          'docker-content-digest': response.headers.get('docker-content-digest'),
+        },
         body: text.length === 0
           ? null
           : contentType === 'application/json' || contentType?.endsWith('+json')

@@ -123,6 +123,8 @@ export function buildOpenClawTask(payload: JsonRecord, resultFile: string): stri
     'Never copy protocol, agent, identity, task, evidence, rules, or outputContract from the request into the result.',
     'Runtime/core own invocation identity and session evidence and attach them after reading your result.',
     'Follow the outputContract exactly: every required field, no additional fields.',
+    'Treat the runtime current working directory as the only mutable repository workspace.',
+    'Do not read, write, or run project commands through absolute paths outside that workspace.',
     `Write the exact raw JSON result atomically to ${resultFile}.`,
     'Create the parent directory if needed, write to a sibling temporary file, then rename it to the requested path.',
     'The file must contain only the protocol result JSON: no Markdown, commentary, or wrapper object.',
@@ -242,6 +244,14 @@ export async function dispatchOpenClaw(
     || path.isAbsolute(repositoryRelativeResult)
   ) {
     throw new Error('OPENCLAW_RESULT_PATH_OUTSIDE_REPOSITORY');
+  }
+  const workspaceRelativeResult = path.relative(target.cwd, resultFile);
+  if (
+    !workspaceRelativeResult
+    || workspaceRelativeResult.startsWith(`..${path.sep}`)
+    || path.isAbsolute(workspaceRelativeResult)
+  ) {
+    throw new Error('OPENCLAW_RESULT_PATH_OUTSIDE_WORKSPACE');
   }
   const spawned = await gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime,

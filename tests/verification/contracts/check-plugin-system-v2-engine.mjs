@@ -85,7 +85,7 @@ try {
     'kubeclaw.telemetry-observer',
     'kubeclaw.telemetry-store',
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
-  assert.equal(snapshot.registrations.stages.length, 14);
+  assert.equal(snapshot.registrations.stages.length, 15);
   assert.equal(snapshot.registrations.observers.length, 6);
   assert.equal(snapshot.registrations.adapters.length, 17);
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));

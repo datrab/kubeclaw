@@ -46,7 +46,7 @@ const packages = discoverPackages({
   },
 });
 const registry = buildRegistry(packages);
-assert.equal(registry.stages.size, 15);
+assert.equal(registry.stages.size, 16);
 assert.equal(registry.observers.size, 6);
 assert.equal(registry.adapters.size, 18);
 for (const [type, owner] of registry.stages) {

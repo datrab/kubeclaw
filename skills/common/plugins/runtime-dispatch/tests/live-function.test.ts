@@ -206,7 +206,7 @@ try {
             maxPollMs: 20,
             maxPolls: 2,
             sessionTimeoutMs: 1_000,
-            resultPathPrefix: '.swarm/runtime-dispatch-test/results',
+            resultPathPrefix: '.swarm/runtime-dispatch-test/work/results',
             resultEndpoint: `${origin}/results`,
             resultTokenSecret: 'runtime.agent',
           },
@@ -257,7 +257,7 @@ try {
     assert.ok(durableResult);
     assert.equal(
       path.dirname(durableResult),
-      path.join(repository, '.swarm', 'runtime-dispatch-test', 'results'),
+      path.join(gatewayCwd, 'results'),
     );
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'subagents').length, 2);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
