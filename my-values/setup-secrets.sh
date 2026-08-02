@@ -353,31 +353,31 @@ generate_secret_value() {
 prompt_hidden() {
   local prompt="$1"
   local out_var="$2"
-  local value
+  local input_value=""
 
-  read -r -s -p "$prompt: " value </dev/tty
+  read -r -s -p "$prompt: " input_value </dev/tty
   echo "" >/dev/tty
-  printf -v "$out_var" '%s' "$value"
+  printf -v "$out_var" '%s' "$input_value"
 }
 
 prompt_plain() {
   local prompt="$1"
   local out_var="$2"
-  local value
+  local input_value=""
 
-  read -r -p "$prompt: " value </dev/tty
-  printf -v "$out_var" '%s' "$value"
+  read -r -p "$prompt: " input_value </dev/tty
+  printf -v "$out_var" '%s' "$input_value"
 }
 
 prompt_secret_required() {
   local prompt="$1"
   local out_var="$2"
-  local value
+  local captured_value=""
 
   while true; do
-    prompt_hidden "$prompt" value
-    if [[ -n $value ]]; then
-      printf -v "$out_var" '%s' "$value"
+    prompt_hidden "$prompt" captured_value
+    if [[ -n $captured_value ]]; then
+      printf -v "$out_var" '%s' "$captured_value"
       return 0
     fi
     warn "Value is required. Press Ctrl-C to stop setup if you need to fetch it."
@@ -387,14 +387,14 @@ prompt_secret_required() {
 prompt_secret_or_generate() {
   local prompt="$1"
   local out_var="$2"
-  local value
+  local captured_value=""
 
-  prompt_hidden "$prompt (blank = generate)" value
-  if [[ -z $value ]]; then
-    value="$(generate_secret_value)"
+  prompt_hidden "$prompt (blank = generate)" captured_value
+  if [[ -z $captured_value ]]; then
+    captured_value="$(generate_secret_value)"
     log "Generated secret value for: $prompt"
   fi
-  printf -v "$out_var" '%s' "$value"
+  printf -v "$out_var" '%s' "$captured_value"
 }
 
 prompt_file_or_paste() {

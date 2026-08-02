@@ -34,6 +34,13 @@ function relative(filePath) {
   return path.relative(root, filePath).split(path.sep).join('/');
 }
 
+function isGeneratedFile(filePath) {
+  const segments = path.relative(root, filePath).split(path.sep);
+  return segments.includes('node_modules')
+    || segments.includes('dist')
+    || relative(filePath) === `${runtimeRoot}/core/isolation/plugin-sandbox`;
+}
+
 const manifestPaths = packageRoots
   .flatMap((packageRoot) => filesBelow(path.join(root, packageRoot)))
   .filter((filePath) =>
@@ -67,7 +74,7 @@ const packages = manifestPaths.map((manifestPath) => {
     root: relative(packageRoot),
     manifest: relative(manifestPath),
     files: filesBelow(packageRoot)
-      .filter((filePath) => !filePath.includes(`${path.sep}node_modules${path.sep}`))
+      .filter((filePath) => !isGeneratedFile(filePath))
       .map(relative),
     registrations,
   };
@@ -80,9 +87,7 @@ const registrations = packages.flatMap((pluginPackage) =>
     registrationId: `${pluginPackage.id}:${registration.id}`,
   })));
 const runtimeFiles = filesBelow(path.join(root, runtimeRoot))
-  .filter((filePath) =>
-    !filePath.includes(`${path.sep}node_modules${path.sep}`) &&
-    !filePath.includes(`${path.sep}dist${path.sep}`))
+  .filter((filePath) => !isGeneratedFile(filePath))
   .map(relative);
 const allFiles = [
   ...new Set([

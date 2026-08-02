@@ -374,7 +374,30 @@ fi
 mapfile -t missing < <(secret_missing_keys test shared present busterV2Token)
 [[ \${#missing[@]} == 1 && \${missing[0]} == busterV2Token ]]
 load_secret_key test shared present decoded
-[[ $decoded == secret ]]`,
+[[ $decoded == secret ]]
+
+prompt_hidden() {
+  local -n output_ref="$2"
+  output_ref="\${PROMPT_TEST_VALUE:-}"
+}
+generate_secret_value() {
+  printf 'generated-worker-token'
+}
+generated=""
+PROMPT_TEST_VALUE="" prompt_secret_or_generate "Buster v2 worker token" generated
+[[ $generated == generated-worker-token ]]
+provided=""
+PROMPT_TEST_VALUE="operator-value" prompt_secret_required "Required value" provided
+[[ $provided == operator-value ]]
+patched=""
+patch_secret_literal() {
+  [[ $1 == test && $2 == shared && $3 == busterV2Token ]]
+  patched="$4"
+}
+NAMESPACE=test
+SECRET_NAME=shared
+PROMPT_TEST_VALUE="" patch_shared_secret_interactive busterV2Token
+[[ $patched == generated-worker-token ]]`,
   ],
   {
     cwd: sourceRoot,
