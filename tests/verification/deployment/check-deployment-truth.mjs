@@ -17,8 +17,10 @@ const exists = (relativePath) =>
   fs.existsSync(path.join(sourceRoot, relativePath));
 
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
+const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
 const generalDockerfile = read('docker/Dockerfile.general');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
+const busterRuntimeEntrypoint = read('docker/buster-runtime-entrypoint.sh');
 const values = read('charts/kubeclaw/values.yaml');
 const novaValues = read('my-values/nova-values.yaml');
 const busterValues = read('my-values/buster-values.yaml');
@@ -138,6 +140,16 @@ assert.match(
   busterRuntimeDockerfile,
   /dist\/src\/worker\.js|buster-runtime-entrypoint/,
   'the Buster image must run the v2 suite worker',
+);
+assert.match(
+  busterRuntimeEntrypoint,
+  /--otel-socket-path\s+"\$otel_socket"/,
+  'rootless BuildKit must place its OTEL trace socket in the writable runtime directory',
+);
+assert.match(
+  gatewayConfig,
+  /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{[\s\S]*"enabled"[\s\S]*"maxEventBytes"[\s\S]*"maxQueuePerStream"[\s\S]*"hookTimeoutMs"/,
+  'the host-native observer must receive its required runtime configuration',
 );
 assert.match(
   read('skills/buster/plugins/buster-suite-runtime/src/worker.ts'),

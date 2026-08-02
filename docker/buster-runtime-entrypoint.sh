@@ -6,9 +6,10 @@ unset BUSTER_V2_TOKEN
 socket="${BUILDKIT_HOST:?BUILDKIT_HOST is required}"
 address="${socket#unix://}"
 state="${BUILDKIT_STATE_DIR:?BUILDKIT_STATE_DIR is required}"
+otel_socket="${BUILDKIT_OTEL_SOCKET_PATH:-${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is required}/buildkit/otel-grpc.sock}"
 registry="${KUBECLAW_LOCAL_REGISTRY:?KUBECLAW_LOCAL_REGISTRY is required}"
 config="${HOME}/.config/buildkit/buildkitd.toml"
-mkdir -p "$(dirname "$address")" "$state" "$(dirname "$config")"
+mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "$state" "$(dirname "$config")"
 cat >"$config" <<EOF
 [registry."${registry}"]
   http = true
@@ -18,6 +19,7 @@ EOF
 rootlesskit --net=host buildkitd \
   --config "$config" \
   --addr "$socket" \
+  --otel-socket-path "$otel_socket" \
   --root "$state" \
   --oci-worker-no-process-sandbox \
   >/tmp/buildkitd.log 2>&1 &

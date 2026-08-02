@@ -344,6 +344,20 @@ data:
           },
           "kubeclaw-agent-observer": {
             "enabled": {{ eq (.Values.agentRole | default "") "buster" }},
+            "config": {
+              "enabled": {{ eq (.Values.agentRole | default "") "buster" }},
+              "redisNetworkIsolation": "isolated",
+              "maxEventBytes": 3145728,
+              "maxQueuePerStream": 100,
+              "redisCommandTimeoutMs": 5000,
+              "streamMaxLen": 10000,
+              "deadLetterMaxLen": 1000,
+              "controlWriteMaxAttempts": 3,
+              "controlWriteRetryBaseMs": 100,
+              "controlWriteRetryMaxMs": 1000,
+              "hookPriority": -100,
+              "hookTimeoutMs": 1000
+            },
             "hooks": {
               "allowConversationAccess": true
             }
