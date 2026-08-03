@@ -134,9 +134,11 @@ extraContainers:
       requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
       limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
     securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      runAsNonRoot: true
+      # A narrowly-capable supervisor starts BuildKit as UID 1000 and enters
+      # UID 1001 for each submitted suite before dropping every capability.
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
       privileged: false
       allowPrivilegeEscalation: true
       appArmorProfile: { type: Unconfined }

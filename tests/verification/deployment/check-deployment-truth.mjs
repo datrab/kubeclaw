@@ -199,8 +199,18 @@ assert.match(
 );
 assert.match(
   busterValues,
-  /add:\s*\["CHOWN",\s*"SETGID",\s*"SETPCAP",\s*"SETUID"\]/,
+  /name:\s*buster-v2-runtime[\s\S]*runAsUser:\s*0[\s\S]*runAsGroup:\s*0[\s\S]*runAsNonRoot:\s*false[\s\S]*add:\s*\["CHOWN",\s*"SETGID",\s*"SETPCAP",\s*"SETUID"\]/,
   'the supervisor must be able to enter the job UID and then drop the complete capability set',
+);
+assert.match(
+  busterRuntimeDockerfile,
+  /USER\s+0:0/,
+  'the runtime image must start the narrowly-capable job supervisor as root',
+);
+assert.match(
+  busterRuntimeEntrypoint,
+  /setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--init-groups[\s\S]*rootlesskit/,
+  'the supervisor must launch rootless BuildKit under the non-root builder identity',
 );
 for (const toolProof of [
   /playwright install --with-deps chromium/,

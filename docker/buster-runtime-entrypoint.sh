@@ -16,7 +16,11 @@ cat >"$config" <<EOF
   insecure = true
 EOF
 
-rootlesskit --net=host buildkitd \
+setpriv \
+  --reuid=1000 \
+  --regid=1000 \
+  --init-groups \
+  rootlesskit --net=host buildkitd \
   --config "$config" \
   --addr "$socket" \
   --otel-socket-path "$otel_socket" \
@@ -49,6 +53,9 @@ done
 chgrp 1002 "$address"
 chmod 0660 "$address"
 
+# The supervisor retains only CHOWN/SETUID/SETGID/SETPCAP. The worker uses
+# those capabilities to prepare the job directory and enter the per-job
+# identity; worker.ts removes the entire capability set before suite code.
 printf '%s' "$worker_token" | node /app/buster-suite-runtime/src/worker.ts &
 worker_pid=$!
 wait "$worker_pid"

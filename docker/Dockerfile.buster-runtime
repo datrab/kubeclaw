@@ -87,7 +87,12 @@ ENV HOME=/home/builder \
     BUSTER_V2_MAX_EXTRACTED_BYTES=536870912 \
     BUSTER_V2_PORT=18891
 
-USER 1000:1000
+# The production supervisor starts with only the capabilities declared by the
+# pod securityContext. The entrypoint immediately launches BuildKit as the
+# non-root builder, while the worker uses the remaining SETUID/SETGID authority
+# solely to enter a per-job identity before dropping every capability.
+# hadolint ignore=DL3002
+USER 0:0
 EXPOSE 18891
 WORKDIR /home/builder
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-runtime-entrypoint"]
