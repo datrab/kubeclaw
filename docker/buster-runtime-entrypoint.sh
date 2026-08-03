@@ -52,8 +52,19 @@ until buildctl --addr "$socket" debug workers >/dev/null 2>&1; do
   sleep 1
 done
 
-chgrp 1002 "$address"
-chmod 0660 "$address"
+# BuildKit creates the socket as the non-root builder. Apply its shared-group
+# permissions as that owner; the restricted supervisor intentionally does not
+# retain CAP_FOWNER.
+setpriv \
+  --reuid=1000 \
+  --regid=1000 \
+  --init-groups \
+  chgrp 1002 "$address"
+setpriv \
+  --reuid=1000 \
+  --regid=1000 \
+  --init-groups \
+  chmod 0660 "$address"
 
 # The supervisor retains only CHOWN/SETUID/SETGID/SETPCAP. The worker uses
 # those capabilities to prepare the job directory and enter the per-job

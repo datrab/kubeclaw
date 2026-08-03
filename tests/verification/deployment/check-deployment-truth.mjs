@@ -223,6 +223,11 @@ assert.match(
   'the generated BuildKit configuration must remain writable by the supervisor and readable by the builder',
 );
 assert.match(
+  busterRuntimeEntrypoint,
+  /setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--init-groups[\s\S]*chgrp 1002 "\$address"[\s\S]*setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--init-groups[\s\S]*chmod 0660 "\$address"/,
+  'the BuildKit socket owner must grant shared runner access without requiring CAP_FOWNER',
+);
+assert.match(
   chart,
   /initializedConfigPath[\s\S]*managedObserver[\s\S]*config\.plugins\.entries\['kubeclaw-agent-observer'\] = managedObserver/,
   'existing persistent homes must converge to the chart-managed observer configuration',
