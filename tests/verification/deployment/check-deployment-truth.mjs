@@ -212,6 +212,21 @@ assert.match(
   /setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--init-groups[\s\S]*rootlesskit/,
   'the supervisor must launch rootless BuildKit under the non-root builder identity',
 );
+assert.match(
+  busterRuntimeDockerfile,
+  /chown root:builder \/home\/builder\/\.config \/home\/builder\/\.config\/buildkit[\s\S]*chmod 0750/,
+  'the restricted supervisor must own the BuildKit configuration directory without DAC_OVERRIDE',
+);
+assert.match(
+  busterRuntimeEntrypoint,
+  /chown root:builder "\$config"[\s\S]*chmod 0640 "\$config"/,
+  'the generated BuildKit configuration must remain writable by the supervisor and readable by the builder',
+);
+assert.match(
+  chart,
+  /initializedConfigPath[\s\S]*managedObserver[\s\S]*config\.plugins\.entries\['kubeclaw-agent-observer'\] = managedObserver/,
+  'existing persistent homes must converge to the chart-managed observer configuration',
+);
 for (const toolProof of [
   /playwright install --with-deps chromium/,
   /k6 version/,

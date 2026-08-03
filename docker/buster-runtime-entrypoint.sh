@@ -15,6 +15,8 @@ cat >"$config" <<EOF
   http = true
   insecure = true
 EOF
+chown root:builder "$config"
+chmod 0640 "$config"
 
 setpriv \
   --reuid=1000 \

@@ -163,6 +163,7 @@ spec:
                 node <<'NODE'
               const fs = require('fs');
               const p = '/config/openclaw.json';
+              const initializedConfigPath = '/init-config/openclaw.json';
               const obsolete = '/app/openclaw-plugins/kubeclaw-agent-observer';
               const litellmSecretRef = { source: 'env', provider: 'default', id: 'LITELLM_API_KEY' };
               const discordSecretRef = { source: 'env', provider: 'default', id: 'DISCORD_TOKEN' };
@@ -180,6 +181,17 @@ spec:
               if (config?.models?.providers?.litellm) config.models.providers.litellm.apiKey = litellmSecretRef;
               if (defaults?.memorySearch?.remote) defaults.memorySearch.remote.apiKey = litellmSecretRef;
               if (config?.channels?.discord) config.channels.discord.token = discordSecretRef;
+
+              if (fs.existsSync(initializedConfigPath)) {
+                const initialized = JSON.parse(fs.readFileSync(initializedConfigPath, 'utf8'));
+                const managedObserver = initialized?.plugins?.entries?.['kubeclaw-agent-observer'];
+                if (managedObserver && typeof managedObserver === 'object') {
+                  config.plugins = config.plugins || {};
+                  config.plugins.entries = config.plugins.entries || {};
+                  config.plugins.entries['kubeclaw-agent-observer'] = managedObserver;
+                  console.log('    synchronized managed kubeclaw-agent-observer configuration');
+                }
+              }
 
               fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\n`);
               console.log('    openclaw.json source refreshed managed SecretRefs and safe migrations');

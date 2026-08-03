@@ -60,8 +60,10 @@ RUN set -eux; \
     usermod --append --groups buster-suite,buster-buildkit builder; \
     printf 'builder:100000:65536\n' >> /etc/subuid; \
     printf 'builder:100000:65536\n' >> /etc/subgid; \
-    mkdir -p /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /run/user/1000/buildkit; \
-    chown -R builder:builder /app /home/builder /run/user/1000
+    mkdir -p /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \
+    chown -R builder:builder /app /home/builder /run/user/1000; \
+    chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
+    chmod 0750 /home/builder/.config /home/builder/.config/buildkit
 
 RUN pip install --break-system-packages --no-cache-dir \
       ruff==0.15.22 mypy==2.3.0 pip-audit==2.10.1 semgrep==1.170.1
