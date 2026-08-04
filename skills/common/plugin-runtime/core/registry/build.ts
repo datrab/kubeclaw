@@ -72,15 +72,19 @@ function provenance(
   });
 }
 
+function registrySnapshot(packageEntries: Array<readonly [string, DiscoveredPackage]>, stageEntries: Array<readonly [string, StageRegistryEntry]>, observerEntries: Array<readonly [string, ObserverRegistryEntry]>, adapterEntries: Array<readonly [string, AdapterRegistryEntry]>, capabilityEntries: Map<string, AdapterRegistryEntry[]>): RegistrySnapshot {
+  return Object.freeze({ apiVersion: 'pipeline-plugin-v2', packages: new FrozenMap(packageEntries), stages: new FrozenMap(stageEntries),
+    observers: new FrozenMap(observerEntries), adapters: new FrozenMap(adapterEntries),
+    capabilityProviders: new FrozenMap([...capabilityEntries].map(([capability, providers]) => [capability, Object.freeze([...providers])])) });
+}
+
 export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistrySnapshot {
   const packageEntries: Array<readonly [string, DiscoveredPackage]> = [];
   const stageEntries: Array<readonly [string, StageRegistryEntry]> = [];
   const observerEntries: Array<readonly [string, ObserverRegistryEntry]> = [];
   const adapterEntries: Array<readonly [string, AdapterRegistryEntry]> = [];
   const capabilityEntries = new Map<string, AdapterRegistryEntry[]>();
-  const packageIds = new Set<string>();
-  const registrationIds = new Set<string>();
-  const stageTypes = new Set<string>();
+  const packageIds = new Set<string>(); const registrationIds = new Set<string>(); const stageTypes = new Set<string>();
 
   for (const pkg of packages) {
     if (packageIds.has(pkg.manifest.id)) {
@@ -135,17 +139,5 @@ export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistryS
     }
   }
 
-  return Object.freeze({
-    apiVersion: 'pipeline-plugin-v2',
-    packages: new FrozenMap(packageEntries),
-    stages: new FrozenMap(stageEntries),
-    observers: new FrozenMap(observerEntries),
-    adapters: new FrozenMap(adapterEntries),
-    capabilityProviders: new FrozenMap(
-      [...capabilityEntries].map(([capability, providers]) => [
-        capability,
-        Object.freeze([...providers]),
-      ]),
-    ),
-  });
+  return registrySnapshot(packageEntries, stageEntries, observerEntries, adapterEntries, capabilityEntries);
 }

@@ -279,16 +279,4 @@ function validatePolicyTargetPaths(repoRoot: string, policy: Record<string, any>
   }
 }
 
-function applicablePolicyToolIds(policy: Record<string, any>, projectTypes: Set<string>, tier: string, options: Record<string, any> = {}): string[] {
-  const tierOrder = ['pre-check', 'full'];
-  const tierIndex = tierOrder.indexOf(tier);
-  if (tierIndex < 0) fail('tier', `unknown tier '${tier}'`);
-  return policy.tools
-    .filter((tool: Record<string, any>) => tierOrder.indexOf(tool.tier) <= tierIndex)
-    .filter((tool: Record<string, any>) => tool.mode === 'blocking' || options.includeExperimental === true)
-    .filter((tool: Record<string, any>) => tool.languages.length === 0 || tool.languages.some((language: string) => projectTypes.has(language)))
-    .map((tool: Record<string, any>) => tool.id)
-    .sort();
-}
-
-export { LINT_POLICY_SCHEMA_VERSION, LintPolicyError, applicablePolicyToolIds, loadLintPolicy, matchesPolicyPattern, policyDigest, policyIncludesFile, selectPolicyProject, validateLintPolicy, validatePolicyTargetPaths };
+export { LINT_POLICY_SCHEMA_VERSION, LintPolicyError, loadLintPolicy, matchesPolicyPattern, policyDigest, policyIncludesFile, selectPolicyProject, validateLintPolicy, validatePolicyTargetPaths };

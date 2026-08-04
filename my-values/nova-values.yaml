@@ -208,9 +208,6 @@ workspace:
     ## Lint
     /app/skills/pipeline/tools/lint-report.ts --repo <path> --tier <full|pre-check> [--module-path <rel-path>] [--output <file>] [--changed-files "a.ts,b.ts"]
 
-    ## Discord
-    discord-purge.js <channel-id>
-
     ## Project Setup guide
     app/skills/project_setup
 

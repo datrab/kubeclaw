@@ -1,22 +1,13 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type {
-  AdapterActivationContext,
-  AdapterInstance,
-  ArtifactRef,
+import {
+  canonicalJson,
+  type AdapterActivationContext,
+  type AdapterInstance,
+  type ArtifactRef,
+  type AdapterInvocation,
 } from '@kubeclaw/plugin-sdk';
-
-function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  if (value && typeof value === 'object') {
-    return `{${Object.entries(value as Record<string, unknown>)
-      .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`)
-      .join(',')}}`;
-  }
-  return JSON.stringify(value) ?? 'null';
-}
 
 function requiredText(value: unknown, label: string): string {
   if (typeof value !== 'string' || value.length === 0 || value.includes('\0') || /[\r\n]/.test(value)) {
@@ -57,7 +48,7 @@ function appendCatalog(root: string, artifact: ArtifactRef): void {
   const file = path.join(root, 'catalog.jsonl');
   const descriptor = fs.openSync(file, 'a', 0o600);
   try {
-    fs.writeSync(descriptor, `${canonical(artifact)}\n`);
+    fs.writeSync(descriptor, `${canonicalJson(artifact)}\n`);
     fs.fsyncSync(descriptor);
   } finally {
     fs.closeSync(descriptor);
@@ -133,6 +124,35 @@ function readArtifact(root: string, artifact: ArtifactRef): {
   };
 }
 
+async function invokeArtifact(root: string, maxArtifactBytes: number, invocation: AdapterInvocation): Promise<Readonly<Record<string, unknown>>> {
+  const { request, signal, confidential, fence } = invocation;
+  if (!confidential) fence.assertCurrent();
+  if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+  if (request.capability === 'artifacts.read' && request.operation === 'get_json') {
+    const digest = digestValue(request.payload.digest);
+    const artifactId = requiredText(request.resource.canonicalId, 'ID');
+    const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
+    if (!catalogContains(root, artifactId, namespace, digest)) throw new Error('ARTIFACT_NOT_FOUND');
+    const stored = readArtifact(root, { artifactId, namespace, mediaType: 'application/json', digest, sizeBytes: 0, producer: request.attempt });
+    return { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes };
+  }
+  if (request.capability === 'artifacts.read' && request.operation === 'get_latest_json') {
+    return readArtifact(root, latestArtifact(root, requiredText(request.resource.canonicalId, 'ID'), requiredText(request.payload.namespace, 'NAMESPACE'), request.attempt.runId));
+  }
+  if (request.capability !== 'artifacts.write' || request.operation !== 'put_json') throw new Error(`ARTIFACT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
+  const artifactId = requiredText(request.resource.canonicalId, 'ID');
+  const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
+  const mediaType = requiredText(request.payload.mediaType, 'MEDIA_TYPE');
+  if (mediaType !== 'application/json') throw new Error('ARTIFACT_MEDIA_TYPE_UNSUPPORTED');
+  const bytes = Buffer.from(canonicalJson(request.payload.value));
+  if (bytes.byteLength > maxArtifactBytes) throw new Error('ARTIFACT_SIZE_EXCEEDED');
+  const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
+  writeImmutable(blobPath(root, digest), bytes);
+  const artifact: ArtifactRef = { artifactId, namespace, mediaType, digest, sizeBytes: bytes.byteLength, producer: request.attempt };
+  appendCatalog(root, artifact);
+  return { artifact };
+}
+
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const configured = context.config.artifactRoot;
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('artifactRoot is required');
@@ -144,56 +164,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     async ready() {
       fs.mkdirSync(path.join(root, 'blobs', 'sha256'), { recursive: true, mode: 0o700 });
     },
-    async invoke({ request, signal, confidential, fence }) {
-      if (!confidential) fence.assertCurrent();
-      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      if (request.capability === 'artifacts.read' && request.operation === 'get_json') {
-        const digest = digestValue(request.payload.digest);
-        const artifactId = requiredText(request.resource.canonicalId, 'ID');
-        const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
-        if (!catalogContains(root, artifactId, namespace, digest)) throw new Error('ARTIFACT_NOT_FOUND');
-        const { value, digest: storedDigest, sizeBytes } = readArtifact(root, {
-          artifactId,
-          namespace,
-          mediaType: 'application/json',
-          digest,
-          sizeBytes: 0,
-          producer: request.attempt,
-        });
-        return { value, digest: storedDigest, sizeBytes };
-      }
-      if (request.capability === 'artifacts.read' && request.operation === 'get_latest_json') {
-        const artifactId = requiredText(request.resource.canonicalId, 'ID');
-        const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
-        return readArtifact(root, latestArtifact(
-          root,
-          artifactId,
-          namespace,
-          request.attempt.runId,
-        ));
-      }
-      if (request.capability !== 'artifacts.write' || request.operation !== 'put_json') {
-        throw new Error(`ARTIFACT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
-      }
-      const artifactId = requiredText(request.resource.canonicalId, 'ID');
-      const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
-      const mediaType = requiredText(request.payload.mediaType, 'MEDIA_TYPE');
-      if (mediaType !== 'application/json') throw new Error('ARTIFACT_MEDIA_TYPE_UNSUPPORTED');
-      const bytes = Buffer.from(canonical(request.payload.value));
-      if (bytes.byteLength > maxArtifactBytes) throw new Error('ARTIFACT_SIZE_EXCEEDED');
-      const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-      writeImmutable(blobPath(root, digest), bytes);
-      const artifact: ArtifactRef = {
-        artifactId,
-        namespace,
-        mediaType,
-        digest,
-        sizeBytes: bytes.byteLength,
-        producer: request.attempt,
-      };
-      appendCatalog(root, artifact);
-      return { artifact };
-    },
+    async invoke(invocation) { return invokeArtifact(root, maxArtifactBytes, invocation); },
     async shutdown() {},
   };
 }

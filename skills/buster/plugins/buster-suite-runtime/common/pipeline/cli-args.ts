@@ -91,7 +91,3 @@ export function parseCliArgs(argv: string[] = [], schema: CliSchema = {}): Parse
 
   return { values, positionals };
 }
-
-export function parseCliFlagValues(argv: string[] = [], schema: CliSchema = {}) {
-  return parseCliArgs(argv, schema).values;
-}

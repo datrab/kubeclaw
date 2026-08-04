@@ -3,8 +3,26 @@ import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
 const pending = new Map();
-let initialize;
-const initialized = new Promise((resolve) => { initialize = resolve; });
+
+function createInitialization() {
+  let resolveCommand;
+  const command = new Promise((resolve) => { resolveCommand = resolve; });
+  return Object.freeze({
+    command,
+    accept(message) { resolveCommand(message); },
+  });
+}
+
+function createRpcIdFactory() {
+  let sequence = 0;
+  return () => {
+    sequence += 1;
+    return `rpc:${sequence}`;
+  };
+}
+
+const initialization = createInitialization();
+const nextRpcId = createRpcIdFactory();
 const lines = readline.createInterface({ input: process.stdin, crlfDelay: Infinity });
 
 function send(value) {
@@ -28,13 +46,11 @@ lines.on('line', (line) => {
     else request.reject(new Error(String(message.error || 'isolated capability failed')));
     return;
   }
-  initialize(message);
+  initialization.accept(message);
 });
 
-let sequence = 0;
 function rpc(kind, payload) {
-  sequence += 1;
-  const id = `rpc:${sequence}`;
+  const id = nextRpcId();
   send({ kind, id, ...payload });
   return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
 }
@@ -61,7 +77,7 @@ console.warn = console.log;
 console.error = console.log;
 
 try {
-  const command = await initialized;
+  const command = await initialization.command;
   if (!command || command.kind !== 'invoke') throw new Error('ISOLATION_PROTOCOL_INIT_REQUIRED');
   if (!['stage', 'observer'].includes(command.surface)) throw new Error('ISOLATION_SURFACE_UNSUPPORTED');
   const module = await import(pathToFileURL(command.modulePath).href);

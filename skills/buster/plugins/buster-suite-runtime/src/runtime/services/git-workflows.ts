@@ -36,8 +36,6 @@ interface GitSyncFailure {
   detail: string;
 }
 
-export type GitSyncResult = GitSyncSuccess | GitSyncFailure;
-
 export interface GitPushResult {
   pushed: boolean;
   hash: string;
@@ -102,69 +100,6 @@ function restoreRuntimeState(repoRoot: string, snapshot: { root: string; paths: 
     }
   } finally {
     fs.rmSync(snapshot.root, { recursive: true, force: true });
-  }
-}
-
-// ─── gitSync ─────────────────────────────────────────────────────────────────
-
-/**
- * Sync the repo to a deterministic task commit: fetch + reset-hard.
- *
- * DELETE_LEGACY: task repo sync must be tied to an explicit typed commit
- * identity; branch-derived sync is not accepted.
- *
- * STRICTIFY_TS_SLICE: Git failures stay nonthrowing for task lifecycle cleanup,
- * but return typed failure metadata instead of a magic null sentinel.
- */
-export async function gitSync(repoRoot: string, expectedHash: string, opts: GitWorkflowOptions = {}): Promise<GitSyncResult> {
-  const logger = opts.logger ? opts.logger : null;
-  const targetHash = normalizeGitTargetHash(expectedHash);
-  if (!targetHash) {
-    const detail = 'gitSync requires explicit expectedHash; branch-derived sync is deleted';
-    logGit(logger, 'warn', detail);
-    return {
-      ok: false,
-      target_hash: null,
-      actual_hash: null,
-      error: 'missing_target_hash',
-      detail,
-    };
-  }
-
-  let runtimeState: { root: string; paths: string[] } | null = null;
-  try {
-    runtimeState = preserveRuntimeState(repoRoot);
-    gitExec(repoRoot, ['fetch', 'origin'], { stdio: 'ignore', timeout: 30000 });
-    logGit(logger, 'info', 'Fetched from origin');
-
-    gitExec(repoRoot, ['reset', '--hard', targetHash], { stdio: 'ignore' });
-    restoreRuntimeState(repoRoot, runtimeState);
-    runtimeState = null;
-    logGit(logger, 'info', `Reset to expected hash: ${targetHash}`);
-
-    const actualHash = gitExec(repoRoot, ['rev-parse', 'HEAD']);
-    if (!gitHashMatchesTarget(actualHash, targetHash)) {
-      throw new Error(`gitSync HEAD mismatch: expected ${targetHash}, got ${actualHash}`);
-    }
-    logGit(logger, 'info', `Git sync complete: ${actualHash}`);
-    return {
-      ok: true,
-      target_hash: targetHash,
-      actual_hash: actualHash,
-      error: null,
-      detail: null,
-    };
-  } catch (error: unknown) {
-    restoreRuntimeState(repoRoot, runtimeState);
-    const detail = firstLine(error);
-    logGit(logger, 'warn', `Git sync failed: ${detail}`);
-    return {
-      ok: false,
-      target_hash: targetHash,
-      actual_hash: null,
-      error: 'git_sync_failed',
-      detail,
-    };
   }
 }
 
@@ -288,49 +223,4 @@ async function recoverRebase(error: unknown, context: PushAttemptContext): Promi
   if (attempt >= maxAttempts) throw new Error(`gitPushWithRetry rebase failed after ${maxAttempts} attempt(s): ${detail}`);
   await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget: options.budget || null, signal: options.signal || null });
   return 'retry';
-}
-
-/**
- * Push to origin with rebase-before-push strategy and bounded retry.
- *
- * If opts.commitMessage is provided, opts.addPaths must contain explicit
- * pathspecs. Commit mode performs `git add -- <addPaths...>` + `git commit`
- * before pushing. Each attempt: pull --rebase → push. On rebase failure with
- * attempts remaining, aborts and retries with exponential backoff.
- *
- * STRICTIFY_TS_SLICE: after the final rebase failure, fail closed. Do not push
- * over unresolved upstream/rebase state.
- */
-export async function gitPushWithRetry(repoRoot: string, branch: string, opts: GitPushOptions = {}): Promise<GitPushResult> {
-  const pushBranch = normalizePushBranch(branch);
-  const maxAttempts = normalizePositiveInteger(opts.maxAttempts, 'opts.maxAttempts');
-  const retryDelayMs = normalizeNonNegativeNumber(opts.retryDelayMs, 'opts.retryDelayMs');
-  const budget = selectTruthyValue(() => (opts.budget), () => (null));
-  const signal = selectTruthyValue(() => (opts.signal), () => (null));
-  const logger = opts.logger ? opts.logger : null;
-
-  const commitResult = prepareScopedCommit(repoRoot, opts, logger);
-  if (commitResult) return commitResult;
-
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    try {
-      gitExec(repoRoot, ['pull', '--rebase', '--autostash', 'origin', pushBranch], { stdio: 'ignore', timeout: 30000 });
-    } catch (rebaseErr: unknown) {
-      const recovery = await recoverRebase(rebaseErr, { repoRoot, branch: pushBranch, attempt, maxAttempts, retryDelayMs, options: opts, logger });
-      if (recovery === 'retry') continue;
-      if (recovery !== 'push') return recovery;
-    }
-
-    try {
-      gitExec(repoRoot, ['push', 'origin', `HEAD:${pushBranch}`], { stdio: 'ignore', timeout: 60000 });
-      const hash = gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']);
-      return { pushed: true, hash };
-    } catch (error: unknown) {
-      if (attempt === maxAttempts) throw error;
-      logGit(logger, 'warn', `Push attempt ${attempt}/${maxAttempts} failed: ${firstLine(error)}`);
-      await sleep(retryDelayMs * Math.pow(2, attempt - 1), { budget: budget || null, signal: signal || null });
-    }
-  }
-
-  throw new Error('gitPushWithRetry exhausted without terminal push result');
 }

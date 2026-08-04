@@ -10,6 +10,13 @@ type EffectJournalEntry =
   | { readonly type: 'accepted'; readonly request: EffectRequest }
   | { readonly type: 'completed'; readonly receipt: EffectReceipt };
 
+function acceptOnce(accepted: Set<string>, request: EffectRequest, persist?: () => void): boolean {
+  if (accepted.has(request.idempotencyKey)) return false;
+  persist?.();
+  accepted.add(request.idempotencyKey);
+  return true;
+}
+
 export class MemoryEffectJournal implements EffectJournal {
   readonly #requests: EffectRequest[] = [];
   readonly #requestByKey = new Map<string, EffectRequest>();
@@ -27,9 +34,7 @@ export class MemoryEffectJournal implements EffectJournal {
   }
 
   async accepted(request: EffectRequest): Promise<boolean> {
-    if (this.#accepted.has(request.idempotencyKey)) return false;
-    this.#accepted.add(request.idempotencyKey);
-    return true;
+    return acceptOnce(this.#accepted, request);
   }
 
   async completed(receipt: EffectReceipt): Promise<void> {
@@ -84,10 +89,9 @@ export class FileEffectJournal implements EffectJournal {
   }
 
   async accepted(request: EffectRequest): Promise<boolean> {
-    if (this.#accepted.has(request.idempotencyKey)) return false;
-    this.#journal.append({ type: 'accepted', request });
-    this.#accepted.add(request.idempotencyKey);
-    return true;
+    return acceptOnce(this.#accepted, request, () => {
+      this.#journal.append({ type: 'accepted', request });
+    });
   }
 
   async completed(receipt: EffectReceipt): Promise<void> {

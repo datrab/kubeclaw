@@ -24,18 +24,6 @@ function errorReason(error: unknown): string {
   return String(selectTruthyValue(() => (error), () => ('scheduler_batch_item_failed')));
 }
 
-export function createAttemptKey(input: AnyRecord = {}): string {
-  const runId = textValue(input.runId);
-  const itemId = textValue(selectDefinedValue(() => (input.itemId), () => (input.moduleId), () => (input.suiteId)));
-  const phase = textValue(input.phase);
-  const attempt = Number(input.attempt);
-  if (!runId) throw new Error('scheduler attempt key requires runId');
-  if (!itemId) throw new Error('scheduler attempt key requires itemId');
-  if (!phase) throw new Error('scheduler attempt key requires phase');
-  if (!Number.isInteger(attempt) || attempt < 1) throw new Error('scheduler attempt key requires positive integer attempt');
-  return `${runId}:${phase}:${itemId}:attempt-${attempt}`;
-}
-
 export function acquireExecutionLock(locks: SchedulerLocks, key: unknown): boolean {
   const lockKey = textValue(key);
   if (!lockKey) throw new Error('scheduler execution lock requires key');
@@ -75,33 +63,6 @@ export function buildDependencyGraph(nodes: unknown[] = []): AnyRecord {
     dependencyIds: (id: string) => dependenciesById.get(id) || [],
     dependentIds: (id: string) => dependentsById.get(id) || [],
   };
-}
-
-export function collectReadyBatch(input: {
-  orderedIds?: unknown[];
-  startIndex?: number;
-  dependencyIds?: DependencyReader;
-  isCandidateReady: ReadyReader;
-}): string[] {
-  const orderedIds = uniqueStrings(input.orderedIds || []);
-  const startIndex = Math.max(0, Number(selectDefinedValue(() => (input.startIndex), () => (0))) || 0);
-  const dependencyIds = input.dependencyIds || (() => []);
-  const batch: string[] = [];
-  const batchIds = new Set<string>();
-  for (let index = startIndex; index < orderedIds.length; index += 1) {
-    const id = orderedIds[index];
-    if (id === undefined) break;
-    const dependencies = uniqueStrings(dependencyIds(id));
-    const dependsOnCurrentBatch = dependencies.some((dependency) => batchIds.has(dependency));
-    const ready = !dependsOnCurrentBatch && input.isCandidateReady(id, { batchIds, dependencyIds: dependencies });
-    if (!ready) {
-      if (batch.length > 0) break;
-      continue;
-    }
-    batch.push(id);
-    batchIds.add(id);
-  }
-  return batch;
 }
 
 export function collectReadyItems(input: {
@@ -161,18 +122,5 @@ export async function runBatch(input: {
         reason: errorReason(entry.reason),
       };
     }),
-  };
-}
-
-export function aggregateBatchResults(batchResult: AnyRecord = {}): AnyRecord {
-  const results = Array.isArray(batchResult.results) ? batchResult.results : [];
-  const fulfilled = results.filter((entry: AnyRecord) => entry?.status === 'fulfilled');
-  const rejected = results.filter((entry: AnyRecord) => entry?.status !== 'fulfilled');
-  return {
-    batch_id: textValue(batchResult.batch_id),
-    item_ids: uniqueStrings(batchResult.item_ids || results.map((entry: AnyRecord) => entry?.item_id)),
-    fulfilled,
-    rejected,
-    ok: rejected.length === 0,
   };
 }

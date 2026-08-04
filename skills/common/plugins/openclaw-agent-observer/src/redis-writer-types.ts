@@ -1,4 +1,4 @@
-import type { AgentObservabilityStreamKind } from './agent-observability/index.ts';
+import type { AgentObservabilityStreamKind } from './generated/agent-observability/index.ts';
 import type { AgentObserverConfig } from './config.ts';
 
 export type RedisClient = {

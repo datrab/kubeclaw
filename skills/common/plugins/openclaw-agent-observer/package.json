@@ -22,7 +22,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "node scripts/build.mjs",
-    "test": "npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+    "test": "node --check scripts/build.mjs && node ../../../../scripts/check-materialized-tree.mjs ../../../../contracts/agent-observability/v1/src src/generated/agent-observability && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {},
   "devDependencies": {

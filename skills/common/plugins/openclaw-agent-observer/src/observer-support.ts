@@ -1,4 +1,4 @@
-import type { AgentObservabilityIngressEventV1 } from './agent-observability/index.ts';
+import type { AgentObservabilityIngressEventV1 } from './generated/agent-observability/index.ts';
 import type { AgentEventUnsubscribe } from './plugin-api.ts';
 
 type AgentEventObserver = {

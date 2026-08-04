@@ -42,68 +42,12 @@ function requireNonEmptyString(record: Record<string, any>, field: string, label
   return value;
 }
 
-export function loadBusterRuntimePolicy(): Record<string, any> {
-  if (runtimePolicyCache.policy) return runtimePolicyCache.policy;
-  const config = loadBusterPlatformConfig();
-  if (!isRecord(config?.buster)) {
-    throw new Error('config.buster: required platform config object in swarm.config.json');
-  }
-  if (!isRecord(config.buster.runtime)) {
-    throw new Error('config.buster.runtime: required platform config object in swarm.config.json');
-  }
-  const runtime = config.buster.runtime;
-  runtimePolicyCache.policy = Object.freeze({
-    task_stream: requireNonEmptyString(runtime, 'task_stream', 'config.buster.runtime.task_stream'),
-    heartbeat_path: requireNonEmptyString(runtime, 'heartbeat_path', 'config.buster.runtime.heartbeat_path'),
-    heartbeat_interval_ms: requirePositiveInteger(runtime, 'heartbeat_interval_ms', 'config.buster.runtime.heartbeat_interval_ms'),
-    task_poll_interval_ms: requirePositiveInteger(runtime, 'task_poll_interval_ms', 'config.buster.runtime.task_poll_interval_ms'),
-    task_pending_reclaim_idle_ms: requirePositiveInteger(runtime, 'task_pending_reclaim_idle_ms', 'config.buster.runtime.task_pending_reclaim_idle_ms'),
-    task_stream_max_len: requirePositiveInteger(runtime, 'task_stream_max_len', 'config.buster.runtime.task_stream_max_len'),
-  });
-  return runtimePolicyCache.policy;
-}
-
 export function loadBusterPlatformConfig(): Record<string, any> {
   if (runtimePolicyCache.platformConfig) return runtimePolicyCache.platformConfig;
   const configPath = resolveSwarmConfigPathFromEnv();
   const platformConfig = expandSwarmConfig(JSON.parse(fs.readFileSync(configPath, 'utf8')));
   runtimePolicyCache.platformConfig = platformConfig;
   return platformConfig;
-}
-
-export function loadBusterSessionPolicies(): Record<string, any> {
-  const config = loadBusterPlatformConfig();
-  const session = config.session;
-  const gateway = config.gateway;
-  if (!isRecord(session?.spawn)) throw new Error('config.session.spawn: required platform config object in swarm.config.json');
-  if (!isRecord(session?.kill)) throw new Error('config.session.kill: required platform config object in swarm.config.json');
-  if (!isRecord(session?.termination)) throw new Error('config.session.termination: required platform config object in swarm.config.json');
-  if (!isRecord(gateway?.invoke)) throw new Error('config.gateway.invoke: required platform config object in swarm.config.json');
-  if (!isRecord(gateway.invoke.retry)) throw new Error('config.gateway.invoke.retry: required platform config object in swarm.config.json');
-  const spawnPolicy = session.spawn;
-  const killPolicy = session.kill;
-  const terminationPolicy = session.termination;
-  const retryPolicy = gateway.invoke.retry;
-  const gatewayPolicy = (field: string, label: string) => {
-    const invokePolicy = gateway.invoke[field];
-    if (!isRecord(invokePolicy)) throw new Error(`${label}: required platform config object in swarm.config.json`);
-    return {
-      timeoutMs: requireNonNegativeNumber(invokePolicy, 'timeout_ms', `${label}.timeout_ms`),
-      maxRetries: requirePositiveInteger(retryPolicy, 'max_attempts', 'config.gateway.invoke.retry.max_attempts'),
-      retryDelayMs: requireNonNegativeNumber(retryPolicy, 'retry_delay_ms', 'config.gateway.invoke.retry.retry_delay_ms'),
-    };
-  };
-  const statusGateway = gatewayPolicy('session_status', 'config.gateway.invoke.session_status');
-  const spawnGateway = gatewayPolicy('session_spawn', 'config.gateway.invoke.session_spawn');
-  const requestGateway = gatewayPolicy('subagent_kill', 'config.gateway.invoke.subagent_kill');
-  const stopGateway = gatewayPolicy('session_send', 'config.gateway.invoke.session_send');
-  const listGateway = gatewayPolicy('subagent_list', 'config.gateway.invoke.subagent_list');
-  return {
-    gatewayStatusPolicy: statusGateway,
-    spawnPolicy: buildSpawnPolicy(spawnPolicy, spawnGateway),
-    killPolicy: buildKillPolicy(killPolicy, statusGateway, requestGateway, stopGateway, listGateway),
-    terminationPolicy: buildTerminationPolicy(terminationPolicy),
-  };
 }
 
 function buildSpawnPolicy(policy: Record<string, any>, gateway: Record<string, any>): Record<string, any> {
@@ -159,42 +103,12 @@ function buildTerminationPolicy(policy: Record<string, any>): Record<string, any
   };
 }
 
-export function loadBusterGitPushPolicy(): Record<string, any> {
-  const config = loadBusterPlatformConfig();
-  if (!isRecord(config.git?.push)) {
-    throw new Error('config.git.push: required platform config object in swarm.config.json');
-  }
-  const pushPolicy = config.git.push;
-  return {
-    maxAttempts: requirePositiveInteger(pushPolicy, 'max_attempts', 'config.git.push.max_attempts'),
-    retryDelayMs: requireNonNegativeNumber(pushPolicy, 'retry_delay_ms', 'config.git.push.retry_delay_ms'),
-  };
-}
-
-export function loadBusterGatewayHealthPolicy(): Record<string, any> {
-  const config = loadBusterPlatformConfig();
-  if (!isRecord(config?.gateway?.invoke?.health)) throw new Error('config.gateway.invoke.health: required platform config object in swarm.config.json');
-  if (!isRecord(config?.gateway?.health)) throw new Error('config.gateway.health: required platform config object in swarm.config.json');
-  return {
-    invokeTimeoutMs: requireNonNegativeNumber(config.gateway.invoke.health, 'timeout_ms', 'config.gateway.invoke.health.timeout_ms'),
-    readyTimeoutMs: requirePositiveInteger(config.gateway.health, 'timeout_ms', 'config.gateway.health.timeout_ms'),
-    readyIntervalMs: requirePositiveInteger(config.gateway.health, 'interval_ms', 'config.gateway.health.interval_ms'),
-    monitorIntervalMs: requirePositiveInteger(config.gateway.health, 'monitor_interval_ms', 'config.gateway.health.monitor_interval_ms'),
-    maxFailures: requirePositiveInteger(config.gateway.health, 'max_failures', 'config.gateway.health.max_failures'),
-  };
-}
-
 export function loadBusterDiscordWebhookTimeoutMs(): number {
   const config = loadBusterPlatformConfig();
   if (!isRecord(config.discord)) {
     throw new Error('config.discord: required platform config object in swarm.config.json');
   }
   return requirePositiveInteger(config.discord, 'webhook_timeout_ms', 'config.discord.webhook_timeout_ms');
-}
-
-export function resetBusterRuntimePolicyForTests(): void {
-  runtimePolicyCache.policy = null;
-  runtimePolicyCache.platformConfig = null;
 }
 function resolveSwarmConfigPathFromEnv(): string {
   const configured = readBusterEnvironment('SWARM_CONFIG');

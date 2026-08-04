@@ -54,6 +54,9 @@ function bounded(value: unknown, maximum = 8_192): string | undefined {
   if (typeof value !== 'string' || value.length === 0) return undefined;
   return value.length <= maximum ? value : `${value.slice(0, maximum)}…`;
 }
+function firstNonNullish(...values: readonly unknown[]): unknown {
+  return values.find((value) => value !== undefined && value !== null);
+}
 function titleCase(value: string): string {
   return value
     .replace(/[._:-]+/gu, ' ')
@@ -71,12 +74,39 @@ function reasonCode(payload: Readonly<Record<string, unknown>>): string | null {
   const nestedCode = nested && typeof nested === 'object' && !Array.isArray(nested)
     ? (nested as Record<string, unknown>).code
     : undefined;
-  return bounded(payload.reasonCode ?? payload.reason_code ?? nestedCode, 256) ?? null;
+  return bounded(firstNonNullish(payload.reasonCode, payload.reason_code, nestedCode), 256) ?? null;
 }
 interface PresentationOptions {
   readonly pipelineLabel?: string;
   readonly modelLabel?: string;
   readonly stageLabels?: Readonly<Record<string, unknown>>;
+}
+function stagePresentation(
+  stageId: string | null,
+  agentRole: string | undefined,
+  labels: Readonly<Record<string, unknown>> | undefined,
+): string | null {
+  if (!stageId) return null;
+  const stage = bounded(labels?.[stageId], 256) ?? titleCase(stageId);
+  return agentRole ? `${titleCase(agentRole)} · ${stage}` : stage;
+}
+
+function notificationTitle(type: string, stageLabel: string | null): string {
+  if (!stageLabel || !type.startsWith('stage.')) return LABELS[type] ?? type;
+  const state = type.split('.').at(-1) ?? type;
+  return `${stageLabel} ${state === 'succeeded' ? 'passed' : state}`;
+}
+
+function notificationFields(
+  runId: string,
+  stageId: string | null,
+  modelLabel: string | undefined,
+): readonly Readonly<Record<string, unknown>>[] {
+  const fields: Readonly<Record<string, unknown>>[] = [{ name: 'Run ID', value: runId, inline: false }];
+  if (stageId) fields.push({ name: 'Stage', value: stageId, inline: true });
+  const model = bounded(modelLabel, 256);
+  if (model) fields.push({ name: 'Model', value: model, inline: true });
+  return fields;
 }
 export function lifecycleNotification(
   delivery: ObserverDelivery,
@@ -87,23 +117,9 @@ export function lifecycleNotification(
   const payload = delivery.event.payload as Record<string, unknown>;
   const runId = delivery.event.identity.runId;
   const stageId = delivery.event.identity.stageId ?? null;
-  const agentRole = bounded(payload.agentRole, 256);
-  const stageLabel = stageId
-    ? agentRole
-      ? `${titleCase(agentRole)} · ${bounded(options.stageLabels?.[stageId], 256) ?? titleCase(stageId)}`
-      : bounded(options.stageLabels?.[stageId], 256) ?? titleCase(stageId)
-    : null;
-  const state = type.split('.').at(-1) ?? type;
-  const title = stageLabel && type.startsWith('stage.')
-    ? `${stageLabel} ${state === 'succeeded' ? 'passed' : state}`
-    : LABELS[type] ?? type;
-  const fields = [
-    { name: 'Run ID', value: runId, inline: false },
-    ...(stageId ? [{ name: 'Stage', value: stageId, inline: true }] : []),
-    ...(bounded(options.modelLabel, 256)
-      ? [{ name: 'Model', value: bounded(options.modelLabel, 256)!, inline: true }]
-      : []),
-  ];
+  const stageLabel = stagePresentation(stageId, bounded(payload.agentRole, 256), options.stageLabels);
+  const title = notificationTitle(type, stageLabel);
+  const fields = notificationFields(runId, stageId, options.modelLabel);
   return Object.freeze({
     type,
     eventId: delivery.event.eventId,
@@ -132,7 +148,10 @@ export function previewNotification(delivery: ObserverDelivery): Readonly<Record
     stageId: delivery.event.identity.stageId ?? null,
     artifactId: delivery.event.identity.artifactId ?? null,
     artifact: Object.freeze({
-      artifactId: bounded(artifact.artifactId, 512) ?? delivery.event.identity.artifactId ?? null,
+      artifactId: bounded(
+        firstNonNullish(artifact.artifactId, delivery.event.identity.artifactId),
+        512,
+      ) ?? null,
       digest: bounded(artifact.digest, 256) ?? null,
       mediaType: bounded(artifact.mediaType, 256) ?? null,
       logicalName: bounded(artifact.logicalName, 512) ?? null,

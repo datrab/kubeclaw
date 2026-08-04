@@ -72,16 +72,8 @@ export function normalizeBusterCapabilities(value: unknown = []): string[] {
   return [...new Set(raw.map((entry: unknown) => textValue(entry).trim()).filter(Boolean))];
 }
 
-export function unsupportedBusterCapabilities(value: unknown = []): string[] {
-  return normalizeBusterCapabilities(value).filter((entry) => !KNOWN.has(entry as typeof KNOWN_BUSTER_CAPABILITIES[number]));
-}
-
 function parseCapabilitiesEnv(value: unknown): string[] {
   return normalizeBusterCapabilities(value);
-}
-
-export function parseCapabilitiesFromEnv(env: Record<string, unknown>, key: string) {
-  return parseCapabilitiesEnv(env[key]);
 }
 
 export function resolveContextCapabilities(context: AnyRecord = {}): string[] {

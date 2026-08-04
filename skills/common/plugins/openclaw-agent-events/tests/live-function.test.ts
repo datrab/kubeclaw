@@ -9,6 +9,10 @@ const core = await import(pathToFileURL(path.join(repository, 'skills/common/plu
 assert.equal(normalizeAgentEvent({}), undefined);
 assert.deepEqual(normalizeAgentEvent({ run_id: 'run:1', stage_id: 'stage:1', attempt_id: 'attempt:1' })?.identity,
   { runId: 'run:1', stageId: 'stage:1', attemptId: 'attempt:1' });
+assert.deepEqual(normalizeAgentEvent({
+  identity: { runId: null, stageId: null, attemptId: null },
+  run_id: 'run:1', stage_id: 'stage:1', attempt_id: 'attempt:1',
+})?.identity, { runId: 'run:1', stageId: 'stage:1', attemptId: 'attempt:1' });
 const projected = normalizeAgentEvent({
   run_id: 'run:1',
   prompt: 'must-not-survive',

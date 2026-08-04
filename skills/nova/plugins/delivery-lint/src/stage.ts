@@ -63,6 +63,43 @@ async function writeReport(
   return artifactRef(result);
 }
 
+async function failureResult(
+  context: PluginInvocationContext,
+  input: DeliveryLintInput,
+  failure: Failure,
+  outcome: 'blocked' | 'request_fix',
+): Promise<StageResult> {
+  const artifact = await writeReport(context, input, [failure]);
+  return {
+    schemaVersion: 'stage-result.v2', outcome,
+    reason: { code: failure.code, message: failure.message }, artifacts: [artifact],
+  };
+}
+
+async function readDockerfile(
+  context: PluginInvocationContext,
+  dockerfilePath: string,
+): Promise<string> {
+  const response = await context.invoke('git.repository.read', {
+    operation: 'read_text',
+    resource: { type: 'git.repository.path', canonicalId: dockerfilePath },
+    payload: {},
+  });
+  if (typeof response.content !== 'string') throw new Error('repository adapter returned non-text content');
+  return response.content;
+}
+
+function staticPathFailures(content: string, staticPath: string | null): readonly Failure[] {
+  const normalizedStatic = staticPath?.replace(/\/$/, '') ?? null;
+  const destinations = copyDestinations(content);
+  if (normalizedStatic === null || destinations.length === 0 || destinations.includes(normalizedStatic)) return [];
+  return [{
+    code: 'delivery_lint.static_path_mismatch',
+    message: `No Dockerfile COPY destination matches '${staticPath}'.`,
+    nextStep: `Align a COPY destination with '${staticPath}'.`,
+  }];
+}
+
 export async function execute(
   input: DeliveryLintInput,
   context: PluginInvocationContext,
@@ -82,48 +119,20 @@ export async function execute(
       message: error instanceof Error ? error.message : String(error),
       nextStep: 'Use repository-relative paths without traversal.',
     };
-    const artifact = await writeReport(context, input, [failure]);
-    return {
-      schemaVersion: 'stage-result.v2',
-      outcome: 'blocked',
-      reason: { code: failure.code, message: failure.message },
-      artifacts: [artifact],
-    };
+    return failureResult(context, input, failure, 'blocked');
   }
   let content: string;
   try {
-    const response = await context.invoke('git.repository.read', {
-      operation: 'read_text',
-      resource: { type: 'git.repository.path', canonicalId: dockerfilePath },
-      payload: {},
-    });
-    if (typeof response.content !== 'string') throw new Error('repository adapter returned non-text content');
-    content = response.content;
+    content = await readDockerfile(context, dockerfilePath);
   } catch (error) {
     const failure = {
       code: 'delivery_lint.dockerfile_unavailable',
       message: error instanceof Error ? error.message : String(error),
       nextStep: `Create a readable Dockerfile at ${dockerfilePath}.`,
     };
-    const artifact = await writeReport(context, input, [failure]);
-    return {
-      schemaVersion: 'stage-result.v2',
-      outcome: 'request_fix',
-      reason: { code: failure.code, message: failure.message },
-      artifacts: [artifact],
-    };
+    return failureResult(context, input, failure, 'request_fix');
   }
-  const normalizedStatic = staticPath?.replace(/\/$/, '') ?? null;
-  const destinations = copyDestinations(content);
-  const failures: Failure[] = normalizedStatic !== null
-    && destinations.length > 0
-    && !destinations.includes(normalizedStatic)
-    ? [{
-      code: 'delivery_lint.static_path_mismatch',
-      message: `No Dockerfile COPY destination matches '${staticPath}'.`,
-      nextStep: `Align a COPY destination with '${staticPath}'.`,
-    }]
-    : [];
+  const failures = staticPathFailures(content, staticPath);
   const artifact = await writeReport(context, input, failures);
   if (failures.length > 0) {
     return {

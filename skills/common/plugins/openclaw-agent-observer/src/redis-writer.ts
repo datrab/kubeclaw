@@ -4,11 +4,11 @@ import {
   checkAgentObservabilityPayloadSize,
   selectAgentObservabilityStreamKey,
   selectAgentObservabilityStreamKind,
-} from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
 import type {
   AgentObservabilityIngressEventV1,
   AgentObservabilityStreamKind,
-} from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
 import { createRedisClient, loadRedisCtor } from './redis-transport.ts';
 import type { AgentObserverConfig } from './config.ts';
 import type {

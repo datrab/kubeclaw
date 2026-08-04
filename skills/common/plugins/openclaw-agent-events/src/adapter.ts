@@ -24,6 +24,9 @@ function release(subscription: Subscription | (() => void)): void {
 function optionalIdentity(value: unknown, field: string): Record<string, string> {
   return typeof value === 'string' && value.length > 0 && value.length <= 512 ? { [field]: value } : {};
 }
+function firstNonNullish(...values: readonly unknown[]): unknown {
+  return values.find((value) => value !== undefined && value !== null);
+}
 function projectEvent(event: Record<string, unknown>): Readonly<Record<string, unknown>> {
   const entries = Object.entries(event)
     .filter(([key]) => !IDENTITY_FIELD.test(key) && !SENSITIVE_FIELD.test(key))
@@ -44,13 +47,19 @@ export function normalizeAgentEvent(raw: unknown): {
 } | undefined {
   const event = record(raw);
   const identity = record(event.identity);
-  const runId = identity.runId ?? identity.run_id ?? event.runId ?? event.run_id;
+  const runId = firstNonNullish(identity.runId, identity.run_id, event.runId, event.run_id);
   if (typeof runId !== 'string' || runId.length === 0 || runId.length > 512) return undefined;
   return {
     identity: Object.freeze({
       runId,
-      ...optionalIdentity(identity.stageId ?? identity.stage_id ?? event.stageId ?? event.stage_id, 'stageId'),
-      ...optionalIdentity(identity.attemptId ?? identity.attempt_id ?? event.attemptId ?? event.attempt_id, 'attemptId'),
+      ...optionalIdentity(
+        firstNonNullish(identity.stageId, identity.stage_id, event.stageId, event.stage_id),
+        'stageId',
+      ),
+      ...optionalIdentity(
+        firstNonNullish(identity.attemptId, identity.attempt_id, event.attemptId, event.attempt_id),
+        'attemptId',
+      ),
     }),
     payload: projectEvent(event),
   };

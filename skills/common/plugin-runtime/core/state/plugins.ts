@@ -1,8 +1,9 @@
 import crypto from 'node:crypto';
-import type {
-  AttemptIdentity,
-  PluginStateEntry,
-  RegistrationProvenance,
+import {
+  canonicalJson,
+  type AttemptIdentity,
+  type PluginStateEntry,
+  type RegistrationProvenance,
 } from '../../sdk/src/index.ts';
 import { validateContractValue } from '../registry/schema.ts';
 import { FileJournal } from './journal.ts';
@@ -15,17 +16,6 @@ export interface PluginStateAppend {
   readonly entrySchemaVersion?: string;
   readonly idempotencyKey: string;
   readonly payload: Readonly<Record<string, unknown>>;
-}
-
-function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  if (value && typeof value === 'object') {
-    return `{${Object.entries(value as Record<string, unknown>)
-      .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, entry]) => `${JSON.stringify(key)}:${canonical(entry)}`)
-      .join(',')}}`;
-  }
-  return JSON.stringify(value) ?? 'null';
 }
 
 function expectedNamespace(registration: RegistrationProvenance): string {
@@ -63,7 +53,7 @@ export class PluginStateJournal {
       }
       if (
         record.entry.namespace !== this.#namespace
-        || canonical(record.entry.registration) !== canonical(this.#registration)
+        || canonicalJson(record.entry.registration) !== canonicalJson(this.#registration)
       ) {
         throw new Error(`PLUGIN_STATE_REGISTRATION_DENIED:${record.entry.namespace}`);
       }
@@ -75,7 +65,7 @@ export class PluginStateJournal {
     if (
       input.namespace !== namespace
       || namespace !== this.#namespace
-      || canonical(input.registration) !== canonical(this.#registration)
+      || canonicalJson(input.registration) !== canonicalJson(this.#registration)
     ) {
       throw new Error(`PLUGIN_STATE_NAMESPACE_DENIED:${input.namespace}`);
     }
@@ -104,7 +94,7 @@ export class PluginStateJournal {
         idempotencyKey: duplicate.idempotencyKey,
         payload: duplicate.payload,
       };
-        if (canonical(comparable) !== canonical(existingComparable)) {
+        if (canonicalJson(comparable) !== canonicalJson(existingComparable)) {
           throw new Error(`PLUGIN_STATE_IDEMPOTENCY_CONFLICT:${input.idempotencyKey}`);
         }
         return duplicate;

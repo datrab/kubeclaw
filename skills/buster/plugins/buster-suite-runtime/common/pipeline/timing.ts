@@ -81,16 +81,6 @@ function toDeadlineMs(input: BudgetInput = {}) {
   throw new TypeError('createBudget requires deadlineMs, deadline, timeoutMs, or timeoutMinutes');
 }
 
-export function isBudgetExhaustedError(error: unknown) {
-  return selectTruthyValue(() => ((error as {
-    name?: string;
-    code?: string;
-} | null)?.name === 'BudgetExhaustedError'), () => ((error as {
-    name?: string;
-    code?: string;
-} | null)?.code === 'BUDGET_EXHAUSTED'));
-}
-
 class DeadlineBudget implements TimeBudget {
   private deadline: number;
   private readonly controller = new AbortController();
@@ -193,14 +183,6 @@ class DeadlineBudget implements TimeBudget {
     };
     this.upstream.addEventListener('abort', this.upstreamAbortHandler, { once: true });
   }
-}
-
-export function createBudget(input: BudgetInput = {}): TimeBudget {
-  return new DeadlineBudget(input);
-}
-
-export function createBudgetFromMinutes(timeoutMinutes: number, options: Omit<BudgetInput, 'timeoutMs'> = {}) {
-  return createBudget({ ...options, timeoutMs: nonNegativeMs(timeoutMinutes) * 60 * 1000 });
 }
 
 export function sleep(ms: number, options: { budget?: TimeBudget | null; signal?: AbortSignal | null } = {}) {

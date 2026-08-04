@@ -18,14 +18,14 @@ const ISSUE_FIELDS = new Set([
   'recommended_fix',
 ]);
 
-export interface ReviewIssue {
+interface ReviewIssue {
   readonly source: string;
   readonly description: string;
   readonly affected_files: readonly string[];
   readonly recommended_fix: string;
 }
 
-export interface ReviewOutput {
+interface ReviewOutput {
   readonly status: 'PASS' | 'FAIL';
   readonly critical_issues: readonly ReviewIssue[];
   readonly deferred_issues: readonly ReviewIssue[];

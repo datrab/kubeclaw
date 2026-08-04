@@ -55,10 +55,6 @@ export function resolveSuiteTimeoutMs(config: Record<string, unknown>): number {
 
 export { applyBuildRuntimePort, buildDetailedSuiteSummary, resolveSuiteResultsDir, runSuiteWithTimeout };
 
-export function collectReadySuites(suiteNames: readonly string[], completedResults: Record<string, SuiteVerdict> = {}): string[] {
-  return collectReady(suiteNames, completedResults, DEPENDENCIES, EXECUTION_ORDER);
-}
-
 export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions): Promise<{ results: SuiteResult[]; suiteSummary: string; suiteDetailSummary: string; criticalFailed: boolean }> {
   return executeSuites({ registry: SUITE_REGISTRY, dependencies: DEPENDENCIES, executionOrder: EXECUTION_ORDER,
     validateNames: validateSuiteNames, resolveTimeout: resolveSuiteTimeoutMs }, suites, opts);

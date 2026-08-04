@@ -86,7 +86,14 @@ ENV HOME=/home/builder \
     BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
     BUSTER_V2_STATE_DIR=/home/builder/.openclaw/v2-jobs \
     BUSTER_V2_RUN_DIR=/tmp/buster-v2-runs \
+    BUSTER_V2_MAX_ARCHIVE_BYTES=67108864 \
     BUSTER_V2_MAX_EXTRACTED_BYTES=536870912 \
+    BUSTER_V2_MAX_QUEUED_JOBS=8 \
+    BUSTER_V2_RESULT_ROOT=/workspace/git-repo/.swarm/runtime-results \
+    BUSTER_V2_RUNNER_UID=1001 \
+    BUSTER_V2_RUNNER_GID=1001 \
+    BUSTER_V2_BUILDKIT_GID=1002 \
+    BUSTER_V2_KUBERNETES_CREDENTIALS=/var/run/buster-worker/kubernetes \
     BUSTER_V2_PORT=18891
 
 # The production supervisor starts with only the capabilities declared by the

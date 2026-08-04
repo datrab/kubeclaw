@@ -1,7 +1,7 @@
 import type {
   AgentObservabilityHook,
   AgentObservabilityIngressPayloadV1,
-} from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
 import {
   boolValue,
   firstValue,

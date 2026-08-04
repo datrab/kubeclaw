@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
-import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.ts';
+import { configuredMarkerDirectories, configuredTargetFilesForScope } from './discovery.ts';
 import { renderChart } from './helm-render.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
@@ -17,14 +17,6 @@ function commandOutput(result: any) {
   return selectDefinedValue(() => ([result.stdout, result.stderr].find((value: any) => typeof value === 'string' && value.length > 0)), () => (''));
 }
 
-function scopedChangedFiles(ctx: any, predicate: any) {
-  if (!ctx.changedFilesRequested) return null;
-  return ctx.changedFiles
-    .filter((file: any) => predicate(file.split(path.sep).join('/')))
-    .map((file: any) => path.join(ctx.repoRoot, file));
-}
-
-
 function hadolintTool() {
   return {
     id: 'hadolint',
@@ -33,7 +25,7 @@ function hadolintTool() {
     tier: 'full',
     detect: (ctx: any) => ctx.projectTypes.has('docker'),
     run: (ctx: any) => {
-      const dockerfiles = selectTruthyValue(() => (scopedChangedFiles(ctx, (file: any) => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))), () => (listConfiguredTargetFiles(ctx, (file: any) => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)))));
+      const dockerfiles = configuredTargetFilesForScope(ctx, (file: any) => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)));
       if (dockerfiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
       const allFindings: any[] = [];
@@ -82,7 +74,7 @@ function helmLintTool() {
     tier: 'full',
     detect: (ctx: any) => ctx.projectTypes.has('helm'),
     run: (ctx: any) => {
-      const chartDirs = configuredTargetPaths(ctx);
+      const chartDirs = configuredMarkerDirectories(ctx, 'Chart.yaml');
 
       const allFindings: any[] = [];
       for (const chartDir of chartDirs) {
@@ -152,7 +144,7 @@ function kubeconformTool() {
         }
       };
 
-      for (const chartDir of configuredTargetPaths(ctx)) {
+      for (const chartDir of configuredMarkerDirectories(ctx, 'Chart.yaml')) {
         const findingsBefore = findings.length;
         const result = requireToolExecution(safeExec('kubeconform', ['-output', 'json', '-summary', '-strict', '-'], {
           cwd: ctx.repoRoot,
@@ -186,9 +178,7 @@ function yamllintTool() {
     detect: (ctx: any) => ctx.projectTypes.has('yaml'),
     run: (ctx: any) => {
       const config = ctx.tool.config_path;
-      const yamlFiles = ctx.changedFilesRequested
-        ? ctx.changedFiles.map((file: any) => path.join(ctx.repoRoot, file))
-        : listConfiguredTargetFiles(ctx, (file: any) => file.endsWith('.yaml') || file.endsWith('.yml'));
+      const yamlFiles = configuredTargetFilesForScope(ctx, (file: any) => file.endsWith('.yaml') || file.endsWith('.yml'));
       if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       const args = ['-c', config, '-f', 'parsable', '--strict', ...yamlFiles];
 

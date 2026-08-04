@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import type { AdapterActivationContext, AdapterInstance, EffectRequest } from '@kubeclaw/plugin-sdk';
+import { createDispatchAdapter } from './dispatch-adapter.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
 interface Target {
@@ -7,6 +8,19 @@ interface Target {
   readonly tokenSecret: string;
   readonly maxRequestBytes: number;
   readonly maxResponseBytes: number;
+}
+
+function boundedInteger(value: unknown, fallback: number, id: string, label: string): number {
+  const parsed = Number(value ?? fallback);
+  if (!Number.isSafeInteger(parsed) || parsed < 1 || parsed > 8_388_608) throw new Error(`RUNTIME_CONFIG_INVALID:${label}:${id}`);
+  return parsed;
+}
+
+function endpointFrom(value: unknown, id: string): URL {
+  if (typeof value !== 'string') throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);
+  const endpoint = new URL(value);
+  if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.hash) throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);
+  return endpoint;
 }
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -17,14 +31,14 @@ function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, cod
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`);
 }
 
+function scalar(value: unknown): boolean {
+  return value === null || typeof value === 'string' || typeof value === 'boolean'
+    || (typeof value === 'number' && Number.isFinite(value));
+}
+
 function json(value: unknown, depth = 0): void {
   if (depth > 20) throw new Error('RUNTIME_PAYLOAD_DEPTH_EXCEEDED');
-  if (
-    value === null
-    || typeof value === 'string'
-    || typeof value === 'boolean'
-    || (typeof value === 'number' && Number.isFinite(value))
-  ) return;
+  if (scalar(value)) return;
   if (Array.isArray(value)) {
     if (value.length > 1_000) throw new Error('RUNTIME_PAYLOAD_ARRAY_EXCEEDED');
     value.forEach((entry) => json(entry, depth + 1));
@@ -40,39 +54,29 @@ function json(value: unknown, depth = 0): void {
   }
 }
 
-function config(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, Target> {
-  exact(raw as Record<string, unknown>, new Set(['targets']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
-  if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');
-  const targets = new Map<string, Target>();
-  for (const [id, value] of Object.entries(raw.targets)) {
+function targetFrom(id: string, value: unknown): Target {
     if (!ID.test(id) || !record(value)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
     exact(value, new Set([
       'endpoint', 'tokenSecret', 'maxRequestBytes', 'maxResponseBytes',
     ]), 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
-    if (typeof value.endpoint !== 'string') throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);
-    const endpoint = new URL(value.endpoint);
-    if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.hash) {
-      throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);
-    }
+    const endpoint = endpointFrom(value.endpoint, id);
     if (typeof value.tokenSecret !== 'string' || !ID.test(value.tokenSecret)) {
       throw new Error(`RUNTIME_CONFIG_INVALID:tokenSecret:${id}`);
     }
-    const maxRequestBytes = Number(value.maxRequestBytes ?? 1_048_576);
-    const maxResponseBytes = Number(value.maxResponseBytes ?? 1_048_576);
-    if (!Number.isSafeInteger(maxRequestBytes) || maxRequestBytes < 1 || maxRequestBytes > 8_388_608) {
-      throw new Error(`RUNTIME_CONFIG_INVALID:maxRequestBytes:${id}`);
-    }
-    if (!Number.isSafeInteger(maxResponseBytes) || maxResponseBytes < 1 || maxResponseBytes > 8_388_608) {
-      throw new Error(`RUNTIME_CONFIG_INVALID:maxResponseBytes:${id}`);
-    }
-    targets.set(id, {
+    const maxRequestBytes = boundedInteger(value.maxRequestBytes, 1_048_576, id, 'maxRequestBytes');
+    const maxResponseBytes = boundedInteger(value.maxResponseBytes, 1_048_576, id, 'maxResponseBytes');
+    return {
       endpoint: endpoint.href,
       tokenSecret: value.tokenSecret,
       maxRequestBytes,
       maxResponseBytes,
-    });
-  }
-  return targets;
+    };
+}
+
+function config(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, Target> {
+  exact(raw as Record<string, unknown>, new Set(['targets']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
+  if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');
+  return new Map(Object.entries(raw.targets).map(([id, value]) => [id, targetFrom(id, value)]));
 }
 
 function assertRequest(request: EffectRequest): void {
@@ -86,18 +90,7 @@ function assertRequest(request: EffectRequest): void {
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const targets = config(context.config);
-  let shuttingDown = false;
-  return {
-    async ready() {
-      if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
-    },
-    async invoke({ request, signal, confidential, fence }) {
-      if (!confidential) fence.assertCurrent();
-      if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
-      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      assertRequest(request);
-      const target = targets.get(request.resource.canonicalId);
-      if (!target) throw new Error(`RUNTIME_TARGET_DENIED:${request.resource.canonicalId}`);
+  return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => {
       json(request.payload);
       const body = JSON.stringify(request.payload);
       if (Buffer.byteLength(body, 'utf8') > target.maxRequestBytes) throw new Error('RUNTIME_REQUEST_SIZE_EXCEEDED');
@@ -135,9 +128,5 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         throw new Error('RUNTIME_RESPONSE_SIZE_EXCEEDED');
       }
       return Object.freeze({ ...response.body });
-    },
-    async shutdown() {
-      shuttingDown = true;
-    },
-  };
+  });
 }

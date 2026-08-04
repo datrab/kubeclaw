@@ -42,6 +42,31 @@ function text(value: unknown, code: string, maximum: number): string {
   return value;
 }
 
+function canonicalNumber(value: number): number {
+  if (!Number.isFinite(value)) throw new Error('PROMPT_VALUE_NUMBER_INVALID');
+  return value;
+}
+
+function canonicalArray(
+  value: readonly unknown[], limits: Required<PromptLimits>, seen: Set<object>,
+  depth: number, count: { value: number },
+): readonly unknown[] {
+  if (Object.keys(value).length !== value.length) throw new Error('PROMPT_VALUE_ARRAY_SPARSE');
+  return value.map((entry) => canonicalize(entry, limits, seen, depth + 1, count));
+}
+
+function canonicalRecord(
+  value: Record<string, unknown>, limits: Required<PromptLimits>, seen: Set<object>,
+  depth: number, count: { value: number },
+): Record<string, unknown> {
+  const result: Record<string, unknown> = Object.create(null);
+  for (const key of Object.keys(value).sort()) {
+    if (!key || key.length > 128 || FORBIDDEN_KEYS.has(key)) throw new Error('PROMPT_VALUE_KEY_INVALID');
+    result[key] = canonicalize(value[key], limits, seen, depth + 1, count);
+  }
+  return result;
+}
+
 function canonicalize(
   value: unknown,
   limits: Required<PromptLimits>,
@@ -53,25 +78,14 @@ function canonicalize(
   count.value += 1;
   if (count.value > limits.maxEntries) throw new Error('PROMPT_VALUE_ENTRIES_EXCEEDED');
   if (value === null || typeof value === 'boolean' || typeof value === 'string') return value;
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) throw new Error('PROMPT_VALUE_NUMBER_INVALID');
-    return value;
-  }
+  if (typeof value === 'number') return canonicalNumber(value);
   if (typeof value !== 'object') throw new Error('PROMPT_VALUE_UNSUPPORTED');
   if (seen.has(value)) throw new Error('PROMPT_VALUE_CYCLE');
   seen.add(value);
   try {
-    if (Array.isArray(value)) {
-      if (Object.keys(value).length !== value.length) throw new Error('PROMPT_VALUE_ARRAY_SPARSE');
-      return value.map((entry) => canonicalize(entry, limits, seen, depth + 1, count));
-    }
+    if (Array.isArray(value)) return canonicalArray(value, limits, seen, depth, count);
     if (!plainRecord(value)) throw new Error('PROMPT_VALUE_PROTOTYPE_INVALID');
-    const result: Record<string, unknown> = Object.create(null);
-    for (const key of Object.keys(value).sort()) {
-      if (!key || key.length > 128 || FORBIDDEN_KEYS.has(key)) throw new Error('PROMPT_VALUE_KEY_INVALID');
-      result[key] = canonicalize(value[key], limits, seen, depth + 1, count);
-    }
-    return result;
+    return canonicalRecord(value, limits, seen, depth, count);
   } finally {
     seen.delete(value);
   }

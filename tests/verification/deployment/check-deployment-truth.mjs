@@ -218,6 +218,11 @@ assert.match(
   'the restricted supervisor must own the BuildKit configuration directory without DAC_OVERRIDE',
 );
 assert.match(
+  busterRuntimeDockerfile,
+  /BUILDKIT_HOST=unix:\/\/\/run\/user\/1000\/buildkit\/buildkitd\.sock/,
+  'the Buster worker must receive the explicit rootless BuildKit endpoint required by readiness checks',
+);
+assert.match(
   busterRuntimeEntrypoint,
   /chown root:builder "\$config"[\s\S]*chmod 0640 "\$config"/,
   'the generated BuildKit configuration must remain writable by the supervisor and readable by the builder',

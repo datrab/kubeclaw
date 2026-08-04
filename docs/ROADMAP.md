@@ -22,6 +22,7 @@ These are candidate roadmap themes, not current behavior claims:
 
 - ClawDeck as the first real pipeline-built project and as richer platform/pipeline visibility.
 - A broader ecosystem of independently installed extensions using the implemented core/package boundary.
+- User-defined workflows that compose installed stages, observers, and adapters, including independently installed lint-tool providers and configuration packs behind a versioned, capability-bounded registration contract.
 - Design agent and design flow for design-aware application delivery.
 - Improved linting with more configurable rules and clearer failure output.
 - Code mapping and autoreview features that help agents reason about ownership and risk.
@@ -50,4 +51,5 @@ Move an item from roadmap to current docs only after the implementation exists a
 - `architecture/plugin-system-vision.md`
 - `architecture/plugin-system-implementation-plan.md`
 - `architecture/plugin-system-phase12-changelog.md`
+- `architecture/pipeline-test-gate-roadmap.md`
 - `operators/external-pipeline-plugins.md`

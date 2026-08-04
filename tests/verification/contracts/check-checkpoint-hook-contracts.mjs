@@ -82,7 +82,11 @@ for (const hookName of CHECKPOINT_NAMES) {
   const hook = checkpointHookContract(hookName);
   assert.equal(hook.name, hookName, `${hookName} hook must be self-identifying`);
   assert.equal(hook.phase_boundary, hookName, `${hookName} hook must expose its exact phase boundary`);
-  assert.equal(hook.required_state.swarm_paths.includes('progress.json'), true, `${hookName} must require progress.json`);
+  assert.deepEqual(
+    hook.required_state.v2_run_files,
+    hookName === 'fresh' ? [] : ['events.jsonl', 'effects.jsonl'],
+    `${hookName} must declare its v2 journal boundary`,
+  );
   assert.equal(hook.fixture_families.length > 0, true, `${hookName} must declare compatible fixture families`);
   for (const fixtureFamily of hook.fixture_families) {
     assert.equal(CHECKPOINT_FIXTURE_FAMILIES.includes(fixtureFamily), true, `${hookName} references unknown fixture family ${fixtureFamily}`);
@@ -233,18 +237,15 @@ assert.equal(
   'root verify:contracts must enforce checkpoint hook contracts',
 );
 
-const redesignDoc = read(sourceRoot, 'docs/pipeline/checkpoint-hook-contracts-redesign.md');
+const redesignDoc = read(sourceRoot, 'tests/verification/e2e/README.md');
 for (const marker of [
-  'scenario mutation contract',
-  'Contract Verification',
-  'Pruned and merged scenarios are not active matrix children',
-  'No legacy full-lifecycle fallback remains',
-  'The executable checkpoint matrix is suite-owned.',
-  'Use `--suite <id>` or `--suites a,b` for aggregate execution.',
-  'Use `--scenario <id>` for a focused case and `--from-scenario <id>` to resume a suite',
-  'Do not restore an uncontracted per-scenario execution path',
+  'Each scenario declares one checkpoint',
+  'allowed_mutation_channels',
+  'There is no alternate checkpoint path',
+  'Matrix execution is not the structural contract',
+  'full-lifecycle authority is introduced',
 ]) {
-  assert.equal(redesignDoc.includes(marker), true, `checkpoint redesign doc must document: ${marker}`);
+  assert.equal(redesignDoc.includes(marker), true, `checkpoint E2E documentation must document: ${marker}`);
 }
 
 console.log(JSON.stringify({

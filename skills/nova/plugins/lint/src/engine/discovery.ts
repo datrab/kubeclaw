@@ -61,14 +61,26 @@ function isPolicyIgnoredFile(filePath: any) {
   ].some(Boolean);
 }
 
-function listPolicySourceFiles(scanRoot: any) {
-  return findFiles(scanRoot, (f: any) => /\.(js|jsx|ts|tsx|mjs|cjs)$/.test(f), 12)
-    .filter((file: any) => !isPolicyIgnoredFile(file));
-}
-
 function configuredTargetPaths(ctx: any, tool: any = ctx.tool) {
   const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
   return tool.targets.map((target: any) => path.resolve(projectRoot, target));
+}
+
+function findPolicyTargetFiles(directory: any, projectRoot: any, globalExclusions: any) {
+  const files: any[] = [];
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const absolute = path.join(directory, entry.name);
+    const relative = path.relative(projectRoot, absolute).split(path.sep).join('/');
+    if (entry.isFile()) {
+      files.push(absolute);
+    } else if (entry.isDirectory()) {
+      const descendant = `${relative}/__lint_discovery__`;
+      if (!globalExclusions.some((pattern: any) => matchesPolicyPattern(descendant, pattern))) {
+        files.push(...findPolicyTargetFiles(absolute, projectRoot, globalExclusions));
+      }
+    }
+  }
+  return files;
 }
 
 function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
@@ -76,7 +88,9 @@ function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
   const candidates: any[] = [];
   for (const target of configuredTargetPaths(ctx)) {
     const stat = fs.statSync(target);
-    candidates.push(...(stat.isDirectory() ? findFiles(target, () => true, Number.MAX_SAFE_INTEGER) : [target]));
+    candidates.push(...(stat.isDirectory()
+      ? findPolicyTargetFiles(target, projectRoot, ctx.policy.global_exclusions)
+      : [target]));
   }
   return [...new Set(candidates)]
     .filter((file: any) => {
@@ -84,6 +98,24 @@ function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
       return predicate(relative) && policyIncludesFile(relative, ctx.tool, ctx.policy.global_exclusions);
     })
     .sort();
+}
+
+function configuredTargetFilesForScope(ctx: any, predicate: any = () => true) {
+  if (!ctx.changedFilesRequested) return listConfiguredTargetFiles(ctx, predicate);
+  const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
+  return [...new Set(ctx.changedFiles
+    .map((file: any) => path.isAbsolute(file) ? file : path.join(ctx.repoRoot, file))
+    .filter((file: any) => fs.existsSync(file)))]
+    .filter((file: any) => {
+      const relative = path.relative(projectRoot, file).split(path.sep).join('/');
+      return predicate(relative) && policyIncludesFile(relative, ctx.tool, ctx.policy.global_exclusions);
+    })
+    .sort();
+}
+
+function configuredMarkerDirectories(ctx: any, markerName: any) {
+  return listConfiguredTargetFiles(ctx, (file: any) => path.basename(file) === markerName)
+    .map((file: any) => path.dirname(file));
 }
 
 /**
@@ -182,8 +214,9 @@ export {
   findFiles,
 
   configuredTargetPaths,
+  configuredMarkerDirectories,
+  configuredTargetFilesForScope,
   listConfiguredTargetFiles,
-  listPolicySourceFiles,
   resolveScope,
   takeDiscoveryDiagnostics,
 };

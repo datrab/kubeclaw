@@ -1,7 +1,7 @@
 import type {
   AgentObservabilityHistoryMessageV1,
   AgentObservabilityJsonValue,
-} from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
 
 export type UnknownRecord = Record<string, unknown>;
 

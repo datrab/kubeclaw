@@ -47,6 +47,14 @@ const manifestPaths = packageRoots
     ['plugin.json', 'openclaw.plugin.json'].includes(path.basename(filePath)))
   .sort();
 
+function manifestVersion(manifest) {
+  if (manifest.packageVersion !== undefined && manifest.packageVersion !== null) {
+    return manifest.packageVersion;
+  }
+  if (manifest.version !== undefined && manifest.version !== null) return manifest.version;
+  return null;
+}
+
 const packages = manifestPaths.map((manifestPath) => {
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   const packageRoot = path.dirname(manifestPath);
@@ -69,7 +77,7 @@ const packages = manifestPaths.map((manifestPath) => {
     : [];
   return {
     id: manifest.id,
-    version: manifest.packageVersion ?? manifest.version ?? null,
+    version: manifestVersion(manifest),
     kind: pipeline ? 'pipeline-plugin' : 'openclaw-plugin',
     root: relative(packageRoot),
     manifest: relative(manifestPath),

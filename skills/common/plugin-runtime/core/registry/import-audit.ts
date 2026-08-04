@@ -3,6 +3,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RegistryError } from './errors.ts';
 
+function auditFailureCause(result: Readonly<{ stderr: string; stdout: string; status: number | null }>): string {
+  const stderr = result.stderr.trim();
+  if (stderr) return stderr;
+  const stdout = result.stdout.trim();
+  if (stdout) return stdout;
+  return `exit ${result.status}`;
+}
+
 interface AuditedEntry {
   readonly package: {
     readonly root: string;
@@ -51,7 +59,7 @@ export function auditTrustedRegistrationImports(entries: readonly AuditedEntry[]
       result.status !== 0
       || !result.stdout.split(/\r?\n/u).includes(successMarker)
     ) {
-      const cause = result.stderr.trim() || result.stdout.trim() || `exit ${result.status}`;
+      const cause = auditFailureCause(result);
       throw new RegistryError(
         cause.includes('REGISTRY_EXECUTOR_INVALID')
           ? 'REGISTRY_EXECUTOR_INVALID'

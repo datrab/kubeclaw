@@ -1463,7 +1463,7 @@ case "${1:-}" in
     TAILSCALE_OPERATOR_ENABLED=true deploy_tailscale_operator
     ;;
   buildkit-preflight)
-    cmd_buildkit_preflight
+    cmd_buildkit_preflight "${2:-}" "${3:-}"
     ;;
   buster-buildkit-smoke)
     warn "buster-buildkit-smoke is retained as an alias; use nova-buildkit-preflight."
@@ -1527,7 +1527,8 @@ case "${1:-}" in
     echo "  secrets            Create/copy/prompt required Kubernetes secrets"
     echo "  infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
-    echo "  buildkit-preflight Verify rootless BuildKit support with a temporary pod"
+    echo "  buildkit-preflight [image] [pull-secret]"
+    echo "                    Verify rootless BuildKit support with a temporary pod"
     echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
     echo "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight"
     echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"

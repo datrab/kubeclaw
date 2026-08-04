@@ -1,27 +1,12 @@
-import crypto from 'crypto';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { configuredTargetPaths } from './discovery.ts';
+import { configuredMarkerDirectories } from './discovery.ts';
 import { requireToolExecution, safeExec } from './execution.ts';
 import { renderChart } from './helm-render.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
-
-const CANONICAL_LINT_CONFIG_FALSE_POSITIVE = {
-  code: 'KSV-0109',
-  resource: 'ConfigMap:default:agent-nova-swarm-config',
-  document_sha256: '150239a94757c523548895c7dbfe86016f6ded90f09641e096a0471f90557186',
-  message: `ConfigMap 'agent-nova-swarm-config' in 'default' namespace stores secrets in key(s) or value(s) '{"              password ", "              secret ", "              token ", "          - pattern"}'`,
-  owner: 'pipeline-maintainers',
-  reason: 'Trivy reads Semgrep rule examples embedded as lint configuration as ConfigMap secret values; the exact canonical resource and config payload are not credentials.',
-  created: '2026-07-21',
-  expires: '2026-10-20',
-  tracking: 'lint-calibration-phase-8',
-  approved_by: 'pipeline-maintainers',
-  approved_on: '2026-07-26',
-};
 
 function issueMessage(issue: any) {
   if (issue.Message) return issue.Message;
@@ -64,32 +49,6 @@ function resourceIdentity(rendered: any, lineNumber: any) {
   return kind && name ? `${kind}:${namespace}:${name}` : 'unresolved-resource';
 }
 
-function documentForResource(rendered: string, resource: string): string {
-  for (const document of rendered.split(/^---\s*$/m)) {
-    if (resourceIdentity(document, 1) === resource) return document;
-  }
-  return '';
-}
-
-function normalizedDocumentDigest(document: string): string {
-  const normalized = document.trim().replace(/\r\n/g, '\n');
-  return crypto.createHash('sha256').update(normalized).digest('hex');
-}
-
-function isCanonicalLintConfigFalsePositive(
-  rendered: string,
-  issue: any,
-  today: any = new Date().toISOString().slice(0, 10),
-  filter: any = CANONICAL_LINT_CONFIG_FALSE_POSITIVE,
-): boolean {
-  if (today > filter.expires) return false;
-  if (issue.ID !== filter.code) return false;
-  if (issueMessage(issue) !== filter.message) return false;
-  const document = documentForResource(rendered, filter.resource);
-  if (!document) return false;
-  return normalizedDocumentDigest(document) === filter.document_sha256;
-}
-
 function trivyFinding(ctx: any, chartDir: any, rendered: any, issue: any, occurrence: any) {
   const code = issue.ID || 'trivy-kubernetes';
   const message = issueMessage(issue);
@@ -107,7 +66,7 @@ function trivyFinding(ctx: any, chartDir: any, rendered: any, issue: any, occurr
 
 function trivyFindings(ctx: any, chartDir: any, rendered: any, issues: any) {
   const occurrences = new Map();
-  return issues.filter((issue: any) => !isCanonicalLintConfigFalsePositive(rendered, issue)).map((issue: any) => {
+  return issues.map((issue: any) => {
     const resource = resourceIdentity(rendered, issue.CauseMetadata?.StartLine);
     const identity = JSON.stringify({ resource, code: issue.ID, message: issueMessage(issue) });
     const occurrence = (occurrences.get(identity) || 0) + 1;
@@ -118,7 +77,7 @@ function trivyFindings(ctx: any, chartDir: any, rendered: any, issues: any) {
 
 function runTrivyKubernetes(ctx: any) {
   const findings: any[] = [];
-  for (const chartDir of configuredTargetPaths(ctx)) {
+  for (const chartDir of configuredMarkerDirectories(ctx, 'Chart.yaml')) {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-trivy-kubernetes-'));
     const manifestPath = path.join(tempDir, 'rendered.yaml');
     try {
@@ -151,4 +110,4 @@ function registerKubernetesSecurityTools(registerTool: any) {
   });
 }
 
-export { CANONICAL_LINT_CONFIG_FALSE_POSITIVE, isCanonicalLintConfigFalsePositive, normalizedDocumentDigest, registerKubernetesSecurityTools, trivyFindings };
+export { registerKubernetesSecurityTools, trivyFindings };

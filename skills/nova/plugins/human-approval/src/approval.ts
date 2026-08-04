@@ -2,7 +2,7 @@ import type { StageResult, WaitRequest } from '@kubeclaw/plugin-sdk';
 
 export const APPROVAL_SIGNAL_TYPE = 'approval.resolved' as const;
 export const DEFAULT_APPROVAL_TIMEOUT_MINUTES = 60;
-export const MAX_APPROVAL_TIMEOUT_MINUTES = 525_600;
+const MAX_APPROVAL_TIMEOUT_MINUTES = 525_600;
 
 type UnknownRecord = Readonly<Record<string, unknown>>;
 
@@ -16,7 +16,7 @@ export interface ApprovalConfig {
   readonly timeoutMinutes: number;
 }
 
-export interface ApprovalIssuer {
+interface ApprovalIssuer {
   readonly type: 'operator';
   readonly id: string;
 }

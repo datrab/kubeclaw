@@ -71,14 +71,16 @@ function readTargets(config: Readonly<Record<string, unknown>>): ReadonlyMap<str
   return targets;
 }
 
-function assertJson(value: unknown, seen: Set<object>, depth: number): void {
-  if (depth > MAX_JSON_DEPTH) throw new Error('TRANSPORT_PAYLOAD_DEPTH_EXCEEDED');
-  if (value === null || typeof value === 'string' || typeof value === 'boolean') return;
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) throw new Error('TRANSPORT_PAYLOAD_INVALID');
-    return;
-  }
-  if (typeof value !== 'object') throw new Error('TRANSPORT_PAYLOAD_INVALID');
+function assertJsonKey(key: string): void {
+  if (
+    key.length < 1
+    || key.length > 128
+    || /[\u0000-\u001f\u007f]/.test(key)
+    || ['__proto__', 'constructor', 'prototype'].includes(key)
+  ) throw new Error('TRANSPORT_PAYLOAD_INVALID');
+}
+
+function assertJsonObject(value: object, seen: Set<object>, depth: number): void {
   if (seen.has(value)) throw new Error('TRANSPORT_PAYLOAD_CYCLIC');
   seen.add(value);
   if (Array.isArray(value)) {
@@ -86,18 +88,22 @@ function assertJson(value: unknown, seen: Set<object>, depth: number): void {
   } else {
     if (!plainRecord(value)) throw new Error('TRANSPORT_PAYLOAD_INVALID');
     for (const [key, item] of Object.entries(value)) {
-      if (
-        key.length < 1
-        || key.length > 128
-        || /[\u0000-\u001f\u007f]/.test(key)
-        || key === '__proto__'
-        || key === 'constructor'
-        || key === 'prototype'
-      ) throw new Error('TRANSPORT_PAYLOAD_INVALID');
+      assertJsonKey(key);
       assertJson(item, seen, depth + 1);
     }
   }
   seen.delete(value);
+}
+
+function assertJson(value: unknown, seen: Set<object>, depth: number): void {
+  if (depth > MAX_JSON_DEPTH) throw new Error('TRANSPORT_PAYLOAD_DEPTH_EXCEEDED');
+  if (value === null || ['string', 'boolean'].includes(typeof value)) return;
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) throw new Error('TRANSPORT_PAYLOAD_INVALID');
+    return;
+  }
+  if (typeof value !== 'object') throw new Error('TRANSPORT_PAYLOAD_INVALID');
+  assertJsonObject(value, seen, depth);
 }
 
 function publicationBody(payload: Readonly<Record<string, unknown>>, maxBytes: number): {

@@ -1,7 +1,12 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { AdapterActivationContext, AdapterInstance, WaitRequest } from '@kubeclaw/plugin-sdk';
+import {
+  canonicalJson,
+  type AdapterActivationContext,
+  type AdapterInstance,
+  type WaitRequest,
+} from '@kubeclaw/plugin-sdk';
 
 interface WaitRecord {
   readonly schemaVersion: 'wait-record.v2';
@@ -36,32 +41,74 @@ function isJson(value: unknown, depth = 0): boolean {
     .every(([key, entry]) => key.length > 0 && isJson(entry, depth + 1));
 }
 
-function isDateTime(value: unknown): value is string {
-  if (typeof value !== 'string') return false;
-  const match = RFC3339_DATE_TIME.exec(value);
-  if (!match) return false;
+function validCalendarDate(match: RegExpExecArray): boolean {
   const year = Number(match[1]);
   const month = Number(match[2]);
   const day = Number(match[3]);
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const maximumDay = month === 2 && leapYear ? 29 : (DAYS_IN_MONTH[month] ?? 0);
+  return month >= 1 && month <= 12 && day >= 1 && day <= maximumDay;
+}
+
+function validClockTime(match: RegExpExecArray): boolean {
   const hour = Number(match[4]);
   const minute = Number(match[5]);
   const second = Number(match[6]);
   const offsetSign = match[8] === '-' ? -1 : 1;
   const offsetHour = Number(match[9] ?? 0);
   const offsetMinute = Number(match[10] ?? 0);
-  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-  const maximumDay = month === 2 && leapYear ? 29 : (DAYS_IN_MONTH[month] ?? 0);
-  if (
-    month < 1 || month > 12
-    || day < 1 || day > maximumDay
-    || offsetHour > 23 || offsetMinute > 59
-  ) return false;
+  if (offsetHour > 23 || offsetMinute > 59) return false;
   if (hour <= 23 && minute <= 59 && second < 60) return true;
   const utcMinute = minute - offsetMinute * offsetSign;
   const utcHour = hour - offsetHour * offsetSign - (utcMinute < 0 ? 1 : 0);
   return (utcHour === 23 || utcHour === -1)
     && (utcMinute === 59 || utcMinute === -1)
     && second < 61;
+}
+
+function isDateTime(value: unknown): value is string {
+  if (typeof value !== 'string') return false;
+  const match = RFC3339_DATE_TIME.exec(value);
+  if (!match) return false;
+  return validCalendarDate(match) && validClockTime(match);
+}
+
+function assertWaitIdentity(payload: Record<string, unknown>, requireIdentity: boolean): void {
+  if (!requireIdentity) return;
+  if (
+    payload.schemaVersion !== 'wait-request.v2'
+    || typeof payload.waitId !== 'string'
+    || !OPAQUE_ID.test(payload.waitId)
+  ) throw new Error('WAIT_REQUEST_INVALID');
+}
+
+function parseIssuer(value: unknown): WaitRequest['authorizedIssuer'] {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WAIT_REQUEST_INVALID');
+  const issuer = value as Record<string, unknown>;
+  if (
+    !exactKeys(issuer, ['type', 'id'])
+    || typeof issuer.type !== 'string'
+    || !ISSUER_TYPES.has(issuer.type)
+    || typeof issuer.id !== 'string'
+    || !OPAQUE_ID.test(issuer.id)
+  ) throw new Error('WAIT_REQUEST_INVALID');
+  return issuer as WaitRequest['authorizedIssuer'];
+}
+
+function assertWaitFields(payload: Record<string, unknown>): void {
+  if (payload.kind !== 'signal' && payload.kind !== 'orchestrator') throw new Error('WAIT_REQUEST_INVALID');
+  if (
+    typeof payload.signalType !== 'string'
+    || payload.signalType.length > 160
+    || !NAMESPACED_ID.test(payload.signalType)
+  ) throw new Error('WAIT_REQUEST_INVALID');
+  if (payload.expiresAt !== null && !isDateTime(payload.expiresAt)) throw new Error('WAIT_EXPIRY_INVALID');
+  if (Object.hasOwn(payload, 'request') && (
+    !payload.request
+    || typeof payload.request !== 'object'
+    || Array.isArray(payload.request)
+    || !isJson(payload.request)
+  )) throw new Error('WAIT_REQUEST_INVALID');
 }
 
 function parseWait(value: unknown, requireIdentity: boolean): WaitRequest | Omit<WaitRequest, 'schemaVersion' | 'waitId'> {
@@ -71,35 +118,9 @@ function parseWait(value: unknown, requireIdentity: boolean): WaitRequest | Omit
     ? ['schemaVersion', 'waitId', 'kind', 'signalType', 'authorizedIssuer', 'expiresAt']
     : ['kind', 'signalType', 'authorizedIssuer', 'expiresAt'];
   if (!exactKeys(payload, required, ['request'])) throw new Error('WAIT_REQUEST_INVALID');
-  if (requireIdentity && (
-    payload.schemaVersion !== 'wait-request.v2'
-    || typeof payload.waitId !== 'string'
-    || !OPAQUE_ID.test(payload.waitId)
-  )) throw new Error('WAIT_REQUEST_INVALID');
-  if (payload.kind !== 'signal' && payload.kind !== 'orchestrator') throw new Error('WAIT_REQUEST_INVALID');
-  if (
-    typeof payload.signalType !== 'string'
-    || payload.signalType.length > 160
-    || !NAMESPACED_ID.test(payload.signalType)
-  ) throw new Error('WAIT_REQUEST_INVALID');
-  if (!payload.authorizedIssuer || typeof payload.authorizedIssuer !== 'object' || Array.isArray(payload.authorizedIssuer)) {
-    throw new Error('WAIT_REQUEST_INVALID');
-  }
-  const issuer = payload.authorizedIssuer as Record<string, unknown>;
-  if (
-    !exactKeys(issuer, ['type', 'id'])
-    || typeof issuer.type !== 'string'
-    || !ISSUER_TYPES.has(issuer.type)
-    || typeof issuer.id !== 'string'
-    || !OPAQUE_ID.test(issuer.id)
-  ) throw new Error('WAIT_REQUEST_INVALID');
-  if (payload.expiresAt !== null && !isDateTime(payload.expiresAt)) throw new Error('WAIT_EXPIRY_INVALID');
-  if (Object.hasOwn(payload, 'request') && (
-    !payload.request
-    || typeof payload.request !== 'object'
-    || Array.isArray(payload.request)
-    || !isJson(payload.request)
-  )) throw new Error('WAIT_REQUEST_INVALID');
+  assertWaitIdentity(payload, requireIdentity);
+  assertWaitFields(payload);
+  const issuer = parseIssuer(payload.authorizedIssuer);
   const parsed = {
     kind: payload.kind,
     signalType: payload.signalType,
@@ -110,17 +131,6 @@ function parseWait(value: unknown, requireIdentity: boolean): WaitRequest | Omit
   return requireIdentity
     ? { schemaVersion: 'wait-request.v2', waitId: payload.waitId as string, ...parsed }
     : parsed;
-}
-
-function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  if (value && typeof value === 'object') {
-    return `{${Object.entries(value as Record<string, unknown>)
-      .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, item]) => `${JSON.stringify(key)}:${canonical(item)}`)
-      .join(',')}}`;
-  }
-  return JSON.stringify(value);
 }
 
 function readRecords(file: string, maxEntryBytes: number): WaitRecord[] {
@@ -177,7 +187,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const duplicate = existing.find((record) => record.idempotencyKey === request.idempotencyKey);
       if (duplicate) {
         const expected = { ...parsed, waitId: duplicate.wait.waitId, schemaVersion: 'wait-request.v2' };
-        if (canonical(duplicate.wait) !== canonical(expected)) throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
+        if (canonicalJson(duplicate.wait) !== canonicalJson(expected)) throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
         return { created: false, wait: duplicate.wait };
       }
       const wait: WaitRequest = {

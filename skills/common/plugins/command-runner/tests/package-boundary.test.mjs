@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-for (const file of ['src/adapter.ts', 'src/adapter.ts']) {
-  const source = fs.readFileSync(file, 'utf8');
+const sources = ['src/adapter.ts', 'src/runner.ts'].map((file) => fs.readFileSync(file, 'utf8'));
+for (const source of sources) {
   assert.doesNotMatch(source, /skills\/(?:nova|buster|common)\/pipeline/);
   assert.doesNotMatch(source, /\b(?:exec|execFile|fork)\s*\(/);
-  assert.match(source, /shell:\s*false/);
-  assert.match(source, /env:\s*\{\}/);
 }
+const runtimeSource = sources.join('\n');
+assert.match(runtimeSource, /shell:\s*false/);
+assert.match(runtimeSource, /env:\s*\{\}/);
 
 console.log(JSON.stringify({
   ok: true,

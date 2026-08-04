@@ -11,6 +11,9 @@ COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
 COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
 WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
 RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+    && rm -rf src/generated/agent-observability \
+    && mkdir -p src/generated/agent-observability \
+    && cp -R /tmp/contracts/agent-observability/v1/src/. src/generated/agent-observability/ \
     && ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
     && node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
     && mkdir -p /out/extensions/kubeclaw-agent-observer \

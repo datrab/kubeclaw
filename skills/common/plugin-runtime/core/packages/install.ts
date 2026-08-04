@@ -102,6 +102,26 @@ function assertPolicy(request: ExternalInstallRequest, digest: string): void {
   }
 }
 
+function installedProvenance(root: string, manifest: ReturnType<typeof parsePluginManifest>, digest: string, request: ExternalInstallRequest) {
+  const now = new Date().toISOString();
+  return { schemaVersion: 'package-provenance.v2' as const,
+    package: { pluginId: manifest.id, apiVersion: manifest.apiVersion, packageVersion: manifest.packageVersion, contentDigest: digest },
+    source: { type: 'registry' as const, canonicalReference: request.canonicalSource }, canonicalPath: root,
+    trustScope: 'isolated_external' as const,
+    trustEvidence: { method: request.trustEvidence.method, verifier: request.trustEvidence.verifier, verifiedAt: now,
+      ...(request.trustEvidence.attestationDigest === undefined ? {} : { attestationDigest: request.trustEvidence.attestationDigest }) },
+    resolvedAt: now };
+}
+
+function validateModules(root: string, manifest: ReturnType<typeof parsePluginManifest>): void {
+  for (const registration of [...manifest.stages, ...manifest.observers]) {
+    const modulePath = path.join(root, registration.module);
+    if (!/\.(?:mjs|mts|js|ts)$/.test(modulePath)) throw new Error(`PLUGIN_INSTALL_MODULE_FORMAT_INVALID:${registration.module}`);
+    const checked = spawnSync(process.execPath, ['--check', modulePath], { cwd: root, env: { NODE_NO_WARNINGS: '1' }, encoding: 'utf8', timeout: 30_000 });
+    if (checked.status !== 0) throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${registration.module}`);
+  }
+}
+
 function validatePackage(root: string, request: ExternalInstallRequest): {
   readonly manifest: ReturnType<typeof parsePluginManifest>;
   readonly digest: string;
@@ -123,48 +143,8 @@ function validatePackage(root: string, request: ExternalInstallRequest): {
     throw new Error(`PLUGIN_INSTALL_DIGEST_MISMATCH:${digest}`);
   }
   assertPolicy(request, digest);
-  const provenance = {
-    schemaVersion: 'package-provenance.v2' as const,
-    package: {
-      pluginId: manifest.id,
-      apiVersion: manifest.apiVersion,
-      packageVersion: manifest.packageVersion,
-      contentDigest: digest,
-    },
-    source: { type: 'registry' as const, canonicalReference: request.canonicalSource },
-    canonicalPath: root,
-    trustScope: 'isolated_external' as const,
-    trustEvidence: {
-      method: request.trustEvidence.method,
-      verifier: request.trustEvidence.verifier,
-      verifiedAt: new Date().toISOString(),
-      ...(request.trustEvidence.attestationDigest === undefined
-        ? {}
-        : { attestationDigest: request.trustEvidence.attestationDigest }),
-    },
-    resolvedAt: new Date().toISOString(),
-  };
-  buildRegistry([{
-    root,
-    manifestPath,
-    manifest,
-    provenance,
-  }]);
-  for (const registration of [...manifest.stages, ...manifest.observers]) {
-    const modulePath = path.join(root, registration.module);
-    if (!/\.(?:mjs|mts|js|ts)$/.test(modulePath)) {
-      throw new Error(`PLUGIN_INSTALL_MODULE_FORMAT_INVALID:${registration.module}`);
-    }
-    const checked = spawnSync(process.execPath, ['--check', modulePath], {
-      cwd: root,
-      env: { NODE_NO_WARNINGS: '1' },
-      encoding: 'utf8',
-      timeout: 30_000,
-    });
-    if (checked.status !== 0) {
-      throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${registration.module}`);
-    }
-  }
+  buildRegistry([{ root, manifestPath, manifest, provenance: installedProvenance(root, manifest, digest, request) }]);
+  validateModules(root, manifest);
   return { manifest, digest };
 }
 

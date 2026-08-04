@@ -18,25 +18,28 @@
       ],
       "language_evidence": {
         "javascript": [
-          "package.json"
+          "**/package.json"
         ],
         "typescript": [
-          "skills/nova/tsconfig.json"
+          "**/tsconfig.json"
         ],
         "shell": [
-          "scripts/*.sh"
+          "**/*.sh"
         ],
         "docker": [
-          "docker/Dockerfile.general"
+          "**/Dockerfile",
+          "**/Dockerfile.*",
+          "**/*.dockerfile"
         ],
         "helm": [
-          "charts/kubeclaw/Chart.yaml"
+          "**/Chart.yaml"
         ],
         "yaml": [
-          "charts/kubeclaw/values.yaml"
+          "**/*.yaml",
+          "**/*.yml"
         ],
         "go": [
-          "go.mod"
+          "**/go.mod"
         ]
       },
       "go": {
@@ -257,11 +260,7 @@
       ],
       "config_path": null,
       "targets": [
-        "contracts/agent-observability/v1/tsconfig.json",
-        "skills/common/plugin-runtime/tsconfig.json",
-        "skills/common/plugins/openclaw-agent-observer/tsconfig.json",
-        "skills/nova/project_setup/tsconfig.json",
-        "skills/nova/tsconfig.json"
+        "."
       ],
       "include": [
         "**/*.ts",
@@ -359,10 +358,7 @@
         "--severity=warning"
       ],
       "targets": [
-        "docker",
-        "my-values",
-        "scripts",
-        "tests/verification"
+        "."
       ],
       "include": [
         "**/*.sh"
@@ -388,10 +384,7 @@
         "-ci"
       ],
       "targets": [
-        "docker",
-        "my-values",
-        "scripts",
-        "tests/verification"
+        "."
       ],
       "include": [
         "**/*.sh"
@@ -445,7 +438,9 @@
         "**/*.ts",
         "**/*.tsx",
         "**/*.mjs",
-        "**/*.cjs"
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
       ],
       "exclude": []
     },
@@ -493,7 +488,9 @@
         "**/*.ts",
         "**/*.tsx",
         "**/*.mjs",
-        "**/*.cjs"
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
       ],
       "exclude": []
     },
@@ -517,6 +514,8 @@
         "**/*.tsx",
         "**/*.mjs",
         "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts",
         "**/*.go",
         "**/*.py",
         "**/*.sh",
@@ -540,8 +539,7 @@
       ],
       "config_path": null,
       "targets": [
-        "docker/general-tools/package.json",
-        "docker/general-tools/package-lock.json"
+        "."
       ],
       "include": [
         "**/package.json",
@@ -775,6 +773,8 @@
         "**/*.tsx",
         "**/*.mjs",
         "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts",
         "**/*.py"
       ],
       "exclude": [
@@ -794,12 +794,7 @@
       ],
       "config_path": null,
       "targets": [
-        "Projects/buster-infra-smoke/src/Dockerfile",
-        "Projects/pipeline-smoke-landing/src/Dockerfile",
-        "docker/Dockerfile.buster-gateway",
-        "docker/Dockerfile.general",
-        "docker/Dockerfile.namespace-controller",
-        "docker/Dockerfile.prism-preview"
+        "."
       ],
       "include": [
         "**/Dockerfile",
@@ -821,7 +816,7 @@
       ],
       "config_path": null,
       "targets": [
-        "charts/kubeclaw"
+        "."
       ],
       "include": [
         "**/Chart.yaml"
@@ -841,7 +836,7 @@
       ],
       "config_path": null,
       "targets": [
-        "charts/kubeclaw"
+        "."
       ],
       "include": [
         "**/*.yaml",
@@ -863,7 +858,7 @@
       "config_path": null,
       "arguments": [],
       "targets": [
-        "charts/kubeclaw"
+        "."
       ],
       "include": [
         "**/*.yaml",
@@ -884,17 +879,15 @@
       ],
       "config_path": ".yamllint.yml",
       "targets": [
-        ".github",
-        "Projects/buster-infra-smoke/src/deployment.yaml",
-        "charts/kubeclaw/values.yaml",
-        "examples",
-        "my-values"
+        "."
       ],
       "include": [
         "**/*.yaml",
         "**/*.yml"
       ],
-      "exclude": []
+      "exclude": [
+        "**/templates/**"
+      ]
     }
   ]
 }

@@ -1,28 +1,23 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": [
-    "skills/common/plugins/openclaw-agent-observer/src/index.ts",
-    "contracts/agent-observability/v1/src/{mapping,validation}.ts*",
-    "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
-    "scripts/**/*.mjs",
-    "skills/common/discord-purge.ts",
-    "skills/common/plugin-runtime/cli.ts",
-    "skills/common/plugin-runtime/core/src/index.ts",
-    "skills/{common,nova,buster}/plugins/*/src/**/*.ts",
-    "skills/nova/pipeline.ts",
-    "skills/nova/project_setup/**/*.ts",
-    "tests/**/*.{mjs,mts,ts}"
-  ],
-  "project": [
-    "skills/common/plugins/openclaw-agent-observer/src/**/*.{ts,tsx}",
-    "scripts/**/*.{js,mjs,cjs}",
-    "skills/{buster,common,nova}/**/*.{js,jsx,ts,tsx,mjs,cjs}",
-    "tests/**/*.{js,mjs,mts,cjs,ts}"
+  "ignoreExportsUsedInFile": true,
+  "ignoreBinaries": [
+    "buildctl",
+    "cc",
+    "eslint",
+    "gofmt",
+    "helm",
+    "kubeconform",
+    "kubectl",
+    "which"
   ],
   "ignore": [
     "**/dist/**",
     "**/generated/**",
-    "**/node_modules/**"
+    "**/node_modules/**",
+    "Projects/**",
+    "charts/kubeclaw/files/config/eslint.config.mjs",
+    "contracts/telemetry/v1/{bundle-types,telemetry-types}.ts"
   ],
   "ignoreDependencies": [
     "@axe-core/playwright",
@@ -35,5 +30,450 @@
     "playwright",
     "pngjs",
     "ws"
-  ]
+  ],
+  "workspaces": {
+    ".": {
+      "entry": [
+        "scripts/**/*.mjs",
+        "skills/nova/pipeline.ts",
+        "skills/nova/project_setup/**/*.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "scripts/**/*.{js,mjs,cjs}",
+        "skills/nova/pipeline.ts",
+        "skills/nova/project_setup/**/*.{ts,mjs}",
+        "tests/**/*.{js,mjs,mts,cjs,ts}"
+      ]
+    },
+    "contracts/agent-observability/v1": {
+      "entry": [
+        "src/index.ts"
+      ],
+      "project": [
+        "src/**/*.ts"
+      ]
+    },
+    "skills/buster/plugins/buster-suite-runtime": {
+      "entry": [
+        "src/adapter.ts",
+        "src/worker-runner.ts",
+        "src/worker.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/test-agent": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugin-runtime/core": {
+      "entry": [
+        "src/index.ts",
+        "isolation/child.mjs"
+      ],
+      "project": [
+        "**/*.{ts,mjs}"
+      ]
+    },
+    "skills/common/plugin-runtime/sdk": {
+      "entry": [
+        "src/index.ts",
+        "src/testing/index.ts"
+      ],
+      "project": [
+        "src/**/*.ts"
+      ]
+    },
+    "skills/common/plugins/agent-observability": {
+      "entry": [
+        "src/observers.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/artifact-store": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/command-runner": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/git-workspace": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/network-http": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/notification-observer": {
+      "entry": [
+        "src/observer.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/openclaw-agent-events": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/openclaw-agent-observer": {
+      "entry": [
+        "src/generated/agent-observability/index.ts",
+        "src/index.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/operator-messaging": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/prompt-contract": {
+      "entry": [
+        "src/index.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/redis-transport": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/runtime-dispatch": {
+      "entry": [
+        "src/adapter.ts",
+        "src/openclaw-adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/secret-resolver": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/state-store": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/telemetry-observer": {
+      "entry": [
+        "src/observer.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/telemetry-store": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/transport-publisher": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/common/plugins/wait-store": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/architecture-validator": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/blueprint-sync": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/buster-quality-gate": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/case-study": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/delivery-lint": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/human-approval": {
+      "entry": [
+        "src/architecture-approval.ts",
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/implementation-agent": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/lint": {
+      "entry": [
+        "src/adapter.ts",
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/pipeline-review": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/preflight-contract": {
+      "entry": [
+        "src/buildkit.ts",
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/project-summary": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/repository-adapter": {
+      "entry": [
+        "src/adapter.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/review": {
+      "entry": [
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    }
+  }
 }

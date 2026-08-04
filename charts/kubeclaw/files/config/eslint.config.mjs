@@ -11,25 +11,54 @@ const PRODUCTION_IGNORES = [
   '**/tests/**',
   '**/__tests__/**',
   '**/fixtures/**',
+  '**/generated/**',
   'contracts/telemetry/v1/telemetry-types.ts',
+];
+
+const TEST_FILES = [
+  '**/*.test.*',
+  '**/*.spec.*',
+  '**/test/**/*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}',
+  '**/tests/**/*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}',
+  '**/__tests__/**/*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}',
 ];
 
 const CONSOLE_BOUNDARIES = [
   'scripts/**/*.mjs',
+  'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts',
+  'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
+  'skills/common/plugin-runtime/core/isolation/child.mjs',
   'skills/common/plugin-runtime/cli.ts',
+  'skills/nova/plugins/lint/src/engine/output.ts',
   'skills/nova/project_setup/tools/progress-scaffold.ts',
 ];
 
 const ENVIRONMENT_BOUNDARIES = [
   'scripts/clawpatch-pipeline-light.mjs',
+  'scripts/verify-all-skill-tests.mjs',
+  'scripts/verify-plugin-live-capabilities.mjs',
+  'scripts/verify-plugin-packages.mjs',
+  'skills/buster/plugins/buster-suite-runtime/common/pipeline/runtime-environment.ts',
+  'skills/buster/plugins/buster-suite-runtime/src/runtime/buster-environment.ts',
+  'skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts',
+  'skills/buster/plugins/buster-suite-runtime/src/worker.ts',
+  'skills/buster/plugins/buster-suite-runtime/src/worker-context.ts',
+  'skills/common/plugin-runtime/core/registry/import-audit-child.mjs',
+  'skills/common/plugin-runtime/core/registry/import-audit.ts',
   'skills/common/plugins/openclaw-agent-observer/src/config.ts',
+  'skills/common/plugins/secret-resolver/src/adapter.ts',
   'skills/common/plugin-runtime/core/config/platform.ts',
+  'skills/nova/plugins/lint/src/engine/execution.ts',
 ];
 
 const DYNAMIC_MODULE_BOUNDARIES = [
+  'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/a11y.ts',
+  'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
   'skills/nova/pipeline.ts',
+  'skills/common/plugin-runtime/core/isolation/child.mjs',
   'skills/common/plugin-runtime/core/isolation/runner.ts',
   'skills/common/plugin-runtime/core/registry/activation.ts',
+  'skills/common/plugin-runtime/core/registry/import-audit-child.mjs',
 ];
 
 function propertyName(node) {
@@ -113,11 +142,8 @@ function isBooleanExpression(node) {
 function isBooleanContext(node) {
   const parent = node?.parent;
   if (!parent) return false;
-  if (parent.type === 'IfStatement' && parent.test === node) return true;
-  if (parent.type === 'WhileStatement' && parent.test === node) return true;
-  if (parent.type === 'DoWhileStatement' && parent.test === node) return true;
-  if (parent.type === 'ForStatement' && parent.test === node) return true;
-  if (parent.type === 'ConditionalExpression' && parent.test === node) return true;
+  const testContexts = new Set(['IfStatement', 'WhileStatement', 'DoWhileStatement', 'ForStatement', 'ConditionalExpression']);
+  if (testContexts.has(parent.type) && parent.test === node) return true;
   return parent.type === 'CallExpression'
     && parent.callee?.type === 'Identifier'
     && parent.callee.name === 'Boolean';
@@ -152,7 +178,10 @@ const discipline = {
       create(context) {
         return {
           Program(node) {
-            const filename = path.basename(context.filename).replace(/(?:\.d)?\.(?:c|m)?(?:j|t)sx?$/, '');
+            const filename = path.basename(context.filename)
+              .replace(/(?:\.d)?\.(?:c|m)?(?:j|t)sx?$/, '')
+              .replace(/\.(?:test|spec)$/, '')
+              .replace(/\.(?:unit|integration|e2e)$/, '');
             if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(filename)) context.report({ node, messageId: 'invalid' });
           },
         };
@@ -227,7 +256,7 @@ export default [
     ignores: ['**/node_modules/**', '**/dist/**', '**/build/**', '**/coverage/**', '**/*.min.js'],
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx,mjs,cjs}'],
+    files: ['**/*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}'],
     languageOptions: {
       parser: tseslint.parser,
       ecmaVersion: 'latest',
@@ -236,7 +265,42 @@ export default [
     },
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx,mjs,cjs}'],
+    files: TEST_FILES,
+    plugins: { discipline },
+    rules: {
+      complexity: ['error', { max: 70, variant: 'classic' }],
+      'max-depth': ['error', { max: 6 }],
+      'max-lines': ['error', { max: 2_000, skipBlankLines: true, skipComments: true }],
+      'max-lines-per-function': ['error', { max: 650, skipBlankLines: true, skipComments: true, IIFEs: true }],
+      'max-params': ['error', { max: 12 }],
+      'no-async-promise-executor': 'error',
+      'no-global-assign': 'error',
+      'no-useless-catch': 'error',
+      'no-var': 'error',
+      'discipline/filename-case': 'error',
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx,mts,cts}'],
+    ignores: PRODUCTION_IGNORES,
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: process.cwd(),
+      },
+    },
+    plugins: { '@typescript-eslint': tseslint.plugin },
+    rules: {
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+    },
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}'],
     ignores: PRODUCTION_IGNORES,
     plugins: { discipline },
     rules: {

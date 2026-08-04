@@ -53,9 +53,9 @@ mkdir -p "${skills_root}/pipeline/agent-observability/src"
 cp -R "${agent_observability_contract_source}/." "${skills_root}/pipeline/agent-observability/src/"
 # The gateway observer source is also materialized as a self-contained package
 # in role bundles; its repository facade must not escape /app/skills.
-rm -rf "${skills_root}/plugins/openclaw-agent-observer/src/agent-observability"
-mkdir -p "${skills_root}/plugins/openclaw-agent-observer/src/agent-observability"
-cp -R "${agent_observability_contract_source}/." "${skills_root}/plugins/openclaw-agent-observer/src/agent-observability/"
+rm -rf "${skills_root}/plugins/openclaw-agent-observer/src/generated/agent-observability"
+mkdir -p "${skills_root}/plugins/openclaw-agent-observer/src/generated/agent-observability"
+cp -R "${agent_observability_contract_source}/." "${skills_root}/plugins/openclaw-agent-observer/src/generated/agent-observability/"
 # Runtime telemetry validation is self-contained inside /app/skills. The
 # repository source remains canonical; bundles materialize immutable assets.
 rm -rf "${skills_root}/pipeline/contracts/telemetry/v1"

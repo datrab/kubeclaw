@@ -34,7 +34,10 @@ const server = http.createServer((request, response) => {
       response.end(JSON.stringify({
         ok: true,
         toolName: 'sessions_spawn',
-        output: { content: [], details: { childSessionKey: 'session:gateway-test' } },
+        output: {
+          content: [],
+          details: { childSessionKey: null, sessionKey: 'session:gateway-test' },
+        },
         source: 'core',
       }));
     } else if (parsed.tool === 'subagents') {

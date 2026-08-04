@@ -146,6 +146,33 @@ function assertNoAdapterCycles(
   for (const id of edges.keys()) visit(id);
 }
 
+function enableProviders(snapshot: RegistrySnapshot, policy: CapabilityPolicy, requirements: ReadonlyMap<string, readonly string[]>, enabled: Set<string>): Map<string, AdapterRegistryEntry> {
+  const providers = new Map<string, AdapterRegistryEntry>();
+  for (;;) {
+    const before = enabled.size;
+    for (const registrationId of [...enabled]) {
+      for (const capability of requirements.get(registrationId) ?? []) {
+        const provider = providers.get(capability) ?? selectedProvider(snapshot, policy, capability);
+        providers.set(capability, provider); enabled.add(`${provider.package.manifest.id}:${provider.registration.id}`);
+      }
+    }
+    if (enabled.size === before) return providers;
+  }
+}
+
+function grantsForRegistration(registrationId: string, requirements: readonly string[], policy: CapabilityPolicy, providers: ReadonlyMap<string, AdapterRegistryEntry>): readonly CapabilityGrant[] {
+  const configured = policy.grants.get(registrationId); const grants: CapabilityGrant[] = [];
+  for (const capability of requirements) {
+    const constraints = configured?.get(capability);
+    if (!constraints) throw new RegistryError('REGISTRY_CAPABILITY_DENIED', `Required capability denied: ${registrationId} -> ${capability}`);
+    const provider = providers.get(capability);
+    if (!provider) throw new RegistryError('REGISTRY_CAPABILITY_PROVIDER_MISSING', `Required capability has no selected provider: ${capability}`);
+    grants.push(Object.freeze({ capability, provider: packageResolution(provider), constraints: validateCapabilityConstraints(capability, constraints) }));
+  }
+  if (configured) for (const capability of configured.keys()) if (!requirements.includes(capability)) throw new RegistryError('REGISTRY_CAPABILITY_UNREQUESTED', `Policy grants unrequested capability: ${registrationId} -> ${capability}`);
+  return Object.freeze(grants);
+}
+
 export function resolveCapabilityGrants(
   snapshot: RegistrySnapshot,
   policy: CapabilityPolicy,
@@ -162,48 +189,11 @@ export function resolveCapabilityGrants(
       );
     }
   }
-  const providers = new Map<string, AdapterRegistryEntry>();
-  for (;;) {
-    const before = enabled.size;
-    for (const registrationId of [...enabled]) {
-      for (const capability of allRequirements.get(registrationId) ?? []) {
-        let provider = providers.get(capability);
-        if (!provider) {
-          provider = selectedProvider(snapshot, policy, capability);
-          providers.set(capability, provider);
-        }
-        enabled.add(`${provider.package.manifest.id}:${provider.registration.id}`);
-      }
-    }
-    if (enabled.size === before) break;
-  }
+  const providers = enableProviders(snapshot, policy, allRequirements, enabled);
   const resolved: Array<readonly [string, readonly CapabilityGrant[]]> = [];
   for (const [registrationId, requirements] of allRequirements) {
     if (!enabled.has(registrationId)) continue;
-    const configured = policy.grants.get(registrationId);
-    const grants: CapabilityGrant[] = [];
-    for (const capability of requirements) {
-      const constraints = configured?.get(capability);
-      if (!constraints) {
-        throw new RegistryError('REGISTRY_CAPABILITY_DENIED', `Required capability denied: ${registrationId} -> ${capability}`);
-      }
-      const normalizedConstraints = validateCapabilityConstraints(capability, constraints);
-      const provider = providers.get(capability);
-      if (!provider) throw new RegistryError('REGISTRY_CAPABILITY_PROVIDER_MISSING', `Required capability has no selected provider: ${capability}`);
-      grants.push(Object.freeze({
-        capability,
-        provider: packageResolution(provider),
-        constraints: normalizedConstraints,
-      }));
-    }
-    if (configured) {
-      for (const capability of configured.keys()) {
-        if (!requirements.includes(capability)) {
-          throw new RegistryError('REGISTRY_CAPABILITY_UNREQUESTED', `Policy grants unrequested capability: ${registrationId} -> ${capability}`);
-        }
-      }
-    }
-    resolved.push([registrationId, Object.freeze(grants)]);
+    resolved.push([registrationId, grantsForRegistration(registrationId, requirements, policy, providers)]);
   }
   for (const registrationId of policy.grants.keys()) {
     if (!enabled.has(registrationId)) {

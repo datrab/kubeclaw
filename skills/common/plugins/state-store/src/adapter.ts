@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, type AdapterActivationContext, type AdapterInstance } from '@kubeclaw/plugin-sdk';
 
 interface StateRecord {
   readonly schemaVersion: 'plugin-state-record.v2';
@@ -36,17 +36,6 @@ function records(file: string, maxEntryBytes: number): StateRecord[] {
   });
 }
 
-function canonical(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
-  if (value && typeof value === 'object') {
-    return `{${Object.entries(value as Record<string, unknown>)
-      .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, item]) => `${JSON.stringify(key)}:${canonical(item)}`)
-      .join(',')}}`;
-  }
-  return JSON.stringify(value);
-}
-
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const configured = context.config.root;
   if (typeof configured !== 'string') throw new Error('state root is required');
@@ -73,7 +62,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const existing = records(file, maxEntryBytes);
       const duplicate = existing.find((entry) => entry.idempotencyKey === request.idempotencyKey);
       if (duplicate) {
-        if (canonical(duplicate.value) !== canonical(request.payload)) {
+        if (canonicalJson(duplicate.value) !== canonicalJson(request.payload)) {
           throw new Error('STATE_IDEMPOTENCY_CONFLICT');
         }
         return { appended: false, entry: duplicate };

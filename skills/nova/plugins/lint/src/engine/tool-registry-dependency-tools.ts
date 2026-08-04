@@ -1,7 +1,7 @@
 import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
-import { configuredTargetPaths } from './discovery.ts';
+import { listConfiguredTargetFiles } from './discovery.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
 import {
@@ -18,6 +18,31 @@ import {
   requireString,
 } from './tool-registry-core.ts';
 
+function auditPackageLock(ctx: any, lockfile: string): any[] {
+  const packageRoot = path.dirname(lockfile);
+  const result = requireToolExecution(safeExec('npm', ['audit', '--json', '--omit=dev'], {
+    cwd: packageRoot,
+    timeout: ctx.tool.timeout_ms,
+  }), 'npm-audit');
+  const parsed = tryParseJson(result.stdout);
+  if (!parsed.ok) return failParse(ctx, 'npm-audit', parsed, result, path.join(packageRoot, 'package.json'));
+  if (parsed.data?.error) {
+    const auditError = recordValue(parsed.data.error);
+    const message = selectPresentValue(auditError.summary, auditError.message, typeof parsed.data.error === 'string' ? parsed.data.error : '', 'npm audit returned an operational error');
+    throw Object.assign(new Error(message), { code: 'npm-audit-execution-failed' });
+  }
+  const findings = Object.entries(recordValue(parsed.data?.vulnerabilities)).map(([name, vuln]) => ({
+    file: path.join(packageRoot, 'package.json'),
+    line: null,
+    column: null,
+    severity: npmAuditSeverity(vuln.severity),
+    code: `npm:${vuln.severity}`,
+    message: `${name}: ${selectPresentValue(vuln.title, vuln.via?.[0]?.title, LINT_VULNERABILITY_FOUND)} (${vuln.severity})`,
+  }));
+  if (result.exitCode !== 0 && findings.length === 0) return failParse(ctx, 'npm-audit', { error: 'non-zero exit without vulnerability findings' }, result, path.join(packageRoot, 'package.json'));
+  return findings;
+}
+
 // ── npm audit (Dependency security) ──
 registerTool({
   id: 'npm-audit',
@@ -26,33 +51,8 @@ registerTool({
   tier: 'full',
   detect: isJavaScriptOrTypeScriptProject,
   run: (ctx: any) => {
-    const packageRoot = path.dirname(configuredTargetPaths(ctx)[0]);
-    const result = requireToolExecution(safeExec('npm', ['audit', '--json', '--omit=dev'], {
-      cwd: packageRoot,
-      timeout: ctx.tool.timeout_ms,
-    }), 'npm-audit');
-
-    const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return failParse(ctx, 'npm-audit', parsed, result, path.join(ctx.repoRoot, 'package.json'));
-    if (parsed.data?.error) {
-      const auditError = recordValue(parsed.data.error);
-      const message = selectPresentValue(auditError.summary, auditError.message, typeof parsed.data.error === 'string' ? parsed.data.error : '', 'npm audit returned an operational error');
-      throw Object.assign(new Error(message), { code: 'npm-audit-execution-failed' });
-    }
-
-    const findings: any[] = [];
-    const vulns = recordValue(parsed.data?.vulnerabilities);
-    for (const [name, vuln] of Object.entries(vulns)) {
-      findings.push({
-        file: path.join(packageRoot, 'package.json'),
-        line: null,
-        column: null,
-        severity: npmAuditSeverity(vuln.severity),
-        code: `npm:${vuln.severity}`,
-        message: `${name}: ${selectPresentValue(vuln.title, vuln.via?.[0]?.title, LINT_VULNERABILITY_FOUND)} (${vuln.severity})`,
-      });
-    }
-    if (result.exitCode !== 0 && findings.length === 0) return failParse(ctx, 'npm-audit', { error: 'non-zero exit without vulnerability findings' }, result, path.join(packageRoot, 'package.json'));
+    const lockfiles = listConfiguredTargetFiles(ctx, (file: string) => path.basename(file) === 'package-lock.json');
+    const findings = lockfiles.flatMap((lockfile: string) => auditPackageLock(ctx, lockfile));
 
     return {
       errors: findings.filter((f: any) => f.severity === 'error').length,

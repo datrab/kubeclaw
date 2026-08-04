@@ -103,87 +103,43 @@ export function isKnownCapability(capability: string): capability is CapabilityI
   return Object.hasOwn(CAPABILITY_DEFINITIONS, capability);
 }
 
+function invalidConstraints(capability: CapabilityId): never { throw new RegistryError('REGISTRY_CAPABILITY_CONSTRAINT_INVALID', `Invalid constraints for capability '${capability}'`); }
+function normalizedLists(capability: CapabilityId, constraints: Readonly<Record<string, unknown>>, required: readonly string[]): Record<string, readonly string[]> {
+  const keys = Object.keys(constraints).sort(); const sorted = [...required].sort();
+  if (keys.length !== required.length || keys.some((key, index) => key !== sorted[index])) invalidConstraints(capability);
+  const resolved: Array<readonly [string, readonly string[]]> = [];
+  for (const key of required) {
+    const value = constraints[key];
+    if (!Array.isArray(value) || value.length === 0 || !value.every((entry) => typeof entry === 'string' && entry.length > 0) || new Set(value).size !== value.length) invalidConstraints(capability);
+    resolved.push([key, Object.freeze([...value] as string[])]);
+  }
+  return Object.fromEntries(resolved);
+}
+function validateAbsoluteLists(capability: CapabilityId, normalized: Record<string, readonly string[]>): void {
+  for (const key of ['allowedRoots','allowedWorkspaceRoots','allowedWorkingRoots','allowedPolicyRoots']) {
+    if (normalized[key]?.some((entry) => !path.isAbsolute(entry) || path.normalize(entry) !== entry)) throw new RegistryError('REGISTRY_CAPABILITY_CONSTRAINT_INVALID', `Capability '${capability}' requires absolute paths in '${key}'`);
+  }
+  if (normalized.allowedExecutables?.some((entry) => !path.isAbsolute(entry) || path.normalize(entry) !== entry)) throw new RegistryError('REGISTRY_CAPABILITY_CONSTRAINT_INVALID', `Capability '${capability}' requires absolute executable paths`);
+}
+function validatePrefixes(capability: CapabilityId, prefixes?: readonly string[]): void {
+  if (prefixes?.some((entry) => { const canonical = entry.endsWith('/') ? entry.slice(0, -1) : entry; return path.isAbsolute(entry) || /^[A-Za-z]:[\\/]/u.test(entry) || entry.includes('\\') || canonical === '..' || canonical.startsWith('../') || path.posix.normalize(canonical) !== canonical; })) {
+    throw new RegistryError('REGISTRY_CAPABILITY_CONSTRAINT_INVALID', `Capability '${capability}' requires repository-relative path prefixes`);
+  }
+}
+function validateOrigins(capability: CapabilityId, origins?: readonly string[]): void {
+  if (origins?.some((entry) => { try { const url = new URL(entry); return !['http:', 'https:'].includes(url.protocol) || url.origin !== entry; } catch { return true; } })) {
+    throw new RegistryError('REGISTRY_CAPABILITY_CONSTRAINT_INVALID', `Capability '${capability}' requires canonical HTTP origins`);
+  }
+}
+
 function constraintLists(
   capability: CapabilityId,
   constraints: Readonly<Record<string, unknown>>,
 ): Readonly<Record<string, readonly string[]>> {
   const definition = CAPABILITY_DEFINITIONS[capability];
   const required = definition.constraintSchema.required as readonly string[];
-  const sortedRequired = [...required].sort();
-  const keys = Object.keys(constraints).sort();
-  if (keys.length !== required.length || keys.some((key, index) => key !== sortedRequired[index])) {
-    throw new RegistryError(
-      'REGISTRY_CAPABILITY_CONSTRAINT_INVALID',
-      `Invalid constraints for capability '${capability}'`,
-    );
-  }
-  const resolved: Array<readonly [string, readonly string[]]> = [];
-  for (const key of required) {
-    const value = constraints[key];
-    if (
-      !Array.isArray(value)
-      || value.length === 0
-      || !value.every((entry) => typeof entry === 'string' && entry.length > 0)
-      || new Set(value).size !== value.length
-    ) {
-      throw new RegistryError(
-        'REGISTRY_CAPABILITY_CONSTRAINT_INVALID',
-        `Invalid constraints for capability '${capability}'`,
-      );
-    }
-    resolved.push([key, Object.freeze([...value])]);
-  }
-  const normalized = Object.fromEntries(resolved) as Record<string, readonly string[]>;
-  for (const key of [
-    'allowedRoots',
-    'allowedWorkspaceRoots',
-    'allowedWorkingRoots',
-    'allowedPolicyRoots',
-  ]) {
-    if (normalized[key]?.some((entry) => !path.isAbsolute(entry) || path.normalize(entry) !== entry)) {
-      throw new RegistryError(
-        'REGISTRY_CAPABILITY_CONSTRAINT_INVALID',
-        `Capability '${capability}' requires absolute paths in '${key}'`,
-      );
-    }
-  }
-  if (normalized.allowedExecutables?.some(
-    (entry) => !path.isAbsolute(entry) || path.normalize(entry) !== entry,
-  )) {
-    throw new RegistryError(
-      'REGISTRY_CAPABILITY_CONSTRAINT_INVALID',
-      `Capability '${capability}' requires absolute executable paths`,
-    );
-  }
-  if (normalized.allowedPrefixes?.some(
-    (entry) => {
-      const canonical = entry.endsWith('/') ? entry.slice(0, -1) : entry;
-      return path.isAbsolute(entry)
-        || /^[A-Za-z]:[\\/]/u.test(entry)
-        || entry.includes('\\')
-        || canonical === '..'
-        || canonical.startsWith('../')
-        || path.posix.normalize(canonical) !== canonical;
-    },
-  )) {
-    throw new RegistryError(
-      'REGISTRY_CAPABILITY_CONSTRAINT_INVALID',
-      `Capability '${capability}' requires repository-relative path prefixes`,
-    );
-  }
-  if (normalized.allowedOrigins?.some((entry) => {
-    try {
-      const url = new URL(entry);
-      return !['http:', 'https:'].includes(url.protocol) || url.origin !== entry;
-    } catch {
-      return true;
-    }
-  })) {
-    throw new RegistryError(
-      'REGISTRY_CAPABILITY_CONSTRAINT_INVALID',
-      `Capability '${capability}' requires canonical HTTP origins`,
-    );
-  }
+  const normalized = normalizedLists(capability, constraints, required);
+  validateAbsoluteLists(capability, normalized); validatePrefixes(capability, normalized.allowedPrefixes); validateOrigins(capability, normalized.allowedOrigins);
   return Object.freeze(normalized);
 }
 

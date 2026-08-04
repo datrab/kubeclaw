@@ -47,7 +47,7 @@ export async function runHttpTest(test: AnyRecord, baseUrl: string, defaults: An
     const response = await fetch(`${baseUrl}${String(interpolate(test.path, vars))}`, requestOptions(test, defaults, vars, controller.signal));
     const elapsed = Date.now() - start;
     const expect = objectRecordOrEmpty(test.expect);
-    const failures = await bodyFailures(await responseBody(response, expect), expect);
+    const failures = bodyFailures(await responseBody(response, expect), expect);
     if (expect.status != null && response.status !== expect.status) failures.unshift(`Expected status ${expect.status}, got ${response.status}`);
     if (expect.max_response_ms != null && elapsed > expect.max_response_ms) failures.push(`Response took ${elapsed}ms (max: ${expect.max_response_ms}ms)`);
     return { passed: failures.length === 0, failures, status: response.status, elapsed };

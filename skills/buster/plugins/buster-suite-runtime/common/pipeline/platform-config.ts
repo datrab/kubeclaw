@@ -3,11 +3,6 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
-declare const process: {
-  env: Record<string, string | undefined>;
-};
-
-export const DEFAULT_SWARM_CONFIG_PATH = '/home/node/.openclaw/swarm.config.json';
 const STANDARD_PROFILE_NAME = 'standard';
 function resolveProfileUrl(file: string): URL {
   const packaged = new URL(`./config-profiles/${file}`, import.meta.url);
@@ -154,7 +149,7 @@ function substituteProfileTemplates(value: any, context: AnyRecord, pathParts: s
   return value;
 }
 
-export function isCompactSwarmConfig(config: any) {
+function isCompactSwarmConfig(config: any) {
   return isPlainObject(config) && hasCompactConfigAuthority(config);
 }
 
@@ -202,49 +197,4 @@ export function expandSwarmConfig(rawConfig: any) {
     repo_root: rawConfig.repo_root
   });
   return expanded;
-}
-
-export function normalizeSwarmConfigInPlace(config: any) {
-  const expanded = expandSwarmConfig(config);
-  if (expanded === config) return config;
-  for (const key of Object.keys(config)) delete config[key];
-  Object.assign(config, expanded);
-  return config;
-}
-
-export function discoverPlatformSwarmConfigCandidates() {
-  return [...new Set([
-    process.env.SWARM_CONFIG,
-    DEFAULT_SWARM_CONFIG_PATH,
-  ].filter((candidate): candidate is string => typeof candidate === 'string' && candidate.length > 0)
-    .map(candidate => path.resolve(candidate)))];
-}
-
-export function discoverSwarmConfigPath(candidates = discoverPlatformSwarmConfigCandidates()): string {
-  const normalizedCandidates = [...new Set(candidates.filter(Boolean).map(candidate => path.resolve(candidate)))];
-  for (const candidate of normalizedCandidates) {
-    if (fs.existsSync(candidate)) return candidate;
-  }
-  return normalizedCandidates[0] ?? DEFAULT_SWARM_CONFIG_PATH;
-}
-
-export function loadPlatformSwarmConfig(configPath: string = discoverSwarmConfigPath()) {
-  const resolvedPath = path.resolve(configPath);
-  if (!fs.existsSync(resolvedPath)) {
-    throw new Error(
-      `Swarm config missing: ${resolvedPath}\n` +
-      `  Expected ${DEFAULT_SWARM_CONFIG_PATH}; SWARM_CONFIG is checked only as a secondary candidate`
-    );
-  }
-  try {
-    return {
-      path: resolvedPath,
-      config: expandSwarmConfig(JSON.parse(fs.readFileSync(resolvedPath, 'utf8'))),
-    };
-  } catch (error) {
-    throw new Error(
-      `Swarm config invalid: ${resolvedPath}\n` +
-      `  ${(error as Error).message}`
-    );
-  }
 }

@@ -218,10 +218,6 @@ export function renderManifestForK8sSuiteWithStats(content: string, imageName: s
   return { content: dumpYamlDocuments(docs), imageRewrites };
 }
 
-export function renderManifestForK8sSuite(content: string, imageName: string, registryTag: string, targetNs: string, log: SuiteLog = () => {}): string {
-  return renderManifestForK8sSuiteWithStats(content, imageName, registryTag, targetNs, log).content;
-}
-
 export function kubectlOutputLooksLikeHtml(value: unknown): boolean {
   return /^\s*</.test(value == null ? '' : String(value));
 }

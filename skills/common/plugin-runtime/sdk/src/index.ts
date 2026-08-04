@@ -1,4 +1,5 @@
 export * from './generated/contracts.ts';
+export * from './values.ts';
 export type {
   CapabilityInvocation,
   AdapterActivationContext,

@@ -70,6 +70,7 @@ export async function executeLintReport(request: LintExecutionRequest): Promise<
     includeDebt: request.includeDebt === true,
     includeExperimental: request.includeExperimental === true,
     diagnostics: takeDiscoveryDiagnostics(),
+    matchedBaselineKeys: new Set<string>(),
   };
   if (changedFiles.length > 0) context.changedFiles = resolveScope(context);
   else resolveScope(context);
@@ -79,5 +80,20 @@ export async function executeLintReport(request: LintExecutionRequest): Promise<
   ];
   const report = await runToolsForRegistry(context, buildToolRegistry(policy, projectTypes));
   validateLintReport(report);
+  if (request.tier === 'full' && !context.changedFilesRequested && !modulePath) {
+    const completedTools = new Set(Object.entries((report as any).tools)
+      .filter(([, result]: any) => result.status === 'ok')
+      .map(([toolId]) => toolId));
+    const stale = policy.baseline.entries
+      .map((entry: any) => `${entry.tool}:${entry.fingerprint}`)
+      .filter((key: string) => completedTools.has(key.slice(0, key.indexOf(':'))))
+      .filter((key: string) => !context.matchedBaselineKeys.has(key));
+    if (stale.length > 0) {
+      throw Object.assign(new Error(`Lint baseline contains ${stale.length} stale fingerprint(s); prune resolved debt before accepting new changes.`), {
+        code: 'LINT_BASELINE_STALE',
+        stale,
+      });
+    }
+  }
   return report as Record<string, unknown>;
 }

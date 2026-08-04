@@ -65,7 +65,10 @@ function pathContains(parent: any, child: any) {
 }
 
 export function affectedTypeScriptConfigs(ctx: any) {
-  const configs = configuredTargetPaths(ctx);
+  const configs = configuredTargetPaths(ctx).flatMap((target: string) => {
+    if (!fs.statSync(target).isDirectory()) return [target];
+    return findFiles(target, (name: string) => name === 'tsconfig.json', ctx.policyProject.discovery_max_depth);
+  }).sort();
   if (ctx.changedFilesRequested) {
     const changes = ctx.changedFiles.map((file: any) => path.resolve(ctx.repoRoot, file));
     return configs.filter((config: any) => changes.some((change: any) => pathContains(path.dirname(config), change)));

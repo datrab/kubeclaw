@@ -37,29 +37,3 @@ export class StructuredOperationError extends Error {
     if (options.cause !== undefined) this.cause = options.cause;
   }
 }
-
-export function operationSuccess<T>(value: T): OperationSuccess<T> {
-  return { ok: true, value };
-}
-
-export function operationFailure(error: StructuredOperationError): OperationFailure {
-  return {
-    ok: false,
-    code: error.code,
-    kind: error.kind,
-    message: error.message,
-    diagnostics: error.diagnostics,
-  };
-}
-
-export function errorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  return String(error);
-}
-
-export function errorCode(error: unknown, fallback: string): string {
-  if (error && typeof error === 'object' && 'code' in error && typeof error.code === 'string' && error.code) {
-    return error.code;
-  }
-  return fallback;
-}

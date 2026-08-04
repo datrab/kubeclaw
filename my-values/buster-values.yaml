@@ -112,14 +112,16 @@ extraContainers:
       httpGet:
         path: /healthz
         port: buster-v2
+      initialDelaySeconds: 5
       periodSeconds: 5
       timeoutSeconds: 2
-      failureThreshold: 3
+      failureThreshold: 6
     livenessProbe:
       httpGet:
         path: /healthz
         port: buster-v2
-      periodSeconds: 10
+      initialDelaySeconds: 30
+      periodSeconds: 15
       timeoutSeconds: 2
       failureThreshold: 3
     volumeMounts:
@@ -149,19 +151,6 @@ extraContainers:
         # per-job identity. setpriv drops the complete capability set before
         # any submitted suite code starts.
         add: ["CHOWN", "SETGID", "SETPCAP", "SETUID"]
-    readinessProbe:
-      httpGet: { path: /healthz, port: buster-v2 }
-      initialDelaySeconds: 5
-      periodSeconds: 5
-      timeoutSeconds: 2
-      failureThreshold: 6
-    livenessProbe:
-      httpGet: { path: /healthz, port: buster-v2 }
-      initialDelaySeconds: 30
-      periodSeconds: 15
-      timeoutSeconds: 2
-      failureThreshold: 3
-
 extraVolumes:
   # Only the v2 sidecar mounts this authoritative receipt store. The Buster
   # gateway and submitted suite code cannot read or mutate worker state.

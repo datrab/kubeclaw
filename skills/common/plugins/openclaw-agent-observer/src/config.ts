@@ -1,4 +1,4 @@
-import { normalizeAgentObservabilityMaxEventBytes } from './agent-observability/index.ts';
+import { normalizeAgentObservabilityMaxEventBytes } from './generated/agent-observability/index.ts';
 
 declare const process: { env: Record<string, unknown> };
 

@@ -10,23 +10,26 @@ const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-observer-b
 const output = path.join(temporaryRoot, 'dist');
 const tscIndex = process.argv.indexOf('--tsc');
 const tsc = tscIndex >= 0 ? process.argv[tscIndex + 1] : 'tsc';
-let compilerExitCode = 0;
 
-try {
-  const command = tsc.endsWith('.js') ? process.execPath : tsc;
-  const args = tsc.endsWith('.js')
-    ? [tsc, '-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output]
-    : ['-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output];
-  const result = spawnSync(command, args, { cwd: pluginRoot, stdio: 'inherit' });
-  if (result.error) throw result.error;
-  compilerExitCode = result.status ?? 1;
+function build() {
+  try {
+    const command = tsc.endsWith('.js') ? process.execPath : tsc;
+    const args = tsc.endsWith('.js')
+      ? [tsc, '-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output]
+      : ['-p', path.join(pluginRoot, 'tsconfig.build.json'), '--outDir', output];
+    const result = spawnSync(command, args, { cwd: pluginRoot, stdio: 'inherit' });
+    if (result.error) throw result.error;
+    const exitCode = result.status ?? 1;
 
-  if (compilerExitCode === 0) {
-    fs.rmSync(path.join(pluginRoot, 'dist'), { recursive: true, force: true });
-    fs.cpSync(output, path.join(pluginRoot, 'dist'), { recursive: true });
+    if (exitCode === 0) {
+      fs.rmSync(path.join(pluginRoot, 'dist'), { recursive: true, force: true });
+      fs.cpSync(output, path.join(pluginRoot, 'dist'), { recursive: true });
+    }
+    return exitCode;
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
   }
-} finally {
-  fs.rmSync(temporaryRoot, { recursive: true, force: true });
 }
 
+const compilerExitCode = build();
 if (compilerExitCode !== 0) process.exit(compilerExitCode);

@@ -19,6 +19,12 @@ assert.deepEqual(lifecycleNotification(base), {
   ],
   footer: 'KubeClaw Pipeline · run:1',
 });
+assert.equal(lifecycleNotification({
+  event: {
+    ...base.event,
+    payload: { reasonCode: null, reason_code: 'quota_exceeded' },
+  },
+}).reasonCode, 'quota_exceeded');
 const preview = previewNotification({
   event: {
     eventId: 'event:2', type: 'artifact.created',

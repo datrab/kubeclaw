@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
-import { configuredTargetPaths, listConfiguredTargetFiles } from './discovery.ts';
+import { configuredTargetFilesForScope, configuredTargetPaths } from './discovery.ts';
 import { tryParseJson } from './parsers.ts';
 import { failConfigMissing, failParse, notApplicable } from './report.ts';
 import { log } from './output.ts';
@@ -100,15 +100,7 @@ registerTool({
   tier: 'pre-check',
   detect: (ctx: any) => ctx.projectTypes.has('shell'),
   run: (ctx: any) => {
-    let shellFiles;
-
-    if (ctx.changedFilesRequested) {
-      shellFiles = ctx.changedFiles
-        .filter((f: any) => f.endsWith('.sh'))
-        .map((f: any) => path.join(ctx.repoRoot, f));
-    } else {
-      shellFiles = listConfiguredTargetFiles(ctx, (file: any) => file.endsWith('.sh'));
-    }
+    const shellFiles = configuredTargetFilesForScope(ctx, (file: any) => file.endsWith('.sh'));
 
     if (shellFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
@@ -143,9 +135,7 @@ registerTool({
   tier: 'pre-check',
   detect: (ctx: any) => ctx.projectTypes.has('shell'),
   run: (ctx: any) => {
-    const shellFiles = ctx.changedFilesRequested
-      ? ctx.changedFiles.filter((file: any) => file.endsWith('.sh')).map((file: any) => path.join(ctx.repoRoot, file))
-      : listConfiguredTargetFiles(ctx, (file: any) => file.endsWith('.sh'));
+    const shellFiles = configuredTargetFilesForScope(ctx, (file: any) => file.endsWith('.sh'));
     if (shellFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
     const findings: any[] = [];
     for (const file of shellFiles) {
@@ -180,7 +170,7 @@ registerTool({
     args.push('--config', config);
 
     if (ctx.changedFilesRequested) {
-      const jsFiles = ctx.changedFiles.filter((f: any) => /\.(js|ts|jsx|tsx|mjs|cjs)$/.test(f));
+      const jsFiles = ctx.changedFiles.filter((f: any) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/.test(f));
       if (jsFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       args.push(...jsFiles.map((f: any) => path.join(ctx.repoRoot, f)));
     } else {

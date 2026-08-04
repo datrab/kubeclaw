@@ -20,8 +20,6 @@ function runtimeStateRoot(): string {
   return path.join(repoRoot, '.swarm', 'resource-cleanup');
 }
 
-export const CLEANUP_POLICY = Object.freeze({ TASK_SCOPED: 'task-scoped', STARTUP_SWEEP: 'startup-sweep', SHUTDOWN_SWEEP: 'shutdown-sweep', DISABLED: 'disabled' });
-
 function token(value: unknown): string {
   return String(value ?? 'none').toLowerCase().replace(/[^a-z0-9._-]+/g, '-').slice(0, 80);
 }
@@ -72,23 +70,4 @@ async function deleteLease(lease: string): Promise<void> {
     encoding: 'utf8',
     env: buildSubprocessEnv(),
   });
-}
-
-export async function cleanupRuntimeResources(_stage: string, payload: Payload | null = null, options: { cleanupPolicy?: string; stateRoot?: string } = {}): Promise<Record<string, unknown>> {
-  if (options.cleanupPolicy === CLEANUP_POLICY.DISABLED) return { ok: true, leases_deleted: [] };
-  const root = options.stateRoot ?? runtimeStateRoot();
-  const statePaths = payload
-    ? [getCleanupStatePath(payload, options)]
-    : (fs.existsSync(root) ? fs.readdirSync(root).filter((name) => name.endsWith('.json')).map((name) => path.join(root, name)) : []);
-  const deleted: string[] = [];
-  const errors: string[] = [];
-  for (const statePath of statePaths) {
-    let state: CleanupState;
-    try { state = readState(statePath); } catch (error) { errors.push(error instanceof Error ? error.message : String(error)); continue; }
-    for (const lease of state.leases) {
-      try { await deleteLease(lease); deleted.push(lease); } catch (error) { errors.push(error instanceof Error ? error.message : String(error)); }
-    }
-    if (errors.length === 0) fs.rmSync(statePath, { force: true });
-  }
-  return { ok: errors.length === 0, leases_deleted: deleted, errors };
 }

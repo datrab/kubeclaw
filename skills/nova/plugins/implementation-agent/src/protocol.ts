@@ -71,6 +71,58 @@ export function buildRequest(agent: string, input: ImplementationInput, helperPr
     },
   };
 }
+function parseChangedPaths(value: unknown): readonly string[] {
+  if (!Array.isArray(value) || value.length > 512) throw new Error('changedPaths is invalid');
+  return value.map((item) => {
+    const changedPath = text(item, 'changed path', 512);
+    if (changedPath.startsWith('/') || changedPath.split('/').includes('..')) {
+      throw new Error('changed path escapes the repository');
+    }
+    return changedPath;
+  });
+}
+
+function parseChecks(value: unknown): readonly { readonly name: string; readonly passed: boolean }[] {
+  if (!Array.isArray(value) || value.length > 128) throw new Error('checks is invalid');
+  return value.map((item) => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error('check is invalid');
+    const check = item as Record<string, unknown>;
+    if (Object.keys(check).some((key) => !['name', 'passed'].includes(key))
+      || typeof check.passed !== 'boolean') throw new Error('check is invalid');
+    return { name: text(check.name, 'check name', 256), passed: check.passed };
+  });
+}
+
+function parseSession(value: unknown): ImplementationCompletion['session'] {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('session evidence is invalid');
+  const source = value as Record<string, unknown>;
+  if (Object.keys(source).some((key) => !['sessionId', 'startedAt', 'completedAt', 'transcriptDigest', 'handoffs', 'termination'].includes(key))) {
+    throw new Error('session evidence has unknown fields');
+  }
+  const startedAt = text(source.startedAt, 'session startedAt', 64);
+  const completedAt = text(source.completedAt, 'session completedAt', 64);
+  if (!Number.isFinite(Date.parse(startedAt)) || !Number.isFinite(Date.parse(completedAt)) || Date.parse(completedAt) < Date.parse(startedAt)) throw new Error('session timestamps are invalid');
+  if (typeof source.transcriptDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(source.transcriptDigest)) throw new Error('transcript digest is invalid');
+  if (!Number.isSafeInteger(source.handoffs) || Number(source.handoffs) < 0) throw new Error('session handoffs are invalid');
+  if (!['completed', 'blocked', 'cancelled'].includes(String(source.termination))) throw new Error('session termination is invalid');
+  return {
+    sessionId: text(source.sessionId, 'session id', 512), startedAt, completedAt,
+    transcriptDigest: source.transcriptDigest, handoffs: Number(source.handoffs),
+    termination: source.termination as 'completed' | 'blocked' | 'cancelled',
+  };
+}
+
+function assertCompletionConsistency(
+  status: ImplementationCompletion['status'],
+  changedPaths: readonly string[],
+  checks: readonly { readonly passed: boolean }[],
+  session: ImplementationCompletion['session'],
+): void {
+  if (status === 'ready_for_testing' && session.termination !== 'completed') throw new Error('ready completion requires a completed session');
+  if (status === 'blocked' && session.termination === 'completed') throw new Error('blocked completion contradicts session evidence');
+  if (status === 'ready_for_testing' && (changedPaths.length === 0 || checks.length === 0 || checks.some((check) => !check.passed))) throw new Error('ready completion requires changed paths and successful checks');
+  if (status === 'blocked' && (changedPaths.length > 0 || checks.some((check) => check.passed))) throw new Error('blocked completion contradicts implementation evidence');
+}
 export function parseCompletion(value: unknown, input: ImplementationInput): ImplementationCompletion {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('completion must be an object');
   const source = value as Record<string, unknown>;
@@ -78,45 +130,10 @@ export function parseCompletion(value: unknown, input: ImplementationInput): Imp
   if (Object.keys(source).some((key) => !allowed.has(key))) throw new Error('completion has unknown fields');
   const status = source.status;
   if (status !== 'ready_for_testing' && status !== 'blocked') throw new Error('completion status is invalid');
-  if (!Array.isArray(source.changedPaths) || source.changedPaths.length > 512) throw new Error('changedPaths is invalid');
-  const changedPaths = source.changedPaths.map((item) => {
-    const path = text(item, 'changed path', 512);
-    if (path.startsWith('/') || path.split('/').includes('..')) throw new Error('changed path escapes the repository');
-    return path;
-  });
-  if (!Array.isArray(source.checks) || source.checks.length > 128) throw new Error('checks is invalid');
-  const checks = source.checks.map((item) => {
-    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error('check is invalid');
-    const check = item as Record<string, unknown>;
-    if (Object.keys(check).some((key) => !['name', 'passed'].includes(key))
-      || typeof check.passed !== 'boolean') throw new Error('check is invalid');
-    return { name: text(check.name, 'check name', 256), passed: check.passed };
-  });
+  const changedPaths = parseChangedPaths(source.changedPaths);
+  const checks = parseChecks(source.checks);
   const summary = text(source.summary, 'summary', 8192);
-  if (!source.session || typeof source.session !== 'object' || Array.isArray(source.session)) throw new Error('session evidence is invalid');
-  const sessionSource = source.session as Record<string, unknown>;
-  if (Object.keys(sessionSource).some((key) => !['sessionId', 'startedAt', 'completedAt', 'transcriptDigest', 'handoffs', 'termination'].includes(key))) {
-    throw new Error('session evidence has unknown fields');
-  }
-  const startedAt = text(sessionSource.startedAt, 'session startedAt', 64);
-  const completedAt = text(sessionSource.completedAt, 'session completedAt', 64);
-  if (!Number.isFinite(Date.parse(startedAt)) || !Number.isFinite(Date.parse(completedAt)) || Date.parse(completedAt) < Date.parse(startedAt)) {
-    throw new Error('session timestamps are invalid');
-  }
-  if (typeof sessionSource.transcriptDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(sessionSource.transcriptDigest)) throw new Error('transcript digest is invalid');
-  if (!Number.isSafeInteger(sessionSource.handoffs) || Number(sessionSource.handoffs) < 0) throw new Error('session handoffs are invalid');
-  if (!['completed', 'blocked', 'cancelled'].includes(String(sessionSource.termination))) throw new Error('session termination is invalid');
-  if (status === 'ready_for_testing' && sessionSource.termination !== 'completed') throw new Error('ready completion requires a completed session');
-  if (status === 'blocked' && sessionSource.termination === 'completed') throw new Error('blocked completion contradicts session evidence');
-  const session = {
-    sessionId: text(sessionSource.sessionId, 'session id', 512),
-    startedAt,
-    completedAt,
-    transcriptDigest: sessionSource.transcriptDigest,
-    handoffs: Number(sessionSource.handoffs),
-    termination: sessionSource.termination as 'completed' | 'blocked' | 'cancelled',
-  };
-  if (status === 'ready_for_testing' && (changedPaths.length === 0 || checks.length === 0 || checks.some((check) => !check.passed))) throw new Error('ready completion requires changed paths and successful checks');
-  if (status === 'blocked' && (changedPaths.length > 0 || checks.some((check) => check.passed))) throw new Error('blocked completion contradicts implementation evidence');
+  const session = parseSession(source.session);
+  assertCompletionConsistency(status, changedPaths, checks, session);
   return { status, runId: input.runId, moduleId: input.moduleId, attempt: input.attempt, summary, changedPaths, checks, session };
 }

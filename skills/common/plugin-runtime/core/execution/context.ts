@@ -5,7 +5,7 @@ import type {
   PluginContext,
   PluginInvocationContext,
 } from '../../sdk/src/index.ts';
-import { RevocableLease } from './lease.ts';
+import type { RevocableLease } from './lease.ts';
 import { authorizeCapabilityInvocation } from './authorization.ts';
 
 export interface CapabilityInvoker {

@@ -54,14 +54,6 @@ function resolveGitRuntimePolicy(): AnyRecord {
   return gitPrimitiveState.runtimePolicy;
 }
 
-export function setGitRuntimePolicy(policy: AnyRecord | null = null) {
-  if (!policy) {
-    gitPrimitiveState.runtimePolicy = null;
-    return;
-  }
-  gitPrimitiveState.runtimePolicy = resolveGitRuntimePolicyFromConfig(policy);
-}
-
 function resolveRepoInput(input: any) {
   if (typeof input === 'string') return path.resolve(input);
   if (input?.repo_root) return path.resolve(input.repo_root);
@@ -151,28 +143,4 @@ export function getCurrentBranch(repoRoot: any) {
   }
 
   return currentBranch;
-}
-
-export function setRepoRoot(repoRoot: any) {
-  gitPrimitiveState.defaultRepoRoot = repoRoot ? path.resolve(repoRoot) : null;
-  if (gitPrimitiveState.defaultRepoRoot) gitPrimitiveState.headHashCache.delete(gitPrimitiveState.defaultRepoRoot);
-}
-
-export function headHash(repoRootOrConfig: any = null) {
-  const repoRoot = resolveRepoInput(repoRootOrConfig);
-  if (!repoRoot) return null;
-  if (gitPrimitiveState.headHashCache.has(repoRoot)) return gitPrimitiveState.headHashCache.get(repoRoot);
-  try {
-    const hash = gitExec(repoRoot, ['rev-parse', '--short', 'HEAD']);
-    gitPrimitiveState.headHashCache.set(repoRoot, hash);
-    return hash;
-  } catch (_error) { /* INTENTIONAL_NONCRITICAL(optional_probe_failed): this optional probe converts unreadable or absent input to explicit absence. */
-    return null;
-  }
-}
-
-export function invalidateHeadHash(repoRootOrConfig: any = null) {
-  const repoRoot = resolveRepoInput(repoRootOrConfig);
-  if (repoRoot) gitPrimitiveState.headHashCache.delete(repoRoot);
-  else gitPrimitiveState.headHashCache.clear();
 }

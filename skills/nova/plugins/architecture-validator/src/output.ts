@@ -5,7 +5,7 @@ export interface ArchitectureOutput {
   readonly checkedFiles: readonly string[];
 }
 
-export interface ArchitectureFinding {
+interface ArchitectureFinding {
   readonly id: string;
   readonly severity: 'blocking' | 'error' | 'warn' | 'info';
   readonly scope: 'domain_model' | 'integration_boundary';

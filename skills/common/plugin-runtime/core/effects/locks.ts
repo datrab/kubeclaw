@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { ResourceLock } from '../../sdk/src/index.ts';
 import { FileJournal } from '../state/journal.ts';
+import { FileMutex } from '../state/file-mutex.ts';
 
 interface LockOwner {
   readonly pid: number;
@@ -17,17 +18,10 @@ function isLockOwner(value: unknown): value is LockOwner {
     return false;
   }
   const contract = candidate.contract as Partial<ResourceLock>;
-  return contract.schemaVersion === 'resource-lock.v2'
-    && typeof contract.lockId === 'string'
-    && typeof contract.ownerLeaseId === 'string'
-    && typeof contract.expiresAt === 'string'
-    && Number.isFinite(Date.parse(contract.expiresAt))
-    && Number.isSafeInteger(contract.fencingToken)
-    && contract.fencingToken! >= 1
-    && contract.status === 'active'
-    && Boolean(contract.resource)
-    && typeof contract.resource?.type === 'string'
-    && typeof contract.resource?.canonicalId === 'string';
+  return [contract.schemaVersion === 'resource-lock.v2', typeof contract.lockId === 'string',
+    typeof contract.ownerLeaseId === 'string', typeof contract.expiresAt === 'string' && Number.isFinite(Date.parse(contract.expiresAt)),
+    Number.isSafeInteger(contract.fencingToken) && contract.fencingToken! >= 1, contract.status === 'active',
+    Boolean(contract.resource), typeof contract.resource?.type === 'string', typeof contract.resource?.canonicalId === 'string'].every(Boolean);
 }
 
 function processAlive(pid: number): boolean {
@@ -45,85 +39,19 @@ function resourceKey(resource: ResourceLock['resource']): string {
     .digest('hex');
 }
 
-const metadataGuardWaitBuffer = new Int32Array(new SharedArrayBuffer(4));
-
-function waitForMetadataGuard(): void {
-  Atomics.wait(metadataGuardWaitBuffer, 0, 0, 10);
-}
-
 export class FileResourceLockManager {
   readonly #root: string;
   readonly #journal: FileJournal<ResourceLock>;
   readonly #now: () => Date;
   readonly #provisionalTtlMs = 60_000;
+  readonly #metadataMutex: FileMutex;
 
   constructor(root: string, now: () => Date = () => new Date()) {
     this.#root = path.resolve(root);
     this.#now = now;
     fs.mkdirSync(this.#root, { recursive: true });
     this.#journal = new FileJournal(path.join(this.#root, 'locks.jsonl'));
-  }
-
-  #withMetadataGuard<T>(operation: () => T): T {
-    const guardFile = path.join(this.#root, 'metadata.guard');
-    const token = crypto.randomUUID();
-    const deadline = Date.now() + 5_000;
-    for (;;) {
-      const temporary = `${guardFile}.${token}.tmp`;
-      fs.writeFileSync(
-        temporary,
-        `${JSON.stringify({ token, pid: process.pid })}\n`,
-        { flag: 'wx', mode: 0o600 },
-      );
-      try {
-        fs.linkSync(temporary, guardFile);
-        fs.unlinkSync(temporary);
-        break;
-      } catch (error) {
-        fs.rmSync(temporary, { force: true });
-        if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-        let owner: { token?: unknown; pid?: unknown };
-        try {
-          owner = JSON.parse(fs.readFileSync(guardFile, 'utf8')) as {
-            token?: unknown;
-            pid?: unknown;
-          };
-        } catch {
-          const corrupt = `${guardFile}.corrupt-${crypto.randomUUID()}`;
-          try {
-            fs.renameSync(guardFile, corrupt);
-          } catch (renameError) {
-            if ((renameError as NodeJS.ErrnoException).code === 'ENOENT') continue;
-            throw renameError;
-          }
-          fs.rmSync(corrupt, { force: true });
-          continue;
-        }
-        if (typeof owner.pid === 'number' && processAlive(owner.pid)) {
-          if (Date.now() >= deadline) throw new Error('RESOURCE_LOCK_METADATA_TIMEOUT');
-          waitForMetadataGuard();
-          continue;
-        }
-        const stale = `${guardFile}.stale-${crypto.randomUUID()}`;
-        try {
-          fs.renameSync(guardFile, stale);
-        } catch (renameError) {
-          if ((renameError as NodeJS.ErrnoException).code === 'ENOENT') continue;
-          throw renameError;
-        }
-        fs.rmSync(stale, { force: true });
-      }
-    }
-    try {
-      return operation();
-    } finally {
-      try {
-        const owner = JSON.parse(fs.readFileSync(guardFile, 'utf8')) as { token?: unknown };
-        if (owner.token === token) fs.unlinkSync(guardFile);
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
-      }
-    }
+    this.#metadataMutex = new FileMutex(path.join(this.#root, 'metadata.guard'), 5_000, 'RESOURCE_LOCK_METADATA_TIMEOUT');
   }
 
   acquire(
@@ -131,7 +59,7 @@ export class FileResourceLockManager {
     ownerLeaseId: string,
     ttlMs: number,
   ): ResourceLock {
-    return this.#withMetadataGuard(
+    return this.#metadataMutex.withLock(
       () => this.#acquire(resource, ownerLeaseId, ttlMs),
     );
   }
@@ -147,99 +75,85 @@ export class FileResourceLockManager {
     const ownerFile = path.join(lockDirectory, 'owner.json');
     const claimFile = path.join(lockDirectory, 'claim.json');
     const claimToken = crypto.randomUUID();
+    this.#claim(resource, ownerLeaseId, lockDirectory, ownerFile, claimFile, claimToken);
+    try { return this.#commitClaim(resource, ownerLeaseId, ttlMs, ownerFile); }
+    catch (error) { this.#cleanupClaim(lockDirectory, claimFile, claimToken); throw error; }
+  }
+
+  #claim(resource: ResourceLock['resource'], ownerLeaseId: string, lockDirectory: string, ownerFile: string, claimFile: string, claimToken: string): void {
     for (;;) {
       try {
         fs.mkdirSync(lockDirectory);
-        fs.writeFileSync(
-          claimFile,
-          `${JSON.stringify({ token: claimToken, pid: process.pid })}\n`,
-          { flag: 'wx', mode: 0o600 },
-        );
-        break;
+        fs.writeFileSync(claimFile, `${JSON.stringify({ token: claimToken, pid: process.pid })}\n`, { flag: 'wx', mode: 0o600 });
+        return;
       } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-        let owner: LockOwner | undefined;
-        try {
-          const parsed = JSON.parse(fs.readFileSync(ownerFile, 'utf8')) as unknown;
-          if (isLockOwner(parsed)) owner = parsed;
-        } catch {
-          // Missing, torn, or invalid owner metadata is a provisional claim.
-        }
-        if (
-          !owner
-          && this.#now().getTime() - fs.statSync(lockDirectory).mtimeMs < this.#provisionalTtlMs
-        ) {
-          throw new Error(`RESOURCE_LOCK_PROVISIONING:${resource.canonicalId}`);
-        }
-        if (
-          owner
-          && processAlive(owner.pid)
-        ) {
-          // A live local adapter may still be unwinding an external operation
-          // after lease expiry. Do not admit a replacement until that process
-          // releases the execution boundary or exits.
-          if (owner.contract.ownerLeaseId === ownerLeaseId) {
-            throw new Error(`RESOURCE_LOCK_REENTRANT_DENIED:${resource.canonicalId}`);
-          }
-          throw new Error(`RESOURCE_LOCKED:${resource.canonicalId}`);
-        }
-        const tombstone = `${lockDirectory}.expired-${crypto.randomUUID()}`;
-        try {
-          fs.renameSync(lockDirectory, tombstone);
-        } catch (error) {
-          if ((error as NodeJS.ErrnoException).code === 'ENOENT') continue;
-          throw error;
-        }
-        const expired: ResourceLock | undefined = owner
-          ? Object.freeze({ ...owner.contract, status: 'expired' })
-          : undefined;
-        try {
-          if (expired) this.#journal.append(expired);
-        } finally {
-          fs.rmSync(tombstone, { recursive: true, force: true });
-        }
+        const owner = this.#owner(ownerFile);
+        if (!owner && this.#now().getTime() - fs.statSync(lockDirectory).mtimeMs < this.#provisionalTtlMs) throw new Error(`RESOURCE_LOCK_PROVISIONING:${resource.canonicalId}`);
+        this.#assertOwnerAvailable(owner, ownerLeaseId, resource.canonicalId);
+        if (!this.#expire(lockDirectory, owner)) continue;
       }
-    }
-    try {
-      const prior = [...this.#journal.refresh()].reverse()
-        .find(({ entry }) => entry.resource.type === resource.type
-          && entry.resource.canonicalId === resource.canonicalId);
-      const fencingToken = (prior?.entry.fencingToken ?? 0) + 1;
-      const now = this.#now();
-      const contract: ResourceLock = Object.freeze({
-        schemaVersion: 'resource-lock.v2',
-        lockId: `lock:${crypto.randomUUID()}`,
-        resource,
-        ownerLeaseId,
-        fencingToken,
-        status: 'active',
-        acquiredAt: now.toISOString(),
-        expiresAt: new Date(now.getTime() + ttlMs).toISOString(),
-      });
-      fs.writeFileSync(
-        ownerFile,
-        `${JSON.stringify({ pid: process.pid, contract } satisfies LockOwner)}\n`,
-        { flag: 'wx', mode: 0o600 },
-      );
-      this.#journal.append(contract);
-      return contract;
-    } catch (error) {
-      try {
-        const claim = JSON.parse(fs.readFileSync(claimFile, 'utf8')) as { token?: unknown };
-        if (claim.token === claimToken) {
-          const tombstone = `${lockDirectory}.failed-${claimToken}`;
-          fs.renameSync(lockDirectory, tombstone);
-          fs.rmSync(tombstone, { recursive: true, force: true });
-        }
-      } catch (cleanupError) {
-        if ((cleanupError as NodeJS.ErrnoException).code !== 'ENOENT') throw cleanupError;
-      }
-      throw error;
     }
   }
 
+  #assertOwnerAvailable(owner: LockOwner | undefined, ownerLeaseId: string, resourceId: string): void {
+    if (!owner || !processAlive(owner.pid)) return;
+    if (owner.contract.ownerLeaseId === ownerLeaseId) throw new Error(`RESOURCE_LOCK_REENTRANT_DENIED:${resourceId}`);
+    throw new Error(`RESOURCE_LOCKED:${resourceId}`);
+  }
+
+  #owner(ownerFile: string): LockOwner | undefined {
+    try { const parsed = JSON.parse(fs.readFileSync(ownerFile, 'utf8')) as unknown; return isLockOwner(parsed) ? parsed : undefined; }
+    catch {
+      // INTENTIONAL_NONCRITICAL(invalid_lock_metadata): Missing or torn owner metadata is treated as absent.
+      return undefined;
+    }
+  }
+
+  #expire(lockDirectory: string, owner: LockOwner | undefined): boolean {
+    const tombstone = `${lockDirectory}.expired-${crypto.randomUUID()}`;
+    try { fs.renameSync(lockDirectory, tombstone); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return false; throw error; }
+    try { if (owner) this.#journal.append(Object.freeze({ ...owner.contract, status: 'expired' })); }
+    finally { fs.rmSync(tombstone, { recursive: true, force: true }); }
+    return true;
+  }
+
+  #commitClaim(resource: ResourceLock['resource'], ownerLeaseId: string, ttlMs: number, ownerFile: string): ResourceLock {
+    const prior = [...this.#journal.refresh()].reverse()
+      .find(({ entry }) => entry.resource.type === resource.type
+        && entry.resource.canonicalId === resource.canonicalId);
+    const fencingToken = (prior?.entry.fencingToken ?? 0) + 1;
+    const now = this.#now();
+    const contract: ResourceLock = Object.freeze({
+      schemaVersion: 'resource-lock.v2',
+      lockId: `lock:${crypto.randomUUID()}`,
+      resource,
+      ownerLeaseId,
+      fencingToken,
+      status: 'active',
+      acquiredAt: now.toISOString(),
+      expiresAt: new Date(now.getTime() + ttlMs).toISOString(),
+    });
+    fs.writeFileSync(
+      ownerFile,
+      `${JSON.stringify({ pid: process.pid, contract } satisfies LockOwner)}\n`,
+      { flag: 'wx', mode: 0o600 },
+    );
+    this.#journal.append(contract);
+    return contract;
+  }
+
+  #cleanupClaim(lockDirectory: string, claimFile: string, token: string): void {
+    try {
+      const claim = JSON.parse(fs.readFileSync(claimFile, 'utf8')) as { token?: unknown };
+      if (claim.token !== token) return;
+      const tombstone = `${lockDirectory}.failed-${token}`; fs.renameSync(lockDirectory, tombstone); fs.rmSync(tombstone, { recursive: true, force: true });
+    } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+  }
+
   renew(lockId: string, ownerLeaseId: string, ttlMs: number): ResourceLock {
-    return this.#withMetadataGuard(() => this.#renew(lockId, ownerLeaseId, ttlMs));
+    return this.#metadataMutex.withLock(() => this.#renew(lockId, ownerLeaseId, ttlMs));
   }
 
   #renew(lockId: string, ownerLeaseId: string, ttlMs: number): ResourceLock {
@@ -269,11 +183,11 @@ export class FileResourceLockManager {
   }
 
   release(lockId: string, ownerLeaseId: string): ResourceLock {
-    return this.#withMetadataGuard(() => this.#release(lockId, ownerLeaseId));
+    return this.#metadataMutex.withLock(() => this.#release(lockId, ownerLeaseId));
   }
 
   assertCurrent(lockId: string, ownerLeaseId: string): ResourceLock {
-    return this.#withMetadataGuard(() => {
+    return this.#metadataMutex.withLock(() => {
       const active = [...this.#journal.refresh()].reverse()
         .find(({ entry }) => entry.lockId === lockId)?.entry;
       if (!active) throw new Error(`RESOURCE_LOCK_UNKNOWN:${lockId}`);

@@ -68,6 +68,12 @@ function identity(manifest: PluginManifest, digest: string): PackageIdentity {
   };
 }
 
+interface ProvenanceInput { manifest: PluginManifest; root: string; digest: string; reference: string; now: string; verifier: string; source: 'builtin' | 'local'; scope: 'trusted_first_party' | 'isolated_external'; method: 'builtin_allowlist' | 'source_digest_allowlist' | 'publisher_attestation'; attestationDigest?: string; }
+function provenanceRecord(input: ProvenanceInput): PackageProvenance {
+  return { schemaVersion: 'package-provenance.v2', package: identity(input.manifest, input.digest), source: { type: input.source, canonicalReference: input.reference }, canonicalPath: input.root,
+    trustScope: input.scope, trustEvidence: { method: input.method, verifier: input.verifier, verifiedAt: input.now, ...(input.attestationDigest ? { attestationDigest: input.attestationDigest } : {}) }, resolvedAt: input.now };
+}
+
 function trustedProvenance(
   manifest: PluginManifest,
   root: string,
@@ -80,51 +86,14 @@ function trustedProvenance(
   );
   const reference = `local:${root}`;
   if (builtin) {
-    return {
-      schemaVersion: 'package-provenance.v2',
-      package: identity(manifest, digest),
-      source: { type: 'builtin', canonicalReference: reference },
-      canonicalPath: root,
-      trustScope: 'trusted_first_party',
-      trustEvidence: {
-        method: 'builtin_allowlist',
-        verifier: options.trustPolicy.verifierId,
-        verifiedAt: now,
-      },
-      resolvedAt: now,
-    };
+    return provenanceRecord({ manifest, root, digest, reference, now, verifier: options.trustPolicy.verifierId, source: 'builtin', scope: 'trusted_first_party', method: 'builtin_allowlist' });
   }
   if ((options.trustPolicy.allowedSourceDigests.get(reference) ?? []).includes(digest)) {
-    return {
-      schemaVersion: 'package-provenance.v2',
-      package: identity(manifest, digest),
-      source: { type: 'local', canonicalReference: reference },
-      canonicalPath: root,
-      trustScope: 'isolated_external',
-      trustEvidence: {
-        method: 'source_digest_allowlist',
-        verifier: options.trustPolicy.verifierId,
-        verifiedAt: now,
-      },
-      resolvedAt: now,
-    };
+    return provenanceRecord({ manifest, root, digest, reference, now, verifier: options.trustPolicy.verifierId, source: 'local', scope: 'isolated_external', method: 'source_digest_allowlist' });
   }
   const attestationDigest = options.trustPolicy.verifiedAttestations.get(digest);
   if (attestationDigest) {
-    return {
-      schemaVersion: 'package-provenance.v2',
-      package: identity(manifest, digest),
-      source: { type: 'local', canonicalReference: reference },
-      canonicalPath: root,
-      trustScope: 'isolated_external',
-      trustEvidence: {
-        method: 'publisher_attestation',
-        verifier: options.trustPolicy.verifierId,
-        verifiedAt: now,
-        attestationDigest,
-      },
-      resolvedAt: now,
-    };
+    return provenanceRecord({ manifest, root, digest, reference, now, verifier: options.trustPolicy.verifierId, source: 'local', scope: 'isolated_external', method: 'publisher_attestation', attestationDigest });
   }
   throw new RegistryError('REGISTRY_PACKAGE_UNTRUSTED', `Plugin package is not trusted: ${manifest.id}`, {
     pluginId: manifest.id,

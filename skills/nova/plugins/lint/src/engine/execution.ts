@@ -1,4 +1,5 @@
 import { execFileSync } from 'child_process';
+import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -21,6 +22,7 @@ const SUBPROCESS_ENV_KEYS = Object.freeze([
   'GIT_EDITOR',
   'NODE_ENV',
   'XDG_CACHE_HOME',
+  'XDG_CONFIG_HOME',
   'TF_DATA_DIR',
   'TF_CLI_CONFIG_FILE',
   'SEMGREP_LOG_FILE',
@@ -49,13 +51,22 @@ function buildSubprocessEnv(overrides: Record<string, unknown> = {}): Record<str
   return env;
 }
 const LINT_CACHE_ROOT = path.join(os.tmpdir(), 'kubeclaw-lint-cache');
+// Every value in this map must be a directory. File-valued settings such as
+// SEMGREP_LOG_FILE remain invocation-specific and are never created here.
 const LINT_TOOL_CACHE_ENV = Object.freeze({
   GOCACHE: path.join(LINT_CACHE_ROOT, 'go-build'),
   GOMODCACHE: path.join(LINT_CACHE_ROOT, 'go-mod'),
   STATICCHECK_CACHE: path.join(LINT_CACHE_ROOT, 'staticcheck'),
   TRIVY_CACHE_DIR: path.join(LINT_CACHE_ROOT, 'trivy'),
   XDG_CACHE_HOME: path.join(LINT_CACHE_ROOT, 'xdg'),
+  XDG_CONFIG_HOME: path.join(LINT_CACHE_ROOT, 'xdg-config'),
 });
+
+function ensureLintToolRuntimeDirectories(): void {
+  for (const directory of Object.values(LINT_TOOL_CACHE_ENV)) {
+    fs.mkdirSync(directory, { recursive: true, mode: 0o700 });
+  }
+}
 function outputText(value: any) {
   return typeof value === 'string' ? value : '';
 }
@@ -71,6 +82,7 @@ function commandTimedOut(error: any) {
 function safeExec(cmd: any, args: any, opts: any = {}) {
   const timeout = selectDefinedValue(() => (opts.timeout), () => (DEFAULT_TOOL_TIMEOUT));
   try {
+    ensureLintToolRuntimeDirectories();
     const stdout = execFileSync(cmd, args, {
       encoding: 'utf8',
       timeout,

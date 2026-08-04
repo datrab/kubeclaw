@@ -263,46 +263,6 @@ function discordWebhookDeliveryMuted(context: DiscordContext = {}): boolean {
   return selectTruthyValue(() => (selectTruthyValue(() => (env === '1'), () => (env === 'true'))), () => (env === 'yes'));
 }
 
-export function sendDiscord(message: AnyRecord | null | undefined, context: DiscordContext = {}): DiscordPayload | null {
-  if (!message) return null;
-
-  const correlation = buildCorrelationContext(context);
-  const normalized = normalizeMessage(message);
-  const payload = {
-    content: normalized.content,
-    embeds: (Array.isArray(normalized.embeds) ? normalized.embeds : []).map((embed: DiscordEmbed) => appendDiscordCorrelation(embed, correlation)),
-  };
-
-  persistDiscordArtifact(payload, correlation, discordArtifactCallbacks);
-
-  if (discordWebhookDeliveryMuted(context)) {
-    persistDiscordAuditReceipt(payload, correlation, normalizeIdentity(context.level) || 'INFO', 'muted', discordArtifactCallbacks);
-    return payload;
-  }
-  if (!correlation.webhook_url) {
-    persistDiscordAuditReceipt(payload, correlation, normalizeIdentity(context.level) || 'INFO', 'missing_webhook', discordArtifactCallbacks);
-    return payload;
-  }
-
-  void postDiscordWebhook(correlation.webhook_url, {
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    timeoutMs: loadBusterDiscordWebhookTimeoutMs(),
-  })
-    .then((result) => {
-      persistDiscordDeliveryReceipt(payload, correlation, normalizeIdentity(context.level) || 'INFO', result || {}, discordArtifactCallbacks);
-      emitDiscordRestoredIfNeeded(correlation, 'webhook', 'webhook_delivery_failed', 'Buster Discord webhook delivery restored');
-    })
-    .catch((error) => {
-      markDiscordDegraded(correlation, 'webhook', 'webhook_delivery_failed', formatWebhookDeliveryDetail(error));
-      reportBusterDiscordIncident(correlation, 'webhook_delivery_failed', error, 'Buster Discord webhook delivery failed', {
-        scope: 'webhook',
-      });
-    });
-
-  return payload;
-}
-
 export async function deliverDiscordWebhookRequest(request: AnyRecord = {}, context: DiscordContext = {}): Promise<AnyRecord> {
   const normalizedRequest = request;
   const correlation = buildCorrelationContext({

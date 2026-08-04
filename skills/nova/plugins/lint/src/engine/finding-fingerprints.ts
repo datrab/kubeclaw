@@ -38,6 +38,7 @@ function normalizeFindings(ctx: Record<string, any>, toolId: string, findings: u
     };
     delete normalized.fingerprint_seed;
     if (baselineEntry && baselineEntry.expires >= today) {
+      if (ctx.matchedBaselineKeys instanceof Set) ctx.matchedBaselineKeys.add(`${toolId}:${fingerprint}`);
       normalized.baseline = {
         owner: baselineEntry.owner,
         reason: baselineEntry.reason,

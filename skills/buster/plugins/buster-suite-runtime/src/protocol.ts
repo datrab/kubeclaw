@@ -80,32 +80,35 @@ export function sha256(value: Buffer | string): string {
   return crypto.createHash('sha256').update(value).digest('hex');
 }
 
+function parseArchive(value: unknown, maxArchiveBytes: number): BusterSuiteJob['archive'] {
+  if (!isRecord(value)) throw new Error('BUSTER_JOB_ARCHIVE_INVALID');
+  exact(value, ['encoding', 'sha256', 'bytes', 'data'], 'BUSTER_JOB_ARCHIVE_UNKNOWN_FIELD');
+  const valid = [value.encoding === 'base64', typeof value.sha256 === 'string' && /^[a-f0-9]{64}$/u.test(value.sha256),
+    Number.isSafeInteger(value.bytes) && Number(value.bytes) >= 1 && Number(value.bytes) <= maxArchiveBytes,
+    typeof value.data === 'string'].every(Boolean);
+  if (!valid) throw new Error('BUSTER_JOB_ARCHIVE_INVALID');
+  const archive = Buffer.from(value.data as string, 'base64');
+  if (archive.byteLength !== value.bytes || sha256(archive) !== value.sha256) throw new Error('BUSTER_JOB_ARCHIVE_DIGEST_MISMATCH');
+  return Object.freeze({ encoding: 'base64', sha256: value.sha256 as string, bytes: Number(value.bytes), data: value.data as string });
+}
+
+function validateJobMetadata(value: Record<string, unknown>): void {
+  if (value.schemaVersion !== JOB_SCHEMA) throw new Error('BUSTER_JOB_SCHEMA_INVALID');
+  if (typeof value.jobId !== 'string' || !JOB_ID.test(value.jobId)) throw new Error('BUSTER_JOB_ID_INVALID');
+  if (typeof value.idempotencyKey !== 'string' || !ID.test(value.idempotencyKey)) throw new Error('BUSTER_JOB_IDEMPOTENCY_INVALID');
+  if (!Number.isSafeInteger(value.timeoutMs) || Number(value.timeoutMs) < 1 || Number(value.timeoutMs) > 7_200_000) throw new Error('BUSTER_JOB_TIMEOUT_INVALID');
+  if (value.moduleId !== undefined && (typeof value.moduleId !== 'string' || !ID.test(value.moduleId))) throw new Error('BUSTER_JOB_MODULE_INVALID');
+  if (value.attempt !== undefined && (!Number.isSafeInteger(value.attempt) || Number(value.attempt) < 1)) throw new Error('BUSTER_JOB_ATTEMPT_INVALID');
+}
+
 export function parseJob(value: unknown, maxArchiveBytes: number): BusterSuiteJob {
   if (!isRecord(value)) throw new Error('BUSTER_JOB_INVALID');
   exact(value, [
     'schemaVersion', 'jobId', 'idempotencyKey', 'archive', 'suites', 'testConfig',
     'task', 'moduleId', 'attempt', 'capabilities', 'timeoutMs',
   ], 'BUSTER_JOB_UNKNOWN_FIELD');
-  if (value.schemaVersion !== JOB_SCHEMA) throw new Error('BUSTER_JOB_SCHEMA_INVALID');
-  if (typeof value.jobId !== 'string' || !JOB_ID.test(value.jobId)) throw new Error('BUSTER_JOB_ID_INVALID');
-  if (typeof value.idempotencyKey !== 'string' || !ID.test(value.idempotencyKey)) {
-    throw new Error('BUSTER_JOB_IDEMPOTENCY_INVALID');
-  }
-  if (!isRecord(value.archive)) throw new Error('BUSTER_JOB_ARCHIVE_INVALID');
-  exact(value.archive, ['encoding', 'sha256', 'bytes', 'data'], 'BUSTER_JOB_ARCHIVE_UNKNOWN_FIELD');
-  if (
-    value.archive.encoding !== 'base64'
-    || typeof value.archive.sha256 !== 'string'
-    || !/^[a-f0-9]{64}$/u.test(value.archive.sha256)
-    || !Number.isSafeInteger(value.archive.bytes)
-    || Number(value.archive.bytes) < 1
-    || Number(value.archive.bytes) > maxArchiveBytes
-    || typeof value.archive.data !== 'string'
-  ) throw new Error('BUSTER_JOB_ARCHIVE_INVALID');
-  const archive = Buffer.from(value.archive.data, 'base64');
-  if (archive.byteLength !== value.archive.bytes || sha256(archive) !== value.archive.sha256) {
-    throw new Error('BUSTER_JOB_ARCHIVE_DIGEST_MISMATCH');
-  }
+  validateJobMetadata(value);
+  const archive = parseArchive(value.archive, maxArchiveBytes);
   const suites = stringList(value.suites, 'suites');
   if (suites.some((suite) => !SUPPORTED_SUITES.includes(suite as typeof SUPPORTED_SUITES[number]))) {
     throw new Error('BUSTER_JOB_SUITE_UNSUPPORTED');
@@ -117,30 +120,15 @@ export function parseJob(value: unknown, maxArchiveBytes: number): BusterSuiteJo
     capabilities.length !== requiredCapabilities.length
     || capabilities.some((capability, index) => capability !== requiredCapabilities[index])
   ) throw new Error('BUSTER_JOB_CAPABILITIES_INVALID');
-  if (
-    !Number.isSafeInteger(value.timeoutMs) || Number(value.timeoutMs) < 1
-    || Number(value.timeoutMs) > 7_200_000
-  ) throw new Error('BUSTER_JOB_TIMEOUT_INVALID');
-  if (value.moduleId !== undefined && (typeof value.moduleId !== 'string' || !ID.test(value.moduleId))) {
-    throw new Error('BUSTER_JOB_MODULE_INVALID');
-  }
-  if (value.attempt !== undefined && (!Number.isSafeInteger(value.attempt) || Number(value.attempt) < 1)) {
-    throw new Error('BUSTER_JOB_ATTEMPT_INVALID');
-  }
   return Object.freeze({
     schemaVersion: JOB_SCHEMA,
-    jobId: value.jobId,
-    idempotencyKey: value.idempotencyKey,
-    archive: Object.freeze({
-      encoding: 'base64',
-      sha256: value.archive.sha256,
-      bytes: Number(value.archive.bytes),
-      data: value.archive.data,
-    }),
+    jobId: value.jobId as string,
+    idempotencyKey: value.idempotencyKey as string,
+    archive,
     suites,
     testConfig: Object.freeze({ ...value.testConfig }),
     task: Object.freeze({ ...value.task }),
-    ...(value.moduleId === undefined ? {} : { moduleId: value.moduleId }),
+    ...(value.moduleId === undefined ? {} : { moduleId: value.moduleId as string }),
     ...(value.attempt === undefined ? {} : { attempt: Number(value.attempt) }),
     capabilities,
     timeoutMs: Number(value.timeoutMs),
@@ -154,25 +142,23 @@ export function parseResult(value: unknown, expectedJobId?: string): BusterSuite
     'criticalFailed', 'completedAt',
   ], 'BUSTER_RESULT_UNKNOWN_FIELD');
   if (value.schemaVersion !== RESULT_SCHEMA) throw new Error('BUSTER_RESULT_SCHEMA_INVALID');
-  if (
-    typeof value.jobId !== 'string' || !JOB_ID.test(value.jobId)
-    || (expectedJobId !== undefined && value.jobId !== expectedJobId)
-  ) throw new Error('BUSTER_RESULT_JOB_INVALID');
-  if (
-    !Array.isArray(value.results) || value.results.some((entry) => !isRecord(entry))
-    || typeof value.suiteSummary !== 'string' || value.suiteSummary.length > 65_536
-    || typeof value.suiteDetailSummary !== 'string' || value.suiteDetailSummary.length > 1_048_576
-    || typeof value.criticalFailed !== 'boolean'
-    || typeof value.completedAt !== 'string' || !Number.isFinite(Date.parse(value.completedAt))
-  ) throw new Error('BUSTER_RESULT_PAYLOAD_INVALID');
+  const validJob = typeof value.jobId === 'string' && JOB_ID.test(value.jobId)
+    && (expectedJobId === undefined || value.jobId === expectedJobId);
+  if (!validJob) throw new Error('BUSTER_RESULT_JOB_INVALID');
+  const validPayload = [Array.isArray(value.results) && value.results.every(isRecord),
+    typeof value.suiteSummary === 'string' && value.suiteSummary.length <= 65_536,
+    typeof value.suiteDetailSummary === 'string' && value.suiteDetailSummary.length <= 1_048_576,
+    typeof value.criticalFailed === 'boolean', typeof value.completedAt === 'string' && Number.isFinite(Date.parse(value.completedAt))].every(Boolean);
+  if (!validPayload) throw new Error('BUSTER_RESULT_PAYLOAD_INVALID');
+  const results = value.results as Record<string, unknown>[];
   return Object.freeze({
     schemaVersion: RESULT_SCHEMA,
-    jobId: value.jobId,
-    results: Object.freeze(value.results.map((entry) => Object.freeze({ ...entry }))),
-    suiteSummary: value.suiteSummary,
-    suiteDetailSummary: value.suiteDetailSummary,
-    criticalFailed: value.criticalFailed,
-    completedAt: value.completedAt,
+    jobId: value.jobId as string,
+    results: Object.freeze(results.map((entry) => Object.freeze({ ...entry }))),
+    suiteSummary: value.suiteSummary as string,
+    suiteDetailSummary: value.suiteDetailSummary as string,
+    criticalFailed: value.criticalFailed as boolean,
+    completedAt: value.completedAt as string,
   });
 }
 

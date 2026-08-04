@@ -1,8 +1,8 @@
 import {
   knownAgentObservabilityHooks,
-} from './agent-observability/index.ts';
-import type { AgentObservabilityHook } from './agent-observability/index.ts';
-import type { AgentObservabilityIngressEventV1 } from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
+import type { AgentObservabilityHook } from './generated/agent-observability/index.ts';
+import type { AgentObservabilityIngressEventV1 } from './generated/agent-observability/index.ts';
 import { agentObserverRuntimeEnvironment, resolveAgentObserverConfig } from './config.ts';
 import type { AgentObserverConfig } from './config.ts';
 import { subscribeModelUsageDiagnostics } from './diagnostics.ts';

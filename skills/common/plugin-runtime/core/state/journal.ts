@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { FileMutex } from './file-mutex.ts';
 
 export interface JournalRecord<T> {
   readonly sequence: number;
@@ -17,15 +18,9 @@ function recordHash(sequence: number, previousHash: string | null, entry: unknow
   })).digest('hex')}`;
 }
 
-const appendLockWaitBuffer = new Int32Array(new SharedArrayBuffer(4));
-
-function waitForAppendLock(): void {
-  Atomics.wait(appendLockWaitBuffer, 0, 0, 10);
-}
-
 export class FileJournal<T> {
   readonly #file: string;
-  readonly #appendLockTimeoutMs: number;
+  readonly #mutex: FileMutex;
   #records: JournalRecord<T>[];
 
   constructor(file: string, appendLockTimeoutMs = 5_000) {
@@ -33,9 +28,9 @@ export class FileJournal<T> {
       throw new Error('JOURNAL_APPEND_LOCK_TIMEOUT_INVALID');
     }
     this.#file = path.resolve(file);
-    this.#appendLockTimeoutMs = appendLockTimeoutMs;
     fs.mkdirSync(path.dirname(this.#file), { recursive: true });
     this.#records = this.#load();
+    this.#mutex = new FileMutex(`${this.#file}.append-lock`, appendLockTimeoutMs, `JOURNAL_APPEND_LOCK_TIMEOUT:${this.#file}`);
   }
 
   #load(): JournalRecord<T>[] {
@@ -55,81 +50,6 @@ export class FileJournal<T> {
       records.push(Object.freeze(record));
     }
     return records;
-  }
-
-  #acquireAppendLock(): { readonly file: string; readonly token: string } {
-    const lockFile = `${this.#file}.append-lock`;
-    const deadline = Date.now() + this.#appendLockTimeoutMs;
-    for (;;) {
-      const token = crypto.randomUUID();
-      const temporary = `${lockFile}.${token}.tmp`;
-      fs.writeFileSync(
-        temporary,
-        `${JSON.stringify({ token, pid: process.pid, acquiredAt: new Date().toISOString() })}\n`,
-        { flag: 'wx', mode: 0o600 },
-      );
-      try {
-        fs.linkSync(temporary, lockFile);
-        fs.unlinkSync(temporary);
-        return { file: lockFile, token };
-      } catch (error) {
-        fs.rmSync(temporary, { force: true });
-        if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-        let owner: { token?: unknown; pid?: unknown };
-        try {
-          owner = JSON.parse(fs.readFileSync(lockFile, 'utf8')) as {
-            token?: unknown;
-            pid?: unknown;
-          };
-        } catch {
-          const tombstone = `${lockFile}.corrupt-${crypto.randomUUID()}`;
-          try {
-            fs.renameSync(lockFile, tombstone);
-          } catch (renameError) {
-            if ((renameError as NodeJS.ErrnoException).code === 'ENOENT') continue;
-            throw renameError;
-          }
-          fs.rmSync(tombstone, { force: true });
-          continue;
-        }
-        if (typeof owner.pid === 'number') {
-          try {
-            process.kill(owner.pid, 0);
-          } catch (livenessError) {
-            if ((livenessError as NodeJS.ErrnoException).code === 'EPERM') {
-              if (Date.now() >= deadline) {
-                throw new Error(`JOURNAL_APPEND_LOCK_TIMEOUT:${this.#file}`);
-              }
-              waitForAppendLock();
-              continue;
-            }
-            if ((livenessError as NodeJS.ErrnoException).code !== 'ESRCH') throw livenessError;
-            const tombstone = `${lockFile}.stale-${crypto.randomUUID()}`;
-            try {
-              fs.renameSync(lockFile, tombstone);
-            } catch (renameError) {
-              if ((renameError as NodeJS.ErrnoException).code === 'ENOENT') continue;
-              throw renameError;
-            }
-            fs.rmSync(tombstone, { force: true });
-            continue;
-          }
-          if (Date.now() >= deadline) {
-            throw new Error(`JOURNAL_APPEND_LOCK_TIMEOUT:${this.#file}`);
-          }
-          waitForAppendLock();
-          continue;
-        }
-        const tombstone = `${lockFile}.stale-${crypto.randomUUID()}`;
-        try {
-          fs.renameSync(lockFile, tombstone);
-        } catch (renameError) {
-          if ((renameError as NodeJS.ErrnoException).code === 'ENOENT') continue;
-          throw renameError;
-        }
-        fs.rmSync(tombstone, { force: true });
-      }
-    }
   }
 
   #appendUnlocked(entry: T): JournalRecord<T> {
@@ -158,23 +78,13 @@ export class FileJournal<T> {
       append: (entry: T) => JournalRecord<T>,
     ) => R,
   ): R {
-    const lock = this.#acquireAppendLock();
-    try {
+    return this.#mutex.withLock(() => {
       this.#records = this.#load();
       return operation(
         Object.freeze([...this.#records]),
         (entry) => this.#appendUnlocked(entry),
       );
-    } finally {
-      try {
-        const owner = JSON.parse(fs.readFileSync(lock.file, 'utf8')) as { token?: unknown };
-        if (owner.token === lock.token) {
-          fs.unlinkSync(lock.file);
-        }
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
-      }
-    }
+    });
   }
 
   append(entry: T): JournalRecord<T> {

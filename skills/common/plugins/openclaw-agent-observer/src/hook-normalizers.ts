@@ -2,7 +2,7 @@ import {
   AGENT_OBSERVABILITY_SCHEMA_VERSION,
   AGENT_OBSERVABILITY_SOURCE,
   assertAgentObservabilityIngressEvent,
-} from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
 import type {
   AgentObservabilityHook,
   AgentObservabilityIdentityV1,
@@ -10,7 +10,7 @@ import type {
   AgentObservabilityIngressEventV1,
   AgentObservabilityIngressPayloadV1,
   AgentObservabilityJsonValue,
-} from './agent-observability/index.ts';
+} from './generated/agent-observability/index.ts';
 import {
   boolValue,
   dropUndefined,
