@@ -233,6 +233,11 @@ assert.match(
   'the BuildKit socket owner must grant shared runner access without requiring CAP_FOWNER',
 );
 assert.match(
+  busterRuntimeEntrypoint,
+  /printf '%s' "\$worker_token" \| setpriv\s+\\\s+--groups 1000,1002\s+\\\s+node \/app\/buster-suite-runtime\/src\/worker\.ts/,
+  'the worker supervisor must retain projected-credential and BuildKit socket group access',
+);
+assert.match(
   chart,
   /initializedConfigPath[\s\S]*managedObserver[\s\S]*config\.plugins\.entries\['kubeclaw-agent-observer'\] = managedObserver/,
   'existing persistent homes must converge to the chart-managed observer configuration',

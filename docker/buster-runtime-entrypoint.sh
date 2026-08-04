@@ -66,9 +66,12 @@ setpriv \
   --init-groups \
   chmod 0660 "$address"
 
-# The supervisor retains only CHOWN/SETUID/SETGID/SETPCAP. The worker uses
-# those capabilities to prepare the job directory and enter the per-job
-# identity; worker.ts removes the entire capability set before suite code.
-printf '%s' "$worker_token" | node /app/buster-suite-runtime/src/worker.ts &
+# The supervisor retains only CHOWN/SETUID/SETGID/SETPCAP. Keep the pod fsGroup
+# (1000) for projected credentials and add the socket group (1002) so its
+# BuildKit readiness checks can connect after the ownership transition above.
+# worker.ts clears all supplementary groups and capabilities before suite code.
+printf '%s' "$worker_token" | setpriv \
+  --groups 1000,1002 \
+  node /app/buster-suite-runtime/src/worker.ts &
 worker_pid=$!
 wait "$worker_pid"
