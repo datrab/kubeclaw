@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const core = await import(pathToFileURL(path.resolve('skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const roots = [
   path.resolve('skills/common/plugins'),
   path.resolve('skills/nova/plugins'),
@@ -25,7 +25,7 @@ const enabled = new Set([
   ...snapshot.adapters.keys(),
 ]);
 const activated = await core.activateRegistry(snapshot, enabled);
-assert.equal(activated.stages.size, 16);
+assert.equal(activated.stages.size, 18);
 assert.equal(activated.observers.size, 6);
 assert.equal(activated.adapters.size, 18);
 console.log(JSON.stringify({

@@ -5,11 +5,10 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-telemetry-store-'));
-const journalPath = path.join(root, 'telemetry.jsonl');
 const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
-  config: { journalPath, maxRecordBytes: 1024 },
+  config: { root, maxRecordBytes: 1024 },
   async emit() {},
   async invoke() { throw new Error('unexpected dependency'); },
 });
@@ -35,13 +34,21 @@ try {
     accepted: true,
     sequence: 1,
   });
-  assert.deepEqual(await invoke('one', { eventId: 'event:1' }), { accepted: false, sequence: 1 });
+  assert.deepEqual(await invoke('one', { eventId: 'event:1', token: 'private', nested: { password: 'hidden' } }), {
+    accepted: false,
+    sequence: 1,
+  });
+  await assert.rejects(
+    invoke('one', { eventId: 'event:conflict' }),
+    /DURABLE_RECORD_IDEMPOTENCY_CONFLICT/,
+  );
   assert.deepEqual(await invoke('two', { eventId: 'event:2' }), { accepted: true, sequence: 2 });
-  const records = fs.readFileSync(journalPath, 'utf8').trim().split('\n').map((line) => JSON.parse(line));
+  const storePath = path.join(root, 'records', 'store.json');
+  const records = JSON.parse(fs.readFileSync(storePath, 'utf8')).records;
   assert.equal(records.length, 2);
   assert.equal(records[0].payload.token, '[REDACTED]');
   assert.equal(records[0].payload.nested.password, '[REDACTED]');
-  assert.equal(fs.statSync(journalPath).mode & 0o777, 0o600);
+  assert.equal(fs.statSync(storePath).mode & 0o777, 0o600);
   await assert.rejects(invoke('large', { value: 'x'.repeat(2000) }), /TELEMETRY_RECORD_SIZE_EXCEEDED/);
   const cancelled = new AbortController();
   cancelled.abort();

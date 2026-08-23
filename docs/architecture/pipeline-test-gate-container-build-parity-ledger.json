@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "pipeline-test-gate-container-build-parity.v1",
+  "expectedItemCount": 36,
+  "authority": { "legacy": "authoritative", "replacement": "shadow-only" },
+  "items": [
+    {"id":"BUILD-INPUT-001","disposition":"preserved"},{"id":"BUILD-INPUT-002","disposition":"improved"},{"id":"BUILD-INPUT-003","disposition":"improved"},{"id":"BUILD-INPUT-004","disposition":"improved"},{"id":"BUILD-INPUT-005","disposition":"improved"},{"id":"BUILD-INPUT-006","disposition":"improved"},
+    {"id":"BUILD-DEFINITION-001","disposition":"preserved"},{"id":"BUILD-DEFINITION-002","disposition":"improved"},{"id":"BUILD-DEFINITION-003","disposition":"improved"},{"id":"BUILD-DEFINITION-004","disposition":"improved"},
+    {"id":"BUILD-EXECUTION-001","disposition":"preserved"},{"id":"BUILD-EXECUTION-002","disposition":"preserved"},{"id":"BUILD-EXECUTION-003","disposition":"preserved"},{"id":"BUILD-EXECUTION-004","disposition":"improved"},{"id":"BUILD-EXECUTION-005","disposition":"improved"},{"id":"BUILD-EXECUTION-006","disposition":"improved"},{"id":"BUILD-EXECUTION-007","disposition":"improved"},{"id":"BUILD-EXECUTION-008","disposition":"improved"},
+    {"id":"BUILD-RESULT-001","disposition":"preserved"},{"id":"BUILD-RESULT-002","disposition":"preserved"},{"id":"BUILD-RESULT-003","disposition":"improved"},{"id":"BUILD-RESULT-004","disposition":"improved"},{"id":"BUILD-RESULT-005","disposition":"improved"},{"id":"BUILD-RESULT-006","disposition":"improved"},
+    {"id":"BUILD-SECURITY-001","disposition":"improved"},{"id":"BUILD-SECURITY-002","disposition":"improved"},{"id":"BUILD-SECURITY-003","disposition":"improved"},{"id":"BUILD-SECURITY-004","disposition":"improved"},
+    {"id":"BUILD-SCOPE-001","disposition":"improved"},{"id":"BUILD-SCOPE-002","disposition":"improved"},{"id":"BUILD-SCOPE-003","disposition":"preserved"},
+    {"id":"BUILD-DEFECT-001","disposition":"removed-defect"},{"id":"BUILD-DEFECT-002","disposition":"removed-defect"},{"id":"BUILD-DEFECT-003","disposition":"removed-defect"},
+    {"id":"BUILD-AUTHORITY-001","disposition":"preserved"},{"id":"BUILD-AUTHORITY-002","disposition":"preserved"}
+  ],
+  "proof": ["tests/verification/contracts/check-pipeline-container-build-parity.mts", "tests/verification/contracts/check-pipeline-container-build-implementation.mts"]
+}

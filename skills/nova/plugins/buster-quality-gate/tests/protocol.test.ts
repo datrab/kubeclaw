@@ -6,10 +6,10 @@ const input = {
   gateId: 'quality',
   attempt: 1,
   task: 'Evaluate.',
-  suiteEvidence: [{ suite: 'unit', passed: true, summary: 'ok' }],
+  suiteEvidence: [{ suite: 'security', passed: true, summary: 'ok' }],
   suitePlan: {
     repositoryRoot: '/repo',
-    suites: ['unit'],
+    suites: ['security'],
     testConfig: {},
     task: {},
   },
@@ -29,5 +29,5 @@ for (const failureClass of ['test_failure', 'contract', 'configuration', 'infras
   const failed = { ...valid, outcome, failureClass, findings: [`Actionable ${failureClass}`] };
   assert.deepEqual(parseVerdict(failed, input), { ...failed, runId: 'run-1', gateId: 'quality', attempt: 1 });
 }
-assert.throws(() => parseVerdict(valid, { ...input, suiteEvidence: [{ suite: 'unit', passed: false, summary: 'failed' }] }));
+assert.throws(() => parseVerdict(valid, { ...input, suiteEvidence: [{ suite: 'security', passed: false, summary: 'failed' }] }));
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.buster-quality-gate', suite: 'protocol' }));

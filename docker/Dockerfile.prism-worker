@@ -1,0 +1,24 @@
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.7.1-2@sha256:8789721d2e9b24b780a1504b56deb4c6bd5c7dbf96a1dd117e7c45c2ed72c8ac
+FROM ${OPENCLAW_BASE} AS build
+USER root
+WORKDIR /build
+COPY . /build
+RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+ && npm run typecheck --prefix skills/prism \
+ && npm prune --omit=dev --ignore-scripts
+
+FROM ${OPENCLAW_BASE}
+USER root
+WORKDIR /app/prism
+COPY --from=build /build/node_modules /app/prism/node_modules
+COPY --from=build /build/contracts /app/prism/contracts
+COPY --from=build /build/skills/prism /app/prism/skills/prism
+COPY --from=build /build/skills/worker/core /app/prism/skills/worker/core
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN ./node_modules/.bin/playwright install --with-deps chromium \
+ && test -d /ms-playwright \
+ && chown -R node:node /app/prism /ms-playwright
+USER node
+ENV NODE_ENV=production PORT=8080
+EXPOSE 8080
+CMD ["node","--experimental-strip-types","skills/prism/server/worker.ts"]

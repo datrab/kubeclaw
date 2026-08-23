@@ -1,0 +1,14 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+const source=readFileSync(new URL("../../../scripts/deploy.sh",import.meta.url),"utf8");
+for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","teardown-prism)"])assert(source.includes(command),`missing deploy command: ${command}`);
+for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_DIGEST","cannot use latest","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment guard: ${guard}`);
+assert(/all\)[\s\S]*?cmd_prism[\s\S]*?cmd_agents/.test(source),"deploy all must install Prism before agents");
+assert(source.includes('PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"'),"Prism must default to the KubeClaw namespace");
+assert(/if \[\[ \$role == "prism" \]\][\s\S]*?cmd_prism/.test(source),"agent prism must use the dedicated Prism command");
+assert(!/kubectl create namespace "\$PRISM_NAMESPACE"/.test(source),"Prism must not create namespaces directly");
+assert(!/kubectl delete namespace "\$PRISM_NAMESPACE"/.test(source),"Prism must not delete namespaces directly");
+assert(!source.includes("kubectl port-forward"),"Prism acceptance must not use port-forward");
+assert(source.includes("svc.cluster.local"),"Prism acceptance must use Kubernetes Service DNS");
+assert(source.includes("app: prism-test-runner"),"Prism acceptance must use an in-cluster test runner");
+console.log(JSON.stringify({ok:true,contract:"deploy-prism-command.v1"}));

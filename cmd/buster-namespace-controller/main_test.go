@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func TestNormalizeLeaseNamespaceName(t *testing.T) {
 	ctrl := &controller{allowedPrefixes: []string{"test"}}
@@ -85,5 +88,29 @@ func TestSecretHasCredentialKeys(t *testing.T) {
 	}
 	if secretHasCredentialKeys(secret, []string{"password"}) {
 		t.Fatal("did not expect unavailable credential key")
+	}
+}
+
+func TestCreatedAtUsesLeaseMetadata(t *testing.T) {
+	want := time.Date(2026, 8, 22, 9, 0, 0, 0, time.UTC)
+	ctrl := &controller{now: func() time.Time { return want.Add(time.Hour) }}
+	item := &lease{Metadata: metadata{CreationTimestamp: want.Format(time.RFC3339)}}
+	got, err := ctrl.createdAt(item)
+	if err != nil || !got.Equal(want) {
+		t.Fatalf("createdAt mismatch: got %s want %s", got, want)
+	}
+	item.Metadata.CreationTimestamp = "invalid"
+	if _, err := ctrl.createdAt(item); err == nil {
+		t.Fatal("invalid creationTimestamp must fail")
+	}
+}
+
+func TestApprovedSecretSet(t *testing.T) {
+	approved := stringSet([]string{"test-registry", "test-database"})
+	if _, ok := approved["test-registry"]; !ok {
+		t.Fatal("approved Secret is absent")
+	}
+	if _, ok := approved["production-database"]; ok {
+		t.Fatal("unapproved Secret is present")
 	}
 }

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const core = await import(pathToFileURL(path.resolve('skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const stage = {
   id: 'verify',
   type: 'example.verify',

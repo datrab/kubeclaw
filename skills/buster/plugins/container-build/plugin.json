@@ -1,0 +1,32 @@
+{
+  "id": "kubeclaw.container-build",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "buildkit",
+      "contractId": "kubeclaw.container-build@1",
+      "kind": "test",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [],
+      "outputs": [
+        { "name": "image", "kind": "value", "required": true, "schemaId": "kubeclaw.container-image@1" }
+      ],
+      "requiredCapabilities": ["container.build"],
+      "retrySafe": true,
+      "matrixFields": ["platform"],
+      "reportFormats": [],
+      "evidenceTypes": ["log"],
+      "evidenceDefaults": {
+        "onPass": ["log"],
+        "onFail": ["log"],
+        "onError": ["log"]
+      }
+    }
+  ]
+}

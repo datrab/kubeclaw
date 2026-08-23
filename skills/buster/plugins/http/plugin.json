@@ -1,0 +1,37 @@
+{
+  "id": "kubeclaw.http",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "request",
+      "contractId": "kubeclaw.http@1",
+      "kind": "test",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [
+        {
+          "name": "deployment",
+          "kind": "value",
+          "required": false,
+          "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+        }
+      ],
+      "outputs": [],
+      "requiredCapabilities": ["network.http"],
+      "retrySafe": true,
+      "matrixFields": ["path"],
+      "reportFormats": [],
+      "evidenceTypes": ["log"],
+      "evidenceDefaults": {
+        "onPass": ["log"],
+        "onFail": ["log"],
+        "onError": ["log"]
+      }
+    }
+  ]
+}

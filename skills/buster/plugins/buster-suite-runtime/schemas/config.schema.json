@@ -6,7 +6,7 @@
     "endpoint",
     "tokenSecret",
     "allowedRepositoryRoots",
-    "allowedSuites",
+    "unmigratedSuites",
     "suiteCapabilities",
     "gitExecutable",
     "maxArchiveBytes",
@@ -29,7 +29,7 @@
       "uniqueItems": true,
       "items": { "type": "string", "minLength": 1 }
     },
-    "allowedSuites": {
+    "unmigratedSuites": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,

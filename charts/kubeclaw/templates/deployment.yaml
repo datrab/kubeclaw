@@ -797,8 +797,12 @@ spec:
               if (!isDirectory(skillsPath)) {
                 throw new Error('bundle must contain a top-level skills/ directory');
               }
-              if (manifest.agent !== expectedAgent) {
-                throw new Error(`bundle agent ${manifest.agent || '<missing>'} does not match ${expectedAgent}`);
+              if (manifest.schemaVersion !== 'pipeline-runtime-bundle.v1'
+                || manifest.bundleKind !== 'app-skills-package-set') {
+                throw new Error('bundle uses an unsupported package contract');
+              }
+              if (manifest.role !== expectedAgent) {
+                throw new Error(`bundle role ${manifest.role || '<missing>'} does not match ${expectedAgent}`);
               }
               if (expectedCommit && manifest.commit !== expectedCommit) {
                 throw new Error(`bundle commit ${manifest.commit || '<missing>'} does not match ${expectedCommit}`);
@@ -811,12 +815,12 @@ spec:
                 fs.cpSync(path.join(skillsPath, entry), path.join('/skills-merged', entry), { recursive: true, force: true });
               }
               fs.copyFileSync(manifestPath, manifestOut);
-              console.log(`    bundle manifest accepted: ${manifest.agent}@${manifest.commit}`);
+              console.log(`    bundle manifest accepted: ${manifest.role}@${manifest.commit}`);
               NODE
               fi
               protected_skill_overlay() {
                 case "$1" in
-                  pipeline.ts|common/plugin-runtime|common/plugin-runtime/*|common/plugins|common/plugins/*|nova/plugins|nova/plugins/*|buster/plugins|buster/plugins/*)
+                  pipeline.ts|runtime.ts|contracts|contracts/*|packages|packages/*|node_modules|node_modules/*|plugins|plugins/*)
                     return 0
                     ;;
                 esac

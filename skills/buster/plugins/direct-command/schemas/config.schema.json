@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["executable", "resultMode"],
+  "properties": {
+    "executable": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "args": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "type": "string", "maxLength": 4096 }
+    },
+    "workingDirectory": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "environment": {
+      "type": "object",
+      "maxProperties": 64,
+      "propertyNames": { "pattern": "^[A-Za-z_][A-Za-z0-9_]*$" },
+      "additionalProperties": { "type": "string", "maxLength": 4096 }
+    },
+    "resultMode": { "enum": ["junit-required", "exit-code"] },
+    "reports": {
+      "type": "array",
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/report" }
+    },
+    "coverage": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/coverage" }
+    },
+    "artifacts": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/artifact" }
+    }
+  },
+  "$defs": {
+    "report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "format", "path", "mediaType"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+        "format": { "const": "junit" },
+        "path": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "mediaType": { "enum": ["application/junit+xml", "application/xml", "text/xml"] }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "format", "path", "mediaType"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+        "format": { "const": "lcov" },
+        "path": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "mediaType": { "const": "text/lcov" }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "mediaType"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+        "path": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "mediaType": { "enum": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar", "application/vnd.kubeclaw.checked-kubernetes-yaml", "application/vnd.kubeclaw.size-budget-baseline+json"] }
+      }
+    }
+  }
+}

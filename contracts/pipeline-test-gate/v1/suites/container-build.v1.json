@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.container-build-suite@1",
+  "tests": {},
+  "fixtures": {},
+  "concurrencyLimits": {
+    "container-build": 1
+  }
+}

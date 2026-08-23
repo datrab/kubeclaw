@@ -9,10 +9,28 @@
       "module": "src/stage.ts",
       "export": "execute",
       "requiredCapabilities": [
-        "runtime.dispatch"
+        "runtime.dispatch",
+        "git.repository.read",
+        "artifacts.read",
+        "artifacts.write"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "repository-audit",
+      "type": "kubeclaw.audit.repository-review",
+      "module": "src/repository-audit-stage.ts",
+      "export": "executeRepositoryAudit",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "git.repository.read",
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/repository-audit-config.schema.json",
+      "inputSchema": "schemas/repository-audit-input.schema.json",
       "resultSchema": "schemas/result.schema.json"
     }
   ],

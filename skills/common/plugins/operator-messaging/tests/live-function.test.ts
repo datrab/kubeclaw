@@ -1,12 +1,15 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
 import http from 'node:http';
+import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
+const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'operator-messaging-test-'));
 const core = await import(pathToFileURL(
-  path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts'),
+  path.join(repository, 'skills/nova/core/src/index.ts'),
 ).href);
 const secretEnvironmentName = 'KUBECLAW_OPERATOR_MESSAGING_TEST_TOKEN';
 const endpointEnvironmentName = 'KUBECLAW_OPERATOR_MESSAGING_TEST_ENDPOINT';
@@ -82,7 +85,7 @@ const granted = core.resolveCapabilityGrants(snapshot, {
   grants: new Map([
     ['kubeclaw.notification-observer:notifications', new Map([
       ['operator.request', {
-        allowedTargets: ['operators', 'discord', 'confidential-discord', 'failing', 'unconfigured'],
+        allowedTargets: ['operators', 'discord', 'confidential-discord', 'failing', 'slow', 'unconfigured'],
       }],
     ])],
     ['kubeclaw.operator-messaging:operator', new Map([
@@ -98,6 +101,7 @@ const adapters = new core.AdapterRuntime({
   activated,
   configs: new Map([
     ['kubeclaw.operator-messaging:operator', {
+      deliveryRoot: path.join(temporary, 'deliveries'),
       targets: {
         operators: {
           endpoint: `${origin}/messages`,
@@ -300,7 +304,7 @@ try {
     signal: midflight.signal,
     idempotencyKey: 'operator:midflight-cancel',
   });
-  await new Promise((resolve) => setTimeout(resolve, 25));
+  await new Promise((resolve) => setTimeout(resolve, 100));
   midflight.abort();
   await assert.rejects(slow, /ADAPTER_CANCELLED|aborted/i);
   await new Promise((resolve) => setTimeout(resolve, 25));
@@ -314,6 +318,151 @@ try {
     publish('failing', { type: 'test.notice', message: 'must fail closed' }),
     /HTTP_503/,
   );
+
+  const { activate: activateDirect } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+  let directSends = 0;
+  const direct = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'direct-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/direct-retry`,
+          tokenSecret: 'operator.webhook',
+          maxPayloadBytes: 512,
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: secretValue };
+      if (capability === 'network.http') {
+        directSends += 1;
+        if (directSends === 1) throw new Error('HTTP_503');
+        return { status: 202, body: { messageId: 'direct-retry-success' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const directPayload = { type: 'test.notice', message: 'retry across attempts' };
+  const directInvoke = (
+    retryAttempt,
+    idempotencyKey = 'operator:retry-across-attempts',
+    message = directPayload,
+  ) => direct.invoke({
+    request: {
+      requestId: `request:${retryAttempt.attemptNumber}`,
+      idempotencyKey,
+      attempt: retryAttempt,
+      capability: 'operator.request',
+      operation: 'publish',
+      resource: { type: 'operator.target', canonicalId: 'retry' },
+      payload: message,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  await assert.rejects(directInvoke(attempt), /HTTP_503/);
+  const directRetried = await directInvoke({
+    ...attempt,
+    attemptId: 'attempt:operator-retry',
+    attemptNumber: 2,
+  });
+  assert.equal(directRetried.accepted, true);
+  assert.equal(directSends, 2);
+  await assert.rejects(
+    directInvoke(attempt, 'operator:retry-across-attempts', { ...directPayload, message: 'changed' }),
+    /DURABLE_RECORD_IDEMPOTENCY_CONFLICT/,
+  );
+  assert.equal((await directInvoke(attempt, 'a'.repeat(256))).accepted, true);
+  assert.equal(directSends, 3, 'a distinct delivery key must not reuse an unrelated receipt');
+  await direct.shutdown();
+
+  let capacitySends = 0;
+  const capacity = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'capacity-deliveries'),
+      maximumDeliveryRecords: 1,
+      targets: {
+        retry: {
+          endpoint: `${origin}/capacity`,
+          tokenSecret: 'operator.webhook',
+          maxPayloadBytes: 512,
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: secretValue };
+      if (capability === 'network.http') {
+        capacitySends += 1;
+        return { status: 202, body: { messageId: 'must-not-send' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  await assert.rejects(capacity.invoke({
+    request: {
+      requestId: 'request:capacity',
+      idempotencyKey: 'operator:capacity',
+      attempt,
+      capability: 'operator.request',
+      operation: 'publish',
+      resource: { type: 'operator.target', canonicalId: 'retry' },
+      payload: directPayload,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  }), /DURABLE_RECORD_STORE_FULL/);
+  assert.equal(capacitySends, 0, 'terminal capacity must be reserved before network delivery');
+  await capacity.shutdown();
+
+  let concurrentSends = 0;
+  const concurrent = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'concurrent-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/concurrent`,
+          tokenSecret: 'operator.webhook',
+          maxPayloadBytes: 512,
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: secretValue };
+      if (capability === 'network.http') {
+        concurrentSends += 1;
+        const call = concurrentSends;
+        await new Promise((resolve) => setTimeout(resolve, call === 1 ? 10 : 30));
+        if (call === 1) throw new Error('HTTP_503');
+        return { status: 202, body: { messageId: 'concurrent-success' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const concurrentInvoke = () => concurrent.invoke({
+    request: {
+      requestId: `request:concurrent:${crypto.randomUUID()}`,
+      idempotencyKey: 'operator:concurrent',
+      attempt,
+      capability: 'operator.request',
+      operation: 'publish',
+      resource: { type: 'operator.target', canonicalId: 'retry' },
+      payload: directPayload,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  const concurrentResults = await Promise.allSettled([concurrentInvoke(), concurrentInvoke()]);
+  assert.equal(concurrentResults.filter((result) => result.status === 'fulfilled').length, 1);
+  assert.equal(concurrentResults.filter((result) => result.status === 'rejected').length, 1);
+  assert.equal((await concurrentInvoke()).accepted, true);
+  assert.equal(concurrentSends, 2, 'the durable success must win over a concurrent failure');
+  await concurrent.shutdown();
 } finally {
   await adapters.shutdown().catch(() => {});
   await new Promise((resolve) => server.close(resolve));
@@ -321,6 +470,7 @@ try {
   else process.env[secretEnvironmentName] = previousSecret;
   if (previousEndpoint === undefined) delete process.env[endpointEnvironmentName];
   else process.env[endpointEnvironmentName] = previousEndpoint;
+  fs.rmSync(temporary, { recursive: true, force: true });
 }
 
 console.log(JSON.stringify({

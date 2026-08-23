@@ -3,9 +3,10 @@ import fs from 'fs';
 import path from 'path';
 
 import { validateBaseline, validateRuleAdmission } from './lint-governance.ts';
+import { loadKubernetesPolicyPacks } from './kubernetes-policy-pack.ts';
 import { LintPolicyError, fail, isoDate, record, repoRelative, stringList, text } from './policy-validation.ts';
 
-const LINT_POLICY_SCHEMA_VERSION = 'pipeline_lint_policy.v6';
+const LINT_POLICY_SCHEMA_VERSION = 'pipeline_lint_policy.v7';
 const LANGUAGES = new Set(['javascript', 'typescript', 'python', 'shell', 'docker', 'helm', 'yaml', 'go', 'terraform']);
 const CATEGORIES = new Set(['format', 'lint', 'types', 'architecture', 'duplication', 'security', 'dependencies', 'manifests']);
 const SCOPES = new Set(['changed-files', 'affected-projects', 'project', 'repository']);
@@ -13,7 +14,54 @@ const TIERS = new Set(['pre-check', 'full']);
 const SEVERITIES = new Set(['warning', 'error']);
 
 
-function validateProject(input: unknown, field: string): Record<string, any> {
+function positiveInteger(value: unknown, field: string, maximum: number): number {
+  if (!Number.isSafeInteger(value) || (value as number) < 1 || (value as number) > maximum) fail(field, `required integer from 1 to ${maximum}`);
+  return value as number;
+}
+
+function uniqueStrings(values: string[], field: string): string[] {
+  if (new Set(values).size !== values.length) fail(field, 'duplicate values are not allowed');
+  return values;
+}
+
+function validateProjectKubernetes(project: Record<string, any>, field: string, packIds: Set<string>): Record<string, any> {
+  if (project.kubernetes === undefined) return {
+    raw_manifests: [], helm_charts: [], policy_packs: [], kubernetes_version: null, schema_location: null,
+    limits: { max_files: 128, max_file_bytes: 1_048_576, max_rendered_bytes: 10_485_760, max_documents: 2048 },
+  };
+  const settings = record(project.kubernetes, `${field}.kubernetes`);
+  const knownSettings = new Set(['raw_manifests', 'helm_charts', 'policy_packs', 'kubernetes_version', 'schema_location', 'limits']);
+  for (const key of Object.keys(settings)) if (!knownSettings.has(key)) fail(`${field}.kubernetes.${key}`, 'unknown field');
+  const rawManifests = uniqueStrings(stringList(settings.raw_manifests, `${field}.kubernetes.raw_manifests`).map((entry, index) => repoRelative(entry, `${field}.kubernetes.raw_manifests[${index}]`)), `${field}.kubernetes.raw_manifests`);
+  const helmCharts = uniqueStrings(stringList(settings.helm_charts, `${field}.kubernetes.helm_charts`).map((entry, index) => repoRelative(entry, `${field}.kubernetes.helm_charts[${index}]`)), `${field}.kubernetes.helm_charts`);
+  if (rawManifests.length + helmCharts.length === 0) fail(`${field}.kubernetes`, 'at least one raw manifest or Helm chart is required');
+  const policyPacks = uniqueStrings(stringList(settings.policy_packs, `${field}.kubernetes.policy_packs`), `${field}.kubernetes.policy_packs`);
+  if (policyPacks.length + rawManifests.length + helmCharts.length > 256) fail(`${field}.kubernetes`, 'selected packs and manifest sources exceed the 256-entry evidence capacity');
+  for (const id of policyPacks) if (!packIds.has(id)) fail(`${field}.kubernetes.policy_packs`, `unknown operator-approved pack '${id}'`);
+  const kubernetesVersion = text(settings.kubernetes_version, `${field}.kubernetes.kubernetes_version`);
+  if (!/^\d+\.\d+\.\d+$/u.test(kubernetesVersion)) fail(`${field}.kubernetes.kubernetes_version`, 'required full Kubernetes version');
+  const schemaLocation = text(settings.schema_location, `${field}.kubernetes.schema_location`);
+  if (!path.isAbsolute(schemaLocation)) fail(`${field}.kubernetes.schema_location`, 'required absolute operator-controlled path');
+  if (/^https?:/iu.test(schemaLocation)) fail(`${field}.kubernetes.schema_location`, 'network schema locations are forbidden');
+  const limits = record(settings.limits, `${field}.kubernetes.limits`);
+  const knownLimits = new Set(['max_files', 'max_file_bytes', 'max_rendered_bytes', 'max_documents']);
+  for (const key of Object.keys(limits)) if (!knownLimits.has(key)) fail(`${field}.kubernetes.limits.${key}`, 'unknown field');
+  return {
+    raw_manifests: rawManifests,
+    helm_charts: helmCharts,
+    policy_packs: policyPacks,
+    kubernetes_version: kubernetesVersion,
+    schema_location: schemaLocation,
+    limits: {
+      max_files: positiveInteger(limits.max_files, `${field}.kubernetes.limits.max_files`, 128),
+      max_file_bytes: positiveInteger(limits.max_file_bytes, `${field}.kubernetes.limits.max_file_bytes`, 16 * 1024 * 1024),
+      max_rendered_bytes: positiveInteger(limits.max_rendered_bytes, `${field}.kubernetes.limits.max_rendered_bytes`, 64 * 1024 * 1024),
+      max_documents: positiveInteger(limits.max_documents, `${field}.kubernetes.limits.max_documents`, 100_000),
+    },
+  };
+}
+
+function validateProject(input: unknown, field: string, packIds: Set<string>): Record<string, any> {
   const project = record(input, field);
   const languages = stringList(project.languages, `${field}.languages`, { nonEmpty: true });
   for (const language of languages) if (!LANGUAGES.has(language)) fail(`${field}.languages`, `unknown language '${language}'`);
@@ -21,6 +69,7 @@ function validateProject(input: unknown, field: string): Record<string, any> {
   if (!Number.isSafeInteger(project.discovery_max_depth) || project.discovery_max_depth < 0) fail(`${field}.discovery_max_depth`, 'required non-negative integer');
   const goModules = validateProjectGo(project, field, languages);
   const terraform = validateProjectTerraform(project, field, languages);
+  const kubernetes = validateProjectKubernetes(project, field, packIds);
   return {
     id: text(project.id, `${field}.id`),
     root: repoRelative(project.root, `${field}.root`),
@@ -29,6 +78,7 @@ function validateProject(input: unknown, field: string): Record<string, any> {
     discovery_max_depth: project.discovery_max_depth,
     go: { modules: goModules },
     terraform,
+    kubernetes,
   };
 }
 
@@ -187,7 +237,9 @@ function validateLintPolicy(input: unknown, policyPath: string, options: Record<
   const policyDir = path.dirname(policyPath);
   const today = typeof options.today === 'string' ? isoDate(options.today, 'validation.today') : new Date().toISOString().slice(0, 10);
   const baseline = validateBaseline(policy.baseline_path, policyDir, today);
-  const projects = policy.projects.map((entry: any, index: any) => validateProject(entry, `policy.projects[${index}]`));
+  const kubernetesPolicyPacks = loadKubernetesPolicyPacks(policy.kubernetes_policy_packs ?? [], policyDir);
+  const packIds = new Set(kubernetesPolicyPacks.map((pack: Record<string, any>) => pack.id));
+  const projects = policy.projects.map((entry: any, index: any) => validateProject(entry, `policy.projects[${index}]`, packIds));
   const tools = policy.tools.map((entry: any, index: any) => validateTool(entry, `policy.tools[${index}]`, policyDir));
   validateUniqueIds(projects, tools);
   applyExperimentalModes(policy, tools);
@@ -197,7 +249,7 @@ function validateLintPolicy(input: unknown, policyPath: string, options: Record<
   const architecture = validateArchitecture(policy.architecture);
   validateArchitectureTool(architecture, tools);
   validateSuppressionTools(baseline, tools);
-  return { schema_version: LINT_POLICY_SCHEMA_VERSION, projects, tools, global_exclusions: globalExclusions, architecture, baseline, rule_admission: ruleAdmission };
+  return { schema_version: LINT_POLICY_SCHEMA_VERSION, projects, tools, global_exclusions: globalExclusions, architecture, baseline, rule_admission: ruleAdmission, kubernetes_policy_packs: kubernetesPolicyPacks };
 }
 
 function loadLintPolicy(policyPath: string): Record<string, any> {
@@ -215,6 +267,7 @@ function loadLintPolicy(policyPath: string): Record<string, any> {
   policy.config_digests = Object.fromEntries(policy.tools
     .filter((tool: Record<string, any>) => tool.config_path && fs.existsSync(tool.config_path))
     .map((tool: Record<string, any>) => [tool.id, crypto.createHash('sha256').update(fs.readFileSync(tool.config_path)).digest('hex')]));
+  policy.policy_pack_digests = Object.fromEntries(policy.kubernetes_policy_packs.map((pack: Record<string, any>) => [pack.id, pack.digest]));
   return policy;
 }
 
@@ -256,6 +309,7 @@ function policyIncludesFile(file: string, tool: Record<string, any>, globalExclu
 
 function validatePolicyTargetPaths(repoRoot: string, policy: Record<string, any>, project: Record<string, any>): void {
   const projectRoot = path.resolve(repoRoot, project.root);
+  const realProjectRoot = fs.realpathSync(projectRoot);
   for (const module of project.go.modules) {
     const absolute = path.resolve(projectRoot, module.mod_file);
     if (!fs.existsSync(absolute)) fail('policy project go module', `does not exist: ${module.mod_file}`);
@@ -263,6 +317,30 @@ function validatePolicyTargetPaths(repoRoot: string, policy: Record<string, any>
   for (const root of project.terraform.roots) {
     const absolute = path.resolve(projectRoot, root);
     if (!fs.existsSync(absolute)) fail('policy project terraform root', `does not exist: ${root}`);
+  }
+  if (project.kubernetes.raw_manifests.length + project.kubernetes.helm_charts.length > project.kubernetes.limits.max_files) fail('policy project kubernetes', 'declared inputs exceed max_files');
+  for (const manifest of project.kubernetes.raw_manifests) {
+    const absolute = path.resolve(projectRoot, manifest);
+    const relative = path.relative(projectRoot, absolute);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) fail('policy project kubernetes raw manifest', `escapes project root: ${manifest}`);
+    if (!fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) fail('policy project kubernetes raw manifest', `does not exist: ${manifest}`);
+    const real = fs.realpathSync(absolute);
+    const realRelative = path.relative(realProjectRoot, real);
+    if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) fail('policy project kubernetes raw manifest', `symlink escapes project root: ${manifest}`);
+    if (fs.statSync(absolute).size > project.kubernetes.limits.max_file_bytes) fail('policy project kubernetes raw manifest', `exceeds max_file_bytes: ${manifest}`);
+  }
+  for (const chart of project.kubernetes.helm_charts) {
+    const absolute = path.resolve(projectRoot, chart);
+    const relative = path.relative(projectRoot, absolute);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) fail('policy project kubernetes Helm chart', `escapes project root: ${chart}`);
+    if (!fs.existsSync(path.join(absolute, 'Chart.yaml'))) fail('policy project kubernetes Helm chart', `Chart.yaml does not exist: ${chart}`);
+    const real = fs.realpathSync(absolute);
+    const realRelative = path.relative(realProjectRoot, real);
+    if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) fail('policy project kubernetes Helm chart', `symlink escapes project root: ${chart}`);
+  }
+  if (project.kubernetes.schema_location !== null) {
+    const schemaRoot = project.kubernetes.schema_location.split('{{', 1)[0].replace(/[\\/]$/u, '');
+    if (!schemaRoot || !fs.existsSync(schemaRoot) || !fs.statSync(schemaRoot).isDirectory()) fail('policy project kubernetes schema_location', `local schema directory does not exist: ${schemaRoot}`);
   }
   for (const tool of policy.tools) {
     for (const target of tool.targets) {

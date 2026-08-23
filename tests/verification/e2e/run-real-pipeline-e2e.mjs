@@ -998,7 +998,7 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_DISCORD_UNAVAILABLE');
   }
   if (scenario.id === 'k8s-context-invalid') {
-    const matched = /KUBECONFIG|real-e2e-context-does-not-exist|namespace-lease|kubectl/i.test(combined);
+    const matched = /KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED|namespacePrefix|namespace prefix|denied/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_K8S_CONTEXT_INVALID');
   }
   if (scenario.id === 'registry-pull-failure') {

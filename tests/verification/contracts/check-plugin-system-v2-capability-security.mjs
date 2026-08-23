@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const core = await import(pathToFileURL(
-  path.resolve('skills/common/plugin-runtime/core/src/index.ts'),
+  path.resolve('skills/nova/core/src/index.ts'),
 ).href);
 
 const roots = [
@@ -28,13 +28,19 @@ const phase5 = JSON.parse(fs.readFileSync(
   'utf8',
 ));
 
-assert.equal(core.CAPABILITY_IDS.length, 21);
+assert.equal(core.CAPABILITY_IDS.length, 23);
 assert.equal(Object.isFrozen(core.CAPABILITY_DEFINITIONS), true);
 for (const capability of core.CAPABILITY_IDS) {
   const definition = core.CAPABILITY_DEFINITIONS[capability];
   assert(definition, `closed vocabulary must define ${capability}`);
   assert.equal(Object.isFrozen(definition), true);
   assert.equal(Object.isFrozen(definition.constraintSchema), true);
+  const runtimeProvider = phase5.runtimeCapabilities?.[capability];
+  if (runtimeProvider) {
+    assert.equal(typeof runtimeProvider, 'string');
+    assert(runtimeProvider.length > 0);
+    continue;
+  }
   const providerId = phase5.capabilities[capability];
   const provider = snapshot.adapters.get(providerId);
   assert(provider, `Phase 5 mapping must select an installed provider for ${capability}`);
@@ -252,6 +258,8 @@ for (const directory of [repositoryRoot, workspaceRoot, policyRoot, outsideRoot]
 }
 const repositoryWork = path.join(repositoryRoot, 'work');
 fs.mkdirSync(repositoryWork);
+const repositoryFile = path.join(repositoryRoot, 'Dockerfile');
+fs.writeFileSync(repositoryFile, 'FROM scratch\n');
 const policyFile = path.join(policyRoot, 'lint.json');
 fs.writeFileSync(policyFile, '{}\n');
 fs.writeFileSync(path.join(outsideRoot, 'lint.json'), '{}\n');
@@ -340,6 +348,20 @@ const cases = [
     operation: 'run', resource: { type: 'command.executable', canonicalId: process.execPath },
     payload: { workingDirectory: repositoryWork },
   }, { payload: { workingDirectory: repositoryEscape } }],
+  ['container.build', {
+    allowedPlatforms: ['linux/amd64'], allowedWorkspaceRoots: [repositoryRoot],
+  }, {
+    operation: 'build_push_verify', resource: { type: 'container.build-definition', canonicalId: 'build:app' },
+    payload: { repositoryRoot, scratchRoot: repositoryRoot, buildContext: repositoryWork,
+      dockerfile: repositoryFile, platform: 'linux/amd64' },
+  }, { payload: { repositoryRoot, scratchRoot: repositoryRoot, buildContext: repositoryEscape,
+    dockerfile: repositoryFile, platform: 'linux/amd64' } }],
+  ['kubernetes.fixture', {
+    allowedNamespacePrefixes: ['test'], allowedWorkspaceRoots: [repositoryRoot],
+  }, {
+    operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: 'fixture:app' },
+    payload: { namespacePrefix: 'test', manifestPath: repositoryFile },
+  }, { payload: { namespacePrefix: 'test', manifestPath: repositoryEscape } }],
   ['test.suite.execute', {
     allowedSuites: ['unit'], allowedRoots: [repositoryRoot],
   }, {

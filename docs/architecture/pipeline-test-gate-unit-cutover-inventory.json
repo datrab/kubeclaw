@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "pipeline-test-gate-unit-cutover-inventory.v1",
+  "suite": "unit",
+  "parityItemCount": 93,
+  "verification": {
+    "solePathTests": ["tests/verification/contracts/check-pipeline-phase10-vertical.mts"],
+    "dualAuthorityTests": ["tests/verification/contracts/check-pipeline-phase10-cutover.mts"],
+    "absenceTests": ["tests/verification/contracts/check-pipeline-phase10-cutover.mts"]
+  },
+  "legacyFilesToDelete": [
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/unit.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/unit-output.ts"
+  ],
+  "legacyRuntimeFilesToClean": [
+    "skills/buster/plugins/buster-suite-runtime/src/protocol.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts",
+    "skills/buster/plugins/buster-suite-runtime/common/pipeline/security.ts",
+    "contracts/pipeline-test-gate/v1/legacy-suite-bridge.json",
+    "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+    "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+    "skills/nova/project_setup/tools/progress-scaffold-test-config.ts",
+    "tests/verification/e2e/real-run-workspace.mjs",
+    "tests/verification/e2e/failure-scenarios.mjs"
+  ],
+  "replacementFilesRequired": [
+    "contracts/pipeline-test-gate/v1/suites/unit.v1.json",
+    "skills/buster/plugins/direct-command/plugin.json",
+    "skills/buster/plugins/junit-report-adapter/plugin.json",
+    "skills/buster/plugins/coverage-budget/plugin.json",
+    "skills/nova/core/test-gates/pipeline.ts",
+    "skills/nova/core/test-gates/production.ts"
+  ],
+  "currentGuidesRequired": [
+    "docs/architecture/pipeline-test-gate-unit-user-guide.md",
+    "docs/architecture/pipeline-test-gate-unit-operator-guide.md",
+    "docs/architecture/pipeline-test-gate-suite-migration-playbook.md",
+    "docs/architecture/pipeline-test-gate-phase-10-final-audit.md"
+  ],
+  "legacyTokensForbidden": [
+    "unit.test_cmd",
+    "unit.thresholds.max_failures",
+    "runtime/suites/unit-output",
+    "runtime/suites/unit.ts"
+  ]
+}

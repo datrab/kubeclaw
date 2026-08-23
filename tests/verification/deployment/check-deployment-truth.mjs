@@ -21,6 +21,7 @@ const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
 const generalDockerfile = read('docker/Dockerfile.general');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
 const busterRuntimeEntrypoint = read('docker/buster-runtime-entrypoint.sh');
+const busterWorker = read('skills/buster/plugins/buster-suite-runtime/src/worker.ts');
 const values = read('charts/kubeclaw/values.yaml');
 const novaValues = read('my-values/nova-values.yaml');
 const busterValues = read('my-values/buster-values.yaml');
@@ -64,10 +65,19 @@ for (const relativePath of [
   'docker/Dockerfile.buster-runtime',
   'docker/buster-runtime-entrypoint.sh',
   'docker/Dockerfile.namespace-controller',
-  'docker/Dockerfile.prism-preview',
+  'docker/Dockerfile.archviewer',
+  'docker/Dockerfile.prism-control',
+  'docker/Dockerfile.prism-studio',
+  'docker/Dockerfile.prism-worker',
+  'docker/Dockerfile.prism-ingestion',
   'skills/nova/pipeline.ts',
-  'skills/common/plugin-runtime/cli.ts',
-  'skills/common/plugin-runtime/core/src/index.ts',
+  'skills/nova/core/cli.ts',
+  'skills/nova/core/src/index.ts',
+  'skills/worker/core/src/index.ts',
+  'skills/buster/engine/src/index.ts',
+  'packaging/runtime/roles/nova.json',
+  'packaging/runtime/roles/buster.json',
+  'scripts/build-runtime-role-bundle.mjs',
 ]) {
   assert.equal(exists(relativePath), true, `${relativePath} must exist`);
 }
@@ -99,8 +109,8 @@ for (const [label, dockerfile] of [
 
 assert.match(
   chart,
-  /plugin-runtime|common\/plugins|nova\/plugins|buster\/plugins/,
-  'the chart must materialize the v2 core and plugin roots',
+  /app-skills-package-set[\s\S]*packages\|packages\/\*[\s\S]*plugins\|plugins\/\*/,
+  'the chart must accept package-set bundles and protect package roots',
 );
 assert.match(
   deploy,
@@ -121,6 +131,10 @@ assert.match(
   workflow,
   /image_inputs:[\s\S]*- 'tsconfig\.base\.json'/,
   'shared TypeScript configuration changes must trigger image builds',
+);
+assert.ok(
+  workflow.includes('(-[0-9]+)?$'),
+  'the OpenClaw release check must accept numbered correction releases',
 );
 assert.doesNotMatch(chart, /execution-buildkit|execution-api-token|executionRuntime/);
 assert.doesNotMatch(values, /executionRuntime|moby\/buildkit/);
@@ -162,9 +176,14 @@ assert.match(
   'the host-native observer must receive its required runtime configuration',
 );
 assert.match(
-  read('skills/buster/plugins/buster-suite-runtime/src/worker.ts'),
-  /--reuid[\s\S]*--clear-groups[\s\S]*\/usr\/bin\/unshare[\s\S]*--pid[\s\S]*--kill-child=SIGKILL[\s\S]*--mount-proc[\s\S]*\/usr\/bin\/setpriv[\s\S]*--no-new-privs[\s\S]*--bounding-set=-all/,
+  busterWorker,
+  /--reuid[\s\S]*--clear-groups[\s\S]*\/usr\/bin\/unshare[\s\S]*--user[\s\S]*--map-current-user[\s\S]*--pid[\s\S]*--kill-child=SIGKILL[\s\S]*\/usr\/bin\/setpriv[\s\S]*--no-new-privs[\s\S]*--bounding-set=-all/,
   'suite jobs must switch identity before entering a killable namespace and drop all authority inside it',
+);
+assert.doesNotMatch(
+  busterWorker,
+  /--mount-proc/,
+  'suite jobs must not remount the container-runtime-masked procfs from a nested user namespace',
 );
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 assert.match(busterValues, /containerPort:\s*18891/);
@@ -202,6 +221,11 @@ assert.match(
   /name:\s*buster-v2-runtime[\s\S]*runAsUser:\s*0[\s\S]*runAsGroup:\s*0[\s\S]*runAsNonRoot:\s*false[\s\S]*add:\s*\["CHOWN",\s*"SETGID",\s*"SETPCAP",\s*"SETUID"\]/,
   'the supervisor must be able to enter the job UID and then drop the complete capability set',
 );
+assert.doesNotMatch(
+  busterValues,
+  /procMount:\s*Unmasked|SYS_ADMIN|privileged:\s*true/,
+  'the nested suite sandbox fix must not broaden the Buster pod privilege boundary',
+);
 assert.match(
   busterRuntimeDockerfile,
   /USER\s+0:0/,
@@ -236,6 +260,11 @@ assert.match(
   busterRuntimeEntrypoint,
   /printf '%s' "\$worker_token" \| setpriv\s+\\\s+--groups 1000,1002\s+\\\s+node \/app\/buster-suite-runtime\/src\/worker\.ts/,
   'the worker supervisor must retain projected-credential and BuildKit socket group access',
+);
+assert.match(
+  deploy,
+  /app\.kubernetes\.io\/instance=\$\{release\},app\.kubernetes\.io\/component=\$\{role\}[\s\S]*pod="\$\(agent_pod_name "\$release"\)"[\s\S]*kubectl exec -n "\$NAMESPACE" "\$pod" -c kubeclaw/,
+  'agent smoke must target the agent component pod rather than the colocated namespace controller',
 );
 assert.match(
   chart,

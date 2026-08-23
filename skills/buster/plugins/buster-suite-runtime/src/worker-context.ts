@@ -86,7 +86,7 @@ function materializeKubeconfig(directory: string, gid: number): string {
   sharedFile(kubeconfig, `${JSON.stringify({ apiVersion: 'v1', kind: 'Config', clusters: [{ name: 'in-cluster', cluster: { server: `https://${host}:${servicePort}`, 'certificate-authority': localCa } }], contexts: [{ name: 'in-cluster', context: { cluster: 'in-cluster', user: 'buster-suite' } }], 'current-context': 'in-cluster', users: [{ name: 'buster-suite', user: { token: fs.readFileSync(tokenFile, 'utf8').trim() } }] })}\n`, gid);
   return kubeconfig;
 }
-export function runnerEnvironment(job: BusterSuiteJob, directory: string, jobGid: number): NodeJS.ProcessEnv {
+export function runnerEnvironment(job: BusterSuiteJob, directory: string, repository: string, jobGid: number): NodeJS.ProcessEnv {
   const environment: NodeJS.ProcessEnv = {};
   for (const key of RUNNER_ENV_KEYS) {
     const denied = (key === 'BUILDKIT_HOST' && !job.capabilities.includes('image_build'))
@@ -96,6 +96,7 @@ export function runnerEnvironment(job: BusterSuiteJob, directory: string, jobGid
     const value = process.env[key]; if (value !== undefined) environment[key] = value;
   }
   environment.HOME = path.join(directory, 'home'); environment.TMPDIR = path.join(directory, 'tmp');
+  environment.REPO_ROOT = repository;
   if (job.capabilities.includes('kubernetes')) environment.KUBECONFIG = materializeKubeconfig(directory, jobGid);
   environment.BUSTER_CAPABILITIES = job.capabilities.join(','); return environment;
 }

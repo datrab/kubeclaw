@@ -1,0 +1,31 @@
+{
+  "requiredBlueprintFiles": {
+    "expected": 6,
+    "missing": []
+  },
+  "oldDocumentLedger": {
+    "expected": 276,
+    "rows": 276,
+    "unclassified": []
+  },
+  "plugins": {
+    "manifests": 40,
+    "inventoried": 40,
+    "missingTargets": []
+  },
+  "registrations": {
+    "stage": 18,
+    "observer": 6,
+    "adapter": 18,
+    "test provider": 6,
+    "report adapter": 1
+  },
+  "contracts": {
+    "families": 6,
+    "missingEvidenceRows": []
+  },
+  "evidencePaths": {
+    "missing": []
+  },
+  "conflictsRequiringPublicationReverification": []
+}

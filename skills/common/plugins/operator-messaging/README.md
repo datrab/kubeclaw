@@ -14,6 +14,18 @@ validated recursively, bounded per target, and sent through the selected
 `network.http` adapter as a `POST`. Delivery errors fail the capability
 invocation; they are not reported as successful requests.
 
+`deliveryRoot` selects the embedded durable-record driver. The adapter saves
+the request before it sends the message. It then saves a delivery receipt or
+failure. A retry uses the same idempotency key. A stored receipt prevents a
+second send after restart.
+Internal record identities use a fixed-length digest of that key. Caller keys
+at the contract maximum length remain valid.
+
+The adapter reserves the terminal record before it starts the network action.
+It does not send when the durable store cannot hold the receipt or failure.
+The request is compared before a saved receipt is returned, so changed content
+with the same key fails as an idempotency conflict.
+
 ## Confidential authentication
 
 The adapter resolves its target secret through the confidential

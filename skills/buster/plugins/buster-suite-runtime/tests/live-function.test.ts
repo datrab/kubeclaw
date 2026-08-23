@@ -42,19 +42,8 @@ async function waitReady(endpoint: string): Promise<void> {
 try {
   const buildctl = path.join(bin, 'buildctl');
   fs.writeFileSync(buildctl, '#!/bin/sh\nexit 0\n', { mode: 0o755 });
-  fs.writeFileSync(path.join(source, 'real.test.mjs'), [
-    "import test from 'node:test';",
-    "import assert from 'node:assert/strict';",
-    "test('real behavior', () => {",
-    "  assert.equal(2 + 2, 4);",
-    "  assert.equal(process.env.BUSTER_V2_TOKEN, undefined);",
-    "  assert.equal(process.env.KUBERNETES_SERVICE_HOST, undefined);",
-    "  assert.equal(process.env.KUBECONFIG, undefined);",
-    "  assert.equal(process.env.BUILDKIT_HOST, undefined);",
-    "  assert.equal(process.env.BUSTER_CAPABILITIES, undefined);",
-    "});",
-    '',
-  ].join('\n'));
+  fs.mkdirSync(path.join(source, 'dist'), { recursive: true });
+  fs.writeFileSync(path.join(source, 'dist', 'index.js'), 'export const fixture = true;\n');
   execFileSync('git', ['init', '-q'], { cwd: source });
   execFileSync('git', ['config', 'user.name', 'KubeClaw Test'], { cwd: source });
   execFileSync('git', ['config', 'user.email', 'test@kubeclaw.invalid'], { cwd: source });
@@ -93,8 +82,8 @@ try {
         endpoint,
         tokenSecret: 'buster.worker',
         allowedRepositoryRoots: [source],
-        allowedSuites: ['unit'],
-        suiteCapabilities: ['image_build', 'kubernetes'],
+        unmigratedSuites: ['security'],
+        suiteCapabilities: ['image_build'],
         gitExecutable: fs.realpathSync(execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim()),
         maxArchiveBytes: 8_388_608,
         maxSuiteTimeoutMs: 60_000,
@@ -127,17 +116,14 @@ try {
         idempotencyKey: 'effect:buster-suite-live',
         capability: 'test.suite.execute',
         operation: 'run',
-        resource: { type: 'test.suite-plan', canonicalId: 'live:unit' },
+        resource: { type: 'test.suite-plan', canonicalId: 'live:security' },
         payload: {
           repositoryRoot: source,
-          suites: ['unit'],
+          suites: ['security'],
           testConfig: {
             suite_timeout_ms: 60_000,
-            serve: { project_dir: source },
-            unit: {
-              test_cmd: `${process.execPath} --test real.test.mjs`,
-              thresholds: { max_failures: 0 },
-            },
+            serve: { type: 'local', project_dir: source, port },
+            security: { paths: ['/healthz'] },
           },
           task: { project: 'live', run_id: 'run:live', project_dir: source },
           moduleId: 'live',
@@ -157,7 +143,7 @@ try {
       fence: { contract: {} as never, assertCurrent: () => ({} as never) },
     });
     assert.equal(Array.isArray(result.results), true);
-    assert.equal((result.results as Array<{ status: string }>)[0]?.status, 'PASS');
+    assert.equal((result.results as Array<{ status: string }>)[0]?.status, 'PASS', JSON.stringify(result.results));
     assert.equal(result.criticalFailed, false);
     assert.equal(
       (result.receipt as { schemaVersion: string }).schemaVersion,

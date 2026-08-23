@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const core = await import(pathToFileURL(path.resolve('skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-registry-v2-'));
 const installRoot = path.join(workspace, 'plugins');
 const packageRoot = path.join(installRoot, 'example');

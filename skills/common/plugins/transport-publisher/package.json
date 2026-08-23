@@ -7,6 +7,7 @@
     "test": "node tests/config-validation.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {
+    "@kubeclaw/plugin-foundation": "*",
     "@kubeclaw/plugin-sdk": "*"
   }
 }

@@ -1,0 +1,51 @@
+{
+  "suites": {
+    "size-budget": {
+      "uses": "kubeclaw.size-budget-suite@1",
+      "add": {
+        "build-artifact": {
+          "uses": "kubeclaw.direct-command@1",
+          "mode": "blocking",
+          "concurrencyGroup": "size-budget",
+          "config": {
+            "executable": "tar",
+            "args": ["--format=ustar", "-cf", ".swarm/size-budget-web-assets.tar", "-C", "dist", "assets", "index.html"],
+            "workingDirectory": ".",
+            "resultMode": "exit-code",
+            "artifacts": [
+              {
+                "id": "build-output",
+                "path": ".swarm/size-budget-web-assets.tar",
+                "mediaType": "application/vnd.kubeclaw.build-output.tar"
+              }
+            ]
+          }
+        },
+        "web-assets": {
+          "uses": "kubeclaw.size-budget@1",
+          "mode": "blocking",
+          "concurrencyGroup": "size-budget",
+          "config": {
+            "format": "tar",
+            "maximumTotalBytes": 10485760,
+            "matchingFiles": [
+              {
+                "id": "javascript",
+                "pattern": "assets/**/*.js",
+                "maximumBytes": 5242880,
+                "requireMatch": true
+              }
+            ],
+            "largestFiles": 10
+          },
+          "inputs": {
+            "build-output": {
+              "from": "build-artifact",
+              "output": "artifact-1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

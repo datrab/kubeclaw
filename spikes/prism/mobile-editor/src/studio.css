@@ -1,0 +1,10 @@
+:root { font-family: Inter, system-ui, sans-serif; color: #e8edf2; background: #0b0e12; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+.mobile-bar, .mobile-controls { display: flex; gap: 8px; align-items: center; padding: 8px; background: #151a21; overflow-x: auto; }
+.mobile-bar { justify-content: space-between; }
+button { min-height: 44px; padding: 8px 12px; border: 1px solid #3a4552; border-radius: 6px; background: #202833; color: inherit; }
+.stack { display: flex; flex-direction: column; padding: 16px; }
+.status { padding: 12px; border: 1px solid currentColor; border-radius: 6px; }
+.status-success { color: #65d59a; }.status-warning { color: #f2bd5b; }.status-danger { color: #ff7b7b; }
+@media (max-width: 600px) { .mobile-bar { position: sticky; top: 0; z-index: 10; } .mobile-controls { position: sticky; bottom: 0; z-index: 10; } }

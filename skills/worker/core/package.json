@@ -1,0 +1,11 @@
+{
+  "name": "@kubeclaw/worker-core",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/pipeline-worker-core-contract": "*"
+  }
+}

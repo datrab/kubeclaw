@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "suite-cutover-inventory.v1",
+  "suite": "health",
+  "successor": "kubeclaw.http@1",
+  "parityItemCount": 50,
+  "legacyFilesToDelete": [
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/health.ts"
+  ],
+  "removedSurfaces": [
+    "legacy protocol health entry",
+    "legacy suite registry health entry",
+    "legacy dependency graph health node",
+    "legacy health infrastructure telemetry",
+    "legacy health capability mapping",
+    "project scaffold health suite selection and health fields",
+    "real workspace health suite selection and health fields"
+  ],
+  "replacementFilesRequired": [
+    "skills/buster/plugins/http/plugin.json",
+    "skills/buster/plugins/http/src/provider.js",
+    "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "contracts/pipeline-test-gate/v1/suites/http.v1.json",
+    "tests/verification/contracts/check-pipeline-http-cutover.mts",
+    "tests/verification/contracts/check-pipeline-http-live.mts",
+    "skills/nova/project_setup/tools/progress-scaffold-discovery.ts"
+  ],
+  "verification": {
+    "solePathTests": ["tests/verification/contracts/check-pipeline-http-cutover.mts"],
+    "dualAuthorityTests": ["tests/verification/contracts/check-pipeline-http-cutover.mts"],
+    "absenceTests": ["tests/verification/contracts/check-pipeline-http-cutover.mts"]
+  }
+}

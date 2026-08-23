@@ -1,0 +1,23 @@
+{
+  "suites": {
+    "container-build": {
+      "uses": "kubeclaw.container-build-suite@1",
+      "add": {
+        "application-image": {
+          "uses": "kubeclaw.container-build@1",
+          "mode": "blocking",
+          "concurrencyGroup": "container-build",
+          "config": {
+            "buildContext": ".",
+            "definition": {
+              "type": "dockerfile",
+              "dockerfile": "Dockerfile"
+            },
+            "outputName": "application",
+            "platform": "linux/amd64"
+          }
+        }
+      }
+    }
+  }
+}

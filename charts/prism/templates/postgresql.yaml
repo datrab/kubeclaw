@@ -1,0 +1,70 @@
+{{- if .Values.postgresql.enabled }}
+{{- $postgresSecret := required "postgresql.existingSecret is required when postgresql.enabled=true" .Values.postgresql.existingSecret }}
+apiVersion: v1
+kind: ConfigMap
+metadata: { name: prism-postgresql-init }
+data:
+  010-prism-roles.sh: |
+    #!/bin/sh
+    set -eu
+    psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" --set=ON_ERROR_STOP=1 \
+      --set=migrator_password="$PRISM_MIGRATOR_PASSWORD" \
+      --set=runtime_password="$PRISM_RUNTIME_PASSWORD" \
+      --set=readonly_password="$PRISM_READONLY_PASSWORD" <<'SQL'
+    SELECT format('CREATE ROLE prism_migrator LOGIN PASSWORD %L', :'migrator_password') WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_migrator') \gexec
+    SELECT format('CREATE ROLE prism_runtime LOGIN PASSWORD %L', :'runtime_password') WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_runtime') \gexec
+    SELECT format('CREATE ROLE prism_readonly LOGIN PASSWORD %L', :'readonly_password') WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_readonly') \gexec
+    GRANT CONNECT ON DATABASE prism TO prism_migrator, prism_runtime, prism_readonly;
+    CREATE EXTENSION IF NOT EXISTS vector;
+    CREATE SCHEMA IF NOT EXISTS prism AUTHORIZATION prism_migrator;
+    SQL
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: { name: prism-postgresql }
+spec:
+  serviceName: prism-postgresql
+  replicas: 1
+  selector: { matchLabels: { app: prism-postgresql } }
+  template:
+    metadata: { labels: { app: prism-postgresql } }
+    spec:
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, runAsUser: 999, runAsGroup: 999, fsGroup: 999, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: postgresql
+          image: {{ .Values.postgresql.image | quote }}
+          env:
+            - { name: POSTGRES_DB, value: prism }
+            - { name: POSTGRES_USER, value: postgres }
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ $postgresSecret }}, key: password } }
+            - name: PRISM_RUNTIME_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ $postgresSecret }}, key: runtime-password } }
+            - name: PRISM_MIGRATOR_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ $postgresSecret }}, key: migrator-password } }
+            - name: PRISM_READONLY_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ $postgresSecret }}, key: readonly-password } }
+          readinessProbe: { exec: { command: ["pg_isready", "-U", "postgres", "-d", "prism"] }, initialDelaySeconds: 5 }
+          livenessProbe: { exec: { command: ["pg_isready", "-U", "postgres", "-d", "prism"] }, initialDelaySeconds: 20 }
+          securityContext: { allowPrivilegeEscalation: false, capabilities: { drop: ["ALL"] } }
+          resources: {{ toYaml .Values.postgresql.resources | nindent 12 }}
+          volumeMounts:
+            - { name: data, mountPath: /var/lib/postgresql/data }
+            - { name: init, mountPath: /docker-entrypoint-initdb.d/010-prism-roles.sh, subPath: 010-prism-roles.sh, readOnly: true }
+      volumes:
+        - { name: init, configMap: { name: prism-postgresql-init, defaultMode: 365 } }
+  volumeClaimTemplates:
+    - metadata: { name: data }
+      spec:
+        accessModes: [ReadWriteOnce]
+        {{- if .Values.postgresql.storageClass }}
+        storageClassName: {{ .Values.postgresql.storageClass | quote }}
+        {{- end }}
+        resources: { requests: { storage: {{ .Values.postgresql.storage }} } }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: prism-postgresql }
+spec: { selector: { app: prism-postgresql }, ports: [{ port: 5432 }] }
+{{- end }}

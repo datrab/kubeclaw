@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "suite-documentation-manifest.v1",
+  "suite": "build",
+  "provider": "kubeclaw.container-build@1",
+  "projectSchema": "skills/buster/plugins/container-build/schemas/config.schema.json",
+  "configurationMarkerFields": ["buildContext", "definition"],
+  "exampleFiles": [
+    "contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json"
+  ],
+  "sourceFilesWithErrors": [
+    "skills/buster/plugins/container-build/src/provider.js",
+    "skills/buster/engine/test-gates/container-build-runtime.ts",
+    "skills/buster/engine/test-gates/production.ts"
+  ],
+  "errorPrefixes": ["CONTAINER_BUILD_", "BUSTER_CONTAINER_BUILD_"],
+  "additionalErrors": [
+    "CONTAINER_BUILD_LOG_LIMIT_INVALID",
+    "CONTAINER_BUILD_TIME_LIMIT_INVALID",
+    "CONTAINER_BUILD_MANIFEST_LIMIT_INVALID"
+  ],
+  "documents": {
+    "userGuide": "docs/architecture/pipeline-test-gate-container-build-user-guide.md",
+    "operatorGuide": "docs/architecture/pipeline-test-gate-container-build-operator-guide.md",
+    "configurationReference": "docs/architecture/pipeline-test-gate-container-build-configuration-reference.md",
+    "errorReference": "docs/architecture/pipeline-test-gate-container-build-error-reference.md",
+    "securityModel": "docs/architecture/pipeline-test-gate-container-build-security-model.md"
+  },
+  "operatorFields": [
+    "buildctlExecutable",
+    "buildkitHost",
+    "registryBaseUrl",
+    "registryReference",
+    "repositoryPrefix",
+    "allowedPlatforms",
+    "allowedBuildArguments",
+    "maximumLogBytes",
+    "maximumExecutionMs",
+    "maximumManifestBytes",
+    "registryUsernameEnvironmentVariable",
+    "registryPasswordEnvironmentVariable"
+  ]
+}

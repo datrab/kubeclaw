@@ -1,0 +1,21 @@
+{
+  "schema": "prism.completion-status.v1",
+  "status": "integration-in-progress",
+  "updatedAt": "2026-08-22T13:00:00Z",
+  "phases": [
+    {"phase":0,"owner":"platform","state":"repository-complete","code":["package.json","tests/verification/live/check-prism-release-evidence.mjs"],"tests":["npm run verify:prism:repository"],"liveProof":"pending production evidence manifest"},
+    {"phase":1,"owner":"nova-prism","state":"repository-complete","code":["skills/nova/plugins/prism-design/src/stage.ts","skills/prism/storage/migrations/006_design_request.sql"],"tests":["npm run verify:prism:nova-stage"],"liveProof":"pending real Nova artifact and restart run"},
+    {"phase":2,"owner":"prism-studio","state":"partial","code":["skills/prism/studio/app.tsx","skills/prism/server/control.ts"],"tests":["npm run verify:prism:studio"],"liveProof":"Brief, Directions, Prototype, and Approve need a complete user journey"},
+    {"phase":3,"owner":"prism-research","state":"partial","code":["skills/prism/corpus/index.ts","skills/prism/preferences/index.ts","skills/prism/directions/index.ts"],"tests":["npm run verify:prism:corpus","npm run verify:prism:quality"],"liveProof":"pending approved corpus and live provider"},
+    {"phase":4,"owner":"prism-renderer","state":"repository-complete","code":["skills/prism/renderer/index.ts","skills/prism/engine/index.ts"],"tests":["npm run verify:prism:renderer"],"liveProof":"pending released Chromium deterministic capture"},
+    {"phase":5,"owner":"worker-core-prism","state":"partial","code":["skills/prism/engine/worker-envelope.ts","skills/prism/server/worker.ts","skills/prism/server/control.ts"],"tests":["npm run verify:prism:engine"],"liveProof":"pending cancellation, timeout, and lost-response proof"},
+    {"phase":6,"owner":"prism-corpus","state":"partial","code":["skills/prism/server/ingestion.ts","skills/prism/corpus/index.ts"],"tests":["npm run verify:prism:corpus"],"liveProof":"public-web stays disabled; approved-source test is pending"},
+    {"phase":7,"owner":"prism-studio","state":"partial","code":["skills/prism/studio/app.tsx","skills/prism/studio/preview.ts"],"tests":["npm run verify:prism:studio"],"liveProof":"pending complete real-service desktop, phone, and tablet journey"},
+    {"phase":8,"owner":"prism-quality","state":"partial","code":["skills/prism/evaluation/index.ts","skills/prism/server/control.ts"],"tests":["npm run verify:prism:quality"],"liveProof":"pending architecture-driven completeness and benchmark proof"},
+    {"phase":9,"owner":"pipeline","state":"partial","code":["skills/prism/pipeline-adapter/index.ts"],"tests":["npm run verify:prism:pipeline"],"liveProof":"pending real Forge implementation and Buster defect cycle"},
+    {"phase":10,"owner":"platform","state":"repository-complete","code":["charts/prism","scripts/deploy.sh"],"tests":["npm run verify:prism:helm","npm run verify:prism:deploy-script"],"liveProof":"blocked by the stale deployed namespace controller"},
+    {"phase":11,"owner":"sre","state":"partial","code":["charts/prism/templates/jobs.yaml"],"tests":["npm run verify:prism:recovery:live"],"liveProof":"pending persistent restore, telemetry, and alert proof"},
+    {"phase":12,"owner":"release","state":"blocked","code":["tests/verification/live",".github/workflows/build-images.yaml"],"tests":["npm run e2e:real:prism","npm run e2e:real:prism:failures"],"liveProof":"controller failed while granting obsolete pods/portforward permission"},
+    {"phase":13,"owner":"release","state":"pending","code":["docs/implementation/prism/phase-18-completion-audit.md"],"tests":["npm run verify:prism:production"],"liveProof":"requires all prior live gates"}
+  ]
+}

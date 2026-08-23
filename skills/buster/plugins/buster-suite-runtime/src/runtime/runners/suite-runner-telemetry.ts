@@ -35,9 +35,9 @@ function completionPayload(identity: Record<string, unknown>, suiteName: string,
 }
 
 async function emitInfrastructureEvidence(tctx: unknown, identity: Record<string, unknown>, suiteName: string, result: SuiteVerdict, attempt: number | undefined): Promise<void> {
-  if (!['k8s', 'health', 'tailscale-preview'].includes(suiteName)) return;
+  if (suiteName !== 'tailscale-preview') return;
   await emitEvent(tctx, 'infrastructure.evidence', { ...identity, attempt, evidence_type: `suite.${suiteName}`, status: result.status,
-    readiness: suiteName === 'health' ? result.status === STATUS.PASS : null,
+    readiness: null,
     preview_url: typeof result.metadata?.preview_url === 'string' ? result.metadata.preview_url : null, workload: result.metadata ?? null });
 }
 

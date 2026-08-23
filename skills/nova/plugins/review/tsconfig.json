@@ -1,11 +1,12 @@
 {
   "extends": "../../../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "scripts/**/*.mts"
   ]
 }

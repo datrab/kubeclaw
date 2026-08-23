@@ -7,7 +7,7 @@ import path from 'node:path';
 import {
   loadPlatformConfig,
   runPipelineV2,
-} from '../../../skills/common/plugin-runtime/core/src/index.ts';
+} from '../../../skills/nova/core/src/index.ts';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
@@ -88,7 +88,7 @@ try {
         endpoint: route.endpoint,
         tokenSecret: 'buster.worker',
         allowedRepositoryRoots: [fixture],
-        allowedSuites: ['build'],
+        unmigratedSuites: ['build'],
         suiteCapabilities: ['image_build', 'kubernetes'],
         gitExecutable,
         maxArchiveBytes: 8_388_608,
@@ -136,7 +136,6 @@ try {
             build_context: fixture,
             start_cmd: 'nginx -g "daemon off;"',
             port: 80,
-            health_path: '/',
             ready_timeout_seconds: 120,
             timeout: 300,
           },

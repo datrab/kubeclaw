@@ -8,10 +8,11 @@ import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(
-  path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts'),
+  path.join(repository, 'skills/nova/core/src/index.ts'),
 ).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-buster-quality-'));
-fs.writeFileSync(path.join(temporary, 'fixture.txt'), 'fixture\n');
+fs.mkdirSync(path.join(temporary, 'dist'), { recursive: true });
+fs.writeFileSync(path.join(temporary, 'dist', 'index.js'), 'export const fixture = true;\n');
 execFileSync('git', ['init', '-q'], { cwd: temporary });
 execFileSync('git', ['config', 'user.name', 'KubeClaw Test'], { cwd: temporary });
 execFileSync('git', ['config', 'user.email', 'test@kubeclaw.invalid'], { cwd: temporary });
@@ -39,9 +40,9 @@ const server = http.createServer((request, response) => {
         result: {
           schemaVersion: 'buster-suite-result.v2',
           jobId,
-          results: [{ suite: 'unit', status: 'PASS' }],
-          suiteSummary: 'unit passed',
-          suiteDetailSummary: 'unit passed',
+          results: [{ suite: 'security', status: 'PASS' }],
+          suiteSummary: 'security passed',
+          suiteDetailSummary: 'security passed',
           criticalFailed: false,
           completedAt: '2026-07-28T00:00:00.000Z',
         },
@@ -50,7 +51,7 @@ const server = http.createServer((request, response) => {
     }
     assert.equal(request.url, '/dispatch');
     assert.equal(payload.suiteEvidence.some(
-      (evidence: { suite: string; passed: boolean }) => evidence.suite === 'unit' && evidence.passed,
+      (evidence: { suite: string; passed: boolean }) => evidence.suite === 'security' && evidence.passed,
     ), true);
     response.writeHead(200, { 'content-type': 'application/json' });
     response.end(JSON.stringify({
@@ -97,7 +98,7 @@ try {
     ]),
     grants: new Map([
       ['kubeclaw.buster-quality-gate:quality', new Map([
-        ['test.suite.execute', { allowedSuites: ['unit'], allowedRoots: [temporary] }],
+        ['test.suite.execute', { allowedSuites: ['security'], allowedRoots: [temporary] }],
         ['runtime.dispatch', { allowedAgents: ['gate'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.buster-quality-gate'] }],
       ])],
@@ -140,7 +141,7 @@ try {
         endpoint: origin,
         tokenSecret: 'buster.worker',
         allowedRepositoryRoots: [temporary],
-        allowedSuites: ['unit'],
+        unmigratedSuites: ['security'],
         suiteCapabilities: ['image_build'],
         gitExecutable: fs.realpathSync('/usr/bin/git'),
         maxArchiveBytes: 8_388_608,
@@ -177,8 +178,10 @@ try {
             suiteEvidence: [],
             suitePlan: {
               repositoryRoot: temporary,
-              suites: ['unit'],
-              testConfig: { suite_timeout_ms: 5_000 },
+              suites: ['security'],
+              testConfig: { suite_timeout_ms: 5_000,
+                serve: { type: 'local', port: address.port },
+                security: { paths: ['/'] } },
               task: {},
             },
           },
@@ -192,7 +195,7 @@ try {
     });
     assert.equal((await runner.run('run:buster-quality')).status, 'succeeded');
     assert.match(
-      fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'),
+      fs.readFileSync(path.join(temporary, 'artifacts', 'records', 'store.json'), 'utf8'),
       /buster-quality:quality:1/u,
     );
     assert.equal(fs.readFileSync(effectsPath, 'utf8').includes(token), false);

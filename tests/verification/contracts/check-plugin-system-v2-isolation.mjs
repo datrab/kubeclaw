@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const { invokeIsolated } = await import(
-  pathToFileURL(path.resolve('skills/common/plugin-runtime/core/isolation/runner.ts')).href
+  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/isolation/runner.ts')).href
 );
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-isolation-v2-'));
 const modulePath = path.join(temporary, 'stage.mjs');

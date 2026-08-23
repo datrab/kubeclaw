@@ -1,15 +1,16 @@
 import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { canonicalJson } from '@kubeclaw/plugin-sdk';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-wait-store-'));
-const journalPath = path.join(root, 'waits.jsonl');
 const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const adapter = activate({
   registration: {},
-  config: { journalPath, maxEntryBytes: 2048 },
+  config: { root, maxEntryBytes: 2048 },
   async emit() {},
   async invoke() { throw new Error('unexpected dependency'); },
 });
@@ -48,7 +49,14 @@ try {
   await assert.rejects(invoke('create', 'wait:one', { ...payload, signalType: 'approval.other' }), /WAIT_IDEMPOTENCY_CONFLICT/);
   const read = await invoke('read', 'read:one', {});
   assert.equal(read.waits.length, 1);
-  assert.equal(fs.statSync(journalPath).mode & 0o777, 0o600);
+  const parallel = await Promise.all(Array.from({ length: 10 }, () => invoke('create', 'wait:parallel')));
+  assert.equal(parallel.filter((result) => result.created).length, 1);
+  assert.equal(new Set(parallel.map((result) => result.wait.waitId)).size, 1);
+  const maximumKey = `w${'a'.repeat(255)}`;
+  assert.equal((await invoke('create', maximumKey)).created, true);
+  assert.equal((await invoke('read', 'read:maximum-key', {})).waits.length, 3);
+  const storePath = path.join(root, 'records', 'store.json');
+  assert.equal(fs.statSync(storePath).mode & 0o777, 0o600);
   await assert.rejects(invoke('create', 'bad-expiry', { ...payload, expiresAt: 'not-a-date' }), /WAIT_EXPIRY_INVALID/);
   await assert.rejects(invoke('create', 'non-rfc-expiry', { ...payload, expiresAt: '1' }), /WAIT_EXPIRY_INVALID/);
   await assert.rejects(invoke('create', 'impossible-expiry', {
@@ -81,19 +89,17 @@ try {
     },
     signal: cancelled.signal,
   }), /ADAPTER_CANCELLED/);
-  fs.appendFileSync(journalPath, `${JSON.stringify({
-    schemaVersion: 'wait-record.v2',
-    idempotencyKey: 'malformed',
-    createdAt: new Date().toISOString(),
-    wait: {
+  const state = JSON.parse(fs.readFileSync(storePath, 'utf8'));
+  state.records[0].payload.wait = {
       schemaVersion: 'wait-request.v2',
       waitId: 'wait:malformed',
       kind: 'human',
       signalType: 'approval.resolved',
       authorizedIssuer: { type: 'operator', id: 'operator:test' },
       expiresAt: null,
-    },
-  })}\n`);
+  };
+  state.records[0].payloadDigest = `sha256:${crypto.createHash('sha256').update(canonicalJson(state.records[0].payload)).digest('hex')}`;
+  fs.writeFileSync(storePath, JSON.stringify(state));
   await assert.rejects(invoke('read', 'read:malformed', {}), /WAIT_RECORD_INVALID/);
 } finally {
   await adapter.shutdown();

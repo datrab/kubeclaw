@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-lint-plugin-'));
 const fixtureRepository = path.join(temporary, 'repository');
 const artifacts = path.join(temporary, 'artifacts');
@@ -17,6 +17,7 @@ function createPolicy() {
     'utf8',
   ));
   policy.baseline_path = 'lint-baseline.json';
+  policy.kubernetes_policy_packs = [];
   policy.projects = [{
     id: 'fixture',
     root: '.',
@@ -188,7 +189,7 @@ try {
     const unusableArtifactRoot = path.join(temporary, `${id}-artifacts`);
     const crashed = await run(['clean.sh'], id, type, {
       artifactRoot: unusableArtifactRoot,
-      afterAdaptersStart: () => fs.mkdirSync(path.join(unusableArtifactRoot, 'catalog.jsonl')),
+      afterAdaptersStart: () => fs.mkdirSync(path.join(unusableArtifactRoot, 'records', 'store.json'), { recursive: true }),
     });
     assert.equal(crashed.status, 'blocked');
     assert.equal(crashed.stages.get('lint')?.status, 'blocked');
@@ -199,7 +200,7 @@ try {
     const completed = events.findLast((record) => record.entry?.type === 'attempt.completed');
     assert.equal(completed?.entry?.payload?.reason?.code, 'core.plugin_runtime_failed');
   }
-  const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8').trim().split('\n');
+  const catalog = JSON.parse(fs.readFileSync(path.join(artifacts, 'records', 'store.json'), 'utf8')).records;
   assert.ok(catalog.length >= 4);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

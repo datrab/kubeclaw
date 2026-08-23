@@ -27,8 +27,8 @@ const CONSOLE_BOUNDARIES = [
   'scripts/**/*.mjs',
   'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts',
   'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
-  'skills/common/plugin-runtime/core/isolation/child.mjs',
-  'skills/common/plugin-runtime/cli.ts',
+  'skills/common/plugin-runtime/foundation/isolation/child.mjs',
+  'skills/nova/core/cli.ts',
   'skills/nova/plugins/lint/src/engine/output.ts',
   'skills/nova/project_setup/tools/progress-scaffold.ts',
 ];
@@ -43,11 +43,11 @@ const ENVIRONMENT_BOUNDARIES = [
   'skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts',
   'skills/buster/plugins/buster-suite-runtime/src/worker.ts',
   'skills/buster/plugins/buster-suite-runtime/src/worker-context.ts',
-  'skills/common/plugin-runtime/core/registry/import-audit-child.mjs',
-  'skills/common/plugin-runtime/core/registry/import-audit.ts',
+  'skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs',
+  'skills/common/plugin-runtime/foundation/registry/import-audit.ts',
   'skills/common/plugins/openclaw-agent-observer/src/config.ts',
   'skills/common/plugins/secret-resolver/src/adapter.ts',
-  'skills/common/plugin-runtime/core/config/platform.ts',
+  'skills/common/plugin-runtime/foundation/config/platform.ts',
   'skills/nova/plugins/lint/src/engine/execution.ts',
 ];
 
@@ -55,10 +55,10 @@ const DYNAMIC_MODULE_BOUNDARIES = [
   'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/a11y.ts',
   'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
   'skills/nova/pipeline.ts',
-  'skills/common/plugin-runtime/core/isolation/child.mjs',
-  'skills/common/plugin-runtime/core/isolation/runner.ts',
-  'skills/common/plugin-runtime/core/registry/activation.ts',
-  'skills/common/plugin-runtime/core/registry/import-audit-child.mjs',
+  'skills/common/plugin-runtime/foundation/isolation/child.mjs',
+  'skills/common/plugin-runtime/foundation/isolation/runner.ts',
+  'skills/common/plugin-runtime/foundation/registry/activation.ts',
+  'skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs',
 ];
 
 function propertyName(node) {

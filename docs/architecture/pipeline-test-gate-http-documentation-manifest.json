@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "suite-documentation-manifest.v1",
+  "suite": "health",
+  "provider": "kubeclaw.http@1",
+  "projectSchema": "skills/buster/plugins/http/schemas/config.schema.json",
+  "exampleFiles": ["contracts/pipeline-test-gate/v1/examples/http.json"],
+  "configurationMarkerFields": ["url", "endpointName", "expectedStatuses"],
+  "documents": {
+    "userGuide": "docs/architecture/pipeline-test-gate-http-user-guide.md",
+    "operatorGuide": "docs/architecture/pipeline-test-gate-http-operator-guide.md",
+    "configurationReference": "docs/architecture/pipeline-test-gate-http-configuration-reference.md",
+    "errorReference": "docs/architecture/pipeline-test-gate-http-error-reference.md",
+    "securityModel": "docs/architecture/pipeline-test-gate-http-security-model.md"
+  },
+  "operatorFields": [
+    "allowedCapabilities",
+    "networkHttp.allowedOrigins",
+    "networkHttp.allowedHostSuffixes",
+    "networkHttp.allowedPorts",
+    "networkHttp.maximumResponseBytes",
+    "networkHttp.maximumExecutionMs"
+  ],
+  "sourceFilesWithErrors": [
+    "skills/buster/plugins/http/src/provider.js",
+    "skills/buster/engine/test-gates/network-http-runtime.ts"
+  ],
+  "errorPrefixes": ["HTTP_"],
+  "additionalErrors": []
+}

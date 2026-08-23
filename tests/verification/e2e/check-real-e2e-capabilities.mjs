@@ -479,7 +479,7 @@ async function checkDiscordDelivery(openclawConfig) {
 
 async function checkKubectlAvailable() {
   if (!commandExists('kubectl')) {
-    return { ok: false, reason: 'INFRA_MISSING_KUBECTL', remediation: 'Install kubectl in the verification pod; the production Buster k8s suite uses kubectl.' };
+    return { ok: false, reason: 'INFRA_MISSING_KUBECTL', remediation: 'Install kubectl in the verification pod; the Kubernetes fixture capability uses kubectl.' };
   }
   const version = await execCapture('kubectl', ['version', '--client=true', '-o', 'json'], { timeout: 20000 });
   return { ok: version.ok, reason: version.ok ? null : 'INFRA_KUBECTL_FAILED', result: version };

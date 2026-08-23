@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.unit-suite@1",
+  "tests": {},
+  "fixtures": {},
+  "concurrencyLimits": {
+    "unit": 4
+  }
+}

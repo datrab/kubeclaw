@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "pipeline-runtime-role.v1",
+  "role": "buster",
+  "entrypoint": {
+    "package": "buster-runtime",
+    "path": "runtime.ts",
+    "output": "runtime.ts",
+    "import": "@kubeclaw/buster-engine"
+  },
+  "packages": [
+    "plugin-sdk",
+    "plugin-foundation",
+    "plugin-system-contract",
+    "worker-core",
+    "buster-engine",
+    "buster-runtime",
+    "agent-observability-contract",
+    "telemetry-contract",
+    "pipeline-test-gate-contract",
+    "pipeline-worker-core-contract",
+    "pipeline-observability-contract"
+  ],
+  "plugins": [
+    "kubeclaw.agent-observability",
+    "kubeclaw.artifact-store",
+    "kubeclaw.command-runner",
+    "kubeclaw.network-http",
+    "kubeclaw.runtime-dispatch",
+    "kubeclaw.secret-resolver",
+    "kubeclaw.telemetry-store",
+    "kubeclaw.buster-suite-runtime",
+    "kubeclaw.container-build",
+    "kubeclaw.coverage-budget",
+    "kubeclaw.direct-command",
+    "kubeclaw.junit-report",
+    "kubeclaw.kubernetes-fixture",
+    "kubeclaw.http",
+    "kubeclaw.size-budget",
+    "kubeclaw.test-agent"
+  ],
+  "extensions": ["kubeclaw-agent-observer"],
+  "externalCapabilities": [
+    {
+      "id": "git.repository.read",
+      "source": "worker-workspace",
+      "reason": "Buster receives a read-only repository snapshot for its attempt."
+    }
+  ]
+}

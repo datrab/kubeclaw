@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const baseline = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-container-build-baseline.json', 'utf8'));
+assert.equal(baseline.schemaVersion, 'pipeline-test-gate-container-build-baseline.v1');
+assert.deepEqual(baseline.decisions, ['D-009', 'D-010', 'D-011', 'D-012']);
+assert.equal(baseline.items.length, baseline.expectedItemCount);
+assert.equal(new Set(baseline.items.map((item) => item.id)).size, baseline.expectedItemCount);
+assert.equal(baseline.items.every((item) => /^BUILD-[A-Z]+-\d{3}$/u.test(item.id)), true);
+assert.equal(baseline.items.every((item) => ['implementation-proved', 'parity-pending', 'parity-proved'].includes(item.state)), true);
+console.log(JSON.stringify({ ok: true, decisions: baseline.decisions, baselineItems: baseline.expectedItemCount }));

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "outcome", "artifacts"],
+  "properties": {
+    "schemaVersion": { "const": "stage-result.v2" },
+    "outcome": { "enum": ["passed", "blocked", "wait"] },
+    "artifacts": { "type": "array" }
+  }
+}

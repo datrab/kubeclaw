@@ -484,7 +484,7 @@ package-escape and sibling-import checks; neither manifest grants access to
 repository-local or sibling-package internals.
 
 The structural boundary is implemented under
-[`../../skills/common/plugin-runtime/core`](../../skills/common/plugin-runtime/core),
+[`../../skills/common/plugin-runtime/foundation`](../../skills/common/plugin-runtime/foundation),
 [`../../skills/common/plugin-runtime/sdk`](../../skills/common/plugin-runtime/sdk),
 [`../../skills/common/plugins`](../../skills/common/plugins),
 [`../../skills/nova/plugins`](../../skills/nova/plugins), and

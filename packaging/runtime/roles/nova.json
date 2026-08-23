@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "pipeline-runtime-role.v1",
+  "role": "nova",
+  "entrypoint": {
+    "package": "nova-runtime",
+    "path": "pipeline.ts",
+    "output": "pipeline.ts",
+    "import": "@kubeclaw/nova-core",
+    "execute": "@kubeclaw/nova-core/cli"
+  },
+  "packages": [
+    "plugin-sdk",
+    "plugin-foundation",
+    "plugin-system-contract",
+    "nova-core",
+    "nova-runtime",
+    "agent-observability-contract",
+    "telemetry-contract",
+    "pipeline-test-gate-contract",
+    "pipeline-worker-core-contract",
+    "pipeline-observability-contract"
+  ],
+  "plugins": [
+    "kubeclaw.agent-observability",
+    "kubeclaw.artifact-store",
+    "kubeclaw.git-workspace",
+    "kubeclaw.network-http",
+    "kubeclaw.notification-observer",
+    "kubeclaw.openclaw-agent-events",
+    "kubeclaw.operator-messaging",
+    "kubeclaw.redis-transport",
+    "kubeclaw.runtime-dispatch",
+    "kubeclaw.secret-resolver",
+    "kubeclaw.state-store",
+    "kubeclaw.telemetry-observer",
+    "kubeclaw.telemetry-store",
+    "kubeclaw.transport-publisher",
+    "kubeclaw.wait-store",
+    "kubeclaw.architecture-validator",
+    "kubeclaw.blueprint-sync",
+    "kubeclaw.buster-quality-gate",
+    "kubeclaw.case-study",
+    "kubeclaw.delivery-lint",
+    "kubeclaw.human-approval",
+    "kubeclaw.implementation-agent",
+    "kubeclaw.lint",
+    "kubeclaw.pipeline-review",
+    "kubeclaw.preflight-contract",
+    "kubeclaw.prism-design",
+    "kubeclaw.project-summary",
+    "kubeclaw.repository-adapter",
+    "kubeclaw.review"
+  ],
+  "extensions": ["kubeclaw-agent-observer"],
+  "externalCapabilities": [
+    {
+      "id": "test.suite.execute",
+      "source": "buster-service",
+      "reason": "Nova requests test execution from Buster. Nova does not install the Buster engine."
+    }
+  ]
+}

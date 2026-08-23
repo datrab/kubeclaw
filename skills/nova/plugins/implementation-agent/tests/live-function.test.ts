@@ -7,7 +7,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-implementation-'));
 const agentWorkspace = path.join(temporary, 'agent-workspace');
 fs.mkdirSync(path.join(agentWorkspace, 'src'), { recursive: true });
@@ -76,7 +76,7 @@ try {
       crypto.createHash('sha256').update(fs.readFileSync(path.join(agentWorkspace, 'transcript.log'))).digest('hex'),
       transcriptDigest,
     );
-    assert.match(fs.readFileSync(path.join(temporary,'artifacts','catalog.jsonl'),'utf8'),/implementation:api:1/);
+    assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/implementation:api:1/);
     assert.equal(fs.readFileSync(effectsPath,'utf8').includes('implementation-secret'),false);
   } finally { await adapters.shutdown(); }
 } finally {

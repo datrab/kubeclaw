@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-agent-observability-'));
 const roots = [
   path.join(repository, 'skills/common/plugins'),
@@ -43,7 +43,7 @@ const activated = await core.activateRegistry(granted.snapshot, new Set(granted.
 const adapters = new core.AdapterRuntime({
   granted, activated,
   configs: new Map([
-    ['kubeclaw.telemetry-store:telemetry', { journalPath: path.join(temporary, 'telemetry.jsonl') }],
+    ['kubeclaw.telemetry-store:telemetry', { root: path.join(temporary, 'telemetry') }],
     ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
   ]),
   effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager()),
@@ -74,10 +74,10 @@ try {
   });
   assert.deepEqual(await observers.drain(), { delivered: 2, failures: [] });
   assert.deepEqual(await observers.drain(), { delivered: 0, failures: [] });
-  const telemetry = fs.readFileSync(path.join(temporary, 'telemetry.jsonl'), 'utf8');
+  const telemetry = fs.readFileSync(path.join(temporary, 'telemetry', 'records', 'store.json'), 'utf8');
   assert.match(telemetry, /agent-observability-event\.v2/);
   assert.doesNotMatch(telemetry, /must-not-survive/);
-  const catalog = fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8');
+  const catalog = fs.readFileSync(path.join(temporary, 'artifacts', 'records', 'store.json'), 'utf8');
   assert.match(catalog, /agent-evidence:event:session-end/);
   const complete = fs.readFileSync(path.join(temporary, 'effects.jsonl'), 'utf8');
   assert.doesNotMatch(complete, /must-not-survive/);

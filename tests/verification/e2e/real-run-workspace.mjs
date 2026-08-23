@@ -24,6 +24,14 @@ export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 10;
 const REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD = 2;
 const REAL_E2E_MODULE_MAX_FAILS = REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD + 1;
 const FIXTURE_DIR = path.join(SCRIPT_DIR, 'fixtures', 'nginx-project');
+function realE2EDeploymentImage() {
+  const image = process.env.REAL_E2E_DEPLOYMENT_IMAGE?.trim();
+  if (!image) throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_REQUIRED: supply the published immutable release image');
+  if (!/^[a-z0-9.-]+\.svc\.cluster\.local:\d+\/[a-z0-9._/:-]+@sha256:[a-f0-9]{64}$/u.test(image)) {
+    throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_INVALID: expected an in-cluster immutable SHA-256 image reference');
+  }
+  return image;
+}
 const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
 const REAL_E2E_MODULE_ID = '01-nginx';
 const REAL_E2E_SEED_MODULE_IDS = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
@@ -179,7 +187,7 @@ function buildDeployableArtifactContract({ projectName, projectSrc, releaseCandi
     authority: {
       producer: 'release-candidate-module-buster',
       consumer: 'final-buster',
-      rule: 'Only the release_candidate_module Buster owns release-candidate image verification; Final Buster promotes and deploys that image with run-scoped manifest override.',
+      rule: 'Only the release_candidate_module Buster owns immutable image verification; Final Buster deploys the exact checked manifest and image.',
     },
     image: {
       role: 'release_candidate',
@@ -190,7 +198,7 @@ function buildDeployableArtifactContract({ projectName, projectSrc, releaseCandi
       {
         path: `${projectSrc}/k8s/deployment.yaml`,
         image_field: 'Deployment/spec/template/spec/containers[name=nginx]/image',
-        mutation_authority: 'final-buster-promotes-source-image',
+        mutation_authority: 'none-checked-manifest-is-immutable',
       },
     ],
     runtime_config_ref: REAL_E2E_CONTRACT_PATHS.runtimeConfig,
@@ -292,7 +300,7 @@ function buildPreviewInfrastructureContract({ projectName }) {
     },
     app_owned_resources: ['Deployment', 'Service', 'Secret'],
     gate_owned_resources: ['BusterNamespaceLease', 'tailscale-ingress-exposure', 'preview-url', 'cleanup-policy'],
-    source_config_ref: 'gates.final-buster.test_config.k8s.preview',
+    source_config_ref: 'gates.final-buster.test_config.tailscale_preview',
     static_module_preview_resources: 'forbidden',
   };
 }
@@ -464,7 +472,7 @@ function applyScenarioModuleScope(progress, scenarioId) {
   const projectName = progress.project || 'real-pipeline-e2e';
   const projectSrc = `Projects/${projectName}/src`;
   const releaseCandidateImage = progress.contracts?.deployable_artifact?.image?.reference
-    || 'localhost/real-pipeline-e2e-nginx:module';
+    || realE2EDeploymentImage();
   progress.contracts = buildRealE2EContractCatalog({
     projectName,
     projectSrc,
@@ -485,11 +493,6 @@ function applyScenarioModuleScope(progress, scenarioId) {
         ...scopedModuleIds.map((moduleId) => moduleSurface(moduleId).output_contract),
       ],
     };
-  }
-  const finalBuster = progress.gates?.['final-buster'];
-  const releaseModule = releaseCandidateModuleId(scopedModuleIds);
-  if (finalBuster?.test_config?.unit && typeof finalBuster.test_config.unit === 'object') {
-    finalBuster.test_config.unit.test_cmd = `npm run verify:${releaseModule}`;
   }
   progress.real_e2e = {
     ...(progress.real_e2e || {}),
@@ -718,37 +721,12 @@ function moduleTitle(moduleId) {
 }
 
 function moduleServeConfig({ moduleId, projectSrc, releaseCandidateImage }) {
-  const smokePathsByModule = {
-    '01-nginx': ['/', '/runtime-foundation-check'],
-    '02-nginx': ['/content/branch-a.html'],
-    '03-nginx': ['/assets/branch-b.css'],
-    '04-nginx': ['/', '/content/branch-a.html', '/assets/branch-b.css'],
-  };
-  const smokeExpectedTextByModule = {
-    '01-nginx': {
-      '/': 'REAL_E2E_NGINX_OK',
-      '/runtime-foundation-check': 'REAL_E2E_NGINX_OK',
-    },
-    '02-nginx': { '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT' },
-    '03-nginx': { '/assets/branch-b.css': '#real-e2e-content-branch' },
-    '04-nginx': {
-      '/': 'REAL_E2E_NGINX_OK',
-      '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT',
-      '/assets/branch-b.css': '#real-e2e-content-branch',
-    },
-  };
   const base = {
     type: 'server',
     project_dir: projectSrc,
     start_cmd: 'nginx -g "daemon off;"',
     image: releaseCandidateImage,
     port: 8080,
-    health_path: '/',
-    health_retries: 6,
-    health_base_delay: 1000,
-    health_timeout: 10000,
-    ...(smokePathsByModule[moduleId] ? { smoke_paths: smokePathsByModule[moduleId] } : {}),
-    ...(smokeExpectedTextByModule[moduleId] ? { smoke_expected_text: smokeExpectedTextByModule[moduleId] } : {}),
     dockerfile: `${projectSrc}/Dockerfile`,
     build_context: projectSrc,
   };
@@ -778,7 +756,7 @@ function buildModuleProgress({ moduleId, moduleIds, projectSrc, releaseCandidate
     max_fails: REAL_E2E_MODULE_MAX_FAILS,
     auto_retry_threshold: REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD,
     thinking_level: thinking,
-    test_suites: ['build', 'health', 'unit'],
+    test_suites: ['build'],
     capabilities: ['image_build', 'kubernetes'],
     agent_judgment: agentJudgment,
     contracts: {
@@ -789,12 +767,6 @@ function buildModuleProgress({ moduleId, moduleIds, projectSrc, releaseCandidate
     },
     test_config: {
       serve: moduleServeConfig({ moduleId, projectSrc, releaseCandidateImage }),
-      unit: {
-        test_cmd: `npm run verify:${moduleId}`,
-        thresholds: {
-          max_failures: 0,
-        },
-      },
     },
   };
 }
@@ -819,7 +791,7 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
   const terminalExtrasEnabled = realE2ETerminalExtrasEnabled();
   const executionBoundary = realE2EExecutionBoundary();
   const projectSrc = `Projects/${projectName}/src`;
-  const releaseCandidateImage = 'localhost/real-pipeline-e2e-nginx:module';
+  const releaseCandidateImage = realE2EDeploymentImage();
   const progressModuleIds = canonicalModuleIds(moduleIds);
   const contracts = buildRealE2EContractCatalog({ projectName, projectSrc, releaseCandidateImage, moduleIds: progressModuleIds });
   const staticSmoke = staticServingSmokeConfig(contracts);
@@ -886,6 +858,20 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
     real_e2e: {
       execution_boundary: executionBoundary,
       module_scope: [...progressModuleIds],
+      kubernetes_fixture: {
+        image: {
+          reference: releaseCandidateImage,
+          digest: releaseCandidateImage.match(/@(sha256:[a-f0-9]{64})$/u)?.[1],
+        },
+        namespace_prefix: 'test',
+        retention_mode: 'delete',
+        retention_seconds: 1800,
+        readiness_timeout_seconds: 180,
+      },
+      container_build: {
+        build_context: projectSrc,
+        dockerfile: 'Dockerfile',
+      },
     },
     execution_order: executionOrderForBoundary(progressModuleIds, executionBoundary),
     contracts,
@@ -925,7 +911,7 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
       },
       'final-buster': {
         type: 'buster',
-        title: 'Final Buster validation with Kubernetes and Tailscale preview',
+        title: 'Final Buster validation with deployment and security evidence',
         contract: {
           deployable_artifact_ref: REAL_E2E_CONTRACT_REFS.deployableArtifact,
           runtime_config_ref: REAL_E2E_CONTRACT_REFS.runtimeConfig,
@@ -938,8 +924,8 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
         forge_model: model,
         timeout_minutes: busterGateTimeoutMinutes,
         max_fix_cycles: 0,
-        test_suites: ['build', 'health', 'unit', 'manifest', 'k8s', 'tailscale-preview'],
-        capabilities: ['image_build', 'kubernetes'],
+        test_suites: ['security'],
+        capabilities: ['browser_automation'],
         test_config: {
           serve: {
             type: 'server',
@@ -947,48 +933,10 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
             start_cmd: 'nginx -g "daemon off;"',
             image: releaseCandidateImage,
             port: 8080,
-            health_path: '/',
-            health_retries: 6,
-            health_base_delay: 1000,
-            health_timeout: 10000,
           },
-          unit: {
-            test_cmd: `npm run verify:${releaseCandidateModuleId(progressModuleIds)}`,
-            thresholds: {
-              max_failures: 0,
-            },
-          },
-          manifest: {
-            deployment_yaml: `${projectSrc}/k8s/deployment.yaml`,
-            enforced: true,
-            required_env: [],
-            thresholds: {
-              max_missing_env: 0,
-            },
-          },
-          k8s: {
-            source_image: releaseCandidateImage,
-            image_name: 'real-pipeline-e2e-nginx',
-            service_name: 'real-pipeline-e2e-nginx',
-            manifests: [`${projectSrc}/k8s/deployment.yaml`],
-            port: 80,
-            health_path: '/',
-            purpose: 'final-preview',
-            cleanup_policy: 'keep',
-            namespace_prefix: 'test',
-            ready_timeout_seconds: 180,
-            preview: {
-              contract: 'dynamic-buster-namespace-lease',
-              provider: 'tailscale-ingress',
-              hostname: `real-e2e-${safeRunIdSegment(projectName)}`,
-              service_name: 'real-pipeline-e2e-nginx',
-              service_port: 80,
-              path: '/',
-              expected_text: 'REAL_E2E_NGINX_OK',
-            },
-          },
+          security: { paths: ['/'], thresholds: { max_missing_headers: 0 } },
           tailscale_preview: {
-            source_suite: 'k8s',
+            source_suite: 'explicit',
             expected_text: 'REAL_E2E_NGINX_OK',
             smoke_paths: staticSmoke.smokePaths,
             smoke_expected_text: staticSmoke.smokeExpectedText,
@@ -1018,6 +966,7 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
 
 function instructionFiles(progress) {
   const contracts = progress?.contracts || {};
+  const projectSrc = `Projects/${progress.project}/src`;
   const moduleIds = Object.keys(progress?.modules || {});
   const moduleList = moduleIds.map((moduleId) => `\`${moduleId}\``).join(', ');
   const fullModuleGraph = moduleIds.includes('04-nginx');
@@ -1030,7 +979,80 @@ function instructionFiles(progress) {
   const deployableHandoff = fullModuleGraph
     ? 'release assembly module Buster'
     : 'module Buster';
+  const deploymentInput = { deployment: { from: 'kubernetes-deployment', output: 'deployment',
+    schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } };
+  const fixtureConfig = progress.real_e2e?.kubernetes_fixture ?? {};
+  const sizeBudgetTests = (scopeId) => {
+    const archive = `.swarm/size-budget-${safeRunIdSegment(scopeId)}.tar`;
+    return {
+      'size-budget-artifact': { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 0,
+        concurrencyGroup: 'size-budget', config: { executable: 'tar',
+          args: ['--format=ustar', '--transform=s,^\\./,,;s,^\\.$,root,', '-cf', archive,
+            '-C', `${projectSrc}/src`, '.'], workingDirectory: '.', resultMode: 'exit-code',
+          artifacts: [{ id: 'build-output', path: archive,
+            mediaType: 'application/vnd.kubeclaw.build-output.tar' }] } },
+      'size-budget': { uses: 'kubeclaw.size-budget@1', mode: 'blocking', retries: 0,
+        concurrencyGroup: 'size-budget', config: { maximumTotalBytes: 10 * 1024 * 1024,
+          maximumFileCount: 10_000, largestFiles: 10 }, inputs: {
+          'build-output': { from: 'size-budget-artifact', output: 'artifact-1' },
+        } },
+    };
+  };
+  const unitPipeline = {
+    project: progress.project,
+    modules: Object.fromEntries(moduleIds.map((moduleId) => [moduleId, {
+      suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
+        command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
+          concurrencyGroup: 'unit', config: { executable: 'npm', args: ['run', `verify:${moduleId}`],
+            workingDirectory: '.', resultMode: 'exit-code' } },
+      } } },
+      tests: {
+        ...sizeBudgetTests(moduleId),
+        health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
+          needs: ['size-budget'], concurrencyGroup: 'http', config: { url: 'http://registry-local.kubeclaw.svc.cluster.local:5001',
+            path: '/v2/', expectedStatuses: [200], requestTimeoutMs: 10000 } },
+      },
+      concurrencyLimits: { unit: 2, 'size-budget': 1, http: 2 },
+    }])),
+    gates: {
+      'final-buster': {
+        suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
+          command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
+            concurrencyGroup: 'unit', config: { executable: 'npm',
+              args: ['run', `verify:${releaseCandidateModuleId(moduleIds)}`], workingDirectory: '.',
+              resultMode: 'exit-code' } },
+        } } },
+        tests: {
+          ...sizeBudgetTests('final-buster'),
+          'checked-manifest': { uses: 'kubeclaw.direct-command@1', mode: 'blocking',
+            concurrencyGroup: 'manifest', config: { executable: 'cp',
+              args: [`${projectSrc}/k8s/deployment.yaml`, `${projectSrc}/.swarm/checked-final-buster.yaml`],
+              workingDirectory: '.', resultMode: 'exit-code', artifacts: [{ id: 'checked-manifest',
+                path: `${projectSrc}/.swarm/checked-final-buster.yaml`,
+                mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' }] } },
+          health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
+            needs: ['size-budget'], concurrencyGroup: 'http', config: { path: '/', expectedStatuses: [200],
+              expectedText: 'REAL_E2E_NGINX_OK', requestTimeoutMs: 10000 }, inputs: deploymentInput },
+        },
+        fixtures: {
+          'kubernetes-deployment': { uses: 'kubeclaw.kubernetes-fixture@1', retries: 0, needs: ['size-budget'],
+            concurrencyGroup: 'kubernetes-fixture', config: { image: fixtureConfig.image,
+              serviceName: 'real-pipeline-e2e-nginx',
+              servicePort: 80, namespacePrefix: fixtureConfig.namespace_prefix ?? 'test',
+              retention: { mode: fixtureConfig.retention_mode ?? 'delete',
+                seconds: fixtureConfig.retention_seconds ?? 1800 },
+              readinessTimeoutSeconds: fixtureConfig.readiness_timeout_seconds ?? 180,
+              secretReferences: fixtureConfig.secret_references ?? [] }, inputs: {
+              'checked-manifest': { from: 'checked-manifest', output: 'artifact-1',
+                mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' },
+            } },
+        },
+        concurrencyLimits: { unit: 1, 'size-budget': 1, manifest: 1, 'kubernetes-fixture': 1, http: 1 },
+      },
+    },
+  };
   const files = {
+    'pipeline.json': `${JSON.stringify(unitPipeline, null, 2)}\n`,
     'ARCHITECTURE.md': [
       '# Real Pipeline E2E Architecture',
       '',
@@ -1039,7 +1061,7 @@ function instructionFiles(progress) {
       '## Pipeline contracts',
       '',
       'The module surface has explicit first-class contracts:',
-      `- \`.swarm/contracts/deployable-artifact.json\` is the release-candidate handoff from ${deployableHandoff} to Final Buster across modules ${moduleList}. Final Buster may only promote and deploy the image/manifests declared by that contract.`,
+      `- \`.swarm/contracts/deployable-artifact.json\` is the immutable deployment handoff from ${deployableHandoff} to Final Buster across modules ${moduleList}. Final Buster deploys only its exact image and checked manifest.`,
       `- \`.swarm/contracts/runtime-config.json\` is the application runtime and static serving boundary for modules ${moduleList}. Empty env/config/secret lists are valid for this static fixture, and URL-to-source mappings are explicit.`,
       `- \`.swarm/contracts/module-review.json\` binds Echo review ownership to modules ${moduleList} and their declared source, contract, and evidence surfaces.`,
       moduleOutputBoundary,
@@ -1047,9 +1069,9 @@ function instructionFiles(progress) {
       '',
       'The nginx module manifest stays reusable with only Deployment, Service, and app-owned Secret resources; it must not hardcode run-scoped BusterNamespaceLease or Ingress objects.',
       'This fixture currently requires no app-owned Secret, so `.swarm/contracts/runtime-config.json` declares `secrets: []` and `credentials.requires_login: false`; that empty contract is the authority, not an implicit omission.',
-      'The preview infrastructure boundary is explicit in `.swarm/contracts/preview-infrastructure.json`; final Buster owns run-scoped preview exposure deterministically in the Buster k8s suite. When `gates.final-buster.test_config.k8s.preview.provider` is `tailscale-ingress`, Buster creates a `BusterNamespaceLease` with `spec.exposure.provider=tailscale-ingress` and waits for the lease `status.previewUrl`.',
-      'The k8s suite validates app content through the in-cluster service URL; external tailnet DNS/HTTPS reachability is not required from the Buster/Nova pod.',
-      `The ${deployableHandoff} owns release-candidate verification and the deployable artifact contract. Final Buster promotes the configured contract image, deploys that promoted image, and records preview evidence for the same artifact.`,
+      'The preview infrastructure boundary is explicit in `.swarm/contracts/preview-infrastructure.json`. The separate preview suite consumes an explicit URL.',
+      'The Kubernetes fixture waits for pod and Service readiness. The HTTP provider validates app content through the internal Service URL.',
+      `The ${deployableHandoff} owns immutable image verification and the deployable artifact contract. Final Buster deploys that exact image and records its digest.`,
       '',
     ].join('\n'),
     'contracts/deployable-artifact.json': `${JSON.stringify(contracts.deployable_artifact, null, 2)}\n`,
@@ -1085,8 +1107,8 @@ function instructionFiles(progress) {
       'Run the requested deterministic suites against the nginx fixture.',
       'Treat deterministic suite results as pre-test evidence only; this foundation module requires Buster agent judgment after suites pass.',
       fullModuleGraph
-        ? 'Treat `.swarm/contracts/deployable-artifact.json` as a downstream release-candidate reference for the release assembly and Final Buster; this foundation module must not require its reusable manifest to use the final release-candidate image.'
-        : 'Treat `.swarm/contracts/deployable-artifact.json` as a release-candidate reference for Final Buster; this module must not require its reusable manifest to use the final release-candidate image.',
+        ? 'Treat `.swarm/contracts/deployable-artifact.json` as the downstream immutable deployment reference for the release assembly and Final Buster.'
+        : 'Treat `.swarm/contracts/deployable-artifact.json` as the immutable deployment reference for Final Buster.',
       'Treat `.swarm/contracts/runtime-config.json` as the runtime input authority. The static fixture has no required env/config/Secret inputs unless that contract says otherwise.',
       'Treat `.swarm/contracts/module-outputs/01-foundation.json` as this module output authority.',
       'Treat `.swarm/contracts/preview-infrastructure.json` as the ownership boundary that keeps run-scoped preview infrastructure out of reusable module source.',
@@ -1100,7 +1122,7 @@ function instructionFiles(progress) {
       'Review the fixture for correctness, reproducibility, and contract adherence.',
       'The source HTML must keep `REAL_E2E_RUN_ID_PLACEHOLDER`; treating a concrete run id in source as valid is a failure.',
       'Use `.swarm/contracts/module-review.json` as the review ownership contract for the exact `module_ids` it declares; do not treat this as a floating global review gate.',
-      `Require \`.swarm/contracts/deployable-artifact.json\` to be the explicit release-candidate handoff from ${deployableHandoff} to Final Buster.`,
+      `Require \`.swarm/contracts/deployable-artifact.json\` to be the explicit immutable deployment handoff from ${deployableHandoff} to Final Buster.`,
       'Require `.swarm/contracts/runtime-config.json` to be the explicit app-owned runtime and static serving boundary. Do not fail solely because env/config/Secret lists are empty for this static fixture.',
       fullModuleGraph
         ? 'Assess whether module Buster evidence proves each module-owned static surface and whether `04-nginx` has a composition-aware check before Final Buster.'
@@ -1109,8 +1131,8 @@ function instructionFiles(progress) {
       'Before PASS, list every required contract in `checked_contracts`, every opened verdict/artifact in `opened_artifacts`, every non-zero evidence command in `failed_commands`, and every missing evidence item in `unverified_requirements`.',
       'A PASS is invalid if `failed_commands` or `unverified_requirements` is non-empty, or if required contracts/artifacts were not actually opened.',
       'Require `.swarm/contracts/preview-infrastructure.json` to keep BusterNamespaceLease, Tailscale exposure, preview URL, and cleanup policy under final-Buster gate ownership.',
-      'Do not require static BusterNamespaceLease or Ingress manifests in module source; final-preview exposure is declared in `gates.final-buster.test_config.k8s.preview` and created deterministically by the Buster k8s suite.',
-      'Fail if the final Buster preview config or Buster instructions omit that `provider=tailscale-ingress` maps to a dynamic BusterNamespaceLease with `spec.exposure.provider=tailscale-ingress`.',
+      'Do not require static BusterNamespaceLease or Ingress manifests in module source. The Kubernetes fixture owns its run-scoped lease.',
+      'Require the preview suite to use an explicit preview URL until its replacement migration is complete.',
       'Return a strict production review result.',
       '',
     ].join('\n'),
@@ -1129,9 +1151,9 @@ function instructionFiles(progress) {
       '',
       'Review the pre-completion run artifacts, gates, final Buster result, deployment evidence, and summary readiness.',
       'During this final-review gate, do not require post-final-review v2 report artifacts; those are written only after final-review passes.',
-      'Do require production evidence that all earlier gates completed, final Buster produced deployment and preview evidence, and there is no missing pre-completion artifact needed to decide readiness.',
-      `Require final Buster to promote and deploy the ${deployableHandoff} deployable artifact contract from \`.swarm/contracts/deployable-artifact.json\`; do not accept a separate final-gate rebuild as equivalent evidence.`,
-      'Accept the final Buster k8s suite `image_promotion` / `source_image_id` / `registry_image_digest` metadata as the immutable provenance link proving the deployed registry image was promoted from the Module Buster release-candidate source image.',
+      'Do require production evidence that all earlier gates completed, final Buster produced deployment and security evidence, and there is no missing pre-completion artifact needed to decide readiness.',
+      `Require final Buster to deploy the exact ${deployableHandoff} artifact contract from \`.swarm/contracts/deployable-artifact.json\`. Do not accept a separate final-gate rebuild.`,
+      'Require the Kubernetes fixture result to contain the exact immutable image reference, manifest digest, lease name, namespace, and creation time.',
       'Require runtime configuration evidence to come from `.swarm/contracts/runtime-config.json`; empty env/config/Secret lists are valid when the contract declares no app runtime inputs.',
       'Require module review evidence to map to the exact `.swarm/contracts/module-review.json` `module_ids`, and preview evidence to map to `.swarm/contracts/preview-infrastructure.json`.',
       'Before PASS, list every required contract in `checked_contracts`, every opened verdict/artifact in `opened_artifacts`, every non-zero evidence command in `failed_commands`, and every missing evidence item in `unverified_requirements`.',
@@ -1143,23 +1165,23 @@ function instructionFiles(progress) {
     'buster-test/FINAL-BUSTER.md': [
       '# Final Buster',
       '',
-      'Validate build, health, unit, manifest, Kubernetes deployment, and Tailscale preview reachability.',
-      'Promote the deployable artifact contract image from `.swarm/contracts/deployable-artifact.json` / `contracts.deployable_artifact.image.reference` into the run-scoped registry tag, override the manifest image to that promoted tag, and validate that exact deployed image in Kubernetes.',
-      'Record immutable promotion evidence in the k8s suite metadata, including the source image ID and pushed registry digest when available.',
+      'Validate the checked Kubernetes deployment and Tailscale preview reachability. The provider plan performs HTTP checks before legacy consumer suites.',
+      'Deploy the exact digest-pinned image and checked manifest from `.swarm/contracts/deployable-artifact.json`.',
+      'Record the immutable image reference, manifest digest, lease name, namespace, and creation time from the fixture result.',
       'Validate app runtime inputs from `.swarm/contracts/runtime-config.json`; this fixture explicitly declares no required env/config/Secret inputs.',
       'Validate the static serving contract from `.swarm/contracts/runtime-config.json`: the app must serve the declared smoke paths and expected markers from the declared source surfaces.',
       'Validate preview ownership from `.swarm/contracts/preview-infrastructure.json`; preview leases, exposure, preview URL, and cleanup policy are final-Buster gate resources.',
-      'The deterministic Buster k8s suite creates the final preview from `gates.final-buster.test_config.k8s.preview`; when `preview.provider` is `tailscale-ingress`, it must create a dynamic BusterNamespaceLease with `spec.exposure.provider=tailscale-ingress` and wait for `status.previewUrl`.',
-      'The k8s suite must validate the app through the in-cluster service URL and must not require tailnet DNS from the Buster/Nova pod.',
+      'The Kubernetes fixture creates a run-scoped BusterNamespaceLease and waits for the real workload and Service endpoints.',
+      'The HTTP provider must validate the app through the internal Service URL.',
       'Do not ask Forge, Echo, or reusable module manifests to create final-preview lease or Ingress resources.',
-      'Do not ask Forge or module manifests to add Role or RoleBinding resources for `pods/portforward`; final-preview k8s validation relies on pod readiness, an internal service content check, and a dynamic preview URL.',
+      'Do not add Role or RoleBinding resources for `pods/portforward`. The provider path does not use port forwarding.',
       'Missing operator or namespace lease permissions are infrastructure failures and must block.',
       '',
     ].join('\n'),
     'pipeline-review/PIPELINE-REVIEW-INSTRUCTIONS.md': [
       '# Pipeline Review',
       '',
-      'Summarize whether the real E2E run exercised Forge, Buster, Echo, approval, k8s, Tailscale, and cleanup contracts.',
+      'Summarize whether the real E2E run exercised Forge, Buster, Echo, approval, Kubernetes fixture, Tailscale, and cleanup contracts.',
       'Flag any missing production evidence.',
       'Assess test-depth quality, including whether module checks prove owned surfaces rather than only the integrated fixture.',
       'Flag missing expected artifacts, especially run-scoped summary, project summary, case-study base data, and publishable case study.',
@@ -1190,7 +1212,7 @@ function moduleInstructionFiles(progress) {
       ...(moduleSurface(moduleId).consumes?.length ? [`Consume declared upstream module outputs only: ${moduleSurface(moduleId).consumes.map((entry) => `\`${entry}\``).join(', ')}.`] : []),
       ...(moduleSurface(moduleId).contract_boundaries?.length ? [`Keep contract boundaries separate: ${moduleSurface(moduleId).contract_boundaries.map((entry) => `\`${entry}\``).join(', ')}.`] : []),
       ...(moduleId !== '01-nginx' ? ['Consume the foundation through `.swarm/contracts/runtime-config.json` and declared module output contracts, not by treating module 01 packaging as an interface.'] : []),
-      ...(moduleId === '04-nginx' ? ['Preserve the reusable deployment manifest image placeholder `real-pipeline-e2e-nginx:verification`; final Buster owns release-candidate image promotion and run-scoped manifest override.'] : []),
+      ...(moduleId === '04-nginx' ? ['Preserve the digest-pinned image in `k8s/deployment.yaml`; the fixture deploys the checked manifest without rewriting it.'] : []),
       'Preserve `.swarm/contracts/deployable-artifact.json`, `.swarm/contracts/runtime-config.json`, `.swarm/contracts/module-review.json`, and `.swarm/contracts/preview-infrastructure.json` as the code-owned contract authorities.',
       'Do not model run-scoped final-preview infrastructure as reusable module source.',
       'Do not bypass module Buster validation. Kubernetes validation is final-Buster gate owned for this fixture.',
@@ -1205,7 +1227,7 @@ function moduleInstructionFiles(progress) {
       `Verify this module output contract remains coherent: \`${moduleSurface(moduleId).output_contract}\`.`,
       'Treat the shared deployable artifact, runtime config, module review, and preview infrastructure contracts as references, not duplicated module-local contract copies.',
       'Treat `.swarm/contracts/preview-infrastructure.json` as the ownership boundary that keeps BusterNamespaceLease, Tailscale exposure, preview URL, and cleanup policy under final-Buster gate ownership.',
-      ...(moduleId === '04-nginx' ? ['Require `k8s/deployment.yaml` to keep the reusable image placeholder `real-pipeline-e2e-nginx:verification`; final Buster must promote and override the image at deployment time.'] : []),
+      ...(moduleId === '04-nginx' ? ['Require `k8s/deployment.yaml` to use the immutable image declared by the deployable artifact contract.'] : []),
       'Kubernetes and final-preview validation are final-Buster gate owned; reusable module manifests must not define the preview lease or an Ingress.',
       '',
     ].join('\n');
@@ -1442,6 +1464,13 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
   applyRealE2EExecutionBoundary(baseProgress);
   const { progress, scenario } = applyRealE2EScenario(baseProgress, scenarioId);
   validateRealE2EContractAuthority(progress);
+  const deploymentImage = progress.real_e2e?.kubernetes_fixture?.image?.reference;
+  if (typeof deploymentImage !== 'string' || !/@sha256:[a-f0-9]{64}$/u.test(deploymentImage)) {
+    throw new Error('real E2E workspace requires an immutable Kubernetes deployment image');
+  }
+  const deploymentManifestPath = path.join(projectSrc, 'k8s', 'deployment.yaml');
+  fs.writeFileSync(deploymentManifestPath, fs.readFileSync(deploymentManifestPath, 'utf8')
+    .replace('real-pipeline-e2e-nginx:verification', deploymentImage));
   applyRealE2EWorkspaceScenario({ projectSrc, progress, scenarioId: scenario.id });
   writeJson(path.join(swarmDir, 'progress.json'), progress);
   writeRealE2ESwarmFiles(swarmDir, progress);

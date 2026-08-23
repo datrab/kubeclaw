@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["serviceName", "servicePort"],
+  "properties": {
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "digest"],
+      "properties": {
+        "reference": { "type": "string", "pattern": "^[A-Za-z0-9.-]+(?::[0-9]{1,5})?/[a-z0-9]+(?:[._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$", "maxLength": 2048 },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "serviceName": { "$ref": "#/$defs/dnsLabel" },
+    "servicePort": { "type": "integer", "minimum": 1, "maximum": 65535 },
+    "namespacePrefix": { "$ref": "#/$defs/namespacePrefix" },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "enum": ["delete", "retain"] },
+        "seconds": { "type": "integer", "minimum": 60, "maximum": 604800 }
+      }
+    },
+    "readinessTimeoutSeconds": { "type": "integer", "minimum": 1, "maximum": 3600 },
+    "secretReferences": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9._-]+$", "maxLength": 253 }
+    }
+  },
+  "$defs": {
+    "dnsLabel": { "type": "string", "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$" },
+    "namespacePrefix": { "type": "string", "pattern": "^[a-z0-9](?:[a-z0-9-]{0,40}[a-z0-9])?$", "maxLength": 42 }
+  }
+}

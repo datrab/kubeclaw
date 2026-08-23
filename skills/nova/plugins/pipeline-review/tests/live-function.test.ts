@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs'; import http from 'node:http'; import os from 'node:os'; import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 const repository=path.resolve('../../../..');
-const core=await import(pathToFileURL(path.join(repository,'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core=await import(pathToFileURL(path.join(repository,'skills/nova/core/src/index.ts')).href);
 const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-pipeline-review-'));
 const observations=['architecture','agents','prompts','tests','configuration'].map((dimension)=>({dimension,finding:`${dimension} reviewed`,priority:'low'}));
 const server=http.createServer((_request,response)=>{response.writeHead(200,{'content-type':'application/json'});
@@ -35,7 +35,7 @@ try{
       id:'review',type:'kubeclaw.report.pipeline-review',dependsOn:[],config:{agent:'reviewer'},input,
       execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'))});
     assert.equal((await runner.run('run:pipeline-review')).status,'succeeded');
-    assert.match(fs.readFileSync(path.join(temporary,'artifacts','catalog.jsonl'),'utf8'),/pipeline-review:run-1:1/);
+    assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/pipeline-review:run-1:1/);
     assert.equal(fs.readFileSync(effectsPath,'utf8').includes('review-secret'),false);
   }finally{await adapters.shutdown();}
 }finally{delete process.env[secret];await new Promise((resolve)=>server.close(resolve));fs.rmSync(temporary,{recursive:true,force:true});}

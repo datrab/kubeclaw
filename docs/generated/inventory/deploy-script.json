@@ -25,7 +25,7 @@
     },
     {
       "invocation": "./scripts/deploy.sh agent <name>",
-      "description": "[--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy"
+      "description": "[--with-code]  Deploy Nova, Buster, or Prism"
     },
     {
       "invocation": "./scripts/deploy.sh image",
@@ -81,6 +81,11 @@
     "smoke",
     "smoke-agent",
     "status",
+    "prism",
+    "prism-smoke",
+    "prism-e2e",
+    "prism-status",
+    "teardown-prism",
     "teardown",
     "teardown-agents",
     "teardown-all"
@@ -214,6 +219,7 @@
     "delete_namespaced_resource_if_present",
     "delete_manifest_if_cluster_resource_present",
     "wait_for_agent_rollout",
+    "agent_pod_name",
     "append_image_override_file",
     "append_code_bundle_override_file",
     "yaml_trim_scalar",
@@ -248,6 +254,15 @@
     "cmd_status",
     "cmd_smoke_agent",
     "cmd_smoke",
+    "prism_image_overrides",
+    "prism_security_overrides",
+    "prism_validate_values",
+    "cmd_prism_secrets",
+    "cmd_prism",
+    "cmd_prism_smoke",
+    "cmd_prism_status",
+    "cmd_prism_e2e",
+    "cmd_teardown_prism",
     "cmd_nova_buildkit_preflight",
     "cmd_buster_infra_smoke",
     "cmd_teardown_agents",
@@ -268,12 +283,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 770,
-    "secrets": 814,
-    "tailscale": 873,
-    "infra": 964,
-    "agents": 1169,
-    "smoke": 1270,
-    "teardown": 1425
+    "setup": 804,
+    "secrets": 848,
+    "tailscale": 907,
+    "infra": 998,
+    "agents": 1203,
+    "smoke": 1325,
+    "teardown": 1684
   }
 }

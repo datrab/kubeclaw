@@ -75,14 +75,17 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
 
   const scaffoldOutput = run(root, ['--project', 'demo']);
   assert.match(scaffoldOutput, /progress scaffold diagnostics/);
-  assert.match(scaffoldOutput, /Next: fill the scaffold gaps/);
+  assert.match(scaffoldOutput, /Next: fill the progress and provider-plan gaps/);
 
   const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
   const scaffold = readJson(scaffoldPath);
   assert.equal(scaffold.project, 'demo');
   assert.equal(scaffold.modules['01-foundation'].title, 'Foundation');
   assert.deepEqual(scaffold.modules['01-foundation'].stages, ['forge', 'buster']);
-  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, ['build', 'health', 'unit']);
+  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
+  assert.equal(scaffold.modules['01-foundation'].test_config?.unit, undefined);
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].uses, 'kubeclaw.http@1');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.path, '/');
   assert.equal(scaffold.gates['module-01-review'].on_fail, 'stop');
   assert.ok(scaffold.execution_order.some((entry) => entry.startsWith('TODO:')));
 
@@ -94,6 +97,7 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   scaffold.description = 'Demo project';
   scaffold.notes = ['No preview for the scaffold test.'];
   scaffold.execution_order = ['01-foundation', 'gate:module-01-review'];
+  scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.url = 'http://service.demo.svc.cluster.local:3000';
   writeFile(scaffoldPath, `${JSON.stringify(scaffold, null, 2)}\n`);
 
   const applyOutput = run(root, ['--project', 'demo', '--apply']);
@@ -103,6 +107,11 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   assert.equal(progress.project, 'demo');
   assert.deepEqual(progress.execution_order, ['01-foundation', 'gate:module-01-review']);
   assert.equal(progress.gates['module-01-review'].on_fail, 'stop');
+  const pipeline = readJson(path.join(swarm, 'pipeline.json'));
+  assert.equal(pipeline.modules['01-foundation'].tests['http-health'].uses, 'kubeclaw.http@1');
+  assert.equal(pipeline.modules['01-foundation'].tests['http-health'].config.url, 'http://service.demo.svc.cluster.local:3000');
+  assert.equal(JSON.stringify(progress).includes('health_path'), false);
+  assert.equal(JSON.stringify(progress).includes('"health"'), false);
 });
 
 test('progress scaffold rejects removed visual-reg path alias', () => {
@@ -139,4 +148,106 @@ test('progress scaffold rejects removed visual-reg path alias', () => {
 
   assert.match(output, /visual-reg\.path is removed; use paths_file/);
   assert.match(output, /visual-reg\.paths_file must be a non-empty string/);
+});
+
+test('progress scaffold migrates legacy health settings into provider plan nodes', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['build', 'health', 'api'], test_config: { serve: { type: 'server', port: 3000,
+        health_path: '/ready', health_retries: 4, health_timeout: 9000,
+        smoke_paths: ['/status'], smoke_expected_text: { '/status': 'ok' } },
+        api: { spec_file: 'modules/01-foundation/test-spec.json' } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'modules/01-foundation/test-spec.json'), '{}\n');
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {
+    '01-foundation': { suites: { unit: { uses: 'kubeclaw.unit-suite@1' } } },
+  }, gates: {} }, null, 2)}\n`);
+
+  run(root, ['--project', 'demo']);
+  const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
+  const scaffold = readJson(scaffoldPath);
+  const module = scaffold.modules['01-foundation'];
+  assert.deepEqual(module.test_suites, ['api']);
+  assert.equal(JSON.stringify(module.test_config).includes('health_path'), false);
+  assert.equal(scaffold.pipeline.modules['01-foundation'].suites.unit.uses, 'kubeclaw.unit-suite@1');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.path, '/ready');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].retries, 3);
+  assert.deepEqual(scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].needs, ['http-health']);
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].config.expectedText, 'ok');
+
+  scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.url = 'http://demo.default.svc.cluster.local:3000';
+  scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].config.url = 'http://demo.default.svc.cluster.local:3000';
+  writeFile(scaffoldPath, `${JSON.stringify(scaffold, null, 2)}\n`);
+  run(root, ['--project', 'demo', '--apply']);
+  const progress = readJson(path.join(swarm, 'progress.json'));
+  assert.deepEqual(progress.modules['01-foundation'].test_suites, ['api']);
+  assert.equal(JSON.stringify(progress).includes('health_path'), false);
+});
+
+test('progress scaffold migrates the legacy bundle suite into an explicit size-budget plan', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(root, 'Projects/demo/src/dist/index.html'), 'real build output\n');
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Bundle migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['bundle'], test_config: { bundle: { www_dir: 'dist',
+        thresholds: { max_size_kb: 64, max_file_count: 12 } } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {
+    '01-foundation': { tests: { probe: { uses: 'kubeclaw.http@1', mode: 'blocking',
+      config: { url: 'http://demo.default.svc.cluster.local:3000', path: '/', expectedStatuses: [200] } } } },
+  }, gates: {} }, null, 2)}\n`);
+
+  run(root, ['--project', 'demo']);
+  const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
+  const scaffold = readJson(scaffoldPath);
+  const module = scaffold.modules['01-foundation'];
+  assert.deepEqual(module.test_suites, []);
+  assert.equal(module.test_config, undefined);
+  const plan = scaffold.pipeline.modules['01-foundation'];
+  assert.equal(plan.tests['size-budget-artifact'].uses, 'kubeclaw.direct-command@1');
+  assert.equal(plan.tests['size-budget-artifact'].config.workingDirectory, 'Projects/demo/src');
+  assert.deepEqual(plan.tests['size-budget-artifact'].config.args.slice(-3), ['-C', 'dist', '.']);
+  execFileSync('/usr/bin/tar', plan.tests['size-budget-artifact'].config.args, {
+    cwd: path.join(root, plan.tests['size-budget-artifact'].config.workingDirectory),
+  });
+  const archived = execFileSync('/usr/bin/tar', ['-tf', path.join(root, 'Projects/demo/src/.swarm/size-budget-01-foundation.tar')], {
+    encoding: 'utf8',
+  });
+  assert.match(archived, /^root\/$/mu);
+  assert.match(archived, /^index\.html$/mu);
+  assert.equal(plan.tests['size-budget'].uses, 'kubeclaw.size-budget@1');
+  assert.equal(plan.tests['size-budget'].config.maximumTotalBytes, 65_536);
+  assert.equal(plan.tests['size-budget'].config.maximumFileCount, 12);
+  assert.deepEqual(plan.tests.probe.needs, ['size-budget']);
+  assert.equal(plan.tests['http-health'], undefined,
+    'an explicitly selected bundle migration does not add an unrelated HTTP node');
+
+  scaffold.description = 'Demo project';
+  scaffold.notes = ['Bundle migrated.'];
+  writeFile(scaffoldPath, `${JSON.stringify(scaffold, null, 2)}\n`);
+  run(root, ['--project', 'demo', '--apply']);
+  const progress = readJson(path.join(swarm, 'progress.json'));
+  const pipeline = readJson(path.join(swarm, 'pipeline.json'));
+  assert.equal(JSON.stringify(progress).includes('bundle'), false);
+  assert.equal(pipeline.modules['01-foundation'].tests['size-budget'].uses, 'kubeclaw.size-budget@1');
+});
+
+test('progress scaffold rejects a legacy bundle suite without an explicit output path', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', modules: { '01-foundation': { title: 'Foundation', dir: '01-foundation',
+      stages: ['forge', 'buster'], test_suites: ['bundle'], test_config: { bundle: { thresholds: { max_size_kb: 64 } } } } },
+    gates: {},
+  })}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_BUNDLE_CONFIGURATION_RETIRED:01-foundation/u);
 });

@@ -27,6 +27,11 @@
       "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.json$",
       "maxLength": 512
     },
+    "testContractId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._/-]*@[1-9][0-9]*$",
+      "maxLength": 256
+    },
     "jsonObject": {
       "type": "object"
     },
@@ -161,6 +166,136 @@
         "configSchema": { "$ref": "#/$defs/relativeSchemaPath" }
       }
     },
+    "testProviderPort": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "kind", "required", "schemaId"],
+          "properties": {
+            "name": { "$ref": "#/$defs/localId" },
+            "kind": { "const": "value" },
+            "required": { "type": "boolean" },
+            "schemaId": { "$ref": "#/$defs/testContractId" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "kind", "required", "mediaTypes"],
+          "properties": {
+            "name": { "$ref": "#/$defs/localId" },
+            "kind": { "const": "artifact" },
+            "required": { "type": "boolean" },
+            "schemaId": { "$ref": "#/$defs/testContractId" },
+            "mediaTypes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1, "maxLength": 256 }
+            }
+          }
+        }
+      ]
+    },
+    "testEvidencePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["onPass", "onFail", "onError"],
+      "properties": {
+        "onPass": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" }
+        },
+        "onFail": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" }
+        },
+        "onError": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" }
+        }
+      }
+    },
+    "testProviderRegistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "contractId", "kind", "module", "export", "configSchema",
+        "inputs", "outputs", "requiredCapabilities", "retrySafe",
+        "matrixFields", "reportFormats", "evidenceTypes", "evidenceDefaults"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "contractId": { "$ref": "#/$defs/testContractId" },
+        "kind": { "enum": ["test", "fixture"] },
+        "module": { "$ref": "#/$defs/relativeModulePath" },
+        "export": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" },
+        "configSchema": { "$ref": "#/$defs/relativeSchemaPath" },
+        "inputs": {
+          "type": "array",
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/testProviderPort" }
+        },
+        "outputs": {
+          "type": "array",
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/testProviderPort" }
+        },
+        "requiredCapabilities": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/namespacedId" }
+        },
+        "retrySafe": { "type": "boolean" },
+        "matrixFields": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" }
+        },
+        "reportFormats": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" }
+        },
+        "evidenceTypes": {
+          "type": "array",
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/localId" }
+        },
+        "evidenceDefaults": { "$ref": "#/$defs/testEvidencePolicy" }
+      }
+    },
+    "reportAdapterRegistration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "format", "contractVersion", "module", "export", "mediaTypes"],
+      "properties": {
+        "id": { "$ref": "#/$defs/localId" },
+        "format": { "$ref": "#/$defs/localId" },
+        "contractVersion": { "type": "integer", "minimum": 1 },
+        "module": { "$ref": "#/$defs/relativeModulePath" },
+        "export": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" },
+        "mediaTypes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 256 }
+        }
+      }
+    },
     "pluginManifest": {
       "type": "object",
       "additionalProperties": false,
@@ -183,12 +318,22 @@
         "adapters": {
           "type": "array",
           "items": { "$ref": "#/$defs/adapterRegistration" }
+        },
+        "testProviders": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/testProviderRegistration" }
+        },
+        "reportAdapters": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/reportAdapterRegistration" }
         }
       },
       "anyOf": [
         { "properties": { "stages": { "type": "array", "minItems": 1 } } },
         { "properties": { "observers": { "type": "array", "minItems": 1 } } },
-        { "properties": { "adapters": { "type": "array", "minItems": 1 } } }
+        { "properties": { "adapters": { "type": "array", "minItems": 1 } } },
+        { "properties": { "testProviders": { "type": "array", "minItems": 1 } } },
+        { "properties": { "reportAdapters": { "type": "array", "minItems": 1 } } }
       ]
     },
     "stageDefinition": {
@@ -644,7 +789,7 @@
       "properties": {
         "schemaVersion": { "const": "registration-provenance.v2" },
         "package": { "$ref": "#/$defs/packageProvenance" },
-        "surface": { "enum": ["stage", "observer", "adapter"] },
+        "surface": { "enum": ["stage", "observer", "adapter", "test_provider", "report_adapter"] },
         "registrationId": { "$ref": "#/$defs/localId" }
       }
     },
@@ -709,6 +854,17 @@
         "config": { "$ref": "#/$defs/jsonObject" },
         "input": { "$ref": "#/$defs/jsonObject" },
         "guidance": { "$ref": "#/$defs/jsonObject" },
+        "stageLifecycle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["attemptsUsed", "remediationCyclesUsed", "maxAttempts", "maxRemediationCycles"],
+          "properties": {
+            "attemptsUsed": { "type": "integer", "minimum": 0 },
+            "remediationCyclesUsed": { "type": "integer", "minimum": 0 },
+            "maxAttempts": { "type": "integer", "minimum": 1 },
+            "maxRemediationCycles": { "type": "integer", "minimum": 0 }
+          }
+        },
         "artifacts": {
           "type": "array",
           "items": { "$ref": "#/$defs/artifactRef" },

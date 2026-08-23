@@ -32,12 +32,14 @@ type controller struct {
 	busterServiceAccountNamespace string
 	additionalRunnerAccounts      []serviceAccountRef
 	allowedPrefixes               []string
+	approvedSecretNames           map[string]struct{}
 	defaultTTL                    time.Duration
 	pollInterval                  time.Duration
 	finalizer                     string
 	apiURL                        string
 	token                         string
 	httpClient                    *http.Client
+	now                           func() time.Time
 }
 
 type serviceAccountRef struct {
@@ -122,9 +124,11 @@ func newController() (*controller, error) {
 		busterServiceAccountName:      env("BUSTER_SERVICE_ACCOUNT_NAME", "agent-buster"),
 		busterServiceAccountNamespace: busterSANamespace,
 		allowedPrefixes:               prefixes,
+		approvedSecretNames:           stringSet(splitCSV(os.Getenv("BUSTER_APPROVED_SECRET_NAMES"))),
 		defaultTTL:                    time.Duration(ttlSeconds) * time.Second,
 		pollInterval:                  time.Duration(pollMs) * time.Millisecond,
 		finalizer:                     apiGroup + "/buster-namespace-cleanup",
+		now:                           time.Now,
 		apiURL:                        "https://" + host + ":" + port,
 		token:                         token,
 	}
@@ -212,6 +216,10 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 		return c.reconcileDeletedLease(ctx, item, namespaceName)
 	}
 
+	if stringValue(item.Status["phase"]) == "Expired" {
+		return c.deleteNamespace(ctx, namespaceName)
+	}
+
 	if expired, err := c.expireReadyLease(ctx, item, namespaceName); expired || err != nil {
 		return err
 	}
@@ -223,11 +231,11 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 }
 
 func (c *controller) expireReadyLease(ctx context.Context, item *lease, namespaceName string) (bool, error) {
-	if stringValueDefault(item.Spec["cleanupPolicy"], "delete") != "delete" || stringValue(item.Status["phase"]) != "Ready" {
+	if stringValue(item.Status["phase"]) != "Ready" {
 		return false, nil
 	}
 	deadline, err := time.Parse(time.RFC3339, stringValue(item.Status["expiresAt"]))
-	if err != nil || !time.Now().After(deadline) {
+	if err != nil || !c.now().After(deadline) {
 		return false, nil
 	}
 	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
@@ -253,6 +261,10 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 }
 
 func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceName string) error {
+	createdAt, err := c.createdAt(item)
+	if err != nil {
+		return err
+	}
 	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
 		"phase":         "Provisioning",
 		"namespaceName": namespaceName,
@@ -280,7 +292,8 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 		"namespaceName":      namespaceName,
 		"serviceAccountName": c.busterServiceAccountNamespace + "/" + c.busterServiceAccountName,
 		"internalUrl":        nil,
-		"expiresAt":          c.expiresAt(item).Format(time.RFC3339),
+		"expiresAt":          c.expiresAt(item, createdAt).Format(time.RFC3339),
+		"createdAt":          createdAt.Format(time.RFC3339),
 		"message":            "Namespace ready",
 	}
 	if serviceName := stringValue(item.Spec["serviceName"]); serviceName != "" {
@@ -296,17 +309,15 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 }
 
 func (c *controller) reconcileDeletedLease(ctx context.Context, item *lease, namespaceName string) error {
-	if stringValueDefault(item.Spec["cleanupPolicy"], "delete") != "keep" {
-		if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
-			"phase":         "Deleting",
-			"namespaceName": namespaceName,
-			"message":       "Lease deleted; deleting broker-owned namespace",
-		}); err != nil {
-			return err
-		}
-		if err := c.deleteNamespace(ctx, namespaceName); err != nil {
-			return err
-		}
+	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
+		"phase":         "Deleting",
+		"namespaceName": namespaceName,
+		"message":       "Lease deleted; deleting broker-owned namespace",
+	}); err != nil {
+		return err
+	}
+	if err := c.deleteNamespace(ctx, namespaceName); err != nil {
+		return err
 	}
 	return c.removeFinalizer(ctx, item)
 }
@@ -385,11 +396,6 @@ func (c *controller) namespaceRole(namespaceName string) map[string]interface{} 
 					"pods", "pods/log", "services", "endpoints", "configmaps", "persistentvolumeclaims",
 				},
 				"verbs": []string{"create", "get", "list", "watch", "delete", "patch", "update"},
-			},
-			map[string]interface{}{
-				"apiGroups": []string{""},
-				"resources": []string{"pods/portforward"},
-				"verbs":     []string{"create"},
 			},
 			map[string]interface{}{
 				"apiGroups": []string{""},
@@ -644,6 +650,9 @@ func ingressPreviewURL(ingress map[string]interface{}, exposure *previewExposure
 
 func (c *controller) copySecrets(ctx context.Context, names []string, targetNamespace string) error {
 	for _, name := range names {
+		if _, approved := c.approvedSecretNames[name]; !approved {
+			return fmt.Errorf("secret %s is not approved for test deployment", name)
+		}
 		var source map[string]interface{}
 		if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+c.namespace+"/secrets/"+name, nil, "application/json", &source); err != nil {
 			return err
@@ -782,16 +791,28 @@ func (c *controller) statusPath(name string) string {
 	return c.leasePath(name) + "/status"
 }
 
-func (c *controller) expiresAt(item *lease) time.Time {
+func (c *controller) expiresAt(item *lease, createdAt time.Time) time.Time {
 	ttl := c.defaultTTL
 	if value := intValue(item.Spec["ttlSeconds"], 0); value > 0 {
 		ttl = time.Duration(value) * time.Second
 	}
+	return createdAt.Add(ttl)
+}
+
+func (c *controller) createdAt(item *lease) (time.Time, error) {
 	createdAt, err := time.Parse(time.RFC3339, item.Metadata.CreationTimestamp)
 	if err != nil {
-		createdAt = time.Now()
+		return time.Time{}, fmt.Errorf("invalid lease creationTimestamp: %w", err)
 	}
-	return createdAt.Add(ttl)
+	return createdAt, nil
+}
+
+func stringSet(values []string) map[string]struct{} {
+	result := make(map[string]struct{}, len(values))
+	for _, value := range values {
+		result[value] = struct{}{}
+	}
+	return result
 }
 
 func (c *controller) parseServiceAccountRefs(value string) ([]serviceAccountRef, error) {

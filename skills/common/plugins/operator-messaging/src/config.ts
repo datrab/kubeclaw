@@ -11,6 +11,12 @@ export interface TargetConfig {
   readonly maxPayloadBytes: number;
   readonly format: 'json' | 'discord_webhook';
 }
+export interface OperatorConfig {
+  readonly targets: ReadonlyMap<string, TargetConfig>;
+  readonly deliveryRoot: string;
+  readonly maximumDeliveryRecords: number;
+  readonly maximumDeliveryBytes: number;
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -65,10 +71,28 @@ function parseTarget(targetId: string, raw: unknown): TargetConfig {
   return Object.freeze({ endpoint: endpoint.href, tokenSecret: raw.tokenSecret, maxPayloadBytes, format });
 }
 
-export function parseConfig(config: AdapterActivationContext['config']): ReadonlyMap<string, TargetConfig> {
-  exactKeys(config as Record<string, unknown>, new Set(['targets']), 'OPERATOR_CONFIG_UNKNOWN_FIELD');
+export function parseConfig(config: AdapterActivationContext['config']): OperatorConfig {
+  exactKeys(config as Record<string, unknown>, new Set([
+    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes',
+  ]), 'OPERATOR_CONFIG_UNKNOWN_FIELD');
   if (!isRecord(config.targets) || Object.keys(config.targets).length < 1) throw new Error('OPERATOR_CONFIG_INVALID:targets');
-  return new Map(Object.entries(config.targets).map(([id, raw]) => [id, parseTarget(id, raw)]));
+  if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
+    throw new Error('OPERATOR_CONFIG_INVALID:deliveryRoot');
+  }
+  const maximumDeliveryRecords = Number(config.maximumDeliveryRecords ?? 100_000);
+  const maximumDeliveryBytes = Number(config.maximumDeliveryBytes ?? 256 * 1024 * 1024);
+  if (!Number.isSafeInteger(maximumDeliveryRecords) || maximumDeliveryRecords < 1) {
+    throw new Error('OPERATOR_CONFIG_INVALID:maximumDeliveryRecords');
+  }
+  if (!Number.isSafeInteger(maximumDeliveryBytes) || maximumDeliveryBytes < 1) {
+    throw new Error('OPERATOR_CONFIG_INVALID:maximumDeliveryBytes');
+  }
+  return Object.freeze({
+    targets: new Map(Object.entries(config.targets).map(([id, raw]) => [id, parseTarget(id, raw)])),
+    deliveryRoot: config.deliveryRoot,
+    maximumDeliveryRecords,
+    maximumDeliveryBytes,
+  });
 }
 
 export function isTargetId(value: string): boolean { return TARGET_ID.test(value); }

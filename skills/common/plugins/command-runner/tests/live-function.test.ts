@@ -43,6 +43,7 @@ function run(adapter, args, {
   operation = 'run',
   type = 'command.executable',
   signal = new AbortController().signal,
+  environment,
 } = {}) {
   requestSequence += 1;
   return adapter.invoke({
@@ -54,7 +55,7 @@ function run(adapter, args, {
       capability,
       operation,
       resource: { type, canonicalId: command },
-      payload: { args, workingDirectory: cwd },
+      payload: { args, workingDirectory: cwd, ...(environment === undefined ? {} : { environment }) },
     },
     signal,
   });
@@ -85,6 +86,7 @@ try {
   await assert.rejects(run(adapter, [], { operation: 'shell' }), /COMMAND_OPERATION_UNSUPPORTED/);
   await assert.rejects(run(adapter, [], { type: 'command.shell' }), /COMMAND_RESOURCE_INVALID/);
   await assert.rejects(run(adapter, ['bad\0argument']), /COMMAND_ARGUMENTS_INVALID/);
+  await assert.rejects(run(adapter, [], { environment: { LD_PRELOAD: '/tmp/attack.so' } }), /COMMAND_ENVIRONMENT_DENIED/);
 } finally {
   await adapter.shutdown(new AbortController().signal);
 }

@@ -1,0 +1,90 @@
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import { NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
+import { provider } from '../src/provider.js';
+
+const server = http.createServer((request, response) => {
+  if (request.url === '/ok') {
+    response.setHeader('content-type', 'text/html; charset=utf-8');
+    response.end('healthy marker');
+  } else if (request.url === '/missing') {
+    response.setHeader('content-type', 'text/plain');
+    response.writeHead(404).end('not found');
+  } else if (request.url === '/redirect') {
+    response.writeHead(302, { location: '/ok' }).end();
+  } else if (request.url === '/large') {
+    response.end('x'.repeat(4096));
+  } else if (request.url === '/slow') {
+    setTimeout(() => response.end('late'), 250);
+  } else response.writeHead(503).end('unavailable');
+});
+await new Promise<void>((resolve, reject) => {
+  server.once('error', reject);
+  server.listen(0, '127.0.0.1', () => resolve());
+});
+const address = server.address();
+if (!address || typeof address === 'string') throw new Error('HTTP_TEST_SERVER_BIND_FAILED');
+const origin = `http://127.0.0.1:${address.port}`;
+const capability = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [],
+  allowedPorts: [address.port], maximumResponseBytes: 1_048_576, maximumExecutionMs: 1000 });
+
+function invocation(values: Record<string, unknown>, attempt: string, inputs: unknown[] = []) {
+  return { schemaVersion: 'provider-invocation.v1', planId: 'plan:http', runId: 'run:http', moduleId: 'app', gateId: null,
+    suiteInstanceId: null, nodeId: `http/${attempt}`, executionId: `plan:http:http/${attempt}`,
+    testIdentity: `test:http:${attempt}`, nodeKind: 'test', attemptId: `attempt:${attempt}`, attemptNumber: 1,
+    provider: {}, configuration: { values }, inputs, evidence: {}, grantedCapabilities: ['network.http'], timeoutMs: 1000,
+    limits: { cpuMillis: 1000, memoryBytes: 64 * 1024 * 1024, logBytes: 1024 * 1024,
+      artifactBytes: 1024 * 1024, artifactFiles: 1, processes: 1 },
+    workspace: { repository: 'repository', scratch: 'scratch', evidence: 'evidence' } } as any;
+}
+
+function context(signal = new AbortController().signal) {
+  return { signal, workspaceRoot: process.cwd(), log() {}, invoke: (name: string, request: any) => capability.invoke(name, request, signal) };
+}
+
+try {
+  const passed = await provider().execute(invocation({ url: origin, path: '/ok', expectedText: 'healthy',
+    expectedContentType: 'text/html' }, 'passed'), context());
+  assert.equal(passed.outcome, 'passed');
+  assert.equal(passed.providerDetails.values.status, 200);
+  assert.match(passed.providerDetails.values.bodyDigest, /^sha256:[a-f0-9]{64}$/u);
+  assert.equal(JSON.stringify(passed).includes('healthy marker'), false, 'response content must not enter result records');
+
+  const assertion = await provider().execute(invocation({ url: origin, path: '/ok', expectedText: 'absent' }, 'assertion'), context());
+  assert.equal(assertion.outcome, 'failed');
+  assert.equal(assertion.findings[0].rule, 'http.response-text');
+
+  const expected404 = await provider().execute(invocation({ url: origin, path: '/missing', expectedStatuses: [404],
+    expectedText: 'not found' }, 'status'), context());
+  assert.equal(expected404.outcome, 'passed');
+
+  const deployment = { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'web', url: origin }] } };
+  const linked = await provider().execute(invocation({ endpointName: 'web', path: '/ok' }, 'linked', [deployment]), context());
+  assert.equal(linked.outcome, 'passed');
+
+  const timeout = await provider().execute(invocation({ url: origin, path: '/slow', requestTimeoutMs: 25 }, 'timeout'), context());
+  assert.equal(timeout.outcome, 'failed');
+  assert.equal(timeout.findings[0].rule, 'http.timeout');
+
+  await assert.rejects(() => provider().execute(invocation({ url: origin, path: '/redirect' }, 'redirect'), context()),
+    /HTTP_RESPONSE_REDIRECT_DENIED/u);
+  await assert.rejects(() => provider().execute(invocation({ url: origin, path: '/large', maximumResponseBytes: 64 }, 'large'), context()),
+    /HTTP_RESPONSE_SIZE_EXCEEDED/u);
+  await assert.rejects(() => provider().execute(invocation({ url: 'http://example.invalid', path: '/' }, 'origin'), context()),
+    /HTTP_REQUEST_(?:PORT|ORIGIN)_DENIED/u);
+  await assert.rejects(() => provider().execute(invocation({ url: origin, path: '//example.invalid/' }, 'path'), context()),
+    /HTTP_CONFIG_PATH_INVALID/u);
+  await assert.rejects(() => provider().execute(invocation({ url: origin, path: '/ok' }, 'ambiguous', [deployment]), context()),
+    /HTTP_TARGET_AMBIGUOUS/u);
+
+  const cancelled = new AbortController();
+  cancelled.abort();
+  await assert.rejects(() => capability.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: {} } as any, cancelled.signal),
+  /HTTP_REQUEST_CANCELLED/u);
+} finally {
+  await new Promise<void>((resolve) => server.close(() => resolve()));
+}
+
+console.log(JSON.stringify({ ok: true, provider: 'http', boundary: 'real-local-http-server', mocks: 0, wrappers: 0 }));

@@ -1,6 +1,4 @@
 import crypto from 'node:crypto';
-import fs from 'node:fs';
-import path from 'node:path';
 import {
   canonicalJson,
   type AdapterActivationContext,
@@ -8,6 +6,15 @@ import {
   type ArtifactRef,
   type AdapterInvocation,
 } from '@kubeclaw/plugin-sdk';
+import {
+  FileDurableBlobStore,
+  FileDurableRecordStore,
+  type DurableRecordStore,
+  type DurableBlobStore,
+} from '@kubeclaw/plugin-foundation/observability/durable-records';
+
+const DEFAULT_MAXIMUM_RECORDS = 100_000;
+const DEFAULT_MAXIMUM_STORE_BYTES = 256 * 1024 * 1024;
 
 function requiredText(value: unknown, label: string): string {
   if (typeof value !== 'string' || value.length === 0 || value.includes('\0') || /[\r\n]/.test(value)) {
@@ -22,135 +29,103 @@ function digestValue(value: unknown): string {
   return digest;
 }
 
-function blobPath(root: string, digest: string): string {
-  const hash = digest.slice('sha256:'.length);
-  return path.join(root, 'blobs', 'sha256', hash.slice(0, 2), `${hash.slice(2)}.json`);
+function stream(namespace: string): string {
+  if (!/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,245}$/.test(namespace)) throw new Error('ARTIFACT_NAMESPACE_INVALID');
+  return `artifacts/${namespace}`;
 }
 
-function writeImmutable(file: string, bytes: Buffer): void {
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  try {
-    const descriptor = fs.openSync(file, 'wx', 0o600);
-    try {
-      fs.writeFileSync(descriptor, bytes);
-      fs.fsyncSync(descriptor);
-    } finally {
-      fs.closeSync(descriptor);
-    }
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-    const existing = fs.readFileSync(file);
-    if (!existing.equals(bytes)) throw new Error('ARTIFACT_DIGEST_COLLISION');
-  }
-}
-
-function appendCatalog(root: string, artifact: ArtifactRef): void {
-  const file = path.join(root, 'catalog.jsonl');
-  const descriptor = fs.openSync(file, 'a', 0o600);
-  try {
-    fs.writeSync(descriptor, `${canonicalJson(artifact)}\n`);
-    fs.fsyncSync(descriptor);
-  } finally {
-    fs.closeSync(descriptor);
-  }
-}
-
-function catalogContains(
-  root: string,
+async function findArtifact(
+  records: DurableRecordStore,
+  blobs: DurableBlobStore,
   artifactId: string,
   namespace: string,
-  digest: string,
-): boolean {
-  const file = path.join(root, 'catalog.jsonl');
-  if (!fs.existsSync(file)) return false;
-  return fs.readFileSync(file, 'utf8').split('\n').some((line) => {
-    if (line.length === 0) return false;
-    try {
-      const artifact = JSON.parse(line) as Partial<ArtifactRef>;
-      return artifact.artifactId === artifactId
-        && artifact.namespace === namespace
-        && artifact.digest === digest;
-    } catch {
-      throw new Error('ARTIFACT_CATALOG_INVALID');
-    }
-  });
-}
-
-function latestArtifact(
-  root: string,
-  artifactId: string,
-  namespace: string,
-  runId: string,
-): ArtifactRef {
-  const file = path.join(root, 'catalog.jsonl');
-  if (!fs.existsSync(file)) throw new Error('ARTIFACT_NOT_FOUND');
-  let latest: ArtifactRef | undefined;
-  for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
-    if (line.length === 0) continue;
-    let artifact: ArtifactRef;
-    try {
-      artifact = JSON.parse(line) as ArtifactRef;
-    } catch {
-      throw new Error('ARTIFACT_CATALOG_INVALID');
-    }
-    if (
-      artifact.artifactId === artifactId
-      && artifact.namespace === namespace
-      && artifact.producer.runId === runId
-    ) {
-      latest = artifact;
-    }
-  }
-  if (!latest) throw new Error('ARTIFACT_NOT_FOUND');
-  return latest;
-}
-
-function readArtifact(root: string, artifact: ArtifactRef): {
+  predicate: (artifact: ArtifactRef) => boolean,
+): Promise<{
   readonly value: unknown;
   readonly digest: string;
   readonly sizeBytes: number;
   readonly artifact: ArtifactRef;
-} {
-  const file = blobPath(root, artifact.digest);
-  if (!fs.existsSync(file)) throw new Error('ARTIFACT_NOT_FOUND');
-  const bytes = fs.readFileSync(file);
-  const actual = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-  if (actual !== artifact.digest) throw new Error('ARTIFACT_INTEGRITY_FAILED');
-  return {
-    value: JSON.parse(bytes.toString('utf8')),
-    digest: artifact.digest,
-    sizeBytes: bytes.byteLength,
-    artifact,
-  };
+}> {
+  const matches = (await records.read<ArtifactRef>(stream(namespace)))
+    .map((record) => record.payload)
+    .filter((artifact) => artifact.artifactId === artifactId && predicate(artifact))
+    .reverse();
+  for (const artifact of matches) {
+    try {
+      return await readArtifact(blobs, artifact);
+    } catch (error) {
+      // Metadata is the bounded write intent. It becomes visible only after its
+      // content-addressed blob exists. This also recovers a crash between the
+      // metadata and blob writes without hiding an older completed artifact.
+      if (error instanceof Error && error.message === 'ARTIFACT_NOT_FOUND') continue;
+      throw error;
+    }
+  }
+  throw new Error('ARTIFACT_NOT_FOUND');
 }
 
-async function invokeArtifact(root: string, maxArtifactBytes: number, invocation: AdapterInvocation): Promise<Readonly<Record<string, unknown>>> {
+async function readArtifact(blobs: DurableBlobStore, artifact: ArtifactRef): Promise<{
+  readonly value: unknown;
+  readonly digest: string;
+  readonly sizeBytes: number;
+  readonly artifact: ArtifactRef;
+}> {
+  let bytes: Buffer;
+  try { bytes = await blobs.get(artifact.digest); } catch (error) {
+    if (error instanceof Error && error.message === 'DURABLE_BLOB_NOT_FOUND') throw new Error('ARTIFACT_NOT_FOUND');
+    if (error instanceof Error && error.message === 'DURABLE_BLOB_INTEGRITY_FAILED') throw new Error('ARTIFACT_INTEGRITY_FAILED');
+    throw error;
+  }
+  return { value: JSON.parse(bytes.toString('utf8')), digest: artifact.digest, sizeBytes: bytes.byteLength, artifact };
+}
+
+async function invokeArtifact(
+  records: DurableRecordStore,
+  blobs: DurableBlobStore,
+  maximumArtifactBytes: number,
+  invocation: AdapterInvocation,
+): Promise<Readonly<Record<string, unknown>>> {
   const { request, signal, confidential, fence } = invocation;
   if (!confidential) fence.assertCurrent();
   if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+  const artifactId = requiredText(request.resource.canonicalId, 'ID');
   if (request.capability === 'artifacts.read' && request.operation === 'get_json') {
     const digest = digestValue(request.payload.digest);
-    const artifactId = requiredText(request.resource.canonicalId, 'ID');
     const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
-    if (!catalogContains(root, artifactId, namespace, digest)) throw new Error('ARTIFACT_NOT_FOUND');
-    const stored = readArtifact(root, { artifactId, namespace, mediaType: 'application/json', digest, sizeBytes: 0, producer: request.attempt });
+    const stored = await findArtifact(records, blobs, artifactId, namespace, (entry) => entry.digest === digest);
     return { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes };
   }
   if (request.capability === 'artifacts.read' && request.operation === 'get_latest_json') {
-    return readArtifact(root, latestArtifact(root, requiredText(request.resource.canonicalId, 'ID'), requiredText(request.payload.namespace, 'NAMESPACE'), request.attempt.runId));
+    const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
+    return findArtifact(records, blobs, artifactId, namespace, (entry) => entry.producer.runId === request.attempt.runId);
   }
-  if (request.capability !== 'artifacts.write' || request.operation !== 'put_json') throw new Error(`ARTIFACT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
-  const artifactId = requiredText(request.resource.canonicalId, 'ID');
+  if (request.capability !== 'artifacts.write' || request.operation !== 'put_json') {
+    throw new Error(`ARTIFACT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
+  }
   const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
   const mediaType = requiredText(request.payload.mediaType, 'MEDIA_TYPE');
   if (mediaType !== 'application/json') throw new Error('ARTIFACT_MEDIA_TYPE_UNSUPPORTED');
   const bytes = Buffer.from(canonicalJson(request.payload.value));
-  if (bytes.byteLength > maxArtifactBytes) throw new Error('ARTIFACT_SIZE_EXCEEDED');
+  if (bytes.byteLength > maximumArtifactBytes) throw new Error('ARTIFACT_SIZE_EXCEEDED');
   const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-  writeImmutable(blobPath(root, digest), bytes);
-  const artifact: ArtifactRef = { artifactId, namespace, mediaType, digest, sizeBytes: bytes.byteLength, producer: request.attempt };
-  appendCatalog(root, artifact);
-  return { artifact };
+  const artifact: ArtifactRef = {
+    artifactId,
+    namespace,
+    mediaType,
+    digest,
+    sizeBytes: bytes.byteLength,
+    producer: request.attempt,
+  };
+  // Admit the bounded metadata record before the blob. A failed admission must
+  // not leave an unreferenced blob. If blob storage fails, the same idempotent
+  // request can retry and complete the missing content-addressed write.
+  const committed = await records.append(
+    stream(namespace),
+    request.idempotencyKey,
+    artifact,
+  );
+  await blobs.put(bytes);
+  return { artifact: committed.record.payload };
 }
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
@@ -158,13 +133,19 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('artifactRoot is required');
   const maximum = context.config.maxArtifactBytes ?? 16 * 1024 * 1024;
   if (!Number.isSafeInteger(maximum) || Number(maximum) <= 0) throw new Error('maxArtifactBytes is invalid');
-  const maxArtifactBytes = Number(maximum);
-  const root = path.resolve(configured);
+  const maximumStoreBytes = context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES;
+  const maximumRecords = context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS;
+  if (!Number.isSafeInteger(maximumStoreBytes) || Number(maximumStoreBytes) < 1) throw new Error('maximumStoreBytes is invalid');
+  if (!Number.isSafeInteger(maximumRecords) || Number(maximumRecords) < 1) throw new Error('maximumRecords is invalid');
+  const records = new FileDurableRecordStore(configured, {
+    maximumRecords: Number(maximumRecords),
+    maximumBytes: Number(maximumStoreBytes),
+    maximumRecordBytes: 64 * 1024,
+  });
+  const blobs = new FileDurableBlobStore(configured, Number(maximum));
   return {
-    async ready() {
-      fs.mkdirSync(path.join(root, 'blobs', 'sha256'), { recursive: true, mode: 0o700 });
-    },
-    async invoke(invocation) { return invokeArtifact(root, maxArtifactBytes, invocation); },
+    async ready() { await records.read<ArtifactRef>('artifacts/readiness'); },
+    async invoke(invocation) { return invokeArtifact(records, blobs, Number(maximum), invocation); },
     async shutdown() {},
   };
 }

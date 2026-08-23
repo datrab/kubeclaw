@@ -6,7 +6,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const core = await import(pathToFileURL(
-  path.resolve('skills/common/plugin-runtime/core/src/index.ts'),
+  path.resolve('skills/nova/core/src/index.ts'),
 ).href);
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-system-phase7-'));

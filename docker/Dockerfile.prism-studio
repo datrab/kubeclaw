@@ -1,0 +1,18 @@
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.7.1-2@sha256:8789721d2e9b24b780a1504b56deb4c6bd5c7dbf96a1dd117e7c45c2ed72c8ac
+FROM ${OPENCLAW_BASE} AS build
+USER root
+WORKDIR /build
+COPY . /build
+RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+ && npm run build:studio --prefix skills/prism
+
+FROM ${OPENCLAW_BASE}
+USER root
+WORKDIR /app/prism
+COPY --from=build /build/skills/prism/dist-studio /app/prism/dist-studio
+COPY --from=build /build/skills/prism/server/studio.ts /app/prism/server/studio.ts
+RUN chown -R node:node /app/prism
+USER node
+ENV NODE_ENV=production PORT=8080 STUDIO_ROOT=/app/prism/dist-studio
+EXPOSE 8080
+CMD ["node","--experimental-strip-types","server/studio.ts"]

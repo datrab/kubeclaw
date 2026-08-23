@@ -1,8 +1,15 @@
 # Telemetry store
 
-Provides a local append-only telemetry evidence journal for v2 lifecycle
-observers. Records receive monotonic sequence numbers and core idempotency
-keys, are fsynced before acknowledgement, redact secret-bearing fields
-recursively, validate on replay, and enforce size and cancellation bounds.
+Provides a bounded telemetry stream for v2 lifecycle observers. Records use
+the shared pipeline durable-record interface. They receive monotonic sequence
+numbers and core idempotency keys. The embedded driver makes each update
+durable before acknowledgement. It also enforces size and cancellation bounds.
 
-This package is local v2 foundation; it does not claim Redis stream parity.
+`root` selects the embedded file driver. The former `journalPath` JSONL file
+is removed. Secret-bearing fields remain redacted by this adapter.
+
+An identical idempotency key and sanitized payload is a duplicate. The same
+key with different content is an idempotency conflict and fails closed.
+
+This package is a pipeline-side storage foundation. ClawDeck ingestion and
+high-volume telemetry drivers are later work.

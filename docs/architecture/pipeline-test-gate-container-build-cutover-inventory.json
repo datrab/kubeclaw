@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "container-build-cutover.v2",
+  "suite": "build",
+  "successor": "kubeclaw.container-build@1",
+  "parityItemCount": 36,
+  "legacyFilesToDelete": [
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/build.ts"
+  ],
+  "removedSurfaces": [
+    "legacy protocol build entry",
+    "legacy suite registry build entry",
+    "legacy dependency graph build node"
+  ],
+  "replacementFilesRequired": [
+    "skills/buster/plugins/container-build/plugin.json",
+    "skills/buster/plugins/container-build/src/provider.js",
+    "tests/verification/contracts/check-pipeline-container-build-cutover.mts"
+  ],
+  "retained": [
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/services/buildkit.ts"
+  ],
+  "retainedReason": "The unmigrated Kubernetes fixture suite still uses the shared BuildKit service.",
+  "verification": {
+    "solePathTests": ["tests/verification/contracts/check-pipeline-container-build-implementation.mts"],
+    "dualAuthorityTests": ["tests/verification/contracts/check-pipeline-container-build-cutover.mts"],
+    "absenceTests": ["tests/verification/contracts/check-pipeline-container-build-cutover.mts"]
+  }
+}

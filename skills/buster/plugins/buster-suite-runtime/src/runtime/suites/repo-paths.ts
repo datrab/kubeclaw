@@ -7,7 +7,7 @@ import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 export { isPathInside };
 
 export function resolveRepoDir(startDir: unknown = null): string {
-  return startDir ? getRepoRoot(startDir) : getRepoRoot();
+  return getRepoRoot(startDir || process.cwd());
 }
 
 export const REPO_DIR = resolveRepoDir();

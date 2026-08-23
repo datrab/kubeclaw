@@ -1,0 +1,603 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "agent",
+    "reviewerModel"
+  ],
+  "properties": {
+    "agent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewerModel": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Exact model identity used by repository-audit cache keys."
+    },
+    "reviewerRuntime": {
+      "enum": [
+        "acp",
+        "subagent"
+      ],
+      "default": "subagent"
+    },
+    "reviewerAgentId": {
+      "type": "string",
+      "minLength": 1,
+      "default": "codex"
+    },
+    "reviewerThinking": {
+      "type": "string",
+      "minLength": 1,
+      "default": "high"
+    },
+    "profile": {
+      "enum": [
+        "gate",
+        "lean",
+        "audit"
+      ],
+      "default": "audit"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "profile",
+        "blocking",
+        "limits",
+        "scope",
+        "verification",
+        "simplification",
+        "ranking",
+        "followUp",
+        "governor"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "review-policy.v2"
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+        },
+        "blocking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "priorities",
+            "categories",
+            "requireIntroducedByDiff",
+            "requireDirectEvidence"
+          ],
+          "properties": {
+            "priorities": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 4,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "P0",
+                  "P1",
+                  "P2",
+                  "P3"
+                ]
+              },
+              "allOf": [
+                {
+                  "contains": {
+                    "const": "P0"
+                  }
+                }
+              ]
+            },
+            "categories": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 5,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "correctness",
+                  "security",
+                  "contract",
+                  "architecture",
+                  "simplification"
+                ]
+              },
+              "allOf": [
+                {
+                  "contains": {
+                    "const": "correctness"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "security"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "contract"
+                  }
+                }
+              ]
+            },
+            "requireIntroducedByDiff": {
+              "type": "boolean"
+            },
+            "requireDirectEvidence": {
+              "type": "boolean"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxProposals",
+            "maxRootCauses",
+            "maxInstancesPerCluster",
+            "maxBundleBytes",
+            "maxContextFiles",
+            "maxInitialContextFiles",
+            "maxContextFileBytes",
+            "maxContextBytes",
+            "maxInitialContextBytes",
+            "maxDependencyDepth",
+            "maxExpansionFiles",
+            "maxAdvisories"
+          ],
+          "properties": {
+            "maxProposals": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 128
+            },
+            "maxRootCauses": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "maxInstancesPerCluster": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "maxBundleBytes": {
+              "type": "integer",
+              "minimum": 1024,
+              "maximum": 16777216
+            },
+            "maxContextFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 256
+            },
+            "maxInitialContextFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 256
+            },
+            "maxContextFileBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2097152
+            },
+            "maxContextBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "maxInitialContextBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16777216
+            },
+            "maxDependencyDepth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "maxExpansionFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16
+            },
+            "maxAdvisories": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outsideScope",
+            "unknownScope",
+            "retainPreExisting"
+          ],
+          "properties": {
+            "outsideScope": {
+              "enum": [
+                "follow_up",
+                "orchestrator_required"
+              ]
+            },
+            "unknownScope": {
+              "enum": [
+                "blocked",
+                "follow_up",
+                "orchestrator_required"
+              ]
+            },
+            "retainPreExisting": {
+              "type": "boolean"
+            }
+          }
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "semanticVerifier",
+            "insufficientFindingEvidence",
+            "unverifiedRequirement"
+          ],
+          "properties": {
+            "semanticVerifier": {
+              "enum": [
+                "disabled",
+                "p0-only",
+                "all-blockers"
+              ]
+            },
+            "insufficientFindingEvidence": {
+              "enum": [
+                "reject",
+                "follow_up",
+                "orchestrator_required"
+              ]
+            },
+            "unverifiedRequirement": {
+              "enum": [
+                "blocked",
+                "orchestrator_required"
+              ]
+            }
+          }
+        },
+        "simplification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "registryVersion",
+            "enabledRules",
+            "maxRecommendations",
+            "minimumConfidence"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "registryVersion": {
+              "const": "simplification-rules.v1"
+            },
+            "enabledRules": {
+              "type": "array",
+              "maxItems": 8,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "SIM001",
+                  "SIM002",
+                  "SIM003",
+                  "SIM004",
+                  "SIM005",
+                  "SIM006",
+                  "SIM007",
+                  "SIM008"
+                ]
+              }
+            },
+            "maxRecommendations": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "minimumConfidence": {
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            }
+          }
+        },
+        "ranking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "priorityWeights",
+            "categoryWeights",
+            "introducedByDiffBonus",
+            "directEvidenceBonus"
+          ],
+          "properties": {
+            "priorityWeights": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "P0",
+                "P1",
+                "P2",
+                "P3"
+              ],
+              "properties": {
+                "P0": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "P1": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "P2": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "P3": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "categoryWeights": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "correctness",
+                "security",
+                "contract",
+                "architecture",
+                "simplification"
+              ],
+              "properties": {
+                "correctness": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "security": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "contract": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "architecture": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "simplification": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              }
+            },
+            "introducedByDiffBonus": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            },
+            "directEvidenceBonus": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          }
+        },
+        "followUp": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "retainedPriorities",
+            "maxItems"
+          ],
+          "properties": {
+            "retainedPriorities": {
+              "type": "array",
+              "minItems": 0,
+              "maxItems": 4,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "P0",
+                  "P1",
+                  "P2",
+                  "P3"
+                ]
+              }
+            },
+            "maxItems": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          }
+        },
+        "governor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxRepairCycles",
+            "fileGrowthMultiplier",
+            "nonTestLocGrowthMultiplier",
+            "absoluteFileAllowance",
+            "absoluteNonTestLocAllowance"
+          ],
+          "properties": {
+            "maxRepairCycles": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "fileGrowthMultiplier": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "nonTestLocGrowthMultiplier": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "absoluteFileAllowance": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 256
+            },
+            "absoluteNonTestLocAllowance": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "scope": {
+                    "type": "object",
+                    "properties": {
+                      "outsideScope": {
+                        "const": "follow_up"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "scope": {
+                    "type": "object",
+                    "properties": {
+                      "unknownScope": {
+                        "const": "follow_up"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "verification": {
+                    "type": "object",
+                    "properties": {
+                      "insufficientFindingEvidence": {
+                        "const": "follow_up"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "followUp": {
+                "type": "object",
+                "properties": {
+                  "retainedPriorities": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "maxItems": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "simplification": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "simplification": {
+                "type": "object",
+                "properties": {
+                  "enabledRules": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "maxRecommendations": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "type": "object",
+            "properties": {
+              "simplification": {
+                "type": "object",
+                "properties": {
+                  "enabledRules": {
+                    "type": "array",
+                    "maxItems": 0
+                  },
+                  "maxRecommendations": {
+                    "const": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

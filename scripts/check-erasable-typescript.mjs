@@ -33,10 +33,10 @@ const trackedGenerated = execFileSync('git', [
 ], { cwd: root, encoding: 'utf8' }).trim();
 if (trackedGenerated) throw new Error(`generated dist files must not be tracked:\n${trackedGenerated}`);
 
-const sourceFiles = execFileSync('git', ['ls-files', '*.ts', '*.mts'], {
+const sourceFiles = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '*.ts', '*.mts'], {
   cwd: root,
   encoding: 'utf8',
-}).trim().split('\n').filter((file) => file && !file.includes('/dist/'));
+}).trim().split('\n').filter((file) => file && !file.includes('/dist/') && fs.existsSync(path.join(root, file)));
 for (const sourceFile of sourceFiles) {
   const source = fs.readFileSync(path.join(root, sourceFile), 'utf8');
   if (!/\.d\.(?:m)?ts$/u.test(sourceFile)) {
@@ -71,10 +71,12 @@ for (const sourceFile of sourceFiles) {
   }
 }
 
-const pluginManifests = execFileSync('git', ['ls-files', 'skills/**/plugin.json'], {
+const pluginManifests = execFileSync('git', [
+  'ls-files', '--cached', '--others', '--exclude-standard', 'skills/**/plugin.json',
+], {
   cwd: root,
   encoding: 'utf8',
-}).trim().split('\n').filter(Boolean);
+}).trim().split('\n').filter((file) => file && fs.existsSync(path.join(root, file)));
 for (const manifestFile of pluginManifests) {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, manifestFile), 'utf8'));
   for (const registration of [...manifest.stages, ...manifest.observers, ...manifest.adapters]) {

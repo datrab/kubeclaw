@@ -25,7 +25,7 @@ These are candidate roadmap themes, not current behavior claims:
 - User-defined workflows that compose installed stages, observers, and adapters, including independently installed lint-tool providers and configuration packs behind a versioned, capability-bounded registration contract.
 - Design agent and design flow for design-aware application delivery.
 - Improved linting with more configurable rules and clearer failure output.
-- Code mapping and autoreview features that help agents reason about ownership and risk.
+- Code mapping and independent review features that help agents reason about ownership and risk.
 - Parallel agents for concurrent specialized work.
 - Parallel pipelines for multiple modules or intents.
 - Improved pipeline reviews and pipeline auto-improvement loops.

@@ -4,14 +4,14 @@ export const JOB_SCHEMA = 'buster-suite-job.v2';
 export const STATUS_SCHEMA = 'buster-suite-status.v2';
 export const RESULT_SCHEMA = 'buster-suite-result.v2';
 
-export const SUPPORTED_SUITES = Object.freeze([
-  'manifest', 'build', 'health', 'k8s', 'tailscale-preview', 'a11y', 'perf',
-  'bundle', 'security', 'visual-reg', 'api', 'e2e', 'unit',
+// This list is a deletion ledger for the old suite bridge. New resolved-plan
+// work must never use these names.
+export const LEGACY_UNMIGRATED_SUITES = Object.freeze([
+  'tailscale-preview', 'a11y', 'perf',
+  'security', 'visual-reg', 'api', 'e2e',
 ] as const);
 
 const SUITE_CAPABILITIES = Object.freeze({
-  build: Object.freeze(['image_build', 'kubernetes']),
-  k8s: Object.freeze(['image_build', 'kubernetes']),
   a11y: Object.freeze(['browser_automation']),
   e2e: Object.freeze(['browser_automation']),
   'visual-reg': Object.freeze(['browser_automation']),
@@ -67,10 +67,10 @@ export function exact(value: Record<string, unknown>, fields: readonly string[],
   for (const field of Object.keys(value)) if (!allowed.has(field)) throw new Error(`${code}:${field}`);
 }
 
-export function stringList(value: unknown, label: string, allowEmpty = false): readonly string[] {
+export function stringList(value: unknown, label: string, allowEmpty = false, maxLength = 128): readonly string[] {
   if (
     !Array.isArray(value) || (!allowEmpty && value.length < 1)
-    || value.some((entry) => typeof entry !== 'string' || entry.length < 1 || entry.length > 128)
+    || value.some((entry) => typeof entry !== 'string' || entry.length < 1 || entry.length > maxLength)
     || new Set(value).size !== value.length
   ) throw new Error(`BUSTER_SUITE_INVALID:${label}`);
   return Object.freeze([...value] as string[]);
@@ -110,7 +110,7 @@ export function parseJob(value: unknown, maxArchiveBytes: number): BusterSuiteJo
   validateJobMetadata(value);
   const archive = parseArchive(value.archive, maxArchiveBytes);
   const suites = stringList(value.suites, 'suites');
-  if (suites.some((suite) => !SUPPORTED_SUITES.includes(suite as typeof SUPPORTED_SUITES[number]))) {
+  if (suites.some((suite) => !LEGACY_UNMIGRATED_SUITES.includes(suite as typeof LEGACY_UNMIGRATED_SUITES[number]))) {
     throw new Error('BUSTER_JOB_SUITE_UNSUPPORTED');
   }
   if (!isRecord(value.testConfig) || !isRecord(value.task)) throw new Error('BUSTER_JOB_PAYLOAD_INVALID');

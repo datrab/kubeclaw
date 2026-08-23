@@ -20,11 +20,22 @@ function allFiles(root) {
   });
 }
 const files = walkModuleFiles;
-const coreRoot = path.resolve('skills/common/plugin-runtime/core');
+const coreRoot = path.resolve('skills/nova/core');
 const sdkRoot = path.resolve('skills/common/plugin-runtime/sdk');
-const contractsRoot = path.resolve('skills/common/plugin-runtime/contracts');
-const approvedSharedRuntimeRoots = [];
-const roleRoots = [path.resolve('skills/nova'), path.resolve('skills/buster')];
+const contractsRoot = path.resolve('contracts');
+const approvedSharedRuntimeRoots = [path.resolve('skills/common/plugin-runtime/foundation')];
+const approvedCorePackages = new Set([
+  '@kubeclaw/plugin-foundation',
+  '@kubeclaw/plugin-sdk',
+  '@kubeclaw/pipeline-test-gate-contract',
+  '@kubeclaw/pipeline-observability-contract',
+  '@kubeclaw/pipeline-worker-core-contract',
+]);
+const approvedSdkPackages = new Set([
+  '@kubeclaw/plugin-sdk',
+  '@kubeclaw/pipeline-test-gate-contract',
+]);
+const roleRoots = [path.resolve('skills/nova'), path.resolve('skills/worker'), path.resolve('skills/buster')];
 const pluginRoots = [
   path.resolve('skills/common/plugins'),
   path.resolve('skills/nova/plugins'),
@@ -63,6 +74,9 @@ const privilegedRuntimeModules = new Set([
 ]);
 const safeRegistrationBuiltins = new Set(['node:path', 'path']);
 const safeRegistrationPackages = new Set(['@kubeclaw/plugin-sdk']);
+const scopedSafeRegistrationPackages = new Map([
+  [path.resolve('skills/nova/plugins/review'), new Set(['js-tiktoken'])],
+]);
 for (const specifier of [...privilegedRuntimeModules]) {
   if (specifier.startsWith('node:')) privilegedRuntimeModules.add(specifier.slice('node:'.length));
 }
@@ -100,7 +114,9 @@ function assertNoDirectPrivilegedAccess(file, surface) {
       && !BUILTINS.has(reference.specifier)
     ) {
       assert(
-        safeRegistrationPackages.has(packageName(reference.specifier)),
+        safeRegistrationPackages.has(packageName(reference.specifier))
+        || [...scopedSafeRegistrationPackages].some(([root, packages]) => inside(file, root)
+          && packages.has(packageName(reference.specifier))),
         `${surface} cannot import an unapproved runtime package: ${file}:${reference.line} -> ${reference.specifier}`,
       );
     }
@@ -268,14 +284,14 @@ try {
   fs.rmSync(parserFixtureRoot, { recursive: true, force: true });
 }
 
-for (const file of files('skills/common/plugin-runtime/core')) {
+for (const file of files('skills/nova/core')) {
   for (const reference of moduleSpecifiers(file)) {
     const resolved = resolvedReference(file, reference.specifier);
     assert(
       !pluginRoots.some((pluginRoot) => inside(resolved, pluginRoot))
-      && !roleRoots.some((roleRoot) => inside(resolved, roleRoot))
+      && !roleRoots.some((roleRoot) => inside(resolved, roleRoot) && !inside(resolved, coreRoot))
       && (!packageName(reference.specifier).startsWith('@kubeclaw/')
-        || packageName(reference.specifier) === '@kubeclaw/plugin-sdk'),
+        || approvedCorePackages.has(packageName(reference.specifier))),
       `core cannot import concrete role/plugin code: ${file}:${reference.line} -> ${reference.specifier}`,
     );
     if (resolved) {
@@ -293,14 +309,14 @@ for (const file of files('skills/common/plugin-runtime/sdk')) {
   for (const reference of moduleSpecifiers(file)) {
     const resolved = resolvedReference(file, reference.specifier);
     assert(
-      !inside(resolved, coreRoot) && reference.specifier !== '@kubeclaw/pipeline-core',
+      !roleRoots.some((roleRoot) => inside(resolved, roleRoot)),
       `SDK cannot import core: ${file}:${reference.line} -> ${reference.specifier}`,
     );
     assert(
       !pluginRoots.some((pluginRoot) => inside(resolved, pluginRoot))
       && !roleRoots.some((roleRoot) => inside(resolved, roleRoot))
       && (!packageName(reference.specifier).startsWith('@kubeclaw/')
-        || packageName(reference.specifier) === '@kubeclaw/plugin-sdk'),
+        || approvedSdkPackages.has(packageName(reference.specifier))),
       `SDK cannot import concrete role/plugin code: ${file}:${reference.line} -> ${reference.specifier}`,
     );
     if (resolved) {
@@ -405,7 +421,7 @@ for (const file of files('skills/common/plugins')) {
   }
 }
 
-const core = await import(pathToFileURL(path.resolve('skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const kernel = core.createEmptyCoreKernel();
 assert.equal(kernel.apiVersion, 'pipeline-plugin-v2');
 assert.deepEqual(kernel.registry.packages, []);

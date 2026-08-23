@@ -20,6 +20,6 @@ consume immutable events and cannot schedule work. Adapters are the only
 providers of privileged capabilities.
 
 Durability is implemented by the journals in
-`skills/common/plugin-runtime/core/effects/`,
-`skills/common/plugin-runtime/core/state/`, and
-`skills/common/plugin-runtime/core/lifecycle/`.
+`skills/nova/core/effects/`,
+`skills/nova/core/state/`, and
+`skills/nova/core/lifecycle/`.

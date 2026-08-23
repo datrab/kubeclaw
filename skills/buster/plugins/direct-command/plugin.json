@@ -1,0 +1,47 @@
+{
+  "id": "kubeclaw.direct-command",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "command",
+      "contractId": "kubeclaw.direct-command@1",
+      "kind": "test",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [],
+      "outputs": [
+        { "name": "coverage-1", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-2", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-3", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-4", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-5", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-6", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-7", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "coverage-8", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+        { "name": "artifact-1", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar", "application/vnd.kubeclaw.checked-kubernetes-yaml", "application/vnd.kubeclaw.size-budget-baseline+json"] },
+        { "name": "artifact-2", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] },
+        { "name": "artifact-3", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] },
+        { "name": "artifact-4", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] },
+        { "name": "artifact-5", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] },
+        { "name": "artifact-6", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] },
+        { "name": "artifact-7", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] },
+        { "name": "artifact-8", "kind": "artifact", "required": false, "mediaTypes": ["application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar"] }
+      ],
+      "requiredCapabilities": ["command.execute"],
+      "retrySafe": true,
+      "matrixFields": [],
+      "reportFormats": ["junit"],
+      "evidenceTypes": ["log", "test-report", "coverage", "artifact"],
+      "evidenceDefaults": {
+        "onPass": ["log", "test-report", "coverage", "artifact"],
+        "onFail": ["log", "test-report", "coverage", "artifact"],
+        "onError": ["log", "test-report", "coverage", "artifact"]
+      }
+    }
+  ]
+}

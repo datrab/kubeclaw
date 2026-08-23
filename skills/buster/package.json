@@ -1,0 +1,8 @@
+{
+  "name": "kubeclaw-buster-runtime",
+  "private": true,
+  "type": "module",
+  "files": [
+    "runtime.ts"
+  ]
+}

@@ -82,7 +82,7 @@ fs.writeFileSync(path.join(consumerRoot, 'plugin.json'), JSON.stringify({
   adapters: [],
 }));
 
-const core = await import(pathToFileURL(path.resolve('../../plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('../../../nova/core/src/index.ts')).href);
 const packages = core.discoverPackages({
   installationRoots: ['../../plugins', path.join(temporary, 'plugins')],
   trustPolicy: {
@@ -122,6 +122,7 @@ const adapters = new core.AdapterRuntime({
   activated,
   configs: new Map([
     [publisherId, {
+      deliveryRoot: path.join(temporary, 'deliveries'),
       targets: {
         audit: {
           endpoint: `${origin}/publish`,
@@ -241,6 +242,188 @@ try {
   const persisted = JSON.stringify(journal.entries());
   assert.doesNotMatch(persisted, new RegExp(signingKey), 'secret must never enter durable effect requests');
   assert.match(persisted, /sha256=[a-f0-9]{64}/, 'auditable request retains only the HMAC');
+
+  const { activate: activateDirect } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+  let directSends = 0;
+  const direct = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'direct-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/direct-retry`,
+          signingSecret: 'transport.signing',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        directSends += 1;
+        if (directSends === 1) throw new Error('HTTP_503');
+        return { status: 200, body: { accepted: true, publicationId: 'publication:direct-retry' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const directPayload = { message: { event: 'retry-across-attempts' } };
+  const directInvoke = (
+    retryAttempt,
+    idempotencyKey = 'transport:retry-across-attempts',
+    message = directPayload,
+  ) => direct.invoke({
+    request: {
+      requestId: `request:${retryAttempt.attemptNumber}`,
+      idempotencyKey,
+      attempt: retryAttempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: message,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  await assert.rejects(directInvoke(attempt), /HTTP_503/);
+  const directRetried = await directInvoke({
+    ...attempt,
+    attemptId: 'attempt:transport-retry',
+    attemptNumber: 2,
+  });
+  assert.equal(directRetried.accepted, true);
+  assert.equal(directSends, 2);
+  await assert.rejects(
+    directInvoke(attempt, 'transport:retry-across-attempts', { message: { event: 'changed' } }),
+    /DURABLE_RECORD_IDEMPOTENCY_CONFLICT/,
+  );
+  assert.equal((await directInvoke(attempt, 'a'.repeat(256))).accepted, true);
+  assert.equal(directSends, 3, 'a distinct delivery key must not reuse an unrelated receipt');
+  await direct.shutdown();
+
+  let capacitySends = 0;
+  const capacity = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'capacity-deliveries'),
+      maximumDeliveryRecords: 1,
+      targets: {
+        retry: {
+          endpoint: `${origin}/capacity`,
+          signingSecret: 'transport.signing',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        capacitySends += 1;
+        return { status: 200, body: { accepted: true, publicationId: 'must-not-send' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  await assert.rejects(capacity.invoke({
+    request: {
+      requestId: 'request:capacity',
+      idempotencyKey: 'transport:capacity',
+      attempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: directPayload,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  }), /DURABLE_RECORD_STORE_FULL/);
+  assert.equal(capacitySends, 0, 'terminal capacity must be reserved before network delivery');
+  await capacity.shutdown();
+
+  let concurrentSends = 0;
+  const concurrent = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'concurrent-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/concurrent`,
+          signingSecret: 'transport.signing',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        concurrentSends += 1;
+        const call = concurrentSends;
+        await new Promise((resolve) => setTimeout(resolve, call === 1 ? 10 : 30));
+        if (call === 1) throw new Error('HTTP_503');
+        return { status: 200, body: { accepted: true, publicationId: 'publication:concurrent' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const concurrentInvoke = () => concurrent.invoke({
+    request: {
+      requestId: `request:concurrent:${crypto.randomUUID()}`,
+      idempotencyKey: 'transport:concurrent',
+      attempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: directPayload,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  const concurrentResults = await Promise.allSettled([concurrentInvoke(), concurrentInvoke()]);
+  assert.equal(concurrentResults.filter((result) => result.status === 'fulfilled').length, 1);
+  assert.equal(concurrentResults.filter((result) => result.status === 'rejected').length, 1);
+  assert.equal((await concurrentInvoke()).accepted, true);
+  assert.equal(concurrentSends, 2, 'the durable success must win over a concurrent failure');
+  await concurrent.shutdown();
+
+  let boundarySends = 0;
+  const boundary = activateDirect({
+    registration: {},
+    config: {
+      deliveryRoot: path.join(temporary, 'boundary-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/boundary`,
+          signingSecret: 'transport.signing',
+          maxPayloadBytes: 1_048_576,
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        boundarySends += 1;
+        return { status: 200, body: { accepted: true, publicationId: 'publication:boundary' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const boundaryResult = await boundary.invoke({
+    request: {
+      requestId: 'request:boundary',
+      idempotencyKey: 'transport:boundary',
+      attempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: { message: { content: 'x'.repeat(1_048_400) } },
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  assert.equal(boundaryResult.accepted, true);
+  assert.equal(boundarySends, 1);
+  await boundary.shutdown();
 } finally {
   await adapters.shutdown();
   await assert.rejects(

@@ -59,7 +59,7 @@ ACP monitor timing is platform-owned and belongs in `swarm.config.json`, not `pr
   "max_fails": 3,
   "forge_model": "anthropic/claude-sonnet-4-6",
   "thinking_level": "adaptive",
-  "test_suites": ["build", "health", "unit"],
+  "test_suites": [],
   "test_config": { ... }
 }
 ```
@@ -77,7 +77,7 @@ ACP monitor timing is platform-owned and belongs in `swarm.config.json`, not `pr
 | `substeps` | no | `null` | Array of sub-IDs. Pipeline concatenates their FORGE.md sections |
 | `forge_subagent` | no | derived | ACP subagent ID override |
 | `session` | no | — | Per-task runtime selection: `{ "runtime": "acp" }` or `{ "runtime": "subagent" }` |
-| `test_suites` | no | `["build","health"]` | Which Buster suites run |
+| `test_suites` | no | `[]` | Unmigrated Buster suites only. Use `.swarm/pipeline.json` for migrated suites. |
 | `test_config` | no | `{}` | Suite-specific config (see Serve & Suite Config below) |
 
 ### Forge-Only Modules
@@ -150,7 +150,7 @@ Set `"stages": ["forge"]` to skip per-module Buster testing. The module passes w
   "forge_model": "anthropic/claude-sonnet-4-6",
   "timeout_minutes": 90,
   "max_fix_cycles": 3,
-  "test_suites": ["build", "health", "unit"],
+  "test_suites": [],
   "test_config": { ... }
 }
 ```
@@ -293,16 +293,13 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 | `start_cmd` | `npm start` | Server start command |
 | `image` | `docker.io/library/node:20-slim` | Fully qualified BuildKit base image |
 | `port` | `3000` | Server listen port |
-| `health_path` | `/` | Health check endpoint |
-| `health_retries` | `3` | Health check retry count |
-| `health_timeout` | `10000` | Timeout per health check (ms) |
-| `health_base_delay` | `2000` | Initial delay before first check (ms) |
 | `dockerfile` | — | Path to Dockerfile (relative to repo root) |
 | `build_context` | dirname of dockerfile | Docker build context (relative to repo root) |
 | `build_timeout` | `300` | Build timeout (seconds) |
 | `deployment_yaml` | — | K8s deployment YAML path (relative to repo root) — injects env vars into build |
 | `secret_yaml` | — | K8s secret YAML path (relative to repo root) — injects secrets into build |
-| `smoke_paths` | — | Array of URL paths to request with bounded HTTP checks after health passes (e.g. `["/", "/api/v1/health"]`) |
+HTTP assertions and retry settings belong to `kubeclaw.http@1` nodes in
+`.swarm/pipeline.json`. They do not belong in `serve`.
 
 ### `type: "static"` (Frontend)
 
@@ -319,105 +316,45 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 | Suite | Config Key | Key Fields |
 |---|---|---|
 | `api` | `api` | `spec_file`, `thresholds: { max_failures }` |
-| `unit` | `unit` | `test_cmd`, `thresholds: { max_failures }` |
 | `e2e` | `e2e` | `tests_dir`, `timeout_ms`, `thresholds: { max_failures }` |
 | `visual-reg` | `visual-reg` | `thresholds: { max_diff_percent }`, `discord`, `path`, `pixelmatch.threshold` |
 | `a11y` | `a11y` | `tags`, `path`, `thresholds: { critical, serious }` |
 | `perf` | `perf` | `thresholds: { performance, accessibility }` |
-| `bundle` | `bundle` | `thresholds: { max_size_kb, max_file_count }` |
 | `security` | `security` | `paths`, `check_cors`, `thresholds: { max_missing_headers }` |
 
 Without `thresholds` → informational (always PASS). With `thresholds` → enforced (can FAIL).
+
+Bundle limits are not a current legacy suite configuration. Project setup
+migrates an existing `bundle` selection only when `bundle.www_dir` names the
+build output. It writes a direct-command archive producer and a
+`kubeclaw.size-budget@1` node to `.swarm/pipeline.json`.
+
+Unit tests are not a legacy `test_suites` value. Declare them as normal test
+nodes in `.swarm/pipeline.json`. See
+`docs/architecture/pipeline-test-gate-unit-user-guide.md` for complete JUnit,
+exit-code, multi-instance, advisory, and coverage examples.
 
 Visual-reg baseline files are not configured by path. Buster derives them from module identity at `.swarm/modules/<module-dir>/baselines/`; place Prism `preview.html`, generated `paths.json`, and baseline PNGs there.
 
 ### test_config.k8s
 
-Builds a production Dockerfile, pushes it to the in-cluster registry-local, deploys the supplied Kubernetes manifests into a broker-created namespace, waits for readiness, and runs an internal health check.
+The retired `test_config.k8s` object is not valid for new projects. Use
+`kubeclaw.kubernetes-fixture@1` in `.swarm/pipeline.json`.
 
-Normal module and gate runs should use the default `purpose: "pretest"` and `cleanup_policy: "delete"`. The final Buster gate can use `purpose: "final-preview"` and `cleanup_policy: "keep"` so the verified deployment remains live after the pipeline completes.
+The fixture node requires a checked manifest and an immutable local-registry
+image. It does not rewrite the manifest. The image in the manifest must match
+the declared image and digest.
 
-```json
-"k8s": {
-  "dockerfile": "Projects/my-app/src/Dockerfile",
-  "build_context": "Projects/my-app/src",
-  "image_name": "my-app",
-  "service_name": "my-app",
-  "manifests": ["Projects/my-app/src/k8s/my-app-all.yaml"],
-  "port": 3000,
-  "health_path": "/health",
-  "purpose": "final-preview",
-  "cleanup_policy": "keep",
-  "namespace_prefix": "test",
-  "secrets_to_copy": ["app-runtime-secrets"],
-  "test_credentials": [
-    {
-      "secret_name": "app-preview-login",
-      "keys": ["username", "password"],
-      "purpose": "login to the app under test"
-    }
-  ],
-  "preview": {
-    "provider": "tailscale-ingress",
-    "path": "/",
-    "expected_text": "my-app",
-    "credentials_ref": "secret/app-preview-login",
-    "reveal_credentials": true,
-    "credentials_keys": ["username", "password"]
-  }
-}
-```
+Use `retention.mode: "delete"` for normal runs. Use `retention.mode: "retain"`
+only when an operator needs short-lived inspection time. The controller deletes
+the retained namespace when its bounded retention period expires.
 
-| Field | Default | Description |
-|---|---|---|
-| `dockerfile` | — | Path to Dockerfile, relative to repo root |
-| `build_context` | Dockerfile directory | Docker build context, relative to repo root |
-| `image_name` | — | Workload image name to replace in manifests |
-| `service_name` | — | Kubernetes Service name to health-check and expose |
-| `manifests` | — | Manifest paths, relative to repo root |
-| `port` | `3000` | Service port |
-| `health_path` | `/health` | Health endpoint path |
-| `purpose` | `pretest` | `pretest` or `final-preview` |
-| `cleanup_policy` | `delete` | `delete` removes broker namespace; `keep` leaves it running |
-| `namespace_prefix` | `test` | Allowed prefix: `test` |
-| `namespace_ttl_seconds` | `7200` | TTL used when cleanup policy is `delete` |
-| `namespace_lease_timeout_seconds` | `60` | Time to wait for the broker namespace lease |
-| `secrets_to_copy` | `[]` | Existing KubeClaw namespace Secret names to copy into the test namespace |
-| `test_credentials` | `[]` | App-under-test Secret/key allowlist decoded by the deterministic k8s suite and injected into Buster's prompt |
-| `preview.provider` | `tailscale-ingress` for final-preview | `tailscale-ingress` creates an Ingress with `ingressClassName: tailscale`; use `off` to disable |
-| `preview.path` | `/` | Public preview path |
-| `preview.hostname` | generated | Optional tailnet hostname label for the Tailscale Ingress |
-| `preview.expected_text` | `null` | Optional text that must be present in the fetched preview URL response body |
-| `preview.credentials_ref` | `null` | Human/operator reference, commonly `secret/<name>` |
-| `preview.reveal_credentials` | `false` | When true, verify the app-owned preview credential Secret in the leased namespace and include a copy-paste retrieval command in Discord |
-| `preview.credentials_secret_name` | derived from `credentials_ref` | App-owned Secret name for credential retrieval in the leased namespace |
-| `preview.credentials_keys` | all keys | Secret keys to retrieve, for example `["username", "password"]` |
+Secret references must appear in both operator allowlists. The provider and the
+namespace controller reject other Secret names.
 
-Final-preview Tailscale URLs require the Tailscale Kubernetes Operator to be installed by deployment. Preview creation is deterministic Buster k8s suite behavior, not Forge/Echo agent work: when `preview.provider` is `tailscale-ingress`, Buster creates a `BusterNamespaceLease` with `spec.exposure.provider=tailscale-ingress`, validates app content through the in-cluster Service URL, and waits for the lease `status.previewUrl`. The Buster/Nova pod does not need tailnet DNS for the default final-preview gate. The pipeline records the resulting tailnet URL and explicitly allowed app credentials in the k8s verdict metadata; Nova uses that metadata for Discord delivery. `test_credentials` is the explicit allowlist for credentials Buster may see in prompt context for authenticated tests; do not put infrastructure, registry, deploy-key, or provider Secrets there.
-
-### test_config.manifest
-
-Optional deployment validation config. Verifies K8s manifests are present and well-formed before testing.
-
-```json
-"manifest": {
-  "deployment_yaml": "Projects/my-app/src/k8s/deployment.yaml",
-  "secret_yaml": "Projects/my-app/src/k8s/secret.yaml",
-  "required_env": ["DATABASE_URL", "API_KEY"],
-  "private_registries": ["registry.example.com"],
-  "thresholds": { "max_missing_env": 0 }
-}
-```
-
-| Field | Default | Description |
-|---|---|---|
-| `deployment_yaml` | — | Path to K8s deployment YAML (relative to repo root) |
-| `secret_yaml` | — | Path to K8s secret YAML (relative to repo root) |
-| `required_env` | `[]` | Env var names that must be present in the deployment |
-| `private_registries` | `[]` | Registry hostnames that require pull secrets |
-| `thresholds` | `null` | `null` = informational. Set `max_missing_env: 0` to enforce |
-
----
+See `docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md`
+for the complete configuration and typed input contract. Preview exposure is a
+separate suite concern. Do not put preview settings in the fixture node.
 
 ## Payload Config
 
@@ -498,7 +435,7 @@ Controls how task payloads are dispatched to Forge agents.
       "timeout_minutes": 300,
       "max_fails": 3,
       "thinking_level": "adaptive",
-      "test_suites": ["build", "health", "unit", "api"],
+      "test_suites": ["api"],
       "test_config": {
         "serve": {
           "type": "server",
@@ -506,11 +443,9 @@ Controls how task payloads are dispatched to Forge agents.
           "start_cmd": "python -m uvicorn main:app --host 0.0.0.0 --port 8000",
           "image": "my-app-backend:m02",
           "port": 8000,
-          "health_path": "/api/v1/health",
           "dockerfile": "Projects/my-app/src/backend/Dockerfile",
           "build_context": "Projects/my-app/src/backend/"
         },
-        "unit": { "test_cmd": "python -m pytest backend/tests/ -v" },
         "api": { "spec_file": ".swarm/modules/02-api/test-spec.json" }
       }
     },
@@ -522,15 +457,14 @@ Controls how task payloads are dispatched to Forge agents.
       "timeout_minutes": 300,
       "max_fails": 3,
       "thinking_level": "adaptive",
-      "test_suites": ["build", "health", "unit"],
+  "test_suites": [],
       "test_config": {
         "serve": {
           "type": "static",
           "project_dir": "Projects/my-app/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "unit": { "test_cmd": "cd frontend && npm install && npx vitest run" }
+        }
       }
     }
   },
@@ -577,17 +511,13 @@ Controls how task payloads are dispatched to Forge agents.
       "forge_model": "anthropic/claude-sonnet-4-6",
       "timeout_minutes": 90,
       "max_fix_cycles": 3,
-      "test_suites": ["build", "health", "unit"],
+      "test_suites": [],
       "test_config": {
         "serve": {
           "type": "static",
           "project_dir": "Projects/my-app/src",
           "build_cmd": "echo no-build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "unit": {
-          "test_cmd": "node --test pipeline/tests/*.test.js",
-          "thresholds": { "max_failures": 0 }
         }
       }
     }

@@ -12,7 +12,7 @@ USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Anchor Debian packages to the snapshot matching the pinned OpenClaw base.
-ARG DEBIAN_SNAPSHOT=20260713T000000Z
+ARG DEBIAN_SNAPSHOT=20260804T000000Z
 RUN test -s /etc/ssl/certs/ca-certificates.crt \
     && printf '%s\n' \
       'Types: deb' \
@@ -118,6 +118,7 @@ ARG K6_VERSION=v0.54.0
 ARG HADOLINT_VERSION=2.12.0
 ARG KUBECONFORM_VERSION=0.6.4
 ARG KUBECTL_VERSION=1.35.6
+ARG KUBERNETES_JSON_SCHEMA_COMMIT=c8f4e61c63bc529749125ac566bccc6986e08d45
 ARG HELM_VERSION=3.18.4
 ARG SHFMT_VERSION=3.13.1
 ARG TERRAFORM_VERSION=1.15.7
@@ -188,6 +189,24 @@ RUN set -eux; \
     kubeconform -v; \
     kubectl version --client=true; \
     helm version --short
+
+# The experimental manifest-lint replacement must never fetch validation
+# schemas while a pipeline runs. The image contains one exact, strict schema
+# tree that matches KUBECTL_VERSION. The legacy authoritative adapter remains
+# unchanged until its parity proof and cutover.
+RUN set -eux; \
+    schema_repo="$(mktemp -d)"; \
+    git -C "$schema_repo" init; \
+    git -C "$schema_repo" remote add origin https://github.com/yannh/kubernetes-json-schema.git; \
+    git -C "$schema_repo" config core.sparseCheckout true; \
+    printf '%s\n' "v${KUBECTL_VERSION}-standalone-strict/" > "$schema_repo/.git/info/sparse-checkout"; \
+    git -C "$schema_repo" fetch --depth 1 --filter=blob:none origin "$KUBERNETES_JSON_SCHEMA_COMMIT"; \
+    test "$(git -C "$schema_repo" rev-parse FETCH_HEAD)" = "$KUBERNETES_JSON_SCHEMA_COMMIT"; \
+    git -C "$schema_repo" checkout --detach FETCH_HEAD; \
+    install -d /opt/kubeclaw-kubernetes-schemas; \
+    cp -a "$schema_repo/v${KUBECTL_VERSION}-standalone-strict" /opt/kubeclaw-kubernetes-schemas/; \
+    test -s "/opt/kubeclaw-kubernetes-schemas/v${KUBECTL_VERSION}-standalone-strict/deployment-apps-v1.json"; \
+    rm -rf "$schema_repo"
 
 # Agent skill code is delivered by the code-bundle overlay at deploy time.
 # Terraform validation uses only explicitly pre-provisioned provider packages.

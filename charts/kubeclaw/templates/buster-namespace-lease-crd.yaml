@@ -57,7 +57,7 @@ spec:
                   type: string
                 cleanupPolicy:
                   type: string
-                  enum: ["delete", "keep"]
+                  enum: ["delete", "retain"]
                 ttlSeconds:
                   type: integer
                   minimum: 60
@@ -121,6 +121,8 @@ spec:
                 credentialsAvailable:
                   type: boolean
                 expiresAt:
+                  type: string
+                createdAt:
                   type: string
                 message:
                   type: string

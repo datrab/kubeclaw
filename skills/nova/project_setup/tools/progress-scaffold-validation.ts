@@ -174,6 +174,40 @@ function validateExecutionOrder(scaffold: AnyRecord, diagnostics: Diagnostic[]) 
   return [...scaffold.execution_order];
 }
 
+function validatePipelineScope(scope: unknown, diagnostics: Diagnostic[], field: string) {
+  if (!isPlainObject(scope)) {
+    diagnostics.push(diagnostic('form_check', `${field} must be an object`, field));
+    return;
+  }
+  const tests = objectOrEmpty(scope.tests);
+  const http = Object.entries(tests).filter(([, test]) => isPlainObject(test) && test.uses === 'kubeclaw.http@1');
+  if (http.length === 0) return;
+  for (const [id, test] of http) {
+    const config = objectOrEmpty(test.config);
+    const inputs = objectOrEmpty(test.inputs);
+    if (typeof config.url !== 'string' && !isPlainObject(inputs.deployment)) {
+      diagnostics.push(diagnostic('form_check', `${field}.tests.${id} needs config.url or a deployment input`, `${field}.tests.${id}`));
+    }
+  }
+}
+
+function validatePipeline(scaffold: AnyRecord, diagnostics: Diagnostic[]) {
+  if (!isPlainObject(scaffold.pipeline) || scaffold.pipeline.project !== scaffold.project) {
+    diagnostics.push(diagnostic('form_check', 'pipeline must contain the project test plan', 'pipeline'));
+    return;
+  }
+  const pipelineModules = objectOrEmpty(scaffold.pipeline.modules);
+  const pipelineGates = objectOrEmpty(scaffold.pipeline.gates);
+  for (const [id, module] of entriesOf(scaffold.modules)) {
+    if (Array.isArray(module.stages) && module.stages.includes('buster')) {
+      validatePipelineScope(pipelineModules[id], diagnostics, `pipeline.modules.${id}`);
+    }
+  }
+  for (const [id, gate] of entriesOf(scaffold.gates)) {
+    if (gate.type === 'buster') validatePipelineScope(pipelineGates[id], diagnostics, `pipeline.gates.${id}`);
+  }
+}
+
 export function validateScaffold(scaffold: unknown, context: Context): Diagnostic[] {
   const diagnostics: Diagnostic[] = [];
   if (!isPlainObject(scaffold)) return [diagnostic('form_check', 'scaffold must be a JSON object', '$')];
@@ -185,6 +219,7 @@ export function validateScaffold(scaffold: unknown, context: Context): Diagnosti
   }
   validateModules(scaffold, context, diagnostics);
   entriesOf(scaffold.gates).forEach(([id, gate]) => validateGate(id, gate, context, diagnostics));
+  validatePipeline(scaffold, diagnostics);
   return diagnostics;
 }
 
@@ -198,6 +233,7 @@ export function scaffoldToProgress(scaffold: AnyRecord, context: Context) {
   }
   return {
     diagnostics,
+    pipeline: scaffold.pipeline,
     progress: omitEmpty({
       project: scaffold.project,
       version: valueOrDefault(scaffold.version, DEFAULTS.version),

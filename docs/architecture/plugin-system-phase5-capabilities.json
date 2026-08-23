@@ -23,6 +23,10 @@
     "transport.publish": "kubeclaw.transport-publisher:publisher",
     "agent.events.subscribe": "kubeclaw.openclaw-agent-events:source"
   },
+  "runtimeCapabilities": {
+    "container.build": "Buster operator-owned container-build runtime",
+    "kubernetes.fixture": "Buster operator-owned Kubernetes fixture runtime"
+  },
   "inventoriedEffectMappings": {
     "filesystem.read": [
       "state.read",
@@ -60,6 +64,8 @@
     ],
     "command.execute": [
       "command.execute",
+      "container.build",
+      "kubernetes.fixture",
       "test.suite.execute",
       "lint.execute"
     ],

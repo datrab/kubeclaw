@@ -1,0 +1,61 @@
+{
+  "suites": {
+    "size-budget-growth": {
+      "uses": "kubeclaw.size-budget-suite@1",
+      "add": {
+        "build-artifact": {
+          "uses": "kubeclaw.direct-command@1",
+          "mode": "blocking",
+          "concurrencyGroup": "size-budget",
+          "config": {
+            "executable": "tar",
+            "args": ["--format=ustar", "-cf", ".swarm/size-budget-current.tar", "-C", "dist", "assets", "index.html"],
+            "workingDirectory": ".",
+            "resultMode": "exit-code",
+            "artifacts": [
+              {
+                "id": "build-output",
+                "path": ".swarm/size-budget-current.tar",
+                "mediaType": "application/vnd.kubeclaw.build-output.tar"
+              }
+            ]
+          }
+        },
+        "baseline-artifact": {
+          "uses": "kubeclaw.direct-command@1",
+          "mode": "blocking",
+          "concurrencyGroup": "size-budget",
+          "config": {
+            "executable": "cp",
+            "args": [".swarm/baselines/size-budget-baseline.json", ".swarm/size-budget-baseline-input.json"],
+            "workingDirectory": ".",
+            "resultMode": "exit-code",
+            "artifacts": [
+              {
+                "id": "baseline",
+                "path": ".swarm/size-budget-baseline-input.json",
+                "mediaType": "application/vnd.kubeclaw.size-budget-baseline+json"
+              }
+            ]
+          }
+        },
+        "growth": {
+          "uses": "kubeclaw.size-budget@1",
+          "mode": "blocking",
+          "concurrencyGroup": "size-budget",
+          "config": {
+            "maximumTotalBytes": 10485760,
+            "maximumFileCount": 5000,
+            "maximumGrowthBytes": 262144,
+            "maximumGrowthPercent": 5,
+            "largestFiles": 10
+          },
+          "inputs": {
+            "build-output": { "from": "build-artifact", "output": "artifact-1" },
+            "baseline": { "from": "baseline-artifact", "output": "artifact-1" }
+          }
+        }
+      }
+    }
+  }
+}

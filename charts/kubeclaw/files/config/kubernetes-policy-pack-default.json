@@ -1,0 +1,50 @@
+{
+  "schema_version": "kubernetes_lint_policy_pack.v1",
+  "id": "kubeclaw-default",
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "required-runtime-env",
+      "type": "required-env",
+      "severity": "error",
+      "parameters": {
+        "names": ["REDIS_HOST"]
+      }
+    },
+    {
+      "id": "valid-secret-refs",
+      "type": "secret-ref",
+      "severity": "error",
+      "parameters": {}
+    },
+    {
+      "id": "private-registry-auth",
+      "type": "private-registry-pull-secret",
+      "severity": "error",
+      "parameters": {
+        "registries": ["registry.example.invalid"]
+      }
+    },
+    {
+      "id": "readiness-probe",
+      "type": "readiness-probe",
+      "severity": "error",
+      "parameters": {}
+    },
+    {
+      "id": "liveness-probe",
+      "type": "liveness-probe",
+      "severity": "error",
+      "parameters": {}
+    },
+    {
+      "id": "resource-limits",
+      "type": "resource-limits",
+      "severity": "error",
+      "parameters": {
+        "cpu": true,
+        "memory": true
+      }
+    }
+  ]
+}

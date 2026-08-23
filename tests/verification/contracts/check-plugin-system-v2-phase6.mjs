@@ -5,18 +5,18 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const core = await import(pathToFileURL(
-  path.resolve('skills/common/plugin-runtime/core/src/index.ts'),
+  path.resolve('skills/nova/core/src/index.ts'),
 ).href);
 const runnerSource = fs.readFileSync(
-  'skills/common/plugin-runtime/core/execution/runner.ts',
+  'skills/nova/core/execution/runner.ts',
   'utf8',
 );
 assert.doesNotMatch(runnerSource, /\b(?:forge|buster|kubeclaw\.)\b/iu);
 for (const file of [
-  'skills/common/plugin-runtime/core/execution/graph.ts',
-  'skills/common/plugin-runtime/core/execution/runner.ts',
-  'skills/common/plugin-runtime/core/lifecycle/reducer.ts',
-  'skills/common/plugin-runtime/core/lifecycle/recovery.ts',
+  'skills/nova/core/execution/graph.ts',
+  'skills/nova/core/execution/runner.ts',
+  'skills/nova/core/lifecycle/reducer.ts',
+  'skills/nova/core/lifecycle/recovery.ts',
 ]) {
   assert.doesNotMatch(
     fs.readFileSync(file, 'utf8'),

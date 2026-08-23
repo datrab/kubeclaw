@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["buildContext", "definition"],
+  "properties": {
+    "buildContext": { "$ref": "#/$defs/path" },
+    "definition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "dockerfile"],
+          "properties": {
+            "type": { "const": "dockerfile" },
+            "dockerfile": { "$ref": "#/$defs/path" },
+            "target": { "$ref": "#/$defs/name" },
+            "buildArgs": {
+              "type": "object",
+              "maxProperties": 32,
+              "propertyNames": { "pattern": "^[A-Za-z_][A-Za-z0-9_]*$" },
+              "additionalProperties": { "type": "string", "maxLength": 4096 }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "template"],
+          "properties": {
+            "type": { "const": "template" },
+            "template": { "const": "node-static@1" }
+          }
+        }
+      ]
+    },
+    "outputName": { "$ref": "#/$defs/name" },
+    "platform": { "type": "string", "pattern": "^linux/[a-z0-9_+-]+(?:/[a-z0-9._+-]+)?$", "maxLength": 64 }
+  },
+  "$defs": {
+    "name": { "type": "string", "pattern": "^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$" },
+    "path": { "type": "string", "minLength": 1, "maxLength": 1024 }
+  }
+}

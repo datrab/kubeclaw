@@ -1,7 +1,7 @@
 import type { OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret']);
+const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
 
 function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, code: string): void { for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`); }
@@ -13,6 +13,10 @@ function idValue(value: unknown, fallback: string): string { return typeof value
 function absolute(value: unknown): string { return typeof value === 'string' && value.startsWith('/') ? value : ''; }
 function endpointValue(value: unknown): URL | null { return typeof value === 'string' ? new URL(value) : null; }
 function optionalText(value: unknown): string | undefined { return typeof value === 'string' ? value : undefined; }
+function numberValue(value: unknown, fallback: number): number { return Number(value === undefined ? fallback : value); }
+function encodingValue(value: unknown): OpenClawTarget['tokenizerEncoding'] {
+  return (value === undefined ? 'o200k_base' : value) as OpenClawTarget['tokenizerEncoding'];
+}
 function prefixValue(value: unknown): string {
   if (typeof value !== 'string' || value.length === 0 || value.startsWith('/') || value.split('/').includes('..')) return '';
   return value.replace(/\/+$/u, '');
@@ -30,6 +34,10 @@ function targetValid(target: OpenClawTarget, endpoint: URL | null): boolean {
     endpoint !== null && validHttp(endpoint), ID.test(target.tokenSecret),
     ['acp', 'subagent'].includes(target.runtime), Boolean(target.model), Boolean(target.cwd),
     Boolean(target.repositoryRoot), Boolean(target.resultPathPrefix), resultValid(target), timingValid(target),
+    target.tokenizerEncoding === 'o200k_base',
+    target.maxPromptBytes === 900_000, target.maxInputTokens === 120_000,
+    target.maxOutputTokens === 6_000, target.maxContextTokens === 128_000,
+    target.maxInputTokens + target.maxOutputTokens <= target.maxContextTokens,
   ].every(Boolean);
 }
 
@@ -42,10 +50,13 @@ function parseTarget(id: string, raw: unknown): OpenClawTarget {
     runtime: raw.runtime as 'acp' | 'subagent',
     agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),
     thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),
-    pollMs: Number(raw.pollMs ?? 1_000), maxPollMs: Number(raw.maxPollMs ?? 15_000),
-    maxPolls: Number(raw.maxPolls ?? 1_800), sessionTimeoutMs: Number(raw.sessionTimeoutMs ?? 1_800_000),
+    pollMs: numberValue(raw.pollMs, 1_000), maxPollMs: numberValue(raw.maxPollMs, 15_000),
+    maxPolls: numberValue(raw.maxPolls, 1_800), sessionTimeoutMs: numberValue(raw.sessionTimeoutMs, 1_800_000),
     resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),
     resultTokenSecret: optionalText(raw.resultTokenSecret),
+    tokenizerEncoding: encodingValue(raw.tokenizerEncoding),
+    maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),
+    maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),
   };
   if (!targetValid(target, endpoint)) throw new Error(`RUNTIME_CONFIG_INVALID:openclaw:${id}`);
   return target;

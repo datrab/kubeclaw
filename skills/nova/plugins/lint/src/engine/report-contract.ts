@@ -1,7 +1,9 @@
+import crypto from 'node:crypto';
+
 import { LINT_POLICY_SCHEMA_VERSION } from './policy.ts';
 import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
-const LINT_REPORT_SCHEMA_VERSION = 'pipeline_lint_report.v6';
+const LINT_REPORT_SCHEMA_VERSION = 'pipeline_lint_report.v7';
 const TOOL_STATUSES = new Set(['ok', 'error', 'not_applicable']);
 const FINDING_SEVERITIES = new Set(['info', 'warning', 'error']);
 type AnyRecord = Record<string, any>;
@@ -54,6 +56,23 @@ function validateFinding(finding: unknown, path: string): void {
   }
 }
 
+function validateEvidence(input: unknown, path: string): void {
+  if (!Array.isArray(input) || input.length > 256) fail(path, 'required array with at most 256 entries');
+  input.forEach((entry, index) => {
+    const value = requireRecord(entry, `${path}[${index}]`);
+    for (const field of ['kind', 'source', 'sha256']) requireString(value[field], `${path}[${index}].${field}`);
+    if (!/^[a-f0-9]{64}$/u.test(value.sha256)) fail(`${path}[${index}].sha256`, 'required lowercase SHA-256');
+    requireCount(value.bytes, `${path}[${index}].bytes`);
+    if (value.bytes > 67_108_864) fail(`${path}[${index}].bytes`, 'referenced evidence exceeds 64 MiB limit');
+    if (value.content !== undefined) {
+      if (typeof value.content !== 'string') fail(`${path}[${index}].content`, 'required string');
+      if (Buffer.byteLength(value.content) > 262_144) fail(`${path}[${index}].content`, 'inline evidence exceeds 256 KiB limit');
+      if (Buffer.byteLength(value.content) !== value.bytes) fail(`${path}[${index}].content`, 'byte count mismatch');
+      if (crypto.createHash('sha256').update(value.content).digest('hex') !== value.sha256) fail(`${path}[${index}].content`, 'digest mismatch');
+    }
+  });
+}
+
 function validateToolPolicy(value: AnyRecord, path: string, expected: AnyRecord | null): void {
   requireString(value.category, `${path}.category`);
   requireString(value.scope, `${path}.scope`);
@@ -92,6 +111,7 @@ function validateDebtVisibility(value: AnyRecord, path: string, visibility: AnyR
 function validateOkToolResult(value: AnyRecord, path: string, toolPolicies: AnyRecord, visibility: AnyRecord): void {
   for (const field of ['errors', 'warnings', 'blocking_findings', 'baselined_findings', 'experimental_findings']) requireCount(value[field], `${path}.${field}`);
   if (!Array.isArray(value.findings)) fail(`${path}.findings`, 'required array');
+  validateEvidence(value.evidence, `${path}.evidence`);
   validateToolPolicy(value, path, expectedToolPolicy(path, toolPolicies));
   value.findings.forEach((finding: any, index: any) => validateFinding(finding, `${path}.findings[${index}]`));
   if (value.mode === 'experimental') validateExperimentalResult(value, path, visibility);
@@ -122,6 +142,11 @@ function validatePolicyEvidence(value: AnyRecord, expected: AnyRecord): AnyRecor
   for (const [toolId, digest] of Object.entries(configDigests)) {
     requireString(toolId, 'report.policy.config_digests key');
     requireString(digest, `report.policy.config_digests.${toolId}`);
+  }
+  const packDigests = requireRecord(policy.policy_pack_digests, 'report.policy.policy_pack_digests');
+  for (const [packId, digest] of Object.entries(packDigests)) {
+    requireString(packId, 'report.policy.policy_pack_digests key');
+    requireString(digest, `report.policy.policy_pack_digests.${packId}`);
   }
   const effectiveTargets = requireRecord(policy.effective_targets, 'report.policy.effective_targets');
   for (const [toolId, targets] of Object.entries(effectiveTargets)) {

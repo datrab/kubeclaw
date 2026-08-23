@@ -1,0 +1,823 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/contracts/prism/v1",
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "dataRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["$data"],
+      "properties": {
+        "$data": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(\\.[a-zA-Z0-9_-]+)*$"
+        }
+      }
+    },
+    "propsPatch": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "hidden",
+          "width",
+          "height",
+          "minWidth",
+          "maxWidth",
+          "minHeight",
+          "maxHeight",
+          "padding",
+          "background",
+          "foreground",
+          "radius",
+          "border",
+          "shadow",
+          "opacity",
+          "accessibilityLabel",
+          "accessibilityDescription",
+          "direction",
+          "gap",
+          "align",
+          "justify",
+          "wrap",
+          "columns",
+          "rowGap",
+          "ratio",
+          "showIndicator",
+          "placement",
+          "dismissAction",
+          "modal",
+          "content",
+          "style",
+          "tone",
+          "level",
+          "asset",
+          "fit",
+          "position",
+          "caption",
+          "size",
+          "decorative",
+          "language",
+          "copyAction",
+          "lineNumbers",
+          "label",
+          "variant",
+          "action",
+          "disabled",
+          "loading",
+          "icon",
+          "iconPosition",
+          "external",
+          "value",
+          "placeholder",
+          "inputType",
+          "required",
+          "error",
+          "help",
+          "options",
+          "checked",
+          "data",
+          "itemComponent",
+          "emptyText",
+          "ordered",
+          "rowAction",
+          "selectable",
+          "sort",
+          "max",
+          "showValue",
+          "kind",
+          "xField",
+          "yFields",
+          "title",
+          "legend",
+          "stacked",
+          "items",
+          "orientation",
+          "active",
+          "page",
+          "pageCount",
+          "previousAction",
+          "nextAction",
+          "message",
+          "description",
+          "open",
+          "duration",
+          "actionLabel",
+          "component",
+          "overrides",
+          "rows",
+          "theme",
+          "prompt",
+          "preserveWhitespace"
+        ]
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": {
+          "enum": [
+            "stack",
+            "grid",
+            "split",
+            "scroll",
+            "overlay",
+            "text",
+            "heading",
+            "image",
+            "icon",
+            "divider",
+            "code",
+            "button",
+            "link",
+            "text-input",
+            "select",
+            "checkbox",
+            "list",
+            "table",
+            "badge",
+            "progress",
+            "chart",
+            "navigation",
+            "tabs",
+            "breadcrumb",
+            "pagination",
+            "alert",
+            "dialog",
+            "toast",
+            "tooltip",
+            "empty-state",
+            "spinner",
+            "component",
+            "terminal",
+            "command",
+            "prompt",
+            "output"
+          ]
+        },
+        "props": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "hidden",
+              "width",
+              "height",
+              "minWidth",
+              "maxWidth",
+              "minHeight",
+              "maxHeight",
+              "padding",
+              "background",
+              "foreground",
+              "radius",
+              "border",
+              "shadow",
+              "opacity",
+              "accessibilityLabel",
+              "accessibilityDescription",
+              "direction",
+              "gap",
+              "align",
+              "justify",
+              "wrap",
+              "columns",
+              "rowGap",
+              "ratio",
+              "showIndicator",
+              "placement",
+              "dismissAction",
+              "modal",
+              "content",
+              "style",
+              "tone",
+              "level",
+              "asset",
+              "fit",
+              "position",
+              "caption",
+              "size",
+              "decorative",
+              "language",
+              "copyAction",
+              "lineNumbers",
+              "label",
+              "variant",
+              "action",
+              "disabled",
+              "loading",
+              "icon",
+              "iconPosition",
+              "external",
+              "value",
+              "placeholder",
+              "inputType",
+              "required",
+              "error",
+              "help",
+              "options",
+              "checked",
+              "data",
+              "itemComponent",
+              "emptyText",
+              "ordered",
+              "rowAction",
+              "selectable",
+              "sort",
+              "max",
+              "showValue",
+              "kind",
+              "xField",
+              "yFields",
+              "title",
+              "legend",
+              "stacked",
+              "items",
+              "orientation",
+              "active",
+              "page",
+              "pageCount",
+              "previousAction",
+              "nextAction",
+              "message",
+              "description",
+              "open",
+              "duration",
+              "actionLabel",
+              "component",
+              "overrides",
+              "rows",
+              "theme",
+              "prompt",
+              "preserveWhitespace"
+            ]
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" },
+          "maxItems": 500
+        }
+      }
+    },
+    "patches": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9-]{1,79}$": { "$ref": "#/$defs/propsPatch" }
+      },
+      "additionalProperties": false
+    },
+    "viewRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["view", "state"],
+      "properties": {
+        "view": { "$ref": "#/$defs/id" },
+        "state": { "$ref": "#/$defs/id" }
+      }
+    },
+    "designDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["meta", "theme", "assets", "components", "views", "flows"],
+      "properties": {
+        "meta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "documentId",
+            "projectId",
+            "revision",
+            "title",
+            "createdAt",
+            "updatedAt"
+          ],
+          "properties": {
+            "schema": { "const": "prism.design-document.v1" },
+            "documentId": { "$ref": "#/$defs/id" },
+            "projectId": { "$ref": "#/$defs/id" },
+            "revision": { "type": "integer", "minimum": 1 },
+            "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+            "createdAt": { "type": "string", "format": "date-time" },
+            "updatedAt": { "type": "string", "format": "date-time" }
+          }
+        },
+        "theme": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["colors", "typography", "space", "breakpoints", "rules"],
+          "properties": {
+            "colors": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "typography": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["family", "fallback"],
+                "properties": {
+                  "family": { "type": "string" },
+                  "fallback": { "type": "array", "items": { "type": "string" } },
+                  "weight": { "type": "integer", "minimum": 100, "maximum": 900 },
+                  "size": { "type": "number", "minimum": 0 },
+                  "lineHeight": { "type": "number", "exclusiveMinimum": 0 },
+                  "letterSpacing": { "type": "number" }
+                }
+              }
+            },
+            "space": {
+              "type": "object",
+              "additionalProperties": { "type": "number", "minimum": 0 }
+            },
+            "radius": {
+              "type": "object",
+              "additionalProperties": { "type": "number", "minimum": 0 }
+            },
+            "shadow": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            },
+            "motion": {
+              "type": "object",
+              "additionalProperties": { "type": "number", "minimum": 0 }
+            },
+            "breakpoints": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["compact", "regular", "wide"],
+              "properties": {
+                "compact": { "type": "number" },
+                "regular": { "type": "number" },
+                "wide": { "type": "number" }
+              }
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["subject", "instruction"],
+                "properties": {
+                  "subject": { "type": "string" },
+                  "instruction": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "assets": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": {
+            "type": "object",
+            "required": ["kind", "artifact", "mediaType", "role"],
+            "properties": {
+              "kind": { "enum": ["image", "icon", "video", "audio", "font"] },
+              "artifact": {
+                "type": "string",
+                "pattern": "^artifact:sha256:[a-f0-9]{64}$"
+              },
+              "mediaType": { "type": "string" },
+              "role": { "type": "string" },
+              "alt": { "type": "string" },
+              "ratio": { "type": "string" },
+              "fit": { "enum": ["contain", "cover", "fill", "none"] },
+              "position": {
+                "enum": ["top", "right", "bottom", "left", "center"]
+              },
+              "artDirection": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "components": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "root"],
+            "properties": {
+              "title": { "type": "string" },
+              "root": { "$ref": "#/$defs/node" },
+              "variants": {
+                "type": "object",
+                "additionalProperties": { "$ref": "#/$defs/patches" }
+              }
+            }
+          }
+        },
+        "views": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "surface", "root", "states", "responsive"],
+            "properties": {
+              "title": { "type": "string" },
+              "surface": { "enum": ["web", "mobile", "desktop", "tui", "cli"] },
+              "root": { "$ref": "#/$defs/node" },
+              "initialState": { "$ref": "#/$defs/id" },
+              "states": {
+                "type": "object",
+                "required": ["default"],
+                "propertyNames": { "$ref": "#/$defs/id" },
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["patches"],
+                  "properties": { "patches": { "$ref": "#/$defs/patches" } }
+                }
+              },
+              "responsive": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["compact", "regular", "wide"],
+                "properties": {
+                  "compact": {
+                    "type": "object",
+                    "required": ["patches"],
+                    "properties": { "patches": { "$ref": "#/$defs/patches" } },
+                    "additionalProperties": false
+                  },
+                  "regular": {
+                    "type": "object",
+                    "required": ["patches"],
+                    "properties": { "patches": { "$ref": "#/$defs/patches" } },
+                    "additionalProperties": false
+                  },
+                  "wide": {
+                    "type": "object",
+                    "required": ["patches"],
+                    "properties": { "patches": { "$ref": "#/$defs/patches" } },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "mockData": { "type": "object" }
+            }
+          }
+        },
+        "flows": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "title",
+              "goal",
+              "start",
+              "success",
+              "recovery",
+              "transitions"
+            ],
+            "properties": {
+              "title": { "type": "string" },
+              "goal": { "type": "string" },
+              "start": { "$ref": "#/$defs/viewRef" },
+              "success": { "$ref": "#/$defs/viewRef" },
+              "recovery": {
+                "type": "array",
+                "items": { "$ref": "#/$defs/viewRef" }
+              },
+              "transitions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["id", "from", "trigger", "to"],
+                  "properties": {
+                    "id": { "$ref": "#/$defs/id" },
+                    "from": { "$ref": "#/$defs/viewRef" },
+                    "trigger": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["actor", "action"],
+                      "properties": {
+                        "actor": { "enum": ["user", "system"] },
+                        "action": { "$ref": "#/$defs/id" },
+                        "node": { "$ref": "#/$defs/id" }
+                      }
+                    },
+                    "response": { "type": "object" },
+                    "to": { "$ref": "#/$defs/viewRef" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "designRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "projectId",
+        "architecture",
+        "architectureContent"
+      ],
+      "properties": {
+        "schema": { "const": "prism.design-request.v1" },
+        "projectId": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "architecture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["artifactId", "contentDigest", "revision"],
+          "properties": {
+            "artifactId": {
+              "type": "string",
+              "pattern": "^artifact:sha256:[a-f0-9]{64}$"
+            },
+            "contentDigest": { "$ref": "#/$defs/digest" },
+            "revision": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "architectureContent": { "type": "object" },
+        "approvalId": { "type": "string", "minLength": 1, "maxLength": 200 }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "baseRevision", "parentId", "index", "node"],
+          "properties": {
+            "type": { "const": "node.insert" },
+            "baseRevision": { "type": "integer" },
+            "parentId": { "$ref": "#/$defs/id" },
+            "index": { "type": "integer", "minimum": 0 },
+            "node": { "$ref": "#/$defs/node" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "baseRevision", "nodeId"],
+          "properties": {
+            "type": { "enum": ["node.remove", "node.duplicate"] },
+            "baseRevision": { "type": "integer" },
+            "nodeId": { "$ref": "#/$defs/id" },
+            "newNodeId": { "$ref": "#/$defs/id" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "baseRevision", "nodeId", "parentId", "index"],
+          "properties": {
+            "type": { "const": "node.move" },
+            "baseRevision": { "type": "integer" },
+            "nodeId": { "$ref": "#/$defs/id" },
+            "parentId": { "$ref": "#/$defs/id" },
+            "index": { "type": "integer", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "baseRevision", "nodeId", "props"],
+          "properties": {
+            "type": { "enum": ["node.props.set", "responsive.props.set"] },
+            "baseRevision": { "type": "integer" },
+            "nodeId": { "$ref": "#/$defs/id" },
+            "props": { "$ref": "#/$defs/propsPatch" },
+            "viewport": { "enum": ["compact", "regular", "wide"] }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "baseRevision", "operations"],
+          "properties": {
+            "type": { "const": "operation.batch" },
+            "baseRevision": { "type": "integer" },
+            "operations": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/operation" }
+            }
+          }
+        }
+      ]
+    },
+    "baselineManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "bundleId",
+        "projectId",
+        "revision",
+        "designDocument",
+        "designSpecification",
+        "acceptanceCriteria",
+        "assets",
+        "previews",
+        "createdAt",
+        "digest"
+      ],
+      "properties": {
+        "schema": { "const": "prism.baseline-bundle.v1" },
+        "bundleId": { "$ref": "#/$defs/id" },
+        "projectId": { "$ref": "#/$defs/id" },
+        "revision": { "type": "integer", "minimum": 1 },
+        "designDocument": {
+          "type": "object",
+          "required": ["path", "schema", "revision"]
+        },
+        "designSpecification": { "type": "object", "required": ["path"] },
+        "acceptanceCriteria": { "type": "object", "required": ["path"] },
+        "assets": { "type": "object" },
+        "previews": { "type": "object", "required": ["path"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "acceptanceCriteria": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "criteria"],
+      "properties": {
+        "schema": { "const": "prism.acceptance-criteria.v1" },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "category",
+              "requirement",
+              "targets",
+              "priority",
+              "verification"
+            ],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "category": {
+                "enum": [
+                  "visual",
+                  "flow",
+                  "responsive",
+                  "accessibility",
+                  "content",
+                  "interaction"
+                ]
+              },
+              "requirement": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "targets": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["view"],
+                      "properties": {
+                        "view": { "$ref": "#/$defs/id" },
+                        "state": { "$ref": "#/$defs/id" }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["flow"],
+                      "properties": { "flow": { "$ref": "#/$defs/id" } }
+                    }
+                  ]
+                }
+              },
+              "priority": { "enum": ["required", "recommended"] },
+              "verification": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "enum": ["automated", "visual", "manual"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "previewIndex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "previews"],
+      "properties": {
+        "schema": { "const": "prism.preview-index.v1" },
+        "previews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "view",
+              "state",
+              "viewport",
+              "path",
+              "width",
+              "height",
+              "digest",
+              "fidelity",
+              "ariaPath",
+              "ariaDigest",
+              "renderer"
+            ],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "view": { "$ref": "#/$defs/id" },
+              "state": { "$ref": "#/$defs/id" },
+              "viewport": { "enum": ["compact", "regular", "wide"] },
+              "path": {
+                "type": "string",
+                "pattern": "^previews/[a-z0-9._/-]+$"
+              },
+              "width": { "type": "integer", "minimum": 1 },
+              "height": { "type": "integer", "minimum": 1 },
+              "digest": { "$ref": "#/$defs/digest" },
+              "fidelity": { "enum": ["exact", "intent"] },
+              "ariaPath": {
+                "type": "string",
+                "pattern": "^previews/[a-z0-9._/-]+$"
+              },
+              "ariaDigest": { "$ref": "#/$defs/digest" },
+              "renderer": { "type": "object" }
+            }
+          }
+        }
+      }
+    },
+    "preferenceEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "eventId",
+        "userId",
+        "action",
+        "context",
+        "source",
+        "learningScope",
+        "occurredAt"
+      ],
+      "properties": {
+        "schema": { "const": "prism.preference-event.v1" },
+        "eventId": { "$ref": "#/$defs/id" },
+        "userId": { "$ref": "#/$defs/id" },
+        "projectId": { "$ref": "#/$defs/id" },
+        "action": {
+          "enum": [
+            "selected",
+            "rejected",
+            "liked",
+            "disliked",
+            "preserved",
+            "changed",
+            "reverted",
+            "retracted"
+          ]
+        },
+        "target": { "type": "object" },
+        "alternatives": { "type": "array" },
+        "traits": { "type": "array" },
+        "context": { "type": "object" },
+        "source": { "enum": ["explicit", "observed"] },
+        "learningScope": { "enum": ["project", "personal"] },
+        "retractsEventId": { "$ref": "#/$defs/id" },
+        "occurredAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "retrievalQuery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "mode", "intent", "limit", "seed"],
+      "properties": {
+        "schema": { "const": "prism.retrieval-query.v1" },
+        "mode": { "enum": ["inspiration", "pattern", "flow", "consistency"] },
+        "intent": { "type": "string", "minLength": 1 },
+        "required": { "type": "object" },
+        "preferred": { "type": "object" },
+        "avoid": { "type": "object" },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "seed": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

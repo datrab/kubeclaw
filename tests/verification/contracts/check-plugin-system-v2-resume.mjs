@@ -5,7 +5,7 @@ import path from 'node:path';
 import {
   resumePipelineV2,
   runPipelineV2,
-} from '../../../skills/common/plugin-runtime/core/execution/engine.ts';
+} from '../../../skills/nova/core/execution/engine.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-resume-'));
 try {

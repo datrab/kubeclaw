@@ -8,6 +8,14 @@ import type {
   RegistrationProvenance,
   ResourceLock,
 } from './generated/contracts.ts';
+import type {
+  ProviderInvocationV1,
+  ProviderResultV1,
+  ReportAdapterResultV1,
+  ReportCaseV1,
+  ReportCountsV1,
+  FindingV1,
+} from '@kubeclaw/pipeline-test-gate-contract';
 
 export interface CapabilityInvocation {
   readonly operation: string;
@@ -96,3 +104,67 @@ export interface EffectJournal {
   request(idempotencyKey: string): Promise<EffectRequest | undefined>;
   receipt(idempotencyKey: string): Promise<EffectReceipt | undefined>;
 }
+
+export interface TestProviderCapabilityRequest {
+  readonly operation: string;
+  readonly resource: {
+    readonly type: string;
+    readonly canonicalId: string;
+  };
+  readonly payload: Readonly<Record<string, unknown>>;
+}
+
+export interface TestProviderExecutionContext {
+  readonly signal: AbortSignal;
+  readonly workspaceRoot: string;
+  log(stream: 'stdout' | 'stderr', value: string | Uint8Array): void;
+  invoke(
+    capability: string,
+    request: TestProviderCapabilityRequest,
+  ): Promise<Readonly<Record<string, unknown>>>;
+}
+
+export interface TestProviderInstance {
+  execute(
+    invocation: ProviderInvocationV1,
+    context: TestProviderExecutionContext,
+  ): Promise<ProviderResultV1>;
+  cleanup?(
+    invocation: ProviderInvocationV1,
+    context: TestProviderExecutionContext,
+  ): Promise<void>;
+}
+
+export type TestProviderFactory = (
+  invocation: ProviderInvocationV1,
+) => Promise<TestProviderInstance> | TestProviderInstance;
+
+export interface ReportAdapterLimits {
+  readonly maximumCases: number;
+  readonly maximumFindings: number;
+  readonly maximumCaseFindings: number;
+}
+
+export interface ReportAdapterInput {
+  readonly schemaVersion: 'report-adapter-input.v1';
+  readonly mediaType: string;
+  readonly bytes: Uint8Array;
+  readonly limits: ReportAdapterLimits;
+}
+
+export type ReportAdapterOutput = Pick<
+  ReportAdapterResultV1,
+  | 'durationMs'
+  | 'casesTruncated'
+  | 'omittedCaseCount'
+  | 'findingsTruncated'
+  | 'omittedFindingCount'
+> & {
+  readonly counts: ReportCountsV1;
+  readonly cases: ReportCaseV1[];
+  readonly findings: FindingV1[];
+};
+
+export type ReportAdapterFunction = (
+  input: ReportAdapterInput,
+) => Promise<ReportAdapterOutput> | ReportAdapterOutput;

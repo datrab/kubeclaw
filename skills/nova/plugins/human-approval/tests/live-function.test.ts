@@ -8,10 +8,15 @@ import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(
-  path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts'),
+  path.join(repository, 'skills/nova/core/src/index.ts'),
 ).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-human-approval-'));
-const waitJournal = path.join(temporary, 'waits.jsonl');
+const waitRoot = path.join(temporary, 'waits');
+const waitStorePath = path.join(waitRoot, 'records', 'store.json');
+const storedWaits = () => JSON.parse(fs.readFileSync(waitStorePath, 'utf8')).records.map((record) => ({
+  schemaVersion: 'wait-record.v2',
+  wait: record.payload.wait,
+}));
 const received = [];
 const server = http.createServer((request, response) => {
   const chunks = [];
@@ -88,6 +93,7 @@ async function run(id, guidance) {
     activated,
     configs: new Map([
       ['kubeclaw.operator-messaging:operator', {
+        deliveryRoot: path.join(temporary, `${id}-deliveries`),
         targets: {
           'release-operators': {
             endpoint,
@@ -95,7 +101,7 @@ async function run(id, guidance) {
           },
         },
       }],
-      ['kubeclaw.wait-store:waits', { journalPath: waitJournal }],
+      ['kubeclaw.wait-store:waits', { root: waitRoot }],
       ['kubeclaw.network-http:http', {
         allowedOrigins: [origin],
         allowedMethods: ['POST'],
@@ -164,7 +170,7 @@ try {
   assert.equal(approved.status, 'succeeded');
   assert.equal(approved.outcome, 'passed');
   assert.equal(received.length, 0);
-  assert.equal(fs.existsSync(waitJournal), false);
+  assert.equal(fs.existsSync(waitStorePath), false);
 
   const rejected = await run('rejected', {
     decision: 'rejected',
@@ -174,7 +180,7 @@ try {
   assert.equal(rejected.status, 'blocked');
   assert.equal(rejected.outcome, 'blocked');
   assert.equal(received.length, 0);
-  assert.equal(fs.existsSync(waitJournal), false);
+  assert.equal(fs.existsSync(waitStorePath), false);
 
   const pending = await run('pending', { decision: 'pending' });
   assert.equal(pending.status, 'waiting');
@@ -198,7 +204,7 @@ try {
   assert.equal(received[0].body.summary, 'Approve the production release.');
   assert.equal(received[0].body.authorizedIssuer.id, 'operator:release');
 
-  const waits = fs.readFileSync(waitJournal, 'utf8').trim().split('\n').map(JSON.parse);
+  const waits = storedWaits();
   assert.equal(waits.length, 1);
   assert.equal(waits[0].schemaVersion, 'wait-record.v2');
   assert.equal(waits[0].wait.signalType, 'approval.resolved');
@@ -217,7 +223,7 @@ try {
   });
   assert.equal(denied.status, 'blocked');
   assert.equal(received.length, 1);
-  assert.equal(fs.readFileSync(waitJournal, 'utf8').trim().split('\n').length, 1);
+  assert.equal(storedWaits().length, 1);
 } finally {
   await new Promise((resolve) => server.close(resolve));
   if (previousSecret === undefined) delete process.env[secretEnvironmentName];

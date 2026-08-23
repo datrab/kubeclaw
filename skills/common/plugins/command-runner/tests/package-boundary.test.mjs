@@ -8,7 +8,7 @@ for (const source of sources) {
 }
 const runtimeSource = sources.join('\n');
 assert.match(runtimeSource, /shell:\s*false/);
-assert.match(runtimeSource, /env:\s*\{\}/);
+assert.match(runtimeSource, /COMMAND_ENVIRONMENT_DENIED/);
 
 console.log(JSON.stringify({
   ok: true,

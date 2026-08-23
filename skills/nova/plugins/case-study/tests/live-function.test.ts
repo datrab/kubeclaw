@@ -1,5 +1,5 @@
 import assert from'node:assert/strict';import fs from'node:fs';import http from'node:http';import os from'node:os';import path from'node:path';import{pathToFileURL}from'node:url';
-const repository=path.resolve('../../../..');const core=await import(pathToFileURL(path.join(repository,'skills/common/plugin-runtime/core/src/index.ts')).href);
+const repository=path.resolve('../../../..');const core=await import(pathToFileURL(path.join(repository,'skills/nova/core/src/index.ts')).href);
 const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-case-study-'));
 const markdown=['Context','Challenge','Approach','Implementation','Verification','Outcome'].map((section)=>`## ${section}\n\nEvidence.`).join('\n\n');
 const server=http.createServer((_request,response)=>{response.writeHead(200,{'content-type':'application/json'});response.end(JSON.stringify({result:{status:'generated',markdown}}));});
@@ -22,7 +22,7 @@ try{
   const runner=new core.PipelineRunner({definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:case-study',maxConcurrency:1,stages:[{
    id:'case-study',type:'kubeclaw.report.case-study',dependsOn:[],config:{agent:'writer'},input:{projectId:'api',runId:'run-1',task:'Write.',facts:[{label:'Tests',value:'10 passed'}]},
    execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'))});
-  assert.equal((await runner.run('run:case-study')).status,'succeeded');assert.match(fs.readFileSync(path.join(temporary,'artifacts','catalog.jsonl'),'utf8'),/case-study:run-1/);
+  assert.equal((await runner.run('run:case-study')).status,'succeeded');assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/case-study:run-1/);
   assert.equal(fs.readFileSync(effectsPath,'utf8').includes('case-secret'),false);
  }finally{await adapters.shutdown();}
 }finally{delete process.env[secret];await new Promise((resolve)=>server.close(resolve));fs.rmSync(temporary,{recursive:true,force:true});}

@@ -1,0 +1,19 @@
+{
+  "name": "@kubeclaw/buster-engine",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./remote-plan-cli": "./remote-plan-cli.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/pipeline-observability-contract": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*",
+    "@kubeclaw/pipeline-worker-core-contract": "*",
+    "@kubeclaw/plugin-command-runner": "*",
+    "@kubeclaw/plugin-foundation": "*",
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/worker-core": "*",
+    "js-yaml": "^4.3.1"
+  }
+}

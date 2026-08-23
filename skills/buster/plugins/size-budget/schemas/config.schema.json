@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "format": { "enum": ["auto", "file", "tar", "tar-gzip"] },
+    "maximumTotalBytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "maximumFileCount": { "type": "integer", "minimum": 0, "maximum": 100000 },
+    "matchingFiles": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "pattern", "maximumBytes"],
+        "properties": {
+          "id": { "$ref": "#/$defs/name" },
+          "pattern": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "maximumBytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+          "requireMatch": { "type": "boolean" }
+        }
+      }
+    },
+    "maximumGrowthBytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "maximumGrowthPercent": { "type": "number", "minimum": 0, "maximum": 1000000 },
+    "largestFiles": { "type": "integer", "minimum": 1, "maximum": 100 }
+  },
+  "$defs": {
+    "name": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" }
+  }
+}

@@ -4,10 +4,50 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { canonicalJson } from '@kubeclaw/plugin-sdk';
+import { assertOpenClawOutputBudget, assertOpenClawPromptBudget, prepareOpenClawTask } from '../src/openclaw.ts';
+
+assert.throws(() => assertOpenClawPromptBudget('oversized prompt', {
+  tokenizerEncoding: 'o200k_base', maxPromptBytes: 1, maxInputTokens: 100,
+  maxOutputTokens: 10, maxContextTokens: 110,
+}), /OPENCLAW_PROMPT_BYTES_EXCEEDED/u);
+assert.throws(() => assertOpenClawPromptBudget('one two three four', {
+  tokenizerEncoding: 'o200k_base', maxPromptBytes: 1_000, maxInputTokens: 1,
+  maxOutputTokens: 1, maxContextTokens: 2,
+}), /OPENCLAW_PROMPT_TOKENS_EXCEEDED/u);
+
+const promptTarget = {
+  endpoint: 'http://127.0.0.1', tokenSecret: 'secret', runtime: 'subagent', agentId: 'reviewer',
+  agentRole: 'reviewer', model: 'gpt-5.6-terra', thinking: 'high', cwd: '/work', repositoryRoot: '/work',
+  pollMs: 1, maxPollMs: 1, maxPolls: 1, sessionTimeoutMs: 1, resultPathPrefix: '.results',
+  tokenizerEncoding: 'o200k_base', maxPromptBytes: 100_000, maxInputTokens: 10_000,
+  maxOutputTokens: 1_000, maxContextTokens: 11_000,
+};
+const controlledPayload = { protocol: 'review', task: 'review', runtimePromptBudget: {
+  schemaVersion: 'runtime-prompt-budget.v1', tokenizerEncoding: 'o200k_base',
+  reservedPromptBytes: 20_000, reservedInputTokens: 2_000,
+  maxPromptBytes: 20_000, maxInputTokens: 2_000, maxOutputTokens: 1_000, maxContextTokens: 3_000,
+} };
+const preparedTask = prepareOpenClawTask(controlledPayload, '/work/.results/result.json', promptTarget);
+assert.equal(preparedTask.includes('runtimePromptBudget'), false);
+assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
+  ...controlledPayload.runtimePromptBudget, tokenizerEncoding: 'cl100k_base',
+} }, '/work/.results/result.json', promptTarget), /OPENCLAW_PROMPT_TOKENIZER_MISMATCH/u);
+assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
+  ...controlledPayload.runtimePromptBudget, reservedInputTokens: 1,
+} }, '/work/.results/result.json', promptTarget), /OPENCLAW_DECLARED_PROMPT_TOKENS_EXCEEDED/u);
+assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
+  ...controlledPayload.runtimePromptBudget, maxOutputTokens: 1_001,
+} }, '/work/.results/result.json', promptTarget), /OPENCLAW_OUTPUT_TOKEN_CAP_MISMATCH/u);
+assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
+  ...controlledPayload.runtimePromptBudget, maxOutputTokens: 999,
+} }, '/work/.results/result.json', promptTarget), /OPENCLAW_OUTPUT_TOKEN_CAP_MISMATCH/u);
+assert.throws(() => assertOpenClawOutputBudget('one two three', promptTarget, 1),
+  /OPENCLAW_OUTPUT_TOKENS_EXCEEDED/u);
 
 const repository = path.resolve('../../../..');
 const gatewayCwd = path.join(repository, '.swarm', 'runtime-dispatch-test', 'work');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const token = 'runtime-secret-that-must-not-be-journaled';
 const environmentName = 'KUBECLAW_RUNTIME_DISPATCH_TEST_TOKEN';
 process.env[environmentName] = token;
@@ -79,12 +119,18 @@ const granted = core.resolveCapabilityGrants(snapshot, {
   enabledRegistrations: new Set(['kubeclaw.review:review']),
   providers: new Map([
     ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
+    ['git.repository.read', 'kubeclaw.repository-adapter:repository'],
+        ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
+        ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
     ['network.http', 'kubeclaw.network-http:http'],
     ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
   ]),
   grants: new Map([
     ['kubeclaw.review:review', new Map([
       ['runtime.dispatch', { allowedAgents: ['reviewer', 'gateway', 'unknown'] }],
+      ['git.repository.read', { allowedPrefixes: ['src'] }],
+          ['artifacts.read', { allowedNamespaces: ['kubeclaw.review'] }],
+          ['artifacts.write', { allowedNamespaces: ['kubeclaw.review'] }],
     ])],
     ['kubeclaw.runtime-dispatch:runtime', new Map([
       ['network.http', { allowedOrigins: [origin] }],
@@ -110,6 +156,13 @@ const adapters = new core.AdapterRuntime({
       maxRequestBytes: 2048,
       maxResponseBytes: 2048,
       timeoutMs: 1000,
+    }],
+    ['kubeclaw.repository-adapter:repository', {
+      repositoryRoot: repository,
+      maxFileBytes: 2048,
+    }],
+    ['kubeclaw.artifact-store:artifact-store', {
+      artifactRoot: path.join(repository, '.swarm', 'runtime-dispatch-test', 'artifacts'),
     }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'runtime.agent': environmentName } }],
   ]),
@@ -171,12 +224,17 @@ try {
     providers: new Map([
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:openclaw'],
       ['git.repository.read', 'kubeclaw.repository-adapter:repository'],
+        ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
+        ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
     ]),
     grants: new Map([
       ['kubeclaw.review:review', new Map([
         ['runtime.dispatch', { allowedAgents: ['gateway'] }],
+        ['git.repository.read', { allowedPrefixes: ['src'] }],
+          ['artifacts.read', { allowedNamespaces: ['kubeclaw.review'] }],
+          ['artifacts.write', { allowedNamespaces: ['kubeclaw.review'] }],
       ])],
       ['kubeclaw.runtime-dispatch:openclaw', new Map([
         ['git.repository.read', { allowedPrefixes: ['.swarm/runtime-dispatch-test/results/'] }],
@@ -227,6 +285,9 @@ try {
         repositoryRoot: repository,
         maxFileBytes: 2048,
       }],
+      ['kubeclaw.artifact-store:artifact-store', {
+        artifactRoot: path.join(repository, '.swarm', 'runtime-dispatch-test', 'gateway-artifacts'),
+      }],
       ['kubeclaw.secret-resolver:secrets', { environment: { 'runtime.agent': environmentName } }],
     ]),
     effects: new core.EffectCoordinator(
@@ -251,11 +312,17 @@ try {
       },
       new AbortController().signal,
     );
-    assert.deepEqual(gateway, { result: { status: 'PASS', summary: 'Reviewed' } });
+    const runtimeIdentity = { targetId: 'gateway', runtime: 'subagent', agentId: 'codex',
+      model: 'openai/gpt-5.6-sol', thinking: 'high' };
+    assert.deepEqual(gateway, { result: { status: 'PASS', summary: 'Reviewed' },
+      runtimeEvidence: { schemaVersion: 'runtime-agent-attestation.v1', ...runtimeIdentity,
+        identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(runtimeIdentity)).digest('hex')}` } });
     const spawnRequests = received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn');
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
     assert.equal(spawnArgs.cwd, gatewayCwd);
+    assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
+      'the adapter must serialize the assignment once');
     const durableResult = String(spawnArgs.task).match(/atomically to (.+\.json)\./u)?.[1];
     assert.ok(durableResult);
     assert.equal(

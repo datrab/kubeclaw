@@ -1,0 +1,50 @@
+{
+  "id": "kubeclaw.kubernetes-fixture",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "deployment",
+      "contractId": "kubeclaw.kubernetes-fixture@1",
+      "kind": "fixture",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [
+        {
+          "name": "image",
+          "kind": "value",
+          "required": false,
+          "schemaId": "kubeclaw.container-image@1"
+        },
+        {
+          "name": "checked-manifest",
+          "kind": "artifact",
+          "required": true,
+          "mediaTypes": ["application/vnd.kubeclaw.checked-kubernetes-yaml"]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "deployment",
+          "kind": "value",
+          "required": true,
+          "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+        }
+      ],
+      "requiredCapabilities": ["kubernetes.fixture"],
+      "retrySafe": false,
+      "matrixFields": [],
+      "reportFormats": [],
+      "evidenceTypes": ["log"],
+      "evidenceDefaults": {
+        "onPass": ["log"],
+        "onFail": ["log"],
+        "onError": ["log"]
+      }
+    }
+  ]
+}

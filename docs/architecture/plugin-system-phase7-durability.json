@@ -33,7 +33,7 @@
     }
   },
   "deletedV2PreparationPaths": [
-    "skills/common/plugin-runtime/core/state/waits.ts",
+    "skills/nova/core/state/waits.ts",
     "in-memory ResourceLockManager"
   ],
   "deferredFinalDeletion": "Phase 12 removes retained v1 authority after all parity phases pass"

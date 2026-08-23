@@ -1,0 +1,26 @@
+{{- if .Values.ingestion.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: prism-ingestion }
+spec:
+  replicas: {{ .Values.ingestion.replicas }}
+  selector: { matchLabels: { app: prism-ingestion } }
+  template:
+    metadata: { labels: { app: prism-ingestion } }
+    spec:
+      serviceAccountName: prism-ingestion
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: ingestion
+          image: "{{ .Values.images.ingestion.repository }}{{ if .Values.images.ingestion.digest }}@{{ .Values.images.ingestion.digest }}{{ else }}:{{ .Values.images.ingestion.tag }}{{ end }}"
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          env:
+            - { name: PORT, value: "8080" }
+            - name: PRISM_INGESTION_SECRET
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.runtime }}, key: ingestion-secret } }
+            - { name: PRISM_QUARANTINE_ROOT, value: /quarantine }
+          volumeMounts: [{ name: quarantine, mountPath: /quarantine }]
+          readinessProbe: { httpGet: { path: /ready, port: 8080 }, initialDelaySeconds: 3 }
+      volumes: [{ name: quarantine, emptyDir: { sizeLimit: 4Gi } }]
+{{- end }}

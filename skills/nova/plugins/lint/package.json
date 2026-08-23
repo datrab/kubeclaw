@@ -7,6 +7,7 @@
     "test": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/live-function.test.ts"
   },
   "dependencies": {
-    "@kubeclaw/plugin-sdk": "*"
+    "@kubeclaw/plugin-sdk": "*",
+    "yaml": "2.9.0"
   }
 }

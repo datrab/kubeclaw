@@ -88,11 +88,7 @@ function validateApiAndVisual(config: any, suites: string[], context: Context, d
 }
 
 function validateLocalSuites(config: any, suites: string[], context: Context, diagnostics: Diagnostic[], field: string) {
-  if (suites.includes('unit') && typeof config.unit?.test_cmd !== 'string') {
-    diagnostics.push(diagnostic('form_check', `${field}.unit.test_cmd must be a string`, `${field}.unit.test_cmd`));
-  }
   validateServe(config, context, diagnostics, field);
-  if (suites.includes('manifest')) validateRepoPath(context, config.manifest?.deployment_yaml, diagnostics, `${field}.manifest.deployment_yaml`);
   if (suites.includes('k8s')) validateK8s(config, context, diagnostics, field);
 }
 

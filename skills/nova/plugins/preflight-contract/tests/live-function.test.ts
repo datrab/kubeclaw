@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-preflight-'));
 const project = path.join(temporary, 'repository');
 const artifacts = path.join(temporary, 'artifacts');
@@ -124,7 +124,7 @@ try {
     serveDockerfile: null,
     apiSpecFile: 'api/openapi.yaml',
   })).outcome, 'passed');
-  const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8').trim().split('\n');
+  const catalog = JSON.parse(fs.readFileSync(path.join(artifacts, 'records', 'store.json'), 'utf8')).records;
   assert.ok(catalog.length >= 5);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

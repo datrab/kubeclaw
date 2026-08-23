@@ -1,0 +1,29 @@
+images:
+  control: { repository: ghcr.io/datrab/kubeclaw-prism-control, tag: main, digest: "" }
+  studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, tag: main, digest: "" }
+  worker: { repository: ghcr.io/datrab/kubeclaw-prism-worker, tag: main, digest: "" }
+  ingestion: { repository: ghcr.io/datrab/kubeclaw-prism-ingestion, tag: main, digest: "" }
+control:
+  replicas: 1
+  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } }
+studio:
+  replicas: 2
+  resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } }
+worker:
+  replicas: 2
+  resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }
+ingestion: { enabled: false, replicas: 1 }
+postgresql:
+  enabled: true
+  image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f
+  storage: 100Gi
+  storageClass: ""
+  existingSecret: ""
+  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 8Gi } }
+secrets:
+  runtime: prism-runtime
+  database: prism-postgresql-auth
+  provider: prism-provider
+artifactStorage: { storage: 100Gi, storageClass: "" }
+tailscale: { enabled: true, hostname: prism-studio, operatorNamespace: tailscale }
+security: { approverUsers: [] }

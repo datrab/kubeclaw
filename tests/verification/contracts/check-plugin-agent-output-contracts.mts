@@ -18,8 +18,14 @@ import {
   buildReviewDispatchRequest,
 } from '../../../skills/nova/plugins/review/src/protocol.ts';
 import {
-  parseReviewDispatchResponse,
-} from '../../../skills/nova/plugins/review/src/review-output.ts';
+  parseEchoReviewDispatchResponse,
+} from '../../../skills/nova/plugins/review/src/echo-review-parser.ts';
+import {
+  getReviewPolicyProfile,
+} from '../../../skills/nova/plugins/review/src/review-policy-profiles.ts';
+import {
+  resolveReviewPolicy,
+} from '../../../skills/nova/plugins/review/src/review-policy-resolver.ts';
 import {
   buildRequest as buildPipelineReviewRequest,
   parseReport,
@@ -111,19 +117,28 @@ assert.throws(() => parseCompletion(
 
 const reviewRequest = buildReviewDispatchRequest(
   'echo',
-  { task: 'Review.', evidence: { artifact: 'artifact-1' } },
+  {
+    task: 'Review.',
+    requirements: [{ id: 'REQ-1', statement: 'The contract is satisfied.' }],
+    evidence: [{
+      kind: 'contract', digest: `sha256:${'a'.repeat(64)}`, content: { artifact: 'artifact-1' },
+    }],
+  },
   null,
+  resolveReviewPolicy({ builtIn: getReviewPolicyProfile('gate') }),
 );
 taskContract(reviewRequest);
-const review = parseReviewDispatchResponse({ result: {
-  status: 'PASS',
-  critical_issues: [],
-  deferred_issues: [],
-  checked_contracts: ['contract-1'],
-  opened_artifacts: ['artifact-1'],
-  failed_commands: [],
-  unverified_requirements: [],
-  summary: 'Passed.',
+const review = parseEchoReviewDispatchResponse({ result: {
+  schemaVersion: 'echo-review-output.v1',
+  summary: 'Reviewed.',
+  inspectedEvidence: [{ kind: 'contract', digest: `sha256:${'a'.repeat(64)}` }],
+  requirementAssessments: {
+    'REQ-1': {
+      assessment: 'satisfied', explanation: 'The contract is satisfied.',
+      evidence: [{ kind: 'contract', digest: `sha256:${'a'.repeat(64)}` }],
+    },
+  },
+  proposedFindings: [],
 } });
 assert.equal(review.ok, true);
 

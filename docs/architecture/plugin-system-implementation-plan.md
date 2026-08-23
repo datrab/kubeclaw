@@ -254,24 +254,16 @@ Status rules:
 
 ## Runtime Bundle And Source-Layout Constraint
 
-The repository's deployment contract is role-aware and remains authoritative
-throughout the migration:
+The repository deployment contract is role-aware and package-based:
 
 ```text
-skills/nova    --\
-                  +-- Nova bundle --> /app/skills
-skills/common  --/
-
-skills/buster  --\
-                   +-- Buster bundle --> /app/skills
-skills/common  ---/
+Nova manifest --> Nova core + declared shared packages and plugins --> /app/skills
+Buster manifest --> worker core + Buster engine + declared shared packages and plugins --> /app/skills
 ```
 
-`scripts/package-agent-skill-bundle.sh` copies the selected role first and
-`skills/common` second. The Common overlay therefore owns shared runtime files.
-Both the current runtime and the final v2 runtime must be valid after this exact
-materialization. Top-level development directories are not a replacement for
-the deployed skill bundle.
+`scripts/package-agent-skill-bundle.sh` uses the selected role manifest. It
+does not copy `skills/common` as an overlay. Shared source remains single-source
+and is installed only when declared by the role.
 
 The canonical v2 target layout is:
 
@@ -279,22 +271,25 @@ The canonical v2 target layout is:
 skills/
   common/
     plugin-runtime/
-      core/
+      foundation/
       sdk/
       contracts/
     plugins/
       <shared-adapter-or-observer>/
   nova/
     pipeline.ts
+    core/
     pipeline/
       SKILL.md
     plugins/
       <nova-stage-or-adapter>/
   buster/
-    buster-pipeline.ts
-    pipeline/
+    runtime.ts
+    engine/
     plugins/
       <buster-stage-or-adapter>/
+  worker/
+    core/
 ```
 
 The exact package set is inventory-driven, but these ownership rules are
@@ -302,13 +297,13 @@ fixed:
 
 - Nova-specific behavior and packages live under [`skills/nova`](../../skills/nova).
 - Buster-specific behavior and packages live under [`skills/buster`](../../skills/buster).
-- Genuinely shared core, SDK, contracts, adapters, observers, and libraries
+- Genuinely shared foundation, SDK, contracts, adapters, observers, and libraries
   live under [`skills/common`](../../skills/common).
 - A package that serves both OpenClaw and the pipeline remains one isolated
   package and atomic release boundary. Both host surfaces receive the same
   package-escape and sibling-import checks.
-- The role-specific and Common plugin directories merge into `/app/skills/plugins`;
-  undeclared path or registration collisions fail packaging or startup.
+- Role manifests select role-owned and shared plugins. Undeclared path or
+  registration collisions fail packaging or startup.
 - Existing role entrypoints and required `SKILL.md` files remain present until
   their canonical replacements are proven in the materialized bundle.
 - A plugin contains its real implementation, configuration, schemas, tests,
@@ -1031,26 +1026,32 @@ Create the target directories:
 skills/
   common/
     plugin-runtime/
-      core/
+      foundation/
         config/
-        execution/
-        lifecycle/
         registry/
-        state/
+        isolation/
         artifacts/
-        effects/
-        telemetry/
         packages/
       sdk/
       contracts/
     plugins/
   nova/
+    core/
+      execution/
+      lifecycle/
+      state/
+      effects/
+      telemetry/
     plugins/
+  worker/
+    core/
   buster/
+    engine/
     plugins/
 ```
 
-Move only genuinely generic code into core or SDK. Do not move current mixed files wholesale when they contain concrete behavior.
+Move only role-neutral code into foundation or SDK. Nova policy, worker
+lifecycle, and Buster test meaning remain in their owner packages.
 
 Add dependency rules:
 

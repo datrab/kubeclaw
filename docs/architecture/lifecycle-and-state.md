@@ -1,7 +1,7 @@
 # Lifecycle And State
 
 Only v2 core owns lifecycle truth. Stages return validated typed results; the
-reducer in `skills/common/plugin-runtime/core/lifecycle/reducer.ts` maps them to
+reducer in `skills/nova/core/lifecycle/reducer.ts` maps them to
 canonical transitions.
 
 Durable state is split by responsibility:

@@ -55,9 +55,14 @@ function spawnRunner(job: BusterSuiteJob, run: Readonly<{ directory: string; rep
   const args = [process.execPath, runner, path.join(run.directory, 'job.json'), run.repository];
   return spawn(testMode ? process.execPath : '/usr/bin/setpriv', testMode ? args.slice(1) : [
     `--reuid=${runnerUid}`, `--regid=${run.gid}`, '--clear-groups', '/usr/bin/unshare', '--user',
-    '--map-current-user', '--pid', '--fork', '--kill-child=SIGKILL', '--mount-proc', '/usr/bin/setpriv',
+    // Kubernetes masks sensitive paths below the container's procfs. Linux
+    // therefore rejects mounting a fresh procfs from this nested user
+    // namespace. Keep the PID namespace kill boundary while inheriting the
+    // container-scoped procfs; the runner still has a distinct UID, no
+    // supplementary groups, no capabilities, and no-new-privileges.
+    '--map-current-user', '--pid', '--fork', '--kill-child=SIGKILL', '/usr/bin/setpriv',
     '--no-new-privs', '--bounding-set=-all', '--inh-caps=-all', '--ambient-caps=-all', ...args,
-  ], { cwd: run.repository, env: runnerEnvironment(job, run.directory, run.gid), stdio: ['ignore', 'ignore', 'pipe', 'pipe'], detached: true }) as ChildProcess;
+  ], { cwd: run.repository, env: runnerEnvironment(job, run.directory, run.repository, run.gid), stdio: ['ignore', 'ignore', 'pipe', 'pipe'], detached: true }) as ChildProcess;
 }
 
 interface Completion { readonly output: Buffer[]; readonly errors: Buffer[]; readonly outputBytes: number; readonly code: number | null; readonly signal: NodeJS.Signals | null; }

@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-notifications-'));
 const messages = [];
 const server = http.createServer((request, response) => {
@@ -74,6 +74,7 @@ const adapters = new core.AdapterRuntime({
     ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
     ['kubeclaw.notification-observer:audit', {}],
     ['kubeclaw.operator-messaging:operator', {
+      deliveryRoot: path.join(temporary, 'notification-deliveries'),
       targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook' } },
     }],
     ['kubeclaw.network-http:http', {
@@ -124,7 +125,7 @@ try {
   assert.equal(messages[1].artifact.secret, undefined);
   assert.equal(checkpoints.records().length, 4);
   const auditCatalog = fs.readFileSync(
-    path.join(temporary, 'artifacts', 'catalog.jsonl'),
+    path.join(temporary, 'artifacts', 'records', 'store.json'),
     'utf8',
   );
   assert.match(auditCatalog, /pipeline-audit:event:failed/);

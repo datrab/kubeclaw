@@ -238,7 +238,7 @@ service:
   # creates a dedicated NodePort Service for that extra port without exposing
   # the gateway.
   extraPorts: []
-  # - name: prism-preview
+  # - name: archviewer
   #   port: 3456
   #   targetPort: 3456
   #   nodePort: 30456
@@ -366,6 +366,8 @@ busterNamespaceBroker:
   leaseApiVersion: v1alpha1
   allowedPrefixes:
     - test
+  # Only these source Secret objects can enter a test deployment.
+  approvedSecretNames: []
   defaultTtlSeconds: 7200
   controller:
     # Additional service accounts that receive the same namespaced runner Role
@@ -458,7 +460,7 @@ tolerations: []
 podAnnotations: {}
 extraEnv: []
 
-# -- Extra sidecar containers to inject into the agent pod (e.g. prism-preview)
+# -- Extra sidecar containers to inject into the agent pod (e.g. archviewer)
 extraContainers: []
 
 # -- Extra volumes to mount into the agent pod

@@ -669,7 +669,6 @@
         "health",
         "a11y",
         "perf",
-        "bundle",
         "unit"
       ],
       "test_config": {
@@ -705,7 +704,6 @@
         "health",
         "a11y",
         "perf",
-        "bundle",
         "visual-reg",
         "e2e",
         "unit"
@@ -749,7 +747,6 @@
         "health",
         "a11y",
         "perf",
-        "bundle",
         "visual-reg",
         "e2e",
         "unit"
@@ -793,7 +790,6 @@
         "health",
         "a11y",
         "perf",
-        "bundle",
         "visual-reg",
         "e2e",
         "unit"

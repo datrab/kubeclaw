@@ -37,7 +37,7 @@ function loadAuthority(args) {
   const report = readJson(path.resolve(args.report), 'report');
   const baselineSource = fs.readFileSync(baselinePath, 'utf8');
   const baseline = JSON.parse(baselineSource);
-  if (report.schema_version !== 'pipeline_lint_report.v6') fail('Report must use pipeline_lint_report.v6.');
+  if (report.schema_version !== 'pipeline_lint_report.v7') fail('Report must use pipeline_lint_report.v7.');
   if (baseline.schema_version !== 'pipeline_lint_baseline.v2') fail('Baseline must use pipeline_lint_baseline.v2.');
   const digest = crypto.createHash('sha256').update(baselineSource).digest('hex');
   if (report.policy?.baseline_digest !== digest) fail('Report was not produced from the current baseline.');

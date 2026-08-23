@@ -4,10 +4,12 @@ import path from 'path';
 import { requireToolExecution, safeExec } from './execution.ts';
 import { configuredMarkerDirectories, configuredTargetFilesForScope } from './discovery.ts';
 import { renderChart } from './helm-render.ts';
+import { loadKubernetesResources } from './kubernetes-manifests.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
+import crypto from 'node:crypto';
 function jsonResourceItems(data: any) {
   if (Array.isArray(data)) return data;
   return [];
@@ -121,38 +123,80 @@ function helmLintTool() {
   };
 }
 
-function kubeconformTool() {
+function kubeconformTool(id = 'kubeconform', includeRaw = false) {
   return {
-    id: 'kubeconform',
-    name: 'Kubeconform',
+    id,
+    name: includeRaw ? 'Kubernetes schema validation' : 'Kubeconform',
     binary: 'kubeconform',
     tier: 'full',
-    detect: (ctx: any) => ctx.projectTypes.has('helm'),
+    detect: (ctx: any) => {
+      const kubernetes = ctx.policyProject?.kubernetes;
+      const explicitInputCount = (Array.isArray(kubernetes?.raw_manifests) ? kubernetes.raw_manifests.length : 0)
+        + (Array.isArray(kubernetes?.helm_charts) ? kubernetes.helm_charts.length : 0);
+      return includeRaw ? explicitInputCount > 0 : ctx.projectTypes.has('helm') && explicitInputCount === 0;
+    },
     run: (ctx: any) => {
       const findings: any[] = [];
+      const evidence: any[] = [];
+      const settings = ctx.policyProject.kubernetes;
+      const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject.root);
+      // The migrated Kubernetes lint path owns its pinned local schema source.
+      // The retained generic Helm adapter stays compatible for non-migrated use.
+      const baseArgs = includeRaw
+        ? ['-output', 'json', '-summary', '-strict', '-kubernetes-version', settings.kubernetes_version, '-schema-location', settings.schema_location]
+        : ['-output', 'json', '-summary', '-strict'];
+      if (includeRaw) evidence.push(...loadKubernetesResources(ctx).sources);
 
       const pushResourceFinding = (item: any) => {
         if (selectTruthyValue(() => (item?.status === 'statusInvalid'), () => (item?.status === 'statusError'))) {
+          const reportedFile = typeof item.filename === 'string' ? item.filename : '';
+          const relativeFile = path.isAbsolute(reportedFile) ? path.relative(ctx.repoRoot, reportedFile) : reportedFile;
+          const findingFile = relativeFile && !relativeFile.startsWith('..') && !path.isAbsolute(relativeFile)
+            ? relativeFile.split(path.sep).join('/')
+            : '<external>';
           findings.push({
-            file: item.filename,
+            file: findingFile,
             line: null,
             column: null,
             severity: 'error',
-            code: 'kubeconform',
-            message: selectDefinedValue(() => (item.msg), () => (`Invalid K8s manifest: ${item.filename}`)),
+            code: id,
+            message: selectDefinedValue(() => (item.msg), () => (`Invalid K8s manifest: ${findingFile}`)),
           });
         }
       };
 
-      for (const chartDir of configuredMarkerDirectories(ctx, 'Chart.yaml')) {
+      const recordEvidence = (kind: string, source: string, content: string) => {
+        const bytes = Buffer.byteLength(content);
+        evidence.push({ kind, source, sha256: crypto.createHash('sha256').update(content).digest('hex'), bytes, ...(bytes <= 262_144 ? { content } : {}) });
+      };
+
+      if (includeRaw && settings.raw_manifests.length > 0) {
+        const rawFiles = settings.raw_manifests.map((relative: string) => path.resolve(projectRoot, relative));
+        const rawArguments = rawFiles.map((absolute: string) => path.relative(ctx.repoRoot, absolute).split(path.sep).join('/'));
+        const result = requireToolExecution(safeExec('kubeconform', [...baseArgs, ...rawArguments], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'kubeconform');
+        const parsed = tryParseJson(result.stdout);
+        if (!parsed.ok) return failParse(ctx, 'kubeconform', parsed, result, rawFiles[0]);
+        recordEvidence('kubeconform-output', 'raw-manifests', result.stdout);
+        const resources = Array.isArray(parsed.data?.resources) ? parsed.data.resources : [];
+        for (const item of resources) pushResourceFinding(item);
+        if (resources.length === 0 && result.exitCode !== 0) return failParse(ctx, 'kubeconform', { error: 'non-zero exit without parsed resources' }, result, rawFiles[0]);
+      }
+
+      const chartDirs = includeRaw
+        ? settings.helm_charts.map((relative: string) => ({ chartDir: path.resolve(projectRoot, relative), source: relative }))
+        : configuredMarkerDirectories(ctx, 'Chart.yaml').map((chartDir: string) => ({ chartDir, source: path.relative(ctx.repoRoot, chartDir).split(path.sep).join('/') }));
+      for (const { chartDir, source } of chartDirs) {
         const findingsBefore = findings.length;
-        const result = requireToolExecution(safeExec('kubeconform', ['-output', 'json', '-summary', '-strict', '-'], {
+        const rendered = renderChart(ctx, chartDir);
+        if (includeRaw && Buffer.byteLength(rendered) > settings.limits.max_rendered_bytes) throw Object.assign(new Error(`${source} exceeds max_rendered_bytes`), { code: 'kubeconform-render-size-limit' });
+        const result = requireToolExecution(safeExec('kubeconform', [...baseArgs, '-'], {
           cwd: ctx.repoRoot,
           timeout: ctx.tool.timeout_ms,
-          input: renderChart(ctx, chartDir),
+          input: rendered,
         }), 'kubeconform');
         const parsed = tryParseJson(result.stdout);
         if (!parsed.ok) return failParse(ctx, 'kubeconform', parsed, result, chartDir);
+        if (includeRaw) recordEvidence('kubeconform-output', source, result.stdout);
         const resources = Array.isArray(parsed.data?.resources) ? parsed.data.resources : [];
         for (const item of resources) pushResourceFinding(item);
         if (findings.length === findingsBefore && result.exitCode !== 0) {
@@ -164,6 +208,7 @@ function kubeconformTool() {
         errors: findings.filter((f: any) => f.severity === 'error').length,
         warnings: findings.filter((f: any) => f.severity === 'warning').length,
         findings,
+        evidence,
       };
     },
   };
@@ -217,5 +262,6 @@ export function registerContainerYamlTools(registerTool: any) {
   registerTool(hadolintTool());
   registerTool(helmLintTool());
   registerTool(kubeconformTool());
+  registerTool(kubeconformTool('kubernetes-schema', true));
   registerTool(yamllintTool());
 }

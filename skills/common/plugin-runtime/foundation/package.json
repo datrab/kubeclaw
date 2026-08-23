@@ -1,0 +1,23 @@
+{
+  "name": "@kubeclaw/plugin-foundation",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./artifacts/*": "./artifacts/*.ts",
+    "./config/*": "./config/*.ts",
+    "./isolation/plugin-sandbox": "./isolation/plugin-sandbox",
+    "./isolation/*": "./isolation/*.ts",
+    "./observability/*": "./observability/*.ts",
+    "./packages/*": "./packages/*.ts",
+    "./registry/*": "./registry/*.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/pipeline-test-gate-contract": "*",
+    "@kubeclaw/pipeline-observability-contract": "*",
+    "@kubeclaw/pipeline-worker-core-contract": "*",
+    "@kubeclaw/plugin-sdk": "*",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  },
+  "kubeclawRuntimeAssets": ["plugin-system-contract"]
+}

@@ -20,6 +20,7 @@ for (const file of files) {
 }
 
 const discovery = await import(pathToFileURL(path.resolve('src/engine/discovery.ts')).href);
+const containerYaml = await import(pathToFileURL(path.resolve('src/engine/container-yaml-tools.ts')).href);
 const base = {
   repoRoot: temporary,
   policyProject: { root: '.' },
@@ -32,6 +33,12 @@ const base = {
 };
 
 try {
+  const tools = [];
+  containerYaml.registerContainerYamlTools((tool) => tools.push(tool));
+  const genericKubeconform = tools.find((tool) => tool.id === 'kubeconform');
+  const explicitKubernetesSchema = tools.find((tool) => tool.id === 'kubernetes-schema');
+  assert.equal(genericKubeconform.detect({ policyProject: { root: '.' }, projectTypes: new Set(['helm']) }), true);
+  assert.equal(explicitKubernetesSchema.detect({ policyProject: { root: '.' }, projectTypes: new Set(['helm']) }), false);
   assert.deepEqual(discovery.configuredMarkerDirectories(base, 'Chart.yaml'), [chart]);
   assert.deepEqual(
     discovery.configuredTargetFilesForScope(base, (file) => file.endsWith('.yaml')),

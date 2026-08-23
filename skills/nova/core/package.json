@@ -1,0 +1,17 @@
+{
+  "name": "@kubeclaw/nova-core",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cli": "./cli.ts",
+    "./remote-gate-cli": "./test-gates/remote-gate-cli.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/pipeline-observability-contract": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*",
+    "@kubeclaw/pipeline-worker-core-contract": "*",
+    "@kubeclaw/plugin-foundation": "*",
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

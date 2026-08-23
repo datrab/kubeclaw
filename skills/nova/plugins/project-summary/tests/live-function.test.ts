@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {pathToFileURL} from 'node:url';
 const repository=path.resolve('../../../..');const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-project-summary-'));
-const core=await import(pathToFileURL(path.join(repository,'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core=await import(pathToFileURL(path.join(repository,'skills/nova/core/src/index.ts')).href);
 const roots=['common','nova','buster'].map((role)=>path.join(repository,`skills/${role}/plugins`));
 try{
   const snapshot=core.buildRegistry(core.discoverPackages({installationRoots:roots,trustPolicy:{trustedBuiltinRoots:roots,allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:project-summary'},now:()=>new Date('2026-07-26T00:00:00Z')}));
@@ -18,7 +18,7 @@ try{
         metrics:{modulesTotal:2,modulesPassed:2,testsPassed:10,testsFailed:0,agentInvocations:3},diagnostics:[]},
       execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'))});
     assert.equal((await runner.run('run:summary')).status,'succeeded');
-    assert.match(fs.readFileSync(path.join(temporary,'artifacts','catalog.jsonl'),'utf8'),/project-summary:run-1/);
+    assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/project-summary:run-1/);
   }finally{await adapters.shutdown();}
 }finally{fs.rmSync(temporary,{recursive:true,force:true});}
 console.log(JSON.stringify({ok:true,plugin:'kubeclaw.project-summary',suite:'live-function'}));

@@ -1,0 +1,25 @@
+{
+  "schema": "prism.live-attempt.v1",
+  "status": "blocked",
+  "test": "controller-leased-namespace-startup",
+  "lease": "test-prism-audit-20260822124511",
+  "requestedNamespace": "test-prism-audit-20260822124511",
+  "authority": {
+    "createLease": true,
+    "createNamespace": false
+  },
+  "controllerStatus": "Failed",
+  "reason": "The deployed controller tried to grant pods/portforward create permission that its ServiceAccount does not hold.",
+  "repositoryControllerRequiresPortForward": false,
+  "cleanup": {
+    "leaseDeleted": true
+  },
+  "skippedChecks": [
+    "namespace-ready",
+    "prism-install",
+    "service-dns-smoke",
+    "tailscale-studio",
+    "nova-stage",
+    "forge-buster"
+  ]
+}

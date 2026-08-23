@@ -215,11 +215,11 @@ Visual-reg baseline path authority is module identity: Buster derives the baseli
 
 ### Multi-Path Baselines (required)
 
-For modules with multiple pages. The **Prism preview HTML is the source of truth**, but Buster visual-reg now requires explicit generated baseline artifacts checked into `.swarm/modules/<module-dir>/baselines/` before the suite runs.
+For modules with multiple pages. The **approved Prism Baseline Bundle is the design source of truth**. Archviewer can show architecture documents as HTML. Buster visual-reg requires explicit generated baseline artifacts checked into `.swarm/modules/<module-dir>/baselines/` before the suite runs.
 
 **Setup:**
 
-1. Create a Prism preview HTML that renders all pages of the module.
+1. Read the approved Prism Baseline Bundle and its assigned views.
 2. The preview must follow the [Prism conventions](prism-conventions.md):
    - `<script type="application/json" data-routes>` manifest listing every page
    - `?baselines=true` query param bypasses auth/login

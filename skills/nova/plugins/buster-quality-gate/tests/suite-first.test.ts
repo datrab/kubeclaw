@@ -9,7 +9,7 @@ const input = {
   suiteEvidence: [],
   suitePlan: {
     repositoryRoot: '/repo',
-    suites: ['unit'],
+    suites: ['security'],
     testConfig: {},
     task: {},
   },
@@ -17,7 +17,7 @@ const input = {
 const receipt = {
   schemaVersion: 'test-suite-receipt.v1',
   provider: 'test-provider',
-  jobId: 'job:unit',
+  jobId: 'job:bundle',
   completedAt: '2026-07-30T00:00:00.000Z',
   resultDigest: 'a'.repeat(64),
 };
@@ -29,7 +29,7 @@ const receipt = {
     async invoke(capability: string) {
       invoked.push(capability);
       if (capability === 'test.suite.execute') {
-        return { results: [{ suite: 'unit', status: 'PASS' }] };
+        return { results: [{ suite: 'security', status: 'PASS' }] };
       }
       throw new Error('REASONING_MUST_NOT_RUN_WITHOUT_SUITE_RECEIPT');
     },
@@ -45,7 +45,7 @@ const receipt = {
     async invoke(capability: string) {
       invoked.push(capability);
       if (capability === 'test.suite.execute') {
-        return { receipt, results: [{ suite: 'unit', status: 'PASS' }] };
+        return { receipt, results: [{ suite: 'security', status: 'PASS' }] };
       }
       if (capability === 'runtime.dispatch') {
         return { result: {

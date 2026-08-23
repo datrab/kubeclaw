@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 export type OptionalAbsenceReader<T> = () => T;
 export type ValueRecord = Record<string, any>;
 
@@ -46,6 +48,10 @@ export function canonicalJson(value: unknown): string {
       .join(',')}}`;
   }
   return JSON.stringify(value) ?? 'null';
+}
+
+export function sha256Text(value: string): `sha256:${string}` {
+  return `sha256:${createHash('sha256').update(value).digest('hex')}`;
 }
 
 const DEFAULT_SENSITIVE_KEY = /(?:authorization|cookie|password|secret|token|api[_-]?key|credential)/i;

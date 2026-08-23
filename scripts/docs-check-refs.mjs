@@ -37,6 +37,7 @@ const historicalRepoRefDocs = new Set([
   'docs/ROADMAP.md',
   'docs/future-implementation-ideas.md',
   'docs/open-issues.md',
+  'docs/architecture/pipeline-test-gate-unit-baseline.md',
 ]);
 
 const errors = [];

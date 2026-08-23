@@ -8,8 +8,6 @@ declare const process: {
   cwd(): string;
 };
 
-const DEFAULT_ALLOWED_PATH_PREFIXES = ['/app/', '/opt/', '/home/', '/tmp/'];
-const SHELL_META_PATTERN = /[;&|<>`]/;
 const DEFAULT_SUBPROCESS_ENV_ALLOWLIST = Object.freeze([
   'PATH',
   'HOME',
@@ -82,9 +80,6 @@ type ScopedPathOptions = {
   scopeDescription?: string;
 };
 
-type AllowedPathOptions = {
-  allowedPrefixes?: readonly string[];
-};
 
 export function isDeniedSubprocessEnvKey(key: unknown) {
   const name = String(selectDefinedValue(() => (key), () => (''))).trim();
@@ -147,11 +142,6 @@ function scopedRootDir(options: ScopedPathOptions, baseDir: string) {
   return path.resolve(options.scopeDir ?? baseDir);
 }
 
-function allowedPathPrefixes(opts: AllowedPathOptions = {}) {
-  const prefixes = opts.allowedPrefixes ?? DEFAULT_ALLOWED_PATH_PREFIXES;
-  return prefixes.map(normalizeAllowedPrefix);
-}
-
 export function isPathInside(candidate: string, root: string) {
   const resolvedCandidate = realpathForScope(candidate);
   const resolvedRoot = realpathForScope(root);
@@ -175,101 +165,4 @@ export function resolveScopedPath(p: unknown, options: ScopedPathOptions = {}) {
     throw new Error(`${field} escapes ${scopeDescription}: ${raw}`);
   }
   return resolved;
-}
-
-function normalizeAllowedPrefix(prefix: string) {
-  const resolved = path.resolve(prefix);
-  return resolved.endsWith(path.sep) ? resolved : `${resolved}${path.sep}`;
-}
-
-export function validateAllowedPath(filePath: unknown, label: string, opts: AllowedPathOptions = {}) {
-  if (typeof filePath !== 'string' || !filePath) {
-    throw new Error(`${label}: path is empty or not a string`);
-  }
-  const normalized = path.resolve(filePath);
-  const allowedPrefixes = allowedPathPrefixes(opts);
-  const realNormalized = realpathForScope(normalized);
-  const allowed = allowedPrefixes.some((prefix) => isPathInside(realNormalized, prefix.slice(0, -1)));
-  if (!allowed) {
-    throw new Error(
-      `${label}: path '${normalized}' not in allowed prefixes [${allowedPrefixes.join(', ')}]`
-    );
-  }
-  return normalized;
-}
-
-export function tokenizeCommandString(command: unknown, label = 'command') {
-  if (Array.isArray(command)) {
-    if (command.length === 0) throw new Error(`${label}: argv array is empty`);
-    const argv = command.map((part, index) => {
-      if (selectTruthyValue(() => (typeof part !== 'string'), () => (part.trim() === ''))) {
-        throw new Error(`${label}[${index}]: argv entry must be a non-empty string`);
-      }
-      if (/[\r\n\0]/.test(part)) {
-        throw new Error(`${label}[${index}]: argv entry contains newline or null-byte characters`);
-      }
-      return part;
-    });
-    return argv;
-  }
-
-  if (typeof command !== 'string' || !command) {
-    throw new Error(`${label}: command is empty or not a string`);
-  }
-
-  const trimmed = command.trim();
-  if (!trimmed) throw new Error(`${label}: command is empty`);
-  if (/[\r\n\0]/.test(trimmed)) throw new Error(`${label}: command contains newline or null-byte characters`);
-  if (selectTruthyValue(() => (selectTruthyValue(() => (SHELL_META_PATTERN.test(trimmed)), () => (trimmed.includes('$(')))), () => (trimmed.includes('${')))) {
-    throw new Error(`${label}: shell metacharacters are not allowed; pass a direct executable and args only`);
-  }
-
-  return parseCommandTokens(trimmed, label);
-}
-
-function parseCommandTokens(trimmed: string, label: string): string[] {
-  const argv: string[] = [];
-  let current = '';
-  let quote: string | null = null;
-
-  for (let i = 0; i < trimmed.length; i += 1) {
-    const ch = trimmed[i] as string;
-    if (quote) {
-      if (ch === quote) {
-        quote = null;
-        continue;
-      }
-      if (ch === '\\' && quote === '"' && i + 1 < trimmed.length) {
-        current += trimmed[i + 1] as string;
-        i += 1;
-        continue;
-      }
-      current += ch;
-      continue;
-    }
-
-    if (selectTruthyValue(() => (ch === '"'), () => (ch === "'"))) {
-      quote = ch;
-      continue;
-    }
-    if (/\s/.test(ch)) {
-      if (current) {
-        argv.push(current);
-        current = '';
-      }
-      continue;
-    }
-    if (ch === '\\') {
-      if (i + 1 >= trimmed.length) throw new Error(`${label}: trailing escape is not allowed`);
-      current += trimmed[i + 1] as string;
-      i += 1;
-      continue;
-    }
-    current += ch;
-  }
-
-  if (quote) throw new Error(`${label}: unterminated quote in command`);
-  if (current) argv.push(current);
-  if (argv.length === 0) throw new Error(`${label}: command produced no argv tokens`);
-  return argv;
 }

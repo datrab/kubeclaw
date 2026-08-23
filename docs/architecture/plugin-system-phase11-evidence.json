@@ -4,7 +4,7 @@
   "status": "complete",
   "runtime": {
     "boundary": "linux_process",
-    "launcher": "skills/common/plugin-runtime/core/isolation/plugin-sandbox",
+    "launcher": "skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
     "protocol": "newline-delimited-json-rpc",
     "supported_surfaces": [
       "stage",

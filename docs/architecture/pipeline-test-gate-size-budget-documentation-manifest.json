@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "suite-documentation-manifest.v1",
+  "suite": "bundle",
+  "provider": "kubeclaw.size-budget@1",
+  "projectSchema": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+  "exampleFiles": ["contracts/pipeline-test-gate/v1/examples/size-budget-tar.json", "contracts/pipeline-test-gate/v1/examples/size-budget-growth.json"],
+  "configurationMarkerFields": ["format", "maximumTotalBytes", "maximumFileCount", "matchingFiles", "maximumGrowthBytes", "maximumGrowthPercent", "largestFiles"],
+  "sourceFilesWithErrors": ["skills/buster/plugins/size-budget/src/provider.js"],
+  "errorPrefixes": ["SIZE_BUDGET_"],
+  "additionalErrors": [],
+  "documents": {
+    "userGuide": "docs/architecture/pipeline-test-gate-size-budget-user-guide.md",
+    "operatorGuide": "docs/architecture/pipeline-test-gate-size-budget-operator-guide.md",
+    "configurationReference": "docs/architecture/pipeline-test-gate-size-budget-configuration-reference.md",
+    "errorReference": "docs/architecture/pipeline-test-gate-size-budget-error-reference.md",
+    "securityModel": "docs/architecture/pipeline-test-gate-size-budget-security-model.md"
+  },
+  "operatorFields": []
+}

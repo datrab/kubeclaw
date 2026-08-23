@@ -25,7 +25,7 @@ const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-real-e2e-'));
 const project = path.join(root, 'project');
 const state = path.join(root, 'state');
 const artifacts = path.join(root, 'artifacts');
-const telemetry = path.join(root, 'telemetry.jsonl');
+const telemetry = path.join(root, 'telemetry');
 const platformPath = path.join(root, 'platform.json');
 const pipelinePath = path.join(root, 'pipeline.json');
 const runId = `run:real-e2e:${crypto.randomUUID()}`;
@@ -73,6 +73,7 @@ try {
     trustedBuiltinRoots: pluginRoots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {
+      'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
       'artifacts.write': 'kubeclaw.artifact-store:artifact-store',
       'command.execute': 'kubeclaw.command-runner:command',
       'network.http': 'kubeclaw.network-http:http',
@@ -95,7 +96,12 @@ try {
         'runtime.dispatch': runtimeGrant,
         'artifacts.write': artifactGrant('kubeclaw.test-agent'),
       }),
-      'kubeclaw.review:review': grant({ 'runtime.dispatch': runtimeGrant }),
+      'kubeclaw.review:review': grant({
+        'runtime.dispatch': runtimeGrant,
+        'git.repository.read': { allowedPrefixes: ['.'] },
+        'artifacts.read': artifactGrant('kubeclaw.review'),
+        'artifacts.write': artifactGrant('kubeclaw.review'),
+      }),
       'kubeclaw.project-summary:summary': grant({
         'artifacts.write': artifactGrant('kubeclaw.project-summary'),
       }),
@@ -149,7 +155,7 @@ try {
       'kubeclaw.secret-resolver:secrets': {
         environment: { 'openclaw.gateway': 'OPENCLAW_GATEWAY_TOKEN' },
       },
-      'kubeclaw.telemetry-store:telemetry': { journalPath: telemetry },
+      'kubeclaw.telemetry-store:telemetry': { root: telemetry },
     },
     activeAdapters: [],
     observers: { 'kubeclaw.telemetry-observer:telemetry': {} },

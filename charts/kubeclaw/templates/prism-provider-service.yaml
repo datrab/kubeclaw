@@ -1,0 +1,11 @@
+{{- if hasKey .Values.capabilityProviders "prism" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: agent-prism
+  labels: { app.kubernetes.io/name: kubeclaw, app.kubernetes.io/component: prism-provider }
+spec:
+  type: ExternalName
+  externalName: prism-control.prism.svc.cluster.local
+  ports: [{ name: http, port: 8080, targetPort: 8080 }]
+{{- end }}

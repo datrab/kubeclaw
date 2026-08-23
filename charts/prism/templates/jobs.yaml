@@ -1,0 +1,133 @@
+{{- if .Values.postgresql.enabled }}
+{{- $postgresSecret := required "postgresql.existingSecret is required when postgresql.enabled=true" .Values.postgresql.existingSecret }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prism-migrate-{{ .Release.Revision }}
+  annotations: { "helm.sh/hook": post-install,post-upgrade, "helm.sh/hook-delete-policy": before-hook-creation }
+spec:
+  backoffLimit: 3
+  template:
+    metadata: { labels: { app: prism-migrate } }
+    spec:
+      serviceAccountName: prism-control
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      restartPolicy: OnFailure
+      initContainers:
+        - name: bootstrap-database-roles
+          image: "{{ .Values.images.control.repository }}{{ if .Values.images.control.digest }}@{{ .Values.images.control.digest }}{{ else }}:{{ .Values.images.control.tag }}{{ end }}"
+          command: ["node", "--experimental-strip-types", "skills/prism/server/bootstrap-database.ts"]
+          env:
+            - name: ADMIN_DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: admin-url } }
+            - name: PRISM_RUNTIME_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: runtime-password } }
+            - name: PRISM_MIGRATOR_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: migrator-password } }
+            - name: PRISM_READONLY_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: readonly-password } }
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 512Mi } }
+      containers:
+        - name: migrate
+          image: "{{ .Values.images.control.repository }}{{ if .Values.images.control.digest }}@{{ .Values.images.control.digest }}{{ else }}:{{ .Values.images.control.tag }}{{ end }}"
+          command: ["node", "--experimental-strip-types", "skills/prism/server/migrate.ts"]
+          env:
+            - name: DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: migrator-url } }
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 1Gi } }
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata: { name: prism-backup }
+spec:
+  schedule: "0 2 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata: { labels: { app: prism-backup } }
+        spec:
+          serviceAccountName: prism-backup
+          automountServiceAccountToken: false
+          securityContext: { runAsNonRoot: true, runAsUser: 999, runAsGroup: 999, fsGroup: 999, seccompProfile: { type: RuntimeDefault } }
+          restartPolicy: OnFailure
+          containers:
+            [
+              {
+                name: proof,
+                image: {{ .Values.postgresql.image | quote }},
+                command: ["sh", "-ec"],
+                args: ["set -eu; stamp=$(date -u +%Y%m%dT%H%M%SZ); file=/backups/prism-$stamp.dump; pg_dump --format=custom --file=$file; pg_restore --list $file >/dev/null; sha256sum $file >$file.sha256; { echo backupVersion=prism-backup-v1; echo createdAt=$stamp; postgres --version; psql --set=ON_ERROR_STOP=1 --tuples-only --no-align --command=\"SELECT name FROM prism.schema_migration ORDER BY name\"; psql --set=ON_ERROR_STOP=1 --tuples-only --no-align --command=\"SELECT extname||'='||extversion FROM pg_extension ORDER BY extname\"; } >$file.manifest; sha256sum $file.manifest >$file.manifest.sha256; find /backups -type f -name 'prism-*' -mtime +30 -delete; test -s $file"],
+                env:
+                  [
+                    { name: PGHOST, value: prism-postgresql },
+                    { name: PGDATABASE, value: prism },
+                    { name: PGUSER, value: postgres },
+                    {
+                      name: PGPASSWORD,
+                      valueFrom:
+                        {
+                          secretKeyRef:
+                            { name: {{ $postgresSecret }}, key: password },
+                        },
+                    },
+                  ],
+                securityContext:
+                  {
+                    allowPrivilegeEscalation: false,
+                    capabilities: { drop: ["ALL"] },
+                  },
+                resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 2Gi } },
+                volumeMounts: [{ name: backups, mountPath: /backups }],
+              },
+            ]
+          volumes: [{ name: backups, persistentVolumeClaim: { claimName: prism-backups } }]
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata: { name: prism-restore-proof }
+spec:
+  schedule: "0 4 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata: { labels: { app: prism-backup } }
+        spec:
+          serviceAccountName: prism-backup
+          automountServiceAccountToken: false
+          securityContext: { runAsNonRoot: true, runAsUser: 999, runAsGroup: 999, fsGroup: 999, seccompProfile: { type: RuntimeDefault } }
+          restartPolicy: OnFailure
+          containers:
+            - name: restore-proof
+              image: {{ .Values.postgresql.image | quote }}
+              command: ["sh", "-ec"]
+              args: ["set -eu; file=$(find /backups -type f -name 'prism-*.dump' -print | sort | tail -n 1); test -n \"$file\"; (cd /backups && sha256sum --check $(basename $file).sha256 && sha256sum --check $(basename $file).manifest.sha256); dropdb --if-exists prism_restore_proof; createdb prism_restore_proof; pg_restore --dbname=prism_restore_proof $file; psql --dbname=prism_restore_proof --set=ON_ERROR_STOP=1 --command='SELECT count(*) FROM prism.project; SELECT count(*) FROM prism.design_revision; SELECT count(*) FROM prism.baseline;' >/dev/null; dropdb prism_restore_proof"]
+              env:
+                - { name: PGHOST, value: prism-postgresql }
+                - { name: PGDATABASE, value: prism }
+                - { name: PGUSER, value: postgres }
+                - name: PGPASSWORD
+                  valueFrom: { secretKeyRef: { name: {{ $postgresSecret }}, key: password } }
+              securityContext: { allowPrivilegeEscalation: false, capabilities: { drop: ["ALL"] } }
+              resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 2Gi } }
+              volumeMounts: [{ name: backups, mountPath: /backups }]
+          volumes: [{ name: backups, persistentVolumeClaim: { claimName: prism-backups } }]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: prism-backups }
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if .Values.artifactStorage.storageClass }}
+  storageClassName: {{ .Values.artifactStorage.storageClass | quote }}
+  {{- end }}
+  resources: { requests: { storage: 100Gi } }
+{{- end }}

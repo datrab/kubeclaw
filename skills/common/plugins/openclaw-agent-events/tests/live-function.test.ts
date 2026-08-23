@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const { activateWithSdk, normalizeAgentEvent } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 assert.equal(normalizeAgentEvent({}), undefined);
 assert.deepEqual(normalizeAgentEvent({ run_id: 'run:1', stage_id: 'stage:1', attempt_id: 'attempt:1' })?.identity,
   { runId: 'run:1', stageId: 'stage:1', attemptId: 'attempt:1' });

@@ -9,6 +9,7 @@
     "helm",
     "kubeconform",
     "kubectl",
+    "tsc",
     "which"
   ],
   "ignore": [
@@ -28,6 +29,7 @@
     "openclaw",
     "pixelmatch",
     "playwright",
+    "pg",
     "pngjs",
     "ws"
   ],
@@ -54,11 +56,81 @@
         "src/**/*.ts"
       ]
     },
+    "skills/buster/engine": {
+      "entry": [
+        "src/index.ts",
+        "test-gates/provider-child.mjs",
+        "test-gates/report-adapter-child.mjs"
+      ],
+      "project": [
+        "**/*.{ts,mjs}"
+      ]
+    },
     "skills/buster/plugins/buster-suite-runtime": {
       "entry": [
         "src/adapter.ts",
         "src/worker-runner.ts",
         "src/worker.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/container-build": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/coverage-budget": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/direct-command": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/junit-report-adapter": {
+      "entry": [
+        "src/adapter.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/size-budget": {
+      "entry": [
+        "src/provider.js",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -80,9 +152,8 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
-    "skills/common/plugin-runtime/core": {
+    "skills/common/plugin-runtime/foundation": {
       "entry": [
-        "src/index.ts",
         "isolation/child.mjs"
       ],
       "project": [
@@ -125,6 +196,7 @@
     "skills/common/plugins/command-runner": {
       "entry": [
         "src/adapter.ts",
+        "src/runner.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -184,7 +256,6 @@
     },
     "skills/common/plugins/openclaw-agent-observer": {
       "entry": [
-        "src/generated/agent-observability/index.ts",
         "src/index.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
@@ -314,6 +385,15 @@
         "common/**/*.{ts,mjs}",
         "contracts/**/*.{ts,mjs}",
         "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/core": {
+      "entry": [
+        "src/index.ts",
+        "cli.ts"
+      ],
+      "project": [
+        "**/*.{ts,mjs}"
       ]
     },
     "skills/nova/plugins/architecture-validator": {
@@ -465,6 +545,7 @@
     },
     "skills/nova/plugins/review": {
       "entry": [
+        "src/repository-audit-stage.ts",
         "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
@@ -473,6 +554,14 @@
         "common/**/*.{ts,mjs}",
         "contracts/**/*.{ts,mjs}",
         "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/worker/core": {
+      "entry": [
+        "src/index.ts"
+      ],
+      "project": [
+        "**/*.{ts,mjs}"
       ]
     }
   }

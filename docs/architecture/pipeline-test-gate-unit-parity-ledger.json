@@ -1,0 +1,944 @@
+{
+  "schemaVersion": "pipeline-test-gate-unit-parity-ledger.v1",
+  "suite": "unit",
+  "baseline": "docs/architecture/pipeline-test-gate-unit-baseline.md",
+  "expectedItemCount": 93,
+  "cutover": {
+    "status": "complete",
+    "phase": 10,
+    "authority": "replacement-only",
+    "proof": "tests/verification/contracts/check-pipeline-phase10-cutover.mts"
+  },
+  "entries": {
+    "UNIT-ACT-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ACT-002": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-IN-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-IN-002": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-IN-003": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ID-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ISO-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ISO-002": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ISO-003": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-002": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-003": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-004": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-005": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-006": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-CFG-007": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DISC-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DISC-002": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DISC-003": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DISC-004": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DISC-005": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DISC-006": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-002": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-003": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-003A": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-004": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-005": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-006": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-007": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-008": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-009": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EXEC-010": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-002": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-003": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-004": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-005": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-006": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-007": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-008": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-009": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-010": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-PARSE-011": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-002": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-003": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-004": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-005": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-006": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-007": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-008": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RES-009": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-LOG-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-LOG-002": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-LOG-003": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EVI-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-EVT-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-RCP-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ERR-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ERR-002": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ERR-003": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-ERR-004": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-SCHED-001": {
+      "disposition": "preserved",
+      "status": "proved",
+      "rationale": "The replacement retains this valid legacy behavior through the shared provider-based runtime.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-001": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-002": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-003": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-004": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-005": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-006": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-007": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-008": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-009": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-010": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-011": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-012": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-013": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-DEF-014": {
+      "disposition": "removed-defect",
+      "status": "proved",
+      "rationale": "The accepted replacement prevents this known legacy defect.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-comparison.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-001": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-002": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-003": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-004": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-005": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-006": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-007": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-008": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-009": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-010": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-011": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-012": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-013": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-014": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    },
+    "UNIT-NEW-015": {
+      "disposition": "improved",
+      "status": "proved",
+      "rationale": "The replacement preserves the useful outcome through the accepted structured, explicit, or safer contract.",
+      "proof": [
+        "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+        "tests/verification/contracts/check-pipeline-phase9-parity.mts",
+        "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+      ]
+    }
+  }
+}

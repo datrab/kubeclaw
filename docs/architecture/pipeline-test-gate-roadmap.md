@@ -3,6 +3,9 @@
 Status: discussion handoff; not current behavior
 Audience: maintainers, pipeline-extension authors, ClawDeck developers
 
+The active discussion and accepted decisions are recorded in
+`docs/architecture/pipeline-test-gate-design.md`.
+
 ## Scope
 
 This workstream concerns the tests executed by pipeline quality gates through
@@ -90,9 +93,10 @@ pipeline authority:
    retries, queueing, and safe cache reuse.
 7. Normalize JUnit, SARIF, coverage, performance metrics, screenshots, logs,
    and arbitrary artifacts into one durable test-evidence model.
-8. Migrate all thirteen built-in suites through the same provider contract,
-   prove behavioral parity, remove the superseded closed registry atomically,
-   and run the complete real gate and failure matrix.
+8. Migrate one built-in suite at a time through the same provider contract.
+   Prove equal or better behavior, switch that suite, remove its superseded
+   code, and then continue with the next suite. Run the complete real gate and
+   failure matrix after the final migration.
 
 ## Non-Negotiable Constraints
 
@@ -107,8 +111,8 @@ pipeline authority:
   suite, attempt, execution, and immutable receipt identities.
 - Custom and built-in providers must use the same execution and evidence
   contracts.
-- Existing built-ins retain authority until one atomic parity-proven cutover;
-  the migration must not create dual execution authority.
+- Each existing built-in retains authority until its own parity-proven cutover.
+  The old and new versions must not both control the gate.
 - ClawDeck should consume canonical test execution, artifact, and verdict
   events rather than a separate dashboard-specific state model.
 

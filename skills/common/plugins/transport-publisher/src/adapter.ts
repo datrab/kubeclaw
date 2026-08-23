@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
+import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
 
 interface TargetConfig {
   readonly endpoint: string;
@@ -12,6 +13,8 @@ const PUBLICATION_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/;
 const DEFAULT_MAX_PAYLOAD_BYTES = 262_144;
 const MAX_PAYLOAD_BYTES = 1_048_576;
 const MAX_JSON_DEPTH = 64;
+const TERMINAL_RESERVATION_BYTES = 8_192;
+const DELIVERY_RECORD_MAX_BYTES = MAX_PAYLOAD_BYTES + 65_536;
 
 function plainRecord(value: unknown): value is Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
@@ -36,6 +39,14 @@ function positiveInteger(value: unknown, fallback: number): number {
   return Number(resolved);
 }
 
+function storeLimit(value: unknown, fallback: number, field: string): number {
+  const resolved = value ?? fallback;
+  if (!Number.isSafeInteger(resolved) || Number(resolved) < 1) {
+    throw new Error(`TRANSPORT_CONFIG_INVALID:${field}`);
+  }
+  return Number(resolved);
+}
+
 function endpoint(value: unknown): string {
   if (typeof value !== 'string') throw new Error('TRANSPORT_CONFIG_INVALID:endpoint');
   let parsed: URL;
@@ -50,8 +61,15 @@ function endpoint(value: unknown): string {
   return parsed.href;
 }
 
-function readTargets(config: Readonly<Record<string, unknown>>): ReadonlyMap<string, TargetConfig> {
-  exactKeys(config as Record<string, unknown>, ['targets'], 'TRANSPORT_CONFIG_INVALID:unknownField');
+function readConfig(config: Readonly<Record<string, unknown>>): {
+  readonly targets: ReadonlyMap<string, TargetConfig>;
+  readonly deliveryRoot: string;
+  readonly maximumDeliveryRecords: number;
+  readonly maximumDeliveryBytes: number;
+} {
+  exactKeys(config as Record<string, unknown>, [
+    'targets', 'deliveryRoot', 'maximumDeliveryRecords', 'maximumDeliveryBytes',
+  ], 'TRANSPORT_CONFIG_INVALID:unknownField');
   if (!plainRecord(config.targets) || Object.keys(config.targets).length === 0) {
     throw new Error('TRANSPORT_CONFIG_INVALID:targets');
   }
@@ -68,7 +86,12 @@ function readTargets(config: Readonly<Record<string, unknown>>): ReadonlyMap<str
       maxPayloadBytes: positiveInteger(rawTarget.maxPayloadBytes, DEFAULT_MAX_PAYLOAD_BYTES),
     }));
   }
-  return targets;
+  if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {
+    throw new Error('TRANSPORT_CONFIG_INVALID:deliveryRoot');
+  }
+  const maximumDeliveryRecords = storeLimit(config.maximumDeliveryRecords, 100_000, 'maximumDeliveryRecords');
+  const maximumDeliveryBytes = storeLimit(config.maximumDeliveryBytes, 256 * 1024 * 1024, 'maximumDeliveryBytes');
+  return { targets, deliveryRoot: config.deliveryRoot, maximumDeliveryRecords, maximumDeliveryBytes };
 }
 
 function assertJsonKey(key: string): void {
@@ -144,8 +167,38 @@ function validateResponse(value: Readonly<Record<string, unknown>>): {
   return { status: Number(value.status), publicationId: value.body.publicationId };
 }
 
+function deliveryRecordKey(idempotencyKey: string, kind: string): string {
+  const digest = crypto.createHash('sha256').update(idempotencyKey).digest('hex');
+  return `delivery:${kind}:${digest}`;
+}
+
+function terminalRecordKey(idempotencyKey: string, attemptId: string, attemptNumber: number): string {
+  const attempt = crypto.createHash('sha256').update(attemptId).digest('hex').slice(0, 16);
+  return deliveryRecordKey(idempotencyKey, `attempt-${attemptNumber}-${attempt}`);
+}
+
+function completedReceipt(
+  records: ReadonlyArray<{
+    readonly idempotencyKey: string;
+    readonly payload: Readonly<Record<string, unknown>>;
+  }>,
+  idempotencyKey: string,
+): Readonly<Record<string, unknown>> | undefined {
+  const digest = crypto.createHash('sha256').update(idempotencyKey).digest('hex');
+  const completed = records.find((entry) =>
+    entry.idempotencyKey.endsWith(`:${digest}`)
+    && entry.payload.schemaVersion === 'transport-publication-receipt.v1');
+  return completed?.payload.receipt as Readonly<Record<string, unknown>> | undefined;
+}
+
 export function activate(context: AdapterActivationContext): AdapterInstance {
-  const targets = readTargets(context.config);
+  const config = readConfig(context.config);
+  const targets = config.targets;
+  const records = new FileDurableRecordStore(config.deliveryRoot, {
+    maximumRecords: config.maximumDeliveryRecords,
+    maximumBytes: config.maximumDeliveryBytes,
+    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,
+  });
   let shuttingDown = false;
   return {
     async ready() {
@@ -164,38 +217,120 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`TRANSPORT_TARGET_UNKNOWN:${request.resource.canonicalId}`);
       const publication = publicationBody(request.payload, target.maxPayloadBytes);
-      const resolved = await context.invoke('secrets.read', {
-        operation: 'resolve',
-        resource: { type: 'secret.name', canonicalId: target.signingSecret },
-        payload: {},
-      });
-      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      const signature = crypto
-        .createHmac('sha256', secretValue(resolved))
-        .update(`${request.resource.canonicalId}\n${request.idempotencyKey}\n${publication.serialized}`)
-        .digest('hex');
-      const response = await context.invoke('network.http', {
-        operation: 'request',
-        resource: { type: 'network.url', canonicalId: target.endpoint },
-        payload: {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'idempotency-key': request.idempotencyKey,
-            'x-kubeclaw-target': request.resource.canonicalId,
-            'x-kubeclaw-signature': `sha256=${signature}`,
-          },
-          body: publication.body,
-        },
-      });
-      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      const receipt = validateResponse(response);
-      return Object.freeze({
-        accepted: true,
+      const stream = `publications/${request.resource.canonicalId}`;
+      const requestKey = deliveryRecordKey(request.idempotencyKey, 'request');
+      await records.append(stream, requestKey, {
+        schemaVersion: 'transport-publication-request.v1',
+        idempotencyKey: request.idempotencyKey,
         target: request.resource.canonicalId,
-        publicationId: receipt.publicationId,
-        status: receipt.status,
+        message: publication.body,
       });
+      const prior = await records.read<Readonly<Record<string, unknown>>>(stream);
+      const completed = completedReceipt(prior, request.idempotencyKey);
+      if (completed) return completed;
+      const terminalKey = terminalRecordKey(
+        request.idempotencyKey,
+        request.attempt.attemptId,
+        request.attempt.attemptNumber,
+      );
+      const existingTerminal = prior.find((entry) => entry.idempotencyKey === terminalKey);
+      const reservation = existingTerminal
+        ? { appended: false, record: existingTerminal }
+        : await records.append<Readonly<Record<string, unknown>>>(stream, terminalKey, {
+          schemaVersion: 'transport-publication-reservation.v1',
+          attempt: request.attempt,
+          reserved: ' '.repeat(TERMINAL_RESERVATION_BYTES),
+        });
+      if (!reservation.appended) {
+        if (reservation.record.payload.schemaVersion === 'transport-publication-receipt.v1') {
+          return reservation.record.payload.receipt as Readonly<Record<string, unknown>>;
+        }
+        if (reservation.record.payload.schemaVersion === 'transport-publication-failure.v1') {
+          throw new Error(String(reservation.record.payload.error));
+        }
+      }
+      try {
+        const resolved = await context.invoke('secrets.read', {
+          operation: 'resolve',
+          resource: { type: 'secret.name', canonicalId: target.signingSecret },
+          payload: {},
+        });
+        if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+        const signature = crypto
+          .createHmac('sha256', secretValue(resolved))
+          .update(`${request.resource.canonicalId}\n${request.idempotencyKey}\n${publication.serialized}`)
+          .digest('hex');
+        const response = await context.invoke('network.http', {
+          operation: 'request',
+          resource: { type: 'network.url', canonicalId: target.endpoint },
+          payload: {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              'idempotency-key': request.idempotencyKey,
+              'x-kubeclaw-target': request.resource.canonicalId,
+              'x-kubeclaw-signature': `sha256=${signature}`,
+            },
+            body: publication.body,
+          },
+        });
+        if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+        const receipt = validateResponse(response);
+        const result = Object.freeze({
+          accepted: true,
+          target: request.resource.canonicalId,
+          publicationId: receipt.publicationId,
+          status: receipt.status,
+        });
+        try {
+          const committed = await records.transition(stream, terminalKey, reservation.record.payloadDigest, {
+            schemaVersion: 'transport-publication-receipt.v1',
+            attempt: request.attempt,
+            receipt: result,
+          });
+          return committed.payload.receipt as Readonly<Record<string, unknown>>;
+        } catch (error) {
+          if (error instanceof Error && error.message === 'DURABLE_RECORD_TRANSITION_CONFLICT') {
+            const current = await records.read<Readonly<Record<string, unknown>>>(stream);
+            const accepted = completedReceipt(current, request.idempotencyKey);
+            if (accepted) return accepted;
+            const terminal = current.find((entry) => entry.idempotencyKey === terminalKey);
+            if (terminal) {
+              const reconciled = await records.transition(stream, terminalKey, terminal.payloadDigest, {
+                schemaVersion: 'transport-publication-receipt.v1',
+                attempt: request.attempt,
+                receipt: result,
+              });
+              return reconciled.payload.receipt as Readonly<Record<string, unknown>>;
+            }
+          }
+          throw error;
+        }
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : String(error);
+        const reasonId = crypto.createHash('sha256').update(reason).digest('hex').slice(0, 16);
+        const boundedReason = reason.slice(0, 2_048);
+        try {
+          await records.transition(stream, terminalKey, reservation.record.payloadDigest, {
+            schemaVersion: 'transport-publication-failure.v1',
+            idempotencyKey: request.idempotencyKey,
+            target: request.resource.canonicalId,
+            attempt: request.attempt,
+            reasonId,
+            error: boundedReason,
+          });
+        } catch (transitionError) {
+          if (transitionError instanceof Error && transitionError.message === 'DURABLE_RECORD_TRANSITION_CONFLICT') {
+            const accepted = completedReceipt(
+              await records.read<Readonly<Record<string, unknown>>>(stream),
+              request.idempotencyKey,
+            );
+            if (accepted) return accepted;
+          }
+          throw transitionError;
+        }
+        throw error;
+      }
     },
     async shutdown() {
       shuttingDown = true;

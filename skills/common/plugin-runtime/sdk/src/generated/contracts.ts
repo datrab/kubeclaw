@@ -1,9 +1,28 @@
 // Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.
 
+export type TestContractId = string;
 export type NamespacedId = string;
 export type LocalId = string;
 export type RelativeModulePath = string;
 export type RelativeSchemaPath = string;
+export type TestProviderPort =
+  | {
+      name: LocalId;
+      kind: 'value';
+      required: boolean;
+      schemaId: TestContractId;
+    }
+  | {
+      name: LocalId;
+      kind: 'artifact';
+      required: boolean;
+      schemaId?: TestContractId;
+      /**
+       * @minItems 1
+       * @maxItems 32
+       */
+      mediaTypes: [string, ...string[]];
+    };
 export type PluginManifest = PluginManifest1 & {
   id: NamespacedId;
   apiVersion: 'pipeline-plugin-v2';
@@ -11,6 +30,8 @@ export type PluginManifest = PluginManifest1 & {
   stages: StageRegistration[];
   observers: ObserverRegistration[];
   adapters: AdapterRegistration[];
+  testProviders?: TestProviderRegistration[];
+  reportAdapters?: ReportAdapterRegistration[];
 };
 export type PluginManifest1 =
   | {
@@ -32,6 +53,20 @@ export type PluginManifest1 =
        * @minItems 1
        */
       adapters?: [any, ...any[]];
+      [k: string]: any;
+    }
+  | {
+      /**
+       * @minItems 1
+       */
+      testProviders?: [any, ...any[]];
+      [k: string]: any;
+    }
+  | {
+      /**
+       * @minItems 1
+       */
+      reportAdapters?: [any, ...any[]];
       [k: string]: any;
     };
 export type OpaqueId = string;
@@ -134,11 +169,16 @@ export type AdapterLifecycle = {
 };
 
 export interface PluginSystemV2 {
+  testContractId?: TestContractId;
   packageIdentity?: PackageIdentity;
   packageResolution?: PackageResolution;
   stageRegistration?: StageRegistration;
   observerRegistration?: ObserverRegistration;
   adapterRegistration?: AdapterRegistration;
+  testProviderPort?: TestProviderPort;
+  testEvidencePolicy?: TestEvidencePolicy;
+  testProviderRegistration?: TestProviderRegistration;
+  reportAdapterRegistration?: ReportAdapterRegistration;
   pluginManifest?: PluginManifest;
   stageDefinition?: StageDefinition;
   pipelineDefinition?: PipelineDefinition;
@@ -219,6 +259,66 @@ export interface AdapterRegistration {
   providesCapabilities: [NamespacedId, ...NamespacedId[]];
   requiredCapabilities: NamespacedId[];
   configSchema: RelativeSchemaPath;
+}
+export interface TestEvidencePolicy {
+  /**
+   * @maxItems 128
+   */
+  onPass: LocalId[];
+  /**
+   * @maxItems 128
+   */
+  onFail: LocalId[];
+  /**
+   * @maxItems 128
+   */
+  onError: LocalId[];
+}
+export interface TestProviderRegistration {
+  id: LocalId;
+  contractId: TestContractId;
+  kind: 'test' | 'fixture';
+  module: RelativeModulePath;
+  export: string;
+  configSchema: RelativeSchemaPath;
+  /**
+   * @maxItems 128
+   */
+  inputs: TestProviderPort[];
+  /**
+   * @maxItems 128
+   */
+  outputs: TestProviderPort[];
+  /**
+   * @maxItems 128
+   */
+  requiredCapabilities: NamespacedId[];
+  retrySafe: boolean;
+  /**
+   * @maxItems 64
+   */
+  matrixFields: LocalId[];
+  /**
+   * @maxItems 32
+   */
+  reportFormats: LocalId[];
+  /**
+   * @maxItems 128
+   */
+  evidenceTypes: LocalId[];
+  evidenceDefaults: TestEvidencePolicy;
+}
+export interface ReportAdapterRegistration {
+  id: LocalId;
+  format: LocalId;
+  contractVersion: number;
+  module: RelativeModulePath;
+  export: string;
+  /**
+   * @minItems 1
+   * @maxItems 32
+   */
+  mediaTypes: [string, ...string[]];
 }
 export interface StageDefinition {
   id: LocalId;
@@ -361,7 +461,7 @@ export interface PackageProvenance {
 export interface RegistrationProvenance {
   schemaVersion: 'registration-provenance.v2';
   package: PackageProvenance;
-  surface: 'stage' | 'observer' | 'adapter';
+  surface: 'stage' | 'observer' | 'adapter' | 'test_provider' | 'report_adapter';
   registrationId: LocalId;
 }
 export interface CapabilityGrant {
@@ -375,6 +475,12 @@ export interface PluginContext {
   config: JsonObject;
   input: JsonObject;
   guidance?: JsonObject;
+  stageLifecycle?: {
+    attemptsUsed: number;
+    remediationCyclesUsed: number;
+    maxAttempts: number;
+    maxRemediationCycles: number;
+  };
   artifacts: ArtifactRef[];
 }
 export interface EventIdentity {

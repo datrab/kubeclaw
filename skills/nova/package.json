@@ -2,6 +2,9 @@
   "name": "kubeclaw-nova-pipeline",
   "private": true,
   "type": "module",
+  "files": [
+    "pipeline.ts"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"
   }

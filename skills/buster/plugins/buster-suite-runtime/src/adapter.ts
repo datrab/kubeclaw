@@ -14,7 +14,7 @@ import {
   relocateRepositoryValues,
   sha256,
   stringList,
-  SUPPORTED_SUITES,
+  LEGACY_UNMIGRATED_SUITES,
 } from './protocol.ts';
 
 const exec = promisify(execFile);
@@ -23,7 +23,7 @@ interface ClientConfig {
   readonly endpoint: string;
   readonly tokenSecret: string;
   readonly allowedRoots: readonly string[];
-  readonly allowedSuites: ReadonlySet<string>;
+  readonly unmigratedSuites: ReadonlySet<string>;
   readonly capabilities: readonly string[];
   readonly gitExecutable: string;
   readonly maxArchiveBytes: number;
@@ -49,7 +49,7 @@ function validLimits(gitExecutable: string, archiveBytes: number, timeoutMs: num
 
 function parseConfig(raw: Readonly<Record<string, unknown>>): ClientConfig {
   exact(raw as Record<string, unknown>, [
-    'endpoint', 'tokenSecret', 'allowedRepositoryRoots', 'allowedSuites',
+    'endpoint', 'tokenSecret', 'allowedRepositoryRoots', 'unmigratedSuites',
     'suiteCapabilities', 'gitExecutable', 'maxArchiveBytes', 'maxSuiteTimeoutMs', 'pollMs',
   ], 'BUSTER_SUITE_CONFIG_UNKNOWN_FIELD');
   const endpoint = typeof raw.endpoint === 'string' ? new URL(raw.endpoint) : null;
@@ -59,10 +59,10 @@ function parseConfig(raw: Readonly<Record<string, unknown>>): ClientConfig {
   if (typeof raw.tokenSecret !== 'string' || !/^[a-z0-9._:-]+$/u.test(raw.tokenSecret)) {
     throw new Error('BUSTER_SUITE_CONFIG_INVALID:tokenSecret');
   }
-  const allowedRoots = stringList(raw.allowedRepositoryRoots, 'allowedRepositoryRoots').map(canonicalDirectory);
-  const allowedSuites = new Set(stringList(raw.allowedSuites, 'allowedSuites'));
-  if ([...allowedSuites].some((suite) => !SUPPORTED_SUITES.includes(suite as typeof SUPPORTED_SUITES[number]))) {
-    throw new Error('BUSTER_SUITE_CONFIG_INVALID:allowedSuites');
+  const allowedRoots = stringList(raw.allowedRepositoryRoots, 'allowedRepositoryRoots', false, 4096).map(canonicalDirectory);
+  const unmigratedSuites = new Set(stringList(raw.unmigratedSuites, 'unmigratedSuites'));
+  if ([...unmigratedSuites].some((suite) => !LEGACY_UNMIGRATED_SUITES.includes(suite as typeof LEGACY_UNMIGRATED_SUITES[number]))) {
+    throw new Error('BUSTER_SUITE_CONFIG_INVALID:unmigratedSuites');
   }
   const capabilities = stringList(raw.suiteCapabilities, 'suiteCapabilities');
   const gitExecutable = typeof raw.gitExecutable === 'string' && path.isAbsolute(raw.gitExecutable)
@@ -76,7 +76,7 @@ function parseConfig(raw: Readonly<Record<string, unknown>>): ClientConfig {
     endpoint: endpoint.href.replace(/\/+$/u, ''),
     tokenSecret: raw.tokenSecret,
     allowedRoots,
-    allowedSuites,
+    unmigratedSuites,
     capabilities,
     gitExecutable,
     maxArchiveBytes,
@@ -146,7 +146,7 @@ function suiteRequest(config: ClientConfig, invocation: AdapterInvocation): Read
   const repositoryRoot = typeof request.payload.repositoryRoot === 'string' ? canonicalDirectory(request.payload.repositoryRoot) : '';
   if (!repositoryRoot || !within(repositoryRoot, config.allowedRoots)) throw new Error('BUSTER_SUITE_REPOSITORY_DENIED');
   const suites = stringList(request.payload.suites, 'suites');
-  if (suites.some((suite) => !config.allowedSuites.has(suite))) throw new Error('BUSTER_SUITE_DENIED');
+  if (suites.some((suite) => !config.unmigratedSuites.has(suite))) throw new Error('BUSTER_SUITE_DENIED');
   if (!isRecord(request.payload.testConfig) || !isRecord(request.payload.task)) throw new Error('BUSTER_SUITE_PAYLOAD_INVALID');
   const timeoutMs = Number(request.payload.testConfig.suite_timeout_ms);
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > config.maxTimeoutMs) throw new Error('BUSTER_SUITE_TIMEOUT_DENIED');

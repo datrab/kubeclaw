@@ -1,0 +1,10 @@
+{
+  "name": "@kubeclaw/plugin-prism-design",
+  "private": true,
+  "type": "module",
+  "dependencies": { "@kubeclaw/plugin-sdk": "*" },
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/live-function.test.ts"
+  }
+}

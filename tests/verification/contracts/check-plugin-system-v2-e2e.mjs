@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const core = await import(pathToFileURL(path.resolve('skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-v2-e2e-'));
 const repository = path.join(temporary, 'repository');
 const artifacts = path.join(temporary, 'artifacts');
@@ -81,10 +81,9 @@ const runner = new core.PipelineRunner({
 const result = await runner.run('run:e2e');
 assert.equal(result.status, 'succeeded');
 assert.equal(result.stages.get('delivery')?.status, 'succeeded');
-const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8')
-  .trim()
-  .split('\n')
-  .map(JSON.parse);
+const catalog = JSON.parse(fs.readFileSync(path.join(artifacts, 'records', 'store.json'), 'utf8'))
+  .records
+  .map((record) => record.payload);
 assert.equal(catalog.length, 1);
 assert.equal(catalog[0].artifactId, 'delivery-lint:web');
 assert.match(catalog[0].digest, /^sha256:[a-f0-9]{64}$/);

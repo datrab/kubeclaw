@@ -41,7 +41,7 @@ function packageEntrypoints(packageJson) {
 }
 
 function pluginEntrypoints(pluginJson) {
-  return ['stages', 'observers', 'adapters']
+  return ['stages', 'observers', 'adapters', 'testProviders', 'reportAdapters']
     .flatMap((kind) => Array.isArray(pluginJson?.[kind]) ? pluginJson[kind] : [])
     .map((registration) => relativeModule(registration?.module))
     .filter(Boolean);
@@ -64,7 +64,7 @@ function pluginWorkspace(directory) {
     : [];
   const overrides = {
     'skills/buster/plugins/buster-suite-runtime': ['src/worker.ts', 'src/worker-runner.ts'],
-    'skills/common/plugins/openclaw-agent-observer': ['src/generated/agent-observability/index.ts'],
+    'skills/common/plugins/openclaw-agent-observer': ['src/index.ts'],
   }[directory] ?? [];
   const entry = [...new Set([
     ...manifestEntries,
@@ -109,8 +109,20 @@ const workspaces = {
     entry: ['src/index.ts'],
     project: ['src/**/*.ts'],
   },
-  'skills/common/plugin-runtime/core': {
-    entry: ['src/index.ts', 'isolation/child.mjs'],
+  'skills/common/plugin-runtime/foundation': {
+    entry: ['isolation/child.mjs'],
+    project: ['**/*.{ts,mjs}'],
+  },
+  'skills/nova/core': {
+    entry: ['src/index.ts', 'cli.ts'],
+    project: ['**/*.{ts,mjs}'],
+  },
+  'skills/worker/core': {
+    entry: ['src/index.ts'],
+    project: ['**/*.{ts,mjs}'],
+  },
+  'skills/buster/engine': {
+    entry: ['src/index.ts', 'test-gates/provider-child.mjs', 'test-gates/report-adapter-child.mjs'],
     project: ['**/*.{ts,mjs}'],
   },
   'skills/common/plugin-runtime/sdk': {
@@ -136,6 +148,7 @@ const config = {
     'helm',
     'kubeconform',
     'kubectl',
+    'tsc',
     'which',
   ],
   ignore: [
@@ -155,6 +168,7 @@ const config = {
     'openclaw',
     'pixelmatch',
     'playwright',
+    'pg',
     'pngjs',
     'ws',
   ],

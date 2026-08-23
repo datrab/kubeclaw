@@ -18,6 +18,7 @@ export type Context = {
   swarmDir: string;
   scaffoldFile: string;
   progressFile: string;
+  pipelineFile: string;
 };
 export type Diagnostic = {
   level: 'error';
@@ -49,7 +50,8 @@ export const DEFAULTS = Object.freeze({
     payload: Object.freeze({}),
   }),
 });
-export const VALID_SUITES = new Set(['build', 'health', 'api', 'security', 'unit', 'a11y', 'perf', 'bundle', 'visual-reg', 'e2e', 'manifest', 'k8s']);
+export const VALID_SUITES = new Set(['api', 'security', 'a11y', 'perf', 'visual-reg', 'e2e', 'tailscale-preview']);
+export const MIGRATED_SUITES = new Set(['unit', 'manifest', 'build', 'bundle', 'size-budget', 'k8s', 'health']);
 
 export function isPlainObject(value: unknown): value is AnyRecord {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);

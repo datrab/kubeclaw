@@ -28,12 +28,18 @@ jobs:
             image_inputs:
               - '.dockerignore'
               - 'tsconfig.base.json'
+              - 'package.json'
+              - 'package-lock.json'
               - 'docker/**'
               - 'go.mod'
               - 'cmd/buster-namespace-controller/**'
               - 'skills/common/plugins/openclaw-agent-observer/**'
               - 'skills/buster/plugins/buster-suite-runtime/**'
               - 'contracts/agent-observability/v1/**'
+              - 'contracts/prism/v1/**'
+              - 'skills/prism/**'
+              - 'skills/worker/core/**'
+              - 'contracts/pipeline-worker-core/v1/**'
   check-base-image:
     name: Check pinned OpenClaw base
     runs-on: ubuntu-latest
@@ -54,6 +60,10 @@ jobs:
             sed -n 's/^ARG OPENCLAW_BASE=//p' \
               docker/Dockerfile.general \
               docker/Dockerfile.buster-gateway \
+              docker/Dockerfile.prism-control \
+              docker/Dockerfile.prism-studio \
+              docker/Dockerfile.prism-worker \
+              docker/Dockerfile.prism-ingestion \
               | sort -u
           )
           if [[ ${#pinned_refs[@]} -ne 1 ]]; then
@@ -81,7 +91,7 @@ jobs:
             echo "Invalid pinned OpenClaw digest: $pinned_digest" >&2
             exit 1
           fi
-          if [[ ! "$latest_version" =~ ^[0-9]{4}\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ ! "$latest_version" =~ ^[0-9]{4}\.[0-9]+\.[0-9]+(-[0-9]+)?$ ]]; then
             echo "Could not resolve the latest stable OpenClaw release" >&2
             exit 1
           fi
@@ -132,6 +142,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
+      attestations: write
     strategy:
       fail-fast: false
       matrix:
@@ -148,9 +160,21 @@ jobs:
           - name: namespace-controller
             dockerfile: docker/Dockerfile.namespace-controller
             image_suffix: kubeclaw-namespace-controller
-          - name: prism-preview
-            dockerfile: docker/Dockerfile.prism-preview
-            image_suffix: kubeclaw-prism-preview
+          - name: archviewer
+            dockerfile: docker/Dockerfile.archviewer
+            image_suffix: kubeclaw-archviewer
+          - name: prism-control
+            dockerfile: docker/Dockerfile.prism-control
+            image_suffix: kubeclaw-prism-control
+          - name: prism-studio
+            dockerfile: docker/Dockerfile.prism-studio
+            image_suffix: kubeclaw-prism-studio
+          - name: prism-worker
+            dockerfile: docker/Dockerfile.prism-worker
+            image_suffix: kubeclaw-prism-worker
+          - name: prism-ingestion
+            dockerfile: docker/Dockerfile.prism-ingestion
+            image_suffix: kubeclaw-prism-ingestion
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -172,6 +196,7 @@ jobs:
             type=sha,prefix=
             type=raw,value={{date 'YYYY.MM.DD'}}
       - name: Build & Push
+        id: build
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -181,6 +206,22 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.name }}
           cache-to: type=gha,scope=${{ matrix.name }},mode=min,ignore-error=true
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
+      - name: Attest image provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+      - name: Scan published image
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "1"
       - name: Summary
         run: |
           echo "### ${{ matrix.name }} image pushed" >> $GITHUB_STEP_SUMMARY
@@ -203,14 +244,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build Nova and Buster bundles
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install bundle dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build plugin isolation launcher
+        run: npm run plugin-system:sandbox:build
+
+      - name: Build Nova, Buster, and Prism bundles
         run: |
           mkdir -p dist
           bash ./scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           bash ./scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash ./scripts/package-agent-skill-bundle.sh prism "dist/prism-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           (
             cd dist
-            sha256sum "nova-${GITHUB_SHA}.tgz" "buster-${GITHUB_SHA}.tgz" > "SHA256SUMS-${GITHUB_SHA}.txt"
+            sha256sum "nova-${GITHUB_SHA}.tgz" "buster-${GITHUB_SHA}.tgz" "prism-${GITHUB_SHA}.tgz" > "SHA256SUMS-${GITHUB_SHA}.txt"
           )
 
       - name: Ensure bundle release exists
@@ -220,7 +274,7 @@ jobs:
           gh release view "$BUNDLE_RELEASE_TAG" >/dev/null 2>&1 \
             || gh release create "$BUNDLE_RELEASE_TAG" \
               --title "Agent code bundles" \
-              --notes "Durable Nova/Buster /app/skills bundle release assets for code deploys."
+              --notes "Durable Nova, Buster, and Prism runtime bundle release assets."
 
       - name: Upload bundle assets
         env:
@@ -229,6 +283,7 @@ jobs:
           gh release upload "$BUNDLE_RELEASE_TAG" \
             "dist/nova-${GITHUB_SHA}.tgz#nova-${GITHUB_SHA}.tgz" \
             "dist/buster-${GITHUB_SHA}.tgz#buster-${GITHUB_SHA}.tgz" \
+            "dist/prism-${GITHUB_SHA}.tgz#prism-${GITHUB_SHA}.tgz" \
             "dist/SHA256SUMS-${GITHUB_SHA}.txt#SHA256SUMS-${GITHUB_SHA}.txt" \
             --clobber
 
@@ -238,4 +293,49 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/nova-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
           echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/buster-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/prism-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
           echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/SHA256SUMS-${GITHUB_SHA}.txt" >> $GITHUB_STEP_SUMMARY
+  prism-live-acceptance:
+    name: Prism leased-namespace service smoke
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ vars.PRISM_LIVE_ACCEPTANCE_ENABLED == 'true' }}
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: azure/setup-kubectl@v4
+      - uses: azure/setup-helm@v4
+      - name: Configure controller-lease client
+        env:
+          KUBECONFIG_B64: ${{ secrets.PRISM_TEST_KUBECONFIG_B64 }}
+        run: |
+          set -euo pipefail
+          test -n "$KUBECONFIG_B64"
+          mkdir -p "$HOME/.kube"
+          printf '%s' "$KUBECONFIG_B64" | base64 -d > "$HOME/.kube/config"
+          chmod 600 "$HOME/.kube/config"
+          test "$(kubectl auth can-i create namespaces)" = no
+          test "$(kubectl auth can-i create busternamespaceleases.kubeclaw.forgestack.ai -n kubeclaw)" = yes
+      - name: Resolve published Prism digests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_SHA:0:7}"
+          for kind in control studio worker ingestion; do
+            ref="ghcr.io/${GITHUB_REPOSITORY_OWNER}/kubeclaw-prism-${kind}:${tag}"
+            digest="$(docker buildx imagetools inspect "$ref" | awk '$1 == "Digest:" {print $2; exit}')"
+            [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+            upper="${kind^^}"
+            echo "PRISM_${upper}_IMAGE_REPOSITORY=ghcr.io/${GITHUB_REPOSITORY_OWNER}/kubeclaw-prism-${kind}" >> "$GITHUB_ENV"
+            echo "PRISM_${upper}_IMAGE_TAG=${tag}" >> "$GITHUB_ENV"
+            echo "PRISM_${upper}_IMAGE_DIGEST=${digest}" >> "$GITHUB_ENV"
+          done
+      - name: Run real Prism acceptance
+        env:
+          PRISM_E2E_USER: ${{ secrets.PRISM_E2E_USER }}
+          PRISM_APPROVER_USERS: ${{ secrets.PRISM_E2E_USER }}
+          PRISM_E2E_USE_LEASE: "true"
+        run: bash scripts/deploy.sh prism-e2e

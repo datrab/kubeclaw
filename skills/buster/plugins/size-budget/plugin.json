@@ -1,0 +1,56 @@
+{
+  "id": "kubeclaw.size-budget",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "artifact",
+      "contractId": "kubeclaw.size-budget@1",
+      "kind": "test",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [
+        {
+          "name": "build-output",
+          "kind": "artifact",
+          "required": true,
+          "mediaTypes": [
+            "application/octet-stream",
+            "application/x-tar",
+            "application/gzip",
+            "application/vnd.kubeclaw.build-output.tar"
+          ]
+        },
+        {
+          "name": "baseline",
+          "kind": "artifact",
+          "required": false,
+          "mediaTypes": ["application/vnd.kubeclaw.size-budget-baseline+json"]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "baseline",
+          "kind": "artifact",
+          "required": true,
+          "schemaId": "kubeclaw.size-budget-baseline@1",
+          "mediaTypes": ["application/vnd.kubeclaw.size-budget-baseline+json"]
+        }
+      ],
+      "requiredCapabilities": [],
+      "retrySafe": true,
+      "matrixFields": [],
+      "reportFormats": [],
+      "evidenceTypes": ["log", "size-budget-baseline"],
+      "evidenceDefaults": {
+        "onPass": ["log", "size-budget-baseline"],
+        "onFail": ["log", "size-budget-baseline"],
+        "onError": ["log"]
+      }
+    }
+  ]
+}

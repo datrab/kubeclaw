@@ -1,10 +1,8 @@
 import { selectDefinedValue, selectTruthyValue } from '../optional-absence.ts';
 // Suite: tailscale-preview — final-preview exposure and served-content evidence.
 //
-// KEEP_TYPED_POLICY: preview reachability uses an explicit source contract:
-// either `source_suite: "k8s"` consumes the already-run k8s suite metadata, or
-// `source_suite: "explicit"` requires `preview_url`. K8s metadata is the
-// canonical final-preview authority; this suite must not rediscover it.
+// KEEP_TYPED_POLICY: preview reachability uses one explicit source contract.
+// `source_suite: "explicit"` requires `preview_url`.
 // DELETE_LEGACY: this suite does not infer preview URLs from unrelated fields.
 
 import dns from 'dns/promises';
@@ -28,7 +26,6 @@ type StaticSurfaceCheck = {
 
 interface TailscalePreviewContext {
   config?: AnyRecord;
-  suiteResults?: Record<string, SuiteVerdict>;
   logSink?: LogSink | null;
 }
 
@@ -36,7 +33,7 @@ interface PreviewTarget {
   previewUrl: string;
   contentUrl: string;
   expectedText: string | null;
-  sourceSuite: 'k8s' | 'explicit';
+  sourceSuite: 'explicit';
   provider: string | null;
   smokePaths: string[];
   smokeExpectedText: Record<string, string>;
@@ -96,11 +93,10 @@ export function resolveTailscalePreviewTarget(context: TailscalePreviewContext):
   const cfg = isRecord(context.config?.tailscale_preview) ? context.config.tailscale_preview : null;
   if (!cfg) throw new Error('tailscale-preview suite requires test_config.tailscale_preview');
 
-  const sourceSuite = cfg.source_suite === 'explicit' ? 'explicit' : cfg.source_suite === 'k8s' ? 'k8s' : null;
-  if (!sourceSuite) throw new Error('test_config.tailscale_preview.source_suite must be "k8s" or "explicit"');
-
-  if (sourceSuite === 'explicit') return resolveExplicitTarget(cfg);
-  return resolveK8sTarget(context, cfg);
+  if (cfg.source_suite !== 'explicit') {
+    throw new Error('test_config.tailscale_preview.source_suite must be "explicit"');
+  }
+  return resolveExplicitTarget(cfg);
 }
 
 function resolveExplicitTarget(cfg: AnyRecord): PreviewTarget {
@@ -113,32 +109,6 @@ function resolveExplicitTarget(cfg: AnyRecord): PreviewTarget {
     expectedText: typeof cfg.expected_text === 'string' && cfg.expected_text ? cfg.expected_text : null,
     sourceSuite: 'explicit',
     provider: cfg.provider === 'tailscale-ingress' ? cfg.provider : null,
-    smokePaths: normalizeSmokePaths(cfg.smoke_paths),
-    smokeExpectedText: normalizeSmokeExpectedText(cfg.smoke_expected_text),
-  };
-}
-
-function resolveK8sTarget(context: TailscalePreviewContext, cfg: AnyRecord): PreviewTarget {
-  const k8s = context.suiteResults?.k8s;
-  if (!k8s) throw new Error('tailscale-preview source_suite "k8s" requires the k8s suite to run first');
-  if (k8s.status !== STATUS.PASS) throw new Error(`k8s suite did not pass before tailscale-preview: ${k8s.status}`);
-  const metadata = isRecord(k8s.metadata) ? k8s.metadata : {};
-  const previewUrl = metadata.preview_url;
-  const serviceUrl = metadata.service_url;
-  if (typeof previewUrl !== 'string' || !previewUrl.trim()) {
-    throw new Error('k8s suite metadata did not include preview_url');
-  }
-  if (typeof serviceUrl !== 'string' || !serviceUrl.trim()) {
-    throw new Error('k8s suite metadata did not include service_url');
-  }
-  return {
-    previewUrl: previewUrl.trim(),
-    contentUrl: serviceUrl.trim(),
-    expectedText: typeof cfg.expected_text === 'string' && cfg.expected_text
-      ? cfg.expected_text
-      : (typeof metadata.preview_expected_text === 'string' && metadata.preview_expected_text ? metadata.preview_expected_text : null),
-    sourceSuite: 'k8s',
-    provider: typeof metadata.preview_exposure_provider === 'string' ? metadata.preview_exposure_provider : null,
     smokePaths: normalizeSmokePaths(cfg.smoke_paths),
     smokeExpectedText: normalizeSmokeExpectedText(cfg.smoke_expected_text),
   };

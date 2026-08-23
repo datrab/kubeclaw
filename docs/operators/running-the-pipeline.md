@@ -9,7 +9,7 @@ npm run pipeline -- --help
 ```
 
 Provide an operator-owned platform configuration and graph through the CLI
-arguments described by `skills/common/plugin-runtime/cli.ts`.
+arguments described by `skills/nova/core/cli.ts`.
 
 ## Check Status
 

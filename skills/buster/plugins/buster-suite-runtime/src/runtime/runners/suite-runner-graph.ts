@@ -110,7 +110,6 @@ async function executeBatch(state: RunState, ready: string[]): Promise<void> {
     });
     if (entry.status !== 'fulfilled') await emitSuiteCompleted(state.telemetryContext, state.moduleId, entry.item_id, result, state.attempt, Date.now());
     if (new Set<SuiteVerdict['status']>([STATUS.ERROR, STATUS.FAIL]).has(result.status)) state.criticalFailed = true;
-    if (result.suite === 'build' && result.status === STATUS.PASS && Number.isInteger(result.metadata?.port)) state.context.config.serve = { ...(state.context.config.serve as object ?? {}), port: result.metadata?.port };
     state.suiteMap[entry.item_id] = result; state.results.push(result); state.context.suiteResults[entry.item_id] = result;
   }
 }
@@ -145,9 +144,6 @@ function suiteIcon(status: SuiteVerdict['status']): string {
   throw new Error(`Unsupported suite status: ${String(exhaustive)}`);
 }
 export function buildDetailedSuiteSummary(results: readonly SuiteVerdict[]): string { return results.map((result) => `${result.suite}: ${result.status}${detail(result) ? ` - ${detail(result)}` : ''}`).join(' | '); }
-export function applyBuildRuntimePort(config: Record<string, unknown>, result: SuiteVerdict): void {
-  if (result.suite === 'build' && result.status === STATUS.PASS && Number.isInteger(result.metadata?.port)) config.serve = { ...(config.serve as object ?? {}), port: result.metadata?.port };
-}
 export function collectReadySuites(names: readonly string[], completed: Record<string, SuiteVerdict>, dependencies: Record<string, string[]>, order: string[]): string[] {
   const state = { authority: { dependencies, executionOrder: order }, ordered: sorted([...names], order), suiteMap: completed } as RunState;
   return readySuites(state, state.ordered.filter((name) => !completed[name]));

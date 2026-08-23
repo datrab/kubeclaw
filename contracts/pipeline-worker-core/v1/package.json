@@ -1,0 +1,21 @@
+{
+  "name": "@kubeclaw/pipeline-worker-core-contract",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "schemas",
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./schemas/pipeline-worker-core.v1.schema.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

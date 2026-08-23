@@ -1,0 +1,12 @@
+{
+  "name": "prism-preview-isolation-spike",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "verify": "npm test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0"
+  }
+}

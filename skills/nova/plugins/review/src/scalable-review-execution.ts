@@ -1,0 +1,58 @@
+import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+
+import { parseEchoReviewDispatchResponse } from './echo-review-parser.ts';
+import { assertReviewDeadline, invokeBeforeReviewDeadline,
+  resolveReviewExecutionSettings, type ReviewExecutionSettings } from './review-execution-settings.ts';
+import { buildScalableReviewDispatchPayload,
+  type ScalableReviewJob, type ScalableReviewJobResult } from './scalable-review-jobs.ts';
+import { assertReviewRuntimeIdentity, parseReviewRuntimeAttestation,
+  type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
+
+interface ReviewDispatchContext {
+  readonly agent: string; readonly context: PluginInvocationContext; readonly maxRetries: number;
+  readonly deadlineEpochMs: number | undefined;
+  readonly beforeDispatch: ReviewExecutionSettings['beforeDispatch'] | undefined;
+  readonly expectedRuntime: ReviewRuntimeIdentity;
+}
+
+async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispatchContext): Promise<ScalableReviewJobResult> {
+  const { agent, context, maxRetries, deadlineEpochMs, beforeDispatch } = runtime;
+  for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+    assertReviewDeadline(deadlineEpochMs, 'scalable review');
+    try {
+      const basePayload = buildScalableReviewDispatchPayload(value);
+      const payload = beforeDispatch?.(basePayload) ?? basePayload;
+      const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
+        operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent }, payload,
+      }), deadlineEpochMs, 'scalable review');
+      const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
+      assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);
+      const parsed = parseEchoReviewDispatchResponse(response);
+      if (parsed.ok || attempt === maxRetries) {
+        return Object.freeze({ jobId: value.id, jobDigest: value.digest, parsed, runtime: attestation });
+      }
+    } catch (error) { if (attempt === maxRetries) throw error; }
+  }
+  throw new Error(`scalable review retry state is invalid: ${value.id}`);
+}
+
+export async function executeScalableReviewJobs(
+  jobs: readonly ScalableReviewJob[], agent: string, context: PluginInvocationContext,
+  execution: number | ReviewExecutionSettings = 4, expectedRuntime?: ReviewRuntimeIdentity,
+): Promise<readonly ScalableReviewJobResult[]> {
+  const { concurrency, maxRetries, deadlineEpochMs, beforeDispatch }
+    = resolveReviewExecutionSettings(execution, 'scalable review');
+  const runtime = { agent, context, maxRetries, deadlineEpochMs, beforeDispatch,
+    expectedRuntime: expectedRuntime ?? { targetId: agent, runtime: 'subagent', agentId: 'codex',
+      model: 'gpt-5.6-terra', thinking: 'high' } };
+  const output = new Map<string, ScalableReviewJobResult>();
+  for (let offset = 0; offset < jobs.length; offset += concurrency) {
+    assertReviewDeadline(deadlineEpochMs, 'scalable review');
+    const batch = jobs.slice(offset, offset + concurrency);
+    const values = await Promise.all(batch.map((value) => (
+      dispatchReviewJob(value, runtime)
+    )));
+    for (const value of values) output.set(value.jobId, value);
+  }
+  return Object.freeze(jobs.map(({ id }) => output.get(id) as ScalableReviewJobResult));
+}

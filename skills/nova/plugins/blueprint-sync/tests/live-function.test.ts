@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const repositoryRoot = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repositoryRoot, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repositoryRoot, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-blueprint-sync-'));
 const repository = path.join(temporary, 'repository');
 const workspaces = path.join(temporary, 'workspaces');
@@ -84,8 +84,8 @@ try {
   assert.equal(result.status, 'succeeded', fs.readFileSync(path.join(temporary, 'effects.jsonl'), 'utf8'));
   assert.equal(fs.readFileSync(path.join(repository, 'module', 'FORGE.md'), 'utf8'), 'architecture\n');
   assert.match(git(['log', '-1', '--pretty=%s']), /blueprint-sync/);
-  assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'), /blueprint-sync:project/);
-  assert.match(fs.readFileSync(path.join(temporary, 'state', 'kubeclaw.blueprint-sync.jsonl'), 'utf8'), /blueprint.controls.synced/);
+  assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'records', 'store.json'), 'utf8'), /blueprint-sync:project/);
+  assert.match(fs.readFileSync(path.join(temporary, 'state', 'records', 'store.json'), 'utf8'), /blueprint.controls.synced/);
 } finally {
   await adapters.shutdown();
   fs.rmSync(temporary, { recursive: true, force: true });

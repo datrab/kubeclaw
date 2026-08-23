@@ -28,9 +28,15 @@ rules:
   - apiGroups: [""]
     resources: ["serviceaccounts", "configmaps", "persistentvolumeclaims", "pods", "pods/log", "services", "endpoints"]
     verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  {{- if .Values.busterNamespaceBroker.approvedSecretNames }}
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["get", "create", "patch", "update"]
+    resourceNames: {{ toJson .Values.busterNamespaceBroker.approvedSecretNames }}
+    verbs: ["get"]
+  {{- end }}
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["create", "patch", "update"]
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets", "statefulsets"]
     verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
@@ -114,6 +120,8 @@ spec:
               value: {{ .Values.busterNamespaceBroker.leaseApiVersion | quote }}
             - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
               value: {{ join "," .Values.busterNamespaceBroker.allowedPrefixes | quote }}
+            - name: BUSTER_APPROVED_SECRET_NAMES
+              value: {{ join "," .Values.busterNamespaceBroker.approvedSecretNames | quote }}
             - name: BUSTER_DEFAULT_TTL_SECONDS
               value: {{ .Values.busterNamespaceBroker.defaultTtlSeconds | quote }}
             - name: BUSTER_CONTROLLER_POLL_MS

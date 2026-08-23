@@ -9,8 +9,8 @@ import {
   resumePipelineV2,
   runPipelineV2,
   validatePipelineRuntimeV2,
-} from '../../../skills/common/plugin-runtime/core/src/index.ts';
-import { loadPlatformConfig } from '../../../skills/common/plugin-runtime/core/config/platform.ts';
+} from '../../../skills/nova/core/src/index.ts';
+import { loadPlatformConfig } from '../../../skills/common/plugin-runtime/foundation/config/platform.ts';
 import type { ResumeSignal } from '../../../skills/common/plugin-runtime/sdk/src/index.ts';
 import { parseProductionPipelineArgs } from './production-pipeline-args.mts';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
@@ -18,11 +18,11 @@ import { parseCapabilityProviders, resolveProviderCapability } from './provider-
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const SPARK_MODEL = 'openai/gpt-5.3-codex-spark';
 const ALL_SUITES = Object.freeze([
-  'manifest', 'build', 'health', 'k8s', 'tailscale-preview', 'a11y', 'perf',
-  'bundle', 'security', 'visual-reg', 'api', 'e2e', 'unit',
+  'tailscale-preview', 'a11y', 'perf',
+  'security', 'visual-reg', 'api', 'e2e',
 ]);
 const BUSTER_CAPABILITIES = Object.freeze([
-  'image_build', 'kubernetes', 'browser_automation', 'lighthouse', 'discord_media',
+  'browser_automation', 'lighthouse', 'discord_media',
 ]);
 
 function writeJson(file: string, value: unknown): void {
@@ -75,6 +75,42 @@ function moduleTask(
     'Do not commit; the v2 Git capability owns commit, merge, and cleanup.',
     'Return ready_for_testing only after a real edit and the real verification command passes.',
   ].join('\n');
+}
+
+function moduleCommandSuites(
+  moduleId: string,
+  module: Record<string, any>,
+  repo: string,
+): readonly Readonly<Record<string, unknown>>[] {
+  const declarations = module.real_e2e_command_suites;
+  if (declarations === undefined) return [];
+  if (!Array.isArray(declarations)) throw new Error(`REAL_E2E_COMMAND_SUITES_INVALID:${moduleId}`);
+  return declarations.map((declaration, index) => {
+    if (
+      !declaration
+      || typeof declaration !== 'object'
+      || Array.isArray(declaration)
+      || declaration.kind !== 'fail-once'
+      || declaration.suite !== 'retry-fixture'
+      || Object.keys(declaration).some((key) => !['kind', 'suite'].includes(key))
+    ) {
+      throw new Error(`REAL_E2E_COMMAND_SUITE_INVALID:${moduleId}:${index}`);
+    }
+    const marker = path.join(repo, '.swarm', 'logs', `real-e2e-retry-fixture-${safe(moduleId)}.txt`);
+    const code = [
+      'const fs=require("node:fs")',
+      'const marker=process.argv[1]',
+      'fs.mkdirSync(require("node:path").dirname(marker),{recursive:true})',
+      'if(!fs.existsSync(marker)){fs.writeFileSync(marker,"failed-once\\n");console.error("REAL_E2E_EXPECTED_RETRYABLE_FORGE_CODE_FAILURE");process.exit(1)}',
+      'console.log("REAL_E2E_RETRY_RECOVERED")',
+    ].join(';');
+    return Object.freeze({
+      suite: 'retry-fixture',
+      executable: process.execPath,
+      args: ['-e', code, marker],
+      workingDirectory: repo,
+    });
+  });
 }
 
 function grant(constraints: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
@@ -275,7 +311,12 @@ async function main(): Promise<void> {
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.test-agent'),
     },
-    'kubeclaw.review:review': { 'runtime.dispatch': runtimeGrants },
+    'kubeclaw.review:review': {
+      'runtime.dispatch': runtimeGrants,
+      'git.repository.read': { allowedPrefixes: ['.'] },
+      'artifacts.read': artifact('kubeclaw.review'),
+      'artifacts.write': artifact('kubeclaw.review'),
+    },
     'kubeclaw.human-approval:approval': {
       'operator.request': { allowedTargets: ['discord'] },
       'signal.wait': {
@@ -381,7 +422,7 @@ async function main(): Promise<void> {
         endpoint: busterWorkerEndpoint,
         tokenSecret: 'buster.worker',
         allowedRepositoryRoots: [repo],
-        allowedSuites: ALL_SUITES,
+        unmigratedSuites: ALL_SUITES,
         suiteCapabilities: BUSTER_CAPABILITIES,
         gitExecutable,
         maxArchiveBytes: 67_108_864,
@@ -428,6 +469,7 @@ async function main(): Promise<void> {
         timeoutMs: 60_000,
       },
       'kubeclaw.operator-messaging:operator': {
+        deliveryRoot: path.join(stateRoot, 'operator-deliveries'),
         targets: {
           discord: {
             endpointOrigin: webhookOrigin,
@@ -447,10 +489,10 @@ async function main(): Promise<void> {
         },
       },
       'kubeclaw.telemetry-store:telemetry': {
-        journalPath: path.join(swarm, 'logs', 'v2-telemetry.jsonl'),
+        root: path.join(stateRoot, 'telemetry'),
       },
       'kubeclaw.wait-store:waits': {
-        journalPath: path.join(swarm, 'logs', 'v2-waits.jsonl'),
+        root: path.join(stateRoot, 'waits'),
       },
     },
     activeAdapters: [],
@@ -546,6 +588,9 @@ async function main(): Promise<void> {
         attempt: 1,
         task: `Act as Buster for ${moduleId}. Judge the actual production suite results and reject any skipped, failed, or errored required check.`,
         suiteEvidence: [],
+        // This command is a pipeline-retry fault fixture. It is not a unit suite
+        // and cannot become unit gate authority.
+        commandSuites: moduleCommandSuites(moduleId, module, repo),
         suitePlan: {
           repositoryRoot: repo,
           suites: module.test_suites,
@@ -591,7 +636,7 @@ async function main(): Promise<void> {
         timeoutMinutes: 10,
       },
       input: {
-        summary: 'Approve the verified four-module release candidate for final Kubernetes and Tailscale preview validation.',
+        summary: 'Approve the verified four-module release candidate for final deployment and security validation.',
       },
       execution: { maxAttempts: 2, maxRemediationCycles: 0, timeoutMs: 60_000 },
     },
@@ -604,7 +649,7 @@ async function main(): Promise<void> {
         runId,
         gateId: 'final-buster',
         attempt: 1,
-        task: 'Act as final Buster. Judge the actual final production suites, Kubernetes readiness, namespace lease, and Tailscale preview evidence. Pass only when every required proof is real.',
+        task: 'Act as final Buster. Judge the actual provider results, Kubernetes readiness, namespace lease, HTTP checks, and security evidence. Pass only when every required proof is real.',
         suiteEvidence: [],
         suitePlan: {
           repositoryRoot: repo,
@@ -631,10 +676,10 @@ async function main(): Promise<void> {
       dependsOn: ['final-buster'],
       config: { agent: 'echo.final-review', agentRole: roles.echo },
       input: {
-        task: 'Act as final Echo reviewer. Inspect the merged repository, Git history, Buster result artifacts, Kubernetes evidence, preview evidence, and lifecycle journal. Return PASS only when the requested production workflow actually ran.',
+        task: 'Act as final Echo reviewer. Inspect the merged repository, Git history, Buster result artifacts, Kubernetes evidence, security evidence, and lifecycle journal. Return PASS only when the requested production workflow actually ran.',
         evidence: {
           openedArtifacts: [
-            'Projects', '.swarm/artifacts/v2', '.swarm/logs/v2-telemetry.jsonl',
+            'Projects', '.swarm/artifacts/v2', '.swarm/v2-runtime/telemetry',
           ],
           checkedContracts: [
             'deployable artifact', 'runtime config', 'preview infrastructure',

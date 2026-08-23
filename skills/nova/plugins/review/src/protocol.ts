@@ -1,127 +1,72 @@
-export interface ReviewInput {
-  readonly task: string;
-  readonly evidence?: Readonly<Record<string, unknown>>;
-}
+import { echoReviewOutputSchema } from './echo-review-contract.ts';
+import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
+import { REVIEWED_SOURCE_EVIDENCE_KIND } from './review-evidence-authority.ts';
 
 export interface ReviewDispatchRequest {
   readonly [key: string]: unknown;
-  readonly protocol: 'kubeclaw.review.v2';
+  readonly protocol: 'kubeclaw.echo-review.v1';
   readonly agent: string;
   readonly task: string;
   readonly review: {
-    readonly subject: string;
-    readonly evidence: Readonly<Record<string, unknown>>;
-    readonly allowedStatuses: readonly ['PASS', 'FAIL'];
+    readonly bundle: ReviewBundleSnapshot['bundle'];
+    readonly bundleDigest: string;
+    readonly policy: { readonly profile: string; readonly digest: string };
   };
   readonly outputContract: Readonly<Record<string, unknown>>;
 }
 
-function stableValue(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(stableValue);
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value as Readonly<Record<string, unknown>>)
-        .sort(([left], [right]) => left.localeCompare(right))
-        .map(([key, entry]) => [key, stableValue(entry)]),
-    );
-  }
-  return value;
-}
-
-function evidenceJson(evidence: Readonly<Record<string, unknown>>): string {
-  return JSON.stringify(stableValue(evidence), null, 2);
-}
+function reviewJson(value: unknown): string { return JSON.stringify(value, null, 2); }
 
 export function buildReviewTask(
-  input: ReviewInput,
+  snapshot: ReviewBundleSnapshot,
   helperPrompt: unknown,
+  resolved: ResolvedReviewPolicy,
 ): string {
   const guidance = typeof helperPrompt === 'string' && helperPrompt.trim()
-    ? helperPrompt.trim()
-    : 'No additional reviewer guidance was supplied.';
-
+    ? helperPrompt.trim() : 'No additional reviewer guidance was supplied.';
   return [
-    '# KubeClaw review protocol v2',
-    '',
-    'Review the stated subject using the supplied evidence. Exercise reviewer judgment, but return only the closed JSON contract below.',
-    '',
-    '## Subject',
-    input.task,
-    '',
-    '## Evidence',
-    evidenceJson(input.evidence ?? {}),
-    '',
-    '## Additional guidance',
-    guidance,
-    '',
+    '# KubeClaw Echo review protocol v1', '',
+    'Assess the declared requirements using only the supplied immutable review bundle.',
+    'Return observations and proposed findings. Do not return PASS, FAIL, or a pipeline outcome.',
+    'You may request one bounded context expansion only when a declared requirement is unverified.', '',
+    'This may be one deterministic slice of a larger change. Review only supplied source. Do not infer a defect in an absent file.',
+    '## Bundle digest', snapshot.digest, '',
+    '## Review bundle', reviewJson(snapshot.bundle), '',
+    '## Resolved review policy', reviewJson({
+      profile: resolved.policy.profile, digest: resolved.digest,
+      blocking: resolved.policy.blocking, simplification: resolved.policy.simplification,
+    }), '',
+    '## Additional guidance', guidance, '',
     '## Required output',
-    '{',
-    '  "status": "PASS | FAIL",',
-    '  "critical_issues": [{ "source": "string", "description": "string", "affected_files": ["string"], "recommended_fix": "string" }],',
-    '  "deferred_issues": [{ "source": "string", "description": "string", "affected_files": ["string"], "recommended_fix": "string" }],',
-    '  "checked_contracts": ["string"],',
-    '  "opened_artifacts": ["string"],',
-    '  "failed_commands": ["string"],',
-    '  "unverified_requirements": ["string"],',
-    '  "summary": "string"',
-    '}',
-    '',
-    'Return raw JSON only. Every listed field is required and unknown fields are forbidden.',
-    'PASS requires no critical issues, at least one checked contract, at least one opened artifact, no failed commands, and no unverified requirements.',
-    'FAIL requires at least one critical issue, failed command, or unverified requirement.',
-    'Do not report PASS for evidence you did not inspect.',
+    'Return raw JSON matching the attached outputContract exactly.',
+    'Assess every requirement ID exactly once and cite only supplied evidence references.',
+    `Reviewed source files are trusted evidence. Cite them as {"kind":"${REVIEWED_SOURCE_EVIDENCE_KIND}","digest":"<the context item digest>"}.`,
+    'Copy every source digest exactly from a supplied context item. Never invent a digest or cite a source path that is absent from this bundle.',
+    'A finding location must name only the changed or supplied context file that directly proves the defect. Do not add an absent supporting file as another location.',
+    'Use the cited source path and a precise lineHint in each related finding location.',
+    'For an introduced finding, include the primary changed line that causes the defect. Do not replace it with nearby pre-existing declarations.',
+    'Focus on introduced bugs, security failures, broken contracts, invalid lifecycle behavior, concurrency defects, persistence or recovery defects, and risks of data loss.',
+    'Do not report formatting, naming preferences, stylistic form, or subjective code-shape opinions. Static lint owns those concerns.',
+    'Use P0 only for a directly evidenced, release-blocking defect with serious correctness, security, contract, lifecycle, persistence, concurrency, or data-loss impact. Use P1 for important but non-critical bugs.',
+    'A Simplification proposal must cite supplied candidate IDs and the candidate manifest evidence.',
+    'Unknown fields are forbidden. The review plugin, not Echo, decides the stage outcome.',
   ].join('\n');
 }
 
 export function buildReviewDispatchRequest(
   agent: string,
-  input: ReviewInput,
+  snapshot: ReviewBundleSnapshot,
   helperPrompt: unknown,
+  resolved: ResolvedReviewPolicy,
 ): ReviewDispatchRequest {
-  const issueContract = {
-    type: 'object',
-    additionalProperties: false,
-    required: ['source', 'description', 'affected_files', 'recommended_fix'],
-    properties: {
-      source: { type: 'string' },
-      description: { type: 'string' },
-      affected_files: { type: 'array', items: { type: 'string' } },
-      recommended_fix: { type: 'string' },
-    },
-  } as const;
-
   return {
-    protocol: 'kubeclaw.review.v2',
-    agent,
-    task: buildReviewTask(input, helperPrompt),
+    protocol: 'kubeclaw.echo-review.v1', agent,
+    task: buildReviewTask(snapshot, helperPrompt, resolved),
     review: {
-      subject: input.task,
-      evidence: input.evidence ?? {},
-      allowedStatuses: ['PASS', 'FAIL'],
+      bundle: snapshot.bundle, bundleDigest: snapshot.digest,
+      policy: { profile: resolved.policy.profile, digest: resolved.digest },
     },
-    outputContract: {
-      type: 'object',
-      additionalProperties: false,
-      required: [
-        'status',
-        'critical_issues',
-        'deferred_issues',
-        'checked_contracts',
-        'opened_artifacts',
-        'failed_commands',
-        'unverified_requirements',
-        'summary',
-      ],
-      properties: {
-        status: { enum: ['PASS', 'FAIL'] },
-        critical_issues: { type: 'array', items: issueContract },
-        deferred_issues: { type: 'array', items: issueContract },
-        checked_contracts: { type: 'array', items: { type: 'string' } },
-        opened_artifacts: { type: 'array', items: { type: 'string' } },
-        failed_commands: { type: 'array', items: { type: 'string' } },
-        unverified_requirements: { type: 'array', items: { type: 'string' } },
-        summary: { type: 'string' },
-      },
-    },
+    outputContract: echoReviewOutputSchema,
   };
 }

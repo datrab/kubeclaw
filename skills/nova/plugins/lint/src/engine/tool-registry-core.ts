@@ -121,7 +121,9 @@ export function buildToolRegistry(policy: any, projectTypes: any) {
       binary: adapter.binary,
       run: adapter.run,
       ...settings,
-      detect: () => settings.languages.length === 0 || settings.languages.some((language: any) => projectTypes.has(language)),
+      detect: (ctx: any) => (settings.languages.length === 0
+        || settings.languages.some((language: any) => projectTypes.has(language)))
+        && adapter.detect(ctx),
     };
   });
   const configuredIds = new Set(policy.tools.map((tool: any) => tool.id));

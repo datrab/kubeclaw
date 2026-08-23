@@ -7,6 +7,7 @@ import {
   isPlainObject,
   listDirs,
   listFiles,
+  MIGRATED_SUITES,
   naturalSort,
   nonEmptyStringOrDefault,
   objectKeys,
@@ -31,11 +32,10 @@ function existingModuleIdForDir(progress: AnyRecord, dir: string): string {
   return match?.[0] ?? dir;
 }
 
-function inferSuites(moduleDir: string, forgeText: string, hasBuster: boolean, existing: unknown): string[] {
-  if (Array.isArray(existing)) return existing;
+function inferSuites(moduleDir: string, hasBuster: boolean, existing: unknown): string[] {
+  if (Array.isArray(existing)) return existing.filter((suite) => typeof suite === 'string' && !MIGRATED_SUITES.has(suite));
   if (!hasBuster) return [];
-  const suites = ['build', 'health'];
-  if (/^##\s+Unit Tests\b/mi.test(forgeText)) suites.push('unit');
+  const suites: string[] = [];
   if (fs.existsSync(path.join(moduleDir, 'test-spec.json'))) suites.push('api');
   if (fs.existsSync(path.join(moduleDir, 'baselines', 'paths.json'))) suites.push('visual-reg');
   return suites;
@@ -67,7 +67,7 @@ function packageScripts(projectSrcDir: string) {
 }
 
 function addServeConfig(config: AnyRecord, input: AnyRecord) {
-  const serveSuites = ['build', 'health', 'security', 'bundle', 'a11y', 'perf', 'e2e', 'visual-reg'];
+  const serveSuites = ['security', 'a11y', 'perf', 'e2e', 'visual-reg'];
   if (!input.suites.some((suite: string) => serveSuites.includes(suite))) return;
   config.serve = {
     type: 'server',
@@ -75,7 +75,6 @@ function addServeConfig(config: AnyRecord, input: AnyRecord) {
     start_cmd: input.scripts.start,
     image: `localhost/${input.project}:${input.moduleId}`,
     port: 3000,
-    health_path: '/health',
   };
   const dockerfile = path.join(input.projectSrcDir, 'Dockerfile');
   if (!fs.existsSync(dockerfile)) return;
@@ -84,41 +83,188 @@ function addServeConfig(config: AnyRecord, input: AnyRecord) {
 }
 
 function addSuiteConfigs(config: AnyRecord, input: AnyRecord) {
-  if (input.suites.includes('unit')) config.unit = { test_cmd: input.scripts.test };
   if (input.suites.includes('api')) {
     config.api = { spec_file: relFromSwarm(path.join(input.projectSrcDir, '.swarm'), path.join(input.moduleDir, 'test-spec.json')) };
   }
-  if (input.suites.includes('manifest')) {
-    config.manifest = {
-      deployment_yaml: `${TODO_PREFIX} repository-relative Kubernetes manifest path`,
-      required_env: [],
-      thresholds: { max_missing_env: 0 },
-    };
+}
+
+function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | undefined {
+  if (!isPlainObject(value)) return undefined;
+  const config = structuredClone(value);
+  delete config.k8s;
+  delete config.bundle;
+  if (isPlainObject(config.serve)) {
+    for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
+      'smoke_paths', 'smoke_expected_text']) delete config.serve[field];
+    if (!suites.some((suite) => ['security', 'a11y', 'perf', 'e2e', 'visual-reg'].includes(suite))) delete config.serve;
   }
-  if (input.suites.includes('k8s')) {
-    config.k8s = {
-      dockerfile: `${TODO_PREFIX} repository-relative Dockerfile path`,
-      build_context: `Projects/${input.project}/src`,
-      image_name: input.project,
-      service_name: input.project,
-      manifests: [`${TODO_PREFIX} repository-relative Kubernetes manifest path`],
-      port: 3000,
-      health_path: '/health',
-      purpose: 'pretest',
-      cleanup_policy: 'delete',
-      preview: { provider: 'off', path: '/' },
-    };
+  return Object.keys(config).length ? config : undefined;
+}
+
+function safeNodeId(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9-]+/gu, '-').replace(/^-+|-+$/gu, '').slice(0, 64) || 'scope';
+}
+
+function legacyBundleNodes(existingConfig: unknown, projectSrcDir: string, repositoryRoot: string, scopeId: string): AnyRecord {
+  const bundle = objectOrEmpty(objectOrEmpty(existingConfig).bundle);
+  const configured = bundle.www_dir;
+  if (typeof configured !== 'string' || configured.trim().length === 0) {
+    throw new Error(`LEGACY_BUNDLE_CONFIGURATION_RETIRED:${scopeId}: set bundle.www_dir once so the scaffold can create an explicit size-budget artifact producer`);
   }
+  const absolute = path.isAbsolute(configured) ? path.resolve(configured) : path.resolve(projectSrcDir, configured);
+  const relative = path.relative(projectSrcDir, absolute).split(path.sep).join('/');
+  if (!relative || relative === '..' || relative.startsWith('../')) {
+    throw new Error(`LEGACY_BUNDLE_OUTPUT_PATH_DENIED:${scopeId}:${configured}`);
+  }
+  const workingDirectory = path.relative(repositoryRoot, projectSrcDir).split(path.sep).join('/');
+  if (!workingDirectory || workingDirectory === '..' || workingDirectory.startsWith('../')) {
+    throw new Error(`LEGACY_BUNDLE_PROJECT_PATH_DENIED:${scopeId}:${projectSrcDir}`);
+  }
+  const thresholds = objectOrEmpty(bundle.thresholds);
+  const config: AnyRecord = { format: 'tar', largestFiles: 5 };
+  if (Number.isFinite(thresholds.max_size_kb) && thresholds.max_size_kb >= 0) {
+    config.maximumTotalBytes = Math.trunc(thresholds.max_size_kb * 1024);
+  }
+  if (Number.isSafeInteger(thresholds.max_file_count) && thresholds.max_file_count >= 0) {
+    config.maximumFileCount = thresholds.max_file_count;
+  }
+  const blocking = config.maximumTotalBytes !== undefined || config.maximumFileCount !== undefined;
+  const archive = `.swarm/size-budget-${safeNodeId(scopeId)}.tar`;
+  return {
+    'size-budget-artifact': {
+      uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 0, concurrencyGroup: 'size-budget',
+      config: { executable: 'tar', args: ['--format=ustar', '--transform=s,^\\./,,;s,^\\.$,root,',
+        '-cf', archive, '-C', relative, '.'],
+        workingDirectory, resultMode: 'exit-code', artifacts: [
+          { id: 'build-output', path: archive, mediaType: 'application/vnd.kubeclaw.build-output.tar' },
+        ] },
+    },
+    'size-budget': {
+      uses: 'kubeclaw.size-budget@1', mode: blocking ? 'blocking' : 'advisory', retries: 0,
+      concurrencyGroup: 'size-budget', config,
+      inputs: { 'build-output': { from: 'size-budget-artifact', output: 'artifact-1' } },
+    },
+  };
 }
 
 function inferTestConfig(input: AnyRecord): AnyRecord | undefined {
-  if (isPlainObject(input.existingConfig)) return input.existingConfig;
+  if (isPlainObject(input.existingConfig)) return sanitizedTestConfig(input.existingConfig, input.suites);
   if (!Array.isArray(input.suites) || input.suites.length === 0) return undefined;
   const config: AnyRecord = {};
   const enriched = { ...input, scripts: packageScripts(input.projectSrcDir) };
   addServeConfig(config, enriched);
   addSuiteConfigs(config, enriched);
   return config;
+}
+
+function httpNodes(existingConfig: unknown, deploymentNode?: string): AnyRecord {
+  const config = objectOrEmpty(existingConfig);
+  const serve = objectOrEmpty(config.serve);
+  const baseConfig: AnyRecord = {
+    ...(deploymentNode ? {} : { url: `${TODO_PREFIX} provider-reachable HTTP origin or use a deployment input` }),
+    path: typeof serve.health_path === 'string' ? serve.health_path : '/',
+    expectedStatuses: [200],
+    requestTimeoutMs: Number.isSafeInteger(serve.health_timeout) ? serve.health_timeout : 10_000,
+  };
+  const tests: AnyRecord = {
+    'http-health': {
+      uses: 'kubeclaw.http@1', mode: 'blocking',
+      retries: Number.isSafeInteger(serve.health_retries) ? Math.max(0, serve.health_retries - 1) : 2,
+      concurrencyGroup: 'http', config: baseConfig,
+      ...(deploymentNode ? { inputs: { deployment: { from: deploymentNode, output: 'deployment',
+        schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } } } : {}),
+    },
+  };
+  const expected = objectOrEmpty(serve.smoke_expected_text);
+  const paths = Array.isArray(serve.smoke_paths) ? serve.smoke_paths : [];
+  paths.forEach((requestPath: unknown, index: number) => {
+    if (typeof requestPath !== 'string') return;
+    tests[`smoke-${index + 1}`] = {
+      uses: 'kubeclaw.http@1', mode: 'blocking', needs: ['http-health'], concurrencyGroup: 'http',
+      config: { ...baseConfig, path: requestPath,
+        ...(typeof expected[requestPath] === 'string' ? { expectedText: expected[requestPath] } : {}) },
+      ...(deploymentNode ? { inputs: { deployment: { from: deploymentNode, output: 'deployment',
+        schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } } } : {}),
+    };
+  });
+  return tests;
+}
+
+function withDependency(node: unknown, dependency: string): unknown {
+  if (!isPlainObject(node)) return node;
+  const needs = Array.isArray(node.needs) ? node.needs.filter((item) => typeof item === 'string') : [];
+  return { ...node, needs: [...new Set([...needs, dependency])] };
+}
+
+function scopeWithProviders(existingScope: unknown, testConfig: unknown, options: {
+  addHttp: boolean; addSizeBudget: boolean; projectSrcDir: string; repositoryRoot: string; scopeId: string;
+}): AnyRecord {
+  const scope = objectOrEmpty(existingScope);
+  const fixtures = objectOrEmpty(scope.fixtures);
+  const deploymentNode = Object.entries(fixtures).find(([, fixture]) => isPlainObject(fixture)
+    && fixture.uses === 'kubeclaw.kubernetes-fixture@1')?.[0];
+  const tests = objectOrEmpty(scope.tests);
+  const hasHttp = Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.http@1');
+  const existingSizeBudget = Object.entries(tests).find(([, test]) => isPlainObject(test) && test.uses === 'kubeclaw.size-budget@1');
+  const hasSizeBudget = existingSizeBudget !== undefined;
+  const generatedBudget = !hasSizeBudget && options.addSizeBudget
+    ? legacyBundleNodes(testConfig, options.projectSrcDir, options.repositoryRoot, options.scopeId) : {};
+  const combinedTests = { ...tests, ...generatedBudget,
+    ...(!hasHttp && options.addHttp ? httpNodes(testConfig, deploymentNode) : {}) };
+  const budgetNodeId = existingSizeBudget?.[0] ?? 'size-budget';
+  const orderedTests = options.addSizeBudget
+    ? Object.fromEntries(Object.entries(combinedTests).map(([id, test]) => [id,
+      isPlainObject(test) && test.uses === 'kubeclaw.http@1' ? withDependency(test, budgetNodeId) : test]))
+    : combinedTests;
+  const orderedFixtures = options.addSizeBudget
+    ? Object.fromEntries(Object.entries(fixtures).map(([id, fixture]) => [id, withDependency(fixture, budgetNodeId)]))
+    : fixtures;
+  return { ...scope,
+    tests: orderedTests,
+    fixtures: orderedFixtures,
+    concurrencyLimits: { ...(options.addHttp ? { http: 4 } : {}), ...(options.addSizeBudget ? { 'size-budget': 2 } : {}),
+      ...objectOrEmpty(scope.concurrencyLimits) } };
+}
+
+function rejectRetiredKubernetesConfig(scope: AnyRecord, scopeId: string) {
+  const suites = scope.test_suites;
+  if ((Array.isArray(suites) && suites.includes('k8s')) || isPlainObject(objectOrEmpty(scope.test_config).k8s)) {
+    throw new Error(`LEGACY_K8S_CONFIGURATION_RETIRED:${scopeId}: define kubeclaw.kubernetes-fixture@1 in .swarm/pipeline.json`);
+  }
+}
+
+function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord, gates: AnyRecord): AnyRecord {
+  const existing = objectOrEmpty(readJsonIfExists(path.join(context.swarmDir, 'pipeline.json')));
+  const existingModules = objectOrEmpty(existing.modules);
+  const existingGates = objectOrEmpty(existing.gates);
+  const progressModules = objectOrEmpty(progress.modules);
+  const progressGates = objectOrEmpty(progress.gates);
+  const projectSrcDir = path.dirname(context.swarmDir);
+  const moduleScopes = Object.fromEntries(Object.entries(modules)
+    .filter(([, module]) => isPlainObject(module) && Array.isArray(module.stages) && module.stages.includes('buster'))
+    .map(([id]) => {
+      const prior = objectOrEmpty(progressModules[id]);
+      rejectRetiredKubernetesConfig(prior, id);
+      const selected = prior.test_suites;
+      return [id, scopeWithProviders(existingModules[id], prior.test_config, {
+        addHttp: !Array.isArray(selected) || selected.includes('health'),
+        addSizeBudget: Array.isArray(selected) && selected.includes('bundle'), projectSrcDir,
+        repositoryRoot: context.repoRoot, scopeId: id,
+      })];
+    }));
+  const gateScopes = Object.fromEntries(Object.entries(gates)
+    .filter(([, gate]) => isPlainObject(gate) && gate.type === 'buster')
+    .map(([id]) => {
+      const prior = objectOrEmpty(progressGates[id]);
+      rejectRetiredKubernetesConfig(prior, id);
+      const selected = prior.test_suites;
+      return [id, scopeWithProviders(existingGates[id], prior.test_config, {
+        addHttp: !Array.isArray(selected) || selected.includes('health'),
+        addSizeBudget: Array.isArray(selected) && selected.includes('bundle'), projectSrcDir,
+        repositoryRoot: context.repoRoot, scopeId: id,
+      })];
+    }));
+  return { project: context.project, modules: moduleScopes, gates: gateScopes };
 }
 
 function discoverModules(context: Context, existingProgress: AnyRecord) {
@@ -132,7 +278,7 @@ function discoverModules(context: Context, existingProgress: AnyRecord) {
     const forgeText = readTextIfExists(path.join(moduleDir, 'FORGE.md'));
     const hasBuster = fs.existsSync(path.join(moduleDir, 'BUSTER.md'));
     const stages = Array.isArray(existing.stages) ? existing.stages : (hasBuster ? ['forge', 'buster'] : ['forge']);
-    const suites = inferSuites(moduleDir, forgeText, hasBuster, existing.test_suites);
+    const suites = inferSuites(moduleDir, hasBuster, existing.test_suites);
     const substeps = listDirs(moduleDir).filter((substep) => fs.existsSync(path.join(moduleDir, substep, 'FORGE.md')));
     modules[id] = omitEmpty({
       title: nonEmptyStringOrDefault(existing.title, firstHeading(forgeText, id)),
@@ -204,7 +350,8 @@ function discoverBusterGates(context: Context, progress: AnyRecord) {
     const id = prior?.id ?? slugFromName(path.basename(file));
     const existing = objectOrEmpty(prior?.gate);
     const required = inferRequiredSuites(readTextIfExists(file));
-    const suites = Array.isArray(existing.test_suites) ? existing.test_suites : (required.length ? required : ['build', 'health', 'unit']);
+    const suites = (Array.isArray(existing.test_suites) ? existing.test_suites : required)
+      .filter((suite) => typeof suite === 'string' && !MIGRATED_SUITES.has(suite));
     gates[id] = omitEmpty({
       type: 'buster',
       title: nonEmptyStringOrDefault(existing.title, titleFromId(id)),
@@ -250,6 +397,7 @@ export function buildScaffold(context: Context): AnyRecord {
   const inferredOrder = gateIds.length
     ? [...moduleIds, ...gateIds.map((gateId) => `${TODO_PREFIX} place gate:${gateId} among [${moduleIds.join(', ')}]`)]
     : moduleIds;
+  const pipeline = buildPipeline(context, progress, modules, gates);
   return {
     _schema: SCHEMA,
     _instructions: ['Edit TODO values and gate placements.', 'Run with --apply to write progress.json.'],
@@ -268,5 +416,6 @@ export function buildScaffold(context: Context): AnyRecord {
     execution_order: valueOrDefault(prior.execution_order, valueOrDefault(progress.execution_order, inferredOrder)),
     modules: mergeObjects(modules, prior.modules),
     gates,
+    pipeline,
   };
 }

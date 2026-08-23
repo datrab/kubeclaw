@@ -18,7 +18,7 @@ const job = {
     bytes: archive.byteLength,
     data: archive.toString('base64'),
   },
-  suites: ['unit'],
+  suites: ['api'],
   testConfig: { suite_timeout_ms: 1000, project: '/source/project' },
   task: { root: '/source', nested: ['/source/file.txt'] },
   capabilities: [],
@@ -26,6 +26,16 @@ const job = {
 };
 
 assert.equal(parseJob(job, 1024).jobId, `job:${'a'.repeat(32)}`);
+assert.throws(
+  () => parseJob({ ...job, suites: ['unit'] }, 1024),
+  /BUSTER_JOB_SUITE_UNSUPPORTED/u,
+  'migrated unit work must never enter the legacy protocol',
+);
+assert.throws(
+  () => parseJob({ ...job, suites: ['manifest'] }, 1024),
+  /BUSTER_JOB_SUITE_UNSUPPORTED/u,
+  'migrated manifest work must never enter the legacy protocol',
+);
 assert.throws(
   () => parseJob({ ...job, extra: true }, 1024),
   /BUSTER_JOB_UNKNOWN_FIELD:extra/u,

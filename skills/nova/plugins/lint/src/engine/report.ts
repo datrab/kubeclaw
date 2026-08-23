@@ -111,7 +111,7 @@ function missingBinaryResult(tool: any, binaryName: any) {
 }
 
 function successfulResult(ctx: any, tool: any, result: any, findings: any, durationMs: any) {
-  const common = { status: 'ok', category: tool.category, scope: tool.scope, blocking_severity: tool.blocking_severity, mode: tool.mode, duration_ms: durationMs };
+  const common = { status: 'ok', category: tool.category, scope: tool.scope, blocking_severity: tool.blocking_severity, mode: tool.mode, duration_ms: durationMs, evidence: Array.isArray(result.evidence) ? result.evidence : [] };
   if (tool.mode === 'experimental') {
     return { ...common, errors: 0, warnings: 0, blocking_findings: 0, baselined_findings: 0, experimental_findings: Math.max(findings.length, resultCount(result.errors) + resultCount(result.warnings)), findings };
   }
@@ -207,6 +207,7 @@ async function runAllTools(ctx: any, toolRegistry: any) {
       digest: ctx.policyDigest,
       project: ctx.policyProject.id,
       config_digests: ctx.policy.config_digests,
+      policy_pack_digests: ctx.policy.policy_pack_digests,
       effective_targets: Object.fromEntries(
         (ctx.policy.tools || applicable).map((tool: any) => [
           tool.id,

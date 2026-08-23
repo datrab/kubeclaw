@@ -1,12 +1,11 @@
 import crypto from 'node:crypto';
-import fs from 'node:fs';
-import path from 'node:path';
 import {
   canonicalJson,
   type AdapterActivationContext,
   type AdapterInstance,
   type WaitRequest,
 } from '@kubeclaw/plugin-sdk';
+import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
 
 interface WaitRecord {
   readonly schemaVersion: 'wait-record.v2';
@@ -14,9 +13,14 @@ interface WaitRecord {
   readonly createdAt: string;
   readonly wait: WaitRequest;
 }
+interface StoredWait {
+  readonly schemaVersion: 'wait-value.v1';
+  readonly wait: WaitRequest;
+}
 
 const NAMESPACED_ID = /^[a-z0-9]+(?:[._-][a-z0-9]+)+$/;
 const OPAQUE_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}$/;
+const IDEMPOTENCY_ID = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;
 const ISSUER_TYPES = new Set(['orchestrator', 'operator', 'adapter']);
 const RFC3339_DATE_TIME = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d+)?)(Z|([+-])(\d{2}):(\d{2}))$/i;
 const DAYS_IN_MONTH = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -133,29 +137,35 @@ function parseWait(value: unknown, requireIdentity: boolean): WaitRequest | Omit
     : parsed;
 }
 
-function readRecords(file: string, maxEntryBytes: number): WaitRecord[] {
-  if (!fs.existsSync(file)) return [];
-  if (fs.lstatSync(file).isSymbolicLink()) throw new Error('WAIT_JOURNAL_SYMLINK_DENIED');
-  return fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((line) => {
-    if (Buffer.byteLength(line, 'utf8') > maxEntryBytes) throw new Error('WAIT_RECORD_SIZE_EXCEEDED');
-    const record = JSON.parse(line) as WaitRecord;
-    if (
-      !record
-      || typeof record !== 'object'
-      || Array.isArray(record)
-      || !exactKeys(record as unknown as Record<string, unknown>, [
-        'schemaVersion', 'idempotencyKey', 'createdAt', 'wait',
-      ])
-      || record.schemaVersion !== 'wait-record.v2'
-      || typeof record.idempotencyKey !== 'string'
-      || !OPAQUE_ID.test(record.idempotencyKey)
-      || !isDateTime(record.createdAt)
-    ) throw new Error('WAIT_RECORD_INVALID');
-    try {
-      return { ...record, wait: parseWait(record.wait, true) as WaitRequest };
-    } catch {
-      throw new Error('WAIT_RECORD_INVALID');
-    }
+function validateRecord(record: WaitRecord): WaitRecord {
+  if (
+    !record
+    || typeof record !== 'object'
+    || Array.isArray(record)
+    || !exactKeys(record as unknown as Record<string, unknown>, [
+      'schemaVersion', 'idempotencyKey', 'createdAt', 'wait',
+    ])
+    || record.schemaVersion !== 'wait-record.v2'
+    || typeof record.idempotencyKey !== 'string'
+    || !IDEMPOTENCY_ID.test(record.idempotencyKey)
+    || !isDateTime(record.createdAt)
+  ) throw new Error('WAIT_RECORD_INVALID');
+  try { return { ...record, wait: parseWait(record.wait, true) as WaitRequest }; }
+  catch { throw new Error('WAIT_RECORD_INVALID'); }
+}
+
+function storedRecord(record: {
+  readonly sequence: number;
+  readonly idempotencyKey: string;
+  readonly committedAt: string;
+  readonly payload: StoredWait;
+}): WaitRecord {
+  if (record.payload.schemaVersion !== 'wait-value.v1') throw new Error('WAIT_RECORD_INVALID');
+  return validateRecord({
+    schemaVersion: 'wait-record.v2',
+    idempotencyKey: record.idempotencyKey,
+    createdAt: record.committedAt,
+    wait: record.payload.wait,
   });
 }
 
@@ -164,21 +174,27 @@ function parsePayload(payload: Record<string, unknown>): Omit<WaitRequest, 'sche
 }
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
-  const journalPath = context.config.journalPath;
-  if (typeof journalPath !== 'string') throw new Error('journalPath is required');
-  const file = path.resolve(journalPath);
+  const root = context.config.root;
+  if (typeof root !== 'string' || root.length === 0) throw new Error('root is required');
   const maxEntryBytes = Number(context.config.maxEntryBytes ?? 1_048_576);
+  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
+  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
   if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');
+  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
+  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const store = new FileDurableRecordStore(root, {
+    maximumRecords,
+    maximumBytes: maximumStoreBytes,
+    maximumRecordBytes: maxEntryBytes,
+  });
+  const waitStream = 'waits/all';
   return {
-    async ready() {
-      fs.mkdirSync(path.dirname(file), { recursive: true });
-      if (fs.existsSync(file) && fs.lstatSync(file).isSymbolicLink()) throw new Error('WAIT_JOURNAL_SYMLINK_DENIED');
-    },
+    async ready() { await store.read<StoredWait>(waitStream); },
     async invoke({ request, signal, confidential, fence }) {
       if (!confidential) fence.assertCurrent();
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       if (request.capability !== 'signal.wait') throw new Error('WAIT_OPERATION_UNSUPPORTED');
-      const existing = readRecords(file, maxEntryBytes);
+      const existing = (await store.read<StoredWait>(waitStream)).map(storedRecord);
       if (request.operation === 'read') {
         return { waits: existing.map((record) => record.wait) };
       }
@@ -192,25 +208,21 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       }
       const wait: WaitRequest = {
         schemaVersion: 'wait-request.v2',
-        waitId: `wait:${crypto.randomUUID()}`,
+        waitId: `wait:${crypto.createHash('sha256').update(request.idempotencyKey).digest('hex')}`,
         ...parsed,
       };
-      const record: WaitRecord = {
-        schemaVersion: 'wait-record.v2',
-        idempotencyKey: request.idempotencyKey,
-        createdAt: new Date().toISOString(),
+      const value: StoredWait = {
+        schemaVersion: 'wait-value.v1',
         wait,
       };
-      const serialized = JSON.stringify(record);
-      if (Buffer.byteLength(serialized, 'utf8') > maxEntryBytes) throw new Error('WAIT_ENTRY_SIZE_EXCEEDED');
-      const descriptor = fs.openSync(file, 'a', 0o600);
       try {
-        fs.writeSync(descriptor, `${serialized}\n`);
-        fs.fsyncSync(descriptor);
-      } finally {
-        fs.closeSync(descriptor);
+        const committed = await store.append(waitStream, request.idempotencyKey, value);
+        return { created: committed.appended, wait: storedRecord(committed.record).wait };
+      } catch (error) {
+        if (error instanceof Error && error.message === 'DURABLE_RECORD_SIZE_EXCEEDED') throw new Error('WAIT_ENTRY_SIZE_EXCEEDED');
+        if (error instanceof Error && error.message === 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
+        throw error;
       }
-      return { created: true, wait };
     },
     async shutdown() {},
   };

@@ -7,9 +7,17 @@
 !docker/Dockerfile.buster-gateway
 !docker/Dockerfile.buster-runtime
 !docker/Dockerfile.namespace-controller
+!docker/Dockerfile.archviewer
+!docker/Dockerfile.prism-control
+!docker/Dockerfile.prism-studio
+!docker/Dockerfile.prism-worker
+!docker/Dockerfile.prism-ingestion
+!docker/archviewer.nginx.conf
 !docker/buster-runtime-entrypoint.sh
 
 !tsconfig.base.json
+!package.json
+!package-lock.json
 
 !go.mod
 !cmd/
@@ -18,6 +26,7 @@
 
 !plugins/
 !skills/
+!skills/**
 !skills/buster/
 !skills/buster/plugins/
 !skills/buster/plugins/buster-suite-runtime/
@@ -29,6 +38,7 @@
 !skills/common/plugins/openclaw-agent-observer/
 !skills/common/plugins/openclaw-agent-observer/**
 !contracts/
+!contracts/**
 !contracts/agent-observability/
 !contracts/agent-observability/v1/
 !contracts/agent-observability/v1/**

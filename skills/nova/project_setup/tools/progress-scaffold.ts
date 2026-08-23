@@ -26,7 +26,7 @@ Options:
   --swarm <path>         Use an explicit .swarm directory instead of --project
   --repo <path>          Repository root. Defaults to nearest parent with .git
   --scaffold <path>      Scaffold file. Defaults to .swarm/progress.scaffold.json
-  --apply                Validate scaffold and write .swarm/progress.json
+  --apply                Validate scaffold and write progress.json plus pipeline.json
   --check                Validate scaffold/progress without writing
   --print                Print generated progress JSON
   --help                 Show this help
@@ -106,6 +106,7 @@ function resolveContext(args: Args): Context {
     swarmDir,
     scaffoldFile: args.scaffold ? path.resolve(args.scaffold) : path.join(swarmDir, DEFAULT_SCAFFOLD_FILE),
     progressFile: path.join(swarmDir, 'progress.json'),
+    pipelineFile: path.join(swarmDir, 'pipeline.json'),
   };
 }
 
@@ -129,16 +130,18 @@ function diffSummary(existing: unknown, next: unknown) {
 function applyScaffold(args: Args, context: Context) {
   const scaffold = readJsonIfExists(context.scaffoldFile);
   if (!scaffold) throw new Error(`Scaffold file not found. Run without --apply first: ${context.scaffoldFile}`);
-  const { progress, diagnostics } = scaffoldToProgress(scaffold, context);
+  const { progress, pipeline, diagnostics } = scaffoldToProgress(scaffold, context);
   printDiagnostics(diagnostics);
   if (args.check) return 0;
   if (args.print) {
-    console.log(JSON.stringify(progress, null, 2));
+    console.log(JSON.stringify({ progress, pipeline }, null, 2));
     return 0;
   }
   console.log(diffSummary(readJsonIfExists(context.progressFile), progress));
   writeJson(context.progressFile, progress);
+  writeJson(context.pipelineFile, pipeline);
   console.log(`wrote ${relFromRepo(context.repoRoot, context.progressFile)}`);
+  console.log(`wrote ${relFromRepo(context.repoRoot, context.pipelineFile)}`);
   return 0;
 }
 
@@ -155,7 +158,7 @@ export function run(argv: string[] = process.argv.slice(2)): number {
   writeJson(context.scaffoldFile, scaffold);
   console.log(`wrote ${relFromRepo(context.repoRoot, context.scaffoldFile)}`);
   printDiagnostics(validateScaffold(scaffold, context));
-  console.log('Next: fill the scaffold gaps, then rerun with --apply.');
+  console.log('Next: fill the progress and provider-plan gaps, then rerun with --apply.');
   return 0;
 }
 

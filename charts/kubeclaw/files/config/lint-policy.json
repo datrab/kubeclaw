@@ -1,7 +1,15 @@
 {
-  "schema_version": "pipeline_lint_policy.v6",
+  "schema_version": "pipeline_lint_policy.v7",
   "baseline_path": "lint-baseline.json",
   "experimental_tools": [],
+  "kubernetes_policy_packs": [
+    {
+      "id": "kubeclaw-default",
+      "version": "1.0.0",
+      "path": "kubernetes-policy-pack-default.json",
+      "sha256": "3c0e2815bc1154e89fdeca2623adbc5018a4b6348f966bdec6dadf82cbc32781"
+    }
+  ],
   "projects": [
     {
       "id": "workspace",
@@ -59,6 +67,25 @@
       "terraform": {
         "roots": [],
         "provider_mirror": "/opt/terraform-provider-mirror"
+      },
+      "kubernetes": {
+        "raw_manifests": [
+          "Projects/buster-infra-smoke/src/deployment.yaml"
+        ],
+        "helm_charts": [
+          "charts/kubeclaw"
+        ],
+        "policy_packs": [
+          "kubeclaw-default"
+        ],
+        "kubernetes_version": "1.35.6",
+        "schema_location": "/opt/kubeclaw-kubernetes-schemas/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "limits": {
+          "max_files": 128,
+          "max_file_bytes": 1048576,
+          "max_rendered_bytes": 10485760,
+          "max_documents": 2048
+        }
       }
     }
   ],
@@ -833,6 +860,50 @@
       "blocking_severity": "warning",
       "languages": [
         "helm"
+      ],
+      "config_path": null,
+      "targets": [
+        "."
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "kubernetes-policy",
+      "required": true,
+      "category": "manifests",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm",
+        "yaml"
+      ],
+      "config_path": null,
+      "targets": [
+        "."
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "kubernetes-schema",
+      "required": true,
+      "category": "manifests",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm",
+        "yaml"
       ],
       "config_path": null,
       "targets": [

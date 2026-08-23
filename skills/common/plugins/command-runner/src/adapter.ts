@@ -33,20 +33,36 @@ function argumentsFrom(value: unknown): string[] {
   return value;
 }
 
-function resolveInvocation(request: EffectRequest, executables: ReadonlySet<string>, roots: readonly string[]): Readonly<{ executable: string; args: string[]; cwd: string }> {
+function catalogFrom(value: unknown): ReadonlyMap<string, string> {
+  if (value === undefined) return new Map();
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('executableCatalog must be an object');
+  const entries = Object.entries(value);
+  if (entries.length > 128 || entries.some(([name, executable]) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(name)
+    || typeof executable !== 'string')) throw new Error('executableCatalog is invalid');
+  return new Map(entries.map(([name, executable]) => [name, canonicalExecutable(executable as string)]));
+}
+
+function resolveInvocation(request: EffectRequest, executables: ReadonlySet<string>, catalog: ReadonlyMap<string, string>,
+  roots: readonly string[]): Readonly<{ executable: string; args: string[]; cwd: string }> {
   if (request.capability !== 'command.execute' || request.operation !== 'run') throw new Error(`COMMAND_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
   if (request.resource.type !== 'command.executable') throw new Error('COMMAND_RESOURCE_INVALID');
   let executable: string;
-  try { executable = canonicalExecutable(request.resource.canonicalId); } catch { throw new Error(`COMMAND_EXECUTABLE_DENIED:${request.resource.canonicalId}`); }
+  const catalogMatch = request.resource.canonicalId.match(/^catalog:([A-Za-z0-9][A-Za-z0-9._-]{0,127})$/u);
+  try { executable = catalogMatch ? catalog.get(catalogMatch[1]!) ?? '' : canonicalExecutable(request.resource.canonicalId); }
+  catch { throw new Error(`COMMAND_EXECUTABLE_DENIED:${request.resource.canonicalId}`); }
+  if (!executable) throw new Error(`COMMAND_EXECUTABLE_DENIED:${request.resource.canonicalId}`);
   if (!executables.has(executable)) throw new Error(`COMMAND_EXECUTABLE_DENIED:${executable}`);
   if (typeof request.payload.workingDirectory !== 'string') throw new Error('COMMAND_WORKING_DIRECTORY_INVALID');
   const cwd = canonicalDirectory(request.payload.workingDirectory);
   if (!roots.some((root) => cwd === root || cwd.startsWith(`${root}${path.sep}`))) throw new Error(`COMMAND_WORKING_DIRECTORY_DENIED:${cwd}`);
+  if (request.payload.environment !== undefined) throw new Error('COMMAND_ENVIRONMENT_DENIED');
   return { executable, args: argumentsFrom(request.payload.args), cwd };
 }
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const executables = new Set(stringArray(context.config.allowedExecutables, 'allowedExecutables').map(canonicalExecutable));
+  const catalog = catalogFrom(context.config.executableCatalog);
+  for (const executable of catalog.values()) executables.add(executable);
   const roots = stringArray(context.config.allowedWorkingRoots, 'allowedWorkingRoots').map(canonicalDirectory);
   const runner = new CommandRunner({
     maxOutputBytes: positiveInteger(context.config.maxOutputBytes, 'maxOutputBytes'),
@@ -63,8 +79,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       if (!confidential) fence.assertCurrent();
       if (runner.stopping) throw new Error('ADAPTER_SHUTTING_DOWN');
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      const command = resolveInvocation(request, executables, roots);
-      return runner.run(command.executable, command.args, command.cwd, signal);
+      const command = resolveInvocation(request, executables, catalog, roots);
+      return runner.run({ ...command, environment: {} }, signal);
     },
     async shutdown() { await runner.shutdown(); },
   };

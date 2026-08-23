@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-architecture-'));
 const server = http.createServer((_request, response) => {
   response.writeHead(200, { 'content-type': 'application/json' });
@@ -98,7 +98,7 @@ try {
       result.stages.get('architecture')?.facts?.['architecture.review'],
       'approval_required',
     );
-    assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'), /architecture-validation/);
+    assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'records', 'store.json'), 'utf8'), /architecture-validation/);
   } finally { await adapters.shutdown(); }
 } finally {
   delete process.env[secretName];

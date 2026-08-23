@@ -8,15 +8,17 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-test-agent-'));
 fs.writeFileSync(path.join(temporary, 'fixture.txt'), 'fixture\n');
+fs.mkdirSync(path.join(temporary, 'dist'));
+fs.writeFileSync(path.join(temporary, 'dist', 'index.js'), 'export const fixture = true;\n');
 execFileSync('git', ['init', '-q'], { cwd: temporary });
 execFileSync('git', ['config', 'user.name', 'KubeClaw Test'], { cwd: temporary });
 execFileSync('git', ['config', 'user.email', 'test@kubeclaw.invalid'], { cwd: temporary });
 execFileSync('git', ['add', '.'], { cwd: temporary });
 execFileSync('git', ['commit', '-qm', 'fixture'], { cwd: temporary });
-const transcript = 'start buster\nexecute unit\ncollect exit=0\njudge PASS\nterminate\n';
+const transcript = 'start buster\nexecute security\ncollect exit=0\njudge PASS\nterminate\n';
 const transcriptDigest = crypto.createHash('sha256').update(transcript).digest('hex');
 const server = http.createServer((request, response) => {
   let body = '';
@@ -39,9 +41,9 @@ const server = http.createServer((request, response) => {
         result: {
           schemaVersion: 'buster-suite-result.v2',
           jobId,
-          results: [{ suite: 'unit', status: 'PASS' }],
-          suiteSummary: 'unit passed',
-          suiteDetailSummary: 'unit passed',
+          results: [{ suite: 'security', status: 'PASS' }],
+          suiteSummary: 'security passed',
+          suiteDetailSummary: 'security passed',
           criticalFailed: false,
           completedAt: '2026-07-28T00:00:00.000Z',
         },
@@ -50,7 +52,7 @@ const server = http.createServer((request, response) => {
     }
     assert.equal(request.url, '/dispatch');
     assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'real-unit' && suite.passed === true), true);
-    assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'unit' && suite.passed === true), true);
+    assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'security' && suite.passed === true), true);
     fs.writeFileSync(path.join(temporary, 'transcript.log'), transcript);
     response.writeHead(200, { 'content-type': 'application/json' });
     response.end(JSON.stringify({ result: {
@@ -102,7 +104,7 @@ try {
     grants: new Map([
       ['kubeclaw.test-agent:test', new Map([
         ['command.execute', { allowedExecutables: [nodeExecutable], allowedWorkingRoots: [temporary] }],
-        ['test.suite.execute', { allowedSuites: ['unit'], allowedRoots: [temporary] }],
+        ['test.suite.execute', { allowedSuites: ['security'], allowedRoots: [temporary] }],
         ['runtime.dispatch', { allowedAgents: ['buster'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.test-agent'] }],
       ])],
@@ -133,7 +135,7 @@ try {
         endpoint: origin,
         tokenSecret: 'buster.worker',
         allowedRepositoryRoots: [temporary],
-        allowedSuites: ['unit'],
+        unmigratedSuites: ['security'],
         suiteCapabilities: ['image_build'],
         gitExecutable: fs.realpathSync(execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim()),
         maxArchiveBytes: 8_388_608,
@@ -169,8 +171,10 @@ try {
             suiteEvidence: [],
             suitePlan: {
               repositoryRoot: temporary,
-              suites: ['unit'],
-              testConfig: { suite_timeout_ms: 5_000 },
+              suites: ['security'],
+              testConfig: { suite_timeout_ms: 5_000,
+                serve: { type: 'local', port: address.port },
+                security: { paths: ['/'] } },
               task: {},
             },
             commandSuites: [{
@@ -189,7 +193,7 @@ try {
       journal: new core.FileJournal(path.join(temporary, 'events.jsonl')),
     });
     assert.equal((await runner.run('run:test-agent')).status, 'succeeded');
-    assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'catalog.jsonl'), 'utf8'), /test-verdict:task-1:1/u);
+    assert.match(fs.readFileSync(path.join(temporary, 'artifacts', 'records', 'store.json'), 'utf8'), /test-verdict:task-1:1/u);
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(temporary, 'transcript.log'))).digest('hex'), transcriptDigest);
     assert.equal(fs.readFileSync(effectsPath, 'utf8').includes(token), false);
   } finally {

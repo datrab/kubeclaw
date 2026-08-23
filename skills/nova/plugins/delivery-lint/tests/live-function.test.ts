@@ -5,7 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const repository = path.resolve('../../../..');
-const core = await import(pathToFileURL(path.join(repository, 'skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-delivery-lint-'));
 const project = path.join(temporary, 'repository');
 const artifacts = path.join(temporary, 'artifacts');
@@ -131,12 +131,12 @@ try {
     moduleId: 'web', dockerfile: 'Dockerfile', staticPath: 'public',
   }, {
     artifactRoot: unusableArtifactRoot,
-    afterAdaptersStart: () => fs.mkdirSync(path.join(unusableArtifactRoot, 'catalog.jsonl')),
+    afterAdaptersStart: () => fs.mkdirSync(path.join(unusableArtifactRoot, 'records', 'store.json'), { recursive: true }),
   });
   assert.equal(crashed.result.status, 'blocked');
   assert.equal(crashed.outcome, 'retry');
   assert.equal(crashed.reason?.code, 'core.plugin_runtime_failed');
-  const catalog = fs.readFileSync(path.join(artifacts, 'catalog.jsonl'), 'utf8').trim().split('\n');
+  const catalog = JSON.parse(fs.readFileSync(path.join(artifacts, 'records', 'store.json'), 'utf8')).records;
   assert.ok(catalog.length >= 5);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

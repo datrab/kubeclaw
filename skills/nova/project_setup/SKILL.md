@@ -123,14 +123,13 @@ Minimal template:
       "depends_on": ["01-scaffold"],
       "stages": ["forge", "buster"],
       "thinking_level": "adaptive",
-      "test_suites": ["build", "health", "unit"],
+      "test_suites": [],
       "test_config": {
         "serve": {
           "type": "server",
           "project_dir": "Projects/my-project/src",
           "start_cmd": "npm start",
-          "port": 3000,
-          "health_path": "/health"
+          "port": 3000
         }
       }
     }
@@ -148,14 +147,13 @@ Minimal template:
       "title": "System Test",
       "instructions_file": "buster-test/SYSTEM.md",
       "output_file": "buster-test/SYSTEM-RESULT.json",
-      "test_suites": ["build", "health", "unit"],
+      "test_suites": [],
       "test_config": {
         "serve": {
           "type": "server",
           "project_dir": "Projects/my-project/src",
           "start_cmd": "npm start",
-          "port": 3000,
-          "health_path": "/health"
+          "port": 3000
         }
       }
     }
@@ -238,93 +236,41 @@ node /app/skills/pipeline.ts --project <project> --nova-channel <id> --resume
 
 | Suite | Backend | Frontend |
 |---|---|---|
-| `build`, `health` | ✅ | ✅ |
+| `kubeclaw.container-build@1`, `kubeclaw.http@1`, `kubeclaw.size-budget@1` plan nodes | ✅ | ✅ |
 | `api` | ✅ (needs test-spec.json) | ❌ |
 | `security` | ✅ | ❌ |
-| `unit` | ✅ (pytest) | ✅ (vitest) |
-| `a11y`, `perf`, `bundle` | ❌ | ✅ |
+| `kubeclaw.direct-command@1` plan nodes | ✅ (pytest) | ✅ (vitest) |
+| `a11y`, `perf` | ❌ | ✅ |
 | `visual-reg`, `e2e` | ❌ | ✅ (needs baselines) |
-| `k8s` | ✅ (deployment modules) | ❌ |
+| `kubeclaw.kubernetes-fixture@1` plan nodes | ✅ (deployment modules) | ❌ |
 
 Without `thresholds` → informational. With `thresholds` → enforced (can FAIL).
 
-### k8s Suite — required test_config fields
+### Provider-based deployment and HTTP checks
 
-Use for any module that produces a Dockerfile + K8s manifests.
-
-```json
-"test_suites": ["k8s"],
-"test_config": {
-  "k8s": {
-    "dockerfile":    "Projects/<name>/src/Dockerfile",
-    "image_name":    "<app>",
-    "service_name":  "<k8s-service-name>",
-    "manifests":     ["Projects/<name>/src/k8s/<app>-all.yaml"],
-    "port":          3001,
-    "health_path":   "/health"
-  }
-}
-```
-
-| Field | Required | Description |
-|---|---|---|
-| `dockerfile` | yes | Path relative to repo root |
-| `image_name` | yes | Image name without registry/tag (used for image override) |
-| `service_name` | yes | K8s Service name in the manifests |
-| `manifests` | yes | Array of manifest paths relative to repo root |
-| `port` | no | Service port (default: 3000) |
-| `health_path` | no | Health check path (default: /health) |
-| `build_context` | no | BuildKit context directory (default: Dockerfile directory) |
-| `secrets_to_copy` | no | Secret names to copy from `kubeclaw` ns into the test ns |
-| `test_credentials` | no | App-under-test Secret/key allowlist decoded by the deterministic k8s suite and injected into Buster's prompt |
-| `ready_timeout_seconds` | no | Pod readiness wait (default: 120) |
-| `namespace_prefix` | no | Test namespace prefix — `test` by default |
-| `purpose` | no | `"pretest"` or `"final-preview"` |
-| `cleanup_policy` | no | `"delete"` for normal runs, `"keep"` for final previews |
-| `preview` | no | Final preview exposure config |
-
-Final-preview shape for the last Buster gate:
+Declare migrated build, deployment, and HTTP checks in `.swarm/pipeline.json`.
+Do not put `build`, `k8s`, or `health` in `test_suites`.
 
 ```json
-"test_suites": ["k8s"],
-"test_config": {
-  "k8s": {
-    "dockerfile": "Projects/<name>/src/Dockerfile",
-    "image_name": "<app>",
-    "service_name": "<k8s-service-name>",
-    "manifests": ["Projects/<name>/src/k8s/<app>-all.yaml"],
-    "port": 3001,
-    "health_path": "/health",
-    "purpose": "final-preview",
-    "cleanup_policy": "keep",
-    "test_credentials": [
-      {
-        "secret_name": "<preview-login-secret>",
-        "keys": ["username", "password"],
-        "purpose": "login to the app under test"
-      }
-    ],
-    "preview": {
-      "provider": "tailscale-ingress",
-      "path": "/",
-      "expected_text": "<app>",
-      "credentials_ref": "secret/<preview-login-secret>",
-      "reveal_credentials": true,
-      "credentials_keys": ["username", "password"]
+"tests": {
+  "health": {
+    "uses": "kubeclaw.http@1",
+    "mode": "blocking",
+    "retries": 2,
+    "config": {
+      "url": "http://service.namespace.svc.cluster.local:3001",
+      "path": "/health",
+      "expectedStatuses": [200]
     }
   }
 }
 ```
 
-**Notes:**
-- Manifests may hardcode `namespace:` — the suite strips it so `-n testNs` takes effect
-- `image_name` match is substring: any `image:` line containing it gets overridden with the test registry tag
-- Normal test namespaces use lease cleanup. Final previews use `cleanup_policy: "keep"` so the app remains live after the final Buster run
-- `preview.provider: "tailscale-ingress"` requires the Tailscale Kubernetes Operator in the cluster
-- `preview.expected_text` makes the final-preview suite fetch the served Tailscale URL and fail if the run-specific marker is missing
-- `reveal_credentials: true` verifies the app-owned preview credential Secret in the leased namespace and sends a copy-paste retrieval command to Discord
-- `test_credentials` is the only place to allow prompt-visible app test credentials; never include production, registry, deploy-key, or provider Secrets
-- Suite is `critical: true` — failure blocks the LLM subagent spawn
+The HTTP provider can also consume the typed `deployment` output from
+`kubeclaw.kubernetes-fixture@1`. Use that link for a dynamic namespace.
+
+For deployment configuration, use the Kubernetes fixture user guide. Keep
+preview configuration only while the preview suite remains unmigrated.
 
 ## Checklist
 
@@ -350,7 +296,7 @@ Final-preview shape for the last Buster gate:
 | Symptom | Fix |
 |---|---|
 | `cd backend: No such file` | Set `serve.project_dir` |
-| Health FAIL timeout | Set `health_retries: 10`, `health_base_delay: 5000` |
+| HTTP request timeout | Increase the HTTP node `requestTimeoutMs` only when the target needs more time |
 | `image not known` | Use fully-qualified `FROM` in Dockerfile |
 | Fix cycle uses wrong model | Set `forge_model` on review gates |
 | Arch validator 404 | Set `arch_validation.model` or `arch_validation.enabled: false` |

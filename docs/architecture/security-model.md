@@ -3,7 +3,7 @@
 Trusted first-party packages are imported only after inert discovery, schema
 validation, content-digest verification, and import-side-effect auditing.
 Restricted external packages are installed transactionally and execute through
-`skills/common/plugin-runtime/core/isolation/runner.ts`.
+`skills/common/plugin-runtime/foundation/isolation/runner.ts`.
 
 Security invariants:
 

@@ -29,6 +29,8 @@ import {
   validateRealE2EScenarioSetup,
 } from './failure-scenarios.mjs';
 
+process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const execFileAsync = promisify(execFile);
 
@@ -43,6 +45,15 @@ function withEnv(key, value, fn) {
     else process.env[key] = prior;
   }
 }
+
+test('real e2e generation requires a published immutable deployment image', () => {
+  withEnv('REAL_E2E_DEPLOYMENT_IMAGE', undefined, () => {
+    assert.throws(() => buildProgress({ projectName: 'missing-deployment-image' }), /REAL_E2E_DEPLOYMENT_IMAGE_REQUIRED/u);
+  });
+  withEnv('REAL_E2E_DEPLOYMENT_IMAGE', 'registry-local/image:latest', () => {
+    assert.throws(() => buildProgress({ projectName: 'mutable-deployment-image' }), /REAL_E2E_DEPLOYMENT_IMAGE_INVALID/u);
+  });
+});
 
 test('generated real e2e config defaults to provider-qualified gpt-5.3-codex-spark with thinking none', () => {
   const progress = buildProgress({ projectName: 'unit-model-defaults' });
@@ -150,7 +161,7 @@ test('scenario module scope keeps module retry cases to the exercised module', (
     assert.equal(progress.arch_validation.enabled, false);
     assert.equal(progress.arch_validation.agent_enabled, false);
     assert.deepEqual(progress.gates['module-review'].contract.module_ids, ['01-nginx']);
-    assert.equal(progress.gates['final-buster'].test_config.unit.test_cmd, 'npm run verify:01-nginx');
+    assert.equal(progress.gates['final-buster'].test_config.unit, undefined);
   });
 });
 
@@ -178,7 +189,7 @@ test('scenario module scope preserves the full graph for graph-owned scenarios',
     assert.deepEqual(Object.keys(progress.modules), ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
     assert.deepEqual(progress.real_e2e.module_scope, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
     assert.deepEqual(progress.execution_order, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
-    assert.equal(progress.gates['final-buster'].test_config.unit.test_cmd, 'npm run verify:04-nginx');
+    assert.equal(progress.gates['final-buster'].test_config.unit, undefined);
   });
 });
 
@@ -310,7 +321,7 @@ test('generated real e2e seed declares intentional minimal fixture architecture'
   assert.equal(progress.notes.some((note) => note.includes('intentional test topology')), true);
 });
 
-test('generated real e2e seed declares explicit static serving and module-owned smoke checks', () => {
+test('generated real e2e seed declares explicit static serving contracts', () => {
   const progress = buildProgress({ projectName: 'unit-static-serving', moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'] });
   const staticServing = progress.contracts.runtime_config.static_serving;
 
@@ -320,16 +331,8 @@ test('generated real e2e seed declares explicit static serving and module-owned 
     '/content/branch-a.html',
     '/assets/branch-b.css',
   ]);
-  assert.deepEqual(progress.modules['02-nginx'].test_config.serve.smoke_paths, ['/content/branch-a.html']);
-  assert.deepEqual(progress.modules['02-nginx'].test_config.serve.smoke_expected_text, { '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT' });
-  assert.deepEqual(progress.modules['03-nginx'].test_config.serve.smoke_paths, ['/assets/branch-b.css']);
-  assert.deepEqual(progress.modules['03-nginx'].test_config.serve.smoke_expected_text, { '/assets/branch-b.css': '#real-e2e-content-branch' });
-  assert.deepEqual(progress.modules['04-nginx'].test_config.serve.smoke_paths, ['/', '/content/branch-a.html', '/assets/branch-b.css']);
-  assert.deepEqual(progress.modules['04-nginx'].test_config.serve.smoke_expected_text, {
-    '/': 'REAL_E2E_NGINX_OK',
-    '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT',
-    '/assets/branch-b.css': '#real-e2e-content-branch',
-  });
+  assert.equal(JSON.stringify(progress.modules).includes('health_path'), false);
+  assert.equal(JSON.stringify(progress.modules).includes('smoke_paths'), false);
   assert.equal(progress.modules['01-nginx'].agent_judgment.required, true);
   assert.equal(progress.modules['01-nginx'].agent_judgment.reason, 'foundation_module_requires_buster_agent_judgment');
   assert.equal(progress.modules['02-nginx'].agent_judgment.required, false);
@@ -453,32 +456,32 @@ test('retry-buster-pass-echo-rejects materializes canonical swarm review instruc
   }
 });
 
-test('retry malformed-output scenarios enforce unit failures before retry', () => {
+test('retry malformed-output scenarios use a one-shot command fault without restoring legacy unit', () => {
   const scenarioId = 'retry-fix-malformed-output';
   const base = buildProgress({ projectName: `unit-${scenarioId}` });
   const { progress } = applyRealE2EScenario(base, scenarioId);
-  const unit = progress.modules['01-nginx'].test_config.unit;
+  const commandSuite = progress.modules['01-nginx'].real_e2e_command_suites[0];
 
   assert.equal(progress.modules['01-nginx'].max_fails, 3);
   assert.equal(progress.modules['01-nginx'].auto_retry_threshold, 1);
-  assert.equal(unit.thresholds.max_failures, 0);
-  assert.equal(Array.isArray(unit.test_cmd), true);
-  assert.match(unit.test_cmd.join(' '), /REAL_E2E_EXPECTED_RETRYABLE_FORGE_CODE_FAILURE/);
+  assert.deepEqual(commandSuite, { kind: 'fail-once', suite: 'retry-fixture' });
+  assert.equal(progress.modules['01-nginx'].test_suites.includes('unit'), false);
+  assert.equal(progress.modules['01-nginx'].test_config.unit, undefined);
 });
 
-test('Buster gate failure configures final gate failing unit command', () => {
+test('Buster gate failure configures a remaining legacy API failure', () => {
   const base = buildProgress({ projectName: 'unit-buster-gate-failure' });
   const { progress } = applyRealE2EScenario(base, 'buster-gate-failure');
-  const unit = progress.gates['final-buster'].test_config.unit;
+  const api = progress.gates['final-buster'].test_config.api;
 
-  assert.equal(Array.isArray(unit.test_cmd), true);
-  assert.match(unit.test_cmd.join(' '), /REAL_E2E_EXPECTED_BUSTER_GATE_FAILURE/);
+  assert.match(api.spec_file, /real-e2e-expected-buster-gate-failure\.json/);
+  assert.equal(progress.gates['final-buster'].test_config.unit, undefined);
 });
 
 test('namespace lease denied scenario preserves intentional invalid prefix through final Buster', async () => {
   const base = buildProgress({ projectName: 'unit-namespace-lease-denied' });
   const { progress } = applyRealE2EScenario(base, 'namespace-lease-denied');
-  assert.equal(progress.gates['final-buster'].test_config.k8s.namespace_prefix, 'prod');
+  assert.equal(progress.real_e2e.kubernetes_fixture.namespace_prefix, 'prod');
 
   let workspace = null;
   try {
@@ -486,11 +489,11 @@ test('namespace lease denied scenario preserves intentional invalid prefix throu
     const generatedProgress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
     const contract = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'real-e2e-scenario-contract.json'), 'utf8'));
 
-    assert.equal(generatedProgress.gates['final-buster'].test_config.k8s.namespace_prefix, 'prod');
+    assert.equal(generatedProgress.real_e2e.kubernetes_fixture.namespace_prefix, 'prod');
     assert.equal(contract.scenario_id, 'namespace-lease-denied');
     assert.equal(contract.intentional_fixture.owner, 'final-buster');
     assert.equal(contract.intentional_fixture.intent, 'namespace_safety_rejection');
-    assert.deepEqual(contract.intentional_fixture.preserve, ['gates.final-buster.test_config.k8s.namespace_prefix']);
+    assert.deepEqual(contract.intentional_fixture.preserve, ['real_e2e.kubernetes_fixture.namespace_prefix']);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -499,7 +502,7 @@ test('namespace lease denied scenario preserves intentional invalid prefix throu
 test('scenario setup preflight rejects drift before pipeline execution', () => {
   const base = buildProgress({ projectName: 'unit-namespace-lease-denied-drift' });
   const { progress } = applyRealE2EScenario(base, 'namespace-lease-denied');
-  progress.gates['final-buster'].test_config.k8s.namespace_prefix = 'test';
+  progress.real_e2e.kubernetes_fixture.namespace_prefix = 'test';
 
   assert.throws(
     () => validateRealE2EScenarioSetup({
@@ -511,7 +514,7 @@ test('scenario setup preflight rejects drift before pipeline execution', () => {
     (error) => {
       assert.equal(error.message, 'real E2E scenario setup contract failed for namespace-lease-denied');
       assert.deepEqual(error.failures, [{
-        field: 'gates.final-buster.test_config.k8s.namespace_prefix',
+        field: 'real_e2e.kubernetes_fixture.namespace_prefix',
         expected: 'prod',
         actual: 'test',
       }]);
@@ -564,42 +567,34 @@ test('k8s pod never ready scenario preserves intentional readiness failure throu
   }
 });
 
-test('k8s invalid context scenario materializes an explicit run-scoped kubeconfig', async () => {
+test('Kubernetes fixture policy scenario uses a denied namespace prefix', async () => {
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'k8s-context-invalid' });
     const progress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
-    const kubeconfigPath = progress.gates['final-buster'].test_config.k8s.kubeconfig_path;
-
-    assert.equal(kubeconfigPath, path.join(workspace.projectSrc, '.real-e2e-invalid-kubeconfig'));
-    assert.match(fs.readFileSync(kubeconfigPath, 'utf8'), /current-context: real-e2e-context-does-not-exist/);
-    assert.equal(progress.real_e2e.intentional_config_failure.error_code, 'KUBECONFIG_CONTEXT_INVALID');
+    assert.equal(progress.real_e2e.kubernetes_fixture.namespace_prefix, 'prod');
+    assert.equal(progress.real_e2e.intentional_config_failure.error_code, 'KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED');
+    assert.equal(fs.existsSync(path.join(workspace.projectSrc, '.real-e2e-invalid-kubeconfig')), false);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
 });
 
-test('registry pull failure targets final Buster k8s build only', async () => {
+test('registry pull failure targets the executed Kubernetes fixture image', async () => {
   const base = buildProgress({ projectName: 'unit-registry-pull-failure' });
   const { progress } = applyRealE2EScenario(base, 'registry-pull-failure');
-  const finalK8s = progress.gates['final-buster'].test_config.k8s;
-
-  assert.equal(finalK8s.source_image, undefined);
-  assert.match(finalK8s.dockerfile, /Dockerfile\.real-e2e-missing-base$/);
-  assert.match(finalK8s.build_context, /\/src$/);
-  assert.equal(progress.modules['01-nginx'].test_config.serve.dockerfile.endsWith('/Dockerfile'), true);
+  assert.match(progress.real_e2e.kubernetes_fixture.image.reference, /real-e2e-intentional-missing@sha256:f{64}$/u);
 
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'registry-pull-failure' });
     const dockerfile = fs.readFileSync(path.join(workspace.projectSrc, 'Dockerfile'), 'utf8');
-    const finalDockerfile = fs.readFileSync(path.join(workspace.projectSrc, 'Dockerfile.real-e2e-missing-base'), 'utf8');
+    const manifest = fs.readFileSync(path.join(workspace.projectSrc, 'k8s', 'deployment.yaml'), 'utf8');
     const generatedProgress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
 
     assert.doesNotMatch(dockerfile, /real-e2e-intentional-missing-base/);
-    assert.match(finalDockerfile, /real-e2e-intentional-missing-base:never/);
-    assert.equal(generatedProgress.gates['final-buster'].test_config.k8s.source_image, undefined);
-    assert.match(generatedProgress.gates['final-buster'].test_config.k8s.dockerfile, /Dockerfile\.real-e2e-missing-base$/);
+    assert.match(manifest, /real-e2e-intentional-missing@sha256:f{64}/u);
+    assert.match(generatedProgress.real_e2e.kubernetes_fixture.image.reference, /real-e2e-intentional-missing@sha256:f{64}$/u);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -725,7 +720,7 @@ test('generated nginx fixture keeps the reproducible run id placeholder', async 
   }
 });
 
-test('generated review contract assigns namespace lease preview exposure to final Buster', async () => {
+test('generated review contract assigns Kubernetes fixture authority to final Buster', async () => {
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
@@ -741,25 +736,24 @@ test('generated review contract assigns namespace lease preview exposure to fina
     const releaseBuster = fs.readFileSync(path.join(workspace.swarmDir, 'modules', '04-nginx', 'BUSTER.md'), 'utf8');
     const manifest = fs.readFileSync(path.join(workspace.projectSrc, 'k8s', 'deployment.yaml'), 'utf8');
     const progress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
+    const pipeline = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'pipeline.json'), 'utf8'));
     const finalGate = progress.gates['final-buster'];
 
     assert.match(architecture, /module manifest stays reusable with only Deployment, Service, and app-owned Secret resources/);
     assert.match(architecture, /Module 01 owns the shared nginx runtime config/);
     assert.match(architecture, /Module 04 owns copying the assembled `src\/` tree into the nginx web root/);
-    assert.match(architecture, /preview-infrastructure\.json.*final Buster owns run-scoped preview exposure deterministically/s);
-    assert.match(architecture, /external tailnet DNS\/HTTPS reachability is not required from the Buster\/Nova pod/);
-    assert.match(architecture, /spec\.exposure\.provider=tailscale-ingress/);
+    assert.match(architecture, /Kubernetes fixture waits for pod and Service readiness/);
+    assert.match(architecture, /HTTP provider validates app content through the internal Service URL/);
     assert.match(moduleReview, /Do not require static BusterNamespaceLease or Ingress manifests in module source/);
-    assert.match(moduleReview, /provider=tailscale-ingress.*dynamic BusterNamespaceLease/s);
-    assert.match(moduleReview, /gates\.final-buster\.test_config\.k8s\.preview/);
+    assert.match(moduleReview, /Kubernetes fixture owns its run-scoped lease/);
+    assert.match(moduleReview, /preview suite to use an explicit preview URL/);
     assert.match(moduleReview, /checked_contracts/);
     assert.match(moduleReview, /opened_artifacts/);
     assert.match(moduleReview, /failed_commands/);
     assert.match(moduleReview, /unverified_requirements/);
     assert.match(moduleReview, /PASS is invalid if `failed_commands` or `unverified_requirements` is non-empty/);
     assert.match(pipelineReview, /Do not report benign startup tool failures, transcript compaction notices, or accepted-output session-stop grace expiry/);
-    assert.match(foundationBuster, /downstream release-candidate reference/);
-    assert.match(foundationBuster, /foundation module must not require its reusable manifest to use the final release-candidate image/);
+    assert.match(foundationBuster, /downstream immutable deployment reference/);
     assert.match(foundationBuster, /deterministic suite results as pre-test evidence only/);
     assert.match(foundationBuster, /foundation module requires Buster agent judgment/);
     assert.match(foundationBuster, /final verdict for this module must come from the Buster agent output/);
@@ -770,30 +764,43 @@ test('generated review contract assigns namespace lease preview exposure to fina
     assert.match(secondaryBuster, /preview infrastructure contracts as references/);
     assert.match(secondaryBuster, /final-preview validation are final-Buster gate owned/);
     assert.match(secondaryBuster, /must not define the preview lease or an Ingress/);
-    assert.match(releaseForge, /Preserve the reusable deployment manifest image placeholder `real-pipeline-e2e-nginx:verification`/);
+    assert.match(releaseForge, /Preserve the digest-pinned image/);
     assert.match(releaseForge, /`Dockerfile`/);
-    assert.match(releaseForge, /final Buster owns release-candidate image promotion and run-scoped manifest override/);
-    assert.match(releaseBuster, /Require `k8s\/deployment\.yaml` to keep the reusable image placeholder `real-pipeline-e2e-nginx:verification`/);
-    assert.match(releaseBuster, /final Buster must promote and override the image at deployment time/);
-    assert.match(finalBuster, /deterministic Buster k8s suite creates the final preview/);
-    assert.match(finalBuster, /must not require tailnet DNS from the Buster\/Nova pod/);
-    assert.match(finalBuster, /preview\.provider.*tailscale-ingress/);
-    assert.match(finalBuster, /spec\.exposure\.provider=tailscale-ingress/);
+    assert.match(releaseBuster, /immutable image declared by the deployable artifact contract/);
+    assert.match(finalBuster, /Kubernetes fixture creates a run-scoped BusterNamespaceLease/);
+    assert.match(finalBuster, /HTTP provider must validate the app through the internal Service URL/);
     assert.match(finalBuster, /Do not ask Forge, Echo, or reusable module manifests to create final-preview lease or Ingress resources/);
-    assert.match(finalBuster, /Do not ask Forge or module manifests to add Role or RoleBinding resources for `pods\/portforward`/);
-    assert.match(finalBuster, /pod readiness, an internal service content check, and a dynamic preview URL/);
-    assert.match(finalBuster, /gates\.final-buster\.test_config\.k8s\.preview/);
-    assert.deepEqual(finalGate.test_suites, ['build', 'health', 'unit', 'manifest', 'k8s', 'tailscale-preview']);
+    assert.match(finalBuster, /Do not add Role or RoleBinding resources for `pods\/portforward`/);
+    assert.deepEqual(finalGate.test_suites, ['security']);
+    assert.deepEqual(finalGate.test_config.security, { paths: ['/'], thresholds: { max_missing_headers: 0 } });
+    assert.equal(finalGate.test_config.unit, undefined);
+    assert.equal(pipeline.modules['01-nginx'].suites.unit.uses, 'kubeclaw.unit-suite@1');
+    assert.equal(
+      pipeline.modules['01-nginx'].suites.unit.add.command.config.executable,
+      'npm',
+    );
+    assert.deepEqual(
+      pipeline.modules['01-nginx'].suites.unit.add.command.config.args,
+      ['run', 'verify:01-nginx'],
+    );
+    assert.equal(pipeline.modules['01-nginx'].tests['size-budget-artifact'].uses, 'kubeclaw.direct-command@1');
+    assert.equal(pipeline.modules['01-nginx'].tests['size-budget'].uses, 'kubeclaw.size-budget@1');
+    assert.deepEqual(pipeline.modules['01-nginx'].tests.health.needs, ['size-budget']);
+    assert.equal(pipeline.gates['final-buster'].suites.unit.uses, 'kubeclaw.unit-suite@1');
+    assert.equal(pipeline.gates['final-buster'].tests['size-budget-artifact'].uses, 'kubeclaw.direct-command@1');
+    assert.equal(pipeline.gates['final-buster'].tests['size-budget'].uses, 'kubeclaw.size-budget@1');
+    assert.deepEqual(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].needs, ['size-budget']);
+    assert.equal(pipeline.gates['final-buster'].tests.health.uses, 'kubeclaw.http@1');
+    assert.equal(pipeline.gates['final-buster'].tests.health.inputs.deployment.from, 'kubernetes-deployment');
+    assert.equal(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].uses, 'kubeclaw.kubernetes-fixture@1');
+    assert.match(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].config.image.reference, /@sha256:[a-f0-9]{64}$/);
     assert.equal(finalGate.contract.preview_infrastructure_ref, 'contracts.preview_infrastructure');
-    assert.equal(finalGate.test_config.serve.image, 'localhost/real-pipeline-e2e-nginx:module');
+    assert.match(finalGate.test_config.serve.image, /@sha256:[a-f0-9]{64}$/);
     assert.equal(finalGate.test_config.serve.dockerfile, undefined);
-    assert.equal(finalGate.test_config.k8s.source_image, 'localhost/real-pipeline-e2e-nginx:module');
-    assert.equal(finalGate.test_config.k8s.dockerfile, undefined);
-    assert.equal(finalGate.test_config.k8s.preview.contract, 'dynamic-buster-namespace-lease');
-    assert.equal(finalGate.test_config.k8s.preview.provider, 'tailscale-ingress');
-    assert.equal(finalGate.test_config.manifest.enforced, true);
+    assert.equal(finalGate.test_config.k8s, undefined);
+    assert.equal(finalGate.test_config.manifest, undefined);
     assert.deepEqual(finalGate.test_config.tailscale_preview, {
-      source_suite: 'k8s',
+      source_suite: 'explicit',
       expected_text: 'REAL_E2E_NGINX_OK',
       smoke_paths: ['/content/branch-a.html', '/assets/branch-b.css'],
       smoke_expected_text: {
@@ -830,8 +837,8 @@ test('generated fixture declares canonical artifact, runtime, review, and previe
     assert.equal(deployableArtifact.authority.producer, 'release-candidate-module-buster');
     assert.equal(deployableArtifact.authority.consumer, 'final-buster');
     assert.equal(deployableArtifact.release_candidate_module, '04-nginx');
-    assert.match(deployableArtifact.authority.rule, /Only the release_candidate_module Buster owns release-candidate image verification/);
-    assert.equal(deployableArtifact.image.reference, 'localhost/real-pipeline-e2e-nginx:module');
+    assert.match(deployableArtifact.authority.rule, /Only the release_candidate_module Buster owns immutable image verification/);
+    assert.match(deployableArtifact.image.reference, /@sha256:[a-f0-9]{64}$/);
     assert.equal(deployableArtifact.runtime_config_ref, '.swarm/contracts/runtime-config.json');
     assert.equal(runtimeConfig.artifact_type, 'runtime_config_contract');
     assert.equal(runtimeConfig.authority.owner, 'application-module');
@@ -904,10 +911,10 @@ test('generated fixture declares canonical artifact, runtime, review, and previe
       runtime_config_ref: 'contracts.runtime_config',
       preview_infrastructure_ref: 'contracts.preview_infrastructure',
     });
-    assert.match(architecture, /deployable-artifact\.json.*release-candidate handoff/s);
+    assert.match(architecture, /deployable-artifact\.json.*immutable deployment handoff/s);
     assert.match(architecture, /runtime-config\.json.*application runtime and static serving boundary/s);
     assert.match(architecture, /module-review\.json.*Echo review ownership/s);
-    assert.match(architecture, /preview-infrastructure\.json.*final Buster owns run-scoped preview exposure/s);
+    assert.match(architecture, /preview-infrastructure\.json.*separate preview suite consumes an explicit URL/s);
     assert.match(architecture, /Empty env\/config\/secret lists are valid/);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
@@ -933,13 +940,13 @@ test('generated final review does not require post-final-review v2 report artifa
     assert.match(finalReview, /do not require post-final-review v2 report artifacts/);
     assert.doesNotMatch(finalReview, /logs\/pipeline/);
     assert.doesNotMatch(finalReview, /read model/);
-    assert.match(finalReview, /final Buster produced deployment and preview evidence/);
+    assert.match(finalReview, /final Buster produced deployment and security evidence/);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
 });
 
-test('generated final review requires final Buster to promote the module release candidate', async () => {
+test('generated final review requires the exact immutable deployment artifact', async () => {
   let workspace = null;
   try {
     workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
@@ -947,15 +954,13 @@ test('generated final review requires final Buster to promote the module release
     const finalReview = fs.readFileSync(path.join(workspace.swarmDir, 'echo-review', 'FINAL-REVIEW-INSTRUCTIONS.md'), 'utf8');
     const finalBuster = fs.readFileSync(path.join(workspace.swarmDir, 'buster-test', 'FINAL-BUSTER.md'), 'utf8');
 
-    assert.match(architecture, /release assembly module Buster owns release-candidate verification/);
-    assert.match(architecture, /Final Buster promotes the configured contract image/);
-    assert.match(finalReview, /Require final Buster to promote and deploy the release assembly module Buster deployable artifact contract/);
-    assert.match(finalReview, /do not accept a separate final-gate rebuild as equivalent evidence/);
-    assert.match(finalReview, /source_image_id/);
-    assert.match(finalReview, /registry_image_digest/);
-    assert.match(finalBuster, /Promote the deployable artifact contract image/);
-    assert.match(finalBuster, /validate that exact deployed image in Kubernetes/);
-    assert.match(finalBuster, /Record immutable promotion evidence/);
+    assert.match(architecture, /release assembly module Buster owns immutable image verification/);
+    assert.match(architecture, /Final Buster deploys that exact image/);
+    assert.match(finalReview, /Require final Buster to deploy the exact release assembly module Buster artifact contract/);
+    assert.match(finalReview, /Do not accept a separate final-gate rebuild/);
+    assert.match(finalReview, /immutable image reference, manifest digest, lease name, namespace, and creation time/);
+    assert.match(finalBuster, /Deploy the exact digest-pinned image and checked manifest/);
+    assert.match(finalBuster, /Record the immutable image reference, manifest digest, lease name, namespace, and creation time/);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -966,7 +971,7 @@ test('tailscale preview unreachable scenario uses explicit unreachable preview U
   const { progress } = applyRealE2EScenario(base, 'tailscale-preview-url-unreachable');
   const finalGate = progress.gates['final-buster'];
 
-  assert.ok(finalGate.test_suites.includes('k8s'));
+  assert.equal(finalGate.test_suites.includes('k8s'), false);
   assert.equal(finalGate.test_suites.includes('tailscale-preview'), true);
   assert.equal(finalGate.test_config.tailscale_preview.source_suite, 'explicit');
   assert.equal(finalGate.test_config.tailscale_preview.preview_url, 'http://127.0.0.1:1');
@@ -989,15 +994,15 @@ test('tailscale preview unreachable scenario uses explicit unreachable preview U
   }
 });
 
-test('tailscale preview wrong deployment scenario changes k8s preview expected marker', async () => {
+test('tailscale preview wrong deployment scenario changes the explicit expected marker', async () => {
   const base = buildProgress({ projectName: 'unit-tailscale-preview-wrong-deployment' });
   const { progress } = applyRealE2EScenario(base, 'tailscale-preview-wrong-deployment');
   const finalGate = progress.gates['final-buster'];
 
-  assert.ok(finalGate.test_suites.includes('k8s'));
+  assert.equal(finalGate.test_suites.includes('k8s'), false);
   assert.equal(finalGate.test_suites.includes('tailscale-preview'), true);
-  assert.equal(finalGate.test_config.k8s.preview.expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
-  assert.equal(finalGate.test_config.tailscale_preview.source_suite, 'k8s');
+  assert.equal(finalGate.test_config.tailscale_preview.expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
+  assert.equal(finalGate.test_config.tailscale_preview.source_suite, 'explicit');
 
   let workspace = null;
   try {
@@ -1005,8 +1010,8 @@ test('tailscale preview wrong deployment scenario changes k8s preview expected m
     const generatedProgress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
     const generatedFinalGate = generatedProgress.gates['final-buster'];
 
-    assert.equal(generatedFinalGate.test_config.k8s.preview.expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.source_suite, 'k8s');
+    assert.equal(generatedFinalGate.test_config.tailscale_preview.expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
+    assert.equal(generatedFinalGate.test_config.tailscale_preview.source_suite, 'explicit');
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -1144,7 +1149,12 @@ test('git push failure scenarios keep setup Git remotes canonical', async () => 
     const cleanup = await cleanupRealE2ERunWorkspace(workspace);
     workspace = null;
     assert.equal(cleanup.steps.some((step) => step.step === 'git_push_url_restore'), false);
-    assert.equal(cleanup.ok, true);
+    assert.equal(
+      cleanup.steps
+        .filter((step) => step.step.startsWith('git_') || step.step === 'artifact_root_remove')
+        .every((step) => step.ok),
+      true,
+    );
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -1265,35 +1275,43 @@ test('nginx fixture pins its base image and verifies production contract fields'
   }
 });
 
-test('generated real e2e serve config uses HTTP smoke paths only', () => {
+test('generated real e2e progress omits retired health configuration', () => {
   const progress = buildProgress({ projectName: 'real-pipeline-e2e-unit' });
-  assert.deepEqual(progress.modules['01-nginx'].test_config.serve.smoke_paths, ['/', '/runtime-foundation-check']);
-  assert.deepEqual(progress.modules['01-nginx'].test_config.serve.smoke_expected_text, {
-    '/': 'REAL_E2E_NGINX_OK',
-    '/runtime-foundation-check': 'REAL_E2E_NGINX_OK',
-  });
-  assert.equal(progress.gates['final-buster'].test_config.serve.smoke_paths, undefined);
+  assert.equal(JSON.stringify(progress).includes('health_path'), false);
+  assert.equal(JSON.stringify(progress).includes('health_retries'), false);
+  assert.equal(JSON.stringify(progress).includes('smoke_paths'), true, 'preview smoke paths remain owned by the unmigrated preview suite');
 });
 
-test('final preview validates stable fixture content without mutating source run identity', () => {
-  const progress = buildProgress({ projectName: 'real-pipeline-e2e-unit', runId: 'real-e2e-unit-run' });
-  const k8s = progress.gates['final-buster'].test_config.k8s;
-
-  assert.equal(k8s.cleanup_policy, 'keep');
-  assert.equal(k8s.preview.expected_text, 'REAL_E2E_NGINX_OK');
-  assert.equal(k8s.preview.reveal_credentials, undefined);
-  assert.equal(k8s.preview.credentials_secret_name, undefined);
-  assert.equal(k8s.preview.credentials_keys, undefined);
-  assert.equal(k8s.test_credentials, undefined);
+test('final deployment uses the fixture provider and a dependent HTTP check', async () => {
+  let workspace = null;
+  try {
+    workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
+    const pipeline = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'pipeline.json'), 'utf8'));
+    const gate = pipeline.gates['final-buster'];
+    assert.equal(gate.tests['size-budget-artifact'].uses, 'kubeclaw.direct-command@1');
+    assert.deepEqual(gate.tests['size-budget-artifact'].config.args.slice(0, 2), ['--format=ustar', '--transform=s,^\\./,,;s,^\\.$,root,']);
+    assert.equal(gate.tests['size-budget'].uses, 'kubeclaw.size-budget@1');
+    assert.deepEqual(gate.tests['size-budget'].inputs['build-output'], {
+      from: 'size-budget-artifact',
+      output: 'artifact-1',
+    });
+    assert.equal(gate.fixtures['kubernetes-deployment'].uses, 'kubeclaw.kubernetes-fixture@1');
+    assert.deepEqual(gate.fixtures['kubernetes-deployment'].needs, ['size-budget']);
+    assert.equal(gate.fixtures['kubernetes-deployment'].config.retention.mode, 'delete');
+    assert.equal(gate.tests.health.uses, 'kubeclaw.http@1');
+    assert.equal(gate.tests.health.inputs.deployment.from, 'kubernetes-deployment');
+    assert.equal(gate.tests.health.config.expectedText, 'REAL_E2E_NGINX_OK');
+  } finally {
+    if (workspace) await cleanupRealE2ERunWorkspace(workspace);
+  }
 });
 
-test('real e2e cleanup hands kept final-preview leases back to controller delete authority', () => {
+test('real e2e fixture delegates lease cleanup to the provider lifecycle', () => {
   const source = fs.readFileSync(path.join(SCRIPT_DIR, 'real-run-workspace.mjs'), 'utf8');
 
-  assert.match(source, /setLeaseCleanupPolicyDelete\(name, kubeclawNamespace\)/);
-  assert.match(source, /cleanupPolicy.*delete/s);
-  assert.match(source, /waitForLeaseDeleted\(name, kubeclawNamespace\)/);
-  assert.match(source, /controller_finalizer_removed_after_delete_policy/);
+  assert.match(source, /uses: 'kubeclaw\.kubernetes-fixture@1'/);
+  assert.match(source, /retention_mode: 'delete'/);
+  assert.match(source, /inputs: deploymentInput/);
 });
 
 test('namespace controller waits for namespace deletion before removing cleanup finalizer', () => {

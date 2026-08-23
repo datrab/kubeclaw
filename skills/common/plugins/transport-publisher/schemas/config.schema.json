@@ -2,8 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["targets"],
+  "required": ["targets", "deliveryRoot"],
   "properties": {
+    "deliveryRoot": { "type": "string", "minLength": 1 },
+    "maximumDeliveryRecords": { "type": "integer", "minimum": 1, "default": 100000 },
+    "maximumDeliveryBytes": { "type": "integer", "minimum": 1, "default": 268435456 },
     "targets": {
       "type": "object",
       "minProperties": 1,

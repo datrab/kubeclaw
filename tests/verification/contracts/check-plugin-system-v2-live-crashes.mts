@@ -7,7 +7,7 @@ import { pathToFileURL } from 'node:url';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const core = await import(pathToFileURL(
-  path.join(root, 'skills/common/plugin-runtime/core/src/index.ts'),
+  path.join(root, 'skills/nova/core/src/index.ts'),
 ).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-plugin-crash-matrix-'));
 const pluginRoots = ['common', 'nova', 'buster']

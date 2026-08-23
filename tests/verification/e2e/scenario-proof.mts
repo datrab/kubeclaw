@@ -12,7 +12,7 @@ import { resolveRealE2EScenario } from './failure-scenarios.mts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const core = await import(pathToFileURL(
-  path.join(repositoryRoot, 'skills/common/plugin-runtime/core/src/index.ts'),
+  path.join(repositoryRoot, 'skills/nova/core/src/index.ts'),
 ).href);
 const scenarioId = process.argv[2];
 if (!scenarioId) throw new Error('scenario id is required');

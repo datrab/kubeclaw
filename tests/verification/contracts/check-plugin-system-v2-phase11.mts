@@ -7,11 +7,11 @@ import { pathToFileURL } from 'node:url';
 const root = path.resolve('.');
 const core = await import(pathToFileURL(path.join(
   root,
-  'skills/common/plugin-runtime/core/src/index.ts',
+  'skills/nova/core/src/index.ts',
 )).href);
 const { computePackageDigest } = await import(pathToFileURL(path.join(
   root,
-  'skills/common/plugin-runtime/core/registry/digest.ts',
+  'skills/common/plugin-runtime/foundation/registry/digest.ts',
 )).href);
 
 function schema(): string {

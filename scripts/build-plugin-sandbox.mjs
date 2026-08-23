@@ -2,8 +2,8 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const source = path.resolve('skills/common/plugin-runtime/core/isolation/sandbox.c');
-const output = path.resolve('skills/common/plugin-runtime/core/isolation/plugin-sandbox');
+const source = path.resolve('skills/common/plugin-runtime/foundation/isolation/sandbox.c');
+const output = path.resolve('skills/common/plugin-runtime/foundation/isolation/plugin-sandbox');
 const temporary = `${output}.tmp-${process.pid}`;
 const result = spawnSync('cc', [
   '-std=c11',

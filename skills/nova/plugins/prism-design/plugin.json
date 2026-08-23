@@ -1,0 +1,7 @@
+{
+  "id":"kubeclaw.prism-design","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0",
+  "stages":[{"id":"design","type":"kubeclaw.design.prism","module":"src/stage.ts","export":"execute",
+    "requiredCapabilities":["runtime.dispatch","artifacts.read","artifacts.write","operator.request","signal.wait"],"configSchema":"schemas/config.schema.json",
+    "inputSchema":"schemas/input.schema.json","resultSchema":"schemas/result.schema.json"}],
+  "observers":[],"adapters":[]
+}

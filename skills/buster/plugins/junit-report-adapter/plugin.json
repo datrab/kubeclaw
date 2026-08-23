@@ -1,0 +1,23 @@
+{
+  "id": "kubeclaw.junit-report",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [],
+  "reportAdapters": [
+    {
+      "id": "junit",
+      "format": "junit",
+      "contractVersion": 1,
+      "module": "src/adapter.js",
+      "export": "adapt",
+      "mediaTypes": [
+        "application/junit+xml",
+        "application/xml",
+        "text/xml"
+      ]
+    }
+  ]
+}

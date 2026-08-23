@@ -1,34 +1,28 @@
 // Suite Runner — deterministic registry and public orchestration boundary.
 import a11ySuite from '../suites/a11y.ts';
 import apiSuite from '../suites/api.ts';
-import buildSuite from '../suites/build.ts';
-import bundleSuite from '../suites/bundle.ts';
 import e2eSuite from '../suites/e2e.ts';
-import healthSuite from '../suites/health.ts';
-import k8sSuite from '../suites/k8s.ts';
-import manifestSuite from '../suites/manifest.ts';
 import perfSuite from '../suites/perf.ts';
 import securitySuite from '../suites/security.ts';
 import tailscalePreviewSuite from '../suites/tailscale-preview.ts';
-import unitSuite from '../suites/unit.ts';
 import { runVisualReg } from '../suites/visual-reg.ts';
 import type { SuiteVerdict } from '../services/verdict-schema.ts';
 import { createSuiteRunnerValidationError } from './suite-runner-contracts.ts';
 import type { SuiteContext, SuiteFunction, SuiteResult, SuiteRunnerOptions } from './suite-runner-contracts.ts';
 import { resolveSuiteResultsDir } from './suite-runner-artifacts.ts';
 import { runSuiteWithTimeout } from './suite-runner-execution.ts';
-import { applyBuildRuntimePort, buildDetailedSuiteSummary, collectReadySuites as collectReady, executeSuites } from './suite-runner-graph.ts';
+import { buildDetailedSuiteSummary, collectReadySuites as collectReady, executeSuites } from './suite-runner-graph.ts';
 
 const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
-  a11y: a11ySuite, api: apiSuite, build: buildSuite, bundle: bundleSuite, e2e: e2eSuite,
-  health: healthSuite, k8s: k8sSuite, manifest: manifestSuite, perf: perfSuite, security: securitySuite,
-  'tailscale-preview': tailscalePreviewSuite, unit: unitSuite, 'visual-reg': runVisualReg,
+  a11y: a11ySuite, api: apiSuite, e2e: e2eSuite,
+  perf: perfSuite, security: securitySuite,
+  'tailscale-preview': tailscalePreviewSuite, 'visual-reg': runVisualReg,
 }) as unknown as Readonly<Record<string, SuiteFunction>>;
 
-export const EXECUTION_ORDER = ['manifest', 'build', 'health', 'k8s', 'tailscale-preview', 'a11y', 'perf', 'bundle', 'security', 'visual-reg', 'api', 'e2e', 'unit'];
-export const DEPENDENCIES: Record<string, string[]> = { manifest: [], build: ['manifest'], health: ['build'], k8s: [],
-  'tailscale-preview': ['k8s'], a11y: ['health'], perf: ['health'], bundle: ['build'], security: ['build'],
-  'visual-reg': ['health'], api: ['health'], e2e: ['health'], unit: [] };
+export const EXECUTION_ORDER = ['tailscale-preview', 'a11y', 'perf', 'security', 'visual-reg', 'api', 'e2e'];
+export const DEPENDENCIES: Record<string, string[]> = {
+  'tailscale-preview': [], a11y: [], perf: [], security: [], 'visual-reg': [], api: [], e2e: [],
+};
 
 export function validateSuiteNames(suites: readonly unknown[]): string[] {
   if (!Array.isArray(suites)) throw createSuiteRunnerValidationError('Buster suites must be an array of suite names', { reason: 'invalid_suites_shape', invalid_suites: [suites] });
@@ -53,7 +47,7 @@ export function resolveSuiteTimeoutMs(config: Record<string, unknown>): number {
   return Number(value);
 }
 
-export { applyBuildRuntimePort, buildDetailedSuiteSummary, resolveSuiteResultsDir, runSuiteWithTimeout };
+export { buildDetailedSuiteSummary, resolveSuiteResultsDir, runSuiteWithTimeout };
 
 export async function runSuites(suites: readonly unknown[], opts: SuiteRunnerOptions): Promise<{ results: SuiteResult[]; suiteSummary: string; suiteDetailSummary: string; criticalFailed: boolean }> {
   return executeSuites({ registry: SUITE_REGISTRY, dependencies: DEPENDENCIES, executionOrder: EXECUTION_ORDER,

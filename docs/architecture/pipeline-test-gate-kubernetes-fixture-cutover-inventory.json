@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "suite-cutover-inventory.v1",
+  "suite": "k8s",
+  "successor": "kubeclaw.kubernetes-fixture@1",
+  "parityItemCount": 48,
+  "legacyFilesToDelete": [
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-base.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-command-env.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-config.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-credentials.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-execution.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-lease.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-plan.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-runtime.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-yaml-documents.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s.ts"
+  ],
+  "removedSurfaces": [
+    "legacy protocol k8s entry",
+    "legacy suite registry k8s entry",
+    "legacy dependency graph k8s node",
+    "legacy image-build and Kubernetes capability mapping",
+    "legacy Tailscale preview dependency on k8s metadata"
+  ],
+  "replacementFilesRequired": [
+    "skills/buster/plugins/kubernetes-fixture/plugin.json",
+    "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+    "contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json",
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+  ],
+  "verification": {
+    "solePathTests": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"],
+    "dualAuthorityTests": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"],
+    "absenceTests": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"]
+  }
+}

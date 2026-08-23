@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "legacy-manifest-comparison.v1",
+  "cases": {
+    "valid": { "status": "PASS" },
+    "invalidYaml": { "status": "FAIL" },
+    "incompleteSidecar": { "status": "PASS", "findingRules": ["image-pull-secrets"] },
+    "secondDeclaredSecret": { "status": "FAIL" }
+  }
+}

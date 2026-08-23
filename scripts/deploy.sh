@@ -13,7 +13,7 @@
 #   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
-#   ./deploy.sh agent <name> [--with-code]  Deploy single agent (nova|buster), optionally followed by code deploy
+#   ./deploy.sh agent <name> [--with-code]  Deploy Nova, Buster, or Prism
 #   ./deploy.sh image              Deploy both agents using image/runtime values
 #   ./deploy.sh image <name>       Deploy one agent using image/runtime values
 #   ./deploy.sh code [target]      Deploy code bundles for all agents or one target
@@ -70,6 +70,24 @@ KUBECLAW_WORKSPACE_NAMESPACE_FILE="${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_
 KUBECLAW_DEPLOY_POSTGRESQL="${KUBECLAW_DEPLOY_POSTGRESQL:-true}"
 KUBECLAW_DEPLOY_QDRANT="${KUBECLAW_DEPLOY_QDRANT:-true}"
 KUBECLAW_DEPLOY_LITELLM="${KUBECLAW_DEPLOY_LITELLM:-true}"
+KUBECLAW_DEPLOY_PRISM="${KUBECLAW_DEPLOY_PRISM:-true}"
+PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"
+PRISM_RELEASE="${PRISM_RELEASE:-prism}"
+PRISM_VALUES_FILE="${PRISM_VALUES_FILE:-$VALUES_DIR/prism-values.yaml}"
+PRISM_HELM_TIMEOUT="${PRISM_HELM_TIMEOUT:-45m}"
+PRISM_ROLLOUT_TIMEOUT="${PRISM_ROLLOUT_TIMEOUT:-45m}"
+PRISM_CONTROL_IMAGE_REPOSITORY="${PRISM_CONTROL_IMAGE_REPOSITORY:-}"
+PRISM_CONTROL_IMAGE_TAG="${PRISM_CONTROL_IMAGE_TAG:-}"
+PRISM_CONTROL_IMAGE_DIGEST="${PRISM_CONTROL_IMAGE_DIGEST:-}"
+PRISM_STUDIO_IMAGE_REPOSITORY="${PRISM_STUDIO_IMAGE_REPOSITORY:-}"
+PRISM_STUDIO_IMAGE_TAG="${PRISM_STUDIO_IMAGE_TAG:-}"
+PRISM_STUDIO_IMAGE_DIGEST="${PRISM_STUDIO_IMAGE_DIGEST:-}"
+PRISM_WORKER_IMAGE_REPOSITORY="${PRISM_WORKER_IMAGE_REPOSITORY:-}"
+PRISM_WORKER_IMAGE_TAG="${PRISM_WORKER_IMAGE_TAG:-}"
+PRISM_WORKER_IMAGE_DIGEST="${PRISM_WORKER_IMAGE_DIGEST:-}"
+PRISM_INGESTION_IMAGE_REPOSITORY="${PRISM_INGESTION_IMAGE_REPOSITORY:-}"
+PRISM_INGESTION_IMAGE_TAG="${PRISM_INGESTION_IMAGE_TAG:-}"
+PRISM_INGESTION_IMAGE_DIGEST="${PRISM_INGESTION_IMAGE_DIGEST:-}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
 AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
@@ -83,6 +101,7 @@ export NAMESPACE
 export KUBECLAW_DEPLOY_POSTGRESQL
 export KUBECLAW_DEPLOY_QDRANT
 export KUBECLAW_DEPLOY_LITELLM
+export KUBECLAW_DEPLOY_PRISM PRISM_NAMESPACE PRISM_RELEASE PRISM_VALUES_FILE
 export ALLOW_PARTIAL_INFRA
 
 # Colors
@@ -226,9 +245,24 @@ delete_manifest_if_cluster_resource_present() {
 
 wait_for_agent_rollout() {
   local release="$1"
-  local selector="app.kubernetes.io/instance=${release}"
+  local role="${release#agent-}"
+  local selector="app.kubernetes.io/instance=${release},app.kubernetes.io/component=${role}"
   kubectl rollout status deployment/"$release" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
   kubectl wait --for=condition=Ready pod -l "$selector" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
+}
+
+agent_pod_name() {
+  local release="$1"
+  local role="${release#agent-}"
+  local selector="app.kubernetes.io/instance=${release},app.kubernetes.io/component=${role}"
+  local pods=()
+
+  mapfile -t pods < <(kubectl get pods -n "$NAMESPACE" -l "$selector" --field-selector=status.phase=Running -o name)
+  if [[ ${#pods[@]} -ne 1 ]]; then
+    err "Expected exactly one running agent pod for '$release'; found ${#pods[@]} using selector '$selector'."
+    return 1
+  fi
+  printf '%s\n' "${pods[0]#pod/}"
 }
 
 append_image_override_file() {
@@ -1204,9 +1238,26 @@ cmd_agent() {
   local extra_arg="${2:-}"
 
   if [[ -z $role ]]; then
-    err "Usage: $0 agent <nova|buster> [--with-code]"
+    err "Usage: $0 agent <nova|buster|prism> [--with-code]"
     return 1
   fi
+
+  if [[ $role == "prism" ]]; then
+    if [[ -n $extra_arg ]]; then
+      err "Prism uses its dedicated multi-workload release and does not support --with-code"
+      return 1
+    fi
+    cmd_prism
+    return
+  fi
+
+  case "$role" in
+    nova|buster) ;;
+    *)
+      err "Unknown agent role: $role (expected nova, buster, or prism)"
+      return 1
+      ;;
+  esac
 
   case "$extra_arg" in
     "")
@@ -1215,7 +1266,7 @@ cmd_agent() {
       with_code=1
       ;;
     *)
-      err "Usage: $0 agent <nova|buster> [--with-code]"
+      err "Usage: $0 agent <nova|buster|prism> [--with-code]"
       return 1
       ;;
   esac
@@ -1248,6 +1299,8 @@ cmd_status() {
 cmd_smoke_agent() {
   local role="$1"
   local release="agent-${role}"
+  local selector
+  local pod
 
   if [[ $role != "nova" && $role != "buster" ]]; then
     err "Usage: $0 smoke-agent <nova|buster>"
@@ -1255,15 +1308,17 @@ cmd_smoke_agent() {
   fi
 
   header "Smoke: ${release}"
+  selector="app.kubernetes.io/instance=${release},app.kubernetes.io/component=${role}"
   kubectl get deployment "$release" -n "$NAMESPACE" >/dev/null
   kubectl get svc "$release" -n "$NAMESPACE" >/dev/null
-  kubectl rollout status deployment/$release -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
-  kubectl wait --for=condition=Ready pod -l "app.kubernetes.io/instance=$release" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
-  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- openclaw gateway status
-  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs startup-status
-  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs readiness
-  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -d /app/skills
-  kubectl exec -n "$NAMESPACE" deployment/$release -c kubeclaw -- test -f /home/node/.openclaw/swarm.config.json
+  kubectl rollout status deployment/"$release" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
+  kubectl wait --for=condition=Ready pod -l "$selector" -n "$NAMESPACE" --timeout="$AGENT_ROLLOUT_TIMEOUT"
+  pod="$(agent_pod_name "$release")"
+  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- openclaw gateway status
+  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs startup-status
+  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs readiness
+  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -d /app/skills
+  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -f /home/node/.openclaw/swarm.config.json
   log "${release} smoke passed"
 }
 
@@ -1272,6 +1327,210 @@ cmd_smoke() {
   for role in nova buster; do
     cmd_smoke_agent "$role"
   done
+  if component_enabled "$KUBECLAW_DEPLOY_PRISM"; then cmd_prism_smoke; fi
+}
+
+# ─── Prism ──────────────────────────────────────────────────────────────
+
+prism_image_overrides() {
+  local pairs=(control CONTROL studio STUDIO worker WORKER ingestion INGESTION)
+  local index kind upper repository tag digest
+  for ((index=0; index<${#pairs[@]}; index+=2)); do
+    kind="${pairs[index]}"; upper="${pairs[index+1]}"
+    repository="PRISM_${upper}_IMAGE_REPOSITORY"; tag="PRISM_${upper}_IMAGE_TAG"; digest="PRISM_${upper}_IMAGE_DIGEST"
+    [[ -z ${!repository:-} ]] || printf '%s\n' --set-string "images.${kind}.repository=${!repository}"
+    [[ -z ${!tag:-} ]] || printf '%s\n' --set-string "images.${kind}.tag=${!tag}"
+    [[ -z ${!digest:-} ]] || printf '%s\n' --set-string "images.${kind}.digest=${!digest}"
+  done
+}
+
+prism_security_overrides() {
+  [[ -n ${PRISM_APPROVER_USERS:-} ]] || return 0
+  local json="[" separator="" user
+  IFS=',' read -r -a users <<<"$PRISM_APPROVER_USERS"
+  for user in "${users[@]}"; do
+    user="${user#"${user%%[![:space:]]*}"}"
+    user="${user%"${user##*[![:space:]]}"}"
+    [[ -n $user ]] || continue
+    json+="${separator}\"${user//\"/\\\"}\""
+    separator=","
+  done
+  json+="]"
+  [[ $json != "[]" ]] || { err "PRISM_APPROVER_USERS must contain a Tailscale login"; return 1; }
+  printf '%s\n' --set-json "security.approverUsers=${json}"
+}
+
+prism_validate_values() {
+  [[ -f $PRISM_VALUES_FILE ]] || { err "Prism values file is missing: $PRISM_VALUES_FILE"; return 1; }
+  local kind image tag digest
+  for kind in control studio worker ingestion; do
+    image="$(helm show values "$REPO_DIR/charts/prism" | awk -v key="$kind:" '$1==key {inside=1; next} inside && $1=="repository:" {print $2; exit}')"
+    tag="$(awk -v key="$kind:" '$1==key {inside=1; next} inside && $1=="tag:" {print $2; exit}' "$PRISM_VALUES_FILE")"
+    digest="$(awk -v key="$kind:" '$1==key {inside=1; next} inside && $1=="digest:" {gsub(/\"/,"",$2); print $2; exit}' "$PRISM_VALUES_FILE")"
+    local upper="${kind^^}" tag_var="PRISM_${kind^^}_IMAGE_TAG" digest_var="PRISM_${kind^^}_IMAGE_DIGEST"
+    tag="${!tag_var:-$tag}"; digest="${!digest_var:-$digest}"
+    [[ $tag != latest ]] || { err "Prism ${kind} image cannot use latest"; return 1; }
+    [[ $digest =~ ^sha256:[0-9a-f]{64}$ ]] || { err "Prism ${kind} image needs a sha256 digest"; return 1; }
+  done
+  [[ -n ${PRISM_APPROVER_USERS:-} ]] || {
+    err "PRISM_APPROVER_USERS must contain the permitted Tailscale login list"
+    return 1
+  }
+}
+
+cmd_prism_secrets() {
+  kubectl get namespace "$PRISM_NAMESPACE" >/dev/null
+  if ! kubectl get secret prism-postgresql-auth -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
+    local password runtime_password migrator_password readonly_password
+    password="$(openssl rand -hex 32)"; runtime_password="$(openssl rand -hex 32)"; migrator_password="$(openssl rand -hex 32)"; readonly_password="$(openssl rand -hex 32)"
+    kubectl create secret generic prism-postgresql-auth -n "$PRISM_NAMESPACE" \
+      --from-literal=password="$password" \
+      --from-literal=runtime-password="$runtime_password" \
+      --from-literal=migrator-password="$migrator_password" \
+      --from-literal=readonly-password="$readonly_password" \
+      --from-literal=admin-url="postgresql://postgres:${password}@prism-postgresql:5432/prism" \
+      --from-literal=runtime-url="postgresql://prism_runtime:${runtime_password}@prism-postgresql:5432/prism" \
+      --from-literal=migrator-url="postgresql://prism_migrator:${migrator_password}@prism-postgresql:5432/prism" \
+      --from-literal=readonly-url="postgresql://prism_readonly:${readonly_password}@prism-postgresql:5432/prism"
+  fi
+  if ! kubectl get secret prism-runtime -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
+    kubectl create secret generic prism-runtime -n "$PRISM_NAMESPACE" \
+      --from-literal=session-secret="$(openssl rand -hex 32)" \
+      --from-literal=ingress-secret="$(openssl rand -hex 32)" \
+      --from-literal=dispatch-secret="$(openssl rand -hex 32)" \
+      --from-literal=worker-secret="$(openssl rand -hex 32)" \
+      --from-literal=ingestion-secret="$(openssl rand -hex 32)"
+  fi
+  local secret_key
+  for secret_key in password runtime-password migrator-password readonly-password admin-url runtime-url migrator-url readonly-url; do
+    kubectl get secret prism-postgresql-auth -n "$PRISM_NAMESPACE" -o "jsonpath={.data.${secret_key}}" | grep -q . || { err "Secret prism-postgresql-auth is missing ${secret_key}; rotate or repair the Secret"; return 1; }
+  done
+  for secret_key in session-secret ingress-secret dispatch-secret worker-secret ingestion-secret; do
+    kubectl get secret prism-runtime -n "$PRISM_NAMESPACE" -o "jsonpath={.data.${secret_key}}" | grep -q . || { err "Secret prism-runtime is missing ${secret_key}; rotate or repair the Secret"; return 1; }
+  done
+  local dispatch_secret
+  dispatch_secret="$(kubectl get secret prism-runtime -n "$PRISM_NAMESPACE" -o jsonpath='{.data.dispatch-secret}' | base64 -d)"
+  kubectl create secret generic prism-dispatch-auth -n "$NAMESPACE" \
+    --from-literal=token="$dispatch_secret" --dry-run=client -o yaml | kubectl apply -f - >/dev/null
+  if ! kubectl get secret prism-provider -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
+    err "Missing Secret prism-provider with keys: endpoint, api-key, model, embedding-endpoint, embedding-model"
+    return 1
+  fi
+  log "Prism secrets are present (values not printed)"
+}
+
+cmd_prism() {
+  component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
+  require_command kubectl; require_command helm; prism_validate_values; cmd_prism_secrets
+  local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
+  while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_security_overrides)
+  helm lint "$REPO_DIR/charts/prism" -f "$PRISM_VALUES_FILE" "${overrides[@]}"
+  helm upgrade --install "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" \
+    -f "$PRISM_VALUES_FILE" "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT"
+  for workload in prism-postgresql prism-control prism-studio prism-worker; do
+    local kind=deployment; [[ $workload == prism-postgresql ]] && kind=statefulset
+    kubectl rollout status "$kind/$workload" -n "$PRISM_NAMESPACE" --timeout="$PRISM_ROLLOUT_TIMEOUT"
+  done
+  cmd_prism_smoke
+  kubectl get svc prism-studio -n "$PRISM_NAMESPACE" -o json
+}
+
+cmd_prism_smoke() {
+  require_command kubectl
+  kubectl wait --for=condition=Ready pod -n "$PRISM_NAMESPACE" -l app=prism-control --timeout="$PRISM_ROLLOUT_TIMEOUT"
+  kubectl exec -n "$PRISM_NAMESPACE" deployment/prism-control -- node -e \
+    "fetch('http://127.0.0.1:8080/ready').then(r=>{if(!r.ok)process.exit(1)})"
+  kubectl exec -n "$PRISM_NAMESPACE" deployment/prism-worker -- node -e \
+    "fetch('http://127.0.0.1:8080/ready').then(r=>{if(!r.ok)process.exit(1)})"
+  kubectl exec -n "$PRISM_NAMESPACE" statefulset/prism-postgresql -- pg_isready -U postgres -d prism
+  log "Prism smoke passed"
+}
+
+cmd_prism_status() {
+  header "Prism ($PRISM_NAMESPACE)"
+  kubectl get deploy,statefulset,job,cronjob,svc,pvc -n "$PRISM_NAMESPACE" -o wide
+  helm status "$PRISM_RELEASE" -n "$PRISM_NAMESPACE"
+}
+
+cmd_prism_e2e() {
+  require_command kubectl; require_command helm; require_command node
+  [[ -n ${PRISM_E2E_USER:-} ]] || { err "PRISM_E2E_USER must match one configured Prism approver"; return 1; }
+  local original_namespace="$PRISM_NAMESPACE" lease_name=""
+  if [[ ${PRISM_E2E_USE_LEASE:-true} == "true" ]]; then
+    lease_name="test-prism-$(date -u +%Y%m%d%H%M%S)-$RANDOM";local test_namespace="$lease_name"
+    kubectl apply -n "$NAMESPACE" -f - <<EOF
+apiVersion: kubeclaw.forgestack.ai/v1alpha1
+kind: BusterNamespaceLease
+metadata: { name: ${lease_name} }
+spec:
+  namespaceName: ${test_namespace}
+  namespacePrefix: test
+  runId: ${lease_name}
+  project: prism-live-acceptance
+  purpose: gate
+  capabilityProfile: storage
+  cleanupPolicy: delete
+  ttlSeconds: 7200
+  secretsToCopy: [prism-provider]
+EOF
+    for _ in {1..120};do [[ $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" -o jsonpath='{.status.phase}' 2>/dev/null) == Ready ]]&&break;sleep 2;done
+    PRISM_NAMESPACE="$(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" -o jsonpath='{.status.namespaceName}')";export PRISM_NAMESPACE
+    [[ $PRISM_NAMESPACE == "$test_namespace" ]]||{ err "Namespace controller did not prepare the Prism test namespace";return 1; }
+  fi
+  cleanup_prism_e2e(){ [[ -z ${runner_job:-} ]]||kubectl delete job,configmap "$runner_job" -n "$PRISM_NAMESPACE" --ignore-not-found --wait=false >/dev/null 2>&1||true;PRISM_NAMESPACE="$original_namespace";export PRISM_NAMESPACE;[[ -z $lease_name ]]||kubectl delete busternamespacelease "$lease_name" -n "$NAMESPACE" --wait=false >/dev/null 2>&1||true; }
+  trap cleanup_prism_e2e RETURN
+  cmd_prism
+  local context digests control_image runner_job
+  context="$(kubectl config current-context)"
+  digests="$(kubectl get deployments prism-control prism-studio prism-worker -n "$PRISM_NAMESPACE" -o jsonpath='{range .items[*]}{.spec.template.spec.containers[0].image}{","}{end}')"
+  control_image="$(kubectl get deployment prism-control -n "$PRISM_NAMESPACE" -o jsonpath='{.spec.template.spec.containers[0].image}')"
+  runner_job="prism-e2e-runner-$(date +%s)"
+  kubectl create configmap "$runner_job" -n "$PRISM_NAMESPACE" --from-literal=user="$PRISM_E2E_USER" --from-literal=digests="$digests" --from-literal=cluster="$context" --from-literal=namespace="$PRISM_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+  kubectl apply -n "$PRISM_NAMESPACE" -f - <<EOF
+apiVersion: batch/v1
+kind: Job
+metadata: { name: ${runner_job}, labels: { app: prism-test-runner } }
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata: { labels: { app: prism-test-runner } }
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: Never
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: runner
+          image: ${control_image}
+          command: ["node", "/app/prism/tests/verification/live/prism-nova-production-e2e.mjs"]
+          env:
+            - { name: PRISM_CONTROL_URL, value: "http://prism-control.${PRISM_NAMESPACE}.svc.cluster.local:8080" }
+            - name: PRISM_E2E_USER
+              valueFrom: { configMapKeyRef: { name: ${runner_job}, key: user } }
+            - name: PRISM_E2E_IMAGE_DIGESTS
+              valueFrom: { configMapKeyRef: { name: ${runner_job}, key: digests } }
+            - name: CLUSTER_ID
+              valueFrom: { configMapKeyRef: { name: ${runner_job}, key: cluster } }
+            - name: PRISM_NAMESPACE
+              valueFrom: { configMapKeyRef: { name: ${runner_job}, key: namespace } }
+            - name: PRISM_E2E_INGRESS_SECRET
+              valueFrom: { secretKeyRef: { name: prism-runtime, key: ingress-secret } }
+            - name: PRISM_E2E_DISPATCH_SECRET
+              valueFrom: { secretKeyRef: { name: prism-runtime, key: dispatch-secret } }
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+EOF
+  kubectl wait -n "$PRISM_NAMESPACE" --for=condition=complete "job/$runner_job" --timeout=30m || { kubectl logs -n "$PRISM_NAMESPACE" "job/$runner_job"; return 1; }
+  kubectl logs -n "$PRISM_NAMESPACE" "job/$runner_job"
+  if [[ ${PRISM_E2E_RUN_FAILURES:-false} == "true" ]]; then
+    PRISM_NAMESPACE="$PRISM_NAMESPACE" node "$REPO_DIR/tests/verification/live/prism-production-failures.mjs"
+  else
+    info "Prism service smoke complete. The Nova, Forge, Buster, and failure gates remain separate required production checks."
+  fi
+}
+
+cmd_teardown_prism() {
+  helm uninstall "$PRISM_RELEASE" -n "$PRISM_NAMESPACE" --ignore-not-found
+  log "Prism workloads removed. PVCs and Secrets remain in $PRISM_NAMESPACE."
 }
 
 cmd_nova_buildkit_preflight() {
@@ -1431,6 +1690,7 @@ cmd_teardown() {
     exit 0
   fi
 
+  if component_enabled "$KUBECLAW_DEPLOY_PRISM"; then cmd_teardown_prism; fi
   run_destructive_teardown 0
 }
 
@@ -1458,6 +1718,7 @@ case "${1:-}" in
     ;;
   secrets)
     cmd_secrets
+    if component_enabled "$KUBECLAW_DEPLOY_PRISM"; then cmd_prism_secrets; fi
     ;;
   tailscale)
     TAILSCALE_OPERATOR_ENABLED=true deploy_tailscale_operator
@@ -1490,6 +1751,7 @@ case "${1:-}" in
   all)
     cmd_setup
     cmd_infra
+    if component_enabled "$KUBECLAW_DEPLOY_PRISM"; then cmd_prism; fi
     cmd_agents
     echo ""
     header "Deployment Complete"
@@ -1507,6 +1769,22 @@ case "${1:-}" in
     ;;
   status)
     cmd_status
+    if component_enabled "$KUBECLAW_DEPLOY_PRISM"; then cmd_prism_status; fi
+    ;;
+  prism)
+    cmd_prism
+    ;;
+  prism-smoke)
+    cmd_prism_smoke
+    ;;
+  prism-e2e)
+    cmd_prism_e2e
+    ;;
+  prism-status)
+    cmd_prism_status
+    ;;
+  teardown-prism)
+    cmd_teardown_prism
     ;;
   teardown)
     cmd_teardown
@@ -1533,7 +1811,7 @@ case "${1:-}" in
     echo "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight"
     echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"
-    echo "  agent <name> [--with-code]  Deploy single agent using image/runtime values"
+    echo "  agent <name> [--with-code]  Deploy Nova, Buster, or the dedicated Prism release"
     echo "                    Add --with-code to also smoke, deploy code, and smoke again"
     echo "  image [target]     Image deploy for nova|buster|both (default: both)"
     echo "  code [target]      Code-bundle deploy for all agents by default, or one target (nova|buster)"
@@ -1541,6 +1819,11 @@ case "${1:-}" in
     echo "  smoke              Run pod-level smoke checks for Nova + Buster"
     echo "  smoke-agent <name> Run pod-level smoke checks for one agent"
     echo "  status             Show all pods, services, PVCs"
+    echo "  prism              Install or upgrade standalone Prism"
+    echo "  prism-smoke        Test the real deployed Prism services"
+    echo "  prism-e2e          Run the Nova-started Prism E2E journey"
+    echo "  prism-status       Show Prism workloads, storage, and release"
+    echo "  teardown-prism     Remove Prism workloads and keep its data"
     echo "  teardown           Remove agents + infra, keep namespace + secrets"
     echo "  teardown-agents    Remove agents only, keep infra"
     echo "  teardown-all       DESTROY namespace and everything in it"

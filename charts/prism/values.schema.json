@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "required":["images","control","studio","worker","postgresql","secrets","artifactStorage"],
+  "properties":{
+    "images":{"type":"object","required":["control","studio","worker","ingestion"]},
+    "control":{"type":"object"},"studio":{"type":"object"},"worker":{"type":"object"},
+    "ingestion":{"type":"object"},"postgresql":{"type":"object"},"secrets":{"type":"object"},
+    "artifactStorage":{"type":"object"},"tailscale":{"type":"object"},
+    "security":{"type":"object","required":["approverUsers"],"properties":{"approverUsers":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true}},"additionalProperties":false}
+  },"additionalProperties":false
+}

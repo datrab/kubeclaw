@@ -1,14 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
-
-interface TelemetryRecord {
-  readonly schemaVersion: 'telemetry-record.v2';
-  readonly sequence: number;
-  readonly idempotencyKey: string;
-  readonly recordedAt: string;
-  readonly payload: Record<string, unknown>;
-}
+import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
 
 const sensitive = /(?:authorization|cookie|password|secret|token)/i;
 
@@ -23,57 +14,40 @@ function sanitize(value: unknown): unknown {
   return value;
 }
 
-function readRecords(file: string, maxRecordBytes: number): TelemetryRecord[] {
-  if (!fs.existsSync(file)) return [];
-  if (fs.lstatSync(file).isSymbolicLink()) throw new Error('TELEMETRY_JOURNAL_SYMLINK_DENIED');
-  return fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((line) => {
-    if (Buffer.byteLength(line, 'utf8') > maxRecordBytes) throw new Error('TELEMETRY_RECORD_SIZE_EXCEEDED');
-    const parsed = JSON.parse(line) as TelemetryRecord;
-    if (
-      parsed.schemaVersion !== 'telemetry-record.v2'
-      || !Number.isSafeInteger(parsed.sequence)
-      || typeof parsed.idempotencyKey !== 'string'
-      || typeof parsed.recordedAt !== 'string'
-      || !parsed.payload
-      || typeof parsed.payload !== 'object'
-      || Array.isArray(parsed.payload)
-    ) throw new Error('TELEMETRY_RECORD_INVALID');
-    return parsed;
-  });
-}
-
 export function activate(context: AdapterActivationContext): AdapterInstance {
-  const configured = context.config.journalPath;
-  if (typeof configured !== 'string') throw new Error('journalPath is required');
-  const file = path.resolve(configured);
+  const root = context.config.root;
+  if (typeof root !== 'string' || root.length === 0) throw new Error('root is required');
   const maxRecordBytes = Number(context.config.maxRecordBytes ?? 1_048_576);
+  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
+  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
   if (!Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');
+  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
+  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const store = new FileDurableRecordStore(root, {
+    maximumRecords,
+    maximumBytes: maximumStoreBytes,
+    maximumRecordBytes: maxRecordBytes,
+  });
+  const stream = 'telemetry/plugin-events';
   return {
-    async ready() { fs.mkdirSync(path.dirname(file), { recursive: true }); },
+    async ready() { await store.read<Record<string, unknown>>(stream); },
     async invoke({ request, signal, confidential, fence }) {
       if (!confidential) fence.assertCurrent();
       if (request.capability !== 'telemetry.emit' || request.operation !== 'append') throw new Error('TELEMETRY_OPERATION_UNSUPPORTED');
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      const existing = readRecords(file, maxRecordBytes);
-      const duplicate = existing.find((record) => record.idempotencyKey === request.idempotencyKey);
-      if (duplicate) return { accepted: false, sequence: duplicate.sequence };
-      const record: TelemetryRecord = {
-        schemaVersion: 'telemetry-record.v2',
-        sequence: existing.length + 1,
-        idempotencyKey: request.idempotencyKey,
-        recordedAt: new Date().toISOString(),
-        payload: sanitize(request.payload) as Record<string, unknown>,
-      };
-      const serialized = JSON.stringify(record);
-      if (Buffer.byteLength(serialized, 'utf8') > maxRecordBytes) throw new Error('TELEMETRY_RECORD_SIZE_EXCEEDED');
-      const descriptor = fs.openSync(file, 'a', 0o600);
       try {
-        fs.writeSync(descriptor, `${serialized}\n`);
-        fs.fsyncSync(descriptor);
-      } finally {
-        fs.closeSync(descriptor);
+        const committed = await store.append(
+          stream,
+          request.idempotencyKey,
+          sanitize(request.payload) as Record<string, unknown>,
+        );
+        return { accepted: committed.appended, sequence: committed.record.sequence };
+      } catch (error) {
+        if (error instanceof Error && error.message === 'DURABLE_RECORD_SIZE_EXCEEDED') {
+          throw new Error('TELEMETRY_RECORD_SIZE_EXCEEDED');
+        }
+        throw error;
       }
-      return { accepted: true, sequence: record.sequence };
     },
     async shutdown() {},
   };

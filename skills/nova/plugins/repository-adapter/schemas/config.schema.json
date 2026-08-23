@@ -5,6 +5,8 @@
   "required": ["repositoryRoot"],
   "properties": {
     "repositoryRoot": { "type": "string", "minLength": 1 },
-    "maxFileBytes": { "type": "integer", "minimum": 1 }
+    "maxFileBytes": { "type": "integer", "minimum": 1 },
+    "maxChangedPaths": { "type": "integer", "minimum": 1 },
+    "expectedHead": { "type": "string", "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$" }
   }
 }

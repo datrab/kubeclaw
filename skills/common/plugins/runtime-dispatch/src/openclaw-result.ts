@@ -13,9 +13,8 @@ function parseJsonText(text: string): unknown {
   const first = trimmed.indexOf('{'); const last = trimmed.lastIndexOf('}');
   if (first >= 0 && last > first) candidates.push(trimmed.slice(first, last + 1));
   for (const candidate of candidates) {
-    try { return JSON.parse(candidate); } catch {
-      // INTENTIONAL_NONCRITICAL(result_candidate_invalid): Continue through bounded representations.
-    }
+    try { return JSON.parse(candidate); }
+    catch (error) { if (!(error instanceof SyntaxError)) throw error; }
   }
   throw new Error('OPENCLAW_SESSION_OUTPUT_NOT_JSON');
 }
@@ -37,7 +36,15 @@ async function remoteResult(context: AdapterActivationContext, target: OpenClawT
   return response.body;
 }
 
-export async function readOpenClawResult(context: AdapterActivationContext, target: OpenClawTarget, payload: JsonRecord, relative: string, key: string, startedAt: string, state: string): Promise<Readonly<{ result: unknown }>> {
+interface OpenClawResultRequest {
+  readonly payload: JsonRecord; readonly relative: string; readonly key: string;
+  readonly startedAt: string; readonly state: string;
+}
+
+export async function readOpenClawResult(
+  context: AdapterActivationContext, target: OpenClawTarget, request: OpenClawResultRequest,
+): Promise<Readonly<{ result: unknown; outputText: string }>> {
+  const { payload, relative, key, startedAt, state } = request;
   const durable = target.resultEndpoint && target.resultTokenSecret
     ? await remoteResult(context, target, relative)
     : await context.invokeConfidential('git.repository.read', { operation: 'read_text', resource: { type: 'git.repository.path', canonicalId: relative.split(path.sep).join('/') }, payload: {} });
@@ -47,5 +54,5 @@ export async function readOpenClawResult(context: AdapterActivationContext, targ
     transcriptDigest: crypto.createHash('sha256').update(content).digest('hex'),
     termination: ['failed', 'error'].includes(state) ? 'blocked' : 'completed',
   };
-  return Object.freeze({ result: attachRuntimeEvidence(payload, parseJsonText(content), session) });
+  return Object.freeze({ result: attachRuntimeEvidence(payload, parseJsonText(content), session), outputText: content });
 }

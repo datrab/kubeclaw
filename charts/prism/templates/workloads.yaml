@@ -1,0 +1,95 @@
+{{- range $name := list "control" "studio" "worker" }}
+{{- $image := index $.Values.images $name }}
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: prism-{{ $name }} }
+spec:
+  replicas: {{ (index $.Values $name).replicas }}
+  selector: { matchLabels: { app: prism-{{ $name }} } }
+  template:
+    metadata: { labels: { app: prism-{{ $name }} } }
+    spec:
+      serviceAccountName: prism-{{ $name }}
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector: { matchLabels: { app: prism-{{ $name }} } }
+      containers:
+        - name: {{ $name }}
+          image: "{{ $image.repository }}{{ if $image.digest }}@{{ $image.digest }}{{ else }}:{{ $image.tag }}{{ end }}"
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          env:
+            - { name: PORT, value: "8080" }
+            - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
+            {{- if or (eq $name "control") (eq $name "worker") }}
+            - name: PRISM_WORKER_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
+            {{- end }}
+            {{- if eq $name "control" }}
+            - name: DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
+            - name: PRISM_SESSION_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: session-secret } }
+            - name: PRISM_INGRESS_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
+            - name: PRISM_DISPATCH_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: dispatch-secret } }
+            - { name: PRISM_APPROVER_USERS, value: {{ join "," $.Values.security.approverUsers | quote }} }
+            - { name: PRISM_INGESTION_URL, value: "http://prism-ingestion:8080" }
+            - name: PRISM_INGESTION_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }
+            {{- end }}
+            {{- if eq $name "studio" }}
+            - { name: PRISM_CONTROL_URL, value: "http://prism-control:8080" }
+            - name: PRISM_INGRESS_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
+            {{- end }}
+            {{- if eq $name "worker" }}
+            - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://prism-control:8080" }
+            - name: DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
+            - name: PRISM_PROVIDER_ENDPOINT
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: endpoint } }
+            - name: PRISM_PROVIDER_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: api-key } }
+            - name: PRISM_PROVIDER_MODEL
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: model } }
+            - name: PRISM_EMBEDDING_ENDPOINT
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-endpoint } }
+            - name: PRISM_EMBEDDING_MODEL
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-model } }
+            {{- end }}
+          resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+            {{- if eq $name "control" }}
+            - { name: artifacts, mountPath: /var/lib/prism/artifacts }
+            {{- end }}
+          readinessProbe: { httpGet: { path: /ready, port: 8080 }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
+      volumes:
+        - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
+        {{- if eq $name "control" }}
+        - { name: artifacts, persistentVolumeClaim: { claimName: prism-artifacts } }
+        {{- end }}
+---
+{{- end }}
+{{- range $name := list "studio" "worker" }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata: { name: prism-{{ $name }} }
+spec: { minAvailable: 1, selector: { matchLabels: { app: prism-{{ $name }} } } }
+---
+{{- end }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: { name: prism-artifacts }
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if .Values.artifactStorage.storageClass }}
+  storageClassName: {{ .Values.artifactStorage.storageClass | quote }}
+  {{- end }}
+  resources: { requests: { storage: {{ .Values.artifactStorage.storage }} } }

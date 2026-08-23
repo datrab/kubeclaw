@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "suite-documentation-manifest.v1",
+  "suite": "k8s",
+  "provider": "kubeclaw.kubernetes-fixture@1",
+  "projectSchema": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+  "documents": {
+    "userGuide": "docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md",
+    "operatorGuide": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+    "configurationReference": "docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md",
+    "errorReference": "docs/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md",
+    "securityModel": "docs/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md"
+  },
+  "operatorFields": [
+    "kubectlExecutable",
+    "controllerNamespace",
+    "leaseApiGroup",
+    "leaseApiVersion",
+    "allowedNamespacePrefixes",
+    "allowedRegistryPrefixes",
+    "allowedSecretReferences",
+    "maximumManifestBytes",
+    "maximumResources",
+    "maximumRetentionSeconds",
+    "maximumExecutionMs",
+    "pollIntervalMs"
+  ],
+  "sourceFilesWithErrors": [
+    "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+  ],
+  "errorPrefixes": ["KUBERNETES_FIXTURE_"],
+  "additionalErrors": ["KUBERNETES_FIXTURE_LEASE_FAILED", "KUBERNETES_FIXTURE_LEASE_REJECTED", "TEST_PROVIDER_FIXTURE_CLEANUP_REQUIRED"],
+  "configurationMarkerFields": ["image", "serviceName", "servicePort"],
+  "exampleFiles": ["contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json"]
+}

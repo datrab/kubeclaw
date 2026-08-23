@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { runPipelineV2 } from '../../../skills/common/plugin-runtime/core/execution/engine.ts';
+import { runPipelineV2 } from '../../../skills/nova/core/execution/engine.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-engine-'));
 try {
@@ -46,7 +46,7 @@ try {
     adapters: {
       'kubeclaw.repository-adapter:repository': { repositoryRoot: repository },
       'kubeclaw.artifact-store:artifact-store': { artifactRoot: path.join(temporary, 'artifacts') },
-      'kubeclaw.telemetry-store:telemetry': { journalPath: path.join(temporary, 'telemetry.jsonl') },
+      'kubeclaw.telemetry-store:telemetry': { root: path.join(temporary, 'telemetry') },
     },
     activeAdapters: [],
     observers: {
@@ -76,7 +76,7 @@ try {
     'utf8',
   ));
   const packageIds = snapshot.packages.map(([id]) => id).sort();
-  assert.equal(packageIds.length, 29, 'run snapshot must record the complete discovered registry');
+  assert.equal(packageIds.length, 30, 'run snapshot must record the complete discovered registry');
   for (const id of [
     'kubeclaw.architecture-validator',
     'kubeclaw.artifact-store',
@@ -85,17 +85,17 @@ try {
     'kubeclaw.telemetry-observer',
     'kubeclaw.telemetry-store',
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
-  assert.equal(snapshot.registrations.stages.length, 15);
+  assert.equal(snapshot.registrations.stages.length, 17);
   assert.equal(snapshot.registrations.observers.length, 6);
   assert.equal(snapshot.registrations.adapters.length, 17);
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.selectedProviders.some(({ capability }) => capability === 'git.repository.read'));
   assert.equal(snapshot.configuredStages[0].stageType, 'kubeclaw.lint.delivery');
-  const telemetry = fs.readFileSync(path.join(temporary, 'telemetry.jsonl'), 'utf8')
-    .split('\n')
-    .filter(Boolean)
-    .map((line) => JSON.parse(line));
+  const telemetry = JSON.parse(fs.readFileSync(
+    path.join(temporary, 'telemetry', 'records', 'store.json'),
+    'utf8',
+  )).records;
   assert.ok(telemetry.some((entry) => entry.payload?.event?.type === 'run.succeeded'));
   const lifecycle = fs.readFileSync(
     path.join(temporary, 'state', 'runs', 'run_engine-test', 'events.jsonl'),

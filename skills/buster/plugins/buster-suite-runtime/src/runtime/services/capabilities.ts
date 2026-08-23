@@ -91,18 +91,12 @@ function missingBusterCapabilities(capabilities: unknown, required: unknown = []
 
 export function requiredCapabilitiesForSuite(suiteName: string, _context: Record<string, any> = {}): string[] {
   switch (suiteName) {
-    case 'build':
-      return [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES];
-    case 'k8s':
-      return [BUSTER_CAPABILITIES.IMAGE_BUILD, BUSTER_CAPABILITIES.KUBERNETES];
     case 'a11y':
     case 'e2e':
     case 'visual-reg':
       return [BUSTER_CAPABILITIES.BROWSER_AUTOMATION];
     case 'perf':
       return [BUSTER_CAPABILITIES.LIGHTHOUSE];
-    case 'health':
-      return [];
     default:
       return [];
   }

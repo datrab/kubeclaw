@@ -1,9 +1,11 @@
 {
   "extends": "../../../tsconfig.base.json",
   "include": [
-    "core/**/*.ts",
+    "foundation/**/*.ts",
     "sdk/**/*.ts",
-    "cli.ts"
+    "../../nova/core/**/*.ts",
+    "../../worker/core/**/*.ts",
+    "../../buster/engine/**/*.ts"
   ],
   "compilerOptions": {
     "exactOptionalPropertyTypes": true,

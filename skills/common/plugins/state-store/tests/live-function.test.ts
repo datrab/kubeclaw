@@ -44,7 +44,7 @@ try {
   assert.equal(second.entry.sequence, 2);
   const read = await request('state.read', 'read', 'read:one');
   assert.deepEqual(read.entries.map((entry) => entry.value), [{ status: 'started' }, { status: 'done' }]);
-  assert.equal(fs.statSync(path.join(root, 'plugin.test__run.jsonl')).mode & 0o777, 0o600);
+  assert.equal(fs.statSync(path.join(root, 'records', 'store.json')).mode & 0o777, 0o600);
   await assert.rejects(
     adapter.invoke({
       ...fenced,

@@ -4,9 +4,9 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const core = await import(pathToFileURL(path.resolve('skills/common/plugin-runtime/core/src/index.ts')).href);
+const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const { computePackageDigest } = await import(
-  pathToFileURL(path.resolve('skills/common/plugin-runtime/core/registry/digest.ts')).href
+  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href
 );
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-install-v2-'));
 const source = path.join(temporary, 'source');
@@ -17,6 +17,11 @@ fs.mkdirSync(installationRoot);
 fs.writeFileSync(path.join(source, 'dist', 'stage.js'), `
   export async function execute() {
     return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [] };
+  }
+`);
+fs.writeFileSync(path.join(source, 'dist', 'test-provider.js'), `
+  export async function execute() {
+    return { schemaVersion: 'provider-result.v1', outcome: 'passed' };
   }
 `);
 for (const name of ['config', 'input', 'result']) {
@@ -42,6 +47,22 @@ fs.writeFileSync(path.join(source, 'plugin.json'), JSON.stringify({
   }],
   observers: [],
   adapters: [],
+  testProviders: [{
+    id: 'unit',
+    contractId: 'external.unit-test@1',
+    kind: 'test',
+    module: 'dist/test-provider.js',
+    export: 'execute',
+    configSchema: 'schemas/config.json',
+    inputs: [],
+    outputs: [],
+    requiredCapabilities: [],
+    retrySafe: true,
+    matrixFields: [],
+    reportFormats: [],
+    evidenceTypes: [],
+    evidenceDefaults: { onPass: [], onFail: [], onError: [] },
+  }],
 }));
 
 try {
@@ -79,6 +100,27 @@ try {
   }).root, installed.root);
   core.removeInstalledPackage(installationRoot, installed.root);
   assert.equal(fs.existsSync(installed.root), false);
+
+  fs.writeFileSync(path.join(source, 'dist', 'test-provider.js'), "export function execute() { return 'unterminated; }\n");
+  const invalidModuleDigest = computePackageDigest(source);
+  policy.allowedSourceDigests.set(canonicalSource, [invalidModuleDigest]);
+  assert.throws(() => core.installExternalPackage({
+    actorId: 'operator:test',
+    canonicalSource,
+    sourceRoot: source,
+    installationRoot,
+    expectedDigest: invalidModuleDigest,
+    policy,
+    trustEvidence: {
+      method: 'source_digest_allowlist',
+      verifier: 'test:installer',
+    },
+  }), /PLUGIN_INSTALL_MODULE_INVALID:dist\/test-provider\.js/);
+  fs.writeFileSync(path.join(source, 'dist', 'test-provider.js'), `
+    export async function execute() {
+      return { schemaVersion: 'provider-result.v1', outcome: 'passed' };
+    }
+  `);
 
   fs.writeFileSync(path.join(source, 'package.json'), JSON.stringify({
     scripts: { prepare: 'touch compromised' },

@@ -1,0 +1,22 @@
+{
+  "name": "@kubeclaw/pipeline-test-gate-contract",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "schemas",
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./schemas/pipeline-test-gate.v1.schema.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@kubeclaw/pipeline-observability-contract": "*",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

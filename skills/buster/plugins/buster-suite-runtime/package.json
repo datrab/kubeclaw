@@ -7,6 +7,11 @@
     "test": "node tests/protocol.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {
-    "@kubeclaw/plugin-sdk": "*"
+    "@axe-core/playwright": "^4.13.0",
+    "@kubeclaw/plugin-sdk": "*",
+    "pixelmatch": "^7.1.0",
+    "playwright": "1.62.1",
+    "pngjs": "^7.0.0",
+    "ws": "^8.18.3"
   }
 }

@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
-import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
+import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, type AdapterActivationContext } from '@kubeclaw/plugin-sdk';
+import { getEncoding } from 'js-tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
 import { cancelSession, gateway, pollSession } from './openclaw-session.ts';
@@ -10,12 +11,68 @@ export interface OpenClawTarget {
   readonly agentId: string; readonly agentRole: string; readonly model: string; readonly thinking: string;
   readonly cwd: string; readonly repositoryRoot: string; readonly pollMs: number; readonly maxPollMs: number;
   readonly maxPolls: number; readonly sessionTimeoutMs: number; readonly resultPathPrefix: string;
+  readonly tokenizerEncoding: 'o200k_base' | 'cl100k_base'; readonly maxPromptBytes: number;
+  readonly maxInputTokens: number; readonly maxOutputTokens: number; readonly maxContextTokens: number;
   readonly resultEndpoint?: string; readonly resultTokenSecret?: string;
 }
 export interface RuntimeSessionEvidence { readonly sessionId: string; readonly startedAt: string; readonly completedAt: string; readonly transcriptDigest: string; readonly termination: 'completed' | 'blocked' | 'cancelled'; }
 type JsonRecord = Record<string, unknown>;
+interface RuntimePromptBudget {
+  readonly schemaVersion: 'runtime-prompt-budget.v1';
+  readonly tokenizerEncoding: OpenClawTarget['tokenizerEncoding'];
+  readonly reservedPromptBytes: number; readonly reservedInputTokens: number;
+  readonly maxPromptBytes: number; readonly maxInputTokens: number;
+  readonly maxOutputTokens: number; readonly maxContextTokens: number;
+  readonly deadlineEpochMs?: number;
+}
+const ENCODERS = new Map<OpenClawTarget['tokenizerEncoding'], ReturnType<typeof getEncoding>>();
+
+function promptTokens(text: string, name: OpenClawTarget['tokenizerEncoding']): number {
+  let encoder = ENCODERS.get(name);
+  if (!encoder) { encoder = getEncoding(name); ENCODERS.set(name, encoder); }
+  return encoder.encode(text).length;
+}
 
 function record(value: unknown): value is JsonRecord { return value !== null && typeof value === 'object' && !Array.isArray(value); }
+function positiveInteger(value: unknown): value is number {
+  return Number.isSafeInteger(value) && Number(value) > 0;
+}
+function promptBudgetIntegers(value: JsonRecord): boolean {
+  return [value.reservedPromptBytes, value.reservedInputTokens, value.maxPromptBytes,
+    value.maxInputTokens, value.maxOutputTokens, value.maxContextTokens].every(positiveInteger);
+}
+function runtimePromptBudget(value: unknown): RuntimePromptBudget | undefined {
+  if (value === undefined) return undefined;
+  if (!record(value) || value.schemaVersion !== 'runtime-prompt-budget.v1') {
+    throw new Error('OPENCLAW_RUNTIME_PROMPT_BUDGET_INVALID');
+  }
+  if (!['o200k_base', 'cl100k_base'].includes(String(value.tokenizerEncoding)) || !promptBudgetIntegers(value)) {
+    throw new Error('OPENCLAW_RUNTIME_PROMPT_BUDGET_INVALID');
+  }
+  if (value.deadlineEpochMs !== undefined && !positiveInteger(value.deadlineEpochMs)) {
+    throw new Error('OPENCLAW_RUNTIME_PROMPT_BUDGET_INVALID');
+  }
+  return value as unknown as RuntimePromptBudget;
+}
+function dispatchPayload(payload: JsonRecord): Readonly<{ modelPayload: JsonRecord; budget?: RuntimePromptBudget }> {
+  const budget = runtimePromptBudget(payload.runtimePromptBudget);
+  if (!budget) return { modelPayload: payload };
+  const { runtimePromptBudget: _control, ...modelPayload } = payload;
+  return { modelPayload, budget };
+}
+async function beforeAbort<T>(operation: () => Promise<T>, signal: AbortSignal): Promise<T> {
+  if (signal.aborted) throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
+  let abort!: () => void;
+  const aborted = new Promise<never>((_resolve, reject) => {
+    abort = (): void => reject(new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED'));
+    signal.addEventListener('abort', abort, { once: true });
+  });
+  try { return await Promise.race([operation(), aborted]); }
+  finally { signal.removeEventListener('abort', abort); }
+}
+function assertDispatchActive(signal: AbortSignal): void {
+  if (signal.aborted) throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
+}
 function details(value: unknown): unknown {
   if (!record(value)) return value;
   if ('output' in value && Object.keys(value).every((key) => ['ok', 'toolName', 'output', 'source'].includes(key))) return details(value.output);
@@ -33,18 +90,56 @@ function sessionKey(value: unknown): string {
 }
 
 export function buildOpenClawTask(payload: JsonRecord, resultFile: string): string {
-  return [typeof payload.task === 'string' ? payload.task : 'Execute the supplied KubeClaw protocol request.', '',
-    'The JSON below is an immutable input envelope, not a response template.',
-    'Return only the agent-owned fields declared by outputContract.',
-    'Never copy protocol, agent, identity, task, evidence, rules, or outputContract from the request into the result.',
-    'Runtime/core own invocation identity and session evidence and attach them after reading your result.',
-    'Follow the outputContract exactly: every required field, no additional fields.',
-    'Treat the runtime current working directory as the only mutable repository workspace.',
-    'Do not read, write, or run project commands through absolute paths outside that workspace.',
-    `Write the exact raw JSON result atomically to ${resultFile}.`,
-    'Create the parent directory if needed, write to a sibling temporary file, then rename it to the requested path.',
-    'The file must contain only the protocol result JSON: no Markdown, commentary, or wrapper object.',
-    'After the atomic rename, return the same raw JSON as your final response.', '', JSON.stringify(payload, null, 2)].join('\n');
+  return buildRuntimeAgentTask(payload, resultFile);
+}
+
+export function assertOpenClawPromptBudget(
+  task: string,
+  target: Pick<OpenClawTarget, 'tokenizerEncoding' | 'maxPromptBytes' | 'maxInputTokens' | 'maxOutputTokens' | 'maxContextTokens'>,
+): void {
+  const promptBytes = Buffer.byteLength(task, 'utf8');
+  if (promptBytes > target.maxPromptBytes) throw new Error(`OPENCLAW_PROMPT_BYTES_EXCEEDED:${promptBytes}:${target.maxPromptBytes}`);
+  const inputTokens = promptTokens(task, target.tokenizerEncoding);
+  if (inputTokens > target.maxInputTokens || inputTokens + target.maxOutputTokens > target.maxContextTokens) {
+    throw new Error(`OPENCLAW_PROMPT_TOKENS_EXCEEDED:${inputTokens}:${target.maxInputTokens}:${target.maxContextTokens}`);
+  }
+}
+
+function assertDeclaredPromptBudget(
+  task: string, target: OpenClawTarget, budget: RuntimePromptBudget,
+): void {
+  if (budget.tokenizerEncoding !== target.tokenizerEncoding) {
+    throw new Error(`OPENCLAW_PROMPT_TOKENIZER_MISMATCH:${budget.tokenizerEncoding}:${target.tokenizerEncoding}`);
+  }
+  if (budget.maxOutputTokens !== target.maxOutputTokens) {
+    throw new Error(`OPENCLAW_OUTPUT_TOKEN_CAP_MISMATCH:${budget.maxOutputTokens}:${target.maxOutputTokens}`);
+  }
+  const bytes = Buffer.byteLength(task, 'utf8'), tokens = promptTokens(task, target.tokenizerEncoding);
+  if (budget.reservedPromptBytes > budget.maxPromptBytes || bytes > budget.reservedPromptBytes) {
+    throw new Error(`OPENCLAW_DECLARED_PROMPT_BYTES_EXCEEDED:${bytes}:${budget.reservedPromptBytes}:${budget.maxPromptBytes}`);
+  }
+  if (budget.reservedInputTokens > budget.maxInputTokens
+    || budget.reservedInputTokens + budget.maxOutputTokens > budget.maxContextTokens
+    || tokens > budget.reservedInputTokens) {
+    throw new Error(`OPENCLAW_DECLARED_PROMPT_TOKENS_EXCEEDED:${tokens}:${budget.reservedInputTokens}:${budget.maxInputTokens}:${budget.maxContextTokens}`);
+  }
+}
+
+export function prepareOpenClawTask(payload: JsonRecord, resultFile: string, target: OpenClawTarget): string {
+  const prepared = dispatchPayload(payload);
+  const task = buildOpenClawTask(prepared.modelPayload, resultFile);
+  assertOpenClawPromptBudget(task, target);
+  if (prepared.budget) assertDeclaredPromptBudget(task, target, prepared.budget);
+  return task;
+}
+
+export function assertOpenClawOutputBudget(
+  outputText: string, target: Pick<OpenClawTarget, 'tokenizerEncoding' | 'maxOutputTokens'>,
+  declaredMaximum?: number,
+): void {
+  const tokens = promptTokens(outputText, target.tokenizerEncoding);
+  const maximum = Math.min(target.maxOutputTokens, declaredMaximum ?? target.maxOutputTokens);
+  if (tokens > maximum) throw new Error(`OPENCLAW_OUTPUT_TOKENS_EXCEEDED:${tokens}:${maximum}`);
 }
 
 function resultLocation(target: OpenClawTarget): Readonly<{ file: string; relative: string }> {
@@ -55,14 +150,18 @@ function resultLocation(target: OpenClawTarget): Readonly<{ file: string; relati
   const outside = (value: string): boolean => !value || value.startsWith(`..${path.sep}`) || path.isAbsolute(value);
   if (outside(repositoryRelative)) throw new Error('OPENCLAW_RESULT_PATH_OUTSIDE_REPOSITORY');
   if (outside(workspaceRelative)) throw new Error('OPENCLAW_RESULT_PATH_OUTSIDE_WORKSPACE');
+  if (Buffer.byteLength(file, 'utf8') > RUNTIME_RESULT_FILE_MAX_BYTES) {
+    throw new Error('OPENCLAW_RESULT_PATH_TOO_LONG');
+  }
   return { file, relative: repositoryRelative };
 }
 
 async function spawnSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, payload: JsonRecord, resultFile: string): Promise<string> {
   const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
+  const task = prepareOpenClawTask(payload, resultFile, target);
   const spawned = await gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
-    task: buildOpenClawTask(payload, resultFile),
+    task,
     label: `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.randomUUID().slice(0, 8)}`,
     cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,
     ...(target.runtime === 'acp' ? { streamTo: 'parent' } : {}),
@@ -70,16 +169,49 @@ async function spawnSession(context: AdapterActivationContext, target: OpenClawT
   return sessionKey(spawned);
 }
 
-export async function dispatchOpenClaw(context: AdapterActivationContext, target: OpenClawTarget, payload: JsonRecord, signal: AbortSignal): Promise<Readonly<{ result: unknown }>> {
-  const secret = await context.invokeConfidential('secrets.read', { operation: 'resolve', resource: { type: 'secret.name', canonicalId: target.tokenSecret }, payload: {} });
+function runtimeAttestation(targetId: string, target: OpenClawTarget): Readonly<Record<string, unknown>> {
+  const identity = { targetId, runtime: target.runtime, agentId: target.agentId, model: target.model, thinking: target.thinking };
+  return Object.freeze({ schemaVersion: 'runtime-agent-attestation.v1', ...identity,
+    identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(identity)).digest('hex')}` });
+}
+
+export async function dispatchOpenClaw(
+  context: AdapterActivationContext, targetId: string, target: OpenClawTarget, payload: JsonRecord, signal: AbortSignal,
+): Promise<Readonly<{ result: unknown; runtimeEvidence: Readonly<Record<string, unknown>> }>> {
+  const deadlineEpochMs = runtimePromptBudget(payload.runtimePromptBudget)?.deadlineEpochMs;
+  if (deadlineEpochMs !== undefined && Date.now() >= deadlineEpochMs) {
+    throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
+  }
+  const deadlineSignal = deadlineEpochMs === undefined ? undefined
+    : AbortSignal.timeout(Math.max(1, deadlineEpochMs - Date.now()));
+  const dispatchSignal = deadlineSignal ? AbortSignal.any([signal, deadlineSignal]) : signal;
+  const secret = await beforeAbort(() => context.invokeConfidential('secrets.read', {
+    operation: 'resolve', resource: { type: 'secret.name', canonicalId: target.tokenSecret }, payload: {},
+  }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
   const result = resultLocation(target);
-  const key = await spawnSession(context, target, token, payload, result.file);
+  assertDispatchActive(dispatchSignal);
+  const spawning = spawnSession(context, target, token, payload, result.file);
+  let key: string;
+  try { key = await beforeAbort(() => spawning, dispatchSignal); }
+  catch (error) {
+    void spawning.then((lateKey) => cancelSession(context, target, token, lateKey)).catch(() => undefined);
+    throw error;
+  }
   const abort = (): void => { void cancelSession(context, target, token, key); };
-  signal.addEventListener('abort', abort, { once: true });
+  dispatchSignal.addEventListener('abort', abort, { once: true });
+  if (dispatchSignal.aborted) {
+    await cancelSession(context, target, token, key);
+    throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
+  }
   try {
-    const state = await pollSession(context, target, token, key, signal);
-    return await readOpenClawResult(context, target, payload, result.relative, key, startedAt, state);
-  } finally { signal.removeEventListener('abort', abort); }
+    const state = await pollSession(context, target, token, key, dispatchSignal);
+    const resolved = await beforeAbort(() => readOpenClawResult(context, target,
+      { payload, relative: result.relative, key, startedAt, state }), dispatchSignal);
+    assertDispatchActive(dispatchSignal);
+    assertOpenClawOutputBudget(resolved.outputText, target,
+      runtimePromptBudget(payload.runtimePromptBudget)?.maxOutputTokens);
+    return Object.freeze({ result: resolved.result, runtimeEvidence: runtimeAttestation(targetId, target) });
+  } finally { dispatchSignal.removeEventListener('abort', abort); }
 }

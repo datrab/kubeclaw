@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { createEmptyCoreKernel } from '../../../skills/common/plugin-runtime/core/src/index.ts';
-import { discoverPackages } from '../../../skills/common/plugin-runtime/core/registry/discovery.ts';
-import { buildRegistry } from '../../../skills/common/plugin-runtime/core/registry/build.ts';
-import { isObserverDeliveryInput } from '../../../skills/common/plugin-runtime/core/telemetry/observers.ts';
+import { createEmptyCoreKernel } from '../../../skills/nova/core/src/index.ts';
+import { discoverPackages } from '../../../skills/common/plugin-runtime/foundation/registry/discovery.ts';
+import { buildRegistry } from '../../../skills/common/plugin-runtime/foundation/registry/build.ts';
+import { isObserverDeliveryInput } from '../../../skills/nova/core/telemetry/observers.ts';
 import type { LifecycleEvent } from '../../../skills/common/plugin-runtime/sdk/src/index.ts';
 
 const root = path.resolve('.');
@@ -13,6 +13,7 @@ const removed = [
   'skills/nova/pipeline',
   'skills/buster/pipeline',
   'skills/buster/buster-pipeline.ts',
+  'skills/common/plugin-runtime/core',
 ];
 for (const target of removed) {
   assert.equal(fs.existsSync(path.join(root, target)), false, `legacy runtime remains: ${target}`);
@@ -22,7 +23,7 @@ const kernel = createEmptyCoreKernel();
 assert.deepEqual(kernel.registry.packages, []);
 assert.deepEqual(kernel.registry.registrations, []);
 
-const coreFiles = fs.readdirSync(path.join(root, 'skills/common/plugin-runtime/core'), {
+const coreFiles = fs.readdirSync(path.join(root, 'skills/nova/core'), {
   recursive: true,
   withFileTypes: true,
 }).filter((entry) => entry.isFile() && /\.(?:ts|mjs)$/u.test(entry.name));
@@ -46,7 +47,7 @@ const packages = discoverPackages({
   },
 });
 const registry = buildRegistry(packages);
-assert.equal(registry.stages.size, 16);
+assert.equal(registry.stages.size, 18);
 assert.equal(registry.observers.size, 6);
 assert.equal(registry.adapters.size, 18);
 for (const [type, owner] of registry.stages) {
@@ -55,7 +56,7 @@ for (const [type, owner] of registry.stages) {
 }
 
 const entrypoint = fs.readFileSync(path.join(root, 'skills/nova/pipeline.ts'), 'utf8');
-assert.match(entrypoint, /common\/plugin-runtime\/cli\.ts/u);
+assert.match(entrypoint, /\.\/core\/cli\.ts/u);
 assert.doesNotMatch(entrypoint, /pipeline\/cli\.ts|compatib/u);
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));

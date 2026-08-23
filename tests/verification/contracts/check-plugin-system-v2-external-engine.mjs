@@ -5,10 +5,10 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const { runPipelineV2 } = await import(
-  pathToFileURL(path.resolve('skills/common/plugin-runtime/core/execution/engine.ts')).href
+  pathToFileURL(path.resolve('skills/nova/core/execution/engine.ts')).href
 );
 const { computePackageDigest } = await import(
-  pathToFileURL(path.resolve('skills/common/plugin-runtime/core/registry/digest.ts')).href
+  pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/registry/digest.ts')).href
 );
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-external-engine-v2-'));
 const installationRoot = path.join(temporary, 'installed');
