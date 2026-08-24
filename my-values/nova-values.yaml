@@ -142,7 +142,7 @@ extraVolumes:
 
 resources:
   requests: { cpu: 1000m, memory: 12288Mi }
-  limits: { cpu: 3000m, memory: 24576Mi }
+  limits: { cpu: 8000m, memory: 24576Mi }
 
 # =============================================================================
 # Prism Preview Sidecar (Phase 2 — Live Web Preview)
