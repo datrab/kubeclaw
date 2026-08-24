@@ -52,7 +52,7 @@ export type {
 export { PluginStateJournal } from '../state/plugins.ts';
 export type { PluginStateAppend } from '../state/plugins.ts';
 export { installExternalPackage, removeInstalledPackage } from '@kubeclaw/plugin-foundation/packages/install';
-export { loadPipelineTestScope } from '../test-gates/pipeline.ts';
+export { loadPipelineLintDeclaration, loadPipelineTestScope } from '../test-gates/pipeline.ts';
 export { resolveTestPlan, TestPlanResolutionError } from '../test-gates/resolver.ts';
 export {
   createRemotePlanJob,

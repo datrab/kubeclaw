@@ -22,6 +22,35 @@ export interface LintExecutionRequest {
   readonly changedFiles?: readonly string[];
   readonly includeDebt?: boolean;
   readonly includeExperimental?: boolean;
+  readonly kubernetes?: {
+    readonly rawManifests: readonly string[];
+    readonly helmCharts: readonly string[];
+  };
+}
+
+function kubernetesInputPaths(values: readonly string[], field: string): string[] {
+  if (values.length > 256) throw new Error(`LINT_KUBERNETES_INPUT_LIMIT:${field}`);
+  const normalized = values.map((value) => {
+    if (typeof value !== 'string' || value.length === 0) throw new Error(`LINT_KUBERNETES_INPUT_INVALID:${field}`);
+    const candidate = path.posix.normalize(value.replace(/\\/gu, '/'));
+    if (path.posix.isAbsolute(candidate) || candidate === '..' || candidate.startsWith('../')) {
+      throw new Error(`LINT_KUBERNETES_INPUT_ESCAPE:${field}:${value}`);
+    }
+    return candidate;
+  });
+  if (new Set(normalized).size !== normalized.length) throw new Error(`LINT_KUBERNETES_INPUT_DUPLICATE:${field}`);
+  return normalized;
+}
+
+function effectivePolicyProject(project: Record<string, any>, input: LintExecutionRequest['kubernetes']): Record<string, any> {
+  if (input === undefined) return project;
+  const rawManifests = kubernetesInputPaths(input.rawManifests, 'rawManifests');
+  const helmCharts = kubernetesInputPaths(input.helmCharts, 'helmCharts');
+  if (rawManifests.length + helmCharts.length === 0) throw new Error('LINT_KUBERNETES_INPUT_EMPTY');
+  return {
+    ...project,
+    kubernetes: { ...project.kubernetes, raw_manifests: rawManifests, helm_charts: helmCharts },
+  };
 }
 
 function normalizeModulePath(repositoryRoot: string, value: string | undefined): string | null {
@@ -49,7 +78,7 @@ export async function executeLintReport(request: LintExecutionRequest): Promise<
   const repositoryRoot = fs.realpathSync(request.workingDirectory);
   const policyPath = fs.realpathSync(request.policyPath);
   const policy = loadLintPolicy(policyPath);
-  const policyProject = selectPolicyProject(policy, request.policyProject);
+  const policyProject = effectivePolicyProject(selectPolicyProject(policy, request.policyProject), request.kubernetes);
   validatePolicyTargetPaths(repositoryRoot, policy, policyProject);
   const modulePath = normalizeModulePath(repositoryRoot, request.modulePath);
   const changedFiles = normalizeChangedFiles(request.changedFiles);

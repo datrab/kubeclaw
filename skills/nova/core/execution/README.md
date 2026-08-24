@@ -20,3 +20,18 @@ Resume fails closed when either package provenance or graph identity differs.
 
 Scheduling is registration-driven. This directory contains no Forge, Buster,
 gate, validator, generator, or fixed-stage dispatch table.
+
+## Durable artifact checkpoints
+
+Every successful `artifacts.write` invocation that explicitly requests
+`checkpoint: true` is validated against the exact serialized payload and its
+producing attempt, then recorded immediately as an `artifact.created`
+lifecycle event. The checkpoint does not wait for the stage to return. If a
+process or container dies mid-attempt, `recoverPipelineV2` supplies those
+certified artifacts to the next attempt and deduplicates them when the
+recovered stage eventually returns its result.
+
+This is the recovery boundary for long-running fan-out stages. Repository
+review uses one immutable cache artifact per completed review or verification
+batch, so recovery reuses completed batches and dispatches only cache misses.
+Conflicting content for one artifact ID and producer attempt fails closed.

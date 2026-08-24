@@ -123,12 +123,12 @@ ARG HELM_VERSION=3.18.4
 ARG SHFMT_VERSION=3.13.1
 ARG TERRAFORM_VERSION=1.15.7
 ARG TFLINT_VERSION=0.64.0
-ARG TRIVY_VERSION=0.72.0
+ARG TRIVY_VERSION=0.74.0
 RUN set -eux; \
     arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
     case "$arch" in \
-      amd64) hadolint_arch="x86_64"; shfmt_sha="fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1"; terraform_sha="73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2"; tflint_sha="cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537"; trivy_arch="64bit"; trivy_sha="bbb64b9695866ce4a7a8f5c9592002c5961cab378577fa3f8a040df362b9b2ea" ;; \
-      arm64) hadolint_arch="arm64"; shfmt_sha="32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7"; terraform_sha="7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d"; tflint_sha="560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb"; trivy_arch="ARM64"; trivy_sha="2ca2c023109c2db6b2b77366b6717291452d4531167377d95c79547f0c8e3467" ;; \
+      amd64) hadolint_arch="x86_64"; shfmt_sha="fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1"; terraform_sha="73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2"; tflint_sha="cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537"; trivy_arch="64bit"; trivy_sha="2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a" ;; \
+      arm64) hadolint_arch="arm64"; shfmt_sha="32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7"; terraform_sha="7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d"; tflint_sha="560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb"; trivy_arch="ARM64"; trivy_sha="b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5" ;; \
       *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
     esac; \
     tmp="$(mktemp -d)"; \

@@ -3,7 +3,7 @@
   "suite": "manifest",
   "parityItemCount": 28,
   "verification": {
-    "solePathTests": ["tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts"],
+    "solePathTests": ["tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts", "tests/verification/contracts/check-pipeline-manifest-lint-production.mts"],
     "dualAuthorityTests": ["tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts"],
     "absenceTests": ["tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts"]
   },
@@ -16,7 +16,6 @@
     "skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts",
     "contracts/pipeline-test-gate/v1/legacy-suite-bridge.json",
     "skills/nova/project_setup/tools/progress-scaffold-values.ts",
-    "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
     "skills/nova/project_setup/tools/progress-scaffold-test-config.ts",
     "tests/verification/e2e/real-run-workspace.mjs",
     "tests/verification/e2e/failure-scenarios.mjs"
@@ -25,6 +24,11 @@
     "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts",
     "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts",
     "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+    "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+    "skills/nova/core/test-gates/pipeline.ts",
+    "tests/verification/e2e/manifest-lint-production.mts",
+    "tests/verification/e2e/run-v2-production-pipeline.mts",
+    "tests/verification/contracts/check-pipeline-manifest-lint-production.mts",
     "charts/kubeclaw/files/config/lint-policy.json",
     "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json"
   ],

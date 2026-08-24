@@ -115,6 +115,7 @@ export function buildToolRegistry(policy: any, projectTypes: any) {
   const configured = policy.tools.map((settings: any) => {
     const adapter = adapters.get(settings.id);
     if (!adapter) throw Object.assign(new Error(`No lint adapter exists for configured tool '${settings.id}'`), { code: 'LINT_POLICY_ADAPTER_MISSING' });
+    const detect = typeof adapter.detect === 'function' ? adapter.detect : () => true;
     return {
       id: adapter.id,
       name: adapter.name,
@@ -123,7 +124,7 @@ export function buildToolRegistry(policy: any, projectTypes: any) {
       ...settings,
       detect: (ctx: any) => (settings.languages.length === 0
         || settings.languages.some((language: any) => projectTypes.has(language)))
-        && adapter.detect(ctx),
+        && detect(ctx),
     };
   });
   const configuredIds = new Set(policy.tools.map((tool: any) => tool.id));

@@ -32,6 +32,7 @@ import { TestPlanRunner, type TestPlanRunResult } from './runner.ts';
 import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
 import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOptions } from './container-build-runtime.ts';
 import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';
+import { TailscaleExposureCapabilityInvoker, type TailscaleExposureCapabilityInvokerOptions } from './tailscale-exposure-runtime.ts';
 import { NetworkHttpCapabilityInvoker, type NetworkHttpCapabilityInvokerOptions } from './network-http-runtime.ts';
 import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
 
@@ -245,6 +246,7 @@ export interface BusterRemotePlanServiceOptions {
   readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
+  readonly tailscaleExposure?: TailscaleExposureCapabilityInvokerOptions;
   readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
   readonly now?: () => Date;
   readonly execute?: (
@@ -551,6 +553,10 @@ export class BusterRemotePlanService {
           workspaceRoot: jobRoot,
         })
         : null;
+      const tailscaleExposure = this.#options.allowedCapabilities.has('kubernetes.exposure')
+        ? new TailscaleExposureCapabilityInvoker(this.#options.tailscaleExposure
+          ?? (() => { throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'); })())
+        : null;
       const networkHttp = this.#options.allowedCapabilities.has('network.http')
         ? new NetworkHttpCapabilityInvoker(this.#options.networkHttp
           ?? (() => { throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED'); })())
@@ -559,6 +565,7 @@ export class BusterRemotePlanService {
       if (directCommand) routes.set('command.execute', directCommand);
       if (containerBuild) routes.set('container.build', containerBuild);
       if (kubernetesFixture) routes.set('kubernetes.fixture', kubernetesFixture);
+      if (tailscaleExposure) routes.set('kubernetes.exposure', tailscaleExposure);
       if (networkHttp) routes.set('network.http', networkHttp);
       const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
       const run = this.#options.execute

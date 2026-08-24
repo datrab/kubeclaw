@@ -27,8 +27,11 @@
     "skills/buster/plugins/direct-command/plugin.json",
     "skills/buster/plugins/junit-report-adapter/plugin.json",
     "skills/buster/plugins/coverage-budget/plugin.json",
+    "skills/nova/plugins/remote-test-gate/plugin.json",
     "skills/nova/core/test-gates/pipeline.ts",
-    "skills/nova/core/test-gates/production.ts"
+    "skills/nova/core/test-gates/production.ts",
+    "tests/verification/e2e/run-v2-production-pipeline.mts",
+    "tests/verification/e2e/nova-unit-production-preflight.mts"
   ],
   "currentGuidesRequired": [
     "docs/architecture/pipeline-test-gate-unit-user-guide.md",

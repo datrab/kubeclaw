@@ -7,6 +7,7 @@ import type { GrantedRegistry } from '@kubeclaw/plugin-foundation/registry/capab
 import { validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { applyStageResult, type StageRuntimeState } from '../lifecycle/reducer.ts';
 import type { FileJournal } from '../state/journal.ts';
+import { artifactFromWrite, type ArtifactCheckpointRecorder } from './artifact-checkpoints.ts';
 import { createPluginInvocationContext } from './context.ts';
 import type { AdapterRuntime } from './adapters.ts';
 import type { ExecutionGraph } from './graph.ts';
@@ -17,6 +18,7 @@ export type AppendLifecycleEvent = (type: LifecycleEvent['type'], identity: Life
 interface ExecutorOptions {
   readonly graph: ExecutionGraph; readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime;
   readonly journal: FileJournal<LifecycleEvent | PluginDomainEvent>; readonly signal?: AbortSignal; readonly now: () => Date; readonly append: AppendLifecycleEvent;
+  readonly checkpoints: ArtifactCheckpointRecorder;
 }
 
 interface AttemptRuntime {
@@ -73,26 +75,26 @@ export class StageExecutor {
     return { attempt, leaseContract, lease, controller, cancellation, cancel, context };
   }
 
-  #priorArtifacts(runId: string, stageId: string): ArtifactRef[] {
-    const artifacts: ArtifactRef[] = [];
-    for (const { entry } of this.#options.journal.records()) {
-      if (entry.schemaVersion !== 'lifecycle-event.v2' || entry.type !== 'artifact.created'
-        || entry.identity.runId !== runId || entry.identity.stageId !== stageId) continue;
-      const artifact = entry.payload.artifact;
-      if (!artifact || typeof artifact !== 'object' || Array.isArray(artifact)) continue;
-      artifacts.push(structuredClone(artifact) as ArtifactRef);
-    }
-    return artifacts;
-  }
-
   #context(contract: PluginContext, lease: RevocableLease, owner: NonNullable<ReturnType<GrantedRegistry['snapshot']['stages']['get']>>, attempt: AttemptIdentity, controller: AbortController): ReturnType<typeof createPluginInvocationContext> {
     let sequence = 0;
     return createPluginInvocationContext(contract, lease, { invoke: async (_leaseId, capability, operation, resource, payload) => {
-      sequence += 1; return this.#options.adapters.invoke(capability, attempt, `${attempt.runId}:${attempt.stageId}:${attempt.attemptNumber}:${sequence}`, { operation, resource, payload }, controller.signal);
+      sequence += 1;
+      const request = { operation, resource, payload };
+      const response = await this.#options.adapters.invoke(capability, attempt,
+        `${attempt.runId}:${attempt.stageId}:${attempt.attemptNumber}:${sequence}`, request, controller.signal);
+      if (capability === 'artifacts.write') {
+        const artifact = artifactFromWrite(attempt, request, response);
+        if (artifact) this.#options.checkpoints.checkpoint(artifact);
+      }
+      return response;
     } }, { append: async (_leaseId, type, identity, payload) => { this.#options.journal.append({
       schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: this.#options.journal.records().length + 1,
       type, producer: owner.provenance, identity, occurredAt: this.#options.now().toISOString(), causationId: attempt.attemptId, payload,
     }); } });
+  }
+
+  #priorArtifacts(runId: string, stageId: string): ArtifactRef[] {
+    return this.#options.checkpoints.artifacts(runId, stageId);
   }
 
   #recordAttempt(runId: string, state: StageRuntimeState, stageType: string, owner: NonNullable<ReturnType<GrantedRegistry['snapshot']['stages']['get']>>, runtime: AttemptRuntime): void {

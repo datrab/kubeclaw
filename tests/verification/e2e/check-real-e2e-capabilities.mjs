@@ -515,6 +515,26 @@ async function checkBusterV2Worker() {
   }
 }
 
+async function checkBusterPlanRuntime() {
+  let endpoint;
+  try {
+    endpoint = resolveProviderCapability(parseCapabilityProviders(), 'buster', 'test.plan.execute').endpoint;
+  } catch {
+    return { ok: false, reason: 'INFRA_MISSING_TEST_PLAN_PROVIDER' };
+  }
+  try {
+    const response = await fetch(`${endpoint.replace(/\/+$/u, '')}/healthz`, {
+      signal: AbortSignal.timeout(20_000),
+    });
+    const body = await response.json();
+    const ok = response.ok && body?.schemaVersion === 'buster-plan-health.v1' && body?.ready === true;
+    return { ok, reason: ok ? null : 'INFRA_BUSTER_PLAN_RUNTIME_UNREADY', endpoint, body };
+  } catch (error) {
+    return { ok: false, reason: 'INFRA_BUSTER_PLAN_RUNTIME_UNREACHABLE', endpoint,
+      error: error?.message || String(error) };
+  }
+}
+
 async function checkNovaBuildkitProof() {
   const result = await execCapture(process.execPath, [
     path.join(REPO_ROOT, 'tests/verification/e2e/nova-buildkit-production-preflight.mts'),
@@ -523,9 +543,9 @@ async function checkNovaBuildkitProof() {
   try {
     const proof = JSON.parse(result.stdout);
     const ok = proof?.ok === true
-      && proof?.schemaVersion === 'nova-buildkit-preflight.v2'
-      && proof?.status === 'succeeded'
-      && proof?.stageStatus === 'succeeded';
+      && proof?.schemaVersion === 'nova-container-build-preflight.v3'
+      && proof?.status === 'completed'
+      && proof?.decision === 'passed';
     return { ok, reason: ok ? null : 'INFRA_NOVA_BUILDKIT_PROOF_INVALID', proof };
   } catch (error) {
     return {
@@ -640,6 +660,7 @@ export async function runCapabilityProbe({ mode = 'full' } = {}) {
   await runCheck(checks, 'Discord production delivery receipt', 'discord_delivery', () => checkDiscordDelivery(openclawConfig));
   await runCheck(checks, 'kubectl available', 'kubectl', checkKubectlAvailable);
   await runCheck(checks, 'Buster v2 worker available', 'buster-v2', checkBusterV2Worker);
+  await runCheck(checks, 'Buster plan runtime available', 'buster-plan', checkBusterPlanRuntime);
   await runCheck(checks, 'Nova → Buster real BuildKit image proof', 'nova_buildkit_proof', checkNovaBuildkitProof);
   await runCheck(checks, 'Kubernetes API reachable', 'kubernetes_api', checkKubernetesApi);
   await runCheck(checks, 'BusterNamespaceLease CRD', 'buster_lease_crd', checkBusterLeaseCrd);

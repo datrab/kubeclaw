@@ -48,10 +48,6 @@ RUN set -eux; \
     printf '%s  %s\n' "$kubectl_sha" /tmp/kubectl | sha256sum -c -; \
     install -m 0755 /tmp/kubectl /usr/local/bin/kubectl; \
     rm /tmp/kubectl; \
-    npm install --prefix /app --no-audit --no-fund \
-      ajv@8.20.0 ajv-formats@3.0.1 js-yaml@5.2.2 uuid@14.0.1 \
-      lighthouse@13.4.1 playwright@1.61.1 @axe-core/playwright@4.12.1 \
-      pixelmatch@7.2.0 pngjs@7.0.0 ws@8.21.1 typescript@5.9.3; \
     groupmod --new-name builder node; \
     usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \
     groupadd --gid 1001 buster-suite; \
@@ -70,6 +66,19 @@ RUN pip install --break-system-packages --no-cache-dir \
 
 ENV PATH="/app/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+COPY package.json package-lock.json /app/
+COPY contracts /app/contracts
+COPY skills /app/skills
+COPY scripts/build-plugin-sandbox.mjs /app/scripts/build-plugin-sandbox.mjs
+COPY tests/verification/contracts/check-pipeline-container-build-production.mts /app/tests/verification/contracts/check-pipeline-container-build-production.mts
+COPY tests/verification/contracts/check-pipeline-container-build-recovery.mts /app/tests/verification/contracts/check-pipeline-container-build-recovery.mts
+RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
+    && cd /app \
+    && node scripts/build-plugin-sandbox.mjs \
+    && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \
+    && chown -R builder:builder /app
+
 RUN playwright install --with-deps chromium && chown -R builder:builder /ms-playwright
 
 COPY skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime
@@ -94,7 +103,8 @@ ENV HOME=/home/builder \
     BUSTER_V2_RUNNER_GID=1001 \
     BUSTER_V2_BUILDKIT_GID=1002 \
     BUSTER_V2_KUBERNETES_CREDENTIALS=/var/run/buster-worker/kubernetes \
-    BUSTER_V2_PORT=18891
+    BUSTER_PLAN_PORT=18891 \
+    BUSTER_LEGACY_PORT=18892
 
 # The production supervisor starts with only the capabilities declared by the
 # pod securityContext. The entrypoint immediately launches BuildKit as the
@@ -102,7 +112,7 @@ ENV HOME=/home/builder \
 # solely to enter a per-job identity before dropping every capability.
 # hadolint ignore=DL3002
 USER 0:0
-EXPOSE 18891
+EXPOSE 18891 18892
 WORKDIR /home/builder
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-runtime-entrypoint"]
 

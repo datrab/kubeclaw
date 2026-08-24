@@ -45,6 +45,7 @@ Result schema: None.
 Inputs:
 
 - `deployment`: value; optional.
+- `endpoint`: value; optional.
 
 ## Failure Behavior
 

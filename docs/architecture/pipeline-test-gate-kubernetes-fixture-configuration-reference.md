@@ -49,6 +49,18 @@ Optional. Set an integer from 1 through 3600. The default is 120.
 Optional. Set up to 32 unique test Secret names. The operator must approve each
 name. The broker copies only approved Secrets. The fixture does not read their values.
 
+### `testCredentials.mode`
+
+Optional. Use `generate`. The broker creates one dedicated preview credential
+Secret before it starts the workload. The Secret contains only a generated
+username and password.
+
+### `testCredentials.secretName`
+
+Required when `testCredentials.mode` is present. Set the DNS name of the
+dedicated preview credential Secret. The workload can mount this Secret. Nova
+can read this exact Secret for private delivery to the user.
+
 ## Input Port
 
 `image` is optional when project fields supply the image. It consumes

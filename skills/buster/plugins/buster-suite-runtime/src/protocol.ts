@@ -7,7 +7,7 @@ export const RESULT_SCHEMA = 'buster-suite-result.v2';
 // This list is a deletion ledger for the old suite bridge. New resolved-plan
 // work must never use these names.
 export const LEGACY_UNMIGRATED_SUITES = Object.freeze([
-  'tailscale-preview', 'a11y', 'perf',
+  'a11y', 'perf',
   'security', 'visual-reg', 'api', 'e2e',
 ] as const);
 

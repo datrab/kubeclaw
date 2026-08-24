@@ -789,25 +789,31 @@ test('generated review contract assigns Kubernetes fixture authority to final Bu
     assert.equal(pipeline.gates['final-buster'].suites.unit.uses, 'kubeclaw.unit-suite@1');
     assert.equal(pipeline.gates['final-buster'].tests['size-budget-artifact'].uses, 'kubeclaw.direct-command@1');
     assert.equal(pipeline.gates['final-buster'].tests['size-budget'].uses, 'kubeclaw.size-budget@1');
-    assert.deepEqual(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].needs, ['size-budget']);
+    assert.equal(pipeline.gates['final-buster'].tests['container-build'].uses, 'kubeclaw.container-build@1');
+    assert.deepEqual(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].needs,
+      ['size-budget', 'container-build']);
+    assert.deepEqual(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].inputs.image, {
+      from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+    });
     assert.equal(pipeline.gates['final-buster'].tests.health.uses, 'kubeclaw.http@1');
     assert.equal(pipeline.gates['final-buster'].tests.health.inputs.deployment.from, 'kubernetes-deployment');
     assert.equal(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].uses, 'kubeclaw.kubernetes-fixture@1');
+    assert.deepEqual(pipeline.lint, {
+      uses: 'kubeclaw.lint.full', policyProject: 'workspace',
+      rawManifests: [`Projects/${progress.project}/src/k8s/deployment.yaml`], helmCharts: [],
+    });
+    assert.match(manifest, /name: REDIS_HOST\s+value: redis\.default\.svc\.cluster\.local/u);
     assert.match(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].config.image.reference, /@sha256:[a-f0-9]{64}$/);
     assert.equal(finalGate.contract.preview_infrastructure_ref, 'contracts.preview_infrastructure');
     assert.match(finalGate.test_config.serve.image, /@sha256:[a-f0-9]{64}$/);
     assert.equal(finalGate.test_config.serve.dockerfile, undefined);
     assert.equal(finalGate.test_config.k8s, undefined);
     assert.equal(finalGate.test_config.manifest, undefined);
-    assert.deepEqual(finalGate.test_config.tailscale_preview, {
-      source_suite: 'explicit',
-      expected_text: 'REAL_E2E_NGINX_OK',
-      smoke_paths: ['/content/branch-a.html', '/assets/branch-b.css'],
-      smoke_expected_text: {
-        '/content/branch-a.html': 'REAL_E2E_BRANCH_A_CONTENT',
-        '/assets/branch-b.css': '#real-e2e-content-branch',
-      },
-    });
+    assert.equal(finalGate.test_config.tailscale_preview, undefined);
+    assert.equal(pipeline.gates['final-buster'].fixtures['tailscale-exposure'].uses,
+      'kubeclaw.tailscale-exposure@1');
+    assert.equal(pipeline.gates['final-buster'].tests['public-http-health'].inputs.endpoint.from,
+      'tailscale-exposure');
     assert.doesNotMatch(manifest, /kind:\s*Secret/);
     assert.doesNotMatch(manifest, /real-pipeline-e2e-preview-login/);
     assert.doesNotMatch(manifest, /BusterNamespaceLease|kind:\s*Ingress/);
@@ -914,7 +920,7 @@ test('generated fixture declares canonical artifact, runtime, review, and previe
     assert.match(architecture, /deployable-artifact\.json.*immutable deployment handoff/s);
     assert.match(architecture, /runtime-config\.json.*application runtime and static serving boundary/s);
     assert.match(architecture, /module-review\.json.*Echo review ownership/s);
-    assert.match(architecture, /preview-infrastructure\.json.*separate preview suite consumes an explicit URL/s);
+    assert.match(architecture, /preview-infrastructure\.json.*exposure fixture returns the public URL to the HTTP provider/s);
     assert.match(architecture, /Empty env\/config\/secret lists are valid/);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
@@ -966,52 +972,37 @@ test('generated final review requires the exact immutable deployment artifact', 
   }
 });
 
-test('tailscale preview unreachable scenario uses explicit unreachable preview URL', async () => {
-  const base = buildProgress({ projectName: 'unit-tailscale-preview-url-unreachable' });
-  const { progress } = applyRealE2EScenario(base, 'tailscale-preview-url-unreachable');
-  const finalGate = progress.gates['final-buster'];
-
-  assert.equal(finalGate.test_suites.includes('k8s'), false);
-  assert.equal(finalGate.test_suites.includes('tailscale-preview'), true);
-  assert.equal(finalGate.test_config.tailscale_preview.source_suite, 'explicit');
-  assert.equal(finalGate.test_config.tailscale_preview.preview_url, 'http://127.0.0.1:1');
-  assert.equal(finalGate.test_config.tailscale_preview.expected_text, 'REAL_E2E_NGINX_OK');
-  assert.equal(finalGate.test_config.tailscale_preview.connect_timeout_seconds, 1);
-  assert.equal(finalGate.test_config.tailscale_preview.max_time_seconds, 1);
+test('tailscale exposure unreachable scenario uses an explicit unreachable HTTP target', async () => {
+  const base = buildProgress({ projectName: 'unit-tailscale-exposure-url-unreachable' });
+  const { progress } = applyRealE2EScenario(base, 'tailscale-exposure-url-unreachable');
+  assert.equal(progress.real_e2e.public_http_url_override, 'http://127.0.0.1:1');
+  assert.equal(progress.real_e2e.public_http_timeout_ms, 1000);
 
   let workspace = null;
   try {
-    workspace = await createRealE2ERunWorkspace({ scenarioId: 'tailscale-preview-url-unreachable' });
-    const generatedProgress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
-    const generatedFinalGate = generatedProgress.gates['final-buster'];
-
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.source_suite, 'explicit');
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.preview_url, 'http://127.0.0.1:1');
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.connect_timeout_seconds, 1);
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.max_time_seconds, 1);
+    workspace = await createRealE2ERunWorkspace({ scenarioId: 'tailscale-exposure-url-unreachable' });
+    const pipeline = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'pipeline.json'), 'utf8'));
+    const publicHttp = pipeline.gates['final-buster'].tests['public-http-health'];
+    assert.equal(publicHttp.config.url, 'http://127.0.0.1:1');
+    assert.equal(publicHttp.config.requestTimeoutMs, 1000);
+    assert.equal(publicHttp.inputs, undefined);
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
 });
 
-test('tailscale preview wrong deployment scenario changes the explicit expected marker', async () => {
-  const base = buildProgress({ projectName: 'unit-tailscale-preview-wrong-deployment' });
-  const { progress } = applyRealE2EScenario(base, 'tailscale-preview-wrong-deployment');
-  const finalGate = progress.gates['final-buster'];
-
-  assert.equal(finalGate.test_suites.includes('k8s'), false);
-  assert.equal(finalGate.test_suites.includes('tailscale-preview'), true);
-  assert.equal(finalGate.test_config.tailscale_preview.expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
-  assert.equal(finalGate.test_config.tailscale_preview.source_suite, 'explicit');
+test('tailscale exposure wrong content scenario changes the public HTTP marker', async () => {
+  const base = buildProgress({ projectName: 'unit-tailscale-exposure-wrong-content' });
+  const { progress } = applyRealE2EScenario(base, 'tailscale-exposure-wrong-content');
+  assert.equal(progress.real_e2e.public_http_expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
 
   let workspace = null;
   try {
-    workspace = await createRealE2ERunWorkspace({ scenarioId: 'tailscale-preview-wrong-deployment' });
-    const generatedProgress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
-    const generatedFinalGate = generatedProgress.gates['final-buster'];
-
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.expected_text, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
-    assert.equal(generatedFinalGate.test_config.tailscale_preview.source_suite, 'explicit');
+    workspace = await createRealE2ERunWorkspace({ scenarioId: 'tailscale-exposure-wrong-content' });
+    const pipeline = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'pipeline.json'), 'utf8'));
+    const publicHttp = pipeline.gates['final-buster'].tests['public-http-health'];
+    assert.equal(publicHttp.config.expectedText, 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER');
+    assert.equal(publicHttp.inputs.endpoint.from, 'tailscale-exposure');
   } finally {
     if (workspace) await cleanupRealE2ERunWorkspace(workspace);
   }
@@ -1275,11 +1266,12 @@ test('nginx fixture pins its base image and verifies production contract fields'
   }
 });
 
-test('generated real e2e progress omits retired health configuration', () => {
+test('generated real e2e progress omits retired health and preview configuration', () => {
   const progress = buildProgress({ projectName: 'real-pipeline-e2e-unit' });
   assert.equal(JSON.stringify(progress).includes('health_path'), false);
   assert.equal(JSON.stringify(progress).includes('health_retries'), false);
-  assert.equal(JSON.stringify(progress).includes('smoke_paths'), true, 'preview smoke paths remain owned by the unmigrated preview suite');
+  assert.equal(JSON.stringify(progress).includes('smoke_paths'), false);
+  assert.equal(JSON.stringify(progress).includes('tailscale_preview'), false);
 });
 
 test('final deployment uses the fixture provider and a dependent HTTP check', async () => {
@@ -1296,7 +1288,11 @@ test('final deployment uses the fixture provider and a dependent HTTP check', as
       output: 'artifact-1',
     });
     assert.equal(gate.fixtures['kubernetes-deployment'].uses, 'kubeclaw.kubernetes-fixture@1');
-    assert.deepEqual(gate.fixtures['kubernetes-deployment'].needs, ['size-budget']);
+    assert.equal(gate.tests['container-build'].uses, 'kubeclaw.container-build@1');
+    assert.deepEqual(gate.fixtures['kubernetes-deployment'].needs, ['size-budget', 'container-build']);
+    assert.deepEqual(gate.fixtures['kubernetes-deployment'].inputs.image, {
+      from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+    });
     assert.equal(gate.fixtures['kubernetes-deployment'].config.retention.mode, 'delete');
     assert.equal(gate.tests.health.uses, 'kubeclaw.http@1');
     assert.equal(gate.tests.health.inputs.deployment.from, 'kubernetes-deployment');
@@ -1322,11 +1318,11 @@ test('namespace controller waits for namespace deletion before removing cleanup 
   assert.match(source, /return c\.removeFinalizer\(ctx, item\)/);
 });
 
-test('namespace controller reports unavailable credentials while preview service is pending', () => {
+test('namespace controller keeps credential delivery separate from preview exposure', () => {
   const source = fs.readFileSync(path.join(REPO_ROOT, 'cmd', 'buster-namespace-controller', 'main.go'), 'utf8');
   const previewExposure = source.match(/func \(c \*controller\) ensurePreviewExposure[\s\S]*?\n}\n\nfunc \(c \*controller\) copySecrets/)?.[0] || '';
 
-  assert.match(previewExposure, /if !serviceReady \{[\s\S]*?"credentialsAvailable": false,[\s\S]*?Waiting for Service\/" \+ exposure\.ServiceName/);
-  assert.match(previewExposure, /if !serviceReady \{[\s\S]*?\}[\s\S]*?c\.previewCredentialsAvailable\(ctx, namespaceName, exposure\)/);
+  assert.doesNotMatch(previewExposure, /credentials(?:Available|Ref)|previewCredentialsAvailable/);
+  assert.match(previewExposure, /if !serviceReady \{[\s\S]*?"exposurePhase":\s+"Pending"/);
   assert.match(previewExposure, /Waiting for Service\/" \+ exposure\.ServiceName \+ " before creating Tailscale ingress/);
 });

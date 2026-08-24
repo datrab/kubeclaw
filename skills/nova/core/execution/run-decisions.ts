@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import type { LifecycleEvent, StageDefinition, StageResult } from '@kubeclaw/plugin-sdk';
 import type { LifecycleDecision, StageRuntimeState } from '../lifecycle/reducer.ts';
+import type { ArtifactCheckpointRecorder } from './artifact-checkpoints.ts';
 import type { AppendLifecycleEvent } from './stage-executor.ts';
 
 export interface CompletedStageDecision {
@@ -14,9 +15,11 @@ export interface BatchOutcome { readonly terminal?: TerminalStatus; readonly pau
 
 export class DecisionRecorder {
   readonly #states: Map<string, StageRuntimeState>; readonly #append: AppendLifecycleEvent; readonly #issuer: string;
-  readonly #force: (stageId: string) => void; #terminal: TerminalStatus | undefined; #paused = false;
-  constructor(states: Map<string, StageRuntimeState>, append: AppendLifecycleEvent, issuer: string, force: (stageId: string) => void) {
-    this.#states = states; this.#append = append; this.#issuer = issuer; this.#force = force;
+  readonly #force: (stageId: string) => void; readonly #checkpoints: ArtifactCheckpointRecorder;
+  #terminal: TerminalStatus | undefined; #paused = false;
+  constructor(states: Map<string, StageRuntimeState>, append: AppendLifecycleEvent, issuer: string,
+    force: (stageId: string) => void, checkpoints: ArtifactCheckpointRecorder) {
+    this.#states = states; this.#append = append; this.#issuer = issuer; this.#force = force; this.#checkpoints = checkpoints;
   }
 
   record(runId: string, completed: CompletedStageDecision): void {
@@ -40,10 +43,12 @@ export class DecisionRecorder {
   }
 
   #artifacts(runId: string, stageId: string, result: StageResult): void {
-    for (const artifact of result.artifacts) this.#append('artifact.created', { runId, stageId, artifactId: artifact.artifactId }, {
-      namespace: artifact.namespace, mediaType: artifact.mediaType, digest: artifact.digest, sizeBytes: artifact.sizeBytes,
-      artifact: structuredClone(artifact),
-    });
+    for (const artifact of result.artifacts) {
+      if (artifact.producer.runId !== runId || artifact.producer.stageId !== stageId) {
+        throw new Error(`ARTIFACT_PRODUCER_MISMATCH:${runId}:${stageId}:${artifact.artifactId}`);
+      }
+      this.#checkpoints.result(artifact);
+    }
   }
 
   #administrativeBlocked(runId: string, stageId: string, state: StageRuntimeState): void {

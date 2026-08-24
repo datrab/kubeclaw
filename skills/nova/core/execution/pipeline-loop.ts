@@ -4,10 +4,12 @@ import type { ExecutionGraph } from './graph.ts';
 import type { PipelineRunIdentity, PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
 import { DecisionRecorder, type CompletedStageDecision } from './run-decisions.ts';
 import type { AppendLifecycleEvent, StageExecutor } from './stage-executor.ts';
+import type { ArtifactCheckpointRecorder } from './artifact-checkpoints.ts';
 
 interface LoopServices {
   readonly options: PipelineRunnerOptions; readonly graph: ExecutionGraph; readonly maxConcurrency: number;
   readonly overrides: Set<string>; readonly append: AppendLifecycleEvent; readonly flush: () => Promise<void>;
+  readonly checkpoints: ArtifactCheckpointRecorder;
   readonly executor: StageExecutor; readonly result: (identity: PipelineRunIdentity, status: PipelineRunResult['status'], states: ReadonlyMap<string, StageRuntimeState>) => PipelineRunResult;
 }
 
@@ -22,7 +24,8 @@ export class PipelineLoop {
       const selection = await this.#selectReady(identity.runId); if (selection === 'continue') continue;
       if (selection.length === 0) break;
       const decisions = await Promise.all(selection.slice(0, this.#services.maxConcurrency).map((stage) => this.#execute(identity.runId, stage)));
-      const recorder = new DecisionRecorder(this.#states, this.#services.append, this.#services.options.orchestratorIssuerId, (id) => this.#force(id));
+      const recorder = new DecisionRecorder(this.#states, this.#services.append, this.#services.options.orchestratorIssuerId,
+        (id) => this.#force(id), this.#services.checkpoints);
       decisions.forEach((decision) => recorder.record(identity.runId, decision)); await this.#services.flush();
       const outcome = recorder.outcome();
       if (outcome.terminal) return this.#terminal(identity, outcome.terminal);

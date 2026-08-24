@@ -9,6 +9,7 @@
       "module": "src/stage.ts",
       "export": "execute",
       "requiredCapabilities": [
+        "test.plan.execute",
         "test.suite.execute",
         "runtime.dispatch",
         "artifacts.write"

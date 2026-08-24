@@ -19,13 +19,15 @@
     "network.http": "kubeclaw.network-http:http",
     "command.execute": "kubeclaw.command-runner:command",
     "test.suite.execute": "kubeclaw.buster-suite-runtime:suite",
+    "test.plan.execute": "kubeclaw.remote-test-gate:plan",
     "lint.execute": "kubeclaw.lint:executor",
     "transport.publish": "kubeclaw.transport-publisher:publisher",
     "agent.events.subscribe": "kubeclaw.openclaw-agent-events:source"
   },
   "runtimeCapabilities": {
     "container.build": "Buster operator-owned container-build runtime",
-    "kubernetes.fixture": "Buster operator-owned Kubernetes fixture runtime"
+    "kubernetes.fixture": "Buster operator-owned Kubernetes fixture runtime",
+    "kubernetes.exposure": "Buster operator-owned Tailscale exposure runtime"
   },
   "inventoriedEffectMappings": {
     "filesystem.read": [

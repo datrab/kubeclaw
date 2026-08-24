@@ -6,7 +6,8 @@ const providers = parseCapabilityProviders(JSON.stringify({
     agentRole: 'buster',
     capabilities: {
       'runtime.dispatch': { adapter: 'openclaw', endpoint: 'http://agent-buster:18789' },
-      'test.suite.execute': { adapter: 'buster-suite-v2', endpoint: 'http://agent-buster:18891' },
+      'test.plan.execute': { adapter: 'buster-plan-v1', endpoint: 'https://agent-buster:18891' },
+      'test.suite.execute': { adapter: 'buster-suite-v2', endpoint: 'http://agent-buster:18892' },
     },
   },
   security: {
@@ -24,7 +25,10 @@ assert.deepEqual(resolveProviderCapability(providers, 'buster', 'runtime.dispatc
 });
 assert.deepEqual(resolveProviderCapability(providers, 'buster', 'test.suite.execute'), {
   adapter: 'buster-suite-v2',
-  endpoint: 'http://agent-buster:18891',
+  endpoint: 'http://agent-buster:18892',
+});
+assert.deepEqual(resolveProviderCapability(providers, 'buster', 'test.plan.execute'), {
+  adapter: 'buster-plan-v1', endpoint: 'https://agent-buster:18891',
 });
 assert.equal(resolveProviderCapability(providers, 'security', 'runtime.dispatch').adapter, 'kagent');
 assert.equal(resolveProviderCapability(providers, 'security', 'test.suite.execute').adapter, 'custom-python');

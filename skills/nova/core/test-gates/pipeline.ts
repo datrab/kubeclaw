@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { LoadedPipelineTestScope, TestPlanScope, TestScopeDeclaration } from './types.ts';
+import type { LoadedPipelineTestScope, PipelineLintDeclaration, TestPlanScope, TestScopeDeclaration } from './types.ts';
 
 function objectValue(value: unknown, label: string): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -48,4 +48,31 @@ export function loadPipelineTestScope(
     project: pipeline.project,
     declaration,
   });
+}
+
+function stringList(value: unknown, label: string): string[] {
+  if (!Array.isArray(value) || value.some((entry) => typeof entry !== 'string' || entry.length === 0)) {
+    throw new Error(`TEST_PLAN_PIPELINE_INVALID:${label}`);
+  }
+  if (new Set(value).size !== value.length) throw new Error(`TEST_PLAN_PIPELINE_INVALID:${label}:duplicate`);
+  return value as string[];
+}
+
+export function loadPipelineLintDeclaration(pipelinePath: string): PipelineLintDeclaration | null {
+  if (path.basename(pipelinePath) !== 'pipeline.json' || path.basename(path.dirname(pipelinePath)) !== '.swarm') {
+    throw new Error('TEST_PLAN_PIPELINE_LOCATION_INVALID');
+  }
+  let source: unknown;
+  try { source = JSON.parse(fs.readFileSync(pipelinePath, 'utf8')); }
+  catch (error) { throw new Error('TEST_PLAN_PIPELINE_INVALID', { cause: error }); }
+  const pipeline = objectValue(source, 'root');
+  if (pipeline.lint === undefined) return null;
+  const lint = objectValue(pipeline.lint, 'lint');
+  if (lint.uses !== 'kubeclaw.lint.full' || typeof lint.policyProject !== 'string' || lint.policyProject.length === 0) {
+    throw new Error('TEST_PLAN_PIPELINE_INVALID:lint');
+  }
+  const rawManifests = stringList(lint.rawManifests, 'lint.rawManifests');
+  const helmCharts = stringList(lint.helmCharts, 'lint.helmCharts');
+  if (rawManifests.length + helmCharts.length === 0) throw new Error('TEST_PLAN_PIPELINE_INVALID:lint.inputs');
+  return Object.freeze({ uses: 'kubeclaw.lint.full', policyProject: lint.policyProject, rawManifests, helmCharts });
 }

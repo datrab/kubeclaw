@@ -173,8 +173,8 @@ Supported scenarios:
 - `buster-gate-failure`
 - `k8s-pod-never-ready`
 - `namespace-lease-denied`
-- `tailscale-preview-url-unreachable`
-- `tailscale-preview-wrong-deployment`
+- `tailscale-exposure-url-unreachable`
+- `tailscale-exposure-wrong-content`
 - `pipeline-summary-failure`
 - `redis-unavailable`
 - `discord-unavailable`

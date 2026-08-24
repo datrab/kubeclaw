@@ -29,7 +29,8 @@ Test files with concrete test cases. ← REQUIRED
 
 ### Unit Test Section — REQUIRED
 
-Without this section Forge writes no tests → requested `unit.ts` fails typed Buster validation because real tests are required.
+Without this section Forge writes no tests. The declared `kubeclaw.direct-command@1`
+node then fails because the required test files do not exist.
 
 **Python (pytest):**
 ```markdown
@@ -99,7 +100,7 @@ File names, cleanup rules, dev dependencies.
 | Aspect | FORGE.md (Unit Tests) | BUSTER.md (Subagent Tests) |
 |---|---|---|
 | Runs in | Leased Kubernetes namespace | Gateway pod |
-| Executed by | `unit.ts` suite | LLM subagent (Claude) |
+| Executed by | Declared `kubeclaw.direct-command@1` node | LLM subagent (Claude) |
 | K8s access | No | Yes (ServiceAccount) |
 | Test type | Deterministic, reproducible | Intelligent, exploratory |
 | Examples | parse_cpu("500m")→500 | Pod count matches kubectl |

@@ -32,7 +32,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.test.execution`.
 
-Required capabilities: `command.execute`, `test.suite.execute`, `runtime.dispatch`, `artifacts.write`
+Required capabilities: `command.execute`, `test.plan.execute`, `test.suite.execute`, `runtime.dispatch`, `artifacts.write`
 
 Provided capabilities: None.
 

@@ -28,12 +28,17 @@ capabilityProviders:
         port: 18789
       test.suite.execute:
         adapter: buster-suite-v2
+        port: 18892
+      test.plan.execute:
+        adapter: buster-plan-v1
+        scheme: https
         port: 18891
 ```
 
 Helm renders the endpoint catalog from the provider role and capability routes.
 Each capability has its own adapter and port; there is no implied companion
-port or framework-specific default.
+port or framework-specific default. A route can select `http` or `https`.
+The default is `http`. The Buster plan route selects `https`.
 
 ## Receiver model
 
@@ -46,10 +51,10 @@ pipeline core
   -> canonical capability response
 ```
 
-For the current Buster provider, `test.suite.execute` reaches the Buster suite
-worker while `runtime.dispatch` reaches the OpenClaw gateway. The two receivers
-share a Kubernetes Service but are separate containers and listen on separate
-ports.
+For Buster, `test.plan.execute` reaches the provider-plan runtime.
+`test.suite.execute` reaches the worker for suites that are not migrated.
+`runtime.dispatch` reaches the OpenClaw gateway. The receivers share one
+Kubernetes Service and use separate ports.
 
 An alternative provider can implement `runtime.dispatch` with Kagent, Pi,
 LangChain, ACP, a custom Python HTTP service, or a local process by installing

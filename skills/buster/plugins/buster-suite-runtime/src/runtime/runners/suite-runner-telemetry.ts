@@ -34,13 +34,6 @@ function completionPayload(identity: Record<string, unknown>, suiteName: string,
     critical: optionalBoolean(result.critical), reason: result.reason ?? null, error: result.error ?? null, top_finding: topFinding(result) };
 }
 
-async function emitInfrastructureEvidence(tctx: unknown, identity: Record<string, unknown>, suiteName: string, result: SuiteVerdict, attempt: number | undefined): Promise<void> {
-  if (suiteName !== 'tailscale-preview') return;
-  await emitEvent(tctx, 'infrastructure.evidence', { ...identity, attempt, evidence_type: `suite.${suiteName}`, status: result.status,
-    readiness: null,
-    preview_url: typeof result.metadata?.preview_url === 'string' ? result.metadata.preview_url : null, workload: result.metadata ?? null });
-}
-
 export async function emitSuiteCompleted(tctx: unknown, moduleId: string | undefined, suiteName: string, result: SuiteVerdict, attempt: number | undefined, startMs: number): Promise<void> {
   const telemetry = tctx && typeof tctx === 'object' ? tctx as Record<string, any> : null;
   const identity = eventIdentity(telemetry, moduleId);
@@ -49,5 +42,4 @@ export async function emitSuiteCompleted(tctx: unknown, moduleId: string | undef
   await emitEvent(tctx, 'quality.evidence', { ...identity, attempt, item_type: 'suite', suite: suiteName, verdict: result.status,
     skipped_reason: result.status === STATUS.SKIP ? result.reason ?? 'dependency' : null, findings: result.findings ?? [],
     dispositions: [], artifact_references: references });
-  await emitInfrastructureEvidence(tctx, identity, suiteName, result, attempt);
 }

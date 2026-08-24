@@ -30,6 +30,15 @@
       "maxItems": 32,
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^[A-Za-z0-9._-]+$", "maxLength": 253 }
+    },
+    "testCredentials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "secretName"],
+      "properties": {
+        "mode": { "const": "generate" },
+        "secretName": { "$ref": "#/$defs/dnsLabel" }
+      }
     }
   },
   "$defs": {

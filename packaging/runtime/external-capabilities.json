@@ -14,6 +14,13 @@
       "capabilities": ["git.repository.read"],
       "contract": "plugin-capability.v2",
       "kind": "read-only-mount"
+    },
+    {
+      "id": "nova-orchestrator",
+      "roles": ["buster"],
+      "capabilities": ["test.plan.execute"],
+      "contract": "pipeline-test-gate.v1",
+      "kind": "orchestrator-routed-capability"
     }
   ]
 }

@@ -8,9 +8,28 @@ The lint stage reads declared raw Kubernetes YAML and rendered Helm charts. It
 checks YAML structure, Kubernetes schemas, and selected static policy rules.
 It does not apply resources, contact a cluster, or prove runtime health.
 
-## Project configuration
+## Project declaration
 
-The lint policy has one `kubernetes` block per project:
+Each project declares its exact inputs in `.swarm/pipeline.json`:
+
+```json
+{
+  "lint": {
+    "uses": "kubeclaw.lint.full",
+    "policyProject": "workspace",
+    "rawManifests": ["Projects/app/src/deploy/base.yaml"],
+    "helmCharts": ["Projects/app/src/charts/app"]
+  }
+}
+```
+
+Project setup converts an old manifest selection into this declaration. It
+fails when the old selection does not name a deployment file. It does not
+guess a path or discover undeclared manifests.
+
+## Operator policy
+
+The operator lint policy supplies the approved rules and limits:
 
 ```json
 {
@@ -28,9 +47,10 @@ The lint policy has one `kubernetes` block per project:
 }
 ```
 
-All project input paths are repository-relative and explicit. Globs and hidden
-manifest discovery are not supported. `schema_location` is operator-owned and
-must be an absolute local path. HTTP and HTTPS schema locations are rejected.
+Project input paths are repository-relative and explicit. Globs and hidden
+manifest discovery are not supported. The project cannot replace policy packs,
+schema versions, schema paths, or limits. `schema_location` is operator-owned.
+HTTP and HTTPS schema locations are rejected.
 
 ## Results
 
@@ -74,5 +94,5 @@ Live cluster checks belong to the later Kubernetes fixture and readiness tests.
 ## Verify locally
 
 Run `npm run verify:test-gate:manifest-lint-cutover`. It checks the 28-item
-ledger, immutable old evidence, the sole Nova lint path, deletion guards,
+ledger, project migration, the production Nova lint stage, deletion guards,
 evidence, and all earlier regressions. No Kubernetes cluster is required.

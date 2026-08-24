@@ -49,9 +49,15 @@ function configuration(invocation) {
     || secretReferences.some((item) => typeof item !== 'string' || !SECRET.test(item))) {
     throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID');
   }
+  const testCredentials = value.testCredentials === undefined ? null : object(value.testCredentials, 'testCredentials');
+  if (testCredentials && (testCredentials.mode !== 'generate'
+    || typeof testCredentials.secretName !== 'string' || !DNS_LABEL.test(testCredentials.secretName))) {
+    throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
+  }
   return { immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
     servicePort: value.servicePort, namespacePrefix, retentionMode, retentionSeconds,
-    readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)] };
+    readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)],
+    ...(testCredentials ? { testCredentials: { mode: 'generate', secretName: testCredentials.secretName } } : {}) };
 }
 
 function manifestInput(invocation) {
@@ -82,7 +88,8 @@ function capabilityRequest(invocation, config, manifest) {
       immutableImage: config.immutableImage, imageDigest: config.imageDigest, manifestPath: manifest.file,
       manifestDigest: manifest.artifact.contentDigest, serviceName: config.serviceName, servicePort: config.servicePort,
       retentionSeconds: config.retentionSeconds, readinessTimeoutMs: Math.min(invocation.timeoutMs, config.readinessTimeoutSeconds * 1000),
-      retentionMode: config.retentionMode, secretReferences: config.secretReferences },
+      retentionMode: config.retentionMode, secretReferences: config.secretReferences,
+      ...(config.testCredentials ? { testCredentials: config.testCredentials } : {}) },
   };
 }
 
@@ -92,17 +99,17 @@ function details(values) {
 }
 
 export function provider() {
-  let prepared = null;
   return {
     async execute(invocation, context) {
       const config = configuration(invocation);
       const manifest = manifestInput(invocation);
       const result = await context.invoke('kubernetes.fixture', capabilityRequest(invocation, config, manifest));
       if (result.ok !== true) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
-      prepared = { invocation, config };
-      const deployment = { schemaVersion: 'kubernetes-deployment-fixture.v1', namespace: result.namespace,
+      const deployment = { schemaVersion: 'kubernetes-deployment-fixture.v1', leaseName: result.leaseName,
+        namespace: result.namespace,
         createdAt: result.createdAt, expiresAt: result.expiresAt, endpoints: [{ name: config.serviceName, url: result.endpoint }],
         secretReferences: config.secretReferences, manifestDigest: manifest.artifact.contentDigest,
+        ...(result.credentialsRef ? { credentialsRef: result.credentialsRef } : {}),
         immutableImage: config.immutableImage, retentionMode: config.retentionMode, releaseAction: result.releaseAction };
       context.log('stdout', `Prepared Kubernetes fixture ${String(result.namespace)} from ${manifest.artifact.contentDigest}.\n`);
       return { schemaVersion: 'provider-result.v1', outcome: 'passed', summary: `Prepared Kubernetes fixture ${String(result.namespace)}.`,
@@ -115,7 +122,7 @@ export function provider() {
           retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };
     },
     async cleanup(invocation, context) {
-      const config = prepared?.config ?? configuration(invocation);
+      const config = configuration(invocation);
       if (config.retentionMode === 'retain') return;
       const names = identity(invocation, config.namespacePrefix);
       await context.invoke('kubernetes.fixture', { operation: 'release',

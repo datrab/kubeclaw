@@ -366,13 +366,20 @@ busterNamespaceBroker:
   leaseApiVersion: v1alpha1
   allowedPrefixes:
     - test
-  # Only these source Secret objects can enter a test deployment.
-  approvedSecretNames: []
   defaultTtlSeconds: 7200
+  maxTtlSeconds: 86400
   controller:
-    # Additional service accounts that receive the same namespaced runner Role
-    # inside broker-created test namespaces. Use "namespace/name" form.
-    additionalRunnerServiceAccounts: []
+    # A lease can bind only these service accounts and access modes. Each lease
+    # must explicitly request its subjects; no agent is added to all namespaces.
+    allowedAccess:
+      # Subjects without a namespace are resolved in the Helm release namespace.
+      - subject: agent-buster
+        modes: [deployer, tester]
+      - subject: agent-nova
+        modes: [deployer]
+    # Only these Secrets can be copied from the release namespace into a test
+    # namespace. Test-login Secrets are created separately and scoped by name.
+    allowedSourceSecrets: []
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
       tag: latest

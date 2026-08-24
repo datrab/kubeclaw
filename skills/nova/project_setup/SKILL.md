@@ -243,13 +243,15 @@ node /app/skills/pipeline.ts --project <project> --nova-channel <id> --resume
 | `a11y`, `perf` | ❌ | ✅ |
 | `visual-reg`, `e2e` | ❌ | ✅ (needs baselines) |
 | `kubeclaw.kubernetes-fixture@1` plan nodes | ✅ (deployment modules) | ❌ |
+| Root `kubeclaw.lint.full` declaration | ✅ (Kubernetes inputs) | ✅ (Kubernetes inputs) |
 
 Without `thresholds` → informational. With `thresholds` → enforced (can FAIL).
 
 ### Provider-based deployment and HTTP checks
 
-Declare migrated build, deployment, and HTTP checks in `.swarm/pipeline.json`.
-Do not put `build`, `k8s`, or `health` in `test_suites`.
+Declare migrated build, static Kubernetes lint, deployment, and HTTP checks in
+`.swarm/pipeline.json`. Do not put `manifest`, `build`, `k8s`, or `health` in
+`test_suites`.
 
 ```json
 "tests": {

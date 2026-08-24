@@ -10,6 +10,7 @@
       "export": "execute",
       "requiredCapabilities": [
         "command.execute",
+        "test.plan.execute",
         "test.suite.execute",
         "runtime.dispatch",
         "artifacts.write"

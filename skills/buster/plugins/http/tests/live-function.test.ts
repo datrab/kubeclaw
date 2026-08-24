@@ -63,6 +63,13 @@ try {
   const linked = await provider().execute(invocation({ endpointName: 'web', path: '/ok' }, 'linked', [deployment]), context());
   assert.equal(linked.outcome, 'passed');
 
+  const publicEndpoint = { name: 'endpoint', kind: 'value', schemaId: 'kubeclaw.public-endpoint-fixture@1',
+    value: { schemaVersion: 'public-endpoint-fixture.v1', provider: 'tailscale-ingress',
+      url: `${origin}/ok`, hostname: 'preview.example.ts.net' } };
+  const publicLinked = await provider().execute(invocation({}, 'public-linked', [publicEndpoint]), context());
+  assert.equal(publicLinked.outcome, 'passed');
+  assert.equal(publicLinked.providerDetails.values.url, `${origin}/ok`);
+
   const timeout = await provider().execute(invocation({ url: origin, path: '/slow', requestTimeoutMs: 25 }, 'timeout'), context());
   assert.equal(timeout.outcome, 'failed');
   assert.equal(timeout.findings[0].rule, 'http.timeout');

@@ -4,7 +4,6 @@ import apiSuite from '../suites/api.ts';
 import e2eSuite from '../suites/e2e.ts';
 import perfSuite from '../suites/perf.ts';
 import securitySuite from '../suites/security.ts';
-import tailscalePreviewSuite from '../suites/tailscale-preview.ts';
 import { runVisualReg } from '../suites/visual-reg.ts';
 import type { SuiteVerdict } from '../services/verdict-schema.ts';
 import { createSuiteRunnerValidationError } from './suite-runner-contracts.ts';
@@ -15,13 +14,12 @@ import { buildDetailedSuiteSummary, collectReadySuites as collectReady, executeS
 
 const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
   a11y: a11ySuite, api: apiSuite, e2e: e2eSuite,
-  perf: perfSuite, security: securitySuite,
-  'tailscale-preview': tailscalePreviewSuite, 'visual-reg': runVisualReg,
+  perf: perfSuite, security: securitySuite, 'visual-reg': runVisualReg,
 }) as unknown as Readonly<Record<string, SuiteFunction>>;
 
-export const EXECUTION_ORDER = ['tailscale-preview', 'a11y', 'perf', 'security', 'visual-reg', 'api', 'e2e'];
+export const EXECUTION_ORDER = ['a11y', 'perf', 'security', 'visual-reg', 'api', 'e2e'];
 export const DEPENDENCIES: Record<string, string[]> = {
-  'tailscale-preview': [], a11y: [], perf: [], security: [], 'visual-reg': [], api: [], e2e: [],
+  a11y: [], perf: [], security: [], 'visual-reg': [], api: [], e2e: [],
 };
 
 export function validateSuiteNames(suites: readonly unknown[]): string[] {

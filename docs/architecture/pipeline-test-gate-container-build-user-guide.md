@@ -178,6 +178,15 @@ The command verifies the provider, parity ledger, old-path deletion, and sole
 authority. A project pipeline still requires an operator BuildKit service and
 registry.
 
+Operators verify the real build boundary with:
+
+```text
+npm run verify:test-gate:container-build-live
+```
+
+The operator guide lists the required BuildKit and registry environment fields.
+The deployed Buster runtime also contains the live gate.
+
 ## Common Corrections
 
 - Keep the context and Dockerfile inside committed source.

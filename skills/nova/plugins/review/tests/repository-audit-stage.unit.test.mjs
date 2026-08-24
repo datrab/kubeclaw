@@ -77,6 +77,8 @@ const cachedContext = (artifacts = [], corruptRead = false, currentAttempt = att
         proposedFindings: [] } };
     }
     if (capability === 'artifacts.write') {
+      assert.equal(request.payload.checkpoint,
+        request.resource.canonicalId.startsWith('repository-review-cache:') ? true : undefined);
       const serialized = canonicalJson(request.payload.value), digest = sha256Text(serialized);
       valuesByDigest.set(digest, request.payload.value);
       return { artifact: { artifactId: request.resource.canonicalId, namespace: request.payload.namespace,

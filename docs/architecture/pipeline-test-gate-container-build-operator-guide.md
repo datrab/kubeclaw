@@ -122,12 +122,36 @@ Complete these checks before you enable the capability:
 5. Confirm that credentials can push and read one test repository.
 6. Confirm that the selected platforms have workers.
 7. Confirm that Buster can write its runtime directory.
-8. Run the contained contract verification.
+8. Run the source and cutover verification.
+9. Run the live BuildKit verification.
 
 Use this repository command for step 8:
 
 ```text
 npm run verify:test-gate:container-build-cutover
+```
+
+Use this repository command for step 9:
+
+```text
+CONTAINER_BUILD_BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
+CONTAINER_BUILD_REGISTRY_REFERENCE=registry-local.kubeclaw.svc.cluster.local:5001 \
+CONTAINER_BUILD_REGISTRY_BASE_URL=http://registry-local.kubeclaw.svc.cluster.local:5001 \
+npm run verify:test-gate:container-build-live
+```
+
+The Buster runtime image contains this live gate. After deployment, run it in
+the runtime container:
+
+```text
+kubectl exec -n kubeclaw deployment/agent-buster -c buster-v2-runtime -- \
+  npm --prefix /app run verify:test-gate:container-build-live
+```
+
+Then run the deployed Nova-to-Buster preflight:
+
+```text
+./scripts/deploy.sh nova-buildkit-preflight
 ```
 
 ## Start and Stop
@@ -150,9 +174,8 @@ Run one committed test project that builds a small image. Verify these facts:
 - A dependent node uses the digest reference.
 - No legacy `build` suite executes.
 
-The contained Nova pod has no BuildKit daemon. Its contract emulator exercises
-the provider, capability checks, registry HTTP verification, result contract,
-and gate route. It does not prove host BuildKit setup.
+The live command does not use a BuildKit substitute. It builds and pushes a
+real image. It also verifies the registry manifest and Nova result import.
 
 ## Monitoring and Evidence
 
@@ -195,12 +218,10 @@ version when its Dockerfile or base-image identity changes.
 Do not restore the deleted legacy build suite. Roll back the platform service,
 provider version, or project declaration instead.
 
-## Final External Proof
+## Production Proof
 
-The migration program defers the final external platform proof until every old
-suite has one authority path. That proof must use the selected BuildKit daemon,
-registry, credentials, service manager, recovery procedure, and rollback
-procedure. It must not use the contained emulator.
+The production proof uses the selected BuildKit daemon and registry. It checks
+failure retries, cancellation, timeout, stored results, and restart recovery.
 
 ## Operator Checklist
 

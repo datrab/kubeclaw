@@ -82,6 +82,11 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
     ['kubernetes.fixture'],
     ['allowedNamespacePrefixes', 'allowedWorkspaceRoots'],
   ),
+  'kubernetes.exposure': definition(
+    ['prepare', 'release'],
+    ['kubernetes.exposure'],
+    ['allowedNamespacePrefixes'],
+  ),
   'lint.execute': definition(
     ['run_report'],
     ['lint.project'],
@@ -91,6 +96,11 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
     ['run'],
     ['test.suite-plan'],
     ['allowedSuites', 'allowedRoots'],
+  ),
+  'test.plan.execute': definition(
+    ['run'],
+    ['test.resolved-plan'],
+    ['allowedRoots'],
   ),
   'transport.publish': definition(['publish'], ['transport.target'], ['allowedTargets']),
   'agent.events.subscribe': definition(['status'], ['agent.events'], ['allowedSources']),

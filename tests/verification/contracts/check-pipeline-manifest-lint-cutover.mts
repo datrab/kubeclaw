@@ -56,5 +56,26 @@ assert.deepEqual(lintPolicy.experimental_tools, []);
 assert.equal(lintPolicy.projects.some((project: any) => project.kubernetes?.raw_manifests?.length > 0), true);
 assert.equal(lintPolicy.projects.some((project: any) => project.kubernetes?.policy_packs?.length > 0), true);
 
+const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+assert.match(scaffold, /function lintDeclaration\(/u);
+assert.match(scaffold, /delete config\.manifest/u);
+assert.match(scaffold, /LEGACY_MANIFEST_DEPLOYMENT_MISSING/u);
+const scaffoldProof = fs.readFileSync('tests/skills/nova/project_setup/progress-scaffold.test.mjs', 'utf8');
+assert.match(scaffoldProof, /migrates the legacy manifest suite into Nova lint inputs/u);
+assert.match(scaffoldProof, /rejects a legacy manifest selection without an explicit deployment input/u);
+
+const workspaceGenerator = fs.readFileSync('tests/verification/e2e/real-run-workspace.mjs', 'utf8');
+assert.match(workspaceGenerator, /uses: 'kubeclaw\.lint\.full'/u);
+const productionRunner = fs.readFileSync('tests/verification/e2e/run-v2-production-pipeline.mts', 'utf8');
+assert.match(productionRunner, /loadPipelineLintDeclaration/u);
+assert.match(productionRunner, /id: 'manifest-lint'/u);
+assert.match(productionRunner, /type: 'kubeclaw\.lint\.full'/u);
+assert.match(productionRunner, /id: 'operator-approval'[\s\S]*dependsOn: \['manifest-lint'\]/u);
+assert.match(productionRunner, /writeRunLintPolicy/u);
+
+const activeSetupGuide = fs.readFileSync('skills/nova/project_setup/progress-json.md', 'utf8');
+assert.doesNotMatch(activeSetupGuide, /`deployment_yaml`|`secret_yaml`|`test_config\.manifest`/u);
+
 console.log(JSON.stringify({ ok: true, cutover: 'manifest-to-lint', parityItems: 28,
-  legacyAuthority: 'absent', replacementAuthority: 'nova-lint' }));
+  legacyAuthority: 'absent', replacementAuthority: 'nova-lint',
+  projectScaffolding: 'explicit', productionStage: 'authoritative' }));

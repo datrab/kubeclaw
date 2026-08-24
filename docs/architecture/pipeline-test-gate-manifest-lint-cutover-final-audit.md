@@ -2,11 +2,18 @@
 
 Status: complete
 
+Audience: maintainers and operators
+
+Purpose: Record the final Suite 2 migration result and its proof.
+
 ## Result
 
 Nova lint is the only static Kubernetes validation authority. The old Buster
 `manifest` runner and parser are deleted. The legacy bridge and protocol reject
 manifest work. All 28 parity items remain proved.
+
+Project setup now writes the exact Kubernetes inputs into `.swarm/pipeline.json`.
+The production pipeline reads this declaration and runs Nova lint before operator approval.
 
 ## Sole path
 
@@ -39,6 +46,9 @@ declared raw YAML and Helm charts
 
 - Machine cutover inventory and executable absence checks.
 - All 28 parity items.
+- Project setup migration with exact input preservation and fail-closed errors.
+- The real production stage order and its root pipeline declaration.
+- The production policy builder with the real nginx deployment fixture.
 - Real raw YAML, Helm, kubeconform, policy-pack, artifact-store, and Nova
   PipelineRunner execution.
 - Passing input succeeds; policy and YAML failures block.
@@ -60,6 +70,12 @@ declared raw YAML and Helm charts
 - A Git cleanup test coupled its Git assertion to an unavailable Kubernetes
   cleanup service. It now requires every relevant Git and artifact cleanup
   step without hiding Kubernetes cleanup failures in their own proof.
+- The canonical policy could call a missing adapter detector. The registry now
+  supplies a safe default detector and tests every configured adapter.
+- Project setup removed `manifest` without creating a lint replacement. It now
+  migrates exact manifest paths or stops when the deployment path is absent.
+- The production pipeline had no manifest lint stage. It now runs the Nova lint
+  stage after merged review and before operator approval.
 
 ## Verification
 
@@ -67,6 +83,13 @@ The focused cutover gate passed. It includes the 28-item parity ledger, sole
 Nova PipelineRunner path, real YAML, Helm, kubeconform, local schemas,
 digest-verified policy packs, bounded evidence, the complete unit migration
 regression, legacy bridge checks, and remaining Buster suite tests.
+
+The vertical proof loads the project lint declaration. It runs the real Nova
+plugin, Helm, kubeconform, policy engine, and artifact store. It does not use a
+mock tool or a fake success result.
+
+The production proof builds the exact runtime policy. It runs yamllint, the
+policy engine, and kubeconform against the real nginx deployment fixture.
 
 The complete repository contract gate passed after the pod restored locked
 development packages from `package-lock.json`. It includes all 119 architecture
@@ -78,11 +101,10 @@ The production dependency audit reported zero vulnerabilities.
 
 ## Terra review
 
-The first `gpt-5.6-terra` high-reasoning review found one valid P1 regression:
-generic Helm projects without a Kubernetes configuration could fail during
-tool detection. The finding was accepted and fixed with regression proof. No
-finding was rejected. The second review was clean and classified the patch as
-correct.
+The final review used `/app/node_modules/.bin/codex`, `gpt-5.6-terra`, and high
+reasoning. TruffleHog found no credential. The review accepted no finding and
+reported no actionable defect. It classified the patch as correct with 0.93
+confidence.
 
 ## Closeout
 

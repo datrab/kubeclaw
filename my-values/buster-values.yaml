@@ -67,9 +67,12 @@ serviceAccount:
 
 service:
   extraPorts:
-    - name: buster-v2
+    - name: buster-plan
       port: 18891
-      targetPort: buster-v2
+      targetPort: buster-plan
+    - name: buster-legacy
+      port: 18892
+      targetPort: buster-legacy
 
 extraContainers:
   - name: buster-v2-runtime
@@ -81,45 +84,70 @@ extraContainers:
           secretKeyRef:
             name: openclaw-shared-secrets
             key: busterV2Token
-      - name: BUSTER_V2_PORT
+      - name: BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            name: pipeline-test-gate-source-attestation
+            key: publicKey
+      - name: BUSTER_PLAN_PORT
         value: "18891"
-      - name: BUSTER_V2_STATE_DIR
-        value: /var/lib/buster-v2/jobs
-      - name: BUSTER_V2_RUN_DIR
-        value: /tmp/buster-v2-runs
+      - name: BUSTER_LEGACY_PORT
+        value: "18892"
+      - name: BUSTER_PLAN_STATE_DIR
+        value: /var/lib/buster-v2/plan-jobs
+      - name: BUSTER_PLAN_RUN_DIR
+        value: /tmp/buster-plan-runs
+      - name: BUSTER_LEGACY_STATE_DIR
+        value: /var/lib/buster-v2/legacy-jobs
+      - name: BUSTER_LEGACY_RUN_DIR
+        value: /tmp/buster-legacy-runs
       - name: BUSTER_V2_MAX_ARCHIVE_BYTES
         value: "67108864"
       - name: BUSTER_V2_MAX_EXTRACTED_BYTES
         value: "536870912"
       - name: BUSTER_V2_RESULT_ROOT
         value: /workspace/git-repo/.swarm/runtime-results
+      - name: BUSTER_DIRECT_COMMAND_CGROUP_ROOT
+        value: /var/run/kubeclaw-command-cgroup
       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
         value: /var/run/buster-worker/kubernetes
       - name: KUBECLAW_LOCAL_REGISTRY
         value: registry-local.kubeclaw.svc.cluster.local:5001
+      - name: CONTAINER_BUILD_BUILDKIT_HOST
+        value: unix:///run/user/1000/buildkit/buildkitd.sock
+      - name: CONTAINER_BUILD_REGISTRY_REFERENCE
+        value: registry-local.kubeclaw.svc.cluster.local:5001
+      - name: CONTAINER_BUILD_REGISTRY_BASE_URL
+        value: http://registry-local.kubeclaw.svc.cluster.local:5001
     ports:
-      - name: buster-v2
+      - name: buster-plan
         containerPort: 18891
+        protocol: TCP
+      - name: buster-legacy
+        containerPort: 18892
         protocol: TCP
     startupProbe:
       httpGet:
+        scheme: HTTPS
         path: /healthz
-        port: buster-v2
+        port: buster-plan
       periodSeconds: 2
       timeoutSeconds: 2
       failureThreshold: 60
     readinessProbe:
       httpGet:
+        scheme: HTTPS
         path: /healthz
-        port: buster-v2
+        port: buster-plan
       initialDelaySeconds: 5
       periodSeconds: 5
       timeoutSeconds: 2
       failureThreshold: 6
     livenessProbe:
       httpGet:
+        scheme: HTTPS
         path: /healthz
-        port: buster-v2
+        port: buster-plan
       initialDelaySeconds: 30
       periodSeconds: 15
       timeoutSeconds: 2
@@ -132,6 +160,11 @@ extraContainers:
       - name: buster-api-token
         mountPath: /var/run/buster-worker/kubernetes
         readOnly: true
+      - name: buster-plan-tls
+        mountPath: /var/run/buster-plan-tls
+        readOnly: true
+      - name: buster-command-cgroup
+        mountPath: /var/run/kubeclaw-command-cgroup
     resources:
       requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
       limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
@@ -178,12 +211,34 @@ extraVolumes:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
+  - name: buster-plan-tls
+    secret:
+      secretName: pipeline-test-gate-source-attestation
+      defaultMode: 288
+      items:
+        - key: tls.key
+          path: tls.key
+        - key: tls.crt
+          path: tls.crt
+  - name: buster-command-cgroup
+    hostPath:
+      # This is one dedicated subtree. Never mount /sys/fs/cgroup into Buster.
+      path: /sys/fs/cgroup/kubeclaw-buster
+      type: DirectoryOrCreate
 
 busterNamespaceBroker:
   enabled: true
   controller:
-    additionalRunnerServiceAccounts:
-      - "kubeclaw/agent-nova"
+    allowedAccess:
+      - subject: kubeclaw/agent-nova
+        modes: [deployer]
+      - subject: kubeclaw/agent-buster
+        modes: [deployer, tester]
+    allowedSourceSecrets:
+      # Test-only values. Never copy production Prism credentials to a fixture.
+      - prism-test-provider
+      - prism-test-runtime
+      - prism-test-postgresql-auth
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
       tag: "latest"

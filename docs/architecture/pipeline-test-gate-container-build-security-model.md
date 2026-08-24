@@ -75,13 +75,8 @@ runtime accesses only the configured registry endpoint for verification.
 Cancellation aborts the BuildKit client request. The capability removes
 temporary metadata and credential files in a final cleanup step.
 
-## Contained Proof Boundary
+## Production Proof Boundary
 
-The Nova pod has `buildctl` but no BuildKit daemon. The contained proof uses a
-contract emulator for that unavailable daemon boundary.
-
-The proof uses the real provider, capability validation, registry HTTP path,
-digest verification, result contract, and gate route. It does not prove the
-selected host daemon, worker limits, service manager, or registry deployment.
-
-The final external proof must use the selected BuildKit and registry services.
+The source gate does not pretend to run BuildKit. The live gate uses the real
+BuildKit daemon and the selected registry. It verifies the pushed manifest by
+digest. No mock, fake registry, or BuildKit emulator supplies acceptance proof.

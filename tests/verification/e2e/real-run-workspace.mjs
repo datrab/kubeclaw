@@ -295,12 +295,12 @@ function buildPreviewInfrastructureContract({ projectName }) {
     gate_id: 'final-buster',
     authority: {
       owner: 'final-buster',
-      executor: 'buster-k8s-suite',
+      executor: 'buster-provider-plan',
       rule: 'Preview infrastructure is run-scoped gate-owned orchestration and must not be modeled as reusable module source.',
     },
     app_owned_resources: ['Deployment', 'Service', 'Secret'],
     gate_owned_resources: ['BusterNamespaceLease', 'tailscale-ingress-exposure', 'preview-url', 'cleanup-policy'],
-    source_config_ref: 'gates.final-buster.test_config.tailscale_preview',
+    source_config_ref: 'pipeline.gates.final-buster.fixtures.tailscale-exposure',
     static_module_preview_resources: 'forbidden',
   };
 }
@@ -756,7 +756,7 @@ function buildModuleProgress({ moduleId, moduleIds, projectSrc, releaseCandidate
     max_fails: REAL_E2E_MODULE_MAX_FAILS,
     auto_retry_threshold: REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD,
     thinking_level: thinking,
-    test_suites: ['build'],
+    test_suites: [],
     capabilities: ['image_build', 'kubernetes'],
     agent_judgment: agentJudgment,
     contracts: {
@@ -771,18 +771,6 @@ function buildModuleProgress({ moduleId, moduleIds, projectSrc, releaseCandidate
   };
 }
 
-function staticServingSmokeConfig(contracts) {
-  const staticServing = contracts?.runtime_config?.static_serving || {};
-  const surfaces = Array.isArray(staticServing.surfaces) ? staticServing.surfaces : [];
-  const smokePaths = surfaces
-    .map((surface) => surface?.served_as)
-    .filter((servedAs) => typeof servedAs === 'string' && servedAs.startsWith('/'));
-  const smokeExpectedText = Object.fromEntries(surfaces
-    .filter((surface) => typeof surface?.served_as === 'string' && surface.served_as.startsWith('/') && typeof surface?.expected_marker === 'string')
-    .map((surface) => [surface.served_as, surface.expected_marker]));
-  return { smokePaths, smokeExpectedText };
-}
-
 export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SEED_MODULE_IDS } = {}) {
   const model = e2eModel();
   const thinking = e2eThinking();
@@ -794,7 +782,6 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
   const releaseCandidateImage = realE2EDeploymentImage();
   const progressModuleIds = canonicalModuleIds(moduleIds);
   const contracts = buildRealE2EContractCatalog({ projectName, projectSrc, releaseCandidateImage, moduleIds: progressModuleIds });
-  const staticSmoke = staticServingSmokeConfig(contracts);
   const modules = Object.fromEntries(progressModuleIds.map((moduleId) => [
     moduleId,
     buildModuleProgress({
@@ -935,12 +922,6 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
             port: 8080,
           },
           security: { paths: ['/'], thresholds: { max_missing_headers: 0 } },
-          tailscale_preview: {
-            source_suite: 'explicit',
-            expected_text: 'REAL_E2E_NGINX_OK',
-            smoke_paths: staticSmoke.smokePaths,
-            smoke_expected_text: staticSmoke.smokeExpectedText,
-          },
         },
       },
       'final-review': {
@@ -981,6 +962,11 @@ function instructionFiles(progress) {
     : 'module Buster';
   const deploymentInput = { deployment: { from: 'kubernetes-deployment', output: 'deployment',
     schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } };
+  const publicEndpointInput = { endpoint: { from: 'tailscale-exposure', output: 'exposure',
+    schemaId: 'kubeclaw.public-endpoint-fixture@1' } };
+  const publicHttpOverride = progress.real_e2e?.public_http_url_override;
+  const publicHttpInput = publicHttpOverride ? undefined : publicEndpointInput;
+  const publicExpectedText = progress.real_e2e?.public_http_expected_text ?? 'REAL_E2E_NGINX_OK';
   const fixtureConfig = progress.real_e2e?.kubernetes_fixture ?? {};
   const sizeBudgetTests = (scopeId) => {
     const archive = `.swarm/size-budget-${safeRunIdSegment(scopeId)}.tar`;
@@ -1000,6 +986,12 @@ function instructionFiles(progress) {
   };
   const unitPipeline = {
     project: progress.project,
+    lint: {
+      uses: 'kubeclaw.lint.full',
+      policyProject: 'workspace',
+      rawManifests: [`${projectSrc}/k8s/deployment.yaml`],
+      helmCharts: [],
+    },
     modules: Object.fromEntries(moduleIds.map((moduleId) => [moduleId, {
       suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
         command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
@@ -1024,6 +1016,12 @@ function instructionFiles(progress) {
         } } },
         tests: {
           ...sizeBudgetTests('final-buster'),
+          'container-build': { uses: 'kubeclaw.container-build@1', mode: 'blocking', retries: 1,
+            needs: ['size-budget'], concurrencyGroup: 'container-build', config: {
+              buildContext: projectSrc,
+              definition: { type: 'dockerfile', dockerfile: `${projectSrc}/Dockerfile` },
+              outputName: 'real-pipeline-e2e', platform: 'linux/amd64',
+            } },
           'checked-manifest': { uses: 'kubeclaw.direct-command@1', mode: 'blocking',
             concurrencyGroup: 'manifest', config: { executable: 'cp',
               args: [`${projectSrc}/k8s/deployment.yaml`, `${projectSrc}/.swarm/checked-final-buster.yaml`],
@@ -1033,9 +1031,15 @@ function instructionFiles(progress) {
           health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['size-budget'], concurrencyGroup: 'http', config: { path: '/', expectedStatuses: [200],
               expectedText: 'REAL_E2E_NGINX_OK', requestTimeoutMs: 10000 }, inputs: deploymentInput },
+          'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
+            needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
+              ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
+              expectedText: publicExpectedText, requestTimeoutMs: progress.real_e2e?.public_http_timeout_ms ?? 10000 },
+            ...(publicHttpInput ? { inputs: publicHttpInput } : {}) },
         },
         fixtures: {
-          'kubernetes-deployment': { uses: 'kubeclaw.kubernetes-fixture@1', retries: 0, needs: ['size-budget'],
+          'kubernetes-deployment': { uses: 'kubeclaw.kubernetes-fixture@1', retries: 0,
+            needs: ['size-budget', 'container-build'],
             concurrencyGroup: 'kubernetes-fixture', config: { image: fixtureConfig.image,
               serviceName: 'real-pipeline-e2e-nginx',
               servicePort: 80, namespacePrefix: fixtureConfig.namespace_prefix ?? 'test',
@@ -1045,9 +1049,14 @@ function instructionFiles(progress) {
               secretReferences: fixtureConfig.secret_references ?? [] }, inputs: {
               'checked-manifest': { from: 'checked-manifest', output: 'artifact-1',
                 mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' },
+              image: { from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1' },
             } },
+          'tailscale-exposure': { uses: 'kubeclaw.tailscale-exposure@1', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'tailscale-exposure',
+            config: { path: '/', readinessTimeoutSeconds: 180 }, inputs: { deployment: deploymentInput.deployment } },
         },
-        concurrencyLimits: { unit: 1, 'size-budget': 1, manifest: 1, 'kubernetes-fixture': 1, http: 1 },
+        concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
+          manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1 },
       },
     },
   };
@@ -1069,7 +1078,7 @@ function instructionFiles(progress) {
       '',
       'The nginx module manifest stays reusable with only Deployment, Service, and app-owned Secret resources; it must not hardcode run-scoped BusterNamespaceLease or Ingress objects.',
       'This fixture currently requires no app-owned Secret, so `.swarm/contracts/runtime-config.json` declares `secrets: []` and `credentials.requires_login: false`; that empty contract is the authority, not an implicit omission.',
-      'The preview infrastructure boundary is explicit in `.swarm/contracts/preview-infrastructure.json`. The separate preview suite consumes an explicit URL.',
+      'The preview infrastructure boundary is explicit in `.swarm/contracts/preview-infrastructure.json`. The exposure fixture returns the public URL to the HTTP provider.',
       'The Kubernetes fixture waits for pod and Service readiness. The HTTP provider validates app content through the internal Service URL.',
       `The ${deployableHandoff} owns immutable image verification and the deployable artifact contract. Final Buster deploys that exact image and records its digest.`,
       '',

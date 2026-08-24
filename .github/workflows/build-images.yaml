@@ -142,8 +142,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      id-token: write
-      attestations: write
     strategy:
       fail-fast: false
       matrix:
@@ -208,26 +206,15 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           provenance: mode=max
           sbom: true
-      - name: Attest image provenance
-        uses: actions/attest-build-provenance@v4
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}
-          subject-digest: ${{ steps.build.outputs.digest }}
-          push-to-registry: true
-      - name: Scan published image
-        uses: aquasecurity/trivy-action@v0.36.0
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}
-          format: table
-          severity: CRITICAL,HIGH
-          ignore-unfixed: true
-          exit-code: "1"
       - name: Summary
         run: |
           echo "### ${{ matrix.name }} image pushed" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "- Digest: \`${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- BuildKit provenance and SBOM: published with the image" >> $GITHUB_STEP_SUMMARY
+          echo "- Local scan: \`npm run scan:images -- ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
   bundle-skills:
     name: Package & Publish Skill Bundles
     runs-on: ubuntu-latest

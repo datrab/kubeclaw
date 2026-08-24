@@ -35,6 +35,7 @@
         "kubeclaw.direct-command",
         "kubeclaw.junit-report",
         "kubeclaw.kubernetes-fixture",
+        "kubeclaw.tailscale-exposure",
         "kubeclaw.http",
         "kubeclaw.size-budget",
         "kubeclaw.test-agent"
@@ -47,6 +48,11 @@
           "id": "git.repository.read",
           "source": "worker-workspace",
           "reason": "Buster receives a read-only repository snapshot for its attempt."
+        },
+        {
+          "id": "test.plan.execute",
+          "source": "nova-orchestrator",
+          "reason": "Nova signs and submits the immutable provider plan before Buster judges its evidence."
         }
       ]
     },
@@ -93,6 +99,7 @@
         "kubeclaw.preflight-contract",
         "kubeclaw.prism-design",
         "kubeclaw.project-summary",
+        "kubeclaw.remote-test-gate",
         "kubeclaw.repository-adapter",
         "kubeclaw.review"
       ],
@@ -619,6 +626,12 @@
               "kind": "value",
               "required": false,
               "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
             }
           ],
           "outputs": [],
@@ -810,6 +823,62 @@
       ]
     },
     {
+      "id": "kubeclaw.tailscale-exposure",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.tailscale-exposure",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "exposure",
+          "contractId": "kubeclaw.tailscale-exposure@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "exposure",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "requiredCapabilities": [
+            "kubernetes.exposure"
+          ],
+          "retrySafe": false,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "kubeclaw.test-agent",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -826,6 +895,7 @@
           "export": "execute",
           "requiredCapabilities": [
             "command.execute",
+            "test.plan.execute",
             "test.suite.execute",
             "runtime.dispatch",
             "artifacts.write"
@@ -1518,6 +1588,7 @@
           "module": "src/stage.ts",
           "export": "execute",
           "requiredCapabilities": [
+            "test.plan.execute",
             "test.suite.execute",
             "runtime.dispatch",
             "artifacts.write"
@@ -1752,20 +1823,6 @@
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
           "kind": "stage"
-        },
-        {
-          "id": "buildkit",
-          "type": "kubeclaw.validate.buildkit-preflight",
-          "module": "src/buildkit.ts",
-          "export": "execute",
-          "requiredCapabilities": [
-            "test.suite.execute",
-            "network.http"
-          ],
-          "configSchema": "schemas/buildkit-config.schema.json",
-          "inputSchema": "schemas/buildkit-input.schema.json",
-          "resultSchema": "schemas/result.schema.json",
-          "kind": "stage"
         }
       ]
     },
@@ -1820,6 +1877,31 @@
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
           "kind": "stage"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.remote-test-gate",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.remote-test-gate",
+      "bundledBy": [
+        "nova"
+      ],
+      "registrations": [
+        {
+          "id": "plan",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "providesCapabilities": [
+            "test.plan.execute"
+          ],
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "kind": "adapter"
         }
       ]
     },
@@ -1892,10 +1974,10 @@
     }
   ],
   "registrationCounts": {
-    "stage": 18,
+    "stage": 17,
     "observer": 6,
-    "adapter": 18,
-    "test provider": 6,
+    "adapter": 19,
+    "test provider": 7,
     "report adapter": 1
   },
   "capabilityIds": [
@@ -1918,8 +2000,10 @@
     "command.execute",
     "container.build",
     "kubernetes.fixture",
+    "kubernetes.exposure",
     "lint.execute",
     "test.suite.execute",
+    "test.plan.execute",
     "transport.publish",
     "agent.events.subscribe"
   ],

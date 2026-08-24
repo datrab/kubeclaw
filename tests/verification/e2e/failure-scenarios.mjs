@@ -121,19 +121,19 @@ const SCENARIOS = Object.freeze({
     approvalDecision: 'approve',
     expectedEvidence: 'namespace_lease_denied',
   }),
-  'tailscale-preview-url-unreachable': Object.freeze({
-    id: 'tailscale-preview-url-unreachable',
+  'tailscale-exposure-url-unreachable': Object.freeze({
+    id: 'tailscale-exposure-url-unreachable',
     description: 'Real Tailscale preview URL is created but the served path is not reachable.',
     expectedPipelineExit: 'nonzero',
     approvalDecision: 'approve',
-    expectedEvidence: 'tailscale_preview_url_unreachable',
+    expectedEvidence: 'tailscale_exposure_url_unreachable',
   }),
-  'tailscale-preview-wrong-deployment': Object.freeze({
-    id: 'tailscale-preview-wrong-deployment',
+  'tailscale-exposure-wrong-content': Object.freeze({
+    id: 'tailscale-exposure-wrong-content',
     description: 'Real Tailscale preview URL serves content that does not match the run-scoped nginx deployment marker.',
     expectedPipelineExit: 'nonzero',
     approvalDecision: 'approve',
-    expectedEvidence: 'tailscale_preview_wrong_deployment',
+    expectedEvidence: 'tailscale_exposure_wrong_content',
   }),
   'pipeline-summary-failure': Object.freeze({
     id: 'pipeline-summary-failure',
@@ -386,8 +386,8 @@ const FAILURE_MATRIX_SUITES = Object.freeze({
       'k8s-pod-never-ready',
       'k8s-context-invalid',
       'registry-pull-failure',
-      'tailscale-preview-url-unreachable',
-      'tailscale-preview-wrong-deployment',
+      'tailscale-exposure-url-unreachable',
+      'tailscale-exposure-wrong-content',
     ]),
   }),
   'git-authority': Object.freeze({
@@ -543,8 +543,8 @@ const SCENARIO_REQUIRED_HOOKS = Object.freeze({
   'buster-gate-failure': 'pre-final-buster',
   'k8s-pod-never-ready': 'pre-forge',
   'namespace-lease-denied': 'pre-final-buster',
-  'tailscale-preview-url-unreachable': 'pre-final-buster',
-  'tailscale-preview-wrong-deployment': 'pre-final-buster',
+  'tailscale-exposure-url-unreachable': 'pre-final-buster',
+  'tailscale-exposure-wrong-content': 'pre-final-buster',
   'k8s-context-invalid': 'pre-final-buster',
   'registry-pull-failure': 'pre-final-buster',
 
@@ -645,8 +645,8 @@ const PROGRESS_MUTATION_SCENARIOS = Object.freeze(new Set([
   'buster-gate-failure',
   'k8s-pod-never-ready',
   'namespace-lease-denied',
-  'tailscale-preview-url-unreachable',
-  'tailscale-preview-wrong-deployment',
+  'tailscale-exposure-url-unreachable',
+  'tailscale-exposure-wrong-content',
   'redis-unavailable',
   'k8s-context-invalid',
   'registry-pull-failure',
@@ -871,20 +871,15 @@ const SETUP_CONTRACTS = Object.freeze({
       'real_e2e.kubernetes_fixture.namespace_prefix': 'prod',
     }),
   }),
-  'tailscale-preview-url-unreachable': Object.freeze({
+  'tailscale-exposure-url-unreachable': Object.freeze({
     progress: Object.freeze({
-      'gates.final-buster.test_config.tailscale_preview.source_suite': 'explicit',
-      'gates.final-buster.test_config.tailscale_preview.preview_url': 'http://127.0.0.1:1',
-      'gates.final-buster.test_config.tailscale_preview.expected_text': 'REAL_E2E_NGINX_OK',
-      'gates.final-buster.test_config.tailscale_preview.connect_timeout_seconds': 1,
-      'gates.final-buster.test_config.tailscale_preview.max_time_seconds': 1,
+      'real_e2e.public_http_url_override': 'http://127.0.0.1:1',
+      'real_e2e.public_http_timeout_ms': 1000,
     }),
   }),
-  'tailscale-preview-wrong-deployment': Object.freeze({
+  'tailscale-exposure-wrong-content': Object.freeze({
     progress: Object.freeze({
-      'gates.final-buster.test_config.tailscale_preview.preview_url': process.env.REAL_E2E_PREVIEW_URL || 'REAL_E2E_PREVIEW_URL_REQUIRED',
-      'gates.final-buster.test_config.tailscale_preview.expected_text': 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER',
-      'gates.final-buster.test_config.tailscale_preview.source_suite': 'explicit',
+      'real_e2e.public_http_expected_text': 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER',
     }),
   }),
   'k8s-pod-never-ready': Object.freeze({
@@ -1317,25 +1312,13 @@ export function applyRealE2EScenario(progress, scenarioId) {
     next.real_e2e.kubernetes_fixture.namespace_prefix = 'prod';
   }
 
-  if (scenario.id === 'tailscale-preview-url-unreachable') {
-    const gate = finalBusterGate(next);
-    gate.test_suites = [...new Set([...(gate.test_suites || []), 'tailscale-preview'])];
-    gate.test_config.tailscale_preview = {
-      ...gate.test_config.tailscale_preview,
-      source_suite: 'explicit',
-      preview_url: 'http://127.0.0.1:1',
-      expected_text: 'REAL_E2E_NGINX_OK',
-      connect_timeout_seconds: 1,
-      max_time_seconds: 1,
-    };
+  if (scenario.id === 'tailscale-exposure-url-unreachable') {
+    next.real_e2e.public_http_url_override = 'http://127.0.0.1:1';
+    next.real_e2e.public_http_timeout_ms = 1000;
   }
 
-  if (scenario.id === 'tailscale-preview-wrong-deployment') {
-    const gate = finalBusterGate(next);
-    gate.test_suites = [...new Set([...(gate.test_suites || []), 'tailscale-preview'])];
-    gate.test_config.tailscale_preview.source_suite = 'explicit';
-    gate.test_config.tailscale_preview.preview_url = process.env.REAL_E2E_PREVIEW_URL || 'REAL_E2E_PREVIEW_URL_REQUIRED';
-    gate.test_config.tailscale_preview.expected_text = 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER';
+  if (scenario.id === 'tailscale-exposure-wrong-content') {
+    next.real_e2e.public_http_expected_text = 'REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER';
   }
 
   if (scenario.id === 'redis-unavailable') {

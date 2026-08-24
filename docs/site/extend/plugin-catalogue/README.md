@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 40 packages.
+The catalogue contains 42 packages.
 
 ## Stage Packages
 
@@ -47,6 +47,7 @@ The catalogue contains 40 packages.
 - [kubeclaw.openclaw-agent-events](kubeclaw.openclaw-agent-events.md)
 - [kubeclaw.operator-messaging](kubeclaw.operator-messaging.md)
 - [kubeclaw.redis-transport](kubeclaw.redis-transport.md)
+- [kubeclaw.remote-test-gate](kubeclaw.remote-test-gate.md)
 - [kubeclaw.repository-adapter](kubeclaw.repository-adapter.md)
 - [kubeclaw.runtime-dispatch](kubeclaw.runtime-dispatch.md)
 - [kubeclaw.secret-resolver](kubeclaw.secret-resolver.md)
@@ -63,6 +64,7 @@ The catalogue contains 40 packages.
 - [kubeclaw.http](kubeclaw.http.md)
 - [kubeclaw.kubernetes-fixture](kubeclaw.kubernetes-fixture.md)
 - [kubeclaw.size-budget](kubeclaw.size-budget.md)
+- [kubeclaw.tailscale-exposure](kubeclaw.tailscale-exposure.md)
 
 ## Report adapter Packages
 

@@ -4,12 +4,21 @@ import { execFileSync } from 'node:child_process';
 
 const baseline = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-container-build-baseline.json', 'utf8'));
 const ledger = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-container-build-parity-ledger.json', 'utf8'));
-assert.equal(ledger.authority.legacy, 'authoritative');
-assert.equal(ledger.authority.replacement, 'shadow-only');
+assert.equal(ledger.authority.legacy, 'removed');
+assert.equal(ledger.authority.replacement, 'authoritative');
+assert.deepEqual(ledger.productionAcceptance, {
+  status: 'pending-deployment',
+  reason: 'The deployed Buster image does not contain the plan runtime or current container-build provider.',
+  requiredCommand: 'npm run verify:test-gate:container-build-live',
+  requiredPreflight: 'node tests/verification/e2e/nova-buildkit-production-preflight.mts',
+});
 assert.equal(ledger.items.length, 36);
 assert.deepEqual(new Set(ledger.items.map((item: any) => item.id)), new Set(baseline.items.map((item: any) => item.id)));
 const allowedDispositions = new Set(['preserved', 'improved', 'removed-defect']);
 assert.equal(ledger.items.every((item: any) => allowedDispositions.has(item.disposition)), true);
+assert.equal(ledger.items.every((item: any) => item.status === 'proved'
+  && Array.isArray(item.proof) && item.proof.length > 0
+  && item.proof.every((file: string) => fs.existsSync(file))), true);
 assert.equal(new Set(ledger.items.map((item: any) => item.id)).size, 36);
 const baselineById = new Map(baseline.items.map((item: any) => [item.id, item]));
 for (const item of ledger.items) {
@@ -35,4 +44,6 @@ if (fs.existsSync(legacyPath)) {
   assert.equal(bridge.suites.build.state, 'unmigrated');
 } else assert.equal(bridge.suites.build.state, 'migrated');
 assert.equal(bridge.suites.build.successor, 'kubeclaw.container-build@1');
-console.log(JSON.stringify({ ok: true, phase: 'container-build-parity', items: 36, authority: bridge.suites.build.state, differencesExplained: true }));
+console.log(JSON.stringify({ ok: true, phase: 'container-build-parity', items: 36,
+  authority: `source-${bridge.suites.build.state}`, productionAcceptance: 'pending-deployment',
+  differencesExplained: true }));

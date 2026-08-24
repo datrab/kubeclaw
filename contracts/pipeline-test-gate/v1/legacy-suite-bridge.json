@@ -5,7 +5,7 @@
     "build": { "state": "migrated", "successor": "kubeclaw.container-build@1" },
     "health": { "state": "migrated", "successor": "kubeclaw.http@1" },
     "k8s": { "state": "migrated", "successor": "kubeclaw.kubernetes-fixture@1" },
-    "tailscale-preview": { "state": "unmigrated", "successor": "kubeclaw.tailscale-exposure@1" },
+    "tailscale-preview": { "state": "migrated", "successor": "kubeclaw.tailscale-exposure@1" },
     "a11y": { "state": "unmigrated", "successor": "kubeclaw.axe@1" },
     "perf": { "state": "unmigrated", "successor": "kubeclaw.lighthouse@1" },
     "bundle": { "state": "migrated", "successor": "kubeclaw.size-budget@1" },

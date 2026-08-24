@@ -977,12 +977,12 @@ export function diagnoseExpectedFailureOutput({ scenario, pipelineOutput }) {
     const matched = /namespace_prefix|namespacePrefix|Invalid k8s namespace_prefix|expected one of|denied|forbidden/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_NAMESPACE_LEASE_DENIED');
   }
-  if (scenario.id === 'tailscale-preview-url-unreachable') {
-    const matched = /tailscale-preview|dns-resolve|Preview URL|preview-health-check|HTTP|404|unreachable|real-e2e-unreachable/i.test(combined);
+  if (scenario.id === 'tailscale-exposure-url-unreachable') {
+    const matched = /tailscale-exposure|public-http-health|HTTP|404|unreachable|real-e2e-unreachable/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_PREVIEW_URL_UNREACHABLE');
   }
-  if (scenario.id === 'tailscale-preview-wrong-deployment') {
-    const matched = /tailscale-preview|Preview URL did not serve expected text|REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER|preview-health-check/i.test(combined);
+  if (scenario.id === 'tailscale-exposure-wrong-content') {
+    const matched = /tailscale-exposure|public-http-health|response did not contain|REAL_E2E_EXPECTED_DIFFERENT_DEPLOYMENT_MARKER/i.test(combined);
     return failureOutputDiagnostic(matched, 'REAL_E2E_OUTPUT_DIAGNOSTIC_MISSING_TAILSCALE_PREVIEW_WRONG_DEPLOYMENT');
   }
   if (scenario.id === 'pipeline-summary-failure') {

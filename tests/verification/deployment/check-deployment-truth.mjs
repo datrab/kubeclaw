@@ -146,7 +146,7 @@ assert.doesNotMatch(
 );
 assert.match(
   novaValues,
-  /capabilityProviders:\s*\n\s+buster:\s*\n\s+agentRole:\s*buster\s*\n\s+capabilities:[\s\S]*runtime\.dispatch:[\s\S]*adapter:\s*openclaw[\s\S]*port:\s*18789[\s\S]*test\.suite\.execute:[\s\S]*adapter:\s*buster-suite-v2[\s\S]*port:\s*18891/,
+  /capabilityProviders:\s*\n\s+buster:\s*\n\s+agentRole:\s*buster\s*\n\s+capabilities:[\s\S]*runtime\.dispatch:[\s\S]*adapter:\s*openclaw[\s\S]*port:\s*18789[\s\S]*test\.suite\.execute:[\s\S]*adapter:\s*buster-suite-v2[\s\S]*port:\s*18892[\s\S]*test\.plan\.execute:[\s\S]*adapter:\s*buster-plan-v1[\s\S]*port:\s*18891/,
   'Nova must identify Buster through the provider-role contract',
 );
 assert.match(
@@ -186,11 +186,18 @@ assert.doesNotMatch(
   'suite jobs must not remount the container-runtime-masked procfs from a nested user namespace',
 );
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
-assert.match(busterValues, /containerPort:\s*18891/);
+assert.match(busterValues, /name:\s*buster-plan[\s\S]*containerPort:\s*18891/);
+assert.match(busterValues, /name:\s*buster-legacy[\s\S]*containerPort:\s*18892/);
+assert.equal((busterValues.match(/scheme:\s*HTTPS/gu) ?? []).length, 3,
+  'all Buster plan runtime probes must use HTTPS');
+assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
+assert.match(busterValues, /CONTAINER_BUILD_REGISTRY_BASE_URL[\s\S]*registry-local/);
+assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
+assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\.mts/);
 for (const probe of ['startupProbe', 'readinessProbe', 'livenessProbe']) {
   assert.match(
     busterValues,
-    new RegExp(`${probe}:[\\s\\S]*path:\\s*/healthz[\\s\\S]*port:\\s*buster-v2`),
+    new RegExp(`${probe}:[\\s\\S]*path:\\s*/healthz[\\s\\S]*port:\\s*buster-plan`),
     `the Buster v2 runtime must define its own ${probe}`,
   );
 }
@@ -201,8 +208,8 @@ assert.doesNotMatch(
 );
 assert.match(
   busterValues,
-  /BUSTER_V2_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/jobs[\s\S]*name:\s*buster-v2-state[\s\S]*mountPath:\s*\/var\/lib\/buster-v2/,
-  'authoritative worker state must use the sidecar-only state volume',
+  /BUSTER_PLAN_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/plan-jobs[\s\S]*BUSTER_LEGACY_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/legacy-jobs[\s\S]*name:\s*buster-v2-state[\s\S]*mountPath:\s*\/var\/lib\/buster-v2/,
+  'plan and legacy state must use separate directories on the sidecar-only volume',
 );
 assert.match(
   busterValues,
@@ -258,8 +265,8 @@ assert.match(
 );
 assert.match(
   busterRuntimeEntrypoint,
-  /printf '%s' "\$worker_token" \| setpriv\s+\\\s+--groups 1000,1002\s+\\\s+node \/app\/buster-suite-runtime\/src\/worker\.ts/,
-  'the worker supervisor must retain projected-credential and BuildKit socket group access',
+  /BUSTER_V2_TOKEN="\$worker_token" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts[\s\S]*printf '%s' "\$worker_token" \| BUSTER_V2_PORT="\$\{BUSTER_LEGACY_PORT:-18892\}"[\s\S]*BUSTER_V2_STATE_DIR="\$legacy_state_dir"[\s\S]*setpriv[\s\S]*--groups 1000,1002[\s\S]*buster-suite-runtime\/src\/worker\.ts/,
+  'the plan runtime and legacy worker must retain only their required token and BuildKit socket access',
 );
 assert.match(
   deploy,
@@ -373,7 +380,7 @@ if (helm.error?.code !== 'ENOENT') {
   );
   assert.match(
     novaHelm.stdout,
-    /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*agent-buster:18891/,
+    /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*agent-buster:18891[\s\S]*agent-buster:18892/,
   );
   assert.doesNotMatch(novaHelm.stdout, /name:\s*BUSTER_V2_ENDPOINT|name:\s*BUSTER_GATEWAY_ORIGIN/);
 

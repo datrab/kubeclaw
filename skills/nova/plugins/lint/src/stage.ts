@@ -5,6 +5,10 @@ interface LintInput {
   readonly project?: string;
   readonly modulePath?: string;
   readonly changedFiles?: readonly string[];
+  readonly kubernetes?: {
+    readonly rawManifests: readonly string[];
+    readonly helmCharts: readonly string[];
+  };
 }
 
 function requiredConfig(config: Readonly<Record<string, unknown>>, key: string): string {
@@ -65,6 +69,10 @@ async function execute(
       ...(input.project ? { project: input.project } : {}),
       ...(input.modulePath ? { modulePath: input.modulePath } : {}),
       ...(input.changedFiles ? { changedFiles: [...input.changedFiles] } : {}),
+      ...(input.kubernetes ? { kubernetes: {
+        rawManifests: [...input.kubernetes.rawManifests],
+        helmCharts: [...input.kubernetes.helmCharts],
+      } } : {}),
       includeDebt: context.contract.config.includeDebt === true,
       includeExperimental: context.contract.config.includeExperimental === true,
     },

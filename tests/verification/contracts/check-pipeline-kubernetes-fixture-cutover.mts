@@ -100,16 +100,14 @@ try {
   assert.equal(fixture?.uses, 'kubeclaw.kubernetes-fixture@1');
   assert.match(String(fixture?.config?.image?.reference), /@sha256:[a-f0-9]{64}$/u);
   assert.match(String(fixture?.config?.image?.digest), /^sha256:[a-f0-9]{64}$/u);
-  assert.equal(fixture?.inputs?.image, undefined);
+  assert.deepEqual(fixture?.inputs?.image, {
+    from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+  });
   assert.equal(fixture?.inputs?.['checked-manifest']?.from, 'checked-manifest');
   assert.equal(scope.declaration.tests?.health?.inputs?.deployment?.from, 'kubernetes-deployment');
 } finally {
   await cleanupRealE2ERunWorkspace(workspace);
 }
-
-const preview = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/runtime/suites/tailscale-preview.ts', 'utf8');
-assert.doesNotMatch(preview, /source_suite[^\n]*k8s|suiteResults\?\.k8s|resolveK8sTarget/u);
-assert.match(preview, /source_suite[^\n]*explicit/u);
 
 await import('./check-pipeline-kubernetes-fixture-implementation.mts');
 await import('./check-pipeline-kubernetes-fixture-parity.mts');

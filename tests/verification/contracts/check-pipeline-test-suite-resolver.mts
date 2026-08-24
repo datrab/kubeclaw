@@ -5,6 +5,7 @@ import path from 'node:path';
 import {
   buildRegistry,
   discoverPackages,
+  loadPipelineLintDeclaration,
   loadPipelineTestScope,
   resolveTestPlan,
   type ResolverPolicy,
@@ -156,6 +157,8 @@ fs.mkdirSync(swarm);
 const pipelinePath = path.join(swarm, 'pipeline.json');
 fs.writeFileSync(pipelinePath, `${JSON.stringify({
   project: 'example-project',
+  lint: { uses: 'kubeclaw.lint.full', policyProject: 'workspace',
+    rawManifests: ['k8s/deployment.yaml'], helmCharts: [] },
   modules: {
     app: {
       title: 'Fields unrelated to tests remain valid pipeline data',
@@ -200,6 +203,10 @@ fs.writeFileSync(pipelinePath, `${JSON.stringify({
 const loaded = loadPipelineTestScope(pipelinePath, { moduleId: 'app', gateId: null });
 assert.equal(loaded.project, 'example-project');
 assert.equal('title' in loaded.declaration, false, 'the loader selects only test-plan fields');
+assert.deepEqual(loadPipelineLintDeclaration(pipelinePath), {
+  uses: 'kubeclaw.lint.full', policyProject: 'workspace',
+  rawManifests: ['k8s/deployment.yaml'], helmCharts: [],
+});
 
 const limits = {
   cpuMillis: 1000,

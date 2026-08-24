@@ -198,6 +198,16 @@ function validatePipeline(scaffold: AnyRecord, diagnostics: Diagnostic[]) {
   }
   const pipelineModules = objectOrEmpty(scaffold.pipeline.modules);
   const pipelineGates = objectOrEmpty(scaffold.pipeline.gates);
+  const lint = scaffold.pipeline.lint;
+  if (lint !== undefined) {
+    if (!isPlainObject(lint) || lint.uses !== 'kubeclaw.lint.full'
+      || typeof lint.policyProject !== 'string' || lint.policyProject.length === 0
+      || !Array.isArray(lint.rawManifests) || !Array.isArray(lint.helmCharts)
+      || lint.rawManifests.length + lint.helmCharts.length === 0
+      || [...lint.rawManifests, ...lint.helmCharts].some((entry) => typeof entry !== 'string' || entry.length === 0)) {
+      diagnostics.push(diagnostic('form_check', 'pipeline.lint must declare kubeclaw.lint.full, one policy project, and explicit Kubernetes inputs', 'pipeline.lint'));
+    }
+  }
   for (const [id, module] of entriesOf(scaffold.modules)) {
     if (Array.isArray(module.stages) && module.stages.includes('buster')) {
       validatePipelineScope(pipelineModules[id], diagnostics, `pipeline.modules.${id}`);

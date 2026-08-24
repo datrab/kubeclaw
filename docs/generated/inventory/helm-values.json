@@ -87,6 +87,8 @@
         "service",
         "capabilityProviders",
         "extraEnv",
+        "extraVolumeMounts",
+        "extraVolumes",
         "resources",
         "extraContainers",
         "workspace"
@@ -131,6 +133,11 @@
           "key": "secretName",
           "value": "git-deploy-key-nova",
           "line": 61
+        },
+        {
+          "key": "secretName",
+          "value": "pipeline-test-gate-source-attestation",
+          "line": 137
         }
       ]
     },
@@ -192,6 +199,11 @@
           "key": "secretName",
           "value": "git-deploy-key-buster",
           "line": 61
+        },
+        {
+          "key": "secretName",
+          "value": "pipeline-test-gate-source-attestation",
+          "line": 216
         }
       ]
     },

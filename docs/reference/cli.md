@@ -40,6 +40,7 @@ Generated from: `scripts/deploy.sh`
 - `buildkit-preflight`
 - `buster-buildkit-smoke`
 - `nova-buildkit-preflight`
+- `nova-unit-preflight`
 - `buster-infra-smoke`
 - `agents`
 - `agent`

@@ -1,6 +1,6 @@
 # Pipeline Test Gate Phase 10 Final Audit
 
-Status: complete
+Status: source complete; deployed production acceptance pending image rollout
 
 Suite: unit
 
@@ -47,9 +47,10 @@ legacy result exists.
 
 ### 10-D — Current configuration
 
-Project setup no longer discovers or writes legacy unit configuration. Real
-workspace fixtures now write explicit unit nodes to `.swarm/pipeline.json`.
-User and operator guides show only the current path.
+Project setup no longer discovers or writes legacy unit configuration. It
+rejects a legacy unit request when the provider plan has no replacement node.
+It preserves an explicit `kubeclaw.direct-command@1` node. Real workspace
+fixtures write explicit unit nodes to `.swarm/pipeline.json`.
 
 ### 10-E — Legacy runtime cleanup
 
@@ -124,6 +125,19 @@ If a project declaration is wrong, correct `.swarm/pipeline.json`. If a
 provider defect is found, stop unit execution, fix the provider, and rerun the
 same immutable plan or create a new plan as the contract requires.
 
+## Production integration
+
+Normal Buster stages execute the resolved provider plan before they make a
+decision. They do not infer commands from legacy configuration.
+
+Nova uses the `test.plan.execute` adapter. The adapter signs the committed
+source snapshot, sends the immutable plan to Buster, imports the result, and
+returns the Nova decision. The production pipeline loads the selected scope
+from `.swarm/pipeline.json`.
+
+The Buster deployment allows `command.execute`. It also requires a narrow
+delegated cgroup v2 subtree. It does not delegate the host cgroup root.
+
 ## Contained environment boundary
 
 All migration acceptance runs in the Nova pod with real source, processes,
@@ -131,9 +145,11 @@ HTTP, providers, reports, evidence, and policy. The pod has a read-only cgroup
 mount. The tracked test harness therefore uses sampled accounting for that one
 unavailable host feature.
 
-Production configuration cannot enable this fallback. The external runtime
-proof with delegated cgroup control remains deferred until every suite has
-migrated and one complete pipeline path remains.
+Production configuration cannot enable this fallback. The deployed runtime
+fails closed when it cannot use the delegated cgroup.
+
+After deployment, run `./scripts/deploy.sh nova-unit-preflight`. This command
+proves the real Nova-to-Buster route without sampled accounting.
 
 ## Verification
 
@@ -151,8 +167,19 @@ The closeout ran:
 - Git whitespace checks; and
 - the production dependency audit.
 
-No external production platform was used. This is the accepted migration
-boundary.
+The updated closeout also checks:
+
+- project migration rejection and explicit replacement preservation;
+- normal production pipeline provider-plan loading;
+- the authenticated `test.plan.execute` route;
+- capability grants for repository roots;
+- Nova and Buster runtime-role packaging;
+- the narrow Buster cgroup mount; and
+- the deployed production preflight source.
+
+No mock service, fake command result, or compatibility wrapper supplies unit
+acceptance evidence. The contained proof uses sampled process accounting only
+because this development container cannot delegate a cgroup.
 
 ## Final state
 
@@ -160,3 +187,6 @@ Unit is fully migrated. Its current configuration, execution, result,
 evidence, and authority paths are explicit. The old executable path is absent.
 The next suite must use the same implementation, parity, cutover, and deletion
 workflow.
+
+The repository cutover is complete. Production acceptance remains pending
+until the current images are deployed and `nova-unit-preflight` passes.

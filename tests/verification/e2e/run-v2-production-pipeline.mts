@@ -4,8 +4,13 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
+  buildRegistry,
+  discoverPackages,
   loadPipelineDefinition,
+  loadPipelineLintDeclaration,
+  loadPipelineTestScope,
   recoverPipelineV2,
+  resolveTestPlan,
   resumePipelineV2,
   runPipelineV2,
   validatePipelineRuntimeV2,
@@ -14,11 +19,12 @@ import { loadPlatformConfig } from '../../../skills/common/plugin-runtime/founda
 import type { ResumeSignal } from '../../../skills/common/plugin-runtime/sdk/src/index.ts';
 import { parseProductionPipelineArgs } from './production-pipeline-args.mts';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
+import { writeRunLintPolicy } from './manifest-lint-production.mts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const SPARK_MODEL = 'openai/gpt-5.3-codex-spark';
 const ALL_SUITES = Object.freeze([
-  'tailscale-preview', 'a11y', 'perf',
+  'a11y', 'perf',
   'security', 'visual-reg', 'api', 'e2e',
 ]);
 const BUSTER_CAPABILITIES = Object.freeze([
@@ -195,6 +201,8 @@ async function main(): Promise<void> {
   const project = path.join(repo, 'Projects', projectName, 'src');
   const swarm = path.join(project, '.swarm');
   const progress = readJson(path.join(swarm, 'progress.json'));
+  const lintDeclaration = loadPipelineLintDeclaration(path.join(swarm, 'pipeline.json'));
+  if (!lintDeclaration) throw new Error('REAL_E2E_MANIFEST_LINT_DECLARATION_MISSING');
   const runId = String(progress.run_id ?? process.env.REAL_E2E_RUN_ID ?? `real-e2e:${crypto.randomUUID()}`);
   const modules = progress.modules as Record<string, Record<string, any>>;
   const moduleIds = Object.keys(modules);
@@ -205,6 +213,7 @@ async function main(): Promise<void> {
   const runtimeResults = path.join(repo, '.swarm', 'runtime-results');
   fs.mkdirSync(workspaces, { recursive: true });
   fs.mkdirSync(runtimeResults, { recursive: true });
+  const lintPolicyPath = writeRunLintPolicy(repositoryRoot, stateRoot, lintDeclaration);
   const headBefore = git(repo, 'rev-parse', 'HEAD');
   const gitExecutable = fs.realpathSync(execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim());
   const gatewayToken = process.env.OPENCLAW_GATEWAY_TOKEN;
@@ -224,6 +233,13 @@ async function main(): Promise<void> {
   const busterWorkerOrigin = busterSuiteRoute.endpoint;
   if (!process.env.BUSTER_V2_TOKEN) {
     throw new Error('REAL_E2E_BUSTER_V2_CONFIG_MISSING');
+  }
+  const busterPlanRoute = resolveProviderCapability(remoteProviders, 'buster', 'test.plan.execute');
+  if (busterPlanRoute.adapter !== 'buster-plan-v1') {
+    throw new Error(`REAL_E2E_TEST_PLAN_ADAPTER_UNSUPPORTED:${busterPlanRoute.adapter}`);
+  }
+  if (!process.env.BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY) {
+    throw new Error('REAL_E2E_BUSTER_SOURCE_KEY_MISSING');
   }
   const busterRuntimeRoute = resolveProviderCapability(
     remoteProviders,
@@ -270,6 +286,7 @@ async function main(): Promise<void> {
       [`buster-${moduleId}`, `${moduleId} verification`],
     ]),
     ['module-review', 'Module review'],
+    ['manifest-lint', 'Kubernetes manifest lint'],
     ['operator-approval', 'Operator approval'],
     ['final-buster', 'Final deployment verification'],
     ['final-review', 'Final review'],
@@ -279,6 +296,8 @@ async function main(): Promise<void> {
     'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
     'artifacts.write': 'kubeclaw.artifact-store:artifact-store',
     'test.suite.execute': 'kubeclaw.buster-suite-runtime:suite',
+    'test.plan.execute': 'kubeclaw.remote-test-gate:plan',
+    'lint.execute': 'kubeclaw.lint:executor',
     'command.execute': 'kubeclaw.command-runner:command',
     'git.workspace.create': 'kubeclaw.git-workspace:git',
     'git.workspace.remove': 'kubeclaw.git-workspace:git',
@@ -308,6 +327,7 @@ async function main(): Promise<void> {
     'kubeclaw.test-agent:test': {
       'command.execute': { allowedExecutables: [process.execPath], allowedWorkingRoots: [repo] },
       'test.suite.execute': suiteGrant,
+      'test.plan.execute': { allowedRoots: [repo] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.test-agent'),
     },
@@ -316,6 +336,14 @@ async function main(): Promise<void> {
       'git.repository.read': { allowedPrefixes: ['.'] },
       'artifacts.read': artifact('kubeclaw.review'),
       'artifacts.write': artifact('kubeclaw.review'),
+    },
+    'kubeclaw.lint:full': {
+      'lint.execute': {
+        allowedRoots: [repo],
+        allowedPolicyRoots: [path.dirname(lintPolicyPath)],
+        allowedProjects: [lintDeclaration.policyProject],
+      },
+      'artifacts.write': artifact('kubeclaw.lint'),
     },
     'kubeclaw.human-approval:approval': {
       'operator.request': { allowedTargets: ['discord'] },
@@ -334,6 +362,7 @@ async function main(): Promise<void> {
     },
     'kubeclaw.buster-quality-gate:quality': {
       'test.suite.execute': suiteGrant,
+      'test.plan.execute': { allowedRoots: [repo] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.buster-quality-gate'),
     },
@@ -348,6 +377,9 @@ async function main(): Promise<void> {
     'kubeclaw.buster-suite-runtime:suite': {
       'network.http': { allowedOrigins: [busterWorkerOrigin] },
       'secrets.read': { allowedNames: ['buster.worker'] },
+    },
+    'kubeclaw.remote-test-gate:plan': {
+      'secrets.read': { allowedNames: ['buster.worker', 'buster.source-private-key'] },
     },
     'kubeclaw.operator-messaging:operator': {
       'network.http': { allowedOrigins: [webhookOrigin] },
@@ -407,6 +439,39 @@ async function main(): Promise<void> {
     path.join(repositoryRoot, 'skills/nova/plugins'),
     path.join(repositoryRoot, 'skills/buster/plugins'),
   ];
+  const providerRegistry = buildRegistry(discoverPackages({
+    installationRoots: [path.join(repositoryRoot, 'skills/buster/plugins')],
+    trustPolicy: { trustedBuiltinRoots: [path.join(repositoryRoot, 'skills/buster/plugins')],
+      allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'real-production-e2e' },
+  }));
+  const suiteTemplates = fs.readdirSync(path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/suites'))
+    .filter((file) => file.endsWith('.json'))
+    .sort()
+    .map((file) => readJson(path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/suites', file)) as any);
+  const providerPlanFor = (scope: { moduleId: string | null; gateId: string | null }, stageId: string) => {
+    const loaded = loadPipelineTestScope(path.join(swarm, 'pipeline.json'), scope);
+    const concurrency = Object.fromEntries(Object.entries(loaded.declaration.concurrencyLimits ?? {})
+      .map(([group, value]) => [group, Math.max(1, Number(value))]));
+    const limits = { cpuMillis: 1_800_000, memoryBytes: 8 * 1024 * 1024 * 1024,
+      logBytes: 16 * 1024 * 1024, artifactBytes: 64 * 1024 * 1024,
+      artifactFiles: 256, processes: 128 };
+    const createdAt = new Date().toISOString();
+    const plan = resolveTestPlan({ planId: `plan:${safe(runId)}:${safe(stageId)}`, runId,
+      project: loaded.project, scope, createdAt, declaration: loaded.declaration,
+      suiteTemplates, registry: providerRegistry,
+      facts: { changedPaths: [], moduleType: 'service', pipelineStage: stageId },
+      policy: { defaultTimeoutMs: 900_000, maximumTimeoutMs: 1_800_000,
+        defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 2,
+        maximumMatrixSize: 16, maximumNodes: 128, defaultConcurrencyLimit: 1,
+        maximumConcurrencyLimits: concurrency } });
+    const grants = Object.fromEntries(plan.nodes.map((node) => {
+      const provider = providerRegistry.testProviderContracts.get(node.provider.contractId);
+      if (!provider) throw new Error(`REAL_E2E_PROVIDER_MISSING:${node.provider.contractId}`);
+      return [node.id, [...provider.declaration.requiredCapabilities].sort()];
+    }));
+    return { repositoryRoot: repo, repositoryId: `repository:${projectName}`, plan, grants,
+      maximumConcurrency: 4, submittedAt: createdAt, timeoutMs: 2_100_000 };
+  };
   const platformPath = path.join(stateRoot, 'platform.json');
   const pipelinePath = path.join(stateRoot, 'pipeline.json');
   writeJson(platformPath, {
@@ -418,6 +483,10 @@ async function main(): Promise<void> {
     grants,
     adapters: {
       'kubeclaw.artifact-store:artifact-store': { artifactRoot: artifacts },
+      'kubeclaw.lint:executor': {
+        allowedRepositoryRoots: [repo],
+        allowedPolicyRoots: [path.dirname(lintPolicyPath)],
+      },
       'kubeclaw.buster-suite-runtime:suite': {
         endpoint: busterWorkerEndpoint,
         tokenSecret: 'buster.worker',
@@ -428,6 +497,15 @@ async function main(): Promise<void> {
         maxArchiveBytes: 67_108_864,
         maxSuiteTimeoutMs: 1_800_000,
         pollMs: 2_000,
+      },
+      'kubeclaw.remote-test-gate:plan': {
+        endpoint: busterPlanRoute.endpoint,
+        tokenSecret: 'buster.worker',
+        sourcePrivateKeySecret: 'buster.source-private-key',
+        sourceAuthority: 'nova:production',
+        stateRoot: path.join(stateRoot, 'provider-gates'),
+        allowedRepositoryRoots: [repo],
+        legacyLedgerPath: path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
       },
       'kubeclaw.command-runner:command': {
         allowedExecutables: [process.execPath],
@@ -485,6 +563,7 @@ async function main(): Promise<void> {
           'openclaw.gateway': 'OPENCLAW_GATEWAY_TOKEN',
           'buster.gateway': 'BUSTER_GATEWAY_TOKEN',
           'buster.worker': 'BUSTER_V2_TOKEN',
+          'buster.source-private-key': 'BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY',
           'discord.webhook': 'DISCORD_WEBHOOK',
         },
       },
@@ -588,6 +667,7 @@ async function main(): Promise<void> {
         attempt: 1,
         task: `Act as Buster for ${moduleId}. Judge the actual production suite results and reject any skipped, failed, or errored required check.`,
         suiteEvidence: [],
+        providerPlan: providerPlanFor({ moduleId, gateId: null }, `buster-${moduleId}`),
         // This command is a pipeline-retry fault fixture. It is not a unit suite
         // and cannot become unit gate authority.
         commandSuites: moduleCommandSuites(moduleId, module, repo),
@@ -614,7 +694,7 @@ async function main(): Promise<void> {
       id: 'module-review',
       type: 'kubeclaw.decision.review',
       dependsOn: busterStages,
-      config: { agent: 'echo.module-review', agentRole: roles.echo },
+      config: { agent: 'echo.module-review' },
       input: {
         task: 'Act as Echo. Review the actual merged four-module repository after Forge and Buster. Inspect Git history, owned paths, module contracts, and run every module verification command. Return PASS only when the module graph and evidence are real.',
         evidence: {
@@ -627,9 +707,24 @@ async function main(): Promise<void> {
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1_200_000 },
     },
     {
+      id: 'manifest-lint',
+      type: 'kubeclaw.lint.full',
+      dependsOn: ['module-review'],
+      config: { policyPath: lintPolicyPath, policyProject: lintDeclaration.policyProject },
+      input: {
+        workingDirectory: repo,
+        project: projectName,
+        kubernetes: {
+          rawManifests: lintDeclaration.rawManifests,
+          helmCharts: lintDeclaration.helmCharts,
+        },
+      },
+      execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 300_000 },
+    },
+    {
       id: 'operator-approval',
       type: 'kubeclaw.decision.human-approval',
-      dependsOn: ['module-review'],
+      dependsOn: ['manifest-lint'],
       config: {
         target: 'discord',
         issuerId: 'real-e2e-operator',
@@ -651,6 +746,7 @@ async function main(): Promise<void> {
         attempt: 1,
         task: 'Act as final Buster. Judge the actual provider results, Kubernetes readiness, namespace lease, HTTP checks, and security evidence. Pass only when every required proof is real.',
         suiteEvidence: [],
+        providerPlan: providerPlanFor({ moduleId: null, gateId: 'final-buster' }, 'final-buster'),
         suitePlan: {
           repositoryRoot: repo,
           suites: progress.gates['final-buster'].test_suites,
@@ -674,7 +770,7 @@ async function main(): Promise<void> {
       id: 'final-review',
       type: 'kubeclaw.decision.review',
       dependsOn: ['final-buster'],
-      config: { agent: 'echo.final-review', agentRole: roles.echo },
+      config: { agent: 'echo.final-review' },
       input: {
         task: 'Act as final Echo reviewer. Inspect the merged repository, Git history, Buster result artifacts, Kubernetes evidence, security evidence, and lifecycle journal. Return PASS only when the requested production workflow actually ran.',
         evidence: {

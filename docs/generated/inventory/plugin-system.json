@@ -2,15 +2,15 @@
   "schemaVersion": "plugin-system-inventory-v2",
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "summary": {
-    "packages": 39,
-    "packageRoots": 40,
-    "stages": 18,
+    "packages": 41,
+    "packageRoots": 42,
+    "stages": 17,
     "observers": 6,
-    "adapters": 18,
-    "testProviders": 6,
+    "adapters": 19,
+    "testProviders": 7,
     "reportAdapters": 1,
-    "registrations": 49,
-    "files": 805
+    "registrations": 50,
+    "files": 815
   },
   "runtime": {
     "roots": [
@@ -40,6 +40,7 @@
       "skills/buster/engine/test-gates/report-adapter-child.mjs",
       "skills/buster/engine/test-gates/report-adapter-runtime.ts",
       "skills/buster/engine/test-gates/runner.ts",
+      "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
       "skills/common/plugin-runtime/contracts/plugin-system/v2/README.md",
       "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
       "skills/common/plugin-runtime/foundation/BOUNDARIES.md",
@@ -228,7 +229,6 @@
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/repo-paths.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/tailscale-preview.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/url-paths.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-delivery.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-discord.ts",
@@ -407,6 +407,28 @@
         {
           "kind": "test-provider",
           "id": "artifact"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.tailscale-exposure",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/tailscale-exposure",
+      "manifest": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "files": [
+        "skills/buster/plugins/tailscale-exposure/package.json",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/buster/plugins/tailscale-exposure/README.md",
+        "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+        "skills/buster/plugins/tailscale-exposure/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "exposure"
         }
       ]
     },
@@ -1186,14 +1208,10 @@
         "skills/nova/plugins/preflight-contract/package.json",
         "skills/nova/plugins/preflight-contract/plugin.json",
         "skills/nova/plugins/preflight-contract/README.md",
-        "skills/nova/plugins/preflight-contract/schemas/buildkit-config.schema.json",
-        "skills/nova/plugins/preflight-contract/schemas/buildkit-input.schema.json",
         "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
         "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
         "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
-        "skills/nova/plugins/preflight-contract/src/buildkit.ts",
         "skills/nova/plugins/preflight-contract/src/stage.ts",
-        "skills/nova/plugins/preflight-contract/tests/buildkit.test.ts",
         "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
         "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
@@ -1203,10 +1221,6 @@
         {
           "kind": "stage",
           "id": "validate"
-        },
-        {
-          "kind": "stage",
-          "id": "buildkit"
         }
       ]
     },
@@ -1259,6 +1273,28 @@
         {
           "kind": "stage",
           "id": "summary"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.remote-test-gate",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/nova/plugins/remote-test-gate",
+      "manifest": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "files": [
+        "skills/nova/plugins/remote-test-gate/package.json",
+        "skills/nova/plugins/remote-test-gate/plugin.json",
+        "skills/nova/plugins/remote-test-gate/README.md",
+        "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+        "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/remote-test-gate/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "plan"
         }
       ]
     },
@@ -1514,6 +1550,12 @@
       "registrationId": "kubeclaw.size-budget:artifact"
     },
     {
+      "kind": "test-provider",
+      "id": "exposure",
+      "packageId": "kubeclaw.tailscale-exposure",
+      "registrationId": "kubeclaw.tailscale-exposure:exposure"
+    },
+    {
       "kind": "stage",
       "id": "test",
       "packageId": "kubeclaw.test-agent",
@@ -1725,12 +1767,6 @@
     },
     {
       "kind": "stage",
-      "id": "buildkit",
-      "packageId": "kubeclaw.preflight-contract",
-      "registrationId": "kubeclaw.preflight-contract:buildkit"
-    },
-    {
-      "kind": "stage",
       "id": "design",
       "packageId": "kubeclaw.prism-design",
       "registrationId": "kubeclaw.prism-design:design"
@@ -1740,6 +1776,12 @@
       "id": "summary",
       "packageId": "kubeclaw.project-summary",
       "registrationId": "kubeclaw.project-summary:summary"
+    },
+    {
+      "kind": "adapter",
+      "id": "plan",
+      "packageId": "kubeclaw.remote-test-gate",
+      "registrationId": "kubeclaw.remote-test-gate:plan"
     },
     {
       "kind": "adapter",
@@ -1781,6 +1823,7 @@
     "skills/buster/engine/test-gates/report-adapter-child.mjs",
     "skills/buster/engine/test-gates/report-adapter-runtime.ts",
     "skills/buster/engine/test-gates/runner.ts",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
     "skills/buster/plugins/buster-suite-runtime/README.md",
     "skills/buster/plugins/buster-suite-runtime/common/pipeline/cli-args.ts",
     "skills/buster/plugins/buster-suite-runtime/common/pipeline/config-profiles/standard.json",
@@ -1853,7 +1896,6 @@
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/repo-paths.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/tailscale-preview.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/url-paths.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-delivery.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-discord.ts",
@@ -1922,6 +1964,13 @@
     "skills/buster/plugins/size-budget/src/provider.js",
     "skills/buster/plugins/size-budget/tests/live-function.test.ts",
     "skills/buster/plugins/size-budget/tsconfig.json",
+    "skills/buster/plugins/tailscale-exposure/README.md",
+    "skills/buster/plugins/tailscale-exposure/package.json",
+    "skills/buster/plugins/tailscale-exposure/plugin.json",
+    "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+    "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+    "skills/buster/plugins/tailscale-exposure/tsconfig.json",
     "skills/buster/plugins/test-agent/README.md",
     "skills/buster/plugins/test-agent/package.json",
     "skills/buster/plugins/test-agent/plugin.json",
@@ -2359,14 +2408,10 @@
     "skills/nova/plugins/preflight-contract/README.md",
     "skills/nova/plugins/preflight-contract/package.json",
     "skills/nova/plugins/preflight-contract/plugin.json",
-    "skills/nova/plugins/preflight-contract/schemas/buildkit-config.schema.json",
-    "skills/nova/plugins/preflight-contract/schemas/buildkit-input.schema.json",
     "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
     "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
     "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
-    "skills/nova/plugins/preflight-contract/src/buildkit.ts",
     "skills/nova/plugins/preflight-contract/src/stage.ts",
-    "skills/nova/plugins/preflight-contract/tests/buildkit.test.ts",
     "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
     "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
     "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
@@ -2393,6 +2438,13 @@
     "skills/nova/plugins/project-summary/tests/parity.test.ts",
     "skills/nova/plugins/project-summary/tests/summary.test.mjs",
     "skills/nova/plugins/project-summary/tsconfig.json",
+    "skills/nova/plugins/remote-test-gate/README.md",
+    "skills/nova/plugins/remote-test-gate/package.json",
+    "skills/nova/plugins/remote-test-gate/plugin.json",
+    "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+    "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+    "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts",
+    "skills/nova/plugins/remote-test-gate/tsconfig.json",
     "skills/nova/plugins/repository-adapter/README.md",
     "skills/nova/plugins/repository-adapter/package.json",
     "skills/nova/plugins/repository-adapter/plugin.json",

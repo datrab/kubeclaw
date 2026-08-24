@@ -20,21 +20,40 @@ function pathValue(value) {
   return resolved;
 }
 
-function explicitBase(value) {
+function parsedBase(value, allowPath) {
   if (typeof value !== 'string' || value.length > 2048) throw new Error('HTTP_CONFIG_URL_INVALID');
   let url;
   try { url = new URL(value); } catch { throw new Error('HTTP_CONFIG_URL_INVALID'); }
+  const canonical = url.origin + url.pathname;
+  const canonicalMatch = value === canonical || (!allowPath && url.pathname === '/' && value === url.origin);
   if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.hash
-    || url.pathname !== '/' || url.search) throw new Error('HTTP_CONFIG_URL_INVALID');
-  return url.origin;
+    || (!allowPath && url.pathname !== '/') || url.search || !canonicalMatch) {
+    throw new Error('HTTP_CONFIG_URL_INVALID');
+  }
+  return { origin: url.origin, path: url.pathname };
+}
+
+function explicitBase(value) {
+  return parsedBase(value, false).origin;
 }
 
 function deploymentInput(invocation) {
-  const unknown = invocation.inputs.filter((input) => input.name !== 'deployment');
+  const unknown = invocation.inputs.filter((input) => !['deployment', 'endpoint'].includes(input.name));
   if (unknown.length) throw new Error('HTTP_INPUT_UNKNOWN');
   const inputs = invocation.inputs.filter((input) => input.name === 'deployment');
   if (inputs.length > 1 || inputs.some((input) => input.kind !== 'value'
     || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1')) throw new Error('HTTP_INPUT_INVALID');
+  const endpointInputs = invocation.inputs.filter((input) => input.name === 'endpoint');
+  if (endpointInputs.length > 1 || endpointInputs.some((input) => input.kind !== 'value'
+    || input.schemaId !== 'kubeclaw.public-endpoint-fixture@1')) throw new Error('HTTP_INPUT_INVALID');
+  if (inputs.length && endpointInputs.length) throw new Error('HTTP_TARGET_AMBIGUOUS');
+  if (endpointInputs.length) {
+    const value = object(endpointInputs[0].value, 'HTTP_INPUT_INVALID');
+    if (value.schemaVersion !== 'public-endpoint-fixture.v1' || value.provider !== 'tailscale-ingress'
+      || typeof value.url !== 'string') throw new Error('HTTP_INPUT_ENDPOINT_INVALID');
+    const endpoint = parsedBase(value.url, true);
+    return [{ name: 'public', url: endpoint.origin, defaultPath: endpoint.path }];
+  }
   if (inputs.length === 0) return null;
   const value = object(inputs[0].value, 'HTTP_INPUT_INVALID');
   if (!Array.isArray(value.endpoints) || value.endpoints.length < 1 || value.endpoints.length > 32) {
@@ -45,7 +64,7 @@ function deploymentInput(invocation) {
     if (typeof endpoint.name !== 'string' || !DNS_LABEL.test(endpoint.name) || typeof endpoint.url !== 'string') {
       throw new Error('HTTP_INPUT_ENDPOINT_INVALID');
     }
-    return { name: endpoint.name, url: explicitBase(endpoint.url) };
+    return { name: endpoint.name, url: explicitBase(endpoint.url), defaultPath: '/' };
   });
   return endpoints;
 }
@@ -57,14 +76,14 @@ function configuration(invocation) {
   if (value.endpointName !== undefined && (!deployment || typeof value.endpointName !== 'string' || !DNS_LABEL.test(value.endpointName))) {
     throw new Error('HTTP_CONFIG_ENDPOINT_NAME_INVALID');
   }
-  let base;
+  let base; let defaultPath = '/';
   if (value.url !== undefined) base = explicitBase(value.url);
   else if (deployment) {
     const selected = value.endpointName === undefined
       ? (deployment.length === 1 ? deployment[0] : null)
       : deployment.find((endpoint) => endpoint.name === value.endpointName);
     if (!selected) throw new Error('HTTP_TARGET_ENDPOINT_NOT_FOUND');
-    base = selected.url;
+    base = selected.url; defaultPath = selected.defaultPath;
   } else throw new Error('HTTP_TARGET_REQUIRED');
   const method = value.method ?? 'GET';
   if (!['GET', 'HEAD'].includes(method)) throw new Error('HTTP_CONFIG_METHOD_INVALID');
@@ -86,7 +105,7 @@ function configuration(invocation) {
     || !/^[a-z0-9!#$&^_.+-]+\/[a-z0-9!#$&^_.+-]+$/u.test(expectedContentType))) {
     throw new Error('HTTP_CONFIG_CONTENT_TYPE_INVALID');
   }
-  const path = pathValue(value.path);
+  const path = pathValue(value.path ?? defaultPath);
   return { url: new URL(path, `${base}/`).href, method, accept, expectedStatuses, expectedText,
     expectedContentType, maximumResponseBytes: integer(value.maximumResponseBytes, 1_048_576, 1, 16_777_216,
       'HTTP_CONFIG_RESPONSE_LIMIT_INVALID'),

@@ -31,6 +31,16 @@ function requestPayload(value: Readonly<Record<string, unknown>>): LintExecution
   if (typeof value.workingDirectory !== 'string') throw new Error('LINT_WORKING_DIRECTORY_INVALID');
   if (typeof value.policyPath !== 'string') throw new Error('LINT_POLICY_PATH_INVALID');
   if (typeof value.policyProject !== 'string') throw new Error('LINT_POLICY_PROJECT_INVALID');
+  const kubernetes = value.kubernetes;
+  if (kubernetes !== undefined && (!kubernetes || typeof kubernetes !== 'object' || Array.isArray(kubernetes))) {
+    throw new Error('LINT_KUBERNETES_INPUT_INVALID');
+  }
+  const rawManifests = kubernetes === undefined ? undefined : (kubernetes as Record<string, unknown>).rawManifests;
+  const helmCharts = kubernetes === undefined ? undefined : (kubernetes as Record<string, unknown>).helmCharts;
+  if (kubernetes !== undefined && (![rawManifests, helmCharts].every((entries) => Array.isArray(entries)
+    && entries.every((entry) => typeof entry === 'string')))) {
+    throw new Error('LINT_KUBERNETES_INPUT_INVALID');
+  }
   return {
     workingDirectory: value.workingDirectory,
     policyPath: value.policyPath,
@@ -39,6 +49,9 @@ function requestPayload(value: Readonly<Record<string, unknown>>): LintExecution
     ...(typeof value.project === 'string' ? { project: value.project } : {}),
     ...(typeof value.modulePath === 'string' ? { modulePath: value.modulePath } : {}),
     ...(Array.isArray(changedFiles) ? { changedFiles: changedFiles as string[] } : {}),
+    ...(kubernetes === undefined ? {} : { kubernetes: {
+      rawManifests: rawManifests as string[], helmCharts: helmCharts as string[],
+    } }),
     ...(value.includeDebt === true ? { includeDebt: true } : {}),
     ...(value.includeExperimental === true ? { includeExperimental: true } : {}),
   };

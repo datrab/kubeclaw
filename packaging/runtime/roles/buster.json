@@ -34,6 +34,7 @@
     "kubeclaw.direct-command",
     "kubeclaw.junit-report",
     "kubeclaw.kubernetes-fixture",
+    "kubeclaw.tailscale-exposure",
     "kubeclaw.http",
     "kubeclaw.size-budget",
     "kubeclaw.test-agent"
@@ -44,6 +45,11 @@
       "id": "git.repository.read",
       "source": "worker-workspace",
       "reason": "Buster receives a read-only repository snapshot for its attempt."
+    },
+    {
+      "id": "test.plan.execute",
+      "source": "nova-orchestrator",
+      "reason": "Nova signs and submits the immutable provider plan before Buster judges its evidence."
     }
   ]
 }

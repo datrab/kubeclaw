@@ -79,5 +79,51 @@ for (const file of [
     `project scaffold can recreate legacy unit configuration: ${file}`);
 }
 
+const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
+assert.match(scaffold, /LEGACY_UNIT_CONFIGURATION_RETIRED/u,
+  'project setup must reject a legacy unit request without a replacement node');
+assert.match(scaffold, /kubeclaw\.direct-command@1/u,
+  'project setup must recognize the explicit replacement authority');
+
+const productionPipeline = fs.readFileSync('tests/verification/e2e/run-v2-production-pipeline.mts', 'utf8');
+assert.match(productionPipeline, /test\.plan\.execute/u,
+  'the production pipeline must route migrated provider plans');
+assert.match(productionPipeline, /loadPipelineTestScope/u,
+  'the production pipeline must load the declared provider plan');
+
+const runtimeEntrypoint = fs.readFileSync('docker/buster-runtime-entrypoint.sh', 'utf8');
+assert.match(runtimeEntrypoint, /'command\.execute'/u,
+  'the deployed Buster plan runtime must allow direct-command execution');
+assert.match(runtimeEntrypoint, /cgroupRoot/u,
+  'the deployed Buster plan runtime must require delegated cgroup control');
+
+const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
+assert.match(busterValues, /BUSTER_DIRECT_COMMAND_CGROUP_ROOT/u,
+  'the Buster deployment must declare the delegated command cgroup');
+assert.match(busterValues, /\/sys\/fs\/cgroup\/kubeclaw-buster/u,
+  'the Buster deployment must use the narrow command cgroup subtree');
+assert.doesNotMatch(busterValues, /hostPath:\s*\n\s*path:\s*\/sys\/fs\/cgroup\s*$/mu,
+  'the Buster deployment must not mount the host cgroup root');
+
+for (const manifestPath of [
+  'skills/buster/plugins/test-agent/plugin.json',
+  'skills/nova/plugins/buster-quality-gate/plugin.json',
+]) {
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as {
+    stages: Array<{ requiredCapabilities: string[] }>;
+  };
+  assert.equal(manifest.stages[0]?.requiredCapabilities.includes('test.plan.execute'), true,
+    `${manifestPath} must execute the provider plan before its decision`);
+}
+
+const moduleGuide = fs.readFileSync('skills/nova/project_setup/module-files.md', 'utf8');
+assert.doesNotMatch(moduleGuide, /unit\.ts/u, 'active setup guidance must not restore the deleted unit runner');
+
+const unitPreflight = fs.readFileSync('tests/verification/e2e/nova-unit-production-preflight.mts', 'utf8');
+assert.match(unitPreflight, /kubeclaw\.direct-command@1/u,
+  'the production preflight must use the replacement provider');
+assert.match(unitPreflight, /legacySuites:\s*\[\]/u,
+  'the production preflight must not execute a legacy suite');
+
 console.log(JSON.stringify({ ok: true, phase: 10, cutover: 'unit', parityItems: inventory.parityItemCount,
   legacyAuthority: 'absent', replacementAuthority: 'required' }));

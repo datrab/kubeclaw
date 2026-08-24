@@ -12,6 +12,47 @@ automountServiceAccountToken: true
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
+  name: {{ include "kubeclaw.fullname" . }}-controller-secrets
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-deployer
+rules:
+  # Deployer subjects are explicitly allowlisted trusted agents. They need full
+  # Service lifecycle access for Helm; external Service forms are rejected at
+  # the broker manifest boundary because Kubernetes RBAC cannot filter spec.type.
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "endpoints", "configmaps", "persistentvolumeclaims", "serviceaccounts"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-tester
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "endpoints", "configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
   name: {{ include "kubeclaw.fullname" . }}-namespace-controller
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
@@ -24,31 +65,29 @@ rules:
     verbs: ["get", "patch", "update"]
   - apiGroups: [""]
     resources: ["namespaces"]
-    verbs: ["create", "get", "list", "delete", "patch", "update"]
+    verbs: ["create", "get", "delete"]
   - apiGroups: [""]
-    resources: ["serviceaccounts", "configmaps", "persistentvolumeclaims", "pods", "pods/log", "services", "endpoints"]
-    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
-  {{- if .Values.busterNamespaceBroker.approvedSecretNames }}
-  - apiGroups: [""]
-    resources: ["secrets"]
-    resourceNames: {{ toJson .Values.busterNamespaceBroker.approvedSecretNames }}
+    resources: ["services", "endpoints"]
     verbs: ["get"]
-  {{- end }}
   - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["create", "patch", "update"]
-  - apiGroups: ["apps"]
-    resources: ["deployments", "replicasets", "statefulsets"]
-    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
-  - apiGroups: ["batch"]
-    resources: ["jobs", "cronjobs"]
-    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    resources: ["resourcequotas", "limitranges"]
+    verbs: ["create", "get", "delete", "patch"]
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
-    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+    verbs: ["create", "get", "delete", "patch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["create", "get", "delete", "patch"]
   - apiGroups: ["rbac.authorization.k8s.io"]
     resources: ["roles", "rolebindings"]
-    verbs: ["create", "get", "list", "delete", "patch", "update"]
+    verbs: ["create", "get", "delete", "patch"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterroles"]
+    resourceNames:
+      - {{ include "kubeclaw.fullname" . }}-controller-secrets
+      - {{ include "kubeclaw.fullname" . }}-namespace-deployer
+      - {{ include "kubeclaw.fullname" . }}-namespace-tester
+    verbs: ["bind"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -65,6 +104,34 @@ subjects:
     name: {{ include "kubeclaw.fullname" . }}-namespace-controller
     namespace: {{ .Release.Namespace }}
 ---
+{{- if .Values.busterNamespaceBroker.controller.allowedSourceSecrets }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller-source-secrets
+  namespace: {{ .Release.Namespace }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames:
+      {{- toYaml .Values.busterNamespaceBroker.controller.allowedSourceSecrets | nindent 6 }}
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller-source-secrets
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "kubeclaw.fullname" . }}-namespace-controller-source-secrets
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "kubeclaw.fullname" . }}-namespace-controller
+    namespace: {{ .Release.Namespace }}
+---
+{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -108,22 +175,36 @@ spec:
           env:
             - name: KUBECLAW_NAMESPACE
               value: {{ .Release.Namespace | quote }}
-            - name: BUSTER_SERVICE_ACCOUNT_NAME
-              value: {{ include "kubeclaw.fullname" . | quote }}
-            - name: BUSTER_SERVICE_ACCOUNT_NAMESPACE
-              value: {{ .Release.Namespace | quote }}
-            - name: BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS
-              value: {{ join "," .Values.busterNamespaceBroker.controller.additionalRunnerServiceAccounts | quote }}
+            - name: BUSTER_CONTROLLER_SERVICE_ACCOUNT
+              value: {{ printf "%s-namespace-controller" (include "kubeclaw.fullname" .) | quote }}
+            - name: BUSTER_SECRET_ROLE_NAME
+              value: {{ printf "%s-controller-secrets" (include "kubeclaw.fullname" .) | quote }}
+            - name: BUSTER_DEPLOYER_ROLE_NAME
+              value: {{ printf "%s-namespace-deployer" (include "kubeclaw.fullname" .) | quote }}
+            - name: BUSTER_TESTER_ROLE_NAME
+              value: {{ printf "%s-namespace-tester" (include "kubeclaw.fullname" .) | quote }}
+            - name: BUSTER_ALLOWED_ACCESS_JSON
+              {{- $allowedAccess := list -}}
+              {{- range .Values.busterNamespaceBroker.controller.allowedAccess -}}
+              {{- $subject := .subject -}}
+              {{- if not (contains "/" $subject) -}}
+              {{- $subject = printf "%s/%s" $.Release.Namespace $subject -}}
+              {{- end -}}
+              {{- $allowedAccess = append $allowedAccess (dict "subject" $subject "modes" .modes) -}}
+              {{- end }}
+              value: {{ toJson $allowedAccess | quote }}
+            - name: BUSTER_ALLOWED_SOURCE_SECRETS
+              value: {{ join "," .Values.busterNamespaceBroker.controller.allowedSourceSecrets | quote }}
             - name: BUSTER_LEASE_API_GROUP
               value: {{ .Values.busterNamespaceBroker.leaseApiGroup | quote }}
             - name: BUSTER_LEASE_API_VERSION
               value: {{ .Values.busterNamespaceBroker.leaseApiVersion | quote }}
             - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
               value: {{ join "," .Values.busterNamespaceBroker.allowedPrefixes | quote }}
-            - name: BUSTER_APPROVED_SECRET_NAMES
-              value: {{ join "," .Values.busterNamespaceBroker.approvedSecretNames | quote }}
             - name: BUSTER_DEFAULT_TTL_SECONDS
               value: {{ .Values.busterNamespaceBroker.defaultTtlSeconds | quote }}
+            - name: BUSTER_MAX_TTL_SECONDS
+              value: {{ .Values.busterNamespaceBroker.maxTtlSeconds | quote }}
             - name: BUSTER_CONTROLLER_POLL_MS
               value: {{ .Values.busterNamespaceBroker.controller.pollIntervalMs | quote }}
           resources:

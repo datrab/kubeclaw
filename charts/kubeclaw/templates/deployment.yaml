@@ -1012,7 +1012,11 @@ spec:
             {{- if or (lt $port 1) (gt $port 65535) }}
             {{- fail (printf "capabilityProviders.%s.capabilities.%s.port must be between 1 and 65535" $providerId $capability) }}
             {{- end }}
-            {{- $_ := set $routes $capability (dict "adapter" $adapter "endpoint" (printf "http://%s:%d" $service $port)) }}
+            {{- $scheme := default "http" $route.scheme }}
+            {{- if not (has $scheme (list "http" "https")) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.scheme must be http or https" $providerId $capability) }}
+            {{- end }}
+            {{- $_ := set $routes $capability (dict "adapter" $adapter "endpoint" (printf "%s://%s:%d" $scheme $service $port)) }}
             {{- end }}
             {{- $_ := set $catalog $providerId (dict "agentRole" $agentRole "capabilities" $routes) }}
             {{- end }}
@@ -1116,13 +1120,17 @@ spec:
           resources: {{- toYaml (.Values.gateway.resources | default .Values.resources) | nindent 12 }}
 
           lifecycle:
-            {{- if .Values.gateway.startupDoctor.enabled }}
             postStart:
               exec:
                 command:
                   - /bin/sh
-                  - /runtime-config/kubeclaw-startup-doctor.sh
-            {{- end }}
+                  - -c
+                  - |
+                    DRAIN_FILE="${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}"
+                    rm -f -- "$DRAIN_FILE"
+                    {{- if .Values.gateway.startupDoctor.enabled }}
+                    exec /runtime-config/kubeclaw-startup-doctor.sh
+                    {{- end }}
             preStop:
               exec:
                 command:

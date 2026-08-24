@@ -3,13 +3,18 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
+	"crypto/sha256"
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"regexp"
 	"strconv"
@@ -24,27 +29,44 @@ const (
 	leasePlural                 = "busternamespaceleases"
 )
 
+var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")
+
 type controller struct {
-	namespace                     string
-	apiGroup                      string
-	apiVersion                    string
-	busterServiceAccountName      string
-	busterServiceAccountNamespace string
-	additionalRunnerAccounts      []serviceAccountRef
-	allowedPrefixes               []string
-	approvedSecretNames           map[string]struct{}
-	defaultTTL                    time.Duration
-	pollInterval                  time.Duration
-	finalizer                     string
-	apiURL                        string
-	token                         string
-	httpClient                    *http.Client
-	now                           func() time.Time
+	namespace            string
+	apiGroup             string
+	apiVersion           string
+	allowedAccess        map[serviceAccountRef]map[string]bool
+	allowedSourceSecrets map[string]bool
+	serviceAccountName   string
+	secretRoleName       string
+	deployerRoleName     string
+	testerRoleName       string
+	allowedPrefixes      []string
+	defaultTTL           time.Duration
+	maxTTL               time.Duration
+	pollInterval         time.Duration
+	finalizer            string
+	apiURL               string
+	token                string
+	httpClient           *http.Client
 }
 
 type serviceAccountRef struct {
 	Namespace string
 	Name      string
+}
+
+type accessRequest struct {
+	Subject serviceAccountRef
+	Mode    string
+}
+
+type testCredentialRequest struct {
+	Mode       string
+	SecretName string
+	Readers    []serviceAccountRef
+	Writers    []serviceAccountRef
+	Keys       []string
 }
 
 type lease struct {
@@ -60,6 +82,7 @@ type metadata struct {
 	Finalizers        []string          `json:"finalizers"`
 	CreationTimestamp string            `json:"creationTimestamp"`
 	DeletionTimestamp string            `json:"deletionTimestamp"`
+	UID               string            `json:"uid"`
 }
 
 type leaseList struct {
@@ -108,36 +131,44 @@ func newController() (*controller, error) {
 
 	apiGroup := env("BUSTER_LEASE_API_GROUP", "kubeclaw.forgestack.ai")
 	apiVersion := env("BUSTER_LEASE_API_VERSION", "v1alpha1")
-	busterSANamespace := env("BUSTER_SERVICE_ACCOUNT_NAMESPACE", namespace)
 	prefixes := splitCSV(env("BUSTER_ALLOWED_NAMESPACE_PREFIXES", "test"))
 	if len(prefixes) == 0 {
 		prefixes = []string{"test"}
 	}
 
 	ttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)
+	maxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)
 	pollMs := envInt("BUSTER_CONTROLLER_POLL_MS", 3000)
 
 	ctrl := &controller{
-		namespace:                     namespace,
-		apiGroup:                      apiGroup,
-		apiVersion:                    apiVersion,
-		busterServiceAccountName:      env("BUSTER_SERVICE_ACCOUNT_NAME", "agent-buster"),
-		busterServiceAccountNamespace: busterSANamespace,
-		allowedPrefixes:               prefixes,
-		approvedSecretNames:           stringSet(splitCSV(os.Getenv("BUSTER_APPROVED_SECRET_NAMES"))),
-		defaultTTL:                    time.Duration(ttlSeconds) * time.Second,
-		pollInterval:                  time.Duration(pollMs) * time.Millisecond,
-		finalizer:                     apiGroup + "/buster-namespace-cleanup",
-		now:                           time.Now,
-		apiURL:                        "https://" + host + ":" + port,
-		token:                         token,
+		namespace:          namespace,
+		apiGroup:           apiGroup,
+		apiVersion:         apiVersion,
+		allowedPrefixes:    prefixes,
+		defaultTTL:         time.Duration(ttlSeconds) * time.Second,
+		maxTTL:             time.Duration(maxTTLSeconds) * time.Second,
+		pollInterval:       time.Duration(pollMs) * time.Millisecond,
+		finalizer:          apiGroup + "/buster-namespace-cleanup",
+		apiURL:             "https://" + host + ":" + port,
+		token:              token,
+		serviceAccountName: env("BUSTER_CONTROLLER_SERVICE_ACCOUNT", "agent-buster-namespace-controller"),
+		secretRoleName:     env("BUSTER_SECRET_ROLE_NAME", "buster-controller-secrets"),
+		deployerRoleName:   env("BUSTER_DEPLOYER_ROLE_NAME", "buster-namespace-deployer"),
+		testerRoleName:     env("BUSTER_TESTER_ROLE_NAME", "buster-namespace-tester"),
 	}
 
-	accounts, err := ctrl.parseServiceAccountRefs(os.Getenv("BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS"))
+	access, err := parseAllowedAccess(env("BUSTER_ALLOWED_ACCESS_JSON", `[{"subject":"kubeclaw/agent-buster","modes":["tester"]}]`))
 	if err != nil {
 		return nil, err
 	}
-	ctrl.additionalRunnerAccounts = accounts
+	ctrl.allowedAccess = access
+	ctrl.allowedSourceSecrets = map[string]bool{}
+	for _, name := range splitCSV(os.Getenv("BUSTER_ALLOWED_SOURCE_SECRETS")) {
+		if !validSecretRefName(name) {
+			return nil, fmt.Errorf("invalid BUSTER_ALLOWED_SOURCE_SECRETS entry: %s", name)
+		}
+		ctrl.allowedSourceSecrets[name] = true
+	}
 
 	client, err := kubernetesHTTPClient()
 	if err != nil {
@@ -185,6 +216,7 @@ func (c *controller) reconcileAll(ctx context.Context) error {
 				"phase":         "Failed",
 				"namespaceName": nullableString(namespaceName),
 				"message":       err.Error(),
+				"conditions":    []interface{}{leaseCondition("Ready", false, "ReconcileFailed")},
 			})
 			if statusErr != nil {
 				logJSON("error", "status patch failed: "+current.Metadata.Name, statusErr.Error())
@@ -198,6 +230,16 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 	name := item.Metadata.Name
 	requestedNamespace := stringValue(item.Spec["namespaceName"])
 	namespaceName := c.normalizeLeaseNamespaceName(requestedNamespace)
+	if item.Metadata.DeletionTimestamp != "" {
+		if !contains(item.Metadata.Finalizers, c.finalizer) {
+			return nil
+		}
+		if stringValue(item.Status["phase"]) == "Rejected" && stringValue(item.Status["namespaceName"]) == "" {
+			return c.removeFinalizer(ctx, item)
+		}
+		ownedNamespace := firstNonEmpty(stringValue(item.Status["namespaceName"]), namespaceName)
+		return c.reconcileDeletedLease(ctx, item, ownedNamespace)
+	}
 	if namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {
 		return c.patchStatus(ctx, name, map[string]interface{}{
 			"phase":         "Rejected",
@@ -205,23 +247,46 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 			"message":       "namespaceName must normalize to a valid broker-owned namespace",
 		})
 	}
-
 	current, err := c.ensureFinalizer(ctx, item)
 	if err != nil {
 		return err
 	}
 	item = current
-
-	if item.Metadata.DeletionTimestamp != "" {
-		return c.reconcileDeletedLease(ctx, item, namespaceName)
+	if len(interfaceSlice(item.Spec["access"])) == 0 {
+		owned, err := c.legacyNamespaceOwned(ctx, item, namespaceName)
+		if err != nil {
+			return err
+		}
+		if owned {
+			if err := c.deleteLegacyRunnerAccess(ctx, namespaceName); err != nil {
+				return err
+			}
+		}
+		if expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {
+			return err
+		}
+		return c.patchStatus(ctx, name, map[string]interface{}{
+			"phase": "Failed", "namespaceName": namespaceName,
+			"expiresAt": c.expiresAt(item).Format(time.RFC3339),
+			"message":   "Legacy lease cannot provision new work; delete it or wait for TTL cleanup",
+		})
 	}
-
-	if stringValue(item.Status["phase"]) == "Expired" {
-		return c.deleteNamespace(ctx, namespaceName)
-	}
-
-	if expired, err := c.expireReadyLease(ctx, item, namespaceName); expired || err != nil {
+	if expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {
 		return err
+	}
+
+	if err := c.validateLeaseSpec(item); err != nil {
+		if stringValue(item.Status["specDigest"]) != "" {
+			if deleteErr := c.deleteOwnedNamespace(ctx, item, namespaceName); deleteErr != nil {
+				return deleteErr
+			}
+		}
+		return c.patchStatus(ctx, name, rejectedStatus(namespaceName, err.Error()))
+	}
+	if digest := stringValue(item.Status["specDigest"]); digest != "" && digest != leaseSpecDigest(item.Spec) {
+		if stringValue(item.Status["phase"]) != "Ready" || !legacyMutableExposureDigest(digest, item.Spec) {
+			return c.patchStatus(ctx, name, rejectedStatus(namespaceName, "lease spec is immutable after provisioning"))
+		}
 	}
 
 	if stringValue(item.Status["phase"]) == "Ready" {
@@ -230,13 +295,13 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 	return c.provisionLease(ctx, item, namespaceName)
 }
 
-func (c *controller) expireReadyLease(ctx context.Context, item *lease, namespaceName string) (bool, error) {
-	if stringValue(item.Status["phase"]) != "Ready" {
+func (c *controller) expireLease(ctx context.Context, item *lease, namespaceName string) (bool, error) {
+	deadline := c.expiresAt(item)
+	if !time.Now().After(deadline) {
 		return false, nil
 	}
-	deadline, err := time.Parse(time.RFC3339, stringValue(item.Status["expiresAt"]))
-	if err != nil || !c.now().After(deadline) {
-		return false, nil
+	if stringValue(item.Status["phase"]) == "Expired" {
+		return true, c.deleteOwnedNamespace(ctx, item, namespaceName)
 	}
 	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
 		"phase":         "Expired",
@@ -245,40 +310,76 @@ func (c *controller) expireReadyLease(ctx context.Context, item *lease, namespac
 	}); err != nil {
 		return true, err
 	}
-	return true, c.deleteNamespace(ctx, namespaceName)
+	return true, c.deleteOwnedNamespace(ctx, item, namespaceName)
 }
 
 func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, namespaceName string) error {
-	exposure, err := c.ensurePreviewExposure(ctx, item, namespaceName)
-	if err != nil || !exposureChanged(item.Status, exposure) {
+	if err := c.verifyNamespaceOwnership(ctx, item, namespaceName); err != nil {
 		return err
 	}
+	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
+	if err != nil {
+		return err
+	}
+	exposure, err := c.ensurePreviewExposure(ctx, item, namespaceName)
+	if err != nil {
+		return err
+	}
+	for key, value := range credentials {
+		exposure[key] = value
+	}
+	digest := leaseSpecDigest(item.Spec)
+	if !exposureChanged(item.Status, exposure) && stringValue(item.Status["specDigest"]) == digest {
+		return nil
+	}
 	next := copyStatusWithoutCredentials(item.Status)
+	next["specDigest"] = digest
 	for key, value := range exposure {
 		next[key] = value
+	}
+	credentialsReady := boolValue(next["credentialsAvailable"]) || stringValue(next["credentialsRef"]) == ""
+	exposureReady := stringValue(next["exposurePhase"]) == "Ready" || stringValue(next["exposurePhase"]) == "Off"
+	next["conditions"] = []interface{}{
+		leaseCondition("NamespaceReady", true, "Created"),
+		leaseCondition("AccessReady", true, "Bound"),
+		leaseCondition("SecretsReady", true, "Copied"),
+		leaseCondition("CredentialsReady", credentialsReady, ternaryString(credentialsReady, "Available", "Pending")),
+		leaseCondition("ExposureReady", exposureReady, ternaryString(exposureReady, "Available", "Pending")),
 	}
 	return c.patchStatus(ctx, item.Metadata.Name, next)
 }
 
 func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceName string) error {
-	createdAt, err := c.createdAt(item)
-	if err != nil {
-		return err
-	}
 	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
 		"phase":         "Provisioning",
 		"namespaceName": namespaceName,
+		"expiresAt":     c.expiresAt(item).Format(time.RFC3339),
+		"specDigest":    leaseSpecDigest(item.Spec),
 		"message":       "Creating broker-owned namespace access",
+		"conditions":    []interface{}{leaseCondition("NamespaceReady", false, "Provisioning")},
 	}); err != nil {
 		return err
 	}
 	if err := c.ensureNamespace(ctx, item, namespaceName); err != nil {
 		return err
 	}
-	if err := c.ensureNamespaceAccess(ctx, namespaceName); err != nil {
+	if err := c.ensureNamespaceResourceLimits(ctx, item, namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureNamespaceNetworkPolicy(ctx, item, namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureControllerSecretAccess(ctx, namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureNamespaceAccess(ctx, item, namespaceName); err != nil {
 		return err
 	}
 	if err := c.copySecrets(ctx, stringSlice(item.Spec["secretsToCopy"]), namespaceName); err != nil {
+		return err
+	}
+	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
+	if err != nil {
 		return err
 	}
 
@@ -288,16 +389,24 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 	}
 
 	status := map[string]interface{}{
-		"phase":              "Ready",
-		"namespaceName":      namespaceName,
-		"serviceAccountName": c.busterServiceAccountNamespace + "/" + c.busterServiceAccountName,
-		"internalUrl":        nil,
-		"expiresAt":          c.expiresAt(item, createdAt).Format(time.RFC3339),
-		"createdAt":          createdAt.Format(time.RFC3339),
-		"message":            "Namespace ready",
+		"phase":         "Ready",
+		"namespaceName": namespaceName,
+		"internalUrl":   nil,
+		"createdAt":     c.createdAt(item).Format(time.RFC3339),
+		"expiresAt":     c.expiresAt(item).Format(time.RFC3339),
+		"specDigest":    leaseSpecDigest(item.Spec),
+		"message":       "Namespace ready",
 	}
 	if serviceName := stringValue(item.Spec["serviceName"]); serviceName != "" {
-		status["internalUrl"] = "http://" + serviceName + "." + namespaceName + ".svc.cluster.local"
+		port := intValue(item.Spec["servicePort"], intValue(objectValue(item.Spec["exposure"])["servicePort"], 80))
+		path := stringValue(objectValue(item.Spec["exposure"])["path"])
+		if path == "" || !strings.HasPrefix(path, "/") {
+			path = "/"
+		}
+		status["internalUrl"] = fmt.Sprintf("http://%s.%s.svc.cluster.local:%d%s", serviceName, namespaceName, port, path)
+	}
+	for key, value := range credentials {
+		status[key] = value
 	}
 	for key, value := range exposure {
 		status[key] = value
@@ -305,7 +414,46 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 	if stringValue(exposure["previewUrl"]) != "" {
 		status["message"] = exposure["message"]
 	}
+	credentialsReady := boolValue(status["credentialsAvailable"]) || stringValue(status["credentialsRef"]) == ""
+	exposureReady := stringValue(status["exposurePhase"]) == "Ready" || stringValue(status["exposurePhase"]) == "Off"
+	status["conditions"] = []interface{}{
+		leaseCondition("NamespaceReady", true, "Created"),
+		leaseCondition("AccessReady", true, "Bound"),
+		leaseCondition("SecretsReady", true, "Copied"),
+		leaseCondition("CredentialsReady", credentialsReady, ternaryString(credentialsReady, "Available", "Pending")),
+		leaseCondition("ExposureReady", exposureReady, ternaryString(exposureReady, "Available", "Pending")),
+	}
 	return c.patchStatus(ctx, item.Metadata.Name, status)
+}
+
+func (c *controller) createdAt(item *lease) time.Time {
+	createdAt, err := time.Parse(time.RFC3339, item.Metadata.CreationTimestamp)
+	if err != nil {
+		return time.Now().UTC()
+	}
+	return createdAt.UTC()
+}
+
+// ensureControllerSecretAccess gives only this controller access to Secrets in
+// the one broker-owned target namespace. Source Secret reads use a separate
+// namespaced Role in the controller namespace.
+func (c *controller) ensureControllerSecretAccess(ctx context.Context, namespaceName string) error {
+	roleName := c.secretRoleName
+	binding := c.controllerSecretRoleBinding(namespaceName, roleName)
+	return c.createOrPatch(ctx,
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/"+roleName, binding, nil)
+}
+
+func (c *controller) controllerSecretRoleBinding(namespaceName string, roleName string) map[string]interface{} {
+	return map[string]interface{}{
+		"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "RoleBinding",
+		"metadata": map[string]interface{}{"name": roleName, "namespace": namespaceName},
+		"roleRef":  map[string]interface{}{"apiGroup": "rbac.authorization.k8s.io", "kind": "ClusterRole", "name": roleName},
+		"subjects": []interface{}{map[string]interface{}{
+			"kind": "ServiceAccount", "name": c.serviceAccountName, "namespace": c.namespace,
+		}},
+	}
 }
 
 func (c *controller) reconcileDeletedLease(ctx context.Context, item *lease, namespaceName string) error {
@@ -316,10 +464,30 @@ func (c *controller) reconcileDeletedLease(ctx context.Context, item *lease, nam
 	}); err != nil {
 		return err
 	}
-	if err := c.deleteNamespace(ctx, namespaceName); err != nil {
-		return err
+	if err := c.deleteOwnedNamespace(ctx, item, namespaceName); err != nil {
+		if !errors.Is(err, errNamespaceOwnershipMismatch) {
+			return err
+		}
 	}
 	return c.removeFinalizer(ctx, item)
+}
+
+func (c *controller) legacyNamespaceOwned(ctx context.Context, item *lease, namespaceName string) (bool, error) {
+	if namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {
+		return false, nil
+	}
+	var namespace map[string]interface{}
+	err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", &namespace)
+	if err != nil {
+		var apiErr *apiError
+		if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
+			return false, nil
+		}
+		return false, err
+	}
+	labels := stringMap(objectValue(namespace["metadata"])["labels"])
+	return labels["kubeclaw/managed-by"] == "buster-namespace-controller" &&
+		labels["kubeclaw/buster-lease"] == item.Metadata.Name, nil
 }
 
 func (c *controller) ensureFinalizer(ctx context.Context, item *lease) (*lease, error) {
@@ -351,6 +519,15 @@ func (c *controller) removeFinalizer(ctx context.Context, item *lease) error {
 }
 
 func (c *controller) ensureNamespace(ctx context.Context, item *lease, namespaceName string) error {
+	var existing map[string]interface{}
+	err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", &existing)
+	if err == nil {
+		return verifyNamespaceLabels(item, namespaceName, existing)
+	}
+	var apiErr *apiError
+	if !errors.As(err, &apiErr) || apiErr.statusCode != http.StatusNotFound {
+		return err
+	}
 	manifest := map[string]interface{}{
 		"apiVersion": "v1",
 		"kind":       "Namespace",
@@ -359,52 +536,175 @@ func (c *controller) ensureNamespace(ctx context.Context, item *lease, namespace
 			"labels": ownerLabels(item, namespaceName),
 		},
 	}
-	return c.createOrPatch(ctx, "/api/v1/namespaces", "/api/v1/namespaces/"+namespaceName, manifest, nil)
+	return c.kube(ctx, http.MethodPost, "/api/v1/namespaces", manifest, "application/json", nil)
 }
 
-func (c *controller) ensureNamespaceAccess(ctx context.Context, namespaceName string) error {
-	if err := c.createOrPatch(
-		ctx,
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles",
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles/buster-namespace-runner",
-		c.namespaceRole(namespaceName),
-		nil,
-	); err != nil {
+func (c *controller) verifyNamespaceOwnership(ctx context.Context, item *lease, namespaceName string) error {
+	if namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {
+		return fmt.Errorf("refusing to mutate invalid broker namespace %q", namespaceName)
+	}
+	var existing map[string]interface{}
+	if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", &existing); err != nil {
 		return err
 	}
-	return c.createOrPatch(
-		ctx,
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/buster-namespace-runner",
-		c.namespaceRoleBinding(namespaceName),
-		nil,
-	)
+	return verifyNamespaceLabels(item, namespaceName, existing)
 }
 
-func (c *controller) namespaceRole(namespaceName string) map[string]interface{} {
+func verifyNamespaceLabels(item *lease, namespaceName string, namespace map[string]interface{}) error {
+	labels := stringMap(objectValue(namespace["metadata"])["labels"])
+	if labels["kubeclaw/managed-by"] != "buster-namespace-controller" ||
+		labels["kubeclaw/buster-lease"] != item.Metadata.Name ||
+		labels["kubeclaw/buster-lease-uid"] != item.Metadata.UID {
+		return fmt.Errorf("namespace %s exists but is not owned by this lease", namespaceName)
+	}
+	return nil
+}
+
+// ensureNamespaceNetworkPolicy blocks arbitrary egress before any Secret is
+// copied. Workloads can use cluster DNS and can reach only pods in this lease.
+func (c *controller) ensureNamespaceNetworkPolicy(ctx context.Context, item *lease, namespaceName string) error {
+	name := "buster-default-egress"
+	manifest := map[string]interface{}{
+		"apiVersion": "networking.k8s.io/v1", "kind": "NetworkPolicy",
+		"metadata": map[string]interface{}{"name": name, "namespace": namespaceName, "labels": ownerLabels(item, namespaceName)},
+		"spec": map[string]interface{}{
+			"podSelector": map[string]interface{}{}, "policyTypes": []interface{}{"Ingress", "Egress"},
+			"ingress": []interface{}{map[string]interface{}{
+				"from": []interface{}{
+					map[string]interface{}{"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": namespaceName}}},
+					map[string]interface{}{
+						"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": c.namespace}},
+						"podSelector":       map[string]interface{}{"matchExpressions": []interface{}{map[string]interface{}{"key": "kubeclaw/role", "operator": "In", "values": []interface{}{"nova", "buster"}}}},
+					},
+					map[string]interface{}{
+						"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": "tailscale"}},
+						"podSelector":       map[string]interface{}{"matchLabels": map[string]interface{}{"tailscale.com/managed": "true", "tailscale.com/parent-resource-ns": namespaceName}},
+					},
+				},
+			}},
+			"egress": []interface{}{
+				map[string]interface{}{
+					"to": []interface{}{map[string]interface{}{"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": namespaceName}}}},
+				},
+				map[string]interface{}{
+					"to": []interface{}{map[string]interface{}{
+						"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": "kube-system"}},
+						"podSelector":       map[string]interface{}{"matchLabels": map[string]interface{}{"k8s-app": "kube-dns"}},
+					}},
+					"ports": []interface{}{
+						map[string]interface{}{"protocol": "UDP", "port": 53},
+						map[string]interface{}{"protocol": "TCP", "port": 53},
+					},
+				},
+			},
+		},
+	}
+	return c.createOrPatch(ctx,
+		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/networkpolicies",
+		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/networkpolicies/"+name, manifest, nil)
+}
+
+// ensureNamespaceResourceLimits puts an enforced ceiling below the cluster
+// scheduler. Default requests and limits also cover manifests that omit them.
+func (c *controller) ensureNamespaceResourceLimits(ctx context.Context, item *lease, namespaceName string) error {
+	labels := ownerLabels(item, namespaceName)
+	quotaName := "buster-resource-quota"
+	quota := map[string]interface{}{
+		"apiVersion": "v1", "kind": "ResourceQuota",
+		"metadata": map[string]interface{}{"name": quotaName, "namespace": namespaceName, "labels": labels},
+		"spec": map[string]interface{}{"hard": map[string]interface{}{
+			"pods": "32", "requests.cpu": "8", "requests.memory": "16Gi", "limits.cpu": "16", "limits.memory": "32Gi",
+			"requests.ephemeral-storage": "16Gi", "limits.ephemeral-storage": "32Gi",
+			"persistentvolumeclaims": "8", "requests.storage": "100Gi",
+		}},
+	}
+	if err := c.createOrPatch(ctx, "/api/v1/namespaces/"+namespaceName+"/resourcequotas",
+		"/api/v1/namespaces/"+namespaceName+"/resourcequotas/"+quotaName, quota, nil); err != nil {
+		return err
+	}
+	limitName := "buster-default-limits"
+	limit := map[string]interface{}{
+		"apiVersion": "v1", "kind": "LimitRange",
+		"metadata": map[string]interface{}{"name": limitName, "namespace": namespaceName, "labels": labels},
+		"spec": map[string]interface{}{"limits": []interface{}{map[string]interface{}{
+			"type":           "Container",
+			"defaultRequest": map[string]interface{}{"cpu": "100m", "memory": "128Mi", "ephemeral-storage": "128Mi"},
+			"default":        map[string]interface{}{"cpu": "1", "memory": "1Gi", "ephemeral-storage": "2Gi"},
+			"max":            map[string]interface{}{"cpu": "4", "memory": "8Gi", "ephemeral-storage": "8Gi"},
+		}}},
+	}
+	return c.createOrPatch(ctx, "/api/v1/namespaces/"+namespaceName+"/limitranges",
+		"/api/v1/namespaces/"+namespaceName+"/limitranges/"+limitName, limit, nil)
+}
+
+func (c *controller) ensureNamespaceAccess(ctx context.Context, item *lease, namespaceName string) error {
+	if err := c.deleteLegacyRunnerAccess(ctx, namespaceName); err != nil {
+		return err
+	}
+	requests, err := c.accessRequests(item)
+	if err != nil {
+		return err
+	}
+	byMode := map[string][]serviceAccountRef{}
+	for _, request := range requests {
+		byMode[request.Mode] = append(byMode[request.Mode], request.Subject)
+	}
+	for _, mode := range []string{"deployer", "tester"} {
+		if len(byMode[mode]) == 0 {
+			continue
+		}
+		roleName := c.testerRoleName
+		if mode == "deployer" {
+			roleName = c.deployerRoleName
+		}
+		if err := c.createOrPatch(ctx,
+			"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
+			"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/"+roleName,
+			c.namespaceRoleBinding(namespaceName, roleName, byMode[mode]), nil); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (c *controller) deleteLegacyRunnerAccess(ctx context.Context, namespaceName string) error {
+	for _, resource := range []string{"rolebindings", "roles"} {
+		path := "/apis/rbac.authorization.k8s.io/v1/namespaces/" + namespaceName + "/" + resource + "/buster-namespace-runner"
+		err := c.kube(ctx, http.MethodDelete, path, map[string]interface{}{}, "application/json", nil)
+		if err == nil {
+			continue
+		}
+		var apiErr *apiError
+		if !errors.As(err, &apiErr) || apiErr.statusCode != http.StatusNotFound {
+			return err
+		}
+	}
+	return nil
+}
+
+func (c *controller) namespaceRole(namespaceName string, roleName string, mode string) map[string]interface{} {
+	coreResources := []string{"pods", "pods/log", "services", "endpoints", "configmaps"}
+	appResources := []string{"deployments", "replicasets"}
+	if mode == "deployer" {
+		coreResources = append(coreResources, "persistentvolumeclaims")
+		appResources = append(appResources, "statefulsets")
+	}
 	return map[string]interface{}{
 		"apiVersion": "rbac.authorization.k8s.io/v1",
 		"kind":       "Role",
 		"metadata": map[string]interface{}{
-			"name":      "buster-namespace-runner",
+			"name":      roleName,
 			"namespace": namespaceName,
 		},
 		"rules": []interface{}{
 			map[string]interface{}{
 				"apiGroups": []string{""},
-				"resources": []string{
-					"pods", "pods/log", "services", "endpoints", "configmaps", "persistentvolumeclaims",
-				},
-				"verbs": []string{"create", "get", "list", "watch", "delete", "patch", "update"},
-			},
-			map[string]interface{}{
-				"apiGroups": []string{""},
-				"resources": []string{"secrets"},
-				"verbs":     []string{"get"},
+				"resources": coreResources,
+				"verbs":     []string{"create", "get", "list", "watch", "delete", "patch", "update"},
 			},
 			map[string]interface{}{
 				"apiGroups": []string{"apps"},
-				"resources": []string{"deployments", "replicasets", "statefulsets"},
+				"resources": appResources,
 				"verbs":     []string{"create", "get", "list", "watch", "delete", "patch", "update"},
 			},
 			map[string]interface{}{
@@ -412,24 +712,17 @@ func (c *controller) namespaceRole(namespaceName string) map[string]interface{} 
 				"resources": []string{"jobs", "cronjobs"},
 				"verbs":     []string{"create", "get", "list", "watch", "delete", "patch", "update"},
 			},
-			map[string]interface{}{
-				"apiGroups": []string{"networking.k8s.io"},
-				"resources": []string{"ingresses"},
-				"verbs":     []string{"create", "get", "list", "watch", "delete", "patch", "update"},
-			},
 		},
 	}
 }
 
-func (c *controller) namespaceRoleBinding(namespaceName string) map[string]interface{} {
-	subjects := []interface{}{
-		map[string]interface{}{
-			"kind":      "ServiceAccount",
-			"name":      c.busterServiceAccountName,
-			"namespace": c.busterServiceAccountNamespace,
-		},
+func (c *controller) namespaceRoleBinding(namespaceName string, roleName string, accounts []serviceAccountRef, roleKinds ...string) map[string]interface{} {
+	roleKind := "ClusterRole"
+	if len(roleKinds) > 0 && roleKinds[0] == "Role" {
+		roleKind = "Role"
 	}
-	for _, account := range c.additionalRunnerAccounts {
+	subjects := []interface{}{}
+	for _, account := range accounts {
 		subjects = append(subjects, map[string]interface{}{
 			"kind":      "ServiceAccount",
 			"name":      account.Name,
@@ -440,28 +733,273 @@ func (c *controller) namespaceRoleBinding(namespaceName string) map[string]inter
 		"apiVersion": "rbac.authorization.k8s.io/v1",
 		"kind":       "RoleBinding",
 		"metadata": map[string]interface{}{
-			"name":      "buster-namespace-runner",
+			"name":      roleName,
 			"namespace": namespaceName,
 		},
 		"roleRef": map[string]interface{}{
 			"apiGroup": "rbac.authorization.k8s.io",
-			"kind":     "Role",
-			"name":     "buster-namespace-runner",
+			"kind":     roleKind,
+			"name":     roleName,
 		},
 		"subjects": subjects,
 	}
 }
 
+func (c *controller) accessRequests(item *lease) ([]accessRequest, error) {
+	values := interfaceSlice(item.Spec["access"])
+	if len(values) == 0 {
+		return nil, errors.New("at least one access request is required")
+	}
+	requests := make([]accessRequest, 0, len(values))
+	seen := map[string]bool{}
+	for _, value := range values {
+		entry := objectValue(value)
+		subject, err := parseServiceAccountRef(stringValue(entry["subject"]), c.namespace)
+		if err != nil {
+			return nil, err
+		}
+		mode := stringValue(entry["mode"])
+		if mode != "deployer" && mode != "tester" {
+			return nil, fmt.Errorf("unsupported access mode %q", mode)
+		}
+		if !c.allowedAccess[subject][mode] {
+			return nil, fmt.Errorf("access denied for %s/%s in mode %s", subject.Namespace, subject.Name, mode)
+		}
+		key := subject.Namespace + "/" + subject.Name + ":" + mode
+		if !seen[key] {
+			requests = append(requests, accessRequest{Subject: subject, Mode: mode})
+			seen[key] = true
+		}
+	}
+	return requests, nil
+}
+
+func (c *controller) credentialRequest(item *lease) (*testCredentialRequest, error) {
+	entry := objectValue(item.Spec["testCredentials"])
+	if len(entry) == 0 {
+		return nil, nil
+	}
+	mode := stringValue(entry["mode"])
+	if mode != "generate" && mode != "existing" {
+		return nil, fmt.Errorf("testCredentials.mode must be generate or existing")
+	}
+	secretName := sanitizeDNSLabel(stringValue(entry["secretName"]), "")
+	if secretName == "" || secretName != stringValue(entry["secretName"]) {
+		return nil, errors.New("testCredentials.secretName must be a valid DNS label")
+	}
+	for _, copiedName := range stringSlice(item.Spec["secretsToCopy"]) {
+		if copiedName == secretName {
+			return nil, errors.New("testCredentials.secretName must not match a copied source Secret")
+		}
+	}
+	readers := []serviceAccountRef{}
+	seen := map[serviceAccountRef]bool{}
+	leaseSubjects := map[serviceAccountRef]bool{}
+	writers := []serviceAccountRef{}
+	for _, value := range interfaceSlice(item.Spec["access"]) {
+		access := objectValue(value)
+		subject, err := parseServiceAccountRef(stringValue(access["subject"]), c.namespace)
+		if err == nil {
+			leaseSubjects[subject] = true
+			if mode == "existing" && stringValue(access["mode"]) == "deployer" {
+				writers = append(writers, subject)
+			}
+		}
+	}
+	for _, raw := range stringSlice(entry["readers"]) {
+		reader, err := parseServiceAccountRef(raw, c.namespace)
+		if err != nil {
+			return nil, err
+		}
+		if _, allowed := c.allowedAccess[reader]; !allowed {
+			return nil, fmt.Errorf("credential reader %s/%s is not allowed", reader.Namespace, reader.Name)
+		}
+		if !seen[reader] {
+			readers = append(readers, reader)
+			seen[reader] = true
+		}
+	}
+	if len(readers) == 0 {
+		return nil, errors.New("testCredentials requires at least one reader")
+	}
+	for subject := range leaseSubjects {
+		if !seen[subject] {
+			return nil, fmt.Errorf("credential reader list must include workload-capable lease subject %s/%s", subject.Namespace, subject.Name)
+		}
+	}
+	keys := stringSlice(entry["keys"])
+	if len(keys) == 0 && mode == "generate" {
+		keys = []string{"username", "password"}
+	}
+	if len(keys) == 0 {
+		return nil, errors.New("existing testCredentials requires at least one deliverable key")
+	}
+	seenKeys := map[string]bool{}
+	for _, key := range keys {
+		if !validSecretRefName(key) || seenKeys[key] {
+			return nil, fmt.Errorf("invalid or duplicate test credential key %q", key)
+		}
+		seenKeys[key] = true
+	}
+	if mode == "generate" && (len(keys) != 2 || !seenKeys["username"] || !seenKeys["password"]) {
+		return nil, errors.New("generated testCredentials keys must be username and password")
+	}
+	if mode == "existing" && len(writers) == 0 {
+		return nil, errors.New("existing testCredentials requires a deployer to populate the dedicated Secret")
+	}
+	return &testCredentialRequest{Mode: mode, SecretName: secretName, Readers: readers, Writers: writers, Keys: keys}, nil
+}
+
+func (c *controller) ensureTestCredentials(ctx context.Context, item *lease, namespaceName string) (map[string]interface{}, error) {
+	request, err := c.credentialRequest(item)
+	if err != nil {
+		return nil, err
+	}
+	if request == nil {
+		return map[string]interface{}{"credentialsRef": nil, "credentialsAvailable": false}, nil
+	}
+	if err := c.ensureCredentialAccess(ctx, namespaceName, request); err != nil {
+		return nil, err
+	}
+	path := "/api/v1/namespaces/" + namespaceName + "/secrets/" + request.SecretName
+	var secret map[string]interface{}
+	err = c.kube(ctx, http.MethodGet, path, nil, "application/json", &secret)
+	if err != nil {
+		var apiErr *apiError
+		if !errors.As(err, &apiErr) || apiErr.statusCode != http.StatusNotFound {
+			return nil, err
+		}
+		if request.Mode == "existing" {
+			placeholder := map[string]interface{}{
+				"apiVersion": "v1", "kind": "Secret", "type": "Opaque",
+				"metadata": map[string]interface{}{
+					"name": request.SecretName, "namespace": namespaceName,
+					"labels": mergeStringMaps(ownerLabels(item, namespaceName), map[string]string{"kubeclaw/user-deliverable": "true"}),
+				},
+			}
+			if err := c.kube(ctx, http.MethodPost, "/api/v1/namespaces/"+namespaceName+"/secrets", placeholder, "application/json", nil); err != nil {
+				return nil, err
+			}
+			return map[string]interface{}{"credentialsRef": "secret/" + request.SecretName, "credentialsAvailable": false}, nil
+		}
+		password := make([]byte, 24)
+		if _, err := rand.Read(password); err != nil {
+			return nil, fmt.Errorf("generate preview credential: %w", err)
+		}
+		manifest := map[string]interface{}{
+			"apiVersion": "v1", "kind": "Secret", "type": "Opaque",
+			"metadata": map[string]interface{}{
+				"name": request.SecretName, "namespace": namespaceName,
+				"labels": mergeStringMaps(ownerLabels(item, namespaceName), map[string]string{"kubeclaw/user-deliverable": "true"}),
+			},
+			"stringData": map[string]interface{}{
+				"username": "preview", "password": base64.RawURLEncoding.EncodeToString(password),
+			},
+		}
+		if err := c.kube(ctx, http.MethodPost, "/api/v1/namespaces/"+namespaceName+"/secrets", manifest, "application/json", &secret); err != nil {
+			return nil, err
+		}
+	}
+	available, err := deliverableCredentialAvailable(secret, request)
+	if err != nil {
+		return nil, err
+	}
+	if !available {
+		if request.Mode == "existing" {
+			return map[string]interface{}{"credentialsRef": "secret/" + request.SecretName, "credentialsAvailable": false}, nil
+		}
+		return nil, fmt.Errorf("generated test credential Secret %s is incomplete", request.SecretName)
+	}
+	return map[string]interface{}{"credentialsRef": "secret/" + request.SecretName, "credentialsAvailable": true}, nil
+}
+
+func validateDeliverableCredentialSecret(secret map[string]interface{}, request *testCredentialRequest) error {
+	available, err := deliverableCredentialAvailable(secret, request)
+	if err != nil {
+		return err
+	}
+	if !available {
+		return fmt.Errorf("test credential Secret %s is missing a declared key", request.SecretName)
+	}
+	return nil
+}
+
+func deliverableCredentialAvailable(secret map[string]interface{}, request *testCredentialRequest) (bool, error) {
+	allowed := map[string]bool{}
+	for _, key := range request.Keys {
+		allowed[key] = true
+	}
+	found := map[string]bool{}
+	for _, field := range []string{"data", "stringData"} {
+		for key, value := range objectValue(secret[field]) {
+			if !allowed[key] {
+				return false, fmt.Errorf("test credential Secret %s contains undeclared key %s", request.SecretName, key)
+			}
+			if stringValue(value) != "" {
+				found[key] = true
+			}
+		}
+	}
+	for _, key := range request.Keys {
+		if !found[key] {
+			return false, nil
+		}
+	}
+	return true, nil
+}
+
+func (c *controller) ensureCredentialAccess(ctx context.Context, namespaceName string, request *testCredentialRequest) error {
+	roleName := "buster-preview-credentials-reader"
+	role := map[string]interface{}{
+		"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "Role",
+		"metadata": map[string]interface{}{"name": roleName, "namespace": namespaceName},
+		"rules": []interface{}{map[string]interface{}{
+			"apiGroups": []string{""}, "resources": []string{"secrets"},
+			"resourceNames": []string{request.SecretName}, "verbs": []string{"get"},
+		}},
+	}
+	if err := c.createOrPatch(ctx,
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles",
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles/"+roleName,
+		role, nil); err != nil {
+		return err
+	}
+	if err := c.createOrPatch(ctx,
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/"+roleName,
+		c.namespaceRoleBinding(namespaceName, roleName, request.Readers, "Role"), nil); err != nil {
+		return err
+	}
+	if request.Mode != "existing" {
+		return nil
+	}
+	writerRoleName := "buster-preview-credentials-writer"
+	writerRole := map[string]interface{}{
+		"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "Role",
+		"metadata": map[string]interface{}{"name": writerRoleName, "namespace": namespaceName},
+		"rules": []interface{}{map[string]interface{}{
+			"apiGroups": []string{""}, "resources": []string{"secrets"},
+			"resourceNames": []string{request.SecretName}, "verbs": []string{"patch"},
+		}},
+	}
+	if err := c.createOrPatch(ctx,
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles",
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles/"+writerRoleName,
+		writerRole, nil); err != nil {
+		return err
+	}
+	return c.createOrPatch(ctx,
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
+		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/"+writerRoleName,
+		c.namespaceRoleBinding(namespaceName, writerRoleName, request.Writers, "Role"), nil)
+}
+
 type previewExposure struct {
-	IngressName           string
-	Hostname              string
-	ServiceName           string
-	ServicePort           int
-	Path                  string
-	CredentialsRef        string
-	CredentialsSecretName string
-	CredentialsKeys       []string
-	RevealCredentials     bool
+	IngressName string
+	Hostname    string
+	ServiceName string
+	ServicePort int
+	Path        string
 }
 
 func previewExposureSpec(item *lease, namespaceName string) (*previewExposure, error) {
@@ -481,25 +1019,17 @@ func previewExposureSpec(item *lease, namespaceName string) (*previewExposure, e
 	serviceName := sanitizeDNSLabel(firstString(exposureMap["serviceName"], item.Spec["serviceName"], "app"), "app")
 	hostname := sanitizeDNSLabel(firstString(exposureMap["hostname"], namespaceName+"-"+serviceName), namespaceName+"-"+serviceName)
 	path := stringValue(exposureMap["path"])
-	if !strings.HasPrefix(path, "/") {
+	if path == "" {
 		path = "/"
+	} else if len(path) > 1024 || !strings.HasPrefix(path, "/") || strings.HasPrefix(path, "//") || strings.ContainsAny(path, "\x00\r\n?#") {
+		return nil, errors.New("invalid final-preview path")
 	}
-	credentialsRef := stringValue(exposureMap["credentialsRef"])
-	credentialsSecretName := stringValue(exposureMap["credentialsSecretName"])
-	if credentialsSecretName == "" {
-		credentialsSecretName = parseSecretNameFromRef(credentialsRef)
-	}
-
 	return &previewExposure{
-		IngressName:           "buster-final-preview",
-		Hostname:              hostname,
-		ServiceName:           serviceName,
-		ServicePort:           servicePort,
-		Path:                  path,
-		CredentialsRef:        nullIfEmpty(credentialsRef),
-		CredentialsSecretName: credentialsSecretName,
-		CredentialsKeys:       stringSlice(exposureMap["credentialsKeys"]),
-		RevealCredentials:     boolValue(exposureMap["revealCredentials"]) || stringValue(exposureMap["credentialsDelivery"]) == "discord",
+		IngressName: "buster-final-preview",
+		Hostname:    hostname,
+		ServiceName: serviceName,
+		ServicePort: servicePort,
+		Path:        path,
 	}, nil
 }
 
@@ -509,34 +1039,28 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 		return nil, err
 	}
 	if exposure == nil {
+		if err := c.deleteIngress(ctx, namespaceName, "buster-final-preview"); err != nil {
+			return nil, err
+		}
 		return map[string]interface{}{
-			"exposurePhase":        "Off",
-			"previewUrl":           nil,
-			"exposureHostname":     nil,
-			"credentialsRef":       nil,
-			"credentialsAvailable": false,
-			"message":              "Preview exposure disabled",
+			"exposurePhase":    "Off",
+			"previewUrl":       nil,
+			"exposureHostname": nil,
+			"message":          "Preview exposure disabled",
 		}, nil
 	}
 
-	serviceReady, err := c.previewServiceReady(ctx, namespaceName, exposure.ServiceName)
+	serviceReady, err := c.previewServiceReady(ctx, namespaceName, exposure.ServiceName, exposure.ServicePort)
 	if err != nil {
 		return nil, err
 	}
 	if !serviceReady {
 		return map[string]interface{}{
-			"exposurePhase":        "Pending",
-			"previewUrl":           nil,
-			"exposureHostname":     exposure.Hostname,
-			"credentialsRef":       nullableString(exposure.CredentialsRef),
-			"credentialsAvailable": false,
-			"message":              "Waiting for Service/" + exposure.ServiceName + " before creating Tailscale ingress",
+			"exposurePhase":    "Pending",
+			"previewUrl":       nil,
+			"exposureHostname": exposure.Hostname,
+			"message":          "Waiting for Service/" + exposure.ServiceName + " before creating Tailscale ingress",
 		}, nil
-	}
-
-	credentialsAvailable, err := c.previewCredentialsAvailable(ctx, namespaceName, exposure)
-	if err != nil {
-		return nil, err
 	}
 
 	var ingress map[string]interface{}
@@ -552,23 +1076,36 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 
 	previewURL := ingressPreviewURL(ingress, exposure)
 	message := "Waiting for Tailscale ingress status"
+	exposureHostname := exposure.Hostname
 	if previewURL != "" {
 		message = "Tailscale preview URL ready"
+		parsed, err := url.Parse(previewURL)
+		if err != nil || parsed.Hostname() == "" {
+			return nil, errors.New("Tailscale ingress returned an invalid preview URL")
+		}
+		exposureHostname = parsed.Hostname()
 	}
 	return map[string]interface{}{
-		"exposurePhase":        ternaryString(previewURL != "", "Ready", "Pending"),
-		"previewUrl":           nullableString(previewURL),
-		"exposureHostname":     exposure.Hostname,
-		"credentialsRef":       nullableString(exposure.CredentialsRef),
-		"credentialsAvailable": credentialsAvailable,
-		"message":              message,
+		"exposurePhase":    ternaryString(previewURL != "", "Ready", "Pending"),
+		"previewUrl":       nullableString(previewURL),
+		"exposureHostname": exposureHostname,
+		"message":          message,
 	}, nil
 }
 
-func (c *controller) previewServiceReady(ctx context.Context, namespaceName string, serviceName string) (bool, error) {
-	err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/services/"+serviceName, nil, "application/json", nil)
+func (c *controller) previewServiceReady(ctx context.Context, namespaceName string, serviceName string, servicePort int) (bool, error) {
+	var service map[string]interface{}
+	err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/services/"+serviceName, nil, "application/json", &service)
 	if err == nil {
-		return true, nil
+		var endpoints map[string]interface{}
+		if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/endpoints/"+serviceName, nil, "application/json", &endpoints); err != nil {
+			var endpointErr *apiError
+			if errors.As(err, &endpointErr) && endpointErr.statusCode == http.StatusNotFound {
+				return false, nil
+			}
+			return false, err
+		}
+		return serviceEndpointReady(service, endpoints, servicePort), nil
 	}
 	var apiErr *apiError
 	if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
@@ -577,21 +1114,56 @@ func (c *controller) previewServiceReady(ctx context.Context, namespaceName stri
 	return false, err
 }
 
-func (c *controller) previewCredentialsAvailable(ctx context.Context, namespaceName string, exposure *previewExposure) (bool, error) {
-	if !exposure.RevealCredentials {
-		return false, nil
+func serviceEndpointReady(service map[string]interface{}, endpoints map[string]interface{}, requestedPort int) bool {
+	var portName string
+	var targetPort interface{}
+	servicePorts := interfaceSlice(objectValue(service["spec"])["ports"])
+	for _, value := range servicePorts {
+		port := objectValue(value)
+		if intValue(port["port"], 0) == requestedPort {
+			portName, targetPort = stringValue(port["name"]), port["targetPort"]
+			if targetPort == nil {
+				targetPort = requestedPort
+			}
+			break
+		}
 	}
-	if exposure.CredentialsSecretName == "" {
-		return false, errors.New("preview credential reveal requested but no credentialsSecretName or credentialsRef secret was provided")
+	if targetPort == nil {
+		return false
 	}
-	var secret map[string]interface{}
-	if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName+"/secrets/"+exposure.CredentialsSecretName, nil, "application/json", &secret); err != nil {
-		return false, err
+	for _, value := range interfaceSlice(endpoints["subsets"]) {
+		subset := objectValue(value)
+		if len(interfaceSlice(subset["addresses"])) == 0 {
+			continue
+		}
+		endpointPorts := interfaceSlice(subset["ports"])
+		if len(servicePorts) == 1 && portName == "" && len(endpointPorts) == 1 {
+			return true
+		}
+		for _, endpointValue := range endpointPorts {
+			endpointPort := objectValue(endpointValue)
+			if (stringValue(targetPort) != "" && stringValue(endpointPort["name"]) == stringValue(targetPort)) ||
+				(stringValue(targetPort) == "" && intValue(endpointPort["port"], 0) == intValue(targetPort, requestedPort)) ||
+				(portName != "" && stringValue(endpointPort["name"]) == portName) {
+				return true
+			}
+		}
 	}
-	if !secretHasCredentialKeys(secret, exposure.CredentialsKeys) {
-		return false, fmt.Errorf("preview credential secret %s did not contain any readable credential keys", exposure.CredentialsSecretName)
+	return false
+}
+
+func (c *controller) deleteIngress(ctx context.Context, namespaceName string, ingressName string) error {
+	err := c.kube(ctx, http.MethodDelete,
+		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/ingresses/"+ingressName,
+		map[string]interface{}{}, "application/json", nil)
+	if err == nil {
+		return nil
 	}
-	return true, nil
+	var apiErr *apiError
+	if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
+		return nil
+	}
+	return err
 }
 
 func previewIngress(item *lease, namespaceName string, exposure *previewExposure) map[string]interface{} {
@@ -610,7 +1182,6 @@ func previewIngress(item *lease, namespaceName string, exposure *previewExposure
 			},
 			"rules": []interface{}{
 				map[string]interface{}{
-					"host": exposure.Hostname,
 					"http": map[string]interface{}{
 						"paths": []interface{}{
 							map[string]interface{}{
@@ -640,7 +1211,7 @@ func ingressPreviewURL(ingress map[string]interface{}, exposure *previewExposure
 		host := firstString(item["hostname"], item["ip"])
 		if host != "" {
 			if exposure.Path == "/" {
-				return "https://" + host
+				return "https://" + host + "/"
 			}
 			return "https://" + host + exposure.Path
 		}
@@ -650,8 +1221,8 @@ func ingressPreviewURL(ingress map[string]interface{}, exposure *previewExposure
 
 func (c *controller) copySecrets(ctx context.Context, names []string, targetNamespace string) error {
 	for _, name := range names {
-		if _, approved := c.approvedSecretNames[name]; !approved {
-			return fmt.Errorf("secret %s is not approved for test deployment", name)
+		if !c.allowedSourceSecrets[name] {
+			return fmt.Errorf("source secret %s is not approved for test namespace copying", name)
 		}
 		var source map[string]interface{}
 		if err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+c.namespace+"/secrets/"+name, nil, "application/json", &source); err != nil {
@@ -672,6 +1243,8 @@ func sanitizeSecret(secret map[string]interface{}, targetNamespace string) map[s
 	for _, field := range []string{"resourceVersion", "uid", "creationTimestamp", "managedFields", "selfLink", "generation"} {
 		delete(meta, field)
 	}
+	delete(meta, "ownerReferences")
+	delete(meta, "finalizers")
 	copy["metadata"] = meta
 	return copy
 }
@@ -685,6 +1258,30 @@ func (c *controller) deleteNamespace(ctx context.Context, namespaceName string) 
 		}
 	}
 	return c.waitForNamespaceDeleted(ctx, namespaceName)
+}
+
+func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, namespaceName string) error {
+	if namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {
+		return fmt.Errorf("refusing to delete invalid broker namespace %q", namespaceName)
+	}
+	var namespace map[string]interface{}
+	err := c.kube(ctx, http.MethodGet, "/api/v1/namespaces/"+namespaceName, nil, "application/json", &namespace)
+	if err != nil {
+		var apiErr *apiError
+		if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
+			return nil
+		}
+		return err
+	}
+	labels := stringMap(objectValue(namespace["metadata"])["labels"])
+	legacyOwned := len(interfaceSlice(item.Spec["access"])) == 0 &&
+		labels["kubeclaw/buster-lease-uid"] == ""
+	if labels["kubeclaw/managed-by"] != "buster-namespace-controller" ||
+		labels["kubeclaw/buster-lease"] != item.Metadata.Name ||
+		(!legacyOwned && labels["kubeclaw/buster-lease-uid"] != item.Metadata.UID) {
+		return fmt.Errorf("%w: refusing to delete namespace %s", errNamespaceOwnershipMismatch, namespaceName)
+	}
+	return c.deleteNamespace(ctx, namespaceName)
 }
 
 func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName string) error {
@@ -791,49 +1388,133 @@ func (c *controller) statusPath(name string) string {
 	return c.leasePath(name) + "/status"
 }
 
-func (c *controller) expiresAt(item *lease, createdAt time.Time) time.Time {
+func (c *controller) expiresAt(item *lease) time.Time {
 	ttl := c.defaultTTL
 	if value := intValue(item.Spec["ttlSeconds"], 0); value > 0 {
 		ttl = time.Duration(value) * time.Second
 	}
+	if c.maxTTL > 0 && ttl > c.maxTTL {
+		ttl = c.maxTTL
+	}
+	createdAt, err := time.Parse(time.RFC3339, item.Metadata.CreationTimestamp)
+	if err != nil {
+		createdAt = time.Now()
+	}
 	return createdAt.Add(ttl)
 }
 
-func (c *controller) createdAt(item *lease) (time.Time, error) {
-	createdAt, err := time.Parse(time.RFC3339, item.Metadata.CreationTimestamp)
-	if err != nil {
-		return time.Time{}, fmt.Errorf("invalid lease creationTimestamp: %w", err)
+func (c *controller) validateLeaseSpec(item *lease) error {
+	ttlSeconds := intValue(item.Spec["ttlSeconds"], int(c.defaultTTL/time.Second))
+	if ttlSeconds < 60 {
+		return errors.New("ttlSeconds must be at least 60")
 	}
-	return createdAt, nil
+	if time.Duration(ttlSeconds)*time.Second > c.maxTTL {
+		return fmt.Errorf("ttlSeconds exceeds maximum %d", int(c.maxTTL/time.Second))
+	}
+	cleanup := stringValueDefault(item.Spec["cleanupPolicy"], "delete")
+	if cleanup != "delete" && cleanup != "retain" {
+		return errors.New("cleanupPolicy must be delete or retain")
+	}
+	if _, err := c.accessRequests(item); err != nil {
+		return err
+	}
+	if _, err := c.credentialRequest(item); err != nil {
+		return err
+	}
+	for _, name := range stringSlice(item.Spec["secretsToCopy"]) {
+		if !c.allowedSourceSecrets[name] {
+			return fmt.Errorf("source secret %s is not approved for test namespace copying", name)
+		}
+	}
+	return nil
 }
 
-func stringSet(values []string) map[string]struct{} {
-	result := make(map[string]struct{}, len(values))
-	for _, value := range values {
-		result[value] = struct{}{}
-	}
-	return result
+func leaseSpecDigest(spec map[string]interface{}) string {
+	copy := cloneObject(spec)
+	delete(copy, "purpose")
+	delete(copy, "exposure")
+	return fullLeaseSpecDigest(copy)
 }
 
-func (c *controller) parseServiceAccountRefs(value string) ([]serviceAccountRef, error) {
-	entries := splitCSV(value)
-	accounts := make([]serviceAccountRef, 0, len(entries))
+func fullLeaseSpecDigest(spec map[string]interface{}) string {
+	data, _ := json.Marshal(spec)
+	digest := sha256.Sum256(data)
+	return "sha256:" + hex.EncodeToString(digest[:])
+}
+
+func cloneObject(value map[string]interface{}) map[string]interface{} {
+	data, _ := json.Marshal(value)
+	copy := map[string]interface{}{}
+	_ = json.Unmarshal(data, &copy)
+	return copy
+}
+
+// legacyMutableExposureDigest permits one migration from the former full-spec
+// digest. The CRD keeps all other fields immutable during this transition.
+func legacyMutableExposureDigest(stored string, spec map[string]interface{}) bool {
+	if stored == fullLeaseSpecDigest(spec) {
+		return true
+	}
+	initial := cloneObject(spec)
+	initial["purpose"] = "gate"
+	initial["exposure"] = map[string]interface{}{"provider": "off"}
+	return stored == fullLeaseSpecDigest(initial)
+}
+
+func rejectedStatus(namespaceName string, message string) map[string]interface{} {
+	return map[string]interface{}{
+		"phase": "Rejected", "namespaceName": nullableString(namespaceName), "message": message,
+		"conditions": []interface{}{leaseCondition("Ready", false, "Rejected")},
+	}
+}
+
+func leaseCondition(conditionType string, ready bool, reason string) map[string]interface{} {
+	status := "False"
+	if ready {
+		status = "True"
+	}
+	return map[string]interface{}{
+		"type": conditionType, "status": status, "reason": reason,
+		"lastTransitionTime": time.Now().UTC().Format(time.RFC3339),
+	}
+}
+
+func parseServiceAccountRef(value string, defaultNamespace string) (serviceAccountRef, error) {
+	parts := strings.Split(value, "/")
+	if len(parts) == 1 {
+		parts = []string{defaultNamespace, parts[0]}
+	}
+	if len(parts) != 2 || sanitizeDNSLabel(parts[0], "") != parts[0] || sanitizeDNSLabel(parts[1], "") != parts[1] {
+		return serviceAccountRef{}, fmt.Errorf("invalid service account reference %q", value)
+	}
+	return serviceAccountRef{Namespace: parts[0], Name: parts[1]}, nil
+}
+
+func parseAllowedAccess(value string) (map[serviceAccountRef]map[string]bool, error) {
+	var entries []map[string]interface{}
+	if err := json.Unmarshal([]byte(value), &entries); err != nil {
+		return nil, fmt.Errorf("invalid BUSTER_ALLOWED_ACCESS_JSON: %w", err)
+	}
+	allowed := map[serviceAccountRef]map[string]bool{}
 	for _, entry := range entries {
-		namespaceName := c.busterServiceAccountNamespace
-		name := entry
-		if strings.Contains(entry, "/") {
-			parts := strings.SplitN(entry, "/", 2)
-			namespaceName = parts[0]
-			name = parts[1]
+		subject, err := parseServiceAccountRef(stringValue(entry["subject"]), "kubeclaw")
+		if err != nil {
+			return nil, err
 		}
-		namespaceName = sanitizeDNSLabel(namespaceName, "")
-		name = sanitizeDNSLabel(name, "")
-		if namespaceName == "" || name == "" {
-			return nil, fmt.Errorf("invalid BUSTER_ADDITIONAL_RUNNER_SERVICE_ACCOUNTS entry: %s", entry)
+		if allowed[subject] == nil {
+			allowed[subject] = map[string]bool{}
 		}
-		accounts = append(accounts, serviceAccountRef{Namespace: namespaceName, Name: name})
+		for _, mode := range stringSlice(entry["modes"]) {
+			if mode != "deployer" && mode != "tester" {
+				return nil, fmt.Errorf("invalid access mode %q for %s", mode, stringValue(entry["subject"]))
+			}
+			allowed[subject][mode] = true
+		}
 	}
-	return accounts, nil
+	if len(allowed) == 0 {
+		return nil, errors.New("BUSTER_ALLOWED_ACCESS_JSON must allow at least one subject")
+	}
+	return allowed, nil
 }
 
 func (c *controller) normalizeLeaseNamespaceName(requestedName string) string {
@@ -895,16 +1576,21 @@ func ownerLabels(item *lease, namespaceName string) map[string]string {
 		labels = map[string]string{}
 	}
 	return map[string]string{
-		"app.kubernetes.io/name":   "kubeclaw",
-		"kubeclaw/managed-by":      "buster-namespace-controller",
-		"kubeclaw/buster-lease":    item.Metadata.Name,
-		"kubeclaw/buster-purpose":  sanitizeLabelValue(stringValueDefault(item.Spec["purpose"], "pretest"), "pretest"),
-		"openclaw.io/buster-scope": sanitizeLabelValue(firstNonEmpty(labels["openclaw.io/buster-scope"], item.Metadata.Name), "unknown"),
+		"app.kubernetes.io/name":                     "kubeclaw",
+		"kubeclaw/managed-by":                        "buster-namespace-controller",
+		"kubeclaw/buster-lease":                      item.Metadata.Name,
+		"kubeclaw/buster-lease-uid":                  sanitizeLabelValue(item.Metadata.UID, "uid-missing"),
+		"kubeclaw/buster-purpose":                    sanitizeLabelValue(stringValueDefault(item.Spec["purpose"], "pretest"), "pretest"),
+		"openclaw.io/buster-scope":                   sanitizeLabelValue(firstNonEmpty(labels["openclaw.io/buster-scope"], item.Metadata.Name), "unknown"),
+		"pod-security.kubernetes.io/enforce":         "restricted",
+		"pod-security.kubernetes.io/enforce-version": "latest",
+		"pod-security.kubernetes.io/audit":           "restricted",
+		"pod-security.kubernetes.io/warn":            "restricted",
 	}
 }
 
 func exposureChanged(status map[string]interface{}, exposure map[string]interface{}) bool {
-	for _, key := range []string{"exposurePhase", "previewUrl", "message", "credentialsRef"} {
+	for _, key := range []string{"exposurePhase", "previewUrl", "exposureHostname", "message", "credentialsRef"} {
 		if stringValue(status[key]) != stringValue(exposure[key]) {
 			return true
 		}
@@ -920,46 +1606,6 @@ func copyStatusWithoutCredentials(status map[string]interface{}) map[string]inte
 		}
 	}
 	return next
-}
-
-func secretHasCredentialKeys(secret map[string]interface{}, keys []string) bool {
-	allowed := map[string]bool{}
-	for _, key := range keys {
-		if key != "" {
-			allowed[key] = true
-		}
-	}
-	return containsReadableCredential(objectValue(secret["data"]), allowed) || containsReadableCredential(objectValue(secret["stringData"]), allowed)
-}
-
-func containsReadableCredential(values map[string]interface{}, allowed map[string]bool) bool {
-	for key, value := range values {
-		if len(allowed) > 0 && !allowed[key] {
-			continue
-		}
-		if stringValue(value) != "" {
-			return true
-		}
-	}
-	return false
-}
-
-func parseSecretNameFromRef(ref string) string {
-	trimmed := strings.TrimSpace(ref)
-	if trimmed == "" {
-		return ""
-	}
-	if strings.HasPrefix(trimmed, "secret/") {
-		name := strings.TrimPrefix(trimmed, "secret/")
-		if validSecretRefName(name) {
-			return name
-		}
-		return ""
-	}
-	if validSecretRefName(trimmed) {
-		return trimmed
-	}
-	return ""
 }
 
 func sanitizeDNSLabel(value string, fallback string) string {
@@ -1119,6 +1765,38 @@ func objectValue(value interface{}) map[string]interface{} {
 		return map[string]interface{}{}
 	}
 	return typed
+}
+
+func interfaceSlice(value interface{}) []interface{} {
+	if values, ok := value.([]interface{}); ok {
+		return values
+	}
+	return nil
+}
+
+func stringMap(value interface{}) map[string]string {
+	result := map[string]string{}
+	switch values := value.(type) {
+	case map[string]string:
+		return values
+	case map[string]interface{}:
+		for key, raw := range values {
+			if text, ok := raw.(string); ok {
+				result[key] = text
+			}
+		}
+	}
+	return result
+}
+
+func mergeStringMaps(values ...map[string]string) map[string]string {
+	result := map[string]string{}
+	for _, value := range values {
+		for key, item := range value {
+			result[key] = item
+		}
+	}
+	return result
 }
 
 func stringSlice(value interface{}) []string {

@@ -96,6 +96,7 @@ try {
     providers: new Map([
       ['command.execute', 'kubeclaw.command-runner:command'],
       ['test.suite.execute', 'kubeclaw.buster-suite-runtime:suite'],
+      ['test.plan.execute', 'kubeclaw.remote-test-gate:plan'],
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
@@ -105,6 +106,7 @@ try {
       ['kubeclaw.test-agent:test', new Map([
         ['command.execute', { allowedExecutables: [nodeExecutable], allowedWorkingRoots: [temporary] }],
         ['test.suite.execute', { allowedSuites: ['security'], allowedRoots: [temporary] }],
+        ['test.plan.execute', { allowedRoots: [temporary] }],
         ['runtime.dispatch', { allowedAgents: ['buster'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.test-agent'] }],
       ])],
@@ -115,6 +117,9 @@ try {
       ['kubeclaw.buster-suite-runtime:suite', new Map([
         ['network.http', { allowedOrigins: [origin] }],
         ['secrets.read', { allowedNames: ['buster.worker'] }],
+      ])],
+      ['kubeclaw.remote-test-gate:plan', new Map([
+        ['secrets.read', { allowedNames: ['buster.worker', 'buster.source-private-key'] }],
       ])],
     ]),
   });
@@ -142,9 +147,19 @@ try {
         maxSuiteTimeoutMs: 5_000,
         pollMs: 100,
       }],
+      ['kubeclaw.remote-test-gate:plan', {
+        endpoint: origin,
+        tokenSecret: 'buster.worker',
+        sourcePrivateKeySecret: 'buster.source-private-key',
+        sourceAuthority: 'nova:production',
+        stateRoot: path.join(temporary, 'provider-state'),
+        allowedRepositoryRoots: [temporary],
+        legacyLedgerPath: path.join(repository, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
+      }],
       ['kubeclaw.runtime-dispatch:runtime', { targets: { buster: { endpoint: `${origin}/dispatch`, tokenSecret: 'buster.agent' } } }],
       ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST', 'GET', 'DELETE'], allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
-      ['kubeclaw.secret-resolver:secrets', { environment: { 'buster.agent': secret, 'buster.worker': secret } }],
+      ['kubeclaw.secret-resolver:secrets', { environment: { 'buster.agent': secret, 'buster.worker': secret,
+        'buster.source-private-key': secret } }],
       ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
     ]),
     effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()),

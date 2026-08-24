@@ -11,6 +11,11 @@ The Nova image must contain:
 3. Versioned declarative policy pack files.
 4. A lint policy that binds every pack to its SHA-256.
 
+The project plan selects only repository-relative raw manifests and Helm
+charts. The operator policy keeps control of rules, schemas, limits, and pack
+approval. Nova combines these two inputs for one run and records source
+digests in the lint report.
+
 The image build fetches schema source at one exact Git commit. The
 authoritative check uses only `/opt/kubeclaw-kubernetes-schemas`. It does not
 download a schema or policy pack during a run. Projects with explicit
@@ -56,9 +61,10 @@ Run the complete cutover proof with:
 npm run verify:test-gate:manifest-lint-cutover
 ```
 
-This proves all 28 ledger items, checks immutable old comparison evidence,
-crosses the real Nova lint plugin and artifact store, and proves that the old
-protocol, runner, parser, setup fields, and examples are absent.
+This proves all 28 ledger items, checks project setup, crosses the real Nova
+lint plugin and artifact store, and proves that the production stage blocks
+deployment. It also proves that the old protocol, runner, parser, setup fields,
+and examples are absent.
 
 ## Authority restriction
 
@@ -66,9 +72,8 @@ Do not restore `manifest` in the legacy bridge, protocol, registry, setup
 fields, or real-pipeline suite lists. A live cluster test is not part of this
 static check.
 
-## Deployment checks for final program closeout
+## Production order
 
-At the final single-path production test, confirm that the image has the exact
-schema directory, pack files match their configured digests, runtime network
-denial does not affect lint, and invalid raw and rendered resources fail. This
-external proof is deliberately deferred until all suites have one path.
+Run full Nova lint after the merged project review. Require its passing result
+before operator approval and deployment. A tool failure blocks the stage. Do
+not continue through a Buster fallback.

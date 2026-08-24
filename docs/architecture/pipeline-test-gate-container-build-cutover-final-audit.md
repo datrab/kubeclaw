@@ -1,6 +1,24 @@
 # Container-build cutover final audit
 
-The replacement is the sole build authority. The old deploy-coupled `build` suite is absent from the protocol, registry, execution order, dependency graph, and source tree. All 36 parity items remain closed. Static Dockerfile policy remains lint-owned; Kubernetes deployment and health remain separate migrations. A project that needs a running target must declare a Kubernetes or exposure fixture separately and pass it the immutable image output. The shared legacy BuildKit service remains only because the unmigrated Kubernetes fixture suite still uses it.
+Status: source cutover complete; production acceptance pending deployment
+
+Audience: pipeline maintainers and reviewers
+
+Purpose: record the final Suite 3 cutover evidence.
+
+The replacement is the sole build authority. The old deploy-coupled `build`
+suite is absent from active code and configuration. All 36 parity items remain
+closed. Project scaffolding creates the replacement node. The generated image
+flows to the Kubernetes fixture by a typed link. Nova uses the plan route.
+Buster starts the plan runtime and keeps the legacy worker on a separate port
+for suites that are not migrated.
+
+The live gate will use the real BuildKit daemon and registry. It will check the
+pushed manifest digest, Nova import, failure retries, cancellation, timeout,
+and restart recovery. It uses no mock or emulator.
+
+The deployed Buster image does not contain this plan runtime yet. Deploy the
+current image before you run the live gate.
 
 Verification: `npm run verify:test-gate:container-build-cutover`.
 

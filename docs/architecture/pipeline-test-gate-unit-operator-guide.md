@@ -4,22 +4,19 @@ Status: authoritative unit-test operator reference after Phase 10
 
 ## Read this first
 
-The unit migration has two operating environments:
+The unit path has two verification environments:
 
-1. **Current migration validation** runs inside the contained Nova development
+1. **Contained validation** runs inside the Nova development
    pod. It uses real Git commits, HTTP, Nova and Buster runtimes, worker and
    provider processes, commands, JUnit files, LCOV files, evidence, and gate
    decisions. The only substituted host feature is delegated cgroup control,
    because the current pod mounts the host cgroup filesystem read-only.
-2. **Final production authority** comes only after every suite has migrated and
-   one execution path remains. That final cutover must run the same proof with
-   a writable delegated cgroup v2 directory on the real runtime platform.
+2. **Production acceptance** runs through the deployed Nova and Buster
+   services. Buster uses a writable delegated cgroup v2 directory.
 
-Phase 10 does not require an external Buster host or a production deployment.
-Do not weaken the production configuration to make the current pod look like
-that final environment. The test harness has an explicit sampled-accounting
-fallback for the contained pod. Production configuration does not expose that
-fallback and still fails closed without cgroup delegation.
+The contained harness has an explicit sampled-accounting fallback. Production
+does not expose that fallback. Buster fails startup without safe cgroup
+delegation.
 
 ## What 8-B gives the operator
 
@@ -63,10 +60,10 @@ for processes and threads. Children cannot escape those totals by starting
 more children.
 
 The contained Nova pod cannot create this box because its cgroup mount is
-read-only. Current migration tests therefore use the explicit test-only sampled
+read-only. Contained tests therefore use the explicit test-only sampled
 accounting path. They still use real processes and test process-group cleanup,
-but they cannot prove the final kernel resource box. That one proof is deferred
-to the final single-path production cutover.
+but they cannot prove the production kernel resource box. The deployed
+preflight proves that box.
 
 ## Operator responsibility
 
@@ -76,10 +73,8 @@ provide arbitrary host paths.
 
 ## Required Buster configuration
 
-This section defines the final production form. It is retained now so the
-deployment contract is known before cutover. The contained Nova-pod test does
-not load this production file; its integration harness constructs the same
-runtime with `allowSampledProcessLimit: true` only in test code.
+This section defines the deployed production form. The contained test builds
+the same runtime with `allowSampledProcessLimit: true` only in test code.
 
 Enable `command.execute` and add `directCommand`:
 
@@ -94,7 +89,7 @@ Enable `command.execute` and add `directCommand`:
     },
     "executableSearchPath": ["/usr/local/bin", "/usr/bin", "/bin"],
     "runtimeReadRoots": ["/usr/local/bin", "/usr/bin", "/lib", "/lib64", "/usr/lib"],
-    "cgroupRoot": "/sys/fs/cgroup/kubeclaw",
+    "cgroupRoot": "/var/run/kubeclaw-command-cgroup",
     "maximumOutputBytes": 8388608,
     "maximumExecutionMs": 900000,
     "maximumProcesses": 64,
@@ -146,16 +141,16 @@ delegation is incomplete, the command fails before the project program starts
 with `COMMAND_CGROUP_CONTROLLERS_NOT_DELEGATED` or
 `COMMAND_CGROUP_CONTROLLERS_NOT_ENABLED`.
 
-### Final-cutover cgroup preflight
+### Production cgroup preflight
 
 Run these read-only checks on the final runtime platform before configuration:
 
 ```bash
 stat -fc %T /sys/fs/cgroup
 cat /sys/fs/cgroup/cgroup.controllers
-cat /sys/fs/cgroup/kubeclaw/cgroup.controllers
-cat /sys/fs/cgroup/kubeclaw/cgroup.subtree_control
-test -w /sys/fs/cgroup/kubeclaw/cgroup.subtree_control
+cat /var/run/kubeclaw-command-cgroup/cgroup.controllers
+cat /var/run/kubeclaw-command-cgroup/cgroup.subtree_control
+test -w /var/run/kubeclaw-command-cgroup/cgroup.subtree_control
 ```
 
 Expected facts are:
@@ -335,7 +330,7 @@ run only the twelve suites that have not completed their own migration.
 - Confirm that a legacy unit request is rejected and the replacement-only
   vertical proof passes.
 
-### Final single-path production cutover
+### Production acceptance
 
 - All suite parity ledgers are closed.
 - Only one execution path can control each gate.
@@ -348,3 +343,12 @@ run only the twelve suites that have not completed their own migration.
 - Recovery, cancellation, resource exhaustion, upgrade, and rollback proofs
   pass on that platform.
 - Nova remains the only final gate authority.
+
+After you deploy the current Nova and Buster images, run:
+
+```bash
+./scripts/deploy.sh nova-unit-preflight
+```
+
+This command starts a real Node process through Nova and Buster. It requires a
+real JUnit report, imports the result, and requires a passing Nova decision.

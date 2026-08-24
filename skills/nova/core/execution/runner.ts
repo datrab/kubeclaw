@@ -12,6 +12,7 @@ import type { AdapterRuntime } from './adapters.ts';
 import { ExecutionGraph, type ExecutionGraphSnapshot } from './graph.ts';
 import { PipelineLoop } from './pipeline-loop.ts';
 import { StageExecutor } from './stage-executor.ts';
+import { ArtifactCheckpointRecorder } from './artifact-checkpoints.ts';
 
 export interface PipelineRunIdentity { readonly runId: string; readonly pipelineId: string; readonly graphDigest: string }
 export interface PipelineRunResult {
@@ -57,10 +58,13 @@ export class PipelineRunner {
         type, identity: eventIdentity, occurredAt: this.#now().toISOString(), causationId, payload };
       this.#options.journal.append(event); return event;
     };
+    const checkpoints = new ArtifactCheckpointRecorder(this.#options.journal, append);
     const executor = new StageExecutor({ graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,
-      adapters: this.#options.adapters, journal: this.#options.journal, ...(this.#options.signal ? { signal: this.#options.signal } : {}), now: this.#now, append });
+      adapters: this.#options.adapters, journal: this.#options.journal, checkpoints,
+      ...(this.#options.signal ? { signal: this.#options.signal } : {}), now: this.#now, append });
     const loop = new PipelineLoop({ options: this.#options, graph: this.#graph, maxConcurrency: this.#options.definition.maxConcurrency,
-      overrides: new Set(this.#options.administrativeAttemptOverrides), append, flush: async () => this.#options.onEventsCommitted?.(), executor,
+      overrides: new Set(this.#options.administrativeAttemptOverrides), append, checkpoints,
+      flush: async () => this.#options.onEventsCommitted?.(), executor,
       result: (runIdentity, status, states) => Object.freeze({ runId: runIdentity.runId, identity: runIdentity, status,
         stages: new FrozenMap([...states].map(([stageId, state]) => [stageId, deepFreeze(structuredClone(state))])) }),
     });

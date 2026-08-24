@@ -72,6 +72,7 @@
     "buildkit-preflight",
     "buster-buildkit-smoke",
     "nova-buildkit-preflight",
+    "nova-unit-preflight",
     "buster-infra-smoke",
     "agents",
     "agent",
@@ -264,6 +265,7 @@
     "cmd_prism_e2e",
     "cmd_teardown_prism",
     "cmd_nova_buildkit_preflight",
+    "cmd_nova_unit_preflight",
     "cmd_buster_infra_smoke",
     "cmd_teardown_agents",
     "uninstall_helm_release_if_present",
@@ -289,6 +291,6 @@
     "infra": 998,
     "agents": 1203,
     "smoke": 1325,
-    "teardown": 1684
+    "teardown": 1692
   }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "@kubeclaw/plugin-remote-test-gate",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/live-function.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/nova-core": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*",
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

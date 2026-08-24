@@ -17,6 +17,9 @@ spec:
       containers:
         - name: nginx
           image: real-pipeline-e2e-nginx:verification
+          env:
+            - name: REDIS_HOST
+              value: redis.default.svc.cluster.local
           ports:
             - name: http
               containerPort: 8080

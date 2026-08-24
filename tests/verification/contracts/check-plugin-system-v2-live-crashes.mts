@@ -13,7 +13,17 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-plugin-crash-m
 const pluginRoots = ['common', 'nova', 'buster']
   .map((role) => path.join(root, 'skills', role, 'plugins'));
 
-function schemaValue(schema) {
+function schemaValue(schema, root = schema) {
+  if (typeof schema.$ref === 'string') {
+    const segments = schema.$ref.split('/');
+    if (segments[0] !== '#' || segments.some((segment, index) => index > 0 && segment.length === 0)) {
+      throw new Error(`LIVE_CRASH_SCHEMA_REFERENCE_UNSUPPORTED:${schema.$ref}`);
+    }
+    let resolved = root;
+    for (const segment of segments.slice(1)) resolved = resolved?.[segment.replaceAll('~1', '/').replaceAll('~0', '~')];
+    if (!resolved) throw new Error(`LIVE_CRASH_SCHEMA_REFERENCE_MISSING:${schema.$ref}`);
+    return schemaValue(resolved, root);
+  }
   if (schema.const !== undefined) return schema.const;
   if (Array.isArray(schema.enum) && schema.enum.length > 0) return schema.enum[0];
   const variant = Array.isArray(schema.oneOf) && schema.oneOf.length > 0
@@ -36,7 +46,7 @@ function schemaValue(schema) {
       required: [...new Set([...(base.required ?? []), ...(variant.required ?? [])])],
     };
     if (Object.keys(mergedProperties).length > 0) merged.properties = mergedProperties;
-    return schemaValue(merged);
+    return schemaValue(merged, root);
   }
   if (schema.default !== undefined) return schema.default;
   if (schema.type === 'null') return null;
@@ -44,19 +54,19 @@ function schemaValue(schema) {
   if (schema.type === 'integer' || schema.type === 'number') return schema.minimum ?? 1;
   if (schema.type === 'array') {
     const count = Math.max(schema.minItems ?? 0, 1);
-    return Array.from({ length: count }, () => schemaValue(schema.items ?? { type: 'string' }));
+    return Array.from({ length: count }, () => schemaValue(schema.items ?? { type: 'string' }, root));
   }
   if (schema.type === 'object' || schema.properties) {
     const value = {};
     for (const key of schema.required ?? []) {
-      value[key] = schemaValue(schema.properties?.[key] ?? { type: 'string' });
+      value[key] = schemaValue(schema.properties?.[key] ?? { type: 'string' }, root);
     }
     if ((schema.minProperties ?? 0) > Object.keys(value).length) {
       const entrySchema = typeof schema.additionalProperties === 'object'
         ? schema.additionalProperties
         : Object.values(schema.patternProperties ?? {})[0];
       if (!entrySchema) throw new Error(`LIVE_CRASH_SCHEMA_OBJECT_UNSUPPORTED:${JSON.stringify(schema)}`);
-      value.test = schemaValue(entrySchema);
+      value.test = schemaValue(entrySchema, root);
     }
     return value;
   }
@@ -88,10 +98,11 @@ function schemaValue(schema) {
 }
 
 function referencedValue(entry, schemaName) {
-  return schemaValue(JSON.parse(fs.readFileSync(
+  const schema = JSON.parse(fs.readFileSync(
     path.join(entry.package.root, entry.registration[schemaName]),
     'utf8',
-  )));
+  ));
+  return schemaValue(schema, schema);
 }
 
 function granted(snapshot, registrationId) {

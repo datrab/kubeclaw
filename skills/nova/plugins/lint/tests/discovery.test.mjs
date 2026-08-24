@@ -21,6 +21,7 @@ for (const file of files) {
 
 const discovery = await import(pathToFileURL(path.resolve('src/engine/discovery.ts')).href);
 const containerYaml = await import(pathToFileURL(path.resolve('src/engine/container-yaml-tools.ts')).href);
+const registry = await import(pathToFileURL(path.resolve('src/engine/tool-registry.ts')).href);
 const base = {
   repoRoot: temporary,
   policyProject: { root: '.' },
@@ -39,6 +40,21 @@ try {
   const explicitKubernetesSchema = tools.find((tool) => tool.id === 'kubernetes-schema');
   assert.equal(genericKubeconform.detect({ policyProject: { root: '.' }, projectTypes: new Set(['helm']) }), true);
   assert.equal(explicitKubernetesSchema.detect({ policyProject: { root: '.' }, projectTypes: new Set(['helm']) }), false);
+  const repositoryRoot = path.resolve(import.meta.dirname, '../../../../..');
+  const canonicalPolicy = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8'));
+  const configuredRegistry = registry.buildToolRegistry(canonicalPolicy, new Set(canonicalPolicy.projects[0].languages));
+  assert.equal(configuredRegistry.length, registry.TOOL_ADAPTERS.length);
+  for (const adapter of configuredRegistry) {
+    assert.equal(typeof adapter.detect, 'function', `${adapter.id} must expose a safe configured detector`);
+    assert.equal(typeof adapter.detect({
+      repoRoot: repositoryRoot,
+      policy: canonicalPolicy,
+      policyProject: canonicalPolicy.projects[0],
+      projectTypes: new Set(canonicalPolicy.projects[0].languages),
+      changedFilesRequested: false,
+      changedFiles: [],
+    }), 'boolean', `${adapter.id} must evaluate applicability without an adapter-specific detector`);
+  }
   assert.deepEqual(discovery.configuredMarkerDirectories(base, 'Chart.yaml'), [chart]);
   assert.deepEqual(
     discovery.configuredTargetFilesForScope(base, (file) => file.endsWith('.yaml')),

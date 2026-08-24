@@ -109,3 +109,10 @@ export interface LoadedPipelineTestScope {
   readonly project: string;
   readonly declaration: TestScopeDeclaration;
 }
+
+export interface PipelineLintDeclaration {
+  readonly uses: 'kubeclaw.lint.full';
+  readonly policyProject: string;
+  readonly rawManifests: readonly string[];
+  readonly helmCharts: readonly string[];
+}

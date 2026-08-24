@@ -8,6 +8,22 @@ import { createManifestParityFixture, legacyCompatibleWorkload, supportResources
 
 const fixture = createManifestParityFixture();
 const artifacts = path.join(fixture.root, 'artifacts');
+const pipelinePath = path.join(fixture.repository, '.swarm', 'pipeline.json');
+
+function writeLintDeclaration(rawManifests: string[], helmCharts: string[]): void {
+  fs.mkdirSync(path.dirname(pipelinePath), { recursive: true });
+  fs.writeFileSync(pipelinePath, JSON.stringify({
+    project: 'fixture',
+    lint: {
+      uses: 'kubeclaw.lint.full',
+      policyProject: 'fixture',
+      rawManifests,
+      helmCharts,
+    },
+    modules: {},
+    gates: {},
+  }, null, 2));
+}
 
 function grantedRegistry() {
   const packages = core.discoverPackages({
@@ -48,6 +64,8 @@ function grantedRegistry() {
 }
 
 async function runAuthoritative(runId: string): Promise<any> {
+  const declaration = core.loadPipelineLintDeclaration(pipelinePath);
+  assert.ok(declaration, 'the project must declare its complete Kubernetes lint inputs');
   const granted = grantedRegistry();
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effects = new core.EffectCoordinator(
@@ -83,11 +101,15 @@ async function runAuthoritative(runId: string): Promise<any> {
           dependsOn: [],
           config: {
             policyPath: fixture.policyPath,
-            policyProject: 'fixture',
+            policyProject: declaration.policyProject,
           },
           input: {
             workingDirectory: fixture.repository,
             project: 'fixture',
+            kubernetes: {
+              rawManifests: declaration.rawManifests,
+              helmCharts: declaration.helmCharts,
+            },
           },
           on: { request_fix: 'manifest-remediation' },
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120_000 },
@@ -95,8 +117,15 @@ async function runAuthoritative(runId: string): Promise<any> {
           id: 'manifest-remediation',
           type: 'kubeclaw.lint.full',
           dependsOn: ['manifest-lint'],
-          config: { policyPath: fixture.policyPath, policyProject: 'fixture' },
-          input: { workingDirectory: fixture.repository, project: 'fixture' },
+          config: { policyPath: fixture.policyPath, policyProject: declaration.policyProject },
+          input: {
+            workingDirectory: fixture.repository,
+            project: 'fixture',
+            kubernetes: {
+              rawManifests: declaration.rawManifests,
+              helmCharts: declaration.helmCharts,
+            },
+          },
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120_000 },
         }],
       },
@@ -112,6 +141,7 @@ async function runAuthoritative(runId: string): Promise<any> {
 }
 
 try {
+  writeLintDeclaration(['raw.yaml'], ['charts/fixture']);
   fixture.writeRaw(`${legacyCompatibleWorkload()}${supportResources()}`);
   fixture.commit('authoritative valid manifest fixture');
   const valid = await runAuthoritative('valid');
@@ -139,10 +169,7 @@ try {
   assert.equal(report.tools['kubernetes-schema'].evidence.some((entry: any) => entry.kind === 'kubeconform-output'), true);
 
   fs.writeFileSync(path.join(fixture.repository, 'invalid.yaml'), 'kind: Deployment\nmetadata: [\n');
-  const invalidPolicy = structuredClone(fixture.policy);
-  invalidPolicy.projects[0].kubernetes.raw_manifests = ['invalid.yaml'];
-  invalidPolicy.projects[0].kubernetes.helm_charts = [];
-  fixture.writePolicy(invalidPolicy);
+  writeLintDeclaration(['invalid.yaml'], []);
   const invalid = await runAuthoritative('invalid-yaml');
   assert.equal(invalid.status, 'blocked');
   assert.equal(invalid.stages.get('manifest-lint')?.status, 'blocked');

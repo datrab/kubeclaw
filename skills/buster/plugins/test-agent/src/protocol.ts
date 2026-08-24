@@ -16,6 +16,15 @@ interface TestSuitePlan {
   readonly task: Readonly<Record<string, unknown>>;
   readonly moduleId?: string;
 }
+export interface ProviderPlanInput {
+  readonly repositoryRoot: string;
+  readonly repositoryId: string;
+  readonly plan: Readonly<Record<string, unknown>>;
+  readonly grants: Readonly<Record<string, readonly string[]>>;
+  readonly maximumConcurrency: number;
+  readonly submittedAt: string;
+  readonly timeoutMs: number;
+}
 export interface TestInput {
   readonly runId:string;
   readonly taskId:string;
@@ -24,6 +33,7 @@ export interface TestInput {
   readonly suiteEvidence:readonly SuiteEvidence[];
   readonly commandSuites?: readonly CommandSuite[];
   readonly suitePlan: TestSuitePlan;
+  readonly providerPlan?: ProviderPlanInput;
 }
 export interface TestVerdict {
   readonly verdict:'PASS'|'FAIL';

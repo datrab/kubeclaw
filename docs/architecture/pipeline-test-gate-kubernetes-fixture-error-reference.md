@@ -36,6 +36,7 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_NAMESPACE_PREFIXES_INVALID`: configure allowed DNS labels.
 - `KUBERNETES_FIXTURE_REGISTRY_PREFIXES_INVALID`: configure allowed registry repositories.
 - `KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID`: configure valid approved Secret names.
+- `KUBERNETES_FIXTURE_SUBJECT_INVALID`: configure valid namespace and ServiceAccount names.
 - `KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID`: configure 50 through 10000 milliseconds.
 
 ## Capability Request Errors
@@ -50,6 +51,7 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID`: make both image digests match.
 - `KUBERNETES_FIXTURE_RETENTION_MODE_INVALID`: use delete or retain.
 - `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED`: request an approved test Secret.
+- `KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID`: request one generated credential Secret with a valid name.
 - `KUBERNETES_FIXTURE_CREATED_AT_INVALID`: inspect the lease creation timestamp.
 
 ## Manifest Errors
@@ -70,8 +72,17 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED`: remove explicit namespaces.
 - `KUBERNETES_FIXTURE_CONTAINERS_INVALID`: correct the pod container list.
 - `KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED`: use immutable images.
+- `KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED`: use an approved image repository for every container.
 - `KUBERNETES_FIXTURE_IMAGE_NOT_USED`: use the selected image in a workload.
 - `KUBERNETES_FIXTURE_WORKLOAD_REQUIRED`: add a namespaced workload.
+- `KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED`: use an internal ClusterIP Service.
+- `KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED`: remove host network, PID, and IPC access.
+- `KUBERNETES_FIXTURE_HOST_PATH_DENIED`: remove hostPath volumes.
+- `KUBERNETES_FIXTURE_HOST_PORT_DENIED`: remove host ports.
+- `KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED`: set pod and container non-root controls.
+- `KUBERNETES_FIXTURE_SECCOMP_REQUIRED`: set a supported seccomp profile.
+- `KUBERNETES_FIXTURE_CONTAINER_SECURITY_INVALID`: remove privilege and privilege escalation.
+- `KUBERNETES_FIXTURE_CAPABILITY_DROP_REQUIRED`: drop all Linux capabilities.
 
 ## Kubernetes Errors
 

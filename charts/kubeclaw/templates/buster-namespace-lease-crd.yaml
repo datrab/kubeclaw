@@ -36,13 +36,37 @@ spec:
           properties:
             spec:
               type: object
+              x-kubernetes-validations:
+                - rule: "self.namespaceName == oldSelf.namespaceName"
+                  message: "namespaceName is immutable"
+                - rule: "has(self.namespacePrefix) == has(oldSelf.namespacePrefix) && (!has(self.namespacePrefix) || self.namespacePrefix == oldSelf.namespacePrefix)"
+                  message: "namespacePrefix is immutable"
+                - rule: "has(self.runId) == has(oldSelf.runId) && (!has(self.runId) || self.runId == oldSelf.runId)"
+                  message: "runId is immutable"
+                - rule: "has(self.project) == has(oldSelf.project) && (!has(self.project) || self.project == oldSelf.project)"
+                  message: "project is immutable"
+                - rule: "has(self.access) == has(oldSelf.access) && (!has(self.access) || self.access == oldSelf.access)"
+                  message: "access is immutable"
+                - rule: "has(self.serviceName) == has(oldSelf.serviceName) && (!has(self.serviceName) || self.serviceName == oldSelf.serviceName)"
+                  message: "serviceName is immutable"
+                - rule: "has(self.servicePort) == has(oldSelf.servicePort) && (!has(self.servicePort) || self.servicePort == oldSelf.servicePort)"
+                  message: "servicePort is immutable"
+                - rule: "has(self.cleanupPolicy) == has(oldSelf.cleanupPolicy) && (!has(self.cleanupPolicy) || self.cleanupPolicy == oldSelf.cleanupPolicy)"
+                  message: "cleanupPolicy is immutable"
+                - rule: "has(self.ttlSeconds) == has(oldSelf.ttlSeconds) && (!has(self.ttlSeconds) || self.ttlSeconds == oldSelf.ttlSeconds)"
+                  message: "ttlSeconds is immutable"
+                - rule: "has(self.secretsToCopy) == has(oldSelf.secretsToCopy) && (!has(self.secretsToCopy) || self.secretsToCopy == oldSelf.secretsToCopy)"
+                  message: "secretsToCopy is immutable"
+                - rule: "has(self.testCredentials) == has(oldSelf.testCredentials) && (!has(self.testCredentials) || self.testCredentials == oldSelf.testCredentials)"
+                  message: "testCredentials is immutable"
               properties:
                 namespaceName:
                   type: string
                   pattern: '^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$'
                 namespacePrefix:
                   type: string
-                  enum: ["test"]
+                  enum:
+                    {{- toYaml .Values.busterNamespaceBroker.allowedPrefixes | nindent 20 }}
                 runId:
                   type: string
                 project:
@@ -50,22 +74,70 @@ spec:
                 purpose:
                   type: string
                   enum: ["pretest", "gate", "final-preview"]
-                capabilityProfile:
-                  type: string
-                  enum: ["default", "network", "storage"]
+                access:
+                  type: array
+                  minItems: 1
+                  maxItems: 8
+                  x-kubernetes-list-type: atomic
+                  items:
+                    type: object
+                    properties:
+                      subject:
+                        type: string
+                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                      mode:
+                        type: string
+                        enum: ["deployer", "tester"]
+                    required: ["subject", "mode"]
                 serviceName:
                   type: string
+                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                servicePort:
+                  type: integer
+                  minimum: 1
+                  maximum: 65535
                 cleanupPolicy:
                   type: string
                   enum: ["delete", "retain"]
                 ttlSeconds:
                   type: integer
                   minimum: 60
+                  maximum: {{ .Values.busterNamespaceBroker.maxTtlSeconds }}
                 secretsToCopy:
                   type: array
                   items:
                     type: string
                     pattern: '^[A-Za-z0-9._-]+$'
+                testCredentials:
+                  type: object
+                  x-kubernetes-validations:
+                    - rule: "self.mode != 'generate' || !has(self.keys) || (size(self.keys) == 2 && self.keys.exists(k, k == 'username') && self.keys.exists(k, k == 'password'))"
+                      message: "generated credentials can only use username and password keys"
+                    - rule: "self.mode != 'existing' || (has(self.keys) && size(self.keys) > 0)"
+                      message: "existing credentials require at least one key"
+                  properties:
+                    mode:
+                      type: string
+                      enum: ["generate", "existing"]
+                    secretName:
+                      type: string
+                      pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                    readers:
+                      type: array
+                      minItems: 1
+                      maxItems: 8
+                      x-kubernetes-list-type: set
+                      items:
+                        type: string
+                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                    keys:
+                      type: array
+                      maxItems: 16
+                      x-kubernetes-list-type: set
+                      items:
+                        type: string
+                        pattern: '^[A-Za-z0-9._-]+$'
+                  required: ["mode", "secretName", "readers"]
                 exposure:
                   type: object
                   properties:
@@ -83,19 +155,8 @@ spec:
                       maximum: 65535
                     path:
                       type: string
-                    credentialsRef:
-                      type: string
-                    credentialsSecretName:
-                      type: string
-                    credentialsKeys:
-                      type: array
-                      items:
-                        type: string
-                    credentialsDelivery:
-                      type: string
-                      enum: ["discord"]
-                    revealCredentials:
-                      type: boolean
+                      maxLength: 1024
+                      pattern: '^/(?:[^/?#\r\n][^?#\r\n]*)?$'
               required:
                 - namespaceName
                 - cleanupPolicy
@@ -106,23 +167,41 @@ spec:
                   type: string
                 namespaceName:
                   type: string
-                serviceAccountName:
+                createdAt:
                   type: string
+                  format: date-time
                 internalUrl:
                   type: string
+                  nullable: true
                 previewUrl:
                   type: string
+                  nullable: true
                 exposurePhase:
                   type: string
                 exposureHostname:
                   type: string
+                  nullable: true
                 credentialsRef:
                   type: string
+                  nullable: true
                 credentialsAvailable:
                   type: boolean
-                expiresAt:
+                specDigest:
                   type: string
-                createdAt:
+                  pattern: '^sha256:[a-f0-9]{64}$'
+                conditions:
+                  type: array
+                  x-kubernetes-list-type: map
+                  x-kubernetes-list-map-keys: ["type"]
+                  items:
+                    type: object
+                    properties:
+                      type: { type: string }
+                      status: { type: string, enum: ["True", "False", "Unknown"] }
+                      reason: { type: string }
+                      lastTransitionTime: { type: string, format: date-time }
+                    required: ["type", "status", "reason", "lastTransitionTime"]
+                expiresAt:
                   type: string
                 message:
                   type: string

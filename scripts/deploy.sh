@@ -1541,6 +1541,14 @@ cmd_nova_buildkit_preflight() {
   log "Nova → Buster BuildKit production preflight passed"
 }
 
+cmd_nova_unit_preflight() {
+  header "Nova → Buster Unit Production Preflight"
+  require_command kubectl
+  kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    node /home/node/.openclaw/workspace/git-repo/tests/verification/e2e/nova-unit-production-preflight.mts
+  log "Nova → Buster unit production preflight passed"
+}
+
 cmd_buster_infra_smoke() {
   header "Buster Full Infrastructure Production Smoke"
   require_command kubectl
@@ -1733,6 +1741,9 @@ case "${1:-}" in
   nova-buildkit-preflight)
     cmd_nova_buildkit_preflight
     ;;
+  nova-unit-preflight)
+    cmd_nova_unit_preflight
+    ;;
   buster-infra-smoke)
     cmd_buster_infra_smoke
     ;;
@@ -1808,6 +1819,7 @@ case "${1:-}" in
     echo "  buildkit-preflight [image] [pull-secret]"
     echo "                    Verify rootless BuildKit support with a temporary pod"
     echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
+    echo "  nova-unit-preflight Run a real unit process through Nova and Buster v2"
     echo "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight"
     echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"
     echo "  agents             Deploy agents (Nova + Buster) using image/runtime values"

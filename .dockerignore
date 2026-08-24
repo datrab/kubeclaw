@@ -18,6 +18,17 @@
 !tsconfig.base.json
 !package.json
 !package-lock.json
+!scripts/
+scripts/*
+!scripts/build-plugin-sandbox.mjs
+!tests/
+tests/*
+!tests/verification/
+tests/verification/*
+!tests/verification/contracts/
+tests/verification/contracts/*
+!tests/verification/contracts/check-pipeline-container-build-production.mts
+!tests/verification/contracts/check-pipeline-container-build-recovery.mts
 
 !go.mod
 !cmd/

@@ -81,7 +81,7 @@ export class RepositoryAuditArtifactCache implements ReviewCacheStore {
     const artifactId = cacheArtifactId(record.cacheKey), serialized = canonicalJson(record);
     const raw = await this.#context.invoke('artifacts.write', {
       operation: 'put_json', resource: { type: 'artifact.object', canonicalId: artifactId },
-      payload: { namespace: CACHE_NAMESPACE, mediaType: 'application/json', value: record },
+      payload: { namespace: CACHE_NAMESPACE, mediaType: 'application/json', checkpoint: true, value: record },
     });
     const artifact = outputArtifact(raw);
     if (artifact.artifactId !== artifactId || artifact.namespace !== CACHE_NAMESPACE

@@ -5,9 +5,9 @@ Do not edit this page directly.
 
 ## Summary
 
-- Replacement implemented: 6 of 13.
-- Parity proved: 6 of 13.
-- Cut over and deleted: 6 of 13.
+- Replacement implemented: 7 of 13.
+- Parity proved: 7 of 13.
+- Cut over and deleted: 7 of 13.
 
 ## Suites
 
@@ -19,7 +19,7 @@ Do not edit this page directly.
 | `bundle` | `kubeclaw.size-budget@1` | complete | complete | complete |
 | `k8s` | `kubeclaw.kubernetes-fixture@1` | complete | complete | complete |
 | `health` | `kubeclaw.http@1` | complete | complete | complete |
-| `tailscale-preview` | `kubeclaw.tailscale-exposure@1` | pending | pending | pending |
+| `tailscale-preview` | `kubeclaw.tailscale-exposure@1` | complete | complete | complete |
 | `api` | `kubeclaw.api-suite@1` | pending | pending | pending |
 | `a11y` | `kubeclaw.axe@1` | pending | pending | pending |
 | `perf` | `kubeclaw.lighthouse@1` | pending | pending | pending |

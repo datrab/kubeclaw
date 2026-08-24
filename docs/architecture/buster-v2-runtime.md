@@ -3,6 +3,13 @@
 Nova owns the pipeline graph, lifecycle journal, effects, waits, and final stage
 transitions. Buster owns deterministic test execution and Buster agent sessions.
 
+Migrated suites use `test.plan.execute` on port 18891. Buster verifies the
+signed source archive, resolves installed providers, runs granted capabilities,
+and stores the typed result. Suite 3 uses this route for container builds.
+
+Suites that are not migrated use `test.suite.execute` on port 18892. This
+separate worker cannot execute the deleted `build` suite.
+
 Deterministic execution uses one neutral capability and one Buster-owned
 protocol:
 

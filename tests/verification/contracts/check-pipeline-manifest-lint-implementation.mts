@@ -152,6 +152,26 @@ try {
   assert.equal(report.tools['kubernetes-policy'].experimental_findings, 0);
   assert.equal(report.policy.policy_pack_digests.fixture, canonical.kubernetes_policy_packs[0].sha256);
 
+  fs.writeFileSync(path.join(repository, 'declared.yaml'), validRaw.replace('name: app', 'name: declared'));
+  const declared: any = await executeLintReport({
+    workingDirectory: repository,
+    policyPath,
+    policyProject: 'fixture',
+    tier: 'full',
+    includeExperimental: true,
+    kubernetes: { rawManifests: ['declared.yaml'], helmCharts: [] },
+  });
+  assert.deepEqual(declared.tools['kubernetes-schema'].evidence
+    .filter((entry: any) => entry.kind === 'raw-manifest').map((entry: any) => entry.source), ['declared.yaml'],
+  'the project declaration must select exact inputs without changing operator policy');
+  await assert.rejects(() => executeLintReport({
+    workingDirectory: repository,
+    policyPath,
+    policyProject: 'fixture',
+    tier: 'full',
+    kubernetes: { rawManifests: ['../escape.yaml'], helmCharts: [] },
+  }), /LINT_KUBERNETES_INPUT_ESCAPE/u);
+
   fs.writeFileSync(path.join(repository, 'charts', 'legacy-discovery', 'templates', 'deployment.yaml'), workload(true).replace('apiVersion: apps/v1', 'apiVersion: apps/v2'));
   const discoveredLegacyChart: any = await executeLintReport({ workingDirectory: repository, policyPath, policyProject: 'fixture', tier: 'full', includeExperimental: true });
   assert.equal(discoveredLegacyChart.tools.kubeconform, undefined,

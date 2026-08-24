@@ -93,16 +93,92 @@ function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | unde
   const config = structuredClone(value);
   delete config.k8s;
   delete config.bundle;
+  delete config.manifest;
   if (isPlainObject(config.serve)) {
     for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
-      'smoke_paths', 'smoke_expected_text']) delete config.serve[field];
+      'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
     if (!suites.some((suite) => ['security', 'a11y', 'perf', 'e2e', 'visual-reg'].includes(suite))) delete config.serve;
   }
   return Object.keys(config).length ? config : undefined;
 }
 
+function legacyManifestPath(config: AnyRecord, field: 'deployment_yaml' | 'secret_yaml'): string | null {
+  const manifest = objectOrEmpty(config.manifest);
+  const serve = objectOrEmpty(config.serve);
+  const value = manifest[field] ?? serve[field];
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
+function lintDeclaration(existing: unknown, progress: AnyRecord, repositoryRoot: string): AnyRecord | undefined {
+  const current = objectOrEmpty(existing);
+  const raw = Array.isArray(current.rawManifests)
+    ? current.rawManifests.filter((entry) => typeof entry === 'string') : [];
+  const charts = Array.isArray(current.helmCharts)
+    ? current.helmCharts.filter((entry) => typeof entry === 'string') : [];
+  const scopes = [...entriesOf(progress.modules), ...entriesOf(progress.gates)];
+  for (const [scopeId, scope] of scopes) {
+    const selected = Array.isArray(scope.test_suites) && scope.test_suites.includes('manifest');
+    const config = objectOrEmpty(scope.test_config);
+    if (!selected && !isPlainObject(config.manifest)) continue;
+    const deployment = legacyManifestPath(config, 'deployment_yaml');
+    if (!deployment) throw new Error(`LEGACY_MANIFEST_DEPLOYMENT_MISSING:${scopeId}`);
+    raw.push(relativeRepositoryPath(repositoryRoot, deployment, `${scopeId}:manifest.deployment_yaml`));
+    const secret = legacyManifestPath(config, 'secret_yaml');
+    if (secret) raw.push(relativeRepositoryPath(repositoryRoot, secret, `${scopeId}:manifest.secret_yaml`));
+  }
+  const rawManifests = [...new Set(raw)];
+  const helmCharts = [...new Set(charts)];
+  if (rawManifests.length + helmCharts.length === 0) return undefined;
+  return {
+    uses: 'kubeclaw.lint.full',
+    policyProject: typeof current.policyProject === 'string' && current.policyProject.trim()
+      ? current.policyProject.trim() : 'workspace',
+    rawManifests,
+    helmCharts,
+  };
+}
+
 function safeNodeId(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9-]+/gu, '-').replace(/^-+|-+$/gu, '').slice(0, 64) || 'scope';
+}
+
+function relativeRepositoryPath(repositoryRoot: string, value: string, label: string): string {
+  const absolute = path.isAbsolute(value) ? path.resolve(value) : path.resolve(repositoryRoot, value);
+  const relative = path.relative(repositoryRoot, absolute).split(path.sep).join('/');
+  if (!relative || relative === '..' || relative.startsWith('../')) {
+    throw new Error(`LEGACY_BUILD_PATH_DENIED:${label}:${value}`);
+  }
+  return relative;
+}
+
+function legacyBuildNode(existingConfig: unknown, projectSrcDir: string, repositoryRoot: string, scopeId: string): AnyRecord {
+  const serve = objectOrEmpty(objectOrEmpty(existingConfig).serve);
+  const defaultContext = path.relative(repositoryRoot, projectSrcDir).split(path.sep).join('/');
+  const configuredContext = typeof serve.build_context === 'string' && serve.build_context.trim()
+    ? serve.build_context.trim() : defaultContext;
+  const buildContext = relativeRepositoryPath(repositoryRoot, configuredContext, `${scopeId}:build_context`);
+  const configuredDockerfile = typeof serve.dockerfile === 'string' && serve.dockerfile.trim()
+    ? serve.dockerfile.trim() : path.join(buildContext, 'Dockerfile').split(path.sep).join('/');
+  const dockerfile = relativeRepositoryPath(repositoryRoot, configuredDockerfile, `${scopeId}:dockerfile`);
+  if (!fs.existsSync(path.join(repositoryRoot, buildContext)) || !fs.statSync(path.join(repositoryRoot, buildContext)).isDirectory()) {
+    throw new Error(`LEGACY_BUILD_CONTEXT_MISSING:${scopeId}:${buildContext}`);
+  }
+  if (!fs.existsSync(path.join(repositoryRoot, dockerfile)) || !fs.statSync(path.join(repositoryRoot, dockerfile)).isFile()) {
+    throw new Error(`LEGACY_BUILD_DOCKERFILE_MISSING:${scopeId}:${dockerfile}`);
+  }
+  const definition: AnyRecord = { type: 'dockerfile', dockerfile };
+  if (typeof serve.target === 'string' && serve.target.trim()) definition.target = serve.target.trim();
+  if (isPlainObject(serve.build_args)) definition.buildArgs = structuredClone(serve.build_args);
+  const values: AnyRecord = {
+    buildContext,
+    definition,
+    outputName: safeNodeId(scopeId),
+    platform: typeof serve.platform === 'string' && serve.platform.trim() ? serve.platform.trim() : 'linux/amd64',
+  };
+  return {
+    uses: 'kubeclaw.container-build@1', mode: 'blocking', retries: 1,
+    concurrencyGroup: 'container-build', config: values,
+  };
 }
 
 function legacyBundleNodes(existingConfig: unknown, projectSrcDir: string, repositoryRoot: string, scopeId: string): AnyRecord {
@@ -190,39 +266,100 @@ function httpNodes(existingConfig: unknown, deploymentNode?: string): AnyRecord 
   return tests;
 }
 
+function exposureNodes(existingConfig: unknown, deploymentNode: string): { fixtures: AnyRecord; tests: AnyRecord } {
+  const preview = objectOrEmpty(objectOrEmpty(existingConfig).tailscale_preview);
+  const exposureId = 'tailscale-exposure';
+  const config: AnyRecord = { path: '/' };
+  if (typeof preview.hostname === 'string' && preview.hostname.trim()) config.hostname = preview.hostname.trim();
+  const maxTimeSeconds = preview.max_time_seconds ?? 30;
+  if (!Number.isSafeInteger(maxTimeSeconds) || maxTimeSeconds < 1 || maxTimeSeconds > 300) {
+    throw new Error('LEGACY_TAILSCALE_PREVIEW_MAX_TIME_INVALID: use an integer from 1 to 300 seconds');
+  }
+  const baseHttp: AnyRecord = { path: '/', expectedStatuses: [200], requestTimeoutMs: maxTimeSeconds * 1000 };
+  if (typeof preview.expected_text === 'string' && preview.expected_text) baseHttp.expectedText = preview.expected_text;
+  const tests: AnyRecord = {
+    'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
+      needs: [exposureId], concurrencyGroup: 'http', config: baseHttp,
+      inputs: { endpoint: { from: exposureId, output: 'exposure', schemaId: 'kubeclaw.public-endpoint-fixture@1' } } },
+  };
+  const expected = objectOrEmpty(preview.smoke_expected_text);
+  const paths = Array.isArray(preview.smoke_paths) ? preview.smoke_paths : [];
+  paths.forEach((requestPath: unknown, index: number) => {
+    if (typeof requestPath !== 'string') return;
+    tests[`public-smoke-${index + 1}`] = { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 1,
+      needs: ['public-http-health'], concurrencyGroup: 'http', config: { ...baseHttp, path: requestPath,
+        ...(typeof expected[requestPath] === 'string' ? { expectedText: expected[requestPath] } : {}) },
+      inputs: { endpoint: { from: exposureId, output: 'exposure', schemaId: 'kubeclaw.public-endpoint-fixture@1' } } };
+  });
+  return { fixtures: { [exposureId]: { uses: 'kubeclaw.tailscale-exposure@1', retries: 0,
+    needs: [deploymentNode], concurrencyGroup: 'tailscale-exposure', config,
+    inputs: { deployment: { from: deploymentNode, output: 'deployment', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } } } }, tests };
+}
+
 function withDependency(node: unknown, dependency: string): unknown {
   if (!isPlainObject(node)) return node;
   const needs = Array.isArray(node.needs) ? node.needs.filter((item) => typeof item === 'string') : [];
   return { ...node, needs: [...new Set([...needs, dependency])] };
 }
 
+function withImageInput(node: unknown, buildNode: string): unknown {
+  if (!isPlainObject(node)) return node;
+  const inputs = objectOrEmpty(node.inputs);
+  return { ...node, inputs: { ...inputs, image: {
+    from: buildNode, output: 'image', schemaId: 'kubeclaw.container-image@1',
+  } } };
+}
+
 function scopeWithProviders(existingScope: unknown, testConfig: unknown, options: {
-  addHttp: boolean; addSizeBudget: boolean; projectSrcDir: string; repositoryRoot: string; scopeId: string;
+  addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; legacyUnitSelected: boolean;
+  projectSrcDir: string; repositoryRoot: string; scopeId: string;
 }): AnyRecord {
   const scope = objectOrEmpty(existingScope);
   const fixtures = objectOrEmpty(scope.fixtures);
   const deploymentNode = Object.entries(fixtures).find(([, fixture]) => isPlainObject(fixture)
     && fixture.uses === 'kubeclaw.kubernetes-fixture@1')?.[0];
   const tests = objectOrEmpty(scope.tests);
+  if (options.addExposure && !deploymentNode) {
+    throw new Error(`LEGACY_TAILSCALE_PREVIEW_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.kubernetes-fixture@1 before Tailscale exposure`);
+  }
+  const exposure = options.addExposure ? exposureNodes(testConfig, deploymentNode!) : { fixtures: {}, tests: {} };
+  const hasDirectCommand = Object.values(tests).some((test) => isPlainObject(test)
+    && test.uses === 'kubeclaw.direct-command@1');
+  if (options.legacyUnitSelected && !hasDirectCommand) {
+    throw new Error(`LEGACY_UNIT_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.direct-command@1 in .swarm/pipeline.json`);
+  }
   const hasHttp = Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.http@1');
+  const existingContainerBuild = Object.entries(tests).find(([, test]) => isPlainObject(test)
+    && test.uses === 'kubeclaw.container-build@1');
+  const hasContainerBuild = existingContainerBuild !== undefined;
   const existingSizeBudget = Object.entries(tests).find(([, test]) => isPlainObject(test) && test.uses === 'kubeclaw.size-budget@1');
   const hasSizeBudget = existingSizeBudget !== undefined;
   const generatedBudget = !hasSizeBudget && options.addSizeBudget
     ? legacyBundleNodes(testConfig, options.projectSrcDir, options.repositoryRoot, options.scopeId) : {};
-  const combinedTests = { ...tests, ...generatedBudget,
+  const generatedBuild = !hasContainerBuild && options.addContainerBuild
+    ? { 'container-build': legacyBuildNode(testConfig, options.projectSrcDir, options.repositoryRoot, options.scopeId) }
+    : {};
+  const combinedTests = { ...tests, ...generatedBuild, ...generatedBudget, ...exposure.tests,
     ...(!hasHttp && options.addHttp ? httpNodes(testConfig, deploymentNode) : {}) };
   const budgetNodeId = existingSizeBudget?.[0] ?? 'size-budget';
   const orderedTests = options.addSizeBudget
     ? Object.fromEntries(Object.entries(combinedTests).map(([id, test]) => [id,
       isPlainObject(test) && test.uses === 'kubeclaw.http@1' ? withDependency(test, budgetNodeId) : test]))
     : combinedTests;
-  const orderedFixtures = options.addSizeBudget
-    ? Object.fromEntries(Object.entries(fixtures).map(([id, fixture]) => [id, withDependency(fixture, budgetNodeId)]))
-    : fixtures;
+  const buildNodeId = existingContainerBuild?.[0] ?? 'container-build';
+  const orderedFixtures = Object.fromEntries(Object.entries({ ...fixtures, ...exposure.fixtures }).map(([id, fixture]) => {
+    let next = options.addSizeBudget ? withDependency(fixture, budgetNodeId) : fixture;
+    if (options.addContainerBuild && isPlainObject(next) && next.uses === 'kubeclaw.kubernetes-fixture@1') {
+      next = withImageInput(withDependency(next, buildNodeId), buildNodeId);
+    }
+    return [id, next];
+  }));
   return { ...scope,
     tests: orderedTests,
     fixtures: orderedFixtures,
-    concurrencyLimits: { ...(options.addHttp ? { http: 4 } : {}), ...(options.addSizeBudget ? { 'size-budget': 2 } : {}),
+    concurrencyLimits: { ...(options.addContainerBuild ? { 'container-build': 1 } : {}),
+      ...(options.addHttp || options.addExposure ? { http: 4 } : {}), ...(options.addSizeBudget ? { 'size-budget': 2 } : {}),
+      ...(options.addExposure ? { 'tailscale-exposure': 1 } : {}),
       ...objectOrEmpty(scope.concurrencyLimits) } };
 }
 
@@ -247,8 +384,11 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
       rejectRetiredKubernetesConfig(prior, id);
       const selected = prior.test_suites;
       return [id, scopeWithProviders(existingModules[id], prior.test_config, {
+        addContainerBuild: Array.isArray(selected) && selected.includes('build'),
         addHttp: !Array.isArray(selected) || selected.includes('health'),
-        addSizeBudget: Array.isArray(selected) && selected.includes('bundle'), projectSrcDir,
+        addSizeBudget: Array.isArray(selected) && selected.includes('bundle'),
+        addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
+        legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, scopeId: id,
       })];
     }));
@@ -259,12 +399,17 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
       rejectRetiredKubernetesConfig(prior, id);
       const selected = prior.test_suites;
       return [id, scopeWithProviders(existingGates[id], prior.test_config, {
+        addContainerBuild: Array.isArray(selected) && selected.includes('build'),
         addHttp: !Array.isArray(selected) || selected.includes('health'),
-        addSizeBudget: Array.isArray(selected) && selected.includes('bundle'), projectSrcDir,
+        addSizeBudget: Array.isArray(selected) && selected.includes('bundle'),
+        addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
+        legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, scopeId: id,
       })];
     }));
-  return { project: context.project, modules: moduleScopes, gates: gateScopes };
+  return omitEmpty({ project: context.project,
+    lint: lintDeclaration(existing.lint, progress, context.repoRoot),
+    modules: moduleScopes, gates: gateScopes });
 }
 
 function discoverModules(context: Context, existingProgress: AnyRecord) {

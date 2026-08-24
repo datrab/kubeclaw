@@ -112,6 +112,10 @@ export function loadProductionBusterRemotePlanRuntime(
   if (allowedCapabilities.has('kubernetes.fixture') && !kubernetesFixtureSource) {
     throw new Error('BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED');
   }
+  const tailscaleExposureSource = value.tailscaleExposure === undefined ? null : object(value.tailscaleExposure, 'tailscaleExposure');
+  if (allowedCapabilities.has('kubernetes.exposure') && !tailscaleExposureSource) {
+    throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED');
+  }
   const networkHttpSource = value.networkHttp === undefined ? null : object(value.networkHttp, 'networkHttp');
   if (allowedCapabilities.has('network.http') && !networkHttpSource) throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED');
   const stateRoot = path.resolve(directory, value.stateRoot as string);
@@ -173,6 +177,21 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumExecutionMs: integer(kubernetesFixtureSource.maximumExecutionMs, 'kubernetesFixture.maximumExecutionMs'),
       ...(kubernetesFixtureSource.pollIntervalMs === undefined ? {} : {
         pollIntervalMs: integer(kubernetesFixtureSource.pollIntervalMs, 'kubernetesFixture.pollIntervalMs'),
+      }),
+    } } : {}),
+    ...(tailscaleExposureSource ? { tailscaleExposure: {
+      kubectlExecutable: path.resolve(directory, String(tailscaleExposureSource.kubectlExecutable)),
+      controllerNamespace: String(tailscaleExposureSource.controllerNamespace),
+      leaseApiGroup: String(tailscaleExposureSource.leaseApiGroup),
+      leaseApiVersion: String(tailscaleExposureSource.leaseApiVersion),
+      allowedNamespacePrefixes: stringArray(tailscaleExposureSource.allowedNamespacePrefixes,
+        'tailscaleExposure.allowedNamespacePrefixes'),
+      allowedHostSuffixes: stringArray(tailscaleExposureSource.allowedHostSuffixes,
+        'tailscaleExposure.allowedHostSuffixes'),
+      maximumExecutionMs: integer(tailscaleExposureSource.maximumExecutionMs,
+        'tailscaleExposure.maximumExecutionMs'),
+      ...(tailscaleExposureSource.pollIntervalMs === undefined ? {} : {
+        pollIntervalMs: integer(tailscaleExposureSource.pollIntervalMs, 'tailscaleExposure.pollIntervalMs'),
       }),
     } } : {}),
     ...(networkHttpSource ? { networkHttp: {

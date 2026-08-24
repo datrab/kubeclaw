@@ -10,6 +10,7 @@ export type { BusterRemotePlanRuntimeOptions } from '../test-gates/remote-plan-r
 export { loadProductionBusterRemotePlanRuntime } from '../test-gates/production.ts';
 export { DirectCommandCapabilityInvoker } from '../test-gates/direct-command-runtime.ts';
 export { KubernetesFixtureCapabilityInvoker } from '../test-gates/kubernetes-fixture-runtime.ts';
+export { TailscaleExposureCapabilityInvoker } from '../test-gates/tailscale-exposure-runtime.ts';
 export { NetworkHttpCapabilityInvoker } from '../test-gates/network-http-runtime.ts';
 export type {
   BusterPlanJobStoreOptions,

@@ -1,0 +1,26 @@
+{
+  "id": "kubeclaw.tailscale-exposure",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "exposure",
+      "contractId": "kubeclaw.tailscale-exposure@1",
+      "kind": "fixture",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [{ "name": "deployment", "kind": "value", "required": true, "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" }],
+      "outputs": [{ "name": "exposure", "kind": "value", "required": true, "schemaId": "kubeclaw.public-endpoint-fixture@1" }],
+      "requiredCapabilities": ["kubernetes.exposure"],
+      "retrySafe": false,
+      "matrixFields": [],
+      "reportFormats": [],
+      "evidenceTypes": ["log"],
+      "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+    }
+  ]
+}

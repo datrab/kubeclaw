@@ -5,169 +5,84 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {
-  loadPlatformConfig,
-  runPipelineV2,
-} from '../../../skills/nova/core/src/index.ts';
+  buildRegistry,
+  createProductionNovaTestGate,
+  discoverPackages,
+  resolveTestPlan,
+} from '@kubeclaw/nova-core';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-buildkit-preflight-'));
+const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-container-build-preflight-'));
 const fixture = path.join(temporary, 'fixture');
-const state = path.join(temporary, 'state');
-const platformPath = path.join(temporary, 'platform.json');
-const runId = `run:buildkit-preflight:${crypto.randomUUID()}`;
+const state = path.join(temporary, 'nova-state');
+const runId = `run:container-build-preflight:${crypto.randomUUID()}`;
+const token = process.env.BUSTER_V2_TOKEN;
+const privateKey = process.env.BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY;
 
-function writeJson(file: string, value: unknown): void {
-  fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
-}
-
-function git(...args: string[]): void {
-  execFileSync('git', args, { cwd: fixture, stdio: 'pipe' });
+function git(...args: string[]): string {
+  return execFileSync('git', args, { cwd: fixture, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 }
 
 try {
-  const route = resolveProviderCapability(
-    parseCapabilityProviders(),
-    'buster',
-    'test.suite.execute',
-  );
-  if (route.adapter !== 'buster-suite-v2') {
-    throw new Error(`BUILDKIT_PREFLIGHT_PROVIDER_UNSUPPORTED:${route.adapter}`);
-  }
-  if (!process.env.BUSTER_V2_TOKEN) throw new Error('BUILDKIT_PREFLIGHT_TOKEN_MISSING');
-  const registryAuthority = String(process.env.KUBECLAW_LOCAL_REGISTRY ?? '').trim();
-  if (!registryAuthority) throw new Error('BUILDKIT_PREFLIGHT_REGISTRY_MISSING');
-  const registryOrigin = new URL(
-    registryAuthority.startsWith('http') ? registryAuthority : `http://${registryAuthority}`,
-  ).origin;
+  if (!token) throw new Error('CONTAINER_BUILD_PREFLIGHT_TOKEN_MISSING');
+  if (!privateKey) throw new Error('CONTAINER_BUILD_PREFLIGHT_SOURCE_KEY_MISSING');
+  const route = resolveProviderCapability(parseCapabilityProviders(), 'buster', 'test.plan.execute');
+  if (route.adapter !== 'buster-plan-v1') throw new Error(`CONTAINER_BUILD_PREFLIGHT_PROVIDER_UNSUPPORTED:${route.adapter}`);
+
   fs.mkdirSync(fixture, { recursive: true });
   fs.writeFileSync(path.join(fixture, 'Dockerfile'), [
     'FROM docker.io/library/nginx:1.27-alpine',
     'COPY index.html /usr/share/nginx/html/index.html',
     '',
   ].join('\n'));
-  fs.writeFileSync(
-    path.join(fixture, 'index.html'),
-    `<!doctype html><title>KubeClaw BuildKit proof</title><p>${runId}</p>\n`,
-  );
+  fs.writeFileSync(path.join(fixture, 'index.html'),
+    `<!doctype html><title>KubeClaw container build proof</title><p>${runId}</p>\n`);
   git('init', '-q', '--initial-branch=main');
   git('config', 'user.name', 'KubeClaw Nova Preflight');
   git('config', 'user.email', 'nova-preflight@kubeclaw.invalid');
   git('add', '.');
-  git('commit', '-qm', 'Create BuildKit preflight fixture');
-  const gitExecutable = fs.realpathSync(
-    execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim(),
-  );
-  const pluginRoots = [
-    path.join(repositoryRoot, 'skills/common/plugins'),
-    path.join(repositoryRoot, 'skills/nova/plugins'),
-    path.join(repositoryRoot, 'skills/buster/plugins'),
-  ];
-  writeJson(platformPath, {
-    schemaVersion: 'pipeline-platform.v2',
-    installationRoots: pluginRoots,
-    trustedBuiltinRoots: pluginRoots,
-    externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
-    providers: {
-      'test.suite.execute': 'kubeclaw.buster-suite-runtime:suite',
-      'network.http': 'kubeclaw.network-http:http',
-      'secrets.read': 'kubeclaw.secret-resolver:secrets',
-    },
-    grants: {
-      'kubeclaw.preflight-contract:buildkit': {
-        'test.suite.execute': { allowedSuites: ['build'], allowedRoots: [fixture] },
-        'network.http': { allowedOrigins: [registryOrigin] },
-      },
-      'kubeclaw.buster-suite-runtime:suite': {
-        'network.http': { allowedOrigins: [route.endpoint] },
-        'secrets.read': { allowedNames: ['buster.worker'] },
-      },
-    },
-    adapters: {
-      'kubeclaw.buster-suite-runtime:suite': {
-        endpoint: route.endpoint,
-        tokenSecret: 'buster.worker',
-        allowedRepositoryRoots: [fixture],
-        unmigratedSuites: ['build'],
-        suiteCapabilities: ['image_build', 'kubernetes'],
-        gitExecutable,
-        maxArchiveBytes: 8_388_608,
-        maxSuiteTimeoutMs: 900_000,
-        pollMs: 2_000,
-      },
-      'kubeclaw.network-http:http': {
-        allowedOrigins: [route.endpoint, registryOrigin],
-        allowedMethods: ['GET', 'POST', 'DELETE'],
-        allowedHeaders: ['authorization', 'content-type', 'accept'],
-        maxRequestBytes: 16_777_216,
-        maxResponseBytes: 16_777_216,
-        timeoutMs: 60_000,
-      },
-      'kubeclaw.secret-resolver:secrets': {
-        environment: { 'buster.worker': 'BUSTER_V2_TOKEN' },
-      },
-    },
-    activeAdapters: [],
-    observers: {},
-    storageRoot: state,
-    shutdownTimeoutMs: 10_000,
-    orchestratorIssuerId: 'nova',
-    administrativeDecisionIssuers: [],
-  });
-  const result = await runPipelineV2(loadPlatformConfig(platformPath), {
-    schemaVersion: 'pipeline-definition.v2',
-    id: 'kubeclaw:nova-buildkit-preflight',
-    maxConcurrency: 1,
-    stages: [{
-      id: 'buildkit-proof',
-      type: 'kubeclaw.validate.buildkit-preflight',
-      dependsOn: [],
-      config: { registryOrigin },
-      input: {
-        repositoryRoot: fixture,
-        moduleId: 'nova-buildkit-proof',
-        attempt: 1,
-        testConfig: {
-          suite_timeout_ms: 900_000,
-          serve: {
-            type: 'server',
-            project_dir: fixture,
-            dockerfile: path.join(fixture, 'Dockerfile'),
-            build_context: fixture,
-            start_cmd: 'nginx -g "daemon off;"',
-            port: 80,
-            ready_timeout_seconds: 120,
-            timeout: 300,
-          },
-        },
-        task: {
-          project: 'nova-buildkit-preflight',
-          run_id: runId,
-          module_id: 'nova-buildkit-proof',
-          task_type: 'infrastructure-preflight',
-        },
-      },
-      execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1_020_000 },
-    }],
-  }, runId);
-  const stage = result.stages.get('buildkit-proof');
-  if (result.status !== 'succeeded' || stage?.status !== 'succeeded') {
-    const runDirectory = path.join(state, 'runs', runId.replaceAll(':', '_'));
-    const eventsPath = path.join(runDirectory, 'events.jsonl');
-    const events = fs.existsSync(eventsPath)
-      ? fs.readFileSync(eventsPath, 'utf8').trim().split('\n').slice(-8).map((line) => JSON.parse(line))
-      : [];
-    throw new Error(`BUILDKIT_PREFLIGHT_PIPELINE_FAILED:${result.status}:${JSON.stringify({ stage, events })}`);
+  git('commit', '-qm', 'Create container build preflight fixture');
+
+  const pluginRoot = path.join(repositoryRoot, 'skills/buster/plugins');
+  const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
+    trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
+    verifierId: 'container-build-production-preflight',
+  } }));
+  const declaration = JSON.parse(fs.readFileSync(
+    path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json'), 'utf8'));
+  const template = JSON.parse(fs.readFileSync(
+    path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/suites/container-build.v1.json'), 'utf8'));
+  const limits = { cpuMillis: 900_000, memoryBytes: 4 * 1024 * 1024 * 1024,
+    logBytes: 8 * 1024 * 1024, artifactBytes: 16 * 1024 * 1024,
+    artifactFiles: 16, processes: 128 };
+  const plan = resolveTestPlan({ planId: 'plan:container-build:production-preflight', runId,
+    project: 'container-build-production-preflight', scope: { moduleId: 'application', gateId: null },
+    createdAt: new Date().toISOString(), declaration, suiteTemplates: [template], registry,
+    facts: { changedPaths: ['Dockerfile', 'index.html'], moduleType: 'container', pipelineStage: 'preflight' },
+    policy: { defaultTimeoutMs: 900_000, maximumTimeoutMs: 900_000,
+      defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 1, maximumMatrixSize: 2,
+      maximumNodes: 4, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { 'container-build': 1 } } });
+  const nova = createProductionNovaTestGate({ stateRoot: state, endpoint: route.endpoint, token,
+    sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey,
+    pollMilliseconds: 500, maximumResponseBytes: 64 * 1024 * 1024,
+    maximumResultBytes: 64 * 1024 * 1024, maximumArchiveBytes: 16 * 1024 * 1024,
+    maximumArchiveStoreBytes: 64 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,
+    maximumEvidenceStoreBytes: 64 * 1024 * 1024,
+    recordLimits: { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024,
+      maximumRecordBytes: 16 * 1024 * 1024 }, legacyLedger: {} });
+  const result = await nova.execute({ idempotencyKey: `container-build:${crypto.randomUUID()}`,
+    pipelineStageId: 'stage:container-build-preflight', plan, repositoryRoot: fixture,
+    repositoryId: 'repository:container-build-preflight',
+    grants: new Map(plan.nodes.map((node) => [node.id, ['container.build']])),
+    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 1_020_000,
+    legacySuites: [] });
+  if (result.remote.decision.state !== 'passed' || result.remote.status.state !== 'completed') {
+    throw new Error(`CONTAINER_BUILD_PREFLIGHT_FAILED:${JSON.stringify(result.remote)}`);
   }
-  process.stdout.write(`${JSON.stringify({
-    ok: true,
-    schemaVersion: 'nova-buildkit-preflight.v2',
-    runId,
-    provider: route,
-    registryOrigin,
-    status: result.status,
-    stageStatus: stage.status,
-  }, null, 2)}\n`);
+  process.stdout.write(`${JSON.stringify({ ok: true, schemaVersion: 'nova-container-build-preflight.v3',
+    runId, provider: route, status: result.remote.status.state, decision: result.remote.decision.state,
+    sourceRevision: git('rev-parse', 'HEAD') }, null, 2)}\n`);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
 }

@@ -28,7 +28,7 @@ const phase5 = JSON.parse(fs.readFileSync(
   'utf8',
 ));
 
-assert.equal(core.CAPABILITY_IDS.length, 23);
+assert.equal(core.CAPABILITY_IDS.length, 25);
 assert.equal(Object.isFrozen(core.CAPABILITY_DEFINITIONS), true);
 for (const capability of core.CAPABILITY_IDS) {
   const definition = core.CAPABILITY_DEFINITIONS[capability];
@@ -362,6 +362,12 @@ const cases = [
     operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: 'fixture:app' },
     payload: { namespacePrefix: 'test', manifestPath: repositoryFile },
   }, { payload: { namespacePrefix: 'test', manifestPath: repositoryEscape } }],
+  ['kubernetes.exposure', {
+    allowedNamespacePrefixes: ['test'],
+  }, {
+    operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: 'kubernetes-exposure:attempt:test' },
+    payload: { namespace: 'test-app' },
+  }, { payload: { namespace: 'prod-app' } }],
   ['test.suite.execute', {
     allowedSuites: ['unit'], allowedRoots: [repositoryRoot],
   }, {
@@ -369,6 +375,15 @@ const cases = [
     payload: { repositoryRoot, suites: ['unit'] },
   }, {
     payload: { repositoryRoot, suites: ['deployment'] },
+  }],
+  ['test.plan.execute', {
+    allowedRoots: [repositoryRoot],
+  }, {
+    operation: 'run', resource: { type: 'test.resolved-plan', canonicalId: repositoryRoot },
+    payload: { repositoryRoot },
+  }, {
+    resource: { type: 'test.resolved-plan', canonicalId: repositoryEscape },
+    payload: { repositoryRoot: repositoryEscape },
   }],
   ['lint.execute', {
     allowedProjects: ['project'],

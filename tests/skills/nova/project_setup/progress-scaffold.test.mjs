@@ -153,6 +153,7 @@ test('progress scaffold rejects removed visual-reg path alias', () => {
 test('progress scaffold migrates legacy health settings into provider plan nodes', () => {
   const root = makeRepo();
   const swarm = createBasicProject(root);
+  writeFile(path.join(root, 'Projects/demo/src/Dockerfile'), 'FROM scratch\n');
   writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
     project: 'demo', version: 1, description: 'Demo project', notes: ['Migration test.'],
     execution_order: ['01-foundation'], modules: { '01-foundation': {
@@ -175,6 +176,14 @@ test('progress scaffold migrates legacy health settings into provider plan nodes
   assert.deepEqual(module.test_suites, ['api']);
   assert.equal(JSON.stringify(module.test_config).includes('health_path'), false);
   assert.equal(scaffold.pipeline.modules['01-foundation'].suites.unit.uses, 'kubeclaw.unit-suite@1');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['container-build'].uses,
+    'kubeclaw.container-build@1');
+  assert.deepEqual(scaffold.pipeline.modules['01-foundation'].tests['container-build'].config, {
+    buildContext: 'Projects/demo/src',
+    definition: { type: 'dockerfile', dockerfile: 'Projects/demo/src/Dockerfile' },
+    outputName: '01-foundation',
+    platform: 'linux/amd64',
+  });
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.path, '/ready');
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].retries, 3);
   assert.deepEqual(scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].needs, ['http-health']);
@@ -187,6 +196,135 @@ test('progress scaffold migrates legacy health settings into provider plan nodes
   const progress = readJson(path.join(swarm, 'progress.json'));
   assert.deepEqual(progress.modules['01-foundation'].test_suites, ['api']);
   assert.equal(JSON.stringify(progress).includes('health_path'), false);
+});
+
+test('progress scaffold rejects legacy unit selection without an explicit provider node', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Unit migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['unit'], test_config: { unit: { test_cmd: 'npm test' } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']),
+    /LEGACY_UNIT_CONFIGURATION_RETIRED:01-foundation/);
+});
+
+test('progress scaffold accepts explicit direct-command replacement for legacy unit selection', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Unit migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['unit'], test_config: {},
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {
+    '01-foundation': { tests: { unit: { uses: 'kubeclaw.direct-command@1', mode: 'blocking',
+      retries: 0, concurrencyGroup: 'unit', config: { executable: 'npm', args: ['test'],
+        workingDirectory: 'Projects/demo/src', resultMode: 'exit-code' } } },
+      concurrencyLimits: { unit: 1 } },
+  }, gates: {} }, null, 2)}\n`);
+  run(root, ['--project', 'demo']);
+  const scaffold = readJson(path.join(swarm, 'progress.scaffold.json'));
+  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests.unit.uses,
+    'kubeclaw.direct-command@1');
+});
+
+test('progress scaffold migrates the legacy manifest suite into Nova lint inputs', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(root, 'Projects/demo/src/k8s/deployment.yaml'), 'apiVersion: apps/v1\nkind: Deployment\nmetadata: { name: demo }\n');
+  writeFile(path.join(root, 'Projects/demo/src/k8s/secret.yaml'), 'apiVersion: v1\nkind: Secret\nmetadata: { name: demo }\n');
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Manifest migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['manifest'], test_config: { manifest: {
+        deployment_yaml: 'Projects/demo/src/k8s/deployment.yaml',
+        secret_yaml: 'Projects/demo/src/k8s/secret.yaml',
+      } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+
+  run(root, ['--project', 'demo']);
+  const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
+  const scaffold = readJson(scaffoldPath);
+  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
+  assert.equal(scaffold.modules['01-foundation'].test_config, undefined);
+  assert.deepEqual(scaffold.pipeline.lint, {
+    uses: 'kubeclaw.lint.full', policyProject: 'workspace',
+    rawManifests: [
+      'Projects/demo/src/k8s/deployment.yaml',
+      'Projects/demo/src/k8s/secret.yaml',
+    ],
+    helmCharts: [],
+  });
+
+  scaffold.description = 'Demo project';
+  scaffold.notes = ['Manifest migration test.'];
+  scaffold.execution_order = ['01-foundation'];
+  writeFile(scaffoldPath, `${JSON.stringify(scaffold, null, 2)}\n`);
+  run(root, ['--project', 'demo', '--apply']);
+  const progress = readJson(path.join(swarm, 'progress.json'));
+  const pipeline = readJson(path.join(swarm, 'pipeline.json'));
+  assert.equal(JSON.stringify(progress).includes('manifest'), false);
+  assert.equal(pipeline.lint.uses, 'kubeclaw.lint.full');
+});
+
+test('progress scaffold rejects a legacy manifest selection without an explicit deployment input', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Manifest migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['manifest'], test_config: {},
+    } }, gates: {},
+  }, null, 2)}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_MANIFEST_DEPLOYMENT_MISSING:01-foundation/);
+});
+
+test('progress scaffold links the migrated container image to a Kubernetes fixture', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(root, 'Projects/demo/src/containers/app/Dockerfile'), 'FROM scratch\n');
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Build migration test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['build'], test_config: { serve: {
+        build_context: 'Projects/demo/src/containers/app',
+        dockerfile: 'Projects/demo/src/containers/app/Dockerfile',
+        target: 'release', platform: 'linux/arm64', build_args: { NODE_ENV: 'production' },
+      } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {
+    '01-foundation': { fixtures: { deploy: { uses: 'kubeclaw.kubernetes-fixture@1', mode: 'blocking',
+      config: { serviceName: 'demo', servicePort: 80 }, inputs: {
+        'checked-manifest': { from: 'manifest', output: 'artifact-1' },
+      } } } },
+  }, gates: {} }, null, 2)}\n`);
+
+  run(root, ['--project', 'demo']);
+  const scaffold = readJson(path.join(swarm, 'progress.scaffold.json'));
+  const plan = scaffold.pipeline.modules['01-foundation'];
+  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
+  assert.deepEqual(plan.tests['container-build'].config, {
+    buildContext: 'Projects/demo/src/containers/app',
+    definition: { type: 'dockerfile', dockerfile: 'Projects/demo/src/containers/app/Dockerfile',
+      target: 'release', buildArgs: { NODE_ENV: 'production' } },
+    outputName: '01-foundation', platform: 'linux/arm64',
+  });
+  assert.deepEqual(plan.fixtures.deploy.needs, ['container-build']);
+  assert.deepEqual(plan.fixtures.deploy.inputs.image, {
+    from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+  });
 });
 
 test('progress scaffold migrates the legacy bundle suite into an explicit size-budget plan', () => {

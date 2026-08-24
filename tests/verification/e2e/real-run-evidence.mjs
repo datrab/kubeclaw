@@ -59,8 +59,8 @@ const FAILURE_STAGE_BY_SCENARIO = Object.freeze({
   'buster-gate-failure': 'final-buster',
   'k8s-pod-never-ready': 'final-buster',
   'namespace-lease-denied': 'final-buster',
-  'tailscale-preview-url-unreachable': 'final-buster',
-  'tailscale-preview-wrong-deployment': 'final-buster',
+  'tailscale-exposure-url-unreachable': 'final-buster',
+  'tailscale-exposure-wrong-content': 'final-buster',
   'pipeline-summary-failure': 'summary',
   'redis-unavailable': null,
   'k8s-context-invalid': 'final-buster',
@@ -105,8 +105,8 @@ const FAILURE_DIAGNOSTICS = Object.freeze({
   'registry-pull-failure': ['registry', 'pull'],
   'k8s-context-invalid': ['k8s', 'context'],
   'k8s-pod-never-ready': ['ready', 'timeout'],
-  'tailscale-preview-url-unreachable': ['tailscale', 'unreachable'],
-  'tailscale-preview-wrong-deployment': ['tailscale', 'deployment'],
+  'tailscale-exposure-url-unreachable': ['tailscale', 'unreachable'],
+  'tailscale-exposure-wrong-content': ['tailscale', 'deployment'],
 });
 
 function pathExists(filePath) {

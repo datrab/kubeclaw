@@ -33,8 +33,14 @@ assert.match(runtimeSource, /servicePortName[\s\S]*hasConfiguredPort/u);
 assert.match(runtimeSource, /retentionMode[\s\S]*cleanupPolicy: retentionMode/u);
 assert.match(runtimeSource, /status\.createdAt[\s\S]*KUBERNETES_FIXTURE_CREATED_AT_INVALID/u);
 assert.match(runtimeSource, /#secretReferences\.has\(name\)[\s\S]*KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/u);
-assert.match(controllerSource, /Status\["phase"\]\) == "Expired"[\s\S]*deleteNamespace/u);
-assert.match(controllerSource, /approvedSecretNames\[name\][\s\S]*not approved for test deployment/u);
+assert.match(runtimeSource, /annotations\['tailscale\.com\/expose'\][\s\S]*KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED/u);
+assert.match(runtimeSource, /externalIPs\.length > 0[\s\S]*externalName\.trim\(\)\.length > 0/u);
+assert.match(runtimeSource, /field === 'containers' && containers\.length < 1/u);
+assert.match(runtimeSource, /hostPort !== undefined && hostPort !== 0/u);
+assert.match(controllerSource, /expireLease\([\s\S]*deleteOwnedNamespace/u);
+assert.match(controllerSource, /allowedSourceSecrets\[name\][\s\S]*not approved for test namespace copying/u);
+assert.match(controllerSource, /generated testCredentials keys must be username and password/u);
+assert.match(runtimeSource, /access: \[\{ subject: this\.#runnerSubject, mode: 'deployer' \}\]/u);
 const legacyExecutionPath = 'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-execution.ts';
 if (fs.existsSync(legacyExecutionPath)) {
   const legacyExecution = fs.readFileSync(legacyExecutionPath, 'utf8');
@@ -86,7 +92,7 @@ try {
       serviceName: 'app', servicePort: 8080, retentionSeconds: 300, readinessTimeoutMs: 10_000,
       retentionMode: 'delete', secretReferences: [],
     } } as any, new AbortController().signal), /KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:ServiceAccount/u);
-  const validManifest = `apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: app\nspec:\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n`;
+  const validManifest = `apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: app\nspec:\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n          securityContext:\n            runAsNonRoot: true\n            allowPrivilegeEscalation: false\n            capabilities:\n              drop: [ALL]\n`;
   const validPath = path.join(temporary, 'valid.yaml');
   fs.writeFileSync(validPath, validManifest);
   await assert.rejects(() => capability.invoke('kubernetes.fixture', { operation: 'prepare',

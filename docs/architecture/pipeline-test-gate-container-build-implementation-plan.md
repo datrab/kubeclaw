@@ -31,11 +31,10 @@ or check health. Those jobs belong to later fixtures and tests.
 5. Keep BuildKit and registry settings in operator configuration.
 6. Require BuildKit to push. Read the pushed manifest and hash its bytes.
 7. Return one typed immutable image output plus full bounded build logs.
-8. Prove the provider, runtime boundary, suite composition, and contained
-   Nova-to-Buster route with real processes and files. The contained BuildKit
-   contract emulator is allowed because this pod has no BuildKit daemon.
-9. Keep the new path non-authoritative and the old build suite authoritative.
-10. Run all regressions and Terra review before the parity phase.
+8. Prove the provider, runtime boundary, and Nova-to-Buster route with a real
+   BuildKit daemon and a real registry.
+9. Keep the new path non-authoritative until parity completes.
+10. Run all regressions and Terra review before cutover.
 
 ## Stop conditions
 

@@ -296,10 +296,12 @@ When enabled, all pipeline events (module status, agent lifecycle, gate verdicts
 | `dockerfile` | — | Path to Dockerfile (relative to repo root) |
 | `build_context` | dirname of dockerfile | Docker build context (relative to repo root) |
 | `build_timeout` | `300` | Build timeout (seconds) |
-| `deployment_yaml` | — | K8s deployment YAML path (relative to repo root) — injects env vars into build |
-| `secret_yaml` | — | K8s secret YAML path (relative to repo root) — injects secrets into build |
 HTTP assertions and retry settings belong to `kubeclaw.http@1` nodes in
 `.swarm/pipeline.json`. They do not belong in `serve`.
+
+Kubernetes YAML inputs belong to the root `lint` declaration in
+`.swarm/pipeline.json`. Project setup migrates old manifest selections into
+that declaration. Nova lint checks those files before deployment.
 
 ### `type: "static"` (Frontend)
 

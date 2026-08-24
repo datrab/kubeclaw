@@ -47,6 +47,14 @@ cost, wall time, and actual retry consumption before dispatch. Prompt accounting
 uses the shared runtime envelope plus a bounded result-path reserve. The OpenClaw
 runtime adapter repeats the check on the exact final prompt that it sends.
 
+Each completed repository review and verification job is persisted as an
+immutable content-cache artifact. Core checkpoints that artifact before the
+overall repository-audit stage completes. Journal recovery supplies the
+checkpoints to the next attempt, which validates their source, policy, model,
+runtime, and evidence identities and dispatches only missing jobs. A container
+failure at batch 150 therefore preserves batches 1 through 149; repository
+snapshot compilation may repeat, but completed model calls do not.
+
 Repository jobs do not copy source into task text. Component jobs carry complete
 source. Boundary jobs carry exact call-site and contract excerpts. Holistic passes
 start from digest-bound compact topology records. They may certify a clean topology

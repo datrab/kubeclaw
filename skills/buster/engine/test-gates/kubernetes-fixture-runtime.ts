@@ -21,8 +21,7 @@ const CLUSTER_SCOPED_KINDS = new Set([
   'ValidatingWebhookConfiguration', 'VolumeSnapshotClass',
 ]);
 const ALLOWED_NAMESPACED_KINDS = new Set([
-  'ConfigMap', 'CronJob', 'Deployment', 'Endpoints', 'Ingress', 'Job', 'PersistentVolumeClaim',
-  'Pod', 'ReplicaSet', 'Service', 'StatefulSet',
+  'ConfigMap', 'CronJob', 'Deployment', 'Job', 'PersistentVolumeClaim', 'Pod', 'Service', 'StatefulSet',
 ]);
 
 type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
@@ -75,6 +74,8 @@ export interface KubernetesFixtureCapabilityInvokerOptions {
   readonly allowedNamespacePrefixes: readonly string[];
   readonly allowedRegistryPrefixes: readonly string[];
   readonly allowedSecretReferences: readonly string[];
+  readonly runnerSubject?: string;
+  readonly credentialReaderSubject?: string;
   readonly maximumManifestBytes: number;
   readonly maximumResources: number;
   readonly maximumRetentionSeconds: number;
@@ -186,7 +187,50 @@ function podSpecs(document: JsonObject): JsonObject[] {
   return [];
 }
 
-function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number): { resources: number; workloads: number } {
+function validatePodSecurity(spec: JsonObject): void {
+  if (spec.hostNetwork === true || spec.hostPID === true || spec.hostIPC === true) {
+    throw new Error('KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED');
+  }
+  const podSecurity = object(spec.securityContext ?? {}, 'pod.securityContext');
+  if (podSecurity.runAsNonRoot !== true) throw new Error('KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED');
+  const seccomp = object(podSecurity.seccompProfile ?? {}, 'pod.seccompProfile');
+  if (seccomp.type !== 'RuntimeDefault' && seccomp.type !== 'Localhost') {
+    throw new Error('KUBERNETES_FIXTURE_SECCOMP_REQUIRED');
+  }
+  const volumes = Array.isArray(spec.volumes) ? spec.volumes : [];
+  if (volumes.some((volume) => object(volume, 'pod.volume').hostPath !== undefined)) {
+    throw new Error('KUBERNETES_FIXTURE_HOST_PATH_DENIED');
+  }
+  for (const field of ['initContainers', 'containers']) {
+    const containers = spec[field];
+    if (containers === undefined) continue;
+    if (!Array.isArray(containers) || (field === 'containers' && containers.length < 1)) {
+      throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
+    }
+    for (const raw of containers) {
+      const container = object(raw, 'container');
+      const security = object(container.securityContext ?? {}, 'container.securityContext');
+      if (security.privileged === true || security.allowPrivilegeEscalation !== false
+        || (security.runAsNonRoot !== true && podSecurity.runAsNonRoot !== true)) {
+        throw new Error('KUBERNETES_FIXTURE_CONTAINER_SECURITY_INVALID');
+      }
+      const capabilities = object(security.capabilities ?? {}, 'container.capabilities');
+      if (!Array.isArray(capabilities.drop) || !capabilities.drop.includes('ALL')) {
+        throw new Error('KUBERNETES_FIXTURE_CAPABILITY_DROP_REQUIRED');
+      }
+      const ports = Array.isArray(container.ports) ? container.ports : [];
+      if (ports.some((port) => {
+        const hostPort = object(port, 'container.port').hostPort;
+        return hostPort !== undefined && hostPort !== 0;
+      })) {
+        throw new Error('KUBERNETES_FIXTURE_HOST_PORT_DENIED');
+      }
+    }
+  }
+}
+
+function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number,
+  allowedRegistryPrefixes: readonly string[]): { resources: number; workloads: number } {
   let loaded: unknown[] = [];
   try { loadAll(bytes.toString('utf8'), (value) => { loaded.push(value); }); }
   catch (error) { throw new Error('KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED', { cause: error }); }
@@ -203,15 +247,36 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
     if (!ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
     if (metadata.namespace !== undefined) throw new Error(`KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED:${kind}`);
     if (!apiVersion.includes('/') && apiVersion !== 'v1') throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
+    if (kind === 'Service') {
+      const spec = object(document.spec, 'service.spec');
+      const type = spec.type ?? 'ClusterIP';
+      const annotations = object(metadata.annotations ?? {}, 'service.metadata.annotations');
+      const externalIPs = spec.externalIPs;
+      const hasExternalIPs = externalIPs !== undefined && (!Array.isArray(externalIPs) || externalIPs.length > 0);
+      const externalName = spec.externalName;
+      const hasExternalName = externalName !== undefined
+        && (typeof externalName !== 'string' || externalName.trim().length > 0);
+      if (type !== 'ClusterIP' || hasExternalIPs || hasExternalName) {
+        throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
+      }
+      if (annotations['tailscale.com/expose'] !== undefined) {
+        throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
+      }
+    }
     for (const spec of podSpecs(document)) {
       workloads += 1;
+      validatePodSecurity(spec);
       for (const field of ['initContainers', 'containers']) {
         const containers = spec[field];
         if (containers === undefined) continue;
         if (!Array.isArray(containers)) throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
         for (const container of containers) {
           const image = text(object(container, 'container').image, 'container.image', 2048);
-          if (!IMMUTABLE_IMAGE.test(image)) throw new Error(`KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED:${image}`);
+          const parsed = IMMUTABLE_IMAGE.exec(image);
+          if (!parsed) throw new Error(`KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED:${image}`);
+          if (!allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
+            throw new Error(`KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED:${image}`);
+          }
           if (image === immutableImage) matchedImage = true;
         }
       }
@@ -256,6 +321,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
   readonly #namespacePrefixes: ReadonlySet<string>;
   readonly #registryPrefixes: readonly string[];
   readonly #secretReferences: ReadonlySet<string>;
+  readonly #runnerSubject: string;
+  readonly #credentialReaderSubject: string;
   readonly #maximumManifestBytes: number;
   readonly #maximumResources: number;
   readonly #maximumRetentionSeconds: number;
@@ -282,6 +349,12 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (options.allowedSecretReferences.some((item) => !SECRET_NAME.test(item))) {
       throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID');
     }
+    const runnerSubject = options.runnerSubject ?? `${options.controllerNamespace}/agent-buster`;
+    const credentialReaderSubject = options.credentialReaderSubject ?? `${options.controllerNamespace}/agent-nova`;
+    if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(runnerSubject)
+      || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(credentialReaderSubject)) {
+      throw new Error('KUBERNETES_FIXTURE_SUBJECT_INVALID');
+    }
     for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],
       [options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {
       if (!Number.isSafeInteger(value) || value < 1) throw new Error(`KUBERNETES_FIXTURE_${label}_LIMIT_INVALID`);
@@ -292,6 +365,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     this.#namespacePrefixes = new Set(options.allowedNamespacePrefixes);
     this.#registryPrefixes = [...options.allowedRegistryPrefixes];
     this.#secretReferences = new Set(options.allowedSecretReferences);
+    this.#runnerSubject = runnerSubject;
+    this.#credentialReaderSubject = credentialReaderSubject;
     this.#maximumManifestBytes = options.maximumManifestBytes;
     this.#maximumResources = options.maximumResources;
     this.#maximumRetentionSeconds = options.maximumRetentionSeconds;
@@ -439,7 +514,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (!DIGEST.test(manifestDigest)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID');
     const manifestPath = contained(this.#root, payload.manifestPath);
     const bytes = manifestBytes(manifestPath, manifestDigest, this.#maximumManifestBytes);
-    const facts = inspectManifest(bytes, immutableImage, this.#maximumResources);
+    const facts = inspectManifest(bytes, immutableImage, this.#maximumResources, this.#registryPrefixes);
     const serviceName = text(payload.serviceName, 'serviceName', 63);
     if (!DNS_LABEL.test(serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
     const servicePort = integer(payload.servicePort, 'servicePort', 1, 65_535);
@@ -453,13 +528,25 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (secretReferences.some((name) => !this.#secretReferences.has(name))) {
       throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
     }
+    const credentialsValue = payload.testCredentials === undefined ? null : object(payload.testCredentials, 'testCredentials');
+    let testCredentials: JsonObject | null = null;
+    if (credentialsValue) {
+      const mode = text(credentialsValue.mode, 'testCredentials.mode', 16);
+      const secretName = text(credentialsValue.secretName, 'testCredentials.secretName', 253);
+      if (mode !== 'generate' || !SECRET_NAME.test(secretName)) {
+        throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
+      }
+      testCredentials = { mode, secretName, keys: ['username', 'password'],
+        readers: [...new Set([this.#credentialReaderSubject, this.#runnerSubject])] };
+    }
     const lease = {
       apiVersion: `${this.#apiGroup}/${this.#apiVersion}`, kind: 'BusterNamespaceLease',
       metadata: { name: leaseName, namespace: this.#controllerNamespace,
         labels: { 'openclaw.io/buster-scope': request.resource.canonicalId.replace(/[^A-Za-z0-9._-]/gu, '-').slice(0, 63) } },
       spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
-        purpose: 'gate', capabilityProfile: 'default', serviceName, cleanupPolicy: retentionMode,
-        ttlSeconds: retentionSeconds, secretsToCopy: secretReferences, exposure: { provider: 'off' } },
+        purpose: 'gate', serviceName, servicePort, cleanupPolicy: retentionMode,
+        ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
+        secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
     };
     const leaseBytes = `${JSON.stringify(lease)}\n`;
     const resource = `busternamespaceleases.${this.#apiGroup}`;
@@ -486,7 +573,9 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       return Object.freeze({ ok: true, leaseName, namespace: namespaceName, createdAt, expiresAt,
         endpoint: `http://${serviceName}.${namespaceName}.svc.cluster.local:${servicePort}`,
         releaseAction: `kubectl delete busternamespacelease ${leaseName} -n ${this.#controllerNamespace}`,
-        manifestDigest, immutableImage, secretReferences, resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
+        manifestDigest, immutableImage, secretReferences,
+        ...(testCredentials ? { credentialsRef: testCredentials.secretName } : {}),
+        resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
     } catch (error) {
       await this.#releaseAfterPrepareFailure(leaseName).catch(() => undefined);
       throw error;
