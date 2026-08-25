@@ -313,7 +313,7 @@ export class DeterministicDesignProvider implements DesignProvider {
 
 export class OpenAICompatibleDesignProvider implements DesignProvider {
   readonly #endpoint: URL;
-  readonly #embeddingEndpoint: URL;
+  readonly #embeddingEndpoint: URL | null;
   readonly #apiKey: string;
   readonly #model: string;
   readonly #embeddingModel: string;
@@ -326,14 +326,22 @@ export class OpenAICompatibleDesignProvider implements DesignProvider {
     embeddingModel: string;
     timeoutMs?: number;
   }) {
-    this.#endpoint = new URL(options.endpoint);
-    if (this.#endpoint.protocol !== "https:")
-      throw new Error("design provider requires HTTPS");
-    this.#embeddingEndpoint = new URL(options.embeddingEndpoint);
-    if (this.#embeddingEndpoint.protocol !== "https:")
-      throw new Error("embedding provider requires HTTPS");
-    if (!options.apiKey || !options.model || !options.embeddingModel)
-      throw new Error("design provider credentials and models are required");
+    const providerUrl = (value: string, label: string) => {
+      const url = new URL(value);
+      const internalHttp = url.protocol === "http:"
+        && (url.hostname.endsWith(".svc.cluster.local") || url.hostname.endsWith(".svc"));
+      if (url.protocol !== "https:" && !internalHttp)
+        throw new Error(`${label} requires HTTPS or an internal Kubernetes Service`);
+      return url;
+    };
+    this.#endpoint = providerUrl(options.endpoint, "design provider");
+    if (!options.apiKey || !options.model)
+      throw new Error("design provider credentials and model are required");
+    if (Boolean(options.embeddingEndpoint) !== Boolean(options.embeddingModel))
+      throw new Error("embedding provider endpoint and model must be configured together");
+    this.#embeddingEndpoint = options.embeddingEndpoint
+      ? providerUrl(options.embeddingEndpoint, "embedding provider")
+      : null;
     this.#apiKey = options.apiKey;
     this.#model = options.model;
     this.#embeddingModel = options.embeddingModel;
@@ -380,6 +388,8 @@ export class OpenAICompatibleDesignProvider implements DesignProvider {
   async embed(
     text: string,
   ): Promise<{ embedding: number[]; model: string; modelVersion: string }> {
+    if (!this.#embeddingEndpoint || !this.#embeddingModel)
+      throw new Error("embedding provider is not configured");
     const response = await fetch(this.#embeddingEndpoint, {
       method: "POST",
       signal: AbortSignal.timeout(this.#timeoutMs),

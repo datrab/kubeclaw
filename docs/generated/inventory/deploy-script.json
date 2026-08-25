@@ -173,6 +173,22 @@
       "description": "true|false (default: true)"
     },
     {
+      "name": "PRISM_PROVIDER_ENDPOINT",
+      "description": "OpenAI-compatible chat endpoint (default: internal LiteLLM)"
+    },
+    {
+      "name": "PRISM_PROVIDER_MODEL",
+      "description": "Chat model exposed by the provider (default: claude-sonnet)"
+    },
+    {
+      "name": "PRISM_EMBEDDING_ENDPOINT",
+      "description": "Optional OpenAI-compatible embedding endpoint"
+    },
+    {
+      "name": "PRISM_EMBEDDING_MODEL",
+      "description": "Optional embedding model; required with PRISM_EMBEDDING_ENDPOINT"
+    },
+    {
       "name": "ALLOW_PARTIAL_INFRA",
       "description": "true|false (default: false)"
     },
@@ -202,6 +218,10 @@
     "KUBECLAW_DEPLOY_POSTGRESQL": "true",
     "KUBECLAW_DEPLOY_QDRANT": "true",
     "KUBECLAW_DEPLOY_LITELLM": "true",
+    "PRISM_PROVIDER_ENDPOINT": "http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions",
+    "PRISM_PROVIDER_MODEL": "claude-sonnet",
+    "PRISM_EMBEDDING_ENDPOINT": "",
+    "PRISM_EMBEDDING_MODEL": "",
     "ALLOW_PARTIAL_INFRA": "false",
     "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:rootless"
   },
@@ -284,12 +304,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 800,
-    "secrets": 844,
-    "tailscale": 903,
-    "infra": 994,
-    "agents": 1199,
-    "smoke": 1321,
-    "teardown": 1656
+    "setup": 808,
+    "secrets": 852,
+    "tailscale": 911,
+    "infra": 1002,
+    "agents": 1207,
+    "smoke": 1329,
+    "teardown": 1685
   }
 }

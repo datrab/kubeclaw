@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with { type: "json" };
-import { PrismEngine, DeterministicDesignProvider } from "../engine/index.ts";
+import { PrismEngine, DeterministicDesignProvider, OpenAICompatibleDesignProvider } from "../engine/index.ts";
 import { executePrismOperation } from "../engine/worker-binding.ts";
 import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import { prismAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
@@ -113,6 +113,24 @@ test("concurrent retries share one provider execution", async () => {
   release();
   assert.deepEqual(await first, await second);
   assert.equal(calls, 1);
+});
+
+test("the live provider accepts internal LiteLLM without requiring embeddings", async () => {
+  const provider = new OpenAICompatibleDesignProvider({
+    endpoint: "http://litellm.kubeclaw.svc.cluster.local:4000/v1/chat/completions",
+    embeddingEndpoint: "",
+    apiKey: "test-key",
+    model: "claude-sonnet",
+    embeddingModel: "",
+  });
+  await assert.rejects(() => provider.embed("not enabled"), /embedding provider is not configured/);
+  assert.throws(() => new OpenAICompatibleDesignProvider({
+    endpoint: "http://provider.example.test/v1/chat/completions",
+    embeddingEndpoint: "",
+    apiKey: "test-key",
+    model: "test-model",
+    embeddingModel: "",
+  }), /requires HTTPS or an internal Kubernetes Service/);
 });
 
 test("an idempotency key cannot identify different requests", async () => {

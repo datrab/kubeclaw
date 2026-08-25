@@ -35,6 +35,10 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `NAMESPACE` | Target namespace (default: kubeclaw) | `kubeclaw` | `kubeclaw` |
 | `NOVA_CODE_BUNDLE_ARCHIVE_URL` | Resolved Nova bundle archive URL for code deploy |  |  |
 | `NOVA_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Nova source commit for code deploy |  |  |
+| `PRISM_EMBEDDING_ENDPOINT` | Optional OpenAI-compatible embedding endpoint |  |  |
+| `PRISM_EMBEDDING_MODEL` | Optional embedding model; required with PRISM_EMBEDDING_ENDPOINT |  |  |
+| `PRISM_PROVIDER_ENDPOINT` | OpenAI-compatible chat endpoint (default: internal LiteLLM) | `http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions` |  |
+| `PRISM_PROVIDER_MODEL` | Chat model exposed by the provider (default: claude-sonnet) | `claude-sonnet` |  |
 | `SRC_NS` | Namespace to copy existing app Secrets from (default: default) |  | `default` |
 | `TAILSCALE_OAUTH_CLIENT_ID` | Optional bootstrap source for Secret/operator-oauth |  |  |
 | `TAILSCALE_OAUTH_CLIENT_SECRET` | Optional bootstrap source for Secret/operator-oauth |  |  |

@@ -57,9 +57,9 @@ spec:
             - name: PRISM_PROVIDER_MODEL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: model } }
             - name: PRISM_EMBEDDING_ENDPOINT
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-endpoint } }
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-endpoint, optional: true } }
             - name: PRISM_EMBEDDING_MODEL
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-model } }
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-model, optional: true } }
             {{- end }}
           resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
           volumeMounts:

@@ -9,6 +9,8 @@ for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","tear
 for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_TAG","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
 assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not require an approver allowlist");
 assert(!source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must use ordinary tagged images");
+assert(source.includes("Created ${PRISM_NAMESPACE}/prism-provider from the existing LiteLLM credential"),"Prism must create its provider Secret from the existing LiteLLM credential");
+assert(source.includes("PRISM_PROVIDER_ENDPOINT"),"Prism must expose an optional provider endpoint override");
 assert(!chartValues.includes("digest:"),"Prism chart values must not expose image digests");
 assert(!chartSchema.includes("approverUsers"),"Prism chart schema must not expose an approver allowlist");
 assert(!workloads.includes("PRISM_APPROVER_USERS"),"Prism workloads must not configure an approver allowlist");

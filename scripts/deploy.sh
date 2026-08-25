@@ -46,6 +46,10 @@
 #   KUBECLAW_DEPLOY_POSTGRESQL    true|false (default: true)
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
+#   PRISM_PROVIDER_ENDPOINT       OpenAI-compatible chat endpoint (default: internal LiteLLM)
+#   PRISM_PROVIDER_MODEL          Chat model exposed by the provider (default: claude-sonnet)
+#   PRISM_EMBEDDING_ENDPOINT      Optional OpenAI-compatible embedding endpoint
+#   PRISM_EMBEDDING_MODEL         Optional embedding model; required with PRISM_EMBEDDING_ENDPOINT
 #   ALLOW_PARTIAL_INFRA           true|false (default: false)
 #   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Rootless BuildKit probe image (default: moby/buildkit:rootless)
 #   BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT Probe pod readiness timeout (default: 180s)
@@ -84,6 +88,10 @@ PRISM_WORKER_IMAGE_REPOSITORY="${PRISM_WORKER_IMAGE_REPOSITORY:-}"
 PRISM_WORKER_IMAGE_TAG="${PRISM_WORKER_IMAGE_TAG:-}"
 PRISM_INGESTION_IMAGE_REPOSITORY="${PRISM_INGESTION_IMAGE_REPOSITORY:-}"
 PRISM_INGESTION_IMAGE_TAG="${PRISM_INGESTION_IMAGE_TAG:-}"
+PRISM_PROVIDER_ENDPOINT="${PRISM_PROVIDER_ENDPOINT:-http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions}"
+PRISM_PROVIDER_MODEL="${PRISM_PROVIDER_MODEL:-claude-sonnet}"
+PRISM_EMBEDDING_ENDPOINT="${PRISM_EMBEDDING_ENDPOINT:-}"
+PRISM_EMBEDDING_MODEL="${PRISM_EMBEDDING_MODEL:-}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
 AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
@@ -1377,10 +1385,31 @@ cmd_prism_secrets() {
   dispatch_secret="$(kubectl get secret prism-runtime -n "$PRISM_NAMESPACE" -o jsonpath='{.data.dispatch-secret}' | base64 -d)"
   kubectl create secret generic prism-dispatch-auth -n "$NAMESPACE" \
     --from-literal=token="$dispatch_secret" --dry-run=client -o yaml | kubectl apply -f - >/dev/null
-  if ! kubectl get secret prism-provider -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
-    err "Missing Secret prism-provider with keys: endpoint, api-key, model, embedding-endpoint, embedding-model"
-    return 1
+  if [[ -n $PRISM_EMBEDDING_ENDPOINT || -n $PRISM_EMBEDDING_MODEL ]]; then
+    if [[ -z $PRISM_EMBEDDING_ENDPOINT || -z $PRISM_EMBEDDING_MODEL ]]; then
+      err "PRISM_EMBEDDING_ENDPOINT and PRISM_EMBEDDING_MODEL must be configured together"
+      return 1
+    fi
   fi
+  if ! kubectl get secret prism-provider -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
+    local provider_api_key
+    provider_api_key="$(kubectl get secret openclaw-shared-secrets -n "$NAMESPACE" -o jsonpath='{.data.litellmApiKey}' 2>/dev/null | base64 -d)"
+    if [[ -z $provider_api_key ]]; then
+      err "Cannot create prism-provider: Secret ${NAMESPACE}/openclaw-shared-secrets is missing litellmApiKey"
+      return 1
+    fi
+    kubectl create secret generic prism-provider -n "$PRISM_NAMESPACE" \
+      --from-literal=endpoint="$PRISM_PROVIDER_ENDPOINT" \
+      --from-literal=api-key="$provider_api_key" \
+      --from-literal=model="$PRISM_PROVIDER_MODEL" \
+      --from-literal=embedding-endpoint="$PRISM_EMBEDDING_ENDPOINT" \
+      --from-literal=embedding-model="$PRISM_EMBEDDING_MODEL"
+    log "Created ${PRISM_NAMESPACE}/prism-provider from the existing LiteLLM credential"
+  fi
+  for secret_key in endpoint api-key model; do
+    kubectl get secret prism-provider -n "$PRISM_NAMESPACE" -o "go-template={{ index .data \"${secret_key}\" }}" | grep -q . \
+      || { err "Secret prism-provider is missing ${secret_key}"; return 1; }
+  done
   log "Prism secrets are present (values not printed)"
 }
 

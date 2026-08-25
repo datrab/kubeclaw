@@ -11,9 +11,13 @@
 Prism uses the image repositories and tags configured once in
 `my-values/prism-values.yaml`; no digest or approver environment variables are
 required. Any user authenticated through the trusted Tailscale ingress can
-approve a design. `deploy.sh prism` still rejects a missing values file and
-missing Secrets. Helm uses an atomic upgrade. A failed upgrade keeps the last
-healthy release.
+approve a design. `deploy.sh prism` creates `prism-provider` from the existing
+`openclaw-shared-secrets/litellmApiKey`, using the internal LiteLLM
+`claude-sonnet` route. Set `PRISM_PROVIDER_ENDPOINT` and
+`PRISM_PROVIDER_MODEL` to override that route. Embeddings are optional while
+ingestion is disabled; configure both `PRISM_EMBEDDING_ENDPOINT` and
+`PRISM_EMBEDDING_MODEL` when enabling them. Helm uses an atomic upgrade. A
+failed upgrade keeps the last healthy release.
 
 ## Remove workloads
 
