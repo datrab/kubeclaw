@@ -233,8 +233,8 @@ assert.doesNotMatch(
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 assert.match(busterValues, /name:\s*buster-plan[\s\S]*containerPort:\s*18891/);
 assert.match(busterValues, /name:\s*buster-legacy[\s\S]*containerPort:\s*18892/);
-assert.equal((busterValues.match(/scheme:\s*HTTPS/gu) ?? []).length, 3,
-  'all Buster plan runtime probes must use HTTPS');
+assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
+  'all Buster plan runtime probes must use the token-authenticated internal HTTP endpoint');
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
 assert.match(busterValues, /CONTAINER_BUILD_REGISTRY_BASE_URL[\s\S]*registry-local/);
 assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
@@ -303,6 +303,17 @@ assert.match(
   /chown root:builder "\$config"[\s\S]*chmod 0640 "\$config"/,
   'the generated BuildKit configuration must remain writable by the supervisor and readable by the builder',
 );
+const configRootOwnership = busterRuntimeEntrypoint.indexOf('chown -R root:root "$runtime_config_root"');
+const kubeconfigWrite = busterRuntimeEntrypoint.indexOf('cat >"$kubeconfig"');
+const runtimeConfigWrite = busterRuntimeEntrypoint.indexOf("fs.writeFileSync(path.join(root, 'runtime.json')");
+const configRootHandoff = busterRuntimeEntrypoint.indexOf('chown -R builder:builder "$runtime_config_root"');
+assert.ok(
+  configRootOwnership >= 0
+    && configRootOwnership < kubeconfigWrite
+    && kubeconfigWrite < runtimeConfigWrite
+    && runtimeConfigWrite < configRootHandoff,
+  'the capability-restricted supervisor must generate runtime configuration before handing the directory to builder',
+);
 assert.match(
   busterRuntimeEntrypoint,
   /setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--init-groups[\s\S]*chgrp 1002 "\$address"[\s\S]*setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--init-groups[\s\S]*chmod 0660 "\$address"/,
@@ -310,7 +321,7 @@ assert.match(
 );
 assert.match(
   busterRuntimeEntrypoint,
-  /BUSTER_V2_TOKEN="\$worker_token" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts[\s\S]*printf '%s' "\$worker_token" \| BUSTER_V2_PORT="\$\{BUSTER_LEGACY_PORT:-18892\}"[\s\S]*BUSTER_V2_STATE_DIR="\$legacy_state_dir"[\s\S]*setpriv[\s\S]*--groups 1000,1002[\s\S]*buster-suite-runtime\/src\/worker\.ts/,
+  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts[\s\S]*printf '%s' "\$worker_token" \| BUSTER_V2_PORT="\$\{BUSTER_LEGACY_PORT:-18892\}"[\s\S]*BUSTER_V2_STATE_DIR="\$legacy_state_dir"[\s\S]*setpriv[\s\S]*--groups 1000,1002[\s\S]*buster-suite-runtime\/src\/worker\.ts/,
   'the plan runtime and legacy worker must retain only their required token and BuildKit socket access',
 );
 assert.match(

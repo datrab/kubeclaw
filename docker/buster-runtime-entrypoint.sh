@@ -103,7 +103,14 @@ setpriv \
 # BuildKit readiness checks can connect after the ownership transition above.
 # worker.ts clears all supplementary groups and capabilities before suite code.
 mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
-chown -R builder:builder "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
+# The supervisor intentionally lacks CAP_DAC_OVERRIDE and CAP_FOWNER. Keep the
+# generated-config directory owned by root until every file has been written;
+# otherwise handing the directory to builder here prevents the supervisor from
+# creating the kubeconfig and runtime JSON below. State and run directories are
+# handed off immediately because only the workers write to them.
+chown -R root:root "$runtime_config_root"
+chmod 0750 "$runtime_config_root"
+chown -R builder:builder "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
 test -r "$kube_service_account_root/token"
 test -r "$kube_service_account_root/ca.crt"
 test -r "$kube_service_account_root/namespace"
@@ -211,7 +218,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
 }, null, 2)}\n`);
 NODE
 chmod 0640 "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
-chown builder:builder "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
+chown -R builder:builder "$runtime_config_root"
 
 BUSTER_V2_TOKEN="$worker_token" KUBECONFIG="$kubeconfig" setpriv \
   --reuid=1000 \
