@@ -1353,6 +1353,8 @@ prism_validate_values() {
 
 cmd_prism_secrets() {
   kubectl get namespace "$PRISM_NAMESPACE" >/dev/null
+  kubectl get secret ghcr-secret -n "$PRISM_NAMESPACE" >/dev/null 2>&1 \
+    || { err "Missing image pull Secret: ${PRISM_NAMESPACE}/ghcr-secret (Prism uses the same GHCR Secret as Nova and Buster)"; return 1; }
   if ! kubectl get secret prism-postgresql-auth -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
     local password runtime_password migrator_password readonly_password
     password="$(openssl rand -hex 32)"; runtime_password="$(openssl rand -hex 32)"; migrator_password="$(openssl rand -hex 32)"; readonly_password="$(openssl rand -hex 32)"

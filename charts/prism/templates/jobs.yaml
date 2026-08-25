@@ -11,6 +11,7 @@ spec:
     metadata: { labels: { app: prism-migrate } }
     spec:
       serviceAccountName: prism-control
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
       automountServiceAccountToken: false
       securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
       restartPolicy: OnFailure
@@ -55,6 +56,7 @@ spec:
         metadata: { labels: { app: prism-backup } }
         spec:
           serviceAccountName: prism-backup
+          imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 12 }}
           automountServiceAccountToken: false
           securityContext: { runAsNonRoot: true, runAsUser: 999, runAsGroup: 999, fsGroup: 999, seccompProfile: { type: RuntimeDefault } }
           restartPolicy: OnFailure
@@ -104,6 +106,7 @@ spec:
         metadata: { labels: { app: prism-backup } }
         spec:
           serviceAccountName: prism-backup
+          imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 12 }}
           automountServiceAccountToken: false
           securityContext: { runAsNonRoot: true, runAsUser: 999, runAsGroup: 999, fsGroup: 999, seccompProfile: { type: RuntimeDefault } }
           restartPolicy: OnFailure

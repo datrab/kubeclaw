@@ -4,6 +4,10 @@ const source=readFileSync(new URL("../../../scripts/deploy.sh",import.meta.url),
 const chartValues=readFileSync(new URL("../../../charts/prism/values.yaml",import.meta.url),"utf8");
 const chartSchema=readFileSync(new URL("../../../charts/prism/values.schema.json",import.meta.url),"utf8");
 const workloads=readFileSync(new URL("../../../charts/prism/templates/workloads.yaml",import.meta.url),"utf8");
+const jobs=readFileSync(new URL("../../../charts/prism/templates/jobs.yaml",import.meta.url),"utf8");
+const ingestion=readFileSync(new URL("../../../charts/prism/templates/ingestion.yaml",import.meta.url),"utf8");
+const postgresql=readFileSync(new URL("../../../charts/prism/templates/postgresql.yaml",import.meta.url),"utf8");
+const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control.ts",import.meta.url),"utf8");
 for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","teardown-prism)"])assert(source.includes(command),`missing deploy command: ${command}`);
 for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_TAG","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
@@ -11,7 +15,14 @@ assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not requi
 assert(!source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must use ordinary tagged images");
 assert(source.includes("Created ${PRISM_NAMESPACE}/prism-provider from the existing LiteLLM credential"),"Prism must create its provider Secret from the existing LiteLLM credential");
 assert(source.includes("PRISM_PROVIDER_ENDPOINT"),"Prism must expose an optional provider endpoint override");
+assert(source.includes("Missing image pull Secret: ${PRISM_NAMESPACE}/ghcr-secret"),"Prism must preflight its GHCR pull Secret");
 assert(!chartValues.includes("digest:"),"Prism chart values must not expose image digests");
+assert(chartValues.includes("imagePullSecrets:"),"Prism chart defaults must configure GHCR authentication");
+assert(productionValues.includes("imagePullSecrets:\n  - name: ghcr-secret"),"Prism production values must reuse the Nova/Buster GHCR Secret");
+assert(productionValues.includes("studio: { replicas: 1"),"Prism Studio must default to one production replica");
+assert(productionValues.includes("worker: { replicas: 1"),"Prism Worker must default to one production replica");
+for(const template of [workloads,jobs,ingestion,postgresql])assert(template.includes("imagePullSecrets:"),"every Prism pod template must render imagePullSecrets");
+assert(postgresql.includes("PGDATA, value: /var/lib/postgresql/data/pgdata"),"Prism PostgreSQL must initialize an ownership-safe PGDATA child directory");
 assert(!chartSchema.includes("approverUsers"),"Prism chart schema must not expose an approver allowlist");
 assert(!workloads.includes("PRISM_APPROVER_USERS"),"Prism workloads must not configure an approver allowlist");
 assert(!control.includes('roles.includes("approver")'),"any authenticated Prism user must be able to approve");

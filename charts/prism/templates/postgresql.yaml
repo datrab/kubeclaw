@@ -29,6 +29,7 @@ spec:
   template:
     metadata: { labels: { app: prism-postgresql } }
     spec:
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
       automountServiceAccountToken: false
       securityContext: { runAsNonRoot: true, runAsUser: 999, runAsGroup: 999, fsGroup: 999, seccompProfile: { type: RuntimeDefault } }
       containers:
@@ -37,6 +38,10 @@ spec:
           env:
             - { name: POSTGRES_DB, value: prism }
             - { name: POSTGRES_USER, value: postgres }
+            # The fsGroup can make the PVC mount writable, but PostgreSQL
+            # requires PGDATA itself to be owned by its runtime UID. The
+            # non-root entrypoint creates this child directory as UID 999.
+            - { name: PGDATA, value: /var/lib/postgresql/data/pgdata }
             - name: POSTGRES_PASSWORD
               valueFrom: { secretKeyRef: { name: {{ $postgresSecret }}, key: password } }
             - name: PRISM_RUNTIME_PASSWORD

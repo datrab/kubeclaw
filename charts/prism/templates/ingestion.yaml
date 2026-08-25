@@ -9,6 +9,7 @@ spec:
     metadata: { labels: { app: prism-ingestion } }
     spec:
       serviceAccountName: prism-ingestion
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
       automountServiceAccountToken: false
       securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
       containers:
