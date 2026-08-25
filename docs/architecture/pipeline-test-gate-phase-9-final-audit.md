@@ -108,9 +108,10 @@ and independent coverage.
 All Phase 9 acceptance work runs inside the Nova pod with real source,
 processes, HTTP, providers, reports, evidence, and policy. The pod has a
 read-only cgroup mount, so the tracked test harness uses sampled accounting for
-that unavailable host facility. Production configuration cannot enable the
-fallback. External production-platform proof remains deferred until all suites
-have migrated and only one authority path remains.
+that unavailable host facility. The deployed Kubernetes runtime now uses the
+same explicit fallback instead of requesting host cgroup administration.
+External production-platform proof remains deferred until all suites have
+migrated and only one authority path remains.
 
 ## Verification
 

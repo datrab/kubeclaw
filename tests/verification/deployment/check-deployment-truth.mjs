@@ -275,8 +275,13 @@ assert.match(
 );
 assert.doesNotMatch(
   busterValues,
-  /procMount:\s*Unmasked|SYS_ADMIN|privileged:\s*true/,
+  /procMount:\s*Unmasked|SYS_ADMIN|privileged:\s*true|\/sys\/fs\/cgroup|buster-command-cgroup/,
   'the nested suite sandbox fix must not broaden the Buster pod privilege boundary',
+);
+assert.match(
+  busterRuntimeEntrypoint,
+  /allowSampledProcessLimit: true/,
+  'the deployed command runner must use the unprivileged sampled process-tree fallback',
 );
 assert.match(
   busterRuntimeDockerfile,

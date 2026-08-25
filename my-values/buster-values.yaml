@@ -102,8 +102,6 @@ extraContainers:
         value: "536870912"
       - name: BUSTER_V2_RESULT_ROOT
         value: /workspace/git-repo/.swarm/runtime-results
-      - name: BUSTER_DIRECT_COMMAND_CGROUP_ROOT
-        value: /var/run/kubeclaw-command-cgroup
       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
         value: /var/run/buster-worker/kubernetes
       - name: KUBECLAW_LOCAL_REGISTRY
@@ -155,8 +153,6 @@ extraContainers:
       - name: buster-api-token
         mountPath: /var/run/buster-worker/kubernetes
         readOnly: true
-      - name: buster-command-cgroup
-        mountPath: /var/run/kubeclaw-command-cgroup
     resources:
       requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
       limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
@@ -203,12 +199,6 @@ extraVolumes:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
-  - name: buster-command-cgroup
-    hostPath:
-      # This is one dedicated subtree. Never mount /sys/fs/cgroup into Buster.
-      path: /sys/fs/cgroup/kubeclaw-buster
-      type: DirectoryOrCreate
-
 busterNamespaceBroker:
   enabled: true
   controller:

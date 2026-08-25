@@ -93,9 +93,11 @@ export function loadProductionBusterRemotePlanRuntime(
   if (allowedCapabilities.has('command.execute') && !directCommandSource) {
     throw new Error('BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED');
   }
-  if (directCommandSource && (typeof directCommandSource.cgroupRoot !== 'string'
-    || directCommandSource.cgroupRoot.length === 0)) {
-    throw new Error('BUSTER_DIRECT_COMMAND_CGROUP_REQUIRED');
+  const directCommandCgroup = typeof directCommandSource?.cgroupRoot === 'string'
+    && directCommandSource.cgroupRoot.length > 0 ? directCommandSource.cgroupRoot : undefined;
+  const allowSampledProcessLimit = directCommandSource?.allowSampledProcessLimit === true;
+  if (directCommandSource && !directCommandCgroup && !allowSampledProcessLimit) {
+    throw new Error('BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED');
   }
   const containerBuildSource = value.containerBuild === undefined ? null : object(value.containerBuild, 'containerBuild');
   if (allowedCapabilities.has('container.build') && !containerBuildSource) throw new Error('BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED');
@@ -139,7 +141,8 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumMemoryBytes: integer(directCommandSource.maximumMemoryBytes, 'directCommand.maximumMemoryBytes'),
       maximumCpuMillis: integer(directCommandSource.maximumCpuMillis, 'directCommand.maximumCpuMillis'),
       terminationGraceMs: integer(directCommandSource.terminationGraceMs, 'directCommand.terminationGraceMs'),
-      cgroupRoot: path.resolve(directory, directCommandSource.cgroupRoot as string),
+      ...(directCommandCgroup ? { cgroupRoot: path.resolve(directory, directCommandCgroup) } : {}),
+      ...(allowSampledProcessLimit ? { allowSampledProcessLimit: true } : {}),
     } } : {}),
     ...(containerBuildSource ? { containerBuild: {
       buildctlExecutable: path.resolve(directory, String(containerBuildSource.buildctlExecutable)),

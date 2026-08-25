@@ -83,7 +83,7 @@ The proof uses a real committed Git repository and a real
 
 ```text
 Nova plan
-→ signed committed source
+→ committed source archive
 → authenticated HTTP
 → Buster storage
 → worker
@@ -130,13 +130,14 @@ same immutable plan or create a new plan as the contract requires.
 Normal Buster stages execute the resolved provider plan before they make a
 decision. They do not infer commands from legacy configuration.
 
-Nova uses the `test.plan.execute` adapter. The adapter signs the committed
-source snapshot, sends the immutable plan to Buster, imports the result, and
-returns the Nova decision. The production pipeline loads the selected scope
-from `.swarm/pipeline.json`.
+Nova uses the `test.plan.execute` adapter. The adapter sends the committed
+source snapshot and immutable plan to Buster, imports the result, and returns
+the Nova decision. The production pipeline loads the selected scope from
+`.swarm/pipeline.json`.
 
-The Buster deployment allows `command.execute`. It also requires a narrow
-delegated cgroup v2 subtree. It does not delegate the host cgroup root.
+The Buster deployment allows `command.execute` without mounting a host cgroup.
+It uses the command runner's explicit unprivileged sampled process-tree limit
+fallback.
 
 ## Contained environment boundary
 
@@ -145,8 +146,9 @@ HTTP, providers, reports, evidence, and policy. The pod has a read-only cgroup
 mount. The tracked test harness therefore uses sampled accounting for that one
 unavailable host feature.
 
-Production configuration cannot enable this fallback. The deployed runtime
-fails closed when it cannot use the delegated cgroup.
+Production configuration enables this fallback because the Kubernetes pod does
+not receive cgroup administration authority. Landlock, seccomp, rlimits, and
+process-tree termination remain enforced.
 
 After deployment, run `./scripts/deploy.sh nova-unit-preflight`. This command
 proves the real Nova-to-Buster route without sampled accounting.
@@ -174,12 +176,12 @@ The updated closeout also checks:
 - the authenticated `test.plan.execute` route;
 - capability grants for repository roots;
 - Nova and Buster runtime-role packaging;
-- the narrow Buster cgroup mount; and
+- the absence of a host cgroup mount or `SYS_ADMIN`; and
 - the deployed production preflight source.
 
 No mock service, fake command result, or compatibility wrapper supplies unit
-acceptance evidence. The contained proof uses sampled process accounting only
-because this development container cannot delegate a cgroup.
+acceptance evidence. Contained and deployed execution use the same unprivileged
+sampled process-tree accounting without requiring host cgroup administration.
 
 ## Final state
 

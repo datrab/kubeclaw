@@ -81,11 +81,11 @@ try {
     maximumOutputBytes: 1024 * 1024, maximumExecutionMs: 10_000,
     maximumProcesses: 8, maximumMemoryBytes: 512 * 1024 * 1024, maximumCpuMillis: 10_000, terminationGraceMs: 100 } }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token }), /BUSTER_DIRECT_COMMAND_CGROUP_REQUIRED/u);
+    { [tokenName]: token }), /BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED/u);
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, allowedCapabilities: ['command.execute'], directCommand: {
     executableCatalog: { node: process.execPath }, executableSearchPath: [path.dirname(process.execPath)],
     runtimeReadRoots: [path.dirname(process.execPath), '/lib/x86_64-linux-gnu', '/lib64', '/etc/ssl'],
-    maximumOutputBytes: 1024 * 1024, maximumExecutionMs: 10_000, cgroupRoot: '/sys/fs/cgroup/kubeclaw',
+    maximumOutputBytes: 1024 * 1024, maximumExecutionMs: 10_000, allowSampledProcessLimit: true,
     maximumProcesses: 8, maximumMemoryBytes: 512 * 1024 * 1024, maximumCpuMillis: 10_000, terminationGraceMs: 100 } }));
   const commandRuntime = loadProductionBusterRemotePlanRuntime(busterConfig,
     { [tokenName]: token });

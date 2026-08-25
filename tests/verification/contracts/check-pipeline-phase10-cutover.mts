@@ -94,16 +94,12 @@ assert.match(productionPipeline, /loadPipelineTestScope/u,
 const runtimeEntrypoint = fs.readFileSync('docker/buster-runtime-entrypoint.sh', 'utf8');
 assert.match(runtimeEntrypoint, /'command\.execute'/u,
   'the deployed Buster plan runtime must allow direct-command execution');
-assert.match(runtimeEntrypoint, /cgroupRoot/u,
-  'the deployed Buster plan runtime must require delegated cgroup control');
+assert.match(runtimeEntrypoint, /allowSampledProcessLimit: true/u,
+  'the deployed Buster plan runtime must use the unprivileged sampled limit fallback');
 
 const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
-assert.match(busterValues, /BUSTER_DIRECT_COMMAND_CGROUP_ROOT/u,
-  'the Buster deployment must declare the delegated command cgroup');
-assert.match(busterValues, /\/sys\/fs\/cgroup\/kubeclaw-buster/u,
-  'the Buster deployment must use the narrow command cgroup subtree');
-assert.doesNotMatch(busterValues, /hostPath:\s*\n\s*path:\s*\/sys\/fs\/cgroup\s*$/mu,
-  'the Buster deployment must not mount the host cgroup root');
+assert.doesNotMatch(busterValues, /BUSTER_DIRECT_COMMAND_CGROUP_ROOT|\/sys\/fs\/cgroup|buster-command-cgroup/u,
+  'the Buster deployment must not require host cgroup administration');
 
 for (const manifestPath of [
   'skills/buster/plugins/test-agent/plugin.json',

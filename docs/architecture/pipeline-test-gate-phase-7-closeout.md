@@ -204,15 +204,14 @@ Status: complete
 
 The independent review used Codex `gpt-5.6-terra` with high reasoning.
 
-Accepted review findings fixed:
+Accepted review findings fixed at Phase 7 included source attestation. That
+attestation was later removed from the current deployment and contract. The
+current route uses bearer-token authentication and binds the archive digest,
+repository identity, revision, tree, and owning pipeline stage in the immutable
+job instead.
 
-- Committed-source metadata now has a trusted Nova attestation that Buster
-  verifies before persistence or execution.
-- Source signing, source verification, and HTTP authentication use separate
-  required credentials. Buster cannot create Nova signatures.
-- Production Nova builds and signs the committed snapshot. Callers cannot
-  supply independent archive and source-statement inputs.
-- The signed source statement binds the owning pipeline stage.
+- Production Nova builds the committed snapshot. Callers cannot supply
+  independent archive and source-statement inputs.
 - Identical graph writes resume safely after the graph-write/import-complete
   crash window. Divergent writes fail.
 - Replayed imports completed before D-091 backfill the canonical graph.

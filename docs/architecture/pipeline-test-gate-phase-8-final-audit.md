@@ -18,12 +18,13 @@ proof used real committed Git source, authenticated HTTP, Nova and Buster
 runtimes, worker and provider processes, commands, JUnit, LCOV, evidence, and
 Nova policy. The pod's cgroup filesystem is read-only, so the tracked test
 harness used sampled process accounting for that one unavailable kernel
-facility. Production configuration cannot enable this fallback.
+facility. The deployed Kubernetes runtime now uses the same explicit fallback
+instead of requesting host cgroup administration.
 
 External production-platform validation is deliberately deferred until every
 suite has migrated and only one authority path remains. At that final cutover,
-the same proof must run with delegated cgroup v2 controls and without local
-fallbacks. Phase 8 does not require an interim external Buster deployment.
+the same proof must run through the deployed Buster boundary. Phase 8 does not
+require an interim external Buster deployment.
 
 ## Subphase audit
 
@@ -95,8 +96,8 @@ accepted and fixed:
 The second Terra review found two more defects. They were accepted and fixed:
 
 - kernel limits applied to each process, but the declared limit applies to the
-  complete process tree; this was first fixed with aggregate accounting and was
-  later strengthened with the cgroup controls recorded below; and
+  complete process tree; this was fixed with aggregate process-tree accounting
+  and termination; and
 - a nonzero command exit with passing JUnit cases could report zero failed
   checks; the result now adds one failed command check so outcome and counts
   agree.
@@ -110,10 +111,10 @@ Later Terra cycles found and fixed additional hard-boundary defects:
 
 - report and coverage bytes are checked against one cumulative attempt budget
   before Buster creates an evidence copy;
-- final production-authority direct commands require delegated cgroup v2 `pids`, `memory`, and
-  `cpu` controllers;
-- cgroups now bound the command tree's execution tasks and memory, while
-  `cpu.max` and cumulative `cpu.stat` accounting bound CPU use;
+- deployed production-authority direct commands use explicit unprivileged
+  process-tree sampling rather than host cgroup administration;
+- rlimits and aggregate sampling bound the command tree's tasks, memory, and
+  CPU use;
 - Landlock denies undeclared file and directory reads as well as writes,
   permits only the private repository and operator runtime roots, and requires
   ABI 2 for safe cross-directory operations;
@@ -136,7 +137,7 @@ D-090 through D-094, and D-119 remain implemented and are exercised by Phase
 
 - no shell execution;
 - exact operator executable catalog;
-- signed committed source only;
+- committed source bound to its verified archive digest;
 - verified provider packages;
 - private writable attempt repositories;
 - kernel-enforced write isolation to the current attempt repository;
@@ -145,7 +146,7 @@ D-090 through D-094, and D-119 remain implemented and are exercised by Phase
 - sanitized environment with no ambient secrets;
 - operator-controlled executable search path and private home/temp folders;
 - denied network syscalls;
-- cgroup-bounded time, aggregate CPU, aggregate memory, execution tasks,
+- bounded time plus sampled aggregate CPU, memory, execution tasks,
   output, file, and artifact use;
 - exact contained report paths; and
 - digest and size verification for stored reports and coverage inputs.

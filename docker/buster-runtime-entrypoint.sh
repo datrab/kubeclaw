@@ -38,7 +38,6 @@ plan_state_dir="${BUSTER_PLAN_STATE_DIR:-/var/lib/buster-v2/plan-jobs}"
 plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/tmp/buster-plan-runs}"
 legacy_state_dir="${BUSTER_LEGACY_STATE_DIR:-/var/lib/buster-v2/legacy-jobs}"
 legacy_run_dir="${BUSTER_LEGACY_RUN_DIR:-/tmp/buster-legacy-runs}"
-cgroup_root="${BUSTER_DIRECT_COMMAND_CGROUP_ROOT:?BUSTER_DIRECT_COMMAND_CGROUP_ROOT is required}"
 
 cleanup() {
   if [ -n "$worker_pid" ]; then
@@ -63,26 +62,6 @@ until buildctl --addr "$socket" debug workers >/dev/null 2>&1; do
   fi
   sleep 1
 done
-
-# The deployment mounts one dedicated cgroup v2 subtree. The worker never
-# receives the host cgroup root. Fail before service startup if delegation is
-# incomplete, because sampled process accounting is forbidden in production.
-test -d "$cgroup_root"
-test -f "$cgroup_root/cgroup.controllers"
-for controller in pids memory cpu; do
-  grep -qw "$controller" "$cgroup_root/cgroup.controllers" \
-    || { echo "required cgroup controller is unavailable: $controller" >&2; exit 1; }
-done
-if [ -s "$cgroup_root/cgroup.procs" ]; then
-  echo "direct-command cgroup subtree contains host processes" >&2
-  exit 1
-fi
-printf '+pids +memory +cpu' >"$cgroup_root/cgroup.subtree_control"
-for controller in pids memory cpu; do
-  grep -qw "$controller" "$cgroup_root/cgroup.subtree_control" \
-    || { echo "required cgroup controller is not delegated: $controller" >&2; exit 1; }
-done
-chown builder:builder "$cgroup_root" "$cgroup_root/cgroup.procs" "$cgroup_root/cgroup.subtree_control"
 
 # BuildKit creates the socket as the non-root builder. Apply its shared-group
 # permissions as that owner; the restricted supervisor intentionally does not
@@ -141,7 +120,6 @@ current-context: buster
 EOF
 
 RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
-  DIRECT_COMMAND_CGROUP_ROOT="$cgroup_root" \
   BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
@@ -189,7 +167,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumMemoryBytes: 4294967296,
     maximumCpuMillis: 900000,
     terminationGraceMs: 2000,
-    cgroupRoot: process.env.DIRECT_COMMAND_CGROUP_ROOT,
+    allowSampledProcessLimit: true,
   },
   containerBuild: {
     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
