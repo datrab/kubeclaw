@@ -10,7 +10,6 @@ import {
   remotePlanResultDigest,
   resolvedTestPlanDigest,
   stableTestIdentity,
-  attestSourceSnapshot,
   type RemotePlanResultV1,
   type RemotePlanStatusV1,
   type ResolvedTestPlanV1,
@@ -47,12 +46,11 @@ const planUnsigned = {
 const plan: ResolvedTestPlanV1 = { ...planUnsigned, planDigest: resolvedTestPlanDigest(planUnsigned) };
 
 const archive = Buffer.from('archive');
-const sourceAttestationPrivateKey = crypto.generateKeyPairSync('ed25519').privateKey.export({ type: 'pkcs8', format: 'pem' });
-const sourceSnapshot = attestSourceSnapshot({ schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
+const sourceSnapshot = { schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
   pipelineStageId: 'stage:test-gate',
   repositoryId: 'repository:remote-test', revision: `git:${'a'.repeat(40)}`, tree: `git:${'b'.repeat(40)}`,
   archiveContentDigest: `sha256:${crypto.createHash('sha256').update(archive).digest('hex')}`,
-  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' }, sourceAttestationPrivateKey);
+  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' };
 const job = createRemotePlanJob({
   idempotencyKey: 'dispatch:remote', pipelineStageId: 'stage:test-gate', plan,
   sourceSnapshot, repositoryArchive: archive, grants: new Map([['unit', []]]),
@@ -73,15 +71,11 @@ assert.equal(checkPipelineTestGateContract('remotePlanJob', {
 assert.equal(checkPipelineTestGateContract('remotePlanJob', {
   ...job, sourceSnapshot: { ...job.sourceSnapshot, revision: `git:${'a'.repeat(41)}` },
 }).ok, false, 'Git object identities must use an exact supported hash length');
-assert.equal(checkPipelineTestGateContract('remotePlanJob', {
-  ...job, sourceSnapshot: { ...job.sourceSnapshot, attestation: {
-    ...job.sourceSnapshot.attestation, authority: 'nova:different' } },
-}).ok, false, 'the source attestation authority must match the declared creator');
 const wrongStageUnsigned = { ...job, pipelineStageId: 'stage:other' };
 const { requestDigest: _wrongStageDigest, ...wrongStageContent } = wrongStageUnsigned;
 assert.equal(checkPipelineTestGateContract('remotePlanJob', {
   ...wrongStageContent, requestDigest: remotePlanJobDigest(wrongStageContent),
-}).ok, false, 'the signed source statement must bind the owning pipeline stage');
+}).ok, false, 'the source statement must bind the owning pipeline stage');
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-remote-plan-'));
 try {

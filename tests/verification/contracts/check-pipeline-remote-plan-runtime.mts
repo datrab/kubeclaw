@@ -32,7 +32,6 @@ import {
   remotePlanJobDigest,
   resolvedTestPlanDigest,
   stableTestIdentity,
-  attestSourceSnapshot,
   type ArtifactRefV1, type AttemptResultV1, type NodeResultV1,
   type RemotePlanJobV1,
   type ResolvedTestPlanV1,
@@ -47,14 +46,11 @@ fs.writeFileSync(path.join(source, 'README.md'), 'remote plan source\n');
 execFileSync('/usr/bin/tar', ['-czf', archiveFile, '-C', source, '.']);
 const archive = fs.readFileSync(archiveFile);
 const token = 'remote-plan-test-token-0000000000000000';
-const sourceKeys = crypto.generateKeyPairSync('ed25519');
-const sourceAttestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const sourceAttestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
-const sourceSnapshot = attestSourceSnapshot({ schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
+const sourceSnapshot = { schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
   pipelineStageId: 'stage:test-gate',
   repositoryId: 'repository:remote-runtime', revision: `git:${'a'.repeat(40)}`, tree: `git:${'b'.repeat(40)}`,
   archiveContentDigest: `sha256:${crypto.createHash('sha256').update(archive).digest('hex')}`,
-  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' }, sourceAttestationPrivateKey);
+  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' };
 const digest = `sha256:${'2'.repeat(64)}`;
 const registryDigest = `sha256:${'3'.repeat(64)}`;
 const provider = {
@@ -150,7 +146,6 @@ const busterStore = new FileBusterPlanJobStore(path.join(temporary, 'buster-stat
   maximumArchiveBytes: 1024 * 1024,
   maximumResultBytes: 16 * 1024 * 1024,
   maximumResultStoreBytes: 64 * 1024 * 1024,
-  trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
 });
 const executionCounts = new Map<string, number>();
 const execute = async (job: RemotePlanJobV1, paths: { repositoryRoot: string; artifactRoot: string }, signal: AbortSignal): Promise<TestPlanRunResult> => {
@@ -195,8 +190,8 @@ assert.equal((await service.status(startupInterrupted.jobId)).state, 'failed',
 assert.equal((await (await fetch(`http://127.0.0.1:${port}/healthz`)).json() as { ready: boolean }).ready, true);
 const transport = new HttpRemotePlanTransport({ endpoint: `http://127.0.0.1:${port}`,
   token, maximumResponseBytes: 8 * 1024 * 1024 });
-assert.throws(() => new HttpRemotePlanTransport({ endpoint: 'http://buster.example.test', token,
-  maximumResponseBytes: 1024 }), /NOVA_REMOTE_PLAN_TLS_REQUIRED/u);
+assert.doesNotThrow(() => new HttpRemotePlanTransport({ endpoint: 'http://buster.example.test', token,
+  maximumResponseBytes: 1024 }));
 
 function novaStore(name: string) {
   return new FileNovaRemotePlanStore(path.join(temporary, name), {
@@ -212,7 +207,6 @@ try {
     recordLimits: { maximumRecords: 10, maximumBytes: 4 * 1024 * 1024, maximumRecordBytes: 2 * 1024 * 1024 },
     maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 4 * 1024 * 1024,
     maximumResultStoreBytes: 8 * 1024 * 1024,
-    trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
   });
   const concurrent = await Promise.allSettled([
     concurrentStore.accept(concurrentBase, '2026-08-10T01:00:00.000Z'),
@@ -226,7 +220,6 @@ try {
     recordLimits: { maximumRecords: 10, maximumBytes: 4 * 1024 * 1024, maximumRecordBytes: 2 * 1024 * 1024 },
     maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 4 * 1024 * 1024,
     maximumResultStoreBytes: 8 * 1024 * 1024,
-    trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
   });
   const identical = await Promise.all([
     identicalStore.accept(concurrentBase, '2026-08-10T01:00:00.000Z'),

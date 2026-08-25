@@ -13,9 +13,9 @@ return facts. The old suite runtime is only a deletion-ledger migration bridge.
 ## Production flow
 
 1. Nova checks old and new authority before work starts.
-2. Nova builds and attests a committed Git snapshot, then stores the job and archive.
-3. Nova sends the job through authenticated HTTP or HTTPS.
-4. Buster verifies the trusted source authority, source attestation, and immutable job before storage.
+2. Nova builds a committed Git snapshot, then stores the job and archive.
+3. Nova sends the job through token-authenticated HTTP or HTTPS.
+4. Buster verifies the archive binding and immutable job digest before storage.
 5. Buster runs the plan through `TestPlanRunner` and the worker core.
 6. Buster stores evidence and the full result before completion.
 7. Status returns a small digest-addressed result reference.
@@ -27,7 +27,7 @@ return facts. The old suite runtime is only a deletion-ledger migration bridge.
 
 - Added the production Nova composition.
 - Added Buster start, recovery-before-ready, and bounded shutdown.
-- Added versioned production configuration and TLS/secret rules.
+- Added versioned production configuration and bearer-token authentication.
 - Removed the full terminal result from the status response.
 - Put the remote repository inside the runner workspace.
 - Made duplicate submission safe before and after state changes.
@@ -37,10 +37,8 @@ return facts. The old suite runtime is only a deletion-ledger migration bridge.
 - Made graph projection replay safe across the graph-write/import-complete crash window.
 - Added stable cross-run test identity without weakening current results.
 - Replaced working-directory archives with committed Git snapshots.
-- Moved snapshot construction and signing inside the production Nova gate.
-- Added a domain-separated Ed25519 source attestation. Nova holds the private
-  key. Buster holds only the public key and checks the trusted authority.
-- Bound the owning pipeline-stage ID inside the signed source statement.
+- Moved snapshot construction inside the production Nova gate.
+- Bound the owning pipeline-stage ID inside the source statement.
 
 ## Unmocked proof
 
@@ -55,9 +53,9 @@ provider marker proves that Nova restart does not execute completed work twice.
 The same proof retains the test subgraph, stable test identity, and committed
 source revision across restart.
 
-The negative process proof changes signed source metadata, recomputes the
-outer request digest, and confirms that Buster rejects the forged source
-attestation before provider execution.
+The negative process proof changes source metadata, recomputes the outer
+request digest, and confirms that Buster rejects a source statement that no
+longer binds the repository archive before provider execution.
 
 A valid terminal result larger than the status limit completes through the
 separate bounded result operation.

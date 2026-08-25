@@ -15,11 +15,6 @@ const packageRoot = path.join(installRoot, 'restart-provider');
 const repository = path.join(temporary, 'repository');
 const tokenName = 'PHASE7_PROCESS_TOKEN';
 const token = 'phase-7-process-restart-token-000000000';
-const sourcePrivateKeyName = 'PHASE7_SOURCE_ATTESTATION_PRIVATE_KEY';
-const sourcePublicKeyName = 'PHASE7_SOURCE_ATTESTATION_PUBLIC_KEY';
-const sourceKeys = crypto.generateKeyPairSync('ed25519');
-const sourceAttestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const sourceAttestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
 const busterCli = path.resolve('skills/buster/engine/remote-plan-cli.ts');
 const novaCli = path.resolve('skills/nova/core/test-gates/remote-gate-cli.ts');
 const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
@@ -66,15 +61,13 @@ async function waitForState(port: number, jobId: string, states: readonly string
 
 function startBuster(config: string): ChildProcessWithoutNullStreams {
   return spawn(process.execPath, [busterCli, '--config', config], {
-    cwd: process.cwd(), env: { ...process.env, [tokenName]: token,
-      [sourcePublicKeyName]: sourceAttestationPublicKey }, stdio: ['pipe', 'pipe', 'pipe'],
+    cwd: process.cwd(), env: { ...process.env, [tokenName]: token }, stdio: ['pipe', 'pipe', 'pipe'],
   });
 }
 
 function startNova(config: string, jobFile: string): ChildProcessWithoutNullStreams {
   return spawn(process.execPath, [novaCli, '--config', config, '--job', jobFile, '--timeout-ms', '30000'], {
-    cwd: process.cwd(), env: { ...process.env, [tokenName]: token,
-      [sourcePrivateKeyName]: sourceAttestationPrivateKey }, stdio: ['pipe', 'pipe', 'pipe'],
+    cwd: process.cwd(), env: { ...process.env, [tokenName]: token }, stdio: ['pipe', 'pipe', 'pipe'],
   });
 }
 
@@ -122,7 +115,7 @@ export function provider() { return { async execute(invocation, context) {
   execFileSync('git', ['-C', repository, 'commit', '-qm', 'committed restart source']);
   const source = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:phase7-restart',
     pipelineStageId: 'stage:test-gate',
-    creatorAuthority: 'nova:production', attestationPrivateKey: sourceAttestationPrivateKey,
+    creatorAuthority: 'nova:production',
     maximumArchiveBytes: 4 * 1024 * 1024 });
   const registry = buildRegistry(discoverPackages({ installationRoots: [installRoot], trustPolicy: {
     trustedBuiltinRoots: [installRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'phase7-restart' },
@@ -167,16 +160,13 @@ export function provider() { return { async execute(invocation, context) {
   const busterConfig = path.join(temporary, 'buster.json');
   fs.writeFileSync(busterConfig, JSON.stringify({ schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: platform,
     host: '127.0.0.1', port, tokenEnvironmentVariable: tokenName,
-    sourceAttestationPublicKeyEnvironmentVariable: sourcePublicKeyName,
     stateRoot: './buster-state', runtimeRoot: './buster-runs',
-    trustedSourceAuthority: 'nova:production',
     tarExecutable: '/usr/bin/tar', maximumArchiveBytes: 4 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumResultStoreBytes: 64 * 1024 * 1024, maximumExtractedBytes: 16 * 1024 * 1024, allowedCapabilities: [],
     maximumRequestBytes: 8 * 1024 * 1024, maximumResponseBytes: 64 * 1024, shutdownTimeoutMs: 5_000, recordLimits: records }));
   const novaConfig = path.join(temporary, 'nova.json');
   fs.writeFileSync(novaConfig, JSON.stringify({ schemaVersion: 'nova-remote-test-gate-runtime.v1',
     endpoint: `http://127.0.0.1:${port}`, tokenEnvironmentVariable: tokenName,
-    sourceAttestationPrivateKeyEnvironmentVariable: sourcePrivateKeyName,
     sourceAuthority: 'nova:production', stateRoot: './nova-state',
     legacyLedgerPath: path.resolve('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), pollMilliseconds: 25,
     maximumResponseBytes: 64 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumArchiveBytes: 4 * 1024 * 1024,

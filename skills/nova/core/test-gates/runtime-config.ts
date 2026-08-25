@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import type { LegacySuiteMigrationLedger } from './legacy-bridge.ts';
 import { createProductionNovaTestGate, type ProductionNovaTestGate } from './production.ts';
 
@@ -22,7 +21,7 @@ export function loadProductionNovaTestGate(
   const directory = path.dirname(canonical);
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
   if (value.schemaVersion !== 'nova-remote-test-gate-runtime.v1') throw new Error('NOVA_REMOTE_CONFIG_VERSION_INVALID');
-  for (const name of ['endpoint', 'tokenEnvironmentVariable', 'sourceAttestationPrivateKeyEnvironmentVariable',
+  for (const name of ['endpoint', 'tokenEnvironmentVariable',
     'sourceAuthority', 'stateRoot', 'legacyLedgerPath']) {
     if (typeof value[name] !== 'string' || value[name].length === 0) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${name}`);
   }
@@ -30,19 +29,8 @@ export function loadProductionNovaTestGate(
   if (!/^[A-Z][A-Z0-9_]*$/u.test(tokenName)) throw new Error('NOVA_REMOTE_CONFIG_TOKEN_ENV_INVALID');
   const token = environment[tokenName];
   if (!token) throw new Error('NOVA_REMOTE_CONFIG_TOKEN_MISSING');
-  const sourceKeyName = value.sourceAttestationPrivateKeyEnvironmentVariable as string;
-  if (!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
-    throw new Error('NOVA_SOURCE_ATTESTATION_ENV_INVALID');
-  }
-  const sourceAttestationPrivateKey = environment[sourceKeyName];
-  if (!sourceAttestationPrivateKey) throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_MISSING');
-  let parsedSourceKey: crypto.KeyObject;
-  try { parsedSourceKey = crypto.createPrivateKey(sourceAttestationPrivateKey); }
-  catch (error) { throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID', { cause: error }); }
-  if (parsedSourceKey.asymmetricKeyType !== 'ed25519') throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID');
   const endpoint = new URL(value.endpoint as string);
-  const loopback = ['localhost', '127.0.0.1', '[::1]'].includes(endpoint.hostname);
-  if (endpoint.protocol !== 'https:' && !loopback) throw new Error('NOVA_REMOTE_PLAN_TLS_REQUIRED');
+  if (!['http:', 'https:'].includes(endpoint.protocol)) throw new Error('NOVA_REMOTE_PLAN_PROTOCOL_INVALID');
   const ledgerPath = path.resolve(directory, value.legacyLedgerPath as string);
   const ledgerSource = object(JSON.parse(fs.readFileSync(fs.realpathSync(ledgerPath), 'utf8')), 'legacyLedger');
   const ledgerEntries = object(ledgerSource.suites, 'legacyLedger.suites');
@@ -59,7 +47,6 @@ export function loadProductionNovaTestGate(
     endpoint: endpoint.href,
     token,
     sourceAuthority: value.sourceAuthority as string,
-    sourceAttestationPrivateKey: parsedSourceKey.export({ type: 'pkcs8', format: 'pem' }),
     stateRoot: path.resolve(directory, value.stateRoot as string),
     legacyLedger: ledger as LegacySuiteMigrationLedger,
     pollMilliseconds: integer(value.pollMilliseconds, 'pollMilliseconds', 10),

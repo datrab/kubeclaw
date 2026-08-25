@@ -244,8 +244,6 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password) {
       throw new Error('NOVA_REMOTE_PLAN_ENDPOINT_INVALID');
     }
-    const loopback = ['localhost', '127.0.0.1', '[::1]'].includes(endpoint.hostname);
-    if (endpoint.protocol !== 'https:' && !loopback) throw new Error('NOVA_REMOTE_PLAN_TLS_REQUIRED');
     if (options.token.length < 32) throw new Error('NOVA_REMOTE_PLAN_TOKEN_INVALID');
     if (!Number.isSafeInteger(options.maximumResponseBytes) || options.maximumResponseBytes < 1) {
       throw new Error('NOVA_REMOTE_PLAN_RESPONSE_LIMIT_INVALID');

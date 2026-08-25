@@ -92,7 +92,7 @@ capabilityProviders:
         port: 18892
       test.plan.execute:
         adapter: buster-plan-v1
-        scheme: https
+        scheme: http
         port: 18891
   prism:
     agentRole: prism
@@ -112,13 +112,6 @@ extraEnv:
       secretKeyRef:
         name: openclaw-shared-secrets
         key: busterV2Token
-  - name: BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY
-    valueFrom:
-      secretKeyRef:
-        name: pipeline-test-gate-source-attestation
-        key: privateKey
-  - name: NODE_EXTRA_CA_CERTS
-    value: /var/run/buster-plan-trust/ca.crt
   - name: BUSTER_GATEWAY_TOKEN
     valueFrom:
       secretKeyRef:
@@ -126,20 +119,6 @@ extraEnv:
         key: gatewayToken-buster
   - name: BUSTER_GATEWAY_REPOSITORY_ROOT
     value: "/home/node/.openclaw/workspace/git-repo"
-
-extraVolumeMounts:
-  - name: buster-plan-trust
-    mountPath: /var/run/buster-plan-trust
-    readOnly: true
-
-extraVolumes:
-  - name: buster-plan-trust
-    secret:
-      secretName: pipeline-test-gate-source-attestation
-      defaultMode: 292
-      items:
-        - key: ca.crt
-          path: ca.crt
 
 resources:
   requests: { cpu: 1000m, memory: 12288Mi }

@@ -7,7 +7,6 @@ import {
   attemptResultDigest, nodeResultDigest, remotePlanDigest, remotePlanResultDigest,
   remotePlanResultReceipt, resolvedTestPlanDigest,
   stableTestIdentity,
-  attestSourceSnapshot,
   type ArtifactRefV1, type AttemptResultV1, type NodeResultV1,
   type RemotePlanJobV1, type RemotePlanResultV1, type RemotePlanStatusV1, type ResolvedTestPlanV1,
 } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
@@ -90,12 +89,11 @@ function completed(job: RemotePlanJobV1, options: {
 }
 
 const archive = Buffer.from('archive');
-const sourceSnapshot = attestSourceSnapshot({ schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
+const sourceSnapshot = { schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
   pipelineStageId: 'stage:test-gate',
   repositoryId: 'repository:import', revision: `git:${'a'.repeat(40)}`, tree: `git:${'b'.repeat(40)}`,
   archiveContentDigest: `sha256:${crypto.createHash('sha256').update(archive).digest('hex')}`,
-  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' },
-crypto.generateKeyPairSync('ed25519').privateKey.export({ type: 'pkcs8', format: 'pem' }));
+  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' };
 const evidenceBytes = Buffer.from('durable evidence');
 const evidenceDigest = `sha256:${crypto.createHash('sha256').update(evidenceBytes).digest('hex')}`;
 const artifact: ArtifactRefV1 = { artifactId: 'artifact:log', type: 'log', mediaType: 'text/plain',

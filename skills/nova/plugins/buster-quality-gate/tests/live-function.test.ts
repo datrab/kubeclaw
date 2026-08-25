@@ -113,7 +113,7 @@ try {
         ['secrets.read', { allowedNames: ['buster.worker'] }],
       ])],
       ['kubeclaw.remote-test-gate:plan', new Map([
-        ['secrets.read', { allowedNames: ['buster.worker', 'buster.source-private-key'] }],
+        ['secrets.read', { allowedNames: ['buster.worker'] }],
       ])],
     ]),
   });
@@ -137,7 +137,7 @@ try {
         ],
       }],
       ['kubeclaw.secret-resolver:secrets', {
-        environment: { 'gate.agent': secret, 'buster.worker': secret, 'buster.source-private-key': secret },
+        environment: { 'gate.agent': secret, 'buster.worker': secret },
       }],
       ['kubeclaw.artifact-store:artifact-store', {
         artifactRoot: path.join(temporary, 'artifacts'),
@@ -156,7 +156,6 @@ try {
       ['kubeclaw.remote-test-gate:plan', {
         endpoint: origin,
         tokenSecret: 'buster.worker',
-        sourcePrivateKeySecret: 'buster.source-private-key',
         sourceAuthority: 'nova:production',
         stateRoot: path.join(temporary, 'provider-state'),
         allowedRepositoryRoots: [temporary],

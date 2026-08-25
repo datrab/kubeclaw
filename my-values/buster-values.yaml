@@ -84,11 +84,6 @@ extraContainers:
           secretKeyRef:
             name: openclaw-shared-secrets
             key: busterV2Token
-      - name: BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY
-        valueFrom:
-          secretKeyRef:
-            name: pipeline-test-gate-source-attestation
-            key: publicKey
       - name: BUSTER_PLAN_PORT
         value: "18891"
       - name: BUSTER_LEGACY_PORT
@@ -128,7 +123,7 @@ extraContainers:
         protocol: TCP
     startupProbe:
       httpGet:
-        scheme: HTTPS
+        scheme: HTTP
         path: /healthz
         port: buster-plan
       periodSeconds: 2
@@ -136,7 +131,7 @@ extraContainers:
       failureThreshold: 60
     readinessProbe:
       httpGet:
-        scheme: HTTPS
+        scheme: HTTP
         path: /healthz
         port: buster-plan
       initialDelaySeconds: 5
@@ -145,7 +140,7 @@ extraContainers:
       failureThreshold: 6
     livenessProbe:
       httpGet:
-        scheme: HTTPS
+        scheme: HTTP
         path: /healthz
         port: buster-plan
       initialDelaySeconds: 30
@@ -159,9 +154,6 @@ extraContainers:
         mountPath: /var/lib/buster-v2
       - name: buster-api-token
         mountPath: /var/run/buster-worker/kubernetes
-        readOnly: true
-      - name: buster-plan-tls
-        mountPath: /var/run/buster-plan-tls
         readOnly: true
       - name: buster-command-cgroup
         mountPath: /var/run/kubeclaw-command-cgroup
@@ -211,15 +203,6 @@ extraVolumes:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
-  - name: buster-plan-tls
-    secret:
-      secretName: pipeline-test-gate-source-attestation
-      defaultMode: 288
-      items:
-        - key: tls.key
-          path: tls.key
-        - key: tls.crt
-          path: tls.crt
   - name: buster-command-cgroup
     hostPath:
       # This is one dedicated subtree. Never mount /sys/fs/cgroup into Buster.

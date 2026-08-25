@@ -238,9 +238,6 @@ async function main(): Promise<void> {
   if (busterPlanRoute.adapter !== 'buster-plan-v1') {
     throw new Error(`REAL_E2E_TEST_PLAN_ADAPTER_UNSUPPORTED:${busterPlanRoute.adapter}`);
   }
-  if (!process.env.BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY) {
-    throw new Error('REAL_E2E_BUSTER_SOURCE_KEY_MISSING');
-  }
   const busterRuntimeRoute = resolveProviderCapability(
     remoteProviders,
     'buster',
@@ -501,7 +498,6 @@ async function main(): Promise<void> {
       'kubeclaw.remote-test-gate:plan': {
         endpoint: busterPlanRoute.endpoint,
         tokenSecret: 'buster.worker',
-        sourcePrivateKeySecret: 'buster.source-private-key',
         sourceAuthority: 'nova:production',
         stateRoot: path.join(stateRoot, 'provider-gates'),
         allowedRepositoryRoots: [repo],
@@ -563,7 +559,6 @@ async function main(): Promise<void> {
           'openclaw.gateway': 'OPENCLAW_GATEWAY_TOKEN',
           'buster.gateway': 'BUSTER_GATEWAY_TOKEN',
           'buster.worker': 'BUSTER_V2_TOKEN',
-          'buster.source-private-key': 'BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY',
           'discord.webhook': 'DISCORD_WEBHOOK',
         },
       },

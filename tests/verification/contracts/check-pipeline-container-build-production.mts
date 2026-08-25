@@ -19,9 +19,6 @@ const repository = path.join(root, 'repository');
 const busterState = path.join(root, 'buster-state');
 const busterRuns = path.join(root, 'buster-runs');
 const token = 'container-build-production-token-0000000000';
-const sourceKeys = crypto.generateKeyPairSync('ed25519');
-const privateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const publicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
 const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
 const limits = { cpuMillis: 120_000, memoryBytes: 1024 * 1024 * 1024, logBytes: 8 * 1024 * 1024,
   artifactBytes: 1024 * 1024, artifactFiles: 8, processes: 32 };
@@ -57,8 +54,7 @@ try {
 
   const makeService = () => new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
-      maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
-      trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey }),
+      maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024 }),
     registry, runtimeRoot: busterRuns, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 64 * 1024 * 1024,
     allowedCapabilities: new Set(['container.build']), containerBuild: {
       buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost,
@@ -75,7 +71,7 @@ try {
     return { runtime, endpoint: `http://127.0.0.1:${address.port}` };
   };
   const nova = (endpoint: string) => createProductionNovaTestGate({ stateRoot: path.join(root, 'nova-state'), endpoint,
-    token, sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey, pollMilliseconds: 20,
+    token, sourceAuthority: 'nova:production', pollMilliseconds: 20,
     maximumResponseBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 16 * 1024 * 1024, maximumEvidenceStoreBytes: 64 * 1024 * 1024,
@@ -136,7 +132,7 @@ try {
   await running.runtime.stop();
 
   console.log(JSON.stringify({ ok: true, phase: 'container-build-production', boundary: 'nova-to-buster-remote',
-    realComponents: ['git-snapshot', 'source-attestation', 'http-runtime', 'remote-job-store', 'provider-process',
+    realComponents: ['git-snapshot', 'http-runtime', 'remote-job-store', 'provider-process',
       'buildctl', 'buildkit-daemon', 'registry-push', 'registry-manifest', 'nova-result-import', 'restart-recovery'],
     image: image.reference, failedBuildAttempts: 2, mocks: 0, fakes: 0, emulators: 0, wrappers: 0 }));
 } finally {

@@ -3,10 +3,9 @@
   "type":"object",
   "required":["images","control","studio","worker","postgresql","secrets","artifactStorage"],
   "properties":{
-    "images":{"type":"object","required":["control","studio","worker","ingestion"]},
+    "images":{"type":"object","required":["control","studio","worker","ingestion"],"additionalProperties":{"type":"object","required":["repository","tag","pullPolicy"],"properties":{"repository":{"type":"string","minLength":1},"tag":{"type":"string","minLength":1},"pullPolicy":{"enum":["Always","IfNotPresent","Never"]}},"additionalProperties":false}},
     "control":{"type":"object"},"studio":{"type":"object"},"worker":{"type":"object"},
     "ingestion":{"type":"object"},"postgresql":{"type":"object"},"secrets":{"type":"object"},
-    "artifactStorage":{"type":"object"},"tailscale":{"type":"object"},
-    "security":{"type":"object","required":["approverUsers"],"properties":{"approverUsers":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true}},"additionalProperties":false}
+    "artifactStorage":{"type":"object"},"tailscale":{"type":"object"}
   },"additionalProperties":false
 }

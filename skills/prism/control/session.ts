@@ -13,9 +13,8 @@ export function verifySession(token: string, secret: string, now = Date.now()): 
   const session = JSON.parse(Buffer.from(payload, "base64url").toString()) as Session;
   if (!session.user || session.audience!=="prism" || !Array.isArray(session.roles) || session.expiresAt <= now) throw new Error("expired session"); return session;
 }
-export function exchangeTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string, approvers: ReadonlySet<string> = new Set()): string {
+export function exchangeTailscaleIdentity(headers: Record<string, string | undefined>, ingressSecret: string, sessionSecret: string): string {
   if (!ingressSecret || headers["x-prism-ingress-secret"] !== ingressSecret) throw new Error("untrusted ingress");
   const user = headers["tailscale-user-login"]?.trim(); if (!user) throw new Error("missing Tailscale identity");
-  const roles=approvers.has(user)?["editor","approver"]:["editor"];
-  return mintSession(user, sessionSecret, Date.now(), roles);
+  return mintSession(user, sessionSecret);
 }

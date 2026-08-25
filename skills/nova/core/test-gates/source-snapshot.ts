@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { attestSourceSnapshot, type SourceSnapshotV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import type { SourceSnapshotV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
 const ID = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/u;
 const GIT_OBJECT = /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/u;
@@ -28,7 +28,6 @@ export function buildCommittedSourceSnapshot(options: {
   repositoryId: string;
   pipelineStageId: string;
   creatorAuthority: string;
-  attestationPrivateKey: string | Buffer;
   revision?: string;
   maximumArchiveBytes: number;
 }): CommittedSourceSnapshot {
@@ -52,11 +51,11 @@ export function buildCommittedSourceSnapshot(options: {
   }
   const archiveContentDigest = `sha256:${crypto.createHash('sha256').update(repositoryArchive).digest('hex')}`;
   return Object.freeze({
-    sourceSnapshot: attestSourceSnapshot({ schemaVersion: 'source-snapshot.v1', sourceType: 'git-commit',
+    sourceSnapshot: Object.freeze({ schemaVersion: 'source-snapshot.v1', sourceType: 'git-commit',
       pipelineStageId: options.pipelineStageId,
       repositoryId: options.repositoryId, revision: `git:${revision}`, tree: `git:${tree}`,
       archiveContentDigest, archiveSizeBytes: repositoryArchive.byteLength,
-      creatorAuthority: options.creatorAuthority }, options.attestationPrivateKey),
+      creatorAuthority: options.creatorAuthority }),
     repositoryArchive,
   });
 }

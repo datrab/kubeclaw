@@ -19,11 +19,11 @@ spec:
           labelSelector: { matchLabels: { app: prism-{{ $name }} } }
       containers:
         - name: {{ $name }}
-          image: "{{ $image.repository }}{{ if $image.digest }}@{{ $image.digest }}{{ else }}:{{ $image.tag }}{{ end }}"
+          image: "{{ $image.repository }}:{{ $image.tag }}"
+          imagePullPolicy: {{ $image.pullPolicy }}
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           env:
             - { name: PORT, value: "8080" }
-            - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
             {{- if or (eq $name "control") (eq $name "worker") }}
             - name: PRISM_WORKER_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
@@ -37,7 +37,6 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
             - name: PRISM_DISPATCH_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: dispatch-secret } }
-            - { name: PRISM_APPROVER_USERS, value: {{ join "," $.Values.security.approverUsers | quote }} }
             - { name: PRISM_INGESTION_URL, value: "http://prism-ingestion:8080" }
             - name: PRISM_INGESTION_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }

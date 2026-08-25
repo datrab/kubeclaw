@@ -78,16 +78,12 @@ PRISM_HELM_TIMEOUT="${PRISM_HELM_TIMEOUT:-45m}"
 PRISM_ROLLOUT_TIMEOUT="${PRISM_ROLLOUT_TIMEOUT:-45m}"
 PRISM_CONTROL_IMAGE_REPOSITORY="${PRISM_CONTROL_IMAGE_REPOSITORY:-}"
 PRISM_CONTROL_IMAGE_TAG="${PRISM_CONTROL_IMAGE_TAG:-}"
-PRISM_CONTROL_IMAGE_DIGEST="${PRISM_CONTROL_IMAGE_DIGEST:-}"
 PRISM_STUDIO_IMAGE_REPOSITORY="${PRISM_STUDIO_IMAGE_REPOSITORY:-}"
 PRISM_STUDIO_IMAGE_TAG="${PRISM_STUDIO_IMAGE_TAG:-}"
-PRISM_STUDIO_IMAGE_DIGEST="${PRISM_STUDIO_IMAGE_DIGEST:-}"
 PRISM_WORKER_IMAGE_REPOSITORY="${PRISM_WORKER_IMAGE_REPOSITORY:-}"
 PRISM_WORKER_IMAGE_TAG="${PRISM_WORKER_IMAGE_TAG:-}"
-PRISM_WORKER_IMAGE_DIGEST="${PRISM_WORKER_IMAGE_DIGEST:-}"
 PRISM_INGESTION_IMAGE_REPOSITORY="${PRISM_INGESTION_IMAGE_REPOSITORY:-}"
 PRISM_INGESTION_IMAGE_TAG="${PRISM_INGESTION_IMAGE_TAG:-}"
-PRISM_INGESTION_IMAGE_DIGEST="${PRISM_INGESTION_IMAGE_DIGEST:-}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
 AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
@@ -1334,48 +1330,17 @@ cmd_smoke() {
 
 prism_image_overrides() {
   local pairs=(control CONTROL studio STUDIO worker WORKER ingestion INGESTION)
-  local index kind upper repository tag digest
+  local index kind upper repository tag
   for ((index=0; index<${#pairs[@]}; index+=2)); do
     kind="${pairs[index]}"; upper="${pairs[index+1]}"
-    repository="PRISM_${upper}_IMAGE_REPOSITORY"; tag="PRISM_${upper}_IMAGE_TAG"; digest="PRISM_${upper}_IMAGE_DIGEST"
+    repository="PRISM_${upper}_IMAGE_REPOSITORY"; tag="PRISM_${upper}_IMAGE_TAG"
     [[ -z ${!repository:-} ]] || printf '%s\n' --set-string "images.${kind}.repository=${!repository}"
     [[ -z ${!tag:-} ]] || printf '%s\n' --set-string "images.${kind}.tag=${!tag}"
-    [[ -z ${!digest:-} ]] || printf '%s\n' --set-string "images.${kind}.digest=${!digest}"
   done
-}
-
-prism_security_overrides() {
-  [[ -n ${PRISM_APPROVER_USERS:-} ]] || return 0
-  local json="[" separator="" user
-  IFS=',' read -r -a users <<<"$PRISM_APPROVER_USERS"
-  for user in "${users[@]}"; do
-    user="${user#"${user%%[![:space:]]*}"}"
-    user="${user%"${user##*[![:space:]]}"}"
-    [[ -n $user ]] || continue
-    json+="${separator}\"${user//\"/\\\"}\""
-    separator=","
-  done
-  json+="]"
-  [[ $json != "[]" ]] || { err "PRISM_APPROVER_USERS must contain a Tailscale login"; return 1; }
-  printf '%s\n' --set-json "security.approverUsers=${json}"
 }
 
 prism_validate_values() {
   [[ -f $PRISM_VALUES_FILE ]] || { err "Prism values file is missing: $PRISM_VALUES_FILE"; return 1; }
-  local kind image tag digest
-  for kind in control studio worker ingestion; do
-    image="$(helm show values "$REPO_DIR/charts/prism" | awk -v key="$kind:" '$1==key {inside=1; next} inside && $1=="repository:" {print $2; exit}')"
-    tag="$(awk -v key="$kind:" '$1==key {inside=1; next} inside && $1=="tag:" {print $2; exit}' "$PRISM_VALUES_FILE")"
-    digest="$(awk -v key="$kind:" '$1==key {inside=1; next} inside && $1=="digest:" {gsub(/\"/,"",$2); print $2; exit}' "$PRISM_VALUES_FILE")"
-    local upper="${kind^^}" tag_var="PRISM_${kind^^}_IMAGE_TAG" digest_var="PRISM_${kind^^}_IMAGE_DIGEST"
-    tag="${!tag_var:-$tag}"; digest="${!digest_var:-$digest}"
-    [[ $tag != latest ]] || { err "Prism ${kind} image cannot use latest"; return 1; }
-    [[ $digest =~ ^sha256:[0-9a-f]{64}$ ]] || { err "Prism ${kind} image needs a sha256 digest"; return 1; }
-  done
-  [[ -n ${PRISM_APPROVER_USERS:-} ]] || {
-    err "PRISM_APPROVER_USERS must contain the permitted Tailscale login list"
-    return 1
-  }
 }
 
 cmd_prism_secrets() {
@@ -1423,7 +1388,6 @@ cmd_prism() {
   component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
   require_command kubectl; require_command helm; prism_validate_values; cmd_prism_secrets
   local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
-  while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_security_overrides)
   helm lint "$REPO_DIR/charts/prism" -f "$PRISM_VALUES_FILE" "${overrides[@]}"
   helm upgrade --install "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" \
     -f "$PRISM_VALUES_FILE" "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT"
@@ -1454,7 +1418,7 @@ cmd_prism_status() {
 
 cmd_prism_e2e() {
   require_command kubectl; require_command helm; require_command node
-  [[ -n ${PRISM_E2E_USER:-} ]] || { err "PRISM_E2E_USER must match one configured Prism approver"; return 1; }
+  [[ -n ${PRISM_E2E_USER:-} ]] || { err "PRISM_E2E_USER must contain a Tailscale login"; return 1; }
   local original_namespace="$PRISM_NAMESPACE" lease_name=""
   if [[ ${PRISM_E2E_USE_LEASE:-true} == "true" ]]; then
     lease_name="test-prism-$(date -u +%Y%m%d%H%M%S)-$RANDOM";local test_namespace="$lease_name"
@@ -1480,12 +1444,12 @@ EOF
   cleanup_prism_e2e(){ [[ -z ${runner_job:-} ]]||kubectl delete job,configmap "$runner_job" -n "$PRISM_NAMESPACE" --ignore-not-found --wait=false >/dev/null 2>&1||true;PRISM_NAMESPACE="$original_namespace";export PRISM_NAMESPACE;[[ -z $lease_name ]]||kubectl delete busternamespacelease "$lease_name" -n "$NAMESPACE" --wait=false >/dev/null 2>&1||true; }
   trap cleanup_prism_e2e RETURN
   cmd_prism
-  local context digests control_image runner_job
+  local context image_references control_image runner_job
   context="$(kubectl config current-context)"
-  digests="$(kubectl get deployments prism-control prism-studio prism-worker -n "$PRISM_NAMESPACE" -o jsonpath='{range .items[*]}{.spec.template.spec.containers[0].image}{","}{end}')"
+  image_references="$(kubectl get deployments prism-control prism-studio prism-worker -n "$PRISM_NAMESPACE" -o jsonpath='{range .items[*]}{.spec.template.spec.containers[0].image}{","}{end}')"
   control_image="$(kubectl get deployment prism-control -n "$PRISM_NAMESPACE" -o jsonpath='{.spec.template.spec.containers[0].image}')"
   runner_job="prism-e2e-runner-$(date +%s)"
-  kubectl create configmap "$runner_job" -n "$PRISM_NAMESPACE" --from-literal=user="$PRISM_E2E_USER" --from-literal=digests="$digests" --from-literal=cluster="$context" --from-literal=namespace="$PRISM_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+  kubectl create configmap "$runner_job" -n "$PRISM_NAMESPACE" --from-literal=user="$PRISM_E2E_USER" --from-literal=image-references="$image_references" --from-literal=cluster="$context" --from-literal=namespace="$PRISM_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
   kubectl apply -n "$PRISM_NAMESPACE" -f - <<EOF
 apiVersion: batch/v1
 kind: Job
@@ -1507,8 +1471,8 @@ spec:
             - { name: PRISM_CONTROL_URL, value: "http://prism-control.${PRISM_NAMESPACE}.svc.cluster.local:8080" }
             - name: PRISM_E2E_USER
               valueFrom: { configMapKeyRef: { name: ${runner_job}, key: user } }
-            - name: PRISM_E2E_IMAGE_DIGESTS
-              valueFrom: { configMapKeyRef: { name: ${runner_job}, key: digests } }
+            - name: PRISM_E2E_IMAGE_REFERENCES
+              valueFrom: { configMapKeyRef: { name: ${runner_job}, key: image-references } }
             - name: CLUSTER_ID
               valueFrom: { configMapKeyRef: { name: ${runner_job}, key: cluster } }
             - name: PRISM_NAMESPACE

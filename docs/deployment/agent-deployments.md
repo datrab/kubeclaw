@@ -26,7 +26,7 @@ capabilityProviders:
         port: 18892
       test.plan.execute:
         adapter: buster-plan-v1
-        scheme: https
+        scheme: http
         port: 18891
 ```
 
@@ -34,9 +34,8 @@ Helm resolves the role to the canonical in-namespace `agent-<role>` Service and
 renders `KUBECLAW_CAPABILITY_PROVIDERS`. No endpoint, namespace, port, agent
 framework, or Buster-specific routing rule is embedded in pipeline core.
 
-The plan route uses TLS. Nova trusts the plan certificate through the mounted
-pipeline source-attestation Secret. The same Secret stores the source-signing
-key pair. Run `my-values/setup-secrets.sh` before deployment.
+The plan route uses its existing bearer token over the internal cluster
+Service. It does not require a source-attestation key or certificate Secret.
 
 ## Verification
 

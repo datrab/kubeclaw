@@ -49,13 +49,6 @@ const workerSecret = required("PRISM_WORKER_SECRET");
 const ingestionSecret=required("PRISM_INGESTION_SECRET");
 const ingestionUrl=new URL(process.env.PRISM_INGESTION_URL??"http://prism-ingestion:8080");
 const controlInternalUrl=new URL(process.env.PRISM_CONTROL_INTERNAL_URL??"http://prism-control:8080");
-const approvers = new Set(
-  (process.env.PRISM_APPROVER_USERS ?? "")
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean),
-);
-
 function required(name: string): string {
   const value = process.env[name];
   if (!value) throw new Error(`${name} is required`);
@@ -258,7 +251,6 @@ const server = createServer(async (request, response) => {
         headers,
         ingressSecret,
         sessionSecret,
-        approvers,
       );
       const csrf = randomBytes(24).toString("base64url");
       response.setHeader("set-cookie", [
@@ -759,8 +751,6 @@ const server = createServer(async (request, response) => {
       });
     }
     if (url.pathname === "/v1/approvals" && request.method === "POST") {
-      if (!actor.roles.includes("approver"))
-        throw new Error("approval authority is required");
       const input = (await body(request)) as {
         projectId?: string;
         documentId?: string;

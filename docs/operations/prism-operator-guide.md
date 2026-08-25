@@ -2,17 +2,18 @@
 
 ## Install
 
-1. Put the four published image digests in protected environment variables or
-   `my-values/prism-values.yaml`.
-2. Run `./scripts/deploy.sh setup`.
-3. Run `./scripts/deploy.sh secrets`.
-4. Run `./scripts/deploy.sh prism`.
-5. Run `./scripts/deploy.sh prism-status`.
-6. Run `./scripts/deploy.sh prism-smoke`.
+1. Run `./scripts/deploy.sh setup`.
+2. Run `./scripts/deploy.sh secrets`.
+3. Run `./scripts/deploy.sh prism`.
+4. Run `./scripts/deploy.sh prism-status`.
+5. Run `./scripts/deploy.sh prism-smoke`.
 
-`deploy.sh prism` rejects `latest`, an empty image digest, a missing values
-file, and missing Secrets. Helm uses an atomic upgrade. A failed upgrade keeps
-the last healthy release.
+Prism uses the image repositories and tags configured once in
+`my-values/prism-values.yaml`; no digest or approver environment variables are
+required. Any user authenticated through the trusted Tailscale ingress can
+approve a design. `deploy.sh prism` still rejects a missing values file and
+missing Secrets. Helm uses an atomic upgrade. A failed upgrade keeps the last
+healthy release.
 
 ## Remove workloads
 

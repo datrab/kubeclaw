@@ -18,7 +18,6 @@ const fixture = path.join(temporary, 'fixture');
 const state = path.join(temporary, 'nova-state');
 const runId = `run:container-build-preflight:${crypto.randomUUID()}`;
 const token = process.env.BUSTER_V2_TOKEN;
-const privateKey = process.env.BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY;
 
 function git(...args: string[]): string {
   return execFileSync('git', args, { cwd: fixture, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -26,7 +25,6 @@ function git(...args: string[]): string {
 
 try {
   if (!token) throw new Error('CONTAINER_BUILD_PREFLIGHT_TOKEN_MISSING');
-  if (!privateKey) throw new Error('CONTAINER_BUILD_PREFLIGHT_SOURCE_KEY_MISSING');
   const route = resolveProviderCapability(parseCapabilityProviders(), 'buster', 'test.plan.execute');
   if (route.adapter !== 'buster-plan-v1') throw new Error(`CONTAINER_BUILD_PREFLIGHT_PROVIDER_UNSUPPORTED:${route.adapter}`);
 
@@ -64,7 +62,7 @@ try {
       defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 1, maximumMatrixSize: 2,
       maximumNodes: 4, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { 'container-build': 1 } } });
   const nova = createProductionNovaTestGate({ stateRoot: state, endpoint: route.endpoint, token,
-    sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey,
+    sourceAuthority: 'nova:production',
     pollMilliseconds: 500, maximumResponseBytes: 64 * 1024 * 1024,
     maximumResultBytes: 64 * 1024 * 1024, maximumArchiveBytes: 16 * 1024 * 1024,
     maximumArchiveStoreBytes: 64 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,

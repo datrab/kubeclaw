@@ -680,11 +680,10 @@ results.
 - Define immutable plan-job, status, and result contracts.
 - Carry a bounded repository archive or a durable authenticated artifact
   reference. Build it from a committed Git revision and bind repository,
-  commit, tree, archive, creator, and owning pipeline-stage identities. Add a
-  trusted source attestation that Buster verifies before persistence. Keep its
-  Ed25519 private key in Nova and give Buster only the public key. Keep both
-  separate from the remote transport credential. The production Nova
-  path must build and sign this snapshot itself; it must not accept independent
+  commit, tree, archive, creator, and owning pipeline-stage identities. The
+  production Nova path builds this snapshot itself and authenticates the remote
+  request with the existing bearer token; it does not require source-signing
+  keys. It must not accept independent
   archive and source-statement inputs.
 - Make Buster verify and retain the archive bytes or recoverable reference
   before it accepts the job for execution.

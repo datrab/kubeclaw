@@ -16,7 +16,8 @@ spec:
       restartPolicy: OnFailure
       initContainers:
         - name: bootstrap-database-roles
-          image: "{{ .Values.images.control.repository }}{{ if .Values.images.control.digest }}@{{ .Values.images.control.digest }}{{ else }}:{{ .Values.images.control.tag }}{{ end }}"
+          image: "{{ .Values.images.control.repository }}:{{ .Values.images.control.tag }}"
+          imagePullPolicy: {{ .Values.images.control.pullPolicy }}
           command: ["node", "--experimental-strip-types", "skills/prism/server/bootstrap-database.ts"]
           env:
             - name: ADMIN_DATABASE_URL
@@ -31,7 +32,8 @@ spec:
           resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 512Mi } }
       containers:
         - name: migrate
-          image: "{{ .Values.images.control.repository }}{{ if .Values.images.control.digest }}@{{ .Values.images.control.digest }}{{ else }}:{{ .Values.images.control.tag }}{{ end }}"
+          image: "{{ .Values.images.control.repository }}:{{ .Values.images.control.tag }}"
+          imagePullPolicy: {{ .Values.images.control.pullPolicy }}
           command: ["node", "--experimental-strip-types", "skills/prism/server/migrate.ts"]
           env:
             - name: DATABASE_URL

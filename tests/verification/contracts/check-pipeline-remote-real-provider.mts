@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -25,9 +24,6 @@ const installRoot = path.join(temporary, 'plugins');
 const packageRoot = path.join(installRoot, 'real-provider');
 const repository = path.join(temporary, 'repository');
 const token = 'phase-7-real-provider-token-00000000000';
-const sourceKeys = crypto.generateKeyPairSync('ed25519');
-const sourceAttestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const sourceAttestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
 const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
 
 try {
@@ -102,7 +98,6 @@ export function provider() {
   const busterStore = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), {
     recordLimits: records, maximumArchiveBytes: 4 * 1024 * 1024,
     maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
-    trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey,
   });
   const service = new BusterRemotePlanService({
     store: busterStore, registry, runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar',
@@ -115,7 +110,7 @@ export function provider() {
   try {
     const gate = createProductionNovaTestGate({
       stateRoot: path.join(temporary, 'nova-state'), endpoint: `http://127.0.0.1:${address.port}`, token,
-      sourceAuthority: 'nova:production', sourceAttestationPrivateKey,
+      sourceAuthority: 'nova:production',
       pollMilliseconds: 10, maximumResponseBytes: 64 * 1024, maximumResultBytes: 16 * 1024 * 1024,
       maximumArchiveBytes: 4 * 1024 * 1024, maximumArchiveStoreBytes: 16 * 1024 * 1024,
       maximumEvidenceBytes: 4 * 1024 * 1024, maximumEvidenceStoreBytes: 16 * 1024 * 1024,

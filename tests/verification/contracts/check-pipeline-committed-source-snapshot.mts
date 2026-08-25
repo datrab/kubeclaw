@@ -1,19 +1,13 @@
 import assert from 'node:assert/strict';
-import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildCommittedSourceSnapshot } from '@kubeclaw/nova-core';
-import { verifySourceSnapshotAttestation } from '@kubeclaw/pipeline-test-gate-contract';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'committed-source-snapshot-'));
 const repository = path.join(temporary, 'repository');
 const extracted = path.join(temporary, 'extracted');
-const sourceKeys = crypto.generateKeyPairSync('ed25519');
-const attestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const attestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
-const wrongPublicKey = crypto.generateKeyPairSync('ed25519').publicKey.export({ type: 'spki', format: 'pem' });
 try {
   fs.mkdirSync(repository);
   execFileSync('git', ['-C', repository, 'init', '-q']);
@@ -29,14 +23,12 @@ try {
 
   const first = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:source-proof',
     pipelineStageId: 'stage:test-gate',
-    creatorAuthority: 'nova:production', attestationPrivateKey, revision: 'HEAD', maximumArchiveBytes: 1024 * 1024 });
+    creatorAuthority: 'nova:production', revision: 'HEAD', maximumArchiveBytes: 1024 * 1024 });
   const second = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:source-proof',
     pipelineStageId: 'stage:test-gate',
-    creatorAuthority: 'nova:production', attestationPrivateKey, revision: commit, maximumArchiveBytes: 1024 * 1024 });
+    creatorAuthority: 'nova:production', revision: commit, maximumArchiveBytes: 1024 * 1024 });
   assert.equal(first.sourceSnapshot.revision, `git:${commit}`);
   assert.equal(first.sourceSnapshot.tree, `git:${tree}`);
-  assert.equal(verifySourceSnapshotAttestation(first.sourceSnapshot, 'nova:production', attestationPublicKey), true);
-  assert.equal(verifySourceSnapshotAttestation(first.sourceSnapshot, 'nova:production', wrongPublicKey), false);
   assert.equal(first.sourceSnapshot.archiveContentDigest, second.sourceSnapshot.archiveContentDigest,
     'the same commit must create the same archive');
   assert.deepEqual(first.repositoryArchive, second.repositoryArchive);
@@ -47,14 +39,14 @@ try {
   assert.equal(fs.readFileSync(path.join(extracted, 'tracked.txt'), 'utf8'), 'committed\n');
   assert.equal(fs.existsSync(path.join(extracted, 'untracked.txt')), false);
   assert.throws(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
-    repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', attestationPrivateKey, revision: 'missing',
+    repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', revision: 'missing',
     maximumArchiveBytes: 1024 * 1024 }), /Command failed/u);
   assert.throws(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
-    repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', attestationPrivateKey, revision: '--help',
+    repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', revision: '--help',
     maximumArchiveBytes: 1024 * 1024 }), /Command failed/u,
   'revision input must not be interpreted as a Git option');
   assert.throws(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
-    repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', attestationPrivateKey, maximumArchiveBytes: 1 }),
+    repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', maximumArchiveBytes: 1 }),
   /NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/u);
   console.log(JSON.stringify({ ok: true, decision: 'D-094', revision: first.sourceSnapshot.revision,
     excludesWorkingTree: true }));

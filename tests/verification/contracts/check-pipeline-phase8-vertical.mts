@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -12,9 +11,6 @@ const repository = path.join(temporary, 'repository');
 const pluginRoot = path.resolve('skills/buster/plugins');
 const suite = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/suites/unit.v1.json', 'utf8'));
 const token = 'phase-8-vertical-token-0000000000000';
-const keys = crypto.generateKeyPairSync('ed25519');
-const privateKey = keys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const publicKey = keys.publicKey.export({ type: 'spki', format: 'pem' });
 const records = { maximumRecords: 200, maximumBytes: 128 * 1024 * 1024, maximumRecordBytes: 32 * 1024 * 1024 };
 
 try {
@@ -80,8 +76,7 @@ if(mode==='exit-fail') process.exitCode=7;
 
   const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { recordLimits: records,
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 32 * 1024 * 1024,
-    maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
-    sourceAttestationPublicKey: publicKey });
+    maximumResultStoreBytes: 128 * 1024 * 1024 });
   const service = new BusterRemotePlanService({ store, registry, runtimeRoot: path.join(temporary, 'buster-runs'),
     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
@@ -97,7 +92,7 @@ if(mode==='exit-fail') process.exitCode=7;
   try {
     const gate = createProductionNovaTestGate({ stateRoot: path.join(temporary, 'nova-state'),
       endpoint: `http://127.0.0.1:${address.port}`, token, sourceAuthority: 'nova:production',
-      sourceAttestationPrivateKey: privateKey, pollMilliseconds: 10, maximumResponseBytes: 64 * 1024,
+      pollMilliseconds: 10, maximumResponseBytes: 64 * 1024,
       maximumResultBytes: 32 * 1024 * 1024, maximumArchiveBytes: 8 * 1024 * 1024,
       maximumArchiveStoreBytes: 32 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,
       maximumEvidenceStoreBytes: 64 * 1024 * 1024, recordLimits: records, legacyLedger: {} });

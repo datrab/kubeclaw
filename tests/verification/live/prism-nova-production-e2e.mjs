@@ -215,7 +215,7 @@ console.log(
     approvalId,
     directionCount: directions.length,
     repositoryCommit: process.env.GITHUB_SHA ?? "local",
-    imageDigests: required("PRISM_E2E_IMAGE_DIGESTS").split(","),
+    imageReferences: required("PRISM_E2E_IMAGE_REFERENCES").split(",").filter(Boolean),
     clusterIdentity: required("CLUSTER_ID"),
     namespace: process.env.PRISM_NAMESPACE ?? "kubeclaw",
     startedAt,

@@ -390,12 +390,6 @@ export interface SourceSnapshotV1 {
   archiveContentDigest: string;
   archiveSizeBytes: number;
   creatorAuthority: string;
-  attestation: {
-    schemaVersion: 'source-snapshot-attestation.v1';
-    algorithm: 'ed25519';
-    authority: string;
-    signature: string;
-  };
 }
 
 export interface RemotePlanJobV1 {

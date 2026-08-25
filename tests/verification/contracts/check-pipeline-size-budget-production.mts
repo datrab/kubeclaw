@@ -12,9 +12,6 @@ const repository = path.join(root, 'repository');
 const busterState = path.join(root, 'buster-state');
 const busterRuns = path.join(root, 'buster-runs');
 const token = 'size-budget-production-token-000000000000';
-const sourceKeys = crypto.generateKeyPairSync('ed25519');
-const privateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
-const publicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
 const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
 const limits = { cpuMillis: 30_000, memoryBytes: 512 * 1024 * 1024, logBytes: 1024 * 1024,
   artifactBytes: 16 * 1024 * 1024, artifactFiles: 16, processes: 16 };
@@ -47,8 +44,7 @@ try {
       pipelineStage: 'test' }, policy });
   const makeService = () => new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
-      maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
-      trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey }),
+      maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024 }),
     registry, runtimeRoot: busterRuns, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 64 * 1024 * 1024,
     allowedCapabilities: new Set(['command.execute']), directCommand: {
       executableCatalog: new Map([['tar', '/usr/bin/tar'], ['cp', '/usr/bin/cp']]),
@@ -66,7 +62,7 @@ try {
     return { runtime, endpoint: `http://127.0.0.1:${address.port}` };
   };
   const nova = (endpoint: string, state: string) => createProductionNovaTestGate({ stateRoot: path.join(root, state),
-    endpoint, token, sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey,
+    endpoint, token, sourceAuthority: 'nova:production',
     pollMilliseconds: 10, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 16 * 1024 * 1024, maximumEvidenceStoreBytes: 64 * 1024 * 1024,
@@ -116,7 +112,7 @@ try {
   await running.runtime.stop();
 
   console.log(JSON.stringify({ ok: true, phase: 'size-budget-production', boundary: 'nova-to-buster-remote',
-    realComponents: ['git-snapshot', 'source-attestation', 'http-runtime', 'remote-job-store', 'command-sandbox',
+    realComponents: ['git-snapshot', 'http-runtime', 'remote-job-store', 'command-sandbox',
       'tar', 'typed-artifact-link', 'provider-process', 'buster-evidence-store', 'nova-result-import', 'restart-recovery'],
     decisions: ['passed', 'passed'], baselinePromoted: true, mocks: 0, wrappers: 0 }));
 } finally {

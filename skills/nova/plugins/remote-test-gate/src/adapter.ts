@@ -45,8 +45,7 @@ function grants(value: unknown, plan: ResolvedTestPlanV1): ReadonlyMap<string, r
 
 function parseConfig(context: AdapterActivationContext) {
   const endpoint = new URL(string(context.config.endpoint, 'REMOTE_TEST_GATE_CONFIG_INVALID'));
-  const loopback = ['localhost', '127.0.0.1', '[::1]'].includes(endpoint.hostname);
-  if (endpoint.protocol !== 'https:' && !loopback) throw new Error('REMOTE_TEST_GATE_TLS_REQUIRED');
+  if (!['http:', 'https:'].includes(endpoint.protocol)) throw new Error('REMOTE_TEST_GATE_PROTOCOL_INVALID');
   const stateRoot = path.resolve(string(context.config.stateRoot, 'REMOTE_TEST_GATE_CONFIG_INVALID'));
   const roots = (context.config.allowedRepositoryRoots as unknown[]).map((root) => canonicalDirectory(root,
     'REMOTE_TEST_GATE_CONFIG_INVALID'));
@@ -63,7 +62,6 @@ function parseConfig(context: AdapterActivationContext) {
   }
   return Object.freeze({ endpoint: endpoint.href, stateRoot, roots, ledger: ledger as LegacySuiteMigrationLedger,
     tokenSecret: string(context.config.tokenSecret, 'REMOTE_TEST_GATE_CONFIG_INVALID'),
-    privateKeySecret: string(context.config.sourcePrivateKeySecret, 'REMOTE_TEST_GATE_CONFIG_INVALID'),
     sourceAuthority: string(context.config.sourceAuthority, 'REMOTE_TEST_GATE_CONFIG_INVALID') });
 }
 
@@ -78,9 +76,8 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
   validatePipelineTestGateContract('resolvedTestPlan', request.payload.plan);
   const plan = request.payload.plan as ResolvedTestPlanV1;
   const token = await secret(context, config.tokenSecret);
-  const privateKey = await secret(context, config.privateKeySecret);
   const gate = createProductionNovaTestGate({ stateRoot: config.stateRoot, endpoint: config.endpoint, token,
-    sourceAuthority: config.sourceAuthority, sourceAttestationPrivateKey: privateKey,
+    sourceAuthority: config.sourceAuthority,
     pollMilliseconds: 500, maximumResponseBytes: 64 * 1024 * 1024,
     maximumResultBytes: 64 * 1024 * 1024, maximumArchiveBytes: 64 * 1024 * 1024,
     maximumArchiveStoreBytes: 1024 * 1024 * 1024, maximumEvidenceBytes: 64 * 1024 * 1024,

@@ -256,7 +256,6 @@
     "cmd_smoke_agent",
     "cmd_smoke",
     "prism_image_overrides",
-    "prism_security_overrides",
     "prism_validate_values",
     "cmd_prism_secrets",
     "cmd_prism",
@@ -285,12 +284,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 804,
-    "secrets": 848,
-    "tailscale": 907,
-    "infra": 998,
-    "agents": 1203,
-    "smoke": 1325,
-    "teardown": 1692
+    "setup": 800,
+    "secrets": 844,
+    "tailscale": 903,
+    "infra": 994,
+    "agents": 1199,
+    "smoke": 1321,
+    "teardown": 1656
   }
 }

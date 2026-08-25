@@ -272,7 +272,7 @@ security checks before external ingestion is enabled.
 
 ### Exit gate
 
-- GHCR contains digest-pinned Prism images.
+- GHCR contains the tagged Prism images configured by the chart.
 - All critical and high vulnerability findings are fixed or have an approved,
   time-bounded exception.
 - Image signatures and SBOM files are available.
@@ -360,7 +360,7 @@ backup and restore-proof jobs
 
 1. Replace the placeholder `kubeclaw/prism:latest` image in `charts/prism`.
 2. Use separate image values for control, Studio, worker, and ingestion.
-3. Add pinned image digests to production values.
+3. Add published image repositories and tags to production values.
 4. Add real Secrets and ConfigMaps.
 5. Add database migrations as a one-shot Job.
 6. Add PodDisruptionBudgets where replicas are greater than one.
@@ -403,7 +403,7 @@ Update existing commands:
   must be ready before Nova is deployed with its required Prism stage enabled.
 - `smoke` includes `prism-smoke` after the Nova and Buster pod checks.
 - `status` includes Prism Deployments, StatefulSets, Jobs, Services, Ingress,
-  PVCs, backup state, migration state, and the installed image digests.
+  PVCs, backup state, migration state, and the installed image references.
 - `teardown` removes Prism workloads and its Helm release but keeps Prism data
   unless the operator explicitly requests data deletion.
 - `teardown-all` clearly lists and then removes the Prism namespace, PVCs,
@@ -421,22 +421,18 @@ PRISM_HELM_TIMEOUT=45m
 PRISM_ROLLOUT_TIMEOUT=45m
 PRISM_CONTROL_IMAGE_REPOSITORY
 PRISM_CONTROL_IMAGE_TAG
-PRISM_CONTROL_IMAGE_DIGEST
 PRISM_STUDIO_IMAGE_REPOSITORY
 PRISM_STUDIO_IMAGE_TAG
-PRISM_STUDIO_IMAGE_DIGEST
 PRISM_WORKER_IMAGE_REPOSITORY
 PRISM_WORKER_IMAGE_TAG
-PRISM_WORKER_IMAGE_DIGEST
 PRISM_INGESTION_IMAGE_REPOSITORY
 PRISM_INGESTION_IMAGE_TAG
-PRISM_INGESTION_IMAGE_DIGEST
 ```
 
 Defaults must come from the checked-in production values. Environment values
-are explicit operator overrides. A production deploy must reject `latest`, an
-empty digest, a missing values file, a missing required Secret, or an image that
-does not match its declared digest.
+are explicit operator overrides. Prism uses ordinary repository-and-tag image
+references. A production deploy must reject a missing values file or a missing
+required Secret.
 
 `deploy.sh prism` must do these steps:
 
@@ -448,7 +444,7 @@ does not match its declared digest.
    timeout.
 6. Run the migration Job once for the target release.
 7. Wait for PostgreSQL, control, Studio, and workers.
-8. Check the exact deployed image digests.
+8. Report the deployed image references.
 9. Run `prism-smoke`.
 10. Print the Studio Tailscale address and a machine-readable deployment
     result.
@@ -502,7 +498,7 @@ Run in a short-lived namespace on a real Kubernetes cluster:
 12. Prove permitted network paths with active application requests.
 13. Run `deploy.sh prism` twice and prove that the second run makes no harmful
     change.
-14. Run `deploy.sh prism-status` and verify every reported image digest against
+14. Run `deploy.sh prism-status` and verify every reported image reference against
     the workload specification.
 15. Run `deploy.sh teardown-prism`, verify that data remains, reinstall Prism,
     and open the same project.
@@ -748,7 +744,7 @@ The run archive must contain:
 - Baseline Bundle digest;
 - approval identity and time;
 - provider and model versions;
-- runtime and image digests;
+- runtime digests and image references;
 - Buster plan and evidence digests;
 - telemetry completeness result;
 - final repository commit.
@@ -988,7 +984,7 @@ Each live command must print one machine-readable result. The result must includ
 status
 test version
 repository commit
-image digests
+image references
 cluster identity
 namespace
 start and finish time

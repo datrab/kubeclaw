@@ -102,7 +102,6 @@ setpriv \
 # (1000) for projected credentials and add the socket group (1002) so its
 # BuildKit readiness checks can connect after the ownership transition above.
 # worker.ts clears all supplementary groups and capabilities before suite code.
-: "${BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:?BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY is required}"
 mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
 chown -R builder:builder "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
 test -r "$kube_service_account_root/token"
@@ -154,8 +153,6 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',
   host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),
   tokenEnvironmentVariable: 'BUSTER_V2_TOKEN',
-  sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
-  trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
   stateRoot: process.env.BUSTER_V2_STATE_DIR,
   runtimeRoot: process.env.BUSTER_V2_RUN_DIR,
   tarExecutable: '/usr/bin/tar',
@@ -165,7 +162,6 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
-  tls: { keyPath: '/var/run/buster-plan-tls/tls.key', certificatePath: '/var/run/buster-plan-tls/tls.crt' },
   allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http'],
   directCommand: {
     executableCatalog: {
