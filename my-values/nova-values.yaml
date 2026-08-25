@@ -74,7 +74,8 @@ busterNamespaceBroker:
 
 service:
   extraPorts:
-    - name: archviewer
+    # Preserve the existing Service identity so Helm upgrades can retain NodePort 30456.
+    - name: prism-preview
       port: 3456
       targetPort: 3456
       nodePort: 30456
@@ -143,6 +144,11 @@ extraVolumes:
 resources:
   requests: { cpu: 1000m, memory: 12288Mi }
   limits: { cpu: 8000m, memory: 24576Mi }
+
+probes:
+  liveness:
+    timeoutSeconds: 10
+    failureThreshold: 5
 
 # =============================================================================
 # Prism Preview Sidecar (Phase 2 — Live Web Preview)

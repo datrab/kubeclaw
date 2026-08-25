@@ -190,14 +190,9 @@ export function preflightScalableReviewResults(
 function reducedFinding(
   job: ScalableVerificationJob, response: ScalableVerificationJobResult | undefined,
 ): ScalableReducedFinding | undefined {
-  if (!response?.parsed.ok) return undefined;
+  if (!response || !completeVerificationResponse(job, response.parsed)) return undefined;
   const parsed = response.parsed.value;
-  if (parsed.bundleDigest !== job.digest || parsed.policyDigest !== job.policyDigest
-    || parsed.proposalSetDigest !== job.proposalSetDigest) return undefined;
-  const result = parsed.results[job.proposal.id];
-  if (!result || Object.keys(parsed.results).length !== 1) return undefined;
-  if (!verifierEvidenceMatchesSource({ evidence: result.evidence, verdict: result.verdict,
-    locations: job.proposal.finding.locations, source: job.source })) return undefined;
+  const result = parsed.results[job.proposal.id]!;
   const fingerprint = findingFingerprint(job.proposal.finding);
   const clusterId = sha256Text(canonicalJson({
     category: job.proposal.finding.category, rootCauseHint: job.proposal.finding.rootCauseHint,
@@ -206,6 +201,18 @@ function reducedFinding(
   return Object.freeze({ proposalId: job.proposal.id, fingerprint, clusterId,
     jobId: job.proposal.jobId, finding: job.proposal.finding,
     verification: result.verdict, verificationReason: result.reason });
+}
+
+function completeVerificationResponse(
+  job: ScalableVerificationJob, parsed: ParsedEchoReviewVerificationOutput,
+): parsed is Extract<ParsedEchoReviewVerificationOutput, { readonly ok: true }> {
+  if (!parsed.ok || parsed.value.bundleDigest !== job.digest
+    || parsed.value.policyDigest !== job.policyDigest
+    || parsed.value.proposalSetDigest !== job.proposalSetDigest) return false;
+  const result = parsed.value.results[job.proposal.id];
+  return Boolean(result && Object.keys(parsed.value.results).length === 1
+    && verifierEvidenceMatchesSource({ evidence: result.evidence, verdict: result.verdict,
+      locations: job.proposal.finding.locations, source: job.source }));
 }
 
 export function buildScalableVerificationJobs(
@@ -270,6 +277,8 @@ export function scalableVerificationTask(): string {
     '# KubeClaw scalable semantic verification v1', '',
     'Independently confirm or reject the proposed finding from exact frozen source.',
     'Confirm only when the cited code directly proves the claimed behavior and material impact.',
+    'For a confirmed verdict, cite the exact reviewed-source digest for every path named by the proposal locations, even when one path only provides supporting context.',
+    'If exact source for any named location is insufficient, return insufficient_evidence instead of confirmed.',
     'Reject style opinions, speculation, absent callers, and unsupported severity.',
     'Return raw JSON matching outputContract.',
   ].join('\n');
@@ -311,7 +320,9 @@ async function dispatchVerificationJob(
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);
       const parsed = parseEchoReviewVerificationDispatchResponse(response);
-      if (parsed.ok || attempt === maxRetries) return Object.freeze({ jobId: value.id, parsed, runtime: attestation });
+      if (completeVerificationResponse(value, parsed) || attempt === maxRetries) {
+        return Object.freeze({ jobId: value.id, parsed, runtime: attestation });
+      }
     } catch (error) { if (attempt === maxRetries) throw error; }
   }
   throw new Error(`scalable verification retry state is invalid: ${value.id}`);

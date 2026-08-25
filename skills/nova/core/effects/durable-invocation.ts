@@ -10,6 +10,11 @@ interface Dependencies {
   readonly lockTtlMs: number;
 }
 
+function lockResource(invocation: EffectInvocation): ResourceLock['resource'] {
+  if (invocation.capability !== 'runtime.dispatch') return invocation.resource;
+  return Object.freeze({ type: 'runtime.invocation', canonicalId: stableEffectId(invocation) });
+}
+
 export async function invokeDurableEffect(
   dependencies: Dependencies,
   adapter: AdapterInstance,
@@ -32,7 +37,7 @@ class DurableInvocation {
     assertMatchingRequest(prior, this.#invocation);
     const existing = await this.#existingReceipt(prior);
     if (existing) return existing;
-    this.#lock = this.#dependencies.locks.acquire(this.#invocation.resource, this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs);
+    this.#lock = this.#dependencies.locks.acquire(lockResource(this.#invocation), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs);
     prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
     assertMatchingRequest(prior, this.#invocation);
     const lockedExisting = await this.#existingReceipt(prior);

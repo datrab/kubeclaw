@@ -105,6 +105,52 @@ assert.equal(first.effectId, replay.effectId);
 assert.match(first.effectId, /^effect:[a-f0-9]{64}$/);
 assert.equal(observedLock.fencingToken, 1);
 assert.equal(observedLock.resource.canonicalId, invocation.resource.canonicalId);
+
+let releaseConcurrentDispatches;
+const concurrentDispatchGate = new Promise((resolve) => { releaseConcurrentDispatches = resolve; });
+let concurrentDispatches = 0;
+const concurrentDispatchLocks = [];
+const concurrentDispatchAdapter = {
+  async ready() {},
+  async invoke({ lock, fence }) {
+    fence.assertCurrent();
+    concurrentDispatches += 1;
+    concurrentDispatchLocks.push(lock.resource);
+    if (concurrentDispatches === 2) releaseConcurrentDispatches();
+    await concurrentDispatchGate;
+    return { accepted: true };
+  },
+  async shutdown() {},
+};
+const concurrentDispatchCoordinator = new core.EffectCoordinator(
+  new core.MemoryEffectJournal(),
+  undefined,
+  undefined,
+  new core.MemoryResourceLockManager(),
+);
+const runtimeInvocation = {
+  ...invocation,
+  capability: 'runtime.dispatch',
+  operation: 'dispatch',
+  resource: { type: 'runtime.agent', canonicalId: 'echo' },
+};
+await Promise.all([
+  concurrentDispatchCoordinator.invoke(
+    concurrentDispatchAdapter,
+    owner,
+    { ...runtimeInvocation, idempotencyKey: 'runtime-dispatch:first', payload: { job: 'first' } },
+    new AbortController().signal,
+  ),
+  concurrentDispatchCoordinator.invoke(
+    concurrentDispatchAdapter,
+    owner,
+    { ...runtimeInvocation, idempotencyKey: 'runtime-dispatch:second', payload: { job: 'second' } },
+    new AbortController().signal,
+  ),
+]);
+assert.equal(concurrentDispatches, 2, 'independent runtime jobs can use one concurrent target');
+assert.equal(new Set(concurrentDispatchLocks.map((resource) => resource.canonicalId)).size, 2);
+assert.ok(concurrentDispatchLocks.every((resource) => resource.type === 'runtime.invocation'));
 await assert.rejects(
   () => coordinator.invoke(
     adapter,

@@ -29,6 +29,8 @@ tests/verification/*
 tests/verification/contracts/*
 !tests/verification/contracts/check-pipeline-container-build-production.mts
 !tests/verification/contracts/check-pipeline-container-build-recovery.mts
+!tests/verification/live/
+!tests/verification/live/**
 
 !go.mod
 !cmd/

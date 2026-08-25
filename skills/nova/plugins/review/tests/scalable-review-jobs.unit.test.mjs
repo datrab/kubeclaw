@@ -144,6 +144,24 @@ assert.deepEqual(executed.map(({ jobId }) => jobId), first.map(({ id }) => id));
 assert.equal(executed.every(({ parsed }) => parsed.ok), true);
 assert.equal(dispatches, first.length);
 
+let semanticDispatches = 0;
+const semanticContext = { async invoke(_capability, request) {
+  semanticDispatches += 1;
+  const dispatched = request.payload.review.job;
+  const sourceEvidence = dispatched.source.map(({ digest: value }) => ({ kind: 'reviewed-source', digest: value }));
+  const evidence = semanticDispatches === 1
+    ? [...sourceEvidence, { kind: 'reviewed-topology', digest: digest('f') }] : sourceEvidence;
+  return { runtimeEvidence, result: { schemaVersion: 'echo-review-output.v1', summary: 'Reviewed exact source.',
+    inspectedEvidence: evidence,
+    requirementAssessments: Object.fromEntries(dispatched.requirements.map(({ id }) => [id, {
+      assessment: 'satisfied', explanation: 'The supplied source satisfies this requirement.', evidence: sourceEvidence,
+    }])), proposedFindings: [] } };
+} };
+const semanticExecution = await executeScalableReviewJobs(first.slice(0, 1), 'echo', semanticContext,
+  { concurrency: 1, maxRetries: 1 });
+assert.equal(semanticDispatches, 2, 'semantically invalid review evidence is retried');
+assert.equal(semanticExecution[0].parsed.ok, true);
+
 const originalNow = Date.now;
 let now = 1_000;
 Date.now = () => now;

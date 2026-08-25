@@ -15,7 +15,7 @@ COPY --from=build /build/contracts /app/prism/contracts
 COPY --from=build /build/skills/prism /app/prism/skills/prism
 COPY --from=build /build/skills/worker/core /app/prism/skills/worker/core
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-RUN ./node_modules/.bin/playwright install --with-deps chromium \
+RUN node ./node_modules/playwright/cli.js install --with-deps chromium \
  && test -d /ms-playwright \
  && chown -R node:node /app/prism /ms-playwright
 USER node

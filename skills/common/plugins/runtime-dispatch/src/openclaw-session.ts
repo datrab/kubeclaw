@@ -11,7 +11,9 @@ function details(value: unknown): unknown {
   return value;
 }
 function first(...values: readonly unknown[]): unknown { return values.find((value) => value !== undefined && value !== null); }
-function terminal(value: unknown, key: string, subagent: boolean): Readonly<{ terminal: boolean; state: string }> {
+export interface OpenClawSessionState { readonly terminal: boolean; readonly state: string; readonly model?: string }
+
+function terminal(value: unknown, key: string, subagent: boolean): OpenClawSessionState {
   const source = details(value);
   if (!record(source)) return { terminal: false, state: 'unknown' };
   if (subagent) {
@@ -20,15 +22,19 @@ function terminal(value: unknown, key: string, subagent: boolean): Readonly<{ te
       const match = collection.find((entry) => record(entry) && (entry.sessionKey === key || entry.session_key === key));
       if (record(match)) {
         const state = String(first(match.status, match.state) ?? 'unknown').toLowerCase();
-        return { terminal: ['completed', 'complete', 'done', 'succeeded', 'ended', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state };
+        const model = typeof match.model === 'string' ? match.model : undefined;
+        return { terminal: ['completed', 'complete', 'done', 'succeeded', 'ended', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state,
+          ...(model ? { model } : {}) };
       }
     }
     return { terminal: false, state: 'unknown' };
   }
   const nested = record(source.session) ? first(source.session.state, source.session.status) : undefined;
   let state = String(first(source.state, source.status, nested) ?? 'unknown').toLowerCase();
+  const model = first(source.model, record(source.session) ? source.session.model : undefined);
   if (state === 'unknown' && typeof source.statusText === 'string') state = source.statusText.match(/Tasks:\s+latest\s+([a-z_]+)/i)?.[1]?.toLowerCase() ?? state;
-  return { terminal: ['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state };
+  return { terminal: ['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state,
+    ...(typeof model === 'string' ? { model } : {}) };
 }
 
 export async function gateway(context: AdapterActivationContext, target: OpenClawTarget, token: string, tool: string, args: JsonRecord, identity = tool): Promise<unknown> {
@@ -47,7 +53,7 @@ async function wait(ms: number, signal: AbortSignal): Promise<void> {
   });
 }
 
-export async function pollSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, key: string, signal: AbortSignal): Promise<string> {
+export async function pollSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, key: string, signal: AbortSignal): Promise<OpenClawSessionState> {
   const deadline = Date.now() + target.sessionTimeoutMs;
   for (let poll = 0; poll < target.maxPolls; poll += 1) {
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
@@ -56,7 +62,7 @@ export async function pollSession(context: AdapterActivationContext, target: Ope
       ? await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) }, `status:${key}:${poll}`)
       : await gateway(context, target, token, 'session_status', { sessionKey: key }, `status:${key}:${poll}`);
     const result = terminal(status, key, target.runtime === 'subagent');
-    if (result.terminal) return result.state;
+    if (result.terminal) return result;
     if (poll + 1 === target.maxPolls) throw new Error('OPENCLAW_SESSION_TIMEOUT');
     const delay = Math.min(target.maxPollMs, target.pollMs * (2 ** Math.min(poll, 8)));
     await wait(Math.min(delay, Math.max(1, deadline - Date.now())), signal);

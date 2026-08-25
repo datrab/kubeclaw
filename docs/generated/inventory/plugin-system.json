@@ -10,7 +10,7 @@
     "testProviders": 7,
     "reportAdapters": 1,
     "registrations": 50,
-    "files": 815
+    "files": 816
   },
   "runtime": {
     "roots": [
@@ -101,6 +101,7 @@
       "skills/nova/core/execution/adapter-startup.ts",
       "skills/nova/core/execution/adapter-support.ts",
       "skills/nova/core/execution/adapters.ts",
+      "skills/nova/core/execution/artifact-checkpoints.ts",
       "skills/nova/core/execution/authorization.ts",
       "skills/nova/core/execution/context.ts",
       "skills/nova/core/execution/engine-admin.ts",
@@ -2220,6 +2221,7 @@
     "skills/nova/core/execution/adapter-startup.ts",
     "skills/nova/core/execution/adapter-support.ts",
     "skills/nova/core/execution/adapters.ts",
+    "skills/nova/core/execution/artifact-checkpoints.ts",
     "skills/nova/core/execution/authorization.ts",
     "skills/nova/core/execution/context.ts",
     "skills/nova/core/execution/engine-admin.ts",

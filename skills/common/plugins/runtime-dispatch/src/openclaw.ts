@@ -4,7 +4,7 @@ import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, ty
 import { getEncoding } from 'js-tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
-import { cancelSession, gateway, pollSession } from './openclaw-session.ts';
+import { cancelSession, gateway, pollSession, type OpenClawSessionState } from './openclaw-session.ts';
 
 export interface OpenClawTarget {
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
@@ -26,6 +26,12 @@ interface RuntimePromptBudget {
   readonly deadlineEpochMs?: number;
 }
 const ENCODERS = new Map<OpenClawTarget['tokenizerEncoding'], ReturnType<typeof getEncoding>>();
+const SUCCESSFUL_SESSION_STATES = new Set(['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed']);
+
+export function assertOpenClawSessionCompleted(session: OpenClawSessionState, expectedModel: string): void {
+  if (!SUCCESSFUL_SESSION_STATES.has(session.state)) throw new Error('OPENCLAW_SESSION_FAILED');
+  if (session.model !== expectedModel) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
+}
 
 function promptTokens(text: string, name: OpenClawTarget['tokenizerEncoding']): number {
   let encoder = ENCODERS.get(name);
@@ -207,6 +213,7 @@ export async function dispatchOpenClaw(
   }
   try {
     const state = await pollSession(context, target, token, key, dispatchSignal);
+    assertOpenClawSessionCompleted(state, target.model);
     const resolved = await beforeAbort(() => readOpenClawResult(context, target,
       { payload, relative: result.relative, key, startedAt, state }), dispatchSignal);
     assertDispatchActive(dispatchSignal);

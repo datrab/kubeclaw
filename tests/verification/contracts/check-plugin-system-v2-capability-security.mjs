@@ -30,6 +30,10 @@ const phase5 = JSON.parse(fs.readFileSync(
 
 assert.equal(core.CAPABILITY_IDS.length, 25);
 assert.equal(Object.isFrozen(core.CAPABILITY_DEFINITIONS), true);
+assert(
+  core.CAPABILITY_DEFINITIONS['git.repository.read'].operations.includes('inventory_revision'),
+  'the production repository audit inventory operation must remain authorized',
+);
 for (const capability of core.CAPABILITY_IDS) {
   const definition = core.CAPABILITY_DEFINITIONS[capability];
   assert(definition, `closed vocabulary must define ${capability}`);

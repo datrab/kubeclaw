@@ -90,6 +90,7 @@
         "extraVolumeMounts",
         "extraVolumes",
         "resources",
+        "probes",
         "extraContainers",
         "workspace"
       ],
@@ -137,7 +138,7 @@
         {
           "key": "secretName",
           "value": "pipeline-test-gate-source-attestation",
-          "line": 137
+          "line": 138
         }
       ]
     },

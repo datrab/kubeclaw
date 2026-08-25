@@ -5,7 +5,19 @@ import http from 'node:http';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { canonicalJson } from '@kubeclaw/plugin-sdk';
-import { assertOpenClawOutputBudget, assertOpenClawPromptBudget, prepareOpenClawTask } from '../src/openclaw.ts';
+import { assertOpenClawOutputBudget, assertOpenClawPromptBudget, assertOpenClawSessionCompleted,
+  prepareOpenClawTask } from '../src/openclaw.ts';
+
+for (const state of ['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed']) {
+  assert.doesNotThrow(() => assertOpenClawSessionCompleted({ terminal: true, state, model: 'declared' }, 'declared'));
+}
+for (const state of ['failed', 'error', 'cancelled', 'canceled', 'unknown']) {
+  assert.throws(() => assertOpenClawSessionCompleted({ terminal: true, state, model: 'declared' }, 'declared'), /OPENCLAW_SESSION_FAILED/u);
+}
+assert.throws(() => assertOpenClawSessionCompleted(
+  { terminal: true, state: 'done', model: 'fallback' }, 'declared'), /OPENCLAW_SESSION_MODEL_MISMATCH/u);
+assert.throws(() => assertOpenClawSessionCompleted(
+  { terminal: true, state: 'done' }, 'declared'), /OPENCLAW_SESSION_MODEL_MISMATCH/u);
 
 assert.throws(() => assertOpenClawPromptBudget('oversized prompt', {
   tokenizerEncoding: 'o200k_base', maxPromptBytes: 1, maxInputTokens: 100,
@@ -87,7 +99,7 @@ const server = http.createServer((request, response) => {
         toolName: 'subagents',
         output: { content: [], details: {
           active: poll === 1 ? [{ sessionKey: 'session:gateway-test', status: 'running' }] : [],
-          recent: poll === 1 ? [] : [{ sessionKey: 'session:gateway-test', status: 'done' }],
+          recent: poll === 1 ? [] : [{ sessionKey: 'session:gateway-test', status: 'done', model: 'openai/gpt-5.6-sol' }],
         } },
         source: 'core',
       }));

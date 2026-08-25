@@ -56,7 +56,7 @@ RUN set -eux; \
     usermod --append --groups buster-suite,buster-buildkit builder; \
     printf 'builder:100000:65536\n' >> /etc/subuid; \
     printf 'builder:100000:65536\n' >> /etc/subgid; \
-    mkdir -p /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \
+    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \
     chown -R builder:builder /app /home/builder /run/user/1000; \
     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
@@ -79,7 +79,8 @@ RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
     && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \
     && chown -R builder:builder /app
 
-RUN playwright install --with-deps chromium && chown -R builder:builder /ms-playwright
+RUN node /app/node_modules/playwright/cli.js install --with-deps chromium \
+    && chown -R builder:builder /ms-playwright
 
 COPY skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime
 RUN rm -rf /app/buster-suite-runtime/tests \

@@ -124,7 +124,7 @@ const DEFAULTS: Readonly<Record<RepositoryReviewGrade, GradeDefaults>> = Object.
     maxVerificationInputTokens: 1_000_000, maxTotalInputTokens: 8_500_000,
     maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 110,
     maxWallTimeSeconds: 7_200, estimatedSecondsPerJob: 120,
-    inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 6, maxRetries: 2,
+    inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 10, maxRetries: 2,
     enabledLenses: ALL_LENSES,
   }),
   deep: Object.freeze({

@@ -5,6 +5,7 @@ import { assertReviewDeadline, invokeBeforeReviewDeadline,
   resolveReviewExecutionSettings, type ReviewExecutionSettings } from './review-execution-settings.ts';
 import { buildScalableReviewDispatchPayload,
   type ScalableReviewJob, type ScalableReviewJobResult } from './scalable-review-jobs.ts';
+import { preflightScalableReviewResults } from './scalable-review-verification.ts';
 import { assertReviewRuntimeIdentity, parseReviewRuntimeAttestation,
   type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
 
@@ -13,6 +14,13 @@ interface ReviewDispatchContext {
   readonly deadlineEpochMs: number | undefined;
   readonly beforeDispatch: ReviewExecutionSettings['beforeDispatch'] | undefined;
   readonly expectedRuntime: ReviewRuntimeIdentity;
+}
+
+function completeReviewResponse(value: ScalableReviewJob, parsed: ScalableReviewJobResult['parsed']): boolean {
+  const preflight = preflightScalableReviewResults(
+    [value], [{ jobId: value.id, jobDigest: value.digest, parsed }],
+  );
+  return preflight.incompleteJobs.length === 0 && preflight.integrityIssues.length === 0;
 }
 
 async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispatchContext): Promise<ScalableReviewJobResult> {
@@ -28,7 +36,7 @@ async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispat
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);
       const parsed = parseEchoReviewDispatchResponse(response);
-      if (parsed.ok || attempt === maxRetries) {
+      if (completeReviewResponse(value, parsed) || attempt === maxRetries) {
         return Object.freeze({ jobId: value.id, jobDigest: value.digest, parsed, runtime: attestation });
       }
     } catch (error) { if (attempt === maxRetries) throw error; }

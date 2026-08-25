@@ -19,7 +19,10 @@ const exists = (relativePath) =>
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
 const generalDockerfile = read('docker/Dockerfile.general');
+const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
+const prismControlDockerfile = read('docker/Dockerfile.prism-control');
+const prismWorkerDockerfile = read('docker/Dockerfile.prism-worker');
 const busterRuntimeEntrypoint = read('docker/buster-runtime-entrypoint.sh');
 const busterWorker = read('skills/buster/plugins/buster-suite-runtime/src/worker.ts');
 const values = read('charts/kubeclaw/values.yaml');
@@ -98,7 +101,7 @@ for (const buildInput of [
 
 for (const [label, dockerfile] of [
   ['general image', generalDockerfile],
-  ['Buster gateway image', read('docker/Dockerfile.buster-gateway')],
+  ['Buster gateway image', busterGatewayDockerfile],
 ]) {
   assert.match(
     dockerfile,
@@ -106,6 +109,48 @@ for (const [label, dockerfile] of [
     `${label} must copy the shared TypeScript configuration before compiling the observer`,
   );
 }
+
+for (const [label, dockerfile] of [
+  ['general image', generalDockerfile],
+  ['Buster gateway image', busterGatewayDockerfile],
+]) {
+  assert.match(
+    dockerfile,
+    /ARG TARGETARCH[\s\S]*keep_codex=codex-acp-linux-x64[\s\S]*keep_claude=claude-agent-sdk-linux-x64[\s\S]*keep_esbuild=linux-x64[\s\S]*keep_codex=codex-acp-linux-arm64[\s\S]*keep_claude=claude-agent-sdk-linux-arm64[\s\S]*keep_esbuild=linux-arm64/,
+    `${label} must discard ACP binaries for platforms other than the image target`,
+  );
+  assert.doesNotMatch(
+    dockerfile,
+    /cp -a \/tmp\/openclaw-plugin-home/,
+    `${label} must not duplicate the multi-gigabyte plugin seed during the build`,
+  );
+}
+
+assert.match(
+  busterRuntimeDockerfile,
+  /mkdir -p \/app \/home\/builder/,
+  'the Buster runtime must create /app before assigning its ownership',
+);
+for (const [label, dockerfile] of [
+  ['Buster runtime image', busterRuntimeDockerfile],
+  ['Prism worker image', prismWorkerDockerfile],
+]) {
+  assert.match(
+    dockerfile,
+    /node \.?\/?(?:app\/)?node_modules\/playwright\/cli\.js install --with-deps chromium/,
+    `${label} must invoke the production Playwright CLI without the pruned dev-dependency symlink`,
+  );
+}
+assert.match(
+  dockerignore,
+  /^!tests\/verification\/live\/\*\*$/m,
+  'Prism live verification assets must be available to the control image build',
+);
+assert.match(
+  prismControlDockerfile,
+  /COPY --from=build \/build\/tests\/verification\/live \/app\/prism\/tests\/verification\/live/,
+  'the Prism control image must package its live verification assets',
+);
 
 assert.match(
   chart,

@@ -25,12 +25,24 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
       /out/extensions/kubeclaw-agent-observer/
 
 ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
-RUN mkdir -p /tmp/openclaw-plugin-home \
-    && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" \
-    && HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" \
-    && mkdir -p /out/openclaw-plugin-home \
-    && cp -a /tmp/openclaw-plugin-home/.openclaw/. /out/openclaw-plugin-home/ \
-    && find /out/openclaw-plugin-home/npm -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version
+ARG TARGETARCH
+RUN set -eux; \
+    mkdir -p /tmp/openclaw-plugin-home; \
+    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}"; \
+    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}"; \
+    acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
+    test -n "$acpx_root"; \
+    case "${TARGETARCH:-amd64}" in \
+      amd64) keep_codex=codex-acp-linux-x64; keep_claude=claude-agent-sdk-linux-x64; keep_esbuild=linux-x64 ;; \
+      arm64) keep_codex=codex-acp-linux-arm64; keep_claude=claude-agent-sdk-linux-arm64; keep_esbuild=linux-arm64 ;; \
+      *) exit 1 ;; \
+    esac; \
+    find "$acpx_root/node_modules/@zed-industries" -mindepth 1 -maxdepth 1 -type d -name 'codex-acp-*' ! -name "$keep_codex" -exec rm -rf -- {} +; \
+    find "$acpx_root/node_modules/@anthropic-ai" -mindepth 1 -maxdepth 1 -type d -name 'claude-agent-sdk-*' ! -name "$keep_claude" -exec rm -rf -- {} +; \
+    find "$acpx_root/node_modules/@esbuild" -mindepth 1 -maxdepth 1 -type d ! -name "$keep_esbuild" -exec rm -rf -- {} +; \
+    mv /tmp/openclaw-plugin-home/.openclaw /out/openclaw-plugin-home; \
+    find /out/openclaw-plugin-home/npm -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version; \
+    rm -rf /tmp/openclaw-plugin-home
 
 USER node
 

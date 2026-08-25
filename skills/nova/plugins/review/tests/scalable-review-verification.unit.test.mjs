@@ -84,6 +84,33 @@ const dispatched = await executeScalableVerificationJobs(verificationJobs, 'echo
 assert.equal(dispatched.length, 1);
 assert.equal(dispatched[0].parsed.ok, true);
 
+const multiSource = [...source, { path: 'b.ts', content: 'export const support = true;\n', digest: digest('e'),
+  complete: true, ranges: [{ startLine: 1, endLine: 1 }] }];
+const multiSourceFinding = { ...finding,
+  locations: [{ path: 'a.ts', lineHint: 1 }, { path: 'b.ts', lineHint: 1 }],
+  evidence: [evidence, { kind: 'reviewed-source', digest: digest('e') }] };
+const multiSourceProposal = { ...preflight.proposals[0], finding: multiSourceFinding };
+const multiSourceJobs = buildScalableVerificationJobs(
+  { proposals: [multiSourceProposal], integrityIssues: [], incompleteJobs: [] },
+  [{ ...job, source: multiSource }], policyDigest,
+);
+let semanticAttempts = 0;
+const semanticRetryContext = { async invoke(_capability, request) {
+  semanticAttempts += 1;
+  const payload = request.payload.verification;
+  const [proposalId] = Object.keys(payload.proposals);
+  return { runtimeEvidence, result: { schemaVersion: 'echo-review-verification.v1',
+    bundleDigest: payload.bundleDigest, policyDigest: payload.policyDigest,
+    proposalSetDigest: payload.proposalSetDigest,
+    results: { [proposalId]: { verdict: 'confirmed', reason: 'Exact source confirms the defect.',
+      evidence: semanticAttempts === 1 ? [evidence] : multiSourceFinding.evidence } } } };
+} };
+const semanticRetry = await executeScalableVerificationJobs(
+  multiSourceJobs, 'echo', semanticRetryContext, { concurrency: 1, maxRetries: 1 },
+);
+assert.equal(semanticAttempts, 2, 'semantically incomplete verification is retried');
+assert.equal(reduceScalableReview(multiSourceJobs, semanticRetry).confirmed.length, 1);
+
 const boundarySources = ['a', 'b', 'c', 'd'].map((name) => ({
   path: `${name}.ts`, content: `export const ${name} = true;\n`, digest: digest(name),
   complete: true, ranges: [{ startLine: 1, endLine: 1 }],
