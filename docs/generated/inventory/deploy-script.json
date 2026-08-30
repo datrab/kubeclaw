@@ -275,6 +275,9 @@
     "run_secret_setup_if_enabled",
     "run_secret_setup",
     "normalize_boolish",
+    "require_spiffe_csi_driver",
+    "require_pipeline_source_attestation_secret",
+    "require_agent_worker_trust_prerequisites",
     "deploy_tailscale_operator",
     "ensure_tailscale_oauth_secret",
     "cmd_infra",
@@ -322,10 +325,10 @@
   "sourceAnchors": {
     "setup": 821,
     "secrets": 866,
-    "tailscale": 925,
-    "infra": 1016,
-    "agents": 1245,
-    "smoke": 1367,
-    "teardown": 1845
+    "tailscale": 957,
+    "infra": 1048,
+    "agents": 1280,
+    "smoke": 1402,
+    "teardown": 1882
   }
 }

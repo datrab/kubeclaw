@@ -14,8 +14,11 @@ const liveAcceptance=readFileSync(new URL("../live/prism-nova-production-e2e.mjs
 const namespacePolicies=readFileSync(new URL("../../../my-values/infra/network-policies.yaml",import.meta.url),"utf8");
 const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control.ts",import.meta.url),"utf8");
+const imageWorkflow=readFileSync(new URL("../../../.github/workflows/build-images.yaml",import.meta.url),"utf8");
 for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","teardown-prism)"])assert(source.includes(command),`missing deploy command: ${command}`);
 for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_TAG","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
+assert.match(source,/cmd_prism\(\)[\s\S]*require_spiffe_csi_driver[\s\S]*cmd_prism_secrets/u,
+  "Prism deployment must fail before Helm when the SPIFFE CSI driver is unavailable");
 assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not require an approver allowlist");
 assert(!source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must use ordinary tagged images");
 assert(source.includes("reconcile_prism_provider_secret"),"Prism must create or explicitly reconcile its provider Secret from the existing LiteLLM credential");
@@ -27,6 +30,13 @@ assert(source.includes("secretsToCopy: [prism-test-provider, prism-test-runtime,
 assert(source.includes("[[ $lease_phase == Ready ]]"),"leased Prism acceptance must fail closed unless the broker reports Ready");
 assert(!chartValues.includes("digest:"),"Prism chart values must not expose image digests");
 assert(chartValues.includes("imagePullSecrets:"),"Prism chart defaults must configure GHCR authentication");
+assert(imageWorkflow.includes("type=raw,value=latest"),"Prism image workflow must publish the default chart tag");
+for(const values of [chartValues,productionValues]){
+  assert(!values.includes("tag: main"),"Prism values must not request the unpublished main image tag");
+  for(const kind of ["control","studio","worker","ingestion"])
+    assert(values.includes(`${kind}: { repository: ghcr.io/datrab/kubeclaw-prism-${kind}, tag: latest`),
+      `Prism ${kind} values must use the published latest image tag`);
+}
 assert(productionValues.includes("imagePullSecrets:\n  - name: ghcr-secret"),"Prism production values must reuse the Nova/Buster GHCR Secret");
 assert(productionValues.includes("studio: { replicas: 1"),"Prism Studio must default to one production replica");
 assert(productionValues.includes("worker: { replicas: 1"),"Prism Worker must default to one production replica");

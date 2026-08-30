@@ -1,8 +1,8 @@
 images:
-  control: { repository: ghcr.io/datrab/kubeclaw-prism-control, tag: main, pullPolicy: Always }
-  studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, tag: main, pullPolicy: Always }
-  worker: { repository: ghcr.io/datrab/kubeclaw-prism-worker, tag: main, pullPolicy: Always }
-  ingestion: { repository: ghcr.io/datrab/kubeclaw-prism-ingestion, tag: main, pullPolicy: Always }
+  control: { repository: ghcr.io/datrab/kubeclaw-prism-control, tag: latest, pullPolicy: Always }
+  studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, tag: latest, pullPolicy: Always }
+  worker: { repository: ghcr.io/datrab/kubeclaw-prism-worker, tag: latest, pullPolicy: Always }
+  ingestion: { repository: ghcr.io/datrab/kubeclaw-prism-ingestion, tag: latest, pullPolicy: Always }
 imagePullSecrets:
   - name: ghcr-secret
 control:

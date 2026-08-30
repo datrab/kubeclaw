@@ -922,6 +922,38 @@ normalize_boolish() {
   esac
 }
 
+require_spiffe_csi_driver() {
+  if kubectl get csidriver csi.spiffe.io >/dev/null 2>&1; then
+    return 0
+  fi
+  err "Worker Trust requires CSIDriver/csi.spiffe.io, but it is not registered"
+  info "Install or repair SPIRE first: ./scripts/deploy.sh infra"
+  return 1
+}
+
+require_pipeline_source_attestation_secret() {
+  local name="pipeline-test-gate-source-attestation"
+  local key
+  if ! kubectl get secret "$name" -n "$NAMESPACE" >/dev/null 2>&1; then
+    err "Worker Trust requires Secret ${NAMESPACE}/${name}"
+    info "Create it locally: ./scripts/deploy.sh secrets"
+    return 1
+  fi
+  for key in privateKey publicKey; do
+    if ! kubectl get secret "$name" -n "$NAMESPACE" \
+      -o "go-template={{ index .data \"${key}\" }}" 2>/dev/null | grep -q .; then
+      err "Secret ${NAMESPACE}/${name} is missing required key ${key}"
+      info "Repair it locally: KUBECLAW_SECRETS_OVERWRITE=true ./scripts/deploy.sh secrets"
+      return 1
+    fi
+  done
+}
+
+require_agent_worker_trust_prerequisites() {
+  require_spiffe_csi_driver
+  require_pipeline_source_attestation_secret
+}
+
 deploy_tailscale_operator() {
   local mode="${TAILSCALE_OPERATOR_ENABLED:-true}"
   local normalized_mode
@@ -1033,6 +1065,7 @@ cmd_infra() {
       --wait --timeout 600s
     kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=agent \
       -n spire-system --timeout=300s
+    require_spiffe_csi_driver
     log "SPIRE server, agent, controller manager, and CSI driver deployed"
   else
     warn "Skipping SPIRE by KUBECLAW_DEPLOY_SPIRE=$KUBECLAW_DEPLOY_SPIRE"
@@ -1134,6 +1167,8 @@ deploy_agent() {
     err "Values file not found: $values_file"
     return 1
   fi
+
+  require_agent_worker_trust_prerequisites
 
   case "$role" in
     nova)
@@ -1485,7 +1520,9 @@ cmd_prism_secrets() {
 
 cmd_prism() {
   component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
-  require_command kubectl; require_command helm; prism_validate_values; cmd_prism_secrets
+  require_command kubectl; require_command helm; prism_validate_values
+  require_spiffe_csi_driver
+  cmd_prism_secrets
   local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
   overrides+=(--set-string "providerNetworkPolicy.internalLiteLLM.namespace=${NAMESPACE}")
   overrides+=(--set-string "workerTrust.spiffe.novaNamespace=${NAMESPACE}")
