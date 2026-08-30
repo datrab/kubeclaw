@@ -17,9 +17,11 @@ global:
       securityContexts: true
       prometheus: false
     namespaces:
-      create: true
+      # Helm --create-namespace owns the release namespace lifecycle. The
+      # SPIRE chart must not render that same Namespace as a release resource.
+      create: false
       system: { name: spire-system, create: true }
-      server: { name: spire-server, create: true }
+      server: { name: spire-server, create: false }
 spire-server:
   controllerManager:
     identities:

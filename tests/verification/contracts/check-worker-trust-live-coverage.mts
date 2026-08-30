@@ -7,6 +7,8 @@ const prismTrust = readFileSync(
   new URL('../../../charts/prism/templates/configmap-worker-trust.yaml', import.meta.url), 'utf8');
 const prismNetwork = readFileSync(
   new URL('../../../charts/prism/templates/networkpolicy.yaml', import.meta.url), 'utf8');
+const spireValues = readFileSync(
+  new URL('../../../my-values/infra/spire-values.yaml', import.meta.url), 'utf8');
 
 for (const evidence of [
   'kubectl get csidriver csi.spiffe.io',
@@ -33,6 +35,8 @@ assert.match(prismNetwork, /name: prism-test-runner[\s\S]*ternary 8443 8080 \.Va
   'Prism test-runner egress must follow the mTLS service port');
 assert.match(prismNetwork, /name: prism-studio-control[\s\S]*port: 8080/u,
   'Prism Studio must retain its application HTTP route when Worker Trust is enabled');
+assert.match(spireValues, /namespaces:[\s\S]*create: false[\s\S]*system: \{ name: spire-system, create: true \}[\s\S]*server: \{ name: spire-server, create: false \}/u,
+  'SPIRE must not ask Helm to adopt its pre-created release namespace');
 
 console.log(JSON.stringify({ ok: true, contract: 'worker-trust-live-coverage.v1',
   positivePaths: 4, negativePaths: 5, testDoubles: 0 }));
