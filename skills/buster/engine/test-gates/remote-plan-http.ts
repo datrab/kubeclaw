@@ -3,6 +3,7 @@ import http from 'node:http';
 import https from 'node:https';
 import { validatePipelineTestGateContract, type RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { BusterRemotePlanService } from './remote-plan-service.ts';
+import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
 
 function authorized(request: http.IncomingMessage, token: string): boolean {
   const value = request.headers.authorization;
@@ -10,6 +11,22 @@ function authorized(request: http.IncomingMessage, token: string): boolean {
   const supplied = Buffer.from(value.slice('Bearer '.length));
   const expected = Buffer.from(token);
   return supplied.byteLength === expected.byteLength && crypto.timingSafeEqual(supplied, expected);
+}
+
+function authorize(request: http.IncomingMessage, options: {
+  readonly token?: string;
+  readonly trustedPeerSpiffeIds?: readonly string[];
+}): boolean {
+  if (options.trustedPeerSpiffeIds) {
+    try {
+      authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress,
+        new Set(options.trustedPeerSpiffeIds));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  return options.token !== undefined && authorized(request, options.token);
 }
 
 async function requestBody(request: http.IncomingMessage, maximumBytes: number): Promise<unknown> {
@@ -66,13 +83,18 @@ function resultRoute(url: string | undefined): { jobId: string; digest: string }
 
 export function createBusterRemotePlanHttpServer(options: {
   readonly service: BusterRemotePlanService;
-  readonly token: string;
+  readonly token?: string;
+  readonly trustedPeerSpiffeIds?: readonly string[];
   readonly maximumRequestBytes: number;
   readonly maximumResponseBytes: number;
   readonly maximumResultBytes: number;
   readonly tls?: Readonly<{ key: string | Buffer; cert: string | Buffer }>;
 }): http.Server {
-  if (options.token.length < 32) throw new Error('BUSTER_REMOTE_TOKEN_INVALID');
+  if ((options.token === undefined) === (options.trustedPeerSpiffeIds === undefined)) {
+    throw new Error('BUSTER_REMOTE_AUTHENTICATION_INVALID');
+  }
+  if (options.token !== undefined && options.token.length < 32) throw new Error('BUSTER_REMOTE_TOKEN_INVALID');
+  if (options.trustedPeerSpiffeIds?.length === 0) throw new Error('BUSTER_REMOTE_SPIFFE_POLICY_INVALID');
   for (const limit of [options.maximumRequestBytes, options.maximumResponseBytes, options.maximumResultBytes]) {
     if (!Number.isSafeInteger(limit) || limit < 1) throw new Error('BUSTER_REMOTE_HTTP_LIMIT_INVALID');
   }
@@ -82,7 +104,7 @@ export function createBusterRemotePlanHttpServer(options: {
         send(response, 200, { schemaVersion: 'buster-plan-health.v1', ready: true }, options.maximumResponseBytes);
         return;
       }
-      if (!authorized(request, options.token)) {
+      if (!authorize(request, options)) {
         send(response, 401, { error: 'unauthorized' }, options.maximumResponseBytes);
         return;
       }

@@ -138,6 +138,9 @@ function remotePlanJobErrors(value: RemotePlanJobV1): string[] {
   if (value.sourceSnapshot.pipelineStageId !== value.pipelineStageId) {
     errors.push('/sourceSnapshot/pipelineStageId must match the owning pipeline stage');
   }
+  if (value.sourceSnapshot.attestation.authority !== value.sourceSnapshot.creatorAuthority) {
+    errors.push('/sourceSnapshot/attestation/authority must match creatorAuthority');
+  }
   if (remotePlanJobDigest(value) !== value.requestDigest) {
     errors.push('/requestDigest must match the canonical job content');
   }

@@ -27,6 +27,7 @@ import {
 } from '@kubeclaw/buster-engine';
 import {
   remotePlanDigest,
+  attestSourceSnapshot,
   attemptResultDigest,
   nodeResultDigest,
   remotePlanJobDigest,
@@ -46,11 +47,14 @@ fs.writeFileSync(path.join(source, 'README.md'), 'remote plan source\n');
 execFileSync('/usr/bin/tar', ['-czf', archiveFile, '-C', source, '.']);
 const archive = fs.readFileSync(archiveFile);
 const token = 'remote-plan-test-token-0000000000000000';
-const sourceSnapshot = { schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
+const sourceKeys = crypto.generateKeyPairSync('ed25519');
+const sourceAttestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
+const sourceAttestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
+const sourceSnapshot = attestSourceSnapshot({ schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
   pipelineStageId: 'stage:test-gate',
   repositoryId: 'repository:remote-runtime', revision: `git:${'a'.repeat(40)}`, tree: `git:${'b'.repeat(40)}`,
   archiveContentDigest: `sha256:${crypto.createHash('sha256').update(archive).digest('hex')}`,
-  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' };
+  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' }, sourceAttestationPrivateKey);
 const digest = `sha256:${'2'.repeat(64)}`;
 const registryDigest = `sha256:${'3'.repeat(64)}`;
 const provider = {
@@ -146,6 +150,7 @@ const busterStore = new FileBusterPlanJobStore(path.join(temporary, 'buster-stat
   maximumArchiveBytes: 1024 * 1024,
   maximumResultBytes: 16 * 1024 * 1024,
   maximumResultStoreBytes: 64 * 1024 * 1024,
+  trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
 });
 const executionCounts = new Map<string, number>();
 const execute = async (job: RemotePlanJobV1, paths: { repositoryRoot: string; artifactRoot: string }, signal: AbortSignal): Promise<TestPlanRunResult> => {
@@ -207,6 +212,7 @@ try {
     recordLimits: { maximumRecords: 10, maximumBytes: 4 * 1024 * 1024, maximumRecordBytes: 2 * 1024 * 1024 },
     maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 4 * 1024 * 1024,
     maximumResultStoreBytes: 8 * 1024 * 1024,
+    trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
   });
   const concurrent = await Promise.allSettled([
     concurrentStore.accept(concurrentBase, '2026-08-10T01:00:00.000Z'),
@@ -220,6 +226,7 @@ try {
     recordLimits: { maximumRecords: 10, maximumBytes: 4 * 1024 * 1024, maximumRecordBytes: 2 * 1024 * 1024 },
     maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 4 * 1024 * 1024,
     maximumResultStoreBytes: 8 * 1024 * 1024,
+    trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
   });
   const identical = await Promise.all([
     identicalStore.accept(concurrentBase, '2026-08-10T01:00:00.000Z'),
@@ -250,6 +257,30 @@ try {
   assert.equal(downloadedResult.planDigest, plan.planDigest);
   assert.equal(downloadedResult.resultDigest, normal.result!.resultDigest);
   assert.deepEqual(await service.status(normalJob.jobId), normal, 'terminal state must remain durable');
+
+  const novaSpiffeId = 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova';
+  const spiffeServer = createBusterRemotePlanHttpServer({
+    service,
+    trustedPeerSpiffeIds: [novaSpiffeId],
+    maximumRequestBytes: 8 * 1024 * 1024,
+    maximumResponseBytes: 8 * 1024 * 1024,
+    maximumResultBytes: 16 * 1024 * 1024,
+  });
+  await new Promise<void>((resolve) => spiffeServer.listen(0, '127.0.0.1', resolve));
+  try {
+    const spiffePort = (spiffeServer.address() as AddressInfo).port;
+    const statusUrl = `http://127.0.0.1:${spiffePort}/v1/plan-jobs/${encodeURIComponent(normalJob.jobId)}`;
+    assert.equal((await fetch(statusUrl)).status, 401, 'missing verified peer identity must fail closed');
+    assert.equal((await fetch(statusUrl, { headers: {
+      'x-forwarded-client-cert': 'URI=spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
+    } })).status, 401, 'an authenticated but unauthorized workload must be rejected');
+    assert.equal((await fetch(statusUrl, { headers: {
+      'x-forwarded-client-cert': `By=spiffe://kubeclaw.internal/proxy;URI=${novaSpiffeId}`,
+    } })).status, 200, 'the configured Nova SPIFFE identity must be accepted');
+  } finally {
+    spiffeServer.closeAllConnections();
+    await new Promise<void>((resolve) => spiffeServer.close(() => resolve()));
+  }
 
   const parallel = await Promise.all(['one', 'two'].map((name) => new NovaRemotePlanDispatcher({
     store: novaStore(`nova-parallel-${name}`), transport, pollMilliseconds: 10,

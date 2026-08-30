@@ -9,7 +9,7 @@ anthropic:
 gateway:
   resources:
     requests: { cpu: 1000m, memory: 12288Mi, ephemeral-storage: 1Gi }
-    limits: { cpu: 1000m, memory: 24576Mi, ephemeral-storage: 50Gi }
+    limits: { cpu: "6", memory: 24576Mi, ephemeral-storage: 50Gi }
 
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
@@ -65,6 +65,11 @@ serviceAccount:
   create: true
   automount: false
 
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
+
 service:
   extraPorts:
     - name: buster-plan
@@ -84,10 +89,17 @@ extraContainers:
           secretKeyRef:
             name: openclaw-shared-secrets
             key: busterV2Token
+      - name: BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            name: pipeline-test-gate-source-attestation
+            key: publicKey
+      - name: BUSTER_TRUSTED_PEER_SPIFFE_ID
+        value: spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova
       - name: BUSTER_PLAN_PORT
-        value: "18891"
+        value: "28891"
       - name: BUSTER_LEGACY_PORT
-        value: "18892"
+        value: "28892"
       - name: BUSTER_PLAN_STATE_DIR
         value: /var/lib/buster-v2/plan-jobs
       - name: BUSTER_PLAN_RUN_DIR
@@ -113,17 +125,17 @@ extraContainers:
       - name: CONTAINER_BUILD_REGISTRY_BASE_URL
         value: http://registry-local.kubeclaw.svc.cluster.local:5001
     ports:
-      - name: buster-plan
-        containerPort: 18891
+      - name: buster-plan-local
+        containerPort: 28891
         protocol: TCP
-      - name: buster-legacy
-        containerPort: 18892
+      - name: buster-legacy-local
+        containerPort: 28892
         protocol: TCP
     startupProbe:
       httpGet:
         scheme: HTTP
         path: /healthz
-        port: buster-plan
+        port: 28891
       periodSeconds: 2
       timeoutSeconds: 2
       failureThreshold: 60
@@ -131,7 +143,7 @@ extraContainers:
       httpGet:
         scheme: HTTP
         path: /healthz
-        port: buster-plan
+        port: 28891
       initialDelaySeconds: 5
       periodSeconds: 5
       timeoutSeconds: 2
@@ -140,7 +152,7 @@ extraContainers:
       httpGet:
         scheme: HTTP
         path: /healthz
-        port: buster-plan
+        port: 28891
       initialDelaySeconds: 30
       periodSeconds: 15
       timeoutSeconds: 2
@@ -212,6 +224,7 @@ busterNamespaceBroker:
       - prism-test-provider
       - prism-test-runtime
       - prism-test-postgresql-auth
+      - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
       tag: "latest"

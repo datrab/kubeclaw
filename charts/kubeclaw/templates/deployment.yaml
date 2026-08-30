@@ -16,6 +16,9 @@ spec:
     metadata:
       labels:
         {{- include "kubeclaw.labels" . | nindent 8 }}
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        kubeclaw.dev/worker-trust: "true"
+        {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
@@ -1016,7 +1019,16 @@ spec:
             {{- if not (has $scheme (list "http" "https")) }}
             {{- fail (printf "capabilityProviders.%s.capabilities.%s.scheme must be http or https" $providerId $capability) }}
             {{- end }}
-            {{- $_ := set $routes $capability (dict "adapter" $adapter "endpoint" (printf "%s://%s:%d" $scheme $service $port)) }}
+            {{- $endpoint := printf "%s://%s:%d" $scheme $service $port }}
+            {{- if and $.Values.workerTrust.spiffe.enabled (hasKey $route "proxyPort") }}
+            {{- $proxyPort := int $route.proxyPort }}
+            {{- if or (lt $proxyPort 1) (gt $proxyPort 65535) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.proxyPort must be between 1 and 65535" $providerId $capability) }}
+            {{- end }}
+            {{- $endpoint = printf "http://127.0.0.1:%d" $proxyPort }}
+            {{- end }}
+            {{- $authentication := default "hmac" $route.authentication }}
+            {{- $_ := set $routes $capability (dict "adapter" $adapter "endpoint" $endpoint "authentication" $authentication) }}
             {{- end }}
             {{- $_ := set $catalog $providerId (dict "agentRole" $agentRole "capabilities" $routes) }}
             {{- end }}
@@ -1085,6 +1097,10 @@ spec:
             {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+            {{- if .Values.workerTrust.spiffe.enabled }}
+            - name: SPIFFE_ENDPOINT_SOCKET
+              value: {{ printf "unix://%s" .Values.workerTrust.spiffe.socketPath | quote }}
+            {{- end }}
 
           ports:
             - name: gateway
@@ -1115,6 +1131,11 @@ spec:
               mountPath: /tmp
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- if .Values.workerTrust.spiffe.enabled }}
+            - name: spiffe-workload-api
+              mountPath: /run/spire/sockets
+              readOnly: true
             {{- end }}
 
           resources: {{- toYaml (.Values.gateway.resources | default .Values.resources) | nindent 12 }}
@@ -1197,6 +1218,31 @@ spec:
         {{- with .Values.extraContainers }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        - name: worker-trust-proxy
+          image: "{{ .Values.workerTrust.spiffe.envoy.repository }}:{{ .Values.workerTrust.spiffe.envoy.tag }}"
+          imagePullPolicy: {{ .Values.workerTrust.spiffe.envoy.pullPolicy }}
+          args: ["-c", "/etc/kubeclaw-worker-trust/envoy.yaml", "--service-cluster", {{ printf "kubeclaw-%s" .Values.agentRole | quote }}]
+          ports:
+            {{- if eq .Values.agentRole "buster" }}
+            - { name: buster-plan, containerPort: 18891, protocol: TCP }
+            - { name: buster-legacy, containerPort: 18892, protocol: TCP }
+            {{- end }}
+          readinessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 10 }
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          resources: {{- toYaml .Values.workerTrust.spiffe.envoy.resources | nindent 12 }}
+          volumeMounts:
+            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }
+            - { name: spiffe-workload-api, mountPath: /run/spire/sockets, readOnly: true }
+            - { name: worker-trust-tmp, mountPath: /tmp }
+        {{- end }}
 
       # ---------------------------------------------------------------
       # VOLUMES
@@ -1246,6 +1292,18 @@ spec:
           configMap:
             name: {{ include "kubeclaw.fullname" . }}-swarm-config
             defaultMode: 0444
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        - name: worker-trust-envoy
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-worker-trust
+            defaultMode: 0444
+        - name: spiffe-workload-api
+          csi:
+            driver: {{ .Values.workerTrust.spiffe.csiDriver | quote }}
+            readOnly: true
+        - name: worker-trust-tmp
+          emptyDir: { sizeLimit: 64Mi }
+        {{- end }}
         {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

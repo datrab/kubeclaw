@@ -9,11 +9,25 @@ apiVersion: v1
 kind: Service
 metadata: { name: prism-control }
 spec: { selector: { app: prism-control }, ports: [{ port: 8080, targetPort: 8080 }] }
+{{- if .Values.workerTrust.spiffe.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata: { name: prism-control-internal }
+spec: { selector: { app: prism-control }, ports: [{ name: mtls, port: 8443, targetPort: worker-trust }] }
+{{- end }}
 ---
 apiVersion: v1
 kind: Service
 metadata: { name: prism-worker }
 spec: { selector: { app: prism-worker }, ports: [{ port: 8080, targetPort: 8080 }] }
+{{- if .Values.workerTrust.spiffe.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata: { name: prism-worker-internal }
+spec: { selector: { app: prism-worker }, ports: [{ name: mtls, port: 8443, targetPort: worker-trust }] }
+{{- end }}
 {{- if .Values.ingestion.enabled }}
 ---
 apiVersion: v1

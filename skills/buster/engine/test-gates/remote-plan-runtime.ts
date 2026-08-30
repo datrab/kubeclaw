@@ -7,7 +7,8 @@ export interface BusterRemotePlanRuntimeOptions {
   readonly service: BusterRemotePlanService;
   readonly host: string;
   readonly port: number;
-  readonly token: string;
+  readonly token?: string;
+  readonly trustedPeerSpiffeIds?: readonly string[];
   readonly maximumRequestBytes: number;
   readonly maximumResponseBytes: number;
   readonly maximumResultBytes: number;

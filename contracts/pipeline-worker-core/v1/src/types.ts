@@ -7,6 +7,24 @@ export type WorkerCleanupState = 'not_required' | 'completed' | 'failed';
 export type WorkerProtocolV1 = 'worker-protocol.v1';
 export type WorkerProtocolVersion = `worker-protocol.v${number}`;
 
+export type WorkerTrustEnvelopeKind = 'request' | 'artifact';
+
+export interface WorkerTrustEnvelopeV1 {
+  schemaVersion: 'worker-trust-envelope.v1';
+  kind: WorkerTrustEnvelopeKind;
+  issuer: string;
+  audience: string;
+  purpose: string;
+  subjectDigest: string;
+  contextDigest: string;
+  issuedAt: string;
+  expiresAt: string;
+  nonce: string;
+  keyId: string;
+  algorithm: 'ed25519';
+  signature: string;
+}
+
 export interface FrozenPackageRefV1 {
   packageId: string;
   packageVersion: string;
@@ -242,6 +260,7 @@ export interface ContractValidationResult {
 }
 
 export type PipelineWorkerCoreDefinition =
+  | 'workerTrustEnvelope'
   | 'workerLifecycleState'
   | 'workerProfile'
   | 'workerRegistration'

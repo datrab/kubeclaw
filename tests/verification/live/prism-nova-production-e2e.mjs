@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { createHash, createHmac } from "node:crypto";
+import { createHash } from "node:crypto";
 import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with { type: "json" };
 
 const required = (name) => {
@@ -9,10 +9,19 @@ const required = (name) => {
 };
 const endpoint = required("PRISM_CONTROL_URL").replace(/\/$/, "");
 const ingress = required("PRISM_E2E_INGRESS_SECRET");
-const dispatchSecret = required("PRISM_E2E_DISPATCH_SECRET");
 const user = required("PRISM_E2E_USER");
 const startedAt = new Date().toISOString();
 const call = async (path, init = {}) => fetch(`${endpoint}${path}`, init);
+for (let attempt = 1; attempt <= 60; attempt += 1) {
+  try {
+    const response = await call("/health");
+    if (response.ok) break;
+  } catch {
+    // The native sidecar can still be obtaining its first SVID from SPIRE.
+  }
+  if (attempt === 60) throw new Error("Worker Trust proxy did not become ready");
+  await new Promise((resolve) => setTimeout(resolve, 500));
+}
 const session = await call("/v1/session", {
   method: "POST",
   headers: { "tailscale-user-login": user, "x-prism-ingress-secret": ingress },
@@ -52,15 +61,11 @@ const initialDispatchBody = JSON.stringify({
   idempotencyKey: `${externalId}-request`,
 });
 const initialDispatchKey = `${externalId}-request`;
-const initialSignature = createHmac("sha256", dispatchSecret)
-  .update(`${initialDispatchKey}.${initialDispatchBody}`)
-  .digest("hex");
 const initialDispatch = await call("/v1/dispatch", {
   method: "POST",
   headers: {
     "content-type": "application/json",
     "idempotency-key": initialDispatchKey,
-    "x-kubeclaw-signature": `v1=${initialSignature}`,
   },
   body: initialDispatchBody,
 });
@@ -188,15 +193,11 @@ const dispatchBody = JSON.stringify({
   idempotencyKey: `${externalId}-dispatch`,
 });
 const dispatchKey = `${externalId}-dispatch`;
-const signature = createHmac("sha256", dispatchSecret)
-  .update(`${dispatchKey}.${dispatchBody}`)
-  .digest("hex");
 const dispatch = await call("/v1/dispatch", {
   method: "POST",
   headers: {
     "content-type": "application/json",
     "idempotency-key": dispatchKey,
-    "x-kubeclaw-signature": `v1=${signature}`,
   },
   body: dispatchBody,
 });

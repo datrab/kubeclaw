@@ -60,6 +60,26 @@
     "workerLifecycleState": {
       "enum": ["starting", "ready", "draining", "stopped", "unhealthy"]
     },
+    "workerTrustEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "kind", "issuer", "audience", "purpose", "subjectDigest", "contextDigest", "issuedAt", "expiresAt", "nonce", "keyId", "algorithm", "signature"],
+      "properties": {
+        "schemaVersion": { "const": "worker-trust-envelope.v1" },
+        "kind": { "enum": ["request", "artifact"] },
+        "issuer": { "type": "string", "pattern": "^spiffe://[a-z0-9.-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$", "maxLength": 512 },
+        "audience": { "type": "string", "pattern": "^spiffe://[a-z0-9.-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$", "maxLength": 512 },
+        "purpose": { "$ref": "#/$defs/stableId" },
+        "subjectDigest": { "$ref": "#/$defs/digest" },
+        "contextDigest": { "$ref": "#/$defs/digest" },
+        "issuedAt": { "$ref": "#/$defs/timestamp" },
+        "expiresAt": { "$ref": "#/$defs/timestamp" },
+        "nonce": { "type": "string", "pattern": "^[A-Za-z0-9_-]{22,128}$" },
+        "keyId": { "$ref": "#/$defs/stableId" },
+        "algorithm": { "const": "ed25519" },
+        "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]{86}==$" }
+      }
+    },
     "workerAttemptState": {
       "enum": ["completed", "errored", "cancelled", "timed_out", "interrupted"]
     },

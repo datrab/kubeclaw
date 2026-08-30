@@ -15,7 +15,6 @@ Nova is the orchestrator. Buster is the sandboxed tester. Redis carries task, co
 - [Developer guides](docs/developers/README.md)
 - [Reference](docs/reference/README.md)
 - [Decision records](docs/decisions/README.md)
-- [Open issues](docs/open-issues.md)
 
 ## 5-Minute Verification Quickstart
 
@@ -40,7 +39,16 @@ The live operator path is implemented by `scripts/deploy.sh`:
 ./scripts/deploy.sh smoke
 ```
 
-This requires a real Kubernetes/K3s cluster, Helm, kubectl, Docker for local image verification, selected secrets, and the k3s registry configuration when the Buster Kubernetes suite must pull from `registry-local`. A complete clean-cluster quickstart is not source-verified yet; the gap is tracked in [docs/open-issues.md](docs/open-issues.md).
+Run the Worker Trust production proof after Nova, Buster, and Prism are ready:
+
+```bash
+npm run verify:worker-core:trust:live
+```
+
+See the [Worker Trust runbook](docs/operations/worker-trust-runbook.md) for
+prerequisites, expected evidence, negative cases, and recovery.
+
+This requires a real Kubernetes/K3s cluster, Helm, kubectl, Docker for local image verification, selected secrets, and the k3s registry configuration when the Buster Kubernetes suite must pull from `registry-local`. A complete clean-cluster quickstart is not source-verified yet and remains an open deployment gap.
 
 ## Repository shape
 
@@ -58,8 +66,8 @@ This requires a real Kubernetes/K3s cluster, Helm, kubectl, Docker for local ima
 - The Helm chart renders one agent per release. Production values define `agent-nova` and `agent-buster`.
 - Nova uses the general image and exposes the gateway on NodePort `30073`; its Archviewer presentation sidecar exposes NodePort `30456`.
 - Buster runs an unprivileged general-image gateway beside a dedicated non-root rootless-BuildKit pipeline sidecar in the same pod. The sidecar calls gateway tools over localhost, publishes immutable images, and deploys only through namespace-controller-issued leases.
-- Infrastructure is deployed separately: Redis, PostgreSQL, Qdrant, LiteLLM, registry mirror, writable registry-local, the Buster namespace fence, and the portable Kubernetes NetworkPolicy baseline in `my-values/infra/network-policies.yaml`.
-- `scripts/deploy.sh infra` applies that NetworkPolicy baseline after shared infrastructure. `tests/verification/deployment/check-deployment-truth.mjs` verifies 13 policy objects, including namespace default-deny ingress/egress, DNS egress, agent service egress, Clawdeck Redis access, LiteLLM PostgreSQL/provider egress, registry-mirror upstream egress, and temporary ingress allowances for current exposed ports.
+- Infrastructure is deployed separately: SPIRE workload identity, Redis, PostgreSQL, Qdrant, LiteLLM, registry mirror, writable registry-local, the Buster namespace fence, and the portable Kubernetes NetworkPolicy baseline in `my-values/infra/network-policies.yaml`.
+- `scripts/deploy.sh infra` applies that NetworkPolicy baseline after shared infrastructure. `tests/verification/deployment/check-deployment-truth.mjs` verifies the policy baseline, including namespace default-deny ingress/egress, DNS egress, scoped Nova-to-Buster test-gate access, agent service egress, Clawdeck Redis access, LiteLLM PostgreSQL/provider egress, registry-mirror upstream egress, and temporary ingress allowances for current exposed ports.
 - The repository does not currently include Prometheus, Loki, Fluent Bit, OpenTelemetry, ServiceMonitor, PodMonitor, or Cilium/FQDN egress policy manifests. NetworkPolicy egress remains portable and port-based until a Kubernetes-native observability and hostname-aware egress layer is added.
 
 ## Community and security
@@ -67,4 +75,4 @@ This requires a real Kubernetes/K3s cluster, Helm, kubectl, Docker for local ima
 - Contribution guidance: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 - Security policy: [SECURITY.md](SECURITY.md)
-- License: not selected in this repository yet. This is tracked in [docs/open-issues.md](docs/open-issues.md).
+- License: not selected in this repository yet.

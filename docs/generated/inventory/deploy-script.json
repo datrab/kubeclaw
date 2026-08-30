@@ -73,6 +73,7 @@
     "buster-buildkit-smoke",
     "nova-buildkit-preflight",
     "nova-unit-preflight",
+    "worker-trust-e2e",
     "buster-infra-smoke",
     "agents",
     "agent",
@@ -173,12 +174,20 @@
       "description": "true|false (default: true)"
     },
     {
+      "name": "KUBECLAW_DEPLOY_SPIRE",
+      "description": "true|false (default: true)"
+    },
+    {
       "name": "PRISM_PROVIDER_ENDPOINT",
       "description": "OpenAI-compatible chat endpoint (default: internal LiteLLM)"
     },
     {
       "name": "PRISM_PROVIDER_MODEL",
       "description": "Chat model exposed by the provider (default: claude-sonnet)"
+    },
+    {
+      "name": "PRISM_PROVIDER_SECRET_OVERWRITE",
+      "description": "true|false to reconcile an existing provider Secret (default: false)"
     },
     {
       "name": "PRISM_EMBEDDING_ENDPOINT",
@@ -218,8 +227,10 @@
     "KUBECLAW_DEPLOY_POSTGRESQL": "true",
     "KUBECLAW_DEPLOY_QDRANT": "true",
     "KUBECLAW_DEPLOY_LITELLM": "true",
+    "KUBECLAW_DEPLOY_SPIRE": "true",
     "PRISM_PROVIDER_ENDPOINT": "http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions",
     "PRISM_PROVIDER_MODEL": "claude-sonnet",
+    "PRISM_PROVIDER_SECRET_OVERWRITE": "false",
     "PRISM_EMBEDDING_ENDPOINT": "",
     "PRISM_EMBEDDING_MODEL": "",
     "ALLOW_PARTIAL_INFRA": "false",
@@ -277,14 +288,19 @@
     "cmd_smoke",
     "prism_image_overrides",
     "prism_validate_values",
+    "prism_provider_secret_value",
+    "prism_provider_secret_matches_requested_route",
+    "reconcile_prism_provider_secret",
     "cmd_prism_secrets",
     "cmd_prism",
     "cmd_prism_smoke",
     "cmd_prism_status",
+    "prepare_prism_e2e_source_secrets",
     "cmd_prism_e2e",
     "cmd_teardown_prism",
     "cmd_nova_buildkit_preflight",
     "cmd_nova_unit_preflight",
+    "cmd_worker_trust_e2e",
     "cmd_buster_infra_smoke",
     "cmd_teardown_agents",
     "uninstall_helm_release_if_present",
@@ -304,12 +320,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 808,
-    "secrets": 852,
-    "tailscale": 911,
-    "infra": 1002,
-    "agents": 1207,
-    "smoke": 1329,
-    "teardown": 1687
+    "setup": 821,
+    "secrets": 866,
+    "tailscale": 925,
+    "infra": 1016,
+    "agents": 1245,
+    "smoke": 1367,
+    "teardown": 1845
   }
 }

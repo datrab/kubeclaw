@@ -1,3 +1,4 @@
 export * from './types.ts';
 export * from './digest.ts';
 export * from './validation.ts';
+export * from './trust.ts';

@@ -12,7 +12,11 @@ import {
   workerAttemptResultDigest,
   workerProfileDigest,
   sha256Text,
+  signWorkerTrustEnvelope,
+  verifyWorkerTrustEnvelope,
+  validatePipelineWorkerCoreContract,
 } from '../../../contracts/pipeline-worker-core/v1/src/index.ts';
+import crypto from 'node:crypto';
 import type {
   AttemptClaimV1,
   AttemptProgressEventV1,
@@ -24,6 +28,7 @@ import type {
   WorkerLogPartV1,
   WorkerProfileV1,
   WorkerRegistrationV1,
+  WorkerTrustEnvelopeV1,
 } from '../../../contracts/pipeline-worker-core/v1/src/types.ts';
 
 const schemaPath = 'contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json';
@@ -33,6 +38,7 @@ addFormats(ajv);
 ajv.addSchema(schema);
 
 const definitions = [
+  'workerTrustEnvelope',
   'workerLifecycleState',
   'workerProfile',
   'workerRegistration',
@@ -45,6 +51,75 @@ const definitions = [
   'workerEvidenceRef',
   'workerAttemptResult',
 ] as const satisfies readonly PipelineWorkerCoreDefinition[];
+
+const trustKeys = crypto.generateKeyPairSync('ed25519');
+const trustEnvelope = signWorkerTrustEnvelope({
+  schemaVersion: 'worker-trust-envelope.v1',
+  kind: 'artifact',
+  issuer: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/nova',
+  audience: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/buster',
+  purpose: 'source.test',
+  subjectDigest: `sha256:${'c'.repeat(64)}`,
+  contextDigest: `sha256:${'d'.repeat(64)}`,
+  issuedAt: '2026-08-29T20:00:00.000Z',
+  expiresAt: '2026-08-29T20:10:00.000Z',
+  nonce: '0123456789abcdef0123456789abcdef',
+  keyId: 'nova-2026-08',
+}, trustKeys.privateKey) satisfies WorkerTrustEnvelopeV1;
+validatePipelineWorkerCoreContract('workerTrustEnvelope', trustEnvelope);
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer,
+  audience: trustEnvelope.audience,
+  purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), true);
+assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, subjectDigest: `sha256:${'e'.repeat(64)}` },
+  trustKeys.publicKey, { issuer: trustEnvelope.issuer, audience: trustEnvelope.audience,
+    purpose: trustEnvelope.purpose }, Date.parse('2026-08-29T20:05:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer,
+  audience: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
+  purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer,
+  audience: trustEnvelope.audience,
+  purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:11:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+  issuer: 'spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
+  audience: trustEnvelope.audience,
+  purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer,
+  audience: trustEnvelope.audience,
+  purpose: 'baseline.publish',
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, issuedAt: 'not-a-time' }, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope,
+  issuedAt: '2026-08-29T20:12:00.000Z', expiresAt: '2026-08-29T20:11:00.000Z' }, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+const wrongTrustKeys = crypto.generateKeyPairSync('ed25519');
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, wrongTrustKeys.publicKey, {
+  issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+const rsaTrustKeys = crypto.generateKeyPairSync('rsa', { modulusLength: 2048 });
+assert.throws(() => signWorkerTrustEnvelope({
+  schemaVersion: 'worker-trust-envelope.v1', kind: 'artifact', issuer: trustEnvelope.issuer,
+  audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+  subjectDigest: trustEnvelope.subjectDigest, contextDigest: trustEnvelope.contextDigest,
+  issuedAt: trustEnvelope.issuedAt, expiresAt: trustEnvelope.expiresAt,
+  nonce: trustEnvelope.nonce, keyId: trustEnvelope.keyId,
+}, rsaTrustKeys.privateKey), /PRIVATE_KEY_INVALID/u);
+assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, rsaTrustKeys.publicKey, {
+  issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
+assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, signature: 'invalid' }, trustKeys.publicKey, {
+  issuer: trustEnvelope.issuer, audience: trustEnvelope.audience, purpose: trustEnvelope.purpose,
+}, Date.parse('2026-08-29T20:05:00.000Z')), false);
 
 for (const definition of definitions) {
   ajv.compile({ $ref: `${schema.$id}#/$defs/${definition}` });
@@ -228,6 +303,7 @@ logPart.contentDigest = sha256Text(logPart.text);
 result.resultDigest = workerAttemptResultDigest(result);
 
 const validValues: Record<PipelineWorkerCoreDefinition, unknown> = {
+  workerTrustEnvelope: trustEnvelope,
   workerLifecycleState: 'ready',
   workerProfile: profile,
   workerRegistration: registration,

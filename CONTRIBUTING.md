@@ -9,15 +9,14 @@ KubeClaw changes should be source-backed and verified against the local behavior
 3. Keep changes scoped to one behavior or documentation area.
 4. Run the narrow verification command for the area you touched.
 5. Run deployment truth checks when chart, values, image, or infrastructure files change.
-6. Update documentation and `docs/open-issues.md` when a behavior is intentionally unresolved.
+6. Update the relevant documentation and issue tracker when a behavior is intentionally unresolved.
 
 ## Documentation rules
 
 - Treat code, rendered Helm manifests, and verification scripts as source of truth.
 - Add source references only where they materially help verify implementation-specific claims.
 - Do not describe intended behavior as current behavior unless the source proves it.
-- Put unresolved problems in `docs/open-issues.md`.
-- Put future improvements in `docs/future-implementation-ideas.md`.
+- Keep unresolved problems and future improvements in the relevant maintained design document or issue tracker.
 - Keep archive material under `docs/archive/`.
 
 ## Verification commands

@@ -20,8 +20,10 @@ import { buildCommittedSourceSnapshot } from './source-snapshot.ts';
 export interface ProductionNovaTestGateOptions {
   readonly stateRoot: string;
   readonly endpoint: string;
-  readonly token: string;
+  readonly token?: string;
+  readonly authentication?: 'bearer' | 'spiffe-proxy';
   readonly sourceAuthority: string;
+  readonly sourceAttestationPrivateKey: string | Buffer;
   readonly pollMilliseconds: number;
   readonly maximumResponseBytes: number;
   readonly maximumResultBytes: number;
@@ -52,12 +54,14 @@ export interface ProductionNovaTestGateExecutionInput<T> {
 export class ProductionNovaTestGate {
   readonly #router: NovaTestGateAuthorityRouter;
   readonly #sourceAuthority: string;
+  readonly #sourceAttestationPrivateKey: string | Buffer;
   readonly #maximumArchiveBytes: number;
   readonly #legacyLedger: LegacySuiteMigrationLedger;
   constructor(options: { router: NovaTestGateAuthorityRouter; sourceAuthority: string;
-    maximumArchiveBytes: number; legacyLedger: LegacySuiteMigrationLedger }) {
+    sourceAttestationPrivateKey: string | Buffer; maximumArchiveBytes: number; legacyLedger: LegacySuiteMigrationLedger }) {
     this.#router = options.router;
     this.#sourceAuthority = options.sourceAuthority;
+    this.#sourceAttestationPrivateKey = options.sourceAttestationPrivateKey;
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
     this.#legacyLedger = options.legacyLedger;
   }
@@ -67,6 +71,7 @@ export class ProductionNovaTestGate {
     const source = buildCommittedSourceSnapshot({ repositoryRoot: input.repositoryRoot,
       repositoryId: input.repositoryId, pipelineStageId: input.pipelineStageId,
       creatorAuthority: this.#sourceAuthority,
+      attestationPrivateKey: this.#sourceAttestationPrivateKey,
       maximumArchiveBytes: this.#maximumArchiveBytes,
       ...(input.revision ? { revision: input.revision } : {}) });
     const job = createRemotePlanJob({ idempotencyKey: input.idempotencyKey,
@@ -93,7 +98,8 @@ export function createProductionNovaTestGate(
   if (!['http:', 'https:'].includes(endpoint.protocol)) throw new Error('NOVA_REMOTE_PLAN_PROTOCOL_INVALID');
   const transport = new HttpRemotePlanTransport({
     endpoint: endpoint.href,
-    token: options.token,
+    ...(options.token ? { token: options.token } : {}),
+    ...(options.authentication ? { authentication: options.authentication } : {}),
     maximumResponseBytes: options.maximumResponseBytes,
     maximumResultBytes: options.maximumResultBytes,
   });
@@ -124,5 +130,6 @@ export function createProductionNovaTestGate(
   });
   const router = new NovaTestGateAuthorityRouter({ remote, ledger: options.legacyLedger });
   return new ProductionNovaTestGate({ router, sourceAuthority: options.sourceAuthority,
+    sourceAttestationPrivateKey: options.sourceAttestationPrivateKey,
     maximumArchiveBytes: options.maximumArchiveBytes, legacyLedger: options.legacyLedger });
 }

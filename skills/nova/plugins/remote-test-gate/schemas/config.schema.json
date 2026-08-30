@@ -2,13 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["endpoint", "tokenSecret", "sourceAuthority", "stateRoot", "allowedRepositoryRoots", "legacyLedgerPath"],
+  "required": ["endpoint", "authentication", "sourcePrivateKeySecret", "sourceAuthority", "stateRoot", "allowedRepositoryRoots", "legacyLedgerPath"],
   "properties": {
     "endpoint": { "type": "string", "format": "uri", "pattern": "^https?://" },
+    "authentication": { "enum": ["bearer", "spiffe-proxy"] },
     "tokenSecret": { "type": "string", "minLength": 1 },
+    "sourcePrivateKeySecret": { "type": "string", "minLength": 1 },
     "sourceAuthority": { "type": "string", "minLength": 1 },
     "stateRoot": { "type": "string", "minLength": 1 },
     "allowedRepositoryRoots": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
     "legacyLedgerPath": { "type": "string", "minLength": 1 }
-  }
+  },
+  "allOf": [{
+    "if": { "properties": { "authentication": { "const": "bearer" } } },
+    "then": { "properties": { "tokenSecret": {} }, "required": ["tokenSecret"] },
+    "else": { "properties": { "endpoint": { "type": "string", "pattern": "^http://(127\\.0\\.0\\.1|localhost|\\[::1\\]):" } }, "not": { "properties": { "tokenSecret": {} }, "required": ["tokenSecret"] } }
+  }]
 }

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -57,10 +58,11 @@ assert.equal(blockedLegacyCalls, 0, 'legacy consumers must not start after a fai
 assert.equal(blocked.legacy, null);
 
 const productionRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'production-dual-authority-'));
+const sourcePrivateKey = crypto.generateKeyPairSync('ed25519').privateKey.export({ type: 'pkcs8', format: 'pem' });
 try {
   const production = createProductionNovaTestGate({
     stateRoot: productionRoot, endpoint: 'http://127.0.0.1:1', token: 'production-dual-authority-token-00000000',
-    sourceAuthority: 'nova:production',
+    sourceAuthority: 'nova:production', sourceAttestationPrivateKey: sourcePrivateKey,
     pollMilliseconds: 10, maximumResponseBytes: 64 * 1024, maximumResultBytes: 1024 * 1024,
     maximumArchiveBytes: 1024, maximumArchiveStoreBytes: 1024 * 1024,
     maximumEvidenceBytes: 1024, maximumEvidenceStoreBytes: 1024 * 1024,

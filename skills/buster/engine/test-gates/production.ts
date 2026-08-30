@@ -66,14 +66,30 @@ export function loadProductionBusterRemotePlanRuntime(
   const directory = path.dirname(canonical);
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
   if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
-  for (const name of ['platformConfig', 'host', 'tokenEnvironmentVariable',
+  for (const name of ['platformConfig', 'host', 'sourceAttestationPublicKeyEnvironmentVariable',
+    'trustedSourceAuthority',
     'stateRoot', 'runtimeRoot', 'tarExecutable']) {
     if (typeof value[name] !== 'string' || value[name].length === 0) throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${name}`);
   }
-  const tokenName = value.tokenEnvironmentVariable as string;
-  if (!/^[A-Z][A-Z0-9_]*$/u.test(tokenName)) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID');
-  const token = environment[tokenName];
-  if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
+  const trustedPeerSpiffeIds = value.trustedPeerSpiffeIds === undefined
+    ? undefined : stringArray(value.trustedPeerSpiffeIds, 'trustedPeerSpiffeIds');
+  let token: string | undefined;
+  let tokenName: string | undefined;
+  if (!trustedPeerSpiffeIds) {
+    if (typeof value.tokenEnvironmentVariable !== 'string'
+      || !/^[A-Z][A-Z0-9_]*$/u.test(value.tokenEnvironmentVariable)) {
+      throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID');
+    }
+    tokenName = value.tokenEnvironmentVariable;
+    token = environment[tokenName];
+    if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
+  }
+  const sourceKeyName = value.sourceAttestationPublicKeyEnvironmentVariable as string;
+  if (!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_ENV_INVALID');
+  }
+  const sourceAttestationPublicKey = environment[sourceKeyName];
+  if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');
   const platform = loadPlatformConfig(path.resolve(directory, value.platformConfig as string));
   const registry = buildRegistry(discoverPackages({
     installationRoots: platform.installationRoots,
@@ -125,6 +141,8 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumArchiveBytes: integer(value.maximumArchiveBytes, 'maximumArchiveBytes'),
       maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),
       maximumResultStoreBytes: integer(value.maximumResultStoreBytes, 'maximumResultStoreBytes'),
+      trustedSourceAuthority: value.trustedSourceAuthority as string,
+      sourceAttestationPublicKey,
     }),
     registry,
     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
@@ -207,7 +225,7 @@ export function loadProductionBusterRemotePlanRuntime(
     service,
     host,
     port: integer(value.port, 'port', 0),
-    token,
+    ...(trustedPeerSpiffeIds ? { trustedPeerSpiffeIds } : { token: token! }),
     maximumRequestBytes: integer(value.maximumRequestBytes, 'maximumRequestBytes'),
     maximumResponseBytes: integer(value.maximumResponseBytes, 'maximumResponseBytes'),
     maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),

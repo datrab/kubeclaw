@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eu
 
-worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required}"
+worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required for the legacy compatibility endpoint}"
+trusted_peer_spiffe_id="${BUSTER_TRUSTED_PEER_SPIFFE_ID:-}"
 unset BUSTER_V2_TOKEN
 socket="${BUILDKIT_HOST:?BUILDKIT_HOST is required}"
 address="${socket#unix://}"
@@ -81,6 +82,7 @@ setpriv \
 # (1000) for projected credentials and add the socket group (1002) so its
 # BuildKit readiness checks can connect after the ownership transition above.
 # worker.ts clears all supplementary groups and capabilities before suite code.
+: "${BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:?BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY is required}"
 mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
 # The supervisor intentionally lacks CAP_DAC_OVERRIDE and CAP_FOWNER. Keep the
 # generated-config directory owned by root until every file has been written;
@@ -137,7 +139,11 @@ fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
 fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',
   host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),
-  tokenEnvironmentVariable: 'BUSTER_V2_TOKEN',
+  ...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID
+    ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
+    : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
+  sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
+  trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
   stateRoot: process.env.BUSTER_V2_STATE_DIR,
   runtimeRoot: process.env.BUSTER_V2_RUN_DIR,
   tarExecutable: '/usr/bin/tar',
@@ -198,11 +204,19 @@ NODE
 chmod 0640 "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
 chown -R builder:builder "$runtime_config_root"
 
-BUSTER_V2_TOKEN="$worker_token" KUBECONFIG="$kubeconfig" setpriv \
-  --reuid=1000 \
-  --regid=1000 \
-  --groups 1000,1002 \
-  node /app/skills/buster/engine/remote-plan-cli.ts --config "$runtime_config_root/runtime.json" &
+if [ -n "$trusted_peer_spiffe_id" ]; then
+  BUSTER_TRUSTED_PEER_SPIFFE_ID="$trusted_peer_spiffe_id" KUBECONFIG="$kubeconfig" setpriv \
+    --reuid=1000 \
+    --regid=1000 \
+    --groups 1000,1002 \
+    node /app/skills/buster/engine/remote-plan-cli.ts --config "$runtime_config_root/runtime.json" &
+else
+  BUSTER_V2_TOKEN="$worker_token" KUBECONFIG="$kubeconfig" setpriv \
+    --reuid=1000 \
+    --regid=1000 \
+    --groups 1000,1002 \
+    node /app/skills/buster/engine/remote-plan-cli.ts --config "$runtime_config_root/runtime.json" &
+fi
 worker_pid=$!
 
 printf '%s' "$worker_token" | BUSTER_V2_PORT="${BUSTER_LEGACY_PORT:-18892}" \

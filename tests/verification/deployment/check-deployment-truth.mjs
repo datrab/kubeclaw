@@ -31,6 +31,7 @@ const busterValues = read('my-values/buster-values.yaml');
 const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
+const networkPolicies = read('my-values/infra/network-policies.yaml');
 
 for (const [label, source] of [
   ['chart', chart],
@@ -231,10 +232,14 @@ assert.doesNotMatch(
   'suite jobs must not remount the container-runtime-masked procfs from a nested user namespace',
 );
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
-assert.match(busterValues, /name:\s*buster-plan[\s\S]*containerPort:\s*18891/);
-assert.match(busterValues, /name:\s*buster-legacy[\s\S]*containerPort:\s*18892/);
+assert.match(busterValues, /name:\s*buster-plan-local[\s\S]*containerPort:\s*28891/);
+assert.match(busterValues, /name:\s*buster-legacy-local[\s\S]*containerPort:\s*28892/);
+assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/);
+assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\s\S]*pipeline-test-gate-source-attestation/);
+assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
+assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
-  'all Buster plan runtime probes must use the token-authenticated internal HTTP endpoint');
+  'all Buster plan runtime probes must use the loopback-only internal HTTP endpoint');
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
 assert.match(busterValues, /CONTAINER_BUILD_REGISTRY_BASE_URL[\s\S]*registry-local/);
 assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
@@ -242,7 +247,7 @@ assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\.
 for (const probe of ['startupProbe', 'readinessProbe', 'livenessProbe']) {
   assert.match(
     busterValues,
-    new RegExp(`${probe}:[\\s\\S]*path:\\s*/healthz[\\s\\S]*port:\\s*buster-plan`),
+    new RegExp(`${probe}:[\\s\\S]*path:\\s*/healthz[\\s\\S]*port:\\s*28891`),
     `the Buster v2 runtime must define its own ${probe}`,
   );
 }
@@ -407,8 +412,15 @@ if (helm.error?.code !== 'ENOENT') {
   assert.match(
     busterHelm.stdout,
     /containerPort:\s*18891/,
-    'Buster must expose the authenticated v2 worker port',
+    'Buster Envoy must expose the authenticated v2 worker port',
   );
+  assert.match(busterHelm.stdout, /name:\s*worker-trust-proxy/,
+    'Buster must obtain its rotating X.509-SVID through the SPIFFE CSI socket');
+  assert.match(busterHelm.stdout, /csi\.spiffe\.io/);
+  assert.match(busterHelm.stdout, /spire-agent\.sock/);
+  assert.match(busterHelm.stdout,
+    /port_value:\s*18891[\s\S]*require_client_certificate:\s*true[\s\S]*agent-nova/,
+    'Buster must require Nova mTLS identity on the plan listener');
   assert.match(
     busterHelm.stdout,
     /fsGroup:\s*1000/,
@@ -441,8 +453,14 @@ if (helm.error?.code !== 'ENOENT') {
   );
   assert.match(
     novaHelm.stdout,
-    /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*agent-buster:18891[\s\S]*agent-buster:18892/,
+    /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*127\.0\.0\.1:28891[\s\S]*127\.0\.0\.1:28892/,
   );
+  assert.match(novaHelm.stdout,
+    /port_value:\s*28891[\s\S]*agent-buster[\s\S]*port_value:\s*18891[\s\S]*agent-buster/,
+    'Nova must reach Buster through its local SPIFFE mTLS proxy');
+  assert.match(novaHelm.stdout,
+    /port_value:\s*28080[\s\S]*prism-control-internal[\s\S]*port_value:\s*8443[\s\S]*prism-control/,
+    'Nova must reach Prism through its local SPIFFE mTLS proxy');
   assert.doesNotMatch(novaHelm.stdout, /name:\s*BUSTER_V2_ENDPOINT|name:\s*BUSTER_GATEWAY_ORIGIN/);
 
   const numericRole = spawnSync(

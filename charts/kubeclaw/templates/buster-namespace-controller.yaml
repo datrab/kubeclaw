@@ -31,6 +31,11 @@ rules:
   - apiGroups: [""]
     resources: ["pods", "pods/log", "services", "endpoints", "configmaps", "persistentvolumeclaims", "serviceaccounts"]
     verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  # A deployer can already project any Secret into a Pod it creates. Direct
+  # read access avoids that indirect path for copied, lease-scoped credentials.
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets", "statefulsets"]
     verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]

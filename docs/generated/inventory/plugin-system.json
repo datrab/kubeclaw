@@ -10,7 +10,7 @@
     "testProviders": 7,
     "reportAdapters": 1,
     "registrations": 50,
-    "files": 816
+    "files": 817
   },
   "runtime": {
     "roots": [
@@ -147,7 +147,8 @@
       "skills/worker/core/src/index.ts",
       "skills/worker/core/worker/attempt-executor.ts",
       "skills/worker/core/worker/digest.ts",
-      "skills/worker/core/worker/local-runtime.ts"
+      "skills/worker/core/worker/local-runtime.ts",
+      "skills/worker/core/worker/trust.ts"
     ]
   },
   "packages": [
@@ -2619,6 +2620,7 @@
     "skills/worker/core/src/index.ts",
     "skills/worker/core/worker/attempt-executor.ts",
     "skills/worker/core/worker/digest.ts",
-    "skills/worker/core/worker/local-runtime.ts"
+    "skills/worker/core/worker/local-runtime.ts",
+    "skills/worker/core/worker/trust.ts"
   ]
 }

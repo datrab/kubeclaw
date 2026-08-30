@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -11,6 +12,7 @@ const core = await import(pathToFileURL(
   path.join(repository, 'skills/nova/core/src/index.ts'),
 ).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-buster-quality-'));
+const sourcePrivateKey = crypto.generateKeyPairSync('ed25519').privateKey.export({ type: 'pkcs8', format: 'pem' });
 fs.mkdirSync(path.join(temporary, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(temporary, 'dist', 'index.js'), 'export const fixture = true;\n');
 execFileSync('git', ['init', '-q'], { cwd: temporary });
@@ -137,7 +139,7 @@ try {
         ],
       }],
       ['kubeclaw.secret-resolver:secrets', {
-        environment: { 'gate.agent': secret, 'buster.worker': secret },
+        environment: { 'gate.agent': secret, 'buster.worker': secret, 'buster.source-private-key': sourcePrivateKey },
       }],
       ['kubeclaw.artifact-store:artifact-store', {
         artifactRoot: path.join(temporary, 'artifacts'),
@@ -145,6 +147,7 @@ try {
       ['kubeclaw.buster-suite-runtime:suite', {
         endpoint: origin,
         tokenSecret: 'buster.worker',
+        sourcePrivateKeySecret: 'buster.source-private-key',
         allowedRepositoryRoots: [temporary],
         unmigratedSuites: ['security'],
         suiteCapabilities: ['image_build'],
@@ -155,7 +158,9 @@ try {
       }],
       ['kubeclaw.remote-test-gate:plan', {
         endpoint: origin,
+        authentication: 'bearer',
         tokenSecret: 'buster.worker',
+        sourcePrivateKeySecret: 'buster.source-private-key',
         sourceAuthority: 'nova:production',
         stateRoot: path.join(temporary, 'provider-state'),
         allowedRepositoryRoots: [temporary],

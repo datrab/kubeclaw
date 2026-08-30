@@ -8,7 +8,14 @@ const prismTemplates = ["workloads.yaml", "ingestion.yaml", "jobs.yaml", "postgr
   .join("\n");
 
 assert(controller.includes('resources: ["namespaces"]'), "namespace controller must declare namespace authority");
-assert(controller.includes('verbs: ["create", "get", "list", "delete", "patch", "update"]'), "namespace controller authority changed unexpectedly");
+assert(
+  /resources: \["namespaces"\]\s+verbs: \["create", "get", "delete"\]/.test(controller),
+  "namespace controller must retain least-privilege namespace lifecycle authority",
+);
+assert(
+  !/resources: \["namespaces"\]\s+verbs: \[[^\]]*"(?:list|patch|update|watch)"/.test(controller),
+  "namespace controller must not gain broad namespace mutation or enumeration authority",
+);
 assert(!prismAccounts.includes("automountServiceAccountToken: true"), "Prism ServiceAccounts must not mount Kubernetes credentials");
 assert(!/resources:\s*\[?\s*["']?namespaces/.test(prismTemplates), "Prism workloads must not declare namespace RBAC");
 console.log(JSON.stringify({ ok: true, contract: "agent-namespace-rbac.v1" }));

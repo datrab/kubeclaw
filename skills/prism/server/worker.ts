@@ -18,8 +18,12 @@ import {
 import { verifyInternalRequest } from "./internal-auth.ts";
 import { PostgresNonceStore } from "./internal-auth.ts";
 import { Pool } from "pg";
+import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+const spiffeEnabled = process.env.WORKER_TRUST_SPIFFE_ENABLED === "true";
 const workerSecret = process.env.PRISM_WORKER_SECRET ?? "";
-if (!workerSecret) throw new Error("PRISM_WORKER_SECRET is required");
+if (!spiffeEnabled && !workerSecret) throw new Error("PRISM_WORKER_SECRET is required");
+const trustedControlSpiffeId = process.env.PRISM_TRUSTED_CONTROL_SPIFFE_ID ?? "";
+if (spiffeEnabled && !trustedControlSpiffeId) throw new Error("Prism worker SPIFFE trust policy is incomplete");
 const databaseUrl = process.env.DATABASE_URL ?? "";
 if (!databaseUrl) throw new Error("DATABASE_URL is required");
 const noncePool = new Pool({ connectionString: databaseUrl, max: 4 });
@@ -44,7 +48,7 @@ const trustedControlOrigin=new URL(controlInternalUrl).origin;
 const digest=(value:Uint8Array)=>`sha256:${createHash("sha256").update(value).digest("hex")}`;
 async function uploadEvidence(id:string,type:string,mediaType:string,bytes:Buffer){
   const contentDigest=digest(bytes);const storageUrl=new URL(`/v1/internal/artifacts/${contentDigest}`,controlInternalUrl).toString();
-  const response=await fetch(storageUrl,{method:"POST",headers:{authorization:`Bearer ${workerSecret}`,"content-type":"application/octet-stream"},body:new Uint8Array(bytes)});
+  const response=await fetch(storageUrl,{method:"POST",headers:spiffeEnabled?{"content-type":"application/octet-stream"}:{authorization:`Bearer ${workerSecret}`,"content-type":"application/octet-stream"},body:new Uint8Array(bytes)});
   if(!response.ok)throw new Error(`Prism evidence upload failed: ${response.status}`);
   return {evidenceId:id,type,artifact:{artifactId:`artifact:${contentDigest}`,type,mediaType,contentDigest,sizeBytes:bytes.byteLength,storageUrl}};
 }
@@ -76,7 +80,7 @@ function operationFor(
       if(!declared||declared.kind!=="artifact"||declared.artifact.mediaType!=="application/json"||declared.artifact.type!=="prism-engine-input")throw new Error("Prism input artifact is missing or invalid");
       const inputUrl=new URL(declared.artifact.storageUrl);
       if(inputUrl.origin!==trustedControlOrigin||inputUrl.pathname!==`/v1/internal/artifacts/${declared.artifact.contentDigest}`||inputUrl.search||inputUrl.hash)throw new Error("Prism input artifact location is not allowed");
-      const inputResponse=await fetch(inputUrl,{headers:{authorization:`Bearer ${workerSecret}`},signal:context.signal});
+      const inputResponse=await fetch(inputUrl,{headers:spiffeEnabled?{}:{authorization:`Bearer ${workerSecret}`},signal:context.signal});
       if(!inputResponse.ok)throw new Error("Prism input artifact could not be read");
       const inputBytes=Buffer.from(await inputResponse.arrayBuffer());
       if(inputBytes.byteLength!==declared.artifact.sizeBytes||digest(inputBytes)!==declared.artifact.contentDigest)throw new Error("Prism input artifact failed integrity validation");
@@ -151,7 +155,8 @@ const server = createServer(async (request, response) => {
       chunks.push(chunk);
     }
     const raw = Buffer.concat(chunks);
-    await verifyInternalRequest(workerSecret, raw, request.headers, nonceStore);
+    if(spiffeEnabled)authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedControlSpiffeId]));
+    else await verifyInternalRequest(workerSecret, raw, request.headers, nonceStore);
     const input = JSON.parse(raw.toString("utf8")) as WorkerAttemptEnvelopeV1;
     validatePipelineWorkerCoreContract("workerAttemptEnvelope", input);
     const result = await new WorkerAttemptExecutor({

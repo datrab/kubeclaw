@@ -28,6 +28,7 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `KUBECLAW_DEPLOY_LITELLM` | true\|false (default: true) | `true` | `true` |
 | `KUBECLAW_DEPLOY_POSTGRESQL` | true\|false (default: true) | `true` | `true` |
 | `KUBECLAW_DEPLOY_QDRANT` | true\|false (default: true) | `true` | `true` |
+| `KUBECLAW_DEPLOY_SPIRE` | true\|false (default: true) | `true` |  |
 | `KUBECLAW_RUN_SECRET_SETUP` | auto\|true\|false for setup/all (default: auto) |  |  |
 | `KUBECLAW_SECRET_SETUP_MODE` | auto\|interactive\|noninteractive (default: auto) |  | `auto` |
 | `KUBECLAW_SECRETS_OVERWRITE` | true\|false (default: false) |  | `false` |
@@ -39,6 +40,7 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `PRISM_EMBEDDING_MODEL` | Optional embedding model; required with PRISM_EMBEDDING_ENDPOINT |  |  |
 | `PRISM_PROVIDER_ENDPOINT` | OpenAI-compatible chat endpoint (default: internal LiteLLM) | `http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions` |  |
 | `PRISM_PROVIDER_MODEL` | Chat model exposed by the provider (default: claude-sonnet) | `claude-sonnet` |  |
+| `PRISM_PROVIDER_SECRET_OVERWRITE` | true\|false to reconcile an existing provider Secret (default: false) | `false` |  |
 | `SRC_NS` | Namespace to copy existing app Secrets from (default: default) |  | `default` |
 | `TAILSCALE_OAUTH_CLIENT_ID` | Optional bootstrap source for Secret/operator-oauth |  |  |
 | `TAILSCALE_OAUTH_CLIENT_SECRET` | Optional bootstrap source for Secret/operator-oauth |  |  |

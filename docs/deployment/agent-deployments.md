@@ -24,24 +24,45 @@ capabilityProviders:
       test.suite.execute:
         adapter: buster-suite-v2
         port: 18892
+        proxyPort: 28892
       test.plan.execute:
         adapter: buster-plan-v1
         scheme: http
         port: 18891
+        proxyPort: 28891
 ```
 
 Helm resolves the role to the canonical in-namespace `agent-<role>` Service and
 renders `KUBECLAW_CAPABILITY_PROVIDERS`. No endpoint, namespace, port, agent
 framework, or Buster-specific routing rule is embedded in pipeline core.
 
-The plan route uses its existing bearer token over the internal cluster
-Service. It does not require a source-attestation key or certificate Secret.
+Production worker routes use local Envoy listeners. SPIRE supplies automatically
+rotated X.509-SVIDs, and Envoy requires the expected peer SPIFFE ID over mTLS.
+Worker Core accepts forwarded identity only from the loopback proxy. See the
+[Worker Trust implementation reference](../security/worker-trust.md) and the
+[operator runbook](../operations/worker-trust-runbook.md).
+
+Nova also signs each committed source snapshot with the local Ed25519
+private key in `pipeline-test-gate-source-attestation`; Buster verifies it with
+the corresponding public key before accepting the archive. This does not depend
+on GitHub artifact attestations or any external signing service.
 
 ## Verification
 
-Confirm Nova has its gateway container. Confirm Buster has its gateway and
-`buster-v2-runtime`. Confirm the runtime exposes plan port 18891 and legacy
-suite port 18892. Neither deployment contains `buster-pipeline`.
+Confirm Nova has its gateway and `worker-trust-proxy` containers. Confirm Buster
+has its gateway, `buster-v2-runtime`, and `worker-trust-proxy`. Confirm Envoy
+exposes plan port 18891 and legacy suite port 18892 while the runtime binds only
+to loopback ports 28891 and 28892. Neither deployment contains
+`buster-pipeline`.
+
+Run the complete live proof after Nova, Buster, and Prism are ready:
+
+```bash
+npm run verify:worker-core:trust:live
+```
+
+The command uses real SPIRE identities, real Envoy proxies, and real worker
+processes. It does not accept a test-double boundary.
 
 ## Common Failures
 

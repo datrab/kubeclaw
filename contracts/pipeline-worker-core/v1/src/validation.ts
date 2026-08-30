@@ -12,6 +12,7 @@ import type {
   WorkerCancellationRequestV1,
   WorkerHealthV1,
   WorkerRegistrationV1,
+  WorkerTrustEnvelopeV1,
 } from './types.ts';
 
 type Validator = ((value: unknown) => boolean) & { errors?: unknown[] | null };
@@ -59,6 +60,13 @@ function errorText(errors: unknown[] | null | undefined): string[] {
 }
 
 function relationErrors(definition: PipelineWorkerCoreDefinition, value: unknown): string[] {
+  if (definition === 'workerTrustEnvelope') {
+    const envelope = value as WorkerTrustEnvelopeV1;
+    return Date.parse(envelope.expiresAt) > Date.parse(envelope.issuedAt)
+      ? []
+      : ['/expiresAt must be after /issuedAt'];
+  }
+
   if (definition === 'workerProfile') {
     const profile = value as WorkerRegistrationV1['profiles'][number];
     try {

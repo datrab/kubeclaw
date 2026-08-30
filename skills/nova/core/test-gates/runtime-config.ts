@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import type { LegacySuiteMigrationLedger } from './legacy-bridge.ts';
 import { createProductionNovaTestGate, type ProductionNovaTestGate } from './production.ts';
 
@@ -21,14 +22,32 @@ export function loadProductionNovaTestGate(
   const directory = path.dirname(canonical);
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
   if (value.schemaVersion !== 'nova-remote-test-gate-runtime.v1') throw new Error('NOVA_REMOTE_CONFIG_VERSION_INVALID');
-  for (const name of ['endpoint', 'tokenEnvironmentVariable',
+  for (const name of ['endpoint', 'sourceAttestationPrivateKeyEnvironmentVariable',
     'sourceAuthority', 'stateRoot', 'legacyLedgerPath']) {
     if (typeof value[name] !== 'string' || value[name].length === 0) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${name}`);
   }
-  const tokenName = value.tokenEnvironmentVariable as string;
-  if (!/^[A-Z][A-Z0-9_]*$/u.test(tokenName)) throw new Error('NOVA_REMOTE_CONFIG_TOKEN_ENV_INVALID');
-  const token = environment[tokenName];
-  if (!token) throw new Error('NOVA_REMOTE_CONFIG_TOKEN_MISSING');
+  const authentication = value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
+  let tokenName: string | undefined;
+  let token: string | undefined;
+  if (authentication === 'bearer') {
+    if (typeof value.tokenEnvironmentVariable !== 'string'
+      || !/^[A-Z][A-Z0-9_]*$/u.test(value.tokenEnvironmentVariable)) {
+      throw new Error('NOVA_REMOTE_CONFIG_TOKEN_ENV_INVALID');
+    }
+    tokenName = value.tokenEnvironmentVariable;
+    token = environment[tokenName];
+    if (!token) throw new Error('NOVA_REMOTE_CONFIG_TOKEN_MISSING');
+  }
+  const sourceKeyName = value.sourceAttestationPrivateKeyEnvironmentVariable as string;
+  if (!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
+    throw new Error('NOVA_SOURCE_ATTESTATION_ENV_INVALID');
+  }
+  const sourceAttestationPrivateKey = environment[sourceKeyName];
+  if (!sourceAttestationPrivateKey) throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_MISSING');
+  let parsedSourceKey: crypto.KeyObject;
+  try { parsedSourceKey = crypto.createPrivateKey(sourceAttestationPrivateKey); }
+  catch (error) { throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID', { cause: error }); }
+  if (parsedSourceKey.asymmetricKeyType !== 'ed25519') throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID');
   const endpoint = new URL(value.endpoint as string);
   if (!['http:', 'https:'].includes(endpoint.protocol)) throw new Error('NOVA_REMOTE_PLAN_PROTOCOL_INVALID');
   const ledgerPath = path.resolve(directory, value.legacyLedgerPath as string);
@@ -45,8 +64,10 @@ export function loadProductionNovaTestGate(
   const records = object(value.recordLimits, 'recordLimits');
   return createProductionNovaTestGate({
     endpoint: endpoint.href,
-    token,
+    ...(token ? { token } : {}),
+    authentication,
     sourceAuthority: value.sourceAuthority as string,
+    sourceAttestationPrivateKey: parsedSourceKey.export({ type: 'pkcs8', format: 'pem' }),
     stateRoot: path.resolve(directory, value.stateRoot as string),
     legacyLedger: ledger as LegacySuiteMigrationLedger,
     pollMilliseconds: integer(value.pollMilliseconds, 'pollMilliseconds', 10),

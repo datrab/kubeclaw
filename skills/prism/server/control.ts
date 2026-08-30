@@ -32,6 +32,7 @@ import {
 } from "../preferences/index.ts";
 import { signInternalRequest } from "./internal-auth.ts";
 import { assertMaterialDirectionDiversity } from "../directions/index.ts";
+import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
 
 const port = Number(process.env.PORT ?? 8080);
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -44,8 +45,16 @@ const workerUrl = new URL(
 );
 const sessionSecret = required("PRISM_SESSION_SECRET");
 const ingressSecret = required("PRISM_INGRESS_SECRET");
-const dispatchSecret = required("PRISM_DISPATCH_SECRET");
-const workerSecret = required("PRISM_WORKER_SECRET");
+const spiffeEnabled = process.env.WORKER_TRUST_SPIFFE_ENABLED === "true";
+const dispatchSecret = spiffeEnabled ? "" : required("PRISM_DISPATCH_SECRET");
+const workerSecret = spiffeEnabled ? "" : required("PRISM_WORKER_SECRET");
+const trustedNovaSpiffeId = process.env.PRISM_TRUSTED_NOVA_SPIFFE_ID ?? "";
+const trustedTestRunnerSpiffeId = process.env.PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID ?? "";
+const trustedWorkerSpiffeId = process.env.PRISM_TRUSTED_WORKER_SPIFFE_ID ?? "";
+const trustedControlSpiffeId = process.env.PRISM_CONTROL_SPIFFE_ID ?? "";
+if (spiffeEnabled && (!trustedNovaSpiffeId || !trustedWorkerSpiffeId || !trustedControlSpiffeId)) {
+  throw new Error("Prism SPIFFE trust policy is incomplete");
+}
 const ingestionSecret=required("PRISM_INGESTION_SECRET");
 const ingestionUrl=new URL(process.env.PRISM_INGESTION_URL??"http://prism-ingestion:8080");
 const controlInternalUrl=new URL(process.env.PRISM_CONTROL_INTERNAL_URL??"http://prism-control:8080");
@@ -119,7 +128,7 @@ async function hydrateWorkerEvidence(
     if(!item.evidenceId||!item.artifact?.storageUrl||!item.artifact.contentDigest)throw new Error("Prism worker returned invalid evidence");
     const evidenceUrl=new URL(item.artifact.storageUrl);
     if(evidenceUrl.origin!==controlInternalUrl.origin||evidenceUrl.pathname!==`/v1/internal/artifacts/${item.artifact.contentDigest}`)throw new Error("Prism worker evidence location is not allowed");
-    const evidenceResponse=await fetch(evidenceUrl,{headers:{authorization:`Bearer ${workerSecret}`}});
+    const evidenceResponse=await fetch(evidenceUrl,{headers:spiffeEnabled?{}:{authorization:`Bearer ${workerSecret}`}});
     if(!evidenceResponse.ok)throw new Error("Prism worker evidence could not be read");
     const bytes=Buffer.from(await evidenceResponse.arrayBuffer());
     if(sha256(bytes)!==item.artifact.contentDigest)throw new Error("Prism worker evidence digest mismatch");
@@ -173,7 +182,9 @@ async function runWorker(
     const nonce = randomBytes(16).toString("hex");
     const result = await fetch(new URL("/v1/attempts", workerUrl), {
       method: "POST",
-      headers: {
+      headers: spiffeEnabled ? {
+        "content-type": "application/json",
+      } : {
         "content-type": "application/json",
         "x-prism-timestamp": String(timestamp),
         "x-prism-nonce": nonce,
@@ -229,8 +240,13 @@ const server = createServer(async (request, response) => {
     }
     const internalArtifact=/^\/v1\/internal\/artifacts\/(sha256:[a-f0-9]{64})$/.exec(url.pathname);
     if(internalArtifact){
-      const supplied=Buffer.from(String(request.headers.authorization??"").replace(/^Bearer /,""));const expected=Buffer.from(workerSecret);
-      if(supplied.length!==expected.length||!timingSafeEqual(supplied,expected))return json(response,401,{error:"unauthorized"});
+      if(spiffeEnabled){
+        try{authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedWorkerSpiffeId,trustedControlSpiffeId]));}
+        catch{return json(response,401,{error:"unauthorized"});}
+      }else{
+        const supplied=Buffer.from(String(request.headers.authorization??"").replace(/^Bearer /,""));const expected=Buffer.from(workerSecret);
+        if(supplied.length!==expected.length||!timingSafeEqual(supplied,expected))return json(response,401,{error:"unauthorized"});
+      }
       if(request.method==="GET"){
         const bytes=await artifacts.get(`artifact:${internalArtifact[1]}`);response.writeHead(200,{"content-type":"application/octet-stream","cache-control":"no-store"});return response.end(bytes);
       }
@@ -263,6 +279,10 @@ const server = createServer(async (request, response) => {
       });
     }
     if (url.pathname === "/v1/dispatch" && request.method === "POST") {
+      if(spiffeEnabled){
+        try{authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedNovaSpiffeId, trustedTestRunnerSpiffeId].filter(Boolean)));}
+        catch{throw new Error("invalid dispatch identity");}
+      }
       if (
         !(request.headers["content-type"] ?? "")
           .toString()
@@ -279,19 +299,13 @@ const server = createServer(async (request, response) => {
       }
       const raw = Buffer.concat(chunks);
       const key = String(request.headers["idempotency-key"] ?? "");
-      const supplied = String(
-        request.headers["x-kubeclaw-signature"] ?? "",
-      ).replace(/^v1=/, "");
-      const expected = createHmac("sha256", dispatchSecret)
-        .update(`${key}.${raw.toString("utf8")}`)
-        .digest();
-      const actual = Buffer.from(supplied, "hex");
-      if (
-        !key ||
-        actual.length !== expected.length ||
-        !timingSafeEqual(actual, expected)
-      )
-        throw new Error("invalid dispatch signature");
+      if(!key)throw new Error("invalid dispatch idempotency key");
+      if(!spiffeEnabled){
+        const supplied = String(request.headers["x-kubeclaw-signature"] ?? "").replace(/^v1=/, "");
+        const expected = createHmac("sha256", dispatchSecret).update(`${key}.${raw.toString("utf8")}`).digest();
+        const actual = Buffer.from(supplied, "hex");
+        if(actual.length !== expected.length || !timingSafeEqual(actual, expected))throw new Error("invalid dispatch signature");
+      }
       const payload = JSON.parse(raw.toString("utf8")) as {
         request?: { projectId?: string; approvalId?: string; schema?: string; architecture?: {artifactId?:string;contentDigest?:string}; architectureContent?: unknown };
       };

@@ -28,6 +28,13 @@ const SECRET_SPECS = [
     setupFunction: 'setup_redis_secret',
   },
   {
+    name: 'pipeline-test-gate-source-attestation',
+    namespace: 'NAMESPACE',
+    requiredWhen: 'Nova-to-Buster committed-source dispatch is enabled',
+    keys: ['privateKey', 'publicKey'],
+    setupFunction: 'setup_pipeline_source_attestation_secret',
+  },
+  {
     name: 'postgresql-secrets',
     namespace: 'NAMESPACE',
     requiredWhen: 'KUBECLAW_DEPLOY_POSTGRESQL is enabled',
@@ -82,6 +89,7 @@ const SECRET_SPECS = [
 
 const SETUP_ORDER = [
   'setup_shared_secret',
+  'setup_pipeline_source_attestation_secret',
   'setup_redis_secret',
   'setup_postgresql_secret when KUBECLAW_DEPLOY_POSTGRESQL is enabled',
   'setup_litellm_secret when KUBECLAW_DEPLOY_LITELLM is enabled',

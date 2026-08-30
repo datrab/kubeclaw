@@ -14,6 +14,7 @@ Use this track to deploy, operate, inspect, and recover KubeClaw.
 ## Start Here
 
 - [Quickstart](quickstart.md) validates the repository and starts a pipeline.
+- [Operate Worker Trust](worker-trust.md) deploys and proves worker identity and mTLS.
 - [Recovery](recovery.md) restores progress after an interrupted or blocked run.
 - [Current Status](../status/current.md) shows supported runtime boundaries.
 

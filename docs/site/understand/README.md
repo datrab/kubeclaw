@@ -18,5 +18,6 @@ Buster uses Worker Core to execute test plans. Forge and Echo are dispatched spe
 ## Read Next
 
 - [Request To Result](request-to-result.md) follows one complete run.
+- [Worker Trust](worker-trust.md) explains workload identity, mTLS, and artifact provenance.
 - [Current Status](../status/current.md) identifies implemented and designed components.
 - [Plugin Catalogue](../extend/plugin-catalogue/README.md) lists every installed extension package.

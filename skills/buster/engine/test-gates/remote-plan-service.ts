@@ -11,6 +11,7 @@ import {
   remotePlanResultReceipt,
   repositoryArchiveBytes,
   resolvedTestPlanDigest,
+  verifySourceSnapshotAttestation,
   validatePipelineTestGateContract,
   type RemotePlanJobV1,
   type RemotePlanResultV1,
@@ -46,6 +47,8 @@ export interface BusterPlanJobStoreOptions {
   readonly maximumArchiveBytes: number;
   readonly maximumResultBytes: number;
   readonly maximumResultStoreBytes: number;
+  readonly trustedSourceAuthority: string;
+  readonly sourceAttestationPublicKey: string | Buffer;
 }
 
 export class FileBusterPlanJobStore {
@@ -53,6 +56,8 @@ export class FileBusterPlanJobStore {
   readonly #results: FileDurableBlobStore;
   readonly #maximumArchiveBytes: number;
   readonly #maximumResultBytes: number;
+  readonly #trustedSourceAuthority: string;
+  readonly #sourceAttestationPublicKey: string | Buffer;
 
   constructor(root: string, options: BusterPlanJobStoreOptions) {
     if (!Number.isSafeInteger(options.maximumArchiveBytes) || options.maximumArchiveBytes < 1) {
@@ -65,6 +70,14 @@ export class FileBusterPlanJobStore {
     this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultStoreBytes);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
     this.#maximumResultBytes = options.maximumResultBytes;
+    let sourcePublicKey: crypto.KeyObject;
+    try { sourcePublicKey = crypto.createPublicKey(options.sourceAttestationPublicKey); }
+    catch (error) { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID', { cause: error }); }
+    if (options.trustedSourceAuthority.length === 0 || sourcePublicKey.asymmetricKeyType !== 'ed25519') {
+      throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID');
+    }
+    this.#trustedSourceAuthority = options.trustedSourceAuthority;
+    this.#sourceAttestationPublicKey = sourcePublicKey.export({ type: 'spki', format: 'pem' });
   }
 
   #preflight(job: RemotePlanJobV1): void {
@@ -76,6 +89,10 @@ export class FileBusterPlanJobStore {
     // Keep the network trust boundary explicit. Contract validation repeats
     // these semantic checks for all other callers.
     repositoryArchiveBytes(job.repositoryArchive);
+    if (!verifySourceSnapshotAttestation(job.sourceSnapshot,
+      this.#trustedSourceAuthority, this.#sourceAttestationPublicKey)) {
+      throw new Error('BUSTER_SOURCE_ATTESTATION_INVALID');
+    }
     if (remotePlanJobId(job.idempotencyKey) !== job.jobId) {
       throw new Error('BUSTER_REMOTE_JOB_ID_INVALID');
     }

@@ -7,6 +7,7 @@ import type {
   RemotePlanResultV1,
   RepositoryArchiveV1,
   ResolvedTestPlanV1,
+  SourceSnapshotV1,
 } from './types.ts';
 
 export function remotePlanDigest(value: unknown): string {
@@ -56,6 +57,46 @@ export function repositoryArchiveBytes(value: RepositoryArchiveV1): Buffer {
     || `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}` !== value.contentDigest
   ) throw new Error('REMOTE_PLAN_ARCHIVE_INVALID');
   return bytes;
+}
+
+function unsignedSourceSnapshot(value: Omit<SourceSnapshotV1, 'attestation'> | SourceSnapshotV1) {
+  const { attestation: _ignored, ...unsigned } = value as SourceSnapshotV1;
+  return unsigned;
+}
+
+function sourceSnapshotAttestationMessage(
+  value: Omit<SourceSnapshotV1, 'attestation'> | SourceSnapshotV1,
+): Buffer {
+  return Buffer.from(`kubeclaw-source-snapshot-v1\0${canonicalJson(unsignedSourceSnapshot(value))}`, 'utf8');
+}
+
+export function attestSourceSnapshot(
+  value: Omit<SourceSnapshotV1, 'attestation'>,
+  privateKey: string | Buffer,
+): SourceSnapshotV1 {
+  let key: crypto.KeyObject;
+  try { key = crypto.createPrivateKey(privateKey); }
+  catch (error) { throw new Error('SOURCE_SNAPSHOT_PRIVATE_KEY_INVALID', { cause: error }); }
+  if (key.asymmetricKeyType !== 'ed25519') throw new Error('SOURCE_SNAPSHOT_PRIVATE_KEY_INVALID');
+  return Object.freeze({ ...value, attestation: Object.freeze({
+    schemaVersion: 'source-snapshot-attestation.v1', algorithm: 'ed25519',
+    authority: value.creatorAuthority,
+    signature: crypto.sign(null, sourceSnapshotAttestationMessage(value), key).toString('base64'),
+  }) });
+}
+
+export function verifySourceSnapshotAttestation(
+  value: SourceSnapshotV1,
+  expectedAuthority: string,
+  publicKey: string | Buffer,
+): boolean {
+  if (value.creatorAuthority !== expectedAuthority || value.attestation.authority !== expectedAuthority) return false;
+  try {
+    const key = crypto.createPublicKey(publicKey);
+    return key.asymmetricKeyType === 'ed25519'
+      && crypto.verify(null, sourceSnapshotAttestationMessage(value), key,
+        Buffer.from(value.attestation.signature, 'base64'));
+  } catch { return false; }
 }
 
 export function remotePlanJobDigest(value: Omit<RemotePlanJobV1, 'requestDigest'> | RemotePlanJobV1): string {

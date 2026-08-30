@@ -305,24 +305,17 @@ jobs:
           chmod 600 "$HOME/.kube/config"
           test "$(kubectl auth can-i create namespaces)" = no
           test "$(kubectl auth can-i create busternamespaceleases.kubeclaw.forgestack.ai -n kubeclaw)" = yes
-      - name: Resolve published Prism digests
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Configure published Prism images
         run: |
           set -euo pipefail
           tag="${GITHUB_SHA:0:7}"
           for kind in control studio worker ingestion; do
-            ref="ghcr.io/${GITHUB_REPOSITORY_OWNER}/kubeclaw-prism-${kind}:${tag}"
-            digest="$(docker buildx imagetools inspect "$ref" | awk '$1 == "Digest:" {print $2; exit}')"
-            [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
             upper="${kind^^}"
             echo "PRISM_${upper}_IMAGE_REPOSITORY=ghcr.io/${GITHUB_REPOSITORY_OWNER}/kubeclaw-prism-${kind}" >> "$GITHUB_ENV"
             echo "PRISM_${upper}_IMAGE_TAG=${tag}" >> "$GITHUB_ENV"
-            echo "PRISM_${upper}_IMAGE_DIGEST=${digest}" >> "$GITHUB_ENV"
           done
       - name: Run real Prism acceptance
         env:
           PRISM_E2E_USER: ${{ secrets.PRISM_E2E_USER }}
-          PRISM_APPROVER_USERS: ${{ secrets.PRISM_E2E_USER }}
           PRISM_E2E_USE_LEASE: "true"
         run: bash scripts/deploy.sh prism-e2e

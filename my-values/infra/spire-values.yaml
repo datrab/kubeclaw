@@ -1,0 +1,46 @@
+global:
+  k8s:
+    clusterDomain: cluster.local
+  spire:
+    clusterName: kubeclaw-cluster2
+    trustDomain: kubeclaw.internal
+    caSubject:
+      country: DE
+      organization: KubeClaw
+      commonName: kubeclaw.internal
+    recommendations:
+      enabled: true
+      namespaceLayout: true
+      namespacePSS: true
+      priorityClassName: true
+      strictMode: true
+      securityContexts: true
+      prometheus: false
+    namespaces:
+      create: true
+      system: { name: spire-system, create: true }
+      server: { name: spire-server, create: true }
+spire-server:
+  controllerManager:
+    identities:
+      clusterSPIFFEIDs:
+        default:
+          enabled: true
+          spiffeIDTemplate: 'spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}'
+          podSelector:
+            matchLabels:
+              kubeclaw.dev/worker-trust: "true"
+          namespaceSelector: {}
+        oidc-discovery-provider:
+          enabled: false
+        test-keys:
+          enabled: false
+  jwtSVIDSupport: false
+spiffe-oidc-discovery-provider:
+  enabled: false
+spiffe-csi-driver:
+  image:
+    # 0.2.13 contains the July 2026 Go and x/net security updates.
+    tag: "0.2.13"
+tornjak-frontend:
+  enabled: false

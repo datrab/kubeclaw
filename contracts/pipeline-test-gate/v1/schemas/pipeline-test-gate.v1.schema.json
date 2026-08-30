@@ -1297,7 +1297,7 @@
     "sourceSnapshot": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schemaVersion", "sourceType", "pipelineStageId", "repositoryId", "revision", "tree", "archiveContentDigest", "archiveSizeBytes", "creatorAuthority"],
+      "required": ["schemaVersion", "sourceType", "pipelineStageId", "repositoryId", "revision", "tree", "archiveContentDigest", "archiveSizeBytes", "creatorAuthority", "attestation"],
       "properties": {
         "schemaVersion": { "const": "source-snapshot.v1" },
         "sourceType": { "const": "git-commit" },
@@ -1307,7 +1307,18 @@
         "tree": { "type": "string", "pattern": "^git:(?:[a-f0-9]{40}|[a-f0-9]{64})$" },
         "archiveContentDigest": { "$ref": "#/$defs/digest" },
         "archiveSizeBytes": { "type": "integer", "minimum": 1, "maximum": 134217728 },
-        "creatorAuthority": { "$ref": "#/$defs/stableId" }
+        "creatorAuthority": { "$ref": "#/$defs/stableId" },
+        "attestation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schemaVersion", "algorithm", "authority", "signature"],
+          "properties": {
+            "schemaVersion": { "const": "source-snapshot-attestation.v1" },
+            "algorithm": { "const": "ed25519" },
+            "authority": { "$ref": "#/$defs/stableId" },
+            "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]{86}==$" }
+          }
+        }
       }
     },
     "grantMap": {

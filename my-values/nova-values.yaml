@@ -90,28 +90,37 @@ capabilityProviders:
       test.suite.execute:
         adapter: buster-suite-v2
         port: 18892
+        proxyPort: 28892
       test.plan.execute:
         adapter: buster-plan-v1
         scheme: http
         port: 18891
+        proxyPort: 28891
   prism:
     agentRole: prism
     capabilities:
       runtime.dispatch:
         adapter: runtime
         port: 8080
+        proxyPort: 28080
+        authentication: spiffe-proxy
+
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
 
 extraEnv:
-  - name: PRISM_DISPATCH_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: prism-dispatch-auth
-        key: token
   - name: BUSTER_V2_TOKEN
     valueFrom:
       secretKeyRef:
         name: openclaw-shared-secrets
         key: busterV2Token
+  - name: BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY
+    valueFrom:
+      secretKeyRef:
+        name: pipeline-test-gate-source-attestation
+        key: privateKey
   - name: BUSTER_GATEWAY_TOKEN
     valueFrom:
       secretKeyRef:

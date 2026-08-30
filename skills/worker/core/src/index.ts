@@ -18,3 +18,9 @@ export type {
   WorkerAttemptOperationResources,
   WorkerAttemptOperationResult,
 } from '../worker/attempt-executor.ts';
+export {
+  authorizeProxiedSpiffePeer,
+  authorizeSpiffePeer,
+  spiffePeerFromForwardedClientCertificate,
+} from '../worker/trust.ts';
+export type { WorkerPrincipal } from '../worker/trust.ts';

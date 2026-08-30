@@ -133,6 +133,82 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
+  name: kubeclaw-nova-buster-test-gates
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: nova
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: kubeclaw
+              app.kubernetes.io/component: buster
+      ports:
+        - protocol: TCP
+          port: 18891
+        - protocol: TCP
+          port: 18892
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kubeclaw-buster-test-gates-from-nova
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: buster
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: kubeclaw
+              app.kubernetes.io/component: nova
+      ports:
+        - protocol: TCP
+          port: 18891
+        - protocol: TCP
+          port: 18892
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kubeclaw-nova-prism-worker-trust
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: nova
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: prism-control
+      ports:
+        - protocol: TCP
+          port: 8443
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubeclaw/managed-by: buster-namespace-controller
+          podSelector:
+            matchLabels:
+              app: prism-control
+      ports:
+        - protocol: TCP
+          port: 8443
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: kubeclaw-redis-ingress
 spec:
   podSelector:

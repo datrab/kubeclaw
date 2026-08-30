@@ -27,6 +27,7 @@
         "gateway",
         "capabilityProviders",
         "replicaCount",
+        "workerTrust",
         "auth",
         "litellm",
         "anthropic",
@@ -63,7 +64,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 197
+          "line": 211
         }
       ]
     },
@@ -86,6 +87,7 @@
         "busterNamespaceBroker",
         "service",
         "capabilityProviders",
+        "workerTrust",
         "extraEnv",
         "resources",
         "probes",
@@ -151,6 +153,7 @@
         "discordWebhook",
         "agent",
         "serviceAccount",
+        "workerTrust",
         "service",
         "extraContainers",
         "extraVolumes",

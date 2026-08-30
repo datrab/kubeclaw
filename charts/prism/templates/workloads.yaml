@@ -7,7 +7,12 @@ spec:
   replicas: {{ (index $.Values $name).replicas }}
   selector: { matchLabels: { app: prism-{{ $name }} } }
   template:
-    metadata: { labels: { app: prism-{{ $name }} } }
+    metadata:
+      labels:
+        app: prism-{{ $name }}
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        kubeclaw.dev/worker-trust: "true"
+        {{- end }}
     spec:
       serviceAccountName: prism-{{ $name }}
       imagePullSecrets: {{ toYaml $.Values.imagePullSecrets | nindent 8 }}
@@ -25,19 +30,25 @@ spec:
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           env:
             - { name: PORT, value: "8080" }
-            {{- if or (eq $name "control") (eq $name "worker") }}
+            {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}
             - name: PRISM_WORKER_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
             {{- end }}
             {{- if eq $name "control" }}
+            {{- if $.Values.workerTrust.spiffe.enabled }}
+            - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }
+            - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }
+            {{- end }}
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
             - name: PRISM_SESSION_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: session-secret } }
             - name: PRISM_INGRESS_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
+            {{- if not $.Values.workerTrust.spiffe.enabled }}
             - name: PRISM_DISPATCH_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: dispatch-secret } }
+            {{- end }}
             - { name: PRISM_INGESTION_URL, value: "http://prism-ingestion:8080" }
             - name: PRISM_INGESTION_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }
@@ -48,7 +59,7 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
             {{- end }}
             {{- if eq $name "worker" }}
-            - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://prism-control:8080" }
+            - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
             - name: PRISM_PROVIDER_ENDPOINT
@@ -62,6 +73,18 @@ spec:
             - name: PRISM_EMBEDDING_MODEL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-model, optional: true } }
             {{- end }}
+            {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+            - { name: SPIFFE_ENDPOINT_SOCKET, value: {{ printf "unix://%s" $.Values.workerTrust.spiffe.socketPath | quote }} }
+            - { name: WORKER_TRUST_SPIFFE_ENABLED, value: "true" }
+            {{- if eq $name "control" }}
+            - { name: PRISM_TRUSTED_NOVA_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/%s" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.novaNamespace $.Values.workerTrust.spiffe.novaServiceAccount | quote }} }
+            - { name: PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-test-runner" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            - { name: PRISM_TRUSTED_WORKER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-worker" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            - { name: PRISM_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            {{- else }}
+            - { name: PRISM_TRUSTED_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            {{- end }}
+            {{- end }}
           resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
           volumeMounts:
             - { name: tmp, mountPath: /tmp }
@@ -70,10 +93,31 @@ spec:
             {{- end }}
           readinessProbe: { httpGet: { path: /ready, port: 8080 }, initialDelaySeconds: 3 }
           livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        - name: worker-trust-proxy
+          image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}"
+          imagePullPolicy: {{ $.Values.workerTrust.spiffe.envoy.pullPolicy }}
+          args: ["-c", {{ printf "/etc/kubeclaw-worker-trust/%s.yaml" $name | quote }}, "--service-cluster", {{ printf "prism-%s" $name | quote }}]
+          ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }]
+          readinessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 10 }
+          securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources: {{ toYaml $.Values.workerTrust.spiffe.envoy.resources | nindent 12 }}
+          volumeMounts:
+            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }
+            - { name: spiffe-workload-api, mountPath: /run/spire/sockets, readOnly: true }
+            - { name: worker-trust-tmp, mountPath: /tmp }
+        {{- end }}
       volumes:
         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
         {{- if eq $name "control" }}
         - { name: artifacts, persistentVolumeClaim: { claimName: prism-artifacts } }
+        {{- end }}
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        - { name: worker-trust-envoy, configMap: { name: prism-worker-trust, defaultMode: 0444 } }
+        - name: spiffe-workload-api
+          csi: { driver: {{ $.Values.workerTrust.spiffe.csiDriver | quote }}, readOnly: true }
+        - { name: worker-trust-tmp, emptyDir: { sizeLimit: 64Mi } }
         {{- end }}
 ---
 {{- end }}

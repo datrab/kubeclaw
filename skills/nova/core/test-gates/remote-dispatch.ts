@@ -234,22 +234,29 @@ export class NovaRemotePlanDispatcher {
 
 export class HttpRemotePlanTransport implements RemotePlanTransport {
   readonly #endpoint: string;
-  readonly #token: string;
+  readonly #token: string | undefined;
   readonly #maximumResponseBytes: number;
   readonly #maximumResultBytes: number;
 
-  constructor(options: { readonly endpoint: string; readonly token: string; readonly maximumResponseBytes: number;
+  constructor(options: { readonly endpoint: string; readonly token?: string; readonly authentication?: 'bearer' | 'spiffe-proxy'; readonly maximumResponseBytes: number;
     readonly maximumResultBytes?: number }) {
     const endpoint = new URL(options.endpoint);
     if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password) {
       throw new Error('NOVA_REMOTE_PLAN_ENDPOINT_INVALID');
     }
-    if (options.token.length < 32) throw new Error('NOVA_REMOTE_PLAN_TOKEN_INVALID');
+    const authentication = options.authentication ?? 'bearer';
+    if (authentication === 'bearer' && (!options.token || options.token.length < 32)) {
+      throw new Error('NOVA_REMOTE_PLAN_TOKEN_INVALID');
+    }
+    if (authentication === 'spiffe-proxy'
+      && !['127.0.0.1', 'localhost', '::1'].includes(endpoint.hostname)) {
+      throw new Error('NOVA_REMOTE_PLAN_SPIFFE_PROXY_NOT_LOOPBACK');
+    }
     if (!Number.isSafeInteger(options.maximumResponseBytes) || options.maximumResponseBytes < 1) {
       throw new Error('NOVA_REMOTE_PLAN_RESPONSE_LIMIT_INVALID');
     }
     this.#endpoint = endpoint.href.replace(/\/+$/u, '');
-    this.#token = options.token;
+    this.#token = authentication === 'bearer' ? options.token : undefined;
     this.#maximumResponseBytes = options.maximumResponseBytes;
     this.#maximumResultBytes = options.maximumResultBytes ?? options.maximumResponseBytes;
     if (!Number.isSafeInteger(this.#maximumResultBytes) || this.#maximumResultBytes < 1) {
@@ -262,7 +269,7 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     try {
       response = await fetch(`${this.#endpoint}${suffix}`, {
         method,
-        headers: { authorization: `Bearer ${this.#token}`, ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
+        headers: { ...(this.#token ? { authorization: `Bearer ${this.#token}` } : {}), ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),
         redirect: 'error',
         ...(signal ? { signal } : {}),
@@ -324,7 +331,7 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     let response: Response;
     try {
       response = await fetch(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/evidence/${encodeURIComponent(contentDigest)}`, {
-        headers: { authorization: `Bearer ${this.#token}` }, redirect: 'error', ...(signal ? { signal } : {}),
+        headers: this.#token ? { authorization: `Bearer ${this.#token}` } : {}, redirect: 'error', ...(signal ? { signal } : {}),
       });
     } catch (error) { throw new RemotePlanTransportError('NOVA_REMOTE_EVIDENCE_NETWORK_ERROR', true, error); }
     if (!response.ok) throw new RemotePlanTransportError(
@@ -358,7 +365,7 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     let response: Response;
     try {
       response = await fetch(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/results/${encodeURIComponent(contentDigest)}`, {
-        headers: { authorization: `Bearer ${this.#token}` }, redirect: 'error', ...(signal ? { signal } : {}),
+        headers: this.#token ? { authorization: `Bearer ${this.#token}` } : {}, redirect: 'error', ...(signal ? { signal } : {}),
       });
     } catch (error) { throw new RemotePlanTransportError('NOVA_REMOTE_RESULT_NETWORK_ERROR', true, error); }
     if (!response.ok) throw new RemotePlanTransportError(

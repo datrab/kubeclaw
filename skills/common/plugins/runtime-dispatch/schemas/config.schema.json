@@ -10,13 +10,19 @@
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-          "required": ["endpoint", "tokenSecret"],
+          "required": ["endpoint"],
           "properties": {
           "endpoint": { "type": "string", "format": "uri" },
+          "authentication": { "enum": ["hmac", "spiffe-proxy"], "default": "hmac" },
           "tokenSecret": { "type": "string", "minLength": 1 },
           "maxRequestBytes": { "type": "integer", "minimum": 1, "maximum": 8388608, "default": 1048576 },
           "maxResponseBytes": { "type": "integer", "minimum": 1, "maximum": 8388608, "default": 1048576 }
-        }
+        },
+        "allOf": [{
+          "if": { "properties": { "authentication": { "const": "spiffe-proxy" } }, "required": ["authentication"] },
+          "then": { "properties": { "endpoint": { "type": "string", "pattern": "^http://(127\\.0\\.0\\.1|localhost|\\[::1\\]):" } }, "not": { "properties": { "tokenSecret": {} }, "required": ["tokenSecret"] } },
+          "else": { "properties": { "tokenSecret": {} }, "required": ["tokenSecret"] }
+        }]
       }
     }
   }

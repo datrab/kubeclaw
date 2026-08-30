@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   checkPipelineTestGateContract,
+  attestSourceSnapshot,
   remotePlanJobDigest,
   nodeResultDigest,
   remotePlanResultDigest,
@@ -46,11 +47,12 @@ const planUnsigned = {
 const plan: ResolvedTestPlanV1 = { ...planUnsigned, planDigest: resolvedTestPlanDigest(planUnsigned) };
 
 const archive = Buffer.from('archive');
-const sourceSnapshot = { schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
+const sourceAttestationPrivateKey = crypto.generateKeyPairSync('ed25519').privateKey.export({ type: 'pkcs8', format: 'pem' });
+const sourceSnapshot = attestSourceSnapshot({ schemaVersion: 'source-snapshot.v1' as const, sourceType: 'git-commit' as const,
   pipelineStageId: 'stage:test-gate',
   repositoryId: 'repository:remote-test', revision: `git:${'a'.repeat(40)}`, tree: `git:${'b'.repeat(40)}`,
   archiveContentDigest: `sha256:${crypto.createHash('sha256').update(archive).digest('hex')}`,
-  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' };
+  archiveSizeBytes: archive.byteLength, creatorAuthority: 'nova:test' }, sourceAttestationPrivateKey);
 const job = createRemotePlanJob({
   idempotencyKey: 'dispatch:remote', pipelineStageId: 'stage:test-gate', plan,
   sourceSnapshot, repositoryArchive: archive, grants: new Map([['unit', []]]),

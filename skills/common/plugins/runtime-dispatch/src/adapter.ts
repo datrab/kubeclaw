@@ -5,7 +5,8 @@ import { createDispatchAdapter } from './dispatch-adapter.ts';
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
 interface Target {
   readonly endpoint: string;
-  readonly tokenSecret: string;
+  readonly authentication: 'hmac' | 'spiffe-proxy';
+  readonly tokenSecret?: string;
   readonly maxRequestBytes: number;
   readonly maxResponseBytes: number;
 }
@@ -58,16 +59,23 @@ function targetFrom(id: string, value: unknown): Target {
     if (!ID.test(id) || !record(value)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
     exact(value, new Set([
       'endpoint', 'tokenSecret', 'maxRequestBytes', 'maxResponseBytes',
+      'authentication',
     ]), 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
     const endpoint = endpointFrom(value.endpoint, id);
-    if (typeof value.tokenSecret !== 'string' || !ID.test(value.tokenSecret)) {
+    const authentication = value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'hmac';
+    if (authentication === 'hmac' && (typeof value.tokenSecret !== 'string' || !ID.test(value.tokenSecret))) {
       throw new Error(`RUNTIME_CONFIG_INVALID:tokenSecret:${id}`);
+    }
+    if (authentication === 'spiffe-proxy'
+      && !['127.0.0.1', 'localhost', '::1'].includes(endpoint.hostname)) {
+      throw new Error(`RUNTIME_CONFIG_INVALID:spiffeProxy:${id}`);
     }
     const maxRequestBytes = boundedInteger(value.maxRequestBytes, 1_048_576, id, 'maxRequestBytes');
     const maxResponseBytes = boundedInteger(value.maxResponseBytes, 1_048_576, id, 'maxResponseBytes');
     return {
       endpoint: endpoint.href,
-      tokenSecret: value.tokenSecret,
+      authentication,
+      ...(authentication === 'hmac' ? { tokenSecret: value.tokenSecret as string } : {}),
       maxRequestBytes,
       maxResponseBytes,
     };
@@ -94,17 +102,13 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       json(request.payload);
       const body = JSON.stringify(request.payload);
       if (Buffer.byteLength(body, 'utf8') > target.maxRequestBytes) throw new Error('RUNTIME_REQUEST_SIZE_EXCEEDED');
-      const secret = await context.invokeConfidential('secrets.read', {
-        operation: 'resolve',
-        resource: { type: 'secret.name', canonicalId: target.tokenSecret },
-        payload: {},
-      });
+      const secret = target.authentication === 'hmac' ? await context.invokeConfidential('secrets.read', {
+        operation: 'resolve', resource: { type: 'secret.name', canonicalId: target.tokenSecret! }, payload: {},
+      }) : undefined;
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-      if (typeof secret.value !== 'string' || secret.value.length < 1) throw new Error('RUNTIME_SECRET_UNAVAILABLE');
-      const signature = crypto
-        .createHmac('sha256', secret.value)
-        .update(`${request.idempotencyKey}.${body}`, 'utf8')
-        .digest('hex');
+      if (secret && (typeof secret.value !== 'string' || secret.value.length < 1)) throw new Error('RUNTIME_SECRET_UNAVAILABLE');
+      const signature = secret ? crypto.createHmac('sha256', secret.value)
+        .update(`${request.idempotencyKey}.${body}`, 'utf8').digest('hex') : undefined;
       const response = await context.invokeConfidential('network.http', {
         operation: 'request',
         resource: { type: 'network.url', canonicalId: target.endpoint },
@@ -113,7 +117,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
           headers: {
             'content-type': 'application/json',
             'idempotency-key': request.idempotencyKey,
-            'x-kubeclaw-signature': `v1=${signature}`,
+            ...(signature ? { 'x-kubeclaw-signature': `v1=${signature}` } : {}),
           },
           body: request.payload,
         },

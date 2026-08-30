@@ -14,6 +14,9 @@ file.
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
+Use the [Worker Trust runbook](../operations/worker-trust-runbook.md) to verify
+SPIRE, SVID issuance, mTLS, identity denials, and source attestation.
+
 ## Troubleshooting
 
 If rendering fails, validate values and Secret references. If runtime startup

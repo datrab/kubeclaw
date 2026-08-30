@@ -91,6 +91,20 @@ capabilityProviders: {}
 # -- Replica count (always 1 per agent — agents are stateful)
 replicaCount: 1
 
+workerTrust:
+  spiffe:
+    enabled: false
+    trustDomain: kubeclaw.internal
+    socketPath: /run/spire/sockets/spire-agent.sock
+    csiDriver: csi.spiffe.io
+    envoy:
+      repository: envoyproxy/envoy
+      tag: v1.39.0
+      pullPolicy: IfNotPresent
+      resources:
+        requests: { cpu: 50m, memory: 64Mi }
+        limits: { cpu: 500m, memory: 256Mi }
+
 # =============================================================================
 # AUTHENTICATION
 # =============================================================================

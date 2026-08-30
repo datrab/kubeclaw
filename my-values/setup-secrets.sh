@@ -609,6 +609,44 @@ setup_shared_secret() {
   warn "Run with KUBECLAW_SECRET_SETUP_MODE=interactive to paste values, or create/copy the Secret before deployment."
 }
 
+setup_pipeline_source_attestation_secret() {
+  local name="pipeline-test-gate-source-attestation"
+  local private_file public_file temporary
+  if secret_exists "$NAMESPACE" "$name" && [[ "$(normalize_boolish "$SECRETS_OVERWRITE")" != "true" ]]; then
+    local missing
+    mapfile -t missing < <(secret_missing_keys "$NAMESPACE" "$name" privateKey publicKey)
+    if [[ ${#missing[@]} == "0" ]]; then
+      log "Using existing Secret: ${NAMESPACE}/${name}"
+      return 0
+    fi
+    warn "Repairing Secret ${NAMESPACE}/${name}; missing keys: $(join_by_comma "${missing[@]}")"
+  fi
+  if copy_secret_from_source "$name"; then
+    local copied_missing
+    mapfile -t copied_missing < <(secret_missing_keys "$NAMESPACE" "$name" privateKey publicKey)
+    if [[ ${#copied_missing[@]} == "0" ]]; then
+      return 0
+    fi
+    warn "Replacing incomplete copied Secret ${NAMESPACE}/${name}; missing keys: $(join_by_comma "${copied_missing[@]}")"
+  fi
+  require_command openssl
+  temporary="$(mktemp -d)"
+  private_file="$temporary/private.pem"
+  public_file="$temporary/public.pem"
+  trap 'rm -rf "${temporary:-}"' RETURN
+  openssl genpkey -algorithm ED25519 -out "$private_file"
+  openssl pkey -in "$private_file" -pubout -out "$public_file"
+  chmod 0600 "$private_file" "$public_file"
+  kubectl create secret generic "$name" \
+    --namespace "$NAMESPACE" \
+    --from-file="privateKey=$private_file" \
+    --from-file="publicKey=$public_file" \
+    --dry-run=client -o yaml | kubectl apply -n "$NAMESPACE" -f - >/dev/null
+  rm -rf "$temporary"
+  trap - RETURN
+  log "Created: ${NAMESPACE}/${name}"
+}
+
 setup_redis_secret() {
   local redis_password
   local missing
@@ -1005,6 +1043,7 @@ main() {
   fi
 
   setup_shared_secret
+  setup_pipeline_source_attestation_secret
   setup_redis_secret
 
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
