@@ -10,7 +10,7 @@
 #   - SSH key added to GitHub
 #
 # Usage: ./setup.sh <github-url>
-# Example: ./setup.sh git@github.com:ForgeStack/kubeclaw.git
+# Example: ./setup.sh git@github.com:datrab/kubeclaw.git
 # =============================================================================
 set -euo pipefail
 
@@ -28,7 +28,7 @@ err() { echo -e "${RED}[✗]${NC} $1" >&2; }
 
 if [[ -z $REPO_URL ]]; then
   echo "Usage: $0 <github-repo-url>"
-  echo "Example: $0 git@github.com:ForgeStack/kubeclaw.git"
+  echo "Example: $0 git@github.com:datrab/kubeclaw.git"
   exit 1
 fi
 

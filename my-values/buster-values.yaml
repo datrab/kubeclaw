@@ -59,7 +59,7 @@ agent:
   git:
     enabled: true
     secretName: "git-deploy-key-buster"
-    repoUrl: "git@github.com:Ravencrypt/ForgeStack.git"
+    repoUrl: "git@github.com:datrab/kubeclaw.git"
 
 serviceAccount:
   create: true

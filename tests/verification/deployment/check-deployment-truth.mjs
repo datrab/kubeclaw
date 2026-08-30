@@ -236,6 +236,12 @@ assert.match(busterValues, /name:\s*buster-plan-local[\s\S]*containerPort:\s*288
 assert.match(busterValues, /name:\s*buster-legacy-local[\s\S]*containerPort:\s*28892/);
 assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/);
 assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\s\S]*pipeline-test-gate-source-attestation/);
+for (const values of [novaValues, busterValues]) {
+  assert.match(values, /repoUrl:\s*["']git@github\.com:datrab\/kubeclaw\.git["']/,
+    'production agents must clone the single authoritative datrab/kubeclaw repository');
+  assert.doesNotMatch(values, /Ravencrypt|ForgeStack/,
+    'production agent values must not retain a legacy repository identity');
+}
 assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
 assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
