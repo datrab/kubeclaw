@@ -331,6 +331,11 @@ assert.match(
 );
 assert.match(
   busterRuntimeEntrypoint,
+  /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"[\s\S]*chown -R root:builder "\$legacy_state_dir" "\$legacy_run_dir"/,
+  'each Buster runtime must own the directories whose modes it initializes without CAP_FOWNER',
+);
+assert.match(
+  busterRuntimeEntrypoint,
   /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts[\s\S]*printf '%s' "\$worker_token" \| BUSTER_V2_PORT="\$\{BUSTER_LEGACY_PORT:-18892\}"[\s\S]*BUSTER_V2_STATE_DIR="\$legacy_state_dir"[\s\S]*setpriv[\s\S]*--groups 1000,1002[\s\S]*buster-suite-runtime\/src\/worker\.ts/,
   'the plan runtime and legacy worker must retain only their required token and BuildKit socket access',
 );

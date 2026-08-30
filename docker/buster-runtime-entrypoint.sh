@@ -88,10 +88,14 @@ mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state
 # generated-config directory owned by root until every file has been written;
 # otherwise handing the directory to builder here prevents the supervisor from
 # creating the kubeconfig and runtime JSON below. State and run directories are
-# handed off immediately because only the workers write to them.
+# handed off immediately because only the workers write to them. The plan
+# runtime runs as builder. The legacy supervisor keeps UID 0 so that it can
+# enter the per-job UID and GID. It does not have CAP_FOWNER, so it must own
+# its state and run directories before worker-context.ts applies their modes.
 chown -R root:root "$runtime_config_root"
 chmod 0750 "$runtime_config_root"
-chown -R builder:builder "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
+chown -R builder:builder "$plan_state_dir" "$plan_run_dir"
+chown -R root:builder "$legacy_state_dir" "$legacy_run_dir"
 test -r "$kube_service_account_root/token"
 test -r "$kube_service_account_root/ca.crt"
 test -r "$kube_service_account_root/namespace"

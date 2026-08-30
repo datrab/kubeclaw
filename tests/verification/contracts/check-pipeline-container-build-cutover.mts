@@ -39,6 +39,7 @@ const entrypoint = read('docker/buster-runtime-entrypoint.sh');
 assert.match(entrypoint, /remote-plan-cli\.ts/u);
 assert.match(entrypoint, /allowedCapabilities: \[[^\]]*'container\.build'[^\]]*\]/u);
 assert.match(entrypoint, /BUSTER_LEGACY_PORT/u);
+assert.match(entrypoint, /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"[\s\S]*chown -R root:builder "\$legacy_state_dir" "\$legacy_run_dir"/u);
 const busterValues = read('my-values/buster-values.yaml');
 assert.match(busterValues, /name: buster-plan[\s\S]*port: 18891/u);
 assert.match(busterValues, /name: buster-legacy[\s\S]*port: 18892/u);

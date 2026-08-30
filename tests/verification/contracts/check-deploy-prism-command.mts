@@ -41,6 +41,8 @@ assert(productionValues.includes("imagePullSecrets:\n  - name: ghcr-secret"),"Pr
 assert(productionValues.includes("studio: { replicas: 1"),"Prism Studio must default to one production replica");
 assert(productionValues.includes("worker: { replicas: 1"),"Prism Worker must default to one production replica");
 for(const template of [workloads,jobs,ingestion,postgresql])assert(template.includes("imagePullSecrets:"),"every Prism pod template must render imagePullSecrets");
+assert(workloads.includes("runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000"),
+  "Prism application pods must use a numeric non-root identity; the images declare the named node user");
 assert(postgresql.includes("PGDATA, value: /var/lib/postgresql/data/pgdata"),"Prism PostgreSQL must initialize an ownership-safe PGDATA child directory");
 assert(!chartSchema.includes("approverUsers"),"Prism chart schema must not expose an approver allowlist");
 assert(!workloads.includes("PRISM_APPROVER_USERS"),"Prism workloads must not configure an approver allowlist");
