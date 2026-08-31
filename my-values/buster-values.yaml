@@ -75,9 +75,9 @@ service:
     - name: buster-plan
       port: 18891
       targetPort: buster-plan
-    - name: buster-legacy
+    - name: buster-legacy-l
       port: 18892
-      targetPort: buster-legacy
+      targetPort: buster-legacy-l
 
 extraContainers:
   - name: buster-v2-runtime
