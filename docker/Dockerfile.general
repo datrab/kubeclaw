@@ -232,8 +232,8 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
 RUN set -eux; \
     mkdir -p /tmp/openclaw-plugin-home; \
-    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}"; \
-    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}"; \
+    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
+    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
     acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
     test -n "$acpx_root"; \
     case "${TARGETARCH:-amd64}" in \
