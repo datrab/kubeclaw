@@ -1,6 +1,8 @@
 # Buster's OpenClaw gateway and native/ACP agent runtime. Deterministic test,
 # image-build and Kubernetes tooling are reached through bounded v2 adapters.
+
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.8.1@sha256:e7849cb6c1ef1ead39ab4be7d85edb2df89611f486e283284c7cf35ce39a20d4
+
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS gateway-assets
 USER root
@@ -10,39 +12,42 @@ COPY tsconfig.base.json /tmp/tsconfig.base.json
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
 COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
 WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
+
 RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
-    && rm -rf src/generated/agent-observability \
-    && mkdir -p src/generated/agent-observability \
-    && cp -R /tmp/contracts/agent-observability/v1/src/. src/generated/agent-observability/ \
-    && ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
-    && node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
-    && mkdir -p /out/extensions/kubeclaw-agent-observer \
-    && cp -R \
-      /tmp/skills/common/plugins/openclaw-agent-observer/package.json \
-      /tmp/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json \
-      /tmp/skills/common/plugins/openclaw-agent-observer/src \
-      /tmp/skills/common/plugins/openclaw-agent-observer/dist \
-      /out/extensions/kubeclaw-agent-observer/
+&& rm -rf src/generated/agent-observability \
+&& mkdir -p src/generated/agent-observability \
+&& cp -R /tmp/contracts/agent-observability/v1/src/. src/generated/agent-observability/ \
+&& ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
+&& node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
+&& mkdir -p /out/extensions/kubeclaw-agent-observer \
+&& cp -R \
+/tmp/skills/common/plugins/openclaw-agent-observer/package.json \
+/tmp/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json \
+/tmp/skills/common/plugins/openclaw-agent-observer/src \
+/tmp/skills/common/plugins/openclaw-agent-observer/dist \
+/out/extensions/kubeclaw-agent-observer/
 
 ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
 ARG TARGETARCH
+
 RUN set -eux; \
-    mkdir -p /tmp/openclaw-plugin-home; \
-    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
-    HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
-    acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
-    test -n "$acpx_root"; \
-    case "${TARGETARCH:-amd64}" in \
-      amd64) keep_codex=codex-acp-linux-x64; keep_claude=claude-agent-sdk-linux-x64; keep_esbuild=linux-x64 ;; \
-      arm64) keep_codex=codex-acp-linux-arm64; keep_claude=claude-agent-sdk-linux-arm64; keep_esbuild=linux-arm64 ;; \
-      *) exit 1 ;; \
-    esac; \
-    find "$acpx_root/node_modules/@zed-industries" -mindepth 1 -maxdepth 1 -type d -name 'codex-acp-*' ! -name "$keep_codex" -exec rm -rf -- {} +; \
-    find "$acpx_root/node_modules/@anthropic-ai" -mindepth 1 -maxdepth 1 -type d -name 'claude-agent-sdk-*' ! -name "$keep_claude" -exec rm -rf -- {} +; \
-    find "$acpx_root/node_modules/@esbuild" -mindepth 1 -maxdepth 1 -type d ! -name "$keep_esbuild" -exec rm -rf -- {} +; \
-    mv /tmp/openclaw-plugin-home/.openclaw /out/openclaw-plugin-home; \
-    find /out/openclaw-plugin-home/npm -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version; \
-    rm -rf /tmp/openclaw-plugin-home
+mkdir -p /tmp/openclaw-plugin-home; \
+HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
+HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
+acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
+test -n "$acpx_root"; \
+project_root="${acpx_root%/node_modules/@openclaw/acpx}"; \
+case "${TARGETARCH:-amd64}" in \
+amd64) keep_codex=codex-acp-linux-x64; keep_claude=claude-agent-sdk-linux-x64; keep_esbuild=linux-x64 ;; \
+arm64) keep_codex=codex-acp-linux-arm64; keep_claude=claude-agent-sdk-linux-arm64; keep_esbuild=linux-arm64 ;; \
+*) exit 1 ;; \
+esac; \
+test ! -d "$project_root/node_modules/@zed-industries" || find "$project_root/node_modules/@zed-industries" -mindepth 1 -maxdepth 1 -type d -name 'codex-acp-*' ! -name "$keep_codex" -exec rm -rf -- {} +; \
+test ! -d "$project_root/node_modules/@anthropic-ai" || find "$project_root/node_modules/@anthropic-ai" -mindepth 1 -maxdepth 1 -type d -name 'claude-agent-sdk-*' ! -name "$keep_claude" -exec rm -rf -- {} +; \
+test ! -d "$project_root/node_modules/@esbuild" || find "$project_root/node_modules/@esbuild" -mindepth 1 -maxdepth 1 -type d ! -name "$keep_esbuild" -exec rm -rf -- {} +; \
+mv /tmp/openclaw-plugin-home/.openclaw /out/openclaw-plugin-home; \
+find /out/openclaw-plugin-home/npm -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version; \
+rm -rf /tmp/openclaw-plugin-home
 
 USER node
 
@@ -52,40 +57,42 @@ USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG DEBIAN_SNAPSHOT=20260804T000000Z
+
 RUN test -s /etc/ssl/certs/ca-certificates.crt \
-    && printf '%s\n' \
-      'Types: deb' \
-      "URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
-      'Suites: bookworm bookworm-updates' \
-      'Components: main' \
-      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
-      '' \
-      'Types: deb' \
-      "URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
-      'Suites: bookworm-security' \
-      'Components: main' \
-      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
-      > /etc/apt/sources.list.d/debian.sources \
-    && rm -f /etc/apt/sources.list \
-    && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
+&& printf '%s\n' \
+'Types: deb' \
+"URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
+'Suites: bookworm bookworm-updates' \
+'Components: main' \
+'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+'' \
+'Types: deb' \
+"URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
+'Suites: bookworm-security' \
+'Components: main' \
+'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+> /etc/apt/sources.list.d/debian.sources \
+&& rm -f /etc/apt/sources.list \
+&& printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
 
 # The snapshot pins the complete dependency graph coherently.
+
 # hadolint ignore=DL3008
 RUN packages=(ca-certificates curl git openssh-client jq ripgrep tree) \
-    && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
-    && for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
-    && apt-get install -y --no-install-recommends "${packages[@]}" \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /app/skills /root/.npm \
-    && npm config set cache /root/.npm --global \
-    && npm install -g ioredis@5.11.1
+&& apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
+&& for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
+&& apt-get install -y --no-install-recommends "${packages[@]}" \
+&& rm -rf /var/lib/apt/lists/* \
+&& mkdir -p /app/skills /root/.npm \
+&& npm config set cache /root/.npm --global \
+&& npm install -g ioredis@5.11.1
 
 COPY --from=gateway-assets /out/extensions/kubeclaw-agent-observer /app/dist/extensions/kubeclaw-agent-observer
 COPY --from=gateway-assets /out/openclaw-plugin-home /opt/openclaw-plugin-home
 
 ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules \
-    NPM_CONFIG_CACHE=/root/.npm \
-    HOME=/home/node
+NPM_CONFIG_CACHE=/root/.npm \
+HOME=/home/node
 
 USER node
 
