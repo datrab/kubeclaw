@@ -72,9 +72,9 @@ workerTrust:
 
 service:
   extraPorts:
-    - name: buster-plan
+    - name: buster-plan-l
       port: 18891
-      targetPort: buster-plan
+      targetPort: buster-plan-l
     - name: buster-legacy-l
       port: 18892
       targetPort: buster-legacy-l
