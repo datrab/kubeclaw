@@ -130,5 +130,9 @@ rollback to an older revision. Agent upgrades use `--reset-values` so the chart
 defaults plus the checked-in role values are the complete deployment source.
 Nova additionally pins `extraVolumes: []` and `extraVolumeMounts: []` to remove
 the retired direct-TLS Buster trust mount across rollback boundaries. Agent
-upgrades use atomic cleanup so a failed wait rolls back instead of leaving a new
-pending release revision.
+deploys also remove the retired `NODE_EXTRA_CA_CERTS` environment entry,
+`buster-plan-trust` mount, and matching volume from a drifted live Nova
+Deployment before Helm computes its three-way merge. This repairs clusters
+whose Helm manifest is already clean but whose Kubernetes object retained the
+old fields. Agent upgrades use atomic cleanup so a failed wait rolls back
+instead of leaving a new pending release revision.

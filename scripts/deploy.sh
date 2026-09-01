@@ -1136,6 +1136,25 @@ cmd_infra() {
 
 # ─── Agents ──────────────────────────────────────────────────────────────
 
+reconcile_nova_retired_trust_mount() {
+  local deployment="agent-nova"
+  local retired_fields=""
+
+  if ! kubectl get deployment "$deployment" -n "$NAMESPACE" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  retired_fields="$(kubectl get deployment "$deployment" -n "$NAMESPACE" \
+    -o 'jsonpath={range .spec.template.spec.containers[?(@.name=="kubeclaw")].env[?(@.name=="NODE_EXTRA_CA_CERTS")]}{.name}{"\n"}{end}{range .spec.template.spec.containers[?(@.name=="kubeclaw")].volumeMounts[?(@.name=="buster-plan-trust")]}{.name}{"\n"}{end}{range .spec.template.spec.volumes[?(@.name=="buster-plan-trust")]}{.name}{"\n"}{end}')"
+  if [[ -z $retired_fields ]]; then
+    return 0
+  fi
+
+  warn "Reconciling retired Nova direct-TLS trust metadata before Helm upgrade"
+  kubectl patch deployment "$deployment" -n "$NAMESPACE" --type=strategic --patch \
+    '{"spec":{"template":{"spec":{"containers":[{"name":"kubeclaw","env":[{"name":"NODE_EXTRA_CA_CERTS","$patch":"delete"}],"volumeMounts":[{"name":"buster-plan-trust","$patch":"delete"}]}],"volumes":[{"name":"buster-plan-trust","$patch":"delete"}]}}}}'
+}
+
 reconcile_buster_runtime_ports() {
   local deployment="agent-buster"
   local runtime_index=""
@@ -1280,7 +1299,9 @@ deploy_agent() {
     append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"
   fi
 
-  if [[ $role == "buster" ]]; then
+  if [[ $role == "nova" ]]; then
+    reconcile_nova_retired_trust_mount
+  elif [[ $role == "buster" ]]; then
     reconcile_buster_runtime_ports
   fi
 

@@ -273,6 +273,11 @@ for (const portName of busterRuntimePortNames) {
 }
 assert.match(
   deploy,
+  /reconcile_nova_retired_trust_mount[\s\S]*?NODE_EXTRA_CA_CERTS[\s\S]*?buster-plan-trust[\s\S]*?--type=strategic[\s\S]*?"\$patch":"delete"[\s\S]*?if \[\[ \$role == "nova" \]\]; then\s+reconcile_nova_retired_trust_mount/u,
+  'Nova deploy must remove retired direct-TLS trust metadata from a drifted live Deployment',
+);
+assert.match(
+  deploy,
   /reconcile_buster_runtime_ports[\s\S]*?go-template=[\s\S]*?runtime_index[\s\S]*?--type=json[\s\S]*?\\"op\\":\\"test[\s\S]*?buster-v2-runtime[\s\S]*?\\"op\\":\\"replace[\s\S]*?plan-runtime[\s\S]*?28891[\s\S]*?legacy-runtime[\s\S]*?28892[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+reconcile_buster_runtime_ports/u,
   'Buster deploy must replace stale runtime port metadata before Helm upgrades',
 );
