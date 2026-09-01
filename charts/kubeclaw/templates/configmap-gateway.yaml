@@ -191,9 +191,8 @@ data:
           },
           "contextInjection": "never"
         },
-        "list": [
-          {
-            "id": "main",
+        "entries": {
+          "main": {
             "subagents": {
               "allowAgents": [
                 "*"
@@ -204,10 +203,8 @@ data:
               "maxSkillsPromptChars": 1200
             }
           },
-          {
-            "id": "codex"
-          }
-        ]
+          "codex": {}
+        }
       },
       "tools": {
         "profile": "coding",

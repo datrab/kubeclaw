@@ -26,10 +26,13 @@ Init refreshes persisted `openclaw.json` so LiteLLM, memory search, and Discord 
 
 Managed multi-agent rosters assign `agents.defaults.systemAgent.agentId` to
 `main`. Startup migration always declares managed roster ownership as `explicit`
-before OpenClaw converts any remaining legacy roster layout. It adds the system
-owner only when neither a system owner nor a heartbeat owner already exists.
-This gives memory reconciliation, cron jobs, and ambient heartbeat work an
-unambiguous owner without overwriting an explicit operator choice.
+and atomically converts a legacy `agents.list` array to the canonical keyed
+`agents.entries` object before OpenClaw validates the file. This avoids the
+OpenClaw 2026.8.1 doctor path that can lose ownership while converting a legacy
+multi-agent roster. The migration adds the system owner only when neither a
+system owner nor a heartbeat owner already exists. This gives memory
+reconciliation, cron jobs, and ambient heartbeat work an unambiguous owner
+without overwriting an explicit operator choice.
 
 ## Source And Runtime Paths
 

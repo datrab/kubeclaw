@@ -431,9 +431,19 @@ assert.match(
   'managed multi-agent configurations must assign system jobs to the main agent',
 );
 assert.match(
+  gatewayConfig,
+  /"entries":\s*\{\s*"main":\s*\{[\s\S]*"codex":\s*\{\}/,
+  'new managed configs must use the canonical keyed OpenClaw agent roster',
+);
+assert.doesNotMatch(
+  gatewayConfig,
+  /"list":\s*\[/,
+  'new managed configs must not emit the retired agents.list roster',
+);
+assert.match(
   chart,
-  /config\.agents = config\.agents \|\| \{\}[\s\S]*config\.agents\.ownership !== 'explicit'[\s\S]*systemAgentId[\s\S]*heartbeatAgentId[\s\S]*managedAgentId[\s\S]*defaults\.systemAgent = \{ agentId: managedAgentId \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
-  'all managed homes must gain explicit ownership and an ambient system owner before startup doctor validation',
+  /legacyEntries\.length > 0[\s\S]*canonicalEntries[\s\S]*delete config\.agents\.list[\s\S]*config\.agents\.ownership !== 'explicit'[\s\S]*systemAgentId[\s\S]*heartbeatAgentId[\s\S]*defaults\.systemAgent = \{ agentId: managedAgentId \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
+  'legacy homes must gain a canonical keyed roster, explicit ownership, and a system owner before doctor validation',
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),

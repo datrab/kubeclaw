@@ -92,6 +92,7 @@ spec:
                 : [];
               const keyedEntries = config?.agents?.entries
                 && typeof config.agents.entries === 'object'
+                && !Array.isArray(config.agents.entries)
                 ? Object.entries(config.agents.entries)
                 : [];
               const rosterIds = legacyEntries.length > 0
@@ -99,6 +100,19 @@ spec:
                 : keyedEntries.map(([id]) => id);
               let changed = false;
               config.agents = config.agents || {};
+              if (legacyEntries.length > 0) {
+                const canonicalEntries = Object.fromEntries(keyedEntries);
+                for (const legacyEntry of legacyEntries) {
+                  if (!legacyEntry || typeof legacyEntry !== 'object' || !legacyEntry.id) continue;
+                  const { id, ...entry } = legacyEntry;
+                  delete entry.default;
+                  canonicalEntries[id] = { ...(canonicalEntries[id] || {}), ...entry };
+                }
+                config.agents.entries = canonicalEntries;
+                delete config.agents.list;
+                changed = true;
+                console.log('==> Migrated agents.list to canonical keyed agents.entries');
+              }
               if (config.agents.ownership !== 'explicit') {
                 config.agents.ownership = 'explicit';
                 changed = true;
