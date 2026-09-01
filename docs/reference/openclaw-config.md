@@ -24,6 +24,12 @@ The rendered config includes:
 
 Init refreshes persisted `openclaw.json` so LiteLLM, memory search, and Discord token fields use env SecretRefs instead of literal secrets. It also removes the obsolete `plugins.load.paths` entry for `/app/openclaw-plugins/kubeclaw-agent-observer` and seeds official external plugins from the image-baked npm cache using pinned `npm:@openclaw/*` provenance. This allows trusted official plugins such as Discord to use protected state APIs without runtime network access. Existing non-secret runtime edits stay in the persistent file across redeploys. The `kubeclaw-prism` plugin entry belongs only to the logical `agent-prism`; startup migration removes it from other persistent agent homes before validation. The startup doctor runs as a blocking init migration against that persistent OpenClaw home while the gateway is stopped; this lets required SQLite schema migrations complete before gateway readiness. SQLite staging uses the writable `/tmp` volume instead of the read-only image home. `swarm.config.json` is still rendered through `/runtime-config` because it can receive `DISCORD_WEBHOOK`.
 
+Managed multi-agent rosters assign `agents.defaults.systemAgent.agentId` to
+`main`. Startup migration adds that owner only when neither a system owner nor a
+heartbeat owner already exists. This gives memory reconciliation, cron jobs,
+and ambient heartbeat work an unambiguous owner without overwriting an explicit
+operator choice.
+
 ## Source And Runtime Paths
 
 | Layer | Owner | Path or key | When it runs | Output |

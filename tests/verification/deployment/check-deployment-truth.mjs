@@ -425,6 +425,16 @@ assert.match(
   /"agents":\s*\{\s*"ownership":\s*"explicit"/,
   'new managed multi-agent configurations must declare explicit ownership',
 );
+assert.match(
+  gatewayConfig,
+  /"systemAgent":\s*\{\s*"agentId":\s*"main"/,
+  'managed multi-agent configurations must assign system jobs to the main agent',
+);
+assert.match(
+  chart,
+  /systemAgentId[\s\S]*heartbeatAgentId[\s\S]*roster\.length > 1[\s\S]*managedAgentId[\s\S]*defaults\.systemAgent = \{ agentId: managedAgentId \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
+  'existing multi-agent homes must gain an ambient system owner before startup doctor validation',
+);
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),
   'state migration must run before init-setup invokes any OpenClaw CLI command',

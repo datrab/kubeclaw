@@ -95,6 +95,9 @@ data:
       "agents": {
         "ownership": "explicit",
         "defaults": {
+          "systemAgent": {
+            "agentId": "main"
+          },
           "thinkingDefault": "off",
           "reasoningDefault": "off",
           "model": {
