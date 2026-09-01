@@ -93,6 +93,7 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.remote-test-gate | 1.0.0 | nova | adapter: plan | requires: secrets.read<br>provides: test.plan.execute | `skills/nova/plugins/remote-test-gate/plugin.json` |
 | kubeclaw.repository-adapter | 1.0.0 | nova | adapter: repository | requires: none<br>provides: git.repository.read | `skills/nova/plugins/repository-adapter/plugin.json` |
 | kubeclaw.review | 1.0.0 | nova | stage: review (kubeclaw.decision.review)<br>stage: repository-audit (kubeclaw.audit.repository-review) | requires: runtime.dispatch, git.repository.read, artifacts.read, artifacts.write<br>provides: none | `skills/nova/plugins/review/plugin.json` |
+| kubeclaw-prism | 0.1.0 | not role-bundled | none | requires: none<br>provides: none | `skills/prism/openclaw-plugin/openclaw.plugin.json` |
 
 ## Completeness boundary
 

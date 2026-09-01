@@ -1,8 +1,9 @@
 # =============================================================================
 # KubeClaw Archviewer — Lightweight architecture presentation server
 # =============================================================================
-# Serves HTML previews from /designs via nginx on port 3456.
-# Used as sidecar in the Nova pod — mounts workspace/prism/designs.
+# Serves Nova's HTML architecture presentations from /designs on port 3456.
+# It is independent from Prism Studio and has no Prism design authority. The
+# Nova sidecar retains the historical workspace/prism/designs storage subpath.
 #
 # Build:  docker build -f docker/Dockerfile.archviewer -t ghcr.io/datrab/kubeclaw-archviewer:latest .
 # Run:    docker run -p 3456:3456 -v ./designs:/designs ghcr.io/datrab/kubeclaw-archviewer:latest

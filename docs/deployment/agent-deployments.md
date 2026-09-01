@@ -2,7 +2,10 @@
 
 Nova, Buster, and the single logical Prism agent use OpenClaw gateway deployments. Pipeline execution is
 provided by the shared v2 core and installed plugin packages. Buster runs the
-plan runtime and the remaining legacy suite worker beside its gateway.
+plan runtime and the remaining legacy suite worker beside its gateway. Nova
+runs Archviewer beside its gateway to serve Nova-authored HTML architecture
+presentations. Archviewer is independent from Prism Studio and has no design or
+Baseline Bundle authority.
 
 ## Deploy
 
@@ -69,8 +72,9 @@ on GitHub artifact attestations or any external signing service.
 
 ## Verification
 
-Confirm Nova has its gateway and `worker-trust-proxy` containers. Confirm Buster
-has its gateway, `buster-v2-runtime`, and `worker-trust-proxy`. Confirm Envoy
+Confirm Nova has its gateway, `archviewer`, and `worker-trust-proxy` containers.
+Its `archviewer` port is `3456`, exposed through the dedicated NodePort `30456`.
+Confirm Buster has its gateway, `buster-v2-runtime`, and `worker-trust-proxy`. Confirm Envoy
 exposes plan port `18891` and legacy suite port `18892`. The Service must target
 the Envoy port names `buster-plan` and `buster-legacy`. The runtime port names
 must remain distinct as `plan-runtime` and `legacy-runtime` on ports `28891` and

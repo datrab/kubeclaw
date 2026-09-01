@@ -327,6 +327,26 @@ assert.match(
   'worker state must be bounded and absent from the shared workspace PVC',
 );
 assert.doesNotMatch(novaValues, /\.kubeclaw\.svc\.cluster\.local/);
+assert.match(
+  novaValues,
+  /service:[\s\S]*name:\s*archviewer[\s\S]*port:\s*3456[\s\S]*targetPort:\s*archviewer[\s\S]*nodePort:\s*30456/,
+  'Nova must expose its independent HTML architecture viewer on the established NodePort',
+);
+assert.match(
+  novaValues,
+  /extraContainers:[\s\S]*name:\s*archviewer[\s\S]*kubeclaw-archviewer:latest[\s\S]*name:\s*archviewer[\s\S]*containerPort:\s*3456[\s\S]*mountPath:\s*\/designs[\s\S]*readOnly:\s*true/,
+  'Nova must retain the read-only Archviewer sidecar separately from Prism Studio',
+);
+assert.doesNotMatch(
+  novaValues,
+  /name:\s*prism-preview/,
+  'the Nova architecture presentation port must not use the misleading Prism preview name',
+);
+assert.match(
+  networkPolicies,
+  /name:\s*kubeclaw-agents-ingress[\s\S]*port:\s*3456/,
+  'the Archviewer NodePort path must retain ingress to Nova port 3456',
+);
 assert.match(chart, /fsGroup:\s*1000/);
 assert.match(
   chart,

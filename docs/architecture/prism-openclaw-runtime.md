@@ -4,6 +4,11 @@ Prism is one logical agent with several separately secured components. Only
 `agent-prism` runs OpenClaw and performs model reasoning. The other workloads
 are ordinary application services.
 
+Nova's `archviewer` sidecar is not part of Prism. It serves Nova-authored HTML
+architecture presentations, while Prism Studio previews and edits Prism Design
+Documents. Both may operate at the same time because they have separate data and
+authority boundaries.
+
 | Component | Responsibility | LLM access |
 | --- | --- | --- |
 | `agent-prism` / `kubeclaw` | OpenClaw gateway, persistent project sessions, Discord | LiteLLM only |

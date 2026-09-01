@@ -1971,6 +1971,15 @@
           "kind": "stage"
         }
       ]
+    },
+    {
+      "id": "kubeclaw-prism",
+      "version": "0.1.0",
+      "kind": "openclaw-plugin",
+      "file": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw-prism",
+      "bundledBy": [],
+      "registrations": []
     }
   ],
   "registrationCounts": {

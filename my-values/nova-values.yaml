@@ -72,6 +72,15 @@ busterNamespaceBroker:
     verificationRead:
       enabled: true
 
+service:
+  extraPorts:
+    # Nova's HTML architecture presentations are separate from Prism Studio.
+    # Keep the established NodePort so existing Tailscale exposure remains valid.
+    - name: archviewer
+      port: 3456
+      targetPort: archviewer
+      nodePort: 30456
+
 capabilityProviders:
   buster:
     agentRole: buster
@@ -129,6 +138,41 @@ probes:
   liveness:
     timeoutSeconds: 10
     failureThreshold: 5
+
+# =============================================================================
+# Archviewer — Nova HTML architecture presentations
+# =============================================================================
+# This sidecar serves Nova-authored architecture documents only. It is not a
+# Prism preview, design authority, or Baseline Bundle consumer. The historical
+# workspace subpath is retained so existing presentations remain available.
+# =============================================================================
+extraContainers:
+  - name: archviewer
+    image: ghcr.io/datrab/kubeclaw-archviewer:latest
+    imagePullPolicy: Always
+    ports:
+      - name: archviewer
+        containerPort: 3456
+        protocol: TCP
+    volumeMounts:
+      - name: workspace
+        mountPath: /designs
+        subPath: prism/designs
+        readOnly: true
+    startupProbe:
+      httpGet: { path: /, port: archviewer }
+      periodSeconds: 2
+      failureThreshold: 30
+    readinessProbe:
+      httpGet: { path: /, port: archviewer }
+      periodSeconds: 10
+    livenessProbe:
+      httpGet: { path: /, port: archviewer }
+      initialDelaySeconds: 10
+      periodSeconds: 15
+    resources:
+      requests: { cpu: 50m, memory: 64Mi }
+      limits: { cpu: 200m, memory: 128Mi }
 
 workspace:
   enabled: false
