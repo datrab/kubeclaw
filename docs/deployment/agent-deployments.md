@@ -124,6 +124,15 @@ for state migration. These init budgets are sequential and do not add to the
 running Buster containers. The running pod requests about `20Gi` and has limits
 of about `48.25Gi`: `24Gi` gateway, `24Gi` runtime, and `256Mi` Envoy.
 
+OpenClaw 2026.8 validates multi-agent ownership before it can migrate persistent
+state. The migration init container therefore adds `agents.ownership: explicit`
+atomically to an existing managed multi-agent configuration before running
+`openclaw doctor`; newly rendered gateway configurations contain the field
+already. Nova and Buster run the doctor with a `3072MiB` V8 heap inside a `4Gi`
+container limit. Nova also reserves a `1Gi` request and `8Gi` limit for the
+following offline plugin setup. Both init containers run sequentially and do
+not add to the steady-state pod memory.
+
 A pod mount error referencing `buster-plan-trust` or another object absent from
 the current values indicates stale Helm release values, commonly after a
 rollback to an older revision. Agent upgrades use `--reset-values` so the chart

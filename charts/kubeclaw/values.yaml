@@ -57,6 +57,9 @@ gateway:
   # the gateway is able to expose a healthy endpoint.
   startupDoctor:
     enabled: true
+    # Keep V8 below the container memory limit while allowing OpenClaw's
+    # configuration and SQLite migrations to process larger persistent state.
+    nodeOptions: "--max-old-space-size=768"
     resources:
       requests: { cpu: 50m, memory: 128Mi }
       limits: { cpu: 1000m, memory: 1Gi }

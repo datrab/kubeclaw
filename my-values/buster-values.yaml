@@ -9,6 +9,7 @@ anthropic:
 gateway:
   startupDoctor:
     enabled: true
+    nodeOptions: "--max-old-space-size=3072"
     resources:
       requests: { cpu: 100m, memory: 256Mi }
       limits: { cpu: "2", memory: 4Gi }

@@ -312,8 +312,13 @@ assert.match(busterValues, /name:\s*plan-runtime[\s\S]*containerPort:\s*28891/);
 assert.match(busterValues, /name:\s*legacy-runtime[\s\S]*containerPort:\s*28892/);
 assert.match(
   busterValues,
-  /startupDoctor:[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*4Gi\s*\}[\s\S]*initSetup:[\s\S]*requests:\s*\{\s*cpu:\s*500m,\s*memory:\s*1Gi\s*\}[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*8Gi\s*\}/,
+  /startupDoctor:[\s\S]*nodeOptions:\s*"--max-old-space-size=3072"[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*4Gi\s*\}[\s\S]*initSetup:[\s\S]*requests:\s*\{\s*cpu:\s*500m,\s*memory:\s*1Gi\s*\}[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*8Gi\s*\}/,
   'Buster migration and plugin setup must have explicit non-trivial memory budgets',
+);
+assert.match(
+  novaValues,
+  /startupDoctor:[\s\S]*nodeOptions:\s*"--max-old-space-size=3072"[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*4Gi\s*\}[\s\S]*initSetup:[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*8Gi\s*\}/,
+  'Nova migration and plugin setup must have enough memory for existing OpenClaw state',
 );
 assert.match(
   busterValues,
@@ -394,6 +399,21 @@ assert.match(
   chart,
   /name:\s*openclaw-state-migration[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive[\s\S]*mountPath:\s*\/home\/node\/\.openclaw/,
   'required OpenClaw state migrations must finish before the gateway container starts',
+);
+assert.match(
+  chart,
+  /config\.agents\.ownership = 'explicit'[\s\S]*Set agents\.ownership=explicit[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive/,
+  'OpenClaw 2026.8 multi-agent ownership must be repaired before doctor validates the config',
+);
+assert.match(
+  chart,
+  /name:\s*NODE_OPTIONS\s*\n\s*value:\s*\{\{ \.Values\.gateway\.startupDoctor\.nodeOptions \| quote \}\}/,
+  'the state migration must receive its explicitly budgeted V8 heap size',
+);
+assert.match(
+  gatewayConfig,
+  /"agents":\s*\{\s*"ownership":\s*"explicit"/,
+  'new managed multi-agent configurations must declare explicit ownership',
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),

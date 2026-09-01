@@ -81,6 +81,29 @@ spec:
                 echo "==> No existing OpenClaw state database; migration not required"
                 exit 0
               fi
+              config_path="/home/node/.openclaw/openclaw.json"
+              if [ -f "$config_path" ]; then
+                node <<'NODE'
+              const fs = require('node:fs');
+              const configPath = '/home/node/.openclaw/openclaw.json';
+              const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+              const legacyEntries = Array.isArray(config?.agents?.list)
+                ? config.agents.list
+                : [];
+              const keyedEntries = config?.agents?.entries
+                && typeof config.agents.entries === 'object'
+                ? Object.values(config.agents.entries)
+                : [];
+              const roster = legacyEntries.length > 0 ? legacyEntries : keyedEntries;
+              if (roster.length > 1 && config.agents.ownership !== 'explicit') {
+                config.agents.ownership = 'explicit';
+                const temporaryPath = `${configPath}.kubeclaw-migration.tmp`;
+                fs.writeFileSync(temporaryPath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
+                fs.renameSync(temporaryPath, configPath);
+                console.log('==> Set agents.ownership=explicit for the managed multi-agent roster');
+              }
+              NODE
+              fi
               echo "==> Migrating OpenClaw persistent state before setup commands"
               exec node /app/openclaw.mjs doctor --fix --non-interactive
           env:
@@ -90,6 +113,8 @@ spec:
               value: "/tmp"
             - name: XDG_CACHE_HOME
               value: "/tmp/.cache"
+            - name: NODE_OPTIONS
+              value: {{ .Values.gateway.startupDoctor.nodeOptions | quote }}
             - name: NODE_PATH
               value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
             - name: SWARM_CONFIG

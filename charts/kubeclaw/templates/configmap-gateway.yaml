@@ -93,6 +93,7 @@ data:
         }
       },
       "agents": {
+        "ownership": "explicit",
         "defaults": {
           "thinkingDefault": "off",
           "reasoningDefault": "off",
