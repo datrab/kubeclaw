@@ -242,6 +242,16 @@ assert.deepEqual(busterRuntimePortNames, ['plan-runtime', 'legacy-runtime']);
 for (const portName of busterRuntimePortNames) {
   assert.ok(portName.length <= 15, `Buster runtime port name exceeds Kubernetes limit: ${portName}`);
 }
+assert.match(
+  deploy,
+  /reconcile_buster_runtime_ports[\s\S]*?go-template=[\s\S]*?runtime_index[\s\S]*?--type=json[\s\S]*?\\"op\\":\\"test[\s\S]*?buster-v2-runtime[\s\S]*?\\"op\\":\\"replace[\s\S]*?plan-runtime[\s\S]*?28891[\s\S]*?legacy-runtime[\s\S]*?28892[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+reconcile_buster_runtime_ports/u,
+  'Buster deploy must replace stale runtime port metadata before Helm upgrades',
+);
+assert.match(
+  deploy,
+  /verify_buster_port_routing[\s\S]*?expected_runtime[\s\S]*?expected_proxy[\s\S]*?expected_service[\s\S]*?Buster port routing invariant failed[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+verify_buster_port_routing/u,
+  'Buster deploy must verify runtime, proxy, and Service port routing after Helm upgrades',
+);
 assert.match(busterValues, /name:\s*plan-runtime[\s\S]*containerPort:\s*28891/);
 assert.match(busterValues, /name:\s*legacy-runtime[\s\S]*containerPort:\s*28892/);
 assert.match(

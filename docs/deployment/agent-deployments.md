@@ -84,3 +84,11 @@ processes. It does not accept a test-double boundary.
 
 Registry activation failures indicate invalid package, provider, trust, or
 grant configuration.
+
+A Kubernetes warning about a duplicate `buster-plan` or `buster-legacy` port
+indicates stale port metadata from an older Buster Deployment. The deploy script
+replaces the runtime port list before the Helm upgrade. The resulting runtime
+ports must be `plan-runtime:28891` and `legacy-runtime:28892`; the Envoy ports
+must be `buster-plan:18891` and `buster-legacy:18892`. The deploy script verifies
+the runtime, proxy, and Service port mappings after the Helm upgrade and fails if
+the Service can bypass Envoy.

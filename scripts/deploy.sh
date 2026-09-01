@@ -1146,6 +1146,59 @@ cmd_infra() {
 
 # ─── Agents ──────────────────────────────────────────────────────────────
 
+reconcile_buster_runtime_ports() {
+  local deployment="agent-buster"
+  local runtime_index=""
+  local current_ports=""
+  local expected_ports=$'plan-runtime:28891:TCP\nlegacy-runtime:28892:TCP'
+
+  if ! kubectl get deployment "$deployment" -n "$NAMESPACE" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  runtime_index="$(kubectl get deployment "$deployment" -n "$NAMESPACE" \
+    -o 'go-template={{range $index, $container := .spec.template.spec.containers}}{{if eq $container.name "buster-v2-runtime"}}{{$index}}{{end}}{{end}}')"
+  if [[ ! $runtime_index =~ ^[0-9]+$ ]]; then
+    return 0
+  fi
+
+  current_ports="$(kubectl get deployment "$deployment" -n "$NAMESPACE" \
+    -o 'jsonpath={range .spec.template.spec.containers[?(@.name=="buster-v2-runtime")].ports[*]}{.name}{":"}{.containerPort}{":"}{.protocol}{"\n"}{end}')"
+  if [[ $current_ports == "$expected_ports" ]]; then
+    return 0
+  fi
+
+  warn "Reconciling stale Buster runtime port metadata before Helm upgrade"
+  kubectl patch deployment "$deployment" -n "$NAMESPACE" --type=json --patch \
+    "[{\"op\":\"test\",\"path\":\"/spec/template/spec/containers/${runtime_index}/name\",\"value\":\"buster-v2-runtime\"},{\"op\":\"replace\",\"path\":\"/spec/template/spec/containers/${runtime_index}/ports\",\"value\":[{\"name\":\"plan-runtime\",\"containerPort\":28891,\"protocol\":\"TCP\"},{\"name\":\"legacy-runtime\",\"containerPort\":28892,\"protocol\":\"TCP\"}]}]"
+}
+
+verify_buster_port_routing() {
+  local runtime_ports=""
+  local proxy_ports=""
+  local service_ports=""
+  local expected_runtime=$'plan-runtime:28891:TCP\nlegacy-runtime:28892:TCP'
+  local expected_proxy=$'buster-plan:18891:TCP\nbuster-legacy:18892:TCP'
+  local expected_service=$'buster-plan:18891:buster-plan\nbuster-legacy:18892:buster-legacy'
+
+  runtime_ports="$(kubectl get deployment agent-buster -n "$NAMESPACE" \
+    -o 'jsonpath={range .spec.template.spec.containers[?(@.name=="buster-v2-runtime")].ports[*]}{.name}{":"}{.containerPort}{":"}{.protocol}{"\n"}{end}')"
+  proxy_ports="$(kubectl get deployment agent-buster -n "$NAMESPACE" \
+    -o 'jsonpath={range .spec.template.spec.containers[?(@.name=="worker-trust-proxy")].ports[*]}{.name}{":"}{.containerPort}{":"}{.protocol}{"\n"}{end}')"
+  service_ports="$(kubectl get service agent-buster -n "$NAMESPACE" \
+    -o 'jsonpath={range .spec.ports[?(@.name=="buster-plan")]}{.name}{":"}{.port}{":"}{.targetPort}{"\n"}{end}{range .spec.ports[?(@.name=="buster-legacy")]}{.name}{":"}{.port}{":"}{.targetPort}{"\n"}{end}')"
+
+  if [[ $runtime_ports != "$expected_runtime" || $proxy_ports != "$expected_proxy" || $service_ports != "$expected_service" ]]; then
+    err "Buster port routing invariant failed"
+    err "  runtime: ${runtime_ports//$'\n'/, }"
+    err "  proxy:   ${proxy_ports//$'\n'/, }"
+    err "  service: ${service_ports//$'\n'/, }"
+    return 1
+  fi
+
+  log "Buster Service targets Envoy only; runtime ports are distinct"
+}
+
 deploy_agent() {
   local role="$1"
   local mode="${2:-image}"
@@ -1237,6 +1290,10 @@ deploy_agent() {
     append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"
   fi
 
+  if [[ $role == "buster" ]]; then
+    reconcile_buster_runtime_ports
+  fi
+
   helm_args=(
     upgrade --install "agent-${role}" "$CHART_DIR"
     --namespace "$NAMESPACE"
@@ -1265,6 +1322,10 @@ deploy_agent() {
 
   if [[ -n $override_file ]]; then
     rm -f "$override_file"
+  fi
+
+  if [[ $role == "buster" ]]; then
+    verify_buster_port_routing
   fi
 
   if [[ $mode == "image" ]]; then
