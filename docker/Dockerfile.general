@@ -17,7 +17,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Anchor Debian packages to the snapshot matching the pinned OpenClaw base.
 
-ARG DEBIAN_SNAPSHOT=20260804T000000Z
+ARG DEBIAN_SNAPSHOT=20260901T000000Z
 
 RUN test -s /etc/ssl/certs/ca-certificates.crt \
 && printf '%s\n' \

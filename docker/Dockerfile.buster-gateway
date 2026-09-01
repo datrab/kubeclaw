@@ -61,7 +61,7 @@ FROM ${OPENCLAW_BASE}
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG DEBIAN_SNAPSHOT=20260804T000000Z
+ARG DEBIAN_SNAPSHOT=20260901T000000Z
 
 RUN test -s /etc/ssl/certs/ca-certificates.crt \
 && printf '%s\n' \
