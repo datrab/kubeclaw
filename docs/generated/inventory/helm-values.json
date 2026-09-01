@@ -64,7 +64,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 209
+          "line": 217
         }
       ]
     },
@@ -85,13 +85,11 @@
         "agent",
         "serviceAccount",
         "busterNamespaceBroker",
-        "service",
         "capabilityProviders",
         "workerTrust",
         "extraEnv",
         "resources",
         "probes",
-        "extraContainers",
         "workspace"
       ],
       "secretReferences": [

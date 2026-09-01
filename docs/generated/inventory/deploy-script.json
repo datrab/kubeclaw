@@ -178,26 +178,6 @@
       "description": "true|false (default: true)"
     },
     {
-      "name": "PRISM_PROVIDER_ENDPOINT",
-      "description": "OpenAI-compatible chat endpoint (default: internal LiteLLM)"
-    },
-    {
-      "name": "PRISM_PROVIDER_MODEL",
-      "description": "Chat model exposed by the provider (default: claude-sonnet)"
-    },
-    {
-      "name": "PRISM_PROVIDER_SECRET_OVERWRITE",
-      "description": "true|false to reconcile an existing provider Secret (default: false)"
-    },
-    {
-      "name": "PRISM_EMBEDDING_ENDPOINT",
-      "description": "Optional OpenAI-compatible embedding endpoint"
-    },
-    {
-      "name": "PRISM_EMBEDDING_MODEL",
-      "description": "Optional embedding model; required with PRISM_EMBEDDING_ENDPOINT"
-    },
-    {
       "name": "ALLOW_PARTIAL_INFRA",
       "description": "true|false (default: false)"
     },
@@ -228,11 +208,6 @@
     "KUBECLAW_DEPLOY_QDRANT": "true",
     "KUBECLAW_DEPLOY_LITELLM": "true",
     "KUBECLAW_DEPLOY_SPIRE": "true",
-    "PRISM_PROVIDER_ENDPOINT": "http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions",
-    "PRISM_PROVIDER_MODEL": "claude-sonnet",
-    "PRISM_PROVIDER_SECRET_OVERWRITE": "false",
-    "PRISM_EMBEDDING_ENDPOINT": "",
-    "PRISM_EMBEDDING_MODEL": "",
     "ALLOW_PARTIAL_INFRA": "false",
     "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:rootless"
   },
@@ -293,9 +268,6 @@
     "cmd_smoke",
     "prism_image_overrides",
     "prism_validate_values",
-    "prism_provider_secret_value",
-    "prism_provider_secret_matches_requested_route",
-    "reconcile_prism_provider_secret",
     "cmd_prism_secrets",
     "cmd_prism",
     "cmd_prism_smoke",
@@ -325,12 +297,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 821,
-    "secrets": 866,
-    "tailscale": 957,
-    "infra": 1048,
-    "agents": 1341,
-    "smoke": 1463,
-    "teardown": 1943
+    "setup": 811,
+    "secrets": 856,
+    "tailscale": 947,
+    "infra": 1038,
+    "agents": 1331,
+    "smoke": 1453,
+    "teardown": 1889
   }
 }
