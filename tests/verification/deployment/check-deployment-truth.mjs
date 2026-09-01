@@ -353,6 +353,16 @@ assert.doesNotMatch(
   'the Nova architecture presentation port must not use the misleading Prism preview name',
 );
 assert.match(
+  novaValues,
+  /extraVolumes:\s*\[\][\s\S]*extraVolumeMounts:\s*\[\]/,
+  'Nova must explicitly clear retired release-specific volumes and gateway mounts',
+);
+assert.doesNotMatch(
+  novaValues,
+  /buster-plan-trust|NODE_EXTRA_CA_CERTS/,
+  'Nova must not retain the retired direct-TLS Buster trust volume',
+);
+assert.match(
   networkPolicies,
   /name:\s*kubeclaw-agents-ingress[\s\S]*port:\s*3456/,
   'the Archviewer NodePort path must retain ingress to Nova port 3456',

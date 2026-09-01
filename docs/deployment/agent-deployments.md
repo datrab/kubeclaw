@@ -128,5 +128,7 @@ A pod mount error referencing `buster-plan-trust` or another object absent from
 the current values indicates stale Helm release values, commonly after a
 rollback to an older revision. Agent upgrades use `--reset-values` so the chart
 defaults plus the checked-in role values are the complete deployment source.
-They also use atomic cleanup so a failed wait rolls back instead of leaving a
-new pending release revision.
+Nova additionally pins `extraVolumes: []` and `extraVolumeMounts: []` to remove
+the retired direct-TLS Buster trust mount across rollback boundaries. Agent
+upgrades use atomic cleanup so a failed wait rolls back instead of leaving a new
+pending release revision.
