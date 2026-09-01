@@ -57,6 +57,9 @@ gateway:
   # the gateway is able to expose a healthy endpoint.
   startupDoctor:
     enabled: true
+    resources:
+      requests: { cpu: 50m, memory: 128Mi }
+      limits: { cpu: 1000m, memory: 1Gi }
   command:
     - "node"
     - "/app/openclaw.mjs"
@@ -68,6 +71,14 @@ gateway:
   port: 18789
   bridgePort: 18790
   resources: {}
+
+# Resource budget for setup work such as the offline OpenClaw plugin install.
+# This init container runs before all application containers, so its resources
+# are not concurrent with the gateway and runtime sidecars.
+initSetup:
+  resources:
+    requests: { cpu: 100m, memory: 256Mi }
+    limits: { cpu: 1000m, memory: 2Gi }
 
 # =============================================================================
 # CAPABILITY PROVIDERS

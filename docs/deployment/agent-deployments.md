@@ -117,6 +117,13 @@ fallback cache while the image root filesystem is read-only. The migration,
 setup, and gateway containers must all mount the pod's writable `tmp` volume at
 both `/tmp` and `/home/node/.cache`.
 
+An `init-setup` termination with exit code `137` and reason `OOMKilled` means
+the offline plugin installation exceeded its memory limit. Buster reserves a
+`1Gi` request and `8Gi` limit for setup, plus a `256Mi` request and `4Gi` limit
+for state migration. These init budgets are sequential and do not add to the
+running Buster containers. The running pod requests about `20Gi` and has limits
+of about `48.25Gi`: `24Gi` gateway, `24Gi` runtime, and `256Mi` Envoy.
+
 A pod mount error referencing `buster-plan-trust` or another object absent from
 the current values indicates stale Helm release values, commonly after a
 rollback to an older revision. Agent upgrades use `--reset-values` so the chart

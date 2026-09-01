@@ -290,6 +290,11 @@ assert.match(busterValues, /name:\s*plan-runtime[\s\S]*containerPort:\s*28891/);
 assert.match(busterValues, /name:\s*legacy-runtime[\s\S]*containerPort:\s*28892/);
 assert.match(
   busterValues,
+  /startupDoctor:[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*4Gi\s*\}[\s\S]*initSetup:[\s\S]*requests:\s*\{\s*cpu:\s*500m,\s*memory:\s*1Gi\s*\}[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*8Gi\s*\}/,
+  'Buster migration and plugin setup must have explicit non-trivial memory budgets',
+);
+assert.match(
+  busterValues,
   /service:\s*\n\s+extraPorts:\s*\n\s+- name:\s*buster-plan\s*\n\s+port:\s*18891\s*\n\s+targetPort:\s*buster-plan\s*\n\s+- name:\s*buster-legacy\s*\n\s+port:\s*18892\s*\n\s+targetPort:\s*buster-legacy/,
   'the Buster Service must target the public Envoy ports, not the local suite runtime ports',
 );

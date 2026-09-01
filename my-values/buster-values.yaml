@@ -7,9 +7,19 @@ anthropic:
   existingSecretKey: "anthropicApiKey"
 
 gateway:
+  startupDoctor:
+    enabled: true
+    resources:
+      requests: { cpu: 100m, memory: 256Mi }
+      limits: { cpu: "2", memory: 4Gi }
   resources:
     requests: { cpu: 1000m, memory: 12288Mi, ephemeral-storage: 1Gi }
     limits: { cpu: "6", memory: 24576Mi, ephemeral-storage: 50Gi }
+
+initSetup:
+  resources:
+    requests: { cpu: 500m, memory: 1Gi }
+    limits: { cpu: "2", memory: 8Gi }
 
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
