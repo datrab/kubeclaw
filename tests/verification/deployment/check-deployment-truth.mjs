@@ -333,6 +333,15 @@ assert.match(
   /name:\s*openclaw-state-migration[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive[\s\S]*mountPath:\s*\/home\/node\/\.openclaw/,
   'required OpenClaw state migrations must finish before the gateway container starts',
 );
+assert.ok(
+  chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),
+  'state migration must run before init-setup invokes any OpenClaw CLI command',
+);
+assert.match(
+  chart,
+  /state_db="\/home\/node\/\.openclaw\/state\/openclaw\.sqlite"[\s\S]*if \[ ! -f "\$state_db" \]; then[\s\S]*migration not required/,
+  'fresh installations without an OpenClaw state database must skip migration safely',
+);
 assert.match(
   chart,
   /name:\s*XDG_CACHE_HOME\s*\n\s*value:\s*"\/tmp\/\.cache"/,
