@@ -125,6 +125,11 @@ for (const [label, dockerfile] of [
   );
   assert.match(
     dockerfile,
+    /NPM_CONFIG_CACHE=\/tmp\/openclaw-plugin-npm-cache[^\n]*openclaw plugins install "npm:@openclaw\/acpx@\$\{OPENCLAW_PLUGIN_VERSION\}" --force --accept-capabilities[\s\S]*openclaw plugins install "npm:@openclaw\/discord@\$\{OPENCLAW_PLUGIN_VERSION\}" --force --accept-capabilities[\s\S]*npm pack[\s\S]*openclaw-plugin-home\/packs[\s\S]*openclaw-plugin-home\/npm-cache/,
+    `${label} must package pinned plugins and their npm cache for offline runtime installation`,
+  );
+  assert.match(
+    dockerfile,
     /ARG TARGETARCH[\s\S]*keep_codex=codex-acp-linux-x64[\s\S]*keep_claude=claude-agent-sdk-linux-x64[\s\S]*keep_esbuild=linux-x64[\s\S]*keep_codex=codex-acp-linux-arm64[\s\S]*keep_claude=claude-agent-sdk-linux-arm64[\s\S]*keep_esbuild=linux-arm64/,
     `${label} must discard ACP binaries for platforms other than the image target`,
   );
@@ -134,6 +139,22 @@ for (const [label, dockerfile] of [
     `${label} must not duplicate the multi-gigabyte plugin seed during the build`,
   );
 }
+
+assert.match(
+  chart,
+  /mountPath:\s*\/home\/node\/\.openclaw/,
+  'the setup container must mount plugin state at the same canonical path used by the gateway',
+);
+assert.match(
+  chart,
+  /NPM_CONFIG_CACHE=\/tmp\/openclaw-plugin-npm-cache[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "npm-pack:\$\{plugin_pack\}" --force --accept-capabilities/,
+  'the setup container must install pinned plugins from the image cache without network access',
+);
+assert.doesNotMatch(
+  chart,
+  /rm -rf \/config\/state|openclaw-plugin-home\/state/,
+  'plugin cache refresh must preserve the persistent OpenClaw SQLite state',
+);
 
 assert.match(
   busterRuntimeDockerfile,

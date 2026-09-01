@@ -203,8 +203,6 @@ spec:
 
               echo "==> 4a. OpenClaw Plugin Cache"
               if [ -d /opt/openclaw-plugin-home ]; then
-                mkdir -p /config/npm
-                mkdir -p /config/state
                 IMAGE_PLUGIN_CACHE_VERSION=""
                 CONFIG_PLUGIN_CACHE_VERSION=""
                 if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
@@ -216,90 +214,26 @@ spec:
                 if [ -n "$IMAGE_PLUGIN_CACHE_VERSION" ] && [ "$IMAGE_PLUGIN_CACHE_VERSION" = "$CONFIG_PLUGIN_CACHE_VERSION" ]; then
                   echo "    OpenClaw external plugin cache already current; skipping reseed"
                 else
-                  rm -rf /config/npm/*
-                  find /config/npm -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} +
-                  rm -rf /config/state/*
-                  find /config/state -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} +
-                  cp -a /opt/openclaw-plugin-home/npm/. /config/npm/
-                  if [ -d /opt/openclaw-plugin-home/state ]; then
-                    cp -a /opt/openclaw-plugin-home/state/. /config/state/
-                  fi
-                  if [ -f /opt/openclaw-plugin-home/openclaw.json ] && [ -f /config/openclaw.json ]; then
-                    node <<'NODE'
-              const fs = require('fs');
-              const bakedPath = '/opt/openclaw-plugin-home/openclaw.json';
-              const configPath = '/config/openclaw.json';
-              const baked = JSON.parse(fs.readFileSync(bakedPath, 'utf8'));
-              const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-              const bakedEntries = baked?.plugins?.entries && typeof baked.plugins.entries === 'object'
-                ? baked.plugins.entries
-                : {};
-              config.plugins = config.plugins || {};
-              config.plugins.entries = config.plugins.entries || {};
-              for (const [pluginId, bakedEntry] of Object.entries(bakedEntries)) {
-                const currentEntry = config.plugins.entries[pluginId];
-                config.plugins.entries[pluginId] = {
-                  ...(bakedEntry && typeof bakedEntry === 'object' ? bakedEntry : {}),
-                  ...(currentEntry && typeof currentEntry === 'object' ? currentEntry : {}),
-                };
-              }
-              fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
-              console.log('    Merged OpenClaw plugin entries from image cache into persistent config');
-              NODE
-                  fi
+                  rm -rf /tmp/openclaw-plugin-npm-cache
+                  mkdir -p /tmp/openclaw-plugin-npm-cache
+                  cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
+                  for plugin_pack in /opt/openclaw-plugin-home/packs/*.tgz; do
+                    echo "    Installing pinned plugin from ${plugin_pack}"
+                    HOME=/home/node \
+                      NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
+                      NPM_CONFIG_OFFLINE=true \
+                      openclaw plugins install "npm-pack:${plugin_pack}" --force --accept-capabilities
+                  done
+                  HOME=/home/node openclaw plugins registry --refresh
                   if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
                     cp -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version /config/.kubeclaw-plugin-cache-version
                   else
                     rm -f /config/.kubeclaw-plugin-cache-version
                   fi
-                  echo "    Seeded OpenClaw external plugins from image cache"
+                  echo "    Installed OpenClaw external plugins from the offline image cache"
                 fi
               else
                 echo "    WARNING: baked OpenClaw plugin home cache not found"
-              fi
-              ensure_official_plugin() {
-                plugin_id="$1"
-                package_name="$2"
-                package_glob="$3"
-                should_install="$(PLUGIN_ID="$plugin_id" node <<'NODE'
-              const fs = require('fs');
-              const pluginId = process.env.PLUGIN_ID;
-              const path = '/config/openclaw.json';
-              try {
-                const config = JSON.parse(fs.readFileSync(path, 'utf8'));
-                const entry = config?.plugins?.entries?.[pluginId];
-                if (entry === false) process.exit(1);
-                if (entry && typeof entry === 'object' && entry.enabled === false) process.exit(1);
-                if (pluginId === 'discord' && !config?.channels?.discord) process.exit(1);
-                process.stdout.write('true');
-              } catch {
-                process.exit(1);
-              }
-              NODE
-                )"
-                if [ "$should_install" != "true" ]; then
-                  echo "    ${plugin_id} not configured; skipping install check"
-                  return 0
-                fi
-                if find /config/npm/projects -maxdepth 1 -type d -name "$package_glob" | grep -q . 2>/dev/null; then
-                  echo "    ${plugin_id} plugin already present in persistent plugin home"
-                  return 0
-                fi
-                echo "    Installing missing official plugin ${plugin_id} (${package_name}) into persistent plugin home"
-                if HOME=/config openclaw plugins install "$package_name"; then
-                  echo "    Installed missing official plugin ${plugin_id}"
-                  return 0
-                fi
-                echo "    ERROR: failed to install required official plugin ${plugin_id}" >&2
-                return 1
-              }
-              mkdir -p /config/npm/projects
-              ensure_official_plugin acpx @openclaw/acpx 'openclaw-acpx-*'
-              ensure_official_plugin discord @openclaw/discord 'openclaw-discord-*'
-              if HOME=/config openclaw plugins registry --refresh; then
-                echo "    Refreshed persisted OpenClaw plugin registry before startup"
-              else
-                echo "    WARNING: failed to refresh persisted OpenClaw plugin registry from baked cache"
               fi
               mkdir -p /config/agents/main/sessions
 
@@ -864,6 +798,8 @@ spec:
               mountPath: /root/.ssh
             - name: config
               mountPath: /config
+            - name: config
+              mountPath: /home/node/.openclaw
             - name: runtime-config
               mountPath: /runtime-config
             - name: workspace

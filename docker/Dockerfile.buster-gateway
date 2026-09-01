@@ -31,11 +31,13 @@ ARG OPENCLAW_PLUGIN_VERSION=2026.8.1
 ARG TARGETARCH
 
 RUN set -eux; \
-mkdir -p /tmp/openclaw-plugin-home; \
-HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
-HOME=/tmp/openclaw-plugin-home openclaw plugins install "@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --accept-capabilities; \
+mkdir -p /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache /out/openclaw-plugin-home/packs; \
+HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install "npm:@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --force --accept-capabilities; \
+HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install "npm:@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --force --accept-capabilities; \
 acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
 test -n "$acpx_root"; \
+discord_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/discord' -print -quit)"; \
+test -n "$discord_root"; \
 project_root="${acpx_root%/node_modules/@openclaw/acpx}"; \
 case "${TARGETARCH:-amd64}" in \
 amd64) keep_codex=codex-acp-linux-x64; keep_claude=claude-agent-sdk-linux-x64; keep_esbuild=linux-x64 ;; \
@@ -45,9 +47,12 @@ esac; \
 test ! -d "$project_root/node_modules/@zed-industries" || find "$project_root/node_modules/@zed-industries" -mindepth 1 -maxdepth 1 -type d -name 'codex-acp-*' ! -name "$keep_codex" -exec rm -rf -- {} +; \
 test ! -d "$project_root/node_modules/@anthropic-ai" || find "$project_root/node_modules/@anthropic-ai" -mindepth 1 -maxdepth 1 -type d -name 'claude-agent-sdk-*' ! -name "$keep_claude" -exec rm -rf -- {} +; \
 test ! -d "$project_root/node_modules/@esbuild" || find "$project_root/node_modules/@esbuild" -mindepth 1 -maxdepth 1 -type d ! -name "$keep_esbuild" -exec rm -rf -- {} +; \
-mv /tmp/openclaw-plugin-home/.openclaw /out/openclaw-plugin-home; \
-find /out/openclaw-plugin-home/npm -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version; \
-rm -rf /tmp/openclaw-plugin-home
+npm pack "$acpx_root" --pack-destination /out/openclaw-plugin-home/packs >/dev/null; \
+npm pack "$discord_root" --pack-destination /out/openclaw-plugin-home/packs >/dev/null; \
+cp -a /tmp/openclaw-plugin-npm-cache /out/openclaw-plugin-home/npm-cache; \
+test "$(find /out/openclaw-plugin-home/packs -maxdepth 1 -type f -name '*.tgz' | wc -l)" -eq 2; \
+find /out/openclaw-plugin-home -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version; \
+rm -rf /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache
 
 USER node
 

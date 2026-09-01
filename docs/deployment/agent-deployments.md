@@ -92,3 +92,10 @@ ports must be `plan-runtime:28891` and `legacy-runtime:28892`; the Envoy ports
 must be `buster-plan:18891` and `buster-legacy:18892`. The deploy script verifies
 the runtime, proxy, and Service port mappings after the Helm upgrade and fails if
 the Service can bypass Envoy.
+
+An OpenClaw `missing-package-dir` error that points to
+`/tmp/openclaw-plugin-home` indicates plugin metadata from an image build path.
+Gateway images package pinned `npm-pack` archives and an npm cache. The setup
+container installs these packages offline against `/home/node/.openclaw`, which
+records the runtime path and capability consent in the existing state database.
+Plugin refresh must not replace the persistent SQLite state.
