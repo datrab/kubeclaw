@@ -616,57 +616,6 @@ spec:
               }
               console.log(JSON.stringify({ ok: true, mode, agent }));
               HEALTH_SCRIPT
-              cat > /runtime-config/kubeclaw-startup-doctor.sh <<'STARTUP_DOCTOR'
-              #!/bin/sh
-              set -u
-
-              if [ "{{ .Values.gateway.startupDoctor.enabled }}" != "true" ]; then
-                exit 0
-              fi
-
-              (
-                set +e
-                LOG_DIR="/home/node/.openclaw/logs"
-                LOG_FILE="/home/node/.openclaw/logs/startup-doctor.log"
-                WAIT_SECONDS="{{ .Values.gateway.startupDoctor.waitSeconds | default 120 }}"
-                POLL_SECONDS="{{ .Values.gateway.startupDoctor.pollSeconds | default 5 }}"
-                mkdir -p "$LOG_DIR"
-
-                echo "[$(date -Iseconds)] startup doctor waiting for gateway health"
-                DEADLINE=$(( $(date +%s) + WAIT_SECONDS ))
-                while [ "$(date +%s)" -le "$DEADLINE" ]; do
-                  node <<'NODE'
-              const raw = process.env.OPENCLAW_GATEWAY_URL || `http://127.0.0.1:${process.env.GATEWAY_PORT || '18789'}`;
-              const base = String(raw).trim().replace(/\/tools\/invoke$/, '').replace(/\/v1$/, '').replace(/\/$/, '');
-              const headers = process.env.OPENCLAW_GATEWAY_TOKEN
-                ? { Authorization: `Bearer ${process.env.OPENCLAW_GATEWAY_TOKEN}` }
-                : {};
-              const controller = new AbortController();
-              const timeout = setTimeout(() => controller.abort(), 5000);
-              fetch(`${base}/health`, { headers, signal: controller.signal })
-                .then((response) => process.exit(response.ok ? 0 : 1))
-                .catch(() => process.exit(1))
-                .finally(() => clearTimeout(timeout));
-              NODE
-                  if [ "$?" -eq 0 ]; then
-                    echo "[$(date -Iseconds)] gateway healthy; running openclaw doctor --fix against persistent home"
-                    HOME="/home/node" \
-                    SWARM_CONFIG="/home/node/.openclaw/swarm.config.json" \
-                    node /app/openclaw.mjs doctor --fix --non-interactive
-                    STATUS="$?"
-                    echo "[$(date -Iseconds)] openclaw doctor --fix exited with status ${STATUS}"
-                    exit 0
-                  fi
-                  sleep "$POLL_SECONDS"
-                done
-
-                echo "[$(date -Iseconds)] startup doctor skipped; gateway did not become healthy within ${WAIT_SECONDS}s"
-              ) >> "$LOG_FILE" 2>&1 &
-
-              exit 0
-              STARTUP_DOCTOR
-              chmod +x /runtime-config/kubeclaw-startup-doctor.sh
-
               echo "==> 5. Skills Merge"
               mkdir -p /skills-merged
               # Base image intentionally carries no fast-changing agent skill code.
@@ -935,6 +884,73 @@ spec:
             - name: tmp
               mountPath: /tmp
 
+        {{- if .Values.gateway.startupDoctor.enabled }}
+        # OpenClaw 2026.8+ blocks gateway startup until required SQLite schema
+        # migrations have completed. Run Doctor before the gateway owns the
+        # state directory so the migration cannot deadlock on gateway health.
+        - name: openclaw-state-migration
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              echo "==> Migrating OpenClaw persistent state before gateway startup"
+              exec node /app/openclaw.mjs doctor --fix --non-interactive
+          env:
+            - name: HOME
+              value: "/home/node"
+            - name: TMPDIR
+              value: "/tmp"
+            - name: XDG_CACHE_HOME
+              value: "/tmp/.cache"
+            - name: NODE_PATH
+              value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
+            - name: SWARM_CONFIG
+              value: "/home/node/.openclaw/swarm.config.json"
+            - name: LITELLM_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
+            - name: OPENCLAW_GATEWAY_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
+            {{- if .Values.anthropic.existingSecret }}
+            - name: CLAUDE_CODE_OAUTH_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
+            - name: ANTHROPIC_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
+            {{- end }}
+            {{- if .Values.discord.enabled }}
+            - name: DISCORD_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
+            {{- end }}
+          securityContext:
+            {{- if .Values.runAsRoot }}
+            runAsUser: 0
+            runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            {{- end }}
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { cpu: 1000m, memory: 1Gi }
+          volumeMounts:
+            - name: config
+              mountPath: /home/node/.openclaw
+            - name: workspace
+              mountPath: /home/node/.openclaw/workspace
+            - name: skills-merged
+              mountPath: /app/skills
+            - name: tmp
+              mountPath: /tmp
+        {{- end }}
+
       # ---------------------------------------------------------------
       # MAIN CONTAINERS
       # ---------------------------------------------------------------
@@ -952,6 +968,10 @@ spec:
           env:
             - name: HOME
               value: "/home/node"
+            - name: TMPDIR
+              value: "/tmp"
+            - name: XDG_CACHE_HOME
+              value: "/tmp/.cache"
             - name: NODE_PATH
               value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
             - name: AGENT_NAME
@@ -1149,9 +1169,6 @@ spec:
                   - |
                     DRAIN_FILE="${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}"
                     rm -f -- "$DRAIN_FILE"
-                    {{- if .Values.gateway.startupDoctor.enabled }}
-                    exec /runtime-config/kubeclaw-startup-doctor.sh
-                    {{- end }}
             preStop:
               exec:
                 command:

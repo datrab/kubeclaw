@@ -52,13 +52,11 @@ gateway:
   # Internal URL used by colocated runtime processes such as Buster and the
   # gateway runtime. Empty defaults to http://127.0.0.1:<gateway.port>.
   url: ""
-  # Run OpenClaw doctor --fix once after the gateway health endpoint is up.
+  # Run OpenClaw doctor --fix as a blocking init migration while the gateway is
+  # stopped. New OpenClaw releases can require state-schema migrations before
+  # the gateway is able to expose a healthy endpoint.
   startupDoctor:
     enabled: true
-    # Maximum time to wait for gateway health before skipping startup doctor.
-    waitSeconds: 120
-    # Seconds between gateway health checks while waiting.
-    pollSeconds: 5
   command:
     - "node"
     - "/app/openclaw.mjs"

@@ -48,7 +48,7 @@ Generated from: `charts/kubeclaw/values.yaml`, `my-values/nova-values.yaml`, `my
 | persistence | creates workspace/config PVCs for gateway and plugin-runtime state | rendered PVCs and security contexts match production values |
 | service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
 | buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
-| probes, startup doctor, and dependency checks | configures gateway, Redis, and LiteLLM health checks; `gateway.startupDoctor` runs `openclaw doctor --fix` once after gateway health | rendered env vars, startup hook, and smoke commands exercise the health and doctor surfaces |
+| probes, startup doctor, and dependency checks | configures gateway, Redis, and LiteLLM health checks; `gateway.startupDoctor` runs `openclaw doctor --fix` as a blocking init migration while the gateway is stopped | rendered init container, env vars, and smoke commands exercise the health and doctor surfaces |
 
 ## Failure Signals
 

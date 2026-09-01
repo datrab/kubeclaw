@@ -275,6 +275,21 @@ assert.match(
 assert.doesNotMatch(novaValues, /\.kubeclaw\.svc\.cluster\.local/);
 assert.match(chart, /fsGroup:\s*1000/);
 assert.match(
+  chart,
+  /name:\s*openclaw-state-migration[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive[\s\S]*mountPath:\s*\/home\/node\/\.openclaw/,
+  'required OpenClaw state migrations must finish before the gateway container starts',
+);
+assert.match(
+  chart,
+  /name:\s*XDG_CACHE_HOME\s*\n\s*value:\s*"\/tmp\/\.cache"/,
+  'OpenClaw SQLite staging must use the writable tmp volume with a read-only root filesystem',
+);
+assert.doesNotMatch(
+  chart,
+  /startup doctor waiting for gateway health|kubeclaw-startup-doctor\.sh/,
+  'state migration must not wait for the gateway whose startup it unblocks',
+);
+assert.match(
   busterValues,
   /name:\s*buster-api-token[\s\S]*defaultMode:\s*288/,
   'the worker credential projection must remain group-readable only',
