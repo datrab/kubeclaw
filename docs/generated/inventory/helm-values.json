@@ -65,7 +65,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 228
+          "line": 231
         }
       ]
     },
@@ -73,6 +73,8 @@
       "path": "my-values/nova-values.yaml",
       "topLevelKeys": [
         "agentRole",
+        "gateway",
+        "initSetup",
         "image",
         "imagePullSecrets",
         "codeBundle",
@@ -101,42 +103,42 @@
         {
           "key": "existingSecret",
           "value": "github-bundle-reader",
-          "line": 21
-        },
-        {
-          "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
-          "line": 25
-        },
-        {
-          "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
-          "line": 29
-        },
-        {
-          "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
-          "line": 33
-        },
-        {
-          "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
           "line": 37
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 42
+          "line": 41
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 45
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 49
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 53
+        },
+        {
+          "key": "existingSecret",
+          "value": "openclaw-shared-secrets",
+          "line": 58
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 47
+          "line": 63
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-nova",
-          "line": 61
+          "line": 77
         }
       ]
     },
@@ -174,32 +176,32 @@
         {
           "key": "existingSecret",
           "value": "github-bundle-reader",
-          "line": 37
+          "line": 38
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 41
+          "line": 42
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 45
+          "line": 46
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 50
+          "line": 51
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 64
+          "line": 65
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 71
+          "line": 72
         }
       ]
     },
