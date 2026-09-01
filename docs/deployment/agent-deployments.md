@@ -136,3 +136,9 @@ Deployment before Helm computes its three-way merge. This repairs clusters
 whose Helm manifest is already clean but whose Kubernetes object retained the
 old fields. Agent upgrades use atomic cleanup so a failed wait rolls back
 instead of leaving a new pending release revision.
+
+Envoy keeps its administrative listener on `127.0.0.1:9901`; it is never
+published through the Pod IP or a Service. Its readiness and liveness probes
+therefore execute inside the Envoy container. A kubelet `httpGet` probe against
+port `9901` would target the Pod IP, receive `connection refused`, and restart a
+healthy proxy after three failed checks.

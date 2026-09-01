@@ -18,6 +18,7 @@ const exists = (relativePath) =>
 
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
+const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const generalDockerfile = read('docker/Dockerfile.general');
 const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
@@ -270,6 +271,22 @@ const busterRuntimePortNames = [...busterRuntimePortBlock.matchAll(/^\s+- name:\
 assert.deepEqual(busterRuntimePortNames, ['plan-runtime', 'legacy-runtime']);
 for (const portName of busterRuntimePortNames) {
   assert.ok(portName.length <= 15, `Buster runtime port name exceeds Kubernetes limit: ${portName}`);
+}
+
+for (const [label, source] of [
+  ['agent Envoy', chart],
+  ['Prism Envoy', prismWorkloads],
+]) {
+  assert.match(
+    source,
+    /readinessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901[\s\S]*?GET \/ready HTTP\/1\.1[\s\S]*?livenessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901/u,
+    `${label} probes must reach the loopback-only Envoy admin listener from inside the container`,
+  );
+  assert.doesNotMatch(
+    source,
+    /httpGet:\s*\{\s*path:\s*\/ready,\s*port:\s*9901/u,
+    `${label} must not ask the kubelet to reach a loopback-only Envoy admin listener through the Pod IP`,
+  );
 }
 assert.match(
   deploy,

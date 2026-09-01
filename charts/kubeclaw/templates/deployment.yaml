@@ -1207,8 +1207,23 @@ spec:
             {{- else if eq .Values.agentRole "prism" }}
             - { name: prism-dispatch, containerPort: 18082, protocol: TCP }
             {{- end }}
-          readinessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 3 }
-          livenessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 10 }
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - >-
+                  exec 3<>/dev/tcp/127.0.0.1/9901;
+                  printf 'GET /ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3;
+                  IFS= read -r status <&3;
+                  [[ "$status" == *" 200 "* ]]
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+          livenessProbe:
+            exec:
+              command: [/bin/bash, -ec, "exec 3<>/dev/tcp/127.0.0.1/9901"]
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
