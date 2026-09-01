@@ -34,6 +34,13 @@ system owner nor a heartbeat owner already exists. This gives memory
 reconciliation, cron jobs, and ambient heartbeat work an unambiguous owner
 without overwriting an explicit operator choice.
 
+The migration init container allocates a private pseudo-TTY while retaining
+`--non-interactive`. OpenClaw 2026.8.1 otherwise skips doctor-owned state
+migrations in headless execution, including import of the retired
+`exec-approvals.json`, and then exits while instructing the operator to run the
+same `doctor --fix` command again. The TTY exists only for the blocking init
+process; the Gateway containers do not expose interactive stdin.
+
 ## Source And Runtime Paths
 
 | Layer | Owner | Path or key | When it runs | Output |

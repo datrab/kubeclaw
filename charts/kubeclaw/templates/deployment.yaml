@@ -71,6 +71,11 @@ spec:
         - name: openclaw-state-migration
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # OpenClaw 2026.8.1 gates doctor-owned state migrations on TTY
+          # presence even when --fix was explicitly requested. Allocate a PTY
+          # only for this exclusive pre-gateway migration process.
+          stdin: true
+          tty: true
           command:
             - /bin/sh
             - -c

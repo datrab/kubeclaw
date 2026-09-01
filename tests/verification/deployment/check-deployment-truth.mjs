@@ -407,6 +407,11 @@ assert.match(
 );
 assert.match(
   chart,
+  /name:\s*openclaw-state-migration[\s\S]*stdin:\s*true[\s\S]*tty:\s*true[\s\S]*doctor --fix --non-interactive/,
+  'OpenClaw 2026.8.1 doctor-owned migrations require a PTY even in non-interactive init automation',
+);
+assert.match(
+  chart,
   /config\.agents\.ownership = 'explicit'[\s\S]*Set agents\.ownership=explicit[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive/,
   'OpenClaw 2026.8 multi-agent ownership must be repaired before doctor validates the config',
 );
