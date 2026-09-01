@@ -95,12 +95,22 @@ spec:
                 ? Object.values(config.agents.entries)
                 : [];
               const roster = legacyEntries.length > 0 ? legacyEntries : keyedEntries;
+              let changed = false;
               if (roster.length > 1 && config.agents.ownership !== 'explicit') {
                 config.agents.ownership = 'explicit';
+                changed = true;
+                console.log('==> Set agents.ownership=explicit for the managed multi-agent roster');
+              }
+              if (process.env.AGENT_ROLE !== 'prism'
+                  && config?.plugins?.entries?.['kubeclaw-prism']) {
+                delete config.plugins.entries['kubeclaw-prism'];
+                changed = true;
+                console.log('==> Removed Prism-only plugin configuration from non-Prism agent');
+              }
+              if (changed) {
                 const temporaryPath = `${configPath}.kubeclaw-migration.tmp`;
                 fs.writeFileSync(temporaryPath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
                 fs.renameSync(temporaryPath, configPath);
-                console.log('==> Set agents.ownership=explicit for the managed multi-agent roster');
               }
               NODE
               fi
@@ -115,6 +125,8 @@ spec:
               value: "/tmp/.cache"
             - name: NODE_OPTIONS
               value: {{ .Values.gateway.startupDoctor.nodeOptions | quote }}
+            - name: AGENT_ROLE
+              value: {{ .Values.agentRole | default "default" | quote }}
             - name: NODE_PATH
               value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
             - name: SWARM_CONFIG
@@ -290,11 +302,15 @@ spec:
                   config.plugins.entries['kubeclaw-agent-observer'] = managedObserver;
                   console.log('    synchronized managed kubeclaw-agent-observer configuration');
                 }
-                if (managedPrism && typeof managedPrism === 'object') {
+                if (process.env.AGENT_ROLE === 'prism'
+                    && managedPrism && typeof managedPrism === 'object') {
                   config.plugins = config.plugins || {};
                   config.plugins.entries = config.plugins.entries || {};
                   config.plugins.entries['kubeclaw-prism'] = managedPrism;
                   console.log('    synchronized managed kubeclaw-prism configuration');
+                } else if (config?.plugins?.entries?.['kubeclaw-prism']) {
+                  delete config.plugins.entries['kubeclaw-prism'];
+                  console.log('    removed Prism-only plugin configuration from non-Prism agent');
                 }
                 if (initialized?.agents?.defaults?.model) {
                   config.agents = config.agents || {};

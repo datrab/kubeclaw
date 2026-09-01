@@ -362,13 +362,15 @@ data:
             "hooks": {
               "allowConversationAccess": true
             }
-          },
+          }
+          {{- if eq (.Values.agentRole | default "") "prism" }},
           "kubeclaw-prism": {
-            "enabled": {{ eq (.Values.agentRole | default "") "prism" }},
+            "enabled": true,
             "config": {
               "controlUrl": "http://127.0.0.1:28080"
             }
           }
+          {{- end }}
         }
       },
       "messages": {

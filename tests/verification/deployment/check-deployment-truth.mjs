@@ -407,6 +407,11 @@ assert.match(
 );
 assert.match(
   chart,
+  /process\.env\.AGENT_ROLE !== 'prism'[\s\S]*delete config\.plugins\.entries\['kubeclaw-prism'\][\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive/,
+  'non-Prism agents must remove the Prism-only plugin entry before startup doctor validation',
+);
+assert.match(
+  chart,
   /name:\s*NODE_OPTIONS\s*\n\s*value:\s*\{\{ \.Values\.gateway\.startupDoctor\.nodeOptions \| quote \}\}/,
   'the state migration must receive its explicitly budgeted V8 heap size',
 );
@@ -519,6 +524,16 @@ assert.match(
   chart,
   /initializedConfigPath[\s\S]*managedObserver[\s\S]*config\.plugins\.entries\['kubeclaw-agent-observer'\] = managedObserver/,
   'existing persistent homes must converge to the chart-managed observer configuration',
+);
+assert.match(
+  chart,
+  /process\.env\.AGENT_ROLE === 'prism'[\s\S]*config\.plugins\.entries\['kubeclaw-prism'\] = managedPrism[\s\S]*delete config\.plugins\.entries\['kubeclaw-prism'\]/,
+  'init setup must manage the Prism plugin only for the logical Prism agent',
+);
+assert.match(
+  gatewayConfig,
+  /if eq \(\.Values\.agentRole \| default ""\) "prism"[\s\S]*"kubeclaw-prism"[\s\S]*\{\{- end \}\}/,
+  'fresh gateway configs must include the Prism plugin only for agent-prism',
 );
 for (const toolProof of [
   /playwright install --with-deps chromium/,
