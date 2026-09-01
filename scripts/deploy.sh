@@ -1287,8 +1287,9 @@ deploy_agent() {
   helm_args=(
     upgrade --install "agent-${role}" "$CHART_DIR"
     --namespace "$NAMESPACE"
+    --reset-values
     --values "$values_file"
-    --wait --timeout "$AGENT_HELM_TIMEOUT"
+    --atomic --cleanup-on-fail --wait --timeout "$AGENT_HELM_TIMEOUT"
   )
 
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then

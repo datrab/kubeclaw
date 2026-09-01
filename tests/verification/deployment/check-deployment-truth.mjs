@@ -281,6 +281,11 @@ assert.match(
   /verify_buster_port_routing[\s\S]*?expected_runtime[\s\S]*?expected_proxy[\s\S]*?expected_service[\s\S]*?Buster port routing invariant failed[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+verify_buster_port_routing/u,
   'Buster deploy must verify runtime, proxy, and Service port routing after Helm upgrades',
 );
+assert.match(
+  deploy,
+  /helm_args=\([\s\S]*upgrade --install "agent-\$\{role\}"[\s\S]*--reset-values[\s\S]*--atomic --cleanup-on-fail --wait/,
+  'agent upgrades must discard stale release values and roll back failed waits atomically',
+);
 assert.match(busterValues, /name:\s*plan-runtime[\s\S]*containerPort:\s*28891/);
 assert.match(busterValues, /name:\s*legacy-runtime[\s\S]*containerPort:\s*28892/);
 assert.match(

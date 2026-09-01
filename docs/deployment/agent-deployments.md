@@ -116,3 +116,10 @@ An init failure containing `Unable to create fallback OpenClaw temp dir:
 fallback cache while the image root filesystem is read-only. The migration,
 setup, and gateway containers must all mount the pod's writable `tmp` volume at
 both `/tmp` and `/home/node/.cache`.
+
+A pod mount error referencing `buster-plan-trust` or another object absent from
+the current values indicates stale Helm release values, commonly after a
+rollback to an older revision. Agent upgrades use `--reset-values` so the chart
+defaults plus the checked-in role values are the complete deployment source.
+They also use atomic cleanup so a failed wait rolls back instead of leaving a
+new pending release revision.
