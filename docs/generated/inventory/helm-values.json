@@ -26,6 +26,7 @@
         "runtimeInfrastructure",
         "gateway",
         "initSetup",
+        "pluginSeed",
         "capabilityProviders",
         "replicaCount",
         "workerTrust",
@@ -65,7 +66,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 231
+          "line": 240
         }
       ]
     },
