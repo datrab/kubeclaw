@@ -367,6 +367,11 @@ assert.match(
   /name:\s*XDG_CACHE_HOME\s*\n\s*value:\s*"\/tmp\/\.cache"/,
   'OpenClaw SQLite staging must use the writable tmp volume with a read-only root filesystem',
 );
+assert.equal(
+  chart.match(/mountPath:\s*\/home\/node\/\.cache/g)?.length,
+  3,
+  'migration, setup, and gateway containers must mount a writable OpenClaw fallback cache',
+);
 assert.doesNotMatch(
   chart,
   /startup doctor waiting for gateway health|kubeclaw-startup-doctor\.sh/,

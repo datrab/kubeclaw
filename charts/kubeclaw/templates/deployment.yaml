@@ -132,6 +132,8 @@ spec:
               mountPath: /home/node/.openclaw/workspace
             - name: tmp
               mountPath: /tmp
+            - name: tmp
+              mountPath: /home/node/.cache
         {{- end }}
 
         - name: init-setup
@@ -822,6 +824,12 @@ spec:
               ls -la /workspace/
 
           env:
+            - name: HOME
+              value: "/home/node"
+            - name: TMPDIR
+              value: "/tmp"
+            - name: XDG_CACHE_HOME
+              value: "/tmp/.cache"
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: AGENT_ROLE
@@ -902,6 +910,8 @@ spec:
               readOnly: true
             - name: tmp
               mountPath: /tmp
+            - name: tmp
+              mountPath: /home/node/.cache
 
       # ---------------------------------------------------------------
       # MAIN CONTAINERS
@@ -1101,6 +1111,8 @@ spec:
               mountPath: /app/skills
             - name: tmp
               mountPath: /tmp
+            - name: tmp
+              mountPath: /home/node/.cache
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

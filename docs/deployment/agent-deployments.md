@@ -110,3 +110,9 @@ Gateway images package pinned `npm-pack` archives and an npm cache. The setup
 container installs these packages offline against `/home/node/.openclaw`, which
 records the runtime path and capability consent in the existing state database.
 Plugin refresh must not replace the persistent SQLite state.
+
+An init failure containing `Unable to create fallback OpenClaw temp dir:
+/home/node/.cache/openclaw-0` means an OpenClaw CLI process cannot write its
+fallback cache while the image root filesystem is read-only. The migration,
+setup, and gateway containers must all mount the pod's writable `tmp` volume at
+both `/tmp` and `/home/node/.cache`.
