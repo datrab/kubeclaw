@@ -93,6 +93,8 @@
         "resources",
         "probes",
         "extraContainers",
+        "extraVolumes",
+        "extraVolumeMounts",
         "workspace"
       ],
       "secretReferences": [
