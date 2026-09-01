@@ -85,11 +85,13 @@
         "agent",
         "serviceAccount",
         "busterNamespaceBroker",
+        "service",
         "capabilityProviders",
         "workerTrust",
         "extraEnv",
         "resources",
         "probes",
+        "extraContainers",
         "workspace"
       ],
       "secretReferences": [
