@@ -232,8 +232,18 @@ assert.doesNotMatch(
   'suite jobs must not remount the container-runtime-masked procfs from a nested user namespace',
 );
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
-assert.match(busterValues, /name:\s*buster-plan-local[\s\S]*containerPort:\s*28891/);
-assert.match(busterValues, /name:\s*buster-legacy-local[\s\S]*containerPort:\s*28892/);
+const busterRuntimePortBlock = busterValues.match(
+  /extraContainers:[\s\S]*?\n    ports:\s*\n(?<ports>[\s\S]*?)\n    startupProbe:/u,
+)?.groups?.ports;
+assert.ok(busterRuntimePortBlock, 'Buster runtime port block is missing');
+const busterRuntimePortNames = [...busterRuntimePortBlock.matchAll(/^\s+- name:\s*(\S+)\s*$/gmu)]
+  .map((match) => match[1]);
+assert.deepEqual(busterRuntimePortNames, ['plan-runtime', 'legacy-runtime']);
+for (const portName of busterRuntimePortNames) {
+  assert.ok(portName.length <= 15, `Buster runtime port name exceeds Kubernetes limit: ${portName}`);
+}
+assert.match(busterValues, /name:\s*plan-runtime[\s\S]*containerPort:\s*28891/);
+assert.match(busterValues, /name:\s*legacy-runtime[\s\S]*containerPort:\s*28892/);
 assert.match(
   busterValues,
   /service:\s*\n\s+extraPorts:\s*\n\s+- name:\s*buster-plan\s*\n\s+port:\s*18891\s*\n\s+targetPort:\s*buster-plan\s*\n\s+- name:\s*buster-legacy\s*\n\s+port:\s*18892\s*\n\s+targetPort:\s*buster-legacy/,

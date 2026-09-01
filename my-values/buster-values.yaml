@@ -125,10 +125,10 @@ extraContainers:
       - name: CONTAINER_BUILD_REGISTRY_BASE_URL
         value: http://registry-local.kubeclaw.svc.cluster.local:5001
     ports:
-      - name: buster-plan-local
+      - name: plan-runtime
         containerPort: 28891
         protocol: TCP
-      - name: buster-legacy-local
+      - name: legacy-runtime
         containerPort: 28892
         protocol: TCP
     startupProbe:

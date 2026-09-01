@@ -66,9 +66,10 @@ Confirm Nova has its gateway and `worker-trust-proxy` containers. Confirm Buster
 has its gateway, `buster-v2-runtime`, and `worker-trust-proxy`. Confirm Envoy
 exposes plan port `18891` and legacy suite port `18892`. The Service must target
 the Envoy port names `buster-plan` and `buster-legacy`. The runtime port names
-must remain distinct as `buster-plan-local` and `buster-legacy-local` on ports
-`28891` and `28892`. No Service may target the runtime ports. Neither deployment
-contains `buster-pipeline`.
+must remain distinct as `plan-runtime` and `legacy-runtime` on ports `28891` and
+`28892`. Kubernetes limits these names to 15 characters.
+No Service may target the runtime ports. Neither deployment contains
+`buster-pipeline`.
 
 Run the complete live proof after Nova, Buster, and Prism are ready:
 

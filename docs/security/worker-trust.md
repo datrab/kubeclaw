@@ -155,8 +155,9 @@ the destination proxy.
 
 The Buster Service targets only the Envoy listeners on `18891` and `18892`.
 Its named target ports are `buster-plan` and `buster-legacy`. The runtime ports
-use the distinct names `buster-plan-local` and `buster-legacy-local`; each
-Service target name must occur only once in the pod.
+use the distinct names `plan-runtime` and `legacy-runtime`; each Service target
+name must occur only once in the pod. Kubernetes limits container port names to
+15 characters.
 
 The Buster runtimes listen on the pod network at `28891` and `28892` so kubelet
 HTTP probes can reach them. No Service targets these ports, and the production
