@@ -115,6 +115,14 @@ for (const [label, dockerfile] of [
   ['general image', generalDockerfile],
   ['Buster gateway image', busterGatewayDockerfile],
 ]) {
+  const baseVersion = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:([^@\s]+)/mu)?.[1];
+  const pluginVersion = dockerfile.match(/^ARG OPENCLAW_PLUGIN_VERSION=([^\s]+)/mu)?.[1];
+  assert.ok(baseVersion, `${label} must pin an OpenClaw base version`);
+  assert.equal(
+    pluginVersion,
+    baseVersion,
+    `${label} must bake external plugins at the same version as the OpenClaw base`,
+  );
   assert.match(
     dockerfile,
     /ARG TARGETARCH[\s\S]*keep_codex=codex-acp-linux-x64[\s\S]*keep_claude=claude-agent-sdk-linux-x64[\s\S]*keep_esbuild=linux-x64[\s\S]*keep_codex=codex-acp-linux-arm64[\s\S]*keep_claude=claude-agent-sdk-linux-arm64[\s\S]*keep_esbuild=linux-arm64/,

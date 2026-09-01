@@ -252,7 +252,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 # Official plugins are pinned and baked into an OpenClaw home seed so startup
 # never requires a network install.
 
-ARG OPENCLAW_PLUGIN_VERSION=2026.7.1
+ARG OPENCLAW_PLUGIN_VERSION=2026.8.1
 
 RUN set -eux; \
 mkdir -p /tmp/openclaw-plugin-home; \
