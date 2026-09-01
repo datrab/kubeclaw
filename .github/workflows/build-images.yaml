@@ -60,10 +60,6 @@ jobs:
             sed -n 's/^ARG OPENCLAW_BASE=//p' \
               docker/Dockerfile.general \
               docker/Dockerfile.buster-gateway \
-              docker/Dockerfile.prism-control \
-              docker/Dockerfile.prism-studio \
-              docker/Dockerfile.prism-worker \
-              docker/Dockerfile.prism-ingestion \
               | sort -u
           )
           if [[ ${#pinned_refs[@]} -ne 1 ]]; then

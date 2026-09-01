@@ -72,14 +72,6 @@ busterNamespaceBroker:
     verificationRead:
       enabled: true
 
-service:
-  extraPorts:
-    # Preserve the existing Service identity so Helm upgrades can retain NodePort 30456.
-    - name: prism-preview
-      port: 3456
-      targetPort: 3456
-      nodePort: 30456
-
 capabilityProviders:
   buster:
     agentRole: buster
@@ -137,26 +129,6 @@ probes:
   liveness:
     timeoutSeconds: 10
     failureThreshold: 5
-
-# =============================================================================
-# Prism Preview Sidecar (Phase 2 — Live Web Preview)
-# =============================================================================
-# Serves /home/node/.openclaw/workspace/designs/ over HTTP on port 3456.
-# Prism (running in Nova) writes designs to workspace/designs/<project-id>/
-# Access via Tailscale: tailscale serve http://localhost:<nodePort> on host.
-# =============================================================================
-extraContainers:
-  - name: archviewer
-    image: ghcr.io/datrab/kubeclaw-archviewer:latest
-    ports:
-      - containerPort: 3456
-    volumeMounts:
-      - name: workspace
-        mountPath: /designs
-        subPath: prism/designs
-    resources:
-      requests: { cpu: 50m, memory: 64Mi }
-      limits: { cpu: 200m, memory: 128Mi }
 
 workspace:
   enabled: false

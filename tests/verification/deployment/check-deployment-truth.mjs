@@ -539,8 +539,8 @@ if (helm.error?.code !== 'ENOENT') {
     /port_value:\s*28891[\s\S]*agent-buster[\s\S]*port_value:\s*18891[\s\S]*agent-buster/,
     'Nova must reach Buster through its local SPIFFE mTLS proxy');
   assert.match(novaHelm.stdout,
-    /port_value:\s*28080[\s\S]*prism-control-internal[\s\S]*port_value:\s*8443[\s\S]*prism-control/,
-    'Nova must reach Prism through its local SPIFFE mTLS proxy');
+    /port_value:\s*28080[\s\S]*agent-prism[\s\S]*port_value:\s*8080[\s\S]*agent-prism/,
+    'Nova must reach the Prism OpenClaw agent through its local SPIFFE mTLS proxy');
   assert.doesNotMatch(novaHelm.stdout, /name:\s*BUSTER_V2_ENDPOINT|name:\s*BUSTER_GATEWAY_ORIGIN/);
 
   const numericRole = spawnSync(

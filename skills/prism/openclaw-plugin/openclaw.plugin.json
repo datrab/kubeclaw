@@ -1,0 +1,17 @@
+{
+  "id": "kubeclaw-prism",
+  "name": "KubeClaw Prism",
+  "description": "Commits validated design sets and revisions produced by the Prism OpenClaw agent.",
+  "version": "0.1.0",
+  "activation": { "onStartup": true },
+  "contracts": { "tools": ["prism_create_design_set", "prism_apply_revision"] },
+  "toolMetadata": {
+    "prism_create_design_set": { "profiles": ["coding"] },
+    "prism_apply_revision": { "profiles": ["coding"] }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": { "controlUrl": { "type": "string" } }
+  }
+}

@@ -1,6 +1,6 @@
 # Agent Deployments
 
-Nova and Buster use OpenClaw gateway deployments. Pipeline execution is
+Nova, Buster, and the single logical Prism agent use OpenClaw gateway deployments. Pipeline execution is
 provided by the shared v2 core and installed plugin packages. Buster runs the
 plan runtime and the remaining legacy suite worker beside its gateway.
 
@@ -54,6 +54,13 @@ Nova application
 
 The legacy route has the same shape with ports `28892` and `18892`.
 Envoy does not proxy the OpenClaw gateway route on port `18789`.
+
+Prism is different from Buster: Nova does not call its application Control API
+directly. Nova's local Envoy listener `127.0.0.1:28080` establishes mTLS to the
+`agent-prism` Envoy ingress. A colocated bridge performs an OpenClaw agent send
+with the stable `prism-<project-id>` session key. Only that gateway has model
+access; Prism Control, Studio, and Worker are non-agent Node services. See the
+[Prism OpenClaw runtime](../architecture/prism-openclaw-runtime.md).
 
 Nova also signs each committed source snapshot with the local Ed25519
 private key in `pipeline-test-gate-source-attestation`; Buster verifies it with

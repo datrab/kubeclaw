@@ -47,11 +47,6 @@
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
 #   KUBECLAW_DEPLOY_SPIRE         true|false (default: true)
-#   PRISM_PROVIDER_ENDPOINT       OpenAI-compatible chat endpoint (default: internal LiteLLM)
-#   PRISM_PROVIDER_MODEL          Chat model exposed by the provider (default: claude-sonnet)
-#   PRISM_PROVIDER_SECRET_OVERWRITE  true|false to reconcile an existing provider Secret (default: false)
-#   PRISM_EMBEDDING_ENDPOINT      Optional OpenAI-compatible embedding endpoint
-#   PRISM_EMBEDDING_MODEL         Optional embedding model; required with PRISM_EMBEDDING_ENDPOINT
 #   ALLOW_PARTIAL_INFRA           true|false (default: false)
 #   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Rootless BuildKit probe image (default: moby/buildkit:rootless)
 #   BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT Probe pod readiness timeout (default: 180s)
@@ -85,6 +80,7 @@ KUBECLAW_DEPLOY_PRISM="${KUBECLAW_DEPLOY_PRISM:-true}"
 PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"
 PRISM_RELEASE="${PRISM_RELEASE:-prism}"
 PRISM_VALUES_FILE="${PRISM_VALUES_FILE:-$VALUES_DIR/prism-values.yaml}"
+PRISM_AGENT_VALUES_FILE="${PRISM_AGENT_VALUES_FILE:-$VALUES_DIR/prism-agent-values.yaml}"
 PRISM_HELM_TIMEOUT="${PRISM_HELM_TIMEOUT:-45m}"
 PRISM_ROLLOUT_TIMEOUT="${PRISM_ROLLOUT_TIMEOUT:-45m}"
 PRISM_CONTROL_IMAGE_REPOSITORY="${PRISM_CONTROL_IMAGE_REPOSITORY:-}"
@@ -95,14 +91,8 @@ PRISM_WORKER_IMAGE_REPOSITORY="${PRISM_WORKER_IMAGE_REPOSITORY:-}"
 PRISM_WORKER_IMAGE_TAG="${PRISM_WORKER_IMAGE_TAG:-}"
 PRISM_INGESTION_IMAGE_REPOSITORY="${PRISM_INGESTION_IMAGE_REPOSITORY:-}"
 PRISM_INGESTION_IMAGE_TAG="${PRISM_INGESTION_IMAGE_TAG:-}"
-PRISM_PROVIDER_ENDPOINT="${PRISM_PROVIDER_ENDPOINT:-http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1/chat/completions}"
-PRISM_PROVIDER_MODEL="${PRISM_PROVIDER_MODEL:-claude-sonnet}"
-PRISM_PROVIDER_SECRET_OVERWRITE="${PRISM_PROVIDER_SECRET_OVERWRITE:-false}"
-PRISM_EMBEDDING_ENDPOINT="${PRISM_EMBEDDING_ENDPOINT:-}"
-PRISM_EMBEDDING_MODEL="${PRISM_EMBEDDING_MODEL:-}"
 PRISM_RUNTIME_SECRET_NAME="${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}"
 PRISM_DATABASE_SECRET_NAME="${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}"
-PRISM_PROVIDER_SECRET_NAME="${PRISM_PROVIDER_SECRET_NAME:-prism-provider}"
 PRISM_IMAGE_PULL_SECRET_NAME="${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
 AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
@@ -118,7 +108,7 @@ export KUBECLAW_DEPLOY_POSTGRESQL
 export KUBECLAW_DEPLOY_QDRANT
 export KUBECLAW_DEPLOY_LITELLM
 export KUBECLAW_DEPLOY_SPIRE
-export KUBECLAW_DEPLOY_PRISM PRISM_NAMESPACE PRISM_RELEASE PRISM_VALUES_FILE
+export KUBECLAW_DEPLOY_PRISM PRISM_NAMESPACE PRISM_RELEASE PRISM_VALUES_FILE PRISM_AGENT_VALUES_FILE
 export ALLOW_PARTIAL_INFRA
 
 # Colors
@@ -1483,35 +1473,7 @@ prism_image_overrides() {
 
 prism_validate_values() {
   [[ -f $PRISM_VALUES_FILE ]] || { err "Prism values file is missing: $PRISM_VALUES_FILE"; return 1; }
-}
-
-prism_provider_secret_value() {
-  local key="$1"
-  kubectl get secret "$PRISM_PROVIDER_SECRET_NAME" -n "$PRISM_NAMESPACE" \
-    -o "go-template={{ index .data \"${key}\" }}" 2>/dev/null | base64 -d
-}
-
-prism_provider_secret_matches_requested_route() {
-  [[ $(prism_provider_secret_value endpoint 2>/dev/null || true) == "$PRISM_PROVIDER_ENDPOINT" \
-    && $(prism_provider_secret_value model 2>/dev/null || true) == "$PRISM_PROVIDER_MODEL" \
-    && $(prism_provider_secret_value embedding-endpoint 2>/dev/null || true) == "$PRISM_EMBEDDING_ENDPOINT" \
-    && $(prism_provider_secret_value embedding-model 2>/dev/null || true) == "$PRISM_EMBEDDING_MODEL" ]]
-}
-
-reconcile_prism_provider_secret() {
-  local provider_api_key
-  provider_api_key="$(kubectl get secret openclaw-shared-secrets -n "$NAMESPACE" -o jsonpath='{.data.litellmApiKey}' 2>/dev/null | base64 -d)"
-  if [[ -z $provider_api_key ]]; then
-    err "Cannot reconcile ${PRISM_PROVIDER_SECRET_NAME}: Secret ${NAMESPACE}/openclaw-shared-secrets is missing litellmApiKey"
-    return 1
-  fi
-  kubectl create secret generic "$PRISM_PROVIDER_SECRET_NAME" -n "$PRISM_NAMESPACE" \
-    --from-literal=endpoint="$PRISM_PROVIDER_ENDPOINT" \
-    --from-literal=api-key="$provider_api_key" \
-    --from-literal=model="$PRISM_PROVIDER_MODEL" \
-    --from-literal=embedding-endpoint="$PRISM_EMBEDDING_ENDPOINT" \
-    --from-literal=embedding-model="$PRISM_EMBEDDING_MODEL" \
-    --dry-run=client -o yaml | kubectl apply -f - >/dev/null
+  [[ -f $PRISM_AGENT_VALUES_FILE ]] || { err "Prism agent values file is missing: $PRISM_AGENT_VALUES_FILE"; return 1; }
 }
 
 cmd_prism_secrets() {
@@ -1546,33 +1508,13 @@ cmd_prism_secrets() {
   for secret_key in session-secret ingress-secret dispatch-secret worker-secret ingestion-secret; do
     kubectl get secret "$PRISM_RUNTIME_SECRET_NAME" -n "$PRISM_NAMESPACE" -o "jsonpath={.data.${secret_key}}" | grep -q . || { err "Secret ${PRISM_RUNTIME_SECRET_NAME} is missing ${secret_key}; rotate or repair the Secret"; return 1; }
   done
-  if [[ -n $PRISM_EMBEDDING_ENDPOINT || -n $PRISM_EMBEDDING_MODEL ]]; then
-    if [[ -z $PRISM_EMBEDDING_ENDPOINT || -z $PRISM_EMBEDDING_MODEL ]]; then
-      err "PRISM_EMBEDDING_ENDPOINT and PRISM_EMBEDDING_MODEL must be configured together"
-      return 1
-    fi
-  fi
-  if ! kubectl get secret "$PRISM_PROVIDER_SECRET_NAME" -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
-    reconcile_prism_provider_secret
-    log "Created ${PRISM_NAMESPACE}/${PRISM_PROVIDER_SECRET_NAME} from the existing LiteLLM credential"
-  elif ! prism_provider_secret_matches_requested_route; then
-    if component_enabled "$PRISM_PROVIDER_SECRET_OVERWRITE"; then
-      reconcile_prism_provider_secret
-      log "Reconciled ${PRISM_NAMESPACE}/${PRISM_PROVIDER_SECRET_NAME} with the requested provider route"
-    else
-      err "Secret ${PRISM_NAMESPACE}/${PRISM_PROVIDER_SECRET_NAME} does not match the requested provider route"
-      info "Set PRISM_PROVIDER_SECRET_OVERWRITE=true to rotate it explicitly"
-      return 1
-    fi
-  fi
-  for secret_key in endpoint api-key model; do
-    kubectl get secret "$PRISM_PROVIDER_SECRET_NAME" -n "$PRISM_NAMESPACE" -o "go-template={{ index .data \"${secret_key}\" }}" | grep -q . \
-      || { err "Secret ${PRISM_PROVIDER_SECRET_NAME} is missing ${secret_key}"; return 1; }
-  done
+  kubectl get secret openclaw-shared-secrets -n "$PRISM_NAMESPACE" >/dev/null 2>&1 \
+    || { err "Missing ${PRISM_NAMESPACE}/openclaw-shared-secrets for the Prism OpenClaw gateway"; return 1; }
+  kubectl get secret openclaw-shared-secrets -n "$PRISM_NAMESPACE" -o jsonpath='{.data.gatewayToken-prism}' | grep -q . \
+    || { err "Secret openclaw-shared-secrets is missing gatewayToken-prism; run setup-secrets.sh"; return 1; }
   if [[ $PRISM_NAMESPACE == "$NAMESPACE" \
     && $PRISM_RUNTIME_SECRET_NAME == prism-runtime \
     && $PRISM_DATABASE_SECRET_NAME == prism-postgresql-auth \
-    && $PRISM_PROVIDER_SECRET_NAME == prism-provider \
     && $PRISM_IMAGE_PULL_SECRET_NAME == ghcr-secret ]]; then
     prepare_prism_e2e_source_secrets
   fi
@@ -1585,21 +1527,28 @@ cmd_prism() {
   require_spiffe_csi_driver
   cmd_prism_secrets
   local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
-  overrides+=(--set-string "providerNetworkPolicy.internalLiteLLM.namespace=${NAMESPACE}")
   overrides+=(--set-string "workerTrust.spiffe.novaNamespace=${NAMESPACE}")
   overrides+=(--set-string "workerTrust.spiffe.novaServiceAccount=agent-nova")
+  overrides+=(--set-string "workerTrust.spiffe.agentNamespace=${PRISM_NAMESPACE}")
+  overrides+=(--set-string "workerTrust.spiffe.agentServiceAccount=agent-prism")
   overrides+=(--set-string "secrets.runtime=${PRISM_RUNTIME_SECRET_NAME}")
   overrides+=(--set-string "secrets.database=${PRISM_DATABASE_SECRET_NAME}")
-  overrides+=(--set-string "secrets.provider=${PRISM_PROVIDER_SECRET_NAME}")
   overrides+=(--set-string "postgresql.existingSecret=${PRISM_DATABASE_SECRET_NAME}")
   overrides+=(--set-string "imagePullSecrets[0].name=${PRISM_IMAGE_PULL_SECRET_NAME}")
   helm lint "$REPO_DIR/charts/prism" -f "$PRISM_VALUES_FILE" "${overrides[@]}"
   helm upgrade --install "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" \
     -f "$PRISM_VALUES_FILE" "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT"
+  helm lint "$CHART_DIR" -f "$PRISM_AGENT_VALUES_FILE" \
+    --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1"
+  helm upgrade --install agent-prism "$CHART_DIR" -n "$PRISM_NAMESPACE" \
+    -f "$PRISM_AGENT_VALUES_FILE" \
+    --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1" \
+    --atomic --wait --timeout "$PRISM_HELM_TIMEOUT"
   for workload in prism-postgresql prism-control prism-studio prism-worker; do
     local kind=deployment; [[ $workload == prism-postgresql ]] && kind=statefulset
     kubectl rollout status "$kind/$workload" -n "$PRISM_NAMESPACE" --timeout="$PRISM_ROLLOUT_TIMEOUT"
   done
+  kubectl rollout status deployment/agent-prism -n "$PRISM_NAMESPACE" --timeout="$PRISM_ROLLOUT_TIMEOUT"
   cmd_prism_smoke
   kubectl get svc prism-studio -n "$PRISM_NAMESPACE" -o json
 }
@@ -1611,6 +1560,7 @@ cmd_prism_smoke() {
     "fetch('http://127.0.0.1:8080/ready').then(r=>{if(!r.ok)process.exit(1)})"
   kubectl exec -n "$PRISM_NAMESPACE" deployment/prism-worker -- node -e \
     "fetch('http://127.0.0.1:8080/ready').then(r=>{if(!r.ok)process.exit(1)})"
+  kubectl exec -n "$PRISM_NAMESPACE" deployment/agent-prism -c kubeclaw -- openclaw gateway status
   kubectl exec -n "$PRISM_NAMESPACE" statefulset/prism-postgresql -- pg_isready -U postgres -d prism
   log "Prism smoke passed"
 }
@@ -1619,10 +1569,11 @@ cmd_prism_status() {
   header "Prism ($PRISM_NAMESPACE)"
   kubectl get deploy,statefulset,job,cronjob,svc,pvc -n "$PRISM_NAMESPACE" -o wide
   helm status "$PRISM_RELEASE" -n "$PRISM_NAMESPACE"
+  helm status agent-prism -n "$PRISM_NAMESPACE"
 }
 
 prepare_prism_e2e_source_secrets() {
-  local password runtime_password migrator_password readonly_password provider_api_key docker_config
+  local password runtime_password migrator_password readonly_password docker_config
   password="$(openssl rand -hex 32)"; runtime_password="$(openssl rand -hex 32)"; migrator_password="$(openssl rand -hex 32)"; readonly_password="$(openssl rand -hex 32)"
   kubectl create secret generic prism-test-postgresql-auth -n "$NAMESPACE" \
     --from-literal=password="$password" \
@@ -1641,12 +1592,6 @@ prepare_prism_e2e_source_secrets() {
     --from-literal=worker-secret="$(openssl rand -hex 32)" \
     --from-literal=ingestion-secret="$(openssl rand -hex 32)" \
     --dry-run=client -o yaml | kubectl apply -f - >/dev/null
-  provider_api_key="$(kubectl get secret openclaw-shared-secrets -n "$NAMESPACE" -o jsonpath='{.data.litellmApiKey}' 2>/dev/null | base64 -d)"
-  [[ -n $provider_api_key ]] || { err "Cannot prepare Prism E2E provider Secret: ${NAMESPACE}/openclaw-shared-secrets is missing litellmApiKey"; return 1; }
-  kubectl create secret generic prism-test-provider -n "$NAMESPACE" \
-    --from-literal=endpoint="$PRISM_PROVIDER_ENDPOINT" --from-literal=api-key="$provider_api_key" --from-literal=model="$PRISM_PROVIDER_MODEL" \
-    --from-literal=embedding-endpoint="$PRISM_EMBEDDING_ENDPOINT" --from-literal=embedding-model="$PRISM_EMBEDDING_MODEL" \
-    --dry-run=client -o yaml | kubectl apply -f - >/dev/null
   docker_config="$(kubectl get secret ghcr-secret -n "$NAMESPACE" -o jsonpath='{.data.\.dockerconfigjson}' 2>/dev/null | base64 -d)"
   [[ -n $docker_config ]] || { err "Cannot prepare Prism E2E pull Secret: ${NAMESPACE}/ghcr-secret is missing .dockerconfigjson"; return 1; }
   printf '%s' "$docker_config" | kubectl create secret generic prism-test-ghcr -n "$NAMESPACE" \
@@ -1658,7 +1603,7 @@ cmd_prism_e2e() {
   require_command kubectl; require_command helm; require_command node
   [[ -n ${PRISM_E2E_USER:-} ]] || { err "PRISM_E2E_USER must contain a Tailscale login"; return 1; }
   local original_namespace="$PRISM_NAMESPACE" original_runtime_secret="$PRISM_RUNTIME_SECRET_NAME" original_database_secret="$PRISM_DATABASE_SECRET_NAME"
-  local original_provider_secret="$PRISM_PROVIDER_SECRET_NAME" original_pull_secret="$PRISM_IMAGE_PULL_SECRET_NAME" lease_name=""
+  local original_pull_secret="$PRISM_IMAGE_PULL_SECRET_NAME" lease_name=""
   if [[ ${PRISM_E2E_USE_LEASE:-true} == "true" ]]; then
     prepare_prism_e2e_source_secrets
     lease_name="test-prism-$(date -u +%Y%m%d%H%M%S)-$RANDOM";local test_namespace="$lease_name"
@@ -1676,7 +1621,7 @@ spec:
   cleanupPolicy: delete
   ttlSeconds: 7200
   access: [{ subject: kubeclaw/agent-nova, mode: deployer }]
-  secretsToCopy: [prism-test-provider, prism-test-runtime, prism-test-postgresql-auth, prism-test-ghcr]
+  secretsToCopy: [prism-test-runtime, prism-test-postgresql-auth, prism-test-ghcr, openclaw-shared-secrets, git-deploy-key-nova]
 EOF
     local lease_phase="" lease_message=""
     for _ in {1..120}; do
@@ -1696,11 +1641,10 @@ EOF
     [[ $PRISM_NAMESPACE == "$test_namespace" ]]||{ err "Namespace controller did not prepare the Prism test namespace";return 1; }
     PRISM_RUNTIME_SECRET_NAME=prism-test-runtime
     PRISM_DATABASE_SECRET_NAME=prism-test-postgresql-auth
-    PRISM_PROVIDER_SECRET_NAME=prism-test-provider
     PRISM_IMAGE_PULL_SECRET_NAME=prism-test-ghcr
-    export PRISM_RUNTIME_SECRET_NAME PRISM_DATABASE_SECRET_NAME PRISM_PROVIDER_SECRET_NAME PRISM_IMAGE_PULL_SECRET_NAME
+    export PRISM_RUNTIME_SECRET_NAME PRISM_DATABASE_SECRET_NAME PRISM_IMAGE_PULL_SECRET_NAME
   fi
-  cleanup_prism_e2e(){ [[ -z ${runner_job:-} ]]||kubectl delete job,configmap "$runner_job" -n "$PRISM_NAMESPACE" --ignore-not-found --wait=false >/dev/null 2>&1||true;PRISM_NAMESPACE="$original_namespace";PRISM_RUNTIME_SECRET_NAME="$original_runtime_secret";PRISM_DATABASE_SECRET_NAME="$original_database_secret";PRISM_PROVIDER_SECRET_NAME="$original_provider_secret";PRISM_IMAGE_PULL_SECRET_NAME="$original_pull_secret";export PRISM_NAMESPACE PRISM_RUNTIME_SECRET_NAME PRISM_DATABASE_SECRET_NAME PRISM_PROVIDER_SECRET_NAME PRISM_IMAGE_PULL_SECRET_NAME;[[ -z $lease_name ]]||kubectl delete busternamespacelease "$lease_name" -n "$NAMESPACE" --wait=false >/dev/null 2>&1||true; }
+  cleanup_prism_e2e(){ [[ -z ${runner_job:-} ]]||kubectl delete job,configmap "$runner_job" -n "$PRISM_NAMESPACE" --ignore-not-found --wait=false >/dev/null 2>&1||true;PRISM_NAMESPACE="$original_namespace";PRISM_RUNTIME_SECRET_NAME="$original_runtime_secret";PRISM_DATABASE_SECRET_NAME="$original_database_secret";PRISM_IMAGE_PULL_SECRET_NAME="$original_pull_secret";export PRISM_NAMESPACE PRISM_RUNTIME_SECRET_NAME PRISM_DATABASE_SECRET_NAME PRISM_IMAGE_PULL_SECRET_NAME;[[ -z $lease_name ]]||kubectl delete busternamespacelease "$lease_name" -n "$NAMESPACE" --wait=false >/dev/null 2>&1||true; }
   trap cleanup_prism_e2e RETURN
   cmd_prism
   local context image_references control_image worker_trust_image runner_job
@@ -1743,6 +1687,7 @@ spec:
           command: ["node", "/app/prism/tests/verification/live/prism-nova-production-e2e.mjs"]
           env:
             - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:18443" }
+            - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18444" }
             - name: PRISM_E2E_USER
               valueFrom: { configMapKeyRef: { name: ${runner_job}, key: user } }
             - name: PRISM_E2E_IMAGE_REFERENCES
@@ -1770,6 +1715,7 @@ EOF
 }
 
 cmd_teardown_prism() {
+  helm uninstall agent-prism -n "$PRISM_NAMESPACE" --ignore-not-found
   helm uninstall "$PRISM_RELEASE" -n "$PRISM_NAMESPACE" --ignore-not-found
   log "Prism workloads removed. PVCs and Secrets remain in $PRISM_NAMESPACE."
 }

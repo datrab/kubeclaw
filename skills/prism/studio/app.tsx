@@ -207,6 +207,7 @@ function App() {
     Array<{ id: string; title: string; summary: string; state: string; evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>} }>
   >([]);
   const [brief,setBrief]=useState<Record<string,unknown>|null>(null);
+  const [projects,setProjects]=useState<Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>>([]);
   const [revisions, setRevisions] = useState<
     Array<{ id: string; revision: number; createdAt: string }>
   >([]);
@@ -251,7 +252,11 @@ function App() {
       setCsrf(sessionData.csrf);
       setUserId(sessionData.userId);
       const id = new URLSearchParams(location.search).get("document");
-      if (!id) return;
+      if (!id) {
+        const projectsResponse=await fetch("/v1/projects");
+        if(projectsResponse.ok)setProjects(((await projectsResponse.json()) as {items:Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>}).items);
+        return;
+      }
       const loaded = await fetch(`/v1/documents/${encodeURIComponent(id)}`);
       if (!loaded.ok) throw new Error("Design document could not load");
       setDocument(
@@ -261,23 +266,11 @@ function App() {
       if (projectId) {
         const briefResponse=await fetch(`/v1/projects/${encodeURIComponent(projectId)}/brief`);
         if(briefResponse.ok)setBrief(((await briefResponse.json()) as {request?:Record<string,unknown>}).request??null);
-        const result = await fetch(
-          `/v1/projects/${encodeURIComponent(projectId)}/directions`,
-        );
-        if (result.ok)
-          setDirections(
-            (
-              (await result.json()) as {
-                items: Array<{
-                  id: string;
-                  title: string;
-                  summary: string;
-                  state: string;
-                  evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>};
-                }>;
-              }
-            ).items,
-          );
+        for(let attempt=0;attempt<300;attempt++){
+          const result=await fetch(`/v1/projects/${encodeURIComponent(projectId)}/directions`);
+          if(result.ok){const items=((await result.json()) as {items:Array<{id:string;title:string;summary:string;state:string;evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>}}>}).items;if(items.length){setDirections(items);break;}}
+          await new Promise((resolve)=>setTimeout(resolve,2000));
+        }
       }
     })().catch((error) =>
       setFailure(error instanceof Error ? error.message : String(error)),
@@ -411,12 +404,16 @@ function App() {
           }),
         },
       );
-      const value = (await response.json()) as { error?: string };
+      const value = (await response.json()) as { error?: string; status?: string };
       if (!response.ok) throw new Error(value.error ?? "Prism proposal failed");
-      const loaded = await fetch(`/v1/documents/${encodeURIComponent(id)}`);
-      setDocument(
-        ((await loaded.json()) as { document: PrismDocument }).document,
-      );
+      for (let attempt = 0; attempt < 300; attempt++) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        const loaded = await fetch(`/v1/documents/${encodeURIComponent(id)}`);
+        if (!loaded.ok) continue;
+        const next = ((await loaded.json()) as { document: PrismDocument }).document;
+        if (next.meta.revision > document.meta.revision) { setDocument(next); break; }
+        if (attempt === 299) throw new Error("Prism accepted the request, but the OpenClaw revision is still running");
+      }
       setQuality(null);
       setAcceptedWarnings([]);
       setInstruction("");
@@ -516,11 +513,16 @@ function App() {
     );
     const result = (await response.json()) as {
       document?: PrismDocument;
+      documentId?: string;
       error?: string;
     };
     if (!response.ok || !result.document)
       throw new Error(result.error ?? "Direction selection failed");
     setDocument(result.document);
+    if(result.documentId){
+      const query=new URLSearchParams(location.search);query.set("document",result.documentId);
+      history.replaceState(null,"",`?${query.toString()}`);
+    }
     setQuality(null);
     setAcceptedWarnings([]);
     setDirections((items) =>
@@ -708,6 +710,7 @@ function App() {
       <main className="studio">
         <section className="sheet">
           <h1>Create a Prism project</h1>
+          {projects.filter((project)=>project.document_id).length>0&&<section aria-label="Existing Prism projects"><h2>Projects from Nova</h2>{projects.filter((project)=>project.document_id).map((project)=><article key={project.id}><strong>{project.name}</strong><p>{project.direction_count} design directions</p><a href={`?project=${encodeURIComponent(project.id)}&document=${encodeURIComponent(project.document_id!)}`}>Open designs</a></article>)}</section>}
           <label>
             Project name
             <input

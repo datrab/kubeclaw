@@ -111,6 +111,7 @@ The base namespace is `kubeclaw` unless `NAMESPACE` selects another namespace.
 | --- | --- | --- |
 | Nova | `agent-nova` | `spiffe://kubeclaw.internal/ns/<nova-namespace>/sa/agent-nova` |
 | Buster | `agent-buster` | `spiffe://kubeclaw.internal/ns/<buster-namespace>/sa/agent-buster` |
+| Prism OpenClaw agent | `agent-prism` | `spiffe://kubeclaw.internal/ns/<prism-namespace>/sa/agent-prism` |
 | Prism control | `prism-control` | `spiffe://kubeclaw.internal/ns/<prism-namespace>/sa/prism-control` |
 | Prism worker | `prism-worker` | `spiffe://kubeclaw.internal/ns/<prism-namespace>/sa/prism-worker` |
 | Prism live runner | `prism-test-runner` | `spiffe://kubeclaw.internal/ns/<prism-namespace>/sa/prism-test-runner` |
@@ -124,7 +125,9 @@ to those test pods. The destination proxies must reject those identities.
 | --- | --- | --- | --- |
 | Nova | Buster plan route | Nova SPIFFE ID | mTLS |
 | Nova | Buster legacy route | Nova SPIFFE ID | mTLS |
-| Nova | Prism control dispatch | Nova SPIFFE ID | mTLS |
+| Nova | Prism agent dispatch | Nova SPIFFE ID | mTLS |
+| Prism control | Prism agent revision request | Prism control SPIFFE ID | mTLS |
+| Prism agent | Prism control tool routes | Prism agent SPIFFE ID | mTLS |
 | Prism control | Prism worker | Prism control SPIFFE ID | mTLS |
 | Prism worker | Prism control internal route | Prism worker SPIFFE ID | mTLS |
 | Prism control | Prism control internal route | Prism control SPIFFE ID | mTLS |
@@ -141,7 +144,7 @@ application Service on port `8080`.
 | --- | --- | --- |
 | `127.0.0.1:28891` | `agent-buster:18891` | Buster plan execution. |
 | `127.0.0.1:28892` | `agent-buster:18892` | Buster legacy suite execution. |
-| `127.0.0.1:28080` | `prism-control-internal:8443` | Prism dispatch. |
+| `127.0.0.1:28080` | `agent-prism:8080` (Envoy target `18082`) | Prism OpenClaw dispatch. |
 
 Nova sends plain HTTP only to its loopback Envoy listener. Envoy sends mTLS to
 the destination proxy.
@@ -169,6 +172,8 @@ SPIFFE identity only when the immediate TCP peer is loopback.
 
 | Local or Service address | Destination | Purpose |
 | --- | --- | --- |
+| `agent-prism:8080` / Envoy `:18082` | Bridge on `127.0.0.1:18080` | Nova dispatch and Control revision requests. |
+| Agent `127.0.0.1:28080` | Control internal Service | OpenClaw tool writes. |
 | `prism-control-internal:8443` | Control on `127.0.0.1:8080` | Protected control ingress. |
 | `prism-worker-internal:8443` | Worker on `127.0.0.1:8080` | Protected worker ingress. |
 | Control `127.0.0.1:18081` | Worker internal Service | Control-to-worker traffic. |
@@ -202,15 +207,15 @@ identity protects the live connection. The signature protects the source metadat
 ## Nova-to-Prism Flow
 
 1. Nova sends the request to `127.0.0.1:28080`.
-2. Nova Envoy starts mTLS with Prism control Envoy.
-3. Prism control Envoy verifies Nova's exact URI SAN.
-4. Prism control Envoy replaces the forwarded certificate header.
-5. Prism control accepts the header only from loopback.
-6. Prism control checks the configured Nova SPIFFE ID.
-7. Prism control validates the request contract and idempotency key.
+2. Nova Envoy starts mTLS with the `agent-prism` Envoy.
+3. Prism agent Envoy verifies Nova's exact URI SAN and forwards to its loopback bridge.
+4. The bridge persists the request through its own SPIFFE-authenticated Control route.
+5. The bridge sends the architecture to the persistent OpenClaw project session.
+6. The OpenClaw agent commits exactly three designs through `prism_create_design_set`.
+7. Prism Control verifies the agent SPIFFE ID, validates all three documents and their diversity, and stores them.
 
 This connection does not use durable Ed25519 artifact attestation today. The
-current control is SPIFFE-authenticated mTLS plus application contract validation.
+current control is SPIFFE-authenticated mTLS plus OpenClaw tool and application contract validation.
 
 ## Prism Control-to-Worker Flow
 

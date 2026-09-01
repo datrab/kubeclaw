@@ -13,7 +13,7 @@
 #   - agent.git.repoUrl
 # =============================================================================
 
-# -- Agent identity. One of: nova, forge, echo, buster
+# -- Agent identity. One of: nova, forge, echo, buster, prism
 agentRole: "nova"
 
 # =============================================================================
@@ -191,6 +191,14 @@ discordWebhook:
 agent:
   # Active project name — sets CURRENT_PROJECT env for memory scoping
   project: ""  # e.g. "kubecommand"
+  model:
+    primary: "openai/gpt-5.5"
+    fallbacks:
+      - "anthropic/claude-sonnet-4-6"
+      - "anthropic/claude-opus-4-6"
+      - "openai/gpt-5.5-pro"
+      - "openai/gpt-5.5"
+      - "litellm/gemini-flash"
   git:
     enabled: true
     # K8s secret containing the SSH deploy key
@@ -241,6 +249,8 @@ workspace:
 service:
   type: ClusterIP
   gatewayPort: 18789
+  gatewayTargetPort: gateway
+  bridgeEnabled: true
   bridgePort: 18790
   # NodePort for gateway when service.type is NodePort.
   nodePort: 0

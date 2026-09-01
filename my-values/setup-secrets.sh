@@ -450,6 +450,7 @@ create_shared_secret_from_sops() {
     --from-literal="gatewayToken-buster=$(sops_get openclaw_gateway_token_buster)"
     --from-literal="busterV2Token=$(sops_get buster_v2_token)"
     --from-literal="gatewayToken-nova=$(sops_get openclaw_gateway_token_nova)"
+    --from-literal="gatewayToken-prism=$(sops_get openclaw_gateway_token_prism 2>/dev/null || generate_secret_value)"
     --from-literal="anthropicApiKey=$(sops_get_first anthropic_api_key claude_code_oauth_token anthropicApiKey)"
     --from-literal="stitchApiKey=$(sops_get_first stitch_api_key stitchApiKey)"
     --from-literal="discordToken-forge=$(sops_get forge_discord_secret)"
@@ -469,7 +470,7 @@ create_shared_secret_from_sops() {
 }
 
 create_shared_secret_interactive() {
-  local gateway_forge gateway_echo gateway_buster gateway_nova buster_v2_token
+  local gateway_forge gateway_echo gateway_buster gateway_nova gateway_prism buster_v2_token
   local anthropic_api_key stitch_api_key litellm_api_key
   local discord_forge discord_echo discord_buster discord_nova discord_webhook
 
@@ -481,6 +482,7 @@ create_shared_secret_interactive() {
   prompt_secret_or_generate "OpenClaw gateway token for Buster" gateway_buster
   prompt_secret_or_generate "Buster v2 worker token" buster_v2_token
   prompt_secret_or_generate "OpenClaw gateway token for Nova" gateway_nova
+  prompt_secret_or_generate "OpenClaw gateway token for Prism" gateway_prism
   prompt_secret_required "Anthropic/Claude credential for agents" anthropic_api_key
   prompt_secret_required "Stitch API key" stitch_api_key
   if component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
@@ -501,6 +503,7 @@ create_shared_secret_interactive() {
     --from-literal="gatewayToken-buster=$gateway_buster" \
     --from-literal="busterV2Token=$buster_v2_token" \
     --from-literal="gatewayToken-nova=$gateway_nova" \
+    --from-literal="gatewayToken-prism=$gateway_prism" \
     --from-literal="anthropicApiKey=$anthropic_api_key" \
     --from-literal="stitchApiKey=$stitch_api_key" \
     --from-literal="litellmApiKey=$litellm_api_key" \
@@ -526,6 +529,7 @@ patch_shared_secret_interactive() {
       gatewayToken-buster) prompt_secret_or_generate "OpenClaw gateway token for Buster" value ;;
       busterV2Token) prompt_secret_or_generate "Buster v2 worker token" value ;;
       gatewayToken-nova) prompt_secret_or_generate "OpenClaw gateway token for Nova" value ;;
+      gatewayToken-prism) prompt_secret_or_generate "OpenClaw gateway token for Prism" value ;;
       anthropicApiKey) prompt_secret_required "Anthropic/Claude credential for agents" value ;;
       stitchApiKey) prompt_secret_required "Stitch API key" value ;;
       litellmApiKey) prompt_secret_or_generate "LiteLLM master key" value ;;
@@ -552,6 +556,7 @@ setup_shared_secret() {
     gatewayToken-buster
     busterV2Token
     gatewayToken-nova
+    gatewayToken-prism
     anthropicApiKey
     stitchApiKey
     discordToken-forge

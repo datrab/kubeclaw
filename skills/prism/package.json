@@ -9,7 +9,7 @@
     "./renderer": "./renderer/index.ts"
   },
   "scripts": {
-    "test": "node --test tests/*.test.mts",
+    "test": "node --test tests/*.test.mts openclaw-plugin/index.test.mjs",
     "test:domain": "node --test tests/domain.test.mts",
     "test:renderer": "node --test tests/renderer.test.mts",
     "test:storage": "node --test tests/storage.test.mts tests/control.test.mts",

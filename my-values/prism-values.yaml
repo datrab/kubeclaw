@@ -16,12 +16,12 @@ postgresql:
   storageClass: ""
   existingSecret: prism-postgresql-auth
   resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 8Gi } }
-secrets: { runtime: prism-runtime, database: prism-postgresql-auth, provider: prism-provider }
+secrets: { runtime: prism-runtime, database: prism-postgresql-auth }
 artifactStorage: { storage: 100Gi, storageClass: "" }
-providerNetworkPolicy:
-  internalLiteLLM: { enabled: true, namespace: kubeclaw }
 tailscale: { enabled: true, hostname: prism-studio, operatorNamespace: tailscale }
 workerTrust:
   spiffe:
     enabled: true
     trustDomain: kubeclaw.internal
+    agentNamespace: kubeclaw
+    agentServiceAccount: agent-prism

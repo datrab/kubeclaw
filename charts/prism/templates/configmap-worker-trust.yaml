@@ -31,6 +31,7 @@ data:
                           - { san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/prism-test-runner" $trustDomain $namespace | quote }} } }
                           - { san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $trustDomain $namespace | quote }} } }
                           - { san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/prism-worker" $trustDomain $namespace | quote }} } }
+                          - { san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/%s" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }
                       validation_context_sds_secret_config:
                         name: {{ printf "spiffe://%s" $trustDomain | quote }}
                         sds_config:
@@ -53,6 +54,9 @@ data:
         - name: control-egress
           address: { socket_address: { address: 127.0.0.1, port_value: 18080 } }
           filter_chains: [{ filters: [{ name: envoy.filters.network.tcp_proxy, typed_config: { "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy, stat_prefix: control-egress, cluster: control-mtls } }] }]
+        - name: prism-agent-egress
+          address: { socket_address: { address: 127.0.0.1, port_value: 18082 } }
+          filter_chains: [{ filters: [{ name: envoy.filters.network.tcp_proxy, typed_config: { "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy, stat_prefix: prism-agent-egress, cluster: prism-agent-mtls } }] }]
       clusters:
         - name: spire-agent
           connect_timeout: 0.25s
@@ -99,6 +103,27 @@ data:
                       api_config_source: { api_type: GRPC, transport_api_version: V3, grpc_services: [{ envoy_grpc: { cluster_name: spire-agent } }] }
                 combined_validation_context:
                   default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $trustDomain $namespace | quote }} } }] }
+                  validation_context_sds_secret_config:
+                    name: {{ printf "spiffe://%s" $trustDomain | quote }}
+                    sds_config:
+                      resource_api_version: V3
+                      api_config_source: { api_type: GRPC, transport_api_version: V3, grpc_services: [{ envoy_grpc: { cluster_name: spire-agent } }] }
+        - name: prism-agent-mtls
+          connect_timeout: 3s
+          type: STRICT_DNS
+          load_assignment: { cluster_name: prism-agent-mtls, endpoints: [{ lb_endpoints: [{ endpoint: { address: { socket_address: { address: agent-prism, port_value: 8080 } } } }] }] }
+          transport_socket:
+            name: envoy.transport_sockets.tls
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+              common_tls_context:
+                tls_certificate_sds_secret_configs:
+                  - name: default
+                    sds_config:
+                      resource_api_version: V3
+                      api_config_source: { api_type: GRPC, transport_api_version: V3, grpc_services: [{ envoy_grpc: { cluster_name: spire-agent } }] }
+                combined_validation_context:
+                  default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/%s" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }] }
                   validation_context_sds_secret_config:
                     name: {{ printf "spiffe://%s" $trustDomain | quote }}
                     sds_config:
@@ -180,6 +205,9 @@ data:
         - name: control-egress
           address: { socket_address: { address: 127.0.0.1, port_value: 18443 } }
           filter_chains: [{ filters: [{ name: envoy.filters.network.tcp_proxy, typed_config: { "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy, stat_prefix: control-egress, cluster: control-mtls } }] }]
+        - name: prism-agent-egress
+          address: { socket_address: { address: 127.0.0.1, port_value: 18444 } }
+          filter_chains: [{ filters: [{ name: envoy.filters.network.tcp_proxy, typed_config: { "@type": type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy, stat_prefix: prism-agent-egress, cluster: prism-agent-mtls } }] }]
       clusters:
         - name: spire-agent
           connect_timeout: 0.25s
@@ -201,6 +229,27 @@ data:
                       api_config_source: { api_type: GRPC, transport_api_version: V3, grpc_services: [{ envoy_grpc: { cluster_name: spire-agent } }] }
                 combined_validation_context:
                   default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $trustDomain $namespace | quote }} } }] }
+                  validation_context_sds_secret_config:
+                    name: {{ printf "spiffe://%s" $trustDomain | quote }}
+                    sds_config:
+                      resource_api_version: V3
+                      api_config_source: { api_type: GRPC, transport_api_version: V3, grpc_services: [{ envoy_grpc: { cluster_name: spire-agent } }] }
+        - name: prism-agent-mtls
+          connect_timeout: 3s
+          type: STRICT_DNS
+          load_assignment: { cluster_name: prism-agent-mtls, endpoints: [{ lb_endpoints: [{ endpoint: { address: { socket_address: { address: agent-prism, port_value: 8080 } } } }] }] }
+          transport_socket:
+            name: envoy.transport_sockets.tls
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+              common_tls_context:
+                tls_certificate_sds_secret_configs:
+                  - name: default
+                    sds_config:
+                      resource_api_version: V3
+                      api_config_source: { api_type: GRPC, transport_api_version: V3, grpc_services: [{ envoy_grpc: { cluster_name: spire-agent } }] }
+                combined_validation_context:
+                  default_validation_context: { match_typed_subject_alt_names: [{ san_type: URI, matcher: { exact: {{ printf "spiffe://%s/ns/%s/sa/%s" $trustDomain .Values.workerTrust.spiffe.agentNamespace .Values.workerTrust.spiffe.agentServiceAccount | quote }} } }] }
                   validation_context_sds_secret_config:
                     name: {{ printf "spiffe://%s" $trustDomain | quote }}
                     sds_config:

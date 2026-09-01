@@ -11,11 +11,12 @@ spec:
   ports:
     - name: gateway
       port: {{ .Values.service.gatewayPort }}
-      targetPort: gateway
+      targetPort: {{ .Values.service.gatewayTargetPort }}
       protocol: TCP
       {{- if and (eq .Values.service.type "NodePort") (gt (int .Values.service.nodePort) 0) }}
       nodePort: {{ .Values.service.nodePort }}
       {{- end }}
+    {{- if .Values.service.bridgeEnabled }}
     - name: bridge
       port: {{ .Values.service.bridgePort }}
       targetPort: bridge
@@ -23,6 +24,7 @@ spec:
       {{- if and (eq .Values.service.type "NodePort") (gt (int .Values.service.bridgeNodePort) 0) }}
       nodePort: {{ .Values.service.bridgeNodePort }}
       {{- end }}
+    {{- end }}
     {{- range .Values.service.extraPorts }}
     - name: {{ .name }}
       port: {{ .port }}

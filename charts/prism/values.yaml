@@ -25,10 +25,7 @@ postgresql:
 secrets:
   runtime: prism-runtime
   database: prism-postgresql-auth
-  provider: prism-provider
 artifactStorage: { storage: 100Gi, storageClass: "" }
-providerNetworkPolicy:
-  internalLiteLLM: { enabled: true, namespace: kubeclaw }
 tailscale: { enabled: true, hostname: prism-studio, operatorNamespace: tailscale }
 workerTrust:
   spiffe:
@@ -36,6 +33,8 @@ workerTrust:
     trustDomain: kubeclaw.internal
     novaNamespace: kubeclaw
     novaServiceAccount: agent-nova
+    agentNamespace: kubeclaw
+    agentServiceAccount: agent-prism
     socketPath: /run/spire/sockets/spire-agent.sock
     csiDriver: csi.spiffe.io
     envoy:

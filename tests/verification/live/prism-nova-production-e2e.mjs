@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with { type: "json" };
 
 const required = (name) => {
   const value = process.env[name];
@@ -8,10 +7,12 @@ const required = (name) => {
   return value;
 };
 const endpoint = required("PRISM_CONTROL_URL").replace(/\/$/, "");
+const agentEndpoint = required("PRISM_AGENT_URL").replace(/\/$/, "");
 const ingress = required("PRISM_E2E_INGRESS_SECRET");
 const user = required("PRISM_E2E_USER");
 const startedAt = new Date().toISOString();
 const call = async (path, init = {}) => fetch(`${endpoint}${path}`, init);
+const agentCall = async (path, init = {}) => fetch(`${agentEndpoint}${path}`, init);
 for (let attempt = 1; attempt <= 60; attempt += 1) {
   try {
     const response = await call("/health");
@@ -61,7 +62,7 @@ const initialDispatchBody = JSON.stringify({
   idempotencyKey: `${externalId}-request`,
 });
 const initialDispatchKey = `${externalId}-request`;
-const initialDispatch = await call("/v1/dispatch", {
+const initialDispatch = await agentCall("/v1/dispatch", {
   method: "POST",
   headers: {
     "content-type": "application/json",
@@ -70,44 +71,26 @@ const initialDispatch = await call("/v1/dispatch", {
   body: initialDispatchBody,
 });
 assert.equal(initialDispatch.status, 202, await initialDispatch.clone().text());
-const projectId = (await initialDispatch.json()).result.projectId;
-assert.ok(projectId);
-const document = {
-  ...structuredClone(fixture),
-  meta: {
-    ...fixture.meta,
-    documentId: externalId,
-    projectId: externalId,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-};
-const documentResponse = await call("/v1/documents", {
-  method: "POST",
-  headers,
-  body: JSON.stringify({ projectId, key: "primary", document }),
-});
-assert.equal(documentResponse.status, 201);
-const documentId = (await documentResponse.json()).id;
-const directionsResponse = await call(`/v1/projects/${projectId}/directions`, {
-  method: "POST",
-  headers,
-  body: JSON.stringify({ documentId }),
-});
-assert.equal(
-  directionsResponse.status,
-  201,
-  await directionsResponse.clone().text(),
-);
+let projectId="";let documentId="";
+for(let attempt=0;attempt<180;attempt++){
+  const projectsResponse=await call("/v1/projects",{headers:{cookie}});
+  if(projectsResponse.ok){const project=(await projectsResponse.json()).items.find((item)=>item.external_id===externalId&&item.direction_count===3);if(project){projectId=project.id;documentId=project.document_id;break;}}
+  await new Promise((resolve)=>setTimeout(resolve,2000));
+}
+assert.ok(projectId&&documentId,"OpenClaw Prism agent did not commit exactly three designs");
+const directionsResponse=await call(`/v1/projects/${projectId}/directions`,{headers:{cookie}});
+assert.equal(directionsResponse.status,200,await directionsResponse.clone().text());
 const directions = (await directionsResponse.json()).items;
-assert.ok(directions.length >= 2);
+assert.equal(directions.length,3);
 const chosen = await call(`/v1/directions/${directions[0].id}/select`, {
   method: "POST",
   headers,
-  body: JSON.stringify({ documentId }),
+  body: JSON.stringify({ documentId: directions[0].source_document_id }),
 });
 assert.equal(chosen.status, 200, await chosen.clone().text());
-const selectedDocument = (await chosen.clone().json()).document;
+const chosenResult=await chosen.clone().json();
+const selectedDocument = chosenResult.document;
+documentId=chosenResult.documentId;
 const engine = await call(`/v1/documents/${documentId}/engine`, {
   method: "POST",
   headers,
@@ -121,13 +104,16 @@ const engine = await call(`/v1/documents/${documentId}/engine`, {
     },
   }),
 });
-assert.equal(engine.status, 200, await engine.clone().text());
-const currentResponse = await call(`/v1/documents/${documentId}`, {
-  headers: { cookie },
-});
-assert.equal(currentResponse.status, 200);
-const current = (await currentResponse.json()).document;
-assert.ok(current.meta.revision >= 3);
+assert.equal(engine.status, 202, await engine.clone().text());
+let current;
+for(let attempt=0;attempt<180;attempt++){
+  const currentResponse=await call(`/v1/documents/${documentId}`,{headers:{cookie}});
+  assert.equal(currentResponse.status,200);
+  current=(await currentResponse.json()).document;
+  if(current.meta.revision>selectedDocument.meta.revision)break;
+  await new Promise((resolve)=>setTimeout(resolve,2000));
+}
+assert.ok(current.meta.revision>selectedDocument.meta.revision);
 const revisions = await call(`/v1/documents/${documentId}/revisions`, {
   headers: { cookie },
 });

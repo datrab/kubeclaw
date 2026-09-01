@@ -52,12 +52,14 @@ const trustedNovaSpiffeId = process.env.PRISM_TRUSTED_NOVA_SPIFFE_ID ?? "";
 const trustedTestRunnerSpiffeId = process.env.PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID ?? "";
 const trustedWorkerSpiffeId = process.env.PRISM_TRUSTED_WORKER_SPIFFE_ID ?? "";
 const trustedControlSpiffeId = process.env.PRISM_CONTROL_SPIFFE_ID ?? "";
-if (spiffeEnabled && (!trustedNovaSpiffeId || !trustedWorkerSpiffeId || !trustedControlSpiffeId)) {
+const trustedPrismAgentSpiffeId = process.env.PRISM_TRUSTED_AGENT_SPIFFE_ID ?? "";
+if (spiffeEnabled && (!trustedNovaSpiffeId || !trustedWorkerSpiffeId || !trustedControlSpiffeId || !trustedPrismAgentSpiffeId)) {
   throw new Error("Prism SPIFFE trust policy is incomplete");
 }
 const ingestionSecret=required("PRISM_INGESTION_SECRET");
 const ingestionUrl=new URL(process.env.PRISM_INGESTION_URL??"http://prism-ingestion:8080");
 const controlInternalUrl=new URL(process.env.PRISM_CONTROL_INTERNAL_URL??"http://prism-control:8080");
+const prismAgentUrl=new URL(process.env.PRISM_AGENT_URL??"http://agent-prism:8080");
 function required(name: string): string {
   const value = process.env[name];
   if (!value) throw new Error(`${name} is required`);
@@ -280,7 +282,7 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname === "/v1/dispatch" && request.method === "POST") {
       if(spiffeEnabled){
-        try{authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedNovaSpiffeId, trustedTestRunnerSpiffeId].filter(Boolean)));}
+        try{authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedNovaSpiffeId, trustedPrismAgentSpiffeId, trustedTestRunnerSpiffeId].filter(Boolean)));}
         catch{throw new Error("invalid dispatch identity");}
       }
       if (
@@ -356,7 +358,53 @@ const server = createServer(async (request, response) => {
         },
       });
     }
+    if (url.pathname === "/v1/agent/design-sets" && request.method === "POST") {
+      if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
+      authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
+      const input = (await body(request)) as {
+        projectId?: string;
+        designs?: Array<{key?:string;title?:string;summary?:string;document?:PrismDocument;evidence?:Record<string,unknown>}>;
+      };
+      if (!input.projectId || input.designs?.length !== 3) throw new Error("exactly three Prism designs are required");
+      if (new Set(input.designs.map((item)=>item.key)).size !== 3) throw new Error("Prism direction keys must be unique");
+      const documents=input.designs.map((item)=>validatePrism<PrismDocument>("designDocument",item.document));
+      assertMaterialDirectionDiversity(documents);
+      const project=await pool.query<{id:string}>("SELECT id FROM prism.project WHERE external_id=$1",[input.projectId]);
+      if(!project.rows[0])throw new Error("active Prism project not found");
+      const active=await pool.query<{id:string}>("SELECT id FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[project.rows[0].id]);
+      if(!active.rows[0])throw new Error("active Prism design request not found");
+      const existing=await pool.query<{id:string;source_document_id:string}>("SELECT d.id,d.source_document_id FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id WHERE d.project_id=$1 AND doc.design_request_id=$2 ORDER BY d.created_at,d.id",[project.rows[0].id,active.rows[0].id]);
+      if(existing.rows.length===3)return json(response,200,{status:"already-created",projectId:project.rows[0].id,documentId:existing.rows[0]!.source_document_id,studioUrl:`${process.env.PRISM_STUDIO_PUBLIC_URL??"https://prism-studio"}?project=${project.rows[0].id}&document=${existing.rows[0]!.source_document_id}`});
+      if(existing.rows.length)throw new Error("partial Prism design set exists; operator repair is required");
+      const created:Array<{directionId:string;documentId:string;key:string}>=[];
+      for(let index=0;index<input.designs.length;index++){
+        const item=input.designs[index]!;const document=documents[index]!;
+        if(!item.key||!item.title||!item.summary)throw new Error("each Prism design requires key, title, and summary");
+        const documentId=await repository.createDocument(project.rows[0].id,`direction-${item.key}`,document,"agent:prism",active.rows[0].id);
+        const current=await repository.current(documentId);const content=JSON.stringify(document);const directionId=randomUUID();
+        await pool.query("INSERT INTO prism.direction(id,project_id,source_document_id,source_revision_id,direction_key,title,summary,proposal,content_digest,state,evidence) VALUES($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,'proposed',$10::jsonb)",[directionId,project.rows[0].id,documentId,current.id,item.key,item.title,item.summary,content,sha256(content),JSON.stringify(item.evidence??{})]);
+        created.push({directionId,documentId,key:item.key});
+      }
+      return json(response,201,{status:"created",projectId:project.rows[0].id,documentId:created[0]!.documentId,directions:created,studioUrl:`${process.env.PRISM_STUDIO_PUBLIC_URL??"https://prism-studio"}?project=${project.rows[0].id}&document=${created[0]!.documentId}`});
+    }
+    if (url.pathname === "/v1/agent/revisions" && request.method === "POST") {
+      if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
+      authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
+      const input=(await body(request)) as {projectId?:string;documentId?:string;expectedRevision?:number;instruction?:string;document?:PrismDocument};
+      if(!input.projectId||!input.documentId||!input.instruction||!Number.isSafeInteger(input.expectedRevision))throw new Error("complete Prism revision input is required");
+      const owner=await pool.query<{external_id:string}>("SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",[input.documentId]);
+      if(owner.rows[0]?.external_id!==input.projectId)throw new Error("document does not belong to the Prism project");
+      const current=await repository.current(input.documentId);if(current.document.meta.revision!==input.expectedRevision)throw new Error("revision conflict");
+      const document=validatePrism<PrismDocument>("designDocument",input.document);
+      if(document.meta.revision!==input.expectedRevision+1)throw new Error("Prism agent must increment the document revision exactly once");
+      const updated=await repository.replace(input.documentId,current.id,document,{type:"agent.revision",instruction:input.instruction},"agent:prism");
+      return json(response,200,{status:"updated",document:updated});
+    }
     const actor = authenticated(request);
+    if (url.pathname === "/v1/projects" && request.method === "GET") {
+      const result=await pool.query<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>("SELECT p.id,p.external_id,p.name,(SELECT d.source_document_id FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' WHERE d.project_id=p.id ORDER BY d.created_at,d.id LIMIT 1) AS document_id,(SELECT count(*)::int FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' WHERE d.project_id=p.id) AS direction_count FROM prism.project p ORDER BY p.updated_at DESC,p.id");
+      return json(response,200,{items:result.rows});
+    }
     const projectBrief=/^\/v1\/projects\/([0-9a-f-]+)\/brief$/.exec(url.pathname);
     if(projectBrief&&request.method==="GET"){
       const result=await pool.query("SELECT architecture_artifact_id,architecture_digest,request,created_at FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[projectBrief[1]]);
@@ -424,7 +472,7 @@ const server = createServer(async (request, response) => {
     );
     if (directions && request.method === "GET") {
       const result = await pool.query(
-        "SELECT id,direction_key,title,summary,proposal,state,content_digest,evidence FROM prism.direction WHERE project_id=$1 ORDER BY created_at,id",
+        "SELECT d.id,d.source_document_id,d.direction_key,d.title,d.summary,d.proposal,d.state,d.content_digest,d.evidence FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' WHERE d.project_id=$1 ORDER BY d.created_at,d.id",
         [directions[1]],
       );
       return json(response, 200, { items: result.rows });
@@ -432,91 +480,12 @@ const server = createServer(async (request, response) => {
     if (directions && request.method === "POST") {
       const input = (await body(request)) as { documentId?: string };
       if (!input.documentId) throw new Error("documentId is required");
-      const documentOwner = await pool.query<{ project_id: string }>(
-        "SELECT d.project_id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' WHERE d.id=$1",
-        [input.documentId],
-      );
-      if (
-        !documentOwner.rows[0] ||
-        documentOwner.rows[0].project_id !== directions[1]
-      )
-        throw new Error("document does not belong to the direction project");
-      const currentDocument = await repository.current(input.documentId);
-      const briefResult=await pool.query<{request:Record<string,unknown>}>("SELECT request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[directions[1]]);
-      const brief=briefResult.rows[0]?.request??{projectId:currentDocument.document.meta.projectId};
-      const preferenceRows=await pool.query<{content:PreferenceEvent}>("SELECT e.content FROM prism.preference_event e WHERE e.subject_id=$1 AND (e.project_id=$2 OR e.project_id IS NULL) ORDER BY e.occurred_at,e.id",[userKey(actor.user),directions[1]]);
-      const preferenceProfile=projectPreferences(preferenceRows.rows.map((row)=>row.content));
-      const researchText=JSON.stringify(brief).slice(0,100_000);
-      const embedded=await runWorker("ingest",{text:researchText},`research:${directions[1]}:${sha256(researchText)}`);
-      const references=await search(pool,researchText,8,{embedding:embedded.embedding as number[],model:String(embedded.model)},{sourceFamilyLimit:2});
-      const referenceSummary=references.map((item)=>({id:item.id,summary:(item.normalized as Record<string,unknown>|undefined)?.summary,sourceKind:item.source_kind,explanation:item.explanation}));
-      const proposals = [
-        {
-          key: "calm-technical",
-          title: "Calm technical",
-          summary: "Dense, restrained, and operational.",
-          instruction:
-            "Create a calm, restrained, high-density technical direction. Preserve task clarity and accessibility.",
-        },
-        {
-          key: "clear-expressive",
-          title: "Clear expressive",
-          summary: "Clear hierarchy with a stronger visual signature.",
-          instruction:
-            "Create a distinct expressive direction with strong hierarchy. Preserve usability and accessibility.",
-        },
-        {
-          key: "focused-editorial",
-          title: "Focused editorial",
-          summary: "Strong narrative order with restrained detail and deliberate emphasis.",
-          instruction:
-            "Create a focused editorial direction with a clear narrative sequence, deliberate typography, and restrained controls. Preserve task completion, accessibility, and product credibility.",
-        },
-      ];
-      const generated: Array<{proposal:(typeof proposals)[number];document:PrismDocument;content:string;evidence:Record<string,unknown>}> = [];
-      for (const proposal of proposals) {
-        const values = await runWorker(
-          "generate",
-          {
-            document: currentDocument.document,
-            instruction: `${proposal.instruction}\nGround the proposal in this approved brief: ${researchText}\nUse these Prism corpus references as evidence, not templates to copy: ${JSON.stringify(referenceSummary)}\nApply these contextual user preferences only where their context matches, and preserve novelty: ${JSON.stringify(preferenceProfile)}`,
-            mode: "directions",
-          },
-          `directions:${directions[1]}:${currentDocument.id}:${proposal.key}:${sha256(JSON.stringify({document:currentDocument.document,brief,references:referenceSummary,preferences:preferenceProfile}))}`,
-        );
-        const document = validatePrism<PrismDocument>(
-          "designDocument",
-          values.document,
-        );
-        const content = JSON.stringify(document);
-        generated.push({proposal,document,content,evidence:{thesis:proposal.summary,references:referenceSummary,preferences:Object.keys(preferenceProfile),tradeoffs:proposal.key==="calm-technical"?["Less expressive","Optimized for expert density"]:proposal.key==="clear-expressive"?["More visual emphasis","Requires careful restraint"]:["More guided narrative","Lower information density"]}});
-      }
-      assertMaterialDirectionDiversity(generated.map((item)=>item.document));
-      const client=await pool.connect();
-      try{
-        await client.query("BEGIN");
-        for(const item of generated)await client.query(
-          "INSERT INTO prism.direction(id,project_id,source_document_id,source_revision_id,direction_key,title,summary,proposal,content_digest,state,evidence) VALUES($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,'proposed',$10::jsonb) ON CONFLICT(project_id,source_document_id,direction_key) DO UPDATE SET source_revision_id=excluded.source_revision_id,title=excluded.title,summary=excluded.summary,proposal=excluded.proposal,content_digest=excluded.content_digest,state='proposed',evidence=excluded.evidence",
-          [
-            randomUUID(),
-            directions[1],
-            input.documentId,
-            currentDocument.id,
-            item.proposal.key,
-            item.proposal.title,
-            item.proposal.summary,
-            item.content,
-            sha256(item.content),
-            JSON.stringify(item.evidence),
-          ],
-        );
-        await client.query("COMMIT");
-      }catch(error){await client.query("ROLLBACK");throw error;}finally{client.release();}
-      const result = await pool.query(
-        "SELECT id,direction_key,title,summary,proposal,state,content_digest,evidence FROM prism.direction WHERE project_id=$1 AND source_document_id=$2 ORDER BY created_at,id",
-        [directions[1], input.documentId],
-      );
-      return json(response, 201, { items: result.rows });
+      const project=await pool.query<{external_id:string}>("SELECT external_id FROM prism.project WHERE id=$1",[directions[1]]);
+      const requestResult=await pool.query<{request:Record<string,unknown>}>("SELECT request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[directions[1]]);
+      if(!project.rows[0]||!requestResult.rows[0])throw new Error("active Prism project not found");
+      const agentResponse=await fetch(new URL("/v1/design-set",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({projectId:project.rows[0].external_id,request:requestResult.rows[0].request})});
+      const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the design request");
+      return json(response,202,accepted);
     }
     const directionFeedback = /^\/v1\/directions\/([0-9a-f-]+)\/feedback$/.exec(
       url.pathname,
@@ -580,34 +549,14 @@ const server = createServer(async (request, response) => {
         [selectDirection[1]],
       );
       if (!selected.rows[0]) throw new Error("direction is not available");
-      const documentOwner = await pool.query<{ project_id: string }>(
-        "SELECT project_id FROM prism.design_document WHERE id=$1",
-        [input.documentId],
-      );
-      if (
-        !documentOwner.rows[0] ||
-        documentOwner.rows[0].project_id !== selected.rows[0].project_id ||
-        selected.rows[0].source_document_id !== input.documentId
-      )
-        throw new Error("direction does not belong to the target document");
-      const currentDocument = await repository.current(input.documentId);
+      const currentDocument = await repository.current(selected.rows[0].source_document_id);
       if (selected.rows[0].source_revision_id !== currentDocument.id)
         throw new Error(
           "direction is stale; generate new directions from the current revision",
         );
-      const proposal = structuredClone(selected.rows[0].proposal);
-      proposal.meta.revision = currentDocument.document.meta.revision + 1;
-      proposal.meta.updatedAt = new Date().toISOString();
-      await repository.replace(
-        input.documentId,
-        currentDocument.id,
-        proposal,
-        { type: "direction.selected", directionId: selectDirection[1] },
-        actor.user,
-      );
       await pool.query(
-        "UPDATE prism.direction SET state=CASE WHEN id=$1 THEN 'selected' ELSE 'rejected' END WHERE project_id=$2 AND source_document_id=$3 AND state IN ('proposed','selected')",
-        [selectDirection[1], selected.rows[0].project_id, input.documentId],
+        "UPDATE prism.direction SET state=CASE WHEN id=$1 THEN 'selected' ELSE 'rejected' END WHERE project_id=$2 AND source_document_id IN (SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' WHERE d.project_id=$2) AND state IN ('proposed','selected')",
+        [selectDirection[1], selected.rows[0].project_id],
       );
       const eventId = `event-${randomBytes(12).toString("hex")}`;
       const userId = `user-${createHash("sha256").update(actor.user).digest("hex").slice(0, 24)}`;
@@ -637,7 +586,8 @@ const server = createServer(async (request, response) => {
         ],
       );
       return json(response, 200, {
-        document: proposal,
+        document: currentDocument.document,
+        documentId: selected.rows[0].source_document_id,
         directionKey: selected.rows[0].direction_key,
       });
     }
@@ -703,6 +653,15 @@ const server = createServer(async (request, response) => {
       );
       const operation = input.operation as
         "generate" | "render" | "evaluate" | "publish";
+      if(operation === "generate"){
+        const owner=await pool.query<{external_id:string}>("SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",[execute[1]]);
+        if(!owner.rows[0])throw new Error("Prism project not found");
+        const instruction=String(input.input?.instruction??"").trim();
+        if(!instruction)throw new Error("Prism revision instruction is required");
+        const agentResponse=await fetch(new URL("/v1/revise",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({projectId:owner.rows[0].external_id,documentId:execute[1],expectedRevision:input.baseRevision,instruction,document:requestDocument.document})});
+        const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the revision");
+        return json(response,202,accepted);
+      }
       const defaults =
         operation === "render"
           ? { view: "home", state: "default", viewport: "wide" }

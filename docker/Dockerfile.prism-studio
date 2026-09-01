@@ -1,12 +1,12 @@
-ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.8.1@sha256:e7849cb6c1ef1ead39ab4be7d85edb2df89611f486e283284c7cf35ce39a20d4
-FROM ${OPENCLAW_BASE} AS build
+ARG NODE_BASE=node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d
+FROM ${NODE_BASE} AS build
 USER root
 WORKDIR /build
 COPY . /build
 RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
  && npm run build:studio --prefix skills/prism
 
-FROM ${OPENCLAW_BASE}
+FROM ${NODE_BASE}
 USER root
 WORKDIR /app/prism
 COPY --from=build /build/skills/prism/dist-studio /app/prism/dist-studio

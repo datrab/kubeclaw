@@ -3,7 +3,6 @@ import { createHash } from "node:crypto";
 import {
   PrismEngine,
   DeterministicDesignProvider,
-  OpenAICompatibleDesignProvider,
 } from "../engine/index.ts";
 import { executePrismOperation } from "../engine/worker-binding.ts";
 import {
@@ -28,21 +27,10 @@ const databaseUrl = process.env.DATABASE_URL ?? "";
 if (!databaseUrl) throw new Error("DATABASE_URL is required");
 const noncePool = new Pool({ connectionString: databaseUrl, max: 4 });
 const nonceStore = new PostgresNonceStore(noncePool);
-const provider = process.env.PRISM_PROVIDER_ENDPOINT
-  ? new OpenAICompatibleDesignProvider({
-      endpoint: process.env.PRISM_PROVIDER_ENDPOINT,
-      embeddingEndpoint: process.env.PRISM_EMBEDDING_ENDPOINT ?? "",
-      apiKey: process.env.PRISM_PROVIDER_API_KEY ?? "",
-      model: process.env.PRISM_PROVIDER_MODEL ?? "",
-      embeddingModel: process.env.PRISM_EMBEDDING_MODEL ?? "",
-      timeoutMs: Number(process.env.PRISM_PROVIDER_TIMEOUT_MS ?? 60_000),
-    })
-  : process.env.NODE_ENV === "production"
-    ? (() => {
-        throw new Error("live Prism provider is required in production");
-      })()
-    : new DeterministicDesignProvider();
-const engine = new PrismEngine(provider);
+// The worker is intentionally model-free. OpenClaw is the sole owner of LLM
+// calls; this deterministic provider only supports bounded render/evaluation
+// operations and cannot reach OpenAI, LiteLLM, or any other model endpoint.
+const engine = new PrismEngine(new DeterministicDesignProvider());
 const controlInternalUrl=process.env.PRISM_CONTROL_INTERNAL_URL??"http://prism-control:8080";
 const trustedControlOrigin=new URL(controlInternalUrl).origin;
 const digest=(value:Uint8Array)=>`sha256:${createHash("sha256").update(value).digest("hex")}`;
@@ -71,6 +59,8 @@ function operationFor(
     async execute(context) {
       if (!prepared || terminated || context.signal.aborted)
         throw new Error("Prism attempt cannot start");
+      if (envelope.operation.values.operation === "generate")
+        throw new Error("Prism generation requires the OpenClaw agent gateway");
       context.log(
         "system",
         `Prism ${String(envelope.operation.values.operation)} operation started`,

@@ -188,11 +188,24 @@ spec:
               if (fs.existsSync(initializedConfigPath)) {
                 const initialized = JSON.parse(fs.readFileSync(initializedConfigPath, 'utf8'));
                 const managedObserver = initialized?.plugins?.entries?.['kubeclaw-agent-observer'];
+                const managedPrism = initialized?.plugins?.entries?.['kubeclaw-prism'];
                 if (managedObserver && typeof managedObserver === 'object') {
                   config.plugins = config.plugins || {};
                   config.plugins.entries = config.plugins.entries || {};
                   config.plugins.entries['kubeclaw-agent-observer'] = managedObserver;
                   console.log('    synchronized managed kubeclaw-agent-observer configuration');
+                }
+                if (managedPrism && typeof managedPrism === 'object') {
+                  config.plugins = config.plugins || {};
+                  config.plugins.entries = config.plugins.entries || {};
+                  config.plugins.entries['kubeclaw-prism'] = managedPrism;
+                  console.log('    synchronized managed kubeclaw-prism configuration');
+                }
+                if (initialized?.agents?.defaults?.model) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.model = initialized.agents.defaults.model;
+                  console.log('    synchronized managed agent model route');
                 }
               }
 
@@ -1180,6 +1193,8 @@ spec:
             {{- if eq .Values.agentRole "buster" }}
             - { name: buster-plan, containerPort: 18891, protocol: TCP }
             - { name: buster-legacy, containerPort: 18892, protocol: TCP }
+            {{- else if eq .Values.agentRole "prism" }}
+            - { name: prism-dispatch, containerPort: 18082, protocol: TCP }
             {{- end }}
           readinessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 3 }
           livenessProbe: { httpGet: { path: /ready, port: 9901 }, initialDelaySeconds: 10 }

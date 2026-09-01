@@ -30,6 +30,10 @@ spec:
         - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }
           podSelector: { matchLabels: { app.kubernetes.io/component: nova } }
       ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
+    - from:
+        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.agentNamespace | quote }} } }
+          podSelector: { matchLabels: { app.kubernetes.io/component: prism } }
+      ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
   egress:
     - to: [{ podSelector: { matchLabels: { app: prism-worker } } }]
       ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
@@ -39,6 +43,10 @@ spec:
       ports: [{ protocol: TCP, port: 8080 }]
     - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
       ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
+    - to:
+        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.agentNamespace | quote }} } }
+          podSelector: { matchLabels: { app.kubernetes.io/component: prism } }
+      ports: [{ protocol: TCP, port: 18082 }]
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -67,21 +75,38 @@ spec:
   podSelector: { matchLabels: { app: prism-worker } }
   policyTypes: [Egress]
   egress:
+    - to: [{ podSelector: { matchLabels: { app: prism-postgresql } } }]
+      ports: [{ protocol: TCP, port: 5432 }]
+    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
+      ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
+    - to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }]
+      ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: prism-openclaw-agent }
+spec:
+  podSelector: { matchLabels: { app.kubernetes.io/component: prism } }
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }
+          podSelector: { matchLabels: { app.kubernetes.io/component: nova } }
+        - podSelector: { matchLabels: { app: prism-control } }
+        - podSelector: { matchLabels: { app: prism-test-runner } }
+      ports: [{ protocol: TCP, port: 18082 }]
+  egress:
+    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
+      ports: [{ protocol: TCP, port: 8443 }]
+    - to:
+        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }
+          podSelector: { matchLabels: { app: litellm } }
+      ports: [{ protocol: TCP, port: 4000 }]
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
             except: [10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16]
       ports: [{ protocol: TCP, port: 443 }]
-    - to: [{ podSelector: { matchLabels: { app: prism-postgresql } } }]
-      ports: [{ protocol: TCP, port: 5432 }]
-    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
-      ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
-    {{- if .Values.providerNetworkPolicy.internalLiteLLM.enabled }}
-    - to:
-        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.providerNetworkPolicy.internalLiteLLM.namespace | quote }} } }
-          podSelector: { matchLabels: { app: litellm } }
-      ports: [{ protocol: TCP, port: 4000 }]
-    {{- end }}
     - to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }]
       ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]
 ---

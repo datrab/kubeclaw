@@ -1,0 +1,97 @@
+# One logical Prism agent. The OpenClaw gateway owns all model calls; the
+# colocated bridge only converts Nova/Studio requests into persistent agent sends.
+agentRole: "prism"
+
+image:
+  repository: ghcr.io/datrab/kubeclaw-general
+  tag: "latest"
+  pullPolicy: Always
+imagePullSecrets:
+  - name: ghcr-secret
+runAsRoot: false
+
+auth:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: gatewayToken-prism
+
+litellm:
+  endpoint: http://litellm.kubeclaw.svc.cluster.local:4000/v1
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: litellmApiKey
+  defaultModel: claude-sonnet
+  models:
+    - { id: claude-sonnet, name: Claude Sonnet, reasoning: true, contextWindow: 200000, maxTokens: 64000 }
+    - { id: gemini-pro, name: Gemini Pro, reasoning: true, contextWindow: 1048576, maxTokens: 65536 }
+
+discord:
+  # Enable after discordToken-prism and the dedicated channel ID are configured.
+  enabled: false
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: discordToken-prism
+  # Set after creating the dedicated Prism Discord channel, then enable above.
+  channelId: ""
+
+commands:
+  ownerAllowFrom: ["discord:849379821536804864"]
+  allowFromDiscord: ["849379821536804864", "user:849379821536804864"]
+
+agent:
+  project: prism
+  model:
+    primary: litellm/claude-sonnet
+    fallbacks: [litellm/gemini-pro]
+  git:
+    enabled: true
+    secretName: git-deploy-key-nova
+    repoUrl: https://github.com/datrab/kubeclaw.git
+
+serviceAccount: { create: true, automount: false }
+workerTrust:
+  spiffe: { enabled: true, trustDomain: kubeclaw.internal }
+
+service:
+  gatewayPort: 8080
+  gatewayTargetPort: prism-dispatch
+  bridgeEnabled: false
+
+extraEnv:
+  - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:28080" }
+  - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
+
+extraContainers:
+  - name: prism-agent-bridge
+    image: ghcr.io/datrab/kubeclaw-general:latest
+    imagePullPolicy: Always
+    command: [node, /opt/kubeclaw-prism/agent-bridge.mjs]
+    env:
+      - { name: PORT, value: "18080" }
+      - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:28080" }
+      - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
+      - name: OPENCLAW_GATEWAY_TOKEN
+        valueFrom: { secretKeyRef: { name: openclaw-shared-secrets, key: gatewayToken-prism } }
+    volumeMounts:
+      - { name: config, mountPath: /home/node/.openclaw }
+      - { name: tmp, mountPath: /tmp }
+    securityContext: { runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
+    readinessProbe: { httpGet: { path: /ready, port: 18080 }, initialDelaySeconds: 3 }
+    livenessProbe: { httpGet: { path: /health, port: 18080 }, initialDelaySeconds: 10 }
+    resources: { requests: { cpu: 50m, memory: 128Mi }, limits: { cpu: 500m, memory: 512Mi } }
+
+workspace:
+  enabled: true
+  overrideOnRestart: true
+  soul: |
+    You are Prism, KubeClaw's single design agent. Nova gives you an architecture and product context.
+    Produce exactly three materially distinct, complete, accessible Prism designs and commit them with prism_create_design_set.
+    When Studio or Discord sends feedback, continue the same project session and commit the complete update with prism_apply_revision.
+    Never call OpenAI or another provider directly. All reasoning goes through your OpenClaw gateway and its LiteLLM route.
+  tools: |
+    prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.
+    prism_apply_revision is mandatory for Studio or Discord design changes.
+    Read git-repo/contracts/prism/v1/schemas/prism-v1.schema.json for the canonical contract and git-repo/contracts/prism/v1/fixtures/minimal-web.json for a minimal valid example before creating a document.
+
+probes:
+  dependencies:
+    redis: { enabled: false }
+    qdrant: { enabled: false }
+    registries: { enabled: false, endpoints: [] }

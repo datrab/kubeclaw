@@ -47,7 +47,9 @@ select an unrelated identity through an environment variable.
 | Caller | Destination | Security |
 | --- | --- | --- |
 | Nova | Buster plan and legacy routes | SPIFFE mTLS and exact Nova identity. |
-| Nova | Prism control | SPIFFE mTLS and exact Nova identity. |
+| Nova | Prism OpenClaw agent | SPIFFE mTLS and exact Nova identity. |
+| Prism control | Prism OpenClaw agent | SPIFFE mTLS and exact control identity. |
+| Prism OpenClaw agent | Prism control | SPIFFE mTLS and exact agent identity. |
 | Prism control | Prism worker | SPIFFE mTLS and exact control identity. |
 | Prism worker | Prism control | SPIFFE mTLS and exact worker identity. |
 | Prism test runner | Prism control | SPIFFE mTLS and exact runner identity. |

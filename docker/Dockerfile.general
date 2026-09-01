@@ -236,6 +236,8 @@ RUN mkdir -p /app/skills /opt/terraform-provider-mirror
 COPY tsconfig.base.json /tmp/tsconfig.base.json
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
 COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
+COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
+COPY skills/prism/server/agent-bridge.mjs /opt/kubeclaw-prism/agent-bridge.mjs
 
 WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
 

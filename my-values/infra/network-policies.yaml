@@ -44,6 +44,10 @@ spec:
   podSelector:
     matchLabels:
       app.kubernetes.io/name: kubeclaw
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: NotIn
+        values: [prism]
   policyTypes:
     - Egress
   egress:
@@ -116,6 +120,10 @@ spec:
   podSelector:
     matchLabels:
       app.kubernetes.io/name: kubeclaw
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: NotIn
+        values: [prism]
   policyTypes:
     - Ingress
   ingress:
@@ -179,7 +187,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: kubeclaw-nova-prism-worker-trust
+  name: kubeclaw-nova-prism-agent-trust
 spec:
   podSelector:
     matchLabels:
@@ -191,20 +199,22 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: prism-control
+              app.kubernetes.io/name: kubeclaw
+              app.kubernetes.io/component: prism
       ports:
         - protocol: TCP
-          port: 8443
+          port: 18082
     - to:
         - namespaceSelector:
             matchLabels:
               kubeclaw/managed-by: buster-namespace-controller
           podSelector:
             matchLabels:
-              app: prism-control
+              app.kubernetes.io/name: kubeclaw
+              app.kubernetes.io/component: prism
       ports:
         - protocol: TCP
-          port: 8443
+          port: 18082
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

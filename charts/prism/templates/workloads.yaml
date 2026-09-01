@@ -41,6 +41,7 @@ spec:
             {{- if $.Values.workerTrust.spiffe.enabled }}
             - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }
             - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }
+            - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18082" }
             {{- end }}
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
@@ -65,16 +66,6 @@ spec:
             - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
-            - name: PRISM_PROVIDER_ENDPOINT
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: endpoint } }
-            - name: PRISM_PROVIDER_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: api-key } }
-            - name: PRISM_PROVIDER_MODEL
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: model } }
-            - name: PRISM_EMBEDDING_ENDPOINT
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-endpoint, optional: true } }
-            - name: PRISM_EMBEDDING_MODEL
-              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.provider }}, key: embedding-model, optional: true } }
             {{- end }}
             {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
             - { name: SPIFFE_ENDPOINT_SOCKET, value: {{ printf "unix://%s" $.Values.workerTrust.spiffe.socketPath | quote }} }
@@ -84,6 +75,7 @@ spec:
             - { name: PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-test-runner" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
             - { name: PRISM_TRUSTED_WORKER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-worker" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
             - { name: PRISM_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            - { name: PRISM_TRUSTED_AGENT_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/%s" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.agentNamespace $.Values.workerTrust.spiffe.agentServiceAccount | quote }} }
             {{- else }}
             - { name: PRISM_TRUSTED_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
             {{- end }}
