@@ -281,6 +281,8 @@
     "deploy_tailscale_operator",
     "ensure_tailscale_oauth_secret",
     "cmd_infra",
+    "reconcile_buster_runtime_ports",
+    "verify_buster_port_routing",
     "deploy_agent",
     "cmd_agents",
     "cmd_image",
@@ -327,8 +329,8 @@
     "secrets": 866,
     "tailscale": 957,
     "infra": 1048,
-    "agents": 1280,
-    "smoke": 1402,
-    "teardown": 1882
+    "agents": 1341,
+    "smoke": 1463,
+    "teardown": 1943
   }
 }
