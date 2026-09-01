@@ -25,6 +25,7 @@
         "codeBundle",
         "runtimeInfrastructure",
         "gateway",
+        "initSetup",
         "capabilityProviders",
         "replicaCount",
         "workerTrust",
@@ -64,7 +65,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 217
+          "line": 228
         }
       ]
     },
@@ -143,6 +144,7 @@
         "agentRole",
         "anthropic",
         "gateway",
+        "initSetup",
         "image",
         "imagePullSecrets",
         "codeBundle",
@@ -170,32 +172,32 @@
         {
           "key": "existingSecret",
           "value": "github-bundle-reader",
-          "line": 27
+          "line": 37
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 31
+          "line": 41
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 35
+          "line": 45
         },
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 40
+          "line": 50
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 54
+          "line": 64
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 61
+          "line": 71
         }
       ]
     },
