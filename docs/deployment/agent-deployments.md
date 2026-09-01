@@ -106,9 +106,12 @@ the Service can bypass Envoy.
 
 An OpenClaw `missing-package-dir` error that points to
 `/tmp/openclaw-plugin-home` indicates plugin metadata from an image build path.
-Gateway images package pinned `npm-pack` archives and an npm cache. The setup
-container installs these packages offline against `/home/node/.openclaw`, which
-records the runtime path and capability consent in the existing state database.
+Gateway images package pinned archives and an npm cache. The setup container
+installs the pinned `npm:@openclaw/*` specifications offline against
+`/home/node/.openclaw`. Keeping the official npm provenance is required for
+privileged plugin state APIs such as Discord's `openKeyedStore`; installing the
+same archive through `npm-pack:` records a local/global origin and is therefore
+not trusted. An install-mode marker repairs old archive-origin installs once.
 Plugin refresh must not replace the persistent SQLite state.
 
 An init failure containing `Unable to create fallback OpenClaw temp dir:

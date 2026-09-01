@@ -83,6 +83,15 @@ initSetup:
     requests: { cpu: 100m, memory: 256Mi }
     limits: { cpu: 1000m, memory: 2Gi }
 
+# Official external plugins are resolved by their pinned npm provenance while
+# npm remains in offline mode against the cache baked into the gateway image.
+# The install-mode marker forces a one-time repair when provenance rules change.
+pluginSeed:
+  installMode: "official-npm-v1"
+  specs:
+    - "npm:@openclaw/acpx@2026.8.1"
+    - "npm:@openclaw/discord@2026.8.1"
+
 # =============================================================================
 # CAPABILITY PROVIDERS
 # =============================================================================

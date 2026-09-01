@@ -148,8 +148,13 @@ assert.match(
 );
 assert.match(
   chart,
-  /NPM_CONFIG_CACHE=\/tmp\/openclaw-plugin-npm-cache[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "npm-pack:\$\{plugin_pack\}" --force --accept-capabilities/,
-  'the setup container must install pinned plugins from the image cache without network access',
+  /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
+  'the setup container must preserve official plugin provenance while installing from the offline image cache',
+);
+assert.match(
+  values,
+  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.8\.1"[\s\S]*"npm:@openclaw\/discord@2026\.8\.1"/,
+  'official OpenClaw plugins must be pinned to the gateway release and installed with trusted npm provenance',
 );
 assert.doesNotMatch(
   chart,

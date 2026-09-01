@@ -329,24 +329,31 @@ spec:
               if [ -d /opt/openclaw-plugin-home ]; then
                 IMAGE_PLUGIN_CACHE_VERSION=""
                 CONFIG_PLUGIN_CACHE_VERSION=""
+                PLUGIN_INSTALL_MODE={{ .Values.pluginSeed.installMode | quote }}
+                CONFIG_PLUGIN_INSTALL_MODE=""
                 if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
                   IMAGE_PLUGIN_CACHE_VERSION="$(cat /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
                 fi
                 if [ -f /config/.kubeclaw-plugin-cache-version ]; then
                   CONFIG_PLUGIN_CACHE_VERSION="$(cat /config/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
                 fi
-                if [ -n "$IMAGE_PLUGIN_CACHE_VERSION" ] && [ "$IMAGE_PLUGIN_CACHE_VERSION" = "$CONFIG_PLUGIN_CACHE_VERSION" ]; then
+                if [ -f /config/.kubeclaw-plugin-install-mode ]; then
+                  CONFIG_PLUGIN_INSTALL_MODE="$(cat /config/.kubeclaw-plugin-install-mode 2>/dev/null || true)"
+                fi
+                if [ -n "$IMAGE_PLUGIN_CACHE_VERSION" ] \
+                  && [ "$IMAGE_PLUGIN_CACHE_VERSION" = "$CONFIG_PLUGIN_CACHE_VERSION" ] \
+                  && [ "$PLUGIN_INSTALL_MODE" = "$CONFIG_PLUGIN_INSTALL_MODE" ]; then
                   echo "    OpenClaw external plugin cache already current; skipping reseed"
                 else
                   rm -rf /tmp/openclaw-plugin-npm-cache
                   mkdir -p /tmp/openclaw-plugin-npm-cache
                   cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
-                  for plugin_pack in /opt/openclaw-plugin-home/packs/*.tgz; do
-                    echo "    Installing pinned plugin from ${plugin_pack}"
+                  for plugin_spec in{{- range .Values.pluginSeed.specs }} {{ . | quote }}{{- end }}; do
+                    echo "    Installing pinned official plugin ${plugin_spec} from offline cache"
                     HOME=/home/node \
                       NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
                       NPM_CONFIG_OFFLINE=true \
-                      openclaw plugins install "npm-pack:${plugin_pack}" --force --accept-capabilities
+                      openclaw plugins install "${plugin_spec}" --force --pin --accept-capabilities
                   done
                   HOME=/home/node openclaw plugins registry --refresh
                   if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
@@ -354,6 +361,7 @@ spec:
                   else
                     rm -f /config/.kubeclaw-plugin-cache-version
                   fi
+                  printf '%s\n' "$PLUGIN_INSTALL_MODE" > /config/.kubeclaw-plugin-install-mode
                   echo "    Installed OpenClaw external plugins from the offline image cache"
                 fi
               else
