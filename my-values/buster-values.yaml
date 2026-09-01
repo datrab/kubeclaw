@@ -72,12 +72,12 @@ workerTrust:
 
 service:
   extraPorts:
-    - name: buster-plan-l
+    - name: buster-plan
       port: 18891
-      targetPort: buster-plan-l
-    - name: buster-legacy-l
+      targetPort: buster-plan
+    - name: buster-legacy
       port: 18892
-      targetPort: buster-legacy-l
+      targetPort: buster-legacy
 
 extraContainers:
   - name: buster-v2-runtime
@@ -125,10 +125,10 @@ extraContainers:
       - name: CONTAINER_BUILD_REGISTRY_BASE_URL
         value: http://registry-local.kubeclaw.svc.cluster.local:5001
     ports:
-      - name: buster-plan
+      - name: buster-plan-local
         containerPort: 28891
         protocol: TCP
-      - name: buster-legacy
+      - name: buster-legacy-local
         containerPort: 28892
         protocol: TCP
     startupProbe:

@@ -234,6 +234,11 @@ assert.doesNotMatch(
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 assert.match(busterValues, /name:\s*buster-plan-local[\s\S]*containerPort:\s*28891/);
 assert.match(busterValues, /name:\s*buster-legacy-local[\s\S]*containerPort:\s*28892/);
+assert.match(
+  busterValues,
+  /service:\s*\n\s+extraPorts:\s*\n\s+- name:\s*buster-plan\s*\n\s+port:\s*18891\s*\n\s+targetPort:\s*buster-plan\s*\n\s+- name:\s*buster-legacy\s*\n\s+port:\s*18892\s*\n\s+targetPort:\s*buster-legacy/,
+  'the Buster Service must target the public Envoy ports, not the local suite runtime ports',
+);
 assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/);
 assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\s\S]*pipeline-test-gate-source-attestation/);
 for (const values of [novaValues, busterValues]) {
