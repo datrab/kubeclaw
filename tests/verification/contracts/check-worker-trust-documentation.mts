@@ -6,7 +6,8 @@ const reference = read('docs/security/worker-trust.md');
 const runbook = read('docs/operations/worker-trust-runbook.md');
 const understand = read('docs/site/understand/worker-trust.md');
 const use = read('docs/site/use/worker-trust.md');
-const all = [reference, runbook, understand, use].join('\n');
+const deployments = read('docs/deployment/agent-deployments.md');
+const all = [reference, runbook, understand, use, deployments].join('\n');
 
 for (const heading of [
   '## Scope', '## Terms', '## Identity Issuance', '## Authorized Connections',
@@ -36,6 +37,8 @@ for (const fact of [
   'kubeclaw.dev/worker-trust', '127.0.0.1:28891', '127.0.0.1:28892',
   '127.0.0.1:28080', '127.0.0.1:18081', '127.0.0.1:18080',
   '127.0.0.1:18443', 'SANITIZE_SET', 'pipeline-test-gate-source-attestation',
+  'buster-plan-local', 'buster-legacy-local', 'No Service may target the runtime ports',
+  'Envoy does not proxy the OpenClaw gateway route on port `18789`',
   'kubeclaw-source-snapshot-v1\\0', 'worker-trust-envelope.v1',
   'No Prism-to-Nova durable signature exists today',
 ]) assert.ok(all.includes(fact), `Worker Trust documentation is missing fact: ${fact}`);
@@ -57,4 +60,4 @@ assert.match(understand, /Current Provenance Limit/u);
 assert.match(use, /does not\s+use a test-double server or fabricated completion result/u);
 
 console.log(JSON.stringify({ ok: true, contract: 'worker-trust-documentation.v1',
-  documents: 4, exactErrorCodes: 13, requiredReferenceSections: 22, requiredRunbookSections: 24 }));
+  documents: 5, exactErrorCodes: 13, requiredReferenceSections: 22, requiredRunbookSections: 24 }));

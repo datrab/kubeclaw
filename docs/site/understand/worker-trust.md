@@ -5,7 +5,7 @@ Audience: architecture reader, maintainer, security reviewer
 Owner: Worker Core and platform operations
 Evidence: skills/worker/core/worker/trust.ts; charts/kubeclaw/templates/configmap-worker-trust.yaml; charts/prism/templates/configmap-worker-trust.yaml
 Applies to: current supported release
-Last verified: source checks on 2026-08-29
+Last verified: source checks on 2026-09-01
 
 ## Purpose
 
@@ -15,6 +15,9 @@ SPIFFE identifies each Kubernetes workload. SPIRE issues short-lived
 X.509-SVIDs. Envoy uses those certificates for mutual TLS.
 
 Worker Core checks the verified identity after Envoy accepts the connection.
+
+Envoy does not replace the OpenClaw gateway. It protects selected internal
+worker routes; agent-session traffic on port `18789` uses a separate route.
 
 ## Security Layers
 
@@ -61,6 +64,17 @@ The destination Envoy verifies the caller URI SAN. It replaces any supplied
 forwarded-certificate header with verified certificate data.
 
 Worker Core accepts that header only from a loopback proxy connection.
+
+For a Buster plan request, the concrete path is:
+
+```text
+Nova -> 127.0.0.1:28891 -> Nova Envoy -> SPIFFE mTLS
+     -> agent-buster:18891 -> Buster Envoy -> 127.0.0.1:28891 -> Buster runtime
+```
+
+The Buster Service targets the Envoy port. It does not target the runtime port.
+The runtime remains reachable on the pod network for kubelet health probes;
+NetworkPolicy denies workload ingress to that port.
 
 ## Nova-to-Buster Provenance
 

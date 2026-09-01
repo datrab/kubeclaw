@@ -5,7 +5,7 @@ Audience: security reviewer, platform maintainer, operator
 Owner: Worker Core and platform operations
 Evidence: `skills/worker/core/worker/trust.ts`; `charts/kubeclaw/templates/configmap-worker-trust.yaml`; `charts/prism/templates/configmap-worker-trust.yaml`
 Applies to: Nova, Buster, Prism control, Prism worker, and Prism test runner
-Last verified: source checks on 2026-08-29
+Last verified: source checks on 2026-09-01
 
 ## Purpose
 
@@ -38,6 +38,10 @@ Worker Trust does not control these surfaces:
 - Provider credentials for LiteLLM or external model services.
 - Image signing or public supply-chain provenance.
 - GitHub artifact attestations.
+
+Envoy is not the OpenClaw gateway and is not a general cluster ingress. The
+OpenClaw agent-session route on port `18789` remains separate. The KubeClaw
+Envoy sidecars protect only the worker routes listed in this document.
 
 Keycloak can control human and external-client identity. Keycloak does not replace
 SPIFFE workload identity or artifact provenance.
@@ -149,8 +153,16 @@ the destination proxy.
 | `0.0.0.0:18891` | `127.0.0.1:28891` | Buster plan execution. |
 | `0.0.0.0:18892` | `127.0.0.1:28892` | Buster legacy suite execution. |
 
-The Buster application runtime binds only to loopback. The Buster Service targets
-the Envoy listener.
+The Buster Service targets only the Envoy listeners on `18891` and `18892`.
+Its named target ports are `buster-plan` and `buster-legacy`. The runtime ports
+use the distinct names `buster-plan-local` and `buster-legacy-local`; each
+Service target name must occur only once in the pod.
+
+The Buster runtimes listen on the pod network at `28891` and `28892` so kubelet
+HTTP probes can reach them. No Service targets these ports, and the production
+NetworkPolicy does not permit ingress to them. Envoy forwards accepted traffic
+to `127.0.0.1:28891` or `127.0.0.1:28892`. Worker Core accepts the forwarded
+SPIFFE identity only when the immediate TCP peer is loopback.
 
 ### Prism listeners
 

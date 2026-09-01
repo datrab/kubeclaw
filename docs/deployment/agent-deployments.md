@@ -42,6 +42,19 @@ Worker Core accepts forwarded identity only from the loopback proxy. See the
 [Worker Trust implementation reference](../security/worker-trust.md) and the
 [operator runbook](../operations/worker-trust-runbook.md).
 
+For Buster plan execution, the traffic path is:
+
+```text
+Nova application
+  -> Nova Envoy 127.0.0.1:28891
+  -> SPIFFE mTLS
+  -> Buster Envoy agent-buster:18891
+  -> Buster runtime 127.0.0.1:28891
+```
+
+The legacy route has the same shape with ports `28892` and `18892`.
+Envoy does not proxy the OpenClaw gateway route on port `18789`.
+
 Nova also signs each committed source snapshot with the local Ed25519
 private key in `pipeline-test-gate-source-attestation`; Buster verifies it with
 the corresponding public key before accepting the archive. This does not depend
@@ -51,9 +64,11 @@ on GitHub artifact attestations or any external signing service.
 
 Confirm Nova has its gateway and `worker-trust-proxy` containers. Confirm Buster
 has its gateway, `buster-v2-runtime`, and `worker-trust-proxy`. Confirm Envoy
-exposes plan port 18891 and legacy suite port 18892 while the runtime binds only
-to loopback ports 28891 and 28892. Neither deployment contains
-`buster-pipeline`.
+exposes plan port `18891` and legacy suite port `18892`. The Service must target
+the Envoy port names `buster-plan` and `buster-legacy`. The runtime port names
+must remain distinct as `buster-plan-local` and `buster-legacy-local` on ports
+`28891` and `28892`. No Service may target the runtime ports. Neither deployment
+contains `buster-pipeline`.
 
 Run the complete live proof after Nova, Buster, and Prism are ready:
 
