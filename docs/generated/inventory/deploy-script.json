@@ -256,6 +256,7 @@
     "deploy_tailscale_operator",
     "ensure_tailscale_oauth_secret",
     "cmd_infra",
+    "reconcile_nova_retired_trust_mount",
     "reconcile_buster_runtime_ports",
     "verify_buster_port_routing",
     "deploy_agent",
@@ -301,8 +302,8 @@
     "secrets": 856,
     "tailscale": 947,
     "infra": 1038,
-    "agents": 1332,
-    "smoke": 1454,
-    "teardown": 1890
+    "agents": 1353,
+    "smoke": 1475,
+    "teardown": 1911
   }
 }
