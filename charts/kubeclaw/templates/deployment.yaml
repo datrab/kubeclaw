@@ -94,28 +94,24 @@ spec:
                 && typeof config.agents.entries === 'object'
                 ? Object.entries(config.agents.entries)
                 : [];
-              const roster = legacyEntries.length > 0
-                ? legacyEntries
-                : keyedEntries.map(([, entry]) => entry);
               const rosterIds = legacyEntries.length > 0
                 ? legacyEntries.map((entry) => entry?.id).filter(Boolean)
                 : keyedEntries.map(([id]) => id);
               let changed = false;
-              if (roster.length > 1 && config.agents.ownership !== 'explicit') {
+              config.agents = config.agents || {};
+              if (config.agents.ownership !== 'explicit') {
                 config.agents.ownership = 'explicit';
                 changed = true;
-                console.log('==> Set agents.ownership=explicit for the managed multi-agent roster');
+                console.log('==> Set agents.ownership=explicit for the managed agent roster');
               }
               const systemAgentId = config?.agents?.defaults?.systemAgent?.agentId;
               const heartbeatAgentId = config?.agents?.defaults?.heartbeat?.agentId;
-              if (roster.length > 1 && !systemAgentId && !heartbeatAgentId) {
-                const managedAgentId = rosterIds.includes('main') ? 'main' : rosterIds[0];
-                if (managedAgentId) {
-                  config.agents.defaults = config.agents.defaults || {};
-                  config.agents.defaults.systemAgent = { agentId: managedAgentId };
-                  changed = true;
-                  console.log(`==> Set agents.defaults.systemAgent.agentId=${managedAgentId}`);
-                }
+              if (!systemAgentId && !heartbeatAgentId) {
+                const managedAgentId = rosterIds.includes('main') ? 'main' : rosterIds[0] || 'main';
+                config.agents.defaults = config.agents.defaults || {};
+                config.agents.defaults.systemAgent = { agentId: managedAgentId };
+                changed = true;
+                console.log(`==> Set agents.defaults.systemAgent.agentId=${managedAgentId}`);
               }
               if (process.env.AGENT_ROLE !== 'prism'
                   && config?.plugins?.entries?.['kubeclaw-prism']) {
