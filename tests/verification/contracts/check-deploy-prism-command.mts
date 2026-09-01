@@ -47,6 +47,12 @@ assert(!workloads.includes("PRISM_APPROVER_USERS"),"Prism workloads must not con
 assert(!workloads.includes("PRISM_PROVIDER_"),"Prism worker must not receive model-provider credentials");
 assert(networkPolicy.includes("prism-openclaw-agent"),"Prism must isolate its OpenClaw agent network path");
 assert(networkPolicy.includes("port: 4000"),"only the Prism OpenClaw agent path may reach internal LiteLLM");
+assert.match(networkPolicy,/name: prism-default-deny[\s\S]*?podSelector:[\s\S]*?key: app[\s\S]*?operator: In[\s\S]*?prism-control[\s\S]*?prism-test-runner/u,
+  "Prism default-deny must select only Prism workloads when sharing the KubeClaw namespace");
+assert.doesNotMatch(networkPolicy,/name: prism-default-deny\s*\}\s*\n?spec:\s*\{\s*podSelector:\s*\{\s*\}/u,
+  "Prism default-deny must never select every pod in a shared namespace");
+assert.doesNotMatch(networkPolicy,/name: prism-dns\s*\}\s*\n?spec:\s*\n?\s*podSelector:\s*\{\s*\}/u,
+  "Prism DNS allowance must not broaden egress for every pod in a shared namespace");
 for(const port of ["18891","18892"])assert(namespacePolicies.includes(`port: ${port}`),`Nova/Buster NetworkPolicies must include test-gate port ${port}`);
 assert(!control.includes('roles.includes("approver")'),"any authenticated Prism user must be able to approve");
 assert(/all\)[\s\S]*?cmd_prism[\s\S]*?cmd_agents/.test(source),"deploy all must install Prism before agents");

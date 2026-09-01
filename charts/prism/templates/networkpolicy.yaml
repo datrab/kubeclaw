@@ -1,13 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: { name: prism-default-deny }
-spec: { podSelector: {}, policyTypes: [Ingress, Egress] }
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: [prism-control, prism-studio, prism-worker, prism-ingestion, prism-postgresql, prism-migrate, prism-backup, prism-test-runner]
+  policyTypes: [Ingress, Egress]
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: { name: prism-dns }
 spec:
-  podSelector: {}
+  podSelector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: [prism-control, prism-studio, prism-worker, prism-ingestion, prism-postgresql, prism-migrate, prism-backup, prism-test-runner]
   policyTypes: [Egress]
   egress: [{ to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }], ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }] }]
 ---

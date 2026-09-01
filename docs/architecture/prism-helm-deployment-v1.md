@@ -4,11 +4,12 @@ Status: accepted architecture contract
 
 ## Decision
 
-Prism is one Helm release in one namespace. It uses separate workloads for control,
-Studio, normal design work, external ingestion, and PostgreSQL.
+Prism is one Helm release. Production defaults it to the existing KubeClaw
+namespace; a dedicated namespace remains supported. It uses separate workloads
+for control, Studio, normal design work, external ingestion, and PostgreSQL.
 
 ```text
-namespace: prism
+namespace: kubeclaw (production default)
 release: prism
 
 prism-control
@@ -109,7 +110,11 @@ Kubernetes read authority.
 
 ## Network policy
 
-The namespace uses default-deny ingress and egress.
+Prism workloads use default-deny ingress and egress. The policy selects only
+pods whose `app` label is one of the managed `prism-*` workloads. It must never
+use an empty `podSelector` because Prism may share a namespace with Nova,
+Buster, Redis, LiteLLM, and registry services. The separate `agent-prism`
+NetworkPolicy selects `app.kubernetes.io/component: prism` explicitly.
 
 Studio can receive Tailscale traffic and call only the Prism API and approved
 artifact-read path.
