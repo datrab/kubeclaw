@@ -8,7 +8,7 @@ uses Archviewer only to present architecture documents as HTML.
 ## Fixed versions
 
 - Node.js: 24
-- OpenClaw base: 2026.8.1
+- OpenClaw base: 2026.8.2
 - PostgreSQL: 17 with pgvector
 - Puck: 0.23.0
 - Playwright: 1.62.1

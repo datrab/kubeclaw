@@ -89,8 +89,8 @@ initSetup:
 pluginSeed:
   installMode: "official-npm-v1"
   specs:
-    - "npm:@openclaw/acpx@2026.8.1"
-    - "npm:@openclaw/discord@2026.8.1"
+    - "npm:@openclaw/acpx@2026.8.2"
+    - "npm:@openclaw/discord@2026.8.2"
 
 # =============================================================================
 # CAPABILITY PROVIDERS

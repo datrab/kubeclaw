@@ -7,6 +7,6 @@
   "openclaw": {
     "extensions": ["./index.mjs"],
     "runtimeExtensions": ["./index.mjs"],
-    "compat": { "pluginApi": ">=2026.8.1", "minGatewayVersion": "2026.8.1" }
+    "compat": { "pluginApi": ">=2026.8.2", "minGatewayVersion": "2026.8.2" }
   }
 }

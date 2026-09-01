@@ -153,7 +153,7 @@ assert.match(
 );
 assert.match(
   values,
-  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.8\.1"[\s\S]*"npm:@openclaw\/discord@2026\.8\.1"/,
+  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.8\.2"[\s\S]*"npm:@openclaw\/discord@2026\.8\.2"/,
   'official OpenClaw plugins must be pinned to the gateway release and installed with trusted npm provenance',
 );
 assert.doesNotMatch(
