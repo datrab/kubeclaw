@@ -273,7 +273,7 @@ for (const portName of busterRuntimePortNames) {
 }
 assert.match(
   deploy,
-  /reconcile_nova_retired_trust_mount[\s\S]*?NODE_EXTRA_CA_CERTS[\s\S]*?buster-plan-trust[\s\S]*?--type=strategic[\s\S]*?"\$patch":"delete"[\s\S]*?if \[\[ \$role == "nova" \]\]; then\s+reconcile_nova_retired_trust_mount/u,
+  /reconcile_nova_retired_trust_mount[\s\S]*?NODE_EXTRA_CA_CERTS[\s\S]*?--type=strategic[\s\S]*?volumeMounts[\s\S]*?mountPath":"\/var\/run\/buster-plan-trust","\$patch":"delete"[\s\S]*?volumes[\s\S]*?name":"buster-plan-trust","\$patch":"delete"[\s\S]*?if \[\[ \$role == "nova" \]\]; then\s+reconcile_nova_retired_trust_mount/u,
   'Nova deploy must remove retired direct-TLS trust metadata from a drifted live Deployment',
 );
 assert.match(

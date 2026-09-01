@@ -1152,7 +1152,7 @@ reconcile_nova_retired_trust_mount() {
 
   warn "Reconciling retired Nova direct-TLS trust metadata before Helm upgrade"
   kubectl patch deployment "$deployment" -n "$NAMESPACE" --type=strategic --patch \
-    '{"spec":{"template":{"spec":{"containers":[{"name":"kubeclaw","env":[{"name":"NODE_EXTRA_CA_CERTS","$patch":"delete"}],"volumeMounts":[{"name":"buster-plan-trust","$patch":"delete"}]}],"volumes":[{"name":"buster-plan-trust","$patch":"delete"}]}}}}'
+    '{"spec":{"template":{"spec":{"containers":[{"name":"kubeclaw","env":[{"name":"NODE_EXTRA_CA_CERTS","$patch":"delete"}],"volumeMounts":[{"mountPath":"/var/run/buster-plan-trust","$patch":"delete"}]}],"volumes":[{"name":"buster-plan-trust","$patch":"delete"}]}}}}'
 }
 
 reconcile_buster_runtime_ports() {
