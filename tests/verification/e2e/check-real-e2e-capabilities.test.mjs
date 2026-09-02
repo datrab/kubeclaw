@@ -53,7 +53,7 @@ test('configured capability probe rejects non-Spark model overrides', () => {
   assert.throws(() => resolveProductionCodexLaunchTarget({
     env: {
       REAL_E2E_CONFIG_PROBE_PROJECT: 'pipeline-smoke-landing',
-      REAL_E2E_MODEL: 'openai/gpt-5.4',
+      REAL_E2E_MODEL: 'openai/gpt-4.1',
     },
   }), /REAL_E2E_MODEL_MUST_BE_SPARK/);
 });

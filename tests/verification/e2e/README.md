@@ -267,7 +267,7 @@ real verification failure, not a retry/fallback path.
 
 ## Model Defaults
 
-The harness defaults to `gpt-5.4` with thinking `none` for Nova, Forge,
+The harness defaults to `openai/gpt-5.3-codex-spark` with thinking `none` for Nova, Forge,
 Buster, Echo, architecture validation, pipeline review, and case study agents.
 The direct Codex capability probe follows the production smoke config dispatch.
 If the smoke config says `subagent`, the probe proves subagent launch; if it

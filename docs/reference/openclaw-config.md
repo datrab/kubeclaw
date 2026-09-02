@@ -13,11 +13,10 @@ The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init cont
 
 The rendered config includes:
 
-- auth profiles for LiteLLM and canonical OpenAI OAuth
+- canonical OpenAI OAuth profiles
 - ACP enabled with backend `acpx`
-- LiteLLM provider model definitions from values
-- agent defaults and model fallbacks, including Codex runtime metadata on canonical OpenAI model refs
-- memory search settings with vector store enabled
+- uniform agent defaults using `openai/gpt-5.6-sol` with `openai/gpt-5.5` as the only fallback
+- memory search settings with vector store enabled and LiteLLM used only as the remote embedding endpoint
 - compaction/context pruning defaults
 - tool policy for coding profile, sessions, session spawn, and full exec
 - Discord channel configuration when enabled
@@ -43,8 +42,10 @@ for the selected role. Only Buster retains the enabled
 `kubeclaw-prism`. This prevents stale optional-provider allowlist entries and
 disabled role-specific configuration from obscuring actionable Doctor output.
 Anthropic provider profiles, plugins, credentials, direct model routes, and
-Claude aliases are absent. Persisted legacy entries are removed before Doctor
-runs; Prism uses `litellm/gemini-pro` with `litellm/gemini-flash` as fallback.
+Claude aliases are absent. Init converges the managed auth, ACP, plugin, model,
+and memory-search sections from the current ConfigMap after any required state
+migration. This generic convergence also removes retired providers and models
+without provider-specific migration code.
 
 The migration init container allocates a private pseudo-TTY while retaining
 `--non-interactive`. OpenClaw 2026.8.1 otherwise skips doctor-owned state
@@ -57,7 +58,7 @@ process; the Gateway containers do not expose interactive stdin.
 
 | Layer | Owner | Path or key | When it runs | Output |
 | --- | --- | --- | --- | --- |
-| Chart source config | `charts/kubeclaw/templates/configmap-gateway.yaml` | ConfigMap key `openclaw.json`; values `litellm.endpoint`, `litellm.defaultModel`, `litellm.models`, `discord.enabled`, `commands.ownerAllowFrom`, `commands.allowFromDiscord`, `gateway.port` | Helm render | source config with env SecretRefs |
+| Chart source config | `charts/kubeclaw/templates/configmap-gateway.yaml` | ConfigMap key `openclaw.json`; values `litellm.endpoint`, `agent.model`, `discord.enabled`, `commands.ownerAllowFrom`, `commands.allowFromDiscord`, `gateway.port` | Helm render | source config with env SecretRefs |
 | Persistent source config | init block in `charts/kubeclaw/templates/deployment.yaml` | `/config/openclaw.json`; mounted as `/home/node/.openclaw/openclaw.json`; exposed as `/home/node/.openclaw-persisted/openclaw.json` | pod start; first write plus migrations | writable retained config with canonical model refs and SecretRefs |
 | Secret inputs | `charts/kubeclaw/templates/deployment.yaml`; `my-values/setup-secrets.sh` | `LITELLM_API_KEY`, `DISCORD_TOKEN`, `OPENCLAW_GATEWAY_TOKEN`, `STITCH_API_KEY` | environment creation from Kubernetes Secrets | runtime credentials available to gateway/container |
 | Health and gateway | deployment template health script; OpenClaw gateway command | `/runtime-config/kubeclaw-health.mjs`, gateway port `18789`, bridge port `18790` | readiness/liveness and runtime command start | dependency-aware health checks and `openclaw gateway status` |
@@ -65,8 +66,8 @@ process; the Gateway containers do not expose interactive stdin.
 ## Config Keys To Treat As Current Behavior
 
 - `acp.enabled`, `acp.backend`, `acp.allowedAgents`, and `acp.maxConcurrentSessions` define ACP availability in the rendered OpenClaw config.
-- `models.providers.litellm.baseUrl` and `models.providers.litellm.apiKey` connect the pod to the configured LiteLLM-compatible endpoint while the default model policy prefers OpenAI profiles and keeps LiteLLM as a chart-driven fallback. The API key is an env SecretRef to `LITELLM_API_KEY`.
-- `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` reuse the LiteLLM endpoint/API key for remote memory search. The API key is also an env SecretRef.
+- `agents.defaults.model` uses `openai/gpt-5.6-sol` as primary and `openai/gpt-5.5` as its only fallback for every deployed agent, including Prism.
+- `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` use LiteLLM only for remote embeddings. The API key is an env SecretRef to `LITELLM_API_KEY`, never a literal ConfigMap value.
 - `agents.entries.main.default`, `agents.defaults.systemAgent`, and `bindings` separately own the default agent, system work, and inbound channel routing.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.

@@ -11,7 +11,8 @@
 `deploy.sh prism` installs two Helm releases: the deterministic Prism services
 from `my-values/prism-values.yaml` and the single OpenClaw agent from
 `my-values/prism-agent-values.yaml`. The latter is the only Prism workload with
-a LiteLLM credential or model route. Control, Studio, worker, and ingestion use
+an OpenAI model route and the LiteLLM credential used for memory-search
+embeddings. Control, Studio, worker, and ingestion use
 Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.

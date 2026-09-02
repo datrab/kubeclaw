@@ -449,7 +449,7 @@ assert.match(
 );
 assert.match(
   gatewayConfig,
-  /"allow":\s*\[[\s\S]*"discord"[\s\S]*"acpx"[\s\S]*"litellm"[\s\S]*"codex"[\s\S]*if ne \(\.Values\.agentRole[\s\S]*"openai"/,
+  /"allow":\s*\[[\s\S]*"discord"[\s\S]*"acpx"[\s\S]*"codex"[\s\S]*"openai"/,
   'fresh configs must allow only the installed role-appropriate OpenClaw plugins',
 );
 assert.doesNotMatch(
@@ -472,13 +472,24 @@ assert.doesNotMatch(
 );
 assert.doesNotMatch(
   litellmConfig,
-  /model_name:\s*["']?\*/,
-  'LiteLLM must not retain a wildcard model route that can bypass the explicit Gemini allowlist',
+  /model_name:\s*["']?(?:\*|gemini-(?:flash|pro))|model:\s*(?:vertex_ai\/)?gemini-(?:\d[^\s]*-)?(?:flash|pro)/i,
+  'LiteLLM must expose only the explicit memory-search embedding route',
 );
-assert.match(prismAgentValues, /primary:\s*litellm\/gemini-pro[\s\S]*fallbacks:\s*\[litellm\/gemini-flash\]/,
-  'Prism must use Gemini models after Anthropic removal');
-assert.doesNotMatch(prismAgentValues, /anthropic|claude-(?:sonnet|opus|haiku)/i,
-  'Prism agent ConfigMap inputs must not retain Anthropic models');
+assert.match(litellmConfig, /model_name:\s*gemini-embedding-001[\s\S]*model:\s*vertex_ai\/gemini-embedding-001/,
+  'LiteLLM must retain the embedding route used by OpenClaw memory search');
+for (const [label, source] of [
+  ['chart values', values],
+  ['Nova values', novaValues],
+  ['Buster values', busterValues],
+  ['Prism values', prismAgentValues],
+]) {
+  assert.doesNotMatch(source, /gpt-5\.4|gpt-5\.5-pro|litellm\/gemini-(?:flash|pro)/i,
+    `${label} must not retain retired reasoning model routes`);
+}
+assert.match(values, /primary:\s*"openai\/gpt-5\.6-sol"[\s\S]*fallbacks:[\s\S]*"openai\/gpt-5\.5"/,
+  'chart defaults must use GPT-5.6 Sol with GPT-5.5 fallback');
+assert.match(prismAgentValues, /primary:\s*openai\/gpt-5\.6-sol[\s\S]*fallbacks:\s*\[openai\/gpt-5\.5\]/,
+  'Prism must use the same OpenAI model policy as every other agent');
 assert.match(
   gatewayConfig,
   /"entries":\s*\{\s*"main":\s*\{[\s\S]*"codex":\s*\{\}/,
@@ -501,8 +512,15 @@ assert.match(
 );
 assert.match(
   chart,
-  /managedPluginAllow = \['discord', 'acpx', 'litellm', 'codex'\][\s\S]*managedPluginAllow\.push\('openai'\)[\s\S]*config\.plugins\.allow = managedPluginAllow[\s\S]*Removed retired Anthropic and Claude configuration[\s\S]*doctor --fix --non-interactive/,
-  'startup migration must remove stale plugin allowlist and observer warnings before doctor validation',
+  /managedPluginAllow = \['discord', 'acpx', 'codex', 'openai'\][\s\S]*config\.plugins\.allow = managedPluginAllow[\s\S]*doctor --fix --non-interactive/,
+  'startup migration must enforce the managed plugin allowlist before doctor validation',
+);
+assert.doesNotMatch(chart, /removedAnthropic|isAnthropicModel/,
+  'provider removal must not leave a one-off Anthropic migration in the deployment');
+assert.match(
+  chart,
+  /config\.plugins\.entries = initialized\.plugins\.entries[\s\S]*config\.auth = initialized\.auth[\s\S]*delete config\.models[\s\S]*config\.acp = initialized\.acp[\s\S]*synchronized managed agent model route/,
+  'init setup must converge managed configuration generically instead of provider-specific cleanup',
 );
 assert.doesNotMatch(
   chart,
@@ -611,13 +629,13 @@ assert.match(
 );
 assert.match(
   chart,
-  /initializedConfigPath[\s\S]*managedObserver[\s\S]*config\.plugins\.entries\['kubeclaw-agent-observer'\] = managedObserver/,
-  'existing persistent homes must converge to the chart-managed observer configuration',
+  /initializedConfigPath[\s\S]*config\.plugins\.entries = initialized\.plugins\.entries/,
+  'existing persistent homes must converge to the complete chart-managed plugin configuration',
 );
 assert.match(
-  chart,
-  /process\.env\.AGENT_ROLE === 'prism'[\s\S]*config\.plugins\.entries\['kubeclaw-prism'\] = managedPrism[\s\S]*delete config\.plugins\.entries\['kubeclaw-prism'\]/,
-  'init setup must manage the Prism plugin only for the logical Prism agent',
+  gatewayConfig,
+  /if eq \(\.Values\.agentRole \| default ""\) "buster"[\s\S]*"kubeclaw-agent-observer"[\s\S]*\{\{- end \}\}/,
+  'fresh gateway configs must include the observer plugin only for Buster',
 );
 assert.match(
   gatewayConfig,

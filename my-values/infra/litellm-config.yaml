@@ -1,14 +1,8 @@
 model_list:
-  # Gemini (Google Vertex AI)
-  - model_name: gemini-flash
+  # Embeddings only: OpenClaw memorySearch remote endpoint.
+  - model_name: gemini-embedding-001
     litellm_params:
-      model: vertex_ai/gemini-3-flash-preview
-      vertex_project: "ornate-loader-487422-u0"
-      vertex_location: "global"
-
-  - model_name: gemini-pro
-    litellm_params:
-      model: vertex_ai/gemini-3.1-pro-preview
+      model: vertex_ai/gemini-embedding-001
       vertex_project: "ornate-loader-487422-u0"
       vertex_location: "global"
 

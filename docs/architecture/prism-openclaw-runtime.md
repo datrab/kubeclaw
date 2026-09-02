@@ -11,7 +11,7 @@ authority boundaries.
 
 | Component | Responsibility | LLM access |
 | --- | --- | --- |
-| `agent-prism` / `kubeclaw` | OpenClaw gateway, persistent project sessions, Discord | LiteLLM only |
+| `agent-prism` / `kubeclaw` | OpenClaw gateway, persistent project sessions, Discord | OpenAI through OpenClaw; LiteLLM only for memory-search embeddings |
 | `prism-agent-bridge` | Turns Nova and Studio HTTP requests into `openclaw agent --session-key ...` sends | None; talks to the local gateway |
 | `prism-control` | Validates contracts, revisions, approvals, and durable state | None |
 | `prism-worker` | Deterministic rendering, evaluation, and evidence | None |
@@ -48,7 +48,9 @@ cannot reach the bridge directly, and the Prism agent cannot reach Control witho
 presenting the `agent-prism` SPIFFE identity.
 
 The worker has no `PRISM_PROVIDER_*` environment variables, provider Secret, or
-LiteLLM/internet egress rule. `agent-prism` selects only `litellm/*` models and is
-the only Prism workload allowed to reach LiteLLM. External TCP 443 remains
-available to that agent for Discord and the public repository clone; no direct
-OpenAI or Anthropic credential is mounted.
+LiteLLM/internet egress rule. `agent-prism` uses the same managed OpenAI model
+policy as Nova and Buster: `openai/gpt-5.6-sol` with `openai/gpt-5.5` fallback.
+It is the only Prism workload allowed to reach LiteLLM, and only OpenClaw memory
+search uses that path for embeddings. External TCP 443 remains available to the
+agent for OpenAI, Discord, and the public repository clone. No application
+service bypasses the OpenClaw gateway for model calls.

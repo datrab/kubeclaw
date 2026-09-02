@@ -346,9 +346,9 @@ test('real e2e model preflight permits only the canonical Spark model', () => {
     validateRealE2EModel('openai/gpt-5.3-codex-spark'),
     'openai/gpt-5.3-codex-spark',
   );
-  assert.throws(() => validateRealE2EModel('gpt-5.4'), /REAL_E2E_MODEL_MUST_BE_SPARK/);
+  assert.throws(() => validateRealE2EModel('gpt-4.1'), /REAL_E2E_MODEL_MUST_BE_SPARK/);
   assert.throws(
-    () => validateRealE2EModel('openai/gpt-5.4/xhigh'),
+    () => validateRealE2EModel('openai/gpt-4.1/xhigh'),
     /REAL_E2E_MODEL_MUST_BE_SPARK/,
   );
 });
@@ -372,7 +372,7 @@ test('checkpoint restore normalization refreshes harness-owned runtime defaults 
     projectName: 'unit-stale-checkpoint-defaults',
     moduleIds: ['01-nginx', '02-nginx', '03-nginx', '04-nginx'],
   });
-  progress.defaults.models.forge = 'gpt-5.4';
+  progress.defaults.models.forge = 'gpt-4.1';
   progress.defaults.thinking.forge = 'low';
   progress.modules['01-nginx'].timeout_minutes = 6;
   progress.modules['02-nginx'].timeout_minutes = 3;
@@ -380,7 +380,7 @@ test('checkpoint restore normalization refreshes harness-owned runtime defaults 
   progress.modules['04-nginx'].timeout_minutes = 3;
   progress.modules['02-nginx'].thinking_level = 'low';
   progress.gates['final-buster'].timeout_minutes = 3;
-  progress.gates['final-buster'].model = 'gpt-5.4';
+  progress.gates['final-buster'].model = 'gpt-4.1';
   progress.pipeline_review = { timeout_minutes: 3 };
 
   const normalized = normalizeRealE2ERuntimeDefaults(progress);

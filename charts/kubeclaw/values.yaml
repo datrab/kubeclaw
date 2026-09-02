@@ -141,10 +141,10 @@ auth:
   existingSecretKey: "gatewayToken"
 
 # =============================================================================
-# LLM PROVIDER (LiteLLM)
+# MEMORY SEARCH EMBEDDING ENDPOINT (LiteLLM)
 # =============================================================================
-# LiteLLM acts as a unified proxy for multiple LLM providers.
-# Deploy LiteLLM separately or use any OpenAI-compatible endpoint.
+# LiteLLM is used only as the OpenAI-compatible remote embedding endpoint for
+# OpenClaw memory search. Agent reasoning uses the managed OpenAI route directly.
 
 litellm:
   endpoint: "http://litellm.kubeclaw.svc.cluster.local:4000/v1"
@@ -153,20 +153,6 @@ litellm:
   # Reference an existing K8s secret
   existingSecret: ""
   existingSecretKey: "litellmApiKey"
-  # Default model for this agent
-  defaultModel: "gemini-flash"
-  # Available models (merged into OpenClaw config)
-  models:
-    - id: "gemini-flash"
-      name: "Gemini Flash"
-      reasoning: false
-      contextWindow: 1048576
-      maxTokens: 65536
-    - id: "gemini-pro"
-      name: "Gemini Pro"
-      reasoning: true
-      contextWindow: 1048576
-      maxTokens: 65536
 
 # =============================================================================
 # STITCH API (Google Stitch MCP — UI design tool for Prism)
@@ -204,11 +190,9 @@ agent:
   # Active project name — sets CURRENT_PROJECT env for memory scoping
   project: ""  # e.g. "kubecommand"
   model:
-    primary: "openai/gpt-5.5"
+    primary: "openai/gpt-5.6-sol"
     fallbacks:
-      - "openai/gpt-5.5-pro"
       - "openai/gpt-5.5"
-      - "litellm/gemini-flash"
   git:
     enabled: true
     # K8s secret containing the SSH deploy key

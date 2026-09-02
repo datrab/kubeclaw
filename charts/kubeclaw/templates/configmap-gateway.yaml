@@ -20,10 +20,6 @@ data:
       },
       "auth": {
         "profiles": {
-          "litellm:default": {
-            "provider": "litellm",
-            "mode": "api_key"
-          },
           "openai:d.trabucco@tutamail.com": {
             "provider": "openai",
             "mode": "oauth",
@@ -46,10 +42,7 @@ data:
         "backend": "acpx",
         "defaultAgent": "codex",
         "allowedAgents": [
-          "codex",
-          "kimi",
-          "gemini",
-          "pi"
+          "codex"
         ],
         "maxConcurrentSessions": 20,
         "stream": {
@@ -58,33 +51,6 @@ data:
         },
         "runtime": {
           "ttlMinutes": 120
-        }
-      },
-      "models": {
-        "mode": "merge",
-        "providers": {
-          "litellm": {
-            "baseUrl": "{{ .Values.litellm.endpoint }}",
-            "apiKey": {
-              "source": "env",
-              "provider": "default",
-              "id": "LITELLM_API_KEY"
-            },
-            "api": "openai-completions",
-            "models": [
-              {{- range $i, $model := .Values.litellm.models }}
-              {{- if $i }},{{ end }}
-              {
-                "id": "{{ $model.id }}",
-                "name": "{{ $model.name }}",
-                "reasoning": {{ $model.reasoning | default "false" }},
-                "input": ["text", "image"],
-                "contextWindow": {{ $model.contextWindow }},
-                "maxTokens": {{ $model.maxTokens }}
-              }
-              {{- end }}
-            ]
-          }
         }
       },
       "agents": {
@@ -104,20 +70,16 @@ data:
             ]
           },
           "models": {
-            {{- if ne (.Values.agentRole | default "") "prism" }}
-            "openai/gpt-5.4": {
+            "openai/gpt-5.6-sol": {
               "agentRuntime": {
                 "id": "codex"
               }
             },
-            "openai/gpt-5.5-pro": {},
             "openai/gpt-5.5": {
               "agentRuntime": {
                 "id": "codex"
               }
-            },
-            {{- end }}
-            "litellm/{{ .Values.litellm.defaultModel }}": {}
+            }
           },
           "workspace": "/home/node/.openclaw/workspace",
           "embeddedAgent": {
@@ -329,11 +291,8 @@ data:
         "allow": [
           "discord",
           "acpx",
-          "litellm",
-          "codex"
-          {{- if ne (.Values.agentRole | default "") "prism" }},
+          "codex",
           "openai"
-          {{- end }}
           {{- if eq (.Values.agentRole | default "") "buster" }},
           "kubeclaw-agent-observer"
           {{- end }}
@@ -352,9 +311,6 @@ data:
             }
           },
           "openai": {
-            "enabled": {{ ne (.Values.agentRole | default "") "prism" }}
-          },
-          "litellm": {
             "enabled": true
           },
           "codex": {
