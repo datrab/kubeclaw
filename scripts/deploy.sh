@@ -1531,9 +1531,9 @@ cmd_prism_secrets() {
     kubectl get secret "$PRISM_RUNTIME_SECRET_NAME" -n "$PRISM_NAMESPACE" -o "jsonpath={.data.${secret_key}}" | grep -q . || { err "Secret ${PRISM_RUNTIME_SECRET_NAME} is missing ${secret_key}; rotate or repair the Secret"; return 1; }
   done
   kubectl get secret openclaw-shared-secrets -n "$PRISM_NAMESPACE" >/dev/null 2>&1 \
-    || { err "Missing ${PRISM_NAMESPACE}/openclaw-shared-secrets for the Prism OpenClaw gateway"; return 1; }
+    || { err "Missing ${PRISM_NAMESPACE}/openclaw-shared-secrets for the Prism OpenClaw gateway; run ./scripts/deploy.sh secrets"; return 1; }
   kubectl get secret openclaw-shared-secrets -n "$PRISM_NAMESPACE" -o jsonpath='{.data.gatewayToken-prism}' | grep -q . \
-    || { err "Secret openclaw-shared-secrets is missing gatewayToken-prism; run setup-secrets.sh"; return 1; }
+    || { err "Secret ${PRISM_NAMESPACE}/openclaw-shared-secrets is missing gatewayToken-prism; run ./scripts/deploy.sh secrets"; return 1; }
   if [[ $PRISM_NAMESPACE == "$NAMESPACE" \
     && $PRISM_RUNTIME_SECRET_NAME == prism-runtime \
     && $PRISM_DATABASE_SECRET_NAME == prism-postgresql-auth \
@@ -1924,7 +1924,7 @@ cmd_teardown() {
 cmd_teardown_all() {
   echo -e "${RED}WARNING: This will DESTROY namespace '$NAMESPACE' and EVERYTHING in it${NC}"
   echo "Including: all agents, infra, PVCs, secrets, namespace itself"
-  echo -e "${YELLOW}You will need to re-run setup-secrets.sh after recreating the namespace.${NC}"
+  echo -e "${YELLOW}You will need to run ./scripts/deploy.sh secrets after recreating the namespace.${NC}"
   read -p "Type 'destroy' to confirm: " confirm
   if [[ $confirm != "destroy" ]]; then
     echo "Aborted."

@@ -16,9 +16,9 @@ Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
 
-The shared Secret must contain `gatewayToken-prism`; `setup-secrets.sh` creates
-it without changing the existing GitHub credential. For Discord, create the
-dedicated Prism bot and channel, add `discordToken-prism` to
+The shared Secret must contain `gatewayToken-prism`;
+`./scripts/deploy.sh secrets` creates it without changing the existing GitHub
+credential. For Discord, create the dedicated Prism bot and channel, add `discordToken-prism` to
 `openclaw-shared-secrets`, set `discord.channelId`, and change
 `discord.enabled` to `true` in `prism-agent-values.yaml`. Do not put provider
 tokens into `prism-runtime` or the worker Deployment.
