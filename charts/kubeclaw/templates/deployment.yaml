@@ -132,6 +132,61 @@ spec:
                 changed = true;
                 console.log(`==> Set agents.defaults.systemAgent.agentId=${managedAgentId}`);
               }
+              if (config?.agents?.entries?.main
+                  && typeof config.agents.entries.main === 'object') {
+                for (const [agentId, entry] of Object.entries(config.agents.entries)) {
+                  if (agentId !== 'main' && entry?.default === true) {
+                    delete entry.default;
+                    changed = true;
+                  }
+                }
+                if (config.agents.entries.main.default !== true) {
+                  config.agents.entries.main.default = true;
+                  changed = true;
+                  console.log('==> Set agents.entries.main.default=true');
+                }
+              }
+              const isBroadDefaultDiscordBinding = (binding) => {
+                const match = binding?.match;
+                return !binding?.type
+                  && match?.channel === 'discord'
+                  && (match.accountId === undefined || match.accountId === 'default')
+                  && match.peer === undefined
+                  && match.guildId === undefined
+                  && match.teamId === undefined
+                  && match.roles === undefined;
+              };
+              if (config?.channels?.discord?.enabled === true) {
+                const existingBindings = Array.isArray(config.bindings) ? config.bindings : [];
+                const retainedBindings = existingBindings.filter(
+                  (binding) => !isBroadDefaultDiscordBinding(binding),
+                );
+                config.bindings = [
+                  { agentId: 'main', match: { channel: 'discord', accountId: 'default' } },
+                  ...retainedBindings,
+                ];
+                if (JSON.stringify(config.bindings) !== JSON.stringify(existingBindings)) {
+                  changed = true;
+                  console.log('==> Bound discord:default to the main agent');
+                }
+              }
+              const managedPluginAllow = ['discord', 'acpx', 'litellm', 'codex'];
+              if (process.env.AGENT_ROLE !== 'prism') managedPluginAllow.push('openai', 'anthropic');
+              if (process.env.AGENT_ROLE === 'buster') managedPluginAllow.push('kubeclaw-agent-observer');
+              if (process.env.AGENT_ROLE === 'prism') managedPluginAllow.push('kubeclaw-prism');
+              config.plugins = config.plugins || {};
+              config.plugins.entries = config.plugins.entries || {};
+              if (JSON.stringify(config.plugins.allow) !== JSON.stringify(managedPluginAllow)) {
+                config.plugins.allow = managedPluginAllow;
+                changed = true;
+                console.log('==> Synchronized installed plugin allowlist');
+              }
+              if (process.env.AGENT_ROLE !== 'buster'
+                  && config.plugins.entries['kubeclaw-agent-observer']) {
+                delete config.plugins.entries['kubeclaw-agent-observer'];
+                changed = true;
+                console.log('==> Removed Buster-only observer configuration from non-Buster agent');
+              }
               if (process.env.AGENT_ROLE !== 'prism'
                   && config?.plugins?.entries?.['kubeclaw-prism']) {
                 delete config.plugins.entries['kubeclaw-prism'];
@@ -327,11 +382,19 @@ spec:
                 const initialized = JSON.parse(fs.readFileSync(initializedConfigPath, 'utf8'));
                 const managedObserver = initialized?.plugins?.entries?.['kubeclaw-agent-observer'];
                 const managedPrism = initialized?.plugins?.entries?.['kubeclaw-prism'];
+                if (Array.isArray(initialized?.plugins?.allow)) {
+                  config.plugins = config.plugins || {};
+                  config.plugins.allow = [...initialized.plugins.allow];
+                  console.log('    synchronized installed plugin allowlist');
+                }
                 if (managedObserver && typeof managedObserver === 'object') {
                   config.plugins = config.plugins || {};
                   config.plugins.entries = config.plugins.entries || {};
                   config.plugins.entries['kubeclaw-agent-observer'] = managedObserver;
                   console.log('    synchronized managed kubeclaw-agent-observer configuration');
+                } else if (config?.plugins?.entries?.['kubeclaw-agent-observer']) {
+                  delete config.plugins.entries['kubeclaw-agent-observer'];
+                  console.log('    removed Buster-only observer configuration from non-Buster agent');
                 }
                 if (process.env.AGENT_ROLE === 'prism'
                     && managedPrism && typeof managedPrism === 'object') {
@@ -348,6 +411,40 @@ spec:
                   config.agents.defaults = config.agents.defaults || {};
                   config.agents.defaults.model = initialized.agents.defaults.model;
                   console.log('    synchronized managed agent model route');
+                }
+                if (initialized?.agents?.entries?.main?.default === true) {
+                  config.agents = config.agents || {};
+                  config.agents.entries = config.agents.entries || {};
+                  for (const [agentId, entry] of Object.entries(config.agents.entries)) {
+                    if (agentId !== 'main' && entry?.default === true) delete entry.default;
+                  }
+                  config.agents.entries.main = config.agents.entries.main || {};
+                  config.agents.entries.main.default = true;
+                  console.log('    synchronized managed default agent');
+                }
+                const managedDiscordBinding = Array.isArray(initialized?.bindings)
+                  ? initialized.bindings.find((binding) => binding?.agentId === 'main'
+                    && binding?.match?.channel === 'discord'
+                    && binding?.match?.accountId === 'default'
+                    && binding?.match?.peer === undefined
+                    && binding?.match?.guildId === undefined
+                    && binding?.match?.teamId === undefined
+                    && binding?.match?.roles === undefined)
+                  : null;
+                if (managedDiscordBinding) {
+                  const currentBindings = Array.isArray(config.bindings) ? config.bindings : [];
+                  const retainedBindings = currentBindings.filter((binding) => {
+                    const match = binding?.match;
+                    return binding?.type
+                      || match?.channel !== 'discord'
+                      || (match.accountId !== undefined && match.accountId !== 'default')
+                      || match.peer !== undefined
+                      || match.guildId !== undefined
+                      || match.teamId !== undefined
+                      || match.roles !== undefined;
+                  });
+                  config.bindings = [managedDiscordBinding, ...retainedBindings];
+                  console.log('    synchronized discord:default agent binding');
                 }
                 const managedSystemAgent = initialized?.agents?.defaults?.systemAgent;
                 const hasAmbientOwner = config?.agents?.defaults?.systemAgent?.agentId

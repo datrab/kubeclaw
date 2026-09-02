@@ -437,6 +437,21 @@ assert.match(
 );
 assert.match(
   gatewayConfig,
+  /"entries":\s*\{\s*"main":\s*\{\s*"default":\s*true/,
+  'managed multi-agent configurations must mark exactly one default agent',
+);
+assert.match(
+  gatewayConfig,
+  /if \.Values\.discord\.enabled[\s\S]*"bindings":\s*\[[\s\S]*"agentId":\s*"main"[\s\S]*"channel":\s*"discord"[\s\S]*"accountId":\s*"default"/,
+  'Discord-enabled gateways must explicitly route the default account to main',
+);
+assert.match(
+  gatewayConfig,
+  /"allow":\s*\[[\s\S]*"discord"[\s\S]*"acpx"[\s\S]*"litellm"[\s\S]*"codex"[\s\S]*if ne \(\.Values\.agentRole[\s\S]*"openai"[\s\S]*"anthropic"/,
+  'fresh configs must allow only the installed role-appropriate OpenClaw plugins',
+);
+assert.match(
+  gatewayConfig,
   /"entries":\s*\{\s*"main":\s*\{[\s\S]*"codex":\s*\{\}/,
   'new managed configs must use the canonical keyed OpenClaw agent roster',
 );
@@ -449,6 +464,16 @@ assert.match(
   chart,
   /legacyEntries\.length > 0[\s\S]*canonicalEntries[\s\S]*delete config\.agents\.list[\s\S]*config\.agents\.ownership !== 'explicit'[\s\S]*systemAgentId[\s\S]*heartbeatAgentId[\s\S]*defaults\.systemAgent = \{ agentId: managedAgentId \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
   'legacy homes must gain a canonical keyed roster, explicit ownership, and a system owner before doctor validation',
+);
+assert.match(
+  chart,
+  /entries\.main\.default = true[\s\S]*isBroadDefaultDiscordBinding[\s\S]*agentId: 'main', match: \{ channel: 'discord', accountId: 'default' \}[\s\S]*Bound discord:default to the main agent[\s\S]*doctor --fix --non-interactive/,
+  'persistent multi-agent homes must gain an explicit Discord owner before doctor validation',
+);
+assert.match(
+  chart,
+  /managedPluginAllow = \['discord', 'acpx', 'litellm', 'codex'\][\s\S]*config\.plugins\.allow = managedPluginAllow[\s\S]*Removed Buster-only observer configuration from non-Buster agent[\s\S]*doctor --fix --non-interactive/,
+  'startup migration must remove stale plugin allowlist and observer warnings before doctor validation',
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),

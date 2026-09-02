@@ -24,15 +24,24 @@ The rendered config includes:
 
 Init refreshes persisted `openclaw.json` so LiteLLM, memory search, and Discord token fields use env SecretRefs instead of literal secrets. It also removes the obsolete `plugins.load.paths` entry for `/app/openclaw-plugins/kubeclaw-agent-observer` and seeds official external plugins from the image-baked npm cache using pinned `npm:@openclaw/*` provenance. This allows trusted official plugins such as Discord to use protected state APIs without runtime network access. Existing non-secret runtime edits stay in the persistent file across redeploys. The `kubeclaw-prism` plugin entry belongs only to the logical `agent-prism`; startup migration removes it from other persistent agent homes before validation. The startup doctor runs as a blocking init migration against that persistent OpenClaw home while the gateway is stopped; this lets required SQLite schema migrations complete before gateway readiness. SQLite staging uses the writable `/tmp` volume instead of the read-only image home. `swarm.config.json` is still rendered through `/runtime-config` because it can receive `DISCORD_WEBHOOK`.
 
-Managed multi-agent rosters assign `agents.defaults.systemAgent.agentId` to
-`main`. Startup migration always declares managed roster ownership as `explicit`
-and atomically converts a legacy `agents.list` array to the canonical keyed
-`agents.entries` object before OpenClaw validates the file. This avoids the
+Managed multi-agent rosters mark `agents.entries.main.default` and assign
+`agents.defaults.systemAgent.agentId` to `main`. Discord-enabled releases also
+bind the `default` Discord account explicitly to `main`; the system-agent owner
+does not own inbound channel routing. Startup migration always declares managed
+roster ownership as `explicit` and atomically converts a legacy `agents.list`
+array to the canonical keyed `agents.entries` object before OpenClaw validates
+the file. This avoids the
 OpenClaw 2026.8.1 doctor path that can lose ownership while converting a legacy
 multi-agent roster. The migration adds the system owner only when neither a
 system owner nor a heartbeat owner already exists. This gives memory
 reconciliation, cron jobs, and ambient heartbeat work an unambiguous owner
 without overwriting an explicit operator choice.
+
+The chart and startup migration keep `plugins.allow` limited to plugins shipped
+for the selected role. Only Buster retains the enabled
+`kubeclaw-agent-observer` entry, while only the Prism agent retains
+`kubeclaw-prism`. This prevents stale optional-provider allowlist entries and
+disabled role-specific configuration from obscuring actionable Doctor output.
 
 The migration init container allocates a private pseudo-TTY while retaining
 `--non-interactive`. OpenClaw 2026.8.1 otherwise skips doctor-owned state
@@ -55,6 +64,7 @@ process; the Gateway containers do not expose interactive stdin.
 - `acp.enabled`, `acp.backend`, `acp.allowedAgents`, and `acp.maxConcurrentSessions` define ACP availability in the rendered OpenClaw config.
 - `models.providers.litellm.baseUrl` and `models.providers.litellm.apiKey` connect the pod to the configured LiteLLM-compatible endpoint while the default model policy prefers OpenAI profiles and keeps LiteLLM as a chart-driven fallback. The API key is an env SecretRef to `LITELLM_API_KEY`.
 - `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` reuse the LiteLLM endpoint/API key for remote memory search. The API key is also an env SecretRef.
+- `agents.entries.main.default`, `agents.defaults.systemAgent`, and `bindings` separately own the default agent, system work, and inbound channel routing.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.
 - `channels.discord.enabled`, `channels.discord.token`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values. The token is an env SecretRef to `DISCORD_TOKEN`.

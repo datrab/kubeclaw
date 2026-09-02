@@ -193,6 +193,7 @@ data:
         },
         "entries": {
           "main": {
+            "default": true,
             "subagents": {
               "allowAgents": [
                 "*"
@@ -206,6 +207,17 @@ data:
           "codex": {}
         }
       },
+      {{- if .Values.discord.enabled }}
+      "bindings": [
+        {
+          "agentId": "main",
+          "match": {
+            "channel": "discord",
+            "accountId": "default"
+          }
+        }
+      ],
+      {{- end }}
       "tools": {
         "profile": "coding",
         "sessions": {
@@ -321,6 +333,22 @@ data:
         }
       },
       "plugins": {
+        "allow": [
+          "discord",
+          "acpx",
+          "litellm",
+          "codex"
+          {{- if ne (.Values.agentRole | default "") "prism" }},
+          "openai",
+          "anthropic"
+          {{- end }}
+          {{- if eq (.Values.agentRole | default "") "buster" }},
+          "kubeclaw-agent-observer"
+          {{- end }}
+          {{- if eq (.Values.agentRole | default "") "prism" }},
+          "kubeclaw-prism"
+          {{- end }}
+        ],
         "entries": {
           "discord": {
             "enabled": {{ .Values.discord.enabled }}
@@ -342,11 +370,12 @@ data:
           },
           "codex": {
             "enabled": true
-          },
+          }
+          {{- if eq (.Values.agentRole | default "") "buster" }},
           "kubeclaw-agent-observer": {
-            "enabled": {{ eq (.Values.agentRole | default "") "buster" }},
+            "enabled": true,
             "config": {
-              "enabled": {{ eq (.Values.agentRole | default "") "buster" }},
+              "enabled": true,
               "redisNetworkIsolation": "isolated",
               "maxEventBytes": 3145728,
               "maxQueuePerStream": 100,
@@ -363,6 +392,7 @@ data:
               "allowConversationAccess": true
             }
           }
+          {{- end }}
           {{- if eq (.Values.agentRole | default "") "prism" }},
           "kubeclaw-prism": {
             "enabled": true,
