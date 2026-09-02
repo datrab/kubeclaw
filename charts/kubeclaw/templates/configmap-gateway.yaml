@@ -72,7 +72,6 @@ data:
         }
       },
       "agents": {
-        "ownership": "explicit",
         "defaults": {
           "systemAgent": {
             "agentId": "main"
@@ -130,7 +129,6 @@ data:
         },
         "entries": {
           "main": {
-            "default": true,
             "subagents": {
               "allowAgents": [
                 "*"

@@ -439,8 +439,8 @@ assert.match(
 );
 assert.match(
   chart,
-  /config\.agents\.ownership = 'explicit'[\s\S]*Set agents\.ownership=explicit[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive/,
-  'OpenClaw 2026.8 multi-agent ownership must be repaired before doctor validates the config',
+  /Object\.hasOwn\(config\.agents, 'ownership'\)[\s\S]*delete config\.agents\.ownership[\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive/,
+  'retired multi-agent ownership must be removed before doctor validates the single-agent config',
 );
 assert.match(
   chart,
@@ -452,20 +452,20 @@ assert.match(
   /name:\s*NODE_OPTIONS\s*\n\s*value:\s*\{\{ \.Values\.gateway\.startupDoctor\.nodeOptions \| quote \}\}/,
   'the state migration must receive its explicitly budgeted V8 heap size',
 );
-assert.match(
+assert.doesNotMatch(
   gatewayConfig,
-  /"agents":\s*\{\s*"ownership":\s*"explicit"/,
-  'new managed multi-agent configurations must declare explicit ownership',
+  /"ownership":\s*"explicit"/,
+  'single-agent configurations must not declare multi-agent ownership',
 );
 assert.match(
   gatewayConfig,
   /"systemAgent":\s*\{\s*"agentId":\s*"main"/,
-  'managed multi-agent configurations must assign system jobs to the main agent',
+  'managed single-agent configurations must assign system jobs to the main agent',
 );
-assert.match(
+assert.doesNotMatch(
   gatewayConfig,
-  /"entries":\s*\{\s*"main":\s*\{\s*"default":\s*true/,
-  'managed configurations must mark their sole main agent as default',
+  /"default":\s*true/,
+  'single-agent configurations must not emit the legacy default marker',
 );
 assert.match(
   gatewayConfig,
@@ -552,13 +552,13 @@ assert.doesNotMatch(
 );
 assert.match(
   chart,
-  /legacyEntries\.length > 0[\s\S]*canonicalEntries[\s\S]*delete config\.agents\.list[\s\S]*config\.agents\.ownership !== 'explicit'[\s\S]*managedEntries[\s\S]*entries = managedEntries[\s\S]*defaults\.systemAgent = \{ agentId: 'main' \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
-  'legacy homes must converge to one main agent with explicit system ownership before doctor validation',
+  /legacyEntries\.length > 0[\s\S]*canonicalEntries[\s\S]*delete config\.agents\.list[\s\S]*delete config\.agents\.ownership[\s\S]*delete managedMainEntry\.default[\s\S]*entries = managedEntries[\s\S]*defaults\.systemAgent = \{ agentId: 'main' \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
+  'legacy homes must converge to one unmarked main agent with explicit system ownership before doctor validation',
 );
 assert.match(
   chart,
-  /managedEntries[\s\S]*default: true[\s\S]*isBroadDefaultDiscordBinding[\s\S]*agentId: 'main', match: \{ channel: 'discord', accountId: 'default' \}[\s\S]*Bound discord:default to the main agent[\s\S]*doctor --fix --non-interactive/,
-  'persistent homes must gain a sole default agent and explicit Discord owner before doctor validation',
+  /delete managedMainEntry\.default[\s\S]*managedEntries[\s\S]*isBroadDefaultDiscordBinding[\s\S]*agentId: 'main', match: \{ channel: 'discord', accountId: 'default' \}[\s\S]*Bound discord:default to the main agent[\s\S]*doctor --fix --non-interactive/,
+  'persistent homes must gain a sole unmarked agent and explicit Discord owner before doctor validation',
 );
 assert.match(
   chart,

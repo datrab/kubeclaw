@@ -115,24 +115,23 @@ spec:
                 changed = true;
                 console.log('==> Migrated agents.list to canonical keyed agents.entries');
               }
-              if (config.agents.ownership !== 'explicit') {
-                config.agents.ownership = 'explicit';
+              if (Object.hasOwn(config.agents, 'ownership')) {
+                delete config.agents.ownership;
                 changed = true;
-                console.log('==> Set agents.ownership=explicit for the managed agent roster');
+                console.log('==> Removed multi-agent ownership from the managed single-agent roster');
               }
               const currentEntries = config?.agents?.entries
                 && typeof config.agents.entries === 'object'
                 && !Array.isArray(config.agents.entries)
                 ? config.agents.entries
                 : {};
-              const managedEntries = {
-                main: {
-                  ...(currentEntries.main && typeof currentEntries.main === 'object'
-                    ? currentEntries.main
-                    : {}),
-                  default: true,
-                },
+              const managedMainEntry = {
+                ...(currentEntries.main && typeof currentEntries.main === 'object'
+                  ? currentEntries.main
+                  : {}),
               };
+              delete managedMainEntry.default;
+              const managedEntries = { main: managedMainEntry };
               if (JSON.stringify(currentEntries) !== JSON.stringify(managedEntries)) {
                 config.agents.entries = managedEntries;
                 changed = true;
@@ -436,7 +435,7 @@ spec:
                     && typeof initialized.agents.entries === 'object'
                     && !Array.isArray(initialized.agents.entries)) {
                   config.agents = config.agents || {};
-                  config.agents.ownership = initialized.agents.ownership;
+                  delete config.agents.ownership;
                   config.agents.entries = structuredClone(initialized.agents.entries);
                   console.log('    synchronized managed single-agent roster');
                 }
