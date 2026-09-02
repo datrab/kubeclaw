@@ -1498,6 +1498,27 @@ prism_validate_values() {
   [[ -f $PRISM_AGENT_VALUES_FILE ]] || { err "Prism agent values file is missing: $PRISM_AGENT_VALUES_FILE"; return 1; }
 }
 
+capture_prism_migration_logs() {
+  local output_file="$1" pod="" container=""
+  while [[ -z $pod ]]; do
+    pod="$(kubectl get pods -n "$PRISM_NAMESPACE" -l app=prism-migrate \
+      --sort-by=.metadata.creationTimestamp -o jsonpath='{.items[-1:].metadata.name}' 2>/dev/null || true)"
+    [[ -n $pod ]] || sleep 1
+  done
+  for container in bootstrap-database-roles migrate; do
+    while ! kubectl get pod "$pod" -n "$PRISM_NAMESPACE" \
+      -o "jsonpath={.status.initContainerStatuses[?(@.name=='${container}')].state.running.startedAt}{.status.initContainerStatuses[?(@.name=='${container}')].state.terminated.finishedAt}{.status.containerStatuses[?(@.name=='${container}')].state.running.startedAt}{.status.containerStatuses[?(@.name=='${container}')].state.terminated.finishedAt}" \
+      2>/dev/null | grep -q .; do
+      kubectl get pod "$pod" -n "$PRISM_NAMESPACE" >/dev/null 2>&1 || return 0
+      sleep 1
+    done
+    {
+      printf '\n===== prism-migrate/%s =====\n' "$container"
+      kubectl logs "$pod" -n "$PRISM_NAMESPACE" -c "$container" --follow --timestamps 2>&1 || true
+    } >>"$output_file"
+  done
+}
+
 cmd_prism_secrets() {
   kubectl get namespace "$PRISM_NAMESPACE" >/dev/null
   kubectl get secret "$PRISM_IMAGE_PULL_SECRET_NAME" -n "$PRISM_NAMESPACE" >/dev/null 2>&1 \
@@ -1558,8 +1579,26 @@ cmd_prism() {
   overrides+=(--set-string "postgresql.existingSecret=${PRISM_DATABASE_SECRET_NAME}")
   overrides+=(--set-string "imagePullSecrets[0].name=${PRISM_IMAGE_PULL_SECRET_NAME}")
   helm lint "$REPO_DIR/charts/prism" -f "$PRISM_VALUES_FILE" "${overrides[@]}"
+  local migration_log migration_log_pid prism_helm_result=0
+  migration_log="$(mktemp)"
+  capture_prism_migration_logs "$migration_log" &
+  migration_log_pid=$!
   helm upgrade --install "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" \
-    -f "$PRISM_VALUES_FILE" "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT"
+    -f "$PRISM_VALUES_FILE" "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT" \
+    || prism_helm_result=$?
+  kill "$migration_log_pid" >/dev/null 2>&1 || true
+  wait "$migration_log_pid" >/dev/null 2>&1 || true
+  if [[ $prism_helm_result -ne 0 ]]; then
+    err "Prism Helm deployment failed; captured migration output follows"
+    if [[ -s $migration_log ]]; then
+      cat "$migration_log"
+    else
+      info "No prism-migrate container output was available before Helm cleanup"
+    fi
+    rm -f "$migration_log"
+    return "$prism_helm_result"
+  fi
+  rm -f "$migration_log"
   helm lint "$CHART_DIR" -f "$PRISM_AGENT_VALUES_FILE" \
     --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1"
   helm upgrade --install agent-prism "$CHART_DIR" -n "$PRISM_NAMESPACE" \

@@ -16,11 +16,16 @@ embeddings. Control, Studio, worker, and ingestion use
 Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
+While Helm waits, the deploy script captures both migration containers. If an
+atomic install removes a failed hook, its last bootstrap or SQL error is still
+printed in the deploy output.
 
 The Envoy sidecars are probed through their named mTLS listener and do not
 depend on shell utilities in the Envoy image. The worker uses its process health
 endpoint during the first install so Helm can reach the post-install database
 migration; later upgrades migrate the database before rolling workloads. The
+Node-based migration containers mount a bounded writable `/tmp` because their
+root filesystem remains read-only. The
 `prism-artifacts` and `prism-backups` PVCs carry Helm's `keep` policy and survive
 release recovery or uninstall.
 

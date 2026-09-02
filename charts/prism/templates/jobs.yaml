@@ -33,6 +33,8 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: readonly-password } }
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 512Mi } }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
       containers:
         - name: migrate
           image: "{{ .Values.images.control.repository }}:{{ .Values.images.control.tag }}"
@@ -43,6 +45,12 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: migrator-url } }
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 1Gi } }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 256Mi
 ---
 apiVersion: batch/v1
 kind: CronJob
