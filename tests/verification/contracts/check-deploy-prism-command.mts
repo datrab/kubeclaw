@@ -56,6 +56,8 @@ assert.match(source,/for prism_workload in prism-control prism-studio prism-work
   "Prism deploys must restart tagged application images after an unchanged Helm render");
 assert.match(databaseBootstrap,/ECONNREFUSED[\s\S]*maxAttempts = 60[\s\S]*retrying bootstrap/u,
   "Prism database bootstrap must tolerate bounded PostgreSQL startup races");
+assert.match(databaseBootstrap,/GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA prism TO prism_runtime[\s\S]*ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator/u,
+  "Prism bootstrap must repair runtime privileges left by interrupted migrations");
 assert.match(databaseMigrate,/infrastructure: "preprovisioned"/u,
   "the production migrator must require infrastructure prepared by the admin bootstrap");
 assert.doesNotMatch(firstMigration,/CREATE EXTENSION|CREATE ROLE|CREATE SCHEMA/u,

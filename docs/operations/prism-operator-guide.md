@@ -53,10 +53,12 @@ tokens into `prism-runtime` or the worker Deployment.
 The one-shot `prism-migrate` job has two privilege-separated stages. Its admin
 bootstrap waits for PostgreSQL with bounded retries, creates or refreshes the
 least-privilege roles, installs the `vector` extension, and ensures that
-`prism_migrator` owns the `prism` schema. The ordinary migrator then verifies
-that ownership and runs only schema-local migrations; it is not granted global
-database `CREATE` or role-management privileges. Only after that hook succeeds
-does the script install the `agent-prism` OpenClaw gateway. Studio is exposed
+`prism_migrator` owns the `prism` schema. It also reapplies least-privilege
+table grants so objects left by an interrupted earlier install remain usable by
+`prism_runtime`. The ordinary migrator then verifies that ownership and runs
+only schema-local migrations; it is not granted global database `CREATE` or
+role-management privileges. Only after that hook succeeds does the script
+install the `agent-prism` OpenClaw gateway. Studio is exposed
 through the `prism-studio` Tailscale Ingress; its HTTPS MagicDNS address is
 shown by `kubectl get ingress prism-studio -n kubeclaw`.
 

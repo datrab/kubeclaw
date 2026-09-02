@@ -12,6 +12,7 @@ test("desktop startup and failure panels remain visible", () => {
   assert.equal(app.match(/className="start-panel"/gu)?.length, 2);
   assert.match(css, /\.start-panel\{[^}]*display:flex/u);
   assert.match(css, /\.mobile-nav,\.sheet\{display:none\}/u);
+  assert.match(app, /failure\?\.error \?\? `Project creation failed \(\$\{project\.status\}\)`/u);
 });
 test("Puck insertion becomes a typed canonical operation", () => {
   const operation = puckChangeToOperation(

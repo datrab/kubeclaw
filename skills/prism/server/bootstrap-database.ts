@@ -36,6 +36,14 @@ const bootstrap = async (): Promise<void> => {
   await admin.query("CREATE EXTENSION IF NOT EXISTS vector");
   await admin.query("CREATE SCHEMA IF NOT EXISTS prism AUTHORIZATION prism_migrator");
   await admin.query("ALTER SCHEMA prism OWNER TO prism_migrator");
+  // Reconcile objects left by interrupted pre-production installs. GRANT ON ALL
+  // TABLES is intentionally repeated because already-recorded migrations are
+  // not rerun merely to repair privileges.
+  await admin.query("GRANT USAGE ON SCHEMA prism TO prism_runtime, prism_readonly");
+  await admin.query("GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA prism TO prism_runtime");
+  await admin.query("GRANT SELECT ON ALL TABLES IN SCHEMA prism TO prism_readonly");
+  await admin.query("ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator IN SCHEMA prism GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO prism_runtime");
+  await admin.query("ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator IN SCHEMA prism GRANT SELECT ON TABLES TO prism_readonly");
 };
 
 try {

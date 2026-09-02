@@ -359,7 +359,7 @@ assert.match(
 );
 assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/);
 assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\s\S]*pipeline-test-gate-source-attestation/);
-for (const values of [novaValues, busterValues]) {
+for (const values of [novaValues, busterValues, prismAgentValues]) {
   assert.match(values, /repoUrl:\s*["']git@github\.com:datrab\/kubeclaw\.git["']/,
     'production agents must clone the single authoritative datrab/kubeclaw repository');
   assert.doesNotMatch(values, /Ravencrypt|ForgeStack/,

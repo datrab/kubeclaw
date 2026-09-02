@@ -1152,6 +1152,11 @@ const server = createServer(async (request, response) => {
     }
     return json(response, 404, { error: "not found" });
   } catch (error) {
+    console.error("[prism-control] request failed", {
+      method: request.method,
+      path: request.url,
+      error: error instanceof Error ? error.message : "request failed",
+    });
     return json(response, error instanceof SyntaxError ? 400 : 422, {
       error: error instanceof Error ? error.message : "request failed",
     });

@@ -318,7 +318,14 @@ function App() {
       headers: { "content-type": "application/json", "x-prism-csrf": csrf },
       body: JSON.stringify({ externalId, name: setupName }),
     });
-    if (!project.ok) throw new Error("Project creation failed");
+    if (!project.ok) {
+      const failure = (await project.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+      throw new Error(
+        failure?.error ?? `Project creation failed (${project.status})`,
+      );
+    }
     const projectId = ((await project.json()) as { id: string }).id;
     const now = new Date().toISOString();
     const initial = {

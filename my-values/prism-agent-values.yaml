@@ -39,7 +39,7 @@ agent:
   git:
     enabled: true
     secretName: git-deploy-key-nova
-    repoUrl: https://github.com/datrab/kubeclaw.git
+    repoUrl: "git@github.com:datrab/kubeclaw.git"
 
 serviceAccount: { create: true, automount: false }
 workerTrust:
