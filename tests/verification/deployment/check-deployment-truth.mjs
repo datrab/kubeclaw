@@ -19,6 +19,7 @@ const exists = (relativePath) =>
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
 const prismWorkloads = read('charts/prism/templates/workloads.yaml');
+const prismJobs = read('charts/prism/templates/jobs.yaml');
 const generalDockerfile = read('docker/Dockerfile.general');
 const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
@@ -280,20 +281,34 @@ for (const portName of busterRuntimePortNames) {
   assert.ok(portName.length <= 15, `Buster runtime port name exceeds Kubernetes limit: ${portName}`);
 }
 
-for (const [label, source] of [
-  ['agent Envoy', chart],
-  ['Prism Envoy', prismWorkloads],
-]) {
-  assert.match(
-    source,
-    /readinessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901[\s\S]*?GET \/ready HTTP\/1\.1[\s\S]*?livenessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901/u,
-    `${label} probes must reach the loopback-only Envoy admin listener from inside the container`,
-  );
-  assert.doesNotMatch(
-    source,
-    /httpGet:\s*\{\s*path:\s*\/ready,\s*port:\s*9901/u,
-    `${label} must not ask the kubelet to reach a loopback-only Envoy admin listener through the Pod IP`,
-  );
+assert.match(
+  chart,
+  /readinessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901[\s\S]*?GET \/ready HTTP\/1\.1[\s\S]*?livenessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901/u,
+  'agent Envoy probes must reach the loopback-only admin listener from inside the container',
+);
+assert.match(
+  prismWorkloads,
+  /name:\s*worker-trust-proxy[\s\S]*readinessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*worker-trust\s*\}[\s\S]*livenessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*worker-trust\s*\}/u,
+  'Prism Envoy probes must use the live mTLS listener without shell dependencies',
+);
+assert.doesNotMatch(
+  prismWorkloads,
+  /\/bin\/bash|\/dev\/tcp\/127\.0\.0\.1\/9901/u,
+  'Prism Envoy probes must not depend on shell utilities in the proxy image',
+);
+assert.match(
+  prismWorkloads,
+  /readinessProbe:\s*\{\s*httpGet:\s*\{\s*path:\s*\{\{\s*ternary "\/health" "\/ready" \(eq \$name "worker"\)/u,
+  'worker readiness must not deadlock the post-install schema migration',
+);
+assert.match(
+  prismJobs,
+  /name:\s*prism-migrate[\s\S]*"helm\.sh\/hook":\s*post-install,pre-upgrade[\s\S]*before-hook-creation,hook-succeeded/u,
+  'Prism migrations must finish initial installation and run before upgraded workloads',
+);
+for (const [label, source] of [['artifacts', prismWorkloads], ['backups', prismJobs]]) {
+  assert.match(source, /kind:\s*PersistentVolumeClaim[\s\S]*helm\.sh\/resource-policy:\s*keep/u,
+    `Prism ${label} PVC must survive release recovery`);
 }
 assert.match(
   deploy,

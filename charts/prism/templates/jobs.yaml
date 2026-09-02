@@ -3,8 +3,10 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: prism-migrate-{{ .Release.Revision }}
-  annotations: { "helm.sh/hook": post-install,post-upgrade, "helm.sh/hook-delete-policy": before-hook-creation }
+  name: prism-migrate
+  annotations:
+    "helm.sh/hook": post-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   backoffLimit: 3
   template:
@@ -128,7 +130,10 @@ spec:
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
-metadata: { name: prism-backups }
+metadata:
+  name: prism-backups
+  annotations:
+    helm.sh/resource-policy: keep
 spec:
   accessModes: [ReadWriteOnce]
   {{- if .Values.artifactStorage.storageClass }}

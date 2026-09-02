@@ -17,6 +17,13 @@ Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
 
+The Envoy sidecars are probed through their named mTLS listener and do not
+depend on shell utilities in the Envoy image. The worker uses its process health
+endpoint during the first install so Helm can reach the post-install database
+migration; later upgrades migrate the database before rolling workloads. The
+`prism-artifacts` and `prism-backups` PVCs carry Helm's `keep` policy and survive
+release recovery or uninstall.
+
 The shared Secret must contain `gatewayToken-prism`;
 `./scripts/deploy.sh secrets` creates it without changing the existing GitHub
 credential. For Discord, create the dedicated Prism bot and channel, add `discordToken-prism` to

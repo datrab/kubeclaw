@@ -86,7 +86,11 @@ spec:
             {{- if eq $name "control" }}
             - { name: artifacts, mountPath: /var/lib/prism/artifacts }
             {{- end }}
-          readinessProbe: { httpGet: { path: /ready, port: 8080 }, initialDelaySeconds: 3 }
+          {{- if eq $name "worker" }}
+          # The migration is a post-install hook. On the first install the worker
+          # must become ready before that hook can create its nonce table.
+          {{- end }}
+          readinessProbe: { httpGet: { path: {{ ternary "/health" "/ready" (eq $name "worker") | quote }}, port: 8080 }, initialDelaySeconds: 3 }
           livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         - name: worker-trust-proxy
@@ -95,20 +99,11 @@ spec:
           args: ["-c", {{ printf "/etc/kubeclaw-worker-trust/%s.yaml" $name | quote }}, "--service-cluster", {{ printf "prism-%s" $name | quote }}]
           ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }]
           readinessProbe:
-            exec:
-              command:
-                - /bin/bash
-                - -ec
-                - >-
-                  exec 3<>/dev/tcp/127.0.0.1/9901;
-                  printf 'GET /ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3;
-                  IFS= read -r status <&3;
-                  [[ "$status" == *" 200 "* ]]
+            tcpSocket: { port: worker-trust }
             initialDelaySeconds: 3
             timeoutSeconds: 3
           livenessProbe:
-            exec:
-              command: [/bin/bash, -ec, "exec 3<>/dev/tcp/127.0.0.1/9901"]
+            tcpSocket: { port: worker-trust }
             initialDelaySeconds: 10
             timeoutSeconds: 3
           securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
@@ -140,7 +135,10 @@ spec: { minAvailable: 1, selector: { matchLabels: { app: prism-{{ $name }} } } }
 {{- end }}
 apiVersion: v1
 kind: PersistentVolumeClaim
-metadata: { name: prism-artifacts }
+metadata:
+  name: prism-artifacts
+  annotations:
+    helm.sh/resource-policy: keep
 spec:
   accessModes: [ReadWriteOnce]
   {{- if .Values.artifactStorage.storageClass }}
