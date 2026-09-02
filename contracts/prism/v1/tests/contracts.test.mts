@@ -9,6 +9,15 @@ const fixture = JSON.parse(
     "utf8",
   ),
 );
+const generatedValidators = await readFile(
+  new URL("../src/validators.generated.mjs", import.meta.url),
+  "utf8",
+);
+assert.doesNotMatch(
+  generatedValidators,
+  /\b(?:eval|Function)\s*\(|\brequire\s*\(/u,
+  "browser validators must remain compatible with the Studio CSP",
+);
 assert.equal(validatePrism("designDocument", fixture), fixture);
 assert.match(schemaDigest(), /^sha256:[a-f0-9]{64}$/);
 assert.doesNotThrow(() =>

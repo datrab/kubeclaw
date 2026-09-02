@@ -593,6 +593,16 @@ assert.ok(
 );
 assert.match(
   chart,
+  /name: init-setup[\s\S]*if \.Values\.runAsRoot[\s\S]*runAsUser: 0[\s\S]*else[\s\S]*runAsUser: 1000[\s\S]*runAsNonRoot: true/,
+  'init setup must honor the agent runtime identity instead of forcing root',
+);
+assert.match(
+  chart,
+  /Non-root init selected; persistent volumes already use fsGroup 1000[\s\S]*name: INIT_SSH_HOME[\s\S]*ternary "\/root\/\.ssh" "\/home\/node\/\.ssh" \.Values\.runAsRoot/,
+  'non-root agents must use their writable home and avoid root-only ownership changes',
+);
+assert.match(
+  chart,
   /state_db="\/home\/node\/\.openclaw\/state\/openclaw\.sqlite"[\s\S]*if \[ ! -f "\$state_db" \]; then[\s\S]*migration not required/,
   'fresh installations without an OpenClaw state database must skip migration safely',
 );

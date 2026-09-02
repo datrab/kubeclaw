@@ -5,7 +5,10 @@
   "type": "module",
   "exports": { ".": "./src/index.ts", "./digest": "./src/digest.ts" },
   "scripts": {
+    "generate:validators": "node scripts/generate-validators.mjs",
+    "pretest": "node scripts/generate-validators.mjs",
     "test": "node tests/contracts.test.mts",
+    "pretypecheck": "node scripts/generate-validators.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

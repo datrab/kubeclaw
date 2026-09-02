@@ -136,6 +136,13 @@ container limit. Nova also reserves a `1Gi` request and `8Gi` limit for the
 following offline plugin setup. Both init containers run sequentially and do
 not add to the steady-state pod memory.
 
+The setup init container follows `runAsRoot`. Root-based agents keep the UID 0
+ownership handoff required by their shared runtime, while non-root agents such
+as Prism run setup as UID/GID 1000, store SSH material below
+`/home/node/.ssh`, and rely on the pod's `fsGroup: 1000`. A
+`CreateContainerConfigError` saying that `init-setup` breaks the non-root policy
+indicates an older chart render and requires redeploying the agent release.
+
 A pod mount error referencing `buster-plan-trust` or another object absent from
 the current values indicates stale Helm release values, commonly after a
 rollback to an older revision. Agent upgrades use `--reset-values` so the chart

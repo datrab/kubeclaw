@@ -16,6 +16,13 @@ embeddings. Control, Studio, worker, and ingestion use
 Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
+
+Studio keeps a strict Content Security Policy and therefore ships
+build-generated JSON Schema validators instead of compiling AJV schemas in the
+browser. A connected Tailscale page that remains black while the browser
+reports `unsafe-eval` or `Error compiling schema` is an outdated Studio image,
+not a relay-latency issue. Rebuild/redeploy Prism; do not add `unsafe-eval` to
+the policy.
 While Helm waits, the deploy script captures both migration containers. If an
 atomic install removes a failed hook, its last bootstrap or SQL error is still
 printed in the deploy output.

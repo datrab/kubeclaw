@@ -18,6 +18,7 @@
     "test:quality": "node --test tests/quality.test.mts tests/directions.test.mts",
     "test:pipeline": "node --test tests/pipeline-adapter.test.mts",
     "test:e2e": "node --test tests/e2e.test.mts",
+    "prebuild:studio": "node ../../contracts/prism/v1/scripts/generate-validators.mjs",
     "build:studio": "vite build --config studio/vite.config.ts",
     "dev:studio": "NODE_ENV=development vite --config studio/vite.config.ts",
     "test:studio": "node --test tests/studio-adapter.test.mts && playwright test --config studio/playwright.config.mjs",

@@ -1,42 +1,40 @@
-import Ajv2020 from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
 import schema from "../schemas/prism-v1.schema.json" with { type: "json" };
-import engineRequests from "../schemas/engine-requests.v1.json" with { type: "json" };
-import engineResults from "../schemas/engine-results.v1.json" with { type: "json" };
+import {
+  validateAcceptanceCriteria,
+  validateBaselineManifest,
+  validateDesignDocument,
+  validateDesignRequest,
+  validateEngineRequestEvaluate,
+  validateEngineRequestGenerate,
+  validateEngineRequestIngest,
+  validateEngineRequestPublish,
+  validateEngineRequestRender,
+  validateEngineResultEvaluate,
+  validateEngineResultGenerate,
+  validateEngineResultIngest,
+  validateEngineResultPublish,
+  validateEngineResultRender,
+  validateOperation,
+  validatePreferenceEvent,
+  validatePreviewIndex,
+  validateRetrievalQuery,
+  type StandaloneValidator,
+} from "./validators.generated.mjs";
 import { validateNodeCatalog } from "./node-catalog.ts";
 export { prismNodeTypes, validateNodeCatalog } from "./node-catalog.ts";
 
 export const PRISM_CONTRACT_ID = "kubeclaw.prism-design-engine@1";
 export const PRISM_SCHEMA_ID = schema.$id;
-type Validator = ((value: unknown) => boolean) & {
-  errors?: Array<{ instancePath: string; message?: string }> | null;
-};
-interface AjvInstance {
-  addSchema(value: object): void;
-  compile(value: object): Validator;
-}
-const AjvConstructor = Ajv2020 as unknown as new (options: {
-  allErrors: boolean;
-  strict: boolean;
-  strictRequired: boolean;
-}) => AjvInstance;
-const installFormats = addFormats as unknown as (
-  instance: AjvInstance,
-) => AjvInstance;
-const ajv = new AjvConstructor({
-  allErrors: true,
-  strict: true,
-  strictRequired: false,
-});
-installFormats(ajv);
-ajv.addSchema(schema);
-
-const validators = new Map(
-  Object.keys(schema.$defs).map((name) => [
-    name,
-    ajv.compile({ $ref: `${schema.$id}#/$defs/${name}` }),
-  ]),
-);
+const validators = new Map<string, StandaloneValidator>([
+  ["designRequest", validateDesignRequest],
+  ["designDocument", validateDesignDocument],
+  ["operation", validateOperation],
+  ["baselineManifest", validateBaselineManifest],
+  ["acceptanceCriteria", validateAcceptanceCriteria],
+  ["previewIndex", validatePreviewIndex],
+  ["preferenceEvent", validatePreferenceEvent],
+  ["retrievalQuery", validateRetrievalQuery],
+]);
 
 export function validatePrism<T>(
   name:
@@ -221,20 +219,22 @@ export function validatePrism<T>(
   return value as T;
 }
 
-const requestValidators = new Map(
-  Object.entries(engineRequests.$defs).map(([name, value]) => [
-    name,
-    ajv.compile(value),
-  ]),
-);
-const resultValidators = new Map(
-  Object.entries(engineResults.$defs).map(([name, value]) => [
-    name,
-    ajv.compile(value),
-  ]),
-);
+const requestValidators = new Map<string, StandaloneValidator>([
+  ["generate", validateEngineRequestGenerate],
+  ["render", validateEngineRequestRender],
+  ["evaluate", validateEngineRequestEvaluate],
+  ["ingest", validateEngineRequestIngest],
+  ["publish", validateEngineRequestPublish],
+]);
+const resultValidators = new Map<string, StandaloneValidator>([
+  ["generate", validateEngineResultGenerate],
+  ["render", validateEngineResultRender],
+  ["evaluate", validateEngineResultEvaluate],
+  ["ingest", validateEngineResultIngest],
+  ["publish", validateEngineResultPublish],
+]);
 function validateEngine(
-  map: Map<string, Validator>,
+  map: Map<string, StandaloneValidator>,
   operation: string,
   value: unknown,
   kind: string,

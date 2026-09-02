@@ -257,8 +257,18 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
-            # Init always runs as root (needs chown, mkdir /root/.ssh, etc.)
+            {{- if .Values.runAsRoot }}
             runAsUser: 0
+            runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            {{- end }}
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
             readOnlyRootFilesystem: true
           command:
             - /bin/bash
@@ -272,21 +282,23 @@ spec:
               fi
 
               echo "==> 1. SSH Setup"
-              mkdir -p /root/.ssh
+              mkdir -p "$INIT_SSH_HOME"
               if [ -f /secrets/ssh/id_rsa ]; then
-                cp /secrets/ssh/id_rsa /root/.ssh/id_rsa
-                chmod 600 /root/.ssh/id_rsa
+                cp /secrets/ssh/id_rsa "$INIT_SSH_HOME/id_rsa"
+                chmod 600 "$INIT_SSH_HOME/id_rsa"
                 echo "    SSH key loaded."
               else
                 echo "    WARNING: No SSH key found at /secrets/ssh/id_rsa"
               fi
 
-              cat > /root/.ssh/known_hosts << 'HOSTKEYS'
+              cat > "$INIT_SSH_HOME/known_hosts" << 'HOSTKEYS'
               github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
               github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
               github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZKyFT7RnFTvx0rWSJrjUCg+b0tJLAt0dXHl0pdd4VVtQYGBSNiCcMMpoiyt3TZV2FJwrH+A6Bkqe3V6JBrigfXvDAdqVX5+a20EJAtHWtnN8TPCS/CY0dkRvK3F2LzD33gZ0Y8+wO3BNEIV/r0JQR5bN5oy0RkreJ3f3wBqaxcRPD7yd8KUzBaR9bgg7UBgc5sCZ0U1Xv5QR+hUw7HhC1DhXEAr1LrKawClUOP7CIFa7R2S4FE+J8FMP2MIlAl9e4BwP/IETvZUFG3ysJIGnaMOO/P0Fo/bK2NrvI/OF3bv+Uot0mYR0P4+BPeVOR6VlGUT+5mLbeHhW/aCSMPjsKq+9TEplz22Rrkj5YHhpieyoDbmIORbOfBF0wYJvWfPi/KLD2TR0QjV3xUe8Tqzp0VXgENLeVEr62OIFKUR3LPwzqnlWavmJCmHYMlC4=
               HOSTKEYS
-              chown -R 0:0 /root/.ssh
+              if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
+                chown -R 0:0 "$INIT_SSH_HOME"
+              fi
               echo "    known_hosts set."
 
               echo "==> 2. Git Repository Sync"
@@ -338,9 +350,11 @@ spec:
                   fi
                 fi
               done
-              chown -R 0:1000 /workspace
-              chmod -R g+rwX /workspace
-              find /workspace -type d -exec chmod g+s {} +
+              if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
+                chown -R 0:1000 /workspace
+                chmod -R g+rwX /workspace
+                find /workspace -type d -exec chmod g+s {} +
+              fi
 
               echo "==> 4. Config Setup"
               if [ ! -f /config/openclaw.json ]; then
@@ -1010,14 +1024,18 @@ spec:
               fi
 
               echo "==> 6. Fixing Permissions"
-              chown -R 0:0 /config /runtime-config /skills-merged
-              if [ "${AGENT_NAME}" = "buster" ]; then
-                chown -R 1000:1000 /workspace
-                chown -R 0:1000 /root/.ssh
-                find /root/.ssh -type d -exec chmod 750 {} +
-                if [ -f /root/.ssh/id_rsa ]; then chmod 640 /root/.ssh/id_rsa; fi
+              if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
+                chown -R 0:0 /config /runtime-config /skills-merged
+                if [ "${AGENT_NAME}" = "buster" ]; then
+                  chown -R 1000:1000 /workspace
+                  chown -R 0:1000 "$INIT_SSH_HOME"
+                  find "$INIT_SSH_HOME" -type d -exec chmod 750 {} +
+                  if [ -f "$INIT_SSH_HOME/id_rsa" ]; then chmod 640 "$INIT_SSH_HOME/id_rsa"; fi
+                else
+                  chown -R 0:0 /workspace "$INIT_SSH_HOME"
+                fi
               else
-                chown -R 0:0 /workspace /root/.ssh
+                echo "    Non-root init selected; persistent volumes already use fsGroup 1000."
               fi
               echo "==> Init Complete."
               ls -la /workspace/
@@ -1029,6 +1047,10 @@ spec:
               value: "/tmp"
             - name: XDG_CACHE_HOME
               value: "/tmp/.cache"
+            - name: INIT_RUN_AS_ROOT
+              value: {{ .Values.runAsRoot | quote }}
+            - name: INIT_SSH_HOME
+              value: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: AGENT_ROLE
@@ -1083,7 +1105,7 @@ spec:
               mountPath: /secrets/ssh
               readOnly: true
             - name: ssh-home-vol
-              mountPath: /root/.ssh
+              mountPath: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
             - name: config
               mountPath: /config
             - name: config
@@ -1297,7 +1319,7 @@ spec:
             - name: workspace
               mountPath: /home/node/.openclaw/workspace
             - name: ssh-home-vol
-              mountPath: /root/.ssh
+              mountPath: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
             - name: skills-merged
               mountPath: /app/skills
             - name: tmp
