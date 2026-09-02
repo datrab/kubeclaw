@@ -11,6 +11,8 @@ import { ContentAddressedArtifactStore, RevisionRepository, migrate } from "../s
 
 test("migration lock is acquired before schema metadata is touched",async()=>{const statements:string[]=[];const db={async query(sql:string){statements.push(sql);return {rows:sql.startsWith("SELECT name")?[]:[]};},async exec(sql:string){statements.push(sql);}};await migrate(db as any);const lock=statements.findIndex((sql)=>sql.includes("pg_advisory_xact_lock"));const schema=statements.findIndex((sql)=>sql.includes("CREATE SCHEMA"));assert(lock>=0&&schema>lock);});
 
+test("managed migrations require the preprovisioned schema without database-wide DDL",async()=>{const statements:string[]=[];const db={async query(sql:string){statements.push(sql);if(sql.includes("FROM pg_namespace"))return {rows:[{nspname:"prism"}]};return {rows:sql.startsWith("SELECT name")?[]:[]};},async exec(sql:string){statements.push(sql);}};await migrate(db as any,{infrastructure:"preprovisioned"});assert.equal(statements.some((sql)=>sql.includes("CREATE SCHEMA")||sql.includes("CREATE EXTENSION")||sql.includes("CREATE ROLE")),false);});
+
 test("PostgreSQL migrations, immutable revisions, and artifacts work", async () => {
   const db = new PGlite({ extensions: { vector } }); await migrate(db);
   const repository = new RevisionRepository(db); const project = await repository.createProject("demo-project", "Demo");

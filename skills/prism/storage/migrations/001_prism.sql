@@ -1,9 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS vector;
-DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_migrator') THEN CREATE ROLE prism_migrator; END IF; END $$;
-DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_runtime') THEN CREATE ROLE prism_runtime; END IF; END $$;
-DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_readonly') THEN CREATE ROLE prism_readonly; END IF; END $$;
-CREATE SCHEMA IF NOT EXISTS prism;
-
 CREATE TABLE IF NOT EXISTS prism.project (
   id uuid PRIMARY KEY, external_id text NOT NULL UNIQUE, name text NOT NULL,
   status text NOT NULL CHECK (status IN ('active','approved','archived')) DEFAULT 'active',

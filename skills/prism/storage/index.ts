@@ -23,6 +23,7 @@ const digest = (value: string | Uint8Array): string =>
 
 export async function migrate(
   db: Queryable & { connect?: () => Promise<Queryable & { release(): void }> },
+  options: { infrastructure?: "embedded" | "preprovisioned" } = {},
 ): Promise<void> {
   const root = new URL("./migrations/", import.meta.url);
   const files = (await readdir(root))
@@ -35,7 +36,18 @@ export async function migrate(
       await connection.query(
         "SELECT pg_advisory_xact_lock(hashtextextended('prism-schema-migrations',0))",
       );
-      await connection.query("CREATE SCHEMA IF NOT EXISTS prism");
+      if (options.infrastructure === "preprovisioned") {
+        const schema = await connection.query(
+          "SELECT n.nspname FROM pg_namespace n JOIN pg_roles r ON r.oid=n.nspowner WHERE n.nspname='prism' AND r.rolname=current_user",
+        );
+        if (!schema.rows[0]) {
+          throw new Error("Prism schema bootstrap is missing or prism_migrator is not its owner");
+        }
+      } else {
+        await connection.query("CREATE EXTENSION IF NOT EXISTS vector");
+        await connection.query("DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_migrator') THEN CREATE ROLE prism_migrator; END IF; IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_runtime') THEN CREATE ROLE prism_runtime; END IF; IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'prism_readonly') THEN CREATE ROLE prism_readonly; END IF; END $$");
+        await connection.query("CREATE SCHEMA IF NOT EXISTS prism");
+      }
       await connection.query(
         "CREATE TABLE IF NOT EXISTS prism.schema_migration(name text PRIMARY KEY,applied_at timestamptz NOT NULL DEFAULT now())",
       );

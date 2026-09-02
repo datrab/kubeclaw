@@ -6,8 +6,22 @@ const required = (name: string): string => {
   return value;
 };
 const literal = (value: string): string => `'${value.replaceAll("'", "''")}'`;
-const admin = new Pool({ connectionString: required("ADMIN_DATABASE_URL") });
-try {
+const admin = new Pool({
+  connectionString: required("ADMIN_DATABASE_URL"),
+  connectionTimeoutMillis: 5_000,
+});
+const retryableCodes = new Set([
+  "ECONNREFUSED",
+  "ECONNRESET",
+  "EHOSTUNREACH",
+  "ENETUNREACH",
+  "ETIMEDOUT",
+  "57P03",
+]);
+const sleep = (milliseconds: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+const bootstrap = async (): Promise<void> => {
   for (const [role, passwordName] of [
     ["prism_migrator", "PRISM_MIGRATOR_PASSWORD"],
     ["prism_runtime", "PRISM_RUNTIME_PASSWORD"],
@@ -22,6 +36,23 @@ try {
   await admin.query("CREATE EXTENSION IF NOT EXISTS vector");
   await admin.query("CREATE SCHEMA IF NOT EXISTS prism AUTHORIZATION prism_migrator");
   await admin.query("ALTER SCHEMA prism OWNER TO prism_migrator");
+};
+
+try {
+  const maxAttempts = 60;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      await bootstrap();
+      break;
+    } catch (error) {
+      const code = error && typeof error === "object" && "code" in error
+        ? String(error.code)
+        : "UNKNOWN";
+      if (!retryableCodes.has(code) || attempt === maxAttempts) throw error;
+      console.warn(`PostgreSQL is not ready (${code}); retrying bootstrap (${attempt}/${maxAttempts})`);
+      await sleep(2_000);
+    }
+  }
 } finally {
   await admin.end();
 }

@@ -14,6 +14,9 @@ const liveAcceptance=readFileSync(new URL("../live/prism-nova-production-e2e.mjs
 const namespacePolicies=readFileSync(new URL("../../../my-values/infra/network-policies.yaml",import.meta.url),"utf8");
 const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control.ts",import.meta.url),"utf8");
+const databaseBootstrap=readFileSync(new URL("../../../skills/prism/server/bootstrap-database.ts",import.meta.url),"utf8");
+const databaseMigrate=readFileSync(new URL("../../../skills/prism/server/migrate.ts",import.meta.url),"utf8");
+const firstMigration=readFileSync(new URL("../../../skills/prism/storage/migrations/001_prism.sql",import.meta.url),"utf8");
 const imageWorkflow=readFileSync(new URL("../../../.github/workflows/build-images.yaml",import.meta.url),"utf8");
 for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","teardown-prism)"])assert(source.includes(command),`missing deploy command: ${command}`);
 for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_TAG","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
@@ -49,6 +52,12 @@ assert.match(jobs,/name: bootstrap-database-roles[\s\S]*mountPath: \/tmp[\s\S]*n
   "Prism migration containers need a writable temporary filesystem under a read-only root");
 assert.match(source,/capture_prism_migration_logs[\s\S]*bootstrap-database-roles migrate[\s\S]*Prism Helm deployment failed; captured migration output follows/u,
   "Prism deployment must preserve migration diagnostics before atomic cleanup");
+assert.match(databaseBootstrap,/ECONNREFUSED[\s\S]*maxAttempts = 60[\s\S]*retrying bootstrap/u,
+  "Prism database bootstrap must tolerate bounded PostgreSQL startup races");
+assert.match(databaseMigrate,/infrastructure: "preprovisioned"/u,
+  "the production migrator must require infrastructure prepared by the admin bootstrap");
+assert.doesNotMatch(firstMigration,/CREATE EXTENSION|CREATE ROLE|CREATE SCHEMA/u,
+  "ordinary Prism schema migrations must not require database-wide administrative privileges");
 assert(ingestion.includes("runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000"),
   "Prism ingestion must use its image's numeric non-root identity");
 assert(postgresql.includes("PGDATA, value: /var/lib/postgresql/data/pgdata"),"Prism PostgreSQL must initialize an ownership-safe PGDATA child directory");
