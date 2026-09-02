@@ -269,6 +269,7 @@
     "cmd_smoke",
     "prism_image_overrides",
     "prism_validate_values",
+    "capture_prism_migration_logs",
     "cmd_prism_secrets",
     "cmd_prism",
     "cmd_prism_smoke",
@@ -304,6 +305,6 @@
     "infra": 1038,
     "agents": 1353,
     "smoke": 1475,
-    "teardown": 1911
+    "teardown": 1950
   }
 }
