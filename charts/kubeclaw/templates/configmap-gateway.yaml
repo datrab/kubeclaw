@@ -47,14 +47,28 @@ data:
           "kimi",
           "gemini",
           "pi"
-        ],
-        "maxConcurrentSessions": 20,
-        "stream": {
-          "coalesceIdleMs": 300,
-          "maxChunkChars": 1200
-        },
-        "runtime": {
-          "ttlMinutes": 120
+        ]
+      },
+      "memory": {
+        "search": {
+          "enabled": true,
+          "experimental": {
+            "sessionMemory": true
+          },
+          "sources": [
+            "memory",
+            "sessions"
+          ],
+          "provider": "openai-compatible",
+          "remote": {
+            "baseUrl": "{{ .Values.litellm.endpoint }}",
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "LITELLM_API_KEY"
+            }
+          },
+          "model": "gemini-embedding-001"
         }
       },
       "agents": {
@@ -88,42 +102,6 @@ data:
           "workspace": "/home/node/.openclaw/workspace",
           "embeddedAgent": {
             "executionContract": "strict-agentic"
-          },
-          "memorySearch": {
-            "enabled": true,
-            "experimental": {
-              "sessionMemory": true
-            },
-            "provider": "openai",
-            "remote": {
-              "baseUrl": "{{ .Values.litellm.endpoint }}",
-              "apiKey": {
-                "source": "env",
-                "provider": "default",
-                "id": "LITELLM_API_KEY"
-              }
-            },
-            "model": "gemini-embedding-001",
-            "store": {
-              "vector": {
-                "enabled": true
-              }
-            },
-            "query": {
-              "hybrid": {
-                "enabled": true,
-                "vectorWeight": 0.7,
-                "textWeight": 0.3,
-                "mmr": {
-                  "enabled": true,
-                  "lambda": 0.7
-                },
-                "temporalDecay": {
-                  "enabled": true,
-                  "halfLifeDays": 30
-                }
-              }
-            }
           },
           "contextPruning": {
             "mode": "cache-ttl",

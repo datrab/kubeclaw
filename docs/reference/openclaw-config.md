@@ -65,9 +65,9 @@ process; the Gateway containers do not expose interactive stdin.
 
 ## Config Keys To Treat As Current Behavior
 
-- `acp.enabled`, `acp.backend`, `acp.allowedAgents`, and `acp.maxConcurrentSessions` define ACP availability in the rendered OpenClaw config.
+- `acp.enabled`, `acp.backend`, and `acp.allowedAgents` define ACP availability in the rendered OpenClaw config. Retired ACP concurrency, stream-size, and runtime-TTL tuning keys are intentionally omitted.
 - `agents.defaults.model` uses `openai/gpt-5.6-sol` as primary and `openai/gpt-5.5` as its only fallback for every deployed agent, including Prism.
-- `agents.defaults.memorySearch.remote.baseUrl` and `agents.defaults.memorySearch.remote.apiKey` use LiteLLM only for remote embeddings. The API key is an env SecretRef to `LITELLM_API_KEY`, never a literal ConfigMap value.
+- `memory.search.remote.baseUrl` and `memory.search.remote.apiKey` use LiteLLM only for remote embeddings through OpenClaw's `openai-compatible` adapter. The API key is an env SecretRef to `LITELLM_API_KEY`, never a literal ConfigMap value. Persistent legacy `agents.defaults.memorySearch` data is removed during managed configuration convergence.
 - `agents.entries.main.default`, `agents.defaults.systemAgent`, and `bindings` separately own the default agent, system work, and inbound channel routing.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.

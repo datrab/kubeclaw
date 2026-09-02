@@ -366,8 +366,7 @@ spec:
                 console.log('    removed obsolete kubeclaw-agent-observer plugin load path');
               }
 
-              const defaults = config?.agents?.defaults;
-              if (defaults?.memorySearch?.remote) defaults.memorySearch.remote.apiKey = litellmSecretRef;
+              if (config?.memory?.search?.remote) config.memory.search.remote.apiKey = litellmSecretRef;
               if (config?.channels?.discord) config.channels.discord.token = discordSecretRef;
 
               if (fs.existsSync(initializedConfigPath)) {
@@ -408,11 +407,14 @@ spec:
                   config.agents.defaults.models = initialized.agents.defaults.models;
                   console.log('    synchronized managed agent model catalog');
                 }
-                if (initialized?.agents?.defaults?.memorySearch) {
-                  config.agents = config.agents || {};
-                  config.agents.defaults = config.agents.defaults || {};
-                  config.agents.defaults.memorySearch = initialized.agents.defaults.memorySearch;
-                  config.agents.defaults.memorySearch.remote.apiKey = litellmSecretRef;
+                if (initialized?.memory?.search) {
+                  config.memory = config.memory || {};
+                  config.memory.search = initialized.memory.search;
+                  config.memory.search.remote.apiKey = litellmSecretRef;
+                  if (config?.agents?.defaults?.memorySearch) {
+                    delete config.agents.defaults.memorySearch;
+                    console.log('    removed retired agents.defaults.memorySearch configuration');
+                  }
                   console.log('    synchronized managed memory search configuration');
                 }
                 if (initialized?.agents?.entries?.main?.default === true) {

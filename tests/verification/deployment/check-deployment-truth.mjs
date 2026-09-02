@@ -484,6 +484,26 @@ assert.match(
 );
 assert.doesNotMatch(
   gatewayConfig,
+  /maxConcurrentSessions|coalesceIdleMs|maxChunkChars|ttlMinutes/,
+  'fresh configs must not emit ACP tuning keys retired by OpenClaw 2026.8',
+);
+assert.match(
+  gatewayConfig,
+  /"memory":\s*\{\s*"search":\s*\{[\s\S]*"provider":\s*"openai-compatible"[\s\S]*"baseUrl":\s*"\{\{ \.Values\.litellm\.endpoint \}\}"[\s\S]*"id":\s*"LITELLM_API_KEY"[\s\S]*"model":\s*"gemini-embedding-001"/,
+  'memory search must use the current top-level schema and the isolated LiteLLM embedding route',
+);
+assert.doesNotMatch(
+  gatewayConfig,
+  /"memorySearch":|"store":\s*\{\s*"vector"|"hybrid":/,
+  'fresh configs must not emit retired memory-search paths or tuning keys',
+);
+assert.match(
+  chart,
+  /initialized\?\.memory\?\.search[\s\S]*config\.memory\.search = initialized\.memory\.search[\s\S]*delete config\.agents\.defaults\.memorySearch/,
+  'persistent configs must converge from legacy agents.defaults.memorySearch to memory.search',
+);
+assert.doesNotMatch(
+  gatewayConfig,
   /anthropic|claude-(?:sonnet|opus|haiku)/i,
   'fresh OpenClaw ConfigMaps must not contain Anthropic providers or Claude models',
 );
