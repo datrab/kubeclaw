@@ -22,7 +22,9 @@ build-generated JSON Schema validators instead of compiling AJV schemas in the
 browser. A connected Tailscale page that remains black while the browser
 reports `unsafe-eval` or `Error compiling schema` is an outdated Studio image,
 not a relay-latency issue. Rebuild/redeploy Prism; do not add `unsafe-eval` to
-the policy.
+the policy. The deploy command restarts the Prism application Deployments after
+Helm succeeds so their mutable `latest` tags are pulled even when chart values
+did not change.
 While Helm waits, the deploy script captures both migration containers. If an
 atomic install removes a failed hook, its last bootstrap or SQL error is still
 printed in the deploy output.

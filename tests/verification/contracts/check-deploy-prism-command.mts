@@ -52,6 +52,8 @@ assert.match(jobs,/name: bootstrap-database-roles[\s\S]*mountPath: \/tmp[\s\S]*n
   "Prism migration containers need a writable temporary filesystem under a read-only root");
 assert.match(source,/capture_prism_migration_logs[\s\S]*bootstrap-database-roles migrate[\s\S]*Prism Helm deployment failed; captured migration output follows/u,
   "Prism deployment must preserve migration diagnostics before atomic cleanup");
+assert.match(source,/for prism_workload in prism-control prism-studio prism-worker prism-ingestion[\s\S]*kubectl rollout restart deployment\/"\$prism_workload"/u,
+  "Prism deploys must restart tagged application images after an unchanged Helm render");
 assert.match(databaseBootstrap,/ECONNREFUSED[\s\S]*maxAttempts = 60[\s\S]*retrying bootstrap/u,
   "Prism database bootstrap must tolerate bounded PostgreSQL startup races");
 assert.match(databaseMigrate,/infrastructure: "preprovisioned"/u,

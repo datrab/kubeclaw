@@ -1628,6 +1628,15 @@ cmd_prism() {
     return "$prism_helm_result"
   fi
   rm -f "$migration_log"
+  # Prism publishes mutable `latest` tags. A Helm upgrade with unchanged values
+  # does not alter the pod template, so explicitly restart existing application
+  # deployments to pull the images built from the current main revision.
+  local prism_workload
+  for prism_workload in prism-control prism-studio prism-worker prism-ingestion; do
+    if kubectl get deployment "$prism_workload" -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
+      kubectl rollout restart deployment/"$prism_workload" -n "$PRISM_NAMESPACE"
+    fi
+  done
   helm lint "$CHART_DIR" -f "$PRISM_AGENT_VALUES_FILE" \
     --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1"
   helm upgrade --install agent-prism "$CHART_DIR" -n "$PRISM_NAMESPACE" \
