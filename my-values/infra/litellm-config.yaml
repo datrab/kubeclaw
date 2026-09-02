@@ -12,32 +12,6 @@ model_list:
       vertex_project: "ornate-loader-487422-u0"
       vertex_location: "global"
 
-  # Claude (Anthropic on Vertex AI)
-  - model_name: claude-opus
-    litellm_params:
-      model: vertex_ai/claude-opus-4-6
-      vertex_project: "ornate-loader-487422-u0"
-      vertex_location: "global"
-
-  - model_name: claude-sonnet
-    litellm_params:
-      model: vertex_ai/claude-sonnet-4-5
-      vertex_project: "ornate-loader-487422-u0"
-      vertex_location: "global"
-
-  - model_name: claude-haiku
-    litellm_params:
-      model: vertex_ai/claude-haiku-4-5
-      vertex_project: "ornate-loader-487422-u0"
-      vertex_location: "global"
-
-  # Fallback
-  - model_name: "*"
-    litellm_params:
-      model: vertex_ai/*
-      vertex_project: "ornate-loader-487422-u0"
-      vertex_location: "global"
-
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
 

@@ -2,10 +2,6 @@
 # colocated v2 runtime owns deterministic suites and rootless BuildKit.
 agentRole: "buster"
 
-anthropic:
-  existingSecret: "openclaw-shared-secrets"
-  existingSecretKey: "anthropicApiKey"
-
 gateway:
   startupDoctor:
     enabled: true

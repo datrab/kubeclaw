@@ -20,10 +20,6 @@ data:
       },
       "auth": {
         "profiles": {
-          "anthropic:default": {
-            "provider": "anthropic",
-            "mode": "token"
-          },
           "litellm:default": {
             "provider": "litellm",
             "mode": "api_key"
@@ -48,9 +44,8 @@ data:
       "acp": {
         "enabled": true,
         "backend": "acpx",
-        "defaultAgent": "claude",
+        "defaultAgent": "codex",
         "allowedAgents": [
-          "claude",
           "codex",
           "kimi",
           "gemini",
@@ -110,8 +105,6 @@ data:
           },
           "models": {
             {{- if ne (.Values.agentRole | default "") "prism" }}
-            "anthropic/claude-sonnet-4-6": {},
-            "anthropic/claude-opus-4-6": {},
             "openai/gpt-5.4": {
               "agentRuntime": {
                 "id": "codex"
@@ -339,8 +332,7 @@ data:
           "litellm",
           "codex"
           {{- if ne (.Values.agentRole | default "") "prism" }},
-          "openai",
-          "anthropic"
+          "openai"
           {{- end }}
           {{- if eq (.Values.agentRole | default "") "buster" }},
           "kubeclaw-agent-observer"
@@ -360,9 +352,6 @@ data:
             }
           },
           "openai": {
-            "enabled": {{ ne (.Values.agentRole | default "") "prism" }}
-          },
-          "anthropic": {
             "enabled": {{ ne (.Values.agentRole | default "") "prism" }}
           },
           "litellm": {

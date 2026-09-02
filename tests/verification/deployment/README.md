@@ -5,7 +5,7 @@ Canonical entrypoint:
 
 Current local scope:
 - rendered Helm manifest truth for Nova values, including structured Service exposure checks that reject unexpected NodePorts
-- rendered Helm manifest truth for Buster values, including lease-only agent RBAC, dedicated pipeline image, non-privileged split containers, pipeline-only BuildKit/result storage, worker probes, Redis/gateway/Anthropic secret wiring, and removal of retired processor/container-runtime paths
+- rendered Helm manifest truth for Buster values, including lease-only agent RBAC, dedicated pipeline image, non-privileged split containers, pipeline-only BuildKit/result storage, worker probes, Redis/gateway secret wiring, and removal of retired processor/container-runtime paths
 - kubeconform validation of the rendered Nova and Buster manifests
 - kubeconform validation of local Kubernetes infra manifests where schemas are available: Buster namespace fence, LiteLLM, registry-local, registry-mirror, and NetworkPolicies
 - structured NetworkPolicy checks for default-deny, agent egress, Redis ingress, Clawdeck Redis egress, LiteLLM egress, and registry-mirror egress selectors/ports

@@ -103,28 +103,6 @@ discordToken
 {{- end -}}
 
 {{/*
-Resolve the Anthropic API key secret name.
-*/}}
-{{- define "kubeclaw.anthropicSecretName" -}}
-{{- if .Values.anthropic.existingSecret -}}
-{{- .Values.anthropic.existingSecret -}}
-{{- else -}}
-{{- include "kubeclaw.fullname" . }}-gateway
-{{- end -}}
-{{- end -}}
-
-{{/*
-Resolve the Anthropic API key secret key.
-*/}}
-{{- define "kubeclaw.anthropicSecretKey" -}}
-{{- if .Values.anthropic.existingSecret -}}
-{{- .Values.anthropic.existingSecretKey -}}
-{{- else -}}
-anthropicApiKey
-{{- end -}}
-{{- end -}}
-
-{{/*
 Resolve the Stitch API key secret name.
 */}}
 {{- define "kubeclaw.stitchSecretName" -}}

@@ -13,7 +13,7 @@ The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init cont
 
 The rendered config includes:
 
-- auth profiles for Anthropic, LiteLLM, and canonical OpenAI OAuth
+- auth profiles for LiteLLM and canonical OpenAI OAuth
 - ACP enabled with backend `acpx`
 - LiteLLM provider model definitions from values
 - agent defaults and model fallbacks, including Codex runtime metadata on canonical OpenAI model refs
@@ -42,6 +42,9 @@ for the selected role. Only Buster retains the enabled
 `kubeclaw-agent-observer` entry, while only the Prism agent retains
 `kubeclaw-prism`. This prevents stale optional-provider allowlist entries and
 disabled role-specific configuration from obscuring actionable Doctor output.
+Anthropic provider profiles, plugins, credentials, direct model routes, and
+Claude aliases are absent. Persisted legacy entries are removed before Doctor
+runs; Prism uses `litellm/gemini-pro` with `litellm/gemini-flash` as fallback.
 
 The migration init container allocates a private pseudo-TTY while retaining
 `--non-interactive`. OpenClaw 2026.8.1 otherwise skips doctor-owned state
@@ -56,7 +59,7 @@ process; the Gateway containers do not expose interactive stdin.
 | --- | --- | --- | --- | --- |
 | Chart source config | `charts/kubeclaw/templates/configmap-gateway.yaml` | ConfigMap key `openclaw.json`; values `litellm.endpoint`, `litellm.defaultModel`, `litellm.models`, `discord.enabled`, `commands.ownerAllowFrom`, `commands.allowFromDiscord`, `gateway.port` | Helm render | source config with env SecretRefs |
 | Persistent source config | init block in `charts/kubeclaw/templates/deployment.yaml` | `/config/openclaw.json`; mounted as `/home/node/.openclaw/openclaw.json`; exposed as `/home/node/.openclaw-persisted/openclaw.json` | pod start; first write plus migrations | writable retained config with canonical model refs and SecretRefs |
-| Secret inputs | `charts/kubeclaw/templates/deployment.yaml`; `my-values/setup-secrets.sh` | `LITELLM_API_KEY`, `DISCORD_TOKEN`, `OPENCLAW_GATEWAY_TOKEN`, `ANTHROPIC_API_KEY`, `STITCH_API_KEY` | environment creation from Kubernetes Secrets | runtime credentials available to gateway/container |
+| Secret inputs | `charts/kubeclaw/templates/deployment.yaml`; `my-values/setup-secrets.sh` | `LITELLM_API_KEY`, `DISCORD_TOKEN`, `OPENCLAW_GATEWAY_TOKEN`, `STITCH_API_KEY` | environment creation from Kubernetes Secrets | runtime credentials available to gateway/container |
 | Health and gateway | deployment template health script; OpenClaw gateway command | `/runtime-config/kubeclaw-health.mjs`, gateway port `18789`, bridge port `18790` | readiness/liveness and runtime command start | dependency-aware health checks and `openclaw gateway status` |
 
 ## Config Keys To Treat As Current Behavior

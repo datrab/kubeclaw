@@ -32,7 +32,6 @@
         "workerTrust",
         "auth",
         "litellm",
-        "anthropic",
         "stitch",
         "discord",
         "discordWebhook",
@@ -66,7 +65,7 @@
         {
           "key": "secretName",
           "value": "redis-secrets",
-          "line": 240
+          "line": 227
         }
       ]
     },
@@ -80,7 +79,6 @@
         "imagePullSecrets",
         "codeBundle",
         "auth",
-        "anthropic",
         "stitch",
         "litellm",
         "discord",
@@ -124,22 +122,17 @@
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 53
-        },
-        {
-          "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
-          "line": 58
+          "line": 54
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 63
+          "line": 59
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-nova",
-          "line": 77
+          "line": 73
         }
       ]
     },
@@ -147,7 +140,6 @@
       "path": "my-values/buster-values.yaml",
       "topLevelKeys": [
         "agentRole",
-        "anthropic",
         "gateway",
         "initSetup",
         "image",
@@ -171,12 +163,12 @@
       "secretReferences": [
         {
           "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
-          "line": 6
+          "value": "github-bundle-reader",
+          "line": 34
         },
         {
           "key": "existingSecret",
-          "value": "github-bundle-reader",
+          "value": "openclaw-shared-secrets",
           "line": 38
         },
         {
@@ -187,22 +179,17 @@
         {
           "key": "existingSecret",
           "value": "openclaw-shared-secrets",
-          "line": 46
-        },
-        {
-          "key": "existingSecret",
-          "value": "openclaw-shared-secrets",
-          "line": 51
+          "line": 47
         },
         {
           "key": "secretName",
           "value": "openclaw-shared-secrets",
-          "line": 65
+          "line": 61
         },
         {
           "key": "secretName",
           "value": "git-deploy-key-buster",
-          "line": 72
+          "line": 68
         }
       ]
     },

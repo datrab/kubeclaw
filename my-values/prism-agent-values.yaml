@@ -18,10 +18,10 @@ litellm:
   endpoint: http://litellm.kubeclaw.svc.cluster.local:4000/v1
   existingSecret: openclaw-shared-secrets
   existingSecretKey: litellmApiKey
-  defaultModel: claude-sonnet
+  defaultModel: gemini-pro
   models:
-    - { id: claude-sonnet, name: Claude Sonnet, reasoning: true, contextWindow: 200000, maxTokens: 64000 }
     - { id: gemini-pro, name: Gemini Pro, reasoning: true, contextWindow: 1048576, maxTokens: 65536 }
+    - { id: gemini-flash, name: Gemini Flash, reasoning: false, contextWindow: 1048576, maxTokens: 65536 }
 
 discord:
   # Enable after discordToken-prism and the dedicated channel ID are configured.
@@ -38,8 +38,8 @@ commands:
 agent:
   project: prism
   model:
-    primary: litellm/claude-sonnet
-    fallbacks: [litellm/gemini-pro]
+    primary: litellm/gemini-pro
+    fallbacks: [litellm/gemini-flash]
   git:
     enabled: true
     secretName: git-deploy-key-nova

@@ -29,6 +29,8 @@ const busterWorker = read('skills/buster/plugins/buster-suite-runtime/src/worker
 const values = read('charts/kubeclaw/values.yaml');
 const novaValues = read('my-values/nova-values.yaml');
 const busterValues = read('my-values/buster-values.yaml');
+const prismAgentValues = read('my-values/prism-agent-values.yaml');
+const litellmConfig = read('my-values/infra/litellm-config.yaml');
 const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
@@ -447,9 +449,36 @@ assert.match(
 );
 assert.match(
   gatewayConfig,
-  /"allow":\s*\[[\s\S]*"discord"[\s\S]*"acpx"[\s\S]*"litellm"[\s\S]*"codex"[\s\S]*if ne \(\.Values\.agentRole[\s\S]*"openai"[\s\S]*"anthropic"/,
+  /"allow":\s*\[[\s\S]*"discord"[\s\S]*"acpx"[\s\S]*"litellm"[\s\S]*"codex"[\s\S]*if ne \(\.Values\.agentRole[\s\S]*"openai"/,
   'fresh configs must allow only the installed role-appropriate OpenClaw plugins',
 );
+assert.doesNotMatch(
+  gatewayConfig,
+  /anthropic|claude-(?:sonnet|opus|haiku)/i,
+  'fresh OpenClaw ConfigMaps must not contain Anthropic providers or Claude models',
+);
+for (const [label, source] of [
+  ['chart values', values],
+  ['Nova values', novaValues],
+  ['Buster values', busterValues],
+]) {
+  assert.doesNotMatch(source, /\banthropic\b|ANTHROPIC_API_KEY|CLAUDE_CODE_OAUTH_TOKEN/i,
+    `${label} must not configure or inject Anthropic credentials`);
+}
+assert.doesNotMatch(
+  litellmConfig,
+  /anthropic|claude-(?:sonnet|opus|haiku)/i,
+  'LiteLLM ConfigMap source must not expose Anthropic models',
+);
+assert.doesNotMatch(
+  litellmConfig,
+  /model_name:\s*["']?\*/,
+  'LiteLLM must not retain a wildcard model route that can bypass the explicit Gemini allowlist',
+);
+assert.match(prismAgentValues, /primary:\s*litellm\/gemini-pro[\s\S]*fallbacks:\s*\[litellm\/gemini-flash\]/,
+  'Prism must use Gemini models after Anthropic removal');
+assert.doesNotMatch(prismAgentValues, /anthropic|claude-(?:sonnet|opus|haiku)/i,
+  'Prism agent ConfigMap inputs must not retain Anthropic models');
 assert.match(
   gatewayConfig,
   /"entries":\s*\{\s*"main":\s*\{[\s\S]*"codex":\s*\{\}/,
@@ -472,8 +501,13 @@ assert.match(
 );
 assert.match(
   chart,
-  /managedPluginAllow = \['discord', 'acpx', 'litellm', 'codex'\][\s\S]*config\.plugins\.allow = managedPluginAllow[\s\S]*Removed Buster-only observer configuration from non-Buster agent[\s\S]*doctor --fix --non-interactive/,
+  /managedPluginAllow = \['discord', 'acpx', 'litellm', 'codex'\][\s\S]*managedPluginAllow\.push\('openai'\)[\s\S]*config\.plugins\.allow = managedPluginAllow[\s\S]*Removed retired Anthropic and Claude configuration[\s\S]*doctor --fix --non-interactive/,
   'startup migration must remove stale plugin allowlist and observer warnings before doctor validation',
+);
+assert.doesNotMatch(
+  chart,
+  /name:\s*(?:ANTHROPIC_API_KEY|CLAUDE_CODE_OAUTH_TOKEN)|\.Values\.anthropic|kubeclaw\.anthropicSecret/,
+  'agent workloads must not receive Anthropic credentials',
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),

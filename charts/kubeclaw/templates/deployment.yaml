@@ -171,7 +171,7 @@ spec:
                 }
               }
               const managedPluginAllow = ['discord', 'acpx', 'litellm', 'codex'];
-              if (process.env.AGENT_ROLE !== 'prism') managedPluginAllow.push('openai', 'anthropic');
+              if (process.env.AGENT_ROLE !== 'prism') managedPluginAllow.push('openai');
               if (process.env.AGENT_ROLE === 'buster') managedPluginAllow.push('kubeclaw-agent-observer');
               if (process.env.AGENT_ROLE === 'prism') managedPluginAllow.push('kubeclaw-prism');
               config.plugins = config.plugins || {};
@@ -180,6 +180,64 @@ spec:
                 config.plugins.allow = managedPluginAllow;
                 changed = true;
                 console.log('==> Synchronized installed plugin allowlist');
+              }
+              let removedAnthropic = false;
+              if (config?.auth?.profiles && typeof config.auth.profiles === 'object') {
+                for (const [profileId, profile] of Object.entries(config.auth.profiles)) {
+                  if (profileId.startsWith('anthropic:') || profile?.provider === 'anthropic') {
+                    delete config.auth.profiles[profileId];
+                    removedAnthropic = true;
+                  }
+                }
+              }
+              if (config?.auth?.order?.anthropic) {
+                delete config.auth.order.anthropic;
+                removedAnthropic = true;
+              }
+              const isAnthropicModel = (modelId) => typeof modelId === 'string'
+                && (modelId.startsWith('anthropic/') || modelId.startsWith('litellm/claude-'));
+              const modelRoute = config?.agents?.defaults?.model;
+              if (modelRoute && typeof modelRoute === 'object') {
+                const retainedFallbacks = Array.isArray(modelRoute.fallbacks)
+                  ? modelRoute.fallbacks.filter((modelId) => !isAnthropicModel(modelId))
+                  : [];
+                if (isAnthropicModel(modelRoute.primary)) {
+                  const replacement = retainedFallbacks[0] || 'litellm/gemini-flash';
+                  modelRoute.primary = replacement;
+                  modelRoute.fallbacks = retainedFallbacks.filter((modelId) => modelId !== replacement);
+                  removedAnthropic = true;
+                } else if (JSON.stringify(modelRoute.fallbacks) !== JSON.stringify(retainedFallbacks)) {
+                  modelRoute.fallbacks = retainedFallbacks;
+                  removedAnthropic = true;
+                }
+              }
+              if (config?.agents?.defaults?.models
+                  && typeof config.agents.defaults.models === 'object') {
+                for (const modelId of Object.keys(config.agents.defaults.models)) {
+                  if (isAnthropicModel(modelId)) {
+                    delete config.agents.defaults.models[modelId];
+                    removedAnthropic = true;
+                  }
+                }
+              }
+              if (config?.acp?.defaultAgent === 'claude') {
+                config.acp.defaultAgent = 'codex';
+                removedAnthropic = true;
+              }
+              if (Array.isArray(config?.acp?.allowedAgents)
+                  && config.acp.allowedAgents.includes('claude')) {
+                config.acp.allowedAgents = config.acp.allowedAgents.filter(
+                  (agentId) => agentId !== 'claude',
+                );
+                removedAnthropic = true;
+              }
+              if (config.plugins.entries.anthropic) {
+                delete config.plugins.entries.anthropic;
+                removedAnthropic = true;
+              }
+              if (removedAnthropic) {
+                changed = true;
+                console.log('==> Removed retired Anthropic and Claude configuration');
               }
               if (process.env.AGENT_ROLE !== 'buster'
                   && config.plugins.entries['kubeclaw-agent-observer']) {
@@ -221,12 +279,6 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
             - name: OPENCLAW_GATEWAY_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
-            {{- if .Values.anthropic.existingSecret }}
-            - name: CLAUDE_CODE_OAUTH_TOKEN
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            - name: ANTHROPIC_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
             {{- if .Values.discord.enabled }}
             - name: DISCORD_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
@@ -387,6 +439,22 @@ spec:
                   config.plugins.allow = [...initialized.plugins.allow];
                   console.log('    synchronized installed plugin allowlist');
                 }
+                if (config?.plugins?.entries?.anthropic) {
+                  delete config.plugins.entries.anthropic;
+                  console.log('    removed retired Anthropic plugin configuration');
+                }
+                if (config?.auth?.profiles && typeof config.auth.profiles === 'object') {
+                  for (const [profileId, profile] of Object.entries(config.auth.profiles)) {
+                    if (profileId.startsWith('anthropic:') || profile?.provider === 'anthropic') {
+                      delete config.auth.profiles[profileId];
+                    }
+                  }
+                }
+                if (config?.auth?.order?.anthropic) delete config.auth.order.anthropic;
+                if (initialized?.acp && typeof initialized.acp === 'object') {
+                  config.acp = initialized.acp;
+                  console.log('    synchronized managed ACP agents');
+                }
                 if (managedObserver && typeof managedObserver === 'object') {
                   config.plugins = config.plugins || {};
                   config.plugins.entries = config.plugins.entries || {};
@@ -411,6 +479,12 @@ spec:
                   config.agents.defaults = config.agents.defaults || {};
                   config.agents.defaults.model = initialized.agents.defaults.model;
                   console.log('    synchronized managed agent model route');
+                }
+                if (initialized?.agents?.defaults?.models) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.models = initialized.agents.defaults.models;
+                  console.log('    synchronized managed agent model catalog');
                 }
                 if (initialized?.agents?.entries?.main?.default === true) {
                   config.agents = config.agents || {};
@@ -1201,12 +1275,6 @@ spec:
             {{- end }}
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
-            {{- if .Values.anthropic.existingSecret }}
-            - name: CLAUDE_CODE_OAUTH_TOKEN
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            - name: ANTHROPIC_API_KEY
-              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.anthropicSecretName" . }}, key: {{ include "kubeclaw.anthropicSecretKey" . }} } }
-            {{- end }}
             {{- if .Values.discord.enabled }}
             - name: DISCORD_TOKEN
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
