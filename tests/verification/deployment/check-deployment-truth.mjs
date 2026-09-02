@@ -283,8 +283,18 @@ for (const portName of busterRuntimePortNames) {
 
 assert.match(
   chart,
-  /readinessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901[\s\S]*?GET \/ready HTTP\/1\.1[\s\S]*?livenessProbe:[\s\S]*?\/dev\/tcp\/127\.0\.0\.1\/9901/u,
-  'agent Envoy probes must reach the loopback-only admin listener from inside the container',
+  /name:\s*envoy-health,\s*containerPort:\s*19000[\s\S]*?readinessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*envoy-health\s*\}[\s\S]*?livenessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*envoy-health\s*\}/u,
+  'agent Envoy probes must use the dedicated kubelet health listener',
+);
+assert.doesNotMatch(
+  chart,
+  /name:\s*worker-trust-proxy[\s\S]*?(?:\/bin\/bash|\/dev\/tcp\/127\.0\.0\.1\/9901)[\s\S]*?securityContext:/u,
+  'agent Envoy probes must not depend on shell utilities in the proxy image',
+);
+assert.match(
+  read('charts/kubeclaw/templates/configmap-worker-trust.yaml'),
+  /name:\s*kubelet-health[\s\S]*address:\s*0\.0\.0\.0,\s*port_value:\s*19000[\s\S]*direct_response:\s*\{\s*status:\s*200\s*\}/u,
+  'agent Envoy must expose a probe-only direct-response listener',
 );
 assert.match(
   prismWorkloads,

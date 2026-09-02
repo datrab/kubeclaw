@@ -16,6 +16,27 @@ data:
       address: { socket_address: { address: 127.0.0.1, port_value: 9901 } }
     static_resources:
       listeners:
+        # Dedicated kubelet probe endpoint. Keep the administrative listener on
+        # loopback and avoid depending on shell tools in the Envoy image.
+        - name: kubelet-health
+          address: { socket_address: { address: 0.0.0.0, port_value: 19000 } }
+          filter_chains:
+            - filters:
+                - name: envoy.filters.network.http_connection_manager
+                  typed_config:
+                    "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                    stat_prefix: kubelet-health
+                    route_config:
+                      name: kubelet-health
+                      virtual_hosts:
+                        - name: kubelet-health
+                          domains: ["*"]
+                          routes:
+                            - match: { prefix: "/" }
+                              direct_response: { status: 200 }
+                    http_filters:
+                      - name: envoy.filters.http.router
+                        typed_config: { "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router }
       {{- if eq .Values.agentRole "nova" }}
       {{- range $listener := list (dict "name" "buster-plan" "port" 28891 "cluster" "buster-plan") (dict "name" "buster-legacy" "port" 28892 "cluster" "buster-legacy") (dict "name" "prism-agent" "port" 28080 "cluster" "prism-agent") }}
         - name: {{ $listener.name }}-egress

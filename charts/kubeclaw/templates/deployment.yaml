@@ -1384,6 +1384,7 @@ spec:
           imagePullPolicy: {{ .Values.workerTrust.spiffe.envoy.pullPolicy }}
           args: ["-c", "/etc/kubeclaw-worker-trust/envoy.yaml", "--service-cluster", {{ printf "kubeclaw-%s" .Values.agentRole | quote }}]
           ports:
+            - { name: envoy-health, containerPort: 19000, protocol: TCP }
             {{- if eq .Values.agentRole "buster" }}
             - { name: buster-plan, containerPort: 18891, protocol: TCP }
             - { name: buster-legacy, containerPort: 18892, protocol: TCP }
@@ -1391,20 +1392,11 @@ spec:
             - { name: prism-dispatch, containerPort: 18082, protocol: TCP }
             {{- end }}
           readinessProbe:
-            exec:
-              command:
-                - /bin/bash
-                - -ec
-                - >-
-                  exec 3<>/dev/tcp/127.0.0.1/9901;
-                  printf 'GET /ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3;
-                  IFS= read -r status <&3;
-                  [[ "$status" == *" 200 "* ]]
+            tcpSocket: { port: envoy-health }
             initialDelaySeconds: 3
             timeoutSeconds: 3
           livenessProbe:
-            exec:
-              command: [/bin/bash, -ec, "exec 3<>/dev/tcp/127.0.0.1/9901"]
+            tcpSocket: { port: envoy-health }
             initialDelaySeconds: 10
             timeoutSeconds: 3
           securityContext:

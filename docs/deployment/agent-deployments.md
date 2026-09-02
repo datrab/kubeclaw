@@ -150,7 +150,7 @@ old fields. Agent upgrades use atomic cleanup so a failed wait rolls back
 instead of leaving a new pending release revision.
 
 Envoy keeps its administrative listener on `127.0.0.1:9901`; it is never
-published through the Pod IP or a Service. Its readiness and liveness probes
-therefore execute inside the Envoy container. A kubelet `httpGet` probe against
-port `9901` would target the Pod IP, receive `connection refused`, and restart a
-healthy proxy after three failed checks.
+published through the Pod IP or a Service. Readiness and liveness use a dedicated
+direct-response listener on container port `19000`, which is likewise not
+published by a Service. This avoids shell dependencies in the Envoy image while
+leaving the administrative API private.
