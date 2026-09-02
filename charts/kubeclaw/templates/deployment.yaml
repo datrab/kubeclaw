@@ -1488,7 +1488,9 @@ spec:
         - name: ssh-secret-vol
           secret:
             secretName: {{ .Values.agent.git.secretName | default (printf "git-deploy-key-%s" (.Values.agentRole | default "default")) }}
-            defaultMode: 0400
+            # Non-root setup reads the key through fsGroup 1000; root agents
+            # retain the stricter owner-only mode.
+            defaultMode: {{ ternary "0400" "0440" .Values.runAsRoot }}
             optional: false
         - name: ssh-home-vol
           emptyDir: {}

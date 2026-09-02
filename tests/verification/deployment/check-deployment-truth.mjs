@@ -608,6 +608,11 @@ assert.match(
 );
 assert.match(
   chart,
+  /name: ssh-secret-vol[\s\S]*defaultMode: \{\{ ternary "0400" "0440" \.Values\.runAsRoot \}\}/,
+  'non-root init must be able to read its fsGroup-restricted deploy key',
+);
+assert.match(
+  chart,
   /state_db="\/home\/node\/\.openclaw\/state\/openclaw\.sqlite"[\s\S]*if \[ ! -f "\$state_db" \]; then[\s\S]*migration not required/,
   'fresh installations without an OpenClaw state database must skip migration safely',
 );

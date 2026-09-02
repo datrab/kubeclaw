@@ -139,7 +139,9 @@ not add to the steady-state pod memory.
 The setup init container follows `runAsRoot`. Root-based agents keep the UID 0
 ownership handoff required by their shared runtime, while non-root agents such
 as Prism run setup as UID/GID 1000, store SSH material below
-`/home/node/.ssh`, and rely on the pod's `fsGroup: 1000`. A
+`/home/node/.ssh`, and rely on the pod's `fsGroup: 1000`. Their projected
+deploy key is owner/group-readable (`0440`) so UID 1000 can copy it without
+making it world-readable; root-based agents retain `0400`. A
 `CreateContainerConfigError` saying that `init-setup` breaks the non-root policy
 indicates an older chart render and requires redeploying the agent release.
 

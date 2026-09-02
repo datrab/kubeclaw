@@ -1,9 +1,18 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
 import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with { type: "json" };
 import { puckChangeToOperation } from "../studio/puck-adapter.ts";
 import { previewDocument } from "../studio/preview.ts";
+
+test("desktop startup and failure panels remain visible", () => {
+  const app = readFileSync(new URL("../studio/app.tsx", import.meta.url), "utf8");
+  const css = readFileSync(new URL("../studio/studio.css", import.meta.url), "utf8");
+  assert.equal(app.match(/className="start-panel"/gu)?.length, 2);
+  assert.match(css, /\.start-panel\{[^}]*display:flex/u);
+  assert.match(css, /\.mobile-nav,\.sheet\{display:none\}/u);
+});
 test("Puck insertion becomes a typed canonical operation", () => {
   const operation = puckChangeToOperation(
     fixture as any,

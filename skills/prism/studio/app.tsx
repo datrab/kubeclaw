@@ -699,7 +699,7 @@ function App() {
   if (failure)
     return (
       <main className="studio">
-        <section className="sheet">
+        <section className="start-panel">
           <h1>Prism cannot open</h1>
           <p>{failure}</p>
         </section>
@@ -708,7 +708,7 @@ function App() {
   if (!document)
     return (
       <main className="studio">
-        <section className="sheet">
+        <section className="start-panel">
           <h1>Create a Prism project</h1>
           {projects.filter((project)=>project.document_id).length>0&&<section aria-label="Existing Prism projects"><h2>Projects from Nova</h2>{projects.filter((project)=>project.document_id).map((project)=><article key={project.id}><strong>{project.name}</strong><p>{project.direction_count} design directions</p><a href={`?project=${encodeURIComponent(project.id)}&document=${encodeURIComponent(project.document_id!)}`}>Open designs</a></article>)}</section>}
           <label>

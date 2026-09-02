@@ -25,6 +25,10 @@ not a relay-latency issue. Rebuild/redeploy Prism; do not add `unsafe-eval` to
 the policy. The deploy command restarts the Prism application Deployments after
 Helm succeeds so their mutable `latest` tags are pulled even when chart values
 did not change.
+
+The desktop project chooser and fatal-error view use the always-visible
+`start-panel` layout. The separate `sheet` class is reserved for mobile
+navigation overlays and remains hidden on wider viewports until opened.
 While Helm waits, the deploy script captures both migration containers. If an
 atomic install removes a failed hook, its last bootstrap or SQL error is still
 printed in the deploy output.
