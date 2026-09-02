@@ -443,6 +443,16 @@ assert.match(
   'retired multi-agent ownership must be removed before doctor validates the single-agent config',
 );
 assert.match(
+  deploy,
+  /require_helm_release_idle\(\)[\s\S]*pending-install\|pending-upgrade\|pending-rollback[\s\S]*refusing to start a competing operation[\s\S]*deploy_agent\(\)[\s\S]*require_helm_release_idle "agent-\$\{role\}"/,
+  'agent deploys must stop before mutating a release that already has a pending Helm operation',
+);
+assert.match(
+  deploy,
+  /Unknown deployment command: \$1[\s\S]*KubeClaw — Deployment CLI/,
+  'unknown deployment targets must produce an explicit error instead of a full-stack heading',
+);
+assert.match(
   chart,
   /process\.env\.AGENT_ROLE !== 'prism'[\s\S]*delete config\.plugins\.entries\['kubeclaw-prism'\][\s\S]*node \/app\/openclaw\.mjs doctor --fix --non-interactive/,
   'non-Prism agents must remove the Prism-only plugin entry before startup doctor validation',

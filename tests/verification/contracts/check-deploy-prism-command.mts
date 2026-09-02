@@ -19,6 +19,8 @@ for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","tear
 for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_TAG","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
 assert.match(source,/cmd_prism\(\)[\s\S]*require_spiffe_csi_driver[\s\S]*cmd_prism_secrets/u,
   "Prism deployment must fail before Helm when the SPIFFE CSI driver is unavailable");
+assert.match(source,/cmd_prism\(\)[\s\S]*require_helm_release_idle "\$PRISM_RELEASE" "\$PRISM_NAMESPACE"[\s\S]*require_helm_release_idle agent-prism "\$PRISM_NAMESPACE"[\s\S]*cmd_prism_secrets/u,
+  "Prism deployment must reject pending operations for both owned Helm releases before changing cluster state");
 assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not require an approver allowlist");
 assert(!source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must use ordinary tagged images");
 assert(!source.includes("reconcile_prism_provider_secret"),"Prism worker deployment must not own model-provider credentials");

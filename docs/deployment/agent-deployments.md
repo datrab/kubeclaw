@@ -149,6 +149,14 @@ whose Helm manifest is already clean but whose Kubernetes object retained the
 old fields. Agent upgrades use atomic cleanup so a failed wait rolls back
 instead of leaving a new pending release revision.
 
+Before an agent upgrade, the deployment CLI checks the Helm release status. A
+`pending-install`, `pending-upgrade`, or `pending-rollback` release is rejected
+before any reconciliation or Helm mutation. First inspect local `helm` and
+`deploy.sh` processes and the release history. Stop only a process confirmed to
+be stale; then recover the pending revision before retrying the deployment.
+The CLI never deletes Helm release metadata automatically because the pending
+operation may still belong to an active operator process.
+
 Envoy keeps its administrative listener on `127.0.0.1:9901`; it is never
 published through the Pod IP or a Service. Readiness and liveness use a dedicated
 direct-response listener on container port `19000`, which is likewise not

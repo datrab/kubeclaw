@@ -139,6 +139,32 @@ is_not_found_error() {
   [[ $text =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|No\ resources\ found ]]
 }
 
+require_helm_release_idle() {
+  local release="$1"
+  local namespace="$2"
+  local output status
+
+  if ! output="$(helm status "$release" -n "$namespace" 2>&1)"; then
+    if is_not_found_error "$output"; then
+      return 0
+    fi
+    err "Cannot inspect Helm release ${namespace}/${release} before deployment"
+    echo "$output" >&2
+    return 1
+  fi
+
+  status="$(awk -F ':[[:space:]]*' '$1 == "STATUS" { print $2; exit }' <<<"$output")"
+  case "$status" in
+    pending-install|pending-upgrade|pending-rollback)
+      err "Helm release ${namespace}/${release} is ${status}; refusing to start a competing operation"
+      info "Inspect local owners: ps -eo pid,ppid,etime,args | grep -E '[h]elm (upgrade|install|rollback)|[d]eploy\\.sh'"
+      info "Inspect release state: helm status ${release} -n ${namespace} && helm history ${release} -n ${namespace} --max 10"
+      info "Stop a confirmed stale local process first; only then recover the pending Helm revision"
+      return 1
+      ;;
+  esac
+}
+
 warn_nonfatal_failure() {
   local context="$1"
   local detail="${2:-}"
@@ -1231,6 +1257,7 @@ deploy_agent() {
   fi
 
   require_agent_worker_trust_prerequisites
+  require_helm_release_idle "agent-${role}" "$NAMESPACE"
 
   case "$role" in
     nova)
@@ -1567,6 +1594,8 @@ cmd_prism_secrets() {
 cmd_prism() {
   component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
   require_command kubectl; require_command helm; prism_validate_values
+  require_helm_release_idle "$PRISM_RELEASE" "$PRISM_NAMESPACE"
+  require_helm_release_idle agent-prism "$PRISM_NAMESPACE"
   require_spiffe_csi_driver
   cmd_prism_secrets
   local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
@@ -2068,7 +2097,10 @@ case "${1:-}" in
     cmd_teardown_all
     ;;
   *)
-    echo "KubeClaw — Full Stack Deployment"
+    if [[ -n ${1:-} ]]; then
+      err "Unknown deployment command: $1"
+    fi
+    echo "KubeClaw — Deployment CLI"
     echo ""
     echo "Usage: $0 <command>"
     echo ""
