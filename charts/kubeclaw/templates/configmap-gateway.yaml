@@ -42,7 +42,11 @@ data:
         "backend": "acpx",
         "defaultAgent": "codex",
         "allowedAgents": [
-          "codex"
+          "claude",
+          "codex",
+          "kimi",
+          "gemini",
+          "pi"
         ],
         "maxConcurrentSessions": 20,
         "stream": {

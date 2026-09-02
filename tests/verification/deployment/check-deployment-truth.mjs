@@ -452,6 +452,11 @@ assert.match(
   /"allow":\s*\[[\s\S]*"discord"[\s\S]*"acpx"[\s\S]*"codex"[\s\S]*"openai"/,
   'fresh configs must allow only the installed role-appropriate OpenClaw plugins',
 );
+assert.match(
+  gatewayConfig,
+  /"defaultAgent":\s*"codex"[\s\S]*"allowedAgents":\s*\[[\s\S]*"claude"[\s\S]*"codex"[\s\S]*"kimi"[\s\S]*"gemini"[\s\S]*"pi"/,
+  'ACPx must retain all approved CLI agents while Codex remains the default',
+);
 assert.doesNotMatch(
   gatewayConfig,
   /anthropic|claude-(?:sonnet|opus|haiku)/i,

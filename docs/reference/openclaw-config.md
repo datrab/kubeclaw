@@ -14,7 +14,7 @@ The chart renders `openclaw.json` in `ConfigMap/<release>-config`. The init cont
 The rendered config includes:
 
 - canonical OpenAI OAuth profiles
-- ACP enabled with backend `acpx`
+- ACP enabled with backend `acpx`; `claude`, `codex`, `kimi`, `gemini`, and `pi` are allowed CLI agents while `codex` remains the default
 - uniform agent defaults using `openai/gpt-5.6-sol` with `openai/gpt-5.5` as the only fallback
 - memory search settings with vector store enabled and LiteLLM used only as the remote embedding endpoint
 - compaction/context pruning defaults
