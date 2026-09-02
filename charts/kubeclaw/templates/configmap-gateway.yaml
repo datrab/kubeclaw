@@ -140,8 +140,7 @@ data:
             "skillsLimits": {
               "maxSkillsPromptChars": 1200
             }
-          },
-          "codex": {}
+          }
         }
       },
       {{- if .Values.discord.enabled }}

@@ -68,7 +68,10 @@ process; the Gateway containers do not expose interactive stdin.
 - `acp.enabled`, `acp.backend`, and `acp.allowedAgents` define ACP availability in the rendered OpenClaw config. Retired ACP concurrency, stream-size, and runtime-TTL tuning keys are intentionally omitted.
 - `agents.defaults.model` uses `openai/gpt-5.6-sol` as primary and `openai/gpt-5.5` as its only fallback for every deployed agent, including Prism.
 - `memory.search.remote.baseUrl` and `memory.search.remote.apiKey` use LiteLLM only for remote embeddings through OpenClaw's `openai-compatible` adapter. The API key is an env SecretRef to `LITELLM_API_KEY`, never a literal ConfigMap value. Persistent legacy `agents.defaults.memorySearch` data is removed during managed configuration convergence.
-- `agents.entries.main.default`, `agents.defaults.systemAgent`, and `bindings` separately own the default agent, system work, and inbound channel routing.
+- `agents.entries` contains only the pod's `main` OpenClaw agent. Codex, Claude,
+  Kimi, Gemini, and Pi remain ACP runtime choices under `acp.allowedAgents`; they
+  are not additional OpenClaw agents. `agents.defaults.systemAgent` and
+  `bindings` separately own system work and inbound channel routing.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.
 - `channels.discord.enabled`, `channels.discord.token`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values. The token is an env SecretRef to `DISCORD_TOKEN`.

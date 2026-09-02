@@ -100,9 +100,6 @@ spec:
                 && !Array.isArray(config.agents.entries)
                 ? Object.entries(config.agents.entries)
                 : [];
-              const rosterIds = legacyEntries.length > 0
-                ? legacyEntries.map((entry) => entry?.id).filter(Boolean)
-                : keyedEntries.map(([id]) => id);
               let changed = false;
               config.agents = config.agents || {};
               if (legacyEntries.length > 0) {
@@ -123,28 +120,35 @@ spec:
                 changed = true;
                 console.log('==> Set agents.ownership=explicit for the managed agent roster');
               }
-              const systemAgentId = config?.agents?.defaults?.systemAgent?.agentId;
-              const heartbeatAgentId = config?.agents?.defaults?.heartbeat?.agentId;
-              if (!systemAgentId && !heartbeatAgentId) {
-                const managedAgentId = rosterIds.includes('main') ? 'main' : rosterIds[0] || 'main';
-                config.agents.defaults = config.agents.defaults || {};
-                config.agents.defaults.systemAgent = { agentId: managedAgentId };
+              const currentEntries = config?.agents?.entries
+                && typeof config.agents.entries === 'object'
+                && !Array.isArray(config.agents.entries)
+                ? config.agents.entries
+                : {};
+              const managedEntries = {
+                main: {
+                  ...(currentEntries.main && typeof currentEntries.main === 'object'
+                    ? currentEntries.main
+                    : {}),
+                  default: true,
+                },
+              };
+              if (JSON.stringify(currentEntries) !== JSON.stringify(managedEntries)) {
+                config.agents.entries = managedEntries;
                 changed = true;
-                console.log(`==> Set agents.defaults.systemAgent.agentId=${managedAgentId}`);
+                console.log('==> Converged the managed OpenClaw roster to the sole main agent');
               }
-              if (config?.agents?.entries?.main
-                  && typeof config.agents.entries.main === 'object') {
-                for (const [agentId, entry] of Object.entries(config.agents.entries)) {
-                  if (agentId !== 'main' && entry?.default === true) {
-                    delete entry.default;
-                    changed = true;
-                  }
-                }
-                if (config.agents.entries.main.default !== true) {
-                  config.agents.entries.main.default = true;
-                  changed = true;
-                  console.log('==> Set agents.entries.main.default=true');
-                }
+              config.agents.defaults = config.agents.defaults || {};
+              if (config.agents.defaults.systemAgent?.agentId !== 'main') {
+                config.agents.defaults.systemAgent = { agentId: 'main' };
+                changed = true;
+                console.log('==> Set agents.defaults.systemAgent.agentId=main');
+              }
+              if (config.agents.defaults.heartbeat?.agentId
+                  && config.agents.defaults.heartbeat.agentId !== 'main') {
+                config.agents.defaults.heartbeat.agentId = 'main';
+                changed = true;
+                console.log('==> Reassigned heartbeat ownership to main');
               }
               const isBroadDefaultDiscordBinding = (binding) => {
                 const match = binding?.match;
@@ -386,6 +390,17 @@ spec:
                   config.auth = initialized.auth;
                   console.log('    synchronized managed auth profiles');
                 }
+                if (initialized?.commands && typeof initialized.commands === 'object') {
+                  config.commands = initialized.commands;
+                  console.log('    synchronized managed command authorization');
+                }
+                if (initialized?.channels?.discord
+                    && typeof initialized.channels.discord === 'object') {
+                  config.channels = config.channels || {};
+                  config.channels.discord = initialized.channels.discord;
+                  config.channels.discord.token = discordSecretRef;
+                  console.log('    synchronized managed Discord channel configuration');
+                }
                 if (initialized?.models && typeof initialized.models === 'object') {
                   config.models = initialized.models;
                 } else {
@@ -417,15 +432,13 @@ spec:
                   }
                   console.log('    synchronized managed memory search configuration');
                 }
-                if (initialized?.agents?.entries?.main?.default === true) {
+                if (initialized?.agents?.entries
+                    && typeof initialized.agents.entries === 'object'
+                    && !Array.isArray(initialized.agents.entries)) {
                   config.agents = config.agents || {};
-                  config.agents.entries = config.agents.entries || {};
-                  for (const [agentId, entry] of Object.entries(config.agents.entries)) {
-                    if (agentId !== 'main' && entry?.default === true) delete entry.default;
-                  }
-                  config.agents.entries.main = config.agents.entries.main || {};
-                  config.agents.entries.main.default = true;
-                  console.log('    synchronized managed default agent');
+                  config.agents.ownership = initialized.agents.ownership;
+                  config.agents.entries = structuredClone(initialized.agents.entries);
+                  console.log('    synchronized managed single-agent roster');
                 }
                 const managedDiscordBinding = Array.isArray(initialized?.bindings)
                   ? initialized.bindings.find((binding) => binding?.agentId === 'main'
@@ -452,13 +465,11 @@ spec:
                   console.log('    synchronized discord:default agent binding');
                 }
                 const managedSystemAgent = initialized?.agents?.defaults?.systemAgent;
-                const hasAmbientOwner = config?.agents?.defaults?.systemAgent?.agentId
-                  || config?.agents?.defaults?.heartbeat?.agentId;
-                if (!hasAmbientOwner && managedSystemAgent?.agentId) {
+                if (managedSystemAgent?.agentId) {
                   config.agents = config.agents || {};
                   config.agents.defaults = config.agents.defaults || {};
                   config.agents.defaults.systemAgent = managedSystemAgent;
-                  console.log('    initialized managed system agent owner');
+                  console.log('    synchronized managed system agent owner');
                 }
               }
 

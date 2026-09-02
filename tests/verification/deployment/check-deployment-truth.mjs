@@ -465,7 +465,7 @@ assert.match(
 assert.match(
   gatewayConfig,
   /"entries":\s*\{\s*"main":\s*\{\s*"default":\s*true/,
-  'managed multi-agent configurations must mark exactly one default agent',
+  'managed configurations must mark their sole main agent as default',
 );
 assert.match(
   gatewayConfig,
@@ -540,10 +540,10 @@ assert.match(values, /primary:\s*"openai\/gpt-5\.6-sol"[\s\S]*fallbacks:[\s\S]*"
   'chart defaults must use GPT-5.6 Sol with GPT-5.5 fallback');
 assert.match(prismAgentValues, /primary:\s*openai\/gpt-5\.6-sol[\s\S]*fallbacks:\s*\[openai\/gpt-5\.5\]/,
   'Prism must use the same OpenAI model policy as every other agent');
-assert.match(
+assert.doesNotMatch(
   gatewayConfig,
-  /"entries":\s*\{\s*"main":\s*\{[\s\S]*"codex":\s*\{\}/,
-  'new managed configs must use the canonical keyed OpenClaw agent roster',
+  /"codex":\s*\{\}/,
+  'ACP runtimes must not be registered as a second OpenClaw agent',
 );
 assert.doesNotMatch(
   gatewayConfig,
@@ -552,13 +552,13 @@ assert.doesNotMatch(
 );
 assert.match(
   chart,
-  /legacyEntries\.length > 0[\s\S]*canonicalEntries[\s\S]*delete config\.agents\.list[\s\S]*config\.agents\.ownership !== 'explicit'[\s\S]*systemAgentId[\s\S]*heartbeatAgentId[\s\S]*defaults\.systemAgent = \{ agentId: managedAgentId \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
-  'legacy homes must gain a canonical keyed roster, explicit ownership, and a system owner before doctor validation',
+  /legacyEntries\.length > 0[\s\S]*canonicalEntries[\s\S]*delete config\.agents\.list[\s\S]*config\.agents\.ownership !== 'explicit'[\s\S]*managedEntries[\s\S]*entries = managedEntries[\s\S]*defaults\.systemAgent = \{ agentId: 'main' \}[\s\S]*node \/app\/openclaw\.mjs doctor/,
+  'legacy homes must converge to one main agent with explicit system ownership before doctor validation',
 );
 assert.match(
   chart,
-  /entries\.main\.default = true[\s\S]*isBroadDefaultDiscordBinding[\s\S]*agentId: 'main', match: \{ channel: 'discord', accountId: 'default' \}[\s\S]*Bound discord:default to the main agent[\s\S]*doctor --fix --non-interactive/,
-  'persistent multi-agent homes must gain an explicit Discord owner before doctor validation',
+  /managedEntries[\s\S]*default: true[\s\S]*isBroadDefaultDiscordBinding[\s\S]*agentId: 'main', match: \{ channel: 'discord', accountId: 'default' \}[\s\S]*Bound discord:default to the main agent[\s\S]*doctor --fix --non-interactive/,
+  'persistent homes must gain a sole default agent and explicit Discord owner before doctor validation',
 );
 assert.match(
   chart,
@@ -569,7 +569,7 @@ assert.doesNotMatch(chart, /removedAnthropic|isAnthropicModel/,
   'provider removal must not leave a one-off Anthropic migration in the deployment');
 assert.match(
   chart,
-  /config\.plugins\.entries = initialized\.plugins\.entries[\s\S]*config\.auth = initialized\.auth[\s\S]*delete config\.models[\s\S]*config\.acp = initialized\.acp[\s\S]*synchronized managed agent model route/,
+  /config\.plugins\.entries = initialized\.plugins\.entries[\s\S]*config\.auth = initialized\.auth[\s\S]*config\.commands = initialized\.commands[\s\S]*config\.channels\.discord = initialized\.channels\.discord[\s\S]*delete config\.models[\s\S]*config\.acp = initialized\.acp[\s\S]*synchronized managed agent model route[\s\S]*config\.agents\.entries = structuredClone\(initialized\.agents\.entries\)/,
   'init setup must converge managed configuration generically instead of provider-specific cleanup',
 );
 assert.doesNotMatch(
