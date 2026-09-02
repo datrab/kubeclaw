@@ -15,7 +15,7 @@ spec:
       serviceAccountName: prism-control
       imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
       automountServiceAccountToken: false
-      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
       restartPolicy: OnFailure
       initContainers:
         - name: bootstrap-database-roles

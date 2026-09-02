@@ -31,6 +31,13 @@ credential. For Discord, create the dedicated Prism bot and channel, add `discor
 `discord.enabled` to `true` in `prism-agent-values.yaml`. Do not put provider
 tokens into `prism-runtime` or the worker Deployment.
 
+`./scripts/deploy.sh prism` first starts Control, Studio, Worker, and PostgreSQL.
+The one-shot `prism-migrate` job then creates the least-privilege database roles,
+the `vector` extension, and the current Prism schema. Only after that hook succeeds
+does the script install the `agent-prism` OpenClaw gateway. Studio is exposed through
+the `prism-studio` Tailscale Ingress; its HTTPS MagicDNS address is shown by
+`kubectl get ingress prism-studio -n kubeclaw`.
+
 Verify the intended ownership after deployment:
 
 ```bash
