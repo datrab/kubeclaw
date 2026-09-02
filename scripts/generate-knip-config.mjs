@@ -157,6 +157,8 @@ const config = {
     '**/node_modules/**',
     'Projects/**',
     'charts/kubeclaw/files/config/eslint.config.mjs',
+    'charts/kubeclaw/files/config/eslint-type-evidence-config.mjs',
+    'charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs',
     'contracts/telemetry/v1/{bundle-types,telemetry-types}.ts',
   ],
   ignoreDependencies: [

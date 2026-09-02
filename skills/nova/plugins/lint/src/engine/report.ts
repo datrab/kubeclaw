@@ -168,7 +168,9 @@ function applicableTools(ctx: any, toolRegistry: any) {
 }
 
 function logToolResult(tool: any, result: any) {
-  if (result.status === 'ok') log('OK', `${tool.name}: ${result.errors} errors, ${result.warnings} warnings (${result.duration_ms}ms)`);
+  if (result.status === 'ok' && result.mode === 'experimental') {
+    log('OK', `${tool.name}: ${result.experimental_findings} experimental findings, nonblocking (${result.duration_ms}ms)`);
+  } else if (result.status === 'ok') log('OK', `${tool.name}: ${result.errors} errors, ${result.warnings} warnings (${result.duration_ms}ms)`);
   else if (result.status === 'not_applicable') log('INFO', `${tool.name}: not applicable — ${result.reason}`);
   else log('WARN', `${tool.name}: error — ${result.error}`);
 }

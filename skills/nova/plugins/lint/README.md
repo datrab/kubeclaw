@@ -23,6 +23,19 @@ Stage configuration:
 - `includeDebt`: include baselined findings in report output.
 - `includeExperimental`: run experimental tools.
 
+Inspired by the evidence-preservation rules in
+[`dmmulroy/anti-slop`](https://github.com/dmmulroy/anti-slop), the canonical
+policy exposes `eslint-type-evidence` as an
+experimental, audit-only tool. It reports TypeScript contracts that discard or
+fabricate type evidence, including chained assertions, broad `object`
+parameters, module mocks, known-key widening, `unknown` return contracts,
+aliases that conceal `unknown`, and widen-then-assert flows. The official
+type-aware `@typescript-eslint/no-unsafe-type-assertion` rule supplements those
+repository-specific checks. Experimental findings remain visible when
+`includeExperimental` is enabled but cannot contribute to blocking or debt
+counts; rules move into the main ESLint gate only after repository evidence and
+rule-admission approval justify that change.
+
 Adapter configuration:
 
 - `allowedRepositoryRoots`: canonical roots the adapter may inspect.

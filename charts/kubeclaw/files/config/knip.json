@@ -18,6 +18,8 @@
     "**/node_modules/**",
     "Projects/**",
     "charts/kubeclaw/files/config/eslint.config.mjs",
+    "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+    "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
     "contracts/telemetry/v1/{bundle-types,telemetry-types}.ts"
   ],
   "ignoreDependencies": [
@@ -116,6 +118,18 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/buster/plugins/http": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
     "skills/buster/plugins/junit-report-adapter": {
       "entry": [
         "src/adapter.js",
@@ -128,7 +142,31 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/buster/plugins/kubernetes-fixture": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
     "skills/buster/plugins/size-budget": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/tailscale-exposure": {
       "entry": [
         "src/provider.js",
         "tests/**/*.{mjs,mts,ts}"
@@ -508,7 +546,18 @@
     },
     "skills/nova/plugins/preflight-contract": {
       "entry": [
-        "src/buildkit.ts",
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/prism-design": {
+      "entry": [
         "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
@@ -522,6 +571,18 @@
     "skills/nova/plugins/project-summary": {
       "entry": [
         "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/remote-test-gate": {
+      "entry": [
+        "src/adapter.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [

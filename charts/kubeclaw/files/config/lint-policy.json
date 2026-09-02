@@ -1,7 +1,9 @@
 {
   "schema_version": "pipeline_lint_policy.v7",
   "baseline_path": "lint-baseline.json",
-  "experimental_tools": [],
+  "experimental_tools": [
+    "eslint-type-evidence"
+  ],
   "kubernetes_policy_packs": [
     {
       "id": "kubeclaw-default",
@@ -451,6 +453,39 @@
         "typescript"
       ],
       "config_path": "eslint.config.mjs",
+      "targets": [
+        "skills/common/plugin-runtime",
+        "skills/common/plugins",
+        "skills/nova/plugins",
+        "skills/buster/plugins",
+        "scripts",
+        "tests/verification"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "eslint-type-evidence",
+      "required": true,
+      "category": "lint",
+      "scope": "changed-files",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "eslint-type-evidence-config.mjs",
       "targets": [
         "skills/common/plugin-runtime",
         "skills/common/plugins",

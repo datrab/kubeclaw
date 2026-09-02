@@ -44,6 +44,8 @@ try {
   const canonicalPolicy = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8'));
   const configuredRegistry = registry.buildToolRegistry(canonicalPolicy, new Set(canonicalPolicy.projects[0].languages));
   assert.equal(configuredRegistry.length, registry.TOOL_ADAPTERS.length);
+  assert.deepEqual(canonicalPolicy.experimental_tools, ['eslint-type-evidence']);
+  assert.equal(configuredRegistry.some((adapter) => adapter.id === 'eslint-type-evidence'), true);
   for (const adapter of configuredRegistry) {
     assert.equal(typeof adapter.detect, 'function', `${adapter.id} must expose a safe configured detector`);
     assert.equal(typeof adapter.detect({
