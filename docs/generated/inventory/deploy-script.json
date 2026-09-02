@@ -219,6 +219,7 @@
     "header",
     "require_command",
     "is_not_found_error",
+    "require_helm_release_idle",
     "warn_nonfatal_failure",
     "add_helm_repo_once",
     "wait_for_rollout_required",
@@ -299,12 +300,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 811,
-    "secrets": 856,
-    "tailscale": 947,
-    "infra": 1038,
-    "agents": 1353,
-    "smoke": 1475,
-    "teardown": 1950
+    "setup": 837,
+    "secrets": 882,
+    "tailscale": 973,
+    "infra": 1064,
+    "agents": 1380,
+    "smoke": 1502,
+    "teardown": 1979
   }
 }
