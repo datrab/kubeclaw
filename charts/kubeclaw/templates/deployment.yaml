@@ -314,6 +314,16 @@ spec:
               else
                 echo "    Repository exists. Checking for safe updates..."
                 cd "$REPO_DIR"
+                if git remote get-url origin >/dev/null 2>&1; then
+                  CURRENT_REPO_URL="$(git remote get-url origin)"
+                  if [ "$CURRENT_REPO_URL" != "$GIT_REPO_URL" ]; then
+                    git remote set-url origin "$GIT_REPO_URL"
+                    echo "    Reconciled origin to the configured repository."
+                  fi
+                else
+                  git remote add origin "$GIT_REPO_URL"
+                  echo "    Added the configured origin repository."
+                fi
                 if git diff --quiet && git diff --cached --quiet; then
                   if git fetch origin main; then
                     LOCAL_REV="$(git rev-parse HEAD)"

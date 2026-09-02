@@ -603,6 +603,11 @@ assert.match(
 );
 assert.match(
   chart,
+  /CURRENT_REPO_URL="\$\(git remote get-url origin\)"[\s\S]*git remote set-url origin "\$GIT_REPO_URL"[\s\S]*git remote add origin "\$GIT_REPO_URL"/,
+  'persistent workspaces must reconcile origin to the configured repository',
+);
+assert.match(
+  chart,
   /state_db="\/home\/node\/\.openclaw\/state\/openclaw\.sqlite"[\s\S]*if \[ ! -f "\$state_db" \]; then[\s\S]*migration not required/,
   'fresh installations without an OpenClaw state database must skip migration safely',
 );
