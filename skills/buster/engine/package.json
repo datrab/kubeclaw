@@ -7,6 +7,7 @@
     "./remote-plan-cli": "./remote-plan-cli.ts"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@kubeclaw/pipeline-observability-contract": "*",
     "@kubeclaw/pipeline-test-gate-contract": "*",
     "@kubeclaw/pipeline-worker-core-contract": "*",
@@ -15,6 +16,7 @@
     "@kubeclaw/plugin-sdk": "*",
     "@kubeclaw/worker-core": "*",
     "js-yaml": "^4.3.1",
+    "playwright": "1.62.1",
     "ws": "^8.18.3"
   }
 }

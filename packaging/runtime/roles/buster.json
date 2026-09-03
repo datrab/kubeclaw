@@ -24,6 +24,7 @@
     "kubeclaw.agent-observability",
     "kubeclaw.artifact-store",
     "kubeclaw.api-flow",
+    "kubeclaw.axe",
     "kubeclaw.command-runner",
     "kubeclaw.network-http",
     "kubeclaw.openapi",

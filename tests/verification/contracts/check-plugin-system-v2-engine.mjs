@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { runPipelineV2 } from '../../../skills/nova/core/execution/engine.ts';
+import { runRoot } from '../../../skills/nova/core/execution/run-root.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-engine-'));
 try {
@@ -71,8 +72,9 @@ try {
   }, 'run:engine-test');
   assert.equal(result.status, 'succeeded');
   assert.equal(result.stages.get('delivery')?.status, 'succeeded');
+  const persistedRunRoot = runRoot(path.join(temporary, 'state'), 'run:engine-test');
   const snapshot = JSON.parse(fs.readFileSync(
-    path.join(temporary, 'state', 'runs', 'run_engine-test', 'registry-snapshot.json'),
+    path.join(persistedRunRoot, 'registry-snapshot.json'),
     'utf8',
   ));
   const packageIds = snapshot.packages.map(([id]) => id).sort();
@@ -98,7 +100,7 @@ try {
   )).records;
   assert.ok(telemetry.some((entry) => entry.payload?.event?.type === 'run.succeeded'));
   const lifecycle = fs.readFileSync(
-    path.join(temporary, 'state', 'runs', 'run_engine-test', 'events.jsonl'),
+    path.join(persistedRunRoot, 'events.jsonl'),
     'utf8',
   ).split('\n').filter(Boolean).map((line) => JSON.parse(line));
   assert.equal(

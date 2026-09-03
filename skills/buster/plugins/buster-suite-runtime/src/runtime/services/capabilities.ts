@@ -91,7 +91,6 @@ function missingBusterCapabilities(capabilities: unknown, required: unknown = []
 
 export function requiredCapabilitiesForSuite(suiteName: string, _context: Record<string, any> = {}): string[] {
   switch (suiteName) {
-    case 'a11y':
     case 'e2e':
     case 'visual-reg':
       return [BUSTER_CAPABILITIES.BROWSER_AUTOMATION];

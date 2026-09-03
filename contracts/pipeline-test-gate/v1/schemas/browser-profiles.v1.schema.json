@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://kubeclaw.dev/contracts/pipeline-test-gate/browser-profiles.v1.schema.json",
+  "type":"object","additionalProperties":false,"required":["schemaVersion","profiles"],
+  "properties":{
+    "schemaVersion":{"const":"kubeclaw.browser-profiles.v1"},
+    "profiles":{"type":"object","minProperties":1,"maxProperties":32,"propertyNames":{"pattern":"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},"additionalProperties":{
+      "type":"object","additionalProperties":false,"required":["browser","viewport"],
+      "properties":{
+        "browser":{"enum":["chromium","firefox","webkit"]},
+        "viewport":{"type":"object","additionalProperties":false,"required":["width","height"],"properties":{"width":{"type":"integer","minimum":1,"maximum":3840},"height":{"type":"integer","minimum":1,"maximum":2160}}},
+        "colorScheme":{"enum":["light","dark","no-preference"]},"reducedMotion":{"enum":["reduce","no-preference"]},
+        "locale":{"type":"string","minLength":1,"maxLength":128},"timezoneId":{"type":"string","minLength":1,"maxLength":128},
+        "hasTouch":{"type":"boolean"},"isMobile":{"type":"boolean"},"deviceScaleFactor":{"type":"number","minimum":0.5,"maximum":4}
+      }
+    }}
+  }
+}

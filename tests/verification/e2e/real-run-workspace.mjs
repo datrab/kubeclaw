@@ -1040,6 +1040,10 @@ function instructionFiles(progress) {
             config: { specFile: '.swarm/openapi-success.json', operations: [
               { operationId: 'getHome', expectedStatuses: [200] },
             ], requestTimeoutMs: 10000 }, inputs: deploymentInput },
+          axe: { uses: 'kubeclaw.axe@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-axe',
+            config: { routes: ['/'], profiles: ['desktop', 'mobile'], tags: ['wcag2a', 'wcag2aa'] },
+            inputs: deploymentInput },
           'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
               ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
@@ -1066,7 +1070,7 @@ function instructionFiles(progress) {
         },
         concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
           manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1,
-          'api-flow': 1, openapi: 1 },
+          'api-flow': 1, openapi: 1, 'browser-axe': 2 },
       },
     },
   };

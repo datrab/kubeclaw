@@ -13,6 +13,7 @@
 #   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
 #   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster
 #   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster
+#   ./deploy.sh nova-a11y-preflight Verify real browser accessibility through Nova and Buster
 #   ./deploy.sh nova-tailscale-preflight Verify a public endpoint through Nova, Buster, Kubernetes, and Tailscale
 #   ./deploy.sh nova-production-preflights <image> Run all required proofs after all source cutovers
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
@@ -2139,6 +2140,74 @@ cmd_nova_http_preflight() {
   log "Nova → Buster HTTP production preflight passed"
 }
 
+cmd_nova_a11y_preflight() {
+  header "Nova → Buster Accessibility Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_A11Y_PREFLIGHT_IMAGE:-}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned port-8080 HTTP image as argument 2 or KUBECLAW_A11Y_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_file runtime_repo_root runtime_revision
+  local buster_runtime_revision lease_name namespace_name
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  if [[ $runtime_repo_root != /home/node/.openclaw/workspace/git-repo ]]; then
+    err "The deployed Nova REPO_ROOT does not match the chart contract."
+    return 1
+  fi
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  if [[ ! $runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The deployed Nova source revision is invalid."
+    return 1
+  fi
+  receipt_tmp=$(mktemp)
+  receipt_file="$REPO_DIR/dist/verification/a11y-production-receipt.json"
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    env "KUBECLAW_A11Y_PREFLIGHT_IMAGE=$immutable_image" \
+    node "$runtime_repo_root/tests/verification/e2e/nova-a11y-production-preflight.mts" | tee "$receipt_tmp"; then
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); const engines=[...(v.browserEnginesVerified??[])].sort(); if(v.schemaVersion!=="nova-a11y-production-preflight.v1"||v.suite!=="a11y"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||JSON.stringify(engines)!==JSON.stringify(["chromium","firefox","webkit"])||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="a11y-preflight"||v.resources?.servicePort!==80) process.exit(1)' "$receipt_tmp"; then
+    err "The accessibility production receipt is invalid."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  lease_name=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).resources.leaseName)' "$receipt_tmp")
+  namespace_name=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).resources.namespace)' "$receipt_tmp")
+  if [[ ! $lease_name =~ ^test-[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ \
+    || ! $namespace_name =~ ^test-[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ ]]; then
+    err "The accessibility production receipt contains an invalid resource identity."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m \
+    || ! kubectl wait --for=delete "busternamespacelease/$lease_name" -n "$NAMESPACE" --timeout=2m; then
+    err "Timed out while waiting for the accessibility production plan cleanup."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if [[ -n $(kubectl get namespace "$namespace_name" --ignore-not-found -o name) \
+    || -n $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then
+    err "The accessibility production plan left its namespace or lease in the cluster."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_unsigned=$(mktemp)
+  # JavaScript is intentionally single-quoted for the shell.
+  # shellcheck disable=SC2016
+  node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); fs.writeFileSync(process.argv[2], `${JSON.stringify({...v,cleanupVerified:true,clusterCleanupObserved:true},null,2)}\n`, {mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]] \
+    || ! sign_and_store_production_receipt "$receipt_unsigned" "$receipt_file" "$runtime_revision"; then
+    rm -f "$receipt_tmp" "$receipt_unsigned"
+    return 1
+  fi
+  rm -f "$receipt_tmp" "$receipt_unsigned"
+  log "Nova → Buster accessibility production preflight passed"
+}
+
 cmd_nova_tailscale_preflight() {
   header "Nova → Buster Tailscale Production Preflight"
   require_command kubectl
@@ -2253,7 +2322,7 @@ const expectedSuiteIds = [
 const actualSuiteIds = suites.map((suite) => suite.id).sort();
 const required = suites.filter((suite) => Object.hasOwn(suite, 'productionAcceptance'))
   .map((suite) => suite.id).sort();
-const orchestrated = ['build', 'health', 'k8s', 'tailscale-preview', 'unit'];
+const orchestrated = ['a11y', 'build', 'health', 'k8s', 'tailscale-preview', 'unit'];
 const incomplete = suites.filter((suite) => suite.implementation !== 'complete'
   || suite.sourceCutover !== 'complete').map((suite) => suite.id);
 if (JSON.stringify(actualSuiteIds) !== JSON.stringify(expectedSuiteIds)) {
@@ -2281,6 +2350,7 @@ NODE
   cmd_nova_buildkit_preflight
   cmd_nova_kubernetes_fixture_preflight nova-kubernetes-fixture-preflight "$immutable_image" "$secret_name"
   cmd_nova_http_preflight nova-http-preflight "$immutable_image"
+  cmd_nova_a11y_preflight nova-a11y-preflight "$immutable_image"
   cmd_nova_tailscale_preflight nova-tailscale-preflight "$immutable_image"
 
   log "All production-required suite preflights passed"
@@ -2497,6 +2567,9 @@ case "${1:-}" in
   nova-http-preflight)
     cmd_nova_http_preflight "$@"
     ;;
+  nova-a11y-preflight)
+    cmd_nova_a11y_preflight "$@"
+    ;;
   nova-tailscale-preflight)
     cmd_nova_tailscale_preflight "$@"
     ;;
@@ -2589,6 +2662,8 @@ case "${1:-}" in
     echo "                    Verify a retained Kubernetes fixture through Nova and Buster v2"
     echo "  nova-http-preflight [image]"
     echo "                    Verify an in-cluster HTTP service through Nova and Buster v2"
+    echo "  nova-a11y-preflight [image]"
+    echo "                    Verify Chromium, Firefox, WebKit, and Axe through Nova and Buster v2"
     echo "  nova-tailscale-preflight [image]"
     echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
     echo "  nova-production-preflights [image]"

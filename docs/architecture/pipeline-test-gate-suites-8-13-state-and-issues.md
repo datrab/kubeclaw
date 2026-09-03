@@ -12,6 +12,22 @@ The workflow documents were improved after the audit. They now distinguish fixed
 
 No mock, fake HTTP service, fake WebSocket result, or capability emulator is used. Tests use real loopback servers and the real isolated provider runner. The known repository dependency audit reports 25 existing findings: 22 moderate and three high. This suite did not add a vulnerable runtime dependency. Production acceptance is deferred to the controlled cycle after all 13 source cutovers. There is no Suite 8 infrastructure blocker at source closeout.
 
-## Suites 9 through 13
+## Suite 9: Accessibility
 
-Accessibility, performance, visual regression, end-to-end, and security remain pending. No implementation or completion claim has been made for them in this record.
+Phase 8 adds `kubeclaw.axe@1` and the operator-controlled `browser.axe` capability. The contained proof uses a real HTTP server, real Chromium, and real Axe. It uses no mock, emulator, or runtime compatibility wrapper. The offline project scaffolder performs one reviewed source conversion.
+
+Phase 9 maps 24 baseline items to executable assertions or an explicit production-preflight assertion. Numeric violation thresholds are removed. Exact, temporary acceptances require a rule, route, selector, reason, and expiry.
+
+Phase 10 removes the legacy `a11y` suite authority. Project setup creates a provider node or rejects retired threshold configuration. The Buster production image installs Chromium, Firefox, and WebKit.
+
+The fresh-context architecture audit found gaps in accepted-violation counts, isolated-runner proof, browser egress, evidence identity, shared-profile validation, deletion inventory, documentation, and production orchestration. Valid findings were fixed. The offline scaffolder was retained because it is a one-time source migration tool and is not called by the runtime.
+
+Terra/high autoreview found and drove fixes for parallel screenshot allocation, operator browser executable paths, legacy timeout bounds, redirect egress, same-origin WebSockets, WebRTC egress, Chromium sandbox settings, the Axe analysis deadline, fixed-origin operator policy, and hybrid legacy threshold rejection. One image-packaging finding was rejected after the Docker and runtime discovery paths proved that the full provider tree is copied. The final review reported no accepted or actionable finding with confidence 0.72.
+
+The repository-wide plugin gate also exposed stale Phase 6, engine, and checkpoint verification paths after the Nova engine changed to digest-based run directories. The tests now use the production run-root resolver. The corrected full plugin gate passes.
+
+Local infrastructure currently contains only the Chromium browser build. An attempted Playwright download for Firefox and WebKit did not complete in this environment and was stopped. No substitute browser was used. The production image installs all three engines. `nova-a11y-preflight` now sends a signed plan through Nova and Buster, runs all three real engines with Axe, imports evidence, verifies fixture deletion, and stores a signed receipt. Full cross-browser production acceptance remains pending for the final controlled cycle.
+
+## Suites 10 through 13
+
+Performance, visual regression, end-to-end, and security remain pending. No implementation or completion claim has been made for them in this record.

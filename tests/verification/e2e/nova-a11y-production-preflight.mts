@@ -1,0 +1,157 @@
+#!/usr/bin/env node
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { buildRegistry, createProductionNovaTestGate, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
+import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
+
+const IMMUTABLE_IMAGE = /^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\/[a-z0-9]+(?:[._\/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u;
+const token = process.env.BUSTER_V2_TOKEN;
+const privateKey = process.env.BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY;
+const immutableImage = process.env.KUBECLAW_A11Y_PREFLIGHT_IMAGE;
+const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
+const runtimeRevision = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], {
+  cwd: repositoryRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+}).trim();
+const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-a11y-preflight-'));
+const fixture = path.join(temporary, 'fixture');
+const state = path.join(temporary, 'nova-state');
+const runId = `run:a11y-preflight:${crypto.randomUUID()}`;
+
+function git(...args: string[]): string {
+  return execFileSync('git', args, { cwd: fixture, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+}
+
+function records(relative: string): any[] {
+  const value = JSON.parse(fs.readFileSync(path.join(state, relative, 'records', 'store.json'), 'utf8'));
+  assert.equal(value.schemaVersion, 'pipeline-durable-record-store.v1');
+  assert.equal(Array.isArray(value.records), true);
+  return value.records;
+}
+
+try {
+  if (!token) throw new Error('A11Y_PREFLIGHT_TOKEN_MISSING');
+  if (!privateKey) throw new Error('A11Y_PREFLIGHT_SOURCE_KEY_MISSING');
+  const image = immutableImage ? IMMUTABLE_IMAGE.exec(immutableImage) : null;
+  if (!image) throw new Error('A11Y_PREFLIGHT_IMMUTABLE_IMAGE_INVALID');
+  const route = resolveProviderCapability(parseCapabilityProviders(), 'buster', 'test.plan.execute');
+  if (route.adapter !== 'buster-plan-v1') throw new Error(`A11Y_PREFLIGHT_PROVIDER_UNSUPPORTED:${route.adapter}`);
+
+  fs.mkdirSync(path.join(fixture, 'k8s'), { recursive: true });
+  fs.mkdirSync(path.join(fixture, '.swarm'), { recursive: true });
+  fs.writeFileSync(path.join(fixture, '.swarm', '.gitkeep'), '');
+  fs.writeFileSync(path.join(fixture, 'browser-profiles.json'), `${JSON.stringify({
+    schemaVersion: 'kubeclaw.browser-profiles.v1', profiles: {
+      chromium: { browser: 'chromium', viewport: { width: 1280, height: 720 } },
+      firefox: { browser: 'firefox', viewport: { width: 1280, height: 720 } },
+      webkit: { browser: 'webkit', viewport: { width: 1280, height: 720 } },
+    },
+  }, null, 2)}\n`);
+  fs.writeFileSync(path.join(fixture, 'k8s', 'deployment.yaml'), [
+    'apiVersion: apps/v1', 'kind: Deployment', 'metadata:', '  name: a11y-preflight',
+    '  labels: { app.kubernetes.io/name: a11y-preflight }', 'spec:', '  replicas: 1',
+    '  selector:', '    matchLabels: { app.kubernetes.io/name: a11y-preflight }', '  template:',
+    '    metadata:', '      labels: { app.kubernetes.io/name: a11y-preflight }', '    spec:',
+    '      securityContext:', '        runAsNonRoot: true', '        seccompProfile: { type: RuntimeDefault }',
+    '      containers:', '        - name: web', `          image: ${immutableImage}`, '          ports:',
+    '            - { name: http, containerPort: 8080 }', '          resources:',
+    '            requests: { cpu: 10m, memory: 32Mi }', '            limits: { cpu: 100m, memory: 128Mi }',
+    '          readinessProbe:', '            httpGet: { path: /, port: http }', '            periodSeconds: 2',
+    '            failureThreshold: 60', '          securityContext:', '            runAsNonRoot: true',
+    '            allowPrivilegeEscalation: false', '            capabilities: { drop: [ALL] }', '---',
+    'apiVersion: v1', 'kind: Service', 'metadata:', '  name: a11y-preflight', 'spec:', '  type: ClusterIP',
+    '  selector: { app.kubernetes.io/name: a11y-preflight }', '  ports:',
+    '    - { name: http, port: 80, targetPort: http }', '',
+  ].join('\n'));
+  git('init', '-q', '--initial-branch=main');
+  git('config', 'user.name', 'KubeClaw Nova Preflight');
+  git('config', 'user.email', 'nova-preflight@kubeclaw.invalid');
+  git('add', '.');
+  git('commit', '-qm', 'Create accessibility production preflight fixture');
+
+  const pluginRoot = path.join(repositoryRoot, 'skills/buster/plugins');
+  const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
+    trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
+    verifierId: 'a11y-production-preflight',
+  } }));
+  const declaration: any = { tests: {
+    'checked-manifest': { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 0,
+      concurrencyGroup: 'manifest', config: { executable: 'cp',
+        args: ['k8s/deployment.yaml', '.swarm/checked-a11y-preflight.yaml'], workingDirectory: '.',
+        resultMode: 'exit-code', artifacts: [{ id: 'checked-manifest', path: '.swarm/checked-a11y-preflight.yaml',
+          mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' }] } },
+    axe: { uses: 'kubeclaw.axe@1', mode: 'blocking', retries: 0,
+      needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-axe',
+      config: { routes: ['/'], profileFile: 'browser-profiles.json',
+        profiles: ['chromium', 'firefox', 'webkit'], tags: ['wcag2a', 'wcag2aa'], timeoutMs: 120_000 },
+      inputs: { deployment: { from: 'kubernetes-deployment', output: 'deployment' } } },
+  }, fixtures: {
+    'kubernetes-deployment': { uses: 'kubeclaw.kubernetes-fixture@1', retries: 0,
+      needs: ['checked-manifest'], concurrencyGroup: 'kubernetes-fixture',
+      config: { image: { reference: immutableImage, digest: image[1] }, serviceName: 'a11y-preflight',
+        servicePort: 80, namespacePrefix: 'test', retention: { mode: 'delete', seconds: 600 },
+        readinessTimeoutSeconds: 300, secretReferences: [] }, inputs: {
+        'checked-manifest': { from: 'checked-manifest', output: 'artifact-1',
+          mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' },
+      } },
+  }, concurrencyLimits: { manifest: 1, 'kubernetes-fixture': 1, 'browser-axe': 3 } };
+  const limits = { cpuMillis: 900_000, memoryBytes: 2 * 1024 * 1024 * 1024,
+    logBytes: 4 * 1024 * 1024, artifactBytes: 32 * 1024 * 1024, artifactFiles: 64, processes: 64 };
+  const plan = resolveTestPlan({ planId: 'plan:a11y:production-preflight', runId,
+    project: 'a11y-production-preflight', scope: { moduleId: null, gateId: 'production-preflight' },
+    createdAt: new Date().toISOString(), declaration, suiteTemplates: [], registry,
+    facts: { changedPaths: ['k8s/deployment.yaml', 'browser-profiles.json'], moduleType: 'service', pipelineStage: 'preflight' },
+    policy: { defaultTimeoutMs: 900_000, maximumTimeoutMs: 900_000, defaultLimits: limits,
+      maximumLimits: limits, maximumRetryCount: 1, maximumMatrixSize: 1, maximumNodes: 3,
+      defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { manifest: 1, 'kubernetes-fixture': 1, 'browser-axe': 3 } } });
+  assert.deepEqual(plan.nodes.map((node) => node.id).sort(), ['axe', 'checked-manifest', 'kubernetes-deployment']);
+  const grants = new Map<string, readonly string[]>([
+    ['checked-manifest', ['command.execute']], ['kubernetes-deployment', ['kubernetes.fixture']], ['axe', ['browser.axe']],
+  ]);
+  const nova = createProductionNovaTestGate({ stateRoot: state, endpoint: route.endpoint, token,
+    sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey, pollMilliseconds: 500,
+    maximumResponseBytes: 64 * 1024 * 1024, maximumResultBytes: 64 * 1024 * 1024,
+    maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
+    maximumEvidenceBytes: 32 * 1024 * 1024, maximumEvidenceStoreBytes: 128 * 1024 * 1024,
+    recordLimits: { maximumRecords: 100, maximumBytes: 128 * 1024 * 1024,
+      maximumRecordBytes: 64 * 1024 * 1024 }, legacyLedger: {} });
+  const result = await nova.execute({ idempotencyKey: `a11y:${crypto.randomUUID()}`,
+    pipelineStageId: 'stage:a11y-preflight', plan, repositoryRoot: fixture,
+    repositoryId: 'repository:a11y-preflight', grants, maximumConcurrency: 1,
+    submittedAt: new Date().toISOString(), timeoutMs: 1_020_000, legacySuites: [] });
+  assert.equal(result.remote.status.state, 'completed');
+  assert.equal(result.remote.decision.state, 'passed');
+  const imports = records('imports').filter((record) => record.stream === 'remote-gate-imports');
+  assert.equal(imports.length, 1);
+  const imported = imports[0].payload;
+  assert.equal(imported.state, 'complete');
+  assert.equal(imported.decision.decisionDigest, result.remote.decision.decisionDigest);
+  assert.ok(imported.evidenceDigests.length > 0);
+  assert.equal(imported.remoteResult.cleanupErrors.length, 0);
+  assert.match(imported.remoteResult.workerRevision, /^[a-f0-9]{40,64}$/u);
+  const deployment = imported.remoteResult.attempts.flatMap((attempt: any) => attempt.outputs)
+    .find((output: any) => output.kind === 'value'
+      && output.schemaId === 'kubeclaw.kubernetes-deployment-fixture@1')?.value;
+  const axeAttempt = imported.remoteResult.attempts.find((attempt: any) => attempt.nodeId === 'axe');
+  const combinations = axeAttempt?.providerDetails?.values?.combinations;
+  assert.deepEqual(new Set(combinations?.map((item: any) => item.browser)), new Set(['chromium', 'firefox', 'webkit']));
+  assert.equal(combinations?.every((item: any) => typeof item.browserVersion === 'string' && item.browserVersion.length > 0), true);
+  assert.ok(deployment?.leaseName && deployment?.namespace);
+
+  process.stdout.write(`${JSON.stringify({ ok: true, schemaVersion: 'nova-a11y-production-preflight.v1',
+    suite: 'a11y', runId, jobId: result.remote.decision.jobId, provider: route, runtimeRevision,
+    busterRuntimeRevision: imported.remoteResult.workerRevision, fixtureRevision: git('rev-parse', 'HEAD'),
+    planDigest: plan.planDigest, resultDigest: result.remote.decision.resultDigest,
+    decisionDigest: result.remote.decision.decisionDigest, status: result.remote.status.state,
+    decision: result.remote.decision.state, evidenceDigests: imported.evidenceDigests,
+    evidenceImported: true, runnerCleanupVerified: true, cleanupVerified: false,
+    clusterCleanupObserved: false, browserEnginesVerified: ['chromium', 'firefox', 'webkit'],
+    resources: { leaseName: deployment.leaseName, namespace: deployment.namespace,
+      serviceName: 'a11y-preflight', servicePort: 80 },
+    boundary: 'Nova signed source to remote Buster isolated Axe provider plan', mocks: 0, emulators: 0 }, null, 2)}\n`);
+} finally {
+  fs.rmSync(temporary, { recursive: true, force: true });
+}

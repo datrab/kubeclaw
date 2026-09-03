@@ -98,4 +98,5 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT`: inspect the Service endpoints.
 - `KUBERNETES_FIXTURE_CANCELLED`: inspect the pipeline cancellation.
 - `KUBERNETES_FIXTURE_PREPARATION_FAILED`: inspect the capability result.
+- `KUBERNETES_FIXTURE_RELEASE_FAILED`: inspect the lease release result and controller events.
 - `TEST_PROVIDER_FIXTURE_CLEANUP_REQUIRED`: implement provider cleanup.

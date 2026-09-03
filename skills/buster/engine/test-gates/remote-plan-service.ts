@@ -34,6 +34,7 @@ import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOp
 import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';
 import { TailscaleExposureCapabilityInvoker, type TailscaleExposureCapabilityInvokerOptions } from './tailscale-exposure-runtime.ts';
 import { NetworkHttpCapabilityInvoker, type NetworkHttpCapabilityInvokerOptions } from './network-http-runtime.ts';
+import { BrowserAxeCapabilityInvoker, type BrowserAxeCapabilityInvokerOptions } from './browser-axe-runtime.ts';
 import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
 
 interface StoredPlanJob {
@@ -249,6 +250,7 @@ export interface BusterRemotePlanServiceOptions {
   readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly tailscaleExposure?: TailscaleExposureCapabilityInvokerOptions;
   readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
+  readonly browserAxe?: BrowserAxeCapabilityInvokerOptions;
   readonly now?: () => Date;
   readonly execute?: (
     job: RemotePlanJobV1,
@@ -563,12 +565,17 @@ export class BusterRemotePlanService {
         ? new NetworkHttpCapabilityInvoker(this.#options.networkHttp
           ?? (() => { throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED'); })())
         : null;
+      const browserAxe = this.#options.allowedCapabilities.has('browser.axe')
+        ? new BrowserAxeCapabilityInvoker(this.#options.browserAxe
+          ?? (() => { throw new Error('BUSTER_BROWSER_AXE_CONFIG_REQUIRED'); })())
+        : null;
       const routes = new Map();
       if (directCommand) routes.set('command.execute', directCommand);
       if (containerBuild) routes.set('container.build', containerBuild);
       if (kubernetesFixture) routes.set('kubernetes.fixture', kubernetesFixture);
       if (tailscaleExposure) routes.set('kubernetes.exposure', tailscaleExposure);
       if (networkHttp) routes.set('network.http', networkHttp);
+      if (browserAxe) routes.set('browser.axe', browserAxe);
       const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
       const run = this.#options.execute
         ? await this.#options.execute(job, paths, controller.signal)

@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"suite-cutover-inventory.v1","suite":"a11y","successor":"kubeclaw.axe@1","parityItemCount":24,
+  "legacyFilesToDelete":["skills/buster/plugins/buster-suite-runtime/src/runtime/suites/a11y.ts"],
+  "replacementFilesRequired":[
+    "skills/buster/plugins/axe/plugin.json","skills/buster/engine/test-gates/browser-axe-runtime.ts",
+    "contracts/pipeline-test-gate/v1/suites/a11y.v1.json","skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+    "tests/verification/e2e/nova-a11y-production-preflight.mts","scripts/deploy.sh"
+  ],
+  "verification":{"solePathTests":["tests/verification/contracts/check-pipeline-a11y-cutover.mts"],"dualAuthorityTests":["tests/verification/contracts/check-pipeline-a11y-cutover.mts"],"absenceTests":["tests/verification/contracts/check-pipeline-a11y-cutover.mts"]}
+}

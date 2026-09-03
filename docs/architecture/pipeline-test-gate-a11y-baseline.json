@@ -1,0 +1,29 @@
+{
+  "schemaVersion":"suite-baseline.v1","legacySuite":"a11y","successor":"kubeclaw.axe@1","expectedItemCount":24,
+  "items":[
+    {"id":"A11Y-001","class":"old-behavior","requirement":"Run the real Axe engine in a real browser.","state":"implementation-proved"},
+    {"id":"A11Y-002","class":"new-behavior","requirement":"Test more than one route.","state":"implementation-proved"},
+    {"id":"A11Y-003","class":"new-behavior","requirement":"Test named browser profiles.","state":"implementation-proved"},
+    {"id":"A11Y-004","class":"old-behavior","requirement":"Provide desktop and mobile defaults.","state":"implementation-proved"},
+    {"id":"A11Y-005","class":"new-behavior","requirement":"Support Chromium, Firefox, and WebKit.","state":"implementation-proved"},
+    {"id":"A11Y-006","class":"new-behavior","requirement":"Record the exact browser version.","state":"implementation-proved"},
+    {"id":"A11Y-007","class":"new-behavior","requirement":"Use a clean context for each combination.","state":"implementation-proved"},
+    {"id":"A11Y-008","class":"new-behavior","requirement":"Bound parallel browser work.","state":"implementation-proved"},
+    {"id":"A11Y-009","class":"old-behavior","requirement":"Apply selected Axe tags.","state":"implementation-proved"},
+    {"id":"A11Y-010","class":"old-behavior","requirement":"Apply excluded selectors.","state":"implementation-proved"},
+    {"id":"A11Y-011","class":"new-behavior","requirement":"Fail for each unaccepted violation node.","state":"implementation-proved"},
+    {"id":"A11Y-012","class":"new-behavior","requirement":"Match an acceptance by rule, route, and selector.","state":"implementation-proved"},
+    {"id":"A11Y-013","class":"new-behavior","requirement":"Require an acceptance reason and expiry.","state":"implementation-proved"},
+    {"id":"A11Y-014","class":"new-behavior","requirement":"Reject an expired acceptance.","state":"implementation-proved"},
+    {"id":"A11Y-015","class":"new-behavior","requirement":"Keep accepted findings visible.","state":"implementation-proved"},
+    {"id":"A11Y-016","class":"new-behavior","requirement":"Keep incomplete Axe results visible.","state":"implementation-proved"},
+    {"id":"A11Y-017","class":"old-behavior","requirement":"Store full Axe result evidence.","state":"implementation-proved"},
+    {"id":"A11Y-018","class":"new-behavior","requirement":"Store bounded failed-element screenshots.","state":"implementation-proved"},
+    {"id":"A11Y-019","class":"new-behavior","requirement":"Limit combinations, time, bytes, and screenshots.","state":"implementation-proved"},
+    {"id":"A11Y-020","class":"new-behavior","requirement":"Restrict navigation to an approved exact origin.","state":"implementation-proved"},
+    {"id":"A11Y-021","class":"new-behavior","requirement":"Block cross-origin subresources.","state":"implementation-proved"},
+    {"id":"A11Y-022","class":"new-behavior","requirement":"Close browsers after cancellation or completion.","state":"implementation-proved"},
+    {"id":"A11Y-023","class":"old-behavior","requirement":"Convert safe legacy project configuration.","state":"implementation-proved"},
+    {"id":"A11Y-024","class":"new-behavior","requirement":"Reject retired numeric thresholds.","state":"implementation-proved"}
+  ]
+}

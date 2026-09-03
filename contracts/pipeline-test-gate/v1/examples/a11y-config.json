@@ -1,0 +1,8 @@
+{
+  "routes":["/","/account"],
+  "profiles":["desktop","mobile"],
+  "tags":["wcag2a","wcag2aa"],
+  "exclude":[".third-party-widget"],
+  "acceptances":[{"rule":"color-contrast","route":"/account","selector":"#legacy-badge","reason":"Replacement design is scheduled for the next release","expiresAt":"2026-12-31"}],
+  "timeoutMs":30000
+}

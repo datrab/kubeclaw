@@ -12,6 +12,7 @@ export { DirectCommandCapabilityInvoker } from '../test-gates/direct-command-run
 export { KubernetesFixtureCapabilityInvoker } from '../test-gates/kubernetes-fixture-runtime.ts';
 export { TailscaleExposureCapabilityInvoker } from '../test-gates/tailscale-exposure-runtime.ts';
 export { NetworkHttpCapabilityInvoker } from '../test-gates/network-http-runtime.ts';
+export { BrowserAxeCapabilityInvoker } from '../test-gates/browser-axe-runtime.ts';
 export type {
   BusterPlanJobStoreOptions,
   BusterRemotePlanServiceOptions,

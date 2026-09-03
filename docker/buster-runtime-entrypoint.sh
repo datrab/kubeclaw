@@ -128,6 +128,7 @@ EOF
 RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
   BUSTER_ALLOWED_SOURCE_SECRETS="${BUSTER_ALLOWED_SOURCE_SECRETS:-}" \
   BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \
+  BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
   BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
 const fs = require('fs');
@@ -136,6 +137,8 @@ const root = process.env.RUNTIME_CONFIG_ROOT;
 const registry = process.env.REGISTRY_REFERENCE;
 const plugins = '/app/skills/buster/plugins';
 const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')
+  .split(',').map((value) => value.trim()).filter(Boolean);
+const exactBrowserOrigins = (process.env.BUSTER_BROWSER_AXE_EXACT_ORIGINS || '')
   .split(',').map((value) => value.trim()).filter(Boolean);
 fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
   schemaVersion: 'pipeline-platform.v2',
@@ -162,7 +165,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
-  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http'],
+  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe'],
   directCommand: {
     executableCatalog: {
       node: '/usr/local/bin/node',
@@ -212,6 +215,16 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     allowedRequestHeaders: ['accept', 'authorization', 'content-type', 'x-api-key'],
     allowWebSocket: process.env.BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET === 'true',
     maximumRequestBytes: 1048576, maximumResponseBytes: 16777216, maximumExecutionMs: 120000,
+  },
+  browserAxe: {
+    allowedOrigins: exactBrowserOrigins,
+    allowedBrowsers: ['chromium', 'firefox', 'webkit'],
+    maximumCombinations: 32,
+    maximumConcurrency: 4,
+    maximumExecutionMs: 120000,
+    maximumResultBytes: 16777216,
+    maximumScreenshots: 16,
+    maximumScreenshotBytes: 8388608,
   },
 }, null, 2)}\n`);
 NODE

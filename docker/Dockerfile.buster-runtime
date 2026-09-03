@@ -71,6 +71,8 @@ ENV PATH="/app/node_modules/.bin:${PATH}" \
 
 COPY package.json package-lock.json /app/
 COPY contracts /app/contracts
+# This copy is the production provider payload. The runtime discovers every
+# role-approved provider below /app/skills/buster/plugins, including Axe.
 COPY skills /app/skills
 COPY scripts/build-plugin-sandbox.mjs /app/scripts/build-plugin-sandbox.mjs
 COPY tests/verification/contracts/check-pipeline-container-build-production.mts /app/tests/verification/contracts/check-pipeline-container-build-production.mts
@@ -81,7 +83,7 @@ RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
     && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \
     && chown -R builder:builder /app
 
-RUN node /app/node_modules/playwright/cli.js install --with-deps chromium \
+RUN node /app/node_modules/playwright/cli.js install --with-deps chromium firefox webkit \
     && chown -R builder:builder /ms-playwright
 
 COPY skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime

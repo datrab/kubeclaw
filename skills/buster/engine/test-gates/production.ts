@@ -41,6 +41,22 @@ function optionalStringArray(value: unknown, label: string): readonly string[] {
   return [...value] as string[];
 }
 
+function browserExecutableMap(value: unknown, label: string): Partial<Readonly<Record<'chromium' | 'firefox' | 'webkit', string>>> {
+  if (value === undefined) return {};
+  const source = object(value, label);
+  const allowed = new Set(['chromium', 'firefox', 'webkit']);
+  if (Object.keys(source).some((name) => !allowed.has(name))) throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${label}`);
+  const result: Partial<Record<'chromium' | 'firefox' | 'webkit', string>> = {};
+  for (const [name, executable] of Object.entries(source)) {
+    if (typeof executable !== 'string' || !path.isAbsolute(executable)) throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${label}`);
+    let canonical: string;
+    try { canonical = fs.realpathSync(executable); fs.accessSync(canonical, fs.constants.X_OK); }
+    catch { throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${label}`); }
+    result[name as 'chromium' | 'firefox' | 'webkit'] = canonical;
+  }
+  return result;
+}
+
 function integerArray(value: unknown, label: string, maximum: number): readonly number[] {
   if (!Array.isArray(value) || value.length === 0 || value.length > 32
     || value.some((item) => !Number.isSafeInteger(item) || Number(item) < 1 || Number(item) > maximum)) {
@@ -134,6 +150,8 @@ export function loadProductionBusterRemotePlanRuntime(
   }
   const networkHttpSource = value.networkHttp === undefined ? null : object(value.networkHttp, 'networkHttp');
   if (allowedCapabilities.has('network.http') && !networkHttpSource) throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED');
+  const browserAxeSource = value.browserAxe === undefined ? null : object(value.browserAxe, 'browserAxe');
+  if (allowedCapabilities.has('browser.axe') && !browserAxeSource) throw new Error('BUSTER_BROWSER_AXE_CONFIG_REQUIRED');
   const stateRoot = path.resolve(directory, value.stateRoot as string);
   const service = new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(stateRoot, {
@@ -228,6 +246,17 @@ export function loadProductionBusterRemotePlanRuntime(
         allowedRequestHeaders: stringArray(networkHttpSource.allowedRequestHeaders, 'networkHttp.allowedRequestHeaders'),
       }),
       allowWebSocket: networkHttpSource.allowWebSocket === true,
+    } } : {}),
+    ...(browserAxeSource ? { browserAxe: {
+      allowedOrigins: optionalStringArray(browserAxeSource.allowedOrigins, 'browserAxe.allowedOrigins'),
+      allowedBrowsers: stringArray(browserAxeSource.allowedBrowsers, 'browserAxe.allowedBrowsers') as ('chromium' | 'firefox' | 'webkit')[],
+      browserExecutables: browserExecutableMap(browserAxeSource.browserExecutables, 'browserAxe.browserExecutables'),
+      maximumCombinations: integer(browserAxeSource.maximumCombinations, 'browserAxe.maximumCombinations'),
+      maximumConcurrency: integer(browserAxeSource.maximumConcurrency, 'browserAxe.maximumConcurrency'),
+      maximumExecutionMs: integer(browserAxeSource.maximumExecutionMs, 'browserAxe.maximumExecutionMs'),
+      maximumResultBytes: integer(browserAxeSource.maximumResultBytes, 'browserAxe.maximumResultBytes'),
+      maximumScreenshots: integer(browserAxeSource.maximumScreenshots, 'browserAxe.maximumScreenshots'),
+      maximumScreenshotBytes: integer(browserAxeSource.maximumScreenshotBytes, 'browserAxe.maximumScreenshotBytes'),
     } } : {}),
   });
   const tlsSource = value.tls === undefined ? null : object(value.tls, 'tls');

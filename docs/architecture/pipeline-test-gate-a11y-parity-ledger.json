@@ -1,0 +1,30 @@
+{
+  "schemaVersion":"pipeline-test-gate-suite-parity-ledger.v1","suite":"a11y","successor":"kubeclaw.axe@1","baseline":"docs/architecture/pipeline-test-gate-a11y-baseline.json","expectedItemCount":24,
+  "authority":{"old":"deleted","replacement":"authoritative"},"cutover":{"status":"complete","authority":"replacement-only","proof":"tests/verification/contracts/check-pipeline-a11y-cutover.mts"},
+  "entries":{
+    "A11Y-001":{"disposition":"preserved","status":"proved","rationale":"The replacement executes the real Axe engine inside a real browser process.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-002":{"disposition":"improved","status":"proved","rationale":"One declared node can scan an explicit bounded list of application routes.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-003":{"disposition":"improved","status":"proved","rationale":"Named profiles make browser and viewport selection visible in reviewed source.","proof":["tests/verification/contracts/check-pipeline-a11y-implementation.mts"]},
+    "A11Y-004":{"disposition":"preserved","status":"proved","rationale":"The provider includes deterministic desktop and mobile Chromium profile defaults.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-005":{"disposition":"improved","status":"proved","rationale":"Operator policy and the production preflight require Chromium, Firefox, and WebKit browser engines; the deployed execution remains production-pending.","proof":["tests/verification/e2e/nova-a11y-production-preflight.mts"]},
+    "A11Y-006":{"disposition":"improved","status":"proved","rationale":"Provider details record the exact version reported by each running browser.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-007":{"disposition":"improved","status":"proved","rationale":"Every route and profile combination receives a new isolated browser context.","proof":["tests/verification/contracts/check-pipeline-a11y-implementation.mts"]},
+    "A11Y-008":{"disposition":"improved","status":"proved","rationale":"An operator limit bounds concurrent combination execution inside the capability.","proof":["tests/verification/contracts/check-pipeline-a11y-implementation.mts"]},
+    "A11Y-009":{"disposition":"preserved","status":"proved","rationale":"The provider passes the reviewed project tag list directly to Axe.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-010":{"disposition":"preserved","status":"proved","rationale":"The provider applies each reviewed excluded selector to the Axe builder.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-011":{"disposition":"improved","status":"proved","rationale":"Every unaccepted violation node contributes a blocking failed result count.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-012":{"disposition":"improved","status":"proved","rationale":"An acceptance applies only to one exact rule, route, and selector tuple.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-013":{"disposition":"improved","status":"proved","rationale":"The strict schema requires a useful reason and an explicit expiry date.","proof":["skills/buster/plugins/axe/schemas/config.schema.json"]},
+    "A11Y-014":{"disposition":"improved","status":"proved","rationale":"The provider ignores an acceptance after its final UTC expiry instant.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-015":{"disposition":"improved","status":"proved","rationale":"Accepted violations stay in findings with their reason and expiry date.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-016":{"disposition":"improved","status":"proved","rationale":"Incomplete Axe rules remain visible as informational review findings.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-017":{"disposition":"preserved","status":"proved","rationale":"The provider writes the complete Axe result without duplicated image bytes.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-018":{"disposition":"improved","status":"proved","rationale":"Failed elements produce separate bounded PNG screenshot evidence files.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-019":{"disposition":"improved","status":"proved","rationale":"Operator policy bounds combinations, concurrency, execution, results, and screenshots.","proof":["tests/verification/contracts/check-pipeline-a11y-implementation.mts"]},
+    "A11Y-020":{"disposition":"improved","status":"proved","rationale":"Only operator origins and exact typed fixture origins authorize navigation.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-021":{"disposition":"improved","status":"proved","rationale":"Real HTTP, WebSocket, popup, redirect, and WebRTC egress paths are denied at browser-context scope.","proof":["skills/buster/plugins/axe/tests/live-function.test.ts"]},
+    "A11Y-022":{"disposition":"improved","status":"proved","rationale":"Completion and errors close contexts and browser processes; deployed cancellation remains part of production acceptance.","proof":["tests/verification/contracts/check-pipeline-a11y-implementation.mts"]},
+    "A11Y-023":{"disposition":"preserved","status":"proved","rationale":"Project setup converts safe routes, tags, exclusions, time, and deployment input.","proof":["tests/skills/nova/project_setup/progress-scaffold.test.mjs"]},
+    "A11Y-024":{"disposition":"improved","status":"proved","rationale":"Project setup stops numeric threshold migration and requests exact acceptances.","proof":["tests/skills/nova/project_setup/progress-scaffold.test.mjs"]}
+  }
+}

@@ -52,7 +52,6 @@ const ENVIRONMENT_BOUNDARIES = [
 ];
 
 const DYNAMIC_MODULE_BOUNDARIES = [
-  'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/a11y.ts',
   'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
   'skills/nova/pipeline.ts',
   'skills/common/plugin-runtime/foundation/isolation/child.mjs',

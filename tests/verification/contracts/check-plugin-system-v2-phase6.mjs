@@ -10,6 +10,9 @@ const core = await import(pathToFileURL(
 const { verifyPinnedPackages } = await import(pathToFileURL(
   path.resolve('skills/nova/core/execution/engine-snapshots.ts'),
 ).href);
+const { runRoot: resolveRunRoot } = await import(pathToFileURL(
+  path.resolve('skills/nova/core/execution/run-root.ts'),
+).href);
 const runnerSource = fs.readFileSync(
   'skills/nova/core/execution/runner.ts',
   'utf8',
@@ -217,12 +220,7 @@ try {
   assert.equal(cleanConditionalResult.stages.get('architecture-approval').status, 'skipped');
   assert.equal(cleanConditionalResult.stages.get('architecture-approval').attemptsUsed, 0);
   assert.equal(cleanConditionalResult.stages.get('forge').status, 'succeeded');
-  const cleanConditionalRoot = path.join(
-    temporary,
-    'state',
-    'runs',
-    'run_conditional-clean',
-  );
+  const cleanConditionalRoot = resolveRunRoot(platform.storageRoot, 'run:conditional-clean');
   const cleanConditionalLines = fs.readFileSync(
     path.join(cleanConditionalRoot, 'events.jsonl'),
     'utf8',
@@ -270,10 +268,9 @@ try {
     cleanConditional,
     'run:conditional-recovery',
   );
-  const activationRecoveryRoot = path.join(
+  const activationRecoveryRoot = resolveRunRoot(
     recoveryPlatformForActivation.storageRoot,
-    'runs',
-    'run_conditional-recovery',
+    'run:conditional-recovery',
   );
   const activationRecoveryEventsFile = path.join(activationRecoveryRoot, 'events.jsonl');
   const activationRecoveryLines = fs.readFileSync(
@@ -338,7 +335,7 @@ try {
     definition.maxConcurrency,
   ).digest);
 
-  const runRoot = path.join(temporary, 'state', 'runs', 'run_phase6');
+  const runRoot = resolveRunRoot(platform.storageRoot, 'run:phase6');
   const storedGraph = JSON.parse(fs.readFileSync(path.join(runRoot, 'graph-snapshot.json'), 'utf8'));
   assert.equal(storedGraph.digest, result.identity.graphDigest);
   const registrySnapshotFile = path.join(runRoot, 'registry-snapshot.json');
@@ -398,9 +395,7 @@ try {
   };
   await core.runPipelineV2(recoveryPlatform, definition, 'run:phase6-recovery');
   const recoveryEventsFile = path.join(
-    recoveryPlatform.storageRoot,
-    'runs',
-    'run_phase6-recovery',
+    resolveRunRoot(recoveryPlatform.storageRoot, 'run:phase6-recovery'),
     'events.jsonl',
   );
   const recoveryLines = fs.readFileSync(recoveryEventsFile, 'utf8').trim().split('\n');
@@ -490,26 +485,18 @@ try {
     2,
     'administrative reopening authorizes one attempt without resetting the consumed budget',
   );
+  const administrativeRunRoot = resolveRunRoot(
+    platform.storageRoot,
+    'run:administrative-reopen',
+  );
   const administrativeRecords = new core.FileJournal(
-    path.join(
-      temporary,
-      'state',
-      'runs',
-      'run_administrative-reopen',
-      'administrative-decisions.jsonl',
-    ),
+    path.join(administrativeRunRoot, 'administrative-decisions.jsonl'),
   ).records();
   assert.equal(administrativeRecords.length, 1);
   assert.equal(administrativeRecords[0].entry.actor.id, 'admin:test');
   assert.equal(
     new core.FileJournal(
-      path.join(
-        temporary,
-        'state',
-        'runs',
-        'run_administrative-reopen',
-        'events.jsonl',
-      ),
+      path.join(administrativeRunRoot, 'events.jsonl'),
     ).records().filter(({ entry }) => entry.type === 'attempt.created').length,
     2,
     'concurrent idempotent calls authorize only one additional attempt',
@@ -523,12 +510,7 @@ try {
     idempotencyKey: 'decision-key:administrative-crash-window',
     runId: crashWindowRunId,
   };
-  const crashWindowRoot = path.join(
-    temporary,
-    'state',
-    'runs',
-    'run_administrative-crash-window',
-  );
+  const crashWindowRoot = resolveRunRoot(platform.storageRoot, crashWindowRunId);
   new core.FileJournal(
     path.join(crashWindowRoot, 'administrative-decisions.jsonl'),
   ).append(crashWindowDecision);
@@ -645,7 +627,7 @@ try {
     'core cancellation must not wait for a plugin that ignores its abort signal',
   );
   const cancellationEvents = fs.readFileSync(
-    path.join(temporary, 'state', 'runs', 'run_cancellation', 'events.jsonl'),
+    path.join(resolveRunRoot(platform.storageRoot, 'run:cancellation'), 'events.jsonl'),
     'utf8',
   );
   assert.equal(

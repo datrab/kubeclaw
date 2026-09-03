@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import { artifactFromWrite } from '../../../skills/nova/core/execution/artifact-checkpoints.ts';
 import { runPipelineV2 } from '../../../skills/nova/core/execution/engine.ts';
+import { runRoot } from '../../../skills/nova/core/execution/run-root.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-checkpoint-recovery-'));
 const platformPath = path.join(temporary, 'platform.json');
@@ -68,7 +69,7 @@ async function waitForMarker(child) {
 }
 
 function lifecycle() {
-  const journal = path.join(temporary, 'state', 'runs', runId.replaceAll(':', '_'), 'events.jsonl');
+  const journal = path.join(runRoot(platform.storageRoot, runId), 'events.jsonl');
   return fs.readFileSync(journal, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line).entry);
 }
 

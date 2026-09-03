@@ -472,3 +472,53 @@ test('progress scaffold rejects a legacy bundle suite without an explicit output
   })}\n`);
   assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_BUNDLE_CONFIGURATION_RETIRED:01-foundation/u);
 });
+
+test('progress scaffold migrates a11y into an axe provider linked to the deployment', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['a11y'],
+    test_config: { a11y: { path: '/account', tags: ['wcag2aa'], exclude: ['.third-party'], timeout: 20000 } },
+  } }, gates: {} })}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    fixtures: { deploy: { uses: 'kubeclaw.kubernetes-fixture@1', config: {} } },
+  } }, gates: {} })}\n`);
+  run(root, ['--project', 'demo']);
+  const scaffold = readJson(path.join(swarm, 'progress.scaffold.json'));
+  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
+  assert.equal(scaffold.modules['01-foundation'].test_config, undefined);
+  assert.deepEqual(scaffold.pipeline.modules['01-foundation'].tests.axe, {
+    uses: 'kubeclaw.axe@1', mode: 'blocking', retries: 0, concurrencyGroup: 'browser-axe',
+    config: { routes: ['/account'], profiles: ['desktop', 'mobile'], tags: ['wcag2aa'], exclude: ['.third-party'], timeoutMs: 20000 },
+    needs: ['deploy'], inputs: { deployment: { from: 'deploy', output: 'deployment', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } },
+  });
+});
+
+test('progress scaffold rejects retired a11y numeric thresholds', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['a11y'],
+    test_config: { a11y: { thresholds: { critical: 0 } } },
+  } }, gates: {} })}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_A11Y_THRESHOLDS_RETIRED:01-foundation/u);
+});
+
+test('progress scaffold rejects an a11y timeout outside the provider contract', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['a11y'],
+    test_config: { a11y: { timeout: 120001 } },
+  } }, gates: {} })}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_A11Y_TIMEOUT_INVALID:01-foundation/u);
+});
+
+test('progress scaffold rejects retired a11y thresholds beside an existing Axe node', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['a11y'],
+    test_config: { a11y: { thresholds: { serious: 0 } } },
+  } }, gates: {} })}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    tests: { axe: { uses: 'kubeclaw.axe@1', config: { url: 'https://example.invalid', routes: ['/'] } } },
+  } }, gates: {} })}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_A11Y_THRESHOLDS_RETIRED:01-foundation/u);
+});

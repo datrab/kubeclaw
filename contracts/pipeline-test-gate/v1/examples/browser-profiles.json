@@ -1,0 +1,7 @@
+{
+  "schemaVersion":"kubeclaw.browser-profiles.v1",
+  "profiles":{
+    "firefox-desktop":{"browser":"firefox","viewport":{"width":1440,"height":900},"colorScheme":"light","reducedMotion":"no-preference","locale":"en-US","timezoneId":"UTC","hasTouch":false,"isMobile":false,"deviceScaleFactor":1},
+    "webkit-mobile":{"browser":"webkit","viewport":{"width":390,"height":844},"colorScheme":"light","reducedMotion":"reduce","locale":"en-US","timezoneId":"UTC","hasTouch":true,"isMobile":true,"deviceScaleFactor":1}
+  }
+}

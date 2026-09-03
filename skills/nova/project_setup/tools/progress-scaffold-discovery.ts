@@ -95,6 +95,7 @@ function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | unde
   delete config.bundle;
   delete config.manifest;
   delete config.api;
+  delete config.a11y;
   if (isPlainObject(config.serve)) {
     for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
       'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
@@ -260,6 +261,31 @@ function legacyApiNode(existingConfig: unknown, repositoryRoot: string, projectS
       schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } } } : {}) };
 }
 
+function legacyA11yNode(existingConfig: unknown, scopeId: string, deploymentNode?: string): AnyRecord {
+  const config = objectOrEmpty(existingConfig);
+  const a11y = objectOrEmpty(config.a11y);
+  if (isPlainObject(a11y.thresholds)) {
+    throw new Error(`LEGACY_A11Y_THRESHOLDS_RETIRED:${scopeId}: replace numeric thresholds with exact rule, route, selector, reason, and expiry acceptances`);
+  }
+  const route = typeof a11y.path === 'string' && a11y.path.trim() ? a11y.path.trim() : '/';
+  if (!route.startsWith('/') || route.startsWith('//') || /[?#\r\n]/u.test(route)) {
+    throw new Error(`LEGACY_A11Y_PATH_INVALID:${scopeId}:${route}`);
+  }
+  if (a11y.timeout !== undefined
+    && (!Number.isSafeInteger(a11y.timeout) || Number(a11y.timeout) < 1000 || Number(a11y.timeout) > 120000)) {
+    throw new Error(`LEGACY_A11Y_TIMEOUT_INVALID:${scopeId}:${String(a11y.timeout)}`);
+  }
+  const values: AnyRecord = { routes: [route], profiles: ['desktop', 'mobile'],
+    tags: Array.isArray(a11y.tags) && a11y.tags.length ? structuredClone(a11y.tags) : ['wcag2a', 'wcag2aa'],
+    exclude: Array.isArray(a11y.exclude) ? structuredClone(a11y.exclude) : [],
+    ...(Number.isSafeInteger(a11y.timeout) ? { timeoutMs: a11y.timeout } : {}),
+    ...(deploymentNode ? {} : { url: `${TODO_PREFIX} provider-reachable browser origin or add a deployment input` }),
+  };
+  return { uses: 'kubeclaw.axe@1', mode: 'blocking', retries: 0, concurrencyGroup: 'browser-axe', config: values,
+    ...(deploymentNode ? { needs: [deploymentNode], inputs: { deployment: { from: deploymentNode, output: 'deployment',
+      schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } } } : {}) };
+}
+
 function inferTestConfig(input: AnyRecord): AnyRecord | undefined {
   if (isPlainObject(input.existingConfig)) return sanitizedTestConfig(input.existingConfig, input.suites);
   if (!Array.isArray(input.suites) || input.suites.length === 0) return undefined;
@@ -348,7 +374,7 @@ function withImageInput(node: unknown, buildNode: string): unknown {
 }
 
 function scopeWithProviders(existingScope: unknown, testConfig: unknown, options: {
-  addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; addApi: boolean; legacyUnitSelected: boolean;
+  addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; addApi: boolean; addA11y: boolean; legacyUnitSelected: boolean;
   projectSrcDir: string; repositoryRoot: string; swarmDir: string; scopeId: string;
 }): AnyRecord {
   const scope = objectOrEmpty(existingScope);
@@ -371,6 +397,7 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   const hasContainerBuild = existingContainerBuild !== undefined;
   const existingSizeBudget = Object.entries(tests).find(([, test]) => isPlainObject(test) && test.uses === 'kubeclaw.size-budget@1');
   const hasSizeBudget = existingSizeBudget !== undefined;
+  const generatedA11y = options.addA11y ? legacyA11yNode(testConfig, options.scopeId, deploymentNode) : null;
   const generatedBudget = !hasSizeBudget && options.addSizeBudget
     ? legacyBundleNodes(testConfig, options.projectSrcDir, options.repositoryRoot, options.scopeId) : {};
   const generatedBuild = !hasContainerBuild && options.addContainerBuild
@@ -379,6 +406,8 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   const combinedTests = { ...tests, ...generatedBuild, ...generatedBudget, ...exposure.tests,
     ...(options.addApi && !Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.api-flow@1')
       ? { 'api-flow': legacyApiNode(testConfig, options.repositoryRoot, options.projectSrcDir, options.scopeId, deploymentNode) } : {}),
+    ...(options.addA11y && !Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.axe@1')
+      ? { axe: generatedA11y } : {}),
     ...(!hasHttp && options.addHttp ? httpNodes(testConfig, deploymentNode) : {}) };
   const budgetNodeId = existingSizeBudget?.[0] ?? 'size-budget';
   const orderedTests = options.addSizeBudget
@@ -400,6 +429,7 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
       ...(options.addHttp || options.addExposure ? { http: 4 } : {}), ...(options.addSizeBudget ? { 'size-budget': 2 } : {}),
       ...(options.addExposure ? { 'tailscale-exposure': 1 } : {}),
       ...(options.addApi ? { api: 1 } : {}),
+      ...(options.addA11y ? { 'browser-axe': 2 } : {}),
       ...objectOrEmpty(scope.concurrencyLimits) } };
 }
 
@@ -423,12 +453,15 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
       const prior = objectOrEmpty(progressModules[id]);
       rejectRetiredKubernetesConfig(prior, id);
       const selected = prior.test_suites;
+      // Provider conversion consumes the raw prior record here. Sanitization
+      // applies only to the separately persisted residual progress record.
       return [id, scopeWithProviders(existingModules[id], prior.test_config, {
         addContainerBuild: Array.isArray(selected) && selected.includes('build'),
         addHttp: !Array.isArray(selected) || selected.includes('health'),
         addSizeBudget: Array.isArray(selected) && selected.includes('bundle'),
         addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
         addApi: Array.isArray(selected) && selected.includes('api'),
+        addA11y: Array.isArray(selected) && selected.includes('a11y'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
@@ -445,6 +478,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addSizeBudget: Array.isArray(selected) && selected.includes('bundle'),
         addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
         addApi: Array.isArray(selected) && selected.includes('api'),
+        addA11y: Array.isArray(selected) && selected.includes('a11y'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
