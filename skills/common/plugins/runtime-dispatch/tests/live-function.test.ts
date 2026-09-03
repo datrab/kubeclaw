@@ -54,8 +54,7 @@ const controlledPayload = { protocol: 'review', task: 'review', runtimePromptBud
 } };
 const preparedTask = prepareOpenClawTask(controlledPayload, '/work/.results/result.json', promptTarget);
 assert.equal(preparedTask.includes('runtimePromptBudget'), false);
-assert.match(preparedTask, /return exactly ANNOUNCE_SKIP as your final response/u);
-assert.doesNotMatch(preparedTask, /return the same raw JSON as your final response/u);
+assert.match(preparedTask, /return the same raw JSON as your final response/u);
 assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
   ...controlledPayload.runtimePromptBudget, tokenizerEncoding: 'cl100k_base',
 } }, '/work/.results/result.json', promptTarget), /OPENCLAW_PROMPT_TOKENIZER_MISMATCH/u);
@@ -118,6 +117,14 @@ const server = http.createServer((request, response) => {
           details: { status: 'accepted', childSessionKey: 'session:gateway-test', runId: 'run:gateway-test',
             resolvedModel: 'openai/gpt-5.6-sol' },
         },
+        source: 'core',
+      }));
+    } else if (parsed.tool === 'agents_wait') {
+      response.end(JSON.stringify({
+        ok: true,
+        toolName: 'agents_wait',
+        output: { content: [], details: { completed: [{ runId: 'run:gateway-test', status: 'done',
+          sessionKey: 'session:gateway-test' }], pending: [] } },
         source: 'core',
       }));
     } else if (parsed.tool === 'subagents') {
@@ -305,6 +312,7 @@ try {
             runtime: 'subagent',
             agentId: 'codex',
             controllerSessionKey: 'agent:codex:nova-review-controller',
+            collectorMode: true,
             model: 'openai/gpt-5.6-sol',
             thinking: 'high',
             cwd: gatewayCwd,
@@ -371,15 +379,17 @@ try {
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');
-    assert.match(String(spawnArgs.task), /return exactly ANNOUNCE_SKIP as your final response/u);
+    assert.match(String(spawnArgs.task), /return the same raw JSON as your final response/u);
+    assert.equal(spawnArgs.collect, true);
+    assert.match(String(spawnArgs.groupId), /^nova-[a-f0-9]{24}$/u);
     const durableResult = String(spawnArgs.task).match(/atomically to (.+\.json)\./u)?.[1];
     assert.ok(durableResult);
     assert.equal(
       path.dirname(durableResult),
       path.join(gatewayCwd, 'results'),
     );
-    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'subagents').length, 2);
-    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'subagents')
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait').length, 1);
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait')
       .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
     await assert.rejects(gatewayAdapters.invoke(

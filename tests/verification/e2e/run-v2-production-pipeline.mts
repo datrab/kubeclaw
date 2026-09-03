@@ -142,6 +142,7 @@ function runtimeTarget(
     runtime: 'subagent',
     agentId: 'main',
     controllerSessionKey: 'agent:main:nova-review-controller',
+    collectorMode: true,
     agentRole,
     model,
     thinking: openClawThinking,

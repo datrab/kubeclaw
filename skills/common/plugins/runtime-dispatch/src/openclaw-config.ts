@@ -1,7 +1,7 @@
 import type { OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
+const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'collectorMode', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
 
 function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, code: string): void { for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`); }
@@ -43,6 +43,7 @@ function targetValid(target: OpenClawTarget, endpoint: URL | null): boolean {
     target.maxPromptBytes === 900_000, target.maxInputTokens === 120_000,
     target.maxOutputTokens === 6_000, target.maxContextTokens === 128_000,
     target.maxInputTokens + target.maxOutputTokens <= target.maxContextTokens,
+    target.collectorMode !== true || target.runtime === 'subagent',
   ].every(Boolean);
 }
 
@@ -59,6 +60,7 @@ function parseTarget(id: string, raw: unknown): OpenClawTarget {
     maxPolls: numberValue(raw.maxPolls, 1_800), sessionTimeoutMs: numberValue(raw.sessionTimeoutMs, 1_800_000),
     resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),
     resultTokenSecret: optionalText(raw.resultTokenSecret),
+    collectorMode: raw.collectorMode === true,
     tokenizerEncoding: encodingValue(raw.tokenizerEncoding),
     maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),
     maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),

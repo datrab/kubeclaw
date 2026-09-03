@@ -11,6 +11,7 @@ export interface OpenClawTarget {
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
   readonly agentId: string; readonly agentRole: string; readonly model: string; readonly thinking: string;
   readonly controllerSessionKey?: string;
+  readonly collectorMode?: boolean;
   readonly cwd: string; readonly repositoryRoot: string; readonly pollMs: number; readonly maxPollMs: number;
   readonly maxPolls: number; readonly sessionTimeoutMs: number; readonly resultPathPrefix: string;
   readonly tokenizerEncoding: 'o200k_base' | 'cl100k_base'; readonly maxPromptBytes: number;
@@ -101,10 +102,7 @@ function sessionIdentity(value: unknown, label: string): OpenClawSessionIdentity
 }
 
 export function buildOpenClawTask(payload: JsonRecord, resultFile: string): string {
-  return buildRuntimeAgentTask(payload, resultFile).replace(
-    'After the atomic rename, return the same raw JSON as your final response.',
-    'After the atomic rename, return exactly ANNOUNCE_SKIP as your final response.',
-  );
+  return buildRuntimeAgentTask(payload, resultFile);
 }
 
 export function assertOpenClawPromptBudget(
@@ -179,6 +177,8 @@ async function spawnSession(context: AdapterActivationContext, target: OpenClawT
   const label = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`;
   const spawned = await gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
+    ...(target.collectorMode ? { collect: true,
+      groupId: `nova-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 24)}` } : {}),
     task,
     label,
     cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,

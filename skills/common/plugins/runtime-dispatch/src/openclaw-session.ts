@@ -44,6 +44,15 @@ function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: b
     ...(typeof model === 'string' ? { model } : {}) };
 }
 
+function collectorTerminal(value: unknown, identity: OpenClawSessionIdentity): OpenClawSessionState {
+  const source = openClawToolDetails(value);
+  if (!record(source) || !Array.isArray(source.completed)) return { terminal: false, state: 'unknown' };
+  const match = source.completed.find((entry) => record(entry) && entry.runId === identity.runId);
+  if (!record(match)) return { terminal: false, state: 'unknown' };
+  const state = String(match.status ?? 'unknown').toLowerCase();
+  return { terminal: true, state, ...(identity.model ? { model: identity.model } : {}) };
+}
+
 // eslint-disable-next-line max-params -- Capability context, authenticated target, tool, args, and idempotency are separate trust inputs.
 export async function gateway(context: AdapterActivationContext, target: OpenClawTarget, token: string, tool: string,
   args: JsonRecord, idempotencyKey?: string): Promise<unknown> {
@@ -70,9 +79,12 @@ export async function pollSession(context: AdapterActivationContext, target: Ope
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     if (Date.now() >= deadline) throw new Error('OPENCLAW_SESSION_TIMEOUT');
     const status = target.runtime === 'subagent'
-      ? await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) })
+      ? target.collectorMode
+        ? await gateway(context, target, token, 'agents_wait', { ids: [identity.runId], timeoutSeconds: 15 })
+        : await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) })
       : await gateway(context, target, token, 'session_status', { sessionKey: identity.sessionKey });
-    const result = terminal(status, identity, target.runtime === 'subagent');
+    const result = target.collectorMode ? collectorTerminal(status, identity)
+      : terminal(status, identity, target.runtime === 'subagent');
     if (result.terminal) return result;
     if (poll + 1 === target.maxPolls) throw new Error('OPENCLAW_SESSION_TIMEOUT');
     const delay = Math.min(target.maxPollMs, target.pollMs * (2 ** Math.min(poll, 8)));

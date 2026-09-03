@@ -144,6 +144,7 @@ try {
           runtime: 'subagent',
           agentId: 'main',
           controllerSessionKey: 'agent:main:nova-review-controller',
+          collectorMode: true,
           model,
           thinking,
           cwd: project,

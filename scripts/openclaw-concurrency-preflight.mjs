@@ -4,6 +4,14 @@ import { promisify } from 'node:util';
 
 const execute = promisify(execFile);
 const TERMINAL = new Set(['cancelled', 'canceled', 'completed', 'done', 'failed', 'succeeded']);
+const SUCCESSFUL = new Set(['completed', 'done', 'succeeded']);
+
+function boolean(value, fallback = false) {
+  if (value === undefined) return fallback;
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  throw new Error('OPENCLAW_PREFLIGHT_BOOLEAN_INVALID');
+}
 
 function argumentsMap(values) {
   const output = new Map();
@@ -99,6 +107,7 @@ async function main(values) {
   const agentId = args.get('agent-id') ?? 'main';
   const model = args.get('model');
   const thinking = args.get('thinking') ?? 'high';
+  const collectorMode = boolean(args.get('collector-mode'));
   if (!model) throw new Error('OPENCLAW_PREFLIGHT_MODEL_REQUIRED');
   const prefix = `nova-capacity-${Date.now()}`;
   const accepted = [];
@@ -107,9 +116,10 @@ async function main(values) {
       const label = `${prefix}-${index + 1}`;
       const details = await invoke('sessions_spawn', {
         runtime: 'subagent', mode: 'run', cleanup: 'delete', thread: false,
+        ...(collectorMode ? { collect: true, groupId: prefix } : {}),
         agentId, model, thinking,
         label,
-        task: `Capacity preflight ${index + 1}/${concurrency}. Do not call tools. Return exactly ANNOUNCE_SKIP.`,
+        task: `Capacity preflight ${index + 1}/${concurrency}. Do not call tools. Return exactly PREFLIGHT_OK.`,
       }, sessionKey, timeoutMs, `preflight-spawn:${prefix}:${index + 1}`);
       const identity = acceptedIdentity(details, label);
       accepted.push(identity);
@@ -124,18 +134,35 @@ async function main(values) {
     const deadline = Date.now() + timeoutMs;
     const completed = new Set();
     while (completed.size < concurrency && Date.now() < deadline) {
-      const details = await invoke('subagents', { action: 'list', recentMinutes: 10 }, sessionKey, timeoutMs);
-      for (const identity of accepted) {
-        const task = matchingTask(details, identity);
-        const state = typeof task?.status === 'string' ? task.status.toLowerCase() : '';
-        if (TERMINAL.has(state)) completed.add(identity.runId);
+      if (collectorMode) {
+        const pending = accepted.map(({ runId }) => runId).filter((runId) => !completed.has(runId));
+        const details = await invoke('agents_wait', { ids: pending, timeoutSeconds: 15 }, sessionKey, timeoutMs);
+        for (const item of Array.isArray(details.completed) ? details.completed : []) {
+          if (item && typeof item === 'object') {
+            const state = String(item.status).toLowerCase();
+            if (TERMINAL.has(state) && !SUCCESSFUL.has(state)) {
+              throw new Error(`OPENCLAW_PREFLIGHT_CHILD_FAILED:${String(item.runId)}:${state}`);
+            }
+            if (SUCCESSFUL.has(state)) completed.add(String(item.runId));
+          }
+        }
+      } else {
+        const details = await invoke('subagents', { action: 'list', recentMinutes: 10 }, sessionKey, timeoutMs);
+        for (const identity of accepted) {
+          const task = matchingTask(details, identity);
+          const state = typeof task?.status === 'string' ? task.status.toLowerCase() : '';
+          if (TERMINAL.has(state) && !SUCCESSFUL.has(state)) {
+            throw new Error(`OPENCLAW_PREFLIGHT_CHILD_FAILED:${identity.runId}:${state}`);
+          }
+          if (SUCCESSFUL.has(state)) completed.add(identity.runId);
+        }
       }
       if (completed.size < concurrency) await new Promise((resolve) => setTimeout(resolve, 500));
     }
     if (completed.size !== concurrency) throw new Error(`OPENCLAW_PREFLIGHT_COMPLETION_TIMEOUT:${completed.size}:${concurrency}`);
     return { schemaVersion: 'openclaw-concurrency-preflight.v1', requested: concurrency,
       accepted: accepted.length, completed: completed.size, model, thinking, controllerSessionKey: sessionKey,
-      completionAnnouncementsSuppressed: true, status: 'passed' };
+      collectorMode, completionAnnouncementsSuppressed: collectorMode, status: 'passed' };
   } catch (error) {
     await cancelAll(accepted, sessionKey, timeoutMs);
     throw error;

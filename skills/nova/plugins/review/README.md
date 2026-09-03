@@ -65,9 +65,9 @@ reads the compact artifact index and the bounded journal tail; it does not scan
 the large source-effect journal.
 
 Production OpenClaw targets should set a dedicated `controllerSessionKey` such as
-`agent:main:nova-review-controller`. Reviewer tasks finish with `ANNOUNCE_SKIP`;
-the adapter imports the authoritative atomic result file instead of scheduling a
-parent-agent completion turn. Before expensive compilation, run
+`agent:main:nova-review-controller` and `collectorMode: true`. Collector mode
+uses OpenClaw Swarm's supported non-announcing `collect`/`agents_wait` path; the
+adapter imports the authoritative atomic result file. Before expensive compilation, run
 `npm run runtime:preflight -- --concurrency <n> --model <model>` to prove that the
 requested number of real children can be admitted and completed through that
 controller without leaving active tasks.
