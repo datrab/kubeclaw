@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import type { OpenClawTarget, RuntimeSessionEvidence } from './openclaw.ts';
+import type { OpenClawSessionState } from './openclaw-session.ts';
 import { gateway } from './openclaw-session.ts';
 import { openClawToolDetails } from './openclaw-response.ts';
 
@@ -41,7 +42,7 @@ async function remoteResult(context: AdapterActivationContext, target: OpenClawT
 
 interface OpenClawResultRequest {
   readonly payload: JsonRecord; readonly relative: string; readonly key: string;
-  readonly startedAt: string; readonly state: string; readonly token: string;
+  readonly startedAt: string; readonly state: OpenClawSessionState; readonly token: string;
 }
 
 function terminalAssistantText(value: unknown): string {
@@ -77,12 +78,26 @@ function persistResult(root: string, relative: string, content: string): void {
 }
 
 async function localResult(context: AdapterActivationContext, target: OpenClawTarget,
-  relative: string, key: string, token: string): Promise<JsonRecord> {
+  relative: string, key: string, token: string, state: OpenClawSessionState): Promise<JsonRecord> {
   try {
     return await context.invokeConfidential('git.repository.read', { operation: 'read_text',
       resource: { type: 'git.repository.path', canonicalId: relative.split(path.sep).join('/') }, payload: {} }) as JsonRecord;
   } catch (error) {
     if (!(error instanceof Error) || !error.message.includes('REPOSITORY_FILE_NOT_FOUND')) throw error;
+    if (state.structured !== undefined) {
+      const content = JSON.stringify(state.structured);
+      if (typeof content !== 'string') throw new Error('OPENCLAW_COLLECTOR_STRUCTURED_RESULT_INVALID');
+      persistResult(target.repositoryRoot, relative, content);
+      return { content };
+    }
+    if (typeof state.result === 'string' && state.result.trim()) {
+      const content = requiredText(state.result, 'COLLECTOR_RESULT');
+      parseJsonText(content);
+      persistResult(target.repositoryRoot, relative, content);
+      return { content };
+    }
+    if (state.schemaError) throw new Error(`OPENCLAW_COLLECTOR_SCHEMA_INVALID:${state.schemaError}`);
+    if (state.error) throw new Error(`OPENCLAW_COLLECTOR_FAILED:${state.error}`);
     const history = await gateway(context, target, token, 'sessions_history',
       { sessionKey: key, limit: 1, includeTools: false });
     const content = terminalAssistantText(history);
@@ -98,12 +113,12 @@ export async function readOpenClawResult(
   const { payload, relative, key, startedAt, state, token } = request;
   const durable = target.resultEndpoint && target.resultTokenSecret
     ? await remoteResult(context, target, relative)
-    : await localResult(context, target, relative, key, token);
+    : await localResult(context, target, relative, key, token, state);
   const content = requiredText(durable.content, 'RESULT_FILE');
   const session: RuntimeSessionEvidence = {
     sessionId: key, startedAt, completedAt: new Date().toISOString(),
     transcriptDigest: crypto.createHash('sha256').update(content).digest('hex'),
-    termination: ['failed', 'error'].includes(state) ? 'blocked' : 'completed',
+    termination: ['failed', 'error'].includes(state.state) ? 'blocked' : 'completed',
   };
   return Object.freeze({ result: attachRuntimeEvidence(payload, parseJsonText(content), session), outputText: content });
 }

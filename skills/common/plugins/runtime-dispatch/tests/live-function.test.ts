@@ -99,6 +99,7 @@ process.env[environmentName] = token;
 const received = [];
 let spawnedLabel = '';
 let suppressResultFile = true;
+const collectorSummary = `Recovered lossless collector output: ${'x'.repeat(5_000)}`;
 const server = http.createServer((request, response) => {
   const chunks = [];
   request.on('data', (chunk) => chunks.push(chunk));
@@ -147,7 +148,9 @@ const server = http.createServer((request, response) => {
         ok: true,
         toolName: 'agents_wait',
         output: { content: [], details: { completed: [{ runId: 'run:gateway-test', status: 'done',
-          sessionKey: 'session:gateway-test' }], pending: [] } },
+          sessionKey: 'session:gateway-test',
+          result: JSON.stringify({ status: 'PASS', summary: collectorSummary }),
+          structured: { status: 'PASS', summary: collectorSummary } }], pending: [] } },
         source: 'core',
       }));
     } else if (parsed.tool === 'sessions_history') {
@@ -366,7 +369,7 @@ try {
       }],
       ['kubeclaw.repository-adapter:repository', {
         repositoryRoot: repository,
-        maxFileBytes: 2048,
+        maxFileBytes: 16_384,
       }],
       ['kubeclaw.artifact-store:artifact-store', {
         artifactRoot: path.join(repository, '.swarm', 'runtime-dispatch-test', 'gateway-artifacts'),
@@ -391,13 +394,15 @@ try {
       {
         operation: 'dispatch',
         resource: { type: 'runtime.agent', canonicalId: 'gateway' },
-        payload: { protocol: 'kubeclaw.review.v2', task: 'Review gateway behavior.' },
+        payload: { protocol: 'kubeclaw.review.v2', task: 'Review gateway behavior.',
+          outputContract: { type: 'object', additionalProperties: false, required: ['status', 'summary'],
+            properties: { status: { const: 'PASS' }, summary: { type: 'string' } } } },
       },
       new AbortController().signal,
     );
     const runtimeIdentity = { targetId: 'gateway', runtime: 'subagent', agentId: 'codex',
       model: 'openai/gpt-5.6-sol', thinking: 'high' };
-    assert.deepEqual(gateway, { result: { status: 'PASS', summary: 'Recovered terminal output' },
+    assert.deepEqual(gateway, { result: { status: 'PASS', summary: collectorSummary },
       runtimeEvidence: { schemaVersion: 'runtime-agent-attestation.v1', ...runtimeIdentity,
         identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(runtimeIdentity)).digest('hex')}` } });
     const spawnRequests = received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn');
@@ -410,6 +415,8 @@ try {
       'the adapter must serialize the assignment once');
     assert.match(String(spawnArgs.task), /return the same raw JSON as your final response/u);
     assert.equal(spawnArgs.collect, true);
+    assert.deepEqual(spawnArgs.outputSchema, { type: 'object', additionalProperties: false,
+      required: ['status', 'summary'], properties: { status: { const: 'PASS' }, summary: { type: 'string' } } });
     assert.match(String(spawnArgs.groupId), /^nova-[a-f0-9]{24}$/u);
     const durableResult = String(spawnArgs.task).match(/atomically to (.+\.json)\./u)?.[1];
     assert.ok(durableResult);
@@ -420,12 +427,8 @@ try {
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait').length, 1);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait')
       .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
-    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 1);
-    assert.deepEqual(
-      JSON.parse(received.find((entry) => JSON.parse(entry.body).tool === 'sessions_history')!.body).args,
-      { sessionKey: 'session:gateway-test', limit: 1, includeTools: false },
-      'result recovery must request only the terminal message so a large task prompt cannot overflow history output',
-    );
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0,
+      'collector completion is the lossless result channel; bounded session history is not a result transport');
     const recoveredGateway = await gatewayAdapters.invoke(
       'runtime.dispatch',
       { ...attempt, attemptId: 'attempt:test:retry', attemptNumber: 2 },
@@ -433,14 +436,16 @@ try {
       {
         operation: 'dispatch',
         resource: { type: 'runtime.agent', canonicalId: 'gateway' },
-        payload: { protocol: 'kubeclaw.review.v2', task: 'Review gateway behavior.' },
+        payload: { protocol: 'kubeclaw.review.v2', task: 'Review gateway behavior.',
+          outputContract: { type: 'object', additionalProperties: false, required: ['status', 'summary'],
+            properties: { status: { const: 'PASS' }, summary: { type: 'string' } } } },
       },
       new AbortController().signal,
     );
     assert.deepEqual(recoveredGateway, gateway);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn').length, 1,
       'a retry with a new engine idempotency key reattaches by stable model payload identity');
-    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 1);
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
     await assert.rejects(gatewayAdapters.invoke(
       'runtime.dispatch',
       attempt,

@@ -4,7 +4,16 @@ import { assertOpenClawToolAccepted, openClawToolDetails, record } from './openc
 
 type JsonRecord = Record<string, unknown>;
 function first(...values: readonly unknown[]): unknown { return values.find((value) => value !== undefined && value !== null); }
-export interface OpenClawSessionState { readonly terminal: boolean; readonly state: string; readonly model?: string; readonly taskId?: string }
+export interface OpenClawSessionState {
+  readonly terminal: boolean;
+  readonly state: string;
+  readonly model?: string;
+  readonly taskId?: string;
+  readonly result?: string;
+  readonly structured?: unknown;
+  readonly error?: string;
+  readonly schemaError?: string;
+}
 export interface OpenClawSessionIdentity {
   readonly sessionKey: string;
   readonly runId: string;
@@ -115,7 +124,15 @@ function collectorTerminal(value: unknown, identity: OpenClawSessionIdentity): O
   const match = source.completed.find((entry) => record(entry) && entry.runId === identity.runId);
   if (!record(match)) return { terminal: false, state: 'unknown' };
   const state = String(match.status ?? 'unknown').toLowerCase();
-  return { terminal: true, state, ...(identity.model ? { model: identity.model } : {}) };
+  return {
+    terminal: true,
+    state,
+    ...(identity.model ? { model: identity.model } : {}),
+    ...(typeof match.result === 'string' ? { result: match.result } : {}),
+    ...(match.structured !== undefined ? { structured: match.structured } : {}),
+    ...(typeof match.error === 'string' ? { error: match.error } : {}),
+    ...(typeof match.schemaError === 'string' ? { schemaError: match.schemaError } : {}),
+  };
 }
 
 // eslint-disable-next-line max-params -- Capability context, authenticated target, tool, args, and idempotency are separate trust inputs.
