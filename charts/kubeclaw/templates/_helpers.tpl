@@ -3,7 +3,11 @@ Generate the full name for resources.
 Uses agentRole to differentiate between agent instances.
 */}}
 {{- define "kubeclaw.fullname" -}}
-{{- printf "agent-%s" .Values.agentRole | trunc 63 | trimSuffix "-" -}}
+{{- $role := required "agentRole is required" .Values.agentRole -}}
+{{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,55}[a-z0-9])?$" $role) -}}
+{{- fail "agentRole must be a DNS label of at most 57 characters" -}}
+{{- end -}}
+{{- printf "agent-%s" $role -}}
 {{- end -}}
 
 {{/*

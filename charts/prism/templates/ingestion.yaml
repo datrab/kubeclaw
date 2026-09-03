@@ -14,7 +14,7 @@ spec:
       securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
       containers:
         - name: ingestion
-          image: "{{ .Values.images.ingestion.repository }}:{{ .Values.images.ingestion.tag }}"
+          image: {{ include "prism.imageRef" .Values.images.ingestion | quote }}
           imagePullPolicy: {{ .Values.images.ingestion.pullPolicy }}
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           env:

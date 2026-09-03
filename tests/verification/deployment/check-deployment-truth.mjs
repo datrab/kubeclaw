@@ -20,6 +20,8 @@ const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
 const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const prismJobs = read('charts/prism/templates/jobs.yaml');
+const prismValues = read('charts/prism/values.yaml');
+const prismNetworkPolicies = read('charts/prism/templates/networkpolicy.yaml');
 const generalDockerfile = read('docker/Dockerfile.general');
 const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
@@ -37,6 +39,21 @@ const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
 const networkPolicies = read('my-values/infra/network-policies.yaml');
+
+assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
+  'Prism chart must use digest references without forced pulls');
+assert.match(prismWorkloads, /control\.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage/,
+  'Prism control must not scale a shared ReadWriteOnce artifact volume across nodes');
+assert.match(prismNetworkPolicies,
+  /name:\s*prism-openclaw-agent[\s\S]*ternary 8443 8080 \.Values\.workerTrust\.spiffe\.enabled/,
+  'Prism agent egress must reach control with and without SPIFFE');
+assert.doesNotMatch(networkPolicies,
+  /name:\s*kubeclaw-agents-ingress[\s\S]*cidr:\s*0\.0\.0\.0\/0[\s\S]*port:\s*18789/,
+  'agent gateway ports must not be open to arbitrary ingress');
+assert.match(deploy, /PRISM_\$\{upper\}_IMAGE_DIGEST must be sha256:/,
+  'Prism deployment must require immutable image digests');
+assert.doesNotMatch(deploy, /rollout restart deployment\/"\$prism_workload"/,
+  'Prism deployment must not restart immutable workloads to pull mutable tags');
 
 for (const [label, source] of [
   ['chart', chart],

@@ -22,13 +22,13 @@ const databaseMigrate=readFileSync(new URL("../../../skills/prism/server/migrate
 const firstMigration=readFileSync(new URL("../../../skills/prism/storage/migrations/001_prism.sql",import.meta.url),"utf8");
 const imageWorkflow=readFileSync(new URL("../../../.github/workflows/build-images.yaml",import.meta.url),"utf8");
 for(const command of ["prism)","prism-smoke)","prism-e2e)","prism-status)","teardown-prism)"])assert(source.includes(command),`missing deploy command: ${command}`);
-for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_TAG","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
+for(const guard of ["--atomic","PRISM_CONTROL_IMAGE_REPOSITORY","PRISM_CONTROL_IMAGE_DIGEST","Prism values file is missing"])assert(source.includes(guard),`missing Prism deployment behavior: ${guard}`);
 assert.match(source,/cmd_prism\(\)[\s\S]*require_spiffe_csi_driver[\s\S]*cmd_prism_secrets/u,
   "Prism deployment must fail before Helm when the SPIFFE CSI driver is unavailable");
 assert.match(source,/cmd_prism\(\)[\s\S]*require_helm_release_idle "\$PRISM_RELEASE" "\$PRISM_NAMESPACE"[\s\S]*require_helm_release_idle agent-prism "\$PRISM_NAMESPACE"[\s\S]*cmd_prism_secrets/u,
   "Prism deployment must reject pending operations for both owned Helm releases before changing cluster state");
 assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not require an approver allowlist");
-assert(!source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must use ordinary tagged images");
+assert(source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must require an immutable control image digest");
 assert(!source.includes("reconcile_prism_provider_secret"),"Prism worker deployment must not own model-provider credentials");
 assert(source.includes("PRISM_AGENT_VALUES_FILE"),"Prism must deploy its OpenClaw agent release");
 assert.match(source,/prism:archive_url[\s\S]*PRISM_CODE_BUNDLE_ARCHIVE_URL[\s\S]*cmd_prism\(\)[\s\S]*append_code_bundle_override_file[\s\S]*-f "\$prism_bundle_override"/u,
@@ -48,17 +48,14 @@ for(const sourceText of [agentValues,agentBridge]){
 assert(source.includes("Missing image pull Secret: ${PRISM_NAMESPACE}/${PRISM_IMAGE_PULL_SECRET_NAME}"),"Prism must preflight its configured pull Secret");
 assert(source.includes("secretsToCopy: [prism-test-runtime, prism-test-postgresql-auth, prism-test-ghcr, openclaw-shared-secrets, git-deploy-key-nova]"),"leased Prism acceptance must copy the OpenClaw agent and isolated fixture Secrets through the broker");
 assert(source.includes("[[ $lease_phase == Ready ]]"),"leased Prism acceptance must fail closed unless the broker reports Ready");
-assert(!chartValues.includes("digest:"),"Prism chart values must not expose image digests");
+assert(chartValues.includes("digest: \"\""),"Prism chart values must require image digests from deployment authority");
 assert(chartValues.includes("imagePullSecrets:"),"Prism chart defaults must configure GHCR authentication");
 assert(imageWorkflow.includes("type=raw,value=latest"),"Prism image workflow must publish the default chart tag");
 assert.match(studioServer,/prismProxyResponseHeaders\(upstream\.headers\)[\s\S]*setHeader\("set-cookie", forwarded\.setCookies\)/u,
   "Prism Studio must forward the session and CSRF Set-Cookie headers as separate values");
-for(const values of [chartValues,productionValues]){
-  assert(!values.includes("tag: main"),"Prism values must not request the unpublished main image tag");
-  for(const kind of ["control","studio","worker","ingestion"])
-    assert(values.includes(`${kind}: { repository: ghcr.io/datrab/kubeclaw-prism-${kind}, tag: latest`),
-      `Prism ${kind} values must use the published latest image tag`);
-}
+for(const values of [chartValues,productionValues])for(const kind of ["control","studio","worker","ingestion"])
+  assert(values.includes(`${kind}: { repository: ghcr.io/datrab/kubeclaw-prism-${kind}, digest: \"\"`),
+    `Prism ${kind} values must require an immutable digest`);
 assert(/imagePullSecrets:\r?\n  - name: ghcr-secret/u.test(productionValues),"Prism production values must reuse the Nova/Buster GHCR Secret");
 assert(productionValues.includes("studio: { replicas: 1"),"Prism Studio must default to one production replica");
 assert(productionValues.includes("worker: { replicas: 1"),"Prism Worker must default to one production replica");
@@ -71,8 +68,8 @@ assert.match(jobs,/name: bootstrap-database-roles[\s\S]*mountPath: \/tmp[\s\S]*n
   "Prism migration containers need a writable temporary filesystem under a read-only root");
 assert.match(source,/capture_prism_migration_logs[\s\S]*bootstrap-database-roles migrate[\s\S]*Prism Helm deployment failed; captured migration output follows/u,
   "Prism deployment must preserve migration diagnostics before atomic cleanup");
-assert.match(source,/for prism_workload in prism-control prism-studio prism-worker prism-ingestion[\s\S]*kubectl rollout restart deployment\/"\$prism_workload"/u,
-  "Prism deploys must restart tagged application images after an unchanged Helm render");
+assert.doesNotMatch(source,/kubectl rollout restart deployment\/"\$prism_workload"/u,
+  "Prism deploys must not restart digest-pinned application images");
 assert.match(databaseBootstrap,/ECONNREFUSED[\s\S]*maxAttempts = 60[\s\S]*retrying bootstrap/u,
   "Prism database bootstrap must tolerate bounded PostgreSQL startup races");
 assert.match(databaseBootstrap,/GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA prism TO prism_runtime[\s\S]*ALTER DEFAULT PRIVILEGES FOR ROLE prism_migrator/u,

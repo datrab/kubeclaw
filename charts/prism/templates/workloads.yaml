@@ -1,3 +1,6 @@
+{{- if ne (int .Values.control.replicas) 1 }}
+{{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
+{{- end }}
 {{- range $name := list "control" "studio" "worker" }}
 {{- $image := index $.Values.images $name }}
 apiVersion: apps/v1
@@ -28,7 +31,7 @@ spec:
           labelSelector: { matchLabels: { app: prism-{{ $name }} } }
       containers:
         - name: {{ $name }}
-          image: "{{ $image.repository }}:{{ $image.tag }}"
+          image: {{ include "prism.imageRef" $image | quote }}
           imagePullPolicy: {{ $image.pullPolicy }}
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           env:

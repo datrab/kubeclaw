@@ -91,13 +91,13 @@ PRISM_AGENT_VALUES_FILE="${PRISM_AGENT_VALUES_FILE:-$VALUES_DIR/prism-agent-valu
 PRISM_HELM_TIMEOUT="${PRISM_HELM_TIMEOUT:-45m}"
 PRISM_ROLLOUT_TIMEOUT="${PRISM_ROLLOUT_TIMEOUT:-45m}"
 PRISM_CONTROL_IMAGE_REPOSITORY="${PRISM_CONTROL_IMAGE_REPOSITORY:-}"
-PRISM_CONTROL_IMAGE_TAG="${PRISM_CONTROL_IMAGE_TAG:-}"
+PRISM_CONTROL_IMAGE_DIGEST="${PRISM_CONTROL_IMAGE_DIGEST:-}"
 PRISM_STUDIO_IMAGE_REPOSITORY="${PRISM_STUDIO_IMAGE_REPOSITORY:-}"
-PRISM_STUDIO_IMAGE_TAG="${PRISM_STUDIO_IMAGE_TAG:-}"
+PRISM_STUDIO_IMAGE_DIGEST="${PRISM_STUDIO_IMAGE_DIGEST:-}"
 PRISM_WORKER_IMAGE_REPOSITORY="${PRISM_WORKER_IMAGE_REPOSITORY:-}"
-PRISM_WORKER_IMAGE_TAG="${PRISM_WORKER_IMAGE_TAG:-}"
+PRISM_WORKER_IMAGE_DIGEST="${PRISM_WORKER_IMAGE_DIGEST:-}"
 PRISM_INGESTION_IMAGE_REPOSITORY="${PRISM_INGESTION_IMAGE_REPOSITORY:-}"
-PRISM_INGESTION_IMAGE_TAG="${PRISM_INGESTION_IMAGE_TAG:-}"
+PRISM_INGESTION_IMAGE_DIGEST="${PRISM_INGESTION_IMAGE_DIGEST:-}"
 PRISM_RUNTIME_SECRET_NAME="${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}"
 PRISM_DATABASE_SECRET_NAME="${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}"
 PRISM_IMAGE_PULL_SECRET_NAME="${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}"
@@ -1523,12 +1523,15 @@ cmd_smoke() {
 
 prism_image_overrides() {
   local pairs=(control CONTROL studio STUDIO worker WORKER ingestion INGESTION)
-  local index kind upper repository tag
+  local index kind upper repository digest selected_digest
   for ((index=0; index<${#pairs[@]}; index+=2)); do
     kind="${pairs[index]}"; upper="${pairs[index+1]}"
-    repository="PRISM_${upper}_IMAGE_REPOSITORY"; tag="PRISM_${upper}_IMAGE_TAG"
+    repository="PRISM_${upper}_IMAGE_REPOSITORY"; digest="PRISM_${upper}_IMAGE_DIGEST"
     [[ -z ${!repository:-} ]] || printf '%s\n' --set-string "images.${kind}.repository=${!repository}"
-    [[ -z ${!tag:-} ]] || printf '%s\n' --set-string "images.${kind}.tag=${!tag}"
+    selected_digest="${!digest:-}"
+    [[ $selected_digest =~ ^sha256:[0-9a-f]{64}$ ]] || { err "PRISM_${upper}_IMAGE_DIGEST must be sha256:<64 lowercase hex characters>"; return 1; }
+    printf '%s\n' --set-string "images.${kind}.digest=${selected_digest}"
+    printf '%s\n' --set-string "images.${kind}.pullPolicy=IfNotPresent"
   done
 }
 
@@ -1644,7 +1647,9 @@ cmd_prism() {
     return 1
   fi
   verify_bundle_archive_url prism "$prism_bundle_archive_url" "$prism_bundle_expected_commit" "$prism_bundle_auth_secret"
-  local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
+  local override_output
+  override_output="$(prism_image_overrides)" || return 1
+  local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done <<<"$override_output"
   overrides+=(--set-string "workerTrust.spiffe.novaNamespace=${NAMESPACE}")
   overrides+=(--set-string "workerTrust.spiffe.novaServiceAccount=agent-nova")
   overrides+=(--set-string "workerTrust.spiffe.agentNamespace=${PRISM_NAMESPACE}")
@@ -1674,15 +1679,6 @@ cmd_prism() {
     return "$prism_helm_result"
   fi
   rm -f "$migration_log"
-  # Prism publishes mutable `latest` tags. A Helm upgrade with unchanged values
-  # does not alter the pod template, so explicitly restart existing application
-  # deployments to pull the images built from the current main revision.
-  local prism_workload
-  for prism_workload in prism-control prism-studio prism-worker prism-ingestion; do
-    if kubectl get deployment "$prism_workload" -n "$PRISM_NAMESPACE" >/dev/null 2>&1; then
-      kubectl rollout restart deployment/"$prism_workload" -n "$PRISM_NAMESPACE"
-    fi
-  done
   prism_bundle_override="$(mktemp)"
   append_code_bundle_override_file "$prism_bundle_override" \
     "$prism_bundle_archive_url" "$prism_bundle_expected_commit" \

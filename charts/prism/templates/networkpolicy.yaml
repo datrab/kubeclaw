@@ -107,7 +107,7 @@ spec:
       ports: [{ protocol: TCP, port: 18082 }]
   egress:
     - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
-      ports: [{ protocol: TCP, port: 8443 }]
+      ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
     - to:
         - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }
           podSelector: { matchLabels: { app: litellm } }

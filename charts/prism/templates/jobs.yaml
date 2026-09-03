@@ -19,7 +19,7 @@ spec:
       restartPolicy: OnFailure
       initContainers:
         - name: bootstrap-database-roles
-          image: "{{ .Values.images.control.repository }}:{{ .Values.images.control.tag }}"
+          image: {{ include "prism.imageRef" .Values.images.control | quote }}
           imagePullPolicy: {{ .Values.images.control.pullPolicy }}
           command: ["node", "--experimental-strip-types", "skills/prism/server/bootstrap-database.ts"]
           env:
@@ -37,7 +37,7 @@ spec:
             - { name: tmp, mountPath: /tmp }
       containers:
         - name: migrate
-          image: "{{ .Values.images.control.repository }}:{{ .Values.images.control.tag }}"
+          image: {{ include "prism.imageRef" .Values.images.control | quote }}
           imagePullPolicy: {{ .Values.images.control.pullPolicy }}
           command: ["node", "--experimental-strip-types", "skills/prism/server/migrate.ts"]
           env:
