@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 42 packages.
+The catalogue contains 47 packages.
 
 ## Stage Packages
 
@@ -58,11 +58,15 @@ The catalogue contains 42 packages.
 
 ## Test provider Packages
 
+- [kubeclaw.api-flow](kubeclaw.api-flow.md)
+- [kubeclaw.axe](kubeclaw.axe.md)
 - [kubeclaw.container-build](kubeclaw.container-build.md)
 - [kubeclaw.coverage-budget](kubeclaw.coverage-budget.md)
 - [kubeclaw.direct-command](kubeclaw.direct-command.md)
 - [kubeclaw.http](kubeclaw.http.md)
 - [kubeclaw.kubernetes-fixture](kubeclaw.kubernetes-fixture.md)
+- [kubeclaw.lighthouse](kubeclaw.lighthouse.md)
+- [kubeclaw.openapi](kubeclaw.openapi.md)
 - [kubeclaw.size-budget](kubeclaw.size-budget.md)
 - [kubeclaw.tailscale-exposure](kubeclaw.tailscale-exposure.md)
 
@@ -73,3 +77,4 @@ The catalogue contains 42 packages.
 ## OpenClaw extension Packages
 
 - [kubeclaw-agent-observer](kubeclaw-agent-observer.md)
+- [kubeclaw-prism](kubeclaw-prism.md)

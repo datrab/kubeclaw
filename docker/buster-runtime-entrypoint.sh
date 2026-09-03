@@ -165,7 +165,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
-  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe'],
+  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse'],
   directCommand: {
     executableCatalog: {
       node: '/usr/local/bin/node',
@@ -225,6 +225,13 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumResultBytes: 16777216,
     maximumScreenshots: 16,
     maximumScreenshotBytes: 8388608,
+  },
+  browserLighthouse: {
+    allowedOrigins: exactBrowserOrigins,
+    chromeExecutable: '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell',
+    maximumRuns: 80,
+    maximumExecutionMs: 180000,
+    maximumResultBytes: 67108864,
   },
 }, null, 2)}\n`);
 NODE

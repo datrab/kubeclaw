@@ -51,7 +51,7 @@ export const DEFAULTS = Object.freeze({
   }),
 });
 export const VALID_SUITES = new Set(['api', 'security', 'a11y', 'perf', 'visual-reg', 'e2e']);
-export const MIGRATED_SUITES = new Set(['unit', 'manifest', 'build', 'bundle', 'size-budget', 'k8s', 'health', 'tailscale-preview', 'api', 'a11y']);
+export const MIGRATED_SUITES = new Set(['unit', 'manifest', 'build', 'bundle', 'size-budget', 'k8s', 'health', 'tailscale-preview', 'api', 'a11y', 'perf']);
 
 export function isPlainObject(value: unknown): value is AnyRecord {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);

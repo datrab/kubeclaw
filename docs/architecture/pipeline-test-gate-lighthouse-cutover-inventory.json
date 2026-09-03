@@ -1,0 +1,22 @@
+{
+  "schemaVersion":"suite-cutover-inventory.v1","suite":"perf","successor":"kubeclaw.lighthouse@1","parityItemCount":40,
+  "authority":{"old":"skills/buster/plugins/buster-suite-runtime","new":"skills/buster/plugins/lighthouse","state":"replacement-only"},
+  "legacyFilesToDelete":["skills/buster/plugins/buster-suite-runtime/src/runtime/suites/perf.ts"],
+  "legacySurfaces":[
+    "legacy suite registry and execution order","legacy protocol capability map","legacy flat test_config.perf parser",
+    "legacy direct Lighthouse subprocess","legacy report_path artifact publication"
+  ],
+  "retainedSharedOwners":["Lighthouse npm package","Chrome binary installed for browser providers","isolated TestPlanRunner","Nova signed remote dispatch"],
+  "replacementFilesRequired":[
+    "skills/buster/plugins/lighthouse/plugin.json","skills/buster/plugins/lighthouse/src/provider.js",
+    "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts","contracts/pipeline-test-gate/v1/suites/perf.v1.json",
+    "tests/verification/e2e/nova-lighthouse-production-preflight.mts"
+  ],
+  "requiredAbsence":[
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/protocol.ts","token":"'perf'"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts","token":"perf"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/services/capabilities.ts","token":"LIGHTHOUSE"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/services/quality-artifacts.ts","token":"report_path"}
+  ],
+  "verification":{"solePathTests":["tests/verification/contracts/check-pipeline-lighthouse-cutover.mts"],"dualAuthorityTests":["tests/verification/contracts/check-pipeline-lighthouse-cutover.mts"],"absenceTests":["tests/verification/contracts/check-pipeline-lighthouse-cutover.mts"]}
+}

@@ -24,8 +24,12 @@
       "plugins": [
         "kubeclaw.agent-observability",
         "kubeclaw.artifact-store",
+        "kubeclaw.api-flow",
+        "kubeclaw.axe",
+        "kubeclaw.lighthouse",
         "kubeclaw.command-runner",
         "kubeclaw.network-http",
+        "kubeclaw.openapi",
         "kubeclaw.runtime-dispatch",
         "kubeclaw.secret-resolver",
         "kubeclaw.telemetry-store",
@@ -210,6 +214,124 @@
     }
   ],
   "plugins": [
+    {
+      "id": "kubeclaw.api-flow",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/api-flow/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.api-flow",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "flow",
+          "contractId": "kubeclaw.api-flow@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "retrySafe": false,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.axe",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/axe/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.axe",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "axe",
+          "contractId": "kubeclaw.axe@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.axe"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
     {
       "id": "kubeclaw.buster-suite-runtime",
       "version": "1.0.0",
@@ -741,6 +863,125 @@
             ],
             "onFail": [
               "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.lighthouse",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/lighthouse/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.lighthouse",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "lighthouse",
+          "contractId": "kubeclaw.lighthouse@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.lighthouse"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onFail": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.openapi",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/openapi/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.openapi",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "operations",
+          "contractId": "kubeclaw.openapi@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "retrySafe": false,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
             ],
             "onError": [
               "log"
@@ -1986,7 +2227,7 @@
     "stage": 17,
     "observer": 6,
     "adapter": 19,
-    "test provider": 7,
+    "test provider": 11,
     "report adapter": 1
   },
   "capabilityIds": [

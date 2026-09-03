@@ -28,6 +28,18 @@ The repository-wide plugin gate also exposed stale Phase 6, engine, and checkpoi
 
 Local infrastructure currently contains only the Chromium browser build. An attempted Playwright download for Firefox and WebKit did not complete in this environment and was stopped. No substitute browser was used. The production image installs all three engines. `nova-a11y-preflight` now sends a signed plan through Nova and Buster, runs all three real engines with Axe, imports evidence, verifies fixture deletion, and stores a signed receipt. Full cross-browser production acceptance remains pending for the final controlled cycle.
 
-## Suites 10 through 13
+## Suite 10: Performance
 
-Performance, visual regression, end-to-end, and security remain pending. No implementation or completion claim has been made for them in this record.
+Phase 8 adds `kubeclaw.lighthouse@1` and the operator-controlled `browser.lighthouse` capability. The contained proof uses a real HTTP server, real Chrome, and Lighthouse 13.4.1. Performance, SEO, and best-practices are separate purposes. Lighthouse accessibility is removed because Axe owns that decision.
+
+Phase 9 maps 40 baseline items to executable proof. Performance runs three times by default and permits five runs for an important gate. Runs are sequential. The provider stores every report and marks the median-score report as representative. Named combined budgets enforce score, LCP, CLS, and TBT for each route. SEO and best-practices keep every failed audit visible and use exact temporary acceptances.
+
+Phase 10 deletes the old direct Lighthouse suite and rejects unsafe flat legacy thresholds. The new provider is packaged in Buster and selected by the real production workspace. `nova-lighthouse-preflight` sends a signed plan through Nova and Buster, uses a real Kubernetes fixture, runs three real Lighthouse samples, imports evidence, verifies cleanup, and stores a signed suite receipt.
+
+The fresh-context architecture audit found ten valid issue groups. Fixes added strict runtime settings validation, mandatory budgets for blocking performance nodes, representative-report receipt checks, a 40-item legacy baseline, an authenticated Nova-to-Buster vertical proof, one-report median selection, audit execution-error handling, suite-specific production receipt identity, a complete deletion inventory, and richer user and operator guidance. The offline project scaffolder remains a one-time migration tool; it is not a runtime compatibility path.
+
+The workflow now requires parity proof paths to exist. It also keeps source cutover separate from the final deployed production receipt. No mock, fake browser, Lighthouse substitute, or runtime compatibility wrapper is used. Production acceptance remains pending for the controlled cycle after all 13 source cutovers. Autoreview found and drove one final HTTPS CONNECT authority fix for default ports and IPv6. The final Terra/high autoreview reported no accepted or actionable finding and confidence 0.76.
+
+## Suites 11 through 13
+
+Visual regression, end-to-end, and security remain pending. No implementation or completion claim has been made for them in this record.

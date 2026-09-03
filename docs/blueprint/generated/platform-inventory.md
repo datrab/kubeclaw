@@ -20,7 +20,7 @@ Unresolved conflicts: none.
 
 | Role | Packages | Plugins | External capabilities |
 | --- | ---: | ---: | --- |
-| buster | 11 | 17 | git.repository.read, test.plan.execute |
+| buster | 11 | 21 | git.repository.read, test.plan.execute |
 | nova | 10 | 30 | test.suite.execute |
 | prism | 11 | 6 | git.repository.read |
 
@@ -42,7 +42,7 @@ Unresolved conflicts: none.
 | stage | 17 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | observer | 6 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | adapter | 19 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
-| test provider | 7 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
+| test provider | 11 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | report adapter | 1 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 
 Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
@@ -51,6 +51,8 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 
 | Plugin | Version | Bundle | Registrations | Required/provided capabilities | Manifest |
 | --- | --- | --- | --- | --- | --- |
+| kubeclaw.api-flow | 1.0.0 | buster | test provider: flow | requires: network.http<br>provides: none | `skills/buster/plugins/api-flow/plugin.json` |
+| kubeclaw.axe | 1.0.0 | buster | test provider: axe | requires: browser.axe<br>provides: none | `skills/buster/plugins/axe/plugin.json` |
 | kubeclaw.buster-suite-runtime | 1.0.0 | buster | adapter: suite | requires: network.http, secrets.read<br>provides: test.suite.execute | `skills/buster/plugins/buster-suite-runtime/plugin.json` |
 | kubeclaw.container-build | 1.0.0 | buster | test provider: buildkit | requires: container.build<br>provides: none | `skills/buster/plugins/container-build/plugin.json` |
 | kubeclaw.coverage-budget | 1.0.0 | buster | test provider: lcov | requires: none<br>provides: none | `skills/buster/plugins/coverage-budget/plugin.json` |
@@ -58,6 +60,8 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.http | 1.0.0 | buster | test provider: request | requires: network.http<br>provides: none | `skills/buster/plugins/http/plugin.json` |
 | kubeclaw.junit-report | 1.0.0 | buster | report adapter: junit | requires: none<br>provides: none | `skills/buster/plugins/junit-report-adapter/plugin.json` |
 | kubeclaw.kubernetes-fixture | 1.0.0 | buster | test provider: deployment | requires: kubernetes.fixture<br>provides: none | `skills/buster/plugins/kubernetes-fixture/plugin.json` |
+| kubeclaw.lighthouse | 1.0.0 | buster | test provider: lighthouse | requires: browser.lighthouse<br>provides: none | `skills/buster/plugins/lighthouse/plugin.json` |
+| kubeclaw.openapi | 1.0.0 | buster | test provider: operations | requires: network.http<br>provides: none | `skills/buster/plugins/openapi/plugin.json` |
 | kubeclaw.size-budget | 1.0.0 | buster | test provider: artifact | requires: none<br>provides: none | `skills/buster/plugins/size-budget/plugin.json` |
 | kubeclaw.tailscale-exposure | 1.0.0 | buster | test provider: exposure | requires: kubernetes.exposure<br>provides: none | `skills/buster/plugins/tailscale-exposure/plugin.json` |
 | kubeclaw.test-agent | 1.0.0 | buster | stage: test (kubeclaw.test.execution) | requires: command.execute, test.plan.execute, test.suite.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/buster/plugins/test-agent/plugin.json` |

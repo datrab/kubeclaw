@@ -12,7 +12,6 @@ export const BUSTER_CAPABILITIES = Object.freeze({
   IMAGE_BUILD: 'image_build',
   KUBERNETES: 'kubernetes',
   BROWSER_AUTOMATION: 'browser_automation',
-  LIGHTHOUSE: 'lighthouse',
   DISCORD_MEDIA: 'discord_media',
 });
 
@@ -94,8 +93,6 @@ export function requiredCapabilitiesForSuite(suiteName: string, _context: Record
     case 'e2e':
     case 'visual-reg':
       return [BUSTER_CAPABILITIES.BROWSER_AUTOMATION];
-    case 'perf':
-      return [BUSTER_CAPABILITIES.LIGHTHOUSE];
     default:
       return [];
   }

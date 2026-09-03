@@ -567,6 +567,11 @@ function expandNodes(input: ResolveTestPlanInput, drafts: readonly DraftNode[]):
         && mode === 'blocking' && configuration.values.minimumLinePercent === undefined) {
         fail('TEST_PLAN_COVERAGE_MINIMUM_REQUIRED', id);
       }
+      if (provider.registration.contractId === 'kubeclaw.lighthouse@1'
+        && mode === 'blocking' && configuration.values.purpose === 'performance'
+        && configuration.values.budget === undefined) {
+        fail('TEST_PLAN_LIGHTHOUSE_BUDGET_REQUIRED', id);
+      }
       const node: ResolvedPlanNodeV1 = {
         id,
         executionId,

@@ -522,3 +522,39 @@ test('progress scaffold rejects retired a11y thresholds beside an existing Axe n
   } }, gates: {} })}\n`);
   assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_A11Y_THRESHOLDS_RETIRED:01-foundation/u);
 });
+
+test('progress scaffold rejects a legacy perf suite without an explicit Lighthouse replacement', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['perf'],
+  } }, gates: {} })}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_PERF_CONFIGURATION_RETIRED:01-foundation/u);
+});
+
+test('progress scaffold accepts an explicit Lighthouse replacement and removes the legacy selector', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['perf'],
+  } }, gates: {} })}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    tests: { performance: { uses: 'kubeclaw.lighthouse@1', config: { purpose: 'performance', routes: ['/'],
+      settingsFile: '.swarm/lighthouse-settings.json', profile: 'desktop', budget: 'default' } } },
+  } }, gates: {} })}\n`);
+  run(root, ['--project', 'demo']);
+  const scaffold = readJson(path.join(swarm, 'progress.scaffold.json'));
+  assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests.performance.uses, 'kubeclaw.lighthouse@1');
+});
+
+test('progress scaffold rejects retired perf configuration beside a Lighthouse replacement', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    title: 'Foundation', dir: '01-foundation', stages: ['forge', 'buster'], test_suites: ['perf'],
+    test_config: { perf: { thresholds: { performance: 80 } } },
+  } }, gates: {} })}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: { '01-foundation': {
+    tests: { performance: { uses: 'kubeclaw.lighthouse@1', config: { purpose: 'performance', routes: ['/'],
+      settingsFile: '.swarm/lighthouse-settings.json', profile: 'desktop', budget: 'default' } } },
+  } }, gates: {} })}\n`);
+  assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_PERF_CONFIGURATION_RETIRED:01-foundation/u);
+});

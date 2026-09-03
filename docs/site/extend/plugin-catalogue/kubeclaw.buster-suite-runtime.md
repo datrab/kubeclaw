@@ -56,7 +56,7 @@ Run:
 npm test --prefix skills/buster/plugins/buster-suite-runtime
 ```
 
-Package tests found: 3.
+Package tests found: 4.
 
 ## Source Evidence
 
@@ -66,3 +66,4 @@ Package tests found: 3.
 - Test: `skills/buster/plugins/buster-suite-runtime/tests/live-function.test.ts`
 - Test: `skills/buster/plugins/buster-suite-runtime/tests/package-boundary.test.mjs`
 - Test: `skills/buster/plugins/buster-suite-runtime/tests/protocol.test.ts`
+- Test: `skills/buster/plugins/buster-suite-runtime/tests/security-boundaries.test.ts`

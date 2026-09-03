@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,
+  "required":["schemaVersion","profiles","budgets"],
+  "properties":{
+    "schemaVersion":{"const":"kubeclaw.lighthouse-settings.v1"},
+    "profiles":{"type":"object","minProperties":1,"maxProperties":32,"propertyNames":{"pattern":"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},"additionalProperties":{"type":"object","additionalProperties":false,"required":["formFactor","screen","throttling"],"properties":{
+      "formFactor":{"enum":["mobile","desktop"]},
+      "screen":{"type":"object","additionalProperties":false,"required":["width","height","deviceScaleFactor","mobile"],"properties":{
+        "width":{"type":"integer","minimum":240,"maximum":3840},"height":{"type":"integer","minimum":240,"maximum":2160},
+        "deviceScaleFactor":{"type":"number","minimum":0.5,"maximum":4},"mobile":{"type":"boolean"}
+      }},
+      "throttling":{"type":"object","additionalProperties":false,"required":["rttMs","throughputKbps","cpuSlowdownMultiplier"],"properties":{
+        "rttMs":{"type":"number","minimum":0,"maximum":5000},"throughputKbps":{"type":"number","exclusiveMinimum":0,"maximum":1000000},
+        "cpuSlowdownMultiplier":{"type":"number","minimum":1,"maximum":32}
+      }}
+    }}},
+    "budgets":{"type":"object","maxProperties":32,"propertyNames":{"pattern":"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},"additionalProperties":{"type":"object","additionalProperties":false,"minProperties":1,"properties":{
+      "minimumScore":{"type":"number","minimum":0,"maximum":100},"maximumLcpMs":{"type":"number","minimum":0,"maximum":120000},
+      "maximumCls":{"type":"number","minimum":0,"maximum":10},"maximumTbtMs":{"type":"number","minimum":0,"maximum":120000}
+    }}}
+  }
+}

@@ -25,6 +25,7 @@
     "kubeclaw.artifact-store",
     "kubeclaw.api-flow",
     "kubeclaw.axe",
+    "kubeclaw.lighthouse",
     "kubeclaw.command-runner",
     "kubeclaw.network-http",
     "kubeclaw.openapi",

@@ -1,0 +1,8 @@
+{
+  "schemaVersion":"kubeclaw.lighthouse-settings.v1",
+  "profiles":{
+    "mobile-standard":{"formFactor":"mobile","screen":{"width":390,"height":844,"deviceScaleFactor":2,"mobile":true},"throttling":{"rttMs":150,"throughputKbps":1638.4,"cpuSlowdownMultiplier":4}},
+    "desktop-standard":{"formFactor":"desktop","screen":{"width":1440,"height":900,"deviceScaleFactor":1,"mobile":false},"throttling":{"rttMs":40,"throughputKbps":10240,"cpuSlowdownMultiplier":1}}
+  },
+  "budgets":{"release":{"minimumScore":80,"maximumLcpMs":2500,"maximumCls":0.1,"maximumTbtMs":300}}
+}

@@ -1,0 +1,4 @@
+{
+  "purpose":"performance","routes":["/"],"settingsFile":".swarm/lighthouse-settings.json",
+  "profile":"mobile-standard","budget":"release","runs":3,"timeoutMs":120000
+}

@@ -1044,6 +1044,11 @@ function instructionFiles(progress) {
             needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-axe',
             config: { routes: ['/'], profiles: ['desktop', 'mobile'], tags: ['wcag2a', 'wcag2aa'] },
             inputs: deploymentInput },
+          performance: { uses: 'kubeclaw.lighthouse@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-lighthouse',
+            config: { purpose: 'performance', routes: ['/'], settingsFile: '.swarm/lighthouse-settings.json',
+              profile: 'desktop', budget: 'fixture', runs: 3, timeoutMs: 120000 },
+            inputs: deploymentInput },
           'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
               ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
@@ -1070,7 +1075,7 @@ function instructionFiles(progress) {
         },
         concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
           manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1,
-          'api-flow': 1, openapi: 1, 'browser-axe': 2 },
+          'api-flow': 1, openapi: 1, 'browser-axe': 2, 'browser-lighthouse': 1 },
       },
     },
   };
@@ -1098,6 +1103,14 @@ function instructionFiles(progress) {
       paths: { '/': { get: { operationId: 'getHome', responses: { 200: { description: 'Fixture page', content: {
         'text/html': { schema: { type: 'string', minLength: 1 } },
       } } } } } },
+    }, null, 2)}\n`,
+    'lighthouse-settings.json': `${JSON.stringify({
+      schemaVersion: 'kubeclaw.lighthouse-settings.v1',
+      profiles: { desktop: { formFactor: 'desktop', screen: { width: 1280, height: 720,
+        deviceScaleFactor: 1, mobile: false }, throttling: { rttMs: 40, throughputKbps: 10240,
+        cpuSlowdownMultiplier: 1 } } },
+      budgets: { fixture: { minimumScore: 50, maximumLcpMs: 5000, maximumCls: 0.25,
+        maximumTbtMs: 1000 } },
     }, null, 2)}\n`,
     ...Object.fromEntries(apiFailureSpecs.map((file) => [file.replace(/^\.swarm\//u, ''), `${JSON.stringify({
       schemaVersion: 'kubeclaw.api-flow.v1',

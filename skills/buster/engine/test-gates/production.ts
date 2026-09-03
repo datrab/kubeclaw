@@ -152,6 +152,10 @@ export function loadProductionBusterRemotePlanRuntime(
   if (allowedCapabilities.has('network.http') && !networkHttpSource) throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED');
   const browserAxeSource = value.browserAxe === undefined ? null : object(value.browserAxe, 'browserAxe');
   if (allowedCapabilities.has('browser.axe') && !browserAxeSource) throw new Error('BUSTER_BROWSER_AXE_CONFIG_REQUIRED');
+  const browserLighthouseSource = value.browserLighthouse === undefined ? null : object(value.browserLighthouse, 'browserLighthouse');
+  if (allowedCapabilities.has('browser.lighthouse') && !browserLighthouseSource) {
+    throw new Error('BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED');
+  }
   const stateRoot = path.resolve(directory, value.stateRoot as string);
   const service = new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(stateRoot, {
@@ -257,6 +261,14 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumResultBytes: integer(browserAxeSource.maximumResultBytes, 'browserAxe.maximumResultBytes'),
       maximumScreenshots: integer(browserAxeSource.maximumScreenshots, 'browserAxe.maximumScreenshots'),
       maximumScreenshotBytes: integer(browserAxeSource.maximumScreenshotBytes, 'browserAxe.maximumScreenshotBytes'),
+    } } : {}),
+    ...(browserLighthouseSource ? { browserLighthouse: {
+      allowedOrigins: optionalStringArray(browserLighthouseSource.allowedOrigins, 'browserLighthouse.allowedOrigins'),
+      chromeExecutable: browserExecutableMap({ chromium: browserLighthouseSource.chromeExecutable },
+        'browserLighthouse.chromeExecutable').chromium!,
+      maximumRuns: integer(browserLighthouseSource.maximumRuns, 'browserLighthouse.maximumRuns'),
+      maximumExecutionMs: integer(browserLighthouseSource.maximumExecutionMs, 'browserLighthouse.maximumExecutionMs'),
+      maximumResultBytes: integer(browserLighthouseSource.maximumResultBytes, 'browserLighthouse.maximumResultBytes'),
     } } : {}),
   });
   const tlsSource = value.tls === undefined ? null : object(value.tls, 'tls');

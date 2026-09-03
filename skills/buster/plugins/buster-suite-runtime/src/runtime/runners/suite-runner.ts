@@ -1,6 +1,5 @@
 // Suite Runner — deterministic registry and public orchestration boundary.
 import e2eSuite from '../suites/e2e.ts';
-import perfSuite from '../suites/perf.ts';
 import securitySuite from '../suites/security.ts';
 import { runVisualReg } from '../suites/visual-reg.ts';
 import type { SuiteVerdict } from '../services/verdict-schema.ts';
@@ -12,12 +11,12 @@ import { buildDetailedSuiteSummary, collectReadySuites as collectReady, executeS
 
 const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
   e2e: e2eSuite,
-  perf: perfSuite, security: securitySuite, 'visual-reg': runVisualReg,
+  security: securitySuite, 'visual-reg': runVisualReg,
 }) as unknown as Readonly<Record<string, SuiteFunction>>;
 
-export const EXECUTION_ORDER = ['perf', 'security', 'visual-reg', 'e2e'];
+export const EXECUTION_ORDER = ['security', 'visual-reg', 'e2e'];
 export const DEPENDENCIES: Record<string, string[]> = {
-  perf: [], security: [], 'visual-reg': [], e2e: [],
+  security: [], 'visual-reg': [], e2e: [],
 };
 
 export function validateSuiteNames(suites: readonly unknown[]): string[] {

@@ -13,6 +13,7 @@ export { KubernetesFixtureCapabilityInvoker } from '../test-gates/kubernetes-fix
 export { TailscaleExposureCapabilityInvoker } from '../test-gates/tailscale-exposure-runtime.ts';
 export { NetworkHttpCapabilityInvoker } from '../test-gates/network-http-runtime.ts';
 export { BrowserAxeCapabilityInvoker } from '../test-gates/browser-axe-runtime.ts';
+export { BrowserLighthouseCapabilityInvoker } from '../test-gates/browser-lighthouse-runtime.ts';
 export type {
   BusterPlanJobStoreOptions,
   BusterRemotePlanServiceOptions,

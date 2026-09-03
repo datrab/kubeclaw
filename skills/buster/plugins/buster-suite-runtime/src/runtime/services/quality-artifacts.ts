@@ -3,9 +3,7 @@ import path from 'node:path';
 import { publishArtifact } from '../portable-artifacts.ts';
 import { readBusterEnvironment } from '../buster-environment.ts';
 
-const FILE_METADATA_KEYS: Readonly<Record<string, ReadonlySet<string>>> = Object.freeze({
-  perf: new Set(['report_path']),
-});
+const FILE_METADATA_KEYS: Readonly<Record<string, ReadonlySet<string>>> = Object.freeze({});
 
 function within(candidate:string,root:string):boolean{
   const relative=path.relative(root,candidate);

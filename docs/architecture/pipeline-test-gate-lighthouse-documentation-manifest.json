@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"suite-documentation-manifest.v1","suite":"perf","provider":"kubeclaw.lighthouse@1",
+  "projectSchema":"skills/buster/plugins/lighthouse/schemas/config.schema.json",
+  "documents":{"userGuide":"docs/architecture/pipeline-test-gate-lighthouse-user-guide.md","operatorGuide":"docs/architecture/pipeline-test-gate-lighthouse-operator-guide.md","configurationReference":"docs/architecture/pipeline-test-gate-lighthouse-configuration-reference.md","errorReference":"docs/architecture/pipeline-test-gate-lighthouse-error-reference.md","securityModel":"docs/architecture/pipeline-test-gate-lighthouse-security-model.md"},
+  "operatorFields":["allowedOrigins","chromeExecutable","maximumRuns","maximumExecutionMs","maximumResultBytes"],
+  "sourceFilesWithErrors":["skills/buster/plugins/lighthouse/src/provider.js","skills/buster/engine/test-gates/browser-lighthouse-runtime.ts","skills/buster/engine/test-gates/production.ts"],
+  "errorPrefixes":["LIGHTHOUSE_","BROWSER_LIGHTHOUSE_"],"additionalErrors":["LEGACY_PERF_CONFIGURATION_RETIRED"],
+  "configurationMarkerFields":["purpose","routes","settingsFile","profile"],
+  "exampleFiles":["contracts/pipeline-test-gate/v1/examples/lighthouse-performance-config.json"]
+}

@@ -96,6 +96,7 @@ function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | unde
   delete config.manifest;
   delete config.api;
   delete config.a11y;
+  delete config.perf;
   if (isPlainObject(config.serve)) {
     for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
       'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
@@ -375,6 +376,7 @@ function withImageInput(node: unknown, buildNode: string): unknown {
 
 function scopeWithProviders(existingScope: unknown, testConfig: unknown, options: {
   addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; addApi: boolean; addA11y: boolean; legacyUnitSelected: boolean;
+  legacyPerfSelected: boolean;
   projectSrcDir: string; repositoryRoot: string; swarmDir: string; scopeId: string;
 }): AnyRecord {
   const scope = objectOrEmpty(existingScope);
@@ -382,6 +384,14 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   const deploymentNode = Object.entries(fixtures).find(([, fixture]) => isPlainObject(fixture)
     && fixture.uses === 'kubeclaw.kubernetes-fixture@1')?.[0];
   const tests = objectOrEmpty(scope.tests);
+  const hasLighthouse = Object.values(tests).some((test) => isPlainObject(test)
+    && test.uses === 'kubeclaw.lighthouse@1');
+  if (isPlainObject(objectOrEmpty(testConfig).perf)) {
+    throw new Error(`LEGACY_PERF_CONFIGURATION_RETIRED:${options.scopeId}: define named Lighthouse profiles, budgets, and kubeclaw.lighthouse@1 nodes in .swarm/pipeline.json`);
+  }
+  if (options.legacyPerfSelected && !hasLighthouse) {
+    throw new Error(`LEGACY_PERF_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.lighthouse@1 in .swarm/pipeline.json`);
+  }
   if (options.addExposure && !deploymentNode) {
     throw new Error(`LEGACY_TAILSCALE_PREVIEW_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.kubernetes-fixture@1 before Tailscale exposure`);
   }
@@ -462,6 +472,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
         addApi: Array.isArray(selected) && selected.includes('api'),
         addA11y: Array.isArray(selected) && selected.includes('a11y'),
+        legacyPerfSelected: Array.isArray(selected) && selected.includes('perf'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
@@ -479,6 +490,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
         addApi: Array.isArray(selected) && selected.includes('api'),
         addA11y: Array.isArray(selected) && selected.includes('a11y'),
+        legacyPerfSelected: Array.isArray(selected) && selected.includes('perf'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];

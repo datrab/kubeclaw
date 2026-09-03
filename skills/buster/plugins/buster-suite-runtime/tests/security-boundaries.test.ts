@@ -41,20 +41,20 @@ try{
   const telemetry={pipelineRunLogPath:logPath,project:'p',runId:'run-test',emitter:'test'};
   const previousResultsDir=process.env.BUSTER_RESULTS_DIR;
   process.env.BUSTER_RESULTS_DIR=path.join(temporary,'not-created-results');
-  const artifacts=publishSuiteArtifacts(telemetry,{moduleId:'m',suiteName:'perf',attempt:1,result:{metadata:{report_path:allowed,secret_path:secret}}});
-  assert.equal(artifacts.length,2,'verdict and approved report are published');
+  const artifacts=publishSuiteArtifacts(telemetry,{moduleId:'m',suiteName:'security',attempt:1,result:{metadata:{report_path:allowed,secret_path:secret}}});
+  assert.equal(artifacts.length,1,'legacy file metadata is not published');
   if(previousResultsDir===undefined)delete process.env.BUSTER_RESULTS_DIR;else process.env.BUSTER_RESULTS_DIR=previousResultsDir;
   assert.equal(artifacts.some((artifact:any)=>String(artifact.logical_id).endsWith('/secret_path')),false);
   const symlink=path.join(pipelineDir,'report-link.json');
   fs.symlinkSync(secret,symlink);
-  const linked=publishSuiteArtifacts(telemetry,{moduleId:'m',suiteName:'perf',attempt:2,result:{metadata:{report_path:symlink}}});
+  const linked=publishSuiteArtifacts(telemetry,{moduleId:'m',suiteName:'security',attempt:2,result:{metadata:{report_path:symlink}}});
   assert.equal(linked.length,1,'a symlink escaping approved roots is not published');
   if(process.platform!=='win32'){
     const fifo=path.join(pipelineDir,'report.fifo');
     const {execFileSync}=await import('node:child_process');
     execFileSync('mkfifo',[fifo]);
     const started=Date.now();
-    const piped=publishSuiteArtifacts(telemetry,{moduleId:'m',suiteName:'perf',attempt:3,result:{metadata:{report_path:fifo}}});
+    const piped=publishSuiteArtifacts(telemetry,{moduleId:'m',suiteName:'security',attempt:3,result:{metadata:{report_path:fifo}}});
     assert.equal(piped.length,1,'a FIFO is not published');
     assert.ok(Date.now()-started<1000,'a FIFO cannot block artifact publication');
   }

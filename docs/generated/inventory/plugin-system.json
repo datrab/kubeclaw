@@ -2,15 +2,15 @@
   "schemaVersion": "plugin-system-inventory-v2",
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "summary": {
-    "packages": 41,
-    "packageRoots": 42,
+    "packages": 45,
+    "packageRoots": 46,
     "stages": 17,
     "observers": 6,
     "adapters": 19,
-    "testProviders": 7,
+    "testProviders": 11,
     "reportAdapters": 1,
-    "registrations": 50,
-    "files": 819
+    "registrations": 54,
+    "files": 846
   },
   "runtime": {
     "roots": [
@@ -26,6 +26,8 @@
       "skills/buster/engine/remote-plan-cli.ts",
       "skills/buster/engine/src/index.ts",
       "skills/buster/engine/test-gates/artifacts.ts",
+      "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+      "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
       "skills/buster/engine/test-gates/composite-capability-runtime.ts",
       "skills/buster/engine/test-gates/container-build-runtime.ts",
       "skills/buster/engine/test-gates/direct-command-runtime.ts",
@@ -115,6 +117,7 @@
       "skills/nova/core/execution/pipeline-loop.ts",
       "skills/nova/core/execution/run-decisions.ts",
       "skills/nova/core/execution/run-mutation.ts",
+      "skills/nova/core/execution/run-root.ts",
       "skills/nova/core/execution/runner.ts",
       "skills/nova/core/execution/stage-executor.ts",
       "skills/nova/core/lifecycle/README.md",
@@ -140,6 +143,7 @@
       "skills/nova/core/test-gates/remote-result-import.ts",
       "skills/nova/core/test-gates/resolver.ts",
       "skills/nova/core/test-gates/runtime-config.ts",
+      "skills/nova/core/test-gates/secure-endpoint.ts",
       "skills/nova/core/test-gates/source-snapshot.ts",
       "skills/nova/core/test-gates/types.ts",
       "skills/worker/core/BOUNDARIES.md",
@@ -152,6 +156,51 @@
     ]
   },
   "packages": [
+    {
+      "id": "kubeclaw.api-flow",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/api-flow",
+      "manifest": "skills/buster/plugins/api-flow/plugin.json",
+      "files": [
+        "skills/buster/plugins/api-flow/package.json",
+        "skills/buster/plugins/api-flow/plugin.json",
+        "skills/buster/plugins/api-flow/README.md",
+        "skills/buster/plugins/api-flow/schemas/config.schema.json",
+        "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+        "skills/buster/plugins/api-flow/src/provider.js",
+        "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+        "skills/buster/plugins/api-flow/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "flow"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.axe",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/axe",
+      "manifest": "skills/buster/plugins/axe/plugin.json",
+      "files": [
+        "skills/buster/plugins/axe/package.json",
+        "skills/buster/plugins/axe/plugin.json",
+        "skills/buster/plugins/axe/README.md",
+        "skills/buster/plugins/axe/schemas/config.schema.json",
+        "skills/buster/plugins/axe/src/provider.js",
+        "skills/buster/plugins/axe/tests/live-function.test.ts",
+        "skills/buster/plugins/axe/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "axe"
+        }
+      ]
+    },
     {
       "id": "kubeclaw.buster-suite-runtime",
       "version": "1.0.0",
@@ -220,14 +269,7 @@
         "skills/buster/plugins/buster-suite-runtime/src/runtime/services/runtime.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/services/telemetry.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/services/verdict-schema.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/a11y.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-http.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-runner.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-values.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-websocket.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/e2e.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/perf.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/repo-paths.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
@@ -249,6 +291,7 @@
         "skills/buster/plugins/buster-suite-runtime/tests/live-function.test.ts",
         "skills/buster/plugins/buster-suite-runtime/tests/package-boundary.test.mjs",
         "skills/buster/plugins/buster-suite-runtime/tests/protocol.test.ts",
+        "skills/buster/plugins/buster-suite-runtime/tests/security-boundaries.test.ts",
         "skills/buster/plugins/buster-suite-runtime/tsconfig.json"
       ],
       "registrations": [
@@ -387,6 +430,50 @@
         {
           "kind": "test-provider",
           "id": "deployment"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.lighthouse",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/lighthouse",
+      "manifest": "skills/buster/plugins/lighthouse/plugin.json",
+      "files": [
+        "skills/buster/plugins/lighthouse/package.json",
+        "skills/buster/plugins/lighthouse/plugin.json",
+        "skills/buster/plugins/lighthouse/README.md",
+        "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+        "skills/buster/plugins/lighthouse/src/provider.js",
+        "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+        "skills/buster/plugins/lighthouse/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "lighthouse"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.openapi",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/openapi",
+      "manifest": "skills/buster/plugins/openapi/plugin.json",
+      "files": [
+        "skills/buster/plugins/openapi/package.json",
+        "skills/buster/plugins/openapi/plugin.json",
+        "skills/buster/plugins/openapi/README.md",
+        "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "skills/buster/plugins/openapi/src/provider.js",
+        "skills/buster/plugins/openapi/tests/live-function.test.ts",
+        "skills/buster/plugins/openapi/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "operations"
         }
       ]
     },
@@ -1506,6 +1593,18 @@
   ],
   "registrations": [
     {
+      "kind": "test-provider",
+      "id": "flow",
+      "packageId": "kubeclaw.api-flow",
+      "registrationId": "kubeclaw.api-flow:flow"
+    },
+    {
+      "kind": "test-provider",
+      "id": "axe",
+      "packageId": "kubeclaw.axe",
+      "registrationId": "kubeclaw.axe:axe"
+    },
+    {
       "kind": "adapter",
       "id": "suite",
       "packageId": "kubeclaw.buster-suite-runtime",
@@ -1546,6 +1645,18 @@
       "id": "deployment",
       "packageId": "kubeclaw.kubernetes-fixture",
       "registrationId": "kubeclaw.kubernetes-fixture:deployment"
+    },
+    {
+      "kind": "test-provider",
+      "id": "lighthouse",
+      "packageId": "kubeclaw.lighthouse",
+      "registrationId": "kubeclaw.lighthouse:lighthouse"
+    },
+    {
+      "kind": "test-provider",
+      "id": "operations",
+      "packageId": "kubeclaw.openapi",
+      "registrationId": "kubeclaw.openapi:operations"
     },
     {
       "kind": "test-provider",
@@ -1813,6 +1924,8 @@
     "skills/buster/engine/remote-plan-cli.ts",
     "skills/buster/engine/src/index.ts",
     "skills/buster/engine/test-gates/artifacts.ts",
+    "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+    "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
     "skills/buster/engine/test-gates/composite-capability-runtime.ts",
     "skills/buster/engine/test-gates/container-build-runtime.ts",
     "skills/buster/engine/test-gates/direct-command-runtime.ts",
@@ -1828,6 +1941,21 @@
     "skills/buster/engine/test-gates/report-adapter-runtime.ts",
     "skills/buster/engine/test-gates/runner.ts",
     "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "skills/buster/plugins/api-flow/README.md",
+    "skills/buster/plugins/api-flow/package.json",
+    "skills/buster/plugins/api-flow/plugin.json",
+    "skills/buster/plugins/api-flow/schemas/config.schema.json",
+    "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+    "skills/buster/plugins/api-flow/src/provider.js",
+    "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "skills/buster/plugins/api-flow/tsconfig.json",
+    "skills/buster/plugins/axe/README.md",
+    "skills/buster/plugins/axe/package.json",
+    "skills/buster/plugins/axe/plugin.json",
+    "skills/buster/plugins/axe/schemas/config.schema.json",
+    "skills/buster/plugins/axe/src/provider.js",
+    "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "skills/buster/plugins/axe/tsconfig.json",
     "skills/buster/plugins/buster-suite-runtime/README.md",
     "skills/buster/plugins/buster-suite-runtime/common/pipeline/cli-args.ts",
     "skills/buster/plugins/buster-suite-runtime/common/pipeline/config-profiles/standard.json",
@@ -1889,14 +2017,7 @@
     "skills/buster/plugins/buster-suite-runtime/src/runtime/services/runtime.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/services/telemetry.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/services/verdict-schema.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/a11y.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-http.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-runner.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-values.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-websocket.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/e2e.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/perf.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/repo-paths.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
@@ -1918,6 +2039,7 @@
     "skills/buster/plugins/buster-suite-runtime/tests/live-function.test.ts",
     "skills/buster/plugins/buster-suite-runtime/tests/package-boundary.test.mjs",
     "skills/buster/plugins/buster-suite-runtime/tests/protocol.test.ts",
+    "skills/buster/plugins/buster-suite-runtime/tests/security-boundaries.test.ts",
     "skills/buster/plugins/buster-suite-runtime/tsconfig.json",
     "skills/buster/plugins/container-build/README.md",
     "skills/buster/plugins/container-build/package.json",
@@ -1961,6 +2083,20 @@
     "skills/buster/plugins/kubernetes-fixture/src/provider.js",
     "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
     "skills/buster/plugins/kubernetes-fixture/tsconfig.json",
+    "skills/buster/plugins/lighthouse/README.md",
+    "skills/buster/plugins/lighthouse/package.json",
+    "skills/buster/plugins/lighthouse/plugin.json",
+    "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+    "skills/buster/plugins/lighthouse/src/provider.js",
+    "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "skills/buster/plugins/lighthouse/tsconfig.json",
+    "skills/buster/plugins/openapi/README.md",
+    "skills/buster/plugins/openapi/package.json",
+    "skills/buster/plugins/openapi/plugin.json",
+    "skills/buster/plugins/openapi/schemas/config.schema.json",
+    "skills/buster/plugins/openapi/src/provider.js",
+    "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "skills/buster/plugins/openapi/tsconfig.json",
     "skills/buster/plugins/size-budget/README.md",
     "skills/buster/plugins/size-budget/package.json",
     "skills/buster/plugins/size-budget/plugin.json",
@@ -2239,6 +2375,7 @@
     "skills/nova/core/execution/pipeline-loop.ts",
     "skills/nova/core/execution/run-decisions.ts",
     "skills/nova/core/execution/run-mutation.ts",
+    "skills/nova/core/execution/run-root.ts",
     "skills/nova/core/execution/runner.ts",
     "skills/nova/core/execution/stage-executor.ts",
     "skills/nova/core/lifecycle/README.md",
@@ -2264,6 +2401,7 @@
     "skills/nova/core/test-gates/remote-result-import.ts",
     "skills/nova/core/test-gates/resolver.ts",
     "skills/nova/core/test-gates/runtime-config.ts",
+    "skills/nova/core/test-gates/secure-endpoint.ts",
     "skills/nova/core/test-gates/source-snapshot.ts",
     "skills/nova/core/test-gates/types.ts",
     "skills/nova/plugins/architecture-validator/README.md",
