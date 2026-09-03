@@ -360,13 +360,15 @@ async function verifiedReduction(
     return request ? [expandScalableReviewJob(job,
       request.paths.flatMap((requestedPath) => resolvedRequests.get(requestedPath) ?? []), completeSources)] : [];
   });
-  const expandedJobs = requestedExpansionJobs.slice(0, compilation.profile.maxContextExpansionJobs);
-  const deferredExpansionIds = new Set(requestedExpansionJobs.slice(expandedJobs.length).map(({ id }) => id));
+  const selectedExpansion = selectExpansionJobs(compilation, requestedExpansionJobs);
+  const expandedJobs = selectedExpansion.jobs;
+  const selectedExpansionIds = new Set(expandedJobs.map(({ id }) => id));
+  const deferredExpansionIds = new Set(requestedExpansionJobs.filter(({ id }) => !selectedExpansionIds.has(id)).map(({ id }) => id));
   let finalJobs = compilation.jobs, reviewResults = firstResults, reviewRuns = [reviewRun];
   let expansionAccounting: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>
     = Object.freeze({ inputTokens: 0, estimatedCostUsd: 0, estimatedWallTimeSeconds: 0 });
   if (expandedJobs.length > 0) {
-    expansionAccounting = enforceExpansionBudget(compilation, expandedJobs);
+    expansionAccounting = selectedExpansion.accounting;
     const expandedRun = await cachedReviewJobs(expandedJobs, reviewIdentity,
       { ...runtime, execution: execution('context-expansion') });
     const replacement = new Map(expandedJobs.map((job) => [job.id, job]));
@@ -386,41 +388,14 @@ async function verifiedReduction(
     maxInputTokens: Math.min(compilation.profile.maxInputTokensPerJob,
       compilation.profile.maxContextTokensPerJob - compilation.profile.maxOutputTokensPerJob),
   });
-  const jobs = requestedVerificationJobs.slice(0, compilation.profile.maxVerificationJobs);
-  const deferredVerificationIds = requestedVerificationJobs.slice(jobs.length).map(({ proposal }) => proposal.id);
-  const verificationMetrics = jobs.map((job) => reserveReviewRuntimePrompt(
-    buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
-  const inputTokens = verificationMetrics.reduce((total, value) => total + value.tokens, 0);
-  const reservedOutputTokens = jobs.length * compilation.profile.maxOutputTokensPerJob;
-  const verificationAccounting: VerificationAccounting = Object.freeze({
-    jobs: jobs.length,
-    promptBytes: verificationMetrics.reduce((total, value) => total + value.bytes, 0),
-    inputTokens,
-    maximumJobBytes: Math.max(0, ...verificationMetrics.map(({ bytes }) => bytes)),
-    maximumJobTokens: Math.max(0, ...verificationMetrics.map(({ tokens }) => tokens)),
-    reservedOutputTokens,
-    estimatedCostUsd: estimatedReviewCostUsd({ inputTokens, outputTokens: reservedOutputTokens,
-      inputUsdPerMillionTokens: compilation.profile.inputUsdPerMillionTokens,
-      outputUsdPerMillionTokens: compilation.profile.outputUsdPerMillionTokens }),
-    estimatedWallTimeSeconds: Math.ceil(jobs.length / compilation.profile.concurrency)
-      * compilation.profile.estimatedSecondsPerJob,
-  });
-  const combinedTokens = compilation.accounting.estimatedInputTokens + expansionAccounting.inputTokens
-    + verificationAccounting.inputTokens;
-  const combinedCost = compilation.accounting.estimatedCostUsd + expansionAccounting.estimatedCostUsd
-    + verificationAccounting.estimatedCostUsd;
-  const combinedWall = compilation.accounting.estimatedWallTimeSeconds + expansionAccounting.estimatedWallTimeSeconds
-    + verificationAccounting.estimatedWallTimeSeconds;
-  if (verificationAccounting.maximumJobBytes > compilation.profile.maxPromptBytesPerJob
-    || verificationAccounting.maximumJobTokens > compilation.profile.maxInputTokensPerJob
-    || verificationAccounting.maximumJobTokens + compilation.profile.maxOutputTokensPerJob
-      > compilation.profile.maxContextTokensPerJob
-    || verificationAccounting.inputTokens > compilation.profile.maxVerificationInputTokens
-    || combinedTokens > compilation.profile.maxTotalInputTokens
-    || combinedCost > compilation.profile.maxEstimatedCostUsd
-    || combinedWall > compilation.profile.maxWallTimeSeconds) {
-    throw new RepositoryAuditIntegrityError('repository audit verification exceeds the resolved operational budget');
+  let jobs = requestedVerificationJobs.slice(0, compilation.profile.maxVerificationJobs);
+  let verificationAccounting = verificationJobAccounting(compilation, jobs);
+  while (jobs.length > 0 && !verificationFitsBudget(compilation, expansionAccounting, verificationAccounting)) {
+    jobs = jobs.slice(0, -1); verificationAccounting = verificationJobAccounting(compilation, jobs);
   }
+  const selectedVerificationIds = new Set(jobs.map(({ id }) => id));
+  const deferredVerificationIds = requestedVerificationJobs.filter(({ id }) => !selectedVerificationIds.has(id))
+    .map(({ proposal }) => proposal.id);
   const verificationIdentity = cacheIdentity(policyDigest, expectedRuntime,
     'kubeclaw.echo-review-scale-verification.v1');
   const verificationRun = await cachedVerificationJobs(jobs, verificationIdentity,
@@ -479,6 +454,55 @@ function enforceExpansionBudget(
     throw new RepositoryAuditIntegrityError('repository audit context expansion exceeds the resolved operational budget');
   }
   return Object.freeze({ inputTokens, estimatedCostUsd: cost, estimatedWallTimeSeconds: wall });
+}
+
+function selectExpansionJobs(
+  compilation: ReturnType<typeof compileScalableReview>, candidates: readonly ScalableReviewJob[],
+): Readonly<{ jobs: readonly ScalableReviewJob[]; accounting: ReturnType<typeof enforceExpansionBudget> }> {
+  let jobs: readonly ScalableReviewJob[] = [];
+  let accounting = enforceExpansionBudget(compilation, jobs);
+  for (const candidate of candidates) {
+    if (jobs.length >= compilation.profile.maxContextExpansionJobs) break;
+    const proposed = [...jobs, candidate];
+    try { accounting = enforceExpansionBudget(compilation, proposed); jobs = proposed; }
+    catch (error) {
+      if (!(error instanceof RepositoryAuditIntegrityError)) throw error;
+    }
+  }
+  return Object.freeze({ jobs: Object.freeze(jobs), accounting });
+}
+
+function verificationJobAccounting(
+  compilation: ReturnType<typeof compileScalableReview>, jobs: readonly ScalableVerificationJob[],
+): VerificationAccounting {
+  const metrics = jobs.map((job) => reserveReviewRuntimePrompt(
+    buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
+  const inputTokens = metrics.reduce((total, value) => total + value.tokens, 0);
+  const reservedOutputTokens = jobs.length * compilation.profile.maxOutputTokensPerJob;
+  return Object.freeze({ jobs: jobs.length,
+    promptBytes: metrics.reduce((total, value) => total + value.bytes, 0), inputTokens,
+    maximumJobBytes: Math.max(0, ...metrics.map(({ bytes }) => bytes)),
+    maximumJobTokens: Math.max(0, ...metrics.map(({ tokens }) => tokens)), reservedOutputTokens,
+    estimatedCostUsd: estimatedReviewCostUsd({ inputTokens, outputTokens: reservedOutputTokens,
+      inputUsdPerMillionTokens: compilation.profile.inputUsdPerMillionTokens,
+      outputUsdPerMillionTokens: compilation.profile.outputUsdPerMillionTokens }),
+    estimatedWallTimeSeconds: Math.ceil(jobs.length / compilation.profile.concurrency)
+      * compilation.profile.estimatedSecondsPerJob } as VerificationAccounting);
+}
+
+function verificationFitsBudget(
+  compilation: ReturnType<typeof compileScalableReview>,
+  expansion: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>,
+  verification: VerificationAccounting,
+): boolean {
+  return verification.maximumJobBytes <= compilation.profile.maxPromptBytesPerJob
+    && verification.maximumJobTokens <= compilation.profile.maxInputTokensPerJob
+    && verification.maximumJobTokens + compilation.profile.maxOutputTokensPerJob <= compilation.profile.maxContextTokensPerJob
+    && verification.inputTokens <= compilation.profile.maxVerificationInputTokens
+    && compilation.accounting.estimatedInputTokens + expansion.inputTokens + verification.inputTokens <= compilation.profile.maxTotalInputTokens
+    && compilation.accounting.estimatedCostUsd + expansion.estimatedCostUsd + verification.estimatedCostUsd <= compilation.profile.maxEstimatedCostUsd
+    && compilation.accounting.estimatedWallTimeSeconds + expansion.estimatedWallTimeSeconds
+      + verification.estimatedWallTimeSeconds <= compilation.profile.maxWallTimeSeconds;
 }
 
 function exactDispatchResults<T extends { readonly jobId: string }>(
