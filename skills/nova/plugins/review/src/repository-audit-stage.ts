@@ -333,7 +333,10 @@ async function verifiedReduction(
   const resolvedRequests = new Map<string, readonly string[]>();
   for (const requestedPath of requestedPaths) {
     const exact = snapshot.files.find(({ path }) => path === requestedPath);
-    const files = exact ? [exact] : snapshot.files.filter(({ path }) => path.startsWith(`${requestedPath}/`));
+    const directory = exact ? [] : snapshot.files.filter(({ path }) => path.startsWith(`${requestedPath}/`));
+    const suffix = exact || directory.length > 0 ? []
+      : snapshot.files.filter(({ path }) => path.endsWith(`/${requestedPath}`));
+    const files = exact ? [exact] : directory.length > 0 ? directory : suffix.length === 1 ? suffix : [];
     if (files.length === 0 || files.some(({ mode, sizeBytes }) => mode !== '100644'
       || sizeBytes > REVIEW_HARD_LIMITS.repositoryAuditFileBytes)) {
       throw new RepositoryAuditIntegrityError(`scalable review requested source is unavailable: ${requestedPath}`);
