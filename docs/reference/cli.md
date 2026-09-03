@@ -44,6 +44,7 @@ Generated from: `scripts/deploy.sh`
 - `nova-unit-preflight`
 - `nova-kubernetes-fixture-preflight`
 - `nova-http-preflight`
+- `nova-a11y-preflight`
 - `nova-tailscale-preflight`
 - `nova-production-preflights`
 - `worker-trust-e2e`

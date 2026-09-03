@@ -79,6 +79,7 @@
     "nova-unit-preflight",
     "nova-kubernetes-fixture-preflight",
     "nova-http-preflight",
+    "nova-a11y-preflight",
     "nova-tailscale-preflight",
     "nova-production-preflights",
     "worker-trust-e2e",
@@ -302,6 +303,7 @@
     "cmd_nova_unit_preflight",
     "cmd_nova_kubernetes_fixture_preflight",
     "cmd_nova_http_preflight",
+    "cmd_nova_a11y_preflight",
     "cmd_nova_tailscale_preflight",
     "cmd_nova_production_preflights",
     "cmd_worker_trust_e2e",
@@ -324,12 +326,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 849,
-    "secrets": 894,
-    "tailscale": 985,
-    "infra": 1076,
-    "agents": 1392,
-    "smoke": 1514,
-    "teardown": 2439
+    "setup": 850,
+    "secrets": 895,
+    "tailscale": 986,
+    "infra": 1077,
+    "agents": 1393,
+    "smoke": 1515,
+    "teardown": 2509
   }
 }
