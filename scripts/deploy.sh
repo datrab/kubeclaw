@@ -37,6 +37,8 @@
 #   NOVA_CODE_BUNDLE_EXPECTED_COMMIT   Expected Nova source commit for code deploy
 #   BUSTER_CODE_BUNDLE_ARCHIVE_URL     Resolved Buster bundle archive URL for code deploy
 #   BUSTER_CODE_BUNDLE_EXPECTED_COMMIT   Expected Buster source commit for code deploy
+#   PRISM_CODE_BUNDLE_ARCHIVE_URL      Resolved Prism bundle archive URL for Prism deploy
+#   PRISM_CODE_BUNDLE_EXPECTED_COMMIT  Expected Prism source commit for Prism deploy
 #   TAILSCALE_OPERATOR_ENABLED     true|false (default: true)
 #   TAILSCALE_OAUTH_CLIENT_ID      Optional bootstrap source for Secret/operator-oauth
 #   TAILSCALE_OAUTH_CLIENT_SECRET  Optional bootstrap source for Secret/operator-oauth
@@ -607,6 +609,11 @@ bundle_env_for_role() {
     buster:contract_version) echo "${BUSTER_CODE_BUNDLE_CONTRACT_VERSION:-v2}" ;;
     buster:auth_secret) echo "${BUSTER_CODE_BUNDLE_AUTH_SECRET:-}" ;;
     buster:auth_key) echo "${BUSTER_CODE_BUNDLE_AUTH_SECRET_KEY:-token}" ;;
+    prism:archive_url) echo "${PRISM_CODE_BUNDLE_ARCHIVE_URL:-}" ;;
+    prism:expected_commit) echo "${PRISM_CODE_BUNDLE_EXPECTED_COMMIT:-}" ;;
+    prism:contract_version) echo "${PRISM_CODE_BUNDLE_CONTRACT_VERSION:-v2}" ;;
+    prism:auth_secret) echo "${PRISM_CODE_BUNDLE_AUTH_SECRET:-}" ;;
+    prism:auth_key) echo "${PRISM_CODE_BUNDLE_AUTH_SECRET_KEY:-token}" ;;
     *) return 1 ;;
   esac
 }
@@ -1598,6 +1605,40 @@ cmd_prism() {
   require_helm_release_idle agent-prism "$PRISM_NAMESPACE"
   require_spiffe_csi_driver
   cmd_prism_secrets
+  local prism_agent_image_repo prism_bundle_archive_url prism_bundle_expected_commit
+  local prism_bundle_contract_version prism_bundle_auth_secret prism_bundle_auth_key
+  local prism_bundle_override
+  prism_agent_image_repo="$(yaml_get_section_key "$PRISM_AGENT_VALUES_FILE" image repository)"
+  prism_bundle_expected_commit="$(bundle_env_for_role prism expected_commit)"
+  prism_bundle_contract_version="$(bundle_env_for_role prism contract_version)"
+  prism_bundle_auth_secret="$(bundle_env_for_role prism auth_secret)"
+  prism_bundle_auth_key="$(bundle_env_for_role prism auth_key)"
+  prism_bundle_archive_url="$(bundle_env_for_role prism archive_url)"
+  if [[ -z $prism_bundle_auth_secret ]]; then
+    prism_bundle_auth_secret="$(yaml_get_nested_section_key "$PRISM_AGENT_VALUES_FILE" codeBundle auth existingSecret)"
+  fi
+  if [[ -z $prism_bundle_auth_key || $prism_bundle_auth_key == "token" ]]; then
+    local prism_values_auth_key=""
+    prism_values_auth_key="$(yaml_get_nested_section_key "$PRISM_AGENT_VALUES_FILE" codeBundle auth existingSecretKey)"
+    if [[ -n $prism_values_auth_key ]]; then
+      prism_bundle_auth_key="$prism_values_auth_key"
+    fi
+  fi
+  if [[ -z $prism_bundle_expected_commit ]]; then
+    if ! prism_bundle_expected_commit="$(default_bundle_expected_commit)"; then
+      err "Prism deploy requires PRISM_CODE_BUNDLE_EXPECTED_COMMIT or a resolvable ${CODE_BUNDLE_DEFAULT_REF}"
+      return 1
+    fi
+    info "Resolved Prism code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}: ${prism_bundle_expected_commit}"
+  fi
+  if [[ -z $prism_bundle_archive_url ]]; then
+    prism_bundle_archive_url="$(default_bundle_archive_url prism "$prism_bundle_expected_commit" "$prism_agent_image_repo")" || true
+  fi
+  if [[ -z $prism_bundle_archive_url ]]; then
+    err "Prism deploy requires PRISM_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
+    return 1
+  fi
+  verify_bundle_archive_url prism "$prism_bundle_archive_url" "$prism_bundle_expected_commit" "$prism_bundle_auth_secret"
   local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done < <(prism_image_overrides)
   overrides+=(--set-string "workerTrust.spiffe.novaNamespace=${NAMESPACE}")
   overrides+=(--set-string "workerTrust.spiffe.novaServiceAccount=agent-nova")
@@ -1637,12 +1678,25 @@ cmd_prism() {
       kubectl rollout restart deployment/"$prism_workload" -n "$PRISM_NAMESPACE"
     fi
   done
-  helm lint "$CHART_DIR" -f "$PRISM_AGENT_VALUES_FILE" \
-    --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1"
+  prism_bundle_override="$(mktemp)"
+  append_code_bundle_override_file "$prism_bundle_override" \
+    "$prism_bundle_archive_url" "$prism_bundle_expected_commit" \
+    "$prism_bundle_contract_version" "$prism_bundle_auth_secret" "$prism_bundle_auth_key"
+  if ! helm lint "$CHART_DIR" -f "$PRISM_AGENT_VALUES_FILE" -f "$prism_bundle_override" \
+    --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1"; then
+    rm -f "$prism_bundle_override"
+    return 1
+  fi
+  local prism_agent_helm_result=0
   helm upgrade --install agent-prism "$CHART_DIR" -n "$PRISM_NAMESPACE" \
     -f "$PRISM_AGENT_VALUES_FILE" \
+    -f "$prism_bundle_override" \
     --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1" \
-    --atomic --wait --timeout "$PRISM_HELM_TIMEOUT"
+    --atomic --wait --timeout "$PRISM_HELM_TIMEOUT" || prism_agent_helm_result=$?
+  rm -f "$prism_bundle_override"
+  if [[ $prism_agent_helm_result -ne 0 ]]; then
+    return "$prism_agent_helm_result"
+  fi
   for workload in prism-postgresql prism-control prism-studio prism-worker; do
     local kind=deployment; [[ $workload == prism-postgresql ]] && kind=statefulset
     kubectl rollout status "$kind/$workload" -n "$PRISM_NAMESPACE" --timeout="$PRISM_ROLLOUT_TIMEOUT"
@@ -2149,6 +2203,8 @@ case "${1:-}" in
     echo "  NOVA_CODE_BUNDLE_EXPECTED_COMMIT=${NOVA_CODE_BUNDLE_EXPECTED_COMMIT:-}"
     echo "  BUSTER_CODE_BUNDLE_ARCHIVE_URL=${BUSTER_CODE_BUNDLE_ARCHIVE_URL:-}"
     echo "  BUSTER_CODE_BUNDLE_EXPECTED_COMMIT=${BUSTER_CODE_BUNDLE_EXPECTED_COMMIT:-}"
+    echo "  PRISM_CODE_BUNDLE_ARCHIVE_URL=${PRISM_CODE_BUNDLE_ARCHIVE_URL:-}"
+    echo "  PRISM_CODE_BUNDLE_EXPECTED_COMMIT=${PRISM_CODE_BUNDLE_EXPECTED_COMMIT:-}"
     echo "  TAILSCALE_OPERATOR_ENABLED=${TAILSCALE_OPERATOR_ENABLED:-true}"
     echo "  TAILSCALE_OPERATOR_NAMESPACE=$TAILSCALE_OPERATOR_NAMESPACE"
     exit 1

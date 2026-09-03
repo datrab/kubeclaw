@@ -36,6 +36,8 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `NAMESPACE` | Target namespace (default: kubeclaw) | `kubeclaw` | `kubeclaw` |
 | `NOVA_CODE_BUNDLE_ARCHIVE_URL` | Resolved Nova bundle archive URL for code deploy |  |  |
 | `NOVA_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Nova source commit for code deploy |  |  |
+| `PRISM_CODE_BUNDLE_ARCHIVE_URL` | Resolved Prism bundle archive URL for Prism deploy |  |  |
+| `PRISM_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Prism source commit for Prism deploy |  |  |
 | `SRC_NS` | Namespace to copy existing app Secrets from (default: default) |  | `default` |
 | `TAILSCALE_OAUTH_CLIENT_ID` | Optional bootstrap source for Secret/operator-oauth |  |  |
 | `TAILSCALE_OAUTH_CLIENT_SECRET` | Optional bootstrap source for Secret/operator-oauth |  |  |

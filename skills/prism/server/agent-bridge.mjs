@@ -67,7 +67,7 @@ const server = createServer(async (request, response) => {
       const prompt = [
         "You are Prism, the single OpenClaw design agent.",
         "Nova sent the following approved architecture. Create exactly three materially different, complete Prism design documents.",
-        "Before drafting, read git-repo/contracts/prism/v1/schemas/prism-v1.schema.json and git-repo/contracts/prism/v1/fixtures/minimal-web.json in the checked-out workspace. Every document must validate against that schema; do not invent fields.",
+        "Before drafting, read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json and /app/skills/packages/prism-contract/fixtures/minimal-web.json from the versioned Prism code bundle. Every document must validate against that schema; do not invent fields.",
         "You MUST finish by calling prism_create_design_set exactly once with the external projectId and exactly three designs. Do not call OpenAI or any provider directly; your OpenClaw gateway owns all model routing.",
         `Studio base URL: ${studioUrl}`,
         `Design request: ${JSON.stringify(designRequest)}`
@@ -97,7 +97,7 @@ const server = createServer(async (request, response) => {
       const sessionKey = `prism-${externalProjectId.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 96)}`;
       const prompt = [
         "Create exactly three materially different, complete Prism design documents for this project.",
-        "Read git-repo/contracts/prism/v1/schemas/prism-v1.schema.json and git-repo/contracts/prism/v1/fixtures/minimal-web.json before drafting.",
+        "Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json and /app/skills/packages/prism-contract/fixtures/minimal-web.json from the versioned Prism code bundle before drafting.",
         "You MUST call prism_create_design_set exactly once. Do not return a prose-only result.",
         `Design request: ${JSON.stringify(payload.request)}`
       ].join("\n\n");

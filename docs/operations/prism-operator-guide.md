@@ -17,6 +17,20 @@ Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
 
+The agent release always receives the published Prism runtime code bundle for
+the resolved `main` commit. That bundle contains the version-matched canonical
+schema and fixture under `/app/skills/packages/prism-contract`; Prism does not
+read those runtime contracts from the checked-out project repository. Private
+release assets use the existing `github-bundle-reader` Secret. Operators may
+pin or override the asset with `PRISM_CODE_BUNDLE_EXPECTED_COMMIT` and
+`PRISM_CODE_BUNDLE_ARCHIVE_URL`.
+
+The project checkout remains a separate concern. For now production values use
+the explicit SSH remote `git@github.com:datrab/kubeclaw.git` and
+`git-deploy-key-nova`. A later pipeline contract may replace that remote with
+the project repository supplied by Nova without changing how Prism runtime
+contracts are delivered.
+
 Studio keeps a strict Content Security Policy and therefore ships
 build-generated JSON Schema validators instead of compiling AJV schemas in the
 browser. A connected Tailscale page that remains black while the browser

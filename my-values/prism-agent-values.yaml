@@ -10,6 +10,17 @@ imagePullSecrets:
   - name: ghcr-secret
 runAsRoot: false
 
+# Prism runtime code, including its version-matched schemas and fixtures, is
+# delivered independently from the project repository checkout.
+codeBundle:
+  enabled: false
+  archiveUrl: ""
+  expectedCommit: ""
+  contractVersion: "v2"
+  auth:
+    existingSecret: "github-bundle-reader"
+    existingSecretKey: "token"
+
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-prism
@@ -84,7 +95,7 @@ workspace:
   tools: |
     prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.
     prism_apply_revision is mandatory for Studio or Discord design changes.
-    Read git-repo/contracts/prism/v1/schemas/prism-v1.schema.json for the canonical contract and git-repo/contracts/prism/v1/fixtures/minimal-web.json for a minimal valid example before creating a document.
+    Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json for the canonical contract and /app/skills/packages/prism-contract/fixtures/minimal-web.json for a minimal valid example before creating a document.
 
 probes:
   dependencies:

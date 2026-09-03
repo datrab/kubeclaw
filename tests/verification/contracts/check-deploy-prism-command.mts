@@ -13,6 +13,8 @@ const workerTrust=readFileSync(new URL("../../../charts/prism/templates/configma
 const liveAcceptance=readFileSync(new URL("../live/prism-nova-production-e2e.mjs",import.meta.url),"utf8");
 const namespacePolicies=readFileSync(new URL("../../../my-values/infra/network-policies.yaml",import.meta.url),"utf8");
 const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
+const agentValues=readFileSync(new URL("../../../my-values/prism-agent-values.yaml",import.meta.url),"utf8");
+const agentBridge=readFileSync(new URL("../../../skills/prism/server/agent-bridge.mjs",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control.ts",import.meta.url),"utf8");
 const databaseBootstrap=readFileSync(new URL("../../../skills/prism/server/bootstrap-database.ts",import.meta.url),"utf8");
 const databaseMigrate=readFileSync(new URL("../../../skills/prism/server/migrate.ts",import.meta.url),"utf8");
@@ -28,6 +30,20 @@ assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not requi
 assert(!source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must use ordinary tagged images");
 assert(!source.includes("reconcile_prism_provider_secret"),"Prism worker deployment must not own model-provider credentials");
 assert(source.includes("PRISM_AGENT_VALUES_FILE"),"Prism must deploy its OpenClaw agent release");
+assert.match(source,/prism:archive_url[\s\S]*PRISM_CODE_BUNDLE_ARCHIVE_URL[\s\S]*cmd_prism\(\)[\s\S]*append_code_bundle_override_file[\s\S]*-f "\$prism_bundle_override"/u,
+  "Prism deploy must install its versioned runtime code bundle");
+assert.match(agentValues,/codeBundle:[\s\S]*existingSecret:\s*"github-bundle-reader"/u,
+  "Prism code bundle must use the existing private-release reader");
+assert.match(agentValues,/repoUrl:\s*"git@github\.com:datrab\/kubeclaw\.git"/u,
+  "Prism project checkout must remain on the explicit SSH remote");
+for(const sourceText of [agentValues,agentBridge]){
+  assert(sourceText.includes("/app/skills/packages/prism-contract/schemas/prism-v1.schema.json"),
+    "Prism prompts must read the canonical schema from the code bundle");
+  assert(sourceText.includes("/app/skills/packages/prism-contract/fixtures/minimal-web.json"),
+    "Prism prompts must read the fixture from the code bundle");
+  assert(!sourceText.includes("git-repo/contracts/prism"),
+    "Prism prompts must not couple runtime contracts to the project checkout");
+}
 assert(source.includes("Missing image pull Secret: ${PRISM_NAMESPACE}/${PRISM_IMAGE_PULL_SECRET_NAME}"),"Prism must preflight its configured pull Secret");
 assert(source.includes("secretsToCopy: [prism-test-runtime, prism-test-postgresql-auth, prism-test-ghcr, openclaw-shared-secrets, git-deploy-key-nova]"),"leased Prism acceptance must copy the OpenClaw agent and isolated fixture Secrets through the broker");
 assert(source.includes("[[ $lease_phase == Ready ]]"),"leased Prism acceptance must fail closed unless the broker reports Ready");

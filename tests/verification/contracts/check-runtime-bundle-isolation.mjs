@@ -82,27 +82,36 @@ try {
   const novaB = build('nova', 'nova-b');
   const busterA = build('buster', 'buster-a');
   const busterB = build('buster', 'buster-b');
+  const prismA = build('prism', 'prism-a');
+  const prismB = build('prism', 'prism-b');
   assert.equal(treeDigest(novaA), treeDigest(novaB), 'Nova bundle tree is not reproducible');
   assert.equal(treeDigest(busterA), treeDigest(busterB), 'Buster bundle tree is not reproducible');
+  assert.equal(treeDigest(prismA), treeDigest(prismB), 'Prism bundle tree is not reproducible');
 
   assert.equal(fs.existsSync(path.join(novaA, 'skills/packages/worker-core')), false);
   assert.equal(fs.existsSync(path.join(novaA, 'skills/packages/buster-engine')), false);
   assert.equal(fs.existsSync(path.join(busterA, 'skills/packages/nova-core')), false);
   assert.equal(fs.existsSync(path.join(busterA, 'skills/packages/worker-core')), true);
   assert.equal(fs.existsSync(path.join(busterA, 'skills/packages/buster-engine')), true);
+  assert.equal(fs.existsSync(path.join(prismA, 'skills/packages/nova-core')), false);
+  assert.equal(fs.existsSync(path.join(prismA, 'skills/packages/buster-engine')), false);
+  assert.equal(fs.existsSync(path.join(prismA, 'skills/packages/prism-contract/schemas/prism-v1.schema.json')), true);
+  assert.equal(fs.existsSync(path.join(prismA, 'skills/packages/prism-contract/fixtures/minimal-web.json')), true);
 
-  for (const [role, bundle] of [['nova', novaA], ['buster', busterA]]) {
+  for (const [role, bundle] of [['nova', novaA], ['buster', busterA], ['prism', prismA]]) {
     const entrypoint = pathToFileURL(path.join(bundle, 'skills', role === 'nova' ? 'pipeline.ts' : 'runtime.ts')).href;
     const expression = role === 'nova'
       ? `import('${entrypoint}').then(m=>{if(typeof m.PipelineRunner!=='function'||'WorkerAttemptExecutor' in m)process.exit(2)})`
-      : `import('${entrypoint}').then(m=>{if(typeof m.TestPlanRunner!=='function'||'PipelineRunner' in m)process.exit(2)})`;
+      : role === 'buster'
+        ? `import('${entrypoint}').then(m=>{if(typeof m.TestPlanRunner!=='function'||'PipelineRunner' in m)process.exit(2)})`
+        : `import('${entrypoint}').then(m=>{if(typeof m.PrismEngine!=='function'||'PipelineRunner' in m)process.exit(2)})`;
     execFileSync(process.execPath, ['-e', expression], {
       cwd: temporary,
       env: { PATH: process.env.PATH ?? '', HOME: temporary, NODE_PATH: '', NODE_NO_WARNINGS: '1' },
     });
   }
 
-  for (const role of ['nova', 'buster']) {
+  for (const role of ['nova', 'buster', 'prism']) {
     const roleManifest = JSON.parse(fs.readFileSync(path.join(root, `packaging/runtime/roles/${role}.json`), 'utf8'));
     const expected = [...roleManifest.plugins.map((id) => {
       for (const base of ['skills/common/plugins', `skills/${role}/plugins`]) {
@@ -115,7 +124,8 @@ try {
       }
       throw new Error(`missing selected plugin source: ${id}`);
     }), 'openclaw-agent-observer'].sort();
-    assert.deepEqual(pluginDirectories(role === 'nova' ? novaA : busterA), expected, `${role} plugin set is not exact`);
+    const bundle = role === 'nova' ? novaA : role === 'buster' ? busterA : prismA;
+    assert.deepEqual(pluginDirectories(bundle), expected, `${role} plugin set is not exact`);
   }
 
   assert.equal(fs.existsSync(path.join(root, 'skills/common/plugin-runtime/core')), false);
@@ -167,4 +177,4 @@ try {
   fs.rmSync(temporary, { recursive: true, force: true });
 }
 
-console.log(JSON.stringify({ ok: true, phase: '5.6-E', roles: 2, negativeProofs: 4 }));
+console.log(JSON.stringify({ ok: true, phase: '5.6-E', roles: 3, negativeProofs: 4 }));

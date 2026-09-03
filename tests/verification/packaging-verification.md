@@ -2,7 +2,7 @@
 
 ## Scope
 
-Packaging verification covers the Nova and Buster runtime trees under
+Packaging verification covers the Nova, Buster, and Prism runtime trees under
 `/app/skills`.
 
 The authoritative rules are:
@@ -31,7 +31,7 @@ The checks fail for:
 - Source changes during assembly.
 - Cross-role package or plugin leakage.
 - A non-repeatable file tree or release archive.
-- Broken Nova or Buster entrypoints.
+- Broken Nova, Buster, or Prism entrypoints.
 - A package link that escapes the bundle.
 - Legacy Common overlay code in an archive.
 - A custom skill that replaces a protected package-set path.
@@ -46,6 +46,11 @@ npm run verify:runtime-packaging:isolation
 npm run verify:runtime-packaging:cutover
 ```
 
-These checks build real Nova and Buster bundles. They load both entrypoints in
+These checks build real Nova, Buster, and Prism bundles. They load all three entrypoints in
 an isolated temporary directory. They also build each release archive twice
 and compare the archive bytes.
+
+The Prism proof additionally requires its canonical JSON Schema and minimal
+fixture under `/app/skills/packages/prism-contract`. These contract assets are
+therefore tied to the accepted bundle commit instead of the mutable project
+repository checkout.

@@ -52,5 +52,9 @@ LiteLLM/internet egress rule. `agent-prism` uses the same managed OpenAI model
 policy as Nova and Buster: `openai/gpt-5.6-sol` with `openai/gpt-5.5` fallback.
 It is the only Prism workload allowed to reach LiteLLM, and only OpenClaw memory
 search uses that path for embeddings. External TCP 443 remains available to the
-agent for OpenAI, Discord, and the public repository clone. No application
+agent for OpenAI, Discord, and versioned runtime-bundle retrieval. The current
+project checkout uses the separate SSH remote
+`git@github.com:datrab/kubeclaw.git`; it is not the source of Prism's runtime
+schema or fixture. Those contract assets are part of the commit-pinned Prism
+code bundle mounted under `/app/skills/packages/prism-contract`. No application
 service bypasses the OpenClaw gateway for model calls.

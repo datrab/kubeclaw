@@ -138,6 +138,14 @@
       "description": "Expected Buster source commit for code deploy"
     },
     {
+      "name": "PRISM_CODE_BUNDLE_ARCHIVE_URL",
+      "description": "Resolved Prism bundle archive URL for Prism deploy"
+    },
+    {
+      "name": "PRISM_CODE_BUNDLE_EXPECTED_COMMIT",
+      "description": "Expected Prism source commit for Prism deploy"
+    },
+    {
       "name": "TAILSCALE_OPERATOR_ENABLED",
       "description": "true|false (default: true)"
     },
@@ -198,6 +206,8 @@
     "NOVA_CODE_BUNDLE_EXPECTED_COMMIT": null,
     "BUSTER_CODE_BUNDLE_ARCHIVE_URL": null,
     "BUSTER_CODE_BUNDLE_EXPECTED_COMMIT": null,
+    "PRISM_CODE_BUNDLE_ARCHIVE_URL": null,
+    "PRISM_CODE_BUNDLE_EXPECTED_COMMIT": null,
     "TAILSCALE_OPERATOR_ENABLED": null,
     "TAILSCALE_OAUTH_CLIENT_ID": null,
     "TAILSCALE_OAUTH_CLIENT_SECRET": null,
@@ -300,12 +310,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 837,
-    "secrets": 882,
-    "tailscale": 973,
-    "infra": 1064,
-    "agents": 1380,
-    "smoke": 1502,
-    "teardown": 1988
+    "setup": 844,
+    "secrets": 889,
+    "tailscale": 980,
+    "infra": 1071,
+    "agents": 1387,
+    "smoke": 1509,
+    "teardown": 2042
   }
 }
