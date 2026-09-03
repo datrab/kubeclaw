@@ -598,6 +598,21 @@ assert.match(
 );
 assert.match(
   chart,
+  /name: init-setup[\s\S]*capabilities:[\s\S]*drop:[\s\S]*- ALL[\s\S]*if \.Values\.runAsRoot[\s\S]*add:[\s\S]*- CHOWN[\s\S]*- FOWNER/,
+  'root-mode setup must retain only the capabilities required for its explicit ownership handoff',
+);
+assert.match(
+  chart,
+  /if \[ "\$INIT_RUN_AS_ROOT" = "true" \]; then[\s\S]*if \[ "\$\{AGENT_NAME\}" = "buster" \]; then[\s\S]*chown -R 1000:1000 \/workspace[\s\S]*chmod -R g\+rwX \/workspace[\s\S]*find \/workspace -type d -exec chmod g\+s \{\} \+/,
+  'Buster setup must hand the shared workspace to UID/GID 1000 with group-write inheritance',
+);
+assert.equal(
+  (chart.match(/chown -R (?:0:1000|1000:1000) \/workspace/gu) ?? []).length,
+  1,
+  'Buster workspace ownership must be reconciled once rather than traversed twice',
+);
+assert.match(
+  chart,
   /Non-root init selected; persistent volumes already use fsGroup 1000[\s\S]*name: INIT_SSH_HOME[\s\S]*ternary "\/root\/\.ssh" "\/home\/node\/\.ssh" \.Values\.runAsRoot/,
   'non-root agents must use their writable home and avoid root-only ownership changes',
 );

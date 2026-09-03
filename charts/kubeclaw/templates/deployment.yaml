@@ -269,6 +269,13 @@ spec:
             capabilities:
               drop:
                 - ALL
+              {{- if .Values.runAsRoot }}
+              # Root-mode setup performs the explicit ownership handoff from
+              # gateway-created files to the non-root Buster runtime.
+              add:
+                - CHOWN
+                - FOWNER
+              {{- end }}
             readOnlyRootFilesystem: true
           command:
             - /bin/bash
@@ -360,12 +367,6 @@ spec:
                   fi
                 fi
               done
-              if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
-                chown -R 0:1000 /workspace
-                chmod -R g+rwX /workspace
-                find /workspace -type d -exec chmod g+s {} +
-              fi
-
               echo "==> 4. Config Setup"
               if [ ! -f /config/openclaw.json ]; then
                 if [ -f /init-config/openclaw.json ]; then
@@ -1038,6 +1039,8 @@ spec:
                 chown -R 0:0 /config /runtime-config /skills-merged
                 if [ "${AGENT_NAME}" = "buster" ]; then
                   chown -R 1000:1000 /workspace
+                  chmod -R g+rwX /workspace
+                  find /workspace -type d -exec chmod g+s {} +
                   chown -R 0:1000 "$INIT_SSH_HOME"
                   find "$INIT_SSH_HOME" -type d -exec chmod 750 {} +
                   if [ -f "$INIT_SSH_HOME/id_rsa" ]; then chmod 640 "$INIT_SSH_HOME/id_rsa"; fi

@@ -144,6 +144,12 @@ deploy key is owner/group-readable (`0440`) so UID 1000 can copy it without
 making it world-readable; root-based agents retain `0400`. A
 `CreateContainerConfigError` saying that `init-setup` breaks the non-root policy
 indicates an older chart render and requires redeploying the agent release.
+Root-mode setup drops every ambient Linux capability and adds only `CHOWN` and
+`FOWNER` for its bounded ownership handoff. Buster reconciles the workspace to
+UID/GID 1000 once, then enables inherited group write access for the root
+gateway through the Pod's supplemental `fsGroup`. Without those two init-only
+capabilities, recursive ownership repair fails with `Operation not permitted`
+before any application container can start.
 
 A pod mount error referencing `buster-plan-trust` or another object absent from
 the current values indicates stale Helm release values, commonly after a
