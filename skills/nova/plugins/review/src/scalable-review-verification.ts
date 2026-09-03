@@ -140,30 +140,29 @@ function sourceLessHolisticJobCertified(job: ScalableReviewJob, parsed: Scalable
 // eslint-disable-next-line complexity -- Preflight validates each independent trust condition before accepting findings.
 function preflightJob(
   job: ScalableReviewJob, result: Pick<ScalableReviewJobResult, 'jobDigest' | 'parsed'> | undefined,
-  proposals: ScalableReviewProposal[], integrityIssues: string[], incompleteJobs: string[], deferred: ReadonlySet<string>,
+  proposals: ScalableReviewProposal[], incompleteJobs: string[],
 ): void {
   if (!result || result.jobDigest !== job.digest || !result.parsed.ok) { incompleteJobs.push(job.id); return; }
   if (result.parsed.value.contextRequest) {
-    if (deferred.has(job.id)) incompleteJobs.push(job.id);
-    else integrityIssues.push(`complete job requested context: ${job.id}`);
+    incompleteJobs.push(job.id);
     return;
   }
   const expected = job.requirements.map(({ id }) => id).sort();
   const actual = Object.keys(result.parsed.value.requirementAssessments).sort();
   if (canonicalJson(expected) !== canonicalJson(actual)) {
-    integrityIssues.push(`job requirement assessments are incomplete: ${job.id}`); return;
+    incompleteJobs.push(job.id); return;
   }
   if (!sourceLessHolisticJobCertified(job, result.parsed)) {
-    integrityIssues.push(`source-less holistic job did not certify the supplied topology: ${job.id}`); return;
+    incompleteJobs.push(job.id); return;
   }
   const offered = new Set(job.source.map(({ digest }) => `${REVIEWED_SOURCE_EVIDENCE_KIND}\0${digest}`));
   const topologyDigest = topologyEvidence(job);
   if (topologyDigest) offered.add(`${REVIEWED_TOPOLOGY_EVIDENCE_KIND}\0${topologyDigest}`);
   const untrusted = result.parsed.value.inspectedEvidence.some(({ kind, digest }) => !offered.has(`${kind}\0${digest}`));
-  if (untrusted) { integrityIssues.push(`job inspected evidence is untrusted: ${job.id}`); return; }
+  if (untrusted) { incompleteJobs.push(job.id); return; }
   for (const finding of result.parsed.value.proposedFindings) {
     const issue = validateFinding(job, finding);
-    if (issue) integrityIssues.push(issue); else proposals.push(proposal(job, finding));
+    if (issue) incompleteJobs.push(job.id); else proposals.push(proposal(job, finding));
   }
 }
 
@@ -182,8 +181,8 @@ export function preflightScalableReviewResults(
   deferred: ReadonlySet<string> = new Set(),
 ): ScalableReviewPreflight {
   const resultById = uniqueResults(results, 'scalable review preflight');
-  const proposals: ScalableReviewProposal[] = [], integrityIssues: string[] = [], incompleteJobs: string[] = [];
-  for (const job of jobs) preflightJob(job, resultById.get(job.id), proposals, integrityIssues, incompleteJobs, deferred);
+  const proposals: ScalableReviewProposal[] = [], integrityIssues: string[] = [], incompleteJobs: string[] = [...deferred];
+  for (const job of jobs) preflightJob(job, resultById.get(job.id), proposals, incompleteJobs);
   if (results.some(({ jobId }) => !jobs.some(({ id }) => id === jobId))) integrityIssues.push('unknown scalable review result');
   return Object.freeze({
     proposals: Object.freeze(proposals.sort((left, right) => compareCodeUnits(left.id, right.id))),

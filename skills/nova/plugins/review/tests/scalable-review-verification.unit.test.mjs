@@ -67,8 +67,11 @@ assert.throws(() => reduceScalableReview(verificationJobs, [
 
 const wrongEvidence = { ...parsed, value: { ...parsed.value, proposedFindings: [{ ...finding,
   evidence: [{ kind: 'reviewed-source', digest: digest('d') }] }] } };
-assert.match(preflightScalableReviewResults([job], [{ jobId: job.id, jobDigest: job.digest,
-  parsed: wrongEvidence }]).integrityIssues[0], /exact source/u);
+const wrongEvidencePreflight = preflightScalableReviewResults([job], [{ jobId: job.id, jobDigest: job.digest,
+  parsed: wrongEvidence }]);
+assert.deepEqual(wrongEvidencePreflight.integrityIssues, []);
+assert.deepEqual(wrongEvidencePreflight.incompleteJobs, [job.id]);
+assert.equal(wrongEvidencePreflight.proposals.length, 0);
 assert.equal(buildScalableVerificationJobs({ ...preflight, incompleteJobs: ['missing'] }, [job], policyDigest).length, 1);
 const contextRequested = { ok: true, value: { ...parsed.value, proposedFindings: [],
   contextRequest: { paths: ['b.ts'], reason: 'Need the boundary source.' } } };
@@ -128,8 +131,8 @@ const boundaryFinding = { ...finding, locations: [{ path: 'a.ts', lineHint: 1 },
   evidence: [{ kind: 'reviewed-source', digest: digest('a') }, { kind: 'reviewed-source', digest: digest('c') }] };
 const boundaryParsed = { ...parsed, value: { ...parsed.value,
   inspectedEvidence: boundaryFinding.evidence, proposedFindings: [boundaryFinding] } };
-assert.match(preflightScalableReviewResults([boundaryJob], [{ jobId: boundaryJob.id,
-  jobDigest: boundaryJob.digest, parsed: boundaryParsed }]).integrityIssues[0], /endpoints of one relation/u);
+assert.deepEqual(preflightScalableReviewResults([boundaryJob], [{ jobId: boundaryJob.id,
+  jobDigest: boundaryJob.digest, parsed: boundaryParsed }]).incompleteJobs, [boundaryJob.id]);
 const relatedFinding = { ...boundaryFinding, locations: [{ path: 'a.ts', lineHint: 1 }, { path: 'b.ts', lineHint: 1 }],
   evidence: [{ kind: 'reviewed-source', digest: digest('a') }, { kind: 'reviewed-source', digest: digest('b') }] };
 const relatedParsed = { ...boundaryParsed, value: { ...boundaryParsed.value,
@@ -141,8 +144,8 @@ const mismatchedLocations = { ...relatedFinding,
   evidence: [...relatedFinding.evidence, { kind: 'reviewed-source', digest: digest('c') }] };
 const mismatchedParsed = { ...relatedParsed, value: { ...relatedParsed.value,
   proposedFindings: [mismatchedLocations] } };
-assert.match(preflightScalableReviewResults([boundaryJob], [{ jobId: boundaryJob.id,
-  jobDigest: boundaryJob.digest, parsed: mismatchedParsed }]).integrityIssues[0], /endpoints of one relation/u);
+assert.deepEqual(preflightScalableReviewResults([boundaryJob], [{ jobId: boundaryJob.id,
+  jobDigest: boundaryJob.digest, parsed: mismatchedParsed }]).incompleteJobs, [boundaryJob.id]);
 
 const lensJob = { ...job, id: 'system-lens:security', kind: 'system-lens', source: [],
   systemContext: { relationCount: 2, topologyEvidence: { kind: 'reviewed-topology', digest: digest('e') } },
@@ -150,8 +153,8 @@ const lensJob = { ...job, id: 'system-lens:security', kind: 'system-lens', sourc
 const lensParsed = { ...parsed, value: { ...parsed.value, inspectedEvidence: [], proposedFindings: [],
   requirementAssessments: { 'system.topology': { assessment: 'unverified',
     explanation: 'The topology could not be certified.', evidence: [] } } } };
-assert.match(preflightScalableReviewResults([lensJob], [{ jobId: lensJob.id,
-  jobDigest: lensJob.digest, parsed: lensParsed }]).integrityIssues[0], /did not certify/u);
+assert.deepEqual(preflightScalableReviewResults([lensJob], [{ jobId: lensJob.id,
+  jobDigest: lensJob.digest, parsed: lensParsed }]).incompleteJobs, [lensJob.id]);
 const certifiedLens = { ...lensParsed, value: { ...lensParsed.value, requirementAssessments: {
   'system.topology': { assessment: 'satisfied', explanation: 'The topology is coherent.',
     evidence: [{ kind: 'reviewed-topology', digest: digest('e') }] } },
@@ -159,15 +162,15 @@ const certifiedLens = { ...lensParsed, value: { ...lensParsed.value, requirement
 assert.equal(preflightScalableReviewResults([lensJob], [{ jobId: lensJob.id,
   jobDigest: lensJob.digest, parsed: certifiedLens }]).integrityIssues.length, 0);
 const incompleteLens = { ...certifiedLens, value: { ...certifiedLens.value, requirementAssessments: {} } };
-assert.match(preflightScalableReviewResults([lensJob], [{ jobId: lensJob.id,
-  jobDigest: lensJob.digest, parsed: incompleteLens }]).integrityIssues[0], /assessments are incomplete/u);
+assert.deepEqual(preflightScalableReviewResults([lensJob], [{ jobId: lensJob.id,
+  jobDigest: lensJob.digest, parsed: incompleteLens }]).incompleteJobs, [lensJob.id]);
 const pathJob = { ...lensJob, id: 'system-path:security', kind: 'system-path' };
-assert.match(preflightScalableReviewResults([pathJob], [{ jobId: pathJob.id,
-  jobDigest: pathJob.digest, parsed: lensParsed }]).integrityIssues[0], /did not certify/u);
+assert.deepEqual(preflightScalableReviewResults([pathJob], [{ jobId: pathJob.id,
+  jobDigest: pathJob.digest, parsed: lensParsed }]).incompleteJobs, [pathJob.id]);
 const sourceLessFinding = { ...finding, locations: [], evidence: [] };
 const sourceLessParsed = { ...certifiedLens, value: { ...certifiedLens.value,
   proposedFindings: [sourceLessFinding] } };
-assert.match(preflightScalableReviewResults([pathJob], [{ jobId: pathJob.id,
-  jobDigest: pathJob.digest, parsed: sourceLessParsed }]).integrityIssues[0], /without expanded source/u);
+assert.deepEqual(preflightScalableReviewResults([pathJob], [{ jobId: pathJob.id,
+  jobDigest: pathJob.digest, parsed: sourceLessParsed }]).incompleteJobs, [pathJob.id]);
 
 console.log(JSON.stringify({ ok: true, suite: 'scalable-review-verification' }));
