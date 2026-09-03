@@ -43,6 +43,11 @@ const context = {
 };
 const result = await executeRepositoryAudit({}, context);
 assert.equal(result.outcome, 'passed');
+const gateContext = { ...context, contract: { ...context.contract,
+  config: { ...context.contract.config, profile: 'gate' } } };
+const policyMismatch = await executeRepositoryAudit({}, gateContext);
+assert.equal(policyMismatch.outcome, 'blocked');
+assert.match(policyMismatch.reason.message, /simplification lens requires an enabled simplification policy/u);
 assert.equal(result.facts['review.repository_files'], 0);
 assert.equal(result.facts['review.repository_jobs'], 0);
 assert.equal(result.artifacts.length, 4);

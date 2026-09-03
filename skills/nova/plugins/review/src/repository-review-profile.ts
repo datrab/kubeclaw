@@ -40,7 +40,7 @@ export interface RepositoryReviewProfileOverrides {
 }
 
 export type RepositoryReviewLens =
-  | 'architecture' | 'contracts' | 'security' | 'lifecycle' | 'resilience' | 'deployment';
+  | 'architecture' | 'contracts' | 'security' | 'lifecycle' | 'resilience' | 'deployment' | 'simplification';
 
 export interface ResolvedRepositoryReviewProfile {
   readonly schemaVersion: 'repository-review-profile.v1';
@@ -101,7 +101,7 @@ interface GradeDefaults extends RepositoryReviewProfileOverrides {
 }
 
 const ALL_LENSES = Object.freeze<RepositoryReviewLens[]>([
-  'architecture', 'contracts', 'security', 'lifecycle', 'resilience', 'deployment',
+  'architecture', 'contracts', 'security', 'lifecycle', 'resilience', 'deployment', 'simplification',
 ]);
 const DEFAULTS: Readonly<Record<RepositoryReviewGrade, GradeDefaults>> = Object.freeze({
   fast: Object.freeze({

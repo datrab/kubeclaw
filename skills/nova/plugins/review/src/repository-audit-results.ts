@@ -7,6 +7,7 @@ export function repositoryPlanFacts(
     'review.repository_head': head,
     'review.repository_mode': 'plan',
     'review.repository_grade': compilation.profile.grade,
+    'review.repository_simplification_enabled': Number(compilation.profile.enabledLenses.includes('simplification')),
     'review.repository_files': compilation.plan.coverage.filesIncluded,
     'review.repository_component_jobs': compilation.accounting.componentJobs,
     'review.repository_boundary_records': compilation.accounting.boundaryRecords,
@@ -40,6 +41,7 @@ export function repositoryPlanFacts(
 export function repositoryExecutionFacts(values: {
   readonly head: string; readonly compilation: ScalableReviewCompilation; readonly reportDigest: string;
   readonly confirmed: number; readonly rejected: number;
+  readonly confirmedSimplifications: number; readonly rejectedSimplifications: number;
   readonly reviewCacheHits: number; readonly reviewCacheMisses: number;
   readonly verificationCacheHits: number; readonly verificationCacheMisses: number;
   readonly actualModelCalls: number; readonly reservedInputTokens: number;
@@ -56,6 +58,8 @@ export function repositoryExecutionFacts(values: {
     'review.repository_slices': compilation.plan.slices.length,
     'review.repository_confirmed': values.confirmed,
     'review.repository_rejected': values.rejected,
+    'review.repository_confirmed_simplifications': values.confirmedSimplifications,
+    'review.repository_rejected_simplifications': values.rejectedSimplifications,
     'review.repository_review_cache_hits': values.reviewCacheHits,
     'review.repository_review_cache_misses': values.reviewCacheMisses,
     'review.repository_verification_cache_hits': values.verificationCacheHits,

@@ -22,6 +22,7 @@ assert.equal(standard.maxRetryAttemptsPerPhase, 20);
 assert.equal(standard.maxEstimatedCostUsd, 650);
 assert.equal(standard.maxPromptBytesPerJob, 900_000);
 assert.equal(standard.tokenizerEncoding, 'o200k_base');
+assert.equal(standard.enabledLenses.includes('simplification'), true);
 
 const plugin = resolveRepositoryReviewProfile({ grade: 'deep', mode: 'plan',
   scope: { kind: 'plugin', names: ['review', 'pipeline', 'review'] },
@@ -41,6 +42,7 @@ assert.equal(fast.maxContextExpansionInputTokens, 750_000);
 assert.equal(fast.maxVerificationInputTokens, 750_000);
 assert.equal(fast.maxTotalInputTokens, 8_000_000);
 assert.equal(fast.maxEstimatedCostUsd, 100);
+assert.equal(fast.enabledLenses.includes('simplification'), false);
 const deep = resolveRepositoryReviewProfile({ grade: 'deep' });
 assert.equal(deep.maxPrimaryJobs, 2_000);
 assert.equal(deep.maxTotalInputTokens, 100_000_000);

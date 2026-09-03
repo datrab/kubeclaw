@@ -45,6 +45,11 @@ bytes, per-call input, model context with reserved output, phase ceilings, a
 combined hard ceiling, estimated cost, wall time, and actual retry consumption
 before dispatch. The standard whole-repository profile permits up to 100 context
 expansions and 100 verification jobs under a 50-million-input-token total ceiling.
+Its component agents also apply the `simplification` lens: they may propose only
+concrete, behavior-preserving reductions backed by exact frozen source, and every
+proposal goes through the same independent verification path as defect findings.
+Simplification is source-based and does not create topology-only jobs. A policy
+with Simplification disabled cannot execute a profile that requests this lens.
 Follow-up phases select deterministically from the total capacity remaining after
 earlier dispatches instead of relying on a small fixed allocation. Their estimates
 reserve one attempt for every selected job plus a bounded shared retry pool rather

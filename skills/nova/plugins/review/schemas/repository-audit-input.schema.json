@@ -78,7 +78,7 @@
         "maxRetries": { "type": "integer", "minimum": 0, "maximum": 10 },
         "maxRetryAttemptsPerPhase": { "type": "integer", "minimum": 0, "maximum": 10000 },
         "enabledLenses": { "type": "array", "uniqueItems": true,
-          "items": { "enum": ["architecture", "contracts", "security", "lifecycle", "resilience", "deployment"] } }
+          "items": { "enum": ["architecture", "contracts", "security", "lifecycle", "resilience", "deployment", "simplification"] } }
       }
     }
   },

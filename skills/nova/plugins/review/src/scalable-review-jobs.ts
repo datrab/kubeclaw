@@ -59,6 +59,10 @@ const COMPONENT_REQUIREMENTS = Object.freeze([
   { id: 'component.security', text: 'The supplied component preserves authorization, confidentiality, and input boundaries.' },
   { id: 'component.lifecycle', text: 'Concurrency, cancellation, persistence, recovery, cleanup, and data-loss behavior are correct.' },
 ]);
+const SIMPLIFICATION_REQUIREMENT = Object.freeze({
+  id: 'component.simplification',
+  text: 'The supplied component has no directly evidenced behavior-preserving simplification opportunity.',
+});
 const BOUNDARY_REQUIREMENTS = Object.freeze([
   { id: 'boundary.contract', text: 'The producer, contract, and consumer agree on behavior and required data.' },
   { id: 'boundary.authority', text: 'Authority, secret, command, network, and storage boundaries are least-privilege and enforced.' },
@@ -75,10 +79,15 @@ const SYSTEM_LENS_REQUIREMENTS: Readonly<Record<RepositoryReviewLens, Readonly<{
   lifecycle: Object.freeze({ id: 'system.lifecycle', text: 'State, persistence, recovery, cleanup, and data ownership compose correctly.' }),
   resilience: Object.freeze({ id: 'system.resilience', text: 'Concurrency, cancellation, timeout, retry, and failure containment compose correctly.' }),
   deployment: Object.freeze({ id: 'system.deployment', text: 'Build, configuration, generated assets, network, and deployment topology agree.' }),
+  simplification: Object.freeze({ id: 'system.simplification', text: 'Cross-component ownership has no directly evidenced behavior-preserving simplification opportunity.' }),
 });
 
+function requestsSimplification(requirements: readonly Readonly<{ id: string }>[]): boolean {
+  return requirements.some(({ id }) => id === SIMPLIFICATION_REQUIREMENT.id || id === 'system.simplification');
+}
+
 // eslint-disable-next-line max-lines-per-function -- The complete reviewer contract stays visible as one prompt definition.
-export function scalableReviewTask(kind: ScalableReviewJob['kind']): string {
+export function scalableReviewTask(kind: ScalableReviewJob['kind'], simplification = false): string {
   const kindRules: Readonly<Record<ScalableReviewJob['kind'], readonly string[]>> = {
     component: [
       'Trace inputs, state changes, outputs, errors, and cleanup through the supplied component source.',
@@ -102,6 +111,10 @@ export function scalableReviewTask(kind: ScalableReviewJob['kind']): string {
   const lensRules = kind === 'system-lens' || kind === 'system-path' ? [
     'A clean topology triage is valid when every system requirement cites the supplied reviewed-topology digest.',
   ] : [];
+  const simplificationRules = simplification ? [
+    'Also identify concrete behavior-preserving simplifications: removable unused code, forwarding-only wrappers, single-use abstractions, unused configuration variation, duplicate helpers, trivial dependencies, and standard-library or native replacements.',
+    'Report a simplification only when exact supplied source proves the current indirection or duplication and the smallest replacement. Use category simplification. Do not report subjective cleanup, naming, formatting, speculative consolidation, or rewrites that change behavior.',
+  ] : [];
   return [
     '# KubeClaw scalable review protocol v1', '',
     `Review this ${kind} unit using only the exact source and deterministic relations below.`,
@@ -117,6 +130,7 @@ export function scalableReviewTask(kind: ScalableReviewJob['kind']): string {
     'Uncertain relations are navigation hints only and do not prove behavior.',
     ...kindRules[kind],
     ...lensRules,
+    ...simplificationRules,
     'When exact evidence is insufficient, return contextRequest with only the additional paths needed.',
     'Return raw JSON matching outputContract. Do not decide the pipeline result.',
   ].join('\n');
@@ -136,14 +150,14 @@ function job(values: {
   const body = { id, kind, source: sources, relationKeys: [...relationKeys].sort(), relatedIds: [...relatedIds].sort(),
     ...(systemContext === undefined ? {} : { systemContext }), requirements };
   const unsigned = { schemaVersion: 'scalable-review-job.v1' as const, ...body,
-    taskDigest: sha256Text(scalableReviewTask(kind)) };
+    taskDigest: sha256Text(scalableReviewTask(kind, requestsSimplification(requirements))) };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }
 
 export function buildScalableReviewDispatchPayload(jobValue: ScalableReviewJob): Readonly<Record<string, unknown>> {
   return Object.freeze({
     protocol: 'kubeclaw.echo-review-scale.v1',
-    task: scalableReviewTask(jobValue.kind),
+    task: scalableReviewTask(jobValue.kind, requestsSimplification(jobValue.requirements)),
     review: Object.freeze({ job: jobValue, jobDigest: jobValue.digest }),
     outputContract: echoReviewOutputSchema,
   });
@@ -397,13 +411,16 @@ export function buildScalableReviewJobs(values: {
   const requireDocuments = (paths: readonly string[]): readonly ReviewSourceDocument[] => paths.map((path) => {
     const document = byPath.get(path); if (!document) throw new Error(`scalable review source is missing: ${path}`); return document;
   });
-  const relations = new Map(graph.relations.map((value) => [relationKey(value), value]));
-  const components = plan.slices.map((slice) => job({ id: `component:${slice.id}`, kind: 'component',
-    sources: requireDocuments(slice.files).map(fullSource), relationKeys: [], relatedIds: [slice.id] }));
   if (!profile) profile = Object.freeze({ boundaryBudget: { ...budget, maxRelations: 1, maxSlices: 2 },
     maxInputTokensPerJob: Number.MAX_SAFE_INTEGER, maxContextTokensPerJob: Number.MAX_SAFE_INTEGER,
     maxOutputTokensPerJob: 0, maxPromptBytesPerJob: Number.MAX_SAFE_INTEGER,
     tokenizerEncoding: 'o200k_base', enabledLenses: [] } as unknown as ResolvedRepositoryReviewProfile);
+  const relations = new Map(graph.relations.map((value) => [relationKey(value), value]));
+  const componentRequirements = profile.enabledLenses.includes('simplification')
+    ? Object.freeze([...COMPONENT_REQUIREMENTS, SIMPLIFICATION_REQUIREMENT]) : COMPONENT_REQUIREMENTS;
+  const components = plan.slices.map((slice) => job({ id: `component:${slice.id}`, kind: 'component',
+    sources: requireDocuments(slice.files).map(fullSource), relationKeys: [], relatedIds: [slice.id],
+    requirements: componentRequirements }));
   const batches = boundaryBatches(boundaryItems(plan, relations, byPath), byPath, relations, profile);
   const batchSources = (part: BoundaryBatch): readonly ScalableReviewSource[] => (
     sourcesForRelations(part.relationKeys, relations, byPath)
@@ -413,7 +430,7 @@ export function buildScalableReviewJobs(values: {
     sources: batchSources(part), relationKeys: part.relationKeys,
     relatedIds: [...part.boundaryIds, ...part.sliceIds],
   }));
-  const holistic = holisticJobs(batches, profile.enabledLenses, profile);
+  const holistic = holisticJobs(batches, profile.enabledLenses.filter((lens) => lens !== 'simplification'), profile);
   return Object.freeze([...components, ...boundaries, ...holistic]
     .sort((left, right) => compareCodeUnits(left.id, right.id)));
 }

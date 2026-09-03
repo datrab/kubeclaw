@@ -657,6 +657,9 @@ async function runRepositoryAudit(
     const parsed = parseInput(input), config = stageConfig(context);
     const policy = resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile),
       ...(config.policy === undefined ? {} : { settingsFile: config.policy }) });
+    if (parsed.reviewProfile.enabledLenses.includes('simplification') && !policy.policy.simplification.enabled) {
+      throw new RepositoryAuditIntegrityError('repository audit simplification lens requires an enabled simplification policy');
+    }
     const { revision, snapshot, compilation, artifact: preparedArtifact } = await preparedRepositoryAudit(parsed, context);
     if (!compilation.plan.coverage.complete) {
       throw new RepositoryAuditIntegrityError(
@@ -688,6 +691,8 @@ async function runRepositoryAudit(
       ...verified.cache.artifacts(), ...verified.followUpArtifacts, artifact],
       facts: repositoryExecutionFacts({ head: revision.head, compilation, reportDigest: artifact.digest,
         confirmed: verified.reduction.confirmed.length, rejected: verified.reduction.rejected.length,
+        confirmedSimplifications: verified.reduction.confirmed.filter(({ finding }) => finding.category === 'simplification').length,
+        rejectedSimplifications: verified.reduction.rejected.filter(({ finding }) => finding.category === 'simplification').length,
         reviewCacheHits: verified.summary.review.hits, reviewCacheMisses: verified.summary.review.misses,
         verificationCacheHits: verified.summary.verification.hits,
         verificationCacheMisses: verified.summary.verification.misses,

@@ -100,6 +100,22 @@ assert.equal(holistic[0].systemContext.topology.relations.every((value) => value
 assert.equal(new Set(batchedBoundaries.flatMap(({ relationKeys }) => relationKeys)).size,
   batchedBoundaries.flatMap(({ relationKeys }) => relationKeys).length);
 
+const simplificationProfile = resolveRepositoryReviewProfile({ grade: 'standard', overrides: {
+  enabledLenses: ['security', 'simplification'], maxPrimaryJobs: 10,
+} });
+const simplificationJobs = buildScalableReviewJobs({ plan: densePlan, graph: denseGraph, documents: denseDocuments,
+  tokenCounts: denseTokens, budget: simplificationProfile.componentBudget, profile: simplificationProfile });
+const simplificationComponents = simplificationJobs.filter(({ kind }) => kind === 'component');
+assert.equal(simplificationComponents.every(({ requirements }) =>
+  requirements.some(({ id }) => id === 'component.simplification')), true);
+assert.equal(simplificationComponents.every((value) =>
+  buildScalableReviewDispatchPayload(value).task.includes('behavior-preserving simplifications')), true);
+assert.equal(simplificationComponents.every((value) => value.taskDigest
+  === sha256Text(scalableReviewTask(value.kind, true))), true);
+assert.equal(simplificationJobs.some(({ requirements }) =>
+  requirements.some(({ id }) => id === 'system.simplification')), false,
+'simplification is source-based and must not create a topology-only job');
+
 const longRelations = Array.from({ length: 40 }, (_value, index) => ({
   type: 'imports', from: 'b.ts', to: 'a.ts',
   extractor: `adversarial-${index}-${'x'.repeat(200)}`, confidence: 'exact',
