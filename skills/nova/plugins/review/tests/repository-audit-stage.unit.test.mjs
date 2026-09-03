@@ -28,7 +28,8 @@ const context = {
       return { head, files: [], inventoryDigest: sha256Text(canonicalJson([])) };
     }
     if (capability === 'artifacts.write') {
-      if (request.payload.value.schemaVersion !== 'repository-review-prepared-plan.v1') {
+      if (!['repository-review-prepared-plan.v1','repository-review-follow-up-status.v1']
+        .includes(request.payload.value.schemaVersion)) {
         assert.equal(typeof request.payload.value.map.filesJsonl, 'string');
         assert.equal(typeof request.payload.value.map.relationsJsonl, 'string');
       }
@@ -44,7 +45,9 @@ const result = await executeRepositoryAudit({}, context);
 assert.equal(result.outcome, 'passed');
 assert.equal(result.facts['review.repository_files'], 0);
 assert.equal(result.facts['review.repository_jobs'], 0);
-assert.equal(result.artifacts.length, 2);
+assert.equal(result.artifacts.length, 4);
+assert.equal(result.facts['review.repository_requested_context_expansions'], 0);
+assert.equal(result.facts['review.repository_requested_verifications'], 0);
 const planned = await executeRepositoryAudit({ mode: 'plan', grade: 'fast' }, context);
 assert.equal(planned.outcome, 'passed');
 assert.equal(planned.facts['review.repository_mode'], 'plan');
@@ -91,7 +94,8 @@ const cachedContext = (artifacts = [], corruptRead = false, currentAttempt = att
     if (capability === 'artifacts.write') {
       assert.equal(request.payload.checkpoint,
         request.resource.canonicalId.startsWith('repository-review-cache:')
-          || request.resource.canonicalId.startsWith('repository-review-prepared:') ? true : undefined);
+          || request.resource.canonicalId.startsWith('repository-review-prepared:')
+          || request.resource.canonicalId.startsWith('repository-review-follow-up:') ? true : undefined);
       const serialized = canonicalJson(request.payload.value), digest = sha256Text(serialized);
       valuesByDigest.set(digest, request.payload.value);
       return { artifact: { artifactId: request.resource.canonicalId, namespace: request.payload.namespace,

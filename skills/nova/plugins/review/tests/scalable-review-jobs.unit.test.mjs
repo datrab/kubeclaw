@@ -161,6 +161,16 @@ const semanticExecution = await executeScalableReviewJobs(first.slice(0, 1), 'ec
   { concurrency: 1, maxRetries: 1 });
 assert.equal(semanticDispatches, 2, 'semantically invalid review evidence is retried');
 assert.equal(semanticExecution[0].parsed.ok, true);
+let sharedRetryChecks=0;
+const sharedRetryContext={async invoke(_capability,request){
+  const dispatched=request.payload.review.job;
+  return {runtimeEvidence,result:{schemaVersion:'echo-review-output.v1',summary:'Incomplete.',
+    inspectedEvidence:[],requirementAssessments:{},proposedFindings:[]}};
+}};
+await assert.rejects(() => executeScalableReviewJobs(first.slice(0,1),'echo',sharedRetryContext,{
+  concurrency:1,maxRetries:2,beforeRetry:()=>{sharedRetryChecks+=1;throw new Error('shared retry budget exhausted');},
+}),/shared retry budget exhausted/u);
+assert.equal(sharedRetryChecks,1,'retry admission is checked before another model dispatch');
 
 const originalNow = Date.now;
 let now = 1_000;

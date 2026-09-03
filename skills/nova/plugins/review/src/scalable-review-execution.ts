@@ -13,6 +13,7 @@ interface ReviewDispatchContext {
   readonly agent: string; readonly context: PluginInvocationContext; readonly maxRetries: number;
   readonly deadlineEpochMs: number | undefined;
   readonly beforeDispatch: ReviewExecutionSettings['beforeDispatch'] | undefined;
+  readonly beforeRetry: ReviewExecutionSettings['beforeRetry'] | undefined;
   readonly expectedRuntime: ReviewRuntimeIdentity;
 }
 
@@ -24,8 +25,9 @@ function completeReviewResponse(value: ScalableReviewJob, parsed: ScalableReview
 }
 
 async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispatchContext): Promise<ScalableReviewJobResult> {
-  const { agent, context, maxRetries, deadlineEpochMs, beforeDispatch } = runtime;
+  const { agent, context, maxRetries, deadlineEpochMs, beforeDispatch, beforeRetry } = runtime;
   for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+    if (attempt > 0) beforeRetry?.();
     assertReviewDeadline(deadlineEpochMs, 'scalable review');
     try {
       const basePayload = buildScalableReviewDispatchPayload(value);
@@ -50,9 +52,9 @@ export async function executeScalableReviewJobs(
   execution: number | ReviewExecutionSettings = 4, expectedRuntime?: ReviewRuntimeIdentity,
   checkpoint?: (result: ScalableReviewJobResult) => Promise<void>,
 ): Promise<readonly ScalableReviewJobResult[]> {
-  const { concurrency, maxRetries, deadlineEpochMs, beforeDispatch }
+  const { concurrency, maxRetries, deadlineEpochMs, beforeDispatch, beforeRetry }
     = resolveReviewExecutionSettings(execution, 'scalable review');
-  const runtime = { agent, context, maxRetries, deadlineEpochMs, beforeDispatch,
+  const runtime = { agent, context, maxRetries, deadlineEpochMs, beforeDispatch, beforeRetry,
     expectedRuntime: expectedRuntime ?? { targetId: agent, runtime: 'subagent', agentId: 'codex',
       model: 'gpt-5.6-terra', thinking: 'high' } };
   const output = new Map<string, ScalableReviewJobResult>();

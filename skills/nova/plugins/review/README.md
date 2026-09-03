@@ -41,11 +41,22 @@ Invalid, incomplete, or semantically unverified blocking output fails closed.
 
 Repository-audit planning uses `o200k_base` token counts for the complete serialized
 input envelope. It reports byte and token values separately. It enforces per-call
-bytes, per-call input, model context with reserved output, separate initial,
-expansion, and verification input budgets, a combined hard ceiling, estimated
-cost, wall time, and actual retry consumption before dispatch. Prompt accounting
-uses the shared runtime envelope plus a bounded result-path reserve. The OpenClaw
-runtime adapter repeats the check on the exact final prompt that it sends.
+bytes, per-call input, model context with reserved output, phase ceilings, a
+combined hard ceiling, estimated cost, wall time, and actual retry consumption
+before dispatch. The standard whole-repository profile permits up to 100 context
+expansions and 100 verification jobs under a 50-million-input-token total ceiling.
+Follow-up phases select deterministically from the total capacity remaining after
+earlier dispatches instead of relying on a small fixed allocation. Their estimates
+reserve one attempt for every selected job plus a bounded shared retry pool rather
+than multiplying every job by its maximum retry count. Prompt accounting uses the
+shared runtime envelope plus a bounded result-path reserve. The OpenClaw runtime
+adapter repeats the check on the exact final prompt that it sends.
+
+Before each follow-up phase dispatches, the stage checkpoints a compact
+`repository-review-follow-up-status.v1` artifact with requested, selected,
+deferred, and reserved-token counts. The final reduction reports semantically
+incomplete review-job IDs separately from valid proposal IDs that could not be
+verified, so execution completion cannot be confused with verification coverage.
 
 Each completed repository review and verification job is persisted as an
 immutable content-cache artifact. Core checkpoints that artifact before the

@@ -5,6 +5,7 @@ export interface ReviewExecutionSettings {
   readonly beforeDispatch?: (
     payload: Readonly<Record<string, unknown>>,
   ) => Readonly<Record<string, unknown>> | void;
+  readonly beforeRetry?: () => void;
 }
 
 export function assertReviewDeadline(deadlineEpochMs: number | undefined, label: string): void {

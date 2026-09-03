@@ -50,14 +50,15 @@ const verified = { ok: true, value: { schemaVersion: 'echo-review-verification.v
   results: { [preflight.proposals[0].id]: { verdict: 'confirmed', reason: 'The exact line always throws.', evidence: [evidence] } } } };
 const reduced = reduceScalableReview(verificationJobs, [{ jobId: verification.id, parsed: verified }]);
 assert.equal(reduced.confirmed.length, 1);
-assert.equal(reduced.incomplete.length, 0);
+assert.equal(reduced.incompleteJobs.length, 0);
+assert.equal(reduced.unverifiedProposals.length, 0);
 const unsupportedVerification = { ...verified, value: { ...verified.value, results: {
   [preflight.proposals[0].id]: { verdict: 'confirmed', reason: 'Unsupported.',
     evidence: [{ kind: 'reviewed-source', digest: digest('d') }] } } } };
 const unsupportedReduction = reduceScalableReview(verificationJobs,
   [{ jobId: verification.id, parsed: unsupportedVerification }]);
 assert.equal(unsupportedReduction.confirmed.length, 0);
-assert.deepEqual(unsupportedReduction.incomplete, [verification.id]);
+assert.deepEqual(unsupportedReduction.incompleteJobs, [verification.id]);
 assert.throws(() => preflightScalableReviewResults([job], [
   { jobId: job.id, jobDigest: job.digest, parsed }, { jobId: job.id, jobDigest: job.digest, parsed },
 ]), /duplicate job result/u);
@@ -79,7 +80,8 @@ const deferredPreflight = preflightScalableReviewResults([job],
   [{ jobId: job.id, jobDigest: job.digest, parsed: contextRequested }], new Set([job.id]));
 assert.deepEqual(deferredPreflight.incompleteJobs, [job.id]);
 assert.deepEqual(deferredPreflight.integrityIssues, []);
-assert.deepEqual(reduceScalableReview([], [], deferredPreflight.incompleteJobs).incomplete, [job.id]);
+assert.deepEqual(reduceScalableReview([], [], deferredPreflight.incompleteJobs).incompleteJobs, [job.id]);
+assert.deepEqual(reduceScalableReview([], [], [], [boundedProposal.id]).unverifiedProposals, [boundedProposal.id]);
 
 const context = { async invoke(capability, request) {
   assert.equal(capability, 'runtime.dispatch');
@@ -120,6 +122,18 @@ const semanticRetry = await executeScalableVerificationJobs(
 );
 assert.equal(semanticAttempts, 2, 'semantically incomplete verification is retried');
 assert.equal(reduceScalableReview(multiSourceJobs, semanticRetry).confirmed.length, 1);
+let verificationRetryChecks=0;
+const incompleteVerificationContext={async invoke(_capability,request){
+  const payload=request.payload.verification;const [proposalId]=Object.keys(payload.proposals);
+  return {runtimeEvidence,result:{schemaVersion:'echo-review-verification.v1',bundleDigest:payload.bundleDigest,
+    policyDigest:payload.policyDigest,proposalSetDigest:payload.proposalSetDigest,
+    results:{[proposalId]:{verdict:'confirmed',reason:'Incomplete evidence.',evidence:[evidence]}}}};
+}};
+await assert.rejects(() => executeScalableVerificationJobs(
+  multiSourceJobs,'echo',incompleteVerificationContext,{concurrency:1,maxRetries:2,
+    beforeRetry:()=>{verificationRetryChecks+=1;throw new Error('shared retry budget exhausted');}},
+),/shared retry budget exhausted/u);
+assert.equal(verificationRetryChecks,1,'verification retry admission is checked before another dispatch');
 
 const boundarySources = ['a', 'b', 'c', 'd'].map((name) => ({
   path: `${name}.ts`, content: `export const ${name} = true;\n`, digest: digest(name),

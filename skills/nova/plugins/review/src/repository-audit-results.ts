@@ -45,6 +45,9 @@ export function repositoryExecutionFacts(values: {
   readonly actualModelCalls: number; readonly reservedInputTokens: number;
   readonly reservedOutputTokens: number; readonly reservedEstimatedCostUsd: number;
   readonly contextExpansions: number;
+  readonly incompleteJobs: number; readonly unverifiedProposals: number;
+  readonly requestedContextExpansions: number; readonly deferredContextExpansions: number;
+  readonly requestedVerifications: number; readonly deferredVerifications: number;
 }): Readonly<Record<string, string | number>> {
   const { head, compilation, reportDigest } = values;
   return Object.freeze({
@@ -62,5 +65,11 @@ export function repositoryExecutionFacts(values: {
     'review.repository_reserved_output_tokens': values.reservedOutputTokens,
     'review.repository_reserved_estimated_cost_usd': values.reservedEstimatedCostUsd,
     'review.repository_context_expansions': values.contextExpansions,
+    'review.repository_incomplete_jobs': values.incompleteJobs,
+    'review.repository_unverified_proposals': values.unverifiedProposals,
+    'review.repository_requested_context_expansions': values.requestedContextExpansions,
+    'review.repository_deferred_context_expansions': values.deferredContextExpansions,
+    'review.repository_requested_verifications': values.requestedVerifications,
+    'review.repository_deferred_verifications': values.deferredVerifications,
   });
 }

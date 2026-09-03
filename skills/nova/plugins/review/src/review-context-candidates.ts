@@ -175,6 +175,7 @@ function parsedHydratedCandidate(
 async function hydrate(
   candidate: CandidateDescriptor,
   revision: FrozenReviewRevision,
+  allowedPrefixes: readonly string[],
   maxBytes: number,
   context: PluginInvocationContext,
 ): Promise<ReviewContextCandidate> {
@@ -183,7 +184,7 @@ async function hydrate(
     rawResponse = await context.invoke('git.repository.read', {
       operation: 'read_revision_text',
       resource: { type: 'git.repository.path', canonicalId: candidate.path },
-      payload: { head: revision.head, proof: revision.proof, maxBytes },
+      payload: { head: revision.head, proof: revision.proof, allowedPrefixes, maxBytes },
     });
   } catch (error) {
     if (error instanceof Error && error.message.includes('REPOSITORY_FILE_TOO_LARGE')) {
@@ -206,6 +207,7 @@ function orderedDescriptors(input: unknown, scope: ReviewBundleScope): readonly 
 
 async function hydrateCandidatePool(
   values: readonly CandidateDescriptor[],
+  scope: ReviewBundleScope,
   revision: FrozenReviewRevision,
   policy: ResolvedReviewPolicy,
   context: PluginInvocationContext,
@@ -226,7 +228,11 @@ async function hydrateCandidatePool(
     if (inspected >= limits.maxContextFiles) break;
     inspected += 1;
     let value: ReviewContextCandidate;
-    try { value = await hydrate(candidate, revision, limits.maxContextFileBytes, context); } catch (error) {
+    try {
+      value = await hydrate(
+        candidate, revision, scope.allowedPrefixes, limits.maxContextFileBytes, context,
+      );
+    } catch (error) {
       if (error instanceof ReviewContextHydrationLimitError && candidate.dependencyDepth > 0) continue;
       throw error;
     }
@@ -265,6 +271,6 @@ export async function hydrateReviewContextCandidates(
   context: PluginInvocationContext,
 ): Promise<readonly ReviewContextCandidate[]> {
   const values = orderedDescriptors(input, scope);
-  const hydrated = await hydrateCandidatePool(values, revision, policy, context);
+  const hydrated = await hydrateCandidatePool(values, scope, revision, policy, context);
   return closeCandidateProvenance(hydrated);
 }

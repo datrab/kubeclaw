@@ -19,7 +19,7 @@ import { compareCodeUnits } from './review-ordering.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
 import { repositoryExecutionFacts, repositoryPlanFacts } from './repository-audit-results.ts';
-import { estimatedReviewCostUsd, reserveReviewAttempts, reserveReviewRuntimePrompt,
+import { estimatedReviewCostUsd, reserveReviewAttempts, reserveReviewRuntimePrompt, selectFittingCandidates,
   ReviewDispatchBudget, type ReviewDispatchPhase } from './review-prompt-budget.ts';
 import { assertReviewRuntimeIdentity, ReviewRuntimeAttestationError, reviewRuntimeIdentityDigest,
   type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
@@ -71,6 +71,10 @@ interface VerificationAccounting {
   readonly jobs: number; readonly promptBytes: number; readonly inputTokens: number;
   readonly maximumJobBytes: number; readonly maximumJobTokens: number;
   readonly reservedOutputTokens: number; readonly estimatedCostUsd: number; readonly estimatedWallTimeSeconds: number;
+}
+interface DispatchAccountingSnapshot {
+  readonly reservedInputTokens: number;
+  readonly reservedEstimatedCostUsd: number;
 }
 
 function parseInput(value: unknown): AuditInput {
@@ -147,6 +151,7 @@ function validatedSourceResponse(
 
 async function repositoryDocuments(
   snapshot: ReturnType<typeof parseReviewSnapshotInventory>, revision: Awaited<ReturnType<typeof freezeReviewRevision>>,
+  allowedPrefixes: readonly string[],
   context: PluginInvocationContext,
 ) {
   const documents = [], sourceDigests = new Map<string, string>();
@@ -154,6 +159,7 @@ async function repositoryDocuments(
     const raw = await context.invoke('git.repository.read', {
       operation: 'read_revision_text', resource: { type: 'git.repository.path', canonicalId: file.path },
       payload: { head: revision.head, proof: revision.proof,
+        allowedPrefixes,
         expectedObjectId: file.objectId, expectedSizeBytes: file.sizeBytes,
         maxBytes: REVIEW_HARD_LIMITS.repositoryAuditFileBytes },
     });
@@ -188,7 +194,9 @@ async function compileRepositoryAudit(
     );
   }
   assertRepositoryReadBudget(snapshot);
-  const { documents, sourceDigests } = await repositoryDocuments(snapshot, revision, context);
+  const { documents, sourceDigests } = await repositoryDocuments(
+    snapshot, revision, parsed.reviewProfile.allowedPrefixes, context,
+  );
   let compilation: ReturnType<typeof compileScalableReview>;
   try { compilation = compileScalableReview({ snapshot, documents, sourceDigests,
     budget: parsed.reviewProfile.componentBudget, profile: executionProfile(parsed.reviewProfile) }); } catch (error) {
@@ -316,11 +324,17 @@ async function verifiedReduction(
   const reviewIdentity = cacheIdentity(policyDigest, expectedRuntime, 'kubeclaw.echo-review-scale.v1');
   const deadlineEpochMs = Date.now() + compilation.profile.maxWallTimeSeconds * 1_000;
   const dispatchBudget = new ReviewDispatchBudget(compilation.profile, deadlineEpochMs);
-  const execution = (phase: ReviewDispatchPhase) => ({
+  const execution = (phase: ReviewDispatchPhase) => {
+    let remainingRetryAttempts = compilation.profile.maxRetryAttemptsPerPhase;
+    return {
     concurrency: compilation.profile.concurrency, maxRetries: compilation.profile.maxRetries,
     deadlineEpochMs,
     beforeDispatch: (payload: Readonly<Record<string, unknown>>) => dispatchBudget.reserve(payload, phase),
-  });
+    beforeRetry: () => {
+      if (remainingRetryAttempts < 1) throw new Error(`repository audit ${phase} shared retry budget exhausted`);
+      remainingRetryAttempts -= 1;
+    },
+  }; };
   const runtime = { cache, agent: config.agent, context, execution: execution('initial'), expectedRuntime };
   const reviewRun = await cachedReviewJobs(compilation.jobs, reviewIdentity, runtime);
   const firstResults = compilation.jobs.map(({ id }) => reviewRun.values.get(id) as ScalableReviewJobResult);
@@ -346,7 +360,8 @@ async function verifiedReduction(
       if (completeSources.has(file.path)) continue;
       const raw = await context.invoke('git.repository.read', {
         operation: 'read_revision_text', resource: { type: 'git.repository.path', canonicalId: file.path },
-        payload: { head: revision.head, proof: revision.proof, expectedObjectId: file.objectId,
+        payload: { head: revision.head, proof: revision.proof,
+          allowedPrefixes: compilation.profile.allowedPrefixes, expectedObjectId: file.objectId,
           expectedSizeBytes: file.sizeBytes, maxBytes: REVIEW_HARD_LIMITS.repositoryAuditFileBytes },
       });
       const response = validatedSourceResponse(raw, file, revision.head);
@@ -360,10 +375,17 @@ async function verifiedReduction(
     return request ? [expandScalableReviewJob(job,
       request.paths.flatMap((requestedPath) => resolvedRequests.get(requestedPath) ?? []), completeSources)] : [];
   });
-  const selectedExpansion = selectExpansionJobs(compilation, requestedExpansionJobs);
+  const selectedExpansion = selectExpansionJobs(compilation, requestedExpansionJobs, dispatchBudget.snapshot());
   const expandedJobs = selectedExpansion.jobs;
   const selectedExpansionIds = new Set(expandedJobs.map(({ id }) => id));
   const deferredExpansionIds = new Set(requestedExpansionJobs.filter(({ id }) => !selectedExpansionIds.has(id)).map(({ id }) => id));
+  const contextExpansionFollowUp = Object.freeze({ requested: requestedExpansionJobs.length,
+    selected: expandedJobs.length, deferred: deferredExpansionIds.size,
+    reservedInputTokens: selectedExpansion.accounting.inputTokens });
+  const followUpArtifacts = [await storeFollowUpStatus(Object.freeze({
+    schemaVersion: 'repository-review-follow-up-status.v1', phase: 'context-expansion',
+    compilationDigest: compilation.digest, contextExpansion: contextExpansionFollowUp,
+  }), context)];
   let finalJobs = compilation.jobs, reviewResults = firstResults, reviewRuns = [reviewRun];
   let expansionAccounting: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>
     = Object.freeze({ inputTokens: 0, estimatedCostUsd: 0, estimatedWallTimeSeconds: 0 });
@@ -388,27 +410,38 @@ async function verifiedReduction(
     maxInputTokens: Math.min(compilation.profile.maxInputTokensPerJob,
       compilation.profile.maxContextTokensPerJob - compilation.profile.maxOutputTokensPerJob),
   });
-  let jobs = requestedVerificationJobs.slice(0, compilation.profile.maxVerificationJobs);
-  let verificationAccounting = verificationJobAccounting(compilation, jobs);
-  while (jobs.length > 0 && !verificationFitsBudget(compilation, expansionAccounting, verificationAccounting)) {
-    jobs = jobs.slice(0, -1); verificationAccounting = verificationJobAccounting(compilation, jobs);
-  }
+  const jobs = selectFittingCandidates(
+    requestedVerificationJobs, compilation.profile.maxVerificationJobs,
+    (selected) => verificationFitsBudget(compilation, dispatchBudget.snapshot(),
+      expansionAccounting.estimatedWallTimeSeconds, verificationJobAccounting(compilation, selected)),
+  );
+  const verificationAccounting = verificationJobAccounting(compilation, jobs);
   const selectedVerificationIds = new Set(jobs.map(({ id }) => id));
   const deferredVerificationIds = requestedVerificationJobs.filter(({ id }) => !selectedVerificationIds.has(id))
     .map(({ proposal }) => proposal.id);
+  const verificationFollowUp = Object.freeze({ requested: requestedVerificationJobs.length,
+    selected: jobs.length, deferred: deferredVerificationIds.length,
+    reservedInputTokens: verificationAccounting.inputTokens });
+  followUpArtifacts.push(await storeFollowUpStatus(Object.freeze({
+    schemaVersion: 'repository-review-follow-up-status.v1', phase: 'verification',
+    compilationDigest: compilation.digest, contextExpansion: contextExpansionFollowUp,
+    verification: verificationFollowUp,
+  }), context));
   const verificationIdentity = cacheIdentity(policyDigest, expectedRuntime,
     'kubeclaw.echo-review-scale-verification.v1');
   const verificationRun = await cachedVerificationJobs(jobs, verificationIdentity,
     { ...runtime, execution: execution('verification') });
   const results = jobs.map(({ id }) => verificationRun.values.get(id) as ScalableVerificationJobResult);
   const completedReduction = reduceScalableReview(jobs, results);
-  if (completedReduction.incomplete.length > 0) {
-    throw new RepositoryAuditIntegrityError(`repository audit verification is incomplete: ${completedReduction.incomplete.join(', ')}`);
+  if (completedReduction.incompleteJobs.length > 0) {
+    throw new RepositoryAuditIntegrityError(`repository audit verification is incomplete: ${completedReduction.incompleteJobs.join(', ')}`);
   }
-  const reduction = reduceScalableReview(jobs, results,
-    [...preflight.incompleteJobs, ...deferredVerificationIds]);
+  const reduction = reduceScalableReview(jobs, results, preflight.incompleteJobs, deferredVerificationIds);
   return { reduction, cache, verificationAccounting, dispatchAccounting: dispatchBudget.snapshot(),
-    contextExpansions: expandedJobs.length, summary: {
+    contextExpansions: expandedJobs.length,
+    followUp: Object.freeze({ contextExpansion: contextExpansionFollowUp,
+      verification: verificationFollowUp }), followUpArtifacts: Object.freeze(followUpArtifacts),
+    summary: {
     review: combinedCacheSummary(reviewIdentity, reviewRuns),
     verification: cacheSummary(verificationIdentity, verificationRun),
   } satisfies AuditCacheSummary };
@@ -429,6 +462,7 @@ async function auditDispatch<T>(label: string, execute: () => Promise<T>): Promi
 
 function enforceExpansionBudget(
   compilation: ReturnType<typeof compileScalableReview>, jobs: readonly ScalableReviewJob[],
+  baseline: DispatchAccountingSnapshot,
 ): Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }> {
   if (jobs.length > compilation.profile.maxContextExpansionJobs) {
     throw new RepositoryAuditIntegrityError(
@@ -436,7 +470,8 @@ function enforceExpansionBudget(
     );
   }
   const reservation = reserveReviewAttempts(jobs.map(buildScalableReviewDispatchPayload),
-    compilation.profile.tokenizerEncoding, compilation.profile.maxRetries);
+    compilation.profile.tokenizerEncoding, compilation.profile.maxRetries,
+    compilation.profile.maxRetryAttemptsPerPhase);
   const inputTokens = reservation.inputTokens;
   const outputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   const cost = estimatedReviewCostUsd({ inputTokens, outputTokens,
@@ -449,8 +484,8 @@ function enforceExpansionBudget(
     || reservation.maximumTokens + compilation.profile.maxOutputTokensPerJob
       > compilation.profile.maxContextTokensPerJob
     || inputTokens > compilation.profile.maxContextExpansionInputTokens
-    || compilation.accounting.estimatedInputTokens + inputTokens > compilation.profile.maxTotalInputTokens
-    || compilation.accounting.estimatedCostUsd + cost > compilation.profile.maxEstimatedCostUsd
+    || baseline.reservedInputTokens + inputTokens > compilation.profile.maxTotalInputTokens
+    || baseline.reservedEstimatedCostUsd + cost > compilation.profile.maxEstimatedCostUsd
     || compilation.accounting.estimatedWallTimeSeconds + wall > compilation.profile.maxWallTimeSeconds) {
     throw new RepositoryAuditIntegrityError('repository audit context expansion exceeds the resolved operational budget');
   }
@@ -459,18 +494,16 @@ function enforceExpansionBudget(
 
 function selectExpansionJobs(
   compilation: ReturnType<typeof compileScalableReview>, candidates: readonly ScalableReviewJob[],
+  baseline: DispatchAccountingSnapshot,
 ): Readonly<{ jobs: readonly ScalableReviewJob[]; accounting: ReturnType<typeof enforceExpansionBudget> }> {
-  let jobs: readonly ScalableReviewJob[] = [];
-  let accounting = enforceExpansionBudget(compilation, jobs);
-  for (const candidate of candidates) {
-    if (jobs.length >= compilation.profile.maxContextExpansionJobs) break;
-    const proposed = [...jobs, candidate];
-    try { accounting = enforceExpansionBudget(compilation, proposed); jobs = proposed; }
+  const jobs = selectFittingCandidates(candidates, compilation.profile.maxContextExpansionJobs, (selected) => {
+    try { enforceExpansionBudget(compilation, selected, baseline); return true; }
     catch (error) {
       if (!(error instanceof RepositoryAuditIntegrityError)) throw error;
+      return false;
     }
-  }
-  return Object.freeze({ jobs: Object.freeze(jobs), accounting });
+  });
+  return Object.freeze({ jobs, accounting: enforceExpansionBudget(compilation, jobs, baseline) });
 }
 
 function verificationJobAccounting(
@@ -479,7 +512,8 @@ function verificationJobAccounting(
   const metrics = jobs.map((job) => reserveReviewRuntimePrompt(
     buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
   const reservation = reserveReviewAttempts(jobs.map(buildScalableVerificationDispatchPayload),
-    compilation.profile.tokenizerEncoding, compilation.profile.maxRetries);
+    compilation.profile.tokenizerEncoding, compilation.profile.maxRetries,
+    compilation.profile.maxRetryAttemptsPerPhase);
   const inputTokens = reservation.inputTokens;
   const reservedOutputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   return Object.freeze({ jobs: jobs.length,
@@ -495,16 +529,17 @@ function verificationJobAccounting(
 
 function verificationFitsBudget(
   compilation: ReturnType<typeof compileScalableReview>,
-  expansion: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>,
+  baseline: DispatchAccountingSnapshot,
+  expansionWallTimeSeconds: number,
   verification: VerificationAccounting,
 ): boolean {
   return verification.maximumJobBytes <= compilation.profile.maxPromptBytesPerJob
     && verification.maximumJobTokens <= compilation.profile.maxInputTokensPerJob
     && verification.maximumJobTokens + compilation.profile.maxOutputTokensPerJob <= compilation.profile.maxContextTokensPerJob
     && verification.inputTokens <= compilation.profile.maxVerificationInputTokens
-    && compilation.accounting.estimatedInputTokens + expansion.inputTokens + verification.inputTokens <= compilation.profile.maxTotalInputTokens
-    && compilation.accounting.estimatedCostUsd + expansion.estimatedCostUsd + verification.estimatedCostUsd <= compilation.profile.maxEstimatedCostUsd
-    && compilation.accounting.estimatedWallTimeSeconds + expansion.estimatedWallTimeSeconds
+    && baseline.reservedInputTokens + verification.inputTokens <= compilation.profile.maxTotalInputTokens
+    && baseline.reservedEstimatedCostUsd + verification.estimatedCostUsd <= compilation.profile.maxEstimatedCostUsd
+    && compilation.accounting.estimatedWallTimeSeconds + expansionWallTimeSeconds
       + verification.estimatedWallTimeSeconds <= compilation.profile.maxWallTimeSeconds;
 }
 
@@ -598,6 +633,23 @@ async function storeRepositoryReport(
   return artifact;
 }
 
+async function storeFollowUpStatus(
+  value: Readonly<Record<string, unknown>>, context: PluginInvocationContext,
+): Promise<ArtifactRef> {
+  const digest = sha256Text(canonicalJson(value));
+  const expectedId = `repository-review-follow-up:${digest.slice(7)}`;
+  const stored = await context.invoke('artifacts.write', {
+    operation: 'put_json', resource: { type: 'artifact.object', canonicalId: expectedId },
+    payload: { namespace: REVIEW_NAMESPACE, mediaType: 'application/json', checkpoint: true, value },
+  });
+  const artifact = artifactRef(stored);
+  if (artifact.artifactId !== expectedId || artifact.namespace !== REVIEW_NAMESPACE
+    || artifact.digest !== digest || !exactArtifactProducer(artifact, context)) {
+    throw new RepositoryAuditIntegrityError('artifact adapter returned an invalid follow-up status reference');
+  }
+  return artifact;
+}
+
 // eslint-disable-next-line max-lines-per-function -- Keeping the plan and execute branches together makes report authority explicit.
 async function runRepositoryAudit(
   input: unknown, context: PluginInvocationContext,
@@ -626,13 +678,14 @@ async function runRepositoryAudit(
       profile: parsed.reviewProfile, accounting: compilation.accounting,
       coverage: compilation.plan.coverage, cache: verified.summary,
       contextExpansions: verified.contextExpansions,
+      followUp: verified.followUp,
       dispatchAccounting: verified.dispatchAccounting,
       verificationAccounting: verified.verificationAccounting, reduction: verified.reduction });
     const identity = sha256Text(canonicalJson(report));
     const artifact = await storeRepositoryReport(report, identity, context);
     return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [
       ...(exactArtifactProducer(preparedArtifact, context) ? [preparedArtifact] : []),
-      ...verified.cache.artifacts(), artifact],
+      ...verified.cache.artifacts(), ...verified.followUpArtifacts, artifact],
       facts: repositoryExecutionFacts({ head: revision.head, compilation, reportDigest: artifact.digest,
         confirmed: verified.reduction.confirmed.length, rejected: verified.reduction.rejected.length,
         reviewCacheHits: verified.summary.review.hits, reviewCacheMisses: verified.summary.review.misses,
@@ -642,7 +695,13 @@ async function runRepositoryAudit(
         reservedInputTokens: verified.dispatchAccounting.reservedInputTokens,
         reservedOutputTokens: verified.dispatchAccounting.reservedOutputTokens,
         reservedEstimatedCostUsd: verified.dispatchAccounting.reservedEstimatedCostUsd,
-        contextExpansions: verified.contextExpansions }) };
+        contextExpansions: verified.contextExpansions,
+        incompleteJobs: verified.reduction.incompleteJobs.length,
+        unverifiedProposals: verified.reduction.unverifiedProposals.length,
+        requestedContextExpansions: verified.followUp.contextExpansion.requested,
+        deferredContextExpansions: verified.followUp.contextExpansion.deferred,
+        requestedVerifications: verified.followUp.verification.requested,
+        deferredVerifications: verified.followUp.verification.deferred }) };
 }
 
 export async function executeRepositoryAudit(input: unknown, context: PluginInvocationContext): Promise<StageResult> {

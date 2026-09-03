@@ -35,6 +35,7 @@ export interface RepositoryReviewProfileOverrides {
   readonly outputUsdPerMillionTokens?: number;
   readonly concurrency?: number;
   readonly maxRetries?: number;
+  readonly maxRetryAttemptsPerPhase?: number;
   readonly enabledLenses?: readonly RepositoryReviewLens[];
 }
 
@@ -68,6 +69,7 @@ export interface ResolvedRepositoryReviewProfile {
   readonly outputUsdPerMillionTokens: number;
   readonly concurrency: number;
   readonly maxRetries: number;
+  readonly maxRetryAttemptsPerPhase: number;
   readonly enabledLenses: readonly RepositoryReviewLens[];
   readonly digest: `sha256:${string}`;
 }
@@ -94,6 +96,7 @@ interface GradeDefaults extends RepositoryReviewProfileOverrides {
   readonly outputUsdPerMillionTokens: number;
   readonly concurrency: number;
   readonly maxRetries: number;
+  readonly maxRetryAttemptsPerPhase: number;
   readonly enabledLenses: readonly RepositoryReviewLens[];
 }
 
@@ -112,32 +115,35 @@ const DEFAULTS: Readonly<Record<RepositoryReviewGrade, GradeDefaults>> = Object.
     maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 100,
     maxWallTimeSeconds: 3_600, estimatedSecondsPerJob: 120,
     inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 8, maxRetries: 1,
+    maxRetryAttemptsPerPhase: 4,
     enabledLenses: Object.freeze<RepositoryReviewLens[]>(['contracts', 'security', 'lifecycle']),
   }),
   standard: Object.freeze({
     tokenizerEncoding: 'o200k_base',
     componentBudget: Object.freeze({ maxFiles: 60, maxBytes: 400_000, maxTokens: 86_000 }),
     boundaryBudget: Object.freeze({ maxFiles: 400, maxBytes: 900_000, maxTokens: 80_000, maxRelations: 600, maxSlices: 200 }),
-    maxPrimaryJobs: 80, maxContextExpansionJobs: 20, maxVerificationJobs: 20, maxInputTokensPerJob: 120_000,
+    maxPrimaryJobs: 500, maxContextExpansionJobs: 100, maxVerificationJobs: 100, maxInputTokensPerJob: 120_000,
     maxContextTokensPerJob: 128_000, maxPromptBytesPerJob: 900_000,
-    maxInitialInputTokens: 6_500_000, maxContextExpansionInputTokens: 1_000_000,
-    maxVerificationInputTokens: 1_000_000, maxTotalInputTokens: 8_500_000,
-    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 110,
-    maxWallTimeSeconds: 7_200, estimatedSecondsPerJob: 120,
+    maxInitialInputTokens: 25_000_000, maxContextExpansionInputTokens: 50_000_000,
+    maxVerificationInputTokens: 50_000_000, maxTotalInputTokens: 50_000_000,
+    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 650,
+    maxWallTimeSeconds: 28_800, estimatedSecondsPerJob: 120,
     inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 10, maxRetries: 2,
+    maxRetryAttemptsPerPhase: 20,
     enabledLenses: ALL_LENSES,
   }),
   deep: Object.freeze({
     tokenizerEncoding: 'o200k_base',
     componentBudget: Object.freeze({ maxFiles: 30, maxBytes: 220_000, maxTokens: 90_000 }),
     boundaryBudget: Object.freeze({ maxFiles: 100, maxBytes: 480_000, maxTokens: 110_000, maxRelations: 100, maxSlices: 32 }),
-    maxPrimaryJobs: 300, maxContextExpansionJobs: 40, maxVerificationJobs: 50, maxInputTokensPerJob: 120_000,
+    maxPrimaryJobs: 2_000, maxContextExpansionJobs: 250, maxVerificationJobs: 250, maxInputTokensPerJob: 120_000,
     maxContextTokensPerJob: 128_000, maxPromptBytesPerJob: 900_000,
-    maxInitialInputTokens: 11_000_000, maxContextExpansionInputTokens: 1_500_000,
-    maxVerificationInputTokens: 1_500_000, maxTotalInputTokens: 14_000_000,
-    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 220,
-    maxWallTimeSeconds: 14_400, estimatedSecondsPerJob: 150,
+    maxInitialInputTokens: 50_000_000, maxContextExpansionInputTokens: 100_000_000,
+    maxVerificationInputTokens: 100_000_000, maxTotalInputTokens: 100_000_000,
+    maxOutputTokensPerJob: 6_000, maxEstimatedCostUsd: 1_300,
+    maxWallTimeSeconds: 86_400, estimatedSecondsPerJob: 150,
     inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30, concurrency: 4, maxRetries: 2,
+    maxRetryAttemptsPerPhase: 40,
     enabledLenses: ALL_LENSES,
   }),
 });
@@ -294,13 +300,15 @@ function operationalLimits(
     outputUsdPerMillionTokens: positiveNumber(overrides.outputUsdPerMillionTokens, defaults.outputUsdPerMillionTokens, 'output price', 10_000),
     concurrency: positive(overrides.concurrency, defaults.concurrency, 'concurrency', 32),
     maxRetries: nonNegative(overrides.maxRetries, defaults.maxRetries, 'retry limit', 10),
+    maxRetryAttemptsPerPhase: nonNegative(overrides.maxRetryAttemptsPerPhase,
+      defaults.maxRetryAttemptsPerPhase, 'shared retry-attempt limit', 10_000),
   };
   if (limits.maxInputTokensPerJob + limits.maxOutputTokensPerJob > limits.maxContextTokensPerJob) {
     throw new Error('repository review profile per-job token limits exceed the context limit');
   }
-  if (limits.maxInitialInputTokens + limits.maxContextExpansionInputTokens
-    + limits.maxVerificationInputTokens > limits.maxTotalInputTokens) {
-    throw new Error('repository review profile phase token limits exceed the combined input limit');
+  if ([limits.maxInitialInputTokens, limits.maxContextExpansionInputTokens,
+    limits.maxVerificationInputTokens].some((value) => value > limits.maxTotalInputTokens)) {
+    throw new Error('repository review profile phase token limit exceeds the combined input limit');
   }
   return limits;
 }

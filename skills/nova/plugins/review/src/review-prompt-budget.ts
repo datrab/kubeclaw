@@ -69,13 +69,28 @@ export function reserveReviewRuntimePrompt(
 
 export function reserveReviewAttempts(
   payloads: readonly Readonly<Record<string, unknown>>[], encoding: ReviewTokenizerEncoding, maxRetries: number,
+  maxRetryAttempts = payloads.length * maxRetries,
 ): ReviewAttemptReservation {
   const metrics = payloads.map((payload) => reserveReviewRuntimePrompt(payload, encoding));
-  const attempts = maxRetries + 1;
-  return Object.freeze({ attempts: payloads.length * attempts,
-    inputTokens: metrics.reduce((total, value) => total + value.tokens, 0) * attempts,
+  const retryTokens = metrics.flatMap(({ tokens }) => Array.from({ length: maxRetries }, () => tokens))
+    .sort((left, right) => right - left).slice(0, maxRetryAttempts);
+  return Object.freeze({ attempts: payloads.length + retryTokens.length,
+    inputTokens: metrics.reduce((total, value) => total + value.tokens, 0)
+      + retryTokens.reduce((total, value) => total + value, 0),
     maximumBytes: Math.max(0, ...metrics.map(({ bytes }) => bytes)),
     maximumTokens: Math.max(0, ...metrics.map(({ tokens }) => tokens)) });
+}
+
+export function selectFittingCandidates<T>(
+  candidates: readonly T[], maximum: number, fits: (selected: readonly T[]) => boolean,
+): readonly T[] {
+  const selected: T[] = [];
+  for (const candidate of candidates) {
+    if (selected.length >= maximum) break;
+    const proposed = [...selected, candidate];
+    if (fits(proposed)) selected.push(candidate);
+  }
+  return Object.freeze(selected);
 }
 
 export function estimatedReviewCostUsd(values: {

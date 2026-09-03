@@ -61,7 +61,8 @@ export interface ScalableReducedFinding {
 export interface ScalableReviewReduction {
   readonly confirmed: readonly ScalableReducedFinding[];
   readonly rejected: readonly ScalableReducedFinding[];
-  readonly incomplete: readonly string[];
+  readonly incompleteJobs: readonly string[];
+  readonly unverifiedProposals: readonly string[];
   readonly duplicateCount: number;
   readonly digest: `sha256:${string}`;
 }
@@ -305,14 +306,16 @@ interface VerificationDispatchContext {
   readonly agent: string; readonly context: PluginInvocationContext; readonly maxRetries: number;
   readonly deadlineEpochMs: number | undefined;
   readonly beforeDispatch: ReviewExecutionSettings['beforeDispatch'] | undefined;
+  readonly beforeRetry: ReviewExecutionSettings['beforeRetry'] | undefined;
   readonly expectedRuntime: ReviewRuntimeIdentity;
 }
 
 async function dispatchVerificationJob(
   value: ScalableVerificationJob, runtime: VerificationDispatchContext,
 ): Promise<ScalableVerificationJobResult> {
-  const { agent, context, maxRetries, deadlineEpochMs, beforeDispatch } = runtime;
+  const { agent, context, maxRetries, deadlineEpochMs, beforeDispatch, beforeRetry } = runtime;
   for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+    if (attempt > 0) beforeRetry?.();
     assertReviewDeadline(deadlineEpochMs, 'verification');
     try {
       const basePayload = buildScalableVerificationDispatchPayload(value);
@@ -338,9 +341,9 @@ export async function executeScalableVerificationJobs(
   execution: number | ReviewExecutionSettings = 4, expectedRuntime?: ReviewRuntimeIdentity,
   checkpoint?: (result: ScalableVerificationJobResult) => Promise<void>,
 ): Promise<readonly ScalableVerificationJobResult[]> {
-  const { concurrency, maxRetries, deadlineEpochMs, beforeDispatch }
+  const { concurrency, maxRetries, deadlineEpochMs, beforeDispatch, beforeRetry }
     = resolveReviewExecutionSettings(execution, 'verification');
-  const runtime = { agent, context, maxRetries, deadlineEpochMs, beforeDispatch,
+  const runtime = { agent, context, maxRetries, deadlineEpochMs, beforeDispatch, beforeRetry,
     expectedRuntime: expectedRuntime ?? { targetId: agent, runtime: 'subagent', agentId: 'codex',
       model: 'gpt-5.6-terra', thinking: 'high' } };
   const output: ScalableVerificationJobResult[] = [];
@@ -358,7 +361,7 @@ export async function executeScalableVerificationJobs(
 
 export function reduceScalableReview(
   verificationJobs: readonly ScalableVerificationJob[], results: readonly ScalableVerificationJobResult[],
-  additionalIncomplete: readonly string[] = [],
+  additionalIncompleteJobs: readonly string[] = [], unverifiedProposals: readonly string[] = [],
 ): ScalableReviewReduction {
   const byId = uniqueResults(results, 'scalable review reduction');
   const values: ScalableReducedFinding[] = [], incomplete: string[] = [];
@@ -374,7 +377,8 @@ export function reduceScalableReview(
   const unsigned = {
     confirmed: Object.freeze(reduced.filter(({ verification }) => verification === 'confirmed')),
     rejected: Object.freeze(reduced.filter(({ verification }) => verification !== 'confirmed')),
-    incomplete: Object.freeze([...new Set([...incomplete, ...additionalIncomplete])].sort()), duplicateCount,
+    incompleteJobs: Object.freeze([...new Set([...incomplete, ...additionalIncompleteJobs])].sort()),
+    unverifiedProposals: Object.freeze([...new Set(unverifiedProposals)].sort()), duplicateCount,
   };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }
