@@ -330,25 +330,32 @@ async function verifiedReduction(
     const request = firstResults[index]?.parsed.ok ? firstResults[index].parsed.value.contextRequest : undefined;
     return request?.paths ?? [];
   }))].sort(compareCodeUnits);
+  const resolvedRequests = new Map<string, readonly string[]>();
   for (const requestedPath of requestedPaths) {
-    if (completeSources.has(requestedPath)) continue;
-    const file = snapshot.files.find(({ path }) => path === requestedPath);
-    if (!file || file.mode !== '100644' || file.sizeBytes > REVIEW_HARD_LIMITS.repositoryAuditFileBytes) {
+    const exact = snapshot.files.find(({ path }) => path === requestedPath);
+    const files = exact ? [exact] : snapshot.files.filter(({ path }) => path.startsWith(`${requestedPath}/`));
+    if (files.length === 0 || files.some(({ mode, sizeBytes }) => mode !== '100644'
+      || sizeBytes > REVIEW_HARD_LIMITS.repositoryAuditFileBytes)) {
       throw new RepositoryAuditIntegrityError(`scalable review requested source is unavailable: ${requestedPath}`);
     }
-    const raw = await context.invoke('git.repository.read', {
-      operation: 'read_revision_text', resource: { type: 'git.repository.path', canonicalId: file.path },
-      payload: { head: revision.head, proof: revision.proof, expectedObjectId: file.objectId,
-        expectedSizeBytes: file.sizeBytes, maxBytes: REVIEW_HARD_LIMITS.repositoryAuditFileBytes },
-    });
-    const response = validatedSourceResponse(raw, file, revision.head);
-    completeSources.set(requestedPath, Object.freeze({ path: requestedPath, content: response.content,
-      digest: response.digest, complete: true,
-      ranges: Object.freeze([{ startLine: 1, endLine: Math.max(1, response.content.split('\n').length) }]) }));
+    resolvedRequests.set(requestedPath, Object.freeze(files.map(({ path }) => path).sort(compareCodeUnits)));
+    for (const file of files) {
+      if (completeSources.has(file.path)) continue;
+      const raw = await context.invoke('git.repository.read', {
+        operation: 'read_revision_text', resource: { type: 'git.repository.path', canonicalId: file.path },
+        payload: { head: revision.head, proof: revision.proof, expectedObjectId: file.objectId,
+          expectedSizeBytes: file.sizeBytes, maxBytes: REVIEW_HARD_LIMITS.repositoryAuditFileBytes },
+      });
+      const response = validatedSourceResponse(raw, file, revision.head);
+      completeSources.set(file.path, Object.freeze({ path: file.path, content: response.content,
+        digest: response.digest, complete: true,
+        ranges: Object.freeze([{ startLine: 1, endLine: Math.max(1, response.content.split('\n').length) }]) }));
+    }
   }
   const expandedJobs = compilation.jobs.flatMap((job, index) => {
     const request = firstResults[index]?.parsed.ok ? firstResults[index].parsed.value.contextRequest : undefined;
-    return request ? [expandScalableReviewJob(job, request.paths, completeSources)] : [];
+    return request ? [expandScalableReviewJob(job,
+      request.paths.flatMap((requestedPath) => resolvedRequests.get(requestedPath) ?? []), completeSources)] : [];
   });
   let finalJobs = compilation.jobs, reviewResults = firstResults, reviewRuns = [reviewRun];
   let expansionAccounting: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>
