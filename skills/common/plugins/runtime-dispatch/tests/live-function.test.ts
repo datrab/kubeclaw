@@ -7,6 +7,18 @@ import { pathToFileURL } from 'node:url';
 import { canonicalJson } from '@kubeclaw/plugin-sdk';
 import { assertOpenClawOutputBudget, assertOpenClawPromptBudget, assertOpenClawSessionCompleted,
   prepareOpenClawTask } from '../src/openclaw.ts';
+import { assertOpenClawToolAccepted, OpenClawToolRejectedError } from '../src/openclaw-response.ts';
+
+assert.doesNotThrow(() => assertOpenClawToolAccepted({
+  ok: true, output: { details: { status: 'accepted', childSessionKey: 'child' } },
+}, 'sessions_spawn'));
+assert.throws(() => assertOpenClawToolAccepted({
+  ok: true, status: 'ok', output: { isError: true, details: {
+    status: 'forbidden', governingCap: 'subagents.maxChildrenPerAgent',
+  } },
+}, 'sessions_spawn'), (error: unknown) => error instanceof OpenClawToolRejectedError
+  && error.message === 'OPENCLAW_SESSIONS_SPAWN_REJECTED:forbidden:subagents.maxChildrenPerAgent'
+  && error.governingCap === 'subagents.maxChildrenPerAgent');
 
 for (const state of ['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed']) {
   assert.doesNotThrow(() => assertOpenClawSessionCompleted({ terminal: true, state, model: 'declared' }, 'declared'));
@@ -42,6 +54,8 @@ const controlledPayload = { protocol: 'review', task: 'review', runtimePromptBud
 } };
 const preparedTask = prepareOpenClawTask(controlledPayload, '/work/.results/result.json', promptTarget);
 assert.equal(preparedTask.includes('runtimePromptBudget'), false);
+assert.match(preparedTask, /return exactly ANNOUNCE_SKIP as your final response/u);
+assert.doesNotMatch(preparedTask, /return the same raw JSON as your final response/u);
 assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
   ...controlledPayload.runtimePromptBudget, tokenizerEncoding: 'cl100k_base',
 } }, '/work/.results/result.json', promptTarget), /OPENCLAW_PROMPT_TOKENIZER_MISMATCH/u);
@@ -64,6 +78,7 @@ const token = 'runtime-secret-that-must-not-be-journaled';
 const environmentName = 'KUBECLAW_RUNTIME_DISPATCH_TEST_TOKEN';
 process.env[environmentName] = token;
 const received = [];
+let spawnedLabel = '';
 const server = http.createServer((request, response) => {
   const chunks = [];
   request.on('data', (chunk) => chunks.push(chunk));
@@ -79,8 +94,20 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, { 'content-type': 'application/json' });
     const parsed = JSON.parse(body);
     if (parsed.tool === 'sessions_spawn') {
+      if (String(parsed.args.task).includes('Trigger admission refusal.')) {
+        response.end(JSON.stringify({
+          ok: true,
+          toolName: 'sessions_spawn',
+          output: { content: [{ type: 'text', text: 'Spawn refused by configured child capacity.' }],
+            details: { status: 'forbidden', governingCap: 'subagents.maxChildrenPerAgent' } },
+          isError: true,
+          source: 'core',
+        }));
+        return;
+      }
       const resultFile = String(parsed.args.task).match(/atomically to (.+\.json)\./u)?.[1];
       assert.ok(resultFile);
+      spawnedLabel = String(parsed.args.label);
       fs.mkdirSync(path.dirname(resultFile), { recursive: true });
       fs.writeFileSync(resultFile, '{"status":"PASS","summary":"Reviewed"}\n');
       response.end(JSON.stringify({
@@ -88,8 +115,8 @@ const server = http.createServer((request, response) => {
         toolName: 'sessions_spawn',
         output: {
           content: [],
-          details: { childSessionKey: 'session:gateway-test', runId: 'run:gateway-test',
-            taskId: 'task:gateway-test', resolvedModel: 'openai/gpt-5.6-sol' },
+          details: { status: 'accepted', childSessionKey: 'session:gateway-test', runId: 'run:gateway-test',
+            resolvedModel: 'openai/gpt-5.6-sol' },
         },
         source: 'core',
       }));
@@ -99,6 +126,9 @@ const server = http.createServer((request, response) => {
         ok: true,
         toolName: 'subagents',
         output: { content: [], details: {
+          tasks: [{ status: 'failed', label: 'unrelated-task-without-id' },
+            { taskId: 'task:gateway-test', label: spawnedLabel,
+            status: poll === 1 ? 'running' : 'completed' }],
           active: poll === 1 ? [{ taskId: 'task:gateway-test', runId: 'run:gateway-test',
             sessionKey: 'session:gateway-test', status: 'running' }] : [],
           recent: poll === 1 ? [] : [{ taskId: 'task:gateway-test', runId: 'run:gateway-test',
@@ -274,6 +304,7 @@ try {
             tokenSecret: 'runtime.agent',
             runtime: 'subagent',
             agentId: 'codex',
+            controllerSessionKey: 'agent:codex:nova-review-controller',
             model: 'openai/gpt-5.6-sol',
             thinking: 'high',
             cwd: gatewayCwd,
@@ -335,10 +366,12 @@ try {
     const spawnRequests = received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn');
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
+    assert.equal(JSON.parse(spawnRequests[0].body).sessionKey, 'agent:codex:nova-review-controller');
     assert.equal(JSON.parse(spawnRequests[0].body).idempotencyKey, 'spawn:runtime:gateway');
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');
+    assert.match(String(spawnArgs.task), /return exactly ANNOUNCE_SKIP as your final response/u);
     const durableResult = String(spawnArgs.task).match(/atomically to (.+\.json)\./u)?.[1];
     assert.ok(durableResult);
     assert.equal(
@@ -349,6 +382,19 @@ try {
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'subagents')
       .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
+    await assert.rejects(gatewayAdapters.invoke(
+      'runtime.dispatch',
+      attempt,
+      'runtime:gateway-refused',
+      {
+        operation: 'dispatch',
+        resource: { type: 'runtime.agent', canonicalId: 'gateway' },
+        payload: { protocol: 'kubeclaw.review.v2', task: 'Trigger admission refusal.' },
+      },
+      new AbortController().signal,
+    ), (error: unknown) => error instanceof Error
+      && error.message.includes('OPENCLAW_SESSIONS_SPAWN_REJECTED:forbidden:subagents.maxChildrenPerAgent')
+      && !error.message.includes('SESSION_KEY_INVALID'));
     assert.equal(received.every((entry) => !entry.body.includes(token)), true);
     const journalText = JSON.stringify(gatewayJournal.entries());
     assert.doesNotMatch(journalText, /gateway-test|tools\/invoke|runtime-secret-that-must-not-be-journaled/);

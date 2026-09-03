@@ -143,6 +143,7 @@ try {
           tokenSecret: 'openclaw.gateway',
           runtime: 'subagent',
           agentId: 'main',
+          controllerSessionKey: 'agent:main:nova-review-controller',
           model,
           thinking,
           cwd: project,

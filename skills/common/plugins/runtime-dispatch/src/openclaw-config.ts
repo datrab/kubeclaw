@@ -1,7 +1,7 @@
 import type { OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
+const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
 
 function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, code: string): void { for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`); }
@@ -13,6 +13,11 @@ function idValue(value: unknown, fallback: string): string { return typeof value
 function absolute(value: unknown): string { return typeof value === 'string' && value.startsWith('/') ? value : ''; }
 function endpointValue(value: unknown): URL | null { return typeof value === 'string' ? new URL(value) : null; }
 function optionalText(value: unknown): string | undefined { return typeof value === 'string' ? value : undefined; }
+function controllerSessionKey(value: unknown, agentId: string): string | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value !== 'string' || value.length > 512 || !value.startsWith(`agent:${agentId}:`)) return '';
+  return value;
+}
 function numberValue(value: unknown, fallback: number): number { return Number(value === undefined ? fallback : value); }
 function encodingValue(value: unknown): OpenClawTarget['tokenizerEncoding'] {
   return (value === undefined ? 'o200k_base' : value) as OpenClawTarget['tokenizerEncoding'];
@@ -58,6 +63,9 @@ function parseTarget(id: string, raw: unknown): OpenClawTarget {
     maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),
     maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),
   };
+  const sessionKey = controllerSessionKey(raw.controllerSessionKey, target.agentId);
+  if (sessionKey === '') throw new Error(`RUNTIME_CONFIG_INVALID:controllerSessionKey:${id}`);
+  if (sessionKey) Object.assign(target, { controllerSessionKey: sessionKey });
   if (!targetValid(target, endpoint)) throw new Error(`RUNTIME_CONFIG_INVALID:openclaw:${id}`);
   return target;
 }

@@ -13,6 +13,9 @@ function argumentsMap(values) {
 }
 
 function jsonFile(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
+function optionalJsonFile(file) {
+  try { return jsonFile(file); } catch (_error) { return undefined; }
+}
 function blobFile(root, digest) {
   const value = String(digest).replace(/^sha256:/u, '');
   return path.join(root, 'blobs', 'sha256', value.slice(0, 2), value.slice(2));
@@ -27,6 +30,34 @@ function lastLines(file, maximumBytes = 1024 * 1024) {
     const text = bytes.toString('utf8');
     return text.slice(start === 0 ? 0 : Math.max(0, text.indexOf('\n') + 1)).trim().split('\n').filter(Boolean);
   } finally { fs.closeSync(descriptor); }
+}
+
+function latestResourceState(file) {
+  if (!file || !fs.existsSync(file)) return undefined;
+  const values = lastLines(file, 8 * 1024 * 1024).flatMap((line) => {
+    try { return [JSON.parse(line)]; } catch (_error) { return []; }
+  });
+  const current = values.at(-1), previous = values.at(-2);
+  if (!current) return undefined;
+  const elapsedMs = previous ? Date.parse(current.observedAt) - Date.parse(previous.observedAt) : undefined;
+  const usageDelta = previous && Number.isFinite(current.cpu?.usage_usec) && Number.isFinite(previous.cpu?.usage_usec)
+    ? current.cpu.usage_usec - previous.cpu.usage_usec : undefined;
+  const cpuPercent = elapsedMs > 0 && usageDelta >= 0 ? usageDelta / (elapsedMs * 10) : undefined;
+  let peakCpuPercent = cpuPercent, peakRamBytes = current.memoryCurrentBytes;
+  for (let index = 1; index < values.length; index += 1) {
+    const before = values[index - 1], after = values[index];
+    const interval = Date.parse(after.observedAt) - Date.parse(before.observedAt);
+    const delta = after.cpu?.usage_usec - before.cpu?.usage_usec;
+    if (interval > 0 && Number.isFinite(delta) && delta >= 0) {
+      peakCpuPercent = Math.max(peakCpuPercent ?? 0, delta / (interval * 10));
+    }
+    if (Number.isFinite(after.memoryCurrentBytes)) peakRamBytes = Math.max(peakRamBytes ?? 0, after.memoryCurrentBytes);
+  }
+  const ageSeconds = Math.max(0, (Date.now() - Date.parse(current.observedAt)) / 1000);
+  return { observedAt: current.observedAt, ageSeconds,
+    currentCpuPercent: cpuPercent, peakCpuPercent, currentRamBytes: current.memoryCurrentBytes,
+    peakRamBytes, cgroupLifetimePeakRamBytes: current.memoryPeakBytes, pipelineRssBytes: current.pipelineRssBytes,
+    gateway: current.gateway, oomEvents: current.memoryEvents?.oom, oomKillEvents: current.memoryEvents?.oom_kill };
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity -- One bounded read produces a complete machine-readable snapshot.
@@ -65,8 +96,10 @@ for (const artifact of unique.values()) {
 }
 const eventFile = path.join(path.resolve(platform.storageRoot), 'runs', runId, 'events.jsonl');
 const stages = {}, terminal = { status: 'running', occurredAt: undefined };
+let lastEventAt;
 if (fs.existsSync(eventFile)) for (const line of lastLines(eventFile)) {
   const event = JSON.parse(line).entry;
+  if (typeof event.occurredAt === 'string') lastEventAt = event.occurredAt;
   if (['stage.succeeded', 'stage.blocked', 'stage.cancelled', 'stage.failed'].includes(event.type)) {
     stages[event.identity.stageId] = event.type.slice('stage.'.length);
   }
@@ -74,8 +107,24 @@ if (fs.existsSync(eventFile)) for (const line of lastLines(eventFile)) {
     terminal.status = event.type.slice('run.'.length); terminal.occurredAt = event.occurredAt;
   }
 }
+const heartbeatFile = args.get('heartbeat');
+const heartbeat = heartbeatFile ? optionalJsonFile(path.resolve(heartbeatFile)) : undefined;
+const resources = latestResourceState(args.get('resource-log') ? path.resolve(args.get('resource-log')) : undefined);
+const staleAfterSeconds = Number(args.get('stale-after-seconds') ?? '120');
+if (!Number.isFinite(staleAfterSeconds) || staleAfterSeconds < 1) throw new Error('stale-after-seconds is invalid');
+const heartbeatAt = typeof heartbeat?.updatedAt === 'string' ? heartbeat.updatedAt : undefined;
+const heartbeatAgeSeconds = heartbeatAt ? Math.max(0, (Date.now() - Date.parse(heartbeatAt)) / 1000) : undefined;
+const terminalRun = terminal.status !== 'running';
+const liveness = terminalRun ? 'terminal' : heartbeatAgeSeconds !== undefined
+  && heartbeatAgeSeconds <= staleAfterSeconds && heartbeat?.processAlive === true ? 'active' : 'stale';
 return { schemaVersion: 'repository-review-status.v1', runId,
   status: terminal.status, terminalAt: terminal.occurredAt, stages,
+  liveness, lastEventAt, heartbeatAt, heartbeatAgeSeconds,
+  pipelinePid: Number.isSafeInteger(heartbeat?.pipelinePid) ? heartbeat.pipelinePid : undefined,
+  supervisorPid: Number.isSafeInteger(heartbeat?.supervisorPid) ? heartbeat.supervisorPid : undefined,
+  attempt: Number.isSafeInteger(heartbeat?.attempt) ? heartbeat.attempt : undefined,
+  recoveryMode: typeof heartbeat?.mode === 'string' ? heartbeat.mode : undefined,
+  resources,
   plannedPrimary, completedReviewCheckpoints: review.size,
   remainingPrimary: Math.max(0, plannedPrimary - review.size),
   completedContextExpansionCheckpoints: expansion.size,

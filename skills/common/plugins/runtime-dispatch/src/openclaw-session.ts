@@ -1,14 +1,15 @@
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import type { OpenClawTarget } from './openclaw.ts';
-import { openClawToolDetails, record } from './openclaw-response.ts';
+import { assertOpenClawToolAccepted, openClawToolDetails, record } from './openclaw-response.ts';
 
 type JsonRecord = Record<string, unknown>;
 function first(...values: readonly unknown[]): unknown { return values.find((value) => value !== undefined && value !== null); }
-export interface OpenClawSessionState { readonly terminal: boolean; readonly state: string; readonly model?: string }
+export interface OpenClawSessionState { readonly terminal: boolean; readonly state: string; readonly model?: string; readonly taskId?: string }
 export interface OpenClawSessionIdentity {
   readonly sessionKey: string;
   readonly runId: string;
-  readonly taskId: string;
+  readonly taskId?: string;
+  readonly label: string;
   readonly model?: string;
 }
 
@@ -17,17 +18,20 @@ function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: b
   const source = openClawToolDetails(value);
   if (!record(source)) return { terminal: false, state: 'unknown' };
   if (subagent) {
+    const expected = new Set([identity.taskId, identity.runId, identity.sessionKey, identity.label]
+      .filter((candidate): candidate is string => typeof candidate === 'string' && candidate.length > 0));
     for (const collection of [source.tasks, source.active, source.recent]) {
       if (!Array.isArray(collection)) continue;
       const match = collection.find((entry) => record(entry) && [
         entry.taskId, entry.task_id, entry.runId, entry.run_id, entry.sessionKey, entry.session_key,
-      ].some((candidate) => candidate === identity.taskId || candidate === identity.runId
-        || candidate === identity.sessionKey));
+        entry.label,
+      ].some((candidate) => typeof candidate === 'string' && expected.has(candidate)));
       if (record(match)) {
         const state = String(first(match.status, match.state) ?? 'unknown').toLowerCase();
         const model = typeof match.model === 'string' ? match.model : identity.model;
+        const taskId = typeof match.taskId === 'string' ? match.taskId : identity.taskId;
         return { terminal: ['completed', 'complete', 'done', 'succeeded', 'ended', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state,
-          ...(model ? { model } : {}) };
+          ...(model ? { model } : {}), ...(taskId ? { taskId } : {}) };
       }
     }
     return { terminal: false, state: 'unknown' };
@@ -45,8 +49,9 @@ export async function gateway(context: AdapterActivationContext, target: OpenCla
   args: JsonRecord, idempotencyKey?: string): Promise<unknown> {
   const resource = new URL(target.endpoint);
   if (idempotencyKey) resource.hash = `kubeclaw=${encodeURIComponent(idempotencyKey)}`;
-  const response = await context.invokeConfidential('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: resource.toString() }, payload: { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: { tool, args, ...(idempotencyKey ? { idempotencyKey } : {}) } } });
+  const response = await context.invokeConfidential('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: resource.toString() }, payload: { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: { tool, args, ...(target.controllerSessionKey ? { sessionKey: target.controllerSessionKey } : {}), ...(idempotencyKey ? { idempotencyKey } : {}) } } });
   if (!record(response) || response.status !== 200) throw new Error(`OPENCLAW_GATEWAY_${tool.toUpperCase()}_FAILED`);
+  assertOpenClawToolAccepted(response.body, tool);
   return response.body;
 }
 
@@ -78,10 +83,22 @@ export async function pollSession(context: AdapterActivationContext, target: Ope
 
 export async function cancelSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, identity: OpenClawSessionIdentity): Promise<void> {
   try {
-    if (target.runtime === 'subagent') await gateway(context, target, token, 'subagents', { action: 'cancel', taskId: identity.taskId }, `cancel:${identity.runId}`);
+    if (target.runtime === 'subagent') {
+      const taskId = identity.taskId ?? (await pollSessionIdentity(context, target, token, identity));
+      if (!taskId) throw new Error('OPENCLAW_TASK_ID_UNRESOLVED');
+      await gateway(context, target, token, 'subagents', { action: 'cancel', taskId }, `cancel:${identity.runId}`);
+    }
     else await gateway(context, target, token, 'sessions_send', { sessionKey: identity.sessionKey, message: 'Stop immediately. The owning pipeline invocation was cancelled.' }, `cancel:${identity.runId}`);
   } catch (_error) {
     /* INTENTIONAL_NONCRITICAL(session_cancel_failed): Cancellation cleanup is best effort. */
     void _error;
   }
+}
+
+async function pollSessionIdentity(context: AdapterActivationContext, target: OpenClawTarget, token: string,
+  identity: OpenClawSessionIdentity): Promise<string | undefined> {
+  const raw = await gateway(context, target, token, 'subagents', {
+    action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5),
+  });
+  return terminal(raw, identity, true).taskId;
 }

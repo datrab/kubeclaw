@@ -10,6 +10,7 @@ import { cancelSession, gateway, pollSession, type OpenClawSessionIdentity, type
 export interface OpenClawTarget {
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
   readonly agentId: string; readonly agentRole: string; readonly model: string; readonly thinking: string;
+  readonly controllerSessionKey?: string;
   readonly cwd: string; readonly repositoryRoot: string; readonly pollMs: number; readonly maxPollMs: number;
   readonly maxPolls: number; readonly sessionTimeoutMs: number; readonly resultPathPrefix: string;
   readonly tokenizerEncoding: 'o200k_base' | 'cl100k_base'; readonly maxPromptBytes: number;
@@ -82,20 +83,28 @@ function assertDispatchActive(signal: AbortSignal): void {
 function requiredText(value: unknown, label: string): string { if (typeof value !== 'string' || !value.trim()) throw new Error(`OPENCLAW_${label}_INVALID`); return value.trim(); }
 function first(...values: readonly unknown[]): unknown { return values.find((value) => value !== undefined && value !== null); }
 // eslint-disable-next-line complexity -- The identity parser accepts current and legacy field aliases but requires one complete identity.
-function sessionIdentity(value: unknown): OpenClawSessionIdentity {
+function sessionIdentity(value: unknown, label: string): OpenClawSessionIdentity {
   const source = openClawToolDetails(value);
   if (!record(source)) throw new Error('OPENCLAW_SPAWN_RESULT_INVALID');
+  if (typeof source.status === 'string' && source.status.toLowerCase() !== 'accepted') {
+    throw new Error(`OPENCLAW_SESSIONS_SPAWN_STATUS_INVALID:${source.status.toLowerCase()}`);
+  }
   const nested = record(source.session) ? source.session : undefined;
   const sessionKey = requiredText(first(source.childSessionKey, source.sessionKey, source.session_key,
     nested?.sessionKey, nested?.session_key), 'SESSION_KEY');
   const runId = requiredText(first(source.runId, source.run_id, nested?.runId, nested?.run_id), 'RUN_ID');
-  const taskId = requiredText(first(source.taskId, source.task_id, nested?.taskId, nested?.task_id, runId), 'TASK_ID');
+  const taskId = first(source.taskId, source.task_id, nested?.taskId, nested?.task_id);
+  if (taskId !== undefined && (typeof taskId !== 'string' || !taskId.trim())) throw new Error('OPENCLAW_TASK_ID_INVALID');
   const model = first(source.resolvedModel, source.model, nested?.model);
-  return Object.freeze({ sessionKey, runId, taskId, ...(typeof model === 'string' ? { model } : {}) });
+  return Object.freeze({ sessionKey, runId, label, ...(typeof taskId === 'string' ? { taskId: taskId.trim() } : {}),
+    ...(typeof model === 'string' ? { model } : {}) });
 }
 
 export function buildOpenClawTask(payload: JsonRecord, resultFile: string): string {
-  return buildRuntimeAgentTask(payload, resultFile);
+  return buildRuntimeAgentTask(payload, resultFile).replace(
+    'After the atomic rename, return the same raw JSON as your final response.',
+    'After the atomic rename, return exactly ANNOUNCE_SKIP as your final response.',
+  );
 }
 
 export function assertOpenClawPromptBudget(
@@ -167,14 +176,15 @@ async function spawnSession(context: AdapterActivationContext, target: OpenClawT
   resultFile: string, dispatchId: string): Promise<OpenClawSessionIdentity> {
   const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
   const task = prepareOpenClawTask(payload, resultFile, target);
+  const label = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`;
   const spawned = await gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
     task,
-    label: `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`,
+    label,
     cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,
     ...(target.runtime === 'acp' ? { streamTo: 'parent' } : {}),
   }, `spawn:${dispatchId}`);
-  return sessionIdentity(spawned);
+  return sessionIdentity(spawned, label);
 }
 
 function runtimeAttestation(targetId: string, target: OpenClawTarget): Readonly<Record<string, unknown>> {

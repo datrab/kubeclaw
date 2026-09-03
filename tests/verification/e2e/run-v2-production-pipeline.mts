@@ -141,6 +141,7 @@ function runtimeTarget(
     tokenSecret,
     runtime: 'subagent',
     agentId: 'main',
+    controllerSessionKey: 'agent:main:nova-review-controller',
     agentRole,
     model,
     thinking: openClawThinking,

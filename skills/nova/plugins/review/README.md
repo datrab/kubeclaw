@@ -64,6 +64,24 @@ edges. `npm run review:status -- --platform <platform.json> --run-id <run-id>`
 reads the compact artifact index and the bounded journal tail; it does not scan
 the large source-effect journal.
 
+Production OpenClaw targets should set a dedicated `controllerSessionKey` such as
+`agent:main:nova-review-controller`. Reviewer tasks finish with `ANNOUNCE_SKIP`;
+the adapter imports the authoritative atomic result file instead of scheduling a
+parent-agent completion turn. Before expensive compilation, run
+`npm run runtime:preflight -- --concurrency <n> --model <model>` to prove that the
+requested number of real children can be admitted and completed through that
+controller without leaving active tasks.
+
+Long reviews use `npm run review:supervise`. The supervisor owns an exclusive
+lease, publishes an atomic heartbeat, samples cgroup and Gateway health, adopts
+an already-running matching pipeline after its own restart, and recovers only
+the same run ID after a nonterminal child exit. `npm run review:status:format`
+combines the compact artifact status, fresh heartbeat/resource samples, and the
+dedicated controller's active-task list into a bounded human status update.
+Stale heartbeats are reported as stale rather than running, and stale resource
+samples are retained with their observation timestamp instead of being presented
+as current measurements.
+
 Repository jobs do not copy source into task text. Component jobs carry complete
 source. Boundary jobs carry exact call-site and contract excerpts. Holistic passes
 start from digest-bound compact topology records. They may certify a clean topology
