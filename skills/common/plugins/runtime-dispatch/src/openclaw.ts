@@ -238,7 +238,8 @@ export async function dispatchOpenClaw(
   }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
-  const stableDispatchId = `payload:${crypto.createHash('sha256')
+  const transport = target.collectorMode ? 'collector-v2' : 'session-v1';
+  const stableDispatchId = `${transport}:payload:${crypto.createHash('sha256')
     .update(canonicalJson(dispatchPayload(payload).modelPayload)).digest('hex')}`;
   const result = resultLocation(target, stableDispatchId);
   assertDispatchActive(dispatchSignal);
