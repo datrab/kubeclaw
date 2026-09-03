@@ -181,7 +181,6 @@ function App() {
   const [document, setDocument] = useState<PrismDocument | null>(null);
   const [csrf, setCsrf] = useState("");
   const [userId, setUserId] = useState("");
-  const [setupName, setSetupName] = useState("New product");
   const [failure, setFailure] = useState("");
   const [approvalMessage, setApprovalMessage] = useState("");
   const [quality, setQuality] = useState<{
@@ -310,87 +309,6 @@ function App() {
     setDocument(payload);
     setQuality(null);
     setAcceptedWarnings([]);
-  };
-  const createProject = async () => {
-    const externalId = `project-${crypto.randomUUID()}`;
-    const project = await fetch("/v1/projects", {
-      method: "POST",
-      headers: { "content-type": "application/json", "x-prism-csrf": csrf },
-      body: JSON.stringify({ externalId, name: setupName }),
-    });
-    if (!project.ok) {
-      const failure = (await project.json().catch(() => null)) as {
-        error?: string;
-      } | null;
-      throw new Error(
-        failure?.error ?? `Project creation failed (${project.status})`,
-      );
-    }
-    const projectId = ((await project.json()) as { id: string }).id;
-    const now = new Date().toISOString();
-    const initial = {
-      meta: {
-        schema: "prism.design-document.v1",
-        documentId: externalId,
-        projectId: externalId,
-        revision: 1,
-        title: setupName,
-        createdAt: now,
-        updatedAt: now,
-      },
-      theme: {
-        colors: {
-          background: "#0b0d10",
-          surface: "#15181d",
-          text: "#f4f6f8",
-          action: "#f97316",
-        },
-        typography: { body: { family: "Inter", fallback: ["system-ui"] } },
-        space: { small: 8, medium: 16, large: 24 },
-        breakpoints: { compact: 0, regular: 768, wide: 1280 },
-        rules: [],
-      },
-      assets: {},
-      components: {},
-      views: {
-        home: {
-          title: "Home",
-          surface: "web",
-          root: {
-            id: "home-root",
-            type: "stack",
-            props: { direction: "vertical", gap: 16 },
-            children: [],
-          },
-          states: { default: { patches: {} } },
-          responsive: {
-            compact: { patches: {} },
-            regular: { patches: {} },
-            wide: { patches: {} },
-          },
-        },
-      },
-      flows: {},
-    } as PrismDocument;
-    const created = await fetch("/v1/documents", {
-      method: "POST",
-      headers: { "content-type": "application/json", "x-prism-csrf": csrf },
-      body: JSON.stringify({ projectId, key: "primary", document: initial }),
-    });
-    if (!created.ok) throw new Error("Design document creation failed");
-    const id = ((await created.json()) as { id: string }).id;
-    const proposed = await fetch(
-      `/v1/projects/${encodeURIComponent(projectId)}/directions`,
-      {
-        method: "POST",
-        headers: { "content-type": "application/json", "x-prism-csrf": csrf },
-        body: JSON.stringify({ documentId: id }),
-      },
-    );
-    if (!proposed.ok) throw new Error("Design directions could not be created");
-    location.assign(
-      `?project=${encodeURIComponent(projectId)}&document=${encodeURIComponent(id)}`,
-    );
   };
   const propose = async () => {
     if (!document || !instruction.trim()) return;
@@ -716,24 +634,31 @@ function App() {
     return (
       <main className="studio">
         <section className="start-panel">
-          <h1>Create a Prism project</h1>
-          {projects.filter((project)=>project.document_id).length>0&&<section aria-label="Existing Prism projects"><h2>Projects from Nova</h2>{projects.filter((project)=>project.document_id).map((project)=><article key={project.id}><strong>{project.name}</strong><p>{project.direction_count} design directions</p><a href={`?project=${encodeURIComponent(project.id)}&document=${encodeURIComponent(project.document_id!)}`}>Open designs</a></article>)}</section>}
-          <label>
-            Project name
-            <input
-              value={setupName}
-              onChange={(event) => setSetupName(event.target.value)}
-            />
-          </label>
-          <button
-            className="primary"
-            disabled={!csrf}
-            onClick={() =>
-              void createProject().catch((error) => setFailure(String(error)))
-            }
-          >
-            Create project
-          </button>
+          <h1>Prism Studio</h1>
+          {projects.length === 0 ? (
+            <>
+              <p>No design requests yet.</p>
+              <p>Projects appear here after Nova sends an architecture to Prism.</p>
+            </>
+          ) : (
+            <section aria-label="Prism projects">
+              <h2>Projects from Nova</h2>
+              {projects.map((project) => (
+                <article key={project.id}>
+                  <strong>{project.name}</strong>
+                  {project.document_id ? (
+                    <>
+                      <p>{project.direction_count} design directions</p>
+                      <a href={`?project=${encodeURIComponent(project.id)}&document=${encodeURIComponent(project.document_id)}`}>Open designs</a>
+                    </>
+                  ) : (
+                    <p>Design generation pending.</p>
+                  )}
+                </article>
+              ))}
+            </section>
+          )}
+          <button onClick={() => location.reload()}>Refresh</button>
         </section>
       </main>
     );

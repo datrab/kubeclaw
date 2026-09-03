@@ -12,7 +12,10 @@ test("desktop startup and failure panels remain visible", () => {
   assert.equal(app.match(/className="start-panel"/gu)?.length, 2);
   assert.match(css, /\.start-panel\{[^}]*display:flex/u);
   assert.match(css, /\.mobile-nav,\.sheet\{display:none\}/u);
-  assert.match(app, /failure\?\.error \?\? `Project creation failed \(\$\{project\.status\}\)`/u);
+  assert.match(app, /No design requests yet\./u);
+  assert.match(app, /Projects appear here after Nova sends an architecture to Prism\./u);
+  assert.match(app, /Design generation pending\./u);
+  assert.doesNotMatch(app, /createProject|Create project|Design directions could not be created/u);
 });
 test("Puck insertion becomes a typed canonical operation", () => {
   const operation = puckChangeToOperation(

@@ -79,6 +79,10 @@ role-management privileges. Only after that hook succeeds does the script
 install the `agent-prism` OpenClaw gateway. Studio is exposed
 through the `prism-studio` Tailscale Ingress; its HTTPS MagicDNS address is
 shown by `kubectl get ingress prism-studio -n kubeclaw`.
+Opening Studio does not create a project or invoke the agent. Before Nova has
+submitted an architecture, Studio shows an empty state. Submitted projects are
+listed immediately, with design generation marked pending until `agent-prism`
+has committed the three directions.
 
 Verify the intended ownership after deployment:
 
