@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import http from 'node:http';
@@ -76,8 +75,10 @@ const address = server.address();
 if (!address || typeof address === 'string') throw new Error('server unavailable');
 const origin = `http://127.0.0.1:${address.port}`;
 const secret = 'KUBECLAW_TEST_AGENT_TOKEN';
+const sourceKeyEnvironment = 'KUBECLAW_TEST_AGENT_SOURCE_PRIVATE_KEY';
 const token = `test-${'a'.repeat(48)}`;
 process.env[secret] = token;
+process.env[sourceKeyEnvironment] = sourcePrivateKey;
 const nodeExecutable = fs.realpathSync(process.execPath);
 const roots = ['common', 'nova', 'buster'].map((role) => path.join(repository, `skills/${role}/plugins`));
 
@@ -141,7 +142,6 @@ try {
       ['kubeclaw.buster-suite-runtime:suite', {
         endpoint: origin,
         tokenSecret: 'buster.worker',
-        sourcePrivateKeySecret: 'buster.source-private-key',
         allowedRepositoryRoots: [temporary],
         unmigratedSuites: ['security'],
         suiteCapabilities: ['image_build'],
@@ -163,7 +163,7 @@ try {
       ['kubeclaw.runtime-dispatch:runtime', { targets: { buster: { endpoint: `${origin}/dispatch`, tokenSecret: 'buster.agent' } } }],
       ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST', 'GET', 'DELETE'], allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],
       ['kubeclaw.secret-resolver:secrets', { environment: { 'buster.agent': secret, 'buster.worker': secret,
-        'buster.source-private-key': sourcePrivateKey } }],
+        'buster.source-private-key': sourceKeyEnvironment } }],
       ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
     ]),
     effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()),
@@ -220,6 +220,7 @@ try {
   }
 } finally {
   delete process.env[secret];
+  delete process.env[sourceKeyEnvironment];
   await new Promise((resolve) => server.close(resolve));
   fs.rmSync(temporary, { recursive: true, force: true });
 }

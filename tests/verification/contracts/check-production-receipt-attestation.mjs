@@ -12,7 +12,8 @@ const revision = 'a'.repeat(40);
 const busterRevision = 'e'.repeat(40);
 const digest = `sha256:${'b'.repeat(64)}`;
 const unsigned = {
-  schemaVersion: 'nova-tailscale-production-preflight.v1', ok: true, runtimeRevision: revision,
+  schemaVersion: 'nova-tailscale-production-preflight.v1', suite: 'tailscale-preview',
+  ok: true, runtimeRevision: revision,
   busterRuntimeRevision: busterRevision,
   runId: 'run:fixture', jobId: 'job:fixture', planDigest: digest, resultDigest: digest,
   decisionDigest: digest, status: 'completed', decision: 'passed', evidenceDigests: [digest],
@@ -38,6 +39,60 @@ assert.ok(verifyProductionReceipt(signed, keys.publicKey, { expectedRevision: ''
   .includes('runtimeRevision does not match'));
 assert.ok(verifyProductionReceipt(signed, keys.publicKey, { expectedBusterRevision: '' })
   .includes('busterRuntimeRevision does not match'));
+assert.ok(verifyProductionReceipt({ ...signed, suite: 'health' }, keys.publicKey,
+  { expectedRevision: revision }).includes('suite identity is invalid'));
+const httpUnsigned = {
+  schemaVersion: 'nova-http-production-preflight.v1', suite: 'health',
+  ok: true, runtimeRevision: revision,
+  busterRuntimeRevision: busterRevision, runId: 'run:http', jobId: 'job:http', planDigest: digest,
+  resultDigest: digest, decisionDigest: digest, status: 'completed', decision: 'passed',
+  evidenceDigests: [digest], evidenceImported: true,
+  runnerCleanupVerified: true, cleanupVerified: true, clusterCleanupObserved: true,
+  resources: { leaseName: 'test-http', namespace: 'test-http', serviceName: 'http-preflight', servicePort: 80 },
+  target: 'http://http-preflight.test-http.svc.cluster.local/', httpStatus: 200,
+  networkRequestVerified: true, mocks: 0, emulators: 0,
+};
+const httpSigned = attestProductionReceipt(httpUnsigned, keys.privateKey);
+assert.deepEqual(verifyProductionReceipt(httpSigned, keys.publicKey, {
+  expectedRevision: revision, expectedBusterRevision: busterRevision,
+}), []);
+assert.ok(verifyProductionReceipt({ ...httpSigned, target: 'https://example.com/' }, keys.publicKey,
+  { expectedRevision: revision }).includes('HTTP target is invalid'));
+assert.ok(verifyProductionReceipt({ ...httpSigned,
+  target: 'http://http-preflight.another-namespace.svc.cluster.local/' }, keys.publicKey,
+{ expectedRevision: revision }).includes('HTTP target is invalid'));
+assert.ok(verifyProductionReceipt(httpSigned, keys.publicKey, {
+  expectedRevision: revision, expectedPublicKeyFingerprint: `sha256:${'f'.repeat(64)}`,
+}).includes('receipt key fingerprint does not match the recorded trust anchor'));
+const { cleanupVerified: _cleanupVerified, clusterCleanupObserved: _clusterCleanupObserved,
+  ...nonClusterUnsigned } = httpUnsigned;
+const unitSigned = attestProductionReceipt({ ...nonClusterUnsigned,
+  schemaVersion: 'nova-unit-production-preflight.v2', suite: 'unit',
+  clusterCleanupNotApplicable: true,
+  realProcessVerified: true, junitReportVerified: true, resourceMetricsVerified: true,
+}, keys.privateKey);
+assert.deepEqual(verifyProductionReceipt(unitSigned, keys.publicKey, {
+  expectedRevision: revision, expectedBusterRevision: busterRevision,
+}), []);
+const buildSigned = attestProductionReceipt({ ...nonClusterUnsigned,
+  schemaVersion: 'nova-container-build-production-preflight.v4', suite: 'build',
+  clusterCleanupNotApplicable: true,
+  immutableImage: `registry.example.invalid/app@${digest}`, imageDigest: digest,
+  registryPushVerified: true, manifestVerified: true,
+}, keys.privateKey);
+assert.deepEqual(verifyProductionReceipt(buildSigned, keys.publicKey, {
+  expectedRevision: revision, expectedBusterRevision: busterRevision,
+}), []);
+const kubernetesSigned = attestProductionReceipt({ ...httpUnsigned,
+  schemaVersion: 'kubernetes-fixture-production-preflight.v1', suite: 'k8s',
+  namespaceDeleted: true, deploymentReadyVerified: true, podReadyVerified: true,
+  manifestAppliedVerified: true, approvedSecretCopyVerified: true,
+  resources: { leaseName: 'test-k8s', namespace: 'test-k8s', secretName: 'test-secret' },
+  imageDigest: digest, manifestDigest: digest,
+}, keys.privateKey);
+assert.deepEqual(verifyProductionReceipt(kubernetesSigned, keys.publicKey, {
+  expectedRevision: revision, expectedBusterRevision: busterRevision,
+}), []);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'production-receipt-attestation-'));
 try {
   const unsignedPath = path.join(temporary, 'unsigned.json');

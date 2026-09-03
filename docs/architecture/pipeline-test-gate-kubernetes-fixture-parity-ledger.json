@@ -5,6 +5,11 @@
   "baseline": "docs/architecture/pipeline-test-gate-kubernetes-fixture-baseline.json",
   "expectedItemCount": 48,
   "authority": { "old": "deleted", "replacement": "authoritative" },
+  "productionAcceptance": {
+    "status": "pending-deployment",
+    "requiredCommand": "./scripts/deploy.sh nova-kubernetes-fixture-preflight",
+    "receipt": "dist/verification/kubernetes-fixture-production-receipt.json"
+  },
   "proof": [
     "tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts",
     "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
@@ -14,7 +19,7 @@
     "acceptedBy": "project-owner",
     "acceptedOn": "2026-08-21",
     "condition": "Roll out the corrected namespace-controller image and pass the live verifier.",
-    "proof": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"
+    "proof": "tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"
   },
   "entries": {
     "K8S-INPUT-001": { "disposition": "preserved", "status": "proved", "rationale": "Both paths reject a requested deployment when the required manifest is absent.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
@@ -36,20 +41,20 @@
     "K8S-LEASE-002": { "disposition": "preserved", "status": "proved", "rationale": "Both paths verify create, get, and delete lease permissions.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-LEASE-003": { "disposition": "preserved", "status": "proved", "rationale": "Both paths use a server-side dry-run before lease creation.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-LEASE-004": { "disposition": "improved", "status": "proved", "rationale": "The replacement derives deterministic attempt-scoped names.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
-    "K8S-LEASE-005": { "disposition": "deferred", "status": "deferred", "rationale": "Source proof is complete. Successful controller readiness proof awaits the accepted image rollout.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"] },
+    "K8S-LEASE-005": { "disposition": "deferred", "status": "deferred", "rationale": "Source proof is complete. Successful controller readiness proof awaits the accepted image rollout.", "proof": ["tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"] },
     "K8S-LEASE-006": { "disposition": "preserved", "status": "proved", "rationale": "Rejected, failed, and timed-out leases cannot return a fixture value.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
-    "K8S-READY-001": { "disposition": "deferred", "status": "deferred", "rationale": "Exact apply is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"] },
-    "K8S-READY-002": { "disposition": "deferred", "status": "deferred", "rationale": "Pod discovery is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"] },
-    "K8S-READY-003": { "disposition": "deferred", "status": "deferred", "rationale": "Ready-condition enforcement is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"] },
+    "K8S-READY-001": { "disposition": "deferred", "status": "deferred", "rationale": "Exact apply is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"] },
+    "K8S-READY-002": { "disposition": "deferred", "status": "deferred", "rationale": "Pod discovery is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"] },
+    "K8S-READY-003": { "disposition": "deferred", "status": "deferred", "rationale": "Ready-condition enforcement is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"] },
     "K8S-READY-004": { "disposition": "preserved", "status": "proved", "rationale": "The replacement converts readiness timeout into execution failure.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-OUTPUT-001": { "disposition": "improved", "status": "proved", "rationale": "The fixture returns one schema-bound deployment value.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-OUTPUT-002": { "disposition": "preserved", "status": "proved", "rationale": "The value includes the namespace and internal service endpoint.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-OUTPUT-003": { "disposition": "improved", "status": "proved", "rationale": "The value includes creation, expiry, and release data.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-OUTPUT-004": { "disposition": "improved", "status": "proved", "rationale": "The value binds the checked manifest digest and immutable image.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
-    "K8S-SECRET-001": { "disposition": "deferred", "status": "deferred", "rationale": "The lease contract preserves approved secret copying. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"] },
+    "K8S-SECRET-001": { "disposition": "deferred", "status": "deferred", "rationale": "The lease contract preserves approved secret copying. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"] },
     "K8S-SECRET-002": { "disposition": "improved", "status": "proved", "rationale": "The fixture returns secret references without reading values.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-DEFECT-001": { "disposition": "removed-defect", "status": "proved", "rationale": "Decoded secret values cannot enter fixture logs or outputs.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
-    "K8S-CLEANUP-001": { "disposition": "deferred", "status": "deferred", "rationale": "Lease deletion is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"] },
+    "K8S-CLEANUP-001": { "disposition": "deferred", "status": "deferred", "rationale": "Lease deletion is source-proved. Live completion awaits the accepted controller rollout.", "proof": ["tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts"] },
     "K8S-CLEANUP-002": { "disposition": "improved", "status": "proved", "rationale": "Cleanup is a mandatory provider lifecycle operation.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-CLEANUP-003": { "disposition": "improved", "status": "proved", "rationale": "Deterministic identity permits cleanup after a provider restart.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-CLEANUP-004": { "disposition": "preserved", "status": "proved", "rationale": "The controller contract enforces bounded retained-fixture expiry.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
@@ -66,5 +71,5 @@
     "K8S-AUTHORITY-001": { "disposition": "preserved", "status": "proved", "rationale": "The replacement remained non-authoritative through parity.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] },
     "K8S-AUTHORITY-002": { "disposition": "preserved", "status": "proved", "rationale": "The legacy suite remained sole authority until the cutover commit.", "proof": ["tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts"] }
   },
-  "cutover": { "status": "complete", "authority": "replacement-only", "proof": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts" }
+  "cutover": { "status": "complete", "scope": "source", "authority": "replacement-only", "proof": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts" }
 }

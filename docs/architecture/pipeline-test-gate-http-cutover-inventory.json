@@ -22,6 +22,9 @@
     "contracts/pipeline-test-gate/v1/suites/http.v1.json",
     "tests/verification/contracts/check-pipeline-http-cutover.mts",
     "tests/verification/contracts/check-pipeline-http-live.mts",
+    "tests/verification/e2e/nova-http-production-preflight.mts",
+    "scripts/production-receipt-attestation.mjs",
+    "scripts/deploy.sh",
     "skills/nova/project_setup/tools/progress-scaffold-discovery.ts"
   ],
   "verification": {

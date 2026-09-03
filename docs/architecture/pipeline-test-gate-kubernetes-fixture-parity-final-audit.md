@@ -1,6 +1,6 @@
 # Kubernetes Fixture Parity Final Audit
 
-Status: complete with one accepted deployment deferral
+Status: contained parity complete; production acceptance pending deployment
 
 Audience: maintainers, reviewers, and operators
 Purpose: record the Suite 5 parity result
@@ -34,5 +34,5 @@ The proof uses no mock, fake service, emulator, or compatibility wrapper.
 The project owner accepted the controller rollout as a deferred deployment action on
 2026-08-21. This deferral does not add authority or a fallback path.
 
-Run `npm run verify:test-gate:kubernetes-fixture-live` after the controller
+Run `./scripts/deploy.sh nova-kubernetes-fixture-preflight IMAGE@sha256:DIGEST` after the controller
 rollout. Record the result before the next release deployment.

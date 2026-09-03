@@ -21,6 +21,18 @@ const allowedState = new Set(['pending', 'in-progress', 'complete']);
 const allowedAcceptanceState = new Set(['pending', 'complete']);
 const allowedDisposition = new Set(['preserved', 'improved', 'removed-defect', 'deferred', 'blocked']);
 const gitRevision = /^[a-f0-9]{40,64}$/u;
+const digest = /^sha256:[a-f0-9]{64}$/u;
+const productionReceiptTrustedPublicKeyFile = '/etc/kubeclaw/production-receipt-authority.pub';
+const productionRequiredSuites = new Set(['unit', 'build', 'k8s', 'health', 'tailscale-preview']);
+const productionReceiptIdentity = new Map([
+  ['unit', { schemaVersion: 'nova-unit-production-preflight.v2', suite: 'unit' }],
+  ['build', { schemaVersion: 'nova-container-build-production-preflight.v4', suite: 'build' }],
+  ['k8s', { schemaVersion: 'kubernetes-fixture-production-preflight.v1', suite: 'k8s' }],
+  ['health', { schemaVersion: 'nova-http-production-preflight.v1', suite: 'health' }],
+  ['tailscale-preview', {
+    schemaVersion: 'nova-tailscale-production-preflight.v1', suite: 'tailscale-preview',
+  }],
+]);
 
 function isContained(relative) {
   if (typeof relative !== 'string' || path.isAbsolute(relative)) return false;
@@ -45,6 +57,8 @@ function checkStatus() {
   if (status.totalLegacySuites !== 13 || status.suites.length !== 13) errors.push(`${statusPath}: expected 13 legacy suites`);
   const ids = status.suites.map((suite) => suite.id);
   if (new Set(ids).size !== ids.length) errors.push(`${statusPath}: duplicate suite id`);
+  const allSourceCutoversComplete = status.suites.every((suite) => suite.implementation === 'complete'
+    && (suite.sourceCutover ?? suite.cutover) === 'complete');
   for (const suite of status.suites) {
     for (const phase of ['implementation', 'parity', 'cutover']) {
       if (!allowedState.has(suite[phase])) errors.push(`${statusPath}: ${suite.id}.${phase} is invalid`);
@@ -55,12 +69,12 @@ function checkStatus() {
     if (suite.productionAcceptance !== undefined && !allowedAcceptanceState.has(suite.productionAcceptance)) {
       errors.push(`${statusPath}: ${suite.id}.productionAcceptance is invalid`);
     }
-    if (suite.id === 'tailscale-preview' && suite.productionAcceptance === undefined) {
-      errors.push(`${statusPath}: tailscale-preview.productionAcceptance is required`);
+    if (productionRequiredSuites.has(suite.id) && suite.productionAcceptance === undefined) {
+      errors.push(`${statusPath}: ${suite.id}.productionAcceptance is required`);
     }
-    if (suite.id === 'tailscale-preview' && suite.parity === 'complete'
+    if (productionRequiredSuites.has(suite.id) && suite.parity === 'complete'
       && suite.productionAcceptance !== 'complete') {
-      errors.push(`${statusPath}: tailscale-preview proves parity before production acceptance`);
+      errors.push(`${statusPath}: ${suite.id} proves parity before production acceptance`);
     }
     if (suite.parity === 'complete' && suite.implementation !== 'complete') errors.push(`${statusPath}: ${suite.id} proves parity before implementation`);
     if (suite.cutover === 'complete' && suite.parity !== 'complete') errors.push(`${statusPath}: ${suite.id} cuts over before parity`);
@@ -72,17 +86,27 @@ function checkStatus() {
       errors.push(`${statusPath}: ${suite.id} completes source cutover before implementation`);
     }
     if (suite.productionAcceptance === 'complete') {
+      if (!allSourceCutoversComplete) {
+        errors.push(`${statusPath}: ${suite.id} completes production acceptance before all source cutovers`);
+      }
       if (!realContained(suite.productionReceipt)) {
         errors.push(`${statusPath}: ${suite.id} has no contained production receipt`);
       } else {
         const receipt = readJson(suite.productionReceipt);
-        const publicKeyPath = process.env.KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE;
-        if (!publicKeyPath || !path.isAbsolute(publicKeyPath) || !fs.existsSync(publicKeyPath)) {
-          errors.push(`${suite.productionReceipt}: KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE is required`);
+        const expectedIdentity = productionReceiptIdentity.get(suite.id);
+        if (!expectedIdentity || receipt.schemaVersion !== expectedIdentity.schemaVersion
+          || receipt.suite !== expectedIdentity.suite) {
+          errors.push(`${suite.productionReceipt}: receipt identity does not match ${suite.id}`);
+        }
+        const publicKeyPath = productionReceiptTrustedPublicKeyFile;
+        if (!fs.existsSync(publicKeyPath)) {
+          errors.push(`${suite.productionReceipt}: trusted production receipt public key is not installed`);
         } else if (!gitRevision.test(suite.productionRevision ?? '')) {
           errors.push(`${statusPath}: ${suite.id}.productionRevision is required`);
         } else if (!gitRevision.test(suite.productionBusterRevision ?? '')) {
           errors.push(`${statusPath}: ${suite.id}.productionBusterRevision is required`);
+        } else if (!digest.test(suite.productionReceiptKeyFingerprint ?? '')) {
+          errors.push(`${statusPath}: ${suite.id}.productionReceiptKeyFingerprint is required`);
         } else {
           const trustedKey = fs.realpathSync(publicKeyPath);
           const fromRoot = path.relative(realRoot, trustedKey);
@@ -93,6 +117,7 @@ function checkStatus() {
             const receiptErrors = verifyProductionReceipt(receipt, fs.readFileSync(trustedKey), {
               expectedRevision: suite.productionRevision,
               expectedBusterRevision: suite.productionBusterRevision,
+              expectedPublicKeyFingerprint: suite.productionReceiptKeyFingerprint,
             });
             for (const error of receiptErrors) errors.push(`${suite.productionReceipt}: ${error}`);
           }
@@ -101,6 +126,10 @@ function checkStatus() {
         const acceptance = ledger?.entries?.['TSX-CUT-005'];
         if (suite.id === 'tailscale-preview' && (acceptance?.status !== 'proved'
           || !acceptance?.proof?.includes(suite.productionReceipt)
+          || ledger?.acceptedDeferral?.status === 'open')) {
+          errors.push(`${suite.parityLedger}: production acceptance does not cite the closed receipt`);
+        } else if (suite.id !== 'tailscale-preview' && (ledger?.productionAcceptance?.status !== 'proved'
+          || ledger?.productionAcceptance?.receipt !== suite.productionReceipt
           || ledger?.acceptedDeferral?.status === 'open')) {
           errors.push(`${suite.parityLedger}: production acceptance does not cite the closed receipt`);
         }

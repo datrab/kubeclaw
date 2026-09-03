@@ -23,7 +23,7 @@ All 93 unit parity items remain proved:
 - 56 behaviors use a safer or clearer implementation; and
 - 14 accepted defects cannot return.
 
-One of thirteen legacy suites is fully migrated. Twelve legacy suites remain.
+The unit source authority is migrated. Production acceptance remains open.
 
 ## Sequential phase result
 
@@ -185,7 +185,7 @@ sampled process-tree accounting without requiring host cgroup administration.
 
 ## Final state
 
-Unit is fully migrated. Its current configuration, execution, result,
+Unit is migrated at the source boundary. Its current configuration, execution, result,
 evidence, and authority paths are explicit. The old executable path is absent.
 The next suite must use the same implementation, parity, cutover, and deletion
 workflow.

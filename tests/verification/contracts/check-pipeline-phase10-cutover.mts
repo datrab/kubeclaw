@@ -26,14 +26,14 @@ for (const file of [...inventory.replacementFilesRequired, ...inventory.currentG
 const parity = JSON.parse(fs.readFileSync(
   'docs/architecture/pipeline-test-gate-unit-parity-ledger.json', 'utf8')) as {
   expectedItemCount: number;
-  cutover: { status: string; phase: number; authority: string; proof: string };
+  cutover: { status: string; scope: string; phase: number; authority: string; proof: string };
   entries: Record<string, { status: string }>;
 };
 assert.equal(parity.expectedItemCount, inventory.parityItemCount);
 assert.equal(Object.keys(parity.entries).length, inventory.parityItemCount);
 assert.equal(Object.values(parity.entries).every((entry) => entry.status === 'proved'), true);
 assert.deepEqual(parity.cutover, {
-  status: 'complete', phase: 10, authority: 'replacement-only',
+  status: 'complete', scope: 'source', phase: 10, authority: 'replacement-only',
   proof: 'tests/verification/contracts/check-pipeline-phase10-cutover.mts',
 });
 
@@ -49,6 +49,13 @@ const bridge = JSON.parse(fs.readFileSync(
   suites: Record<string, { state: string; successor: string }>;
 };
 assert.deepEqual(bridge.suites.unit, { state: 'migrated', successor: 'kubeclaw.direct-command@1' });
+const migrationStatus = JSON.parse(fs.readFileSync(
+  'docs/architecture/pipeline-test-gate-suite-migration-status.json', 'utf8'));
+const unitStatus = migrationStatus.suites.find((item: any) => item.id === 'unit');
+assert.deepEqual({ implementation: unitStatus.implementation, parity: unitStatus.parity,
+  sourceCutover: unitStatus.sourceCutover, productionAcceptance: unitStatus.productionAcceptance,
+  cutover: unitStatus.cutover }, { implementation: 'complete', parity: 'in-progress',
+  sourceCutover: 'complete', productionAcceptance: 'pending', cutover: 'in-progress' });
 assert.throws(() => assertLegacyBridgeSelection({ nodes: [] } as any, ['unit'], bridge.suites as any),
   /LEGACY_SUITE_ALREADY_MIGRATED:unit/u);
 
@@ -120,6 +127,11 @@ assert.match(unitPreflight, /kubeclaw\.direct-command@1/u,
   'the production preflight must use the replacement provider');
 assert.match(unitPreflight, /legacySuites:\s*\[\]/u,
   'the production preflight must not execute a legacy suite');
+assert.match(unitPreflight, /nova-unit-production-preflight\.v2/u);
+assert.match(unitPreflight, /workerRevision/u);
+const deployScript = fs.readFileSync('scripts/deploy.sh', 'utf8');
+assert.match(deployScript, /unit-production-receipt\.json/u);
+assert.match(deployScript, /sign_and_store_production_receipt/u);
 
 console.log(JSON.stringify({ ok: true, phase: 10, cutover: 'unit', parityItems: inventory.parityItemCount,
   legacyAuthority: 'absent', replacementAuthority: 'required' }));

@@ -1,6 +1,6 @@
 # Kubernetes Fixture Cutover Final Audit
 
-Status: complete with one accepted deployment deferral
+Status: source cutover complete; production acceptance pending deployment
 
 Audience: maintainers, reviewers, and operators
 Purpose: record the Suite 5 authority change and deletion result

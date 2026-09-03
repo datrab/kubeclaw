@@ -123,7 +123,7 @@ for (const heading of ['## 10-A — Lock the cutover inventory', '## 10-B — Ac
 assert.equal(phase10Inventory.parityItemCount, 93);
 assert.equal(unitParityLedger.cutover?.status, 'complete');
 assert.equal(unitParityLedger.cutover?.authority, 'replacement-only');
-assert.match(phase10Audit, /Status: complete/u);
+assert.match(phase10Audit, /Status: source complete; deployed production acceptance pending image rollout/u);
 assert.equal(manifestBaseline.expectedItemCount, 28);
 assert.equal(manifestBaseline.items.length, manifestBaseline.expectedItemCount);
 assert.equal(new Set(manifestBaseline.items.map((item) => item.id)).size, manifestBaseline.expectedItemCount);

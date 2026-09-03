@@ -3,8 +3,21 @@
   "suite": "unit",
   "baseline": "docs/architecture/pipeline-test-gate-unit-baseline.md",
   "expectedItemCount": 93,
+  "productionAcceptance": {
+    "status": "pending-deployment",
+    "requiredCommand": "./scripts/deploy.sh nova-unit-preflight",
+    "receipt": "dist/verification/unit-production-receipt.json"
+  },
+  "acceptedDeferral": {
+    "status": "open",
+    "acceptedBy": "project-owner",
+    "acceptedOn": "2026-09-03",
+    "condition": "Deploy the current Nova and Buster images and pass the real Nova-to-Buster unit preflight.",
+    "proof": "tests/verification/e2e/nova-unit-production-preflight.mts"
+  },
   "cutover": {
     "status": "complete",
+    "scope": "source",
     "phase": 10,
     "authority": "replacement-only",
     "proof": "tests/verification/contracts/check-pipeline-phase10-cutover.mts"

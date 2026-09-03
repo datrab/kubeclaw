@@ -71,8 +71,10 @@ const address = server.address();
 if (!address || typeof address === 'string') throw new Error('server unavailable');
 const origin = `http://127.0.0.1:${address.port}`;
 const secret = 'KUBECLAW_BUSTER_QUALITY_TOKEN';
+const sourceKeyEnvironment = 'KUBECLAW_BUSTER_QUALITY_SOURCE_PRIVATE_KEY';
 const token = `quality-${'a'.repeat(48)}`;
 process.env[secret] = token;
+process.env[sourceKeyEnvironment] = sourcePrivateKey;
 const roots = ['common', 'nova', 'buster'].map(
   (role) => path.join(repository, `skills/${role}/plugins`),
 );
@@ -139,7 +141,8 @@ try {
         ],
       }],
       ['kubeclaw.secret-resolver:secrets', {
-        environment: { 'gate.agent': secret, 'buster.worker': secret, 'buster.source-private-key': sourcePrivateKey },
+        environment: { 'gate.agent': secret, 'buster.worker': secret,
+          'buster.source-private-key': sourceKeyEnvironment },
       }],
       ['kubeclaw.artifact-store:artifact-store', {
         artifactRoot: path.join(temporary, 'artifacts'),
@@ -147,7 +150,6 @@ try {
       ['kubeclaw.buster-suite-runtime:suite', {
         endpoint: origin,
         tokenSecret: 'buster.worker',
-        sourcePrivateKeySecret: 'buster.source-private-key',
         allowedRepositoryRoots: [temporary],
         unmigratedSuites: ['security'],
         suiteCapabilities: ['image_build'],
@@ -222,6 +224,7 @@ try {
   }
 } finally {
   delete process.env[secret];
+  delete process.env[sourceKeyEnvironment];
   await new Promise((resolve) => server.close(resolve));
   fs.rmSync(temporary, { recursive: true, force: true });
 }

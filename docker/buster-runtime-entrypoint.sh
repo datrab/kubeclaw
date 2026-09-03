@@ -126,6 +126,7 @@ current-context: buster
 EOF
 
 RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
+  BUSTER_ALLOWED_SOURCE_SECRETS="${BUSTER_ALLOWED_SOURCE_SECRETS:-}" \
   BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
@@ -190,7 +191,9 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
     leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
     leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
-    allowedRegistryPrefixes: [`${registry}/kubeclaw`], allowedSecretReferences: [], maximumManifestBytes: 1048576,
+    allowedRegistryPrefixes: [`${registry}/kubeclaw`],
+    allowedSecretReferences: (process.env.BUSTER_ALLOWED_SOURCE_SECRETS || '').split(',').filter(Boolean),
+    maximumManifestBytes: 1048576,
     maximumResources: 64, maximumRetentionSeconds: 604800, maximumExecutionMs: 900000, pollIntervalMs: 1000,
   },
   tailscaleExposure: {

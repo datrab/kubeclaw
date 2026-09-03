@@ -19,6 +19,12 @@ assert.equal(ledger.items.length, 36);
 assert.equal(ledger.authority.legacy, 'removed');
 assert.equal(ledger.authority.replacement, 'authoritative');
 assert.equal(ledger.items.every((item: any) => item.status === 'proved' && item.proof.length > 0), true);
+const status = JSON.parse(read('docs/architecture/pipeline-test-gate-suite-migration-status.json'));
+const suiteStatus = status.suites.find((item: any) => item.id === 'build');
+assert.deepEqual({ implementation: suiteStatus.implementation, parity: suiteStatus.parity,
+  sourceCutover: suiteStatus.sourceCutover, productionAcceptance: suiteStatus.productionAcceptance,
+  cutover: suiteStatus.cutover }, { implementation: 'complete', parity: 'in-progress',
+  sourceCutover: 'complete', productionAcceptance: 'pending', cutover: 'in-progress' });
 
 const scaffold = read('skills/nova/project_setup/tools/progress-scaffold-discovery.ts');
 assert.match(scaffold, /legacyBuildNode/u);
@@ -34,6 +40,8 @@ assert.equal(fs.existsSync('skills/nova/plugins/preflight-contract/src/buildkit.
 assert.doesNotMatch(read('skills/nova/plugins/preflight-contract/plugin.json'), /preflight\.buildkit/u);
 assert.match(read('tests/verification/e2e/nova-buildkit-production-preflight.mts'), /test\.plan\.execute/u);
 assert.doesNotMatch(read('tests/verification/e2e/nova-buildkit-production-preflight.mts'), /test\.suite\.execute|allowedSuites|unmigratedSuites/u);
+assert.match(read('tests/verification/e2e/nova-buildkit-production-preflight.mts'),
+  /nova-container-build-production-preflight\.v4/u);
 
 const entrypoint = read('docker/buster-runtime-entrypoint.sh');
 assert.match(entrypoint, /remote-plan-cli\.ts/u);
@@ -51,6 +59,8 @@ const deploy = read('scripts/deploy.sh');
 assert.match(secretSetup, /setup_pipeline_source_attestation_secret/u);
 assert.match(deploy, /require_agent_worker_trust_prerequisites[\s\S]*require_spiffe_csi_driver[\s\S]*require_pipeline_source_attestation_secret/u);
 assert.match(deploy, /deploy_agent\(\)[\s\S]*require_agent_worker_trust_prerequisites[\s\S]*info "Deploying agent-/u);
+assert.match(deploy, /container-build-production-receipt\.json/u);
+assert.match(deploy, /sign_and_store_production_receipt/u);
 assert.match(secretSetup, /openssl genpkey -algorithm ED25519/u);
 assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\s\S]*pipeline-test-gate-source-attestation/u);
 assert.doesNotMatch(busterValues, /buster-plan-tls/u);

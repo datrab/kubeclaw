@@ -123,6 +123,8 @@ extraContainers:
         value: /workspace/git-repo/.swarm/runtime-results
       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
         value: /var/run/buster-worker/kubernetes
+      - name: BUSTER_ALLOWED_SOURCE_SECRETS
+        value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
       - name: KUBECLAW_LOCAL_REGISTRY
         value: registry-local.kubeclaw.svc.cluster.local:5001
       - name: CONTAINER_BUILD_BUILDKIT_HOST
@@ -228,6 +230,7 @@ busterNamespaceBroker:
         modes: [deployer, tester]
     allowedSourceSecrets:
       # Test-only values. Never copy production Prism credentials to a fixture.
+      - kubeclaw-fixture-preflight
       - prism-test-provider
       - prism-test-runtime
       - prism-test-postgresql-auth

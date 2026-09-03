@@ -7,6 +7,13 @@ import { pathToFileURL } from 'node:url';
 const DIGEST = /^sha256:[a-f0-9]{64}$/u;
 const GIT_REVISION = /^[a-f0-9]{40,64}$/u;
 const MESSAGE_PREFIX = 'kubeclaw-production-receipt-v1\0';
+const RECEIPT_SCHEMAS = new Set([
+  'kubernetes-fixture-production-preflight.v1',
+  'nova-container-build-production-preflight.v4',
+  'nova-http-production-preflight.v1',
+  'nova-tailscale-production-preflight.v1',
+  'nova-unit-production-preflight.v2',
+]);
 
 function encodeString(value) {
   for (let index = 0; index < value.length; index += 1) {
@@ -73,14 +80,12 @@ export function attestProductionReceipt(value, privateKey, authority = 'kubeclaw
   }) });
 }
 
-export function verifyProductionReceipt(value, publicKey, options = {}) {
+function validateProductionReceiptPayload(value, options = {}) {
   const errors = [];
   if (!value || typeof value !== 'object' || Array.isArray(value)) return ['receipt is not an object'];
-  const expectedAuthority = options.expectedAuthority ?? 'kubeclaw:production-operator';
-  if (value.schemaVersion !== 'nova-tailscale-production-preflight.v1') errors.push('schemaVersion is invalid');
+  if (!RECEIPT_SCHEMAS.has(value.schemaVersion)) errors.push('schemaVersion is invalid');
   if (value.ok !== true || value.status !== 'completed' || value.decision !== 'passed') errors.push('result is not successful');
-  if (value.evidenceImported !== true || value.runnerCleanupVerified !== true
-    || value.cleanupVerified !== true || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
+  if (value.evidenceImported !== true) errors.push('evidence import proof is incomplete');
   if (value.mocks !== 0 || value.emulators !== 0) errors.push('mock or emulator evidence is not permitted');
   if (!GIT_REVISION.test(value.runtimeRevision ?? '')) errors.push('runtimeRevision is invalid');
   if (!GIT_REVISION.test(value.busterRuntimeRevision ?? '')) errors.push('busterRuntimeRevision is invalid');
@@ -96,15 +101,79 @@ export function verifyProductionReceipt(value, publicKey, options = {}) {
   }
   if (!Array.isArray(value.evidenceDigests) || value.evidenceDigests.length < 1
     || value.evidenceDigests.some((digest) => !DIGEST.test(digest))) errors.push('evidenceDigests are invalid');
-  if (!value.resources?.leaseName || !value.resources?.namespace || !value.resources?.hostname) {
-    errors.push('resource identity is incomplete');
+  if (value.schemaVersion === 'nova-unit-production-preflight.v2') {
+    if (value.suite !== 'unit') errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.clusterCleanupNotApplicable !== true
+      || value.cleanupVerified === true || value.clusterCleanupObserved === true) {
+      errors.push('unit cleanup scope is invalid');
+    }
+    if (value.realProcessVerified !== true || value.junitReportVerified !== true
+      || value.resourceMetricsVerified !== true) errors.push('unit execution proof is incomplete');
+  } else if (value.schemaVersion === 'nova-container-build-production-preflight.v4') {
+    if (value.suite !== 'build') errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.clusterCleanupNotApplicable !== true
+      || value.cleanupVerified === true || value.clusterCleanupObserved === true) {
+      errors.push('container-build cleanup scope is invalid');
+    }
+    if (typeof value.immutableImage !== 'string' || !DIGEST.test(value.imageDigest ?? '')
+      || !value.immutableImage.endsWith(`@${value.imageDigest}`)
+      || value.registryPushVerified !== true || value.manifestVerified !== true) {
+      errors.push('container image proof is incomplete');
+    }
+  } else if (value.schemaVersion === 'kubernetes-fixture-production-preflight.v1') {
+    if (value.suite !== 'k8s') errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.cleanupVerified !== true
+      || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
+    if (value.namespaceDeleted !== true || value.deploymentReadyVerified !== true
+      || value.podReadyVerified !== true || value.manifestAppliedVerified !== true
+      || value.approvedSecretCopyVerified !== true || !DIGEST.test(value.imageDigest ?? '')
+      || !DIGEST.test(value.manifestDigest ?? '') || !value.resources?.leaseName
+      || !value.resources?.namespace || !value.resources?.secretName) {
+      errors.push('Kubernetes fixture proof is incomplete');
+    }
+  } else if (value.schemaVersion === 'nova-tailscale-production-preflight.v1') {
+    if (value.suite !== 'tailscale-preview') errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.cleanupVerified !== true
+      || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
+    if (!value.resources?.leaseName || !value.resources?.namespace || !value.resources?.hostname) {
+      errors.push('resource identity is incomplete');
+    }
+  } else if (value.schemaVersion === 'nova-http-production-preflight.v1') {
+    if (value.suite !== 'health') errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.cleanupVerified !== true
+      || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
+    if (!value.resources?.leaseName || !value.resources?.namespace
+      || value.resources?.serviceName !== 'http-preflight' || value.resources?.servicePort !== 80) {
+      errors.push('resource identity is incomplete');
+    }
+    let target;
+    try { target = new URL(value.target); } catch { errors.push('HTTP target is invalid'); }
+    const expectedHostname = value.resources?.namespace
+      ? `http-preflight.${value.resources.namespace}.svc.cluster.local`
+      : null;
+    if (target && (target.protocol !== 'http:' || target.hostname !== expectedHostname
+      || (target.port !== '' && target.port !== '80') || target.pathname !== '/'
+      || target.username || target.password || target.search || target.hash)) errors.push('HTTP target is invalid');
+    if (!Number.isSafeInteger(value.httpStatus) || value.httpStatus < 200 || value.httpStatus > 299
+      || value.networkRequestVerified !== true) errors.push('HTTP request proof is incomplete');
   }
+  return errors;
+}
+
+export function verifyProductionReceipt(value, publicKey, options = {}) {
+  const errors = validateProductionReceiptPayload(value, options);
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return errors;
+  const expectedAuthority = options.expectedAuthority ?? 'kubeclaw:production-operator';
   const attestation = value.attestation;
   if (attestation?.schemaVersion !== 'production-receipt-attestation.v1'
     || attestation.algorithm !== 'ed25519' || attestation.authority !== expectedAuthority
     || !DIGEST.test(attestation.publicKeyFingerprint ?? '') || typeof attestation.signature !== 'string') {
     errors.push('attestation metadata is invalid');
     return errors;
+  }
+  if (options.expectedPublicKeyFingerprint !== undefined
+    && attestation.publicKeyFingerprint !== options.expectedPublicKeyFingerprint) {
+    errors.push('receipt key fingerprint does not match the recorded trust anchor');
   }
   try {
     const key = publicKey instanceof crypto.KeyObject ? publicKey : crypto.createPublicKey(publicKey);
@@ -128,8 +197,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
   if (command === 'sign') {
     if (receipt.runtimeRevision !== expectedRevision
-      || receipt.busterRuntimeRevision !== expectedBusterRevision || receipt.cleanupVerified !== true
-      || receipt.clusterCleanupObserved !== true || Object.hasOwn(receipt, 'attestation')) {
+      || receipt.busterRuntimeRevision !== expectedBusterRevision
+      || validateProductionReceiptPayload(receipt, { expectedRevision, expectedBusterRevision }).length > 0
+      || Object.hasOwn(receipt, 'attestation')) {
       process.stderr.write('production receipt: unsigned operator observation is invalid\n');
       process.exit(1);
     }

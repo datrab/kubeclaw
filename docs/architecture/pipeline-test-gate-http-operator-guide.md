@@ -52,6 +52,23 @@ timeouts, redirects, response limits, origin denial, and cancellation.
 
 The second check contacts `registry-local.kubeclaw.svc.cluster.local` through the real cluster network.
 
+After Nova and Buster are deployed, run the authoritative production proof
+from the control node with a digest-pinned HTTP image that listens on port
+`8080`:
+
+```bash
+./scripts/deploy.sh nova-http-preflight \
+  registry-local.kubeclaw.svc.cluster.local:5001/kubeclaw/pipeline/HTTP-IMAGE@sha256:DIGEST
+```
+
+The command stores `dist/verification/http-production-receipt.json`. It uses
+the production-operator Ed25519 private key outside the repository. Install
+the approved public key at
+`/etc/kubeclaw/production-receipt-authority.pub` before the run. The command
+signs the receipt only after the control node observes namespace and lease
+deletion. It also binds the signed HTTP target to the exact Service and
+namespace that the Kubernetes fixture created.
+
 ## Troubleshooting
 
 Read the attempt summary and stable error code. Confirm that the configured

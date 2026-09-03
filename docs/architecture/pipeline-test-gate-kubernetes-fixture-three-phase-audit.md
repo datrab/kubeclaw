@@ -1,6 +1,6 @@
 # Kubernetes Fixture Three-Phase Audit
 
-Status: complete with one accepted deployment deferral
+Status: source cutover complete; production acceptance pending deployment
 
 Audience: maintainers, reviewers, and operators
 Purpose: record the attempted implementation, parity, and cutover workflow
@@ -40,7 +40,7 @@ replacement remained shadow-only until the cutover.
 
 ## Phase C: Cut Over and Delete
 
-Phase C is complete. The legacy bridge records `migrated`. The old Kubernetes
+The Phase C source cutover is complete. The legacy bridge records `migrated`. The old Kubernetes
 runtime, protocol entry, registry entry, dependency node, capability mapping,
 and metadata coupling are absent.
 
@@ -56,7 +56,7 @@ plan. They do not select the deleted `k8s` suite.
 
 2. Wait for the namespace-controller Deployment rollout.
 
-3. Run `npm run verify:test-gate:kubernetes-fixture-live`.
+3. Run `./scripts/deploy.sh nova-kubernetes-fixture-preflight IMAGE@sha256:DIGEST`.
 
 4. Attach the successful result to the next release evidence.
 

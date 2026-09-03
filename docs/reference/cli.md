@@ -41,6 +41,8 @@ Generated from: `scripts/deploy.sh`
 - `buster-buildkit-smoke`
 - `nova-buildkit-preflight`
 - `nova-unit-preflight`
+- `nova-kubernetes-fixture-preflight`
+- `nova-http-preflight`
 - `nova-tailscale-preflight`
 - `worker-trust-e2e`
 - `buster-infra-smoke`

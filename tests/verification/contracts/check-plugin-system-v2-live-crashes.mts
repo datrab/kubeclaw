@@ -13,6 +13,16 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-plugin-crash-m
 const pluginRoots = ['common', 'nova', 'buster']
   .map((role) => path.join(root, 'skills', role, 'plugins'));
 
+function schemaConditionMatches(value, condition) {
+  if (!condition || typeof condition !== 'object') return true;
+  if (Array.isArray(condition.required)
+    && condition.required.some((key) => !Object.hasOwn(value, key))) return false;
+  for (const [key, property] of Object.entries(condition.properties ?? {})) {
+    if (property?.const !== undefined && value[key] !== property.const) return false;
+  }
+  return true;
+}
+
 function schemaValue(schema, root = schema) {
   if (typeof schema.$ref === 'string') {
     const segments = schema.$ref.split('/');
@@ -67,6 +77,24 @@ function schemaValue(schema, root = schema) {
         : Object.values(schema.patternProperties ?? {})[0];
       if (!entrySchema) throw new Error(`LIVE_CRASH_SCHEMA_OBJECT_UNSUPPORTED:${JSON.stringify(schema)}`);
       value.test = schemaValue(entrySchema, root);
+    }
+    for (const conditional of schema.allOf ?? []) {
+      const branch = schemaConditionMatches(value, conditional.if)
+        ? conditional.then
+        : conditional.else;
+      for (const key of branch?.required ?? []) {
+        if (!Object.hasOwn(value, key)) {
+          value[key] = schemaValue(
+            {
+              ...(schema.properties?.[key] ?? {}),
+              ...(branch.properties?.[key] ?? {}),
+            },
+            root,
+          );
+        }
+      }
+      const prohibited = branch?.not?.required ?? [];
+      for (const key of prohibited) delete value[key];
     }
     return value;
   }

@@ -11,6 +11,8 @@
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
 #   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
+#   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster
+#   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster
 #   ./deploy.sh nova-tailscale-preflight Verify a public endpoint through Nova, Buster, Kubernetes, and Tailscale
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
@@ -61,6 +63,7 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 CHART_DIR="$REPO_DIR/charts/kubeclaw"
 VALUES_DIR="$REPO_DIR/my-values"
 INFRA_DIR="$VALUES_DIR/infra"
+PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE="/etc/kubeclaw/production-receipt-authority.pub"
 
 NAMESPACE_WAS_SET="${NAMESPACE+x}"
 NAMESPACE="${NAMESPACE:-kubeclaw}"
@@ -1874,20 +1877,269 @@ cmd_teardown_prism() {
   log "Prism workloads removed. PVCs and Secrets remain in $PRISM_NAMESPACE."
 }
 
+sign_and_store_production_receipt() {
+  local receipt_tmp=$1 receipt_file=$2 expected_runtime_revision=$3
+  local receipt_private_key receipt_public_key buster_runtime_revision receipt_signed
+  receipt_private_key=${KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE:-}
+  receipt_public_key=$PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE
+  if [[ -z $receipt_private_key || ! -f $receipt_private_key || ! -f $receipt_public_key ]]; then
+    err "Set KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE and install the trusted public key at $PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE."
+    return 1
+  fi
+  receipt_private_key=$(realpath "$receipt_private_key")
+  receipt_public_key=$(realpath "$receipt_public_key")
+  if [[ $receipt_private_key == "$REPO_DIR"/* || $receipt_public_key == "$REPO_DIR"/* ]]; then
+    err "Production receipt keys must be outside the repository."
+    return 1
+  fi
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).busterRuntimeRevision ?? "")' "$receipt_tmp")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The production receipt has no valid Buster runtime revision."
+    return 1
+  fi
+  receipt_signed=$(mktemp)
+  if ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" sign \
+    "$receipt_tmp" "$receipt_private_key" "$expected_runtime_revision" "$buster_runtime_revision" "$receipt_signed" \
+    || ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" verify \
+    "$receipt_signed" "$receipt_public_key" "$expected_runtime_revision" "$buster_runtime_revision"; then
+    rm -f "$receipt_signed"
+    return 1
+  fi
+  mkdir -p "$(dirname "$receipt_file")"
+  cp "$receipt_signed" "$receipt_file"
+  rm -f "$receipt_signed"
+  log "Stored production receipt at $receipt_file"
+}
+
+run_nova_production_receipt_preflight() {
+  local preflight_file=$1 receipt_file=$2
+  local runtime_repo_root runtime_revision receipt_tmp
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  if [[ $runtime_repo_root != /home/node/.openclaw/workspace/git-repo ]]; then
+    err "The deployed Nova REPO_ROOT does not match the chart contract."
+    return 1
+  fi
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  if [[ ! $runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The deployed Nova source revision is invalid."
+    return 1
+  fi
+  receipt_tmp=$(mktemp)
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    node "$runtime_repo_root/$preflight_file" | tee "$receipt_tmp"; then
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! sign_and_store_production_receipt "$receipt_tmp" "$receipt_file" "$runtime_revision"; then
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  rm -f "$receipt_tmp"
+}
+
 cmd_nova_buildkit_preflight() {
   header "Nova → Buster BuildKit Production Preflight"
   require_command kubectl
-  kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
-    node /home/node/.openclaw/workspace/git-repo/tests/verification/e2e/nova-buildkit-production-preflight.mts
+  run_nova_production_receipt_preflight \
+    tests/verification/e2e/nova-buildkit-production-preflight.mts \
+    "$REPO_DIR/dist/verification/container-build-production-receipt.json"
   log "Nova → Buster BuildKit production preflight passed"
 }
 
 cmd_nova_unit_preflight() {
   header "Nova → Buster Unit Production Preflight"
   require_command kubectl
-  kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
-    node /home/node/.openclaw/workspace/git-repo/tests/verification/e2e/nova-unit-production-preflight.mts
+  run_nova_production_receipt_preflight \
+    tests/verification/e2e/nova-unit-production-preflight.mts \
+    "$REPO_DIR/dist/verification/unit-production-receipt.json"
   log "Nova → Buster unit production preflight passed"
+}
+
+cmd_nova_kubernetes_fixture_preflight() {
+  header "Nova → Buster Kubernetes Fixture Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE:-}}
+  local secret_name=${3:-${KUBECLAW_KUBERNETES_PREFLIGHT_SECRET:-kubeclaw-fixture-preflight}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned workload image as argument 2 or KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  if [[ ! $secret_name =~ ^[a-z0-9]([a-z0-9.-]{0,251}[a-z0-9])?$ ]]; then
+    err "Provide a valid approved test Secret name as argument 3 or KUBECLAW_KUBERNETES_PREFLIGHT_SECRET."
+    return 1
+  fi
+  if [[ -z $(kubectl get secret "$secret_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then
+    err "The approved test Secret $secret_name does not exist in $NAMESPACE."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_file runtime_repo_root runtime_revision
+  local buster_runtime_revision lease_name namespace_name
+  receipt_tmp=$(mktemp)
+  receipt_file="$REPO_DIR/dist/verification/kubernetes-fixture-production-receipt.json"
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  if [[ $runtime_repo_root != /home/node/.openclaw/workspace/git-repo ]]; then
+    err "The deployed Nova REPO_ROOT does not match the chart contract."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  if [[ ! $runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The deployed Nova source revision is invalid."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- env \
+    "KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE=$immutable_image" \
+    "KUBECLAW_KUBERNETES_PREFLIGHT_SECRET=$secret_name" \
+    node "$runtime_repo_root/tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts" \
+    | tee "$receipt_tmp"; then
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));if(v.schemaVersion!=="kubernetes-fixture-production-preflight.v1"||v.suite!=="k8s"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.evidenceImported!==true||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.deploymentReadyVerified!==true||v.podReadyVerified!==true||v.manifestAppliedVerified!==true||v.approvedSecretCopyVerified!==false||v.namespaceDeleted!==false||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.secretName!==process.argv[2])process.exit(1)' "$receipt_tmp" "$secret_name"; then
+    err "The Kubernetes fixture production receipt is invalid."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  lease_name=$(node -e 'const fs=require("node:fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).resources.leaseName)' "$receipt_tmp")
+  namespace_name=$(node -e 'const fs=require("node:fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).resources.namespace)' "$receipt_tmp")
+  if [[ ! $lease_name =~ ^test-[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ \
+    || ! $namespace_name =~ ^test-[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ ]]; then
+    err "The Kubernetes fixture receipt contains an invalid resource identity."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" -o json \
+    | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const v=JSON.parse(s);if(v.status?.phase!=="Ready"||v.status?.namespaceName!==process.argv[1]||!v.spec?.secretsToCopy?.includes(process.argv[2]))process.exit(1)})' "$namespace_name" "$secret_name" \
+    || [[ -z $(kubectl get secret "$secret_name" -n "$namespace_name" --ignore-not-found -o name) ]]; then
+    err "The retained fixture does not prove readiness and approved Secret copying."
+    kubectl delete busternamespacelease "$lease_name" -n "$NAMESPACE" \
+      --ignore-not-found=true --wait=true --timeout=2m >/dev/null 2>&1 || true
+    kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m >/dev/null 2>&1 || true
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! kubectl delete busternamespacelease "$lease_name" -n "$NAMESPACE" --wait=true --timeout=2m \
+    || ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m; then
+    err "Timed out while cleaning the retained Kubernetes fixture."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if [[ -n $(kubectl get namespace "$namespace_name" --ignore-not-found -o name) \
+    || -n $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then
+    err "The Kubernetes fixture left its namespace or lease in the cluster."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_unsigned=$(mktemp)
+  node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));fs.writeFileSync(process.argv[2],`${JSON.stringify({...v,cleanupVerified:true,clusterCleanupObserved:true,approvedSecretCopyVerified:true,namespaceDeleted:true},null,2)}\n`,{mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs");process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]] \
+    || ! sign_and_store_production_receipt "$receipt_unsigned" "$receipt_file" "$runtime_revision"; then
+    rm -f "$receipt_tmp" "$receipt_unsigned"
+    return 1
+  fi
+  rm -f "$receipt_tmp" "$receipt_unsigned"
+  log "Nova → Buster Kubernetes fixture production preflight passed"
+}
+
+cmd_nova_http_preflight() {
+  header "Nova → Buster HTTP Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_HTTP_PREFLIGHT_IMAGE:-}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned HTTP image as argument 2 or KUBECLAW_HTTP_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_signed receipt_private_key receipt_public_key receipt_file
+  local runtime_repo_root runtime_revision buster_runtime_revision lease_name namespace_name
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  if [[ $runtime_repo_root != /home/node/.openclaw/workspace/git-repo ]]; then
+    err "The deployed Nova REPO_ROOT does not match the chart contract."
+    return 1
+  fi
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  if [[ ! $runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The deployed Nova source revision is invalid."
+    return 1
+  fi
+  local -a environment=("KUBECLAW_HTTP_PREFLIGHT_IMAGE=$immutable_image")
+  if [[ -n ${KUBECLAW_HTTP_PREFLIGHT_EXPECTED_TEXT:-} ]]; then
+    environment+=("KUBECLAW_HTTP_PREFLIGHT_EXPECTED_TEXT=$KUBECLAW_HTTP_PREFLIGHT_EXPECTED_TEXT")
+  fi
+  receipt_tmp=$(mktemp)
+  receipt_file="$REPO_DIR/dist/verification/http-production-receipt.json"
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- env "${environment[@]}" \
+    node "$runtime_repo_root/tests/verification/e2e/nova-http-production-preflight.mts" \
+    | tee "$receipt_tmp"; then
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(v.schemaVersion!=="nova-http-production-preflight.v1"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.networkRequestVerified!==true||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="http-preflight"||v.resources?.servicePort!==80) process.exit(1)' "$receipt_tmp"; then
+    err "The HTTP production receipt is invalid."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  lease_name=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).resources.leaseName)' "$receipt_tmp")
+  namespace_name=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).resources.namespace)' "$receipt_tmp")
+  if [[ ! $lease_name =~ ^test-[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ \
+    || ! $namespace_name =~ ^test-[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ ]]; then
+    err "The HTTP production receipt contains an invalid resource identity."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m \
+    || ! kubectl wait --for=delete "busternamespacelease/$lease_name" -n "$NAMESPACE" --timeout=2m; then
+    err "Timed out while waiting for the HTTP production plan cleanup."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if [[ -n $(kubectl get namespace "$namespace_name" --ignore-not-found -o name) \
+    || -n $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then
+    err "The HTTP production plan left its namespace or lease in the cluster."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_private_key=${KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE:-}
+  receipt_public_key=$PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE
+  if [[ -z $receipt_private_key || ! -f $receipt_private_key || ! -f $receipt_public_key ]]; then
+    err "Set KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE and install the trusted public key at $PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_private_key=$(realpath "$receipt_private_key")
+  receipt_public_key=$(realpath "$receipt_public_key")
+  if [[ $receipt_private_key == "$REPO_DIR"/* || $receipt_public_key == "$REPO_DIR"/* ]]; then
+    err "Production receipt keys must be outside the repository."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_unsigned=$(mktemp)
+  receipt_signed=$(mktemp)
+  # JavaScript is intentionally single-quoted for the shell.
+  # shellcheck disable=SC2016
+  node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); fs.writeFileSync(process.argv[2], `${JSON.stringify({...v,cleanupVerified:true,clusterCleanupObserved:true},null,2)}\n`, {mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs"); process.stdout.write(JSON.parse(fs.readFileSync(process.argv[1],"utf8")).busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The Buster execution result has no valid worker revision."
+    rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+    return 1
+  fi
+  if ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" sign \
+    "$receipt_unsigned" "$receipt_private_key" "$runtime_revision" "$buster_runtime_revision" "$receipt_signed" \
+    || ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" verify \
+    "$receipt_signed" "$receipt_public_key" "$runtime_revision" "$buster_runtime_revision"; then
+    rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+    return 1
+  fi
+  mkdir -p "$(dirname "$receipt_file")"
+  cp "$receipt_signed" "$receipt_file"
+  rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+  log "Stored production receipt at $receipt_file"
+  log "Nova → Buster HTTP production preflight passed"
 }
 
 cmd_nova_tailscale_preflight() {
@@ -1945,10 +2197,9 @@ cmd_nova_tailscale_preflight() {
     return 1
   fi
   receipt_private_key=${KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE:-}
-  receipt_public_key=${KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE:-}
-  if [[ -z $receipt_private_key || -z $receipt_public_key \
-    || ! -f $receipt_private_key || ! -f $receipt_public_key ]]; then
-    err "Set KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE and KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE."
+  receipt_public_key=$PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE
+  if [[ -z $receipt_private_key || ! -f $receipt_private_key || ! -f $receipt_public_key ]]; then
+    err "Set KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE and install the trusted public key at $PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE."
     rm -f "$receipt_tmp"
     return 1
   fi
@@ -2191,6 +2442,12 @@ case "${1:-}" in
   nova-unit-preflight)
     cmd_nova_unit_preflight
     ;;
+  nova-kubernetes-fixture-preflight)
+    cmd_nova_kubernetes_fixture_preflight "$@"
+    ;;
+  nova-http-preflight)
+    cmd_nova_http_preflight "$@"
+    ;;
   nova-tailscale-preflight)
     cmd_nova_tailscale_preflight "$@"
     ;;
@@ -2276,6 +2533,10 @@ case "${1:-}" in
     echo "                    Verify rootless BuildKit support with a temporary pod"
     echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
     echo "  nova-unit-preflight Run a real unit process through Nova and Buster v2"
+    echo "  nova-kubernetes-fixture-preflight [image] [secret-name]"
+    echo "                    Verify a retained Kubernetes fixture through Nova and Buster v2"
+    echo "  nova-http-preflight [image]"
+    echo "                    Verify an in-cluster HTTP service through Nova and Buster v2"
     echo "  nova-tailscale-preflight [image]"
     echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
     echo "  worker-trust-e2e  Prove SPIRE identity, mTLS, authorization, and source attestation on-cluster"

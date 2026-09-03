@@ -298,3 +298,7 @@ After you deploy the current Nova and Buster images, run:
 
 This command starts a real Node process through Nova and Buster. It requires a
 real JUnit report, imports the result, and requires a passing Nova decision.
+It stores `dist/verification/unit-production-receipt.json`. Install the
+approved public key at
+`/etc/kubeclaw/production-receipt-authority.pub` and supply the external
+operator private-key file before the run.

@@ -6,19 +6,19 @@ Do not edit this page directly.
 ## Summary
 
 - Replacement implemented: 7 of 13.
-- Parity proved: 6 of 13.
-- Cut over and deleted: 6 of 13.
+- Parity proved: 2 of 13.
+- Cut over and deleted: 2 of 13.
 
 ## Suites
 
 | Old suite | Successor | Implementation | Parity | Cutover |
 | --- | --- | --- | --- | --- |
-| `unit` | `kubeclaw.direct-command@1` | complete | complete | complete |
+| `unit` | `kubeclaw.direct-command@1` | complete | in-progress | in-progress |
 | `manifest` | `lint:kubernetes-policy` | complete | complete | complete |
-| `build` | `kubeclaw.container-build@1` | complete | complete | complete |
+| `build` | `kubeclaw.container-build@1` | complete | in-progress | in-progress |
 | `bundle` | `kubeclaw.size-budget@1` | complete | complete | complete |
-| `k8s` | `kubeclaw.kubernetes-fixture@1` | complete | complete | complete |
-| `health` | `kubeclaw.http@1` | complete | complete | complete |
+| `k8s` | `kubeclaw.kubernetes-fixture@1` | complete | in-progress | in-progress |
+| `health` | `kubeclaw.http@1` | complete | in-progress | in-progress |
 | `tailscale-preview` | `kubeclaw.tailscale-exposure@1` | complete | in-progress | in-progress |
 | `api` | `kubeclaw.api-suite@1` | pending | pending | pending |
 | `a11y` | `kubeclaw.axe@1` | pending | pending | pending |

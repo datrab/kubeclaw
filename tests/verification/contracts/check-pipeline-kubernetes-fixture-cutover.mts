@@ -23,7 +23,10 @@ const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legac
 assert.deepEqual(bridge.suites.k8s, { state: 'migrated', successor: 'kubeclaw.kubernetes-fixture@1' });
 const status = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-suite-migration-status.json', 'utf8'));
 const suite = status.suites.find((entry: any) => entry.id === 'k8s');
-assert.deepEqual([suite.implementation, suite.parity, suite.cutover], ['complete', 'complete', 'complete']);
+assert.deepEqual({ implementation: suite.implementation, parity: suite.parity,
+  sourceCutover: suite.sourceCutover, productionAcceptance: suite.productionAcceptance,
+  cutover: suite.cutover }, { implementation: 'complete', parity: 'in-progress',
+  sourceCutover: 'complete', productionAcceptance: 'pending', cutover: 'in-progress' });
 
 const protocol = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/protocol.ts', 'utf8');
 const runner = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts', 'utf8');
@@ -37,6 +40,20 @@ assert.match(scaffold, /LEGACY_K8S_CONFIGURATION_RETIRED/u);
 assert.doesNotMatch(scaffold, /sourceImage\.match|cleanup_policy/u);
 const productionRunner = fs.readFileSync('tests/verification/e2e/run-v2-production-pipeline.mts', 'utf8');
 assert.doesNotMatch(productionRunner.match(/ALL_SUITES[\s\S]*?\]\);/u)?.[0] ?? '', /['"]k8s['"]/u);
+const deployScript = fs.readFileSync('scripts/deploy.sh', 'utf8');
+assert.match(deployScript, /nova-kubernetes-fixture-preflight/u);
+assert.match(deployScript, /kubernetes-fixture-production-receipt\.json/u);
+assert.match(deployScript, /deployment\/agent-nova[\s\S]*nova-kubernetes-fixture-production-preflight\.mts/u);
+assert.match(deployScript, /approved Secret copying/u);
+const livePreflight = fs.readFileSync(
+  'tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts', 'utf8');
+assert.match(livePreflight, /kubernetes-fixture-production-preflight\.v1/u);
+assert.match(livePreflight, /createProductionNovaTestGate/u);
+assert.match(livePreflight, /approvedSecretCopyVerified/u);
+const runtimeEntrypoint = fs.readFileSync('docker/buster-runtime-entrypoint.sh', 'utf8');
+assert.match(runtimeEntrypoint, /BUSTER_ALLOWED_SOURCE_SECRETS/u);
+const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
+assert.match(busterValues, /BUSTER_ALLOWED_SOURCE_SECRETS/u);
 
 const scaffoldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-scaffold-'));
 try {

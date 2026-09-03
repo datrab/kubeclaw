@@ -480,10 +480,11 @@ and cutover `in-progress` until the normal deployed route stores a successful
 receipt. A test file or a direct capability check is not a production receipt.
 The receipt must have an Ed25519 signature from the production operator
 authority after the operator observes final resource deletion. The closeout
-check must use a trusted public key supplied outside the repository. It must
-bind the receipt to the deployed Nova source revision and Buster image revision. A key inside the repository,
-or a fingerprint that a contributor adds in the same patch, is not a trust
-anchor.
+check must use the trusted public key installed at
+`/etc/kubeclaw/production-receipt-authority.pub` outside the repository. It
+must bind the receipt to the deployed Nova source revision and Buster image
+revision. A key inside the repository, a caller-selected verification key, or
+a fingerprint that a contributor adds in the same patch is not a trust anchor.
 
 ## Reusable closeout checklist
 

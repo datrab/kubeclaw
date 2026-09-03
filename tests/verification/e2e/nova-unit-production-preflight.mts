@@ -20,9 +20,20 @@ const state = path.join(temporary, 'nova-state');
 const runId = `run:unit-preflight:${crypto.randomUUID()}`;
 const token = process.env.BUSTER_V2_TOKEN;
 const privateKey = process.env.BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY;
+const runtimeRevision = execFileSync('git', ['rev-parse', '--verify', 'HEAD'], {
+  cwd: repositoryRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+}).trim();
 
 function git(...args: string[]): string {
   return execFileSync('git', args, { cwd: fixture, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+}
+
+function records(relative: string): any[] {
+  const value = JSON.parse(fs.readFileSync(path.join(state, relative, 'records', 'store.json'), 'utf8'));
+  if (value.schemaVersion !== 'pipeline-durable-record-store.v1' || !Array.isArray(value.records)) {
+    throw new Error('UNIT_PREFLIGHT_RECORD_STORE_INVALID');
+  }
+  return value.records;
 }
 
 try {
@@ -80,9 +91,41 @@ try {
   if (result.remote.decision.state !== 'passed' || result.remote.status.state !== 'completed') {
     throw new Error(`UNIT_PREFLIGHT_FAILED:${JSON.stringify(result.remote)}`);
   }
-  process.stdout.write(`${JSON.stringify({ ok: true, schemaVersion: 'nova-unit-preflight.v1', runId,
-    provider: route, status: result.remote.status.state, decision: result.remote.decision.state,
-    sourceRevision: git('rev-parse', 'HEAD') }, null, 2)}\n`);
+  const imports = records('imports').filter((record) => record.stream === 'remote-gate-imports');
+  if (imports.length !== 1 || imports[0].payload.state !== 'complete'
+    || imports[0].payload.jobId !== result.remote.decision.jobId
+    || imports[0].payload.decision.decisionDigest !== result.remote.decision.decisionDigest
+    || !Array.isArray(imports[0].payload.evidenceDigests)
+    || imports[0].payload.evidenceDigests.length < 1
+    || imports[0].payload.remoteResult.cleanupErrors.length !== 0) {
+    throw new Error('UNIT_PREFLIGHT_EVIDENCE_IMPORT_INVALID');
+  }
+  const imported = imports[0].payload;
+  const attempt = imported.remoteResult.attempts.find((entry: any) => entry.nodeId === 'unit:production');
+  const commandResources = attempt?.providerDetails?.values?.commandResources;
+  if (attempt?.providerDetails?.values?.reportCount !== 1
+    || !Number.isSafeInteger(commandResources?.maximumProcesses)
+    || !Number.isSafeInteger(commandResources?.maximumMemoryBytes)
+    || !Number.isSafeInteger(commandResources?.cpuTimeMs)) {
+    throw new Error('UNIT_PREFLIGHT_PROCESS_EVIDENCE_INVALID');
+  }
+  const graphs = records('execution-graph').filter((record) => record.stream === 'test-execution-graphs');
+  if (graphs.length !== 1 || graphs[0].payload.planDigest !== plan.planDigest
+    || !graphs[0].payload.results.every((node: any) => node.state === 'completed')) {
+    throw new Error('UNIT_PREFLIGHT_EXECUTION_GRAPH_INVALID');
+  }
+  process.stdout.write(`${JSON.stringify({ ok: true,
+    schemaVersion: 'nova-unit-production-preflight.v2', suite: 'unit', runId,
+    jobId: result.remote.decision.jobId, provider: route, runtimeRevision,
+    busterRuntimeRevision: imported.remoteResult.workerRevision,
+    fixtureRevision: git('rev-parse', 'HEAD'), planDigest: plan.planDigest,
+    resultDigest: result.remote.decision.resultDigest,
+    decisionDigest: result.remote.decision.decisionDigest,
+    status: result.remote.status.state, decision: result.remote.decision.state,
+    evidenceDigests: imported.evidenceDigests, evidenceImported: true,
+    runnerCleanupVerified: true, clusterCleanupNotApplicable: true,
+    realProcessVerified: true, junitReportVerified: true, resourceMetricsVerified: true,
+    mocks: 0, emulators: 0 }, null, 2)}\n`);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
 }

@@ -154,6 +154,12 @@ Then run the deployed Nova-to-Buster preflight:
 ./scripts/deploy.sh nova-buildkit-preflight
 ```
 
+This command stores
+`dist/verification/container-build-production-receipt.json`. Install the
+approved public key at
+`/etc/kubeclaw/production-receipt-authority.pub` and supply the external
+operator private-key file before the run.
+
 ## Start and Stop
 
 Start BuildKit and the registry before Buster. Start Buster only after the

@@ -8,9 +8,10 @@ assert.equal(ledger.authority.legacy, 'removed');
 assert.equal(ledger.authority.replacement, 'authoritative');
 assert.deepEqual(ledger.productionAcceptance, {
   status: 'pending-deployment',
-  reason: 'The deployed Buster image does not contain the plan runtime or current container-build provider.',
+  reason: 'The real Nova-to-Buster BuildKit preflight must run after the current images are deployed.',
   requiredCommand: 'npm run verify:test-gate:container-build-live',
-  requiredPreflight: 'node tests/verification/e2e/nova-buildkit-production-preflight.mts',
+  requiredPreflight: './scripts/deploy.sh nova-buildkit-preflight',
+  receipt: 'dist/verification/container-build-production-receipt.json',
 });
 assert.equal(ledger.items.length, 36);
 assert.deepEqual(new Set(ledger.items.map((item: any) => item.id)), new Set(baseline.items.map((item: any) => item.id)));

@@ -4,9 +4,17 @@
   "authority": { "legacy": "removed", "replacement": "authoritative" },
   "productionAcceptance": {
     "status": "pending-deployment",
-    "reason": "The deployed Buster image does not contain the plan runtime or current container-build provider.",
+    "reason": "The real Nova-to-Buster BuildKit preflight must run after the current images are deployed.",
     "requiredCommand": "npm run verify:test-gate:container-build-live",
-    "requiredPreflight": "node tests/verification/e2e/nova-buildkit-production-preflight.mts"
+    "requiredPreflight": "./scripts/deploy.sh nova-buildkit-preflight",
+    "receipt": "dist/verification/container-build-production-receipt.json"
+  },
+  "acceptedDeferral": {
+    "status": "open",
+    "acceptedBy": "project-owner",
+    "acceptedOn": "2026-09-03",
+    "condition": "Deploy the current Nova and Buster images and pass the real BuildKit build and registry preflight.",
+    "proof": "tests/verification/e2e/nova-buildkit-production-preflight.mts"
   },
   "items": [
     { "id": "BUILD-INPUT-001", "disposition": "preserved", "status": "proved", "proof": ["tests/verification/contracts/check-pipeline-container-build-production.mts"] },

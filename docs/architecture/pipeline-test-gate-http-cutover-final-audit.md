@@ -1,6 +1,6 @@
 # HTTP Provider Cutover Final Audit
 
-Status: complete
+Status: source cutover complete; production acceptance pending deployment
 
 Audience: maintainers and reviewers
 
@@ -32,6 +32,14 @@ Remaining legacy suites do not depend on a deleted suite name.
 
 The cutover gate checks sole authority, project scaffolding, real workspace data, decision D-013, and the complete 50-item parity ledger.
 
-The live gate runs the isolated provider against a real Kubernetes Service through cluster DNS.
+The capability diagnostic runs the isolated provider against a real Kubernetes Service through cluster DNS.
+
+The production preflight runs signed source through Nova, the authenticated
+Buster plan service, the Kubernetes fixture, and the isolated HTTP provider.
+It imports evidence and the final decision into Nova. The control node waits
+for resource deletion and signs the final receipt with an operator key that is
+outside the repository.
+
+Production acceptance remains pending until that signed receipt exists.
 
 The proof uses no mocks, fake services, emulators, or compatibility wrappers.

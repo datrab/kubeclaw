@@ -1027,6 +1027,18 @@ setup_tailscale_oauth_secret() {
   log "Created: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}"
 }
 
+setup_fixture_preflight_secret() {
+  local name="kubeclaw-fixture-preflight"
+  if secret_exists "$NAMESPACE" "$name"; then
+    log "Reusing: ${NAMESPACE}/${name}"
+    return 0
+  fi
+  require_command openssl
+  openssl rand 32 | kubectl create secret generic "$name" -n "$NAMESPACE" \
+    --from-file=proof=/dev/stdin --dry-run=client -o yaml | kubectl apply -f - >/dev/null
+  log "Created isolated Kubernetes fixture preflight Secret: ${NAMESPACE}/${name}"
+}
+
 main() {
   local tailscale_secret_list
 
@@ -1063,6 +1075,7 @@ main() {
   setup_ghcr_secret
   setup_git_deploy_key git-deploy-key-nova Nova
   setup_git_deploy_key git-deploy-key-buster Buster
+  setup_fixture_preflight_secret
   setup_tailscale_oauth_secret
 
   echo ""

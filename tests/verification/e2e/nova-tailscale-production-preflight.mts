@@ -210,6 +210,7 @@ try {
   assert.equal(graphs[0].payload.results.every((node: any) => node.state === 'completed'), true);
 
   const receipt = { ok: true, schemaVersion: 'nova-tailscale-production-preflight.v1',
+    suite: 'tailscale-preview',
     runId, jobId: result.remote.decision.jobId, provider: route, runtimeRevision,
     busterRuntimeRevision,
     fixtureRevision: git('rev-parse', 'HEAD'),

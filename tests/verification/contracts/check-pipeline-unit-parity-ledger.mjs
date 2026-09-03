@@ -18,8 +18,13 @@ assert.equal(baselineIds.length, uniqueSorted(baselineIds).length, 'baseline IDs
 assert.equal(ledgerIds.length, uniqueSorted(ledgerIds).length, 'ledger IDs must be unique');
 assert.deepEqual(uniqueSorted(ledgerIds), uniqueSorted(baselineIds), 'ledger must exactly equal the unit baseline');
 assert.equal(ledger.expectedItemCount, baselineIds.length);
+assert.deepEqual(ledger.productionAcceptance, {
+  status: 'pending-deployment', requiredCommand: './scripts/deploy.sh nova-unit-preflight',
+  receipt: 'dist/verification/unit-production-receipt.json',
+});
 assert.deepEqual(ledger.cutover, {
   status: 'complete',
+  scope: 'source',
   phase: 10,
   authority: 'replacement-only',
   proof: 'tests/verification/contracts/check-pipeline-phase10-cutover.mts',

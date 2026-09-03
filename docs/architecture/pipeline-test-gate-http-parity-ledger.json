@@ -5,6 +5,18 @@
   "baseline": "docs/architecture/pipeline-test-gate-http-baseline.json",
   "expectedItemCount": 50,
   "authority": { "old": "deleted", "replacement": "authoritative" },
+  "productionAcceptance": {
+    "status": "pending-deployment",
+    "requiredCommand": "./scripts/deploy.sh nova-http-preflight",
+    "receipt": "dist/verification/http-production-receipt.json"
+  },
+  "acceptedDeferral": {
+    "status": "open",
+    "acceptedBy": "project-owner",
+    "acceptedOn": "2026-09-03",
+    "condition": "Deploy the current Nova and Buster images and pass the signed Nova-to-Buster HTTP preflight.",
+    "proof": "tests/verification/e2e/nova-http-production-preflight.mts"
+  },
   "entries": {
     "HEALTH-ARCH-001": { "disposition": "improved", "status": "proved", "rationale": "A versioned provider contract replaces the special health suite name.", "proof": ["tests/verification/contracts/check-pipeline-http-parity.mts"] },
     "HEALTH-ARCH-002": { "disposition": "improved", "status": "proved", "rationale": "The declared plan graph controls HTTP test order explicitly.", "proof": ["tests/verification/contracts/check-pipeline-http-parity.mts"] },
@@ -57,5 +69,5 @@
     "HEALTH-DEFECT-003": { "disposition": "removed-defect", "status": "proved", "rationale": "Schemas and runtime checks validate every numeric execution limit.", "proof": ["tests/verification/contracts/check-pipeline-http-implementation.mts"] },
     "HEALTH-DEFECT-004": { "disposition": "removed-defect", "status": "proved", "rationale": "Provider findings use consistent severity and failed-count metadata.", "proof": ["tests/verification/contracts/check-pipeline-http-parity.mts"] }
   },
-  "cutover": { "status": "complete", "authority": "replacement-only", "proof": "tests/verification/contracts/check-pipeline-http-cutover.mts" }
+  "cutover": { "status": "complete", "scope": "source", "authority": "replacement-only", "proof": "tests/verification/contracts/check-pipeline-http-cutover.mts" }
 }

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -13,6 +14,13 @@ if (process.env.KUBECLAW_KUBERNETES_FIXTURE_LIVE !== '1') {
 }
 
 const registryHost = process.env.KUBECLAW_LOCAL_REGISTRY ?? 'registry-local.kubeclaw.svc.cluster.local:5001';
+const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
+const runtimeRevision = execFileSync('git', ['-C', repositoryRoot, 'rev-parse', '--verify', 'HEAD'],
+  { encoding: 'utf8' }).trim();
+const busterRuntimeRevision = process.env.KUBECLAW_BUILD_REVISION;
+if (!busterRuntimeRevision || !/^[a-f0-9]{40,64}$/u.test(busterRuntimeRevision)) {
+  throw new Error('KUBERNETES_FIXTURE_LIVE_BUSTER_REVISION_MISSING');
+}
 const registryUrl = `http://${registryHost}`;
 const catalog = await (await fetch(`${registryUrl}/v2/_catalog`)).json() as { repositories?: string[] };
 const repositoryName = catalog.repositories?.sort()[0];
@@ -33,6 +41,8 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-live
 let leaseName: string | null = null;
 const rawLeaseNames: string[] = [];
 let generatedWorkspace: Awaited<ReturnType<typeof createRealE2ERunWorkspace>> | null = null;
+let productionReceipt: Record<string, unknown> | null = null;
+const cleanupErrors: unknown[] = [];
 const kubectlJson = (args: string[], input?: string) => JSON.parse(execFileSync('/usr/local/bin/kubectl', args,
   { input, encoding: 'utf8' }) as string);
 const waitForLeasePhase = async (name: string, phases: string[], timeoutMs: number) => {
@@ -59,7 +69,7 @@ try {
   declaration.suites = {};
   delete declaration.tests.health;
   declaration.concurrencyLimits = { manifest: 1, 'kubernetes-fixture': 1 };
-  const pluginRoot = path.resolve('skills/buster/plugins');
+  const pluginRoot = path.join(repositoryRoot, 'skills/buster/plugins');
   const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
     trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
     verifierId: 'kubernetes-fixture-live',
@@ -146,19 +156,31 @@ try {
     { input: `${JSON.stringify(secretResource)}\n`, encoding: 'utf8' });
   const rejectedSecretLease = await waitForLeasePhase(secretLease, ['Failed'], 60_000);
   assert.match(String(rejectedSecretLease.status.message), /not approved for test deployment/u);
-  console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-live', boundary: 'real-cluster',
+  const resultDigest = `sha256:${crypto.createHash('sha256').update(JSON.stringify(result)).digest('hex')}`;
+  const decisionDigest = `sha256:${crypto.createHash('sha256').update(JSON.stringify({
+    namespaceDeleted: true, retainedNamespaceExpired: true, rejectedUnapprovedSecret: true,
+  })).digest('hex')}`;
+  productionReceipt = { ok: true, schemaVersion: 'kubernetes-fixture-capability-diagnostic.v1',
+    runId: plan.runId, jobId: plan.runId, runtimeRevision, busterRuntimeRevision,
+    planDigest: plan.planDigest, resultDigest, decisionDigest, status: 'completed', decision: 'passed',
+    evidenceDigests: [deployment.manifestDigest, resultDigest], evidenceCollected: true,
+    runnerCleanupVerified: true, cleanupVerified: true, clusterCleanupObserved: true,
+    phase: 'kubernetes-fixture-live', boundary: 'direct-capability-diagnostic',
     realComponents: ['generated-workspace', 'generated-plan', 'provider-process', 'command-sandbox', 'typed-artifact-link', 'kubernetes-api', 'namespace-controller',
       'local-registry-image', 'deployment', 'service', 'pod-readiness', 'lease-cleanup', 'retention-expiry',
       'secret-approval-denial'], mocks: 0, imageDigest: digest, manifestDigest: deployment.manifestDigest,
-    namespaceDeleted: true, retainedNamespaceExpired: true, rejectedUnapprovedSecret: true }));
+    namespaceDeleted: true, retainedNamespaceExpired: true, rejectedUnapprovedSecret: true,
+    resources: { leaseName, lifecycleLease, secretLease } };
 } finally {
   if (leaseName) {
     try { execFileSync('/usr/local/bin/kubectl', ['delete', 'busternamespacelease', leaseName, '-n', 'kubeclaw', '--ignore-not-found=true', '--wait=true', '--timeout=120s']); }
-    catch { /* The primary assertion reports cleanup failure. */ }
+    catch (error) { cleanupErrors.push(error); }
   }
   for (const rawLeaseName of rawLeaseNames) {
     try { execFileSync('/usr/local/bin/kubectl', ['delete', 'busternamespacelease', rawLeaseName, '-n', 'kubeclaw',
-      '--ignore-not-found=true', '--wait=true', '--timeout=120s']); } catch { /* Primary assertions report failures. */ }
+      '--ignore-not-found=true', '--wait=true', '--timeout=120s']); } catch (error) { cleanupErrors.push(error); }
+    try { execFileSync('/usr/local/bin/kubectl', ['wait', '--for=delete', `namespace/${rawLeaseName}`,
+      '--timeout=120s']); } catch (error) { cleanupErrors.push(error); }
   }
   if (generatedWorkspace) {
     fs.rmSync(`${generatedWorkspace.artifactRoot}-suite5-artifacts`, { recursive: true, force: true });
@@ -167,3 +189,5 @@ try {
   }
   fs.rmSync(temporary, { recursive: true, force: true });
 }
+if (cleanupErrors.length > 0) throw new AggregateError(cleanupErrors, 'KUBERNETES_FIXTURE_LIVE_CLEANUP_FAILED');
+if (productionReceipt) process.stdout.write(`${JSON.stringify(productionReceipt, null, 2)}\n`);

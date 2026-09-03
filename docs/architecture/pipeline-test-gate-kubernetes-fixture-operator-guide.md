@@ -44,18 +44,26 @@ The lease client needs create, get, and delete access for
 `busternamespaceleases`. The controller needs authority for each permission
 that it grants inside leased namespaces.
 
-Set `busterNamespaceBroker.approvedSecretNames` to the same approved names.
+Set `busterNamespaceBroker.controller.allowedSourceSecrets` to the same approved names.
 The default empty list denies all Secret copying.
 
-Run the live check after each controller or RBAC change.
+Run the signed live check from the control node after each controller or RBAC
+change.
 
 ```sh
-KUBECLAW_KUBERNETES_FIXTURE_LIVE=1 node tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
+./scripts/deploy.sh nova-kubernetes-fixture-preflight \
+  registry-local.kubeclaw.svc.cluster.local:5001/kubeclaw/WORKLOAD@sha256:DIGEST \
+  kubeclaw-fixture-preflight
 ```
 
-The check creates a real lease. It deploys a real local-registry image. It
-waits for a real pod and Service endpoint. It then deletes the lease and
-namespace.
+The check sends signed source from Nova to Buster. It creates a retained real
+lease and deploys a real local-registry image. It waits for a real pod and
+Service endpoint. The control node verifies the approved Secret copy without
+reading its value. It then deletes the lease and namespace. It stores
+`dist/verification/kubernetes-fixture-production-receipt.json`. Install the
+approved public key at
+`/etc/kubeclaw/production-receipt-authority.pub` and supply the external
+operator private-key file before the run.
 
 ## Handle Retained Fixtures
 

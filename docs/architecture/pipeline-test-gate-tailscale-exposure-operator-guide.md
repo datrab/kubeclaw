@@ -43,21 +43,22 @@ The operator then confirms that the run namespace and lease are absent. Only
 after these checks does the deploy command sign the receipt with the external
 production-operator Ed25519 key.
 
-Set `KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE` and
-`KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE` to files outside the repository.
-Keep the private key in the operator-controlled secret store. Do not commit
-either key. The deploy command verifies the final signature before it stores
-the receipt.
+Set `KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE` to the private-key file
+outside the repository. Install its approved public key at
+`/etc/kubeclaw/production-receipt-authority.pub` on the control node before the
+run. Keep the private key in the operator-controlled secret store. Do not
+commit either key. The fixed public-key location is the external trust anchor.
+The deploy command verifies the final signature before it stores the receipt.
 
-To close the migration record, set
-`KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE` to the same externally controlled
-public-key file. Set `productionRevision` in the migration status to
-the signed `runtimeRevision`. Set `productionBusterRevision` to the signed
-`busterRuntimeRevision`. The deploy command reads that revision from the
-authenticated result of the Buster worker that ran the plan. The Buster image
-embeds this revision at build time. The migration check rejects an unsigned receipt,
-a different key, a changed receipt, or a different Nova or Buster revision. Do not close
-`TSX-CUT-005` from a test file or from a direct capability check.
+To close the migration record, set `productionRevision` to the signed
+`runtimeRevision`. Set `productionBusterRevision` to the signed
+`busterRuntimeRevision`. Set `productionReceiptKeyFingerprint` to the signed
+fingerprint of the public key at the fixed trust-anchor location. The deploy
+command reads the Buster revision from the authenticated result of the worker
+that ran the plan. The Buster image embeds this revision at build time. The
+migration check rejects an unsigned receipt, a different key, a changed
+receipt, or a different Nova or Buster revision. Do not close `TSX-CUT-005`
+from a test file or from a direct capability check.
 
 Use `verify:test-gate:tailscale-exposure-capability-live` only to diagnose the
 brokered Kubernetes capability. That command is not production acceptance.
