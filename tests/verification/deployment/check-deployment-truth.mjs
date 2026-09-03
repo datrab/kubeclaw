@@ -24,6 +24,7 @@ const generalDockerfile = read('docker/Dockerfile.general');
 const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
 const prismControlDockerfile = read('docker/Dockerfile.prism-control');
+const prismStudioDockerfile = read('docker/Dockerfile.prism-studio');
 const prismWorkerDockerfile = read('docker/Dockerfile.prism-worker');
 const busterRuntimeEntrypoint = read('docker/buster-runtime-entrypoint.sh');
 const busterWorker = read('skills/buster/plugins/buster-suite-runtime/src/worker.ts');
@@ -189,6 +190,11 @@ assert.match(
   prismControlDockerfile,
   /COPY --from=build \/build\/tests\/verification\/live \/app\/prism\/tests\/verification\/live/,
   'the Prism control image must package its live verification assets',
+);
+assert.match(
+  prismStudioDockerfile,
+  /COPY --from=build \/build\/skills\/prism\/server\/proxy-headers\.ts \/app\/prism\/server\/proxy-headers\.ts/,
+  'the Prism Studio image must package every imported server module',
 );
 
 assert.match(

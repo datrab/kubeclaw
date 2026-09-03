@@ -11,6 +11,7 @@ USER root
 WORKDIR /app/prism
 COPY --from=build /build/skills/prism/dist-studio /app/prism/dist-studio
 COPY --from=build /build/skills/prism/server/studio.ts /app/prism/server/studio.ts
+COPY --from=build /build/skills/prism/server/proxy-headers.ts /app/prism/server/proxy-headers.ts
 RUN chown -R node:node /app/prism
 USER node
 ENV NODE_ENV=production PORT=8080 STUDIO_ROOT=/app/prism/dist-studio
