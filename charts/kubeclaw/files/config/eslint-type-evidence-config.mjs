@@ -16,6 +16,7 @@ const IGNORES = [
 ];
 
 const TYPE_AWARE_DEFAULT_PROJECT = [
+  'scripts/production-receipt-attestation.d.mts',
   'skills/buster/plugins/buster-suite-runtime/common/pipeline/runtime-state-paths.ts',
   'skills/buster/plugins/buster-suite-runtime/common/pipeline/timing.ts',
   'skills/buster/plugins/buster-suite-runtime/src/runtime/runtime-state-paths.ts',
