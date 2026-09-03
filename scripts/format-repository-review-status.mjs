@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 
 function argumentsMap(values) {
@@ -23,6 +24,9 @@ function jsonCommand(command, commandArgs, options = {}) {
     maxBuffer: 2 * 1024 * 1024, ...options });
   if (result.status !== 0) return undefined;
   try { return JSON.parse(result.stdout); } catch (_error) { return undefined; }
+}
+function optionalJson(file) {
+  try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_error) { return undefined; }
 }
 
 function taskDetails(sessionKey, openclawBin) {
@@ -54,6 +58,8 @@ function utcTime(date = new Date()) {
 
 function format(values) {
   const args = argumentsMap(values), workdir = path.resolve(args.get('workdir') ?? process.cwd());
+  const reopen = args.get('reopen-status') ? optionalJson(path.resolve(args.get('reopen-status'))) : undefined;
+  const reopenPending = ['waiting-for-preflight', 'preflight-succeeded', 'reopening'].includes(reopen?.state);
   const status = jsonCommand(process.execPath, [path.join(workdir, 'scripts', 'repository-review-status.mjs'),
     '--platform', required(args, 'platform'), '--run-id', required(args, 'run-id'),
     '--heartbeat', required(args, 'heartbeat'), '--resource-log', required(args, 'resource-log'),
@@ -72,7 +78,9 @@ function format(values) {
     ? status.health === 'degraded'
       ? `The supervised attempt is degraded; ${status.recentResourceLockExpired} resource-lock expiries occurred in the last 15 minutes.`
       : 'The supervised execute attempt is active.'
-    : status.liveness === 'terminal' ? `The run is terminal (${status.status}).`
+    : status.liveness === 'terminal' && reopenPending
+      ? `The run is blocked; its detached reopen controller is ${reopen.state.replaceAll('-', ' ')} (preflight attempt ${reopen.attempt ?? 'unknown'}).`
+      : status.liveness === 'terminal' ? `The run is terminal (${status.status}).`
       : 'The run is nonterminal but its supervisor heartbeat is stale.';
   const gateway = status.resources?.gateway?.healthy === true
     ? 'connectivity probe healthy' : 'connectivity probe unhealthy or unavailable';
@@ -89,7 +97,7 @@ function format(values) {
     `Recovery: attempt ${status.attempt ?? 'unknown'} in ${status.recoveryMode ?? 'unknown'} mode; liveness ${status.liveness}; last durable event ${status.lastEventAt ?? 'unavailable'}.`,
     `Resources: current CPU ${percent(resourcesFresh ? status.resources?.currentCpuPercent : undefined)}, peak ${percent(status.resources?.peakCpuPercent)}; current RAM ${gibibytes(resourcesFresh ? status.resources?.currentRamBytes : undefined)}, peak ${gibibytes(status.resources?.peakRamBytes)}; OOM kills ${status.resources?.oomKillEvents ?? 'unknown'}${resourcesFresh ? '' : `; latest sample stale (${status.resources?.observedAt ?? 'unavailable'})`}.`,
     `Gateway: ${resourcesFresh ? gateway : 'latest connectivity probe stale or unavailable'}. Supervised pipeline PID ${status.pipelinePid ?? 'not visible'}.`,
-    status.liveness === 'terminal' ? 'Monitoring can now be disabled.'
+    status.liveness === 'terminal' && !reopenPending ? 'Monitoring can now be disabled.'
       : `Monitoring remains enabled on its ${nextMinutes}-minute cadence; next check is approximately ${utcTime(next)} UTC.`,
   ].join('\n');
 }

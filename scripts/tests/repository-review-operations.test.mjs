@@ -82,16 +82,20 @@ test('compact status and formatter report live state without scanning source jou
   assert.equal(parsed.activeDispatches, 1);
 
   const fakeOpenClaw = path.join(value.root, 'openclaw');
+  const reopenStatus = path.join(value.root, 'reopen-status.json');
+  writeJson(reopenStatus, { state: 'waiting-for-preflight', attempt: 3 });
   fs.writeFileSync(fakeOpenClaw, '#!/bin/sh\nprintf \'%s\\n\' \'{"output":{"details":{"active":[{"status":"running"},{"status":"running"}]}}}\'\n', { mode: 0o755 });
   const formatted = spawnSync(process.execPath, [path.join(repositoryRoot, 'scripts', 'format-repository-review-status.mjs'),
     '--workdir', repositoryRoot, '--platform', value.platform, '--run-id', value.runId,
     '--heartbeat', value.heartbeat, '--resource-log', value.resources, '--openclaw-bin', fakeOpenClaw,
+    '--reopen-status', reopenStatus,
     '--configured-concurrency', '10', '--interval-minutes', '10'], { encoding: 'utf8' });
   assert.equal(formatted.status, 0, formatted.stderr);
   assert.match(formatted.stdout, /^Active as of \d{2}:\d{2}:\d{2} UTC/mu);
   assert.match(formatted.stdout, /Primary batches: 3 planned; 0 completed; 2 running; 3 remaining\./u);
   assert.match(formatted.stdout, /Actual concurrency: 2 reviewer agents active; 0 dispatches await acceptance\. Configured concurrency is 10\./u);
   assert.match(formatted.stdout, /current CPU 10\.0%, peak 10\.0%; current RAM 2\.00 GiB/u);
+  assert.match(formatted.stdout, /Monitoring remains enabled/u);
 });
 
 test('supervisor preserves a single lease and records a terminal child attempt', () => {
