@@ -4,13 +4,15 @@ import tseslint from 'typescript-eslint';
 import typeEvidence from './type-evidence-eslint-plugin.mjs';
 
 const IGNORES = [
+  '.git/**',
+  '.swarm/**',
   '**/node_modules/**',
-  '**/dist/**',
-  '**/build/**',
-  '**/coverage/**',
-  '**/generated/**',
-  '**/*.min.js',
-  'contracts/telemetry/v1/telemetry-types.ts',
+  '**/*.test.*',
+  '**/*.spec.*',
+  '**/test/**',
+  '**/tests/**',
+  '**/__tests__/**',
+  '**/fixtures/**',
 ];
 
 const TYPE_AWARE_DEFAULT_PROJECT = [
@@ -27,6 +29,15 @@ const TYPE_AWARE_DEFAULT_PROJECT = [
   'skills/buster/plugins/buster-suite-runtime/src/runtime/timing.ts',
 ];
 
+const PROJECT_OWNED_TYPE_AWARE_FILES = [
+  'skills/common/plugin-runtime/**/*.{ts,tsx,mts,cts}',
+  'skills/common/plugins/**/*.{ts,tsx,mts,cts}',
+  'skills/nova/plugins/**/*.{ts,tsx,mts,cts}',
+  'skills/buster/plugins/**/*.{ts,tsx,mts,cts}',
+  'scripts/**/*.{ts,tsx,mts,cts}',
+  'tests/verification/**/*.{ts,tsx,mts,cts}',
+];
+
 export default [
   { ignores: IGNORES },
   { linterOptions: { reportUnusedDisableDirectives: 'off' } },
@@ -41,6 +52,7 @@ export default [
     plugins: { 'type-evidence': typeEvidence },
     rules: { 'type-evidence/no-module-mocking': 'warn' },
   },
+  // Syntax-level evidence rules cover every production TypeScript file.
   {
     files: ['**/*.{ts,tsx,mts,cts}'],
     plugins: { 'type-evidence': typeEvidence },
@@ -53,9 +65,9 @@ export default [
       'type-evidence/no-widen-then-assert': 'warn',
     },
   },
+  // Only this official rule requires TypeScript project ownership and type information.
   {
-    files: ['**/*.{ts,tsx,mts,cts}'],
-    ignores: ['**/*.test.*', '**/*.spec.*', '**/test/**', '**/tests/**', '**/__tests__/**', '**/fixtures/**'],
+    files: PROJECT_OWNED_TYPE_AWARE_FILES,
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {

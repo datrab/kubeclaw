@@ -153,7 +153,7 @@ registerTool({
 // ── eslint (JS/TS linting) ──
 function runEslint(ctx: any): Record<string, any> {
   const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
-  const args = ['--format', 'json', '--no-error-on-unmatched-pattern'];
+  const args = ['--format', 'json', '--no-error-on-unmatched-pattern', '--no-warn-ignored'];
 
   // The caller owns one exact ESLint config path. Missing config is an execution failure.
   const config = ctx.tool.config_path;
@@ -163,7 +163,15 @@ function runEslint(ctx: any): Record<string, any> {
   log('INFO', `ESLint using config: ${config}`);
   args.push('--config', config);
 
-  if (ctx.changedFilesRequested) {
+  if (ctx.tool.id.startsWith('eslint-type-evidence-')) {
+    const files = configuredTargetFilesForScope(
+      ctx,
+      (file: string) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/u.test(file),
+      ['.git/**', '.swarm/**', '**/node_modules/**'],
+    );
+    if (files.length === 0) return { errors: 0, warnings: 0, findings: [] };
+    args.push(...files);
+  } else if (ctx.changedFilesRequested) {
     const jsFiles = ctx.changedFiles.filter((f: any) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/.test(f));
     if (jsFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
     args.push(...jsFiles.map((f: any) => path.join(ctx.repoRoot, f)));
@@ -174,6 +182,7 @@ function runEslint(ctx: any): Record<string, any> {
   const result = requireToolExecution(safeExec('eslint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), ctx.tool.id);
   const parsed = tryParseJson(result.stdout);
   if (!parsed.ok) return failParse(ctx, ctx.tool.id, parsed, result, target);
+  log('INFO', `${ctx.tool.name}: ${arrayValue(parsed.data).length} files scanned`);
 
   const findings: any[] = [];
   for (const fileResult of arrayValue(parsed.data)) {
@@ -208,8 +217,17 @@ registerTool({
 });
 
 registerTool({
-  id: 'eslint-type-evidence',
-  name: 'ESLint Type Evidence Audit',
+  id: 'eslint-type-evidence-production',
+  name: 'ESLint Type Evidence Audit (Production)',
+  binary: 'eslint',
+  tier: 'full',
+  detect: isJavaScriptOrTypeScriptProject,
+  run: runEslint,
+});
+
+registerTool({
+  id: 'eslint-type-evidence-tests',
+  name: 'ESLint Type Evidence Audit (Tests)',
   binary: 'eslint',
   tier: 'full',
   detect: isJavaScriptOrTypeScriptProject,

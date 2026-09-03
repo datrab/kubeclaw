@@ -27,6 +27,8 @@ data:
 {{- end }}
   eslint-type-evidence-config.mjs: |
 {{ .Files.Get "files/config/eslint-type-evidence-config.mjs" | indent 4 }}
+  eslint-type-evidence-tests-config.mjs: |
+{{ .Files.Get "files/config/eslint-type-evidence-tests-config.mjs" | indent 4 }}
   type-evidence-eslint-plugin.mjs: |
 {{ .Files.Get "files/config/type-evidence-eslint-plugin.mjs" | indent 4 }}
   .yamllint.yml: |

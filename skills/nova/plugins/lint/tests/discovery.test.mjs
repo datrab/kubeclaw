@@ -12,6 +12,9 @@ const files = [
   'services/example/values.yaml',
   'services/example/templates/deployment.yaml',
   'services/example/dist/generated.yaml',
+  'src/application.ts',
+  'tests/application.test.ts',
+  'fixtures/example.ts',
 ];
 for (const file of files) {
   const absolute = path.join(temporary, file);
@@ -44,8 +47,30 @@ try {
   const canonicalPolicy = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8'));
   const configuredRegistry = registry.buildToolRegistry(canonicalPolicy, new Set(canonicalPolicy.projects[0].languages));
   assert.equal(configuredRegistry.length, registry.TOOL_ADAPTERS.length);
-  assert.deepEqual(canonicalPolicy.experimental_tools, ['eslint-type-evidence']);
-  assert.equal(configuredRegistry.some((adapter) => adapter.id === 'eslint-type-evidence'), true);
+  assert.deepEqual(canonicalPolicy.experimental_tools, [
+    'eslint-type-evidence-production',
+    'eslint-type-evidence-tests',
+  ]);
+  assert.equal(configuredRegistry.some((adapter) => adapter.id === 'eslint-type-evidence-production'), true);
+  assert.equal(configuredRegistry.some((adapter) => adapter.id === 'eslint-type-evidence-tests'), true);
+  const evidenceTools = canonicalPolicy.tools.filter(({ id }) => id.startsWith('eslint-type-evidence-'));
+  const evidenceFiles = evidenceTools.map((tool) => discovery.configuredTargetFilesForScope({
+    repoRoot: temporary,
+    policyProject: { root: '.' },
+    policy: { global_exclusions: [] },
+    tool,
+    changedFilesRequested: false,
+  }, (file) => /\.(?:[cm]?[jt]sx?)$/u.test(file), ['.git/**', '.swarm/**', '**/node_modules/**']));
+  const productionEvidence = evidenceFiles[0].map((file) => path.relative(temporary, file).split(path.sep).join('/'));
+  const testEvidence = evidenceFiles[1].map((file) => path.relative(temporary, file).split(path.sep).join('/'));
+  assert.deepEqual(productionEvidence, ['src/application.ts']);
+  assert.deepEqual(testEvidence, ['fixtures/example.ts', 'tests/application.test.ts']);
+  assert.deepEqual(productionEvidence.filter((file) => testEvidence.includes(file)), []);
+  assert.deepEqual([...productionEvidence, ...testEvidence].sort(), [
+    'fixtures/example.ts',
+    'src/application.ts',
+    'tests/application.test.ts',
+  ]);
   for (const adapter of configuredRegistry) {
     assert.equal(typeof adapter.detect, 'function', `${adapter.id} must expose a safe configured detector`);
     assert.equal(typeof adapter.detect({

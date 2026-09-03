@@ -7,16 +7,19 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = path.resolve(packageRoot, '../../../..');
 const config = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint-type-evidence-config.mjs');
+const testConfig = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs');
 const auditConfig = (await import(pathToFileURL(config).href)).default;
+const testAuditConfig = (await import(pathToFileURL(testConfig).href)).default;
 
 assert.deepEqual(Object.keys(auditConfig[0]), ['ignores'], 'audit exclusions must remain global flat-config ignores');
+assert.deepEqual(Object.keys(testAuditConfig[0]), ['ignores'], 'test audit exclusions must remain global flat-config ignores');
 
-function lint(filename, source) {
+function lint(filename, source, selectedConfig = config) {
   const directory = fs.mkdtempSync(path.join(packageRoot, 'src/eslint-type-evidence-fixture-'));
   const file = path.join(directory, filename);
   fs.writeFileSync(file, source);
   try {
-    const result = childProcess.spawnSync('eslint', ['--format', 'json', '--config', config, file], {
+    const result = childProcess.spawnSync('eslint', ['--format', 'json', '--config', selectedConfig, file], {
       cwd: repoRoot,
       encoding: 'utf8',
       env: process.env,
@@ -37,6 +40,10 @@ assert.deepEqual(evidenceRules('chained.ts', 'interface User { id: string }\ndec
   'type-evidence/no-chained-type-assertions',
 ]);
 assert.deepEqual(evidenceRules('single-assertion.ts', 'interface User { id: string }\ndeclare const input: unknown;\nconst user = input as User;\n'), []);
+assert.deepEqual(
+  lint('chained.test.ts', 'interface User { id: string }\ndeclare const input: unknown;\nconst user = input as object as User;\n', testConfig),
+  ['type-evidence/no-chained-type-assertions'],
+);
 
 assert.deepEqual(evidenceRules('object-parameter.ts', 'export function save(value: object): void { void value; }\n'), [
   'type-evidence/no-object-parameters',
@@ -107,5 +114,29 @@ assert.deepEqual(evidenceRules('direct-value.ts', 'interface User { id: string }
 assert.ok(lint('unsafe-assertion.ts', 'interface User { id: string }\ndeclare const input: unknown;\nconst user = input as User;\n').includes(
   '@typescript-eslint/no-unsafe-type-assertion',
 ));
+
+const emptyRepository = fs.mkdtempSync(path.join(packageRoot, 'src/eslint-type-evidence-empty-'));
+try {
+  const { TOOL_ADAPTERS } = await import('../src/engine/tool-registry.ts');
+  const adapter = TOOL_ADAPTERS.find(({ id }) => id === 'eslint-type-evidence-tests');
+  const emptyResult = adapter.run({
+    repoRoot: emptyRepository,
+    modulePath: null,
+    changedFilesRequested: false,
+    policyProject: { root: '.' },
+    policy: { global_exclusions: [] },
+    tool: {
+      id: 'eslint-type-evidence-tests',
+      config_path: testConfig,
+      targets: ['.'],
+      include: ['**/*.ts'],
+      exclude: [],
+      timeout_ms: 120_000,
+    },
+  });
+  assert.deepEqual(emptyResult, { errors: 0, warnings: 0, findings: [] });
+} finally {
+  fs.rmSync(emptyRepository, { recursive: true, force: true });
+}
 
 console.log(JSON.stringify({ ok: true, suite: 'eslint-type-evidence-rules' }));

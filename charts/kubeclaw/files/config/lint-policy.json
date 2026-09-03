@@ -2,7 +2,8 @@
   "schema_version": "pipeline_lint_policy.v7",
   "baseline_path": "lint-baseline.json",
   "experimental_tools": [
-    "eslint-type-evidence"
+    "eslint-type-evidence-production",
+    "eslint-type-evidence-tests"
   ],
   "kubernetes_policy_packs": [
     {
@@ -474,10 +475,10 @@
       "exclude": []
     },
     {
-      "id": "eslint-type-evidence",
+      "id": "eslint-type-evidence-production",
       "required": true,
       "category": "lint",
-      "scope": "changed-files",
+      "scope": "repository",
       "tier": "full",
       "timeout_ms": 120000,
       "blocking_severity": "warning",
@@ -487,12 +488,7 @@
       ],
       "config_path": "eslint-type-evidence-config.mjs",
       "targets": [
-        "skills/common/plugin-runtime",
-        "skills/common/plugins",
-        "skills/nova/plugins",
-        "skills/buster/plugins",
-        "scripts",
-        "tests/verification"
+        "."
       ],
       "include": [
         "**/*.js",
@@ -503,6 +499,81 @@
         "**/*.cjs",
         "**/*.mts",
         "**/*.cts"
+      ],
+      "exclude": [
+        "**/*.test.*",
+        "**/*.spec.*",
+        "**/test/**",
+        "**/tests/**",
+        "**/__tests__/**",
+        "**/fixtures/**"
+      ]
+    },
+    {
+      "id": "eslint-type-evidence-tests",
+      "required": true,
+      "category": "lint",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "eslint-type-evidence-tests-config.mjs",
+      "targets": [
+        "."
+      ],
+      "include": [
+        "**/*.test.js",
+        "**/*.test.jsx",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.test.mjs",
+        "**/*.test.cjs",
+        "**/*.test.mts",
+        "**/*.test.cts",
+        "**/*.spec.js",
+        "**/*.spec.jsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.spec.mjs",
+        "**/*.spec.cjs",
+        "**/*.spec.mts",
+        "**/*.spec.cts",
+        "**/test/**/*.js",
+        "**/test/**/*.jsx",
+        "**/test/**/*.ts",
+        "**/test/**/*.tsx",
+        "**/test/**/*.mjs",
+        "**/test/**/*.cjs",
+        "**/test/**/*.mts",
+        "**/test/**/*.cts",
+        "**/tests/**/*.js",
+        "**/tests/**/*.jsx",
+        "**/tests/**/*.ts",
+        "**/tests/**/*.tsx",
+        "**/tests/**/*.mjs",
+        "**/tests/**/*.cjs",
+        "**/tests/**/*.mts",
+        "**/tests/**/*.cts",
+        "**/__tests__/**/*.js",
+        "**/__tests__/**/*.jsx",
+        "**/__tests__/**/*.ts",
+        "**/__tests__/**/*.tsx",
+        "**/__tests__/**/*.mjs",
+        "**/__tests__/**/*.cjs",
+        "**/__tests__/**/*.mts",
+        "**/__tests__/**/*.cts",
+        "**/fixtures/**/*.js",
+        "**/fixtures/**/*.jsx",
+        "**/fixtures/**/*.ts",
+        "**/fixtures/**/*.tsx",
+        "**/fixtures/**/*.mjs",
+        "**/fixtures/**/*.cjs",
+        "**/fixtures/**/*.mts",
+        "**/fixtures/**/*.cts"
       ],
       "exclude": []
     },
