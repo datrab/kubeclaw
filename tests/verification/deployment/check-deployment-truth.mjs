@@ -599,8 +599,8 @@ assert.ok(
 );
 assert.match(
   chart,
-  /if and \.Values\.gateway\.startupDoctor\.enabled \(not \.Values\.runAsRoot\)[\s\S]*name: openclaw-state-permissions[\s\S]*find \/home\/node\/\.openclaw -xdev -exec chown -h 1000:1000 \{\} \+[\s\S]*runAsNonRoot: false[\s\S]*add:[\s\S]*- CHOWN[\s\S]*name: config[\s\S]*mountPath: \/home\/node\/\.openclaw/,
-  'non-root agents must repair only their persistent config ownership with the minimal CHOWN capability',
+  /if and \.Values\.gateway\.startupDoctor\.enabled \(not \.Values\.runAsRoot\)[\s\S]*name: openclaw-state-permissions[\s\S]*find \/home\/node\/\.openclaw -xdev -exec chown -h 1000:1000 \{\} \+[\s\S]*runAsNonRoot: false[\s\S]*add:[\s\S]*- CHOWN[\s\S]*- DAC_READ_SEARCH[\s\S]*name: config[\s\S]*mountPath: \/home\/node\/\.openclaw/,
+  'non-root agents must repair only their persistent config ownership with bounded traversal and ownership capabilities',
 );
 assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),
