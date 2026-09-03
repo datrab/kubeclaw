@@ -140,10 +140,14 @@ function sourceLessHolisticJobCertified(job: ScalableReviewJob, parsed: Scalable
 // eslint-disable-next-line complexity -- Preflight validates each independent trust condition before accepting findings.
 function preflightJob(
   job: ScalableReviewJob, result: Pick<ScalableReviewJobResult, 'jobDigest' | 'parsed'> | undefined,
-  proposals: ScalableReviewProposal[], integrityIssues: string[], incompleteJobs: string[],
+  proposals: ScalableReviewProposal[], integrityIssues: string[], incompleteJobs: string[], deferred: ReadonlySet<string>,
 ): void {
   if (!result || result.jobDigest !== job.digest || !result.parsed.ok) { incompleteJobs.push(job.id); return; }
-  if (result.parsed.value.contextRequest) { integrityIssues.push(`complete job requested context: ${job.id}`); return; }
+  if (result.parsed.value.contextRequest) {
+    if (deferred.has(job.id)) incompleteJobs.push(job.id);
+    else integrityIssues.push(`complete job requested context: ${job.id}`);
+    return;
+  }
   const expected = job.requirements.map(({ id }) => id).sort();
   const actual = Object.keys(result.parsed.value.requirementAssessments).sort();
   if (canonicalJson(expected) !== canonicalJson(actual)) {
@@ -175,10 +179,11 @@ function uniqueResults<T extends { readonly jobId: string }>(results: readonly T
 export function preflightScalableReviewResults(
   jobs: readonly ScalableReviewJob[],
   results: readonly Pick<ScalableReviewJobResult, 'jobId' | 'jobDigest' | 'parsed'>[],
+  deferred: ReadonlySet<string> = new Set(),
 ): ScalableReviewPreflight {
   const resultById = uniqueResults(results, 'scalable review preflight');
   const proposals: ScalableReviewProposal[] = [], integrityIssues: string[] = [], incompleteJobs: string[] = [];
-  for (const job of jobs) preflightJob(job, resultById.get(job.id), proposals, integrityIssues, incompleteJobs);
+  for (const job of jobs) preflightJob(job, resultById.get(job.id), proposals, integrityIssues, incompleteJobs, deferred);
   if (results.some(({ jobId }) => !jobs.some(({ id }) => id === jobId))) integrityIssues.push('unknown scalable review result');
   return Object.freeze({
     proposals: Object.freeze(proposals.sort((left, right) => compareCodeUnits(left.id, right.id))),
@@ -219,7 +224,7 @@ export function buildScalableVerificationJobs(
   preflight: ScalableReviewPreflight, jobs: readonly ScalableReviewJob[],
   policyDigest: `sha256:${string}`, budget?: ScalableVerificationBudget,
 ): readonly ScalableVerificationJob[] {
-  if (preflight.integrityIssues.length > 0 || preflight.incompleteJobs.length > 0) {
+  if (preflight.integrityIssues.length > 0) {
     throw new Error('scalable review preflight is incomplete');
   }
   const byId = new Map(jobs.map((value) => [value.id, value]));
@@ -354,6 +359,7 @@ export async function executeScalableVerificationJobs(
 
 export function reduceScalableReview(
   verificationJobs: readonly ScalableVerificationJob[], results: readonly ScalableVerificationJobResult[],
+  additionalIncomplete: readonly string[] = [],
 ): ScalableReviewReduction {
   const byId = uniqueResults(results, 'scalable review reduction');
   const values: ScalableReducedFinding[] = [], incomplete: string[] = [];
@@ -369,7 +375,7 @@ export function reduceScalableReview(
   const unsigned = {
     confirmed: Object.freeze(reduced.filter(({ verification }) => verification === 'confirmed')),
     rejected: Object.freeze(reduced.filter(({ verification }) => verification !== 'confirmed')),
-    incomplete: Object.freeze([...new Set(incomplete)].sort()), duplicateCount,
+    incomplete: Object.freeze([...new Set([...incomplete, ...additionalIncomplete])].sort()), duplicateCount,
   };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }

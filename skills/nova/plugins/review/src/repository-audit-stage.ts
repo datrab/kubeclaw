@@ -355,11 +355,13 @@ async function verifiedReduction(
         ranges: Object.freeze([{ startLine: 1, endLine: Math.max(1, response.content.split('\n').length) }]) }));
     }
   }
-  const expandedJobs = compilation.jobs.flatMap((job, index) => {
+  const requestedExpansionJobs = compilation.jobs.flatMap((job, index) => {
     const request = firstResults[index]?.parsed.ok ? firstResults[index].parsed.value.contextRequest : undefined;
     return request ? [expandScalableReviewJob(job,
       request.paths.flatMap((requestedPath) => resolvedRequests.get(requestedPath) ?? []), completeSources)] : [];
   });
+  const expandedJobs = requestedExpansionJobs.slice(0, compilation.profile.maxContextExpansionJobs);
+  const deferredExpansionIds = new Set(requestedExpansionJobs.slice(expandedJobs.length).map(({ id }) => id));
   let finalJobs = compilation.jobs, reviewResults = firstResults, reviewRuns = [reviewRun];
   let expansionAccounting: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>
     = Object.freeze({ inputTokens: 0, estimatedCostUsd: 0, estimatedWallTimeSeconds: 0 });
@@ -374,21 +376,18 @@ async function verifiedReduction(
     ) as ScalableReviewJobResult);
     reviewRuns = [reviewRun, expandedRun];
   }
-  const preflight = preflightScalableReviewResults(finalJobs, reviewResults);
-  if (preflight.integrityIssues.length > 0 || preflight.incompleteJobs.length > 0) {
+  const preflight = preflightScalableReviewResults(finalJobs, reviewResults, deferredExpansionIds);
+  if (preflight.integrityIssues.length > 0) {
     throw new RepositoryAuditIntegrityError(`repository audit review is incomplete: ${canonicalJson(preflight)}`);
   }
-  const jobs = buildScalableVerificationJobs(preflight, finalJobs, policyDigest, {
+  const requestedVerificationJobs = buildScalableVerificationJobs(preflight, finalJobs, policyDigest, {
     tokenizerEncoding: compilation.profile.tokenizerEncoding,
     maxPromptBytes: compilation.profile.maxPromptBytesPerJob,
     maxInputTokens: Math.min(compilation.profile.maxInputTokensPerJob,
       compilation.profile.maxContextTokensPerJob - compilation.profile.maxOutputTokensPerJob),
   });
-  if (jobs.length > compilation.profile.maxVerificationJobs) {
-    throw new RepositoryAuditIntegrityError(
-      `repository audit verification job budget exceeded: ${jobs.length}:${compilation.profile.maxVerificationJobs}`,
-    );
-  }
+  const jobs = requestedVerificationJobs.slice(0, compilation.profile.maxVerificationJobs);
+  const deferredVerificationIds = requestedVerificationJobs.slice(jobs.length).map(({ proposal }) => proposal.id);
   const verificationMetrics = jobs.map((job) => reserveReviewRuntimePrompt(
     buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
   const inputTokens = verificationMetrics.reduce((total, value) => total + value.tokens, 0);
@@ -427,10 +426,12 @@ async function verifiedReduction(
   const verificationRun = await cachedVerificationJobs(jobs, verificationIdentity,
     { ...runtime, execution: execution('verification') });
   const results = jobs.map(({ id }) => verificationRun.values.get(id) as ScalableVerificationJobResult);
-  const reduction = reduceScalableReview(jobs, results);
-  if (reduction.incomplete.length > 0) {
-    throw new RepositoryAuditIntegrityError(`repository audit verification is incomplete: ${reduction.incomplete.join(', ')}`);
+  const completedReduction = reduceScalableReview(jobs, results);
+  if (completedReduction.incomplete.length > 0) {
+    throw new RepositoryAuditIntegrityError(`repository audit verification is incomplete: ${completedReduction.incomplete.join(', ')}`);
   }
+  const reduction = reduceScalableReview(jobs, results,
+    [...preflight.incompleteJobs, ...deferredVerificationIds]);
   return { reduction, cache, verificationAccounting, dispatchAccounting: dispatchBudget.snapshot(),
     contextExpansions: expandedJobs.length, summary: {
     review: combinedCacheSummary(reviewIdentity, reviewRuns),

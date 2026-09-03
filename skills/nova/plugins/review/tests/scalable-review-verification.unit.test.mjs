@@ -69,7 +69,14 @@ const wrongEvidence = { ...parsed, value: { ...parsed.value, proposedFindings: [
   evidence: [{ kind: 'reviewed-source', digest: digest('d') }] }] } };
 assert.match(preflightScalableReviewResults([job], [{ jobId: job.id, jobDigest: job.digest,
   parsed: wrongEvidence }]).integrityIssues[0], /exact source/u);
-assert.throws(() => buildScalableVerificationJobs({ ...preflight, incompleteJobs: ['missing'] }, [job], policyDigest), /incomplete/u);
+assert.equal(buildScalableVerificationJobs({ ...preflight, incompleteJobs: ['missing'] }, [job], policyDigest).length, 1);
+const contextRequested = { ok: true, value: { ...parsed.value, proposedFindings: [],
+  contextRequest: { paths: ['b.ts'], reason: 'Need the boundary source.' } } };
+const deferredPreflight = preflightScalableReviewResults([job],
+  [{ jobId: job.id, jobDigest: job.digest, parsed: contextRequested }], new Set([job.id]));
+assert.deepEqual(deferredPreflight.incompleteJobs, [job.id]);
+assert.deepEqual(deferredPreflight.integrityIssues, []);
+assert.deepEqual(reduceScalableReview([], [], deferredPreflight.incompleteJobs).incomplete, [job.id]);
 
 const context = { async invoke(capability, request) {
   assert.equal(capability, 'runtime.dispatch');
