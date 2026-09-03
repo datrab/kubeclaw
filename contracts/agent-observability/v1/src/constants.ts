@@ -15,7 +15,6 @@ export const AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES = Object.freeze([
   'openclaw.agent.ended',
   'openclaw.llm.input',
   'openclaw.llm.output',
-  'openclaw.subagent.spawning',
   'openclaw.subagent.spawned',
   'openclaw.subagent.delivery_target',
   'openclaw.subagent.ended',

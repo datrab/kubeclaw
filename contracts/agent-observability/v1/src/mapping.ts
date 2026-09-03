@@ -26,14 +26,6 @@ export const AGENT_OBSERVABILITY_TELEMETRY_MAPPINGS = Object.freeze([
     notes: 'Summary schema exists, but full assistant/provider output remains on the payload stream unless explicitly promoted.',
   },
   {
-    ingress_type: 'openclaw.subagent.spawning',
-    hook: 'subagent_spawning',
-    current_telemetry_type: 'agent.spawn.requested',
-    future_telemetry_type: 'agent.spawn.requested',
-    promoted_by_default: true,
-    notes: 'First-class typed spawn-request telemetry; raw requester payload remains on the agent-observability control stream.',
-  },
-  {
     ingress_type: 'openclaw.subagent.spawned',
     hook: 'subagent_spawned',
     current_telemetry_type: 'agent.spawned',

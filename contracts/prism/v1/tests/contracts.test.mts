@@ -75,6 +75,24 @@ assert.doesNotThrow(() =>
     props: { content: "Hello" },
   }),
 );
+assert.throws(() =>
+  validatePrism("operation", {
+    type: "responsive.props.set",
+    baseRevision: 1,
+    nodeId: "title",
+    props: { content: "Compact" },
+  }),
+  /viewport|required property/,
+);
+assert.doesNotThrow(() =>
+  validatePrism("operation", {
+    type: "responsive.props.set",
+    baseRevision: 1,
+    nodeId: "title",
+    viewport: "compact",
+    props: { content: "Compact" },
+  }),
+);
 assert.throws(
   () =>
     validatePrism("designDocument", {

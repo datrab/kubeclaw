@@ -16,7 +16,6 @@ const TYPE_TO_HOOK: Record<AgentObservabilityIngressEventType, string> = Object.
   'openclaw.agent.ended': 'agent_end',
   'openclaw.llm.input': 'llm_input',
   'openclaw.llm.output': 'llm_output',
-  'openclaw.subagent.spawning': 'subagent_spawning',
   'openclaw.subagent.spawned': 'subagent_spawned',
   'openclaw.subagent.delivery_target': 'subagent_delivery_target',
   'openclaw.subagent.ended': 'subagent_ended',
@@ -189,7 +188,7 @@ const validateSubagent: PayloadValidator = (payload, errors) => {
 const validators: Record<AgentObservabilityIngressEventType, PayloadValidator> = {
   'openclaw.llm.input': validateLlmInput, 'openclaw.llm.output': validateLlmOutput, 'openclaw.tool.started': validateToolStarted,
   'openclaw.tool.finished': validateToolFinished, 'openclaw.agent.ended': validateAgentEnded, 'openclaw.model.started': validateModelStarted,
-  'openclaw.model.ended': validateModelEnded, 'openclaw.model.usage': validateModelUsage, 'openclaw.subagent.spawning': validateSubagent,
+  'openclaw.model.ended': validateModelEnded, 'openclaw.model.usage': validateModelUsage,
   'openclaw.subagent.spawned': validateSubagent, 'openclaw.subagent.delivery_target': validateSubagent, 'openclaw.subagent.ended': validateSubagent,
   'openclaw.session.started': validateSession, 'openclaw.session.ended': validateSession,
 };

@@ -7,7 +7,7 @@ import type {
 export type AgentObservabilityIngressEventType = (typeof AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES)[number];
 export type AgentObservabilityHook = (typeof AGENT_OBSERVABILITY_HOOKS)[number];
 export type AgentObservabilityDiagnostic = (typeof AGENT_OBSERVABILITY_DIAGNOSTICS)[number];
-export type AgentObservabilityPayloadHook = AgentObservabilityHook | 'model_usage' | 'subagent_spawning';
+export type AgentObservabilityPayloadHook = AgentObservabilityHook | 'model_usage';
 export type AgentObservabilityStreamKind = 'control' | 'payload';
 export type AgentObservabilityCanonicalTelemetryType =
   | 'agent.ended'
@@ -140,7 +140,7 @@ export interface AgentObservabilityModelUsagePayloadV1 extends AgentObservabilit
 }
 
 export interface AgentObservabilitySubagentPayloadV1 extends AgentObservabilityPayloadBaseV1 {
-  hook: 'subagent_spawning' | 'subagent_spawned' | 'subagent_delivery_target' | 'subagent_ended';
+  hook: 'subagent_spawned' | 'subagent_delivery_target' | 'subagent_ended';
   child_session_key?: string | null;
   child_session_id?: string | null;
   agent_id?: string | null;

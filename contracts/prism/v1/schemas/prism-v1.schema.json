@@ -588,7 +588,18 @@
           "additionalProperties": false,
           "required": ["type", "baseRevision", "nodeId", "props"],
           "properties": {
-            "type": { "enum": ["node.props.set", "responsive.props.set"] },
+            "type": { "const": "node.props.set" },
+            "baseRevision": { "type": "integer" },
+            "nodeId": { "$ref": "#/$defs/id" },
+            "props": { "$ref": "#/$defs/propsPatch" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "baseRevision", "nodeId", "props", "viewport"],
+          "properties": {
+            "type": { "const": "responsive.props.set" },
             "baseRevision": { "type": "integer" },
             "nodeId": { "$ref": "#/$defs/id" },
             "props": { "$ref": "#/$defs/propsPatch" },
