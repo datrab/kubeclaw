@@ -13,6 +13,71 @@ export interface OpenClawSessionIdentity {
   readonly model?: string;
 }
 
+interface SessionListCacheEntry {
+  readonly expiresAt: number;
+  readonly response: Promise<unknown>;
+}
+
+const SESSION_LIST_CACHE = new WeakMap<AdapterActivationContext, Map<string, SessionListCacheEntry>>();
+
+function optionalText(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim() ? value.trim() : undefined;
+}
+
+function sessionListEntries(value: unknown): readonly JsonRecord[] {
+  const source = openClawToolDetails(value);
+  if (!record(source)) return [];
+  return [source.tasks, source.active, source.recent]
+    .flatMap((collection) => Array.isArray(collection) ? collection : [])
+    .filter(record);
+}
+
+function entryIdentifiers(entry: JsonRecord): readonly string[] {
+  return [entry.taskId, entry.task_id, entry.runId, entry.run_id, entry.sessionKey, entry.session_key]
+    .map(optionalText).filter((value): value is string => value !== undefined);
+}
+
+function includeIdentifiers(target: Set<string>, values: readonly string[]): boolean {
+  const missing = values.filter((value) => !target.has(value));
+  missing.forEach((value) => target.add(value));
+  return missing.length > 0;
+}
+
+/** Resolve one previously accepted deterministic task, failing closed if its label is ambiguous or incomplete. */
+// eslint-disable-next-line complexity -- Registry normalization joins current task, active, and recent projections.
+export function registeredSessionIdentity(
+  value: unknown, label: string, expectedModel: string,
+): OpenClawSessionIdentity | undefined {
+  const entries = sessionListEntries(value);
+  const exact = entries.filter((entry) => optionalText(entry.label) === label);
+  if (exact.length === 0) return undefined;
+  const identifiers = new Set(exact.flatMap(entryIdentifiers));
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const entry of entries) {
+      const ids = entryIdentifiers(entry);
+      if (optionalText(entry.label) !== label && !ids.some((id) => identifiers.has(id))) continue;
+      changed = includeIdentifiers(identifiers, ids) || changed;
+    }
+  }
+  const related = entries.filter((entry) => optionalText(entry.label) === label
+    || entryIdentifiers(entry).some((id) => identifiers.has(id)));
+  const runIds = new Set(related.map((entry) => optionalText(first(entry.runId, entry.run_id)))
+    .filter((value): value is string => value !== undefined));
+  if (runIds.size > 1) throw new Error(`OPENCLAW_SESSION_REATTACHMENT_AMBIGUOUS:${label}`);
+  const runId = [...runIds][0];
+  const sessionKey = related.map((entry) => optionalText(first(entry.sessionKey, entry.session_key)))
+    .find((value): value is string => value !== undefined);
+  if (!runId || !sessionKey) throw new Error(`OPENCLAW_SESSION_REATTACHMENT_INCOMPLETE:${label}`);
+  const taskId = related.map((entry) => optionalText(first(entry.taskId, entry.task_id)))
+    .find((value): value is string => value !== undefined);
+  const models = new Set(related.map((entry) => optionalText(entry.model))
+    .filter((value): value is string => value !== undefined));
+  if ([...models].some((model) => model !== expectedModel)) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
+  return Object.freeze({ sessionKey, runId, label, model: expectedModel, ...(taskId ? { taskId } : {}) });
+}
+
 // eslint-disable-next-line complexity -- Current and legacy session lists expose several equivalent identity/state fields.
 function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: boolean): OpenClawSessionState {
   const source = openClawToolDetails(value);
@@ -62,6 +127,28 @@ export async function gateway(context: AdapterActivationContext, target: OpenCla
   if (!record(response) || response.status !== 200) throw new Error(`OPENCLAW_GATEWAY_${tool.toUpperCase()}_FAILED`);
   assertOpenClawToolAccepted(response.body, tool);
   return response.body;
+}
+
+async function cachedSessionList(
+  context: AdapterActivationContext, target: OpenClawTarget, token: string,
+): Promise<unknown> {
+  let cache = SESSION_LIST_CACHE.get(context);
+  if (!cache) { cache = new Map(); SESSION_LIST_CACHE.set(context, cache); }
+  const recentMinutes = Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5);
+  const key = `${target.endpoint}\u0000${target.controllerSessionKey ?? ''}\u0000${recentMinutes}`;
+  const current = cache.get(key);
+  if (current && current.expiresAt > Date.now()) return current.response;
+  const response = gateway(context, target, token, 'subagents', { action: 'list', recentMinutes });
+  cache.set(key, { expiresAt: Date.now() + 250, response });
+  try { return await response; }
+  catch (error) { if (cache.get(key)?.response === response) cache.delete(key); throw error; }
+}
+
+export async function findRegisteredSession(
+  context: AdapterActivationContext, target: OpenClawTarget, token: string, label: string,
+): Promise<OpenClawSessionIdentity | undefined> {
+  if (target.runtime !== 'subagent') return undefined;
+  return registeredSessionIdentity(await cachedSessionList(context, target, token), label, target.model);
 }
 
 async function wait(ms: number, signal: AbortSignal): Promise<void> {

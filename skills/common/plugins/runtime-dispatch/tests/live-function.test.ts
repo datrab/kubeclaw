@@ -8,6 +8,7 @@ import { canonicalJson } from '@kubeclaw/plugin-sdk';
 import { assertOpenClawOutputBudget, assertOpenClawPromptBudget, assertOpenClawSessionCompleted,
   prepareOpenClawTask } from '../src/openclaw.ts';
 import { assertOpenClawToolAccepted, OpenClawToolRejectedError } from '../src/openclaw-response.ts';
+import { registeredSessionIdentity } from '../src/openclaw-session.ts';
 
 assert.doesNotThrow(() => assertOpenClawToolAccepted({
   ok: true, output: { details: { status: 'accepted', childSessionKey: 'child' } },
@@ -30,6 +31,24 @@ assert.throws(() => assertOpenClawSessionCompleted(
   { terminal: true, state: 'done', model: 'fallback' }, 'declared'), /OPENCLAW_SESSION_MODEL_MISMATCH/u);
 assert.throws(() => assertOpenClawSessionCompleted(
   { terminal: true, state: 'done' }, 'declared'), /OPENCLAW_SESSION_MODEL_MISMATCH/u);
+
+assert.deepEqual(registeredSessionIdentity({ output: { details: {
+  tasks: [{ taskId: 'task:reattach', label: 'review-job-deadbeef', status: 'running' }],
+  active: [{ taskId: 'task:reattach', runId: 'run:reattach', sessionKey: 'session:reattach',
+    status: 'running' }],
+} } }, 'review-job-deadbeef', 'openai/gpt-5.6-terra'), {
+  taskId: 'task:reattach', runId: 'run:reattach', sessionKey: 'session:reattach',
+  label: 'review-job-deadbeef', model: 'openai/gpt-5.6-terra',
+});
+assert.equal(registeredSessionIdentity({ tasks: [{ label: 'other' }] },
+  'review-job-deadbeef', 'openai/gpt-5.6-terra'), undefined);
+assert.throws(() => registeredSessionIdentity({ tasks: [
+  { label: 'review-job-deadbeef', runId: 'run:one', sessionKey: 'session:one' },
+  { label: 'review-job-deadbeef', runId: 'run:two', sessionKey: 'session:two' },
+] }, 'review-job-deadbeef', 'openai/gpt-5.6-terra'), /OPENCLAW_SESSION_REATTACHMENT_AMBIGUOUS/u);
+assert.throws(() => registeredSessionIdentity({ tasks: [
+  { label: 'review-job-deadbeef', taskId: 'task:incomplete' },
+] }, 'review-job-deadbeef', 'openai/gpt-5.6-terra'), /OPENCLAW_SESSION_REATTACHMENT_INCOMPLETE/u);
 
 assert.throws(() => assertOpenClawPromptBudget('oversized prompt', {
   tokenizerEncoding: 'o200k_base', maxPromptBytes: 1, maxInputTokens: 100,

@@ -5,7 +5,7 @@ import { getEncoding } from 'js-tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
 import { openClawToolDetails, record } from './openclaw-response.ts';
-import { cancelSession, gateway, pollSession, type OpenClawSessionIdentity, type OpenClawSessionState } from './openclaw-session.ts';
+import { cancelSession, findRegisteredSession, gateway, pollSession, type OpenClawSessionIdentity, type OpenClawSessionState } from './openclaw-session.ts';
 
 export interface OpenClawTarget {
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
@@ -175,6 +175,8 @@ async function spawnSession(context: AdapterActivationContext, target: OpenClawT
   const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
   const task = prepareOpenClawTask(payload, resultFile, target);
   const label = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`;
+  const existing = await findRegisteredSession(context, target, token, label);
+  if (existing) return existing;
   const spawned = await gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
     ...(target.collectorMode ? { collect: true,
@@ -219,7 +221,10 @@ export async function dispatchOpenClaw(
     void spawning.then((lateIdentity) => cancelSession(context, target, token, lateIdentity)).catch(() => undefined);
     throw error;
   }
-  if (identity.model && identity.model !== target.model) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
+  if (identity.model && identity.model !== target.model) {
+    await cancelSession(context, target, token, identity);
+    throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
+  }
   const abort = (): void => { void cancelSession(context, target, token, identity); };
   dispatchSignal.addEventListener('abort', abort, { once: true });
   if (dispatchSignal.aborted) {
