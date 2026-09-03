@@ -54,9 +54,8 @@ export class PipelineRunner {
   async run(runId = `run:${crypto.randomUUID()}`): Promise<PipelineRunResult> {
     const identity = Object.freeze({ runId, pipelineId: this.#snapshot.pipelineId, graphDigest: this.#snapshot.digest });
     const append = (type: LifecycleEvent['type'], eventIdentity: LifecycleEvent['identity'], payload: Readonly<Record<string, unknown>> = {}, causationId: string | null = this.#options.resumeCausationId ?? null): LifecycleEvent => {
-      const event: LifecycleEvent = { schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: this.#options.journal.records().length + 1,
-        type, identity: eventIdentity, occurredAt: this.#now().toISOString(), causationId, payload };
-      this.#options.journal.append(event); return event;
+      return this.#options.journal.appendSequenced((sequence): LifecycleEvent => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence,
+        type, identity: eventIdentity, occurredAt: this.#now().toISOString(), causationId, payload })).entry;
     };
     const checkpoints = new ArtifactCheckpointRecorder(this.#options.journal, append);
     const executor = new StageExecutor({ graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,

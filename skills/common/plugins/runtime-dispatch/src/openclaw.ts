@@ -237,9 +237,11 @@ export async function dispatchOpenClaw(
   }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
-  const result = resultLocation(target, dispatchId);
+  const stableDispatchId = `payload:${crypto.createHash('sha256')
+    .update(canonicalJson(dispatchPayload(payload).modelPayload)).digest('hex')}`;
+  const result = resultLocation(target, stableDispatchId);
   assertDispatchActive(dispatchSignal);
-  const spawning = spawnSession(context, target, token, payload, result.file, dispatchId, dispatchSignal);
+  const spawning = spawnSession(context, target, token, payload, result.file, stableDispatchId, dispatchSignal);
   let identity: OpenClawSessionIdentity;
   try { identity = await beforeAbort(() => spawning, dispatchSignal); }
   catch (error) {

@@ -52,10 +52,23 @@ function enabledRegistrations(platform: PlatformConfig, definition: PipelineDefi
 function effectAppender(events: FileJournal<LifecycleEvent | PluginDomainEvent>): (type: 'effect.requested' | 'effect.accepted' | 'effect.completed' | 'effect.failed', request: EffectRequest, payload: Readonly<Record<string, unknown>>) => void {
   return (type, request, payload) => {
     if (request.attempt.attemptId.startsWith('observer:')) return;
-    events.append({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: events.records().length + 1,
+    events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence,
       type, identity: { runId: request.attempt.runId, stageId: request.attempt.stageId, attemptId: request.attempt.attemptId, effectId: request.effectId },
-      occurredAt: new Date().toISOString(), causationId: request.attempt.attemptId, payload });
+      occurredAt: new Date().toISOString(), causationId: request.attempt.attemptId, payload }));
   };
+}
+
+function auditResult(result: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
+  const serialized = Buffer.from(JSON.stringify(result));
+  if (serialized.length <= 16 * 1024) return result;
+  const contentDigest = `sha256:${crypto.createHash('sha256').update(serialized).digest('hex')}`;
+  return Object.freeze({
+    schemaVersion: 'effect-result-summary.v1',
+    contentDigest,
+    artifactRef: `effect-result:${contentDigest}`,
+    bytes: serialized.length,
+    externalized: true,
+  });
 }
 
 export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): AdapterRuntime {
@@ -64,13 +77,13 @@ export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, 
     requested: (request) => append('effect.requested', request, { capability: request.capability, operation: request.operation, resource: request.resource }),
     accepted: (request) => append('effect.accepted', request, {}),
     completed: (request, receipt) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
-      receipt.status === 'completed' ? { adapter: receipt.adapter, result: receipt.result ?? {} } : { adapter: receipt.adapter, error: receipt.error ?? {} }),
-  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), Math.max(platform.shutdownTimeoutMs * 2, 60_000));
+      receipt.status === 'completed' ? { adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { adapter: receipt.adapter, error: receipt.error ?? {} }),
+  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs ?? 300_000);
   return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(platform.adapters), effects,
-    shutdownTimeoutMs: platform.shutdownTimeoutMs, emitDomainEvent: async (registration, type, identity, payload) => { events.append({
-      schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: events.records().length + 1, type,
+    shutdownTimeoutMs: platform.shutdownTimeoutMs, emitDomainEvent: async (registration, type, identity, payload) => { events.appendSequenced((sequence) => ({
+      schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence, type,
       producer: registration, identity, occurredAt: new Date().toISOString(), causationId: null, payload,
-    }); } });
+    })); } });
 }
 
 export async function drainObservers(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, adapters: AdapterRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): Promise<void> {

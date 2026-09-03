@@ -87,6 +87,7 @@
     },
     "storageRoot": { "type": "string", "minLength": 1 },
     "shutdownTimeoutMs": { "type": "integer", "minimum": 1 },
+    "effectLockTtlMs": { "type": "integer", "minimum": 60000, "maximum": 86400000 },
     "orchestratorIssuerId": { "type": "string", "minLength": 1 },
     "administrativeDecisionIssuers": {
       "type": "array",

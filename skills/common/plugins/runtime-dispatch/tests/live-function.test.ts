@@ -395,7 +395,7 @@ try {
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
     assert.equal(JSON.parse(spawnRequests[0].body).sessionKey, 'agent:codex:nova-review-controller');
-    assert.equal(JSON.parse(spawnRequests[0].body).idempotencyKey, 'spawn:runtime:gateway');
+    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:payload:[a-f0-9]{64}$/u);
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');
@@ -412,6 +412,20 @@ try {
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait')
       .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
+    const recoveredGateway = await gatewayAdapters.invoke(
+      'runtime.dispatch',
+      { ...attempt, attemptId: 'attempt:test:retry', attemptNumber: 2 },
+      'runtime:gateway-retry',
+      {
+        operation: 'dispatch',
+        resource: { type: 'runtime.agent', canonicalId: 'gateway' },
+        payload: { protocol: 'kubeclaw.review.v2', task: 'Review gateway behavior.' },
+      },
+      new AbortController().signal,
+    );
+    assert.deepEqual(recoveredGateway, gateway);
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn').length, 1,
+      'a retry with a new engine idempotency key reattaches by stable model payload identity');
     await assert.rejects(gatewayAdapters.invoke(
       'runtime.dispatch',
       attempt,

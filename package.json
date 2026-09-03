@@ -21,6 +21,7 @@
     "skills/buster/plugins/*"
   ],
   "scripts": {
+    "verify:nova-journal-scale": "node tests/verification/contracts/check-nova-journal-scale.mts",
     "scan:images": "bash scripts/scan-runtime-images.sh",
     "bootstrap:prism:tests": "bash scripts/bootstrap-prism-tests.sh",
     "verify:prism:spikes": "npm run verify --prefix spikes/prism/puck-adapter && npm run verify --prefix spikes/prism/mobile-editor && npm run verify --prefix spikes/prism/preview-isolation && npm run verify --prefix spikes/prism/postgres-retrieval",

@@ -21,6 +21,25 @@ function blobFile(root, digest) {
   return path.join(root, 'blobs', 'sha256', value.slice(0, 2), value.slice(2));
 }
 function artifactValue(root, artifact) { return jsonFile(blobFile(root, artifact.digest)); }
+function processAlive(pid) {
+  if (!Number.isSafeInteger(pid) || pid < 1) return false;
+  try { process.kill(pid, 0); return true; } catch (_error) { return false; }
+}
+function activeRuntimeLocks(storageRoot, attemptIds) {
+  const root = path.join(storageRoot, 'resource-locks');
+  if (!fs.existsSync(root)) return 0;
+  let total = 0;
+  for (const name of fs.readdirSync(root)) {
+    if (!name.endsWith('.active')) continue;
+    const owner = optionalJsonFile(path.join(root, name, 'owner.json'));
+    const contract = owner?.contract;
+    if (contract?.status === 'active' && contract.resource?.type === 'runtime.invocation'
+      && attemptIds.has(contract.ownerLeaseId)
+      && typeof contract.expiresAt === 'string' && Date.parse(contract.expiresAt) > Date.now()
+      && processAlive(owner?.pid)) total += 1;
+  }
+  return total;
+}
 function lastLines(file, maximumBytes = 1024 * 1024) {
   const size = fs.statSync(file).size, start = Math.max(0, size - maximumBytes);
   const descriptor = fs.openSync(file, 'r');
@@ -97,9 +116,21 @@ for (const artifact of unique.values()) {
 const eventFile = path.join(path.resolve(platform.storageRoot), 'runs', runId, 'events.jsonl');
 const stages = {}, terminal = { status: 'running', occurredAt: undefined };
 let lastEventAt;
+const dispatches = new Map(), recentFailures = [], attemptIds = new Set();
 if (fs.existsSync(eventFile)) for (const line of lastLines(eventFile)) {
   const event = JSON.parse(line).entry;
+  if (typeof event.identity?.attemptId === 'string') attemptIds.add(event.identity.attemptId);
   if (typeof event.occurredAt === 'string') lastEventAt = event.occurredAt;
+  const effectId = event.identity?.effectId;
+  if (event.type === 'effect.requested' && event.payload?.capability === 'runtime.dispatch' && effectId) {
+    dispatches.set(effectId, 'requested');
+  } else if (event.type === 'effect.accepted' && dispatches.has(effectId)) {
+    dispatches.set(effectId, 'accepted');
+  } else if (['effect.completed', 'effect.failed'].includes(event.type) && effectId) {
+    dispatches.delete(effectId);
+  }
+  if (event.type === 'effect.failed') recentFailures.push({ occurredAt: event.occurredAt,
+    code: event.payload?.error?.code, message: event.payload?.error?.message });
   if (['stage.succeeded', 'stage.blocked', 'stage.cancelled', 'stage.failed'].includes(event.type)) {
     stages[event.identity.stageId] = event.type.slice('stage.'.length);
   }
@@ -117,6 +148,11 @@ const heartbeatAgeSeconds = heartbeatAt ? Math.max(0, (Date.now() - Date.parse(h
 const terminalRun = terminal.status !== 'running';
 const liveness = terminalRun ? 'terminal' : heartbeatAgeSeconds !== undefined
   && heartbeatAgeSeconds <= staleAfterSeconds && heartbeat?.processAlive === true ? 'active' : 'stale';
+const activeDispatches = activeRuntimeLocks(path.resolve(platform.storageRoot), attemptIds);
+const requestedDispatches = [...dispatches.values()].filter((value) => value === 'requested').length;
+const recentResourceLockExpired = recentFailures.filter(({ occurredAt, message }) =>
+  typeof occurredAt === 'string' && Date.now() - Date.parse(occurredAt) <= 15 * 60_000
+  && String(message).startsWith('RESOURCE_LOCK_EXPIRED:')).length;
 return { schemaVersion: 'repository-review-status.v1', runId,
   status: terminal.status, terminalAt: terminal.occurredAt, stages,
   liveness, lastEventAt, heartbeatAt, heartbeatAgeSeconds,
@@ -124,6 +160,9 @@ return { schemaVersion: 'repository-review-status.v1', runId,
   supervisorPid: Number.isSafeInteger(heartbeat?.supervisorPid) ? heartbeat.supervisorPid : undefined,
   attempt: Number.isSafeInteger(heartbeat?.attempt) ? heartbeat.attempt : undefined,
   recoveryMode: typeof heartbeat?.mode === 'string' ? heartbeat.mode : undefined,
+  health: terminalRun ? 'terminal' : recentResourceLockExpired > 0 ? 'degraded' : liveness,
+  activeDispatches, requestedDispatches, recentResourceLockExpired,
+  lastEffectFailure: recentFailures.at(-1),
   resources,
   plannedPrimary, completedReviewCheckpoints: review.size,
   remainingPrimary: Math.max(0, plannedPrimary - review.size),

@@ -3,12 +3,24 @@ import type {
   EffectReceipt,
   EffectRequest,
 } from '@kubeclaw/plugin-sdk';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
 import { FileJournal } from '../state/journal.ts';
+
+const INLINE_RESULT_LIMIT_BYTES = 64 * 1024;
+
+interface EffectResultReference {
+  readonly schemaVersion: 'effect-result-reference.v1';
+  readonly contentDigest: string;
+  readonly bytes: number;
+}
 
 type EffectJournalEntry =
   | { readonly type: 'requested'; readonly request: EffectRequest }
   | { readonly type: 'accepted'; readonly request: EffectRequest }
-  | { readonly type: 'completed'; readonly receipt: EffectReceipt };
+  | { readonly type: 'completed'; readonly receipt: EffectReceipt }
+  | { readonly type: 'completed-reference'; readonly receipt: EffectReceipt; readonly result: EffectResultReference };
 
 function acceptOnce(accepted: Set<string>, request: EffectRequest, persist?: () => void): boolean {
   if (accepted.has(request.idempotencyKey)) return false;
@@ -60,55 +72,132 @@ export class MemoryEffectJournal implements EffectJournal {
 
 export class FileEffectJournal implements EffectJournal {
   readonly #journal: FileJournal<EffectJournalEntry>;
+  readonly #resultRoot: string;
   readonly #receipts = new Map<string, EffectReceipt>();
   readonly #requests = new Map<string, EffectRequest>();
   readonly #accepted = new Set<string>();
+  #replayedRecords = 0;
 
   constructor(file: string) {
     this.#journal = new FileJournal(file);
-    for (const record of this.#journal.records()) {
+    this.#resultRoot = path.join(path.dirname(path.resolve(file)), 'effect-results', 'sha256');
+    this.#replay(this.#journal.records());
+  }
+
+  #replay(records: readonly { readonly entry: EffectJournalEntry }[]): void {
+    for (const record of records.slice(this.#replayedRecords)) {
       if (record.entry.type === 'requested') {
         this.#requests.set(record.entry.request.idempotencyKey, record.entry.request);
       } else if (record.entry.type === 'accepted') {
         this.#accepted.add(record.entry.request.idempotencyKey);
+      } else {
+        const receipt = record.entry.type === 'completed'
+          ? record.entry.receipt
+          : this.#hydrate(record.entry.receipt, record.entry.result);
+        this.#receipts.set(receipt.idempotencyKey, receipt);
       }
-      if (record.entry.type === 'completed') {
-        this.#receipts.set(record.entry.receipt.idempotencyKey, record.entry.receipt);
-      }
+      this.#replayedRecords += 1;
     }
   }
 
   async requested(request: EffectRequest): Promise<void> {
-    const existing = this.#requests.get(request.idempotencyKey);
-    if (existing && JSON.stringify(existing) !== JSON.stringify(request)) {
-      throw new Error(`EFFECT_REQUEST_CONFLICT:${request.idempotencyKey}`);
-    }
-    if (existing) return;
-    this.#journal.append({ type: 'requested', request });
-    this.#requests.set(request.idempotencyKey, request);
+    this.#journal.transact((records, append) => {
+      this.#replay(records);
+      const existing = this.#requests.get(request.idempotencyKey);
+      if (existing && JSON.stringify(existing) !== JSON.stringify(request)) {
+        throw new Error(`EFFECT_REQUEST_CONFLICT:${request.idempotencyKey}`);
+      }
+      if (existing) return;
+      append({ type: 'requested', request });
+      this.#requests.set(request.idempotencyKey, request);
+      this.#replayedRecords += 1;
+    });
   }
 
   async accepted(request: EffectRequest): Promise<boolean> {
-    return acceptOnce(this.#accepted, request, () => {
-      this.#journal.append({ type: 'accepted', request });
+    return this.#journal.transact((records, append) => {
+      this.#replay(records);
+      if (this.#accepted.has(request.idempotencyKey)) return false;
+      append({ type: 'accepted', request });
+      this.#accepted.add(request.idempotencyKey);
+      this.#replayedRecords += 1;
+      return true;
     });
   }
 
   async completed(receipt: EffectReceipt): Promise<void> {
-    const existing = this.#receipts.get(receipt.idempotencyKey);
-    if (existing && JSON.stringify(existing) !== JSON.stringify(receipt)) {
-      throw new Error(`EFFECT_RECEIPT_CONFLICT:${receipt.idempotencyKey}`);
+    const serialized = receipt.result === undefined ? undefined : Buffer.from(JSON.stringify(receipt.result));
+    const reference = serialized && serialized.length > INLINE_RESULT_LIMIT_BYTES
+      ? this.#persistResult(serialized) : undefined;
+    this.#journal.transact((records, append) => {
+      this.#replay(records);
+      const existing = this.#receipts.get(receipt.idempotencyKey);
+      if (existing && JSON.stringify(existing) !== JSON.stringify(receipt)) {
+        throw new Error(`EFFECT_RECEIPT_CONFLICT:${receipt.idempotencyKey}`);
+      }
+      if (existing) return;
+      if (reference) {
+        const { result: _result, ...withoutResult } = receipt;
+        append({ type: 'completed-reference', receipt: withoutResult as EffectReceipt, result: reference });
+      } else append({ type: 'completed', receipt });
+      this.#receipts.set(receipt.idempotencyKey, receipt);
+      this.#replayedRecords += 1;
+    });
+  }
+
+  #resultPath(digest: string): string {
+    const hash = digest.replace(/^sha256:/, '');
+    return path.join(this.#resultRoot, hash.slice(0, 2), `${hash.slice(2)}.json`);
+  }
+
+  #persistResult(serialized: Buffer): EffectResultReference {
+    const contentDigest = `sha256:${crypto.createHash('sha256').update(serialized).digest('hex')}`;
+    const target = this.#resultPath(contentDigest);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    if (fs.existsSync(target)) {
+      const existing = fs.readFileSync(target);
+      if (!existing.equals(serialized)) throw new Error(`EFFECT_RESULT_DIGEST_COLLISION:${contentDigest}`);
+    } else {
+      const temporary = `${target}.${process.pid}.${crypto.randomUUID()}.tmp`;
+      const descriptor = fs.openSync(temporary, 'wx', 0o600);
+      try { fs.writeFileSync(descriptor, serialized); fs.fsyncSync(descriptor); }
+      finally { fs.closeSync(descriptor); }
+      try { fs.linkSync(temporary, target); }
+      catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+        if (!fs.readFileSync(target).equals(serialized)) throw new Error(`EFFECT_RESULT_DIGEST_COLLISION:${contentDigest}`);
+      } finally { fs.rmSync(temporary, { force: true }); }
+      const directory = fs.openSync(path.dirname(target), 'r');
+      try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
     }
-    if (existing) return;
-    this.#journal.append({ type: 'completed', receipt });
-    this.#receipts.set(receipt.idempotencyKey, receipt);
+    return Object.freeze({ schemaVersion: 'effect-result-reference.v1', contentDigest, bytes: serialized.length });
+  }
+
+  #hydrate(receipt: EffectReceipt, reference: EffectResultReference): EffectReceipt {
+    if (reference.schemaVersion !== 'effect-result-reference.v1'
+      || !/^sha256:[a-f0-9]{64}$/.test(reference.contentDigest)
+      || !Number.isSafeInteger(reference.bytes) || reference.bytes < 1) {
+      throw new Error('EFFECT_RESULT_REFERENCE_INVALID');
+    }
+    const serialized = fs.readFileSync(this.#resultPath(reference.contentDigest));
+    if (serialized.length !== reference.bytes) throw new Error(`EFFECT_RESULT_SIZE_MISMATCH:${reference.contentDigest}`);
+    const digest = `sha256:${crypto.createHash('sha256').update(serialized).digest('hex')}`;
+    if (digest !== reference.contentDigest) throw new Error(`EFFECT_RESULT_DIGEST_MISMATCH:${reference.contentDigest}`);
+    return Object.freeze({ ...receipt,
+      result: JSON.parse(serialized.toString('utf8')) as NonNullable<EffectReceipt['result']> });
   }
 
   async receipt(idempotencyKey: string): Promise<EffectReceipt | undefined> {
-    return this.#receipts.get(idempotencyKey);
+    return this.#journal.transact((records) => {
+      this.#replay(records);
+      return this.#receipts.get(idempotencyKey);
+    });
   }
 
   async request(idempotencyKey: string): Promise<EffectRequest | undefined> {
-    return this.#requests.get(idempotencyKey);
+    return this.#journal.transact((records) => {
+      this.#replay(records);
+      return this.#requests.get(idempotencyKey);
+    });
   }
 }

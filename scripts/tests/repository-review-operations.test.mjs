@@ -42,7 +42,8 @@ function fixture() {
     artifactId: 'repository-review-prepared:test', digest: `sha256:${digest}`,
     producer: { runId, stageId: 'plan', attemptId: 'attempt:1', attemptNumber: 1 },
   } }] });
-  appendEvent(events, { type: 'run.started', occurredAt: new Date().toISOString(), identity: { runId } });
+  appendEvent(events, { type: 'run.started', occurredAt: new Date().toISOString(),
+    identity: { runId, attemptId: 'attempt:fixture' } });
   return { root, artifacts, storage, runId, platform, heartbeat, resources, events };
 }
 
@@ -51,6 +52,11 @@ test('compact status and formatter report live state without scanning source jou
   const now = Date.now();
   writeJson(value.heartbeat, { updatedAt: new Date(now).toISOString(), supervisorPid: 12,
     pipelinePid: 34, processAlive: true, attempt: 2, mode: 'recover' });
+  writeJson(path.join(value.storage, 'resource-locks', 'dispatch.active', 'owner.json'), {
+    pid: process.pid,
+    contract: { status: 'active', ownerLeaseId: 'attempt:fixture', resource: { type: 'runtime.invocation' },
+      expiresAt: new Date(now + 60_000).toISOString() },
+  });
   fs.writeFileSync(value.resources, [
     { observedAt: new Date(now - 15_000).toISOString(), memoryCurrentBytes: 1024 ** 3,
       memoryPeakBytes: 3 * 1024 ** 3, memoryEvents: { oom: 0, oom_kill: 0 },
@@ -68,6 +74,7 @@ test('compact status and formatter report live state without scanning source jou
   assert.equal(parsed.plannedPrimary, 3);
   assert.equal(parsed.resources.currentCpuPercent, 10);
   assert.equal(parsed.resources.currentRamBytes, 2 * 1024 ** 3);
+  assert.equal(parsed.activeDispatches, 1);
 
   const fakeOpenClaw = path.join(value.root, 'openclaw');
   fs.writeFileSync(fakeOpenClaw, '#!/bin/sh\nprintf \'%s\\n\' \'{"output":{"details":{"active":[{"status":"running"},{"status":"running"}]}}}\'\n', { mode: 0o755 });
@@ -78,7 +85,7 @@ test('compact status and formatter report live state without scanning source jou
   assert.equal(formatted.status, 0, formatted.stderr);
   assert.match(formatted.stdout, /^Active as of \d{2}:\d{2}:\d{2} UTC/mu);
   assert.match(formatted.stdout, /Primary batches: 3 planned; 0 completed; 2 running; 3 remaining\./u);
-  assert.match(formatted.stdout, /Actual concurrency: 2 reviewer agents active\. Configured concurrency is 10\./u);
+  assert.match(formatted.stdout, /Actual concurrency: 2 reviewer agents active; 0 dispatches await acceptance\. Configured concurrency is 10\./u);
   assert.match(formatted.stdout, /current CPU 10\.0%, peak 10\.0%; current RAM 2\.00 GiB/u);
 });
 

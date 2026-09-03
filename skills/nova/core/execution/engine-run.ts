@@ -105,9 +105,9 @@ function recordSignal(runRoot: string, signal: ResumeSignal): void {
 function recordWaitResolution(events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, waiting: StageRuntimeState, signal: ResumeSignal, lease: AbortSignal): void {
   const exists = events.records().some(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.type === 'wait.resolved'
     && entry.identity.runId === runId && entry.identity.waitId === signal.waitId && entry.causationId === signal.signalId);
-  if (exists) return; lease.throwIfAborted(); events.append({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`,
-    sequence: events.records().length + 1, type: 'wait.resolved', identity: { runId, stageId: waiting.stageId, waitId: signal.waitId },
-    occurredAt: new Date().toISOString(), causationId: signal.signalId, payload: { signal } });
+  if (exists) return; lease.throwIfAborted(); events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`,
+    sequence, type: 'wait.resolved', identity: { runId, stageId: waiting.stageId, waitId: signal.waitId },
+    occurredAt: new Date().toISOString(), causationId: signal.signalId, payload: { signal } }));
 }
 function resumeStates(recovered: ReadonlyMap<string, StageRuntimeState>, resumedStageId: string): Map<string, StageRuntimeState> {
   const states = new Map(recovered); const state = states.get(resumedStageId)!; const { wait: _wait, ...withoutWait } = state;

@@ -128,8 +128,8 @@ class AdministrativeReopener {
   }
   #appendOnce(context: Context, type: LifecycleEvent['type'], stageId: string | undefined, payload: Readonly<Record<string, unknown>> = {}): void {
     context.lease.throwIfAborted(); if (this.#hasEvent(context, type, stageId)) return;
-    context.events.append({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: context.events.records().length + 1,
-      type, identity: { runId: context.runId, ...(stageId ? { stageId } : {}) }, occurredAt: new Date().toISOString(), causationId: context.decision.decisionId, payload });
+    context.events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence,
+      type, identity: { runId: context.runId, ...(stageId ? { stageId } : {}) }, occurredAt: new Date().toISOString(), causationId: context.decision.decisionId, payload }));
   }
   #audit(): Readonly<Record<string, unknown>> { return { administrativeDecision: this.#decision }; }
   #result(context: Context, status: PipelineRunResult['status'], states: ReadonlyMap<string, StageRuntimeState>): PipelineRunResult {

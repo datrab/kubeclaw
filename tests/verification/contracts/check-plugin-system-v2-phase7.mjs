@@ -53,6 +53,40 @@ if (lockHolder.exitCode === null) {
 } else {
   assert.equal(lockHolder.exitCode, 0);
 }
+
+const incrementalFile = path.join(root, 'incremental.jsonl');
+const incrementalLeft = new core.FileJournal(incrementalFile);
+const incrementalRight = new core.FileJournal(incrementalFile);
+incrementalLeft.append({ writer: 'left', sequence: 1 });
+incrementalRight.append({ writer: 'right', sequence: 2 });
+incrementalLeft.append({ writer: 'left', sequence: 3 });
+assert.deepEqual(incrementalRight.refresh().map(({ entry }) => entry.sequence), [1, 2, 3]);
+const validPrefix = fs.readFileSync(incrementalFile);
+incrementalLeft.append({ writer: 'left', sequence: 4 });
+fs.writeFileSync(incrementalFile, validPrefix);
+assert.throws(() => incrementalLeft.refresh(), /JOURNAL_REWIND_OR_DIVERGENCE/,
+  'a replaced or truncated journal cannot roll back an already observed chain');
+const sameSizeFile = path.join(root, 'same-size-tamper.jsonl');
+const sameSizeJournal = new core.FileJournal(sameSizeFile);
+sameSizeJournal.append({ value: 'trusted' });
+const tampered = fs.readFileSync(sameSizeFile, 'utf8').replace('trusted', 'untrust');
+fs.writeFileSync(sameSizeFile, tampered);
+assert.throws(() => sameSizeJournal.refresh(), /JOURNAL_HASH_INVALID/,
+  'same-size in-place journal tampering is detected without accepting a cached prefix');
+const tornFile = path.join(root, 'torn-tail.jsonl');
+const committedTornJournal = new core.FileJournal(tornFile);
+committedTornJournal.append({ value: 'committed' });
+const committedTornBytes = fs.statSync(tornFile).size;
+fs.appendFileSync(tornFile, '{"sequence":2,"previousHash":"partial');
+assert.deepEqual(committedTornJournal.refresh().map(({ entry }) => entry.value), ['committed'],
+  'an already-open reader also removes an unterminated crash-torn tail');
+const recoveredTornJournal = new core.FileJournal(tornFile);
+assert.deepEqual(recoveredTornJournal.records().map(({ entry }) => entry.value), ['committed']);
+assert.equal(fs.statSync(tornFile).size, committedTornBytes,
+  'restart truncates only an unterminated final append to the last commit marker');
+recoveredTornJournal.append({ value: 'after-recovery' });
+assert.deepEqual(new core.FileJournal(tornFile).records().map(({ entry }) => entry.value),
+  ['committed', 'after-recovery']);
 const attempt = {
   runId: 'run:phase7',
   stageId: 'stage',
@@ -105,6 +139,65 @@ assert.equal(first.effectId, replay.effectId);
 assert.match(first.effectId, /^effect:[a-f0-9]{64}$/);
 assert.equal(observedLock.fencingToken, 1);
 assert.equal(observedLock.resource.canonicalId, invocation.resource.canonicalId);
+
+let preDispatchNow = new Date('2026-07-28T01:00:00.000Z');
+const preDispatchLocks = new core.FileResourceLockManager(
+  path.join(root, 'pre-dispatch-renewal-locks'),
+  () => preDispatchNow,
+);
+const preDispatchCoordinator = new core.EffectCoordinator(
+  new core.FileEffectJournal(path.join(root, 'pre-dispatch-renewal-effects.jsonl')),
+  () => preDispatchNow,
+  {
+    requested() {},
+    accepted() { preDispatchNow = new Date('2026-07-28T01:00:00.900Z'); },
+    completed() {},
+  },
+  preDispatchLocks,
+  1_000,
+);
+const preDispatchReceipt = await preDispatchCoordinator.invoke({
+  async ready() {},
+  async invoke({ fence }) {
+    preDispatchNow = new Date('2026-07-28T01:00:01.100Z');
+    fence.assertCurrent();
+    return { renewed: true };
+  },
+  async shutdown() {},
+}, owner, { ...invocation, idempotencyKey: 'effect-key:pre-dispatch-renewal' }, new AbortController().signal);
+assert.deepEqual(preDispatchReceipt.result, { renewed: true },
+  'the adapter starts with a full lease after durable pre-dispatch bookkeeping');
+
+const externalJournalFile = path.join(root, 'external-results', 'effects.jsonl');
+const externalJournal = new core.FileEffectJournal(externalJournalFile);
+const largeValue = `result-${'x'.repeat(128 * 1024)}`;
+const externalReceipt = {
+  schemaVersion: 'effect-receipt.v2',
+  effectId: `effect:${'c'.repeat(64)}`,
+  idempotencyKey: 'effect-key:external-result',
+  adapter: owner,
+  status: 'completed',
+  result: { largeValue },
+  recordedAt: '2026-07-28T00:00:00.000Z',
+};
+await externalJournal.completed(externalReceipt);
+assert.equal(fs.readFileSync(externalJournalFile, 'utf8').includes(largeValue), false,
+  'large effect results are not duplicated inline in the effect journal');
+const externalizedFiles = fs.readdirSync(path.join(path.dirname(externalJournalFile), 'effect-results', 'sha256'),
+  { recursive: true }).filter((entry) => String(entry).endsWith('.json'));
+assert.equal(externalizedFiles.length, 1);
+assert.deepEqual((await new core.FileEffectJournal(externalJournalFile)
+  .receipt(externalReceipt.idempotencyKey))?.result, externalReceipt.result,
+  'a restarted process verifies and hydrates the content-addressed effect result');
+const sharedEffectFile = path.join(root, 'shared-effects.jsonl');
+const sharedEffectLeft = new core.FileEffectJournal(sharedEffectFile);
+const sharedEffectRight = new core.FileEffectJournal(sharedEffectFile);
+const sharedRequest = { ...invocation, idempotencyKey: 'effect-key:cross-instance-acceptance' };
+await sharedEffectLeft.requested(sharedRequest);
+await sharedEffectRight.requested(sharedRequest);
+assert.equal(await sharedEffectLeft.accepted(sharedRequest), true);
+assert.equal(await sharedEffectRight.accepted(sharedRequest), false,
+  'accepted is an atomic cross-instance decision under the journal transaction lock');
 
 let releaseConcurrentDispatches;
 const concurrentDispatchGate = new Promise((resolve) => { releaseConcurrentDispatches = resolve; });

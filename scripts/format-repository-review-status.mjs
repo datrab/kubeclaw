@@ -64,10 +64,14 @@ function format(values) {
   const controllerSessionKey = args.get('controller-session-key') ?? 'agent:main:nova-review-controller';
   const details = taskDetails(controllerSessionKey, args.get('openclaw-bin') ?? 'openclaw');
   const active = activeTasks(details);
-  const running = Number.isFinite(active) ? Math.min(active, status.remainingPrimary) : 'unavailable';
+  const observedActive = Number.isFinite(active) ? Math.max(active, status.activeDispatches ?? 0)
+    : status.activeDispatches;
+  const running = Number.isFinite(observedActive) ? Math.min(observedActive, status.remainingPrimary) : 'unavailable';
   const remaining = status.remainingPrimary;
   const processText = status.liveness === 'active'
-    ? 'The supervised execute attempt is active.'
+    ? status.health === 'degraded'
+      ? `The supervised attempt is degraded; ${status.recentResourceLockExpired} resource-lock expiries occurred in the last 15 minutes.`
+      : 'The supervised execute attempt is active.'
     : status.liveness === 'terminal' ? `The run is terminal (${status.status}).`
       : 'The run is nonterminal but its supervisor heartbeat is stale.';
   const gateway = status.resources?.gateway?.healthy === true
@@ -79,7 +83,7 @@ function format(values) {
   return [
     `Active as of ${utcTime()} UTC`, '',
     `Primary batches: ${status.plannedPrimary} planned; ${status.completedReviewCheckpoints} completed; ${running} running; ${remaining} remaining. ${processText}`,
-    `Actual concurrency: ${active ?? 'unavailable'} reviewer agents active. Configured concurrency is ${configuredConcurrency}.`,
+    `Actual concurrency: ${observedActive ?? 'unavailable'} reviewer agents active; ${status.requestedDispatches ?? 0} dispatches await acceptance. Configured concurrency is ${configuredConcurrency}.`,
     `Expansion / verification: ${status.completedContextExpansionCheckpoints} / ${status.completedVerificationCheckpoints} checkpointed.`,
     `Tokens: ${status.actualTokenUsage === 'unavailable_until_imported_results_expose_usage' ? 'actual reviewer usage unavailable' : status.actualTokenUsage}. Plan estimate: ${status.estimatedInputTokens.toLocaleString('en-US')} input tokens.`,
     `Recovery: attempt ${status.attempt ?? 'unknown'} in ${status.recoveryMode ?? 'unknown'} mode; liveness ${status.liveness}; last durable event ${status.lastEventAt ?? 'unavailable'}.`,

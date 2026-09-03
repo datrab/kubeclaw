@@ -18,6 +18,7 @@ export interface PlatformConfig {
   readonly observers: Readonly<Record<string, Readonly<Record<string, unknown>>>>;
   readonly storageRoot: string;
   readonly shutdownTimeoutMs: number;
+  readonly effectLockTtlMs?: number;
   readonly orchestratorIssuerId: string;
   readonly administrativeDecisionIssuers: readonly Readonly<{
     readonly type: 'operator' | 'administrator';

@@ -87,10 +87,10 @@ export class StageExecutor {
         if (artifact) this.#options.checkpoints.checkpoint(artifact);
       }
       return response;
-    } }, { append: async (_leaseId, type, identity, payload) => { this.#options.journal.append({
-      schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: this.#options.journal.records().length + 1,
+    } }, { append: async (_leaseId, type, identity, payload) => { this.#options.journal.appendSequenced((eventSequence) => ({
+      schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: eventSequence,
       type, producer: owner.provenance, identity, occurredAt: this.#options.now().toISOString(), causationId: attempt.attemptId, payload,
-    }); } });
+    })); } });
   }
 
   #priorArtifacts(runId: string, stageId: string): ArtifactRef[] {

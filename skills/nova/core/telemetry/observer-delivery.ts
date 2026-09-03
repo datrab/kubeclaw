@@ -29,10 +29,10 @@ export async function deliverObserver(options: ObserverRuntimeOptions, now: () =
   let sequence = 0;
   const context = createPluginInvocationContext(contract, lease, { invoke: async (_leaseId, capability, operation, resource, payload) => {
     sequence += 1; return options.adapters.invoke(capability, attempt, `${delivery.deliveryId}:${sequence}`, { operation, resource, payload }, controller.signal);
-  } }, { append: async (_leaseId, type, identity, payload) => { options.events.append({
-    schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: options.events.records().length + 1,
+  } }, { append: async (_leaseId, type, identity, payload) => { options.events.appendSequenced((eventSequence) => ({
+    schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: eventSequence,
     type, producer: entry.provenance, identity, occurredAt: now().toISOString(), causationId: delivery.deliveryId, payload,
-  }); } });
+  })); } });
   try { await withTimeout(activated.execute(delivery, context, controller.signal) as Promise<void>, timeoutMs, () => controller.abort(new Error('OBSERVER_DELIVERY_TIMEOUT'))); }
   finally { controller.abort(new Error('OBSERVER_DELIVERY_COMPLETED')); lease.revoke({ code: 'core.observer_delivery_completed' }, now()); }
 }

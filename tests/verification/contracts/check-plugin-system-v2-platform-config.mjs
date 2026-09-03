@@ -24,6 +24,7 @@ const platform = {
   observers: {},
   storageRoot: './state',
   shutdownTimeoutMs: 5000,
+  effectLockTtlMs: 300_000,
   orchestratorIssuerId: 'nova',
   administrativeDecisionIssuers: [],
 };
@@ -38,6 +39,10 @@ try {
   assert.equal(Object.isFrozen(loaded.externalTrust.allowedSourceDigests), true);
   assert.equal(Object.isFrozen(loaded.providers), true);
   assert.equal(Object.isFrozen(loaded.grants), true);
+  assert.equal(loaded.effectLockTtlMs, 300_000);
+
+  fs.writeFileSync(file, JSON.stringify({ ...platform, effectLockTtlMs: 59_999 }));
+  assert.throws(() => core.loadPlatformConfig(file), /PLATFORM_CONFIG_INVALID/);
 
   fs.writeFileSync(file, JSON.stringify({
     ...platform,

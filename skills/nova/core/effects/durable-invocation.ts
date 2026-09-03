@@ -92,7 +92,12 @@ class DurableInvocation {
 
   async #invokeAdapter(request: EffectRequest, renewalSignal: AbortSignal): Promise<EffectReceipt> {
     this.#dependencies.audit?.accepted(request);
-    const lock = this.#lock!;
+    this.#lock = this.#dependencies.locks.renew(
+      this.#lock!.lockId,
+      this.#invocation.attempt.attemptId,
+      this.#dependencies.lockTtlMs,
+    );
+    const lock = this.#lock;
     let asserted = false;
     const invocation = this;
     const fence = {
