@@ -337,7 +337,7 @@ async function verifiedReduction(
     const suffix = exact || directory.length > 0 ? []
       : snapshot.files.filter(({ path }) => path.endsWith(`/${requestedPath}`));
     const files = exact ? [exact] : directory.length > 0 ? directory : suffix.length === 1 ? suffix : [];
-    if (files.length === 0 || files.some(({ mode, sizeBytes }) => mode !== '100644'
+    if (files.length === 0 || files.some(({ mode, sizeBytes }) => !/^100[0-7]{3}$/u.test(mode)
       || sizeBytes > REVIEW_HARD_LIMITS.repositoryAuditFileBytes)) {
       throw new RepositoryAuditIntegrityError(`scalable review requested source is unavailable: ${requestedPath}`);
     }
