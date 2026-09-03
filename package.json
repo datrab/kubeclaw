@@ -37,6 +37,7 @@
     "verify:prism:e2e": "npm run test:e2e --prefix skills/prism",
     "verify:prism": "npm run verify:prism:spikes && npm run verify:prism:contracts && npm run verify:prism:domain && npm run verify:prism:renderer && npm run verify:prism:storage && npm run verify:prism:studio && npm run verify:prism:engine && npm run verify:prism:corpus && npm run verify:prism:quality && npm run verify:prism:pipeline && npm run verify:prism:helm && npm run verify:prism:e2e",
     "pipeline": "node skills/nova/pipeline.ts",
+    "review:status": "node scripts/repository-review-status.mjs",
     "e2e:real:fast": "node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode fast",
     "e2e:real:full": "node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full",
     "e2e:real:matrix": "node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs --mode full --continue-on-failure",

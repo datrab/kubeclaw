@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const artifactId = 'checkpoint:batch-1';
+const defaultArtifactId = 'checkpoint:batch-1';
 const namespace = 'test.checkpoint';
 
 function artifactResponse(value) {
@@ -11,7 +11,16 @@ function artifactResponse(value) {
 
 export async function execute(_input, context) {
   const attempt = context.contract.lease.attempt;
-  if (attempt.attemptNumber === 1) {
+  const artifactId = context.contract.config.artifactId ?? defaultArtifactId;
+  if (context.contract.config.mode === 'produce') {
+    const response = await context.invoke('artifacts.write', {
+      operation: 'put_json', resource: { type: 'artifact.object', canonicalId: artifactId },
+      payload: { namespace, mediaType: 'application/json', checkpoint: true,
+        value: { batch: 1, result: 'completed' } },
+    });
+    return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [artifactResponse(response)] };
+  }
+  if (context.contract.config.mode !== 'consume' && attempt.attemptNumber === 1) {
     const response = await context.invoke('artifacts.write', {
       operation: 'put_json',
       resource: { type: 'artifact.object', canonicalId: artifactId },
@@ -32,5 +41,6 @@ export async function execute(_input, context) {
   if (response.value?.batch !== 1 || response.value?.result !== 'completed') {
     throw new Error('durable checkpoint content is invalid');
   }
-  return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [artifact] };
+  return { schemaVersion: 'stage-result.v2', outcome: 'passed',
+    artifacts: context.contract.config.mode === 'consume' ? [] : [artifact] };
 }

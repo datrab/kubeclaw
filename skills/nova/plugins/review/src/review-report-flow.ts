@@ -10,6 +10,7 @@ import type { ReviewSemanticFlowResult } from './review-semantic-flow.ts';
 import type { ReviewGovernorSnapshot } from './review-governor.ts';
 import { applyReviewGovernor } from './review-governor-decision.ts';
 import { verifyEchoReviewForReduction } from './review-stage-verification.ts';
+import { blockedReviewStage } from './review-stage-result.ts';
 
 export interface FinalizeReviewInput {
   readonly semantic: ReviewSemanticFlowResult;
@@ -24,10 +25,6 @@ export interface FinalizeReviewInput {
 interface PersistReviewOutcomeInput extends FinalizeReviewInput {
   readonly result: StageResult;
   readonly governance?: ReturnType<typeof verifyEchoReviewForReduction>['governance'];
-}
-
-function blocked(code: string, message: string): StageResult {
-  return { schemaVersion: 'stage-result.v2', outcome: 'blocked', reason: { code, message }, artifacts: [] };
 }
 
 function reduction(values: FinalizeReviewInput) {
@@ -47,7 +44,7 @@ function reduction(values: FinalizeReviewInput) {
 export async function persistReviewOutcome(values: PersistReviewOutcomeInput): Promise<StageResult> {
   const { semantic, parsed, snapshot, policy, context, result, governance } = values;
   const attemptId = context.contract.lease?.attempt?.attemptId;
-  if (!attemptId) return blocked('kubeclaw.review.report_identity_missing', 'Review report requires an attempt identity.');
+  if (!attemptId) return blockedReviewStage('kubeclaw.review.report_identity_missing', 'Review report requires an attempt identity.');
   try {
     const governedResult = applyReviewGovernor(result, values.governor, values.wait);
     const report = buildReviewReport({
@@ -60,7 +57,7 @@ export async function persistReviewOutcome(values: PersistReviewOutcomeInput): P
     });
     return attachReviewReport(governedResult, report, await storeReviewReport(report, context));
   } catch (error) {
-    return blocked(
+    return blockedReviewStage(
       'kubeclaw.review.report_write_failed',
       `Required review report persistence failed: ${error instanceof Error ? error.message : String(error)}`,
     );

@@ -1,1 +1,1 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"markerPath":{"type":"string","minLength":1}},"required":["markerPath"],"additionalProperties":false}
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"markerPath":{"type":"string","minLength":1},"mode":{"type":"string","enum":["produce","consume"]},"artifactId":{"type":"string","minLength":1}},"required":["markerPath"],"additionalProperties":false}

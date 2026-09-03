@@ -49,11 +49,20 @@ runtime adapter repeats the check on the exact final prompt that it sends.
 
 Each completed repository review and verification job is persisted as an
 immutable content-cache artifact. Core checkpoints that artifact before the
+next concurrent job can make the stage fail. Core checkpoints that artifact before the
 overall repository-audit stage completes. Journal recovery supplies the
 checkpoints to the next attempt, which validates their source, policy, model,
 runtime, and evidence identities and dispatches only missing jobs. A container
-failure at batch 150 therefore preserves batches 1 through 149; repository
-snapshot compilation may repeat, but completed model calls do not.
+failure at batch 150 therefore preserves batches 1 through 149.
+
+Compilation also writes a content-addressed `repository-review-prepared:*`
+checkpoint before the first runtime dispatch. A later attempt of the same stage,
+or an execute stage that depends on a plan stage in the same run, validates and
+reuses that complete frozen compilation instead of inventorying and hydrating the
+repository again. Dependency artifacts are visible only along declared graph
+edges. `npm run review:status -- --platform <platform.json> --run-id <run-id>`
+reads the compact artifact index and the bounded journal tail; it does not scan
+the large source-effect journal.
 
 Repository jobs do not copy source into task text. Component jobs carry complete
 source. Boundary jobs carry exact call-site and contract excerpts. Holistic passes

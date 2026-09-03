@@ -328,9 +328,11 @@ async function dispatchVerificationJob(
   throw new Error(`scalable verification retry state is invalid: ${value.id}`);
 }
 
+// eslint-disable-next-line max-params -- The optional checkpoint callback is separate from immutable execution settings.
 export async function executeScalableVerificationJobs(
   jobs: readonly ScalableVerificationJob[], agent: string, context: PluginInvocationContext,
   execution: number | ReviewExecutionSettings = 4, expectedRuntime?: ReviewRuntimeIdentity,
+  checkpoint?: (result: ScalableVerificationJobResult) => Promise<void>,
 ): Promise<readonly ScalableVerificationJobResult[]> {
   const { concurrency, maxRetries, deadlineEpochMs, beforeDispatch }
     = resolveReviewExecutionSettings(execution, 'verification');
@@ -341,9 +343,11 @@ export async function executeScalableVerificationJobs(
   for (let offset = 0; offset < jobs.length; offset += concurrency) {
     assertReviewDeadline(deadlineEpochMs, 'verification');
     const batch = jobs.slice(offset, offset + concurrency);
-    output.push(...await Promise.all(batch.map((value) => (
-      dispatchVerificationJob(value, runtime)
-    ))));
+    output.push(...await Promise.all(batch.map(async (value) => {
+      const result = await dispatchVerificationJob(value, runtime);
+      await checkpoint?.(result);
+      return result;
+    })));
   }
   return Object.freeze(output);
 }

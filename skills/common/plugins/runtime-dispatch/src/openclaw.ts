@@ -4,7 +4,8 @@ import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, ty
 import { getEncoding } from 'js-tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
-import { cancelSession, gateway, pollSession, type OpenClawSessionState } from './openclaw-session.ts';
+import { openClawToolDetails, record } from './openclaw-response.ts';
+import { cancelSession, gateway, pollSession, type OpenClawSessionIdentity, type OpenClawSessionState } from './openclaw-session.ts';
 
 export interface OpenClawTarget {
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
@@ -39,7 +40,6 @@ function promptTokens(text: string, name: OpenClawTarget['tokenizerEncoding']): 
   return encoder.encode(text).length;
 }
 
-function record(value: unknown): value is JsonRecord { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function positiveInteger(value: unknown): value is number {
   return Number.isSafeInteger(value) && Number(value) > 0;
 }
@@ -79,20 +79,19 @@ async function beforeAbort<T>(operation: () => Promise<T>, signal: AbortSignal):
 function assertDispatchActive(signal: AbortSignal): void {
   if (signal.aborted) throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
 }
-function details(value: unknown): unknown {
-  if (!record(value)) return value;
-  if ('output' in value && Object.keys(value).every((key) => ['ok', 'toolName', 'output', 'source'].includes(key))) return details(value.output);
-  if ('details' in value) return details(value.details);
-  if ('result' in value && Object.keys(value).every((key) => ['ok', 'result', 'error'].includes(key))) return details(value.result);
-  return value;
-}
 function requiredText(value: unknown, label: string): string { if (typeof value !== 'string' || !value.trim()) throw new Error(`OPENCLAW_${label}_INVALID`); return value.trim(); }
 function first(...values: readonly unknown[]): unknown { return values.find((value) => value !== undefined && value !== null); }
-function sessionKey(value: unknown): string {
-  const source = details(value);
+// eslint-disable-next-line complexity -- The identity parser accepts current and legacy field aliases but requires one complete identity.
+function sessionIdentity(value: unknown): OpenClawSessionIdentity {
+  const source = openClawToolDetails(value);
   if (!record(source)) throw new Error('OPENCLAW_SPAWN_RESULT_INVALID');
-  const nested = record(source.session) ? first(source.session.sessionKey, source.session.session_key) : undefined;
-  return requiredText(first(source.childSessionKey, source.sessionKey, source.session_key, nested), 'SESSION_KEY');
+  const nested = record(source.session) ? source.session : undefined;
+  const sessionKey = requiredText(first(source.childSessionKey, source.sessionKey, source.session_key,
+    nested?.sessionKey, nested?.session_key), 'SESSION_KEY');
+  const runId = requiredText(first(source.runId, source.run_id, nested?.runId, nested?.run_id), 'RUN_ID');
+  const taskId = requiredText(first(source.taskId, source.task_id, nested?.taskId, nested?.task_id, runId), 'TASK_ID');
+  const model = first(source.resolvedModel, source.model, nested?.model);
+  return Object.freeze({ sessionKey, runId, taskId, ...(typeof model === 'string' ? { model } : {}) });
 }
 
 export function buildOpenClawTask(payload: JsonRecord, resultFile: string): string {
@@ -148,8 +147,9 @@ export function assertOpenClawOutputBudget(
   if (tokens > maximum) throw new Error(`OPENCLAW_OUTPUT_TOKENS_EXCEEDED:${tokens}:${maximum}`);
 }
 
-function resultLocation(target: OpenClawTarget): Readonly<{ file: string; relative: string }> {
-  const relative = `${target.resultPathPrefix.replace(/\/+$/u, '')}/${crypto.randomUUID()}.json`;
+function resultLocation(target: OpenClawTarget, dispatchId: string): Readonly<{ file: string; relative: string }> {
+  const resultId = crypto.createHash('sha256').update(dispatchId).digest('hex');
+  const relative = `${target.resultPathPrefix.replace(/\/+$/u, '')}/${resultId}.json`;
   const file = path.join(target.repositoryRoot, relative);
   const repositoryRelative = path.relative(target.repositoryRoot, file);
   const workspaceRelative = path.relative(target.cwd, file);
@@ -162,17 +162,19 @@ function resultLocation(target: OpenClawTarget): Readonly<{ file: string; relati
   return { file, relative: repositoryRelative };
 }
 
-async function spawnSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, payload: JsonRecord, resultFile: string): Promise<string> {
+// eslint-disable-next-line max-params -- Dispatch identity remains explicit at the external spawn boundary.
+async function spawnSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, payload: JsonRecord,
+  resultFile: string, dispatchId: string): Promise<OpenClawSessionIdentity> {
   const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
   const task = prepareOpenClawTask(payload, resultFile, target);
   const spawned = await gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
     task,
-    label: `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.randomUUID().slice(0, 8)}`,
+    label: `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`,
     cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,
     ...(target.runtime === 'acp' ? { streamTo: 'parent' } : {}),
-  });
-  return sessionKey(spawned);
+  }, `spawn:${dispatchId}`);
+  return sessionIdentity(spawned);
 }
 
 function runtimeAttestation(targetId: string, target: OpenClawTarget): Readonly<Record<string, unknown>> {
@@ -181,8 +183,10 @@ function runtimeAttestation(targetId: string, target: OpenClawTarget): Readonly<
     identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(identity)).digest('hex')}` });
 }
 
+// eslint-disable-next-line max-lines-per-function, max-params, complexity -- One transaction owns secret resolution, spawn, cancellation, polling, import, and attestation.
 export async function dispatchOpenClaw(
-  context: AdapterActivationContext, targetId: string, target: OpenClawTarget, payload: JsonRecord, signal: AbortSignal,
+  context: AdapterActivationContext, targetId: string, target: OpenClawTarget, payload: JsonRecord,
+  signal: AbortSignal, dispatchId: string,
 ): Promise<Readonly<{ result: unknown; runtimeEvidence: Readonly<Record<string, unknown>> }>> {
   const deadlineEpochMs = runtimePromptBudget(payload.runtimePromptBudget)?.deadlineEpochMs;
   if (deadlineEpochMs !== undefined && Date.now() >= deadlineEpochMs) {
@@ -196,26 +200,27 @@ export async function dispatchOpenClaw(
   }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
-  const result = resultLocation(target);
+  const result = resultLocation(target, dispatchId);
   assertDispatchActive(dispatchSignal);
-  const spawning = spawnSession(context, target, token, payload, result.file);
-  let key: string;
-  try { key = await beforeAbort(() => spawning, dispatchSignal); }
+  const spawning = spawnSession(context, target, token, payload, result.file, dispatchId);
+  let identity: OpenClawSessionIdentity;
+  try { identity = await beforeAbort(() => spawning, dispatchSignal); }
   catch (error) {
-    void spawning.then((lateKey) => cancelSession(context, target, token, lateKey)).catch(() => undefined);
+    void spawning.then((lateIdentity) => cancelSession(context, target, token, lateIdentity)).catch(() => undefined);
     throw error;
   }
-  const abort = (): void => { void cancelSession(context, target, token, key); };
+  if (identity.model && identity.model !== target.model) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
+  const abort = (): void => { void cancelSession(context, target, token, identity); };
   dispatchSignal.addEventListener('abort', abort, { once: true });
   if (dispatchSignal.aborted) {
-    await cancelSession(context, target, token, key);
+    await cancelSession(context, target, token, identity);
     throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
   }
   try {
-    const state = await pollSession(context, target, token, key, dispatchSignal);
+    const state = await pollSession(context, target, token, identity, dispatchSignal);
     assertOpenClawSessionCompleted(state, target.model);
     const resolved = await beforeAbort(() => readOpenClawResult(context, target,
-      { payload, relative: result.relative, key, startedAt, state }), dispatchSignal);
+      { payload, relative: result.relative, key: identity.sessionKey, startedAt, state: state.state }), dispatchSignal);
     assertDispatchActive(dispatchSignal);
     assertOpenClawOutputBudget(resolved.outputText, target,
       runtimePromptBudget(payload.runtimePromptBudget)?.maxOutputTokens);

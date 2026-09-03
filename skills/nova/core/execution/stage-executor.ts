@@ -94,7 +94,15 @@ export class StageExecutor {
   }
 
   #priorArtifacts(runId: string, stageId: string): ArtifactRef[] {
-    return this.#options.checkpoints.artifacts(runId, stageId);
+    const visible = new Set<string>([stageId]), pending = [...this.#options.graph.stage(stageId).dependsOn];
+    while (pending.length > 0) {
+      const dependency = pending.pop() as string;
+      if (visible.has(dependency)) continue;
+      visible.add(dependency);
+      pending.push(...this.#options.graph.stage(dependency).dependsOn);
+    }
+    return this.#options.checkpoints.artifacts(runId)
+      .filter((artifact) => visible.has(artifact.producer.stageId));
   }
 
   #recordAttempt(runId: string, state: StageRuntimeState, stageType: string, owner: NonNullable<ReturnType<GrantedRegistry['snapshot']['stages']['get']>>, runtime: AttemptRuntime): void {

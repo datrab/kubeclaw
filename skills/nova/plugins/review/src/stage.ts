@@ -23,6 +23,7 @@ import { finalizeReview, persistReviewOutcome } from './review-report-flow.ts';
 import { mergeSlicedEchoOutputs } from './review-slicing.ts';
 import { buildReviewSnapshot, prepareReview, ReviewPreparationIntegrityError,
   ReviewPreparationLimitError, type PreparedReview } from './review-preparation.ts';
+import { blockedReviewStage } from './review-stage-result.ts';
 
 interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown }
 class ReviewStageIntegrityError extends Error {
@@ -30,10 +31,6 @@ class ReviewStageIntegrityError extends Error {
   constructor(message: string, snapshot?: ReviewBundleSnapshot) {
     super(message); this.snapshot = snapshot;
   }
-}
-
-function blocked(code: string, message: string): StageResult {
-  return { schemaVersion: 'stage-result.v2', outcome: 'blocked', reason: { code, message }, artifacts: [] };
 }
 
 function config(context: PluginInvocationContext): ReviewStageConfig {
@@ -126,7 +123,7 @@ function resolvedStagePolicy(stageConfig: ReviewStageConfig): ResolvedReviewPoli
       ...(stageConfig.policy === undefined ? {} : { settingsFile: stageConfig.policy }),
     });
   } catch (error) {
-    return blocked('kubeclaw.review.invalid_policy', error instanceof Error ? error.message : String(error));
+    return blockedReviewStage('kubeclaw.review.invalid_policy', error instanceof Error ? error.message : String(error));
   }
 }
 

@@ -17,6 +17,7 @@ function assertRequest(request: EffectRequest): void {
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const targets = targetsFrom(context.config);
   return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => (
-    dispatchOpenClaw(context, request.resource.canonicalId, target, request.payload as Record<string, unknown>, signal)
+    dispatchOpenClaw(context, request.resource.canonicalId, target,
+      request.payload as Record<string, unknown>, signal, request.idempotencyKey)
   ));
 }

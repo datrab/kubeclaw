@@ -148,6 +148,11 @@ These values supersede the former 69.6 million “token” report. That old valu
 
 Repository review supports `fast`, `standard`, and `deep` grades and `repository`, `plugin`, and explicit path scopes. Normal limits can be lowered for prompt bytes, input tokens, and context. Total input, cost, wall time, relations, slices, primary jobs, context-expansion jobs, verification jobs, concurrency, retries, and system lenses can also be overridden. The review runtime contract is fixed to `o200k_base`, 900,000 prompt bytes, 120,000 input tokens, 128,000 context tokens, and a 6,000-token output cap. Overrides above these runtime capacities fail during profile resolution, before planning. A target with incompatible settings is rejected before a model session starts. Safety authority is not configurable: pinned source, full selected-scope accounting, no silent truncation, exact source evidence, blocker verification, and fail-closed incomplete jobs remain mandatory. `plan` mode compiles and stores the complete review plan without dispatching a model; `execute` and `resume` share content-addressed review and verification cache identities.
 
+The plan report is accompanied by a content-addressed prepared-plan checkpoint.
+A dependent execute stage in the same pipeline run validates and reuses that
+complete compilation. Each imported review or verification result is checkpointed
+immediately, so a concurrent failure cannot discard already completed work.
+
 Plan mode is safe for calibration. A deployed production release still requires its environment-specific shadow and end-to-end gates. Do not use repository findings as repair authority. Only an independently confirmed, in-scope P0 finding can ask core for repair.
 
 The synthetic scale fixture also processes 2,000 files and exactly 1,000,000 source lines in 100 slices. Exact tokenizer accounting completed in about 35 to 37 seconds during this audit, with a 45-second regression ceiling. Token accounting caches each unique serialized source payload and multiplies its exact token count for repeated assignments. It proves complete file assignment, boundary accounting, stable output, and bounded compilation time. These numbers measure deterministic compilation only. Model review time scales with the number of jobs and is reduced by the authenticated immutable cache.

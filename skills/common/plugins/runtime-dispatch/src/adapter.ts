@@ -37,6 +37,7 @@ function scalar(value: unknown): boolean {
     || (typeof value === 'number' && Number.isFinite(value));
 }
 
+// eslint-disable-next-line complexity -- Recursive JSON validation checks every supported scalar and container bound.
 function json(value: unknown, depth = 0): void {
   if (depth > 20) throw new Error('RUNTIME_PAYLOAD_DEPTH_EXCEEDED');
   if (scalar(value)) return;
@@ -98,6 +99,7 @@ function assertRequest(request: EffectRequest): void {
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const targets = config(context.config);
+  // eslint-disable-next-line complexity -- Authentication, size, signature, and response checks share one dispatch boundary.
   return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => {
       json(request.payload);
       const body = JSON.stringify(request.payload);
@@ -107,7 +109,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       }) : undefined;
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       if (secret && (typeof secret.value !== 'string' || secret.value.length < 1)) throw new Error('RUNTIME_SECRET_UNAVAILABLE');
-      const signature = secret ? crypto.createHmac('sha256', secret.value)
+      const secretValue = secret?.value;
+      const signature = typeof secretValue === 'string' ? crypto.createHmac('sha256', secretValue)
         .update(`${request.idempotencyKey}.${body}`, 'utf8').digest('hex') : undefined;
       const response = await context.invokeConfidential('network.http', {
         operation: 'request',

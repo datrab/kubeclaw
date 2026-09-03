@@ -88,7 +88,8 @@ const server = http.createServer((request, response) => {
         toolName: 'sessions_spawn',
         output: {
           content: [],
-          details: { childSessionKey: null, sessionKey: 'session:gateway-test' },
+          details: { childSessionKey: 'session:gateway-test', runId: 'run:gateway-test',
+            taskId: 'task:gateway-test', resolvedModel: 'openai/gpt-5.6-sol' },
         },
         source: 'core',
       }));
@@ -98,8 +99,10 @@ const server = http.createServer((request, response) => {
         ok: true,
         toolName: 'subagents',
         output: { content: [], details: {
-          active: poll === 1 ? [{ sessionKey: 'session:gateway-test', status: 'running' }] : [],
-          recent: poll === 1 ? [] : [{ sessionKey: 'session:gateway-test', status: 'done', model: 'openai/gpt-5.6-sol' }],
+          active: poll === 1 ? [{ taskId: 'task:gateway-test', runId: 'run:gateway-test',
+            sessionKey: 'session:gateway-test', status: 'running' }] : [],
+          recent: poll === 1 ? [] : [{ taskId: 'task:gateway-test', runId: 'run:gateway-test',
+            sessionKey: 'session:gateway-test', status: 'done', model: 'openai/gpt-5.6-sol' }],
         } },
         source: 'core',
       }));
@@ -332,6 +335,7 @@ try {
     const spawnRequests = received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn');
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
+    assert.equal(JSON.parse(spawnRequests[0].body).idempotencyKey, 'spawn:runtime:gateway');
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');
@@ -342,6 +346,8 @@ try {
       path.join(gatewayCwd, 'results'),
     );
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'subagents').length, 2);
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'subagents')
+      .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
     assert.equal(received.every((entry) => !entry.body.includes(token)), true);
     const journalText = JSON.stringify(gatewayJournal.entries());

@@ -37,4 +37,13 @@ const key = primed.cacheKeys.get('slice-a');
 corruptStore.records.set(key, { ...corruptStore.records.get(key), value: { result: 'tampered' } });
 await assert.rejects(runWithReviewCache([units[0]], identity, corruptStore, execute), /value digest/u);
 
+const durableStore = new MemoryStore();
+await assert.rejects(runWithReviewCache(units, identity, durableStore, async (misses, checkpoint) => {
+  await checkpoint(misses[0].id, { result: misses[0].id });
+  throw new Error('simulated process loss after first completed unit');
+}), /simulated process loss/u);
+const resumed = await runWithReviewCache(units, identity, durableStore, execute);
+assert.deepEqual({ hits: resumed.hits, misses: resumed.misses }, { hits: 1, misses: 1 },
+  'a completed unit is durable even when a later unit prevents the batch executor from returning');
+
 console.log(JSON.stringify({ ok: true, suite: 'review-content-cache' }));

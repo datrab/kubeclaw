@@ -115,6 +115,19 @@ if (process.argv[2] === '--child') {
       .map(({ payload }) => payload.attemptNumber), [1, 2]);
     assert.ok(completed.some(({ type }) => type === 'run.resumed'));
     assert.ok(completed.some(({ type }) => type === 'run.succeeded'));
+
+    const dependencyRunId = 'run:checkpoint-dependency';
+    const dependencyDefinition = { ...definition, id: 'test:checkpoint-dependency', stages: [
+      { id: 'producer', type: 'test.checkpoint', dependsOn: [],
+        config: { markerPath, mode: 'produce', artifactId: 'checkpoint:dependency' }, input: {},
+        execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 60_000 } },
+      { id: 'consumer', type: 'test.checkpoint', dependsOn: ['producer'],
+        config: { markerPath, mode: 'consume', artifactId: 'checkpoint:dependency' }, input: {},
+        execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 60_000 } },
+    ] };
+    const dependencyResult = await runPipelineV2(platform, dependencyDefinition, dependencyRunId);
+    assert.equal(dependencyResult.status, 'succeeded',
+      'a declared dependent stage receives the producer checkpoint artifact');
     console.log(JSON.stringify({ ok: true, contract: 'plugin-system-v2-checkpoint-recovery' }));
   } finally {
     fs.rmSync(temporary, { recursive: true, force: true });

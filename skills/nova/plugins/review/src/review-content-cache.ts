@@ -83,9 +83,11 @@ export function parseReviewCacheRecord(
   return record as unknown as ReviewCacheRecord;
 }
 
+// eslint-disable-next-line max-lines-per-function, complexity -- Cache read, streaming checkpoint, and final completeness form one transaction.
 export async function runWithReviewCache<T>(
   units: readonly ReviewCacheUnit[], identity: ReviewCacheIdentity, store: ReviewCacheStore,
-  execute: (misses: readonly ReviewCacheUnit[]) => Promise<ReadonlyMap<string, T>>,
+  execute: (misses: readonly ReviewCacheUnit[], checkpoint: (unitId: string, value: T) => Promise<void>)
+    => Promise<ReadonlyMap<string, T>>,
 ): Promise<ReviewCacheRun<T>> {
   const ordered = [...units].sort((left, right) => compareCodeUnits(left.id, right.id));
   if (new Set(ordered.map(({ id }) => id)).size !== ordered.length) {
@@ -103,13 +105,22 @@ export async function runWithReviewCache<T>(
     }
     values.set(unit.id, parsed.value as T); hits += 1;
   }
-  const executed = misses.length === 0 ? new Map<string, T>() : await execute(Object.freeze(misses));
+  const missingById = new Map(misses.map((unit) => [unit.id, unit])), checkpointed = new Set<string>();
+  const checkpoint = async (unitId: string, value: T): Promise<void> => {
+    const unit = missingById.get(unitId);
+    if (!unit) throw new ReviewContentCacheIntegrityError(`review cache checkpoint returned an unknown unit: ${unitId}`);
+    if (checkpointed.has(unitId)) throw new ReviewContentCacheIntegrityError(`review cache checkpoint duplicated a unit: ${unitId}`);
+    await store.write(buildReviewCacheRecord(unit, identity, value));
+    checkpointed.add(unitId);
+  };
+  const executed = misses.length === 0 ? new Map<string, T>()
+    : await execute(Object.freeze(misses), checkpoint);
   for (const unit of misses) {
     if (!executed.has(unit.id)) {
       throw new ReviewContentCacheIntegrityError(`review cache execution result is missing: ${unit.id}`);
     }
     const value = executed.get(unit.id) as T; values.set(unit.id, value);
-    await store.write(buildReviewCacheRecord(unit, identity, value));
+    if (!checkpointed.has(unit.id)) await store.write(buildReviewCacheRecord(unit, identity, value));
   }
   if ([...executed.keys()].some((id) => !misses.some((unit) => unit.id === id))) {
     throw new ReviewContentCacheIntegrityError('review cache execution returned an unknown unit');

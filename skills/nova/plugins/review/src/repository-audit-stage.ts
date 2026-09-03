@@ -5,7 +5,7 @@ import { getReviewPolicyProfile } from './review-policy-profiles.ts';
 import { resolveReviewPolicy } from './review-policy-resolver.ts';
 import { freezeReviewRevision } from './review-repository.ts';
 import { parseReviewSnapshotInventory } from './review-snapshot-inventory.ts';
-import { compileScalableReview } from './scalable-review-compiler.ts';
+import { compileScalableReview, type ScalableReviewCompilation } from './scalable-review-compiler.ts';
 import { RepositoryAuditArtifactCache, RepositoryAuditCacheIntegrityError } from './repository-audit-cache.ts';
 import { ReviewContentCacheIntegrityError, runWithReviewCache,
   type ReviewCacheIdentity, type ReviewCacheRun } from './review-content-cache.ts';
@@ -21,8 +21,9 @@ import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from
 import { repositoryExecutionFacts, repositoryPlanFacts } from './repository-audit-results.ts';
 import { estimatedReviewCostUsd, reserveReviewRuntimePrompt,
   ReviewDispatchBudget, type ReviewDispatchPhase } from './review-prompt-budget.ts';
-import { assertReviewRuntimeIdentity, reviewRuntimeIdentityDigest,
+import { assertReviewRuntimeIdentity, ReviewRuntimeAttestationError, reviewRuntimeIdentityDigest,
   type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
+import { blockedReviewStage } from './review-stage-result.ts';
 
 interface AuditInput { readonly reviewProfile: ResolvedRepositoryReviewProfile }
 interface AuditConfig {
@@ -35,6 +36,18 @@ interface AuditConfig {
   readonly policy?: unknown;
 }
 class RepositoryAuditIntegrityError extends Error {}
+class RepositoryAuditInfrastructureError extends Error {}
+
+const PREPARED_PLAN_PREFIX = 'repository-review-prepared:';
+const REVIEW_NAMESPACE = 'kubeclaw.review';
+
+interface PreparedRepositoryReview {
+  readonly schemaVersion: 'repository-review-prepared-plan.v1';
+  readonly head: string;
+  readonly profileDigest: `sha256:${string}`;
+  readonly snapshot: ReturnType<typeof parseReviewSnapshotInventory>;
+  readonly compilation: ScalableReviewCompilation;
+}
 
 interface AuditCacheRunSummary {
   readonly identity: ReviewCacheIdentity;
@@ -58,10 +71,6 @@ interface VerificationAccounting {
   readonly jobs: number; readonly promptBytes: number; readonly inputTokens: number;
   readonly maximumJobBytes: number; readonly maximumJobTokens: number;
   readonly reservedOutputTokens: number; readonly estimatedCostUsd: number; readonly estimatedWallTimeSeconds: number;
-}
-
-function blocked(code: string, message: string): StageResult {
-  return { schemaVersion: 'stage-result.v2', outcome: 'blocked', reason: { code, message }, artifacts: [] };
 }
 
 function parseInput(value: unknown): AuditInput {
@@ -157,8 +166,8 @@ async function repositoryDocuments(
 
 async function compileRepositoryAudit(
   parsed: AuditInput, context: PluginInvocationContext,
+  revision: Awaited<ReturnType<typeof freezeReviewRevision>>,
 ) {
-  const revision = await freezeReviewRevision(context);
   const rawInventory = await context.invoke('git.repository.read', {
       operation: 'inventory_revision', resource: { type: 'git.repository.path', canonicalId: '.' },
       payload: { head: revision.head, proof: revision.proof,
@@ -182,10 +191,116 @@ async function compileRepositoryAudit(
   const { documents, sourceDigests } = await repositoryDocuments(snapshot, revision, context);
   let compilation: ReturnType<typeof compileScalableReview>;
   try { compilation = compileScalableReview({ snapshot, documents, sourceDigests,
-    budget: parsed.reviewProfile.componentBudget, profile: parsed.reviewProfile }); } catch (error) {
+    budget: parsed.reviewProfile.componentBudget, profile: executionProfile(parsed.reviewProfile) }); } catch (error) {
     throw new RepositoryAuditIntegrityError(error instanceof Error ? error.message : String(error));
   }
   return { revision, snapshot, compilation };
+}
+
+type CompiledRepositoryAudit = Awaited<ReturnType<typeof compileRepositoryAudit>>;
+
+function executionProfile(profile: ResolvedRepositoryReviewProfile): ResolvedRepositoryReviewProfile {
+  if (profile.mode === 'execute') return profile;
+  const { digest: _digest, mode: _mode, ...values } = profile;
+  const unsigned = { ...values, mode: 'execute' as const };
+  return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
+}
+
+function preparedPlanId(head: string, profile: ResolvedRepositoryReviewProfile): string {
+  return `${PREPARED_PLAN_PREFIX}${sha256Text(canonicalJson({ head, profileDigest: executionProfile(profile).digest })).slice(7)}`;
+}
+
+function compilationDigest(compilation: ScalableReviewCompilation): `sha256:${string}` {
+  return sha256Text(canonicalJson({ schemaVersion: compilation.schemaVersion,
+    snapshotDigest: compilation.snapshotDigest, graphDigest: compilation.graph.digest,
+    coverageDigest: compilation.plan.coverage.digest,
+    jobDigests: compilation.jobs.map(({ digest }) => digest),
+    mapDigest: compilation.artifacts.manifest.digest, profileDigest: compilation.profile.digest,
+    accountingDigest: compilation.accounting.digest }));
+}
+
+// eslint-disable-next-line complexity -- Every signed compilation identity is checked before hydrated source reuse.
+function validatedPreparedPlan(
+  value: unknown, head: string, profile: ResolvedRepositoryReviewProfile,
+): PreparedRepositoryReview {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new RepositoryAuditIntegrityError('prepared repository review is invalid');
+  }
+  const prepared = value as PreparedRepositoryReview;
+  const expectedProfile = executionProfile(profile);
+  if (prepared.schemaVersion !== 'repository-review-prepared-plan.v1' || prepared.head !== head
+    || prepared.profileDigest !== expectedProfile.digest || !prepared.snapshot || !prepared.compilation
+    || prepared.snapshot.head !== head || prepared.compilation.snapshotDigest !== prepared.snapshot.digest
+    || prepared.compilation.profile.digest !== expectedProfile.digest
+    || prepared.compilation.digest !== compilationDigest(prepared.compilation)) {
+    throw new RepositoryAuditIntegrityError('prepared repository review proof is invalid');
+  }
+  return prepared;
+}
+
+// eslint-disable-next-line complexity -- Selection and storage proof validation intentionally share one fail-closed read boundary.
+async function readPreparedPlan(
+  head: string, profile: ResolvedRepositoryReviewProfile, context: PluginInvocationContext,
+): Promise<{ readonly prepared: PreparedRepositoryReview; readonly artifact: ArtifactRef } | undefined> {
+  const attempt = context.contract.lease?.attempt;
+  if (!attempt) throw new RepositoryAuditIntegrityError('prepared repository review requires an attempt identity');
+  const artifactId = preparedPlanId(head, profile);
+  const candidates = (context.contract.artifacts ?? []).filter((artifact) => artifact.artifactId === artifactId
+    && artifact.namespace === REVIEW_NAMESPACE && artifact.mediaType === 'application/json'
+    && artifact.producer.runId === attempt.runId);
+  if (candidates.length === 0) return undefined;
+  const digests = new Set(candidates.map(({ digest }) => digest));
+  if (digests.size !== 1) throw new RepositoryAuditIntegrityError('prepared repository review artifacts conflict');
+  const artifact = candidates[0] as ArtifactRef;
+  const raw = await context.invoke('artifacts.read', {
+    operation: 'get_json', resource: { type: 'artifact.object', canonicalId: artifactId },
+    payload: { namespace: REVIEW_NAMESPACE, digest: artifact.digest },
+  });
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+    throw new RepositoryAuditIntegrityError('prepared repository review adapter response is invalid');
+  }
+  const response = raw as Readonly<Record<string, unknown>>, serialized = canonicalJson(response.value);
+  if (response.digest !== artifact.digest || response.sizeBytes !== artifact.sizeBytes
+    || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) {
+    throw new RepositoryAuditIntegrityError('prepared repository review artifact proof is invalid');
+  }
+  return { prepared: validatedPreparedPlan(response.value, head, profile), artifact };
+}
+
+async function writePreparedPlan(
+  revision: Awaited<ReturnType<typeof freezeReviewRevision>>,
+  snapshot: ReturnType<typeof parseReviewSnapshotInventory>, compilation: ScalableReviewCompilation,
+  profile: ResolvedRepositoryReviewProfile, context: PluginInvocationContext,
+): Promise<ArtifactRef> {
+  const value: PreparedRepositoryReview = Object.freeze({
+    schemaVersion: 'repository-review-prepared-plan.v1', head: revision.head,
+    profileDigest: executionProfile(profile).digest, snapshot, compilation,
+  });
+  const artifactId = preparedPlanId(revision.head, profile), serialized = canonicalJson(value);
+  const stored = await context.invoke('artifacts.write', {
+    operation: 'put_json', resource: { type: 'artifact.object', canonicalId: artifactId },
+    payload: { namespace: REVIEW_NAMESPACE, mediaType: 'application/json', checkpoint: true, value },
+  });
+  const artifact = artifactRef(stored);
+  if (artifact.artifactId !== artifactId || artifact.namespace !== REVIEW_NAMESPACE
+    || artifact.mediaType !== 'application/json' || artifact.digest !== sha256Text(serialized)
+    || artifact.sizeBytes !== Buffer.byteLength(serialized) || !exactArtifactProducer(artifact, context)) {
+    throw new RepositoryAuditIntegrityError('prepared repository review artifact identity is invalid');
+  }
+  return artifact;
+}
+
+async function preparedRepositoryAudit(
+  parsed: AuditInput, context: PluginInvocationContext,
+): Promise<CompiledRepositoryAudit & { readonly artifact: ArtifactRef }> {
+  const revision = await freezeReviewRevision(context);
+  const available = await readPreparedPlan(revision.head, parsed.reviewProfile, context);
+  if (available) return { revision, snapshot: available.prepared.snapshot,
+    compilation: available.prepared.compilation, artifact: available.artifact };
+  const compiled = await compileRepositoryAudit(parsed, context, revision);
+  const artifact = await writePreparedPlan(compiled.revision, compiled.snapshot, compiled.compilation,
+    parsed.reviewProfile, context);
+  return { ...compiled, artifact };
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity -- This is the fail-closed review and verification transaction.
@@ -294,7 +409,12 @@ async function verifiedReduction(
 
 async function auditDispatch<T>(label: string, execute: () => Promise<T>): Promise<T> {
   try { return await execute(); } catch (error) {
-    throw new RepositoryAuditIntegrityError(
+    if (error instanceof ReviewRuntimeAttestationError) {
+      throw new RepositoryAuditIntegrityError(error.message);
+    }
+    // Runtime transport/session failures must reach core so its bounded stage-attempt
+    // policy can retry from prepared-plan and per-job checkpoints.
+    throw new RepositoryAuditInfrastructureError(
       `repository audit ${label} dispatch failed: ${error instanceof Error ? error.message : String(error)}`,
     );
   }
@@ -346,11 +466,12 @@ async function cachedReviewJobs(
   jobs: readonly ScalableReviewJob[], identity: ReviewCacheIdentity,
   runtime: AuditRuntime,
 ): Promise<ReviewCacheRun<ScalableReviewJobResult>> {
-  const run = await runWithReviewCache(jobs, identity, runtime.cache, async (misses) => {
+  const run = await runWithReviewCache<ScalableReviewJobResult>(jobs, identity, runtime.cache, async (misses, checkpoint) => {
     const wanted = new Set(misses.map(({ id }) => id));
     const selected = jobs.filter(({ id }) => wanted.has(id));
     const results = await auditDispatch('review', () => executeScalableReviewJobs(
       selected, runtime.agent, runtime.context, runtime.execution, runtime.expectedRuntime,
+      async (result) => checkpoint(result.jobId, result),
     ));
     return exactDispatchResults('review dispatch', selected, results);
   });
@@ -362,11 +483,12 @@ async function cachedVerificationJobs(
   jobs: readonly ScalableVerificationJob[], identity: ReviewCacheIdentity,
   runtime: AuditRuntime,
 ): Promise<ReviewCacheRun<ScalableVerificationJobResult>> {
-  const run = await runWithReviewCache(jobs, identity, runtime.cache, async (misses) => {
+  const run = await runWithReviewCache<ScalableVerificationJobResult>(jobs, identity, runtime.cache, async (misses, checkpoint) => {
     const wanted = new Set(misses.map(({ id }) => id));
     const selected = jobs.filter(({ id }) => wanted.has(id));
     const results = await auditDispatch('verification', () => executeScalableVerificationJobs(
       selected, runtime.agent, runtime.context, runtime.execution, runtime.expectedRuntime,
+      async (result) => checkpoint(result.jobId, result),
     ));
     return exactDispatchResults('verification dispatch', selected, results);
   });
@@ -424,7 +546,7 @@ async function runRepositoryAudit(
     const parsed = parseInput(input), config = stageConfig(context);
     const policy = resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile),
       ...(config.policy === undefined ? {} : { settingsFile: config.policy }) });
-    const { revision, snapshot, compilation } = await compileRepositoryAudit(parsed, context);
+    const { revision, snapshot, compilation, artifact: preparedArtifact } = await preparedRepositoryAudit(parsed, context);
     if (!compilation.plan.coverage.complete) {
       throw new RepositoryAuditIntegrityError(
         `repository audit coverage is incomplete: ${canonicalJson(compilation.plan.coverage)}`,
@@ -435,7 +557,8 @@ async function runRepositoryAudit(
         snapshotDigest: snapshot.digest, compilationDigest: compilation.digest, profile: parsed.reviewProfile,
         accounting: compilation.accounting, map: compilation.artifacts, coverage: compilation.plan.coverage });
       const artifact = await storeRepositoryReport(report, sha256Text(canonicalJson(report)), context);
-      return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [artifact],
+      return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [
+        ...(exactArtifactProducer(preparedArtifact, context) ? [preparedArtifact] : []), artifact],
         facts: repositoryPlanFacts(revision.head, compilation, artifact.digest) };
     }
     const verified = await verifiedReduction(compilation, config, policy.digest, context);
@@ -448,7 +571,9 @@ async function runRepositoryAudit(
       verificationAccounting: verified.verificationAccounting, reduction: verified.reduction });
     const identity = sha256Text(canonicalJson(report));
     const artifact = await storeRepositoryReport(report, identity, context);
-    return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [...verified.cache.artifacts(), artifact],
+    return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [
+      ...(exactArtifactProducer(preparedArtifact, context) ? [preparedArtifact] : []),
+      ...verified.cache.artifacts(), artifact],
       facts: repositoryExecutionFacts({ head: revision.head, compilation, reportDigest: artifact.digest,
         confirmed: verified.reduction.confirmed.length, rejected: verified.reduction.rejected.length,
         reviewCacheHits: verified.summary.review.hits, reviewCacheMisses: verified.summary.review.misses,
@@ -468,6 +593,6 @@ export async function executeRepositoryAudit(input: unknown, context: PluginInvo
     if (!(error instanceof RepositoryAuditIntegrityError
       || error instanceof RepositoryAuditCacheIntegrityError
       || error instanceof ReviewContentCacheIntegrityError)) throw error;
-    return blocked('kubeclaw.review.repository_audit_incomplete', error instanceof Error ? error.message : String(error));
+    return blockedReviewStage('kubeclaw.review.repository_audit_incomplete', error instanceof Error ? error.message : String(error));
   }
 }

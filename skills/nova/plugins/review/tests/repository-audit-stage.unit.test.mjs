@@ -3,6 +3,15 @@ import assert from 'node:assert/strict';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import { executeRepositoryAudit } from '../src/repository-audit-stage.ts';
 import { REVIEW_HARD_LIMITS } from '../src/review-hard-limits.ts';
+import { blockedReviewStage } from '../src/review-stage-result.ts';
+
+const oversizedReason = 'x'.repeat(10_000);
+const boundedBlock = blockedReviewStage('kubeclaw.review.test_block', oversizedReason);
+assert.equal(boundedBlock.outcome, 'blocked');
+assert.ok(boundedBlock.reason.message.length <= 4096);
+assert.equal(boundedBlock.reason.details.truncated, true);
+assert.equal(boundedBlock.reason.details.originalLength, oversizedReason.length);
+assert.equal(boundedBlock.reason.details.fullMessageDigest, sha256Text(oversizedReason));
 
 const head = 'a'.repeat(40), proof = 'b'.repeat(64);
 const runtimeIdentity = { targetId: 'echo', runtime: 'subagent', agentId: 'codex',
@@ -11,15 +20,18 @@ const runtimeEvidence = { schemaVersion: 'runtime-agent-attestation.v1', ...runt
   identityDigest: sha256Text(canonicalJson(runtimeIdentity)) };
 const attempt = { runId: 'run-1', stageId: 'repository-audit', attemptId: 'attempt-1', attemptNumber: 0 };
 const context = {
-  contract: { config: { agent: 'echo', reviewerModel: 'gpt-5.6-terra', profile: 'audit' }, lease: { attempt } },
+  contract: { config: { agent: 'echo', reviewerModel: 'gpt-5.6-terra', profile: 'audit' },
+    artifacts: [], lease: { attempt } },
   async invoke(capability, request) {
     if (capability === 'git.repository.read' && request.operation === 'freeze_head') return { head, proof };
     if (capability === 'git.repository.read' && request.operation === 'inventory_revision') {
       return { head, files: [], inventoryDigest: sha256Text(canonicalJson([])) };
     }
     if (capability === 'artifacts.write') {
-      assert.equal(typeof request.payload.value.map.filesJsonl, 'string');
-      assert.equal(typeof request.payload.value.map.relationsJsonl, 'string');
+      if (request.payload.value.schemaVersion !== 'repository-review-prepared-plan.v1') {
+        assert.equal(typeof request.payload.value.map.filesJsonl, 'string');
+        assert.equal(typeof request.payload.value.map.relationsJsonl, 'string');
+      }
       const serialized = canonicalJson(request.payload.value);
       return { artifact: { artifactId: request.resource.canonicalId, namespace: request.payload.namespace,
         mediaType: request.payload.mediaType, digest: sha256Text(serialized), sizeBytes: Buffer.byteLength(serialized),
@@ -32,7 +44,7 @@ const result = await executeRepositoryAudit({}, context);
 assert.equal(result.outcome, 'passed');
 assert.equal(result.facts['review.repository_files'], 0);
 assert.equal(result.facts['review.repository_jobs'], 0);
-assert.equal(result.artifacts.length, 1);
+assert.equal(result.artifacts.length, 2);
 const planned = await executeRepositoryAudit({ mode: 'plan', grade: 'fast' }, context);
 assert.equal(planned.outcome, 'passed');
 assert.equal(planned.facts['review.repository_mode'], 'plan');
@@ -78,7 +90,8 @@ const cachedContext = (artifacts = [], corruptRead = false, currentAttempt = att
     }
     if (capability === 'artifacts.write') {
       assert.equal(request.payload.checkpoint,
-        request.resource.canonicalId.startsWith('repository-review-cache:') ? true : undefined);
+        request.resource.canonicalId.startsWith('repository-review-cache:')
+          || request.resource.canonicalId.startsWith('repository-review-prepared:') ? true : undefined);
       const serialized = canonicalJson(request.payload.value), digest = sha256Text(serialized);
       valuesByDigest.set(digest, request.payload.value);
       return { artifact: { artifactId: request.resource.canonicalId, namespace: request.payload.namespace,
@@ -135,10 +148,12 @@ const wrongLength = await executeRepositoryAudit({}, wrongLengthSource);
 assert.equal(wrongLength.outcome, 'blocked');
 assert.match(wrongLength.reason.message, /invalid frozen source proof/u);
 const cacheRefs = cold.artifacts.filter(({ artifactId }) => artifactId.startsWith('repository-review-cache:'));
+const preparedRefs = cold.artifacts.filter(({ artifactId }) => artifactId.startsWith('repository-review-prepared:'));
 assert.equal(cacheRefs.length, 1);
+assert.equal(preparedRefs.length, 1);
 const retryAttempt = { ...attempt, attemptId: 'attempt-2', attemptNumber: 1 };
 const runtimeCallsBeforeWarm = runtimeCalls;
-const warm = await executeRepositoryAudit({}, cachedContext(cacheRefs, false, retryAttempt));
+const warm = await executeRepositoryAudit({}, cachedContext([...preparedRefs, ...cacheRefs], false, retryAttempt));
 assert.equal(warm.outcome, 'passed');
 assert.equal(warm.facts['review.repository_review_cache_hits'], 1);
 assert.equal(warm.facts['review.repository_review_cache_misses'], 0);
@@ -159,9 +174,8 @@ unavailableReviewer.invoke = async (capability, request) => {
   if (capability === 'runtime.dispatch') throw new Error('reviewer unavailable');
   return availableInvoke(capability, request);
 };
-const unavailable = await executeRepositoryAudit({}, unavailableReviewer);
-assert.equal(unavailable.outcome, 'blocked');
-assert.match(unavailable.reason.message, /review dispatch failed: reviewer unavailable/u);
+await assert.rejects(executeRepositoryAudit({}, unavailableReviewer),
+  /review dispatch failed: reviewer unavailable/u);
 
 let oversizedReadCalls = 0;
 const oversizedContext = cachedContext(), oversizedInvoke = oversizedContext.invoke.bind(oversizedContext);
