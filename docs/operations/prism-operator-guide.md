@@ -43,6 +43,10 @@ did not change.
 The desktop project chooser and fatal-error view use the always-visible
 `start-panel` layout. The separate `sheet` class is reserved for mobile
 navigation overlays and remains hidden on wider viewports until opened.
+Studio forwards Control's `prism_session` and `prism_csrf` cookies as separate
+`Set-Cookie` values. Combining or overwriting them causes the first authenticated
+API request to fail with `invalid session` even though the Tailscale identity
+exchange itself succeeded.
 While Helm waits, the deploy script captures both migration containers. If an
 atomic install removes a failed hook, its last bootstrap or SQL error is still
 printed in the deploy output.

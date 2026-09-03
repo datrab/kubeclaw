@@ -15,6 +15,7 @@ const namespacePolicies=readFileSync(new URL("../../../my-values/infra/network-p
 const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
 const agentValues=readFileSync(new URL("../../../my-values/prism-agent-values.yaml",import.meta.url),"utf8");
 const agentBridge=readFileSync(new URL("../../../skills/prism/server/agent-bridge.mjs",import.meta.url),"utf8");
+const studioServer=readFileSync(new URL("../../../skills/prism/server/studio.ts",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control.ts",import.meta.url),"utf8");
 const databaseBootstrap=readFileSync(new URL("../../../skills/prism/server/bootstrap-database.ts",import.meta.url),"utf8");
 const databaseMigrate=readFileSync(new URL("../../../skills/prism/server/migrate.ts",import.meta.url),"utf8");
@@ -50,6 +51,8 @@ assert(source.includes("[[ $lease_phase == Ready ]]"),"leased Prism acceptance m
 assert(!chartValues.includes("digest:"),"Prism chart values must not expose image digests");
 assert(chartValues.includes("imagePullSecrets:"),"Prism chart defaults must configure GHCR authentication");
 assert(imageWorkflow.includes("type=raw,value=latest"),"Prism image workflow must publish the default chart tag");
+assert.match(studioServer,/prismProxyResponseHeaders\(upstream\.headers\)[\s\S]*setHeader\("set-cookie", forwarded\.setCookies\)/u,
+  "Prism Studio must forward the session and CSRF Set-Cookie headers as separate values");
 for(const values of [chartValues,productionValues]){
   assert(!values.includes("tag: main"),"Prism values must not request the unpublished main image tag");
   for(const kind of ["control","studio","worker","ingestion"])

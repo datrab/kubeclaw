@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { createReadStream, statSync } from "node:fs";
 import { extname, join, normalize } from "node:path";
+import { prismProxyResponseHeaders } from "./proxy-headers.ts";
 const root = process.env.STUDIO_ROOT ?? new URL("../dist-studio", import.meta.url).pathname;
 const control = new URL(process.env.PRISM_CONTROL_URL ?? "http://prism-control:8080");
 const ingressSecret = process.env.PRISM_INGRESS_SECRET ?? "";
@@ -19,7 +20,9 @@ createServer(async (request, response) => {
     headers.set("x-prism-ingress-secret", ingressSecret);
     const upstream = await fetch(new URL(`${requestUrl.pathname}${requestUrl.search}`, control), { method: request.method, headers, body: chunks.length ? Buffer.concat(chunks) : undefined, redirect: "manual" });
     response.statusCode = upstream.status;
-    for (const [name, value] of upstream.headers) if (!["content-length", "content-encoding"].includes(name)) response.setHeader(name, value);
+    const forwarded = prismProxyResponseHeaders(upstream.headers);
+    for (const [name, value] of forwarded.ordinary) response.setHeader(name, value);
+    if (forwarded.setCookies.length) response.setHeader("set-cookie", forwarded.setCookies);
     return response.end(Buffer.from(await upstream.arrayBuffer()));
   }
   const requested = normalize(decodeURIComponent(requestUrl.pathname)).replace(/^\/+/, "");
