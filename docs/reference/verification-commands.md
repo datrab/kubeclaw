@@ -15,6 +15,7 @@ Generated from: `scripts/deploy.sh`
 
 | Command | Description |
 | --- | --- |
+| `./scripts/deploy.sh nova-production-preflights <image>` | Run all required proofs after all source cutovers |
 | `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
 | `./scripts/deploy.sh image <name>` | Deploy one agent using image/runtime values |
 | `./scripts/deploy.sh smoke` | Run pod-level smoke checks for Nova + Buster |

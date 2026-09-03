@@ -207,6 +207,20 @@ assert.match(
   /nova-buildkit-preflight[\s\S]*kubectl exec[\s\S]*deployment\/agent-nova[\s\S]*nova-buildkit-production-preflight\.mts/,
   'the live BuildKit proof must execute from Nova through the v2 capability graph',
 );
+const productionPreflights = deploy.match(
+  /cmd_nova_production_preflights\(\) \{[\s\S]*?\n\}\n\ncmd_worker_trust_e2e/u,
+)?.[0];
+assert.ok(productionPreflights, 'the combined production suite preflight command must exist');
+assert.match(
+  productionPreflights,
+  /expectedSuiteIds[\s\S]*actualSuiteIds[\s\S]*sourceCutover[\s\S]*JSON\.stringify\(actualSuiteIds\) !== JSON\.stringify\(expectedSuiteIds\)[\s\S]*cmd_nova_unit_preflight[\s\S]*cmd_nova_buildkit_preflight[\s\S]*cmd_nova_kubernetes_fixture_preflight[\s\S]*cmd_nova_http_preflight[\s\S]*cmd_nova_tailscale_preflight/u,
+  'the combined preflight must require all source cutovers and run every production-required suite in order',
+);
+assert.match(
+  productionPreflights,
+  /JSON\.stringify\(required\) !== JSON\.stringify\(orchestrated\)/u,
+  'the combined preflight must fail if a production-required suite has no orchestrated proof',
+);
 assert.doesNotMatch(
   deploy,
   /tests\/verification\/live\/buster-buildkit-production-smoke\.mjs/,

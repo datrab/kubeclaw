@@ -310,6 +310,19 @@ migrated and one authority path remains. At that point, repeat the vertical
 proof without local fallbacks and prove the selected service manager, kernel
 controls, external facilities, recovery, and rollback.
 
+Run all production-required suite proofs with one command:
+
+```bash
+./scripts/deploy.sh nova-production-preflights \
+  registry.example.invalid/kubeclaw/preflight@sha256:DIGEST
+```
+
+Use a real 64-character SHA-256 digest. The image must listen on port `8080`.
+The command stops on the first failed proof. It refuses to start until all 13
+source cutovers are complete. It also fails when a production-required suite
+does not have an orchestration entry. It uses only the dedicated
+`kubeclaw-fixture-preflight` Secret for the Secret-copy proof.
+
 For each unavailable facility, record five facts:
 
 1. Why the real facility is unavailable.

@@ -14,6 +14,7 @@
 #   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster
 #   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster
 #   ./deploy.sh nova-tailscale-preflight Verify a public endpoint through Nova, Buster, Kubernetes, and Tailscale
+#   ./deploy.sh nova-production-preflights <image> Run all required proofs after all source cutovers
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name> [--with-code]  Deploy Nova, Buster, or Prism
@@ -1960,7 +1961,7 @@ cmd_nova_kubernetes_fixture_preflight() {
   header "Nova → Buster Kubernetes Fixture Production Preflight"
   require_command kubectl
   local immutable_image=${2:-${KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE:-}}
-  local secret_name=${3:-${KUBECLAW_KUBERNETES_PREFLIGHT_SECRET:-kubeclaw-fixture-preflight}}
+  local secret_name=kubeclaw-fixture-preflight
   if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
     err "Provide a digest-pinned workload image as argument 2 or KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE."
     return 1
@@ -2237,6 +2238,58 @@ cmd_nova_tailscale_preflight() {
   log "Nova → Buster Tailscale production preflight passed"
 }
 
+cmd_nova_production_preflights() {
+  header "Nova → Buster Production Suite Preflights"
+  require_command node
+
+  local immutable_image=${2:-${KUBECLAW_PRODUCTION_PREFLIGHT_IMAGE:-}}
+  local secret_name=${3:-${KUBECLAW_KUBERNETES_PREFLIGHT_SECRET:-kubeclaw-fixture-preflight}}
+  local status_file="$REPO_DIR/docs/architecture/pipeline-test-gate-suite-migration-status.json"
+
+  if ! node - "$status_file" <<'NODE'
+const fs = require('node:fs');
+const status = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+const suites = Array.isArray(status.suites) ? status.suites : [];
+const expectedSuiteIds = [
+  'a11y', 'api', 'build', 'bundle', 'e2e', 'health', 'k8s',
+  'manifest', 'perf', 'security', 'tailscale-preview', 'unit', 'visual-reg',
+];
+const actualSuiteIds = suites.map((suite) => suite.id).sort();
+const required = suites.filter((suite) => Object.hasOwn(suite, 'productionAcceptance'))
+  .map((suite) => suite.id).sort();
+const orchestrated = ['build', 'health', 'k8s', 'tailscale-preview', 'unit'];
+const incomplete = suites.filter((suite) => suite.implementation !== 'complete'
+  || suite.sourceCutover !== 'complete').map((suite) => suite.id);
+if (JSON.stringify(actualSuiteIds) !== JSON.stringify(expectedSuiteIds)) {
+  process.stderr.write('Production suite preflights require the exact, unique 13-suite migration status.\n');
+  process.exit(1);
+}
+if (JSON.stringify(required) !== JSON.stringify(orchestrated)) {
+  process.stderr.write(`Production suite preflight orchestration is incomplete for: ${required.join(', ')}.\n`);
+  process.exit(1);
+}
+if (incomplete.length > 0) {
+  process.stderr.write(`Production suite preflights are blocked until these source cutovers complete: ${incomplete.join(', ')}.\n`);
+  process.exit(1);
+}
+NODE
+  then
+    return 1
+  fi
+
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide one digest-pinned port-8080 HTTP image as argument 2 or KUBECLAW_PRODUCTION_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  cmd_nova_unit_preflight
+  cmd_nova_buildkit_preflight
+  cmd_nova_kubernetes_fixture_preflight nova-kubernetes-fixture-preflight "$immutable_image" "$secret_name"
+  cmd_nova_http_preflight nova-http-preflight "$immutable_image"
+  cmd_nova_tailscale_preflight nova-tailscale-preflight "$immutable_image"
+
+  log "All production-required suite preflights passed"
+}
+
 cmd_worker_trust_e2e() {
   header "Worker Trust Production E2E"
   require_command kubectl
@@ -2451,6 +2504,9 @@ case "${1:-}" in
   nova-tailscale-preflight)
     cmd_nova_tailscale_preflight "$@"
     ;;
+  nova-production-preflights)
+    cmd_nova_production_preflights "$@"
+    ;;
   worker-trust-e2e)
     cmd_worker_trust_e2e
     ;;
@@ -2539,6 +2595,8 @@ case "${1:-}" in
     echo "                    Verify an in-cluster HTTP service through Nova and Buster v2"
     echo "  nova-tailscale-preflight [image]"
     echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
+    echo "  nova-production-preflights [image]"
+    echo "                    Run all production-required suite proofs after all 13 source cutovers"
     echo "  worker-trust-e2e  Prove SPIRE identity, mTLS, authorization, and source attestation on-cluster"
     echo "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight"
     echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"

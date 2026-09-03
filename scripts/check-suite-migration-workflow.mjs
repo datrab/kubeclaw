@@ -58,12 +58,12 @@ function checkStatus() {
   const ids = status.suites.map((suite) => suite.id);
   if (new Set(ids).size !== ids.length) errors.push(`${statusPath}: duplicate suite id`);
   const allSourceCutoversComplete = status.suites.every((suite) => suite.implementation === 'complete'
-    && (suite.sourceCutover ?? suite.cutover) === 'complete');
+    && suite.sourceCutover === 'complete');
   for (const suite of status.suites) {
     for (const phase of ['implementation', 'parity', 'cutover']) {
       if (!allowedState.has(suite[phase])) errors.push(`${statusPath}: ${suite.id}.${phase} is invalid`);
     }
-    if (suite.sourceCutover !== undefined && !allowedState.has(suite.sourceCutover)) {
+    if (!allowedState.has(suite.sourceCutover)) {
       errors.push(`${statusPath}: ${suite.id}.sourceCutover is invalid`);
     }
     if (suite.productionAcceptance !== undefined && !allowedAcceptanceState.has(suite.productionAcceptance)) {

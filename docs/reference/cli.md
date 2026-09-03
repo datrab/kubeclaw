@@ -19,6 +19,7 @@ Generated from: `scripts/deploy.sh`
 | `./scripts/deploy.sh secrets` | Create/copy/prompt required Kubernetes secrets |
 | `./scripts/deploy.sh infra` | Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM |
 | `./scripts/deploy.sh tailscale` | Deploy Tailscale Kubernetes Operator |
+| `./scripts/deploy.sh nova-production-preflights <image>` | Run all required proofs after all source cutovers |
 | `./scripts/deploy.sh agents` | Deploy agents (Nova + Buster) |
 | `./scripts/deploy.sh agent <name>` | [--with-code]  Deploy Nova, Buster, or Prism |
 | `./scripts/deploy.sh image` | Deploy both agents using image/runtime values |
@@ -44,6 +45,7 @@ Generated from: `scripts/deploy.sh`
 - `nova-kubernetes-fixture-preflight`
 - `nova-http-preflight`
 - `nova-tailscale-preflight`
+- `nova-production-preflights`
 - `worker-trust-e2e`
 - `buster-infra-smoke`
 - `agents`

@@ -7,22 +7,23 @@ Do not edit this page directly.
 
 - Replacement implemented: 7 of 13.
 - Parity proved: 2 of 13.
+- Source cutover complete: 7 of 13.
 - Cut over and deleted: 2 of 13.
 
 ## Suites
 
-| Old suite | Successor | Implementation | Parity | Cutover |
-| --- | --- | --- | --- | --- |
-| `unit` | `kubeclaw.direct-command@1` | complete | in-progress | in-progress |
-| `manifest` | `lint:kubernetes-policy` | complete | complete | complete |
-| `build` | `kubeclaw.container-build@1` | complete | in-progress | in-progress |
-| `bundle` | `kubeclaw.size-budget@1` | complete | complete | complete |
-| `k8s` | `kubeclaw.kubernetes-fixture@1` | complete | in-progress | in-progress |
-| `health` | `kubeclaw.http@1` | complete | in-progress | in-progress |
-| `tailscale-preview` | `kubeclaw.tailscale-exposure@1` | complete | in-progress | in-progress |
-| `api` | `kubeclaw.api-suite@1` | pending | pending | pending |
-| `a11y` | `kubeclaw.axe@1` | pending | pending | pending |
-| `perf` | `kubeclaw.lighthouse@1` | pending | pending | pending |
-| `visual-reg` | `kubeclaw.visual@1` | pending | pending | pending |
-| `e2e` | `kubeclaw.e2e-suite@1` | pending | pending | pending |
-| `security` | `kubeclaw.security-suite@1` | pending | pending | pending |
+| Old suite | Successor | Implementation | Parity | Source cutover | Production acceptance | Cutover |
+| --- | --- | --- | --- | --- | --- | --- |
+| `unit` | `kubeclaw.direct-command@1` | complete | in-progress | complete | pending | in-progress |
+| `manifest` | `lint:kubernetes-policy` | complete | complete | complete | not required | complete |
+| `build` | `kubeclaw.container-build@1` | complete | in-progress | complete | pending | in-progress |
+| `bundle` | `kubeclaw.size-budget@1` | complete | complete | complete | not required | complete |
+| `k8s` | `kubeclaw.kubernetes-fixture@1` | complete | in-progress | complete | pending | in-progress |
+| `health` | `kubeclaw.http@1` | complete | in-progress | complete | pending | in-progress |
+| `tailscale-preview` | `kubeclaw.tailscale-exposure@1` | complete | in-progress | complete | pending | in-progress |
+| `api` | `kubeclaw.api-suite@1` | pending | pending | pending | not required | pending |
+| `a11y` | `kubeclaw.axe@1` | pending | pending | pending | not required | pending |
+| `perf` | `kubeclaw.lighthouse@1` | pending | pending | pending | not required | pending |
+| `visual-reg` | `kubeclaw.visual@1` | pending | pending | pending | not required | pending |
+| `e2e` | `kubeclaw.e2e-suite@1` | pending | pending | pending | not required | pending |
+| `security` | `kubeclaw.security-suite@1` | pending | pending | pending | not required | pending |

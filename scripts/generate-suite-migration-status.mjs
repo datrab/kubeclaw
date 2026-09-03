@@ -12,7 +12,7 @@ const status = JSON.parse(fs.readFileSync(source, 'utf8'));
 
 const complete = (phase) => status.suites.filter((suite) => suite[phase] === 'complete').length;
 const rows = status.suites.map((suite) => (
-  `| \`${suite.id}\` | \`${suite.successor}\` | ${suite.implementation} | ${suite.parity} | ${suite.cutover} |`
+  `| \`${suite.id}\` | \`${suite.successor}\` | ${suite.implementation} | ${suite.parity} | ${suite.sourceCutover} | ${suite.productionAcceptance ?? 'not required'} | ${suite.cutover} |`
 ));
 const output = `# Test-Suite Migration Status
 
@@ -23,12 +23,13 @@ Do not edit this page directly.
 
 - Replacement implemented: ${complete('implementation')} of ${status.totalLegacySuites}.
 - Parity proved: ${complete('parity')} of ${status.totalLegacySuites}.
+- Source cutover complete: ${complete('sourceCutover')} of ${status.totalLegacySuites}.
 - Cut over and deleted: ${complete('cutover')} of ${status.totalLegacySuites}.
 
 ## Suites
 
-| Old suite | Successor | Implementation | Parity | Cutover |
-| --- | --- | --- | --- | --- |
+| Old suite | Successor | Implementation | Parity | Source cutover | Production acceptance | Cutover |
+| --- | --- | --- | --- | --- | --- | --- |
 ${rows.join('\n')}
 `;
 

@@ -20,6 +20,10 @@
       "description": "Deploy Tailscale Kubernetes Operator"
     },
     {
+      "invocation": "./scripts/deploy.sh nova-production-preflights <image>",
+      "description": "Run all required proofs after all source cutovers"
+    },
+    {
       "invocation": "./scripts/deploy.sh agents",
       "description": "Deploy agents (Nova + Buster)"
     },
@@ -76,6 +80,7 @@
     "nova-kubernetes-fixture-preflight",
     "nova-http-preflight",
     "nova-tailscale-preflight",
+    "nova-production-preflights",
     "worker-trust-e2e",
     "buster-infra-smoke",
     "agents",
@@ -298,6 +303,7 @@
     "cmd_nova_kubernetes_fixture_preflight",
     "cmd_nova_http_preflight",
     "cmd_nova_tailscale_preflight",
+    "cmd_nova_production_preflights",
     "cmd_worker_trust_e2e",
     "cmd_buster_infra_smoke",
     "cmd_teardown_agents",
@@ -318,12 +324,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 848,
-    "secrets": 893,
-    "tailscale": 984,
-    "infra": 1075,
-    "agents": 1391,
-    "smoke": 1513,
-    "teardown": 2390
+    "setup": 849,
+    "secrets": 894,
+    "tailscale": 985,
+    "infra": 1076,
+    "agents": 1392,
+    "smoke": 1514,
+    "teardown": 2443
   }
 }

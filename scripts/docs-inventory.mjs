@@ -22,6 +22,7 @@ function parseHeaderUsage(scriptText) {
   const commands = [];
   const lines = scriptText.split('\n');
   const invocationForms = [
+    'nova-production-preflights <image>',
     'image <name>',
     'code <target>',
     'image',
