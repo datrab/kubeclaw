@@ -109,3 +109,9 @@ fs.appendFileSync(process.env.REVIEW_TEST_EVENTS, JSON.stringify({entry:{type:'r
   assert.equal(fs.existsSync(lease), false);
   assert.equal(fs.existsSync(path.join(value.root, 'diagnostics', 'attempt-1-exit.json')), true);
 });
+
+test('supervisor start mode uses the current pipeline CLI flag', () => {
+  const source = fs.readFileSync(path.join(repositoryRoot, 'scripts', 'supervise-repository-review.mjs'), 'utf8');
+  assert.match(source, /'--pipeline', graph, '--run-id', runId/u);
+  assert.doesNotMatch(source, /'--graph', graph/u);
+});

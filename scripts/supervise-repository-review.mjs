@@ -92,7 +92,7 @@ function reviewStatus(script, cwd, platform, runId, heartbeat, resourceLog) {
 function pipelineArguments(mode, platform, graph, runId) {
   return mode === 'recover'
     ? ['run', 'pipeline', '--', '--platform', platform, '--recover', runId]
-    : ['run', 'pipeline', '--', '--platform', platform, '--graph', graph, '--run-id', runId];
+    : ['run', 'pipeline', '--', '--platform', platform, '--pipeline', graph, '--run-id', runId];
 }
 
 function readNumber(file) {
