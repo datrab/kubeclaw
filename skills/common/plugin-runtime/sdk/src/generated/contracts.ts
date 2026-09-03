@@ -137,6 +137,21 @@ export type AdministrativeReopenDecision =
       };
       reason: Reason;
       continuation: 'retry' | 'cancel';
+      /**
+       * @minItems 1
+       */
+      packageUpgrades?: [
+        {
+          pluginId: NamespacedId;
+          from: PackageIdentity;
+          to: PackageIdentity;
+        },
+        ...{
+          pluginId: NamespacedId;
+          from: PackageIdentity;
+          to: PackageIdentity;
+        }[]
+      ];
       decidedAt: string;
     };
 export type InvocationLease = {

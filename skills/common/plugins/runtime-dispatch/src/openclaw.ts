@@ -262,7 +262,7 @@ export async function dispatchOpenClaw(
     const state = await pollSession(context, target, token, identity, dispatchSignal);
     assertOpenClawSessionCompleted(state, target.model);
     const resolved = await beforeAbort(() => readOpenClawResult(context, target,
-      { payload, relative: result.relative, key: identity.sessionKey, startedAt, state: state.state }), dispatchSignal);
+      { payload, relative: result.relative, key: identity.sessionKey, startedAt, state: state.state, token }), dispatchSignal);
     assertDispatchActive(dispatchSignal);
     assertOpenClawOutputBudget(resolved.outputText, target,
       runtimePromptBudget(payload.runtimePromptBudget)?.maxOutputTokens);

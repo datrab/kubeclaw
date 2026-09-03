@@ -10,7 +10,7 @@ import { RepositoryAuditArtifactCache, RepositoryAuditCacheIntegrityError } from
 import { ReviewContentCacheIntegrityError, runWithReviewCache,
   type ReviewCacheIdentity, type ReviewCacheRun } from './review-content-cache.ts';
 import { buildScalableReviewDispatchPayload, expandScalableReviewJob,
-  type ScalableReviewJob, type ScalableReviewJobResult } from './scalable-review-jobs.ts';
+  type ScalableReviewJob, type ScalableReviewJobResult, type ScalableReviewSource } from './scalable-review-jobs.ts';
 import { executeScalableReviewJobs } from './scalable-review-execution.ts';
 import { buildScalableVerificationDispatchPayload, buildScalableVerificationJobs, executeScalableVerificationJobs,
   preflightScalableReviewResults, reduceScalableReview,
@@ -305,9 +305,10 @@ async function preparedRepositoryAudit(
 
 // eslint-disable-next-line max-lines-per-function, complexity -- This is the fail-closed review and verification transaction.
 async function verifiedReduction(
-  compilation: ReturnType<typeof compileScalableReview>, config: AuditConfig,
+  prepared: CompiledRepositoryAudit, config: AuditConfig,
   policyDigest: `sha256:${string}`, context: PluginInvocationContext,
 ) {
+  const { compilation, revision, snapshot } = prepared;
   const cache = new RepositoryAuditArtifactCache(context);
   const expectedRuntime: ReviewRuntimeIdentity = Object.freeze({ targetId: config.agent,
     runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,
@@ -323,8 +324,28 @@ async function verifiedReduction(
   const runtime = { cache, agent: config.agent, context, execution: execution('initial'), expectedRuntime };
   const reviewRun = await cachedReviewJobs(compilation.jobs, reviewIdentity, runtime);
   const firstResults = compilation.jobs.map(({ id }) => reviewRun.values.get(id) as ScalableReviewJobResult);
-  const completeSources = new Map(compilation.jobs.filter(({ kind }) => kind === 'component')
+  const completeSources = new Map<string, ScalableReviewSource>(compilation.jobs.filter(({ kind }) => kind === 'component')
     .flatMap(({ source }) => source.filter(({ complete }) => complete).map((value) => [value.path, value] as const)));
+  const requestedPaths = [...new Set(compilation.jobs.flatMap((job, index) => {
+    const request = firstResults[index]?.parsed.ok ? firstResults[index].parsed.value.contextRequest : undefined;
+    return request?.paths ?? [];
+  }))].sort(compareCodeUnits);
+  for (const requestedPath of requestedPaths) {
+    if (completeSources.has(requestedPath)) continue;
+    const file = snapshot.files.find(({ path }) => path === requestedPath);
+    if (!file || file.mode !== '100644' || file.sizeBytes > REVIEW_HARD_LIMITS.repositoryAuditFileBytes) {
+      throw new RepositoryAuditIntegrityError(`scalable review requested source is unavailable: ${requestedPath}`);
+    }
+    const raw = await context.invoke('git.repository.read', {
+      operation: 'read_revision_text', resource: { type: 'git.repository.path', canonicalId: file.path },
+      payload: { head: revision.head, proof: revision.proof, expectedObjectId: file.objectId,
+        expectedSizeBytes: file.sizeBytes, maxBytes: REVIEW_HARD_LIMITS.repositoryAuditFileBytes },
+    });
+    const response = validatedSourceResponse(raw, file, revision.head);
+    completeSources.set(requestedPath, Object.freeze({ path: requestedPath, content: response.content,
+      digest: response.digest, complete: true,
+      ranges: Object.freeze([{ startLine: 1, endLine: Math.max(1, response.content.split('\n').length) }]) }));
+  }
   const expandedJobs = compilation.jobs.flatMap((job, index) => {
     const request = firstResults[index]?.parsed.ok ? firstResults[index].parsed.value.contextRequest : undefined;
     return request ? [expandScalableReviewJob(job, request.paths, completeSources)] : [];
@@ -561,7 +582,7 @@ async function runRepositoryAudit(
         ...(exactArtifactProducer(preparedArtifact, context) ? [preparedArtifact] : []), artifact],
         facts: repositoryPlanFacts(revision.head, compilation, artifact.digest) };
     }
-    const verified = await verifiedReduction(compilation, config, policy.digest, context);
+    const verified = await verifiedReduction({ revision, snapshot, compilation }, config, policy.digest, context);
     const report = Object.freeze({ schemaVersion: 'repository-review-report.v1', head: revision.head,
       snapshotDigest: snapshot.digest, compilationDigest: compilation.digest, map: compilation.artifacts,
       profile: parsed.reviewProfile, accounting: compilation.accounting,

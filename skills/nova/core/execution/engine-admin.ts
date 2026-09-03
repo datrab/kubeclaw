@@ -10,7 +10,7 @@ import { FileJournal } from '../state/journal.ts';
 import type { AdministrativeDecisionAuthenticator } from './engine.ts';
 import { createAdapterRuntime, drainObservers, prepareRuntime, type PreparedRuntime } from './engine-runtime.ts';
 import { executePrepared } from './engine-run.ts';
-import { canonicalJson, deepFreeze, verifyPinnedGraph, verifyPinnedPackages } from './engine-snapshots.ts';
+import { canonicalJson, deepFreeze, recordedPackageUpgrades, verifyPinnedGraph, verifyPinnedPackages } from './engine-snapshots.ts';
 import type { ExecutionGraphSnapshot } from './graph.ts';
 import type { PipelineRunResult } from './runner.ts';
 import { withRunMutationLock } from './run-mutation.ts';
@@ -35,11 +35,15 @@ class AdministrativeReopener {
   }
 
   async run(): Promise<PipelineRunResult> {
-    verifyPinnedPackages(this.#runRoot, this.#runtime); const graph = verifyPinnedGraph(this.#runRoot, this.#definition);
+    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(this.#runRoot, 'administrative-decisions.jsonl'));
+    const recorded = this.#recorded(decisions); await this.#authorize(recorded);
+    if (this.#decision.continuation === 'cancel' && this.#decision.packageUpgrades?.length) throw new Error('ADMIN_PACKAGE_UPGRADE_REQUIRES_RETRY');
+    const approved = recordedPackageUpgrades(decisions.records().map(({ entry }) => entry));
+    const upgrades = recorded ? approved : [...approved, ...(this.#decision.continuation === 'retry' ? this.#decision.packageUpgrades ?? [] : [])];
+    verifyPinnedPackages(this.#runRoot, this.#runtime, upgrades); const graph = verifyPinnedGraph(this.#runRoot, this.#definition);
     const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(this.#runRoot, 'events.jsonl'));
     const recovered = recoverStageStates(this.#definition, events.records(), this.#decision.runId, this.#platform.orchestratorIssuerId);
-    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(this.#runRoot, 'administrative-decisions.jsonl'));
-    const recorded = this.#recorded(decisions); await this.#authorize(recorded); const target = this.#validate(recovered, events, recorded);
+    const target = this.#validate(recovered, events, recorded);
     if (!recorded) { this.#lease.throwIfAborted(); decisions.append(Object.freeze(structuredClone(this.#decision))); }
     const context: Context = { platform: this.#platform, definition: this.#definition, decision: this.#decision, runtime: this.#runtime,
       runId: this.#decision.runId, runRoot: this.#runRoot, lease: this.#lease, events, recovered, graph, recorded, target };

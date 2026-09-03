@@ -13,6 +13,7 @@ const files = [
   { path: 'go.mod', objectId: '6'.repeat(40), mode: '100644', sizeBytes: 15 },
   { path: 'services/api/go.mod', objectId: '7'.repeat(40), mode: '100644', sizeBytes: 16 },
   { path: 'web/index.html', objectId: '8'.repeat(40), mode: '100644', sizeBytes: 17 },
+  { path: '.dockerignore', objectId: '9'.repeat(40), mode: '100644', sizeBytes: 18 },
 ];
 const proof = { head, files, inventoryDigest: sha256Text(canonicalJson(files)) };
 const first = parseReviewSnapshotInventory(proof);
@@ -21,6 +22,7 @@ const second = parseReviewSnapshotInventory({ ...proof, files: reversed,
   inventoryDigest: sha256Text(canonicalJson(reversed)) });
 assert.equal(first.digest, second.digest);
 assert.deepEqual(first.files.map(({ path, role, included }) => ({ path, role, included })), [
+  { path: '.dockerignore', role: 'configuration', included: true },
   { path: 'assets/logo.png', role: 'binary', included: false },
   { path: 'go.mod', role: 'configuration', included: true },
   { path: 'linked.ts', role: 'symlink', included: false },

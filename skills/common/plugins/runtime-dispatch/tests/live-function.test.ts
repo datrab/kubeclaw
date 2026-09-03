@@ -98,6 +98,7 @@ const environmentName = 'KUBECLAW_RUNTIME_DISPATCH_TEST_TOKEN';
 process.env[environmentName] = token;
 const received = [];
 let spawnedLabel = '';
+let suppressResultFile = true;
 const server = http.createServer((request, response) => {
   const chunks = [];
   request.on('data', (chunk) => chunks.push(chunk));
@@ -127,8 +128,10 @@ const server = http.createServer((request, response) => {
       const resultFile = String(parsed.args.task).match(/atomically to (.+\.json)\./u)?.[1];
       assert.ok(resultFile);
       spawnedLabel = String(parsed.args.label);
-      fs.mkdirSync(path.dirname(resultFile), { recursive: true });
-      fs.writeFileSync(resultFile, '{"status":"PASS","summary":"Reviewed"}\n');
+      if (!suppressResultFile) {
+        fs.mkdirSync(path.dirname(resultFile), { recursive: true });
+        fs.writeFileSync(resultFile, '{"status":"PASS","summary":"Reviewed"}\n');
+      }
       response.end(JSON.stringify({
         ok: true,
         toolName: 'sessions_spawn',
@@ -146,6 +149,14 @@ const server = http.createServer((request, response) => {
         output: { content: [], details: { completed: [{ runId: 'run:gateway-test', status: 'done',
           sessionKey: 'session:gateway-test' }], pending: [] } },
         source: 'core',
+      }));
+    } else if (parsed.tool === 'sessions_history') {
+      response.end(JSON.stringify({
+        ok: true, toolName: 'sessions_history', output: { content: [], details: {
+          sessionKey: parsed.args.sessionKey, messages: [{ role: 'assistant',
+            content: [{ type: 'text', text: '{"status":"PASS","summary":"Recovered terminal output"}' }],
+            __openclaw: { runTerminal: true } }],
+        } }, source: 'core',
       }));
     } else if (parsed.tool === 'subagents') {
       const poll = received.filter((entry) => JSON.parse(entry.body).tool === 'subagents').length;
@@ -309,7 +320,7 @@ try {
           ['artifacts.write', { allowedNamespaces: ['kubeclaw.review'] }],
       ])],
       ['kubeclaw.runtime-dispatch:openclaw', new Map([
-        ['git.repository.read', { allowedPrefixes: ['.swarm/runtime-dispatch-test/results/'] }],
+        ['git.repository.read', { allowedPrefixes: ['.swarm/runtime-dispatch-test/work/results/'] }],
         ['network.http', { allowedOrigins: [origin] }],
         ['secrets.read', { allowedNames: ['runtime.agent'] }],
       ])],
@@ -342,8 +353,6 @@ try {
             maxPolls: 2,
             sessionTimeoutMs: 1_000,
             resultPathPrefix: '.swarm/runtime-dispatch-test/work/results',
-            resultEndpoint: `${origin}/results`,
-            resultTokenSecret: 'runtime.agent',
           },
         },
       }],
@@ -388,7 +397,7 @@ try {
     );
     const runtimeIdentity = { targetId: 'gateway', runtime: 'subagent', agentId: 'codex',
       model: 'openai/gpt-5.6-sol', thinking: 'high' };
-    assert.deepEqual(gateway, { result: { status: 'PASS', summary: 'Reviewed' },
+    assert.deepEqual(gateway, { result: { status: 'PASS', summary: 'Recovered terminal output' },
       runtimeEvidence: { schemaVersion: 'runtime-agent-attestation.v1', ...runtimeIdentity,
         identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(runtimeIdentity)).digest('hex')}` } });
     const spawnRequests = received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn');
@@ -411,7 +420,7 @@ try {
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait').length, 1);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait')
       .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
-    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 1);
     const recoveredGateway = await gatewayAdapters.invoke(
       'runtime.dispatch',
       { ...attempt, attemptId: 'attempt:test:retry', attemptNumber: 2 },
@@ -426,6 +435,7 @@ try {
     assert.deepEqual(recoveredGateway, gateway);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn').length, 1,
       'a retry with a new engine idempotency key reattaches by stable model payload identity');
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 1);
     await assert.rejects(gatewayAdapters.invoke(
       'runtime.dispatch',
       attempt,

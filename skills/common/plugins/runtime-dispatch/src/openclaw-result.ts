@@ -1,7 +1,10 @@
 import crypto from 'node:crypto';
+import fs from 'node:fs';
 import path from 'node:path';
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import type { OpenClawTarget, RuntimeSessionEvidence } from './openclaw.ts';
+import { gateway } from './openclaw-session.ts';
+import { openClawToolDetails } from './openclaw-response.ts';
 
 type JsonRecord = Record<string, unknown>;
 function record(value: unknown): value is JsonRecord { return value !== null && typeof value === 'object' && !Array.isArray(value); }
@@ -38,16 +41,64 @@ async function remoteResult(context: AdapterActivationContext, target: OpenClawT
 
 interface OpenClawResultRequest {
   readonly payload: JsonRecord; readonly relative: string; readonly key: string;
-  readonly startedAt: string; readonly state: string;
+  readonly startedAt: string; readonly state: string; readonly token: string;
+}
+
+function terminalAssistantText(value: unknown): string {
+  const details = openClawToolDetails(value);
+  if (!record(details) || !Array.isArray(details.messages)) throw new Error('OPENCLAW_SESSION_HISTORY_INVALID');
+  const candidates = details.messages.filter((message) => record(message) && message.role === 'assistant'
+    && record(message.__openclaw) && message.__openclaw.runTerminal === true);
+  if (candidates.length !== 1) throw new Error('OPENCLAW_SESSION_TERMINAL_OUTPUT_AMBIGUOUS');
+  const content = candidates[0]?.content;
+  if (!Array.isArray(content)) throw new Error('OPENCLAW_SESSION_OUTPUT_NOT_JSON');
+  const texts = content.filter((item) => record(item) && item.type === 'text' && typeof item.text === 'string')
+    .map((item) => String(item.text));
+  if (texts.length !== 1) throw new Error('OPENCLAW_SESSION_OUTPUT_NOT_JSON');
+  return requiredText(texts[0], 'SESSION_OUTPUT');
+}
+
+function persistResult(root: string, relative: string, content: string): void {
+  const absoluteRoot = path.resolve(root), destination = path.resolve(absoluteRoot, relative);
+  if (destination !== absoluteRoot && !destination.startsWith(`${absoluteRoot}${path.sep}`)) throw new Error('OPENCLAW_RESULT_PATH_INVALID');
+  fs.mkdirSync(path.dirname(destination), { recursive: true });
+  const temporary = `${destination}.tmp-${crypto.randomUUID()}`;
+  try {
+    fs.writeFileSync(temporary, content, { encoding: 'utf8', flag: 'wx' });
+    const handle = fs.openSync(temporary, 'r'); try { fs.fsyncSync(handle); } finally { fs.closeSync(handle); }
+    try { fs.linkSync(temporary, destination); }
+    catch (error) {
+      if (!(error instanceof Error) || !('code' in error) || error.code !== 'EEXIST'
+        || fs.readFileSync(destination, 'utf8') !== content) throw error;
+    }
+    fs.unlinkSync(temporary);
+    const directory = fs.openSync(path.dirname(destination), 'r'); try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+  } finally { try { fs.unlinkSync(temporary); } catch { /* temporary was renamed or already absent */ } }
+}
+
+async function localResult(context: AdapterActivationContext, target: OpenClawTarget,
+  relative: string, key: string, token: string): Promise<JsonRecord> {
+  try {
+    return await context.invokeConfidential('git.repository.read', { operation: 'read_text',
+      resource: { type: 'git.repository.path', canonicalId: relative.split(path.sep).join('/') }, payload: {} }) as JsonRecord;
+  } catch (error) {
+    if (!(error instanceof Error) || !error.message.includes('REPOSITORY_FILE_NOT_FOUND')) throw error;
+    const history = await gateway(context, target, token, 'sessions_history',
+      { sessionKey: key, limit: 20, includeTools: false });
+    const content = terminalAssistantText(history);
+    parseJsonText(content);
+    persistResult(target.repositoryRoot, relative, content);
+    return { content };
+  }
 }
 
 export async function readOpenClawResult(
   context: AdapterActivationContext, target: OpenClawTarget, request: OpenClawResultRequest,
 ): Promise<Readonly<{ result: unknown; outputText: string }>> {
-  const { payload, relative, key, startedAt, state } = request;
+  const { payload, relative, key, startedAt, state, token } = request;
   const durable = target.resultEndpoint && target.resultTokenSecret
     ? await remoteResult(context, target, relative)
-    : await context.invokeConfidential('git.repository.read', { operation: 'read_text', resource: { type: 'git.repository.path', canonicalId: relative.split(path.sep).join('/') }, payload: {} });
+    : await localResult(context, target, relative, key, token);
   const content = requiredText(durable.content, 'RESULT_FILE');
   const session: RuntimeSessionEvidence = {
     sessionId: key, startedAt, completedAt: new Date().toISOString(),

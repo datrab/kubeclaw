@@ -34,7 +34,11 @@ function specialRole(mode: string): { role: ReviewFileRole; exclusionReason: str
   return undefined;
 }
 function configurationFile(file: string): boolean {
-  return pathBasename(file) === 'go.mod' || /(?:^|\/)(?:package|plugin|tsconfig)\.json$|\.(?:ya?ml|toml)$/u.test(file);
+  const basename = pathBasename(file);
+  return basename === 'go.mod'
+    || new Set(['.dockerignore', '.containerignore', '.gitignore', '.gitattributes', '.gitmodules',
+      '.npmrc', '.editorconfig', '.prettierignore', '.eslintignore', '.helmignore', '.tool-versions']).has(basename)
+    || /(?:^|\/)(?:package|plugin|tsconfig)\.json$|\.(?:ya?ml|toml)$/u.test(file);
 }
 
 function pathBasename(file: string): string { return file.slice(file.lastIndexOf('/') + 1); }

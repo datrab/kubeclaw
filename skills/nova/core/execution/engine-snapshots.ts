@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { PipelineDefinition, ResumeSignal } from '@kubeclaw/plugin-sdk';
+import type { AdministrativeReopenDecision, PipelineDefinition, ResumeSignal } from '@kubeclaw/plugin-sdk';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { ExecutionGraph, type ExecutionGraphSnapshot } from './graph.ts';
@@ -20,13 +20,21 @@ export function graphSnapshot(definition: PipelineDefinition): ExecutionGraphSna
 }
 
 interface PinnedPackage { readonly package: { readonly packageVersion: string; readonly contentDigest: string } }
-export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime): void {
+type PackageUpgrade = NonNullable<Extract<AdministrativeReopenDecision, { continuation: 'retry' | 'cancel' }>['packageUpgrades']>[number];
+export function recordedPackageUpgrades(decisions: readonly AdministrativeReopenDecision[]): readonly PackageUpgrade[] {
+  return decisions.flatMap((decision) => decision.continuation === 'retry' ? decision.packageUpgrades ?? [] : []);
+}
+export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[] = []): void {
   const stored = JSON.parse(fs.readFileSync(path.join(runRoot, 'registry-snapshot.json'), 'utf8')) as unknown;
   const packages = stored && typeof stored === 'object' && !Array.isArray(stored) ? (stored as { packages?: unknown }).packages : undefined;
   if (!Array.isArray(packages)) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
   const pinned = new Map<string, PinnedPackage>(); packages.forEach((value) => addPinnedPackage(value, pinned));
   if (canonicalJson([...runtime.snapshot.packages.keys()].sort()) !== canonicalJson([...pinned.keys()].sort())) throw new Error('RECOVERY_PINNED_PACKAGE_SET_MISMATCH');
-  for (const [pluginId, provenance] of pinned) assertPinnedPackage(pluginId, provenance, runtime);
+  for (const pluginId of new Set(upgrades.map(({ pluginId }) => pluginId))) {
+    if (!pinned.has(pluginId)) throw new Error(`RECOVERY_PACKAGE_UPGRADE_UNKNOWN:${pluginId}`);
+  }
+  for (const [pluginId, provenance] of pinned) assertPinnedPackage(pluginId, provenance, runtime,
+    upgrades.filter((upgrade) => upgrade.pluginId === pluginId));
 }
 
 function addPinnedPackage(value: unknown, pinned: Map<string, PinnedPackage>): void {
@@ -35,8 +43,21 @@ function addPinnedPackage(value: unknown, pinned: Map<string, PinnedPackage>): v
   if (!provenance?.package || typeof provenance.package.packageVersion !== 'string' || typeof provenance.package.contentDigest !== 'string') throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
   pinned.set(value[0], provenance as PinnedPackage);
 }
-function assertPinnedPackage(pluginId: string, provenance: PinnedPackage, runtime: PreparedRuntime): void {
+function assertPinnedPackage(pluginId: string, provenance: PinnedPackage, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[]): void {
   const current = runtime.snapshot.packages.get(pluginId); if (!current) throw new Error(`RECOVERY_PINNED_PACKAGE_MISSING:${pluginId}`);
+  let expected = { pluginId, apiVersion: current.provenance.package.apiVersion,
+    packageVersion: provenance.package.packageVersion, contentDigest: provenance.package.contentDigest };
+  for (const upgrade of upgrades) {
+    if (canonicalJson(upgrade.from) !== canonicalJson(expected) || upgrade.pluginId !== pluginId
+      || upgrade.to.pluginId !== pluginId || upgrade.to.apiVersion !== expected.apiVersion) {
+      throw new Error(`RECOVERY_PACKAGE_UPGRADE_MISMATCH:${pluginId}`);
+    }
+    expected = upgrade.to;
+  }
+  if (upgrades.length > 0) {
+    if (canonicalJson(current.provenance.package) !== canonicalJson(expected)) throw new Error(`RECOVERY_PACKAGE_UPGRADE_MISMATCH:${pluginId}`);
+    return;
+  }
   if (current.provenance.package.packageVersion !== provenance.package.packageVersion) throw new Error(`RECOVERY_PINNED_PACKAGE_VERSION_MISMATCH:${pluginId}`);
   if (current.provenance.package.contentDigest !== provenance.package.contentDigest) throw new Error(`RECOVERY_PINNED_PACKAGE_DIGEST_MISMATCH:${pluginId}`);
 }

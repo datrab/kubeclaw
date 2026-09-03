@@ -7,6 +7,9 @@ import { pathToFileURL } from 'node:url';
 const core = await import(pathToFileURL(
   path.resolve('skills/nova/core/src/index.ts'),
 ).href);
+const { verifyPinnedPackages } = await import(pathToFileURL(
+  path.resolve('skills/nova/core/execution/engine-snapshots.ts'),
+).href);
 const runnerSource = fs.readFileSync(
   'skills/nova/core/execution/runner.ts',
   'utf8',
@@ -653,6 +656,24 @@ try {
     cancellationEvents.match(/"type":"stage.cancelled"/g)?.length,
     2,
   );
+
+  const upgradeRoot = path.join(temporary, 'package-upgrade-contract');
+  fs.mkdirSync(upgradeRoot, { recursive: true });
+  const oldIdentity = { pluginId: 'kubeclaw.review', apiVersion: 'pipeline-plugin-v2',
+    packageVersion: '2.0.0', contentDigest: `sha256:${'1'.repeat(64)}` };
+  const newIdentity = { ...oldIdentity, packageVersion: '2.0.1', contentDigest: `sha256:${'2'.repeat(64)}` };
+  fs.writeFileSync(path.join(upgradeRoot, 'registry-snapshot.json'), JSON.stringify({
+    packages: [['kubeclaw.review', { package: oldIdentity }]],
+  }));
+  const upgradedRuntime = { snapshot: { packages: new Map([['kubeclaw.review', {
+    provenance: { package: newIdentity },
+  }]]) } };
+  assert.throws(() => verifyPinnedPackages(upgradeRoot, upgradedRuntime), /RECOVERY_PINNED_PACKAGE_VERSION_MISMATCH/u);
+  assert.doesNotThrow(() => verifyPinnedPackages(upgradeRoot, upgradedRuntime,
+    [{ pluginId: 'kubeclaw.review', from: oldIdentity, to: newIdentity }]));
+  assert.throws(() => verifyPinnedPackages(upgradeRoot, upgradedRuntime,
+    [{ pluginId: 'kubeclaw.review', from: { ...oldIdentity, contentDigest: `sha256:${'3'.repeat(64)}` }, to: newIdentity }]),
+  /RECOVERY_PACKAGE_UPGRADE_MISMATCH/u);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
 }

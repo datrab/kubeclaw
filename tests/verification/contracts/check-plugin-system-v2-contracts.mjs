@@ -173,6 +173,16 @@ const administrativeReopen = {
 valid('administrativeReopenDecision', administrativeReopen);
 valid('administrativeReopenDecision', {
   ...administrativeReopen,
+  packageUpgrades: [{ pluginId: 'kubeclaw.review',
+    from: { pluginId: 'kubeclaw.review', apiVersion: 'pipeline-plugin-v2', packageVersion: '2.0.0', contentDigest: `sha256:${'a'.repeat(64)}` },
+    to: { pluginId: 'kubeclaw.review', apiVersion: 'pipeline-plugin-v2', packageVersion: '2.0.1', contentDigest: `sha256:${'b'.repeat(64)}` } }],
+});
+invalid('administrativeReopenDecision', {
+  ...administrativeReopen, continuation: 'remediation', remediationStageId: 'fix-delivery',
+  packageUpgrades: [],
+}, 'package upgrades are retry-only');
+valid('administrativeReopenDecision', {
+  ...administrativeReopen,
   continuation: 'remediation',
   remediationStageId: 'fix-delivery',
 });

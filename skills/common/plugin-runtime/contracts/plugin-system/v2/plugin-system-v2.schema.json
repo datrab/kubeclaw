@@ -730,6 +730,18 @@
             },
             "reason": { "$ref": "#/$defs/reason" },
             "continuation": { "enum": ["retry", "cancel"] },
+            "packageUpgrades": {
+              "type": "array", "minItems": 1, "uniqueItems": true,
+              "items": {
+                "type": "object", "additionalProperties": false,
+                "required": ["pluginId", "from", "to"],
+                "properties": {
+                  "pluginId": { "$ref": "#/$defs/namespacedId" },
+                  "from": { "$ref": "#/$defs/packageIdentity" },
+                  "to": { "$ref": "#/$defs/packageIdentity" }
+                }
+              }
+            },
             "decidedAt": { "type": "string", "format": "date-time" }
           }
         }

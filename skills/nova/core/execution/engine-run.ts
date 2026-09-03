@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { LifecycleEvent, PipelineDefinition, PluginDomainEvent, ResumeSignal } from '@kubeclaw/plugin-sdk';
+import type { AdministrativeReopenDecision, LifecycleEvent, PipelineDefinition, PluginDomainEvent, ResumeSignal } from '@kubeclaw/plugin-sdk';
 import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { recoverStageStates } from '../lifecycle/recovery.ts';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
@@ -9,7 +9,7 @@ import { FileJournal } from '../state/journal.ts';
 import type { PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
 import { PipelineRunner } from './runner.ts';
 import { createAdapterRuntime, prepareRuntime, serializedObserverDrainer, type PreparedRuntime } from './engine-runtime.ts';
-import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
+import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
 import { withRunMutationLock } from './run-mutation.ts';
 import { reconcileNovaObservabilityOnRecovery } from '../observability/reconciler.ts';
 
@@ -48,7 +48,8 @@ export async function recoverPipeline(platform: PlatformConfig, definitionInput:
   const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
   const runRoot = path.join(platform.storageRoot, 'runs', runId.replaceAll(':', '_'));
   return withRunMutationLock(runRoot, async (leaseSignal) => {
-    verifyPinnedPackages(runRoot, runtime); verifyPinnedGraph(runRoot, definition);
+    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
+    verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
     const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'RECOVERY');
     // Phase 7 persists this run's test-attempt reconciliation plan before
     // dispatch. The recovery hook is active now; it is a no-op for legacy runs.
@@ -73,7 +74,8 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
   const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
   const runRoot = path.join(platform.storageRoot, 'runs', runId.replaceAll(':', '_'));
   return withRunMutationLock(runRoot, async (leaseSignal) => {
-    verifyPinnedPackages(runRoot, runtime); verifyPinnedGraph(runRoot, definition);
+    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
+    verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
     const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'WAIT');
     const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
     const created = validateWaitHistory(events, runId, signal.waitId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
