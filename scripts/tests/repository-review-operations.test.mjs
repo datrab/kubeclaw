@@ -106,6 +106,7 @@ fs.appendFileSync(process.env.REVIEW_TEST_EVENTS, JSON.stringify({entry:{type:'r
   const invoked = JSON.parse(fs.readFileSync(capture, 'utf8'));
   assert.deepEqual(invoked.slice(0, 2), ['run', 'pipeline']);
   assert.ok(invoked.includes('--recover'));
+  assert.ok(invoked.includes('--pipeline'));
   assert.equal(fs.existsSync(lease), false);
   assert.equal(fs.existsSync(path.join(value.root, 'diagnostics', 'attempt-1-exit.json')), true);
 });
