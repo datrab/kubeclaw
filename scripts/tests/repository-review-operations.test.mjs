@@ -57,6 +57,10 @@ test('compact status and formatter report live state without scanning source jou
     contract: { status: 'active', ownerLeaseId: 'attempt:fixture', resource: { type: 'runtime.invocation' },
       expiresAt: new Date(now + 60_000).toISOString() },
   });
+  appendEvent(value.events, { type: 'run.blocked', occurredAt: new Date(now - 1_000).toISOString(),
+    identity: { runId: value.runId } });
+  appendEvent(value.events, { type: 'run.resumed', occurredAt: new Date(now).toISOString(),
+    identity: { runId: value.runId, attemptId: 'attempt:fixture' } });
   fs.writeFileSync(value.resources, [
     { observedAt: new Date(now - 15_000).toISOString(), memoryCurrentBytes: 1024 ** 3,
       memoryPeakBytes: 3 * 1024 ** 3, memoryEvents: { oom: 0, oom_kill: 0 },
@@ -71,6 +75,7 @@ test('compact status and formatter report live state without scanning source jou
   assert.equal(status.status, 0, status.stderr);
   const parsed = JSON.parse(status.stdout);
   assert.equal(parsed.liveness, 'active');
+  assert.equal(parsed.status, 'running');
   assert.equal(parsed.plannedPrimary, 3);
   assert.equal(parsed.resources.currentCpuPercent, 10);
   assert.equal(parsed.resources.currentRamBytes, 2 * 1024 ** 3);

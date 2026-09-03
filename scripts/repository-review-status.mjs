@@ -136,6 +136,8 @@ if (fs.existsSync(eventFile)) for (const line of lastLines(eventFile)) {
   }
   if (['run.succeeded', 'run.blocked', 'run.cancelled', 'run.failed'].includes(event.type)) {
     terminal.status = event.type.slice('run.'.length); terminal.occurredAt = event.occurredAt;
+  } else if (event.type === 'run.resumed') {
+    terminal.status = 'running'; terminal.occurredAt = undefined;
   }
 }
 const heartbeatFile = args.get('heartbeat');
