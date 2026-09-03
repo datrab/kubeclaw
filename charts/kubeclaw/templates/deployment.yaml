@@ -64,6 +64,40 @@ spec:
       # INIT CONTAINER — Setup SSH, Git, Workspace, Skills
       # ---------------------------------------------------------------
       initContainers:
+        {{- if and .Values.gateway.startupDoctor.enabled (not .Values.runAsRoot) }}
+        # Older releases could initialize the persistent OpenClaw state as
+        # root. Reconcile only the config PVC before the non-root doctor needs
+        # to chmod or atomically replace those files. The workspace PVC is not
+        # mounted here and is therefore outside this ownership repair.
+        - name: openclaw-state-permissions
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              find /home/node/.openclaw -xdev -exec chown -h 1000:1000 {} +
+              echo "==> Reconciled persistent OpenClaw state ownership to UID/GID 1000"
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+          resources:
+            requests: { cpu: 10m, memory: 32Mi }
+            limits: { cpu: 100m, memory: 128Mi }
+          volumeMounts:
+            - name: config
+              mountPath: /home/node/.openclaw
+        {{- end }}
         {{- if .Values.gateway.startupDoctor.enabled }}
         # OpenClaw 2026.8+ can reject every CLI command while an existing
         # state database still needs a schema migration. This must run before

@@ -151,6 +151,11 @@ gateway through the Pod's supplemental `fsGroup`. Without those two init-only
 capabilities, recursive ownership repair fails with `Operation not permitted`
 before any application container can start.
 
+Before the OpenClaw doctor runs for a non-root agent, a bounded permissions init
+container reconciles legacy root-owned files on the config PVC to UID/GID 1000.
+It mounts neither the workspace PVC nor other application storage and retains
+only `CHOWN`; the doctor and steady-state gateway remain non-root.
+
 A pod mount error referencing `buster-plan-trust` or another object absent from
 the current values indicates stale Helm release values, commonly after a
 rollback to an older revision. Agent upgrades use `--reset-values` so the chart

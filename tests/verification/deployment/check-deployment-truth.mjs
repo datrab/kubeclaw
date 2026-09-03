@@ -594,6 +594,15 @@ assert.doesNotMatch(
   'agent workloads must not receive Anthropic credentials',
 );
 assert.ok(
+  chart.indexOf('name: openclaw-state-permissions') < chart.indexOf('name: openclaw-state-migration'),
+  'legacy state ownership must be repaired before the non-root OpenClaw migration',
+);
+assert.match(
+  chart,
+  /if and \.Values\.gateway\.startupDoctor\.enabled \(not \.Values\.runAsRoot\)[\s\S]*name: openclaw-state-permissions[\s\S]*find \/home\/node\/\.openclaw -xdev -exec chown -h 1000:1000 \{\} \+[\s\S]*runAsNonRoot: false[\s\S]*add:[\s\S]*- CHOWN[\s\S]*name: config[\s\S]*mountPath: \/home\/node\/\.openclaw/,
+  'non-root agents must repair only their persistent config ownership with the minimal CHOWN capability',
+);
+assert.ok(
   chart.indexOf('name: openclaw-state-migration') < chart.indexOf('name: init-setup'),
   'state migration must run before init-setup invokes any OpenClaw CLI command',
 );
