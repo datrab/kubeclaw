@@ -19,7 +19,7 @@ import { compareCodeUnits } from './review-ordering.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
 import { repositoryExecutionFacts, repositoryPlanFacts } from './repository-audit-results.ts';
-import { estimatedReviewCostUsd, reserveReviewRuntimePrompt,
+import { estimatedReviewCostUsd, reserveReviewAttempts, reserveReviewRuntimePrompt,
   ReviewDispatchBudget, type ReviewDispatchPhase } from './review-prompt-budget.ts';
 import { assertReviewRuntimeIdentity, ReviewRuntimeAttestationError, reviewRuntimeIdentityDigest,
   type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
@@ -435,17 +435,18 @@ function enforceExpansionBudget(
       `repository audit context expansion job budget exceeded: ${jobs.length}:${compilation.profile.maxContextExpansionJobs}`,
     );
   }
-  const metrics = jobs.map((job) => reserveReviewRuntimePrompt(
-    buildScalableReviewDispatchPayload(job), compilation.profile.tokenizerEncoding));
-  const inputTokens = metrics.reduce((total, value) => total + value.tokens, 0);
-  const outputTokens = jobs.length * compilation.profile.maxOutputTokensPerJob;
+  const reservation = reserveReviewAttempts(jobs.map(buildScalableReviewDispatchPayload),
+    compilation.profile.tokenizerEncoding, compilation.profile.maxRetries);
+  const inputTokens = reservation.inputTokens;
+  const outputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   const cost = estimatedReviewCostUsd({ inputTokens, outputTokens,
     inputUsdPerMillionTokens: compilation.profile.inputUsdPerMillionTokens,
     outputUsdPerMillionTokens: compilation.profile.outputUsdPerMillionTokens });
-  const wall = Math.ceil(jobs.length / compilation.profile.concurrency) * compilation.profile.estimatedSecondsPerJob;
-  if (Math.max(0, ...metrics.map(({ bytes }) => bytes)) > compilation.profile.maxPromptBytesPerJob
-    || Math.max(0, ...metrics.map(({ tokens }) => tokens)) > compilation.profile.maxInputTokensPerJob
-    || Math.max(0, ...metrics.map(({ tokens }) => tokens)) + compilation.profile.maxOutputTokensPerJob
+  const wall = Math.ceil(reservation.attempts / compilation.profile.concurrency)
+    * compilation.profile.estimatedSecondsPerJob;
+  if (reservation.maximumBytes > compilation.profile.maxPromptBytesPerJob
+    || reservation.maximumTokens > compilation.profile.maxInputTokensPerJob
+    || reservation.maximumTokens + compilation.profile.maxOutputTokensPerJob
       > compilation.profile.maxContextTokensPerJob
     || inputTokens > compilation.profile.maxContextExpansionInputTokens
     || compilation.accounting.estimatedInputTokens + inputTokens > compilation.profile.maxTotalInputTokens
@@ -477,16 +478,18 @@ function verificationJobAccounting(
 ): VerificationAccounting {
   const metrics = jobs.map((job) => reserveReviewRuntimePrompt(
     buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
-  const inputTokens = metrics.reduce((total, value) => total + value.tokens, 0);
-  const reservedOutputTokens = jobs.length * compilation.profile.maxOutputTokensPerJob;
+  const reservation = reserveReviewAttempts(jobs.map(buildScalableVerificationDispatchPayload),
+    compilation.profile.tokenizerEncoding, compilation.profile.maxRetries);
+  const inputTokens = reservation.inputTokens;
+  const reservedOutputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   return Object.freeze({ jobs: jobs.length,
     promptBytes: metrics.reduce((total, value) => total + value.bytes, 0), inputTokens,
-    maximumJobBytes: Math.max(0, ...metrics.map(({ bytes }) => bytes)),
-    maximumJobTokens: Math.max(0, ...metrics.map(({ tokens }) => tokens)), reservedOutputTokens,
+    maximumJobBytes: reservation.maximumBytes,
+    maximumJobTokens: reservation.maximumTokens, reservedOutputTokens,
     estimatedCostUsd: estimatedReviewCostUsd({ inputTokens, outputTokens: reservedOutputTokens,
       inputUsdPerMillionTokens: compilation.profile.inputUsdPerMillionTokens,
       outputUsdPerMillionTokens: compilation.profile.outputUsdPerMillionTokens }),
-    estimatedWallTimeSeconds: Math.ceil(jobs.length / compilation.profile.concurrency)
+    estimatedWallTimeSeconds: Math.ceil(reservation.attempts / compilation.profile.concurrency)
       * compilation.profile.estimatedSecondsPerJob } as VerificationAccounting);
 }
 

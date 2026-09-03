@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 
 import { buildRuntimeAgentTask, RUNTIME_RESULT_FILE_MAX_BYTES } from '@kubeclaw/plugin-sdk';
 
-import { ReviewDispatchBudget, countReviewTextTokens, estimatedReviewCostUsd,
+import { ReviewDispatchBudget, countReviewTextTokens, estimatedReviewCostUsd, reserveReviewAttempts,
   measureReviewPayload, reserveReviewRuntimePrompt } from '../src/review-prompt-budget.ts';
 
 assert.equal(countReviewTextTokens('review exact source') > 0, true);
@@ -16,6 +16,11 @@ const reservedEnvelope = reserveReviewRuntimePrompt(envelopePayload, 'o200k_base
 const actualEnvelope = buildRuntimeAgentTask(envelopePayload, maximumResultPath);
 assert.equal(Buffer.byteLength(actualEnvelope, 'utf8') <= reservedEnvelope.bytes, true);
 assert.equal(countReviewTextTokens(actualEnvelope) <= reservedEnvelope.tokens, true);
+const retryReservation = reserveReviewAttempts([envelopePayload, envelopePayload], 'o200k_base', 2);
+assert.equal(retryReservation.attempts, 6);
+assert.equal(retryReservation.inputTokens, reservedEnvelope.tokens * 6);
+assert.equal(retryReservation.maximumBytes, reservedEnvelope.bytes);
+assert.equal(retryReservation.maximumTokens, reservedEnvelope.tokens);
 const nestedPayload = { review: { job: { source: Array.from({ length: 200 }, (_value, index) => ({
   path: `src/${index}.ts`, ranges: [{ startLine: 1, endLine: 10 }], content: 'const value = true;\n'.repeat(10),
 })) } } };

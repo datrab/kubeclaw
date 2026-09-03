@@ -14,6 +14,13 @@ export interface ReviewPromptReservation extends ReviewPromptMetrics {
   readonly payloadTokens: number;
 }
 
+export interface ReviewAttemptReservation {
+  readonly attempts: number;
+  readonly inputTokens: number;
+  readonly maximumBytes: number;
+  readonly maximumTokens: number;
+}
+
 export interface ReviewDispatchLimits {
   readonly tokenizerEncoding: ReviewTokenizerEncoding;
   readonly maxPromptBytesPerJob: number;
@@ -58,6 +65,17 @@ export function reserveReviewRuntimePrompt(
   return Object.freeze({ payloadBytes: measured.bytes, payloadTokens: measured.tokens,
     bytes: measured.bytes + fixedBytes + RUNTIME_RESULT_FILE_MAX_BYTES,
     tokens: measured.tokens + fixedTokens + RUNTIME_RESULT_FILE_MAX_BYTES + PROMPT_TOKEN_BOUNDARY_RESERVE });
+}
+
+export function reserveReviewAttempts(
+  payloads: readonly Readonly<Record<string, unknown>>[], encoding: ReviewTokenizerEncoding, maxRetries: number,
+): ReviewAttemptReservation {
+  const metrics = payloads.map((payload) => reserveReviewRuntimePrompt(payload, encoding));
+  const attempts = maxRetries + 1;
+  return Object.freeze({ attempts: payloads.length * attempts,
+    inputTokens: metrics.reduce((total, value) => total + value.tokens, 0) * attempts,
+    maximumBytes: Math.max(0, ...metrics.map(({ bytes }) => bytes)),
+    maximumTokens: Math.max(0, ...metrics.map(({ tokens }) => tokens)) });
 }
 
 export function estimatedReviewCostUsd(values: {
