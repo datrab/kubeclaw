@@ -137,18 +137,21 @@ try {
   const frozenObjectId = execFileSync('git', ['-C', repository, 'rev-parse', `${stageHead}:nested/file.txt`],
     { encoding: 'utf8' }).trim();
   assert.deepEqual(await invoke('read_revision_text', 'nested/file.txt', {
-    ...revision, expectedObjectId: frozenObjectId, expectedSizeBytes: 26,
+    ...revision, allowedPrefixes: ['nested'], expectedObjectId: frozenObjectId, expectedSizeBytes: 26,
   }), {
     path: 'nested/file.txt', head: stageHead, content: 'updated repository content',
     objectId: frozenObjectId, sizeBytes: 26,
     digest: sha256Text('updated repository content'),
   });
   await assert.rejects(invoke('read_revision_text', 'nested/file.txt', {
-    ...revision, expectedObjectId: '0'.repeat(40), expectedSizeBytes: 26,
+    ...revision, allowedPrefixes: ['nested'], expectedObjectId: '0'.repeat(40), expectedSizeBytes: 26,
   }), /REPOSITORY_OBJECT_ID_MISMATCH/u);
   await assert.rejects(invoke('read_revision_text', 'nested/file.txt', {
-    ...revision, expectedObjectId: frozenObjectId, expectedSizeBytes: 25,
+    ...revision, allowedPrefixes: ['nested'], expectedObjectId: frozenObjectId, expectedSizeBytes: 25,
   }), /REPOSITORY_FILE_SIZE_MISMATCH/u);
+  await assert.rejects(invoke('read_revision_text', 'added.txt', {
+    ...revision, allowedPrefixes: ['nested'],
+  }), /REPOSITORY_PATH_OUT_OF_SCOPE/u);
   assert.deepEqual(await invoke('changed_line_ranges', 'nested/file.txt', { base, ...revision }), {
     base, head: stageHead, path: 'nested/file.txt', ranges: [{ start: 1, end: 1 }],
     rangesDigest: sha256Text(canonicalJson([{ start: 1, end: 1 }])),
@@ -162,15 +165,15 @@ try {
     /REPOSITORY_REVISION_PROOF_INVALID/u,
   );
   await assert.rejects(
-    invoke('read_revision_text', 'nested/file.txt', { head: base, proof: frozen.proof }),
+    invoke('read_revision_text', 'nested/file.txt', { head: base, proof: frozen.proof, allowedPrefixes: ['nested'] }),
     /REPOSITORY_REVISION_PROOF_INVALID/u,
   );
   await assert.rejects(
-    invoke('read_revision_text', 'nested/file.txt', { head: stageHead, proof: '0'.repeat(64) }),
+    invoke('read_revision_text', 'nested/file.txt', { head: stageHead, proof: '0'.repeat(64), allowedPrefixes: ['nested'] }),
     /REPOSITORY_REVISION_PROOF_INVALID/u,
   );
   await assert.rejects(
-    invoke('read_revision_text', 'nested/file.txt', revision, new AbortController().signal, {
+    invoke('read_revision_text', 'nested/file.txt', { ...revision, allowedPrefixes: ['nested'] }, new AbortController().signal, {
       ...attempt, attemptId: 'attempt:other',
     }),
     /REPOSITORY_REVISION_PROOF_INVALID/u,

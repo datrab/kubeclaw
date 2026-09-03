@@ -11,6 +11,7 @@ import { PipelineRunner } from './runner.ts';
 import { createAdapterRuntime, prepareRuntime, serializedObserverDrainer, type PreparedRuntime } from './engine-runtime.ts';
 import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
 import { withRunMutationLock } from './run-mutation.ts';
+import { runRoot as resolveRunRoot } from './run-root.ts';
 import { reconcileNovaObservabilityOnRecovery } from '../observability/reconciler.ts';
 
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
@@ -26,7 +27,7 @@ export async function executePrepared(context: ExecutionContext, options: Omit<P
 
 export async function runNewPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId?: string, signal?: AbortSignal): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
-  const effectiveRunId = runId ?? `run:${crypto.randomUUID()}`; const runRoot = path.join(platform.storageRoot, 'runs', effectiveRunId.replaceAll(':', '_'));
+  const effectiveRunId = runId ?? `run:${crypto.randomUUID()}`; const runRoot = resolveRunRoot(platform.storageRoot, effectiveRunId);
   return withRunMutationLock(runRoot, async (leaseSignal) => {
     fs.mkdirSync(runRoot, { recursive: true }); const graph = graphSnapshot(definition); writeRunSnapshots(runRoot, graph, frozenRegistryRecord(runtime, definition, graph));
     const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'));
@@ -46,7 +47,7 @@ function recoveryStates(definition: PipelineDefinition, events: FileJournal<Life
 
 export async function recoverPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
-  const runRoot = path.join(platform.storageRoot, 'runs', runId.replaceAll(':', '_'));
+  const runRoot = resolveRunRoot(platform.storageRoot, runId);
   return withRunMutationLock(runRoot, async (leaseSignal) => {
     const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
@@ -72,7 +73,7 @@ function dueRecoveryStates(recovered: ReadonlyMap<string, StageRuntimeState>): M
 
 export async function resumePipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string, signal: ResumeSignal): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
-  const runRoot = path.join(platform.storageRoot, 'runs', runId.replaceAll(':', '_'));
+  const runRoot = resolveRunRoot(platform.storageRoot, runId);
   return withRunMutationLock(runRoot, async (leaseSignal) => {
     const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);

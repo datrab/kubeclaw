@@ -14,6 +14,7 @@ import { canonicalJson, deepFreeze, recordedPackageUpgrades, verifyPinnedGraph, 
 import type { ExecutionGraphSnapshot } from './graph.ts';
 import type { PipelineRunResult } from './runner.ts';
 import { withRunMutationLock } from './run-mutation.ts';
+import { runRoot as resolveRunRoot } from './run-root.ts';
 
 interface Context { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly decision: AdministrativeReopenDecision;
   readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly lease: AbortSignal;
@@ -23,7 +24,7 @@ interface Context { readonly platform: PlatformConfig; readonly definition: Pipe
 export async function reopenPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, decisionInput: AdministrativeReopenDecision, authenticate: AdministrativeDecisionAuthenticator): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput)); const decision = deepFreeze(structuredClone(decisionInput));
   validateContractValue('administrativeReopenDecision', decision); const runtime = await prepareRuntime(platform, definition);
-  const runRoot = path.join(platform.storageRoot, 'runs', decision.runId.replaceAll(':', '_'));
+  const runRoot = resolveRunRoot(platform.storageRoot, decision.runId);
   return withRunMutationLock(runRoot, async (lease) => new AdministrativeReopener(platform, definition, decision, runtime, runRoot, lease, authenticate).run());
 }
 

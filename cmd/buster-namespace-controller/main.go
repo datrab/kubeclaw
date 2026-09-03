@@ -179,9 +179,13 @@ func newController() (*controller, error) {
 }
 
 func kubernetesHTTPClient() (*http.Client, error) {
-	caPEM, err := os.ReadFile(serviceAccountCAPath)
+	return kubernetesHTTPClientFromCA(serviceAccountCAPath)
+}
+
+func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {
+	caPEM, err := os.ReadFile(caPath)
 	if err != nil {
-		return &http.Client{Timeout: 60 * time.Second}, nil
+		return nil, fmt.Errorf("read Kubernetes ServiceAccount CA: %w", err)
 	}
 	roots := x509.NewCertPool()
 	if !roots.AppendCertsFromPEM(caPEM) {

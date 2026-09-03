@@ -284,6 +284,11 @@ export class RevisionReader {
   readRevisionText(pathInput: unknown, payload: Readonly<Record<string, unknown>>, attemptId: string) {
     const path = repositoryRelativePath(pathInput);
     const head = this.#assertProof(payload, attemptId);
+    // Core authorization has already constrained request.resource.canonicalId
+    // against the capability grant. This payload check is defense-in-depth and
+    // cannot expand the authority established by that grant.
+    const allowedPrefixes = allowedScopePrefixes(payload.allowedPrefixes);
+    if (!inScope(path, allowedPrefixes)) throw new Error(`REPOSITORY_PATH_OUT_OF_SCOPE:${path}`);
     const object = `${head}:${path}`;
     const requestedMaximum = payload.maxBytes === undefined ? this.#maxFileBytes : payload.maxBytes;
     if (!Number.isSafeInteger(requestedMaximum) || Number(requestedMaximum) < 1

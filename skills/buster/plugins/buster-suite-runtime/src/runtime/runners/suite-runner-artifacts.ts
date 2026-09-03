@@ -34,7 +34,7 @@ async function emitWriteDiagnostic(tctx: unknown, classification: string, error:
 function writeVerdicts(dir: string, suiteMap: Record<string, SuiteVerdict>, runner: unknown, suffix = ''): void {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, `runner-verdict${suffix}.json`), JSON.stringify(runner, null, 2));
-  for (const [name, suite] of Object.entries(suiteMap)) fs.writeFileSync(path.join(dir, `${name}-verdict${suffix}.json`), JSON.stringify(suite, null, 2));
+  for (const [name, suite] of Object.entries(suiteMap)) fs.writeFileSync(path.join(dir, `${safeArtifactSegment(name)}-verdict${suffix}.json`), JSON.stringify(suite, null, 2));
 }
 
 export async function writeSuiteResults(input: { suiteMap: Record<string, SuiteVerdict>; moduleId: string; project: string;

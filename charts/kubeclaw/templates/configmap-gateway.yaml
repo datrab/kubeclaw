@@ -200,7 +200,9 @@ data:
             "provider": "default",
             "id": "DISCORD_TOKEN"
           },
-          "groupPolicy": "open",
+          "allowFrom": {{ .Values.commands.allowFromDiscord | default list | toJson }},
+          "groupAllowFrom": {{ .Values.commands.allowFromDiscord | default list | toJson }},
+          "groupPolicy": "allowlist",
           "streaming": {
             "mode": "partial"
           },
@@ -209,7 +211,7 @@ data:
           },
           "guilds": {
             "*": {
-              "requireMention": false
+              "requireMention": true
             }
           },
           "threadBindings": {
@@ -218,7 +220,7 @@ data:
             "spawnSessions": true
           },
           "execApprovals": {
-            "enabled": false,
+            "enabled": true,
             "approvers": {{ .Values.discord.execApprovers | default list | toJson }},
             "target": "dm"
           }

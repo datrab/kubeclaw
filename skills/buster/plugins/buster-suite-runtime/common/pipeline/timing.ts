@@ -126,8 +126,11 @@ class DeadlineBudget implements TimeBudget {
   }
 
   extendForRateLimit(cooldownMs: number, meta: BudgetExtensionMeta = {}): number {
+    if (meta.authorized !== true) {
+      throw new TypeError('Rate-limit budget extension requires explicit authorization');
+    }
     return this.extend(nonNegativeMs(cooldownMs) + nonNegativeMs(meta.bufferMs), {
-      authorized: true,
+      authorized: meta.authorized,
       reason: textValue(meta.reason) ?? RATE_LIMIT_COOLDOWN_REASON,
     });
   }

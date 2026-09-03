@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { assertSecureRemoteEndpoint } from './secure-endpoint.ts';
 import type { ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { DurableRecordLimits } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import { assertLegacyBridgeSelection, NovaTestGateAuthorityRouter,
@@ -94,8 +95,7 @@ export function createProductionNovaTestGate(
   options: ProductionNovaTestGateOptions,
 ): ProductionNovaTestGate {
   if (!path.isAbsolute(options.stateRoot)) throw new Error('NOVA_REMOTE_STATE_ROOT_NOT_ABSOLUTE');
-  const endpoint = new URL(options.endpoint);
-  if (!['http:', 'https:'].includes(endpoint.protocol)) throw new Error('NOVA_REMOTE_PLAN_PROTOCOL_INVALID');
+  const endpoint = assertSecureRemoteEndpoint(options.endpoint);
   const transport = new HttpRemotePlanTransport({
     endpoint: endpoint.href,
     ...(options.token ? { token: options.token } : {}),

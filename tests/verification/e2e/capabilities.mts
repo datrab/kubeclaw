@@ -1,6 +1,8 @@
 import net from 'node:net';
 import tls from 'node:tls';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
 
@@ -110,15 +112,26 @@ function probeKubernetes(): CapabilityResult {
   }
   const namespace = fs.readFileSync(`${serviceAccountRoot}/namespace`, 'utf8').trim();
   const token = fs.readFileSync(`${serviceAccountRoot}/token`, 'utf8').trim();
-  const result = spawnSync('kubectl', [
-    `--server=https://${host}:${port}`,
-    `--certificate-authority=${serviceAccountRoot}/ca.crt`,
-    `--token=${token}`,
-    '-n', namespace,
-    'get', 'pods',
-    '--request-timeout=10s',
-    '-o', 'name',
-  ], { encoding: 'utf8', timeout: 15_000 });
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-kubectl-'));
+  const kubeconfig = path.join(temporary, 'config.json');
+  fs.writeFileSync(kubeconfig, JSON.stringify({
+    apiVersion: 'v1', kind: 'Config',
+    clusters: [{ name: 'in-cluster', cluster: { server: `https://${host}:${port}`, 'certificate-authority': `${serviceAccountRoot}/ca.crt` } }],
+    users: [{ name: 'service-account', user: { token } }],
+    contexts: [{ name: 'probe', context: { cluster: 'in-cluster', user: 'service-account', namespace } }],
+    'current-context': 'probe',
+  }), { mode: 0o600 });
+  let result;
+  try {
+    result = spawnSync('kubectl', [
+      '--kubeconfig', kubeconfig,
+      'get', 'pods',
+      '--request-timeout=10s',
+      '-o', 'name',
+    ], { encoding: 'utf8', timeout: 15_000 });
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
   return result.status === 0
     ? {
         capability: 'kubernetes',

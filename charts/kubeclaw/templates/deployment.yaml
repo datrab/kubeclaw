@@ -862,8 +862,8 @@ spec:
                 const expectedAgent = process.env.KUBECLAW_CODE_BUNDLE_AGENT || agent;
                 const expectedCommit = String(process.env.KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT || '').trim();
                 const expectedContract = String(process.env.KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION || '').trim();
-                if (manifest?.agent !== expectedAgent) {
-                  throw new Error(`bundle agent ${manifest?.agent || '<missing>'} does not match ${expectedAgent}`);
+                if (manifest?.role !== expectedAgent) {
+                  throw new Error(`bundle role ${manifest?.role || '<missing>'} does not match ${expectedAgent}`);
                 }
                 if (expectedCommit && manifest?.commit !== expectedCommit) {
                   throw new Error(`bundle commit ${manifest?.commit || '<missing>'} does not match ${expectedCommit}`);

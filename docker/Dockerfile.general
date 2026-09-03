@@ -63,7 +63,6 @@ COPY --from=buildkit-client /usr/bin/buildctl /usr/local/bin/buildctl
 COPY docker/general-tools/package.json docker/general-tools/package-lock.json /opt/kubeclaw-tools/
 
 RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
-&& npm install -g --no-audit --no-fund ioredis@5.11.1 \
 && /opt/kubeclaw-tools/node_modules/.bin/depcruise --version \
 && /opt/kubeclaw-tools/node_modules/.bin/knip --version \
 && /opt/kubeclaw-tools/node_modules/.bin/jscpd --version \

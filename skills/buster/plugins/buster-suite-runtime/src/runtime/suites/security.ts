@@ -71,7 +71,7 @@ const HEADER_CHECKS: HeaderCheck[] = [
       if (!val) return { message: 'Missing Strict-Transport-Security (HSTS) header', rule: 'hsts-missing' };
       const maxAgeMatch = val.match(/max-age=(\d+)/);
       if (!maxAgeMatch?.[1]) return { message: 'HSTS header missing max-age directive', rule: 'hsts-max-age' };
-      const minAge = config.min_hsts_max_age
+      const minAge = config.min_hsts_max_age ?? DEFAULTS.min_hsts_max_age;
       const maxAge = Number.parseInt(maxAgeMatch[1], 10);
       if (maxAge < minAge) return { message: `HSTS max-age ${maxAge}s is below minimum ${minAge}s`, rule: 'hsts-max-age-low' };
       return null;

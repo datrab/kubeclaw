@@ -34,6 +34,12 @@ function repositoryWithoutTag(image: string): string {
   return colon > slash ? withoutDigest.slice(0, colon) : withoutDigest;
 }
 
+function registryOutput(outputImage: string): string {
+  const configured = (readBusterEnvironment('KUBECLAW_LOCAL_REGISTRY') ?? '').trim().toLowerCase();
+  const registry = outputImage.slice(0, outputImage.indexOf('/')).toLowerCase();
+  return configured && registry === configured ? ',registry.insecure=true' : '';
+}
+
 function readDigest(metadataPath: string): string {
   const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8')) as Record<string, unknown>;
   const digest = metadata['containerimage.digest'];
@@ -67,7 +73,7 @@ export async function buildAndPushImage({
     '--local', `context=${contextDir}`,
     '--local', `dockerfile=${path.dirname(dockerfile)}`,
     '--opt', `filename=${path.basename(dockerfile)}`,
-    '--output', `type=image,name=${outputImage},push=true,registry.insecure=true`,
+    '--output', `type=image,name=${outputImage},push=true${registryOutput(outputImage)}`,
     '--metadata-file', metadataPath,
   ];
   log(`BuildKit: ${outputImage}`);

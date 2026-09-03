@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { assertSecureRemoteEndpoint } from './secure-endpoint.ts';
 import type { LegacySuiteMigrationLedger } from './legacy-bridge.ts';
 import { createProductionNovaTestGate, type ProductionNovaTestGate } from './production.ts';
 
@@ -48,8 +49,7 @@ export function loadProductionNovaTestGate(
   try { parsedSourceKey = crypto.createPrivateKey(sourceAttestationPrivateKey); }
   catch (error) { throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID', { cause: error }); }
   if (parsedSourceKey.asymmetricKeyType !== 'ed25519') throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID');
-  const endpoint = new URL(value.endpoint as string);
-  if (!['http:', 'https:'].includes(endpoint.protocol)) throw new Error('NOVA_REMOTE_PLAN_PROTOCOL_INVALID');
+  const endpoint = assertSecureRemoteEndpoint(value.endpoint as string);
   const ledgerPath = path.resolve(directory, value.legacyLedgerPath as string);
   const ledgerSource = object(JSON.parse(fs.readFileSync(fs.realpathSync(ledgerPath), 'utf8')), 'legacyLedger');
   const ledgerEntries = object(ledgerSource.suites, 'legacyLedger.suites');

@@ -6,10 +6,17 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 )
+
+func TestKubernetesHTTPClientRequiresServiceAccountCA(t *testing.T) {
+	if _, err := kubernetesHTTPClientFromCA(filepath.Join(t.TempDir(), "missing-ca.crt")); err == nil {
+		t.Fatal("expected a missing ServiceAccount CA to fail closed")
+	}
+}
 
 func testController(t *testing.T) *controller {
 	t.Helper()

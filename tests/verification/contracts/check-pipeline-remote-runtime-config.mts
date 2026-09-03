@@ -55,8 +55,9 @@ try {
     maximumArchiveBytes: 1024 * 1024, maximumArchiveStoreBytes: 4 * 1024 * 1024,
     maximumEvidenceBytes: 1024 * 1024, maximumEvidenceStoreBytes: 4 * 1024 * 1024, recordLimits: records,
   }));
-  assert.ok(loadProductionNovaTestGate(novaConfig,
-    { [tokenName]: token, [sourcePrivateKeyName]: sourceAttestationPrivateKey }) instanceof ProductionNovaTestGate);
+  assert.throws(() => loadProductionNovaTestGate(novaConfig,
+    { [tokenName]: token, [sourcePrivateKeyName]: sourceAttestationPrivateKey }),
+  /NOVA_REMOTE_PLAN_PLAINTEXT_NON_LOOPBACK/u);
 
   const platformConfig = path.join(temporary, 'platform.json');
   const pluginRoot = path.join(root, 'skills/buster/plugins');
