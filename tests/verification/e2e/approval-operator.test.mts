@@ -3,8 +3,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { execFileSync } from 'node:child_process';
 
 import { runApprovalOperator } from './approval-operator.mts';
+
+test('approval operator help does not require state path', () => {
+  const output = execFileSync(process.execPath, [path.join(import.meta.dirname, 'approval-operator.mts'), '--help'], { encoding: 'utf8' });
+  assert.match(output, /^Usage:/u);
+});
 
 test('approval operator rejects non-v2 invocation', async () => {
   const previous = process.env.REAL_E2E_V2_RUNTIME;

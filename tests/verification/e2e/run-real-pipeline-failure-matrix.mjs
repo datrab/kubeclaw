@@ -230,10 +230,11 @@ async function waitForChildWithTimeout(child, timeoutMs, {
   const startedAt = Date.now();
   let deadlineAt = startedAt + timeoutMs;
   let exit = null;
+  const exitPromise = waitForChild(child);
   while (!exit) {
     const waitMs = Math.max(0, deadlineAt - Date.now());
     exit = await Promise.race([
-      waitForChild(child),
+      exitPromise,
       new Promise((resolve) => {
         timeout = setTimeout(() => resolve(null), waitMs);
       }),
@@ -279,7 +280,7 @@ async function waitForChildWithTimeout(child, timeoutMs, {
   }
   let gracefulTimeout = null;
   const graceful = await Promise.race([
-    waitForChild(child),
+    exitPromise,
     new Promise((resolve) => {
       gracefulTimeout = setTimeout(() => resolve(null), 10000);
     }),
@@ -295,7 +296,7 @@ async function waitForChildWithTimeout(child, timeoutMs, {
   }
   signalChildTree(child, 'SIGKILL');
   return {
-    ...(await waitForChild(child)),
+    ...(await exitPromise),
     timed_out: timedOut,
     rate_limit_timeout_extended: rateLimitTimeoutExtensions > 0,
     rate_limit_timeout_extensions: rateLimitTimeoutExtensions,

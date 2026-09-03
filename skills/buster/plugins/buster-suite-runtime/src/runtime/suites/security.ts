@@ -22,6 +22,7 @@ type LogSink = (entry: Record<string, unknown>) => void;
 
 interface SecurityContext {
   logSink?: LogSink | null;
+  suiteAbortSignal?: AbortSignal;
   config?: {
     serve?: AnyRecord;
     security?: AnyRecord;
@@ -241,12 +242,13 @@ function inspectHeaders(headers: Headers, urlPath: string, settings: SecuritySet
   return { findings, totalChecks, failedChecks };
 }
 
-async function scanSecurityPath(urlPath: string, url: string, settings: SecuritySettings, log: (message: string) => void): Promise<PathScanResult> {
+async function scanSecurityPath(urlPath: string, url: string, settings: SecuritySettings, log: (message: string) => void, suiteSignal?: AbortSignal): Promise<PathScanResult> {
   log(`  Scanning ${url}`);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), settings.timeoutMs);
   try {
-    const response = await fetch(url, { signal: controller.signal, headers: { Accept: 'text/html, application/json, */*' } });
+    const signal = suiteSignal ? AbortSignal.any([controller.signal, suiteSignal]) : controller.signal;
+    const response = await fetch(url, { signal, headers: { Accept: 'text/html, application/json, */*' } });
     const result = inspectHeaders(response.headers, urlPath, settings);
     const metadata = {
       path: urlPath, status: response.status, issues: result.findings.length,
@@ -291,7 +293,7 @@ export default async function securitySuite(context: SecurityContext): Promise<S
   let failedChecks = 0;
   const pathResults: AnyRecord[] = [];
   for (const { path: urlPath, url } of settings.urls) {
-    const result = await scanSecurityPath(urlPath, url, settings, log);
+    const result = await scanSecurityPath(urlPath, url, settings, log, context.suiteAbortSignal);
     allFindings.push(...result.findings.slice(0, Math.max(0, DEFAULTS.max_findings - allFindings.length)));
     totalChecks += result.totalChecks;
     failedChecks += result.failedChecks;

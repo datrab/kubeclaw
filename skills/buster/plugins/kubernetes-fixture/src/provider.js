@@ -125,9 +125,10 @@ export function provider() {
       const config = configuration(invocation);
       if (config.retentionMode === 'retain') return;
       const names = identity(invocation, config.namespacePrefix);
-      await context.invoke('kubernetes.fixture', { operation: 'release',
+      const released = await context.invoke('kubernetes.fixture', { operation: 'release',
         resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
         payload: { ...names, namespacePrefix: config.namespacePrefix } });
+      if (released?.ok !== true) throw new Error('KUBERNETES_FIXTURE_RELEASE_FAILED');
     },
   };
 }

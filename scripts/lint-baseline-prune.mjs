@@ -47,6 +47,12 @@ if (removed === 0) {
 } else if (!write) {
   throw new Error(`lint baseline contains ${removed} stale fingerprint(s); rerun with --write to prune them`);
 } else {
-  fs.writeFileSync(baselinePath, `${JSON.stringify({ ...baseline, groups }, null, 2)}\n`);
+  const temporaryPath = `${baselinePath}.${process.pid}.${crypto.randomUUID()}.tmp`;
+  try {
+    fs.writeFileSync(temporaryPath, `${JSON.stringify({ ...baseline, groups }, null, 2)}\n`, { flag: 'wx' });
+    fs.renameSync(temporaryPath, baselinePath);
+  } finally {
+    fs.rmSync(temporaryPath, { force: true });
+  }
   process.stdout.write(`pruned ${removed} stale lint baseline fingerprint(s)\n`);
 }

@@ -2,9 +2,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { spawn } from 'node:child_process';
 import { buildAndPushImage } from '../src/runtime/services/buildkit.ts';
 import { publishSuiteArtifacts } from '../src/runtime/services/quality-artifacts.ts';
 import { writeSuiteResults } from '../src/runtime/runners/suite-runner-artifacts.ts';
+import { trackRuntimeResources } from '../src/runtime/services/resource-cleanup.ts';
+import { runSuiteWithTimeout } from '../src/runtime/runners/suite-runner-execution.ts';
 
 const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'buster-security-boundaries-'));
 try{
@@ -59,6 +62,28 @@ try{
   await writeSuiteResults({suiteMap:{'../../escaped':{} as any},moduleId:'module',project:'project',swarmResultsDir,attempt:1,telemetryContext:null});
   assert.equal(fs.existsSync(path.join(temporary,'escaped-verdict-attempt-1.json')),false);
   assert.equal(fs.readdirSync(swarmResultsDir).some((name)=>name.endsWith('-verdict-attempt-1.json')),true);
+  const cleanupStateRoot=path.join(temporary,'cleanup-state');
+  const payload={project:'p',module_id:'m',attempt:1,run_id:'r'};
+  trackRuntimeResources(payload,{leases:['lease:parent']},{stateRoot:cleanupStateRoot});
+  const moduleUrl=new URL('../src/runtime/services/resource-cleanup.ts',import.meta.url).href;
+  await Promise.all(Array.from({length:8},(_,index)=>new Promise<void>((resolve,reject)=>{
+    const script=`import {trackRuntimeResources} from ${JSON.stringify(moduleUrl)};trackRuntimeResources(${JSON.stringify(payload)},{leases:['lease:${index}']},{stateRoot:${JSON.stringify(cleanupStateRoot)}});`;
+    const child=spawn(process.execPath,['--input-type=module','--eval',script],{stdio:'ignore'});
+    child.once('error',reject);child.once('exit',(code)=>code===0?resolve():reject(new Error(`cleanup writer exited ${code}`)));
+  })));
+  const tracked=fs.readFileSync(path.join(cleanupStateRoot,'p--m--1--r.json'),'utf8').trim().split('\n')
+    .map((line)=>JSON.parse(line).lease as string);
+  assert.deepEqual(new Set(tracked),new Set(['lease:parent',...Array.from({length:8},(_,index)=>`lease:${index}`)]));
+  const legacyPayload={project:'legacy',module_id:'m',attempt:1,run_id:'r'};
+  const legacyPath=path.join(cleanupStateRoot,'legacy--m--1--r.json');
+  fs.writeFileSync(legacyPath,JSON.stringify({leases:['lease:legacy']}),{mode:0o600});
+  const migrated=trackRuntimeResources(legacyPayload,{leases:['lease:new']},{stateRoot:cleanupStateRoot});
+  assert.deepEqual(new Set(migrated.state.leases),new Set(['lease:legacy','lease:new']),'legacy cleanup leases survive the append-only migration');
+  let observedAbort=false;
+  await assert.rejects(runSuiteWithTimeout('abort-proof',async(context:any)=>new Promise((_resolve)=>{
+    context.suiteAbortSignal.addEventListener('abort',()=>{observedAbort=true;},{once:true});
+  }),{} as any,10),/timed out/u);
+  assert.equal(observedAbort,true,'suite timeout is propagated to the running suite');
 }finally{
   fs.rmSync(temporary,{recursive:true,force:true});
 }

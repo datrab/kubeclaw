@@ -1317,11 +1317,11 @@ export class TestPlanRunner {
         };
       },
       cleanup: async (workerContext) => {
-        if (
-          (!executionStarted && !fixtureInitializationStarted) ||
-          !instance?.cleanup ||
-          retainFixture
-        )
+        if (!executionStarted && !fixtureInitializationStarted) {
+          await instance?.discard?.();
+          return;
+        }
+        if (!instance?.cleanup || retainFixture)
           return;
         await instance.cleanup(
           invocation,
@@ -1995,7 +1995,18 @@ export class TestPlanRunner {
   }
 
   async #cleanupFixtures(): Promise<void> {
-    for (const retained of [...this.#retainedFixtures].reverse())
-      await this.#cleanupInstance(retained.node, retained.execution);
+    for (const retained of [...this.#retainedFixtures].reverse()) {
+      try { await this.#cleanupInstance(retained.node, retained.execution); }
+      finally {
+        const repository = path.resolve(this.#workspaceRoot, retained.execution.invocation.workspace.repository);
+        const attemptsRoot = path.join(path.resolve(this.#workspaceRoot), 'test-attempts');
+        const attemptRoot = path.dirname(repository);
+        const relative = path.relative(attemptsRoot, attemptRoot);
+        if (!relative || relative === '..' || relative.startsWith(`..${path.sep}`)) {
+          throw new Error('TEST_PROVIDER_ATTEMPT_PATH_INVALID');
+        }
+        fs.rmSync(attemptRoot, { recursive: true, force: true });
+      }
+    }
   }
 }

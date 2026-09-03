@@ -60,6 +60,7 @@ function parseArgs(argv: readonly string[]): ParsedApprovalOperatorArgs {
       throw new Error(`unknown argument: ${arg}`);
     }
   }
+  if (args.help) return args;
   if (!args.statePath) throw new Error('--state-path is required');
   if (!Number.isFinite(args.timeoutMs) || args.timeoutMs <= 0) throw new Error('--timeout-ms must be positive');
   if (!Number.isFinite(args.pollMs) || args.pollMs <= 0) throw new Error('--poll-ms must be positive');

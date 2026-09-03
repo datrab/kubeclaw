@@ -49,19 +49,32 @@ export function getCleanupStatePath(payload: Payload = {}, options: { stateRoot?
 
 function readState(statePath: string): CleanupState {
   if (!fs.existsSync(statePath)) return { leases: [] };
-  const parsed = JSON.parse(fs.readFileSync(statePath, 'utf8')) as CleanupState;
-  return { leases: Array.isArray(parsed.leases) ? parsed.leases.filter((value) => typeof value === 'string') : [] };
+  const source = fs.readFileSync(statePath, 'utf8');
+  try {
+    const legacy = JSON.parse(source) as CleanupState;
+    if (Array.isArray(legacy.leases)) return { leases: legacy.leases.filter((value) => typeof value === 'string') };
+  } catch { /* Append-only v1 records are parsed below. */ }
+  const leases = source.split('\n').filter(Boolean).flatMap((line) => {
+    const record = JSON.parse(line) as { lease?: unknown; leases?: unknown };
+    if (typeof record.lease === 'string') return [record.lease];
+    if (Array.isArray(record.leases)) return record.leases.filter((lease): lease is string => typeof lease === 'string');
+    return [];
+  });
+  return { leases: [...new Set(leases)] };
 }
 
 export function trackRuntimeResources(payload: Payload = {}, resources: { leases?: string[] } = {}, options: { stateRoot?: string } = {}): { statePath: string; state: CleanupState } {
   const statePath = getCleanupStatePath(payload, options);
   fs.mkdirSync(path.dirname(statePath), { recursive: true });
-  const state = readState(statePath);
-  state.leases = [...new Set([...state.leases, ...(resources.leases ?? [])])];
-  const tempPath = `${statePath}.${process.pid}.tmp`;
-  fs.writeFileSync(tempPath, `${JSON.stringify(state, null, 2)}\n`);
-  fs.renameSync(tempPath, statePath);
-  return { statePath, state };
+  const separator = fs.existsSync(statePath) && fs.statSync(statePath).size > 0
+    && !fs.readFileSync(statePath, 'utf8').endsWith('\n') ? '\n' : '';
+  let firstRecord = true;
+  for (const lease of [...new Set(resources.leases ?? [])]) {
+    if (typeof lease !== 'string' || lease.length < 1 || lease.length > 253) throw new Error('BUSTER_RESOURCE_LEASE_INVALID');
+    fs.appendFileSync(statePath, `${firstRecord ? separator : ''}${JSON.stringify({ schemaVersion: 'resource-cleanup-entry.v1', lease })}\n`, { mode: 0o600 });
+    firstRecord = false;
+  }
+  return { statePath, state: readState(statePath) };
 }
 
 async function deleteLease(lease: string): Promise<void> {

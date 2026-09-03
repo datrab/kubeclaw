@@ -1,4 +1,5 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
@@ -22,6 +23,7 @@ export interface LoadedTestProvider {
   execute(invocation: ProviderInvocationV1, context: TestProviderExecutionContext): Promise<ProviderResultV1>;
   cleanup(invocation: ProviderInvocationV1, context: TestProviderExecutionContext): Promise<void>;
   terminate(): Promise<void>;
+  discard?(): Promise<void>;
   resources(): ProviderProcessResources;
 }
 
@@ -53,14 +55,19 @@ function verifiedSnapshot(entry: TestProviderRegistryEntry, workspaceRoot: strin
   }
   const snapshots = path.join(workspaceRoot, 'test-provider-snapshots');
   fs.mkdirSync(snapshots, { recursive: true });
-  const destination = path.join(snapshots, attemptId.replace(/[^A-Za-z0-9._-]/gu, '_'));
-  fs.cpSync(entry.package.root, destination, {
-    recursive: true,
-    errorOnExist: true,
-    force: false,
-  });
-  if (computePackageDigest(destination) !== expected) {
-    throw new Error(`TEST_PROVIDER_PACKAGE_SNAPSHOT_MISMATCH:${entry.registration.registrationId}`);
+  const snapshotKey = createHash('sha256').update(attemptId).digest('hex');
+  const destination = fs.mkdtempSync(path.join(snapshots, `${snapshotKey}-`));
+  try {
+    fs.cpSync(entry.package.root, destination, {
+      recursive: true,
+      force: true,
+    });
+    if (computePackageDigest(destination) !== expected) {
+      throw new Error(`TEST_PROVIDER_PACKAGE_SNAPSHOT_MISMATCH:${entry.registration.registrationId}`);
+    }
+  } catch (error) {
+    fs.rmSync(destination, { recursive: true, force: true });
+    throw error;
   }
   const relativeManifest = path.relative(entry.package.root, entry.package.manifestPath);
   const relativeSchema = path.relative(entry.package.root, entry.configSchemaPath);
@@ -347,6 +354,18 @@ class IsolatedLoadedProvider implements LoadedTestProvider {
     this.#resources = this.#session.resources(); this.#terminated = true; await this.#session.terminate();
   }
 
+  async discard(): Promise<void> {
+    try { await this.terminate(); }
+    finally { this.#removeSnapshot(); }
+  }
+
+  #removeSnapshot(): void {
+    const snapshots = path.join(fs.realpathSync(this.#workspaceRoot), 'test-provider-snapshots');
+    const relative = path.relative(snapshots, this.#entry.package.root);
+    if (relative === '' || relative === '..' || relative.startsWith(`..${path.sep}`)) throw new Error('TEST_PROVIDER_SNAPSHOT_PATH_INVALID');
+    fs.rmSync(this.#entry.package.root, { recursive: true, force: true });
+  }
+
   resources(): ProviderProcessResources {
     const current = this.#terminated ? this.#resources : this.#session.resources();
     return { ...current };
@@ -358,7 +377,7 @@ export class RegisteredTestProviderLoader implements TestProviderLoader {
     signal: AbortSignal): Promise<LoadedTestProvider> {
     if (signal.aborted) throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED');
     const provider = new IsolatedLoadedProvider(verifiedSnapshot(entry, workspaceRoot, invocation.attemptId), invocation, workspaceRoot);
-    if (signal.aborted) { await provider.terminate(); throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED'); }
+    if (signal.aborted) { await provider.discard(); throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED'); }
     return provider;
   }
 }
