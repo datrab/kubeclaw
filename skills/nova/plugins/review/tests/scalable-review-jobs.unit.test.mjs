@@ -177,6 +177,29 @@ const semanticExecution = await executeScalableReviewJobs(first.slice(0, 1), 'ec
   { concurrency: 1, maxRetries: 1 });
 assert.equal(semanticDispatches, 2, 'semantically invalid review evidence is retried');
 assert.equal(semanticExecution[0].parsed.ok, true);
+
+let contextRequestDispatches = 0;
+let contextRequestRetries = 0;
+const contextRequestContext = { async invoke(_capability, request) {
+  contextRequestDispatches += 1;
+  const dispatched = request.payload.review.job;
+  const sourceEvidence = dispatched.source.map(({ digest: value }) => ({ kind: 'reviewed-source', digest: value }));
+  const assessments = Object.fromEntries(dispatched.requirements.map(({ id }) => [id, {
+    assessment: 'unverified', explanation: 'Additional source is required.', evidence: [],
+  }]));
+  return { runtimeEvidence, result: { schemaVersion: 'echo-review-output.v1', summary: 'More context is required.',
+    inspectedEvidence: sourceEvidence, requirementAssessments: assessments, proposedFindings: [],
+    contextRequest: { paths: ['src/additional.ts'], requirementIds: dispatched.requirements.map(({ id }) => id),
+      reason: 'The additional source is required to complete this review.' } } };
+} };
+const contextRequestExecution = await executeScalableReviewJobs(first.slice(0, 1), 'echo', contextRequestContext, {
+  concurrency: 1, maxRetries: 2, beforeRetry: () => { contextRequestRetries += 1; },
+});
+assert.equal(contextRequestDispatches, 1, 'valid context requests proceed to expansion without identical retries');
+assert.equal(contextRequestRetries, 0, 'valid context requests do not consume shared retry reserve');
+assert.equal(contextRequestExecution[0].parsed.ok
+  && contextRequestExecution[0].parsed.value.contextRequest?.paths[0], 'src/additional.ts');
+
 let sharedRetryChecks=0;
 const sharedRetryContext={async invoke(_capability,request){
   const dispatched=request.payload.review.job;

@@ -38,7 +38,8 @@ async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispat
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);
       const parsed = parseEchoReviewDispatchResponse(response);
-      if (completeReviewResponse(value, parsed) || attempt === maxRetries) {
+      const requestedContext = parsed.ok && parsed.value.contextRequest !== undefined;
+      if (requestedContext || completeReviewResponse(value, parsed) || attempt === maxRetries) {
         return Object.freeze({ jobId: value.id, jobDigest: value.digest, parsed, runtime: attestation });
       }
     } catch (error) { if (attempt === maxRetries) throw error; }
