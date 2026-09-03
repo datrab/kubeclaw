@@ -10,7 +10,7 @@
     "testProviders": 7,
     "reportAdapters": 1,
     "registrations": 50,
-    "files": 817
+    "files": 819
   },
   "runtime": {
     "roots": [
@@ -747,6 +747,7 @@
         "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
         "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
         "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
         "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
         "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
         "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
@@ -1414,6 +1415,7 @@
         "skills/nova/plugins/review/src/review-slicing.ts",
         "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
         "skills/nova/plugins/review/src/review-stage-input.ts",
+        "skills/nova/plugins/review/src/review-stage-result.ts",
         "skills/nova/plugins/review/src/review-stage-verification.ts",
         "skills/nova/plugins/review/src/review-test-relations.ts",
         "skills/nova/plugins/review/src/review-verdict-policy.ts",
@@ -2148,6 +2150,7 @@
     "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
     "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
     "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
     "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
     "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
     "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
@@ -2540,6 +2543,7 @@
     "skills/nova/plugins/review/src/review-slicing.ts",
     "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
     "skills/nova/plugins/review/src/review-stage-input.ts",
+    "skills/nova/plugins/review/src/review-stage-result.ts",
     "skills/nova/plugins/review/src/review-stage-verification.ts",
     "skills/nova/plugins/review/src/review-test-relations.ts",
     "skills/nova/plugins/review/src/review-verdict-policy.ts",
