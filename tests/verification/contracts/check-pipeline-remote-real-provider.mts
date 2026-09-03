@@ -105,7 +105,7 @@ export function provider() {
     trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey,
   });
   const service = new BusterRemotePlanService({
-    store: busterStore, registry, runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar',
+    store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar',
     maximumExtractedBytes: 16 * 1024 * 1024, allowedCapabilities: new Set(),
   });
   const runtime = new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,

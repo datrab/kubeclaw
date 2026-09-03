@@ -6,6 +6,7 @@ USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_SNAPSHOT=20260713T000000Z
 ARG TARGETARCH
+ARG KUBECLAW_BUILD_REVISION=unknown
 ARG KUBECTL_VERSION=1.35.6
 ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
 ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
@@ -65,7 +66,8 @@ RUN pip install --break-system-packages --no-cache-dir \
       ruff==0.15.22 mypy==2.3.0 pip-audit==2.10.1 semgrep==1.170.1
 
 ENV PATH="/app/node_modules/.bin:${PATH}" \
-    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+    KUBECLAW_BUILD_REVISION=${KUBECLAW_BUILD_REVISION}
 
 COPY package.json package-lock.json /app/
 COPY contracts /app/contracts

@@ -73,6 +73,7 @@
     "buster-buildkit-smoke",
     "nova-buildkit-preflight",
     "nova-unit-preflight",
+    "nova-tailscale-preflight",
     "worker-trust-e2e",
     "buster-infra-smoke",
     "agents",
@@ -290,6 +291,7 @@
     "cmd_teardown_prism",
     "cmd_nova_buildkit_preflight",
     "cmd_nova_unit_preflight",
+    "cmd_nova_tailscale_preflight",
     "cmd_worker_trust_e2e",
     "cmd_buster_infra_smoke",
     "cmd_teardown_agents",
@@ -310,12 +312,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 844,
-    "secrets": 889,
-    "tailscale": 980,
-    "infra": 1071,
-    "agents": 1387,
-    "smoke": 1509,
-    "teardown": 2042
+    "setup": 845,
+    "secrets": 890,
+    "tailscale": 981,
+    "infra": 1072,
+    "agents": 1388,
+    "smoke": 1510,
+    "teardown": 2139
   }
 }

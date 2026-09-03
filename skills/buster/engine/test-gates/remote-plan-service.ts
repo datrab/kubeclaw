@@ -239,6 +239,7 @@ export class FileBusterPlanJobStore {
 export interface BusterRemotePlanServiceOptions {
   readonly store: FileBusterPlanJobStore;
   readonly registry: RegistrySnapshot;
+  readonly workerRevision: string;
   readonly runtimeRoot: string;
   readonly tarExecutable: string;
   readonly maximumExtractedBytes: number;
@@ -350,6 +351,7 @@ export class BusterRemotePlanService {
     }
     const tar = fs.realpathSync(options.tarExecutable);
     if (!path.isAbsolute(tar) || !fs.statSync(tar).isFile()) throw new Error('BUSTER_REMOTE_TAR_INVALID');
+    if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
     this.#options = { ...options, tarExecutable: tar };
     this.#now = options.now ?? (() => new Date());
   }
@@ -589,6 +591,7 @@ export class BusterRemotePlanService {
       }
       const unsigned = {
         schemaVersion: 'buster-plan-result.v1' as const,
+        workerRevision: this.#options.workerRevision,
         jobId: job.jobId,
         planId: job.plan.planId,
         planDigest: job.plan.planDigest,

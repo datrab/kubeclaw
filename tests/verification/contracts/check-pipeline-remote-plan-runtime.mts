@@ -172,7 +172,7 @@ const execute = async (job: RemotePlanJobV1, paths: { repositoryRoot: string; ar
   return { planId: job.plan.planId, runId: job.plan.runId, attempts: [], nodes: [nodeResult(job)], cleanupErrors: [] };
 };
 const service = new BusterRemotePlanService({
-  store: busterStore, registry, runtimeRoot: path.join(temporary, 'buster-runs'),
+  store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
   allowedCapabilities: new Set(), execute,
 });
@@ -346,7 +346,7 @@ try {
   await busterStore.accept(interruptedJob, '2026-08-10T01:00:00.000Z');
   await busterStore.transition(interruptedJob.jobId, ['accepted'], 'running', '2026-08-10T01:00:01.000Z');
   const restarted = new BusterRemotePlanService({
-    store: busterStore, registry, runtimeRoot: path.join(temporary, 'buster-runs'),
+    store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
     allowedCapabilities: new Set(), execute,
   });
@@ -358,6 +358,7 @@ try {
   const mismatched = new BusterRemotePlanService({
     store: busterStore,
     registry: { ...registry, snapshotDigest: `sha256:${'4'.repeat(64)}` },
+    workerRevision: 'a'.repeat(40),
     runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar',
     maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(), execute,
   });

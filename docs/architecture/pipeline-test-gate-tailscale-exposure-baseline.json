@@ -41,6 +41,6 @@
     {"id":"TSX-CUT-002","class":"behavior","state":"implementation-proved","requirement":"Project setup generates the replacement graph."},
     {"id":"TSX-CUT-003","class":"behavior","state":"implementation-proved","requirement":"The real workspace uses the replacement graph."},
     {"id":"TSX-CUT-004","class":"behavior","state":"implementation-proved","requirement":"The Buster runtime package contains the replacement plugin."},
-    {"id":"TSX-CUT-005","class":"behavior","state":"implementation-proved","requirement":"Production acceptance uses a real cluster and Tailscale service."}
+    {"id":"TSX-CUT-005","class":"behavior","state":"production-pending","requirement":"Production acceptance uses a real cluster and Tailscale service."}
   ]
 }

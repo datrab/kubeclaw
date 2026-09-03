@@ -79,50 +79,54 @@ try {
     shutdownTimeoutMs: 5_000, recordLimits: records,
   };
   fs.writeFileSync(busterConfig, JSON.stringify(baseBuster));
-  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, { [tokenName]: token }),
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
+    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }),
+  /BUSTER_REMOTE_WORKER_REVISION_INVALID/u);
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token }),
     /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING/u);
   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: token }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/u);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: token }), /BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID/u);
   const runtime = loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey });
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey });
   assert.ok(runtime instanceof BusterRemotePlanRuntime);
   const address = await runtime.start();
   assert.equal(address.address, '127.0.0.1');
   await runtime.stop();
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, allowedCapabilities: ['command.execute'] }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }), /BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED/u);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }), /BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED/u);
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, allowedCapabilities: ['command.execute'], directCommand: {
     executableCatalog: { node: process.execPath }, executableSearchPath: [path.dirname(process.execPath)],
     runtimeReadRoots: [path.dirname(process.execPath), '/lib/x86_64-linux-gnu', '/lib64', '/etc/ssl'],
     maximumOutputBytes: 1024 * 1024, maximumExecutionMs: 10_000,
     maximumProcesses: 8, maximumMemoryBytes: 512 * 1024 * 1024, maximumCpuMillis: 10_000, terminationGraceMs: 100 } }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }), /BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED/u);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }), /BUSTER_DIRECT_COMMAND_ISOLATION_REQUIRED/u);
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, allowedCapabilities: ['command.execute'], directCommand: {
     executableCatalog: { node: process.execPath }, executableSearchPath: [path.dirname(process.execPath)],
     runtimeReadRoots: [path.dirname(process.execPath), '/lib/x86_64-linux-gnu', '/lib64', '/etc/ssl'],
     maximumOutputBytes: 1024 * 1024, maximumExecutionMs: 10_000, allowSampledProcessLimit: true,
     maximumProcesses: 8, maximumMemoryBytes: 512 * 1024 * 1024, maximumCpuMillis: 10_000, terminationGraceMs: 100 } }));
   const commandRuntime = loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey });
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey });
   const commandAddress = await commandRuntime.start(); assert.equal(commandAddress.address, '127.0.0.1');
   await commandRuntime.stop();
 
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, allowedCapabilities: ['network.http'] }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }), /BUSTER_NETWORK_HTTP_CONFIG_REQUIRED/u);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }), /BUSTER_NETWORK_HTTP_CONFIG_REQUIRED/u);
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, allowedCapabilities: ['network.http'], networkHttp: {
     allowedOrigins: ['http://127.0.0.1:3000'], allowedHostSuffixes: ['.svc.cluster.local'], allowedPorts: [3000],
     maximumResponseBytes: 1024 * 1024, maximumExecutionMs: 10_000 } }));
   const httpRuntime = loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey });
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey });
   const httpAddress = await httpRuntime.start(); assert.equal(httpAddress.address, '127.0.0.1');
   await httpRuntime.stop();
 
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, host: '0.0.0.0' }));
   assert.ok(loadProductionBusterRemotePlanRuntime(busterConfig,
-    { [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }) instanceof BusterRemotePlanRuntime);
+    { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }) instanceof BusterRemotePlanRuntime);
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
 }

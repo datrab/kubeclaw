@@ -21,12 +21,57 @@ const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legac
 assert.deepEqual(bridge.suites['tailscale-preview'], { state: 'migrated', successor: 'kubeclaw.tailscale-exposure@1' });
 const status = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-suite-migration-status.json', 'utf8'));
 const suiteStatus = status.suites.find((item: any) => item.id === 'tailscale-preview');
-assert.deepEqual([suiteStatus.implementation, suiteStatus.parity, suiteStatus.cutover], ['complete', 'complete', 'complete']);
+assert.deepEqual({ implementation: suiteStatus.implementation, parity: suiteStatus.parity,
+  sourceCutover: suiteStatus.sourceCutover, productionAcceptance: suiteStatus.productionAcceptance,
+  cutover: suiteStatus.cutover }, { implementation: 'complete', parity: 'in-progress',
+  sourceCutover: 'complete', productionAcceptance: 'pending', cutover: 'in-progress' });
 for (const file of ['skills/buster/plugins/buster-suite-runtime/src/protocol.ts',
   'skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts',
   'tests/verification/e2e/run-v2-production-pipeline.mts']) {
   assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /['"]tailscale-preview['"]/u, `${file} keeps old authority`);
 }
+const productionPreflight = fs.readFileSync('tests/verification/e2e/nova-tailscale-production-preflight.mts', 'utf8');
+assert.match(productionPreflight, /createProductionNovaTestGate/u);
+assert.match(productionPreflight, /resolveProviderCapability\(parseCapabilityProviders\(\), 'buster', 'test\.plan\.execute'\)/u);
+assert.match(productionPreflight, /kubeclaw\.kubernetes-fixture@1/u);
+assert.match(productionPreflight, /kubeclaw\.tailscale-exposure@1/u);
+assert.match(productionPreflight, /kubeclaw\.http@1/u);
+assert.match(productionPreflight, /remote-gate-imports/u);
+assert.match(productionPreflight, /test-execution-graphs/u);
+assert.match(productionPreflight, /remoteResult\.cleanupErrors\.length, 0/u);
+assert.match(productionPreflight, /\.swarm', '\.gitkeep/u);
+assert.doesNotMatch(productionPreflight, /attestProductionReceipt|sign-receipt/u);
+assert.match(productionPreflight, /clusterCleanupObserved: false/u);
+assert.match(productionPreflight, /busterRuntimeRevision/u);
+assert.doesNotMatch(productionPreflight, /TailscaleExposureCapabilityInvoker|NetworkHttpCapabilityInvoker/u,
+  'production acceptance must not bypass the normal provider plan');
+const deployScript = fs.readFileSync('scripts/deploy.sh', 'utf8');
+assert.match(deployScript, /nova-tailscale-preflight/u);
+assert.match(deployScript, /kubectl wait --for=delete.*namespace/u);
+assert.match(deployScript, /kubectl wait --for=delete.*busternamespacelease/u);
+assert.match(deployScript, /get namespace.*--ignore-not-found/u);
+assert.match(deployScript, /get busternamespacelease.*--ignore-not-found/u);
+assert.match(deployScript, /production-receipt-attestation\.mjs.*verify/su);
+assert.match(deployScript, /production-receipt-attestation\.mjs.*sign/su);
+assert.match(deployScript, /KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE/u);
+assert.match(deployScript, /KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE/u);
+assert.match(deployScript, /JSON\.parse\(fs\.readFileSync/u);
+assert.match(deployScript, /value\.busterRuntimeRevision/u);
+const migrationWorkflow = fs.readFileSync('scripts/check-suite-migration-workflow.mjs', 'utf8');
+assert.match(migrationWorkflow, /tailscale-preview\.productionAcceptance is required/u);
+assert.match(migrationWorkflow, /tailscale-preview proves parity before production acceptance/u);
+assert.match(migrationWorkflow, /productionBusterRevision/u);
+assert.match(migrationWorkflow, /trusted public key must be outside the repository/u);
+const busterDockerfile = fs.readFileSync('docker/Dockerfile.buster-runtime', 'utf8');
+assert.match(busterDockerfile, /KUBECLAW_BUILD_REVISION/u);
+const imageWorkflow = fs.readFileSync('.github/workflows/build-images.yaml', 'utf8');
+assert.match(imageWorkflow, /KUBECLAW_BUILD_REVISION=\$\{\{ github\.sha \}\}/u);
+await import('./check-production-receipt-attestation.mjs');
+const packageScripts = JSON.parse(fs.readFileSync('package.json', 'utf8')).scripts;
+assert.equal(packageScripts['verify:test-gate:tailscale-exposure-live'],
+  'node tests/verification/e2e/nova-tailscale-production-preflight.mts');
+assert.match(packageScripts['verify:test-gate:tailscale-exposure-capability-live'],
+  /check-pipeline-tailscale-exposure-live\.mts/u);
 
 const scaffoldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-exposure-scaffold-'));
 try {
@@ -68,5 +113,5 @@ try {
 } finally { await cleanupRealE2ERunWorkspace(workspace); }
 
 await import('./check-pipeline-tailscale-exposure-parity.mts');
-console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-cutover', authority: 'replacement-only',
-  productionAcceptance: 'pending-deployment', mocks: 0, emulators: 0 }));
+console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-source-cutover', authority: 'replacement-only',
+  productionAcceptance: 'pending-deployment-and-live-proof', mocks: 0, emulators: 0 }));

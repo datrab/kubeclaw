@@ -63,6 +63,10 @@ export function loadProductionBusterRemotePlanRuntime(
   environment: Readonly<Record<string, string | undefined>> = process.env,
 ): BusterRemotePlanRuntime {
   const canonical = fs.realpathSync(file);
+  const workerRevision = environment.KUBECLAW_BUILD_REVISION;
+  if (!workerRevision || !/^[a-f0-9]{40,64}$/u.test(workerRevision)) {
+    throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
+  }
   const directory = path.dirname(canonical);
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
   if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
@@ -145,6 +149,7 @@ export function loadProductionBusterRemotePlanRuntime(
       sourceAttestationPublicKey,
     }),
     registry,
+    workerRevision,
     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
     tarExecutable: path.resolve(directory, value.tarExecutable as string),
     maximumExtractedBytes: integer(value.maximumExtractedBytes, 'maximumExtractedBytes'),

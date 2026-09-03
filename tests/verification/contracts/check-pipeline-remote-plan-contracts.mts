@@ -110,6 +110,7 @@ const nodeUnsigned = {
 const node = { ...nodeUnsigned, resultDigest: nodeResultDigest(nodeUnsigned), receipt };
 const unsigned = {
   schemaVersion: 'buster-plan-result.v1' as const,
+  workerRevision: 'a'.repeat(40),
   jobId: job.jobId, planId: plan.planId, planDigest: plan.planDigest, runId: plan.runId,
   attempts: [], nodes: [node], cleanupErrors: [], completedAt: '2026-08-10T00:01:00.000Z',
 };

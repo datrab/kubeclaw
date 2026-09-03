@@ -414,6 +414,7 @@ export interface RemotePlanJobV1 {
 
 export interface RemotePlanResultV1 {
   schemaVersion: 'buster-plan-result.v1';
+  workerRevision: string;
   jobId: string;
   planId: string;
   planDigest: string;

@@ -9,7 +9,8 @@ assert.equal(baseline.items.length, 38);
 assert.equal(new Set(baseline.items.map((item) => item.id)).size, 38);
 for (const item of baseline.items) {
   assert.match(item.id, /^TSX-[A-Z]+-[0-9]{3}$/u);
-  assert.equal(item.state, 'implementation-proved');
+  assert.equal(item.state, item.id === 'TSX-CUT-005' ? 'production-pending' : 'implementation-proved');
   assert.ok(item.requirement.endsWith('.'));
 }
-console.log(JSON.stringify({ ok: true, suite: 'tailscale-preview', successor: baseline.successor, items: 38 }));
+console.log(JSON.stringify({ ok: true, suite: 'tailscale-preview', successor: baseline.successor,
+  items: 38, implementationProved: 37, productionPending: 1 }));

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
+import { verifyProductionReceipt } from './production-receipt-attestation.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const realRoot = fs.realpathSync(root);
@@ -17,7 +18,9 @@ const exists = (relative) => fs.existsSync(path.join(root, relative));
 const statusPath = 'docs/architecture/pipeline-test-gate-suite-migration-status.json';
 const status = readJson(statusPath);
 const allowedState = new Set(['pending', 'in-progress', 'complete']);
+const allowedAcceptanceState = new Set(['pending', 'complete']);
 const allowedDisposition = new Set(['preserved', 'improved', 'removed-defect', 'deferred', 'blocked']);
+const gitRevision = /^[a-f0-9]{40,64}$/u;
 
 function isContained(relative) {
   if (typeof relative !== 'string' || path.isAbsolute(relative)) return false;
@@ -46,15 +49,70 @@ function checkStatus() {
     for (const phase of ['implementation', 'parity', 'cutover']) {
       if (!allowedState.has(suite[phase])) errors.push(`${statusPath}: ${suite.id}.${phase} is invalid`);
     }
+    if (suite.sourceCutover !== undefined && !allowedState.has(suite.sourceCutover)) {
+      errors.push(`${statusPath}: ${suite.id}.sourceCutover is invalid`);
+    }
+    if (suite.productionAcceptance !== undefined && !allowedAcceptanceState.has(suite.productionAcceptance)) {
+      errors.push(`${statusPath}: ${suite.id}.productionAcceptance is invalid`);
+    }
+    if (suite.id === 'tailscale-preview' && suite.productionAcceptance === undefined) {
+      errors.push(`${statusPath}: tailscale-preview.productionAcceptance is required`);
+    }
+    if (suite.id === 'tailscale-preview' && suite.parity === 'complete'
+      && suite.productionAcceptance !== 'complete') {
+      errors.push(`${statusPath}: tailscale-preview proves parity before production acceptance`);
+    }
     if (suite.parity === 'complete' && suite.implementation !== 'complete') errors.push(`${statusPath}: ${suite.id} proves parity before implementation`);
     if (suite.cutover === 'complete' && suite.parity !== 'complete') errors.push(`${statusPath}: ${suite.id} cuts over before parity`);
+    if (suite.cutover === 'complete' && suite.productionAcceptance !== undefined
+      && suite.productionAcceptance !== 'complete') {
+      errors.push(`${statusPath}: ${suite.id} cuts over before production acceptance`);
+    }
+    if (suite.sourceCutover === 'complete' && suite.implementation !== 'complete') {
+      errors.push(`${statusPath}: ${suite.id} completes source cutover before implementation`);
+    }
+    if (suite.productionAcceptance === 'complete') {
+      if (!realContained(suite.productionReceipt)) {
+        errors.push(`${statusPath}: ${suite.id} has no contained production receipt`);
+      } else {
+        const receipt = readJson(suite.productionReceipt);
+        const publicKeyPath = process.env.KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE;
+        if (!publicKeyPath || !path.isAbsolute(publicKeyPath) || !fs.existsSync(publicKeyPath)) {
+          errors.push(`${suite.productionReceipt}: KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE is required`);
+        } else if (!gitRevision.test(suite.productionRevision ?? '')) {
+          errors.push(`${statusPath}: ${suite.id}.productionRevision is required`);
+        } else if (!gitRevision.test(suite.productionBusterRevision ?? '')) {
+          errors.push(`${statusPath}: ${suite.id}.productionBusterRevision is required`);
+        } else {
+          const trustedKey = fs.realpathSync(publicKeyPath);
+          const fromRoot = path.relative(realRoot, trustedKey);
+          if (fromRoot === '' || (fromRoot !== '..' && !fromRoot.startsWith(`..${path.sep}`)
+            && !path.isAbsolute(fromRoot))) {
+            errors.push(`${suite.productionReceipt}: trusted public key must be outside the repository`);
+          } else {
+            const receiptErrors = verifyProductionReceipt(receipt, fs.readFileSync(trustedKey), {
+              expectedRevision: suite.productionRevision,
+              expectedBusterRevision: suite.productionBusterRevision,
+            });
+            for (const error of receiptErrors) errors.push(`${suite.productionReceipt}: ${error}`);
+          }
+        }
+        const ledger = suite.parityLedger && exists(suite.parityLedger) ? readJson(suite.parityLedger) : null;
+        const acceptance = ledger?.entries?.['TSX-CUT-005'];
+        if (suite.id === 'tailscale-preview' && (acceptance?.status !== 'proved'
+          || !acceptance?.proof?.includes(suite.productionReceipt)
+          || ledger?.acceptedDeferral?.status === 'open')) {
+          errors.push(`${suite.parityLedger}: production acceptance does not cite the closed receipt`);
+        }
+      }
+    }
   }
   const bridge = readJson('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json');
   for (const suite of status.suites) {
     const legacy = bridge.suites[suite.id];
     if (!legacy) errors.push(`legacy bridge is missing ${suite.id}`);
-    else if (suite.cutover === 'complete' && legacy.state !== 'migrated') errors.push(`${suite.id}: cutover is complete but bridge is not migrated`);
-    else if (suite.cutover !== 'complete' && legacy.state !== 'unmigrated') errors.push(`${suite.id}: bridge migrated before cutover`);
+    else if ((suite.sourceCutover ?? suite.cutover) === 'complete' && legacy.state !== 'migrated') errors.push(`${suite.id}: source cutover is complete but bridge is not migrated`);
+    else if ((suite.sourceCutover ?? suite.cutover) !== 'complete' && legacy.state !== 'unmigrated') errors.push(`${suite.id}: bridge migrated before source cutover`);
     if (legacy?.successor !== suite.successor) errors.push(`${suite.id}: successor differs between status and bridge`);
   }
 }
@@ -95,7 +153,8 @@ function checkBaseline() {
 }
 
 function checkParity() {
-  for (const suite of selectedSuites('parity')) {
+  for (const suite of status.suites.filter((item) => (!suiteFilter || item.id === suiteFilter)
+    && (item.parity === 'complete' || item.productionAcceptance !== undefined))) {
     const ledger = suite.parityLedger;
     if (!ledger) { errors.push(`${suite.id}: parity ledger is not declared`); continue; }
     if (!exists(ledger)) { errors.push(`${suite.id}: parity ledger is missing`); continue; }
@@ -126,7 +185,8 @@ function checkParity() {
 }
 
 function checkCutover() {
-  for (const suite of selectedSuites('cutover')) {
+  for (const suite of status.suites.filter((item) => (!suiteFilter || item.id === suiteFilter)
+    && (item.sourceCutover ?? item.cutover) === 'complete')) {
     const inventory = suite.cutoverInventory;
     if (!inventory) { errors.push(`${suite.id}: cutover inventory is not declared`); continue; }
     if (!exists(inventory)) { errors.push(`${suite.id}: cutover inventory is missing`); continue; }

@@ -3,7 +3,7 @@
   "suite": "tailscale-preview",
   "successor": "kubeclaw.tailscale-exposure@1",
   "summary": {"preserved":10,"improved":26,"removedDefect":1,"deferred":1,"blocked":0},
-  "acceptedDeferral": {"status":"open","acceptedBy":"project-owner","acceptedOn":"2026-08-24","condition":"Deploy the current Nova and Buster images, then run the real cluster and Tailscale check.","proof":"tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts"},
+  "acceptedDeferral": {"status":"open","acceptedBy":"project-owner","acceptedOn":"2026-08-24","condition":"Deploy the current Nova and Buster images, then run the full Nova-to-Buster production preflight with a real cluster and Tailscale operator.","proofKind":"closeout-gate","proofState":"planned","proof":"tests/verification/e2e/nova-tailscale-production-preflight.mts"},
   "proof": [
     "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
     "tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts",
@@ -47,6 +47,6 @@
     "TSX-CUT-002":{"status":"proved","disposition":"improved","rationale":"Project setup creates the exposure and public HTTP graph or fails when no deployment fixture exists.","proof":["skills/nova/project_setup/tools/progress-scaffold-discovery.ts","tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts"]},
     "TSX-CUT-003":{"status":"proved","disposition":"improved","rationale":"The real workspace links deployment, exposure, and public HTTP nodes with typed values.","proof":["tests/verification/e2e/real-run-workspace.mjs","tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts"]},
     "TSX-CUT-004":{"status":"proved","disposition":"preserved","rationale":"The Buster runtime archive includes the exposure provider and its capability runtime.","proof":["packaging/runtime/roles/buster.json","scripts/check-runtime-role-manifests.mjs"]},
-    "TSX-CUT-005":{"status":"deferred","disposition":"deferred","proof":["tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts"],"decision":"Run after the current Nova and Buster images are deployed.","acceptedOn":"2026-08-24"}
+    "TSX-CUT-005":{"status":"deferred","disposition":"deferred","proofKind":"closeout-gate","proofState":"planned","proof":["tests/verification/e2e/nova-tailscale-production-preflight.mts"],"decision":"Run after the current Nova and Buster images are deployed. Store the successful receipt before closing parity and cutover.","acceptedOn":"2026-08-24"}
   }
 }

@@ -200,6 +200,8 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.name }}
           cache-to: type=gha,scope=${{ matrix.name }},mode=min,ignore-error=true
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            KUBECLAW_BUILD_REVISION=${{ github.sha }}
           provenance: mode=max
           sbom: true
       - name: Summary

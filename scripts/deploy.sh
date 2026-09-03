@@ -11,6 +11,7 @@
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
 #   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
+#   ./deploy.sh nova-tailscale-preflight Verify a public endpoint through Nova, Buster, Kubernetes, and Tailscale
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
 #   ./deploy.sh agents             Deploy agents (Nova + Buster)
 #   ./deploy.sh agent <name> [--with-code]  Deploy Nova, Buster, or Prism
@@ -1889,6 +1890,102 @@ cmd_nova_unit_preflight() {
   log "Nova → Buster unit production preflight passed"
 }
 
+cmd_nova_tailscale_preflight() {
+  header "Nova → Buster Tailscale Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_TAILSCALE_PREFLIGHT_IMAGE:-}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned HTTP image as argument 2 or KUBECLAW_TAILSCALE_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_signed receipt_private_key receipt_public_key receipt_file
+  local runtime_repo_root runtime_revision
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  if [[ $runtime_repo_root != /home/node/.openclaw/workspace/git-repo ]]; then
+    err "The deployed Nova REPO_ROOT does not match the chart contract."
+    return 1
+  fi
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- \
+    git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  if [[ ! $runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The deployed Nova source revision is invalid."
+    return 1
+  fi
+  local -a environment=("KUBECLAW_TAILSCALE_PREFLIGHT_IMAGE=$immutable_image")
+  if [[ -n ${KUBECLAW_TAILSCALE_PREFLIGHT_EXPECTED_TEXT:-} ]]; then
+    environment+=("KUBECLAW_TAILSCALE_PREFLIGHT_EXPECTED_TEXT=$KUBECLAW_TAILSCALE_PREFLIGHT_EXPECTED_TEXT")
+  fi
+  receipt_tmp=$(mktemp)
+  receipt_file="$REPO_DIR/dist/verification/tailscale-exposure-production-receipt.json"
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- env "${environment[@]}" \
+    node "$runtime_repo_root/tests/verification/e2e/nova-tailscale-production-preflight.mts" \
+    | tee "$receipt_tmp"; then
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  if ! node -e 'const fs=require("node:fs"); const value=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(value.schemaVersion!=="nova-tailscale-production-preflight.v1"||value.ok!==true||value.decision!=="passed"||value.status!=="completed"||value.runnerCleanupVerified!==true||value.cleanupVerified!==false||value.clusterCleanupObserved!==false||value.evidenceImported!==true||value.mocks!==0||value.emulators!==0||!value.resources?.leaseName||!value.resources?.namespace) process.exit(1)' "$receipt_tmp"; then
+    err "The Tailscale production receipt is invalid."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  local lease_name namespace_name remaining_namespace remaining_lease
+  lease_name=$(node -e 'const fs=require("node:fs"); const value=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); process.stdout.write(value.resources.leaseName)' "$receipt_tmp")
+  namespace_name=$(node -e 'const fs=require("node:fs"); const value=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); process.stdout.write(value.resources.namespace)' "$receipt_tmp")
+  if ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m \
+    || ! kubectl wait --for=delete "busternamespacelease/$lease_name" -n "$NAMESPACE" --timeout=2m; then
+    err "Timed out while waiting for the production plan cleanup."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  remaining_namespace=$(kubectl get namespace "$namespace_name" --ignore-not-found -o name)
+  remaining_lease=$(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name)
+  if [[ -n $remaining_namespace || -n $remaining_lease ]]; then
+    err "The production plan left its namespace or lease in the cluster."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_private_key=${KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE:-}
+  receipt_public_key=${KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE:-}
+  if [[ -z $receipt_private_key || -z $receipt_public_key \
+    || ! -f $receipt_private_key || ! -f $receipt_public_key ]]; then
+    err "Set KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE and KUBECLAW_PRODUCTION_RECEIPT_PUBLIC_KEY_FILE."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_private_key=$(realpath "$receipt_private_key")
+  receipt_public_key=$(realpath "$receipt_public_key")
+  if [[ $receipt_private_key == "$REPO_DIR"/* || $receipt_public_key == "$REPO_DIR"/* ]]; then
+    err "Production receipt keys must be outside the repository."
+    rm -f "$receipt_tmp"
+    return 1
+  fi
+  receipt_unsigned=$(mktemp)
+  receipt_signed=$(mktemp)
+  node -e 'const fs=require("node:fs"); const value=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); fs.writeFileSync(process.argv[2], `${JSON.stringify({...value,cleanupVerified:true,clusterCleanupObserved:true},null,2)}\n`, {mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  local buster_runtime_revision
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs"); const value=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); process.stdout.write(value.busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]]; then
+    err "The Buster execution result has no valid worker revision."
+    rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+    return 1
+  fi
+  if ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" sign \
+    "$receipt_unsigned" "$receipt_private_key" "$runtime_revision" "$buster_runtime_revision" "$receipt_signed"; then
+    rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+    return 1
+  fi
+  if ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" verify \
+    "$receipt_signed" "$receipt_public_key" "$runtime_revision" "$buster_runtime_revision"; then
+    rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+    return 1
+  fi
+  mkdir -p "$(dirname "$receipt_file")"
+  cp "$receipt_signed" "$receipt_file"
+  rm -f "$receipt_tmp" "$receipt_unsigned" "$receipt_signed"
+  log "Stored production receipt at $receipt_file"
+  log "Nova → Buster Tailscale production preflight passed"
+}
+
 cmd_worker_trust_e2e() {
   header "Worker Trust Production E2E"
   require_command kubectl
@@ -2094,6 +2191,9 @@ case "${1:-}" in
   nova-unit-preflight)
     cmd_nova_unit_preflight
     ;;
+  nova-tailscale-preflight)
+    cmd_nova_tailscale_preflight "$@"
+    ;;
   worker-trust-e2e)
     cmd_worker_trust_e2e
     ;;
@@ -2176,6 +2276,8 @@ case "${1:-}" in
     echo "                    Verify rootless BuildKit support with a temporary pod"
     echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
     echo "  nova-unit-preflight Run a real unit process through Nova and Buster v2"
+    echo "  nova-tailscale-preflight [image]"
+    echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
     echo "  worker-trust-e2e  Prove SPIRE identity, mTLS, authorization, and source attestation on-cluster"
     echo "  buster-buildkit-smoke Deprecated alias for nova-buildkit-preflight"
     echo "  buster-infra-smoke  Test Redis → deployed Buster → BuildKit → deploy → completion"

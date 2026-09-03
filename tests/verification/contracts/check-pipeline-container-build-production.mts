@@ -59,7 +59,7 @@ try {
     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
       maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
       trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey }),
-    registry, runtimeRoot: busterRuns, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 64 * 1024 * 1024,
+    registry, workerRevision: 'a'.repeat(40), runtimeRoot: busterRuns, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 64 * 1024 * 1024,
     allowedCapabilities: new Set(['container.build']), containerBuild: {
       buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost,
       registryBaseUrl, registryReference, repositoryPrefix: 'kubeclaw/pipeline',

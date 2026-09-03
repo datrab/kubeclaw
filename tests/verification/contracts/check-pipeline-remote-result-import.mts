@@ -76,7 +76,8 @@ function completed(job: RemotePlanJobV1, options: {
   const nodeDigest = nodeResultDigest(nodeUnsigned);
   const resultNode: NodeResultV1 = { ...nodeUnsigned, resultDigest: nodeDigest,
     receipt: authorityReceipt(job.plan.planDigest, nodeDigest, 'node') };
-  const resultUnsigned = { schemaVersion: 'buster-plan-result.v1' as const, jobId: job.jobId,
+  const resultUnsigned = { schemaVersion: 'buster-plan-result.v1' as const,
+    workerRevision: 'a'.repeat(40), jobId: job.jobId,
     planId: job.plan.planId, planDigest: job.plan.planDigest, runId: job.plan.runId,
     attempts: [attempt], nodes: [resultNode], cleanupErrors: options.cleanup ? [{ nodeId: node.id, message: 'cleanup' }] : [],
     completedAt: '2026-08-10T03:00:03.000Z' };

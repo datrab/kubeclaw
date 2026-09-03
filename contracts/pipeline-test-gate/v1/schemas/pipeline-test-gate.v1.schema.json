@@ -1365,11 +1365,12 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "schemaVersion", "jobId", "planId", "planDigest", "runId", "attempts",
+        "schemaVersion", "workerRevision", "jobId", "planId", "planDigest", "runId", "attempts",
         "nodes", "cleanupErrors", "completedAt", "resultDigest", "receipt"
       ],
       "properties": {
         "schemaVersion": { "const": "buster-plan-result.v1" },
+        "workerRevision": { "type": "string", "pattern": "^[a-f0-9]{40,64}$" },
         "jobId": { "$ref": "#/$defs/stableId" },
         "planId": { "$ref": "#/$defs/stableId" },
         "planDigest": { "$ref": "#/$defs/digest" },

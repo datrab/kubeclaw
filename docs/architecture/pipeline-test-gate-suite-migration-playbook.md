@@ -473,6 +473,18 @@ old defect remains absent, and the shadow path cannot affect the real gate.
 Exit only when one authority remains and source searches plus executable tests
 prove the old path is gone.
 
+If a requirement needs deployed infrastructure, record source cutover and
+production cutover separately. Use `sourceCutover: complete` only after the old
+source authority is gone. Keep `productionAcceptance: pending`, parity `in-progress`,
+and cutover `in-progress` until the normal deployed route stores a successful
+receipt. A test file or a direct capability check is not a production receipt.
+The receipt must have an Ed25519 signature from the production operator
+authority after the operator observes final resource deletion. The closeout
+check must use a trusted public key supplied outside the repository. It must
+bind the receipt to the deployed Nova source revision and Buster image revision. A key inside the repository,
+or a fingerprint that a contributor adds in the same patch, is not a trust
+anchor.
+
 ## Reusable closeout checklist
 
 - [ ] Baseline covers the complete old production path.
@@ -482,6 +494,8 @@ prove the old path is gone.
 - [ ] Examples are real, valid, and tested.
 - [ ] The new path reuses shared runtime systems.
 - [ ] Real vertical proof crosses Nova and Buster.
+- [ ] A deployed-infrastructure requirement has an executed receipt, not only a planned gate.
+- [ ] A trusted external key verifies the production receipt and deployed Nova and Buster revisions.
 - [ ] Every parity item has a disposition and proof.
 - [ ] Comparison has only one authority.
 - [ ] Cutover rejects dual authority.

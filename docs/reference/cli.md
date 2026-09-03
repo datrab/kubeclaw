@@ -41,6 +41,7 @@ Generated from: `scripts/deploy.sh`
 - `buster-buildkit-smoke`
 - `nova-buildkit-preflight`
 - `nova-unit-preflight`
+- `nova-tailscale-preflight`
 - `worker-trust-e2e`
 - `buster-infra-smoke`
 - `agents`

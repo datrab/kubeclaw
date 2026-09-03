@@ -1,6 +1,6 @@
 # Tailscale Exposure Implementation Plan
 
-Status: implemented with production acceptance pending deployment
+Status: source implemented; production parity and cutover pending live acceptance
 
 Audience: platform engineers
 Purpose: define the three-phase replacement of `tailscale-preview`
@@ -15,7 +15,8 @@ capability. Do not give Kubernetes credentials to provider code.
 
 Prove every baseline item. Keep URL acquisition separate from HTTP content
 checks. Use the real namespace controller tests and the real provider process.
-Run the live cluster check after deployment.
+Run the production closeout gate after deployment. The gate must use the normal
+Nova-to-Buster plan route. It must not construct capability invokers directly.
 
 ## Phase C
 
@@ -28,5 +29,10 @@ expiry and cleanup authority.
 Stop when the controller reports a failed exposure. Stop when the returned URL
 is not HTTPS. Stop when the public hostname is outside an approved suffix.
 
-Production acceptance stays pending until the deployed Buster runtime runs the
-live check against the real Kubernetes and Tailscale services.
+Production acceptance stays pending until the deployed Nova and Buster
+runtimes pass the closeout gate against the real Kubernetes and Tailscale
+services. Store the successful execution receipt before the status changes to
+complete. The production operator must sign the receipt only after it observes
+final resource deletion. The closeout check must verify that signature with a
+trusted public key supplied outside the repository and must match the signed
+Nova source revision and the deployed Buster image revision.

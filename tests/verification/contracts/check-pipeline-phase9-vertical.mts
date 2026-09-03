@@ -62,7 +62,7 @@ test.skip('real skip', () => {});
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumResultStoreBytes: 64 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
     sourceAttestationPublicKey: publicKey });
-  const service = new BusterRemotePlanService({ store, registry, runtimeRoot: path.join(temporary, 'buster-runs'),
+  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
       executableSearchPath: [path.dirname(process.execPath)], runtimeReadRoots: [path.dirname(process.execPath),
