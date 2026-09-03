@@ -18,7 +18,7 @@ const job = {
     bytes: archive.byteLength,
     data: archive.toString('base64'),
   },
-  suites: ['api'],
+  suites: ['security'],
   testConfig: { suite_timeout_ms: 1000, project: '/source/project' },
   task: { root: '/source', nested: ['/source/file.txt'] },
   capabilities: [],

@@ -5,9 +5,9 @@ Do not edit this page directly.
 
 ## Summary
 
-- Replacement implemented: 7 of 13.
+- Replacement implemented: 8 of 13.
 - Parity proved: 2 of 13.
-- Source cutover complete: 7 of 13.
+- Source cutover complete: 8 of 13.
 - Cut over and deleted: 2 of 13.
 
 ## Suites
@@ -21,7 +21,7 @@ Do not edit this page directly.
 | `k8s` | `kubeclaw.kubernetes-fixture@1` | complete | in-progress | complete | pending | in-progress |
 | `health` | `kubeclaw.http@1` | complete | in-progress | complete | pending | in-progress |
 | `tailscale-preview` | `kubeclaw.tailscale-exposure@1` | complete | in-progress | complete | pending | in-progress |
-| `api` | `kubeclaw.api-suite@1` | pending | pending | pending | not required | pending |
+| `api` | `kubeclaw.api-suite@1` | complete | in-progress | complete | pending | in-progress |
 | `a11y` | `kubeclaw.axe@1` | pending | pending | pending | not required | pending |
 | `perf` | `kubeclaw.lighthouse@1` | pending | pending | pending | not required | pending |
 | `visual-reg` | `kubeclaw.visual@1` | pending | pending | pending | not required | pending |

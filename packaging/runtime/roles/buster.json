@@ -23,8 +23,10 @@
   "plugins": [
     "kubeclaw.agent-observability",
     "kubeclaw.artifact-store",
+    "kubeclaw.api-flow",
     "kubeclaw.command-runner",
     "kubeclaw.network-http",
+    "kubeclaw.openapi",
     "kubeclaw.runtime-dispatch",
     "kubeclaw.secret-resolver",
     "kubeclaw.telemetry-store",

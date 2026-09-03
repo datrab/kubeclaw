@@ -8,7 +8,7 @@ export const RESULT_SCHEMA = 'buster-suite-result.v2';
 // work must never use these names.
 export const LEGACY_UNMIGRATED_SUITES = Object.freeze([
   'a11y', 'perf',
-  'security', 'visual-reg', 'api', 'e2e',
+  'security', 'visual-reg', 'e2e',
 ] as const);
 
 const SUITE_CAPABILITIES = Object.freeze({

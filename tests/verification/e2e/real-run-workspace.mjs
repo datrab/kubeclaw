@@ -1031,6 +1031,15 @@ function instructionFiles(progress) {
           health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['size-budget'], concurrencyGroup: 'http', config: { path: '/', expectedStatuses: [200],
               expectedText: 'REAL_E2E_NGINX_OK', requestTimeoutMs: 10000 }, inputs: deploymentInput },
+          'api-flow': { uses: 'kubeclaw.api-flow@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'api-flow',
+            config: { flowFile: '.swarm/api-flow-success.json', requestTimeoutMs: 10000 },
+            inputs: deploymentInput },
+          openapi: { uses: 'kubeclaw.openapi@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'openapi',
+            config: { specFile: '.swarm/openapi-success.json', operations: [
+              { operationId: 'getHome', expectedStatuses: [200] },
+            ], requestTimeoutMs: 10000 }, inputs: deploymentInput },
           'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
               ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
@@ -1056,12 +1065,40 @@ function instructionFiles(progress) {
             config: { path: '/', readinessTimeoutSeconds: 180 }, inputs: { deployment: deploymentInput.deployment } },
         },
         concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
-          manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1 },
+          manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1,
+          'api-flow': 1, openapi: 1 },
       },
     },
   };
+  const apiFailureSpecs = [];
+  const addApiFailure = (scope, legacy) => {
+    const flowFile = legacy?.test_config?.api?.spec_file;
+    if (typeof flowFile !== 'string') return;
+    scope.tests['intentional-api-failure'] = { uses: 'kubeclaw.api-flow@1', mode: 'blocking', retries: 0,
+      concurrencyGroup: 'api-flow', config: { flowFile,
+        url: 'http://registry-local.kubeclaw.svc.cluster.local:5001' } };
+    scope.concurrencyLimits['api-flow'] = 1;
+    apiFailureSpecs.push(flowFile);
+  };
+  for (const moduleId of moduleIds) addApiFailure(unitPipeline.modules[moduleId], progress.modules[moduleId]);
+  addApiFailure(unitPipeline.gates['final-buster'], progress.gates?.['final-buster']);
   const files = {
     'pipeline.json': `${JSON.stringify(unitPipeline, null, 2)}\n`,
+    'api-flow-success.json': `${JSON.stringify({
+      schemaVersion: 'kubeclaw.api-flow.v1',
+      steps: [{ id: 'get-home', path: '/', expect: { status: 200, bodyContains: 'REAL_E2E_NGINX_OK' } }],
+    }, null, 2)}\n`,
+    'openapi-success.json': `${JSON.stringify({
+      openapi: '3.1.0',
+      info: { title: 'Real pipeline fixture', version: '1.0.0' },
+      paths: { '/': { get: { operationId: 'getHome', responses: { 200: { description: 'Fixture page', content: {
+        'text/html': { schema: { type: 'string', minLength: 1 } },
+      } } } } } },
+    }, null, 2)}\n`,
+    ...Object.fromEntries(apiFailureSpecs.map((file) => [file.replace(/^\.swarm\//u, ''), `${JSON.stringify({
+      schemaVersion: 'kubeclaw.api-flow.v1',
+      steps: [{ id: 'intentional-failure', path: '/v2/', expect: { status: 599 } }],
+    }, null, 2)}\n`])),
     'ARCHITECTURE.md': [
       '# Real Pipeline E2E Architecture',
       '',

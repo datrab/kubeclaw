@@ -94,6 +94,7 @@ function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | unde
   delete config.k8s;
   delete config.bundle;
   delete config.manifest;
+  delete config.api;
   if (isPlainObject(config.serve)) {
     for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
       'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
@@ -223,6 +224,42 @@ function legacyBundleNodes(existingConfig: unknown, projectSrcDir: string, repos
   };
 }
 
+function legacyApiNode(existingConfig: unknown, repositoryRoot: string, projectSrcDir: string, scopeId: string,
+  deploymentNode?: string): AnyRecord {
+  const config = objectOrEmpty(existingConfig);
+  const api = objectOrEmpty(config.api);
+  const serve = objectOrEmpty(config.serve);
+  if (typeof api.spec_file !== 'string' || !api.spec_file.trim()) throw new Error(`LEGACY_API_SPEC_MISSING:${scopeId}`);
+  const base = typeof serve.project_dir === 'string' && serve.project_dir.trim()
+    ? path.resolve(repositoryRoot, serve.project_dir) : projectSrcDir;
+  const baseRelative = path.relative(repositoryRoot, base);
+  if (baseRelative === '..' || baseRelative.startsWith(`..${path.sep}`)) {
+    throw new Error(`LEGACY_API_PROJECT_PATH_DENIED:${scopeId}:${String(serve.project_dir)}`);
+  }
+  const absolute = path.resolve(base, api.spec_file);
+  const scopedRelative = path.relative(base, absolute);
+  const relative = path.relative(repositoryRoot, absolute).split(path.sep).join('/');
+  if (!relative || relative === '..' || relative.startsWith('../') || scopedRelative === '..'
+    || scopedRelative.startsWith(`..${path.sep}`) || !fs.existsSync(absolute)) {
+    throw new Error(`LEGACY_API_SPEC_DENIED:${scopeId}:${api.spec_file}`);
+  }
+  let realSpec: string;
+  try { realSpec = fs.realpathSync(absolute); } catch { throw new Error(`LEGACY_API_SPEC_DENIED:${scopeId}:${api.spec_file}`); }
+  const realRepository = fs.realpathSync(repositoryRoot);
+  if (!realSpec.startsWith(`${realRepository}${path.sep}`) || !fs.statSync(realSpec).isFile()) {
+    throw new Error(`LEGACY_API_SPEC_DENIED:${scopeId}:${api.spec_file}`);
+  }
+  const parsed = readJsonIfExists(realSpec);
+  if (parsed?.schemaVersion !== 'kubeclaw.api-flow.v1') {
+    throw new Error(`LEGACY_API_SPEC_VERSION_RETIRED:${scopeId}: convert ${api.spec_file} to kubeclaw.api-flow.v1`);
+  }
+  return { uses: 'kubeclaw.api-flow@1', mode: 'blocking', retries: 0, concurrencyGroup: 'api',
+    ...(deploymentNode ? { needs: [deploymentNode] } : {}),
+    config: { flowFile: relative, ...(deploymentNode ? {} : { url: `${TODO_PREFIX} provider-reachable API origin or add a deployment input` }) },
+    ...(deploymentNode ? { inputs: { deployment: { from: deploymentNode, output: 'deployment',
+      schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } } } : {}) };
+}
+
 function inferTestConfig(input: AnyRecord): AnyRecord | undefined {
   if (isPlainObject(input.existingConfig)) return sanitizedTestConfig(input.existingConfig, input.suites);
   if (!Array.isArray(input.suites) || input.suites.length === 0) return undefined;
@@ -311,8 +348,8 @@ function withImageInput(node: unknown, buildNode: string): unknown {
 }
 
 function scopeWithProviders(existingScope: unknown, testConfig: unknown, options: {
-  addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; legacyUnitSelected: boolean;
-  projectSrcDir: string; repositoryRoot: string; scopeId: string;
+  addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; addApi: boolean; legacyUnitSelected: boolean;
+  projectSrcDir: string; repositoryRoot: string; swarmDir: string; scopeId: string;
 }): AnyRecord {
   const scope = objectOrEmpty(existingScope);
   const fixtures = objectOrEmpty(scope.fixtures);
@@ -340,6 +377,8 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
     ? { 'container-build': legacyBuildNode(testConfig, options.projectSrcDir, options.repositoryRoot, options.scopeId) }
     : {};
   const combinedTests = { ...tests, ...generatedBuild, ...generatedBudget, ...exposure.tests,
+    ...(options.addApi && !Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.api-flow@1')
+      ? { 'api-flow': legacyApiNode(testConfig, options.repositoryRoot, options.projectSrcDir, options.scopeId, deploymentNode) } : {}),
     ...(!hasHttp && options.addHttp ? httpNodes(testConfig, deploymentNode) : {}) };
   const budgetNodeId = existingSizeBudget?.[0] ?? 'size-budget';
   const orderedTests = options.addSizeBudget
@@ -360,6 +399,7 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
     concurrencyLimits: { ...(options.addContainerBuild ? { 'container-build': 1 } : {}),
       ...(options.addHttp || options.addExposure ? { http: 4 } : {}), ...(options.addSizeBudget ? { 'size-budget': 2 } : {}),
       ...(options.addExposure ? { 'tailscale-exposure': 1 } : {}),
+      ...(options.addApi ? { api: 1 } : {}),
       ...objectOrEmpty(scope.concurrencyLimits) } };
 }
 
@@ -388,8 +428,9 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addHttp: !Array.isArray(selected) || selected.includes('health'),
         addSizeBudget: Array.isArray(selected) && selected.includes('bundle'),
         addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
+        addApi: Array.isArray(selected) && selected.includes('api'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
-        repositoryRoot: context.repoRoot, scopeId: id,
+        repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
     }));
   const gateScopes = Object.fromEntries(Object.entries(gates)
@@ -403,8 +444,9 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addHttp: !Array.isArray(selected) || selected.includes('health'),
         addSizeBudget: Array.isArray(selected) && selected.includes('bundle'),
         addExposure: Array.isArray(selected) && selected.includes('tailscale-preview'),
+        addApi: Array.isArray(selected) && selected.includes('api'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
-        repositoryRoot: context.repoRoot, scopeId: id,
+        repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
     }));
   return omitEmpty({ project: context.project,
@@ -542,6 +584,7 @@ export function buildScaffold(context: Context): AnyRecord {
   const inferredOrder = gateIds.length
     ? [...moduleIds, ...gateIds.map((gateId) => `${TODO_PREFIX} place gate:${gateId} among [${moduleIds.join(', ')}]`)]
     : moduleIds;
+  // Provider conversion reads raw legacy config before retired fields are removed from persisted progress.
   const pipeline = buildPipeline(context, progress, modules, gates);
   return {
     _schema: SCHEMA,

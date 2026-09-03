@@ -111,6 +111,19 @@ File names, cleanup rules, dev dependencies.
 
 ## test-spec.json
 
+> **Current format:** The legacy format shown later in this section is retained only to explain rejected input. New and migrated projects must use `kubeclaw.api-flow.v1`. Project setup stops with `LEGACY_API_SPEC_VERSION_RETIRED` when it reads the historical format. See the [API user guide](../../../docs/architecture/pipeline-test-gate-api-user-guide.md) and [configuration reference](../../../docs/architecture/pipeline-test-gate-api-configuration-reference.md).
+
+```json
+{
+  "schemaVersion": "kubeclaw.api-flow.v1",
+  "setup": [{ "id": "login", "method": "POST", "path": "/api/auth/login", "extract": { "token": "token" } }],
+  "steps": [{ "id": "health", "path": "/api/health", "expect": { "status": 200 } }],
+  "cleanup": [{ "id": "logout", "method": "DELETE", "path": "/api/auth/session", "expect": { "status": 204 } }]
+}
+```
+
+### Historical format: rejected after Suite 8 cutover
+
 ### When Needed
 
 Only when `api` is in `test_suites`; `spec_file` is required and missing API specs fail typed Buster validation.

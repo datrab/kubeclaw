@@ -1,0 +1,7 @@
+{
+  "name": "@kubeclaw/plugin-api-flow-test-provider",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node tests/live-function.test.ts" },
+  "devDependencies": { "ws": "^8.18.3" }
+}

@@ -169,10 +169,17 @@ Evidence for every code appears in the attempt result and Buster log.
 
 ### `HTTP_REQUEST_METHOD_DENIED`
 
-- Cause: the capability request uses an unsupported method.
+- Cause: the capability request uses a method that operator policy does not allow.
 - Effect: the runtime denies the request.
-- Correction: use GET or HEAD.
+- Correction: use an allowed method or approve it for an exact origin.
 - Retry: retry after provider correction.
+
+### `HTTP_REQUEST_EXACT_ORIGIN_REQUIRED`
+
+- Cause: a mutating method targets a host allowed only by a DNS suffix.
+- Effect: the runtime denies the request before network access.
+- Correction: use a dedicated test target and add its canonical origin to the exact origin allowlist.
+- Retry: retry only after an operator policy decision.
 
 ### `HTTP_REQUEST_HEADERS_INVALID`
 
@@ -187,6 +194,13 @@ Evidence for every code appears in the attempt result and Buster log.
 - Effect: the runtime denies the request.
 - Correction: retain only one bounded Accept header.
 - Retry: retry after provider correction.
+
+### `HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED`
+
+- Cause: a WebSocket connection targets a host allowed only by a DNS suffix.
+- Effect: the runtime denies the connection before network access.
+- Correction: add the dedicated target's canonical origin to the exact origin allowlist.
+- Retry: retry only after an operator policy decision.
 
 ### `HTTP_REQUEST_PAYLOAD_INVALID`
 
@@ -310,3 +324,66 @@ Evidence for every code appears in the attempt result and Buster log.
 - Effect: Buster startup stops.
 - Correction: declare a bounded positive millisecond limit.
 - Retry: restart after configuration correction.
+
+### `HTTP_RUNTIME_REQUEST_LIMIT_INVALID`
+
+- Cause: the operator request byte limit is invalid.
+- Effect: Buster startup stops.
+- Correction: declare a positive integer byte limit.
+- Retry: restart after configuration correction.
+
+### `HTTP_RUNTIME_METHOD_POLICY_INVALID`
+
+- Cause: the operator method allowlist is empty or contains an unsupported method.
+- Effect: Buster startup stops.
+- Correction: declare only supported uppercase methods.
+- Retry: restart after configuration correction.
+
+### `HTTP_RUNTIME_HEADER_POLICY_INVALID`
+
+- Cause: the operator request header allowlist contains an unsafe name.
+- Effect: Buster startup stops.
+- Correction: declare normalized safe header names.
+- Retry: restart after configuration correction.
+
+### `HTTP_REQUEST_BODY_INVALID`
+
+- Cause: the request body is not text or exceeds the operator byte limit.
+- Effect: the request is not sent.
+- Correction: reduce or correct the request body.
+- Retry: retry after project correction.
+
+### `HTTP_RESPONSE_HEADERS_INVALID`
+
+- Cause: requested response header names are malformed or excessive.
+- Effect: the request is not sent.
+- Correction: request at most 32 safe header names.
+- Retry: retry after project correction.
+
+### `HTTP_WEBSOCKET_MESSAGES_INVALID`
+
+- Cause: outbound WebSocket messages are malformed, excessive, or too large.
+- Effect: the connection is not opened.
+- Correction: reduce and correct the message list.
+- Retry: retry after project correction.
+
+### `HTTP_WEBSOCKET_DENIED`
+
+- Cause: the operator policy does not permit WebSocket connections.
+- Effect: the connection is not opened.
+- Correction: enable WebSocket authority only for an approved API target.
+- Retry: retry after operator policy correction.
+
+### `HTTP_WEBSOCKET_MESSAGES_MISSING`
+
+- Cause: the peer closed before the declared message count arrived.
+- Effect: the WebSocket step fails.
+- Correction: inspect the service and the declared count.
+- Retry: retry only after the cause is corrected.
+
+### `HTTP_WEBSOCKET_MINIMUM_INVALID`
+
+- Cause: the required WebSocket message count is outside the safe range.
+- Effect: the connection is not opened.
+- Correction: use a value from 1 through 64.
+- Retry: retry after project correction.

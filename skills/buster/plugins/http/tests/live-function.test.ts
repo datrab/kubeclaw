@@ -90,6 +90,58 @@ try {
   await assert.rejects(() => capability.invoke('network.http', { operation: 'request',
     resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: {} } as any, cancelled.signal),
   /HTTP_REQUEST_CANCELLED/u);
+  await assert.rejects(() => capability.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: { method: 'POST' } } as any,
+  new AbortController().signal), /HTTP_REQUEST_METHOD_DENIED/u);
+  const websocketDenied = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [],
+    allowedPorts: [address.port], allowedMethods: ['GET'], allowedRequestHeaders: ['accept'],
+    maximumRequestBytes: 1024, maximumResponseBytes: 1024, maximumExecutionMs: 1000 });
+  await assert.rejects(() => websocketDenied.invoke('network.http', { operation: 'websocket',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: {} } as any,
+  new AbortController().signal), /HTTP_WEBSOCKET_DENIED/u);
+  const suffixOnly = new NetworkHttpCapabilityInvoker({ allowedOrigins: [], allowedHostSuffixes: ['.0.0.1'],
+    allowedPorts: [address.port], allowedMethods: ['GET', 'POST'], allowedRequestHeaders: ['accept', 'authorization'],
+    allowWebSocket: true, maximumRequestBytes: 1024, maximumResponseBytes: 1024, maximumExecutionMs: 1000 });
+  const suffixUrl = `${origin}/ok`;
+  await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: suffixUrl }, payload: { method: 'POST' } } as any,
+  new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:POST/u);
+  await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: suffixUrl }, payload: { headers: { authorization: 'denied' } } } as any,
+  new AbortController().signal), /HTTP_REQUEST_HEADER_DENIED/u);
+  await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'websocket',
+    resource: { type: 'network.url', canonicalId: suffixUrl }, payload: {} } as any,
+  new AbortController().signal), /HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED/u);
+  const deploymentInput = [{ name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'api', url: origin }] } }] as any;
+  const scopedMutation = await suffixOnly.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: suffixUrl },
+    payload: { method: 'POST', headers: { authorization: 'test' }, body: '{}' } } as any,
+  new AbortController().signal, deploymentInput);
+  assert.equal(scopedMutation.status, 200);
+  const noHeaders = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [],
+    allowedPorts: [address.port], allowedMethods: ['GET'], allowedRequestHeaders: [],
+    maximumRequestBytes: 1024, maximumResponseBytes: 1024, maximumExecutionMs: 1000 });
+  const noHeaderResult = await noHeaders.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: {} } as any,
+  new AbortController().signal);
+  assert.equal(noHeaderResult.status, 200);
+  const mixedCaseHeaderPolicy = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [],
+    allowedPorts: [address.port], allowedMethods: ['GET'], allowedRequestHeaders: ['Authorization'],
+    maximumRequestBytes: 1024, maximumResponseBytes: 1024, maximumExecutionMs: 1000 });
+  const mixedCaseResult = await mixedCaseHeaderPolicy.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` },
+    payload: { headers: { authorization: 'Bearer test' } } } as any, new AbortController().signal);
+  assert.equal(mixedCaseResult.status, 200);
+  await assert.rejects(() => capability.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: { headers: { authorization: 'denied' } } } as any,
+  new AbortController().signal), /HTTP_REQUEST_HEADER_DENIED/u);
+  const bounded = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [],
+    allowedPorts: [address.port], allowedMethods: ['POST'], allowedRequestHeaders: ['content-type'],
+    maximumRequestBytes: 4, maximumResponseBytes: 1024, maximumExecutionMs: 1000 });
+  await assert.rejects(() => bounded.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: { method: 'POST', body: '12345' } } as any,
+  new AbortController().signal), /HTTP_REQUEST_BODY_INVALID/u);
 } finally {
   await new Promise<void>((resolve) => server.close(() => resolve()));
 }

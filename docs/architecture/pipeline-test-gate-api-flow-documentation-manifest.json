@@ -1,0 +1,8 @@
+{
+  "schemaVersion":"suite-documentation-manifest.v1", "suite":"api", "provider":"kubeclaw.api-flow@1",
+  "projectSchema":"skills/buster/plugins/api-flow/schemas/config.schema.json",
+  "documents":{"userGuide":"docs/architecture/pipeline-test-gate-api-user-guide.md","operatorGuide":"docs/architecture/pipeline-test-gate-api-operator-guide.md","configurationReference":"docs/architecture/pipeline-test-gate-api-configuration-reference.md","errorReference":"docs/architecture/pipeline-test-gate-api-error-reference.md","securityModel":"docs/architecture/pipeline-test-gate-api-security-model.md"},
+  "operatorFields":["allowedOrigins","allowedHostSuffixes","allowedPorts","allowedMethods","allowedRequestHeaders","allowWebSocket","maximumRequestBytes","maximumResponseBytes","maximumExecutionMs"],
+  "sourceFilesWithErrors":["skills/buster/plugins/api-flow/src/provider.js"], "errorPrefixes":["API_FLOW_"], "additionalErrors":[],
+  "configurationMarkerFields":["flowFile","maximumSteps"], "exampleFiles":["contracts/pipeline-test-gate/v1/examples/api-flow-config.json"]
+}

@@ -959,6 +959,20 @@
       "exclude": [
         "**/templates/**"
       ]
+    },
+    {
+      "id": "openapi-contract",
+      "required": true,
+      "category": "lint",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [],
+      "config_path": null,
+      "targets": ["."],
+      "include": ["**/openapi.json", "**/openapi.yaml", "**/openapi.yml"],
+      "exclude": []
     }
   ]
 }

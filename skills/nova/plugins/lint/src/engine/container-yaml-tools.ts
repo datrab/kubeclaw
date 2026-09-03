@@ -10,6 +10,7 @@ import { failParse } from './report.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
 import crypto from 'node:crypto';
+import { parseDocument } from 'yaml';
 function jsonResourceItems(data: any) {
   if (Array.isArray(data)) return data;
   return [];
@@ -258,10 +259,81 @@ function yamllintTool() {
   };
 }
 
+function openapiContractTool() {
+  const filePattern = (file: string) => /(?:^|\/)openapi\.(?:json|ya?ml)$/iu.test(file.split(path.sep).join('/'));
+  const pathItem = (spec: any, value: any): any | null => {
+    let current = value;
+    const seen = new Set<string>();
+    for (let depth = 0; depth < 32; depth += 1) {
+      if (!current || typeof current !== 'object' || Array.isArray(current)) return null;
+      if (current.$ref === undefined) return current;
+      if (typeof current.$ref !== 'string' || !current.$ref.startsWith('#/') || seen.has(current.$ref)) return null;
+      seen.add(current.$ref);
+      let resolved: any = spec;
+      for (const part of current.$ref.slice(2).split('/').map((item: string) => item.replace(/~1/gu, '/').replace(/~0/gu, '~'))) {
+        if (!resolved || typeof resolved !== 'object' || Array.isArray(resolved)
+          || !Object.prototype.hasOwnProperty.call(resolved, part)) return null;
+        resolved = resolved[part];
+      }
+      current = resolved;
+    }
+    return null;
+  };
+  return {
+    id: 'openapi-contract', name: 'OpenAPI contract validation', binary: 'node', tier: 'full',
+    detect: () => true,
+    run: (ctx: any) => {
+      const findings: any[] = [];
+      for (const file of configuredTargetFilesForScope(ctx, filePattern)) {
+        const document = parseDocument(fs.readFileSync(file, 'utf8'), { uniqueKeys: true });
+        for (const error of document.errors) findings.push({ file, line: null, column: null, severity: 'error',
+          code: 'openapi-syntax', message: error.message });
+        if (document.errors.length) continue;
+        let spec: any;
+        try {
+          spec = document.toJS({ maxAliasCount: 0 });
+        } catch (error) {
+          findings.push({ file, line: null, column: null, severity: 'error', code: 'openapi-syntax',
+            message: error instanceof Error ? error.message : 'The contract contains unsupported YAML aliases.' });
+          continue;
+        }
+        if (typeof spec?.openapi !== 'string' || !spec.openapi.startsWith('3.')) findings.push({ file, line: null,
+          column: null, severity: 'error', code: 'openapi-version', message: 'The contract must declare OpenAPI 3.' });
+        if (!spec?.paths || typeof spec.paths !== 'object' || Array.isArray(spec.paths)) findings.push({ file, line: null,
+          column: null, severity: 'error', code: 'openapi-paths', message: 'The contract must declare a paths object.' });
+        const seen = new Set<string>();
+        for (const [route, rawPathItem] of Object.entries(spec?.paths ?? {}) as [string, any][]) {
+          const resolvedPathItem = pathItem(spec, rawPathItem);
+          if (!resolvedPathItem) {
+            findings.push({ file, line: null, column: null, severity: 'error', code: 'openapi-path-item',
+              message: `Path ${route} must be an object or a valid local reference.` });
+            continue;
+          }
+          for (const method of ['delete', 'get', 'head', 'options', 'patch', 'post', 'put']) {
+          const operation = resolvedPathItem[method]; if (!operation) continue;
+          if (typeof operation !== 'object' || Array.isArray(operation)) {
+            findings.push({ file, line: null, column: null, severity: 'error', code: 'openapi-operation',
+              message: `Operation ${method.toUpperCase()} ${route} must be an object.` });
+            continue;
+          }
+          if (typeof operation.operationId !== 'string' || seen.has(operation.operationId)) findings.push({ file, line: null,
+            column: null, severity: 'error', code: 'openapi-operation-id', message: 'Every operation must have a unique operationId.' });
+          else seen.add(operation.operationId);
+          if (!operation.responses || typeof operation.responses !== 'object') findings.push({ file, line: null,
+            column: null, severity: 'error', code: 'openapi-responses', message: `Operation ${String(operation.operationId)} must declare responses.` });
+          }
+        }
+      }
+      return { errors: findings.length, warnings: 0, findings };
+    },
+  };
+}
+
 export function registerContainerYamlTools(registerTool: any) {
   registerTool(hadolintTool());
   registerTool(helmLintTool());
   registerTool(kubeconformTool());
   registerTool(kubeconformTool('kubernetes-schema', true));
   registerTool(yamllintTool());
+  registerTool(openapiContractTool());
 }

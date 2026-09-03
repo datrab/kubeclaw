@@ -1,0 +1,15 @@
+{
+  "schemaVersion":"suite-cutover-inventory.v1", "suite":"api", "successor":"kubeclaw.api-suite@1", "parityItemCount":32,
+  "legacyFilesToDelete":[
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-http.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-runner.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-values.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/api-websocket.ts"
+  ],
+  "replacementFilesRequired":[
+    "skills/buster/plugins/api-flow/plugin.json", "skills/buster/plugins/openapi/plugin.json",
+    "contracts/pipeline-test-gate/v1/suites/api.v1.json", "skills/nova/project_setup/tools/progress-scaffold-discovery.ts"
+  ],
+  "verification":{"solePathTests":["tests/verification/contracts/check-pipeline-api-cutover.mts"],"dualAuthorityTests":["tests/verification/contracts/check-pipeline-api-cutover.mts"],"absenceTests":["tests/verification/contracts/check-pipeline-api-cutover.mts"]}
+}

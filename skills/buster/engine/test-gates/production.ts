@@ -218,6 +218,16 @@ export function loadProductionBusterRemotePlanRuntime(
       allowedPorts: integerArray(networkHttpSource.allowedPorts, 'networkHttp.allowedPorts', 65_535),
       maximumResponseBytes: integer(networkHttpSource.maximumResponseBytes, 'networkHttp.maximumResponseBytes'),
       maximumExecutionMs: integer(networkHttpSource.maximumExecutionMs, 'networkHttp.maximumExecutionMs'),
+      ...(networkHttpSource.maximumRequestBytes === undefined ? {} : {
+        maximumRequestBytes: integer(networkHttpSource.maximumRequestBytes, 'networkHttp.maximumRequestBytes'),
+      }),
+      ...(networkHttpSource.allowedMethods === undefined ? {} : {
+        allowedMethods: stringArray(networkHttpSource.allowedMethods, 'networkHttp.allowedMethods'),
+      }),
+      ...(networkHttpSource.allowedRequestHeaders === undefined ? {} : {
+        allowedRequestHeaders: stringArray(networkHttpSource.allowedRequestHeaders, 'networkHttp.allowedRequestHeaders'),
+      }),
+      allowWebSocket: networkHttpSource.allowWebSocket === true,
     } } : {}),
   });
   const tlsSource = value.tls === undefined ? null : object(value.tls, 'tls');

@@ -95,6 +95,7 @@ export interface TestProviderCapabilityInvoker {
     capability: string,
     request: TestProviderCapabilityRequest,
     signal: AbortSignal,
+    inputs?: readonly ResolvedInputV1[],
   ): Promise<Readonly<Record<string, unknown>>>;
 }
 
@@ -1188,6 +1189,7 @@ export class TestPlanRunner {
             workerContext.log(stream, value);
           },
           new Set(granted),
+          invocation.inputs,
         );
         loadWork = this.#loader.load(
           entry,
@@ -1330,6 +1332,7 @@ export class TestPlanRunner {
               workerContext.log(stream, value);
             },
             new Set(granted),
+            invocation.inputs,
           ),
         );
       },
@@ -1872,6 +1875,7 @@ export class TestPlanRunner {
     signal: AbortSignal,
     log: TestProviderExecutionContext["log"],
     granted: ReadonlySet<string>,
+    inputs: readonly ResolvedInputV1[],
   ): TestProviderExecutionContext {
     return Object.freeze({
       signal,
@@ -1889,6 +1893,7 @@ export class TestPlanRunner {
           capability,
           request,
           signal,
+          inputs,
         );
       },
     });
@@ -1966,6 +1971,7 @@ export class TestPlanRunner {
       controller.signal,
       log,
       new Set(invocation.grantedCapabilities),
+      invocation.inputs,
     );
     try {
       await Promise.race([

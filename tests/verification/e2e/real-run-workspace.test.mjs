@@ -739,6 +739,13 @@ test('generated review contract assigns Kubernetes fixture authority to final Bu
     const pipeline = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'pipeline.json'), 'utf8'));
     const finalGate = progress.gates['final-buster'];
 
+    assert.equal(pipeline.gates['final-buster'].tests['api-flow'].uses, 'kubeclaw.api-flow@1');
+    assert.equal(pipeline.gates['final-buster'].tests.openapi.uses, 'kubeclaw.openapi@1');
+    assert.equal(pipeline.gates['final-buster'].tests['api-flow'].inputs.deployment.from, 'kubernetes-deployment');
+    assert.equal(pipeline.gates['final-buster'].tests.openapi.inputs.deployment.from, 'kubernetes-deployment');
+    assert.equal(fs.existsSync(path.join(workspace.swarmDir, 'api-flow-success.json')), true);
+    assert.equal(fs.existsSync(path.join(workspace.swarmDir, 'openapi-success.json')), true);
+
     assert.match(architecture, /module manifest stays reusable with only Deployment, Service, and app-owned Secret resources/);
     assert.match(architecture, /Module 01 owns the shared nginx runtime config/);
     assert.match(architecture, /Module 04 owns copying the assembled `src\/` tree into the nginx web root/);

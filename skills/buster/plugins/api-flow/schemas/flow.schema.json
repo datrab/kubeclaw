@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/schemas/api-flow.v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "steps"],
+  "properties": {
+    "schemaVersion": { "const": "kubeclaw.api-flow.v1" },
+    "variables": { "$ref": "#/$defs/scalars" },
+    "setup": { "$ref": "#/$defs/steps" },
+    "steps": { "$ref": "#/$defs/steps" },
+    "cleanup": { "$ref": "#/$defs/steps" }
+  },
+  "$defs": {
+    "scalars": {
+      "type": "object", "maxProperties": 64,
+      "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9_]{0,63}$" },
+      "additionalProperties": { "type": ["string", "number", "boolean"] }
+    },
+    "steps": { "type": "array", "maxItems": 256, "items": { "$ref": "#/$defs/step" } },
+    "step": {
+      "type": "object", "additionalProperties": false, "required": ["id", "path"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$" },
+        "protocol": { "const": "websocket" },
+        "method": { "enum": ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"] },
+        "path": { "type": "string", "minLength": 1, "maxLength": 2048, "pattern": "^/(?!/)[^#\\r\\n]*$" },
+        "headers": { "type": "object", "maxProperties": 32, "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 4096 } },
+        "body": {},
+        "messages": { "type": "array", "maxItems": 64 },
+        "timeoutMs": { "type": "integer", "minimum": 1, "maximum": 300000 },
+        "expect": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+            "contentType": { "type": "string" },
+            "bodyContains": { "type": "string" },
+            "json": { "type": "object", "maxProperties": 32 },
+            "minimumMessages": { "type": "integer", "minimum": 1, "maximum": 64 },
+            "messageContains": { "type": "string" }
+          }
+        },
+        "extract": { "type": "object", "maxProperties": 32, "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9_]{0,63}$" }, "additionalProperties": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "modules": {
+    "api": {
+      "suites": {
+        "api": {
+          "uses": "kubeclaw.api-suite@1",
+          "exclude": ["openapi"],
+          "overrides": {
+            "http": {
+              "inputs": { "deployment": { "from": "deployment", "output": "deployment", "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" } }
+            },
+            "flow": {
+              "config": { "flowFile": ".swarm/modules/api/api-flow.json" },
+              "inputs": { "deployment": { "from": "deployment", "output": "deployment", "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

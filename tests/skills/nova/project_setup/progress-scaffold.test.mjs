@@ -161,10 +161,12 @@ test('progress scaffold migrates legacy health settings into provider plan nodes
       test_suites: ['build', 'health', 'api'], test_config: { serve: { type: 'server', port: 3000,
         health_path: '/ready', health_retries: 4, health_timeout: 9000,
         smoke_paths: ['/status'], smoke_expected_text: { '/status': 'ok' } },
-        api: { spec_file: 'modules/01-foundation/test-spec.json' } },
+        api: { spec_file: '.swarm/modules/01-foundation/test-spec.json' } },
     } }, gates: {},
   }, null, 2)}\n`);
-  writeFile(path.join(swarm, 'modules/01-foundation/test-spec.json'), '{}\n');
+  writeFile(path.join(swarm, 'modules/01-foundation/test-spec.json'), `${JSON.stringify({
+    schemaVersion: 'kubeclaw.api-flow.v1', steps: [{ id: 'health', method: 'GET', path: '/ready', expect: { status: 200 } }],
+  }, null, 2)}\n`);
   writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {
     '01-foundation': { suites: { unit: { uses: 'kubeclaw.unit-suite@1' } } },
   }, gates: {} }, null, 2)}\n`);
@@ -173,8 +175,9 @@ test('progress scaffold migrates legacy health settings into provider plan nodes
   const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
   const scaffold = readJson(scaffoldPath);
   const module = scaffold.modules['01-foundation'];
-  assert.deepEqual(module.test_suites, ['api']);
-  assert.equal(JSON.stringify(module.test_config).includes('health_path'), false);
+  assert.deepEqual(module.test_suites, []);
+  assert.equal(module.test_config?.api, undefined);
+  assert.equal(String(JSON.stringify(module.test_config)).includes('health_path'), false);
   assert.equal(scaffold.pipeline.modules['01-foundation'].suites.unit.uses, 'kubeclaw.unit-suite@1');
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['container-build'].uses,
     'kubeclaw.container-build@1');
@@ -188,14 +191,94 @@ test('progress scaffold migrates legacy health settings into provider plan nodes
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].retries, 3);
   assert.deepEqual(scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].needs, ['http-health']);
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].config.expectedText, 'ok');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['api-flow'].uses, 'kubeclaw.api-flow@1');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['api-flow'].config.flowFile,
+    'Projects/demo/src/.swarm/modules/01-foundation/test-spec.json');
 
   scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.url = 'http://demo.default.svc.cluster.local:3000';
   scaffold.pipeline.modules['01-foundation'].tests['smoke-1'].config.url = 'http://demo.default.svc.cluster.local:3000';
+  scaffold.pipeline.modules['01-foundation'].tests['api-flow'].config.url = 'http://demo.default.svc.cluster.local:3000';
   writeFile(scaffoldPath, `${JSON.stringify(scaffold, null, 2)}\n`);
   run(root, ['--project', 'demo', '--apply']);
   const progress = readJson(path.join(swarm, 'progress.json'));
-  assert.deepEqual(progress.modules['01-foundation'].test_suites, ['api']);
+  assert.deepEqual(progress.modules['01-foundation'].test_suites, []);
   assert.equal(JSON.stringify(progress).includes('health_path'), false);
+});
+
+test('progress scaffold resolves a legacy API spec inside serve.project_dir', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(root, 'Projects/demo/src/service/.swarm/api-flow.json'), `${JSON.stringify({
+    schemaVersion: 'kubeclaw.api-flow.v1', steps: [
+      { id: 'health', method: 'GET', path: '/health', expect: { status: 200 } },
+    ],
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Scoped API migration.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['api'], test_config: {
+        serve: { type: 'server', project_dir: 'Projects/demo/src/service', start_cmd: 'npm start', port: 3000 },
+        api: { spec_file: '.swarm/api-flow.json' },
+      },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {}, gates: {} }, null, 2)}\n`);
+
+  run(root, ['--project', 'demo']);
+  const scaffold = readJson(path.join(swarm, 'progress.scaffold.json'));
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['api-flow'].config.flowFile,
+    'Projects/demo/src/service/.swarm/api-flow.json');
+});
+
+test('progress scaffold orders a migrated API flow after its deployment fixture', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'modules/01-foundation/api-flow.json'), `${JSON.stringify({
+    schemaVersion: 'kubeclaw.api-flow.v1', steps: [
+      { id: 'health', method: 'GET', path: '/health', expect: { status: 200 } },
+    ],
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Ordered API migration.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['api'], test_config: { api: { spec_file: '.swarm/modules/01-foundation/api-flow.json' } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {
+    '01-foundation': { fixtures: { deploy: { uses: 'kubeclaw.kubernetes-fixture@1', mode: 'blocking',
+      config: { serviceName: 'demo', servicePort: 80 } } } },
+  }, gates: {} }, null, 2)}\n`);
+
+  run(root, ['--project', 'demo']);
+  const node = readJson(path.join(swarm, 'progress.scaffold.json'))
+    .pipeline.modules['01-foundation'].tests['api-flow'];
+  assert.deepEqual(node.needs, ['deploy']);
+  assert.deepEqual(node.inputs.deployment, {
+    from: 'deploy', output: 'deployment', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
+  });
+  assert.equal(node.config.url, undefined);
+});
+
+test('progress scaffold rejects a legacy API spec symlink outside the repository', () => {
+  const root = makeRepo();
+  const swarm = createBasicProject(root);
+  const outside = path.join(path.dirname(root), `${path.basename(root)}-outside-api.json`);
+  writeFile(outside, `${JSON.stringify({ schemaVersion: 'kubeclaw.api-flow.v1', steps: [] })}\n`);
+  fs.symlinkSync(outside, path.join(swarm, 'outside-api.json'));
+  writeFile(path.join(swarm, 'progress.json'), `${JSON.stringify({
+    project: 'demo', version: 1, description: 'Demo project', notes: ['Symlink boundary test.'],
+    execution_order: ['01-foundation'], modules: { '01-foundation': {
+      title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+      test_suites: ['api'], test_config: { api: { spec_file: '.swarm/outside-api.json' } },
+    } }, gates: {},
+  }, null, 2)}\n`);
+  writeFile(path.join(swarm, 'pipeline.json'), `${JSON.stringify({ project: 'demo', modules: {}, gates: {} }, null, 2)}\n`);
+
+  try {
+    assert.match(runFailure(root, ['--project', 'demo']), /LEGACY_API_SPEC_DENIED:01-foundation/u);
+  } finally { fs.rmSync(outside, { force: true }); }
 });
 
 test('progress scaffold rejects legacy unit selection without an explicit provider node', () => {

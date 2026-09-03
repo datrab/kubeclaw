@@ -127,12 +127,16 @@ EOF
 
 RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
   BUSTER_ALLOWED_SOURCE_SECRETS="${BUSTER_ALLOWED_SOURCE_SECRETS:-}" \
+  BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \
+  BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
   BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
 const root = process.env.RUNTIME_CONFIG_ROOT;
 const registry = process.env.REGISTRY_REFERENCE;
 const plugins = '/app/skills/buster/plugins';
+const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')
+  .split(',').map((value) => value.trim()).filter(Boolean);
 fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
   schemaVersion: 'pipeline-platform.v2',
   installationRoots: [plugins], trustedBuiltinRoots: [plugins],
@@ -203,8 +207,11 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 900000, pollIntervalMs: 1000,
   },
   networkHttp: {
-    allowedOrigins: [], allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],
-    maximumResponseBytes: 16777216, maximumExecutionMs: 120000,
+    allowedOrigins: exactHttpOrigins, allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],
+    allowedMethods: ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'],
+    allowedRequestHeaders: ['accept', 'authorization', 'content-type', 'x-api-key'],
+    allowWebSocket: process.env.BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET === 'true',
+    maximumRequestBytes: 1048576, maximumResponseBytes: 16777216, maximumExecutionMs: 120000,
   },
 }, null, 2)}\n`);
 NODE
