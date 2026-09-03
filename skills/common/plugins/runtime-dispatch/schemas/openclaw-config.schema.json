@@ -23,6 +23,7 @@
           "thinking": { "type": "string", "minLength": 1 },
           "controllerSessionKey": { "type": "string", "minLength": 1, "maxLength": 512 },
           "collectorMode": { "type": "boolean", "default": false },
+          "spawnIntervalMs": { "type": "integer", "minimum": 0, "maximum": 60000, "default": 1500 },
           "tokenizerEncoding": { "const": "o200k_base", "default": "o200k_base" },
           "maxPromptBytes": { "const": 900000, "default": 900000 },
           "maxInputTokens": { "const": 120000, "default": 120000 },

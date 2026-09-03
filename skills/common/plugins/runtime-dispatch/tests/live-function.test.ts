@@ -62,6 +62,7 @@ assert.throws(() => assertOpenClawPromptBudget('one two three four', {
 const promptTarget = {
   endpoint: 'http://127.0.0.1', tokenSecret: 'secret', runtime: 'subagent', agentId: 'reviewer',
   agentRole: 'reviewer', model: 'gpt-5.6-terra', thinking: 'high', cwd: '/work', repositoryRoot: '/work',
+  spawnIntervalMs: 0,
   pollMs: 1, maxPollMs: 1, maxPolls: 1, sessionTimeoutMs: 1, resultPathPrefix: '.results',
   tokenizerEncoding: 'o200k_base', maxPromptBytes: 100_000, maxInputTokens: 10_000,
   maxOutputTokens: 1_000, maxContextTokens: 11_000,

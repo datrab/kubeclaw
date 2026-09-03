@@ -12,6 +12,7 @@ export interface OpenClawTarget {
   readonly agentId: string; readonly agentRole: string; readonly model: string; readonly thinking: string;
   readonly controllerSessionKey?: string;
   readonly collectorMode?: boolean;
+  readonly spawnIntervalMs: number;
   readonly cwd: string; readonly repositoryRoot: string; readonly pollMs: number; readonly maxPollMs: number;
   readonly maxPolls: number; readonly sessionTimeoutMs: number; readonly resultPathPrefix: string;
   readonly tokenizerEncoding: 'o200k_base' | 'cl100k_base'; readonly maxPromptBytes: number;
@@ -30,6 +31,7 @@ interface RuntimePromptBudget {
 }
 const ENCODERS = new Map<OpenClawTarget['tokenizerEncoding'], ReturnType<typeof getEncoding>>();
 const SUCCESSFUL_SESSION_STATES = new Set(['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed']);
+const SPAWN_QUEUES = new WeakMap<AdapterActivationContext, Map<string, Promise<void>>>();
 
 export function assertOpenClawSessionCompleted(session: OpenClawSessionState, expectedModel: string): void {
   if (!SUCCESSFUL_SESSION_STATES.has(session.state)) throw new Error('OPENCLAW_SESSION_FAILED');
@@ -169,15 +171,38 @@ function resultLocation(target: OpenClawTarget, dispatchId: string): Readonly<{ 
   return { file, relative: repositoryRelative };
 }
 
+async function pacedSpawn<T>(
+  context: AdapterActivationContext, target: OpenClawTarget, signal: AbortSignal,
+  operation: () => Promise<T>,
+): Promise<T> {
+  let queues = SPAWN_QUEUES.get(context);
+  if (!queues) { queues = new Map(); SPAWN_QUEUES.set(context, queues); }
+  const key = `${target.endpoint}\u0000${target.controllerSessionKey ?? ''}`;
+  const previous = queues.get(key) ?? Promise.resolve();
+  const queued = previous.catch(() => undefined).then(async () => {
+    assertDispatchActive(signal);
+    try { return await operation(); }
+    finally {
+      if (target.spawnIntervalMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, target.spawnIntervalMs));
+      }
+    }
+  });
+  const tail = queued.then(() => undefined, () => undefined);
+  queues.set(key, tail);
+  void tail.finally(() => { if (queues?.get(key) === tail) queues.delete(key); });
+  return queued;
+}
+
 // eslint-disable-next-line max-params -- Dispatch identity remains explicit at the external spawn boundary.
 async function spawnSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, payload: JsonRecord,
-  resultFile: string, dispatchId: string): Promise<OpenClawSessionIdentity> {
+  resultFile: string, dispatchId: string, signal: AbortSignal): Promise<OpenClawSessionIdentity> {
   const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
   const task = prepareOpenClawTask(payload, resultFile, target);
   const label = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`;
   const existing = await findRegisteredSession(context, target, token, label);
   if (existing) return existing;
-  const spawned = await gateway(context, target, token, 'sessions_spawn', {
+  const spawned = await pacedSpawn(context, target, signal, () => gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
     ...(target.collectorMode ? { collect: true,
       groupId: `nova-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 24)}` } : {}),
@@ -185,7 +210,7 @@ async function spawnSession(context: AdapterActivationContext, target: OpenClawT
     label,
     cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,
     ...(target.runtime === 'acp' ? { streamTo: 'parent' } : {}),
-  }, `spawn:${dispatchId}`);
+  }, `spawn:${dispatchId}`));
   return sessionIdentity(spawned, label);
 }
 
@@ -214,7 +239,7 @@ export async function dispatchOpenClaw(
   const startedAt = new Date().toISOString();
   const result = resultLocation(target, dispatchId);
   assertDispatchActive(dispatchSignal);
-  const spawning = spawnSession(context, target, token, payload, result.file, dispatchId);
+  const spawning = spawnSession(context, target, token, payload, result.file, dispatchId, dispatchSignal);
   let identity: OpenClawSessionIdentity;
   try { identity = await beforeAbort(() => spawning, dispatchSignal); }
   catch (error) {

@@ -158,6 +158,7 @@ function runPreflight(args, cwd) {
     '--thinking', args.get('preflight-thinking') ?? 'high',
     '--session-key', args.get('controller-session-key') ?? 'agent:main:nova-review-controller',
     '--collector-mode', args.get('preflight-collector-mode') ?? 'false',
+    '--spawn-interval-ms', args.get('preflight-spawn-interval-ms') ?? '1500',
     '--timeout-ms', args.get('preflight-timeout-ms') ?? '180000'];
   const result = spawnSync(process.execPath, command, { cwd, encoding: 'utf8', timeout: 240_000,
     maxBuffer: 1024 * 1024 });

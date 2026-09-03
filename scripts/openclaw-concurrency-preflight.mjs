@@ -31,6 +31,14 @@ function positiveInteger(value, label, maximum) {
   return parsed;
 }
 
+function nonnegativeInteger(value, label, maximum) {
+  const parsed = Number(value);
+  if (!Number.isSafeInteger(parsed) || parsed < 0 || parsed > maximum) {
+    throw new Error(`OPENCLAW_PREFLIGHT_${label.toUpperCase()}_INVALID`);
+  }
+  return parsed;
+}
+
 async function invoke(name, args, sessionKey, timeoutMs, idempotencyKey) {
   const params = JSON.stringify({ name, args, sessionKey, ...(idempotencyKey ? { idempotencyKey } : {}) });
   let envelope;
@@ -108,14 +116,16 @@ async function main(values) {
   const model = args.get('model');
   const thinking = args.get('thinking') ?? 'high';
   const collectorMode = boolean(args.get('collector-mode'));
+  const spawnIntervalMs = nonnegativeInteger(args.get('spawn-interval-ms') ?? '1500',
+    'spawn_interval_ms', 60_000);
   if (!model) throw new Error('OPENCLAW_PREFLIGHT_MODEL_REQUIRED');
   const prefix = `nova-capacity-${Date.now()}`;
   const accepted = [];
   try {
-    const results = await Promise.allSettled(Array.from({ length: concurrency }, async (_, index) => {
+    const spawnOne = async (index) => {
       const label = `${prefix}-${index + 1}`;
       const details = await invoke('sessions_spawn', {
-        runtime: 'subagent', mode: 'run', cleanup: 'delete', thread: false,
+        runtime: 'subagent', mode: 'run', cleanup: 'keep', thread: false,
         ...(collectorMode ? { collect: true, groupId: prefix } : {}),
         agentId, model, thinking,
         label,
@@ -124,7 +134,17 @@ async function main(values) {
       const identity = acceptedIdentity(details, label);
       accepted.push(identity);
       return identity;
-    }));
+    };
+    const results = [];
+    if (spawnIntervalMs === 0) {
+      results.push(...await Promise.allSettled(Array.from({ length: concurrency }, (_, index) => spawnOne(index))));
+    } else {
+      for (let index = 0; index < concurrency; index += 1) {
+        try { results.push({ status: 'fulfilled', value: await spawnOne(index) }); }
+        catch (reason) { results.push({ status: 'rejected', reason }); }
+        if (index + 1 < concurrency) await new Promise((resolve) => setTimeout(resolve, spawnIntervalMs));
+      }
+    }
     const refused = results.filter(({ status }) => status === 'rejected');
     if (refused.length > 0) {
       const reasons = refused.map((result) => result.status === 'rejected'
@@ -162,7 +182,7 @@ async function main(values) {
     if (completed.size !== concurrency) throw new Error(`OPENCLAW_PREFLIGHT_COMPLETION_TIMEOUT:${completed.size}:${concurrency}`);
     return { schemaVersion: 'openclaw-concurrency-preflight.v1', requested: concurrency,
       accepted: accepted.length, completed: completed.size, model, thinking, controllerSessionKey: sessionKey,
-      collectorMode, completionAnnouncementsSuppressed: collectorMode, status: 'passed' };
+      collectorMode, spawnIntervalMs, completionAnnouncementsSuppressed: collectorMode, status: 'passed' };
   } catch (error) {
     await cancelAll(accepted, sessionKey, timeoutMs);
     throw error;

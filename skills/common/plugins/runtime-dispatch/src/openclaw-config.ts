@@ -1,7 +1,7 @@
 import type { OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'collectorMode', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
+const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'collectorMode', 'spawnIntervalMs', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
 
 function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, code: string): void { for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`); }
@@ -27,7 +27,8 @@ function prefixValue(value: unknown): string {
   return value.replace(/\/+$/u, '');
 }
 function timingValid(target: OpenClawTarget): boolean {
-  return validInteger(target.pollMs, 10) && validInteger(target.maxPollMs, target.pollMs)
+  return validInteger(target.spawnIntervalMs, 0, 60_000)
+    && validInteger(target.pollMs, 10) && validInteger(target.maxPollMs, target.pollMs)
     && validInteger(target.maxPolls, 1) && validInteger(target.sessionTimeoutMs, target.pollMs, 86_400_000);
 }
 function resultValid(target: OpenClawTarget): boolean {
@@ -61,6 +62,7 @@ function parseTarget(id: string, raw: unknown): OpenClawTarget {
     resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),
     resultTokenSecret: optionalText(raw.resultTokenSecret),
     collectorMode: raw.collectorMode === true,
+    spawnIntervalMs: numberValue(raw.spawnIntervalMs, 1_500),
     tokenizerEncoding: encodingValue(raw.tokenizerEncoding),
     maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),
     maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),
