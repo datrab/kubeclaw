@@ -168,6 +168,10 @@ The repository URL in role values is authoritative for both new and persistent
 workspaces. During setup, an existing checkout keeps its files and local edits,
 but its `origin` remote is reconciled to `agent.git.repoUrl` before fetching.
 This removes retired repository identities without deleting the workspace.
+GitHub SSH URLs keep their normal `git@github.com:owner/repository.git` form,
+while the init container routes that host through `ssh.github.com:443`. This
+allows fresh clones from clusters where outbound TCP port 22 is blocked without
+falling back to token-bearing HTTPS repository URLs.
 
 Before an agent upgrade, the deployment CLI checks the Helm release status. A
 `pending-install`, `pending-upgrade`, or `pending-rollback` release is rejected

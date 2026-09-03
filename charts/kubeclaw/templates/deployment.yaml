@@ -302,11 +302,22 @@ spec:
               github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
               github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
               github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZKyFT7RnFTvx0rWSJrjUCg+b0tJLAt0dXHl0pdd4VVtQYGBSNiCcMMpoiyt3TZV2FJwrH+A6Bkqe3V6JBrigfXvDAdqVX5+a20EJAtHWtnN8TPCS/CY0dkRvK3F2LzD33gZ0Y8+wO3BNEIV/r0JQR5bN5oy0RkreJ3f3wBqaxcRPD7yd8KUzBaR9bgg7UBgc5sCZ0U1Xv5QR+hUw7HhC1DhXEAr1LrKawClUOP7CIFa7R2S4FE+J8FMP2MIlAl9e4BwP/IETvZUFG3ysJIGnaMOO/P0Fo/bK2NrvI/OF3bv+Uot0mYR0P4+BPeVOR6VlGUT+5mLbeHhW/aCSMPjsKq+9TEplz22Rrkj5YHhpieyoDbmIORbOfBF0wYJvWfPi/KLD2TR0QjV3xUe8Tqzp0VXgENLeVEr62OIFKUR3LPwzqnlWavmJCmHYMlC4=
+              [ssh.github.com]:443 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+              [ssh.github.com]:443 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+              [ssh.github.com]:443 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZKyFT7RnFTvx0rWSJrjUCg+b0tJLAt0dXHl0pdd4VVtQYGBSNiCcMMpoiyt3TZV2FJwrH+A6Bkqe3V6JBrigfXvDAdqVX5+a20EJAtHWtnN8TPCS/CY0dkRvK3F2LzD33gZ0Y8+wO3BNEIV/r0JQR5bN5oy0RkreJ3f3wBqaxcRPD7yd8KUzBaR9bgg7UBgc5sCZ0U1Xv5QR+hUw7HhC1DhXEAr1LrKawClUOP7CIFa7R2S4FE+J8FMP2MIlAl9e4BwP/IETvZUFG3ysJIGnaMOO/P0Fo/bK2NrvI/OF3bv+Uot0mYR0P4+BPeVOR6VlGUT+5mLbeHhW/aCSMPjsKq+9TEplz22Rrkj5YHhpieyoDbmIORbOfBF0wYJvWfPi/KLD2TR0QjV3xUe8Tqzp0VXgENLeVEr62OIFKUR3LPwzqnlWavmJCmHYMlC4=
               HOSTKEYS
+              cat > "$INIT_SSH_HOME/config" << 'SSHCONFIG'
+              Host github.com
+                HostName ssh.github.com
+                Port 443
+                User git
+                IdentitiesOnly yes
+              SSHCONFIG
+              chmod 600 "$INIT_SSH_HOME/config"
               if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
                 chown -R 0:0 "$INIT_SSH_HOME"
               fi
-              echo "    known_hosts set."
+              echo "    GitHub SSH configured through port 443."
 
               echo "==> 2. Git Repository Sync"
               REPO_DIR="/workspace/git-repo"

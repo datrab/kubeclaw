@@ -618,6 +618,11 @@ assert.match(
 );
 assert.match(
   chart,
+  /\[ssh\.github\.com\]:443 ssh-ed25519[\s\S]*Host github\.com[\s\S]*HostName ssh\.github\.com[\s\S]*Port 443[\s\S]*IdentitiesOnly yes/,
+  'GitHub SSH must use the HTTPS-compatible port because cluster egress blocks port 22',
+);
+assert.match(
+  chart,
   /CURRENT_REPO_URL="\$\(git remote get-url origin\)"[\s\S]*git remote set-url origin "\$GIT_REPO_URL"[\s\S]*git remote add origin "\$GIT_REPO_URL"/,
   'persistent workspaces must reconcile origin to the configured repository',
 );
