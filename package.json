@@ -34,7 +34,7 @@
     "verify:prism:corpus": "npm run test:corpus --prefix skills/prism",
     "verify:prism:quality": "npm run test:quality --prefix skills/prism",
     "verify:prism:pipeline": "npm run test:pipeline --prefix skills/prism",
-    "verify:prism:helm": "helm lint charts/prism --set postgresql.existingSecret=prism-postgresql-auth && helm template prism charts/prism --set postgresql.existingSecret=prism-postgresql-auth >/dev/null",
+    "verify:prism:helm": "helm lint charts/prism -f charts/prism/ci-values.yaml && helm template prism charts/prism -f charts/prism/ci-values.yaml >/dev/null",
     "verify:prism:e2e": "npm run test:e2e --prefix skills/prism",
     "verify:prism": "npm run verify:prism:spikes && npm run verify:prism:contracts && npm run verify:prism:domain && npm run verify:prism:renderer && npm run verify:prism:storage && npm run verify:prism:studio && npm run verify:prism:engine && npm run verify:prism:corpus && npm run verify:prism:quality && npm run verify:prism:pipeline && npm run verify:prism:helm && npm run verify:prism:e2e",
     "pipeline": "node skills/nova/pipeline.ts",
