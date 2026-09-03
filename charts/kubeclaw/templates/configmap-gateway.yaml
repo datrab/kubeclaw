@@ -9,8 +9,7 @@ data:
   openclaw.json: |
     {
       "meta": {
-        "lastTouchedVersion": "2026.4.5",
-        "lastTouchedAt": "2026-04-06T06:29:30.790Z"
+        "lastTouchedVersion": "2026.8.2"
       },
       "wizard": {
         "lastRunAt": "2026-03-26T19:20:27.474Z",
@@ -86,6 +85,12 @@ data:
               {{- end }}
             ]
           },
+          "modelPolicy": {
+            "allow": [
+              "openai/gpt-5.6-sol",
+              "openai/gpt-5.5"
+            ]
+          },
           "models": {
             "openai/gpt-5.6-sol": {
               "agentRuntime": {
@@ -104,20 +109,14 @@ data:
           },
           "contextPruning": {
             "mode": "cache-ttl",
-            "ttl": "2h",
-            "keepLastAssistants": 5,
-            "softTrimRatio": 0.7,
-            "hardClearRatio": 0.85
+            "ttl": "2h"
           },
           "compaction": {
             "mode": "safeguard",
-            "reserveTokens": 80000,
             "keepRecentTokens": 140000,
-            "maxHistoryShare": 0.4,
             "memoryFlush": {
               "enabled": true
-            },
-            "reserveTokensFloor": 40000
+            }
           },
           "subagents": {
             "maxConcurrent": 20,
@@ -163,9 +162,8 @@ data:
           }
         },
         "exec": {
-          "timeoutSec": 604800,
-          "security": "full",
-          "ask": "off"
+          "timeoutSeconds": 604800,
+          "mode": "full"
         },
         "agentToAgent": {
           "enabled": true
@@ -175,7 +173,6 @@ data:
         "native": "auto",
         "nativeSkills": "auto",
         "restart": true,
-        "ownerDisplay": "raw",
         "ownerAllowFrom": {{ .Values.commands.ownerAllowFrom | default list | toJson }},
         "allowFrom": {
           "discord": {{ .Values.commands.allowFromDiscord | default list | toJson }}
@@ -207,17 +204,8 @@ data:
           "streaming": {
             "mode": "partial"
           },
-          "eventQueue": {
-            "listenerTimeout": 120000
-          },
           "inboundWorker": {
             "runTimeoutMs": 43200000
-          },
-          "retry": {
-            "attempts": 3,
-            "minDelayMs": 500,
-            "maxDelayMs": 30000,
-            "jitter": 0.1
           },
           "guilds": {
             "*": {
@@ -259,11 +247,8 @@ data:
             "group:openclaw"
           ]
         },
-        "channelStaleEventThresholdMinutes": 1440,
-        "channelMaxRestartsPerHour": 3,
         "tailscale": {
-          "mode": "off",
-          "resetOnExit": false
+          "mode": "off"
         }
       },
       "plugins": {

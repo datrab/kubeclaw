@@ -505,6 +505,26 @@ assert.doesNotMatch(
 );
 assert.match(
   gatewayConfig,
+  /"exec":\s*\{\s*"timeoutSeconds":\s*604800,\s*"mode":\s*"full"\s*\}/,
+  'fresh configs must use the canonical OpenClaw 2026.8 exec policy keys',
+);
+assert.match(
+  gatewayConfig,
+  /"modelPolicy":\s*\{\s*"allow":\s*\[\s*"openai\/gpt-5\.6-sol",\s*"openai\/gpt-5\.5"\s*\]/,
+  'fresh configs must explicitly allow exactly the managed primary and fallback models',
+);
+assert.doesNotMatch(
+  gatewayConfig,
+  /"lastTouchedAt":|"timeoutSec":|"security":\s*"full"|"ask":\s*"off"|"ownerDisplay":|"eventQueue":|"retry":|"channelStaleEventThresholdMinutes":|"channelMaxRestartsPerHour":|"resetOnExit":/,
+  'fresh configs must not reintroduce OpenClaw 2026.8 legacy runtime and Discord keys after doctor repair',
+);
+assert.doesNotMatch(
+  gatewayConfig,
+  /"keepLastAssistants":|"softTrimRatio":|"hardClearRatio":|"reserveTokens":|"reserveTokensFloor":|"maxHistoryShare":/,
+  'fresh configs must not emit retired context-pruning and compaction tuning keys',
+);
+assert.match(
+  gatewayConfig,
   /"memory":\s*\{\s*"search":\s*\{[\s\S]*"provider":\s*"openai-compatible"[\s\S]*"baseUrl":\s*"\{\{ \.Values\.litellm\.endpoint \}\}"[\s\S]*"id":\s*"LITELLM_API_KEY"[\s\S]*"model":\s*"gemini-embedding-001"/,
   'memory search must use the current top-level schema and the isolated LiteLLM embedding route',
 );
@@ -585,7 +605,7 @@ assert.doesNotMatch(chart, /removedAnthropic|isAnthropicModel/,
   'provider removal must not leave a one-off Anthropic migration in the deployment');
 assert.match(
   chart,
-  /config\.plugins\.entries = initialized\.plugins\.entries[\s\S]*config\.auth = initialized\.auth[\s\S]*config\.commands = initialized\.commands[\s\S]*config\.channels\.discord = initialized\.channels\.discord[\s\S]*delete config\.models[\s\S]*config\.acp = initialized\.acp[\s\S]*synchronized managed agent model route[\s\S]*config\.agents\.entries = structuredClone\(initialized\.agents\.entries\)/,
+  /config\.plugins\.entries = initialized\.plugins\.entries[\s\S]*config\.auth = initialized\.auth[\s\S]*config\.commands = initialized\.commands[\s\S]*config\.channels\.discord = initialized\.channels\.discord[\s\S]*delete config\.models[\s\S]*config\.acp = initialized\.acp[\s\S]*synchronized managed agent model route[\s\S]*synchronized managed agent model policy[\s\S]*config\.agents\.entries = structuredClone\(initialized\.agents\.entries\)/,
   'init setup must converge managed configuration generically instead of provider-specific cleanup',
 );
 assert.doesNotMatch(

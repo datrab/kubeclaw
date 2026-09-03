@@ -492,6 +492,12 @@ spec:
                   config.agents.defaults.models = initialized.agents.defaults.models;
                   console.log('    synchronized managed agent model catalog');
                 }
+                if (initialized?.agents?.defaults?.modelPolicy) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.modelPolicy = initialized.agents.defaults.modelPolicy;
+                  console.log('    synchronized managed agent model policy');
+                }
                 if (initialized?.memory?.search) {
                   config.memory = config.memory || {};
                   config.memory.search = initialized.memory.search;

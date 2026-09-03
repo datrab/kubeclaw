@@ -16,6 +16,7 @@ The rendered config includes:
 - canonical OpenAI OAuth profiles
 - ACP enabled with backend `acpx`; `claude`, `codex`, `kimi`, `gemini`, and `pi` are allowed CLI agents while `codex` remains the default
 - uniform agent defaults using `openai/gpt-5.6-sol` with `openai/gpt-5.5` as the only fallback
+- an explicit model-policy allowlist containing exactly those two managed models
 - memory search settings with vector store enabled and LiteLLM used only as the remote embedding endpoint
 - compaction/context pruning defaults
 - tool policy for coding profile, sessions, session spawn, and full exec
@@ -72,8 +73,9 @@ process; the Gateway containers do not expose interactive stdin.
   are not additional OpenClaw agents. `agents.defaults.systemAgent` and
   `bindings` separately own system work and inbound channel routing.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
-- `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and `tools.exec.security` configure the runtime tool posture.
+- `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and the OpenClaw 2026.8 `tools.exec.mode`/`timeoutSeconds` keys configure the runtime tool posture.
 - `channels.discord.enabled`, `channels.discord.token`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values. The token is an env SecretRef to `DISCORD_TOKEN`.
+- The managed source deliberately omits retired OpenClaw tuning keys. In particular, command owner rendering now uses the built-in raw format; Discord retry/event-queue tuning and gateway health restart thresholds use built-in defaults.
 
 ## Verification
 
