@@ -159,6 +159,7 @@ const config = {
     'charts/kubeclaw/files/config/eslint.config.mjs',
     'charts/kubeclaw/files/config/eslint-type-evidence-config.mjs',
     'charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs',
+    'charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs',
     'charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs',
     'contracts/telemetry/v1/{bundle-types,telemetry-types}.ts',
   ],

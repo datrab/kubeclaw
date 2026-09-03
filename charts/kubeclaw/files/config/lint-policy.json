@@ -3,7 +3,8 @@
   "baseline_path": "lint-baseline.json",
   "experimental_tools": [
     "eslint-type-evidence-production",
-    "eslint-type-evidence-tests"
+    "eslint-type-evidence-tests",
+    "eslint-type-evidence-generated"
   ],
   "kubernetes_policy_packs": [
     {
@@ -574,6 +575,34 @@
         "**/fixtures/**/*.cjs",
         "**/fixtures/**/*.mts",
         "**/fixtures/**/*.cts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "eslint-type-evidence-generated",
+      "required": true,
+      "category": "lint",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "eslint-type-evidence-generated-config.mjs",
+      "targets": [
+        "."
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
       ],
       "exclude": []
     },

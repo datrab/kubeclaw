@@ -3,6 +3,7 @@ import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
 import { configuredTargetFilesForScope, configuredTargetPaths } from './discovery.ts';
+import { partitionEvidenceFiles } from './evidence-file-partition.ts';
 import { tryParseJson } from './parsers.ts';
 import { failConfigMissing, failParse, notApplicable } from './report.ts';
 import { log } from './output.ts';
@@ -151,6 +152,50 @@ registerTool({
 });
 
 // ── eslint (JS/TS linting) ──
+const EMPTY_ESLINT_RESULT = Object.freeze({ errors: 0, warnings: 0, findings: [] });
+const EVIDENCE_PARTITION_BY_TOOL = Object.freeze({
+  'eslint-type-evidence-production': 'production',
+  'eslint-type-evidence-tests': 'tests',
+  'eslint-type-evidence-generated': 'generatedOrUntracked',
+} as const);
+
+function evidenceFiles(ctx: any): readonly string[] {
+  const candidates = configuredTargetFilesForScope(
+    ctx,
+    (file: string) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/u.test(file),
+    ['.git/**', '.swarm/**', '**/node_modules/**'],
+  );
+  const key = EVIDENCE_PARTITION_BY_TOOL[ctx.tool.id as keyof typeof EVIDENCE_PARTITION_BY_TOOL];
+  return key ? partitionEvidenceFiles(ctx.repoRoot, candidates)[key] : [];
+}
+
+function eslintTargetFiles(ctx: any): readonly string[] {
+  if (ctx.tool.id.startsWith('eslint-type-evidence-')) return evidenceFiles(ctx);
+  if (!ctx.changedFilesRequested) return configuredTargetPaths(ctx);
+  return ctx.changedFiles
+    .filter((file: string) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/u.test(file))
+    .map((file: string) => path.join(ctx.repoRoot, file));
+}
+
+function normalizeEslintFindings(ctx: any, reports: readonly any[]): any[] {
+  const findings: any[] = [];
+  for (const report of reports) {
+    const occurrences = new Map();
+    for (const message of arrayValue(report.messages)) {
+      findings.push({
+        file: report.filePath,
+        line: message.line,
+        column: message.column,
+        severity: message.severity === 2 ? 'error' : 'warning',
+        code: selectTruthyValue(() => (message.ruleId), () => ('eslint')),
+        message: message.message,
+        fingerprint_seed: eslintFindingSeed(ctx, report, message, occurrences),
+      });
+    }
+  }
+  return findings;
+}
+
 function runEslint(ctx: any): Record<string, any> {
   const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
   const args = ['--format', 'json', '--no-error-on-unmatched-pattern', '--no-warn-ignored'];
@@ -163,42 +208,16 @@ function runEslint(ctx: any): Record<string, any> {
   log('INFO', `ESLint using config: ${config}`);
   args.push('--config', config);
 
-  if (ctx.tool.id.startsWith('eslint-type-evidence-')) {
-    const files = configuredTargetFilesForScope(
-      ctx,
-      (file: string) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/u.test(file),
-      ['.git/**', '.swarm/**', '**/node_modules/**'],
-    );
-    if (files.length === 0) return { errors: 0, warnings: 0, findings: [] };
-    args.push(...files);
-  } else if (ctx.changedFilesRequested) {
-    const jsFiles = ctx.changedFiles.filter((f: any) => /\.(js|ts|jsx|tsx|mjs|cjs|mts|cts)$/.test(f));
-    if (jsFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
-    args.push(...jsFiles.map((f: any) => path.join(ctx.repoRoot, f)));
-  } else {
-    args.push(...configuredTargetPaths(ctx));
-  }
+  const files = eslintTargetFiles(ctx);
+  if (files.length === 0) return EMPTY_ESLINT_RESULT;
+  args.push(...files);
 
   const result = requireToolExecution(safeExec('eslint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), ctx.tool.id);
   const parsed = tryParseJson(result.stdout);
   if (!parsed.ok) return failParse(ctx, ctx.tool.id, parsed, result, target);
-  log('INFO', `${ctx.tool.name}: ${arrayValue(parsed.data).length} files scanned`);
-
-  const findings: any[] = [];
-  for (const fileResult of arrayValue(parsed.data)) {
-    const occurrences = new Map();
-    for (const msg of arrayValue(fileResult.messages)) {
-      findings.push({
-        file: fileResult.filePath,
-        line: msg.line,
-        column: msg.column,
-        severity: msg.severity === 2 ? 'error' : 'warning',
-        code: selectTruthyValue(() => (msg.ruleId), () => ('eslint')),
-        message: msg.message,
-        fingerprint_seed: eslintFindingSeed(ctx, fileResult, msg, occurrences),
-      });
-    }
-  }
+  const reports = arrayValue(parsed.data);
+  log('INFO', `${ctx.tool.name}: ${reports.length} files scanned`);
+  const findings = normalizeEslintFindings(ctx, reports);
 
   return {
     errors: findings.filter((f: any) => f.severity === 'error').length,
@@ -228,6 +247,15 @@ registerTool({
 registerTool({
   id: 'eslint-type-evidence-tests',
   name: 'ESLint Type Evidence Audit (Tests)',
+  binary: 'eslint',
+  tier: 'full',
+  detect: isJavaScriptOrTypeScriptProject,
+  run: runEslint,
+});
+
+registerTool({
+  id: 'eslint-type-evidence-generated',
+  name: 'ESLint Type Evidence Audit (Generated/Untracked)',
   binary: 'eslint',
   tier: 'full',
   detect: isJavaScriptOrTypeScriptProject,

@@ -634,7 +634,7 @@ spec:
                 cp -Lf "/init-swarm-config/.tflint.hcl" "/config/.tflint.hcl"
                 echo "    .tflint.hcl written from chart source"
               fi
-              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
+              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
                 if [ -f "/init-swarm-config/$lint_config" ]; then
                   cp -Lf "/init-swarm-config/$lint_config" "/config/$lint_config"
                   echo "    $lint_config written from chart source"
@@ -665,7 +665,7 @@ spec:
               if [ -f /config/.tflint.hcl ]; then
                 cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl
               fi
-              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
+              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
                 if [ -f "/config/$lint_config" ]; then
                   cp -Lf "/config/$lint_config" "/runtime-config/$lint_config"
                 fi

@@ -8,11 +8,14 @@ const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const repoRoot = path.resolve(packageRoot, '../../../..');
 const config = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint-type-evidence-config.mjs');
 const testConfig = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs');
+const generatedConfig = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs');
 const auditConfig = (await import(pathToFileURL(config).href)).default;
 const testAuditConfig = (await import(pathToFileURL(testConfig).href)).default;
+const generatedAuditConfig = (await import(pathToFileURL(generatedConfig).href)).default;
 
 assert.deepEqual(Object.keys(auditConfig[0]), ['ignores'], 'audit exclusions must remain global flat-config ignores');
 assert.deepEqual(Object.keys(testAuditConfig[0]), ['ignores'], 'test audit exclusions must remain global flat-config ignores');
+assert.deepEqual(Object.keys(generatedAuditConfig[0]), ['ignores'], 'generated audit exclusions must remain global flat-config ignores');
 
 function lint(filename, source, selectedConfig = config) {
   const directory = fs.mkdtempSync(path.join(packageRoot, 'src/eslint-type-evidence-fixture-'));
@@ -42,6 +45,10 @@ assert.deepEqual(evidenceRules('chained.ts', 'interface User { id: string }\ndec
 assert.deepEqual(evidenceRules('single-assertion.ts', 'interface User { id: string }\ndeclare const input: unknown;\nconst user = input as User;\n'), []);
 assert.deepEqual(
   lint('chained.test.ts', 'interface User { id: string }\ndeclare const input: unknown;\nconst user = input as object as User;\n', testConfig),
+  ['type-evidence/no-chained-type-assertions'],
+);
+assert.deepEqual(
+  lint('generated.ts', 'interface User { id: string }\ndeclare const input: unknown;\nconst user = input as object as User;\n', generatedConfig),
   ['type-evidence/no-chained-type-assertions'],
 );
 

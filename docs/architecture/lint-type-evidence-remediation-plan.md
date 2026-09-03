@@ -10,11 +10,13 @@ Resolve or disposition every experimental type-evidence finding without hiding r
 
 ## Frozen inventory
 
-The exhaustive audit covers 831 eligible JavaScript and TypeScript files in two disjoint scans:
+The exhaustive audit covers 839 eligible JavaScript and TypeScript files in three disjoint scans:
 
-- Production/non-test: 496 files, 540 findings across 165 files.
+- Tracked production/non-test: 497 files, 540 findings across 165 files.
 - Tests/fixtures: 335 files, 15 findings across 8 files.
-- Combined: 831 files, 555 findings, zero overlap, zero missing files, and zero parser failures.
+- Generated or otherwise untracked: 7 files, zero findings. This scope contains
+  one tracked generated contract and six untracked generated observer files.
+- Combined: 839 files, 555 findings, zero overlap, zero missing files, and zero parser failures.
 
 Finding ledger:
 
@@ -43,11 +45,11 @@ Run batches sequentially unless their file sets are disjoint. Each batch should 
 
 ### 0. Freeze and classify the ledger
 
-- Rerun both exhaustive scans on current `origin/main`.
+- Rerun all three exhaustive scans on current `origin/main`.
 - Persist the machine-readable findings and coverage summary as CI artifacts.
 - Assign every fingerprint to exactly one batch below.
 - Record baseline counts, affected files, and rule versions.
-- Acceptance: production plus test file counts equal the eligible-file inventory; all 555 baseline findings are assigned once; parser failures are zero.
+- Acceptance: production plus test plus generated/untracked file counts equal the eligible-file inventory; all 555 baseline findings are assigned once; parser failures are zero.
 
 ### 1–4. Review-plugin unsafe assertions — 201 findings
 
@@ -133,7 +135,7 @@ Replace `object` with the smallest named structural contract. For third-party co
 2. Inspect the real producer, consumer, and runtime boundary for each finding.
 3. Make the smallest ownership-correct change.
 4. Add or update focused positive and negative tests.
-5. Run the affected package test, TypeScript build, blocking ESLint, and both experimental scans.
+5. Run the affected package test, TypeScript build, blocking ESLint, and all three experimental scans.
 6. Prove assigned fingerprints are terminally dispositioned and no new fingerprints appeared.
 7. Run Autoreview on the batch commit and verify every proposed finding against the code.
 8. Record before/after counts and dispositions in the remediation ledger.
@@ -141,7 +143,7 @@ Replace `object` with the smallest named structural contract. For third-party co
 ## Final completion criteria
 
 - All 555 initial fingerprints have exactly one terminal disposition.
-- Both production and test scans remain exhaustive, disjoint, and parser-clean.
+- Production, test, and generated/untracked scans remain exhaustive, disjoint, and parser-clean.
 - Active findings are zero, or every remaining approved boundary is represented by an auditable, unsuppressible structured record.
 - No new blocking-lint debt is introduced.
 - Complete package, TypeScript, generated-config, Helm, and plugin verification passes.
