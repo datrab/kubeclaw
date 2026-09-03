@@ -421,6 +421,11 @@ try {
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'agents_wait')
       .every((entry) => JSON.parse(entry.body).idempotencyKey === undefined), true);
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 1);
+    assert.deepEqual(
+      JSON.parse(received.find((entry) => JSON.parse(entry.body).tool === 'sessions_history')!.body).args,
+      { sessionKey: 'session:gateway-test', limit: 1, includeTools: false },
+      'result recovery must request only the terminal message so a large task prompt cannot overflow history output',
+    );
     const recoveredGateway = await gatewayAdapters.invoke(
       'runtime.dispatch',
       { ...attempt, attemptId: 'attempt:test:retry', attemptNumber: 2 },

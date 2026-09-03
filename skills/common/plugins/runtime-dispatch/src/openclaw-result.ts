@@ -84,7 +84,7 @@ async function localResult(context: AdapterActivationContext, target: OpenClawTa
   } catch (error) {
     if (!(error instanceof Error) || !error.message.includes('REPOSITORY_FILE_NOT_FOUND')) throw error;
     const history = await gateway(context, target, token, 'sessions_history',
-      { sessionKey: key, limit: 20, includeTools: false });
+      { sessionKey: key, limit: 1, includeTools: false });
     const content = terminalAssistantText(history);
     parseJsonText(content);
     persistResult(target.repositoryRoot, relative, content);
