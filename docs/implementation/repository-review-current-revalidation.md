@@ -121,6 +121,18 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 |---|---|---:|---|---|---|---|
 | N01 | accepted/current | P2 | Dockerfile.buster-gateway | security-trust | The old O10 root cause survives in the sibling image: `npm install -g ioredis@5.11.1` resolves outside the copied lockfile, although Dockerfile.general is fixed. | Docker/deployment contract plus Dockerfile source trace |
 
+## Accepted P1/P2 remediation status
+
+All three accepted P1 findings and all twenty-seven accepted P2 findings have been implemented on isolated, pushed branches. Every logical fix has a regression test, focused package/contract validation, and a clean exact-diff Auto Review. The combined branch is `remediation/accepted-p1-p2` at `0c359db36`; its complete branch-level Auto Review against frozen base `2c7f52f124b429876feff55965950f36fc3cc9e5` is clean.
+
+- P1: `C24` `87fb775de`; `C25` `63c0149b3`; `C30` `a01e850d8`.
+- Security/trust P2: `N01` `d3aef578e`; `C13` `e9e4db21c`; `C12` `91de0da78`; `C40` `a002b5d5b`; `C35` `d9c32b4c9` + ownership follow-up `a734f48ab`.
+- State/recovery P2: `C05` `6ccfb1816`; `C26` `9a9a7aca5`; `C07` `5302af907`; `C28` `114221ece`; `C31` `c6f4b7151`, receipt clarification `ceeff4771`, and immutable-decision follow-up `fcf6bf019`.
+- Contracts/data P2: `C04` `f1c6062ad`; `C10` `17c1d28f4`; `C11` `bcd6484bf`; `C20` `f7274db1d`; `C32` `debf825d0`; `C22` `2adc77e7f`; `C42` `49e853140`; `C14` `aa6b1826e`.
+- Deployment/operations P2: `C03` `73bee952f`; `C06` `e3cbe6af8`; `C15` `433851068`; `C17` `88816566c`; `C29` `f6f47d0fe`; `C41` `614219fa7`; `C38` `5c37bb96e`; `C21` `74bdc4dab` + volume-source hardening `1cd04f790`; `O04` `702488bda` + external-HTTP credential hardening `5ba09fc0d`.
+
+The combined integration also catalogs the new Tailscale rollback failure code (`5709b3941`). Rejected findings `C02`, `C18`, `C19`, `C36`, and `C37` remain closed with the evidence above. `C34` remains outside the fix queue pending the specified lifecycle reproduction. P3 simplifications remain a separate backlog.
+
 ## Remediation order
 
 1. P1 command isolation contract (`C24`).
