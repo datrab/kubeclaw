@@ -142,13 +142,8 @@ function checkStatus() {
       }
     }
   }
-  const bridge = readJson('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json');
-  for (const suite of status.suites) {
-    const legacy = bridge.suites[suite.id];
-    if (!legacy) errors.push(`legacy bridge is missing ${suite.id}`);
-    else if ((suite.sourceCutover ?? suite.cutover) === 'complete' && legacy.state !== 'migrated') errors.push(`${suite.id}: source cutover is complete but bridge is not migrated`);
-    else if ((suite.sourceCutover ?? suite.cutover) !== 'complete' && legacy.state !== 'unmigrated') errors.push(`${suite.id}: bridge migrated before source cutover`);
-    if (legacy?.successor !== suite.successor) errors.push(`${suite.id}: successor differs between status and bridge`);
+  if (exists('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json')) {
+    errors.push('retired legacy suite bridge still exists');
   }
 }
 

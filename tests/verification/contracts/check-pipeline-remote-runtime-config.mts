@@ -31,7 +31,6 @@ try {
     sourceAttestationPrivateKeyEnvironmentVariable: sourcePrivateKeyName,
     sourceAuthority: 'nova:production',
     stateRoot: './nova-state',
-    legacyLedgerPath: path.join(root, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
     pollMilliseconds: 10, maximumResponseBytes: 1024 * 1024,
     maximumResultBytes: 16 * 1024 * 1024,
     maximumArchiveBytes: 1024 * 1024, maximumArchiveStoreBytes: 4 * 1024 * 1024,
@@ -40,6 +39,12 @@ try {
   }));
   assert.ok(loadProductionNovaTestGate(novaConfig,
     { [tokenName]: token, [sourcePrivateKeyName]: sourceAttestationPrivateKey }) instanceof ProductionNovaTestGate);
+  const validNovaConfig = JSON.parse(fs.readFileSync(novaConfig, 'utf8'));
+  fs.writeFileSync(novaConfig, JSON.stringify({ ...validNovaConfig, legacyLedgerPath: './retired.json' }));
+  assert.throws(() => loadProductionNovaTestGate(novaConfig,
+    { [tokenName]: token, [sourcePrivateKeyName]: sourceAttestationPrivateKey }),
+  /NOVA_REMOTE_CONFIG_INVALID:root\.legacyLedgerPath/u);
+  fs.writeFileSync(novaConfig, JSON.stringify(validNovaConfig));
   assert.throws(() => loadProductionNovaTestGate(novaConfig, {}), /NOVA_REMOTE_CONFIG_TOKEN_MISSING/u);
   assert.throws(() => loadProductionNovaTestGate(novaConfig, { [tokenName]: token }),
     /NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_MISSING/u);
@@ -50,7 +55,6 @@ try {
     schemaVersion: 'nova-remote-test-gate-runtime.v1', endpoint: 'http://buster.internal',
     tokenEnvironmentVariable: tokenName, sourceAttestationPrivateKeyEnvironmentVariable: sourcePrivateKeyName,
     sourceAuthority: 'nova:production', stateRoot: './nova-state',
-    legacyLedgerPath: path.join(root, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
     pollMilliseconds: 10, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumArchiveBytes: 1024 * 1024, maximumArchiveStoreBytes: 4 * 1024 * 1024,
     maximumEvidenceBytes: 1024 * 1024, maximumEvidenceStoreBytes: 4 * 1024 * 1024, recordLimits: records,

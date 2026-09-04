@@ -475,7 +475,6 @@ async function main(): Promise<void> {
         sourceAuthority: 'nova:production',
         stateRoot: path.join(stateRoot, 'provider-gates'),
         allowedRepositoryRoots: [repo],
-        legacyLedgerPath: path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
       },
       'kubeclaw.command-runner:command': {
         allowedExecutables: [process.execPath],

@@ -63,10 +63,10 @@ try {
       token, sourceAuthority: 'nova:production', sourceAttestationPrivateKey: privateKey, pollMilliseconds: 10,
       maximumResponseBytes: 64 * 1024, maximumResultBytes: 64 * 1024 * 1024, maximumArchiveBytes: 8 * 1024 * 1024,
       maximumArchiveStoreBytes: 32 * 1024 * 1024, maximumEvidenceBytes: 64 * 1024 * 1024,
-      maximumEvidenceStoreBytes: 128 * 1024 * 1024, recordLimits: records, legacyLedger: {} });
+      maximumEvidenceStoreBytes: 128 * 1024 * 1024, recordLimits: records });
     const executed = await gate.execute({ idempotencyKey: 'lighthouse:remote:vertical', pipelineStageId: 'stage:lighthouse', plan,
       repositoryRoot: repository, repositoryId: 'repository:lighthouse', maximumConcurrency: 1,
-      grants: new Map([['seo', ['browser.lighthouse']]]), submittedAt: '2026-09-03T00:00:00.000Z', timeoutMs: 240_000, legacySuites: [] });
+      grants: new Map([['seo', ['browser.lighthouse']]]), submittedAt: '2026-09-03T00:00:00.000Z', timeoutMs: 240_000 });
     assert.equal(executed.remote.status.state, 'completed'); assert.equal(executed.remote.decision.state, 'passed');
     const reference = executed.remote.status.result!;
     const result = JSON.parse((await service.result(executed.remote.status.jobId, reference.contentDigest, reference.sizeBytes)).toString('utf8'));

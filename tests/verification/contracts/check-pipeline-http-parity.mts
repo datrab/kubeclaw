@@ -4,7 +4,6 @@ import fs from 'node:fs';
 import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { NetworkHttpCapabilityInvoker, TestPlanRunner } from '@kubeclaw/buster-engine';
 
@@ -57,25 +56,7 @@ async function replacement(pathname: string, options: { retries?: number; expect
 
 try {
   const legacyPath = path.resolve('skills/buster/plugins/buster-suite-runtime/src/runtime/suites/health.ts');
-  const healthSuite = fs.existsSync(legacyPath) ? (await import(pathToFileURL(legacyPath).href)).default : null;
-  if (healthSuite) {
-    const legacyRetry = await healthSuite({ config: { serve: { port: address.port, health_path: '/legacy/retry',
-      health_retries: 3, health_base_delay: 1, health_timeout: 1_000 } } });
-    assert.equal(legacyRetry.status, 'PASS');
-    assert.equal(legacyRetry.metadata?.attempts, 3);
-    const legacyFailure = await healthSuite({ config: { serve: { port: address.port, health_path: '/legacy/failure',
-      health_retries: 1, health_base_delay: 1, health_timeout: 1_000 } } });
-    assert.equal(legacyFailure.status, 'FAIL');
-    const legacyText = await healthSuite({ config: { serve: { port: address.port, health_path: '/legacy/text',
-      smoke_paths: ['/legacy/text'], smoke_expected_text: { '/legacy/text': 'ready' }, health_retries: 1 } } });
-    assert.equal(legacyText.status, 'PASS');
-    const legacyInvalid = await healthSuite({ config: { serve: { health_path: 'relative' } } });
-    assert.equal(legacyInvalid.status, 'ERROR');
-    assert.equal(counters.get('/legacy/retry'), 3);
-  } else {
-    const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-    assert.equal(bridge.suites.health.state, 'migrated');
-  }
+  assert.equal(fs.existsSync(legacyPath), false);
   const providerRetry = await replacement('/provider/retry', { retries: 2 });
   assert.equal(providerRetry.nodes[0].outcome, 'passed');
   assert.equal(providerRetry.attempts.length, 3);
@@ -99,4 +80,4 @@ assert.deepEqual(ledger.authority, ledger.cutover?.status === 'complete'
   ? { old: 'deleted', replacement: 'authoritative' }
   : { old: 'authoritative', replacement: 'shadow-only' });
 console.log(JSON.stringify({ ok: true, phase: 'http-parity', items: 50, realHttp: true,
-  legacyAttempts: 3, replacementAttempts: 3, mocks: 0, wrappers: 0 }));
+  replacementAttempts: 3, mocks: 0, wrappers: 0 }));

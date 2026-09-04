@@ -44,7 +44,6 @@ export function toBusterPlan(input: BaselineHandoff) {
       },
       viewport: viewport[target.viewport],
     })),
-    legacySuites: ["a11y", "e2e"],
   };
 }
 

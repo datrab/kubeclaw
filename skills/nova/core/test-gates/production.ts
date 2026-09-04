@@ -2,8 +2,6 @@ import path from 'node:path';
 import { assertSecureRemoteEndpoint } from './secure-endpoint.ts';
 import type { ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { DurableRecordLimits } from '@kubeclaw/plugin-foundation/observability/durable-records';
-import { assertLegacyBridgeSelection, NovaTestGateAuthorityRouter,
-  type LegacySuiteMigrationLedger } from './legacy-bridge.ts';
 import {
   createRemotePlanJob,
   FileNovaRemotePlanStore,
@@ -33,10 +31,9 @@ export interface ProductionNovaTestGateOptions {
   readonly maximumEvidenceBytes: number;
   readonly maximumEvidenceStoreBytes: number;
   readonly recordLimits: DurableRecordLimits;
-  readonly legacyLedger: LegacySuiteMigrationLedger;
 }
 
-export interface ProductionNovaTestGateExecutionInput<T> {
+export interface ProductionNovaTestGateExecutionInput {
   readonly idempotencyKey: string;
   readonly pipelineStageId: string;
   readonly plan: ResolvedTestPlanV1;
@@ -48,27 +45,21 @@ export interface ProductionNovaTestGateExecutionInput<T> {
   readonly submittedAt: string;
   readonly timeoutMs: number;
   readonly signal?: AbortSignal;
-  readonly legacySuites?: readonly string[];
-  readonly runLegacy?: () => Promise<T>;
 }
 
 export class ProductionNovaTestGate {
-  readonly #router: NovaTestGateAuthorityRouter;
+  readonly #remote: NovaRemoteTestGate;
   readonly #sourceAuthority: string;
   readonly #sourceAttestationPrivateKey: string | Buffer;
   readonly #maximumArchiveBytes: number;
-  readonly #legacyLedger: LegacySuiteMigrationLedger;
-  constructor(options: { router: NovaTestGateAuthorityRouter; sourceAuthority: string;
-    sourceAttestationPrivateKey: string | Buffer; maximumArchiveBytes: number; legacyLedger: LegacySuiteMigrationLedger }) {
-    this.#router = options.router;
+  constructor(options: { remote: NovaRemoteTestGate; sourceAuthority: string;
+    sourceAttestationPrivateKey: string | Buffer; maximumArchiveBytes: number }) {
+    this.#remote = options.remote;
     this.#sourceAuthority = options.sourceAuthority;
     this.#sourceAttestationPrivateKey = options.sourceAttestationPrivateKey;
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
-    this.#legacyLedger = options.legacyLedger;
   }
-  async execute<T>(input: ProductionNovaTestGateExecutionInput<T>) {
-    const legacySuites = input.legacySuites ?? [];
-    assertLegacyBridgeSelection(input.plan, legacySuites, this.#legacyLedger);
+  async execute(input: ProductionNovaTestGateExecutionInput) {
     const source = buildCommittedSourceSnapshot({ repositoryRoot: input.repositoryRoot,
       repositoryId: input.repositoryId, pipelineStageId: input.pipelineStageId,
       creatorAuthority: this.#sourceAuthority,
@@ -79,9 +70,9 @@ export class ProductionNovaTestGate {
       pipelineStageId: input.pipelineStageId, plan: input.plan, sourceSnapshot: source.sourceSnapshot,
       repositoryArchive: source.repositoryArchive, grants: input.grants,
       maximumConcurrency: input.maximumConcurrency, submittedAt: input.submittedAt });
-    return this.#router.execute({ job, timeoutMs: input.timeoutMs, legacySuites,
-      ...(input.signal ? { signal: input.signal } : {}),
-      ...(input.runLegacy ? { runLegacy: input.runLegacy } : {}) });
+    const result = await this.#remote.execute(job, { timeoutMs: input.timeoutMs,
+      ...(input.signal ? { signal: input.signal } : {}) });
+    return { remote: result } as const;
   }
 }
 
@@ -123,13 +114,8 @@ export function createProductionNovaTestGate(
     maximumEvidenceBytes: options.maximumEvidenceBytes,
     maximumResultBytes: options.maximumResultBytes,
   });
-  const remote = new NovaRemoteTestGate({
-    dispatcher,
-    importer,
-    legacyLedger: options.legacyLedger,
-  });
-  const router = new NovaTestGateAuthorityRouter({ remote, ledger: options.legacyLedger });
-  return new ProductionNovaTestGate({ router, sourceAuthority: options.sourceAuthority,
+  const remote = new NovaRemoteTestGate({ dispatcher, importer });
+  return new ProductionNovaTestGate({ remote, sourceAuthority: options.sourceAuthority,
     sourceAttestationPrivateKey: options.sourceAttestationPrivateKey,
-    maximumArchiveBytes: options.maximumArchiveBytes, legacyLedger: options.legacyLedger });
+    maximumArchiveBytes: options.maximumArchiveBytes });
 }

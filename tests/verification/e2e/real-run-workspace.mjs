@@ -11,7 +11,7 @@ import {
   realE2EScenarioModuleIds,
   validateRealE2EScenarioSetup,
 } from './failure-scenarios.mjs';
-import { expandSwarmConfig } from '../../../skills/buster/plugins/buster-suite-runtime/common/pipeline/platform-config.ts';
+import { expandSwarmConfig } from './support/platform-config.ts';
 
 const execFileAsync = promisify(execFile);
 

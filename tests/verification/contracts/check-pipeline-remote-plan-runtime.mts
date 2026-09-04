@@ -296,8 +296,7 @@ try {
       maximumBytes: 16 * 1024 * 1024, maximumRecordBytes: 8 * 1024 * 1024 },
       maximumEvidenceStoreBytes: 16 * 1024 * 1024 }), evidence: transport, results: transport,
     maximumEvidenceBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024 });
-  const connected = await new NovaRemoteTestGate({ dispatcher: evidenceDispatcher, importer: evidenceImporter,
-    legacyLedger: {} }).execute(evidenceJob, { timeoutMs: 5_000, legacySuites: [] });
+  const connected = await new NovaRemoteTestGate({ dispatcher: evidenceDispatcher, importer: evidenceImporter }).execute(evidenceJob, { timeoutMs: 5_000 });
   assert.equal(connected.stageResult.outcome, 'passed', 'real HTTP evidence must be stored before gate success');
 
   const smallStatusTransport = new HttpRemotePlanTransport({ endpoint: `http://127.0.0.1:${port}`,

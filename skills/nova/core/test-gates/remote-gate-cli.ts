@@ -31,7 +31,7 @@ try {
   }
   const gate = loadProductionNovaTestGate(args.config);
   const result = await gate.execute({ ...request, grants: new Map(Object.entries(request.grants)),
-    timeoutMs: args.timeoutMs, legacySuites: [] });
+    timeoutMs: args.timeoutMs });
   process.stdout.write(`${JSON.stringify(result)}\n`);
   process.exitCode = result.remote.stageResult.outcome === 'passed' ? 0 : 1;
 } catch (error) {

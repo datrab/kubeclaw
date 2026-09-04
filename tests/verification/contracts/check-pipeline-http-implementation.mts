@@ -67,7 +67,4 @@ try {
   fs.rmSync(root, { recursive: true, force: true });
 } finally { await new Promise<void>((resolve) => server.close(() => resolve())); }
 
-const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-assert.match(bridge.suites.health.state, /^(?:unmigrated|migrated)$/u);
-assert.equal(bridge.suites.health.successor, 'kubeclaw.http@1');
 console.log(JSON.stringify({ ok: true, phase: 'http-implementation', realHttp: true, capability: 'network.http', mocks: 0, wrappers: 0 }));

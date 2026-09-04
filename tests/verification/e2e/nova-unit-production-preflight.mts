@@ -83,11 +83,11 @@ try {
     maximumArchiveStoreBytes: 32 * 1024 * 1024, maximumEvidenceBytes: 8 * 1024 * 1024,
     maximumEvidenceStoreBytes: 32 * 1024 * 1024,
     recordLimits: { maximumRecords: 100, maximumBytes: 32 * 1024 * 1024,
-      maximumRecordBytes: 8 * 1024 * 1024 }, legacyLedger: {} });
+      maximumRecordBytes: 8 * 1024 * 1024 } });
   const result = await nova.execute({ idempotencyKey: `unit:${crypto.randomUUID()}`,
     pipelineStageId: 'stage:unit-preflight', plan, repositoryRoot: fixture,
     repositoryId: 'repository:unit-preflight', grants: new Map(plan.nodes.map((node) => [node.id, ['command.execute']])),
-    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 120_000, legacySuites: [] });
+    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 120_000 });
   if (result.remote.decision.state !== 'passed' || result.remote.status.state !== 'completed') {
     throw new Error(`UNIT_PREFLIGHT_FAILED:${JSON.stringify(result.remote)}`);
   }

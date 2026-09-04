@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'; import fs from 'node:fs';
 const inventory=JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-e2e-cutover-inventory.json','utf8'));
-for(const file of inventory.legacyFilesToDelete)assert.equal(fs.existsSync(file),false,`legacy file remains: ${file}`); for(const file of inventory.replacementFilesRequired)assert.equal(fs.existsSync(file),true,`replacement missing: ${file}`); for(const check of inventory.requiredAbsence)assert.equal(fs.readFileSync(check.file,'utf8').includes(check.token),false,`legacy token remains: ${check.file}`);
-const bridge=JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json','utf8'));assert.equal(bridge.suites.e2e.state,'migrated');
+for(const file of inventory.legacyFilesToDelete)assert.equal(fs.existsSync(file),false,`legacy file remains: ${file}`); for(const file of inventory.replacementFilesRequired)assert.equal(fs.existsSync(file),true,`replacement missing: ${file}`); for(const check of inventory.requiredAbsence)if(fs.existsSync(check.file))assert.equal(fs.readFileSync(check.file,'utf8').includes(check.token),false,`legacy token remains: ${check.file}`);
+assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),false);assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'),false);
 const scaffold=fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts','utf8');assert.match(scaffold,/LEGACY_E2E_CONFIGURATION_RETIRED/u);
 const workspace=fs.readFileSync('tests/verification/e2e/real-run-workspace.mjs','utf8');assert.match(workspace,/uses: 'kubeclaw\.playwright@1'/u);
 assert.match(workspace,/kubeclaw\/e2e-target: "true"/u);assert.match(workspace,/servicePort: 18080/u);

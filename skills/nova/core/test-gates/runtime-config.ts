@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { assertSecureRemoteEndpoint } from './secure-endpoint.ts';
-import type { LegacySuiteMigrationLedger } from './legacy-bridge.ts';
 import { createProductionNovaTestGate, type ProductionNovaTestGate } from './production.ts';
 
 function object(value: unknown, label: string): Record<string, unknown> {
@@ -15,6 +14,12 @@ function integer(value: unknown, label: string, minimum = 1): number {
   return value as number;
 }
 
+function assertKnownKeys(value: Record<string, unknown>, allowed: readonly string[], label: string): void {
+  const allowedKeys = new Set(allowed);
+  const unknown = Object.keys(value).find((key) => !allowedKeys.has(key));
+  if (unknown) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${label}.${unknown}`);
+}
+
 export function loadProductionNovaTestGate(
   file: string,
   environment: Readonly<Record<string, string | undefined>> = process.env,
@@ -22,9 +27,13 @@ export function loadProductionNovaTestGate(
   const canonical = fs.realpathSync(file);
   const directory = path.dirname(canonical);
   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
+  assertKnownKeys(value, ['schemaVersion', 'endpoint', 'authentication', 'tokenEnvironmentVariable',
+    'sourceAttestationPrivateKeyEnvironmentVariable', 'sourceAuthority', 'stateRoot', 'pollMilliseconds',
+    'maximumResponseBytes', 'maximumResultBytes', 'maximumArchiveBytes', 'maximumArchiveStoreBytes',
+    'maximumEvidenceBytes', 'maximumEvidenceStoreBytes', 'recordLimits'], 'root');
   if (value.schemaVersion !== 'nova-remote-test-gate-runtime.v1') throw new Error('NOVA_REMOTE_CONFIG_VERSION_INVALID');
   for (const name of ['endpoint', 'sourceAttestationPrivateKeyEnvironmentVariable',
-    'sourceAuthority', 'stateRoot', 'legacyLedgerPath']) {
+    'sourceAuthority', 'stateRoot']) {
     if (typeof value[name] !== 'string' || value[name].length === 0) throw new Error(`NOVA_REMOTE_CONFIG_INVALID:${name}`);
   }
   const authentication = value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
@@ -50,18 +59,8 @@ export function loadProductionNovaTestGate(
   catch (error) { throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID', { cause: error }); }
   if (parsedSourceKey.asymmetricKeyType !== 'ed25519') throw new Error('NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID');
   const endpoint = assertSecureRemoteEndpoint(value.endpoint as string);
-  const ledgerPath = path.resolve(directory, value.legacyLedgerPath as string);
-  const ledgerSource = object(JSON.parse(fs.readFileSync(fs.realpathSync(ledgerPath), 'utf8')), 'legacyLedger');
-  const ledgerEntries = object(ledgerSource.suites, 'legacyLedger.suites');
-  const ledger: Record<string, { state: 'unmigrated' | 'migrated'; successor: string }> = {};
-  for (const [suite, entrySource] of Object.entries(ledgerEntries)) {
-    const entry = object(entrySource, `legacyLedger.suites.${suite}`);
-    if (!['unmigrated', 'migrated'].includes(String(entry.state)) || typeof entry.successor !== 'string' || entry.successor.length === 0) {
-      throw new Error(`NOVA_REMOTE_CONFIG_INVALID:legacyLedger.suites.${suite}`);
-    }
-    ledger[suite] = { state: entry.state as 'unmigrated' | 'migrated', successor: entry.successor };
-  }
   const records = object(value.recordLimits, 'recordLimits');
+  assertKnownKeys(records, ['maximumRecords', 'maximumBytes', 'maximumRecordBytes'], 'recordLimits');
   return createProductionNovaTestGate({
     endpoint: endpoint.href,
     ...(token ? { token } : {}),
@@ -69,7 +68,6 @@ export function loadProductionNovaTestGate(
     sourceAuthority: value.sourceAuthority as string,
     sourceAttestationPrivateKey: parsedSourceKey.export({ type: 'pkcs8', format: 'pem' }),
     stateRoot: path.resolve(directory, value.stateRoot as string),
-    legacyLedger: ledger as LegacySuiteMigrationLedger,
     pollMilliseconds: integer(value.pollMilliseconds, 'pollMilliseconds', 10),
     maximumResponseBytes: integer(value.maximumResponseBytes, 'maximumResponseBytes'),
     maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),

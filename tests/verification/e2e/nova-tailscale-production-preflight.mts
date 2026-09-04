@@ -170,11 +170,11 @@ try {
     maximumArchiveStoreBytes: 64 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,
     maximumEvidenceStoreBytes: 64 * 1024 * 1024,
     recordLimits: { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024,
-      maximumRecordBytes: 32 * 1024 * 1024 }, legacyLedger: {} });
+      maximumRecordBytes: 32 * 1024 * 1024 } });
   const result = await nova.execute({ idempotencyKey: `tailscale:${crypto.randomUUID()}`,
     pipelineStageId: 'stage:tailscale-preflight', plan, repositoryRoot: fixture,
     repositoryId: 'repository:tailscale-preflight', grants, maximumConcurrency: 1,
-    submittedAt: new Date().toISOString(), timeoutMs: 720_000, legacySuites: [] });
+    submittedAt: new Date().toISOString(), timeoutMs: 720_000 });
   assert.equal(result.remote.status.state, 'completed');
   assert.equal(result.remote.decision.state, 'passed');
   assert.deepEqual(result.remote.decision.nodes.map((node) => [node.nodeId, node.effect]).sort(), [

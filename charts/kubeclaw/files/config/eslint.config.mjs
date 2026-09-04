@@ -25,8 +25,6 @@ const TEST_FILES = [
 
 const CONSOLE_BOUNDARIES = [
   'scripts/**/*.mjs',
-  'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts',
-  'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
   'skills/common/plugin-runtime/foundation/isolation/child.mjs',
   'skills/nova/core/cli.ts',
   'skills/nova/plugins/lint/src/engine/output.ts',
@@ -38,11 +36,6 @@ const ENVIRONMENT_BOUNDARIES = [
   'scripts/verify-all-skill-tests.mjs',
   'scripts/verify-plugin-live-capabilities.mjs',
   'scripts/verify-plugin-packages.mjs',
-  'skills/buster/plugins/buster-suite-runtime/common/pipeline/runtime-environment.ts',
-  'skills/buster/plugins/buster-suite-runtime/src/runtime/buster-environment.ts',
-  'skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts',
-  'skills/buster/plugins/buster-suite-runtime/src/worker.ts',
-  'skills/buster/plugins/buster-suite-runtime/src/worker-context.ts',
   'skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs',
   'skills/common/plugin-runtime/foundation/registry/import-audit.ts',
   'skills/common/plugins/openclaw-agent-observer/src/config.ts',
@@ -52,7 +45,6 @@ const ENVIRONMENT_BOUNDARIES = [
 ];
 
 const DYNAMIC_MODULE_BOUNDARIES = [
-  'skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts',
   'skills/nova/pipeline.ts',
   'skills/common/plugin-runtime/foundation/isolation/child.mjs',
   'skills/common/plugin-runtime/foundation/isolation/runner.ts',

@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { createProductionNovaTestGate, type LegacySuiteMigrationLedger } from '@kubeclaw/nova-core';
+import { createProductionNovaTestGate } from '@kubeclaw/nova-core';
 import { validatePipelineTestGateContract, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { AdapterActivationContext, AdapterInstance, AdapterInvocation } from '@kubeclaw/plugin-sdk';
 
@@ -49,22 +49,11 @@ function parseConfig(context: AdapterActivationContext) {
   const stateRoot = path.resolve(string(context.config.stateRoot, 'REMOTE_TEST_GATE_CONFIG_INVALID'));
   const roots = (context.config.allowedRepositoryRoots as unknown[]).map((root) => canonicalDirectory(root,
     'REMOTE_TEST_GATE_CONFIG_INVALID'));
-  const ledgerPath = path.resolve(string(context.config.legacyLedgerPath, 'REMOTE_TEST_GATE_CONFIG_INVALID'));
-  const ledgerDocument = JSON.parse(fs.readFileSync(ledgerPath, 'utf8')) as { suites?: Record<string, { state?: unknown; successor?: unknown }> };
-  if (!ledgerDocument.suites) throw new Error('REMOTE_TEST_GATE_LEDGER_INVALID');
-  const ledger: Record<string, { state: 'migrated' | 'unmigrated'; successor: string }> = {};
-  for (const [suite, entry] of Object.entries(ledgerDocument.suites)) {
-    if (!['migrated', 'unmigrated'].includes(String(entry.state))
-      || typeof entry.successor !== 'string' || entry.successor.length === 0) {
-      throw new Error('REMOTE_TEST_GATE_LEDGER_INVALID');
-    }
-    ledger[suite] = { state: entry.state as 'migrated' | 'unmigrated', successor: entry.successor };
-  }
   const authentication = context.config.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
   if (authentication === 'spiffe-proxy' && !['127.0.0.1', 'localhost', '::1'].includes(endpoint.hostname)) {
     throw new Error('REMOTE_TEST_GATE_SPIFFE_PROXY_NOT_LOOPBACK');
   }
-  return Object.freeze({ endpoint: endpoint.href, stateRoot, roots, ledger: ledger as LegacySuiteMigrationLedger,
+  return Object.freeze({ endpoint: endpoint.href, stateRoot, roots,
     authentication,
     tokenSecret: authentication === 'bearer'
       ? string(context.config.tokenSecret, 'REMOTE_TEST_GATE_CONFIG_INVALID') : undefined,
@@ -92,15 +81,14 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
     maximumArchiveStoreBytes: 1024 * 1024 * 1024, maximumEvidenceBytes: 64 * 1024 * 1024,
     maximumEvidenceStoreBytes: 1024 * 1024 * 1024,
     recordLimits: { maximumRecords: 10_000, maximumBytes: 1024 * 1024 * 1024,
-      maximumRecordBytes: 64 * 1024 * 1024 }, legacyLedger: config.ledger });
+      maximumRecordBytes: 64 * 1024 * 1024 } });
   const result = await gate.execute({ idempotencyKey: request.idempotencyKey,
     pipelineStageId: plan.planId, plan, repositoryRoot,
     repositoryId: string(request.payload.repositoryId, 'REMOTE_TEST_GATE_REPOSITORY_ID_INVALID'),
     grants: grants(request.payload.grants, plan),
     maximumConcurrency: positiveInteger(request.payload.maximumConcurrency, 64, 'REMOTE_TEST_GATE_CONCURRENCY_INVALID'),
     submittedAt: string(request.payload.submittedAt, 'REMOTE_TEST_GATE_SUBMITTED_AT_INVALID'),
-    timeoutMs: positiveInteger(request.payload.timeoutMs, 7_200_000, 'REMOTE_TEST_GATE_TIMEOUT_INVALID'),
-    signal, legacySuites: [] });
+    timeoutMs: positiveInteger(request.payload.timeoutMs, 7_200_000, 'REMOTE_TEST_GATE_TIMEOUT_INVALID'), signal });
   const reference = result.remote.status.result;
   if (!reference) throw new Error('REMOTE_TEST_GATE_RESULT_MISSING');
   return Object.freeze({ schemaVersion: 'test-plan-receipt.v1', provider: 'buster-plan-v1',

@@ -9,7 +9,6 @@ import {
   createProductionNovaTestGate,
   discoverPackages,
   resolveTestPlan,
-  runLegacyAuthoritativeShadowComparison,
 } from '@kubeclaw/nova-core';
 import { BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
 
@@ -80,24 +79,15 @@ test.skip('real skip', () => {});
       maximumResponseBytes: 64 * 1024, maximumResultBytes: 16 * 1024 * 1024,
       maximumArchiveBytes: 8 * 1024 * 1024, maximumArchiveStoreBytes: 32 * 1024 * 1024,
       maximumEvidenceBytes: 16 * 1024 * 1024, maximumEvidenceStoreBytes: 64 * 1024 * 1024,
-      recordLimits: records, legacyLedger: {} });
-    const comparison = await runLegacyAuthoritativeShadowComparison({
-      shadowTimeoutMs: 60_000,
-      runLegacy: async () => ({ state: 'passed', source: 'legacy-unit', authoritative: true }),
-      runShadow: async (signal) => gate.execute({ idempotencyKey: 'phase9:vertical', pipelineStageId: 'stage:unit-shadow', plan,
-        repositoryRoot: repository, repositoryId: 'repository:phase9', maximumConcurrency: 1,
-        grants: new Map([['unit/node', ['command.execute']]]), submittedAt: '2026-08-12T20:30:00.000Z',
-        timeoutMs: 60_000, signal, legacySuites: [] }),
-    });
-    assert.equal(comparison.authority, 'legacy');
-    assert.equal(comparison.gateResult, comparison.legacy);
-    assert.equal(comparison.shadow.status, 'deferred');
-    const shadow = await comparison.collectShadow();
-    if (shadow.status !== 'completed') throw new Error('PHASE9_SHADOW_UNEXPECTED_FAILURE');
-    const reference = shadow.result.remote.status.result!;
-    const result: any = JSON.parse((await service.result(shadow.result.remote.status.jobId,
+      recordLimits: records });
+    const executed = await gate.execute({ idempotencyKey: 'phase9:vertical', pipelineStageId: 'stage:unit', plan,
+      repositoryRoot: repository, repositoryId: 'repository:phase9', maximumConcurrency: 1,
+      grants: new Map([['unit/node', ['command.execute']]]), submittedAt: '2026-08-12T20:30:00.000Z',
+      timeoutMs: 60_000 });
+    const reference = executed.remote.status.result!;
+    const result: any = JSON.parse((await service.result(executed.remote.status.jobId,
       reference.contentDigest, reference.sizeBytes)).toString('utf8'));
-    assert.equal(shadow.result.remote.decision.state, 'passed', JSON.stringify(result));
+    assert.equal(executed.remote.decision.state, 'passed', JSON.stringify(result));
     assert.deepEqual(result.attempts[0].reports[0].counts,
       { total: 2, passed: 1, failed: 0, errored: 0, skipped: 1 });
     assert.equal(result.attempts[0].reports[0].cases[0].name, 'real pass');
@@ -106,4 +96,4 @@ test.skip('real skip', () => {});
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 
 console.log(JSON.stringify({ ok: true, phase: 9, vertical: 'real', tool: 'node:test',
-  report: 'node-junit', authority: 'legacy', replacement: 'shadow-only' }));
+  report: 'node-junit', authority: 'replacement-only' }));

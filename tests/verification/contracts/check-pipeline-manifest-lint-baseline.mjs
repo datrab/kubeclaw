@@ -10,9 +10,6 @@ assert.equal(baseline.items.every((item) => /^MANIFEST-[A-Z]+-\d{3}$/u.test(item
 assert.equal(baseline.items.every((item) => ['implementation-proved', 'parity-pending', 'parity-proved'].includes(item.state)), true);
 assert.equal(baseline.items.every((item) => item.state === 'parity-proved'), true, 'completed parity phase must prove every baseline item');
 
-const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-assert.deepEqual(bridge.suites.manifest, { state: 'migrated', successor: 'lint:kubernetes-policy' });
-
 const policy = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/lint-policy.json', 'utf8'));
 for (const id of ['kubernetes-schema', 'kubernetes-policy']) assert.equal(policy.experimental_tools.includes(id), false, `${id} must be authoritative after cutover`);
 assert.equal(policy.projects[0].kubernetes.raw_manifests.length > 0, true);

@@ -4,30 +4,21 @@ import os from 'node:os';
 import path from 'node:path';
 import { loadPipelineTestScope } from '@kubeclaw/nova-core';
 import { cleanupRealE2ERunWorkspace, createRealE2ERunWorkspace } from '../e2e/real-run-workspace.mjs';
-import { LEGACY_UNMIGRATED_SUITES, requiredCapabilitiesForSuites } from '../../../skills/buster/plugins/buster-suite-runtime/src/protocol.ts';
-import { DEPENDENCIES, EXECUTION_ORDER, validateSuiteNames } from '../../../skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts';
 import { buildScaffold } from '../../../skills/nova/project_setup/tools/progress-scaffold-discovery.ts';
 
 const inventory = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-tailscale-exposure-cutover-inventory.json', 'utf8'));
 assert.equal(inventory.parityItemCount, 38);
 for (const file of inventory.legacyFilesToDelete) assert.equal(fs.existsSync(file), false, `legacy file remains: ${file}`);
 for (const file of inventory.replacementFilesRequired) assert.equal(fs.existsSync(file), true, `replacement file missing: ${file}`);
-assert.equal(LEGACY_UNMIGRATED_SUITES.includes('tailscale-preview' as never), false);
-assert.equal(EXECUTION_ORDER.includes('tailscale-preview'), false);
-assert.equal(Object.hasOwn(DEPENDENCIES, 'tailscale-preview'), false);
-assert.deepEqual(requiredCapabilitiesForSuites(['tailscale-preview']), []);
-assert.throws(() => validateSuiteNames(['tailscale-preview']), /Invalid Buster suite request/u);
-const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-assert.deepEqual(bridge.suites['tailscale-preview'], { state: 'migrated', successor: 'kubeclaw.tailscale-exposure@1' });
+assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), false);
+assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'), false);
 const status = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-suite-migration-status.json', 'utf8'));
 const suiteStatus = status.suites.find((item: any) => item.id === 'tailscale-preview');
 assert.deepEqual({ implementation: suiteStatus.implementation, parity: suiteStatus.parity,
   sourceCutover: suiteStatus.sourceCutover, productionAcceptance: suiteStatus.productionAcceptance,
   cutover: suiteStatus.cutover }, { implementation: 'complete', parity: 'in-progress',
   sourceCutover: 'complete', productionAcceptance: 'pending', cutover: 'in-progress' });
-for (const file of ['skills/buster/plugins/buster-suite-runtime/src/protocol.ts',
-  'skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts',
-  'tests/verification/e2e/run-v2-production-pipeline.mts']) {
+for (const file of ['tests/verification/e2e/run-v2-production-pipeline.mts']) {
   assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /['"]tailscale-preview['"]/u, `${file} keeps old authority`);
 }
 const productionPreflight = fs.readFileSync('tests/verification/e2e/nova-tailscale-production-preflight.mts', 'utf8');

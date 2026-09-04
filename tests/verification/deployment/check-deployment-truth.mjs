@@ -121,7 +121,6 @@ for (const buildInput of [
   'tsconfig.base.json',
   'docker/Dockerfile.buster-runtime',
   'docker/buster-runtime-entrypoint.sh',
-  'skills/buster/plugins/buster-suite-runtime/**',
   'skills/common/plugin-runtime/sdk/**',
 ]) {
   assert.match(

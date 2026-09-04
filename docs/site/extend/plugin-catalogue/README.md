@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 50 packages.
+The catalogue contains 49 packages.
 
 ## Stage Packages
 

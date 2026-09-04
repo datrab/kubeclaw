@@ -88,10 +88,10 @@ try {
     maximumResponseBytes: 128 * 1024 * 1024, maximumResultBytes: 128 * 1024 * 1024,
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 96 * 1024 * 1024, maximumEvidenceStoreBytes: 256 * 1024 * 1024,
-    recordLimits: { maximumRecords: 100, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 128 * 1024 * 1024 }, legacyLedger: {} });
+    recordLimits: { maximumRecords: 100, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 128 * 1024 * 1024 } });
   const result = await nova.execute({ idempotencyKey: `lighthouse:${crypto.randomUUID()}`,
     pipelineStageId: 'stage:lighthouse-preflight', plan, repositoryRoot: fixture, repositoryId: 'repository:lighthouse-preflight',
-    grants, maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 1_020_000, legacySuites: [] });
+    grants, maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 1_020_000 });
   assert.equal(result.remote.status.state, 'completed'); assert.equal(result.remote.decision.state, 'passed');
   const imported = records('imports').find((record) => record.stream === 'remote-gate-imports')?.payload;
   assert.equal(imported?.state, 'complete'); assert.equal(imported?.decision.decisionDigest, result.remote.decision.decisionDigest);

@@ -5,7 +5,7 @@
 - Required blueprint artifacts: 6/6.
 - Existing documentation files classified: 368/368.
 - Unclassified documentation files: 0.
-- Plugin manifests inventoried: 50/50.
+- Plugin manifests inventoried: 49/49.
 - Extension registrations inventoried: 60.
 - Contract families linked in the evidence matrix: 6/6.
 - Missing local evidence paths: 0.

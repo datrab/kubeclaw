@@ -3,7 +3,6 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {
-  assertLegacyBridgeSelection,
   buildRegistry,
   discoverPackages,
   resolveTestPlan,
@@ -79,11 +78,10 @@ try {
   /DIRECT_COMMAND_REPORT_REQUIRED/u);
 } finally { fs.rmSync(workspace, { recursive: true, force: true }); }
 
-const ledger = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-assert.equal(ledger.suites.unit.state, 'migrated');
-assert.throws(() => assertLegacyBridgeSelection(plan, ['unit'], ledger.suites), /LEGACY_SUITE_ALREADY_MIGRATED:unit/u);
-assert.throws(() => assertLegacyBridgeSelection({ nodes: [] } as any, ['unit'], ledger.suites),
-  /LEGACY_SUITE_ALREADY_MIGRATED:unit/u, 'deleted unit authority cannot return when replacement nodes are absent');
+assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'), false,
+  'the retired suite runtime package must stay deleted');
+assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), false,
+  'the retired migration ledger must stay deleted');
 
 console.log(JSON.stringify({ ok: true, phase: 9, layer: 'parity', nodes: plan.nodes.length,
   explicitConfiguration: true, legacyUnitAuthority: 'deleted' }));

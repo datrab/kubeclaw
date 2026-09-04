@@ -100,12 +100,12 @@ if(mode==='exit-fail') process.exitCode=7;
       sourceAttestationPrivateKey: privateKey, pollMilliseconds: 10, maximumResponseBytes: 64 * 1024,
       maximumResultBytes: 32 * 1024 * 1024, maximumArchiveBytes: 8 * 1024 * 1024,
       maximumArchiveStoreBytes: 32 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,
-      maximumEvidenceStoreBytes: 64 * 1024 * 1024, recordLimits: records, legacyLedger: {} });
+      maximumEvidenceStoreBytes: 64 * 1024 * 1024, recordLimits: records });
     const executed = await gate.execute({ idempotencyKey: 'phase8:vertical', pipelineStageId: 'stage:unit', plan,
       repositoryRoot: repository, repositoryId: 'repository:phase8', maximumConcurrency: 2,
       grants: new Map(plan.nodes.filter((node) => node.provider.contractId === 'kubeclaw.direct-command@1')
         .map((node) => [node.id, ['command.execute']])), submittedAt: '2026-08-12T16:00:00.000Z',
-      timeoutMs: 60_000, legacySuites: [] });
+      timeoutMs: 60_000 });
     assert.equal(executed.remote.status.state, 'completed', JSON.stringify(executed.remote));
     const result = JSON.parse((await service.result(executed.remote.status.jobId,
       executed.remote.status.result!.contentDigest, executed.remote.status.result!.sizeBytes)).toString('utf8'));
@@ -132,7 +132,7 @@ if(mode==='exit-fail') process.exitCode=7;
       const outcome = await gate.execute({ idempotencyKey: `phase8:${mode}`, pipelineStageId: `stage:${mode}`, plan: conflictPlan,
         repositoryRoot: repository, repositoryId: 'repository:phase8', maximumConcurrency: 1,
         grants: new Map([['command', ['command.execute']]]), submittedAt: '2026-08-12T16:01:00.000Z',
-        timeoutMs: 60_000, legacySuites: [] });
+        timeoutMs: 60_000 });
       assert.equal(outcome.remote.decision.state, expected, JSON.stringify(outcome.remote));
       if (expectedFailed !== undefined) {
         const reference = outcome.remote.status.result!;

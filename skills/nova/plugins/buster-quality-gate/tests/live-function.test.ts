@@ -149,7 +149,6 @@ try {
         sourceAuthority: 'nova:production',
         stateRoot: path.join(temporary, 'provider-state'),
         allowedRepositoryRoots: [temporary],
-        legacyLedgerPath: path.join(repository, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
       }],
     ]),
     effects: new core.EffectCoordinator(

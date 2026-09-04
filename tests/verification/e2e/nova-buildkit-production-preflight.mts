@@ -81,13 +81,12 @@ try {
     maximumArchiveStoreBytes: 64 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,
     maximumEvidenceStoreBytes: 64 * 1024 * 1024,
     recordLimits: { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024,
-      maximumRecordBytes: 16 * 1024 * 1024 }, legacyLedger: {} });
+      maximumRecordBytes: 16 * 1024 * 1024 } });
   const result = await nova.execute({ idempotencyKey: `container-build:${crypto.randomUUID()}`,
     pipelineStageId: 'stage:container-build-preflight', plan, repositoryRoot: fixture,
     repositoryId: 'repository:container-build-preflight',
     grants: new Map(plan.nodes.map((node) => [node.id, ['container.build']])),
-    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 1_020_000,
-    legacySuites: [] });
+    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 1_020_000 });
   if (result.remote.decision.state !== 'passed' || result.remote.status.state !== 'completed') {
     throw new Error(`CONTAINER_BUILD_PREFLIGHT_FAILED:${JSON.stringify(result.remote)}`);
   }

@@ -187,8 +187,8 @@ assert.equal(gateDecisionStageResult(passed.decision).outcome, 'passed');
     { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 }), evidence: { evidence: async () => evidenceBytes },
     results: { result: async () => completed(passed.job, { outcome: 'passed', artifact }).result },
     maximumEvidenceBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024 });
-  const gate = new NovaRemoteTestGate({ dispatcher: { dispatch: async () => passed.status }, importer, legacyLedger: {} });
-  const executed = await gate.execute(passed.job, { timeoutMs: 1000, legacySuites: [] });
+  const gate = new NovaRemoteTestGate({ dispatcher: { dispatch: async () => passed.status }, importer });
+  const executed = await gate.execute(passed.job, { timeoutMs: 1000 });
   assert.equal(executed.stageResult.outcome, 'passed', 'terminal dispatch must flow through import and stage policy');
   fs.rmSync(root, { recursive: true, force: true });
 }

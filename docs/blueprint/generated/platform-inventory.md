@@ -53,7 +53,6 @@ Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 | --- | --- | --- | --- | --- | --- |
 | kubeclaw.api-flow | 1.0.0 | buster | test provider: flow | requires: network.http<br>provides: none | `skills/buster/plugins/api-flow/plugin.json` |
 | kubeclaw.axe | 1.0.0 | buster | test provider: axe | requires: browser.axe<br>provides: none | `skills/buster/plugins/axe/plugin.json` |
-| kubeclaw.buster-suite-runtime | 1.0.0 | not role-bundled | none | requires: none<br>provides: none | `skills/buster/plugins/buster-suite-runtime/plugin.json` |
 | kubeclaw.container-build | 1.0.0 | buster | test provider: buildkit | requires: container.build<br>provides: none | `skills/buster/plugins/container-build/plugin.json` |
 | kubeclaw.coverage-budget | 1.0.0 | buster | test provider: lcov | requires: none<br>provides: none | `skills/buster/plugins/coverage-budget/plugin.json` |
 | kubeclaw.direct-command | 1.0.0 | buster | test provider: command | requires: command.execute<br>provides: none | `skills/buster/plugins/direct-command/plugin.json` |

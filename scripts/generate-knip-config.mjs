@@ -63,7 +63,6 @@ function pluginWorkspace(directory) {
     ? pluginEntrypoints(readJson(manifestPath))
     : [];
   const overrides = {
-    'skills/buster/plugins/buster-suite-runtime': ['src/worker.ts', 'src/worker-runner.ts'],
     'skills/common/plugins/openclaw-agent-observer': ['src/index.ts'],
   }[directory] ?? [];
   const entry = [...new Set([

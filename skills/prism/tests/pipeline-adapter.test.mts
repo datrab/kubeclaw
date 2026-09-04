@@ -18,7 +18,7 @@ test("approved Prism targets map to the visual provider declaration", () => {
   });
   assert.equal(plan.visual.uses, "kubeclaw.visual@1");
   assert.deepEqual(plan.visual.config.targets, ["home-wide"]);
-  assert.deepEqual(plan.legacySuites, ["a11y", "e2e"]);
+  assert.equal(Object.hasOwn(plan, "legacySuites"), false);
   assert.equal(plan.targets[0]?.viewport.width, 1440);
   assert.equal(plan.baselineDigest.length, 71);
 });

@@ -715,20 +715,18 @@ Implementation and proof:
 - `tests/verification/contracts/check-pipeline-remote-result-import.mts`
 - `pipeline-test-gate-phase-7-d-audit.md`
 
-#### Phase 7-E: Contain the Legacy Bridge
+#### Phase 7-E: Retire the Legacy Bridge
 
 Status: complete
 
-- Route resolved-plan work only through the new protocol.
-- Permit the old bridge only for explicitly unmigrated suite names.
-- Prevent one test from becoming authoritative through both paths.
-- Maintain an exact deletion ledger for the old bridge and suite mappings.
+- Route resolved-plan work only through the provider-plan protocol.
+- Reject unknown configuration through strict schemas.
+- Remove the bridge, its suite mappings, and all dual-authority plumbing after migration.
 
 Implementation and proof:
 
-- `contracts/pipeline-test-gate/v1/legacy-suite-bridge.json`
-- `skills/nova/core/test-gates/legacy-bridge.ts`
-- `tests/verification/contracts/check-pipeline-legacy-suite-bridge.mts`
+- `skills/nova/plugins/remote-test-gate/schemas/config.schema.json`
+- `tests/verification/contracts/check-pipeline-legacy-retirement.mts`
 - `pipeline-test-gate-phase-7-e-audit.md`
 
 #### Phase 7-F: Prove and Close the Phase

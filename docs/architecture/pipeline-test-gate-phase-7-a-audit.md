@@ -102,17 +102,11 @@ Buster owns:
 
 The transport owns no pipeline policy.
 
-## Deletion targets
+## Deleted compatibility surfaces
 
-The following surfaces remain only for old-suite migration:
-
-- `skills/buster/plugins/buster-suite-runtime/src/protocol.ts`
-- the retired Buster suite adapter;
-- the retired Buster suite worker;
-- the retired Buster suite worker runner.
-- The compiled `SUPPORTED_SUITES` list.
-- The compiled suite capability map.
-- Old suite result summaries and receipts.
+The old Buster suite protocol, adapter, worker, worker runner, compiled suite
+lists, capability maps, and legacy receipts were removed after all suite
+migrations completed. The provider-plan protocol is the sole execution path.
 
 Phase 7-E must prevent resolved-plan work from entering this path. Later suite
 cutovers remove each mapping. Phase 10 starts that deletion with unit.

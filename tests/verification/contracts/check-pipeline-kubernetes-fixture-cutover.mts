@@ -4,36 +4,20 @@ import os from 'node:os';
 import path from 'node:path';
 import { loadPipelineTestScope } from '@kubeclaw/nova-core';
 import { cleanupRealE2ERunWorkspace, createRealE2ERunWorkspace } from '../e2e/real-run-workspace.mjs';
-import { LEGACY_UNMIGRATED_SUITES, requiredCapabilitiesForSuites } from '../../../skills/buster/plugins/buster-suite-runtime/src/protocol.ts';
-import { DEPENDENCIES, EXECUTION_ORDER, validateSuiteNames } from '../../../skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts';
 import { buildScaffold } from '../../../skills/nova/project_setup/tools/progress-scaffold-discovery.ts';
 
 const inventory = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-inventory.json', 'utf8'));
 for (const file of inventory.legacyFilesToDelete) assert.equal(fs.existsSync(file), false, `legacy Kubernetes file remains: ${file}`);
 for (const file of inventory.replacementFilesRequired) assert.equal(fs.existsSync(file), true, `replacement file is missing: ${file}`);
 
-assert.equal(LEGACY_UNMIGRATED_SUITES.includes('k8s' as never), false);
-assert.equal(EXECUTION_ORDER.includes('k8s'), false);
-assert.equal(Object.hasOwn(DEPENDENCIES, 'k8s'), false);
-assert.equal(Object.values(DEPENDENCIES).flat().includes('k8s'), false);
-assert.deepEqual(requiredCapabilitiesForSuites(['k8s']), []);
-assert.throws(() => validateSuiteNames(['k8s']), /Invalid Buster suite request/u);
-
-const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-assert.deepEqual(bridge.suites.k8s, { state: 'migrated', successor: 'kubeclaw.kubernetes-fixture@1' });
+assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), false);
+assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'), false);
 const status = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-suite-migration-status.json', 'utf8'));
 const suite = status.suites.find((entry: any) => entry.id === 'k8s');
 assert.deepEqual({ implementation: suite.implementation, parity: suite.parity,
   sourceCutover: suite.sourceCutover, productionAcceptance: suite.productionAcceptance,
   cutover: suite.cutover }, { implementation: 'complete', parity: 'in-progress',
   sourceCutover: 'complete', productionAcceptance: 'pending', cutover: 'in-progress' });
-
-const protocol = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/protocol.ts', 'utf8');
-const runner = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts', 'utf8');
-const capabilities = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/runtime/services/capabilities.ts', 'utf8');
-assert.doesNotMatch(protocol, /['"]k8s['"]/u);
-assert.doesNotMatch(runner, /suites\/k8s|\bk8sSuite\b|\bk8s:\s/u);
-assert.doesNotMatch(capabilities, /case ['"]k8s['"]/u);
 
 const scaffold = fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts', 'utf8');
 assert.match(scaffold, /LEGACY_K8S_CONFIGURATION_RETIRED/u);

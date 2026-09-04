@@ -123,11 +123,11 @@ try {
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 32 * 1024 * 1024, maximumEvidenceStoreBytes: 128 * 1024 * 1024,
     recordLimits: { maximumRecords: 100, maximumBytes: 128 * 1024 * 1024,
-      maximumRecordBytes: 64 * 1024 * 1024 }, legacyLedger: {} });
+      maximumRecordBytes: 64 * 1024 * 1024 } });
   const result = await nova.execute({ idempotencyKey: `api:${crypto.randomUUID()}`,
     pipelineStageId: 'stage:api-preflight', plan, repositoryRoot: fixture,
     repositoryId: 'repository:api-preflight', grants, maximumConcurrency: 1,
-    submittedAt: new Date().toISOString(), timeoutMs: 1_020_000, legacySuites: [] });
+    submittedAt: new Date().toISOString(), timeoutMs: 1_020_000 });
   assert.equal(result.remote.status.state, 'completed');
   assert.equal(result.remote.decision.state, 'passed');
   const imports = records('imports').filter((record) => record.stream === 'remote-gate-imports');

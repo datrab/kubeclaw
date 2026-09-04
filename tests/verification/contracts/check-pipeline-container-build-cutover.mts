@@ -1,19 +1,11 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { LEGACY_UNMIGRATED_SUITES } from '../../../skills/buster/plugins/buster-suite-runtime/src/protocol.ts';
-import { EXECUTION_ORDER, DEPENDENCIES, validateSuiteNames } from '../../../skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts';
 
 const read = (file: string) => fs.readFileSync(file, 'utf8');
 const oldRunner = 'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/build.ts';
 assert.equal(fs.existsSync(oldRunner), false);
-assert.equal(LEGACY_UNMIGRATED_SUITES.includes('build' as any), false);
-assert.equal(EXECUTION_ORDER.includes('build'), false);
-assert.equal(Object.hasOwn(DEPENDENCIES, 'build'), false);
-assert.equal(Object.values(DEPENDENCIES).flat().includes('build'), false);
-assert.throws(() => validateSuiteNames(['build']), /Invalid Buster suite request/u);
-
-const bridge = JSON.parse(read('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'));
-assert.deepEqual(bridge.suites.build, { state: 'migrated', successor: 'kubeclaw.container-build@1' });
+assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), false);
+assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'), false);
 const ledger = JSON.parse(read('docs/architecture/pipeline-test-gate-container-build-parity-ledger.json'));
 assert.equal(ledger.items.length, 36);
 assert.equal(ledger.authority.legacy, 'removed');

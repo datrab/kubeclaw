@@ -66,11 +66,21 @@
         "**/*.{ts,mjs}"
       ]
     },
-    "skills/buster/plugins/buster-suite-runtime": {
+    "skills/buster/plugins/api-flow": {
       "entry": [
-        "src/adapter.ts",
-        "src/worker-runner.ts",
-        "src/worker.ts",
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/axe": {
+      "entry": [
+        "src/provider.js",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -116,9 +126,85 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/buster/plugins/http": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
     "skills/buster/plugins/junit-report-adapter": {
       "entry": [
         "src/adapter.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/kubernetes-fixture": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/lighthouse": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/openapi": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/playwright": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/security-providers": {
+      "entry": [
+        "src/dependency.js",
+        "src/headers.js",
+        "src/image.js",
+        "src/kubernetes-policy.js",
+        "src/kubernetes-runtime.js",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -140,9 +226,33 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/buster/plugins/tailscale-exposure": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
     "skills/buster/plugins/test-agent": {
       "entry": [
         "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/buster/plugins/visual": {
+      "entry": [
+        "src/provider.js",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -508,7 +618,18 @@
     },
     "skills/nova/plugins/preflight-contract": {
       "entry": [
-        "src/buildkit.ts",
+        "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/prism-design": {
+      "entry": [
         "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
@@ -522,6 +643,18 @@
     "skills/nova/plugins/project-summary": {
       "entry": [
         "src/stage.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
+    "skills/nova/plugins/remote-test-gate": {
+      "entry": [
+        "src/adapter.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [

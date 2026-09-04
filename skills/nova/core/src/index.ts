@@ -71,10 +71,6 @@ export type { ProductionNovaTestGateOptions } from '../test-gates/production.ts'
 export { loadProductionNovaTestGate } from '../test-gates/runtime-config.ts';
 export { buildCommittedSourceSnapshot } from '../test-gates/source-snapshot.ts';
 export type { CommittedSourceSnapshot } from '../test-gates/source-snapshot.ts';
-export { NovaTestGateAuthorityRouter, assertLegacyBridgeSelection,
-  runLegacyAuthoritativeShadowComparison } from '../test-gates/legacy-bridge.ts';
-export type { LegacyAuthoritativeShadowComparison, LegacySuiteMigrationEntry,
-  LegacySuiteMigrationLedger } from '../test-gates/legacy-bridge.ts';
 export { invokeIsolated } from '@kubeclaw/plugin-foundation/isolation/runner';
 export { FileJournal } from '../state/journal.ts';
 export type { JournalRecord } from '../state/journal.ts';

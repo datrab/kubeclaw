@@ -174,11 +174,6 @@ try {
   assert.equal(invalid.status, 'blocked');
   assert.equal(invalid.stages.get('manifest-lint')?.status, 'blocked');
 
-  const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-  assert.deepEqual(bridge.suites.manifest, { state: 'migrated', successor: 'lint:kubernetes-policy' });
-  assert.throws(() => core.assertLegacyBridgeSelection({ nodes: [] } as any, ['manifest'], bridge.suites),
-    /LEGACY_SUITE_ALREADY_MIGRATED:manifest/u);
-
   console.log(JSON.stringify({
     ok: true,
     phase: 'manifest-lint-cutover-vertical',

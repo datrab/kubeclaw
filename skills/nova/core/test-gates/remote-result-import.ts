@@ -19,7 +19,6 @@ import {
   type DurableRecordLimits,
 } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import type { RemotePlanEvidenceTransport, RemotePlanResultTransport } from './remote-dispatch.ts';
-import { assertLegacyBridgeSelection, type LegacySuiteMigrationLedger } from './legacy-bridge.ts';
 
 export type GateDecisionState = 'passed' | 'failed' | 'execution_error' | 'review_required' | 'cancelled';
 export type GateNodeEffect = 'passed' | 'failed' | 'advisory_failure' | 'execution_error' | 'review_required' | 'skipped';
@@ -385,18 +384,13 @@ export interface RemotePlanTerminalDispatcher {
 export class NovaRemoteTestGate {
   readonly #dispatcher: RemotePlanTerminalDispatcher;
   readonly #importer: NovaRemoteGateImporter;
-  readonly #legacyLedger: LegacySuiteMigrationLedger;
-  constructor(options: { dispatcher: RemotePlanTerminalDispatcher; importer: NovaRemoteGateImporter;
-    legacyLedger: LegacySuiteMigrationLedger }) {
+  constructor(options: { dispatcher: RemotePlanTerminalDispatcher; importer: NovaRemoteGateImporter }) {
     this.#dispatcher = options.dispatcher;
     this.#importer = options.importer;
-    this.#legacyLedger = options.legacyLedger;
   }
-  async execute(job: RemotePlanJobV1, options: { timeoutMs: number; signal?: AbortSignal;
-    legacySuites: readonly string[] }): Promise<{
+  async execute(job: RemotePlanJobV1, options: { timeoutMs: number; signal?: AbortSignal }): Promise<{
     status: RemotePlanStatusV1; decision: GateDecisionV1; stageResult: StageResult;
   }> {
-    assertLegacyBridgeSelection(job.plan, options.legacySuites, this.#legacyLedger);
     const status = await this.#dispatcher.dispatch(job, options);
     const decision = await this.#importer.import(job, status, options.signal);
     return { status, decision, stageResult: gateDecisionStageResult(decision) };

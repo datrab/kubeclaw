@@ -79,14 +79,14 @@ try {
     maximumResponseBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 16 * 1024 * 1024, maximumEvidenceStoreBytes: 64 * 1024 * 1024,
-    recordLimits: records, legacyLedger: {},
+    recordLimits: records,
   });
   let service = makeService();
   let running = await start(service);
   const execution = await nova(running.endpoint).execute({ idempotencyKey: `container-build:${outputName}`,
     pipelineStageId: 'stage:container-build', plan, repositoryRoot: repository,
     repositoryId: 'repository:container-build', grants: new Map([[plan.nodes[0]!.id, ['container.build']]]),
-    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 660_000, legacySuites: [] });
+    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 660_000 });
   const resultRef = execution.remote.status.result!;
   const result = JSON.parse((await service.result(execution.remote.status.jobId,
     resultRef.contentDigest, resultRef.sizeBytes)).toString('utf8'));
@@ -126,7 +126,7 @@ try {
   const failed = await nova(running.endpoint).execute({ idempotencyKey: `container-build:${failedName}`,
     pipelineStageId: 'stage:container-build-failure', plan: failedPlan, repositoryRoot: repository,
     repositoryId: 'repository:container-build', grants: new Map([[failedPlan.nodes[0]!.id, ['container.build']]]),
-    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 660_000, legacySuites: [] });
+    maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 660_000 });
   assert.equal(failed.remote.decision.state, 'failed');
   const failedRef = failed.remote.status.result!;
   const failedResult = JSON.parse((await service.result(failed.remote.status.jobId,

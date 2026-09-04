@@ -114,11 +114,11 @@ try {
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 16 * 1024 * 1024, maximumEvidenceStoreBytes: 64 * 1024 * 1024,
     recordLimits: { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024,
-      maximumRecordBytes: 32 * 1024 * 1024 }, legacyLedger: {} });
+      maximumRecordBytes: 32 * 1024 * 1024 } });
   const result = await nova.execute({ idempotencyKey: `kubernetes-fixture:${crypto.randomUUID()}`,
     pipelineStageId: 'stage:kubernetes-fixture-preflight', plan, repositoryRoot: fixture,
     repositoryId: 'repository:kubernetes-fixture-preflight', grants, maximumConcurrency: 1,
-    submittedAt: new Date().toISOString(), timeoutMs: 720_000, legacySuites: [] });
+    submittedAt: new Date().toISOString(), timeoutMs: 720_000 });
   assert.equal(result.remote.status.state, 'completed');
   assert.equal(result.remote.decision.state, 'passed');
   assert.deepEqual(result.remote.decision.nodes.map((node) => [node.nodeId, node.effect]).sort(), [

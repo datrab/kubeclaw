@@ -140,7 +140,6 @@ try {
         sourceAuthority: 'nova:production',
         stateRoot: path.join(temporary, 'provider-state'),
         allowedRepositoryRoots: [temporary],
-        legacyLedgerPath: path.join(repository, 'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'),
       }],
       ['kubeclaw.runtime-dispatch:runtime', { targets: { buster: { endpoint: `${origin}/dispatch`, tokenSecret: 'buster.agent' } } }],
       ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST', 'GET', 'DELETE'], allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-kubeclaw-signature'] }],

@@ -119,11 +119,11 @@ export function provider() {
       pollMilliseconds: 10, maximumResponseBytes: 64 * 1024, maximumResultBytes: 16 * 1024 * 1024,
       maximumArchiveBytes: 4 * 1024 * 1024, maximumArchiveStoreBytes: 16 * 1024 * 1024,
       maximumEvidenceBytes: 4 * 1024 * 1024, maximumEvidenceStoreBytes: 16 * 1024 * 1024,
-      recordLimits: records, legacyLedger: {},
+      recordLimits: records,
     });
     const executed = await gate.execute({ idempotencyKey: 'phase7:real-provider', pipelineStageId: 'stage:test-gate', plan,
       repositoryRoot: repository, repositoryId: 'repository:phase7-real', grants: new Map([['real-provider', []]]),
-      maximumConcurrency: 1, submittedAt: '2026-08-12T08:00:00.000Z', timeoutMs: 30_000, legacySuites: [] });
+      maximumConcurrency: 1, submittedAt: '2026-08-12T08:00:00.000Z', timeoutMs: 30_000 });
     const resultRef = executed.remote.status.result!;
     const storedResult = JSON.parse((await service.result(executed.remote.status.jobId, resultRef.contentDigest,
       resultRef.sizeBytes)).toString('utf8'));

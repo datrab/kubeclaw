@@ -32,19 +32,10 @@ assert.deepEqual(ledger.items.reduce((counts: any, item: any) => {
   counts[item.disposition] = (counts[item.disposition] ?? 0) + 1; return counts;
 }, {}), { preserved: 10, improved: 23, 'removed-defect': 3 });
 
-// The same committed Dockerfile fixture passes through the replacement. Before
-// cutover, also prove that the deploy-coupled legacy implementation remains present.
-// After cutover, retain the 36-item parity proof while requiring legacy absence.
+// The same committed Dockerfile fixture passes through the authoritative replacement.
 execFileSync(process.execPath, ['tests/verification/contracts/check-pipeline-container-build-implementation.mts'], { stdio: 'pipe' });
 const legacyPath = 'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/build.ts';
-const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-if (fs.existsSync(legacyPath)) {
-  const legacy = fs.readFileSync(legacyPath, 'utf8');
-  assert.match(legacy, /return k8sSuite\(/u);
-  assert.doesNotMatch(legacy, /startServicePortForward/u);
-  assert.equal(bridge.suites.build.state, 'unmigrated');
-} else assert.equal(bridge.suites.build.state, 'migrated');
-assert.equal(bridge.suites.build.successor, 'kubeclaw.container-build@1');
+assert.equal(fs.existsSync(legacyPath), false);
 console.log(JSON.stringify({ ok: true, phase: 'container-build-parity', items: 36,
-  authority: `source-${bridge.suites.build.state}`, productionAcceptance: 'pending-deployment',
+  authority: 'replacement-only', productionAcceptance: 'pending-deployment',
   differencesExplained: true }));

@@ -1,7 +1,5 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { JOB_SCHEMA, parseJob, sha256 } from '../../../skills/buster/plugins/buster-suite-runtime/src/protocol.ts';
-import { assertLegacyBridgeSelection } from '../../../skills/nova/core/test-gates/legacy-bridge.ts';
 
 const inventory = JSON.parse(fs.readFileSync(
   'docs/architecture/pipeline-test-gate-manifest-lint-cutover-inventory.json', 'utf8')) as any;
@@ -24,32 +22,15 @@ assert.deepEqual(parity.cutover, {
 });
 
 for (const file of inventory.legacyRuntimeFilesToClean) {
+  if (!fs.existsSync(file)) continue;
   const source = fs.readFileSync(file, 'utf8');
   for (const token of inventory.legacyTokensForbidden) {
     assert.equal(source.includes(token), false, `legacy manifest token remains in ${file}: ${token}`);
   }
 }
 
-const bridge = JSON.parse(fs.readFileSync(
-  'contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8')) as any;
-assert.deepEqual(bridge.suites.manifest, { state: 'migrated', successor: 'lint:kubernetes-policy' });
-assert.throws(() => assertLegacyBridgeSelection({ nodes: [] } as any, ['manifest'], bridge.suites),
-  /LEGACY_SUITE_ALREADY_MIGRATED:manifest/u);
-
-const archive = Buffer.from('archive');
-assert.throws(() => parseJob({
-  schemaVersion: JOB_SCHEMA,
-  jobId: `job:${'a'.repeat(32)}`,
-  idempotencyKey: 'manifest-cutover:legacy-denied',
-  archive: { encoding: 'base64', sha256: sha256(archive), bytes: archive.byteLength,
-    data: archive.toString('base64') },
-  suites: ['manifest'], testConfig: { suite_timeout_ms: 1000 }, task: {}, capabilities: [], timeoutMs: 1000,
-}, 1024), /BUSTER_JOB_SUITE_UNSUPPORTED/u);
-
-const protocol = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/protocol.ts', 'utf8');
-const runner = fs.readFileSync('skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts', 'utf8');
-assert.doesNotMatch(protocol, /['"]manifest['"]/u);
-assert.doesNotMatch(runner, /suites\/manifest|\bmanifestSuite\b|\bmanifest:\s/u);
+assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), false);
+assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'), false);
 
 const lintPolicy = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/lint-policy.json', 'utf8'));
 assert.deepEqual(lintPolicy.experimental_tools, []);

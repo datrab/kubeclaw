@@ -105,8 +105,5 @@ try {
     } } as any, new AbortController().signal), /KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/u);
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 
-const bridge = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8'));
-assert.match(bridge.suites.k8s.state, /^(?:unmigrated|migrated)$/u);
-assert.equal(bridge.suites.k8s.successor, 'kubeclaw.kubernetes-fixture@1');
-console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-implementation', authority: bridge.suites.k8s.state,
+console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-implementation', authority: 'replacement-only',
   providerKind: 'fixture', typedManifestLink: true, narrowCapability: true, mocks: 0 }));

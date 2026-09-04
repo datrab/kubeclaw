@@ -70,7 +70,7 @@ try {
     pollMilliseconds: 10, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
     maximumArchiveBytes: 16 * 1024 * 1024, maximumArchiveStoreBytes: 64 * 1024 * 1024,
     maximumEvidenceBytes: 16 * 1024 * 1024, maximumEvidenceStoreBytes: 64 * 1024 * 1024,
-    recordLimits: records, legacyLedger: {},
+    recordLimits: records,
   });
   const grants = (plan: ReturnType<typeof resolve>) => new Map(plan.nodes.map((node) => [node.id,
     node.provider.contractId === 'kubeclaw.direct-command@1' ? ['command.execute'] : []]));
@@ -81,7 +81,7 @@ try {
   const first = await nova(running.endpoint, 'nova-first').execute({ idempotencyKey: 'size-budget:first',
     pipelineStageId: 'stage:size-budget', plan: firstPlan, repositoryRoot: repository,
     repositoryId: 'repository:size-budget', grants: grants(firstPlan), maximumConcurrency: 1,
-    submittedAt: '2026-08-22T12:00:00.000Z', timeoutMs: 120_000, legacySuites: [] });
+    submittedAt: '2026-08-22T12:00:00.000Z', timeoutMs: 120_000 });
   const firstStatus = first.remote.status;
   const firstResultRef = firstStatus.result!;
   const firstResult = JSON.parse((await service.result(firstStatus.jobId, firstResultRef.contentDigest,
@@ -106,7 +106,7 @@ try {
   const growth = await nova(running.endpoint, 'nova-growth').execute({ idempotencyKey: 'size-budget:growth',
     pipelineStageId: 'stage:size-budget-growth', plan: growthPlan, repositoryRoot: repository,
     repositoryId: 'repository:size-budget', grants: grants(growthPlan), maximumConcurrency: 2,
-    submittedAt: '2026-08-22T12:01:00.000Z', timeoutMs: 120_000, legacySuites: [] });
+    submittedAt: '2026-08-22T12:01:00.000Z', timeoutMs: 120_000 });
   const growthRef = growth.remote.status.result!;
   const growthResult = JSON.parse((await service.result(growth.remote.status.jobId, growthRef.contentDigest,
     growthRef.sizeBytes)).toString('utf8'));

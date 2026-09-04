@@ -329,15 +329,6 @@
       ]
     },
     {
-      "id": "kubeclaw.buster-suite-runtime",
-      "version": "1.0.0",
-      "kind": "pipeline-plugin",
-      "file": "skills/buster/plugins/buster-suite-runtime/plugin.json",
-      "docsTarget": "/extend/plugin-catalogue/kubeclaw.buster-suite-runtime",
-      "bundledBy": [],
-      "registrations": []
-    },
-    {
       "id": "kubeclaw.container-build",
       "version": "1.0.0",
       "kind": "pipeline-plugin",

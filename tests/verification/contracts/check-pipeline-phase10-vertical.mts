@@ -17,7 +17,6 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'phase10-vertical-'));
 const repository = path.join(temporary, 'repository');
 const pluginRoot = path.resolve('skills/buster/plugins');
 const suite = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/suites/unit.v1.json', 'utf8'));
-const ledger = JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json', 'utf8')).suites;
 const token = 'phase-10-unit-cutover-token-000000000000';
 const records = { maximumRecords: 200, maximumBytes: 128 * 1024 * 1024, maximumRecordBytes: 32 * 1024 * 1024 };
 const sourceKeys = crypto.generateKeyPairSync('ed25519');
@@ -100,15 +99,14 @@ fs.writeFileSync('reports/' + mode + '.xml', '<testsuite name="' + mode + '"><te
       sourceAttestationPrivateKey: privateKey, pollMilliseconds: 10, maximumResponseBytes: 64 * 1024,
       maximumResultBytes: 32 * 1024 * 1024, maximumArchiveBytes: 8 * 1024 * 1024,
       maximumArchiveStoreBytes: 32 * 1024 * 1024, maximumEvidenceBytes: 16 * 1024 * 1024,
-      maximumEvidenceStoreBytes: 64 * 1024 * 1024, recordLimits: records, legacyLedger: ledger });
+      maximumEvidenceStoreBytes: 64 * 1024 * 1024, recordLimits: records });
     const executed = await gate.execute({ idempotencyKey: 'phase10:sole-unit', pipelineStageId: 'stage:unit', plan,
       repositoryRoot: repository, repositoryId: 'repository:phase10', maximumConcurrency: 2,
       grants: new Map(plan.nodes.map((node) => [node.id, ['command.execute']])),
-      submittedAt: '2026-08-13T21:00:00.000Z', timeoutMs: 60_000, legacySuites: [] });
+      submittedAt: '2026-08-13T21:00:00.000Z', timeoutMs: 60_000 });
     const reference = executed.remote.status.result!;
     const result: any = JSON.parse((await service.result(executed.remote.status.jobId,
       reference.contentDigest, reference.sizeBytes)).toString('utf8'));
-    assert.equal(executed.legacy, null, 'no legacy unit result may exist after cutover');
     assert.equal(executed.remote.decision.state, 'passed', JSON.stringify({ remote: executed.remote, attempts: result.attempts }));
     assert.equal(executed.remote.decision.nodes.find((node) => node.nodeId === 'unit/blocking')?.effect, 'passed');
     assert.equal(executed.remote.decision.nodes.find((node) => node.nodeId === 'unit/advisory')?.effect, 'advisory_failure');

@@ -20,6 +20,7 @@ const sourcePublicKeyName = 'PHASE7_SOURCE_ATTESTATION_PUBLIC_KEY';
 const sourceKeys = crypto.generateKeyPairSync('ed25519');
 const sourceAttestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
 const sourceAttestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
+const workerRevision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const busterCli = path.resolve('skills/buster/engine/remote-plan-cli.ts');
 const novaCli = path.resolve('skills/nova/core/test-gates/remote-gate-cli.ts');
 const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
@@ -67,7 +68,8 @@ async function waitForState(port: number, jobId: string, states: readonly string
 function startBuster(config: string): ChildProcessWithoutNullStreams {
   return spawn(process.execPath, [busterCli, '--config', config], {
     cwd: process.cwd(), env: { ...process.env, [tokenName]: token,
-      [sourcePublicKeyName]: sourceAttestationPublicKey }, stdio: ['pipe', 'pipe', 'pipe'],
+      [sourcePublicKeyName]: sourceAttestationPublicKey, KUBECLAW_BUILD_REVISION: workerRevision },
+    stdio: ['pipe', 'pipe', 'pipe'],
   });
 }
 
@@ -177,8 +179,7 @@ export function provider() { return { async execute(invocation, context) {
   fs.writeFileSync(novaConfig, JSON.stringify({ schemaVersion: 'nova-remote-test-gate-runtime.v1',
     endpoint: `http://127.0.0.1:${port}`, tokenEnvironmentVariable: tokenName,
     sourceAttestationPrivateKeyEnvironmentVariable: sourcePrivateKeyName,
-    sourceAuthority: 'nova:production', stateRoot: './nova-state',
-    legacyLedgerPath: path.resolve('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json'), pollMilliseconds: 25,
+    sourceAuthority: 'nova:production', stateRoot: './nova-state', pollMilliseconds: 25,
     maximumResponseBytes: 64 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumArchiveBytes: 4 * 1024 * 1024,
     maximumArchiveStoreBytes: 16 * 1024 * 1024, maximumEvidenceBytes: 4 * 1024 * 1024,
     maximumEvidenceStoreBytes: 16 * 1024 * 1024, recordLimits: records }));
