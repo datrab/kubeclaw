@@ -433,7 +433,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     const deadline = Date.now() + timeoutMs;
     let last = 'Pending';
     while (Date.now() < deadline) {
-      const raw = await this.#kubectlRun(['get', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, 15_000);
+      const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
+      const raw = await this.#kubectlRun(['get', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, requestTimeoutMs);
       const value = object(JSON.parse(raw), 'lease');
       const status = object(value.status ?? {}, 'lease.status');
       const phase = typeof status.phase === 'string' ? status.phase : 'Pending';
@@ -441,7 +442,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       if (phase === 'Ready') return status;
       if (phase === 'Rejected') throw new Error(`KUBERNETES_FIXTURE_LEASE_REJECTED:${last}`);
       if (phase === 'Failed') throw new Error(`KUBERNETES_FIXTURE_LEASE_FAILED:${last}`);
-      await waitForPoll(this.#pollIntervalMs, signal);
+      const pollMs = Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now()));
+      if (pollMs > 0) await waitForPoll(pollMs, signal);
     }
     throw new Error(`KUBERNETES_FIXTURE_LEASE_TIMEOUT:${last}`);
   }
@@ -450,7 +452,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     const deadline = Date.now() + timeoutMs;
     let last = 'No pods found.';
     while (Date.now() < deadline) {
-      const raw = await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, 15_000);
+      const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
+      const raw = await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, requestTimeoutMs);
       const value = object(JSON.parse(raw), 'pods');
       const items = Array.isArray(value.items) ? value.items : [];
       if (items.length > 0) {
@@ -469,7 +472,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         if (pending.length === 0) return items.length;
         last = `Pods not ready: ${pending.join(', ')}`;
       }
-      await waitForPoll(this.#pollIntervalMs, signal);
+      const pollMs = Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now()));
+      if (pollMs > 0) await waitForPoll(pollMs, signal);
     }
     throw new Error(`KUBERNETES_FIXTURE_READINESS_TIMEOUT:${last}`);
   }
