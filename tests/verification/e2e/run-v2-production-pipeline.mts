@@ -157,10 +157,14 @@ async function waitForOperator(
 ): Promise<ResumeSignal> {
   const deadline = Date.now() + 10 * 60_000;
   while (Date.now() < deadline) {
-    if (fs.existsSync(file)) {
-      const state = readJson(file);
+    const decisionIdentity = crypto.createHash('sha256').update(waitId).digest('hex');
+    const decisionFile = `${file}.decision-${decisionIdentity}.json`;
+    for (const candidate of [file, decisionFile]) {
+      if (!fs.existsSync(candidate)) continue;
+      const state = readJson(candidate);
       const status = String(state.status ?? '').toUpperCase();
       if (status === 'APPROVED' || status === 'REJECTED') {
+        if (state.wait_id !== waitId) throw new Error('REAL_E2E_OPERATOR_DECISION_IDENTITY_MISMATCH');
         const issuedAt = typeof state.resolved_at === 'string'
           ? state.resolved_at
           : new Date().toISOString();
