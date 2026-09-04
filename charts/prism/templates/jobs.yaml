@@ -124,7 +124,7 @@ spec:
             - name: restore-proof
               image: {{ .Values.postgresql.image | quote }}
               command: ["sh", "-ec"]
-              args: ["set -eu; file=$(find /backups -type f -name 'prism-*.dump' -print | sort | tail -n 1); test -n \"$file\"; (cd /backups && sha256sum --check $(basename $file).sha256 && sha256sum --check $(basename $file).manifest.sha256); dropdb --if-exists prism_restore_proof; createdb prism_restore_proof; pg_restore --dbname=prism_restore_proof $file; psql --dbname=prism_restore_proof --set=ON_ERROR_STOP=1 --command='SELECT count(*) FROM prism.project; SELECT count(*) FROM prism.design_revision; SELECT count(*) FROM prism.baseline;' >/dev/null; dropdb prism_restore_proof"]
+              args: ["set -eu; cleanup(){ status=$?; trap - EXIT; cleanup_status=0; dropdb --if-exists prism_restore_proof || cleanup_status=$?; if [ $status -ne 0 ]; then exit $status; fi; exit $cleanup_status; }; trap cleanup EXIT; file=$(find /backups -type f -name 'prism-*.dump' -print | sort | tail -n 1); test -n \"$file\"; (cd /backups && sha256sum --check $(basename $file).sha256 && sha256sum --check $(basename $file).manifest.sha256); dropdb --if-exists prism_restore_proof; createdb prism_restore_proof; pg_restore --dbname=prism_restore_proof $file; psql --dbname=prism_restore_proof --set=ON_ERROR_STOP=1 --command='SELECT count(*) FROM prism.project; SELECT count(*) FROM prism.design_revision; SELECT count(*) FROM prism.baseline;' >/dev/null"]
               env:
                 - { name: PGHOST, value: prism-postgresql }
                 - { name: PGDATABASE, value: prism }
