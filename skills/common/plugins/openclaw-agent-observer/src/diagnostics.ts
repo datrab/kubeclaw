@@ -28,9 +28,9 @@ function unsubscribe(subscription: DiagnosticSubscription): void {
 }
 
 export function subscribeModelUsageDiagnostics(handler: DiagnosticHandler): () => void {
-  const sdk = require('openclaw/plugin-sdk') as PluginSdkModule;
+  const sdk = require('openclaw/plugin-sdk/diagnostic-runtime') as PluginSdkModule;
   if (typeof sdk.onDiagnosticEvent !== 'function') {
-    throw new Error('openclaw/plugin-sdk onDiagnosticEvent is unavailable');
+    throw new Error('openclaw/plugin-sdk/diagnostic-runtime onDiagnosticEvent is unavailable');
   }
   const subscription = sdk.onDiagnosticEvent((event: unknown) => {
     if (!event || typeof event !== 'object' || Array.isArray(event)) return;

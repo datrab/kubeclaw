@@ -160,6 +160,11 @@ for (const [label, dockerfile] of [
   );
   assert.match(
     dockerfile,
+    /require\('openclaw\/plugin-sdk\/diagnostic-runtime'\)[^\n]*onDiagnosticEvent/,
+    `${label} must verify the focused observer diagnostics SDK contract against its OpenClaw base`,
+  );
+  assert.match(
+    dockerfile,
     /NPM_CONFIG_CACHE=\/tmp\/openclaw-plugin-npm-cache[^\n]*openclaw plugins install "npm:@openclaw\/acpx@\$\{OPENCLAW_PLUGIN_VERSION\}" --force --accept-capabilities[\s\S]*openclaw plugins install "npm:@openclaw\/discord@\$\{OPENCLAW_PLUGIN_VERSION\}" --force --accept-capabilities[\s\S]*npm pack[\s\S]*openclaw-plugin-home\/packs[\s\S]*openclaw-plugin-home\/npm-cache/,
     `${label} must package pinned plugins and their npm cache for offline runtime installation`,
   );

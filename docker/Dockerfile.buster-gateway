@@ -19,6 +19,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 && cp -R /tmp/contracts/agent-observability/v1/src/. src/generated/agent-observability/ \
 && ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
 && node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
+&& (cd /app && node -e "const sdk=require('openclaw/plugin-sdk/diagnostic-runtime'); if(typeof sdk.onDiagnosticEvent!=='function') throw new Error('OpenClaw diagnostic SDK contract unavailable')") \
 && mkdir -p /out/extensions/kubeclaw-agent-observer \
 && cp -R \
 /tmp/skills/common/plugins/openclaw-agent-observer/package.json \

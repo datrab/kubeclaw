@@ -18,6 +18,18 @@ assert.equal(
   'the self-contained contract source must be generated before validation',
 );
 
+const diagnosticsSource = fs.readFileSync(path.resolve('src/diagnostics.ts'), 'utf8');
+assert.match(
+  diagnosticsSource,
+  /require\('openclaw\/plugin-sdk\/diagnostic-runtime'\)/,
+  'model usage diagnostics must use the focused OpenClaw SDK export',
+);
+assert.doesNotMatch(
+  diagnosticsSource,
+  /require\('openclaw\/plugin-sdk'\)/,
+  'the removed OpenClaw plugin SDK root export must not return',
+);
+
 const manifest = JSON.parse(fs.readFileSync('openclaw.plugin.json', 'utf8'));
 assert.equal(manifest.activation.onStartup, true);
 assert.equal(fs.existsSync('plugin.json'), false);
