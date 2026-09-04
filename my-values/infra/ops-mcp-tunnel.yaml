@@ -64,8 +64,10 @@ spec:
             limits:
               cpu: 250m
               memory: 256Mi
+          # Upstream tunnel-client currently runs as root in its Alpine image.
+          # Keep privileges constrained without forcing runAsNonRoot, which would
+          # prevent the image from starting.
           securityContext:
             allowPrivilegeEscalation: false
-            runAsNonRoot: true
             capabilities:
               drop: ["ALL"]
