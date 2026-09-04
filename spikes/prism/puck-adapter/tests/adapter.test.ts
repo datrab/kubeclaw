@@ -63,6 +63,18 @@ describe("Puck adapter", () => {
     expect(result.revision).toBe(2);
   });
 
+  it("assigns fresh IDs to every node in a duplicated subtree", () => {
+    const result = applyOperation(document, {
+      type: "node.duplicate",
+      nodeId: "grid",
+      newNodeId: "grid-copy",
+    });
+    const original = result.root.children?.find((node) => node.id === "grid");
+    const duplicate = result.root.children?.find((node) => node.id === "grid-copy");
+    expect(duplicate?.children?.[0]?.id).not.toBe(original?.children?.[0]?.id);
+    expect(duplicate?.children?.[0]?.id).toBe("grid-copy-copy-1");
+  });
+
   it("rejects Puck state replacement as a canonical operation", () => {
     const current = state(projectDocument(document));
     expect(() => actionToOperation({ type: "setData", data: {} }, current, current)).toThrow(
