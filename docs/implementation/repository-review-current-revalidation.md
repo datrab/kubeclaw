@@ -10,10 +10,10 @@
 
 ## Disposition summary
 
-- Latest inventory: 34 accepted/current, 3 already fixed by removal, 4 rejected, 1 needs additional reproduction.
+- Latest inventory: 33 accepted/current, 3 already fixed by removal, 5 rejected, 1 needs additional reproduction.
 - Older inventory: 1 accepted/current regression and 12 already fixed.
 - Additional sibling regression found during revalidation: 1 accepted/current.
-- Actionable backlog: 36 items (3 P1, 28 P2, 5 P3).
+- Actionable backlog: 35 items (3 P1, 27 P2, 5 P3).
 
 The live-PID resource-lock item is not accepted as a defect yet. Current tests explicitly preserve an expired lock while its process is alive to prevent dual execution. A task-lifecycle reproduction is required before changing that safety boundary.
 
@@ -90,7 +90,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 | C34 | needs additional reproduction | P2 | nova-core/effect locks | state-recovery | The reported behavior exists, but V11 explicitly requires an expired lock to remain while its owner process is alive to prevent dual execution. Reproduce a dead task within a live process and prove safe ownership transfer before changing policy. | V11 |
 | C35 | accepted/current | P2 | tailscale-exposure runtime | state-recovery | Cancellation/failure after the enabling patch has no compensating patch to turn exposure off. | tailscale implementation contracts plus source trace |
 | C36 | rejected | P2 | pipeline-observability Go contract | contracts-data | The proposed `9007199254740993` regression is not valid RFC 8785 wire JSON: strict decode rejects it before unmarshalling because canonicalization changes the unrepresentable odd integer. Canonical numeric inputs that pass the wire gate already share the IEEE-754 representation used by the digest path. | V26 |
-| C37 | accepted/current | P2 | namespace-controller | deployment-operations | Validation accepts `cleanupPolicy=retain`; `expireLease` does not branch on it before namespace deletion. | V24 |
+| C37 | rejected | P2 | namespace-controller | deployment-operations | The lifecycle contract defines `retain` as suppressing client-side immediate release so a preview remains active until its required TTL. TTL expiry and explicit lease deletion intentionally delete the owned namespace; branching on `retain` during expiry would leak it. The runtime passes `retentionMode` into `cleanupPolicy` and uses it only to decide whether the client releases immediately. | `go test ./cmd/buster-namespace-controller` plus runtime/controller/docs caller trace |
 | C38 | accepted/current | P2 | buster kubernetes-fixture runtime | deployment-operations | Lease/pod poll loops pass fixed 15-second child timeouts even when less remains; service polling already uses the correct remaining-deadline pattern. | V12 |
 | C39 | accepted/current | P3 | artifact-store tests | simplification | Package-boundary file list repeats `src/adapter.ts`. | package test plus source assertion |
 | C40 | accepted/current | P2 | size-budget provider | security-trust | `verifiedFile` closes the checked descriptor and returns a path; baseline/archive readers reopen it later. | V09 |
@@ -129,7 +129,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 4. P2 security/trust: `C12`, `C13`, `C35`, `C40`, `N01`.
 5. P2 state/recovery/concurrency: `C05`, `C07`, `C26`, `C28`, `C31`; keep `C34` outside the fix queue until reproduced.
 6. P2 contracts/data integrity: `C04`, `C10`, `C11`, `C14`, `C20`, `C22`, `C32`, `C42`.
-7. P2 deployment/operations: `C03`, `C06`, `C15`, `C17`, `C21`, `C29`, `C37`, `C38`, `C41`, `O04`.
+7. P2 deployment/operations: `C03`, `C06`, `C15`, `C17`, `C21`, `C29`, `C38`, `C41`, `O04`.
 8. P3 simplification: `C01`, `C23`, `C27`, `C33`, `C39`.
 9. Review-plugin reporting, current-branch revalidation, backlog output, and measured efficiency changes.
 
