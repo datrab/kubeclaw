@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { KubernetesFixtureCapabilityInvoker } from '@kubeclaw/buster-engine';
+import { KubernetesFixtureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts';
 import { resolveExecutable } from './support/resolve-executable.mts';
 
 const pluginRoot = path.resolve('skills/buster/plugins');
@@ -104,6 +104,41 @@ try {
       serviceName: 'app', servicePort: 8080, retentionSeconds: 300, retentionMode: 'delete',
       readinessTimeoutMs: 10_000, secretReferences: ['not-approved'],
     } } as any, new AbortController().signal), /KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/u);
+
+  const deadlineManifest = `${validManifest}---\napiVersion: v1\nkind: Service\nmetadata:\n  name: app\nspec:\n  selector:\n    app: app\n  ports:\n    - port: 8080\n      targetPort: 8080\n`;
+  const deadlinePath = path.join(temporary, 'deadline.yaml');
+  fs.writeFileSync(deadlinePath, deadlineManifest);
+  const podTimeouts: number[] = [];
+  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary,
+    kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
+    leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
+    allowedSecretReferences: [], maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+    maximumRetentionSeconds: 3600, maximumExecutionMs: 2_000, pollIntervalMs: 50,
+    async execute(_command, args, options) {
+      if (args[0] === 'auth') return { stdout: 'yes\n' };
+      if (args[0] === 'apply') return { stdout: '{}' };
+      if (args[0] === 'delete') return { stdout: '{}' };
+      if (args[0] === 'get' && args[1] === 'busternamespacelease') return { stdout: JSON.stringify({ status: {
+        phase: 'Ready', namespaceName: 'test-deadline', createdAt: new Date().toISOString(),
+      } }) };
+      if (args[0] === 'get' && args[1] === 'pods') {
+        podTimeouts.push(Number(options.timeout));
+        return { stdout: '{"items":[]}' };
+      }
+      throw new Error(`unexpected kubectl operation: ${args.join(' ')}`);
+    },
+  });
+  await assert.rejects(() => deadlineCapability.invoke('kubernetes.fixture', { operation: 'prepare',
+    resource: { type: 'kubernetes.fixture', canonicalId: 'kubernetes-fixture:attempt:deadline' }, payload: {
+      leaseName: 'test-deadline', namespaceName: 'test-deadline', namespacePrefix: 'test', project: 'proof',
+      immutableImage: `registry.local/app@${digest}`, imageDigest: digest, manifestPath: deadlinePath,
+      manifestDigest: `sha256:${crypto.createHash('sha256').update(deadlineManifest).digest('hex')}`,
+      serviceName: 'app', servicePort: 8080, retentionSeconds: 300, retentionMode: 'delete',
+      readinessTimeoutMs: 1_000, secretReferences: [],
+    } } as any, new AbortController().signal), /KUBERNETES_FIXTURE_READINESS_TIMEOUT/u);
+  assert.ok(podTimeouts.length > 1);
+  assert.ok(podTimeouts.every((timeout) => timeout > 0 && timeout <= 1_000),
+    `pod polls exceeded their remaining readiness budget: ${podTimeouts.join(',')}`);
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 
 console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-implementation', authority: 'replacement-only',
