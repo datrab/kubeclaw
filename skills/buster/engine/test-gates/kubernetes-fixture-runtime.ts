@@ -230,7 +230,8 @@ function validatePodSecurity(spec: JsonObject): void {
 }
 
 function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number,
-  allowedRegistryPrefixes: readonly string[]): { resources: number; workloads: number } {
+  allowedRegistryPrefixes: readonly string[], serviceName: string, servicePort: number,
+  expectedServiceTargetPort: number | null): { resources: number; workloads: number; serviceTargetPort: number } {
   let loaded: unknown[] = [];
   try { loadAll(bytes.toString('utf8'), (value) => { loaded.push(value); }); }
   catch (error) { throw new Error('KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED', { cause: error }); }
@@ -238,6 +239,10 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
   if (documents.length < 1 || documents.length > maximumResources) throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
   let workloads = 0;
   let matchedImage = false;
+  let matchedService = false;
+  let serviceTargetPortName: string | null = null;
+  let resolvedServiceTargetPort: number | null = null;
+  const namedContainerPorts = new Map<string, Set<number>>();
   for (const document of documents) {
     const apiVersion = text(document.apiVersion, 'apiVersion', 128);
     const kind = text(document.kind, 'kind', 128);
@@ -262,6 +267,16 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
       if (annotations['tailscale.com/expose'] !== undefined) {
         throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
       }
+      if (metadata.name === serviceName) {
+        if (matchedService) throw new Error('KUBERNETES_FIXTURE_SERVICE_DUPLICATE');
+        matchedService = true;
+        const ports = Array.isArray(spec.ports) ? spec.ports.map((entry) => object(entry, 'service.port')) : [];
+        const selected = ports.filter((entry) => entry.port === servicePort);
+        if (selected.length !== 1) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH');
+        const target = selected[0]!.targetPort ?? servicePort;
+        if (typeof target === 'number') resolvedServiceTargetPort = target;
+        if (typeof target === 'string') serviceTargetPortName = target;
+      }
     }
     for (const spec of podSpecs(document)) {
       workloads += 1;
@@ -271,20 +286,39 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
         if (containers === undefined) continue;
         if (!Array.isArray(containers)) throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
         for (const container of containers) {
-          const image = text(object(container, 'container').image, 'container.image', 2048);
+          const containerObject = object(container, 'container');
+          const image = text(containerObject.image, 'container.image', 2048);
           const parsed = IMMUTABLE_IMAGE.exec(image);
           if (!parsed) throw new Error(`KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED:${image}`);
           if (!allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
             throw new Error(`KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED:${image}`);
           }
           if (image === immutableImage) matchedImage = true;
+          for (const rawPort of Array.isArray(containerObject.ports) ? containerObject.ports : []) {
+            const port = object(rawPort, 'container.port');
+            if (typeof port.name === 'string' && Number.isSafeInteger(port.containerPort)) {
+              const values = namedContainerPorts.get(port.name) ?? new Set<number>();
+              values.add(Number(port.containerPort));
+              namedContainerPorts.set(port.name, values);
+            }
+          }
         }
       }
     }
   }
   if (workloads < 1) throw new Error('KUBERNETES_FIXTURE_WORKLOAD_REQUIRED');
   if (!matchedImage) throw new Error('KUBERNETES_FIXTURE_IMAGE_NOT_USED');
-  return { resources: documents.length, workloads };
+  if (!matchedService) throw new Error('KUBERNETES_FIXTURE_SERVICE_REQUIRED');
+  if (serviceTargetPortName !== null) {
+    const ports = namedContainerPorts.get(serviceTargetPortName);
+    if (ports?.size !== 1) throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH');
+    resolvedServiceTargetPort = [...ports][0]!;
+  }
+  if (resolvedServiceTargetPort === null || resolvedServiceTargetPort < 1 || resolvedServiceTargetPort > 65_535
+    || (expectedServiceTargetPort !== null && resolvedServiceTargetPort !== expectedServiceTargetPort)) {
+    throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH');
+  }
+  return { resources: documents.length, workloads, serviceTargetPort: resolvedServiceTargetPort };
 }
 
 function detail(error: unknown): string {
@@ -514,20 +548,23 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (!DIGEST.test(manifestDigest)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID');
     const manifestPath = contained(this.#root, payload.manifestPath);
     const bytes = manifestBytes(manifestPath, manifestDigest, this.#maximumManifestBytes);
-    const facts = inspectManifest(bytes, immutableImage, this.#maximumResources, this.#registryPrefixes);
     const serviceName = text(payload.serviceName, 'serviceName', 63);
     if (!DNS_LABEL.test(serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
     const servicePort = integer(payload.servicePort, 'servicePort', 1, 65_535);
+    const expectedServiceTargetPort = payload.serviceTargetPort === undefined
+      ? null : integer(payload.serviceTargetPort, 'serviceTargetPort', 1, 65_535);
+    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);
+    if (secretReferences.some((name) => !this.#secretReferences.has(name))) {
+      throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
+    }
+    const facts = inspectManifest(bytes, immutableImage, this.#maximumResources, this.#registryPrefixes,
+      serviceName, servicePort, expectedServiceTargetPort);
     const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, this.#maximumRetentionSeconds);
     const retentionMode = text(payload.retentionMode, 'retentionMode', 6);
     if (retentionMode !== 'delete' && retentionMode !== 'retain') {
       throw new Error('KUBERNETES_FIXTURE_RETENTION_MODE_INVALID');
     }
     const readinessTimeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1_000, this.#maximumExecutionMs);
-    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);
-    if (secretReferences.some((name) => !this.#secretReferences.has(name))) {
-      throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
-    }
     const credentialsValue = payload.testCredentials === undefined ? null : object(payload.testCredentials, 'testCredentials');
     let testCredentials: JsonObject | null = null;
     if (credentialsValue) {
@@ -544,7 +581,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       metadata: { name: leaseName, namespace: this.#controllerNamespace,
         labels: { 'openclaw.io/buster-scope': request.resource.canonicalId.replace(/[^A-Za-z0-9._-]/gu, '-').slice(0, 63) } },
       spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
-        purpose: 'gate', serviceName, servicePort, cleanupPolicy: retentionMode,
+        purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
         ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
         secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
     };

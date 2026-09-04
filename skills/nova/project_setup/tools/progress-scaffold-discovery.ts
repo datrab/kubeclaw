@@ -98,6 +98,7 @@ function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | unde
   delete config.a11y;
   delete config.perf;
   delete config['visual-reg'];
+  delete config.e2e;
   if (isPlainObject(config.serve)) {
     for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
       'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
@@ -379,6 +380,7 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   addContainerBuild: boolean; addHttp: boolean; addSizeBudget: boolean; addExposure: boolean; addApi: boolean; addA11y: boolean; legacyUnitSelected: boolean;
   legacyPerfSelected: boolean;
   legacyVisualSelected: boolean;
+  legacyE2eSelected: boolean;
   projectSrcDir: string; repositoryRoot: string; swarmDir: string; scopeId: string;
 }): AnyRecord {
   const scope = objectOrEmpty(existingScope);
@@ -399,6 +401,9 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   }
   if (options.legacyVisualSelected) {
     throw new Error(`LEGACY_VISUAL_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.visual@1 in .swarm/pipeline.json`);
+  }
+  if (isPlainObject(objectOrEmpty(testConfig).e2e) || options.legacyE2eSelected) {
+    throw new Error(`LEGACY_E2E_CONFIGURATION_RETIRED:${options.scopeId}: define a project-owned Playwright config and kubeclaw.playwright@1 in .swarm/pipeline.json`);
   }
   if (options.addExposure && !deploymentNode) {
     throw new Error(`LEGACY_TAILSCALE_PREVIEW_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.kubernetes-fixture@1 before Tailscale exposure`);
@@ -482,6 +487,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addA11y: Array.isArray(selected) && selected.includes('a11y'),
         legacyPerfSelected: Array.isArray(selected) && selected.includes('perf'),
         legacyVisualSelected: Array.isArray(selected) && selected.includes('visual-reg'),
+        legacyE2eSelected: Array.isArray(selected) && selected.includes('e2e'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
@@ -501,6 +507,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         addA11y: Array.isArray(selected) && selected.includes('a11y'),
         legacyPerfSelected: Array.isArray(selected) && selected.includes('perf'),
         legacyVisualSelected: Array.isArray(selected) && selected.includes('visual-reg'),
+        legacyE2eSelected: Array.isArray(selected) && selected.includes('e2e'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];

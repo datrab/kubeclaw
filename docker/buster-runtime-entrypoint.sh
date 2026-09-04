@@ -39,6 +39,7 @@ plan_state_dir="${BUSTER_PLAN_STATE_DIR:-/var/lib/buster-v2/plan-jobs}"
 plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/tmp/buster-plan-runs}"
 legacy_state_dir="${BUSTER_LEGACY_STATE_DIR:-/var/lib/buster-v2/legacy-jobs}"
 legacy_run_dir="${BUSTER_LEGACY_RUN_DIR:-/tmp/buster-legacy-runs}"
+browser_playwright_cgroup_root="${BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT:?BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT is required}"
 
 cleanup() {
   if [ -n "$worker_pid" ]; then
@@ -63,6 +64,30 @@ until buildctl --addr "$socket" debug workers >/dev/null 2>&1; do
   fi
   sleep 1
 done
+
+# The pod mounts one dedicated cgroup v2 subtree. The worker never receives
+# the host cgroup root. Production browser execution cannot use sampled
+# accounting because short-lived descendants could escape a sample.
+test -d "$browser_playwright_cgroup_root"
+test -f "$browser_playwright_cgroup_root/cgroup.controllers"
+if [ "$(realpath "$browser_playwright_cgroup_root")" != "/var/run/kubeclaw-browser-cgroup" ]; then
+  echo "browser Playwright cgroup root is unsafe" >&2
+  exit 1
+fi
+for controller in pids memory cpu; do
+  grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.controllers" \
+    || { echo "required browser cgroup controller is unavailable: $controller" >&2; exit 1; }
+done
+if [ -s "$browser_playwright_cgroup_root/cgroup.procs" ]; then
+  echo "browser Playwright cgroup subtree contains host processes" >&2
+  exit 1
+fi
+printf '+pids +memory +cpu' >"$browser_playwright_cgroup_root/cgroup.subtree_control"
+for controller in pids memory cpu; do
+  grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.subtree_control" \
+    || { echo "required browser cgroup controller is not delegated: $controller" >&2; exit 1; }
+done
+chown builder:builder "$browser_playwright_cgroup_root" "$browser_playwright_cgroup_root/cgroup.procs" "$browser_playwright_cgroup_root/cgroup.subtree_control"
 
 # BuildKit creates the socket as the non-root builder. Apply its shared-group
 # permissions as that owner; the restricted supervisor intentionally does not
@@ -130,6 +155,7 @@ RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_REFERENCE="$registry" CONTRO
   BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \
   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
+  BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT="$browser_playwright_cgroup_root" \
   BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
@@ -165,7 +191,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
-  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual'],
+  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright'],
   directCommand: {
     executableCatalog: {
       node: '/usr/local/bin/node',
@@ -242,6 +268,28 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumResultBytes: 134217728,
     maximumScreenshotBytes: 16777216,
     maximumMasksPerCombination: 32,
+  },
+  browserPlaywright: {
+    allowedOrigins: exactBrowserOrigins,
+    allowedTargetPorts: [18080],
+    playwrightExecutable: '/app/node_modules/.bin/playwright',
+    sandboxExecutable: '/opt/kubeclaw-trusted/plugin-sandbox',
+    runtimeNodeModules: '/app/node_modules',
+    browsersPath: '/ms-playwright',
+    readOnlyRoots: ['/app', '/ms-playwright', '/usr', '/lib', '/lib64', '/etc/fonts', '/etc/hosts', '/etc/nsswitch.conf', '/etc/resolv.conf', '/etc/ssl', '/proc', '/sys', '/dev'],
+    maximumWorkers: 4,
+    maximumExecutionMs: 900000,
+    maximumOutputBytes: 16777216,
+    maximumResultBytes: 67108864,
+    maximumArtifactBytes: 268435456,
+    maximumArtifactFiles: 256,
+    maximumProcesses: 128,
+    maximumMemoryBytes: 4294967296,
+    maximumCpuMillis: 900000,
+    terminationGraceMs: 5000,
+    cgroupRoot: process.env.BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT,
+    runAsUid: 1001,
+    runAsGid: 1000,
   },
 }, null, 2)}\n`);
 NODE

@@ -103,6 +103,8 @@ for (const receipt of [
     lighthouseVersion: '13.4.1', reportCount: 3 },
   { ...browserReceiptBase, schemaVersion: 'nova-visual-production-preflight.v1', suite: 'visual-reg',
     browserVersion: 'real-browser-version' },
+  { ...browserReceiptBase, schemaVersion: 'nova-e2e-production-preflight.v1', suite: 'e2e',
+    browserProjects: ['chromium'] },
 ]) {
   const browserSigned = attestProductionReceipt(receipt, keys.privateKey);
   assert.deepEqual(verifyProductionReceipt(browserSigned, keys.publicKey, {

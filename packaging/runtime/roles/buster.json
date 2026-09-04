@@ -27,6 +27,7 @@
     "kubeclaw.axe",
     "kubeclaw.lighthouse",
     "kubeclaw.visual",
+    "kubeclaw.playwright",
     "kubeclaw.command-runner",
     "kubeclaw.network-http",
     "kubeclaw.openapi",

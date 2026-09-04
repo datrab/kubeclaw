@@ -241,7 +241,7 @@ node /app/skills/pipeline.ts --project <project> --nova-channel <id> --resume
 | `security` | ✅ | ❌ |
 | `kubeclaw.direct-command@1` plan nodes | ✅ (pytest) | ✅ (vitest) |
 | `a11y`, `perf` | ❌ | ✅ |
-| `e2e` | ❌ | ✅ (needs test declarations) |
+| `kubeclaw.playwright@1` plan nodes | ❌ | ✅ (needs a project Playwright configuration) |
 | `kubeclaw.visual@1` plan nodes | ❌ | ✅ (needs reviewed manifest, profiles, and PNG baselines) |
 | `kubeclaw.kubernetes-fixture@1` plan nodes | ✅ (deployment modules) | ❌ |
 | Root `kubeclaw.lint.full` declaration | ✅ (Kubernetes inputs) | ✅ (Kubernetes inputs) |

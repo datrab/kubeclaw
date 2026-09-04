@@ -25,6 +25,13 @@ Required. Set the Kubernetes Service DNS label.
 
 Required. Set an integer from 1 through 65535.
 
+### `serviceTargetPort`
+
+Optional. Set an integer from 1 through 65535 only when you must require an
+exact backend container port. The provider always resolves the selected
+Service port to its numeric backend port from the checked manifest. A declared
+value must match that result.
+
 ### `namespacePrefix`
 
 Optional. The default is `test`. Use a DNS-label prefix with 42 characters or

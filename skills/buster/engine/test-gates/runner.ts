@@ -2,6 +2,8 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import {
+  E2E_RESULT_SCHEMA_ID,
+  validateE2eProviderDetails,
   validatePipelineTestGateContract,
   type AttemptResultV1,
   type DeclaredEvidenceV1,
@@ -325,6 +327,11 @@ function validateCounts(result: ProviderResultV1): void {
     throw new Error("TEST_PROVIDER_COUNTS_INVALID");
   if (result.outcome === "passed" && failed !== 0)
     throw new Error("TEST_PROVIDER_OUTCOME_INVALID");
+}
+
+function validateProviderDetails(entry: TestProviderRegistryEntry, result: ProviderResultV1): void {
+  if (entry.registration.contractId === 'kubeclaw.playwright@1') validateE2eProviderDetails(result.providerDetails);
+  else if (result.providerDetails?.schemaId === E2E_RESULT_SCHEMA_ID) validateE2eProviderDetails(result.providerDetails);
 }
 
 function validateEvidenceDeclarations(
@@ -1224,6 +1231,7 @@ export class TestPlanRunner {
           throw new Error("TEST_PROVIDER_RESULT_LIMIT");
         validatePipelineTestGateContract("providerResult", providerResult);
         validateCounts(providerResult);
+        validateProviderDetails(entry, providerResult);
         validateEvidenceDeclarations(entry, providerResult.evidenceFiles);
         validateProviderReports(entry, providerResult);
         providerResult = freeze(structuredClone(providerResult));

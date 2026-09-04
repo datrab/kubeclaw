@@ -1877,7 +1877,7 @@ cmd_teardown_prism() {
 
 sign_and_store_production_receipt() {
   local receipt_tmp=$1 receipt_file=$2 expected_runtime_revision=$3
-  local receipt_private_key receipt_public_key buster_runtime_revision receipt_signed
+  local receipt_private_key receipt_public_key buster_runtime_revision observed_buster_revision receipt_signed
   receipt_private_key=${KUBECLAW_PRODUCTION_RECEIPT_PRIVATE_KEY_FILE:-}
   receipt_public_key=$PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE
   if [[ -z $receipt_private_key || ! -f $receipt_private_key || ! -f $receipt_public_key ]]; then
@@ -1895,11 +1895,16 @@ sign_and_store_production_receipt() {
     err "The production receipt has no valid Buster runtime revision."
     return 1
   fi
+  observed_buster_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-buster -c kubeclaw -- printenv KUBECLAW_BUILD_REVISION)
+  if [[ ! $observed_buster_revision =~ ^[a-f0-9]{40,64}$ || $buster_runtime_revision != "$observed_buster_revision" ]]; then
+    err "The authenticated worker revision does not match the deployed Buster revision."
+    return 1
+  fi
   receipt_signed=$(mktemp)
   if ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" sign \
-    "$receipt_tmp" "$receipt_private_key" "$expected_runtime_revision" "$buster_runtime_revision" "$receipt_signed" \
+    "$receipt_tmp" "$receipt_private_key" "$expected_runtime_revision" "$observed_buster_revision" "$receipt_signed" \
     || ! node "$REPO_DIR/scripts/production-receipt-attestation.mjs" verify \
-    "$receipt_signed" "$receipt_public_key" "$expected_runtime_revision" "$buster_runtime_revision"; then
+    "$receipt_signed" "$receipt_public_key" "$expected_runtime_revision" "$observed_buster_revision"; then
     rm -f "$receipt_signed"
     return 1
   fi
@@ -2301,6 +2306,31 @@ cmd_nova_visual_preflight() {
   rm -f "$receipt_tmp" "$receipt_unsigned"; log "Nova → Buster visual production preflight passed"
 }
 
+cmd_nova_e2e_preflight() {
+  header "Nova → Buster End-to-End Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_E2E_PREFLIGHT_IMAGE:-}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned port-8080 HTTP image as argument 2 or KUBECLAW_E2E_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_file runtime_repo_root runtime_revision buster_runtime_revision lease_name namespace_name
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  [[ $runtime_repo_root == /home/node/.openclaw/workspace/git-repo ]] || { err "The deployed Nova REPO_ROOT does not match the chart contract."; return 1; }
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  [[ $runtime_revision =~ ^[a-f0-9]{40,64}$ ]] || { err "The deployed Nova source revision is invalid."; return 1; }
+  receipt_tmp=$(mktemp); receipt_file="$REPO_DIR/dist/verification/e2e-production-receipt.json"
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- env "KUBECLAW_E2E_PREFLIGHT_IMAGE=$immutable_image" node "$runtime_repo_root/tests/verification/e2e/nova-e2e-production-preflight.mts" | tee "$receipt_tmp"; then rm -f "$receipt_tmp"; return 1; fi
+  if ! node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));if(v.schemaVersion!=="nova-e2e-production-preflight.v1"||v.suite!=="e2e"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.resourceEnforcement!=="cgroup-v2"||v.immutableImage!==process.argv[2]||!/^sha256:[a-f0-9]{64}$/.test(v.imageDigest??"")||!v.immutableImage.endsWith(`@${v.imageDigest}`)||!Array.isArray(v.browserProjects)||v.browserProjects.length<1||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="real-pipeline-e2e-nginx"||v.resources?.servicePort!==18080)process.exit(1)' "$receipt_tmp" "$immutable_image"; then err "The end-to-end production receipt is invalid."; rm -f "$receipt_tmp"; return 1; fi
+  lease_name=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.resources.leaseName)' "$receipt_tmp"); namespace_name=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.resources.namespace)' "$receipt_tmp")
+  if ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m || ! kubectl wait --for=delete "busternamespacelease/$lease_name" -n "$NAMESPACE" --timeout=2m; then err "Timed out while waiting for end-to-end preflight cleanup."; rm -f "$receipt_tmp"; return 1; fi
+  if [[ -n $(kubectl get namespace "$namespace_name" --ignore-not-found -o name) || -n $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then err "The end-to-end preflight left cluster resources."; rm -f "$receipt_tmp"; return 1; fi
+  receipt_unsigned=$(mktemp); node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));fs.writeFileSync(process.argv[2],`${JSON.stringify({...v,cleanupVerified:true,clusterCleanupObserved:true},null,2)}\n`,{mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]] || ! sign_and_store_production_receipt "$receipt_unsigned" "$receipt_file" "$runtime_revision"; then rm -f "$receipt_tmp" "$receipt_unsigned"; return 1; fi
+  rm -f "$receipt_tmp" "$receipt_unsigned"; log "Nova → Buster end-to-end production preflight passed"
+}
+
 cmd_nova_tailscale_preflight() {
   header "Nova → Buster Tailscale Production Preflight"
   require_command kubectl
@@ -2415,7 +2445,7 @@ const expectedSuiteIds = [
 const actualSuiteIds = suites.map((suite) => suite.id).sort();
 const required = suites.filter((suite) => Object.hasOwn(suite, 'productionAcceptance'))
   .map((suite) => suite.id).sort();
-const orchestrated = ['a11y', 'build', 'health', 'k8s', 'perf', 'tailscale-preview', 'unit', 'visual-reg'];
+const orchestrated = ['a11y', 'build', 'e2e', 'health', 'k8s', 'perf', 'tailscale-preview', 'unit', 'visual-reg'];
 const incomplete = suites.filter((suite) => suite.implementation !== 'complete'
   || suite.sourceCutover !== 'complete').map((suite) => suite.id);
 if (JSON.stringify(actualSuiteIds) !== JSON.stringify(expectedSuiteIds)) {
@@ -2446,6 +2476,7 @@ NODE
   cmd_nova_a11y_preflight nova-a11y-preflight "$immutable_image"
   cmd_nova_lighthouse_preflight nova-lighthouse-preflight "$immutable_image"
   cmd_nova_visual_preflight nova-visual-preflight "$immutable_image"
+  cmd_nova_e2e_preflight nova-e2e-preflight "$immutable_image"
   cmd_nova_tailscale_preflight nova-tailscale-preflight "$immutable_image"
 
   log "All production-required suite preflights passed"
@@ -2671,6 +2702,9 @@ case "${1:-}" in
   nova-visual-preflight)
     cmd_nova_visual_preflight "$@"
     ;;
+  nova-e2e-preflight)
+    cmd_nova_e2e_preflight "$@"
+    ;;
   nova-tailscale-preflight)
     cmd_nova_tailscale_preflight "$@"
     ;;
@@ -2769,6 +2803,8 @@ case "${1:-}" in
     echo "                    Verify real Lighthouse performance through Nova and Buster v2"
     echo "  nova-visual-preflight [image]"
     echo "                    Verify real browser visual comparison through Nova and Buster v2"
+    echo "  nova-e2e-preflight [image]"
+    echo "                    Verify real Playwright end-to-end execution through Nova and Buster v2"
     echo "  nova-tailscale-preflight [image]"
     echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
     echo "  nova-production-preflights [image]"

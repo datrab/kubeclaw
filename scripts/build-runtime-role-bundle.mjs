@@ -23,7 +23,7 @@ assert(fs.existsSync(isolationLauncher), 'plugin isolation launcher is not built
 assert(fs.statSync(isolationLauncher).isFile() && (fs.statSync(isolationLauncher).mode & 0o111) !== 0,
   'plugin isolation launcher is not executable');
 
-function selectedFiles(sourceRoot, singleFile, excludedDirectories = ['dist', 'node_modules', 'tests']) {
+function selectedFiles(sourceRoot, singleFile, excludedDirectories = ['dist', 'node_modules', 'tests', 'test-results', 'playwright-report', '.playwright']) {
   if (singleFile) return [singleFile];
   const result = [];
   function visit(relative) {

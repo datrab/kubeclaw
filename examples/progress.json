@@ -704,7 +704,6 @@
         "health",
         "a11y",
         "perf",
-        "e2e",
         "unit"
       ],
       "test_config": {
@@ -713,9 +712,6 @@
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "e2e": {
-          "tests_dir": ".swarm/modules/15-dashboard-core-pages/tests"
         },
         "unit": {
           "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
@@ -743,7 +739,6 @@
         "health",
         "a11y",
         "perf",
-        "e2e",
         "unit"
       ],
       "test_config": {
@@ -752,9 +747,6 @@
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "e2e": {
-          "tests_dir": ".swarm/modules/16-resource-pages/tests"
         },
         "unit": {
           "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"
@@ -782,7 +774,6 @@
         "health",
         "a11y",
         "perf",
-        "e2e",
         "unit"
       ],
       "test_config": {
@@ -791,9 +782,6 @@
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "e2e": {
-          "tests_dir": ".swarm/modules/17-feature-pages/tests"
         },
         "unit": {
           "test_cmd": "cd frontend && npm install && npx vitest run --reporter=verbose"

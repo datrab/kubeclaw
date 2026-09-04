@@ -99,6 +99,9 @@ export function validateTestConfig(
   if (isPlainObject(testConfig) && isPlainObject(testConfig['visual-reg'])) {
     diagnostics.push(diagnostic('form_check', `LEGACY_VISUAL_CONFIGURATION_RETIRED:${field}: define kubeclaw.visual@1 in .swarm/pipeline.json`, `${field}.visual-reg`));
   }
+  if (isPlainObject(testConfig) && isPlainObject(testConfig.e2e)) {
+    diagnostics.push(diagnostic('form_check', `LEGACY_E2E_CONFIGURATION_RETIRED:${field}: define kubeclaw.playwright@1 in .swarm/pipeline.json`, `${field}.e2e`));
+  }
   if (!Array.isArray(suites) || suites.length === 0) return;
   if (!isPlainObject(testConfig)) {
     diagnostics.push(diagnostic('form_check', `${field} must be an object when test_suites are configured`, field));

@@ -30,6 +30,6 @@
   ],
   "errorPrefixes": ["KUBERNETES_FIXTURE_"],
   "additionalErrors": ["KUBERNETES_FIXTURE_LEASE_FAILED", "KUBERNETES_FIXTURE_LEASE_REJECTED", "TEST_PROVIDER_FIXTURE_CLEANUP_REQUIRED"],
-  "configurationMarkerFields": ["image", "serviceName", "servicePort"],
+  "configurationMarkerFields": ["image", "serviceName", "servicePort", "serviceTargetPort"],
   "exampleFiles": ["contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json"]
 }

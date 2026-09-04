@@ -79,6 +79,68 @@ func TestEnsureControllerSecretAccessUsesOneTargetRoleBinding(t *testing.T) {
 	}
 }
 
+func TestBusterE2EEgressPolicyIsLeaseScoped(t *testing.T) {
+	item := &lease{}
+	item.Metadata.Name = "lease-a"
+	item.Metadata.UID = "uid-a"
+	item.Spec = map[string]interface{}{"servicePort": 18080, "serviceTargetPort": 80}
+
+	manifest, err := busterE2EEgressPolicy(item, "kubeclaw", "test-lease-a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	encoded, err := json.Marshal(manifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := string(encoded)
+	for _, required := range []string{
+		`"name":"` + busterE2EEgressPolicyName(item) + `"`,
+		`"namespace":"kubeclaw"`,
+		`"app.kubernetes.io/component":"buster"`,
+		`"kubeclaw/buster-lease":"lease-a"`,
+		`"kubeclaw/buster-lease-uid":"uid-a"`,
+		`"kubeclaw/e2e-target":"true"`,
+		`"port":18080`,
+		`"port":80`,
+		`"kubernetes.io/metadata.name":"kube-system"`,
+		`"k8s-app":"kube-dns"`,
+		`"port":53`,
+		`"protocol":"UDP"`,
+	} {
+		if !strings.Contains(text, required) {
+			t.Fatalf("lease-scoped E2E policy is missing %s: %s", required, text)
+		}
+	}
+
+	other := &lease{}
+	other.Metadata.Name = item.Metadata.Name
+	other.Metadata.UID = "uid-b"
+	if busterE2EEgressPolicyName(item) == busterE2EEgressPolicyName(other) {
+		t.Fatal("policy names must bind the immutable lease UID")
+	}
+
+	longItem := &lease{}
+	longItem.Metadata.Name = "lease-" + strings.Repeat("a", 100)
+	longItem.Metadata.UID = "uid-long"
+	longItem.Spec = map[string]interface{}{"servicePort": 18080, "serviceTargetPort": 80}
+	longManifest, err := busterE2EEgressPolicy(longItem, "kubeclaw", "test-long")
+	if err != nil {
+		t.Fatal(err)
+	}
+	longEncoded, err := json.Marshal(longManifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	wantLeaseLabel := leaseLabelValue(longItem)
+	if len(wantLeaseLabel) > 63 {
+		t.Fatalf("lease label exceeds Kubernetes limit: %d", len(wantLeaseLabel))
+	}
+	if strings.Count(string(longEncoded), `"kubeclaw/buster-lease":"`+wantLeaseLabel+`"`) != 2 {
+		t.Fatalf("metadata and selector must use the same sanitized lease label: %s", longEncoded)
+	}
+}
+
 func TestLegacyRunnerAccessDeletionRemovesRoleAndBinding(t *testing.T) {
 	var paths []string
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

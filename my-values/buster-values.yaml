@@ -133,6 +133,8 @@ extraContainers:
         value: registry-local.kubeclaw.svc.cluster.local:5001
       - name: CONTAINER_BUILD_REGISTRY_BASE_URL
         value: http://registry-local.kubeclaw.svc.cluster.local:5001
+      - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT
+        value: /var/run/kubeclaw-browser-cgroup
     ports:
       - name: plan-runtime
         containerPort: 28891
@@ -174,6 +176,8 @@ extraContainers:
       - name: buster-api-token
         mountPath: /var/run/buster-worker/kubernetes
         readOnly: true
+      - name: buster-browser-cgroup
+        mountPath: /var/run/kubeclaw-browser-cgroup
     resources:
       requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }
       limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }
@@ -220,6 +224,11 @@ extraVolumes:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
+  - name: buster-browser-cgroup
+    hostPath:
+      # This is one dedicated subtree. Never mount /sys/fs/cgroup into Buster.
+      path: /sys/fs/cgroup/kubeclaw-buster-browser
+      type: DirectoryOrCreate
 busterNamespaceBroker:
   enabled: true
   controller:

@@ -100,7 +100,6 @@
       "test_suites": [
         "build",
         "health",
-        "e2e",
         "a11y"
       ],
       "test_config": {
@@ -110,12 +109,6 @@
           "start_cmd": "npm run preview -- --host 127.0.0.1",
           "port": 4173,
           "health_path": "/"
-        },
-        "e2e": {
-          "test_cmd": "npm run test:e2e",
-          "thresholds": {
-            "max_failures": 0
-          }
         },
         "a11y": {
           "paths": [
@@ -155,7 +148,6 @@
         "build",
         "health",
         "unit",
-        "e2e",
         "k8s"
       ],
       "test_config": {

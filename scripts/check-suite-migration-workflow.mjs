@@ -23,7 +23,7 @@ const allowedDisposition = new Set(['preserved', 'improved', 'removed-defect', '
 const gitRevision = /^[a-f0-9]{40,64}$/u;
 const digest = /^sha256:[a-f0-9]{64}$/u;
 const productionReceiptTrustedPublicKeyFile = '/etc/kubeclaw/production-receipt-authority.pub';
-const productionRequiredSuites = new Set(['unit', 'build', 'k8s', 'health', 'tailscale-preview', 'a11y', 'perf', 'visual-reg']);
+const productionRequiredSuites = new Set(['unit', 'build', 'k8s', 'health', 'tailscale-preview', 'a11y', 'perf', 'visual-reg', 'e2e']);
 const productionReceiptIdentity = new Map([
   ['unit', { schemaVersion: 'nova-unit-production-preflight.v2', suite: 'unit' }],
   ['build', { schemaVersion: 'nova-container-build-production-preflight.v4', suite: 'build' }],
@@ -32,6 +32,7 @@ const productionReceiptIdentity = new Map([
   ['a11y', { schemaVersion: 'nova-a11y-production-preflight.v1', suite: 'a11y' }],
   ['perf', { schemaVersion: 'nova-lighthouse-production-preflight.v1', suite: 'perf' }],
   ['visual-reg', { schemaVersion: 'nova-visual-production-preflight.v1', suite: 'visual-reg' }],
+  ['e2e', { schemaVersion: 'nova-e2e-production-preflight.v1', suite: 'e2e' }],
   ['tailscale-preview', {
     schemaVersion: 'nova-tailscale-production-preflight.v1', suite: 'tailscale-preview',
   }],

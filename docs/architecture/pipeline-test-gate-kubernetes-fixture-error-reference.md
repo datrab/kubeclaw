@@ -17,6 +17,7 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID`: correct the Secret name list.
 - `KUBERNETES_FIXTURE_SERVICE_NAME_INVALID`: use a DNS-label Service name.
 - `KUBERNETES_FIXTURE_SERVICE_PORT_INVALID`: use a port from 1 through 65535.
+- `KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_INVALID`: use a backend port from 1 through 65535.
 
 ## Input Errors
 
@@ -95,6 +96,9 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_NAMESPACE_MISMATCH`: inspect controller normalization.
 - `KUBERNETES_FIXTURE_READINESS_TIMEOUT`: inspect pods and events.
 - `KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH`: expose the configured Service port.
+- `KUBERNETES_FIXTURE_SERVICE_REQUIRED`: include exactly one Service with the configured name.
+- `KUBERNETES_FIXTURE_SERVICE_DUPLICATE`: remove the duplicate Service with the configured name.
+- `KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH`: make the selected Service port resolve to one numeric backend container port. If `serviceTargetPort` is set, it must match that port.
 - `KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT`: inspect the Service endpoints.
 - `KUBERNETES_FIXTURE_CANCELLED`: inspect the pipeline cancellation.
 - `KUBERNETES_FIXTURE_PREPARATION_FAILED`: inspect the capability result.

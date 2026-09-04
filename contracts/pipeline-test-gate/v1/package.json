@@ -9,7 +9,8 @@
   ],
   "exports": {
     ".": "./src/index.ts",
-    "./schema": "./schemas/pipeline-test-gate.v1.schema.json"
+    "./schema": "./schemas/pipeline-test-gate.v1.schema.json",
+    "./e2e-result-schema": "./schemas/e2e-result.v1.schema.json"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"

@@ -4,20 +4,20 @@
     "missing": []
   },
   "oldDocumentLedger": {
-    "expected": 344,
-    "rows": 344,
+    "expected": 356,
+    "rows": 356,
     "unclassified": []
   },
   "plugins": {
-    "manifests": 48,
-    "inventoried": 48,
+    "manifests": 49,
+    "inventoried": 49,
     "missingTargets": []
   },
   "registrations": {
     "stage": 17,
     "observer": 6,
     "adapter": 19,
-    "test provider": 12,
+    "test provider": 13,
     "report adapter": 1
   },
   "contracts": {

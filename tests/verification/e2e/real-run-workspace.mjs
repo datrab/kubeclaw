@@ -1053,6 +1053,10 @@ function instructionFiles(progress) {
             needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-visual',
             config: { manifestFile: '.swarm/visual/baselines.json', profileFile: '.swarm/browser-profiles.json',
               targets: ['home-desktop'], comparisonProfile: 'strict-v1', timeoutMs: 60000 }, inputs: deploymentInput },
+          playwright: { uses: 'kubeclaw.playwright@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-playwright',
+            config: { projectDirectory: '.', configFile: '.swarm/playwright.config.ts', workers: 2,
+              timeoutMs: 120000 }, inputs: deploymentInput },
           'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
               ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
@@ -1064,7 +1068,7 @@ function instructionFiles(progress) {
             needs: ['size-budget', 'container-build'],
             concurrencyGroup: 'kubernetes-fixture', config: { image: fixtureConfig.image,
               serviceName: 'real-pipeline-e2e-nginx',
-              servicePort: 80, namespacePrefix: fixtureConfig.namespace_prefix ?? 'test',
+              servicePort: 18080, namespacePrefix: fixtureConfig.namespace_prefix ?? 'test',
               retention: { mode: fixtureConfig.retention_mode ?? 'delete',
                 seconds: fixtureConfig.retention_seconds ?? 1800 },
               readinessTimeoutSeconds: fixtureConfig.readiness_timeout_seconds ?? 180,
@@ -1079,7 +1083,8 @@ function instructionFiles(progress) {
         },
         concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
           manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1,
-          'api-flow': 1, openapi: 1, 'browser-axe': 2, 'browser-lighthouse': 1, 'browser-visual': 1 },
+          'api-flow': 1, openapi: 1, 'browser-axe': 2, 'browser-lighthouse': 1, 'browser-visual': 1,
+          'browser-playwright': 1 },
       },
     },
   };
@@ -1118,6 +1123,16 @@ function instructionFiles(progress) {
     }, null, 2)}\n`,
     'browser-profiles.json': fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/browser-profiles.json'), 'utf8'),
     'visual/baselines.json': fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/visual/baselines.json'), 'utf8'),
+    'playwright.config.ts': [
+      "import { defineConfig } from '@playwright/test';",
+      "export default defineConfig({ testDir: './e2e', retries: 1, use: { baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL, screenshot: 'only-on-failure', trace: 'retain-on-failure' }, projects: [{ name: 'chromium', use: { browserName: 'chromium' } }] });",
+      '',
+    ].join('\n'),
+    'e2e/home.spec.ts': [
+      "import { test, expect } from '@playwright/test';",
+      "test('real deployment responds', async ({ page }) => { await page.goto('/'); await expect(page.locator('body')).toContainText('REAL_E2E_NGINX_OK'); });",
+      '',
+    ].join('\n'),
     ...Object.fromEntries(apiFailureSpecs.map((file) => [file.replace(/^\.swarm\//u, ''), `${JSON.stringify({
       schemaVersion: 'kubeclaw.api-flow.v1',
       steps: [{ id: 'intentional-failure', path: '/v2/', expect: { status: 599 } }],
@@ -1539,7 +1554,10 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
   }
   const deploymentManifestPath = path.join(projectSrc, 'k8s', 'deployment.yaml');
   fs.writeFileSync(deploymentManifestPath, fs.readFileSync(deploymentManifestPath, 'utf8')
-    .replace('real-pipeline-e2e-nginx:verification', deploymentImage));
+    .replace('real-pipeline-e2e-nginx:verification', deploymentImage)
+    .replace('        app.kubernetes.io/name: real-pipeline-e2e-nginx\n    spec:\n      containers:',
+      '        app.kubernetes.io/name: real-pipeline-e2e-nginx\n        kubeclaw/e2e-target: "true"\n    spec:\n      containers:')
+    .replace('      port: 80\n      targetPort: http', '      port: 18080\n      targetPort: http'));
   applyRealE2EWorkspaceScenario({ projectSrc, progress, scenarioId: scenario.id });
   writeJson(path.join(swarmDir, 'progress.json'), progress);
   writeRealE2ESwarmFiles(swarmDir, progress);

@@ -1,0 +1,5 @@
+{
+  "schemaVersion":"test-suite-template.v1","contractId":"kubeclaw.e2e-suite@1",
+  "tests":{"playwright":{"uses":"kubeclaw.playwright@1","mode":"blocking","retries":0,"concurrencyGroup":"browser-playwright","config":{"projectDirectory":".","configFile":"playwright.config.ts","workers":4,"timeoutMs":600000}}},
+  "fixtures":{},"concurrencyLimits":{"browser-playwright":1}
+}

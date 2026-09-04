@@ -15,6 +15,7 @@
     },
     "serviceName": { "$ref": "#/$defs/dnsLabel" },
     "servicePort": { "type": "integer", "minimum": 1, "maximum": 65535 },
+    "serviceTargetPort": { "type": "integer", "minimum": 1, "maximum": 65535 },
     "namespacePrefix": { "$ref": "#/$defs/namespacePrefix" },
     "retention": {
       "type": "object",

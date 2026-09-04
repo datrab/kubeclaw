@@ -64,6 +64,32 @@ The following pass found that a very tall uniform page could have a small compre
 
 No mock browser, fake screenshot, image emulator, or compatibility wrapper is used. Production acceptance remains pending for the controlled final cycle.
 
-## Suites 12 and 13
+## Suite 12: End-to-end
 
-End-to-end and security remain pending. No implementation or completion claim has been made for them in this record.
+Phase 8 adds the editable `kubeclaw.e2e-suite@1` suite, the `kubeclaw.playwright@1` provider, and the operator-owned `browser.playwright` capability. The contained proof uses a real HTTP server, the real Playwright runner, and real Chromium. A signed Nova-to-Buster vertical proof runs the provider in an isolated attempt and imports the structured report into Nova.
+
+Phase 9 maps 30 baseline items to executable evidence and a controlled legacy comparison. The project Playwright configuration owns selection, browser projects, retries, authentication setup, screenshots, video, traces, and test timeouts. The KubeClaw overlay supplies the typed endpoint, canonical JSON reporter, total execution controls, and operator ceilings. Numeric failure allowances and console-text parsing are removed.
+
+Phase 10 deletes the legacy `e2e.ts` authority and removes E2E from the legacy protocol, suite runner, examples, and production bridge. Project setup rejects all retired E2E configuration. The real workspace selects the replacement provider. The production preflight deploys a digest-bound fixture, sends a signed plan through Nova and Buster, imports the Playwright report, observes Kubernetes cleanup, and stores a suite-specific signed receipt.
+
+The source proof uses no mock browser, fake Playwright result, emulator, or compatibility wrapper. Production acceptance remains pending until all 13 source cutovers complete.
+
+The fresh-context architecture audit found ten material issue groups. The accepted corrections add the common `kubeclaw.e2e-result.v1` contract, a second-provider conformance record, strict count and identity validation in Buster, `--max-failures=0`, multiple-test continuation proof, explicit skip and zero-test proof, process/memory/CPU enforcement, complete serialized-result limits, attempt-owned output cleanup, generated-directory bundle exclusions, duplicate-delivery proof, independent Buster revision observation for receipts, stale legacy-consumer removal, and field/error/recovery documentation.
+
+The audit proposed deletion of the project-setup rejection path as a compatibility adapter. This point was rejected. Project setup does not translate or run legacy E2E behavior. It fails with `LEGACY_E2E_CONFIGURATION_RETIRED`, which is the required cutover guard.
+
+The Phase 8 workflow now requires a common provider result and explicit authority split. The Phase 9 workflow now requires named scenario evidence instead of source-file presence. The Phase 10 workflow now inventories generated runtime directories, stale live consumers, rollback rules, and the full production route. Final Terra/high review is required before commit and its result is recorded after it completes.
+
+Terra/high then found two concurrent-network defects. Additive Kubernetes policies could let one untrusted attempt use another active lease route, and browser mode still permitted UDP. The capability now creates one attempt-local exact-origin proxy and injects it into every Playwright browser project. Native Landlock permits only the proxy's temporary TCP port. Seccomp denies Internet datagram and raw sockets. Real Chromium proves that a second origin receives no request, and the native isolation gate proves that UDP fails with `EPERM` or `EACCES`. The namespace controller still limits the trusted proxy's cluster route by immutable lease identity, target pod label, and service port.
+
+The next reviews tightened this boundary further. Seccomp now denies packet, netlink, and every other socket family except Unix sockets and Internet stream sockets. The lease policy preserves Kubernetes DNS, while the installed namespace baseline retains the shared worker's Redis, Qdrant, registry, and agent routes. Cleanup starts before any temporary link, directory, proxy, or overlay is created. A real cancellation test starts a detached `setsid` descendant, sends `SIGTERM` to the attempt, and proves that the native subreaper kills and waits for the detached process.
+
+The final resource audit found that `/proc` sampling could miss CPU used by a short-lived descendant. Production now requires a dedicated delegated cgroup v2 subtree. Each attempt gets a child cgroup with kernel PID, memory, swap, and CPU controls. Cumulative `cpu.stat` accounting includes processes after they exit. The signed production receipt must report `cgroup-v2`; the deployment command rejects sampled evidence. Contained tests use sampled accounting only because this development host exposes cgroups read-only. This does not satisfy production acceptance.
+
+The next review found that Chromium's required `/proc` access could expose the trusted worker when both processes used one UID. Production now uses a capability-bearing launcher outside all project read roots. The launcher joins the attempt cgroup and changes the complete browser tree to UID `1001` before it applies Landlock and seccomp. The trusted worker stays at UID `1000`. The production image gives only this inaccessible launcher the required identity-change capability.
+
+The final controller review found two Kubernetes edge cases. Lease names can exceed the label-value limit, so ownership labels and selectors now use one canonical 63-character value. Kubernetes policies can also observe the backend pod port after Service translation. The fixture capability now resolves the checked Service to one numeric backend container port and records it in the lease. The lease policy permits only the declared Service port and that resolved backend port. Tests cover long lease names, named target ports, and the `18080` to `80` production fixture mapping. One later portability finding was rejected because `_GNU_SOURCE` and `<limits.h>` were already present and the native sandbox rebuilt successfully. The final Terra/high review reported no accepted or actionable finding and confidence 0.62.
+
+## Suite 13: Security
+
+Security remains pending. No implementation or completion claim has been made for it in this record.

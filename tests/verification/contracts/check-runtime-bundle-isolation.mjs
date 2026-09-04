@@ -1,15 +1,22 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import net from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
+import { once } from 'node:events';
 import { pathToFileURL } from 'node:url';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-bundle-isolation-'));
 const commit = '0000000000000000000000000000000000000000';
 const builtAt = '1970-01-01T00:00:00Z';
+const allowedServer = net.createServer();
+const deniedServer = net.createServer();
+allowedServer.listen(0, '127.0.0.1');
+deniedServer.listen(0, '127.0.0.1');
+await Promise.all([once(allowedServer, 'listening'), once(deniedServer, 'listening')]);
 
 function build(role, name, fixtureRoot = root) {
   const output = path.join(temporary, name);
@@ -78,6 +85,94 @@ function rewriteJson(file, update) {
 }
 
 try {
+  const supervisorPidFile = path.join(temporary, 'supervisor-descendant.pid');
+  const supervisorFixture = path.join(temporary, 'supervisor-descendant.sh');
+  fs.writeFileSync(supervisorFixture, `#!/bin/sh
+/usr/bin/setsid /bin/sh -c 'echo $$ > ${supervisorPidFile}; while :; do /bin/sleep 1; done' &
+while [ ! -s ${supervisorPidFile} ]; do /bin/sleep 0.01; done
+exit 0
+`, { mode: 0o700 });
+  const supervisorResult = spawnSync(
+    path.join(root, 'skills/common/plugin-runtime/foundation/isolation/plugin-sandbox'),
+    ['67108864', '10', '64', '--no-address-space-limit', supervisorFixture],
+    { timeout: 5000 },
+  );
+  assert.equal(supervisorResult.status, 0, `supervisor fixture failed: ${supervisorResult.stderr}`);
+  const escapedPid = Number(fs.readFileSync(supervisorPidFile, 'utf8').trim());
+  assert.ok(Number.isSafeInteger(escapedPid) && escapedPid > 1, 'supervisor fixture did not record a PID');
+  assert.throws(() => process.kill(escapedPid, 0), (error) => error?.code === 'ESRCH',
+    'setsid descendant survived the supervisor boundary');
+
+  const cancelledPidFile = path.join(temporary, 'cancelled-descendant.pid');
+  const cancellationFixture = path.join(temporary, 'cancellation-supervisor.sh');
+  fs.writeFileSync(cancellationFixture, `#!/bin/sh
+/usr/bin/setsid /bin/sh -c 'echo $$ > ${cancelledPidFile}; while :; do /bin/sleep 1; done' &
+while :; do /bin/sleep 1; done
+`, { mode: 0o700 });
+  const cancellationSupervisor = spawn(
+    path.join(root, 'skills/common/plugin-runtime/foundation/isolation/plugin-sandbox'),
+    ['67108864', '10', '64', '--no-address-space-limit', cancellationFixture],
+    { detached: true, stdio: ['ignore', 'pipe', 'pipe'] },
+  );
+  const cancellationDeadline = Date.now() + 3000;
+  while (!fs.existsSync(cancelledPidFile) && Date.now() < cancellationDeadline) await new Promise((resolve) => setTimeout(resolve, 10));
+  assert.equal(fs.existsSync(cancelledPidFile), true, 'cancelled supervisor fixture did not record a PID');
+  const cancelledDescendantPid = Number(fs.readFileSync(cancelledPidFile, 'utf8').trim());
+  assert.ok(cancellationSupervisor.pid, 'cancelled supervisor has no PID');
+  process.kill(-cancellationSupervisor.pid, 'SIGTERM');
+  await once(cancellationSupervisor, 'close');
+  assert.throws(() => process.kill(cancelledDescendantPid, 0), (error) => error?.code === 'ESRCH',
+    'setsid descendant survived supervisor cancellation');
+
+  const allowedAddress = allowedServer.address();
+  const deniedAddress = deniedServer.address();
+  assert.ok(allowedAddress && typeof allowedAddress !== 'string' && deniedAddress && typeof deniedAddress !== 'string');
+  const networkFixture = path.join(temporary, 'network-boundary.mjs');
+  fs.writeFileSync(networkFixture, `import net from 'node:net';
+const allowed = net.connect(${allowedAddress.port}, '127.0.0.1');
+allowed.once('error', () => process.exit(2));
+allowed.once('connect', () => {
+  allowed.destroy();
+  const denied = net.connect(${deniedAddress.port}, '127.0.0.1');
+  denied.once('connect', () => process.exit(3));
+  denied.once('error', (error) => process.exit(error.code === 'EACCES' || error.code === 'EPERM' ? 0 : 4));
+});
+`);
+  const networkResult = spawnSync(
+    path.join(root, 'skills/common/plugin-runtime/foundation/isolation/plugin-sandbox'),
+    ['67108864', '10', '64', '--allow-network', '--connect-tcp-port', String(allowedAddress.port),
+      '--read-root', '/usr', '--read-root', '/etc/ssl', '--write-root', temporary, process.execPath, networkFixture],
+    { timeout: 5000 },
+  );
+  assert.equal(networkResult.status, 0, `network boundary fixture failed: ${networkResult.stderr}`);
+
+  const udpFixture = path.join(temporary, 'udp-boundary.mjs');
+  fs.writeFileSync(udpFixture, `import dgram from 'node:dgram';
+const socket = dgram.createSocket('udp4');
+socket.once('error', (error) => process.exit(error.code === 'EACCES' || error.code === 'EPERM' ? 0 : 2));
+socket.send(Buffer.from('denied'), 53, '127.0.0.1', (error) => process.exit(error?.code === 'EACCES' || error?.code === 'EPERM' ? 0 : 3));
+`);
+  const udpResult = spawnSync(
+    path.join(root, 'skills/common/plugin-runtime/foundation/isolation/plugin-sandbox'),
+    ['67108864', '10', '64', '--allow-network', '--connect-tcp-port', String(allowedAddress.port),
+      '--read-root', '/usr', '--read-root', '/etc/ssl', '--write-root', temporary, process.execPath, udpFixture],
+    { timeout: 5000 },
+  );
+  assert.equal(udpResult.status, 0, `UDP boundary fixture failed: ${udpResult.stderr}`);
+
+  const rawSocketSource = path.join(temporary, 'raw-socket-boundary.c');
+  const rawSocketFixture = path.join(temporary, 'raw-socket-boundary');
+  fs.writeFileSync(rawSocketSource, `#include <errno.h>\n#include <linux/if_ether.h>\n#include <linux/netlink.h>\n#include <netinet/in.h>\n#include <sys/socket.h>\nint main(void) { int packet = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL)); if (packet >= 0 || errno != EPERM) return 2; int netlink = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE); return netlink < 0 && errno == EPERM ? 0 : 3; }\n`);
+  assert.equal(spawnSync('cc', ['-O2', '-o', rawSocketFixture, rawSocketSource]).status, 0,
+    'raw-socket denial fixture did not compile');
+  const rawSocketResult = spawnSync(
+    path.join(root, 'skills/common/plugin-runtime/foundation/isolation/plugin-sandbox'),
+    ['67108864', '10', '64', '--allow-network', '--connect-tcp-port', String(allowedAddress.port),
+      '--read-root', '/usr', '--read-root', '/lib', '--read-root', '/lib64', '--write-root', temporary, rawSocketFixture],
+    { timeout: 5000 },
+  );
+  assert.equal(rawSocketResult.status, 0, `raw socket boundary fixture failed: ${rawSocketResult.stderr}`);
+
   const novaA = build('nova', 'nova-a');
   const novaB = build('nova', 'nova-b');
   const busterA = build('buster', 'buster-a');
@@ -174,7 +269,9 @@ try {
     env: { ...process.env, NODE_OPTIONS: `--import=${pathToFileURL(preloader).href}` },
   }).status, 0, 'source changes after an early package copy must fail');
 } finally {
+  allowedServer.close();
+  deniedServer.close();
   fs.rmSync(temporary, { recursive: true, force: true });
 }
 
-console.log(JSON.stringify({ ok: true, phase: '5.6-E', roles: 3, negativeProofs: 4 }));
+console.log(JSON.stringify({ ok: true, phase: '5.6-E', roles: 3, negativeProofs: 9 }));

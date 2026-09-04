@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 48 packages.
+The catalogue contains 49 packages.
 
 ## Stage Packages
 
@@ -67,6 +67,7 @@ The catalogue contains 48 packages.
 - [kubeclaw.kubernetes-fixture](kubeclaw.kubernetes-fixture.md)
 - [kubeclaw.lighthouse](kubeclaw.lighthouse.md)
 - [kubeclaw.openapi](kubeclaw.openapi.md)
+- [kubeclaw.playwright](kubeclaw.playwright.md)
 - [kubeclaw.size-budget](kubeclaw.size-budget.md)
 - [kubeclaw.tailscale-exposure](kubeclaw.tailscale-exposure.md)
 - [kubeclaw.visual](kubeclaw.visual.md)

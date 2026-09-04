@@ -105,8 +105,10 @@ assert.match(runtimeEntrypoint, /allowSampledProcessLimit: true/u,
   'the deployed Buster plan runtime must use the unprivileged sampled limit fallback');
 
 const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
-assert.doesNotMatch(busterValues, /BUSTER_DIRECT_COMMAND_CGROUP_ROOT|\/sys\/fs\/cgroup|buster-command-cgroup/u,
-  'the Buster deployment must not require host cgroup administration');
+assert.doesNotMatch(busterValues, /BUSTER_DIRECT_COMMAND_CGROUP_ROOT|buster-command-cgroup/u,
+  'the direct-command provider must not require host cgroup administration');
+assert.doesNotMatch(busterValues, /^\s*(?:path|mountPath):\s*\/sys\/fs\/cgroup\s*$/mu,
+  'the Buster deployment must not mount the host cgroup root');
 
 for (const manifestPath of [
   'skills/buster/plugins/test-agent/plugin.json',

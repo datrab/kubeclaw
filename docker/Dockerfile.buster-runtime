@@ -81,6 +81,8 @@ RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
     && cd /app \
     && node scripts/build-plugin-sandbox.mjs \
     && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \
+    && install -D -o root -g builder -m 0750 /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox /opt/kubeclaw-trusted/plugin-sandbox \
+    && setcap cap_setuid,cap_setgid=ep /opt/kubeclaw-trusted/plugin-sandbox \
     && chown -R builder:builder /app
 
 RUN node /app/node_modules/playwright/cli.js install --with-deps chromium firefox webkit \

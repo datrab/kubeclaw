@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
@@ -32,12 +33,38 @@ interface AjvInstance {
 
 const schemaUrl = new URL('../schemas/pipeline-test-gate.v1.schema.json', import.meta.url);
 const schema = JSON.parse(fs.readFileSync(schemaUrl, 'utf8')) as { $id: string };
+const e2eResultSchemaUrl = new URL('../schemas/e2e-result.v1.schema.json', import.meta.url);
+const e2eResultSchemaText = fs.readFileSync(e2eResultSchemaUrl, 'utf8');
+const e2eResultSchema = JSON.parse(e2eResultSchemaText) as { $id: string };
 const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean; strict: boolean }) => AjvInstance;
 const installFormats = addFormats as unknown as (instance: AjvInstance) => AjvInstance;
 const ajv = new AjvConstructor({ allErrors: true, strict: true });
 installFormats(ajv);
 ajv.addSchema(schema);
+ajv.addSchema(e2eResultSchema);
 const validators = new Map<string, Validator>();
+const validateE2eResultSchema = ajv.compile({ $ref: e2eResultSchema.$id });
+
+export const E2E_RESULT_SCHEMA_ID = 'kubeclaw.e2e-result.v1';
+
+export function e2eResultSchemaDigest(): string {
+  return `sha256:${crypto.createHash('sha256').update(e2eResultSchemaText).digest('hex')}`;
+}
+
+export function validateE2eProviderDetails(value: unknown): void {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('TEST_PROVIDER_E2E_DETAILS_INVALID');
+  const details = value as { schemaId?: unknown; schemaDigest?: unknown; values?: unknown };
+  if (details.schemaId !== E2E_RESULT_SCHEMA_ID || details.schemaDigest !== e2eResultSchemaDigest()
+    || !validateE2eResultSchema(details.values)) throw new Error('TEST_PROVIDER_E2E_DETAILS_INVALID');
+  const result = details.values as { counts: { total: number; passed: number; failed: number; skipped: number; unexecuted: number }; testCases: Array<{ id: string; status: string }> };
+  const counts = result.counts;
+  if (counts.total !== counts.passed + counts.failed + counts.skipped + counts.unexecuted
+    || counts.total !== result.testCases.length
+    || new Set(result.testCases.map((item) => item.id)).size !== result.testCases.length
+    || ['passed', 'failed', 'skipped', 'unexecuted'].some((status) => result.testCases.filter((item) => item.status === status).length !== counts[status as keyof typeof counts])) {
+    throw new Error('TEST_PROVIDER_E2E_DETAILS_INVALID');
+  }
+}
 
 export class PipelineTestGateContractError extends Error {
   definition: string;

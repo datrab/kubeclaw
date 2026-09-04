@@ -14,6 +14,7 @@ const RECEIPT_SCHEMAS = new Set([
   'nova-a11y-production-preflight.v1',
   'nova-lighthouse-production-preflight.v1',
   'nova-visual-production-preflight.v1',
+  'nova-e2e-production-preflight.v1',
   'nova-tailscale-production-preflight.v1',
   'nova-unit-production-preflight.v2',
 ]);
@@ -160,10 +161,11 @@ function validateProductionReceiptPayload(value, options = {}) {
     if (!Number.isSafeInteger(value.httpStatus) || value.httpStatus < 200 || value.httpStatus > 299
       || value.networkRequestVerified !== true) errors.push('HTTP request proof is incomplete');
   } else if (['nova-a11y-production-preflight.v1', 'nova-lighthouse-production-preflight.v1',
-    'nova-visual-production-preflight.v1'].includes(value.schemaVersion)) {
+    'nova-visual-production-preflight.v1', 'nova-e2e-production-preflight.v1'].includes(value.schemaVersion)) {
     const expectedSuite = { 'nova-a11y-production-preflight.v1': 'a11y',
       'nova-lighthouse-production-preflight.v1': 'perf',
-      'nova-visual-production-preflight.v1': 'visual-reg' }[value.schemaVersion];
+      'nova-visual-production-preflight.v1': 'visual-reg',
+      'nova-e2e-production-preflight.v1': 'e2e' }[value.schemaVersion];
     if (value.suite !== expectedSuite) errors.push('suite identity is invalid');
     if (value.runnerCleanupVerified !== true || value.cleanupVerified !== true
       || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
@@ -183,6 +185,11 @@ function validateProductionReceiptPayload(value, options = {}) {
       && (value.lighthouseVersion !== '13.4.1' || value.reportCount !== 3)) errors.push('Lighthouse proof is incomplete');
     if (value.schemaVersion === 'nova-visual-production-preflight.v1'
       && (typeof value.browserVersion !== 'string' || !value.browserVersion)) errors.push('visual browser proof is incomplete');
+    if (value.schemaVersion === 'nova-e2e-production-preflight.v1'
+      && (!Array.isArray(value.browserProjects) || value.browserProjects.length < 1
+        || value.browserProjects.some((project) => typeof project !== 'string' || !project))) {
+      errors.push('end-to-end browser proof is incomplete');
+    }
   }
   return errors;
 }

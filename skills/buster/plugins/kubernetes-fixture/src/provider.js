@@ -31,6 +31,8 @@ function configuration(invocation) {
   }
   if (typeof value.serviceName !== 'string' || !DNS_LABEL.test(value.serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
   if (!Number.isSafeInteger(value.servicePort) || value.servicePort < 1 || value.servicePort > 65535) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_INVALID');
+  const serviceTargetPort = value.serviceTargetPort;
+  if (serviceTargetPort !== undefined && (!Number.isSafeInteger(serviceTargetPort) || serviceTargetPort < 1 || serviceTargetPort > 65535)) throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_INVALID');
   const namespacePrefix = value.namespacePrefix ?? 'test';
   if (typeof namespacePrefix !== 'string' || namespacePrefix.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(namespacePrefix)) {
     throw new Error('KUBERNETES_FIXTURE_NAMESPACE_PREFIX_INVALID');
@@ -57,6 +59,7 @@ function configuration(invocation) {
   return { immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
     servicePort: value.servicePort, namespacePrefix, retentionMode, retentionSeconds,
     readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)],
+    ...(serviceTargetPort === undefined ? {} : { serviceTargetPort }),
     ...(testCredentials ? { testCredentials: { mode: 'generate', secretName: testCredentials.secretName } } : {}) };
 }
 
@@ -87,6 +90,7 @@ function capabilityRequest(invocation, config, manifest) {
     payload: { ...names, namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
       immutableImage: config.immutableImage, imageDigest: config.imageDigest, manifestPath: manifest.file,
       manifestDigest: manifest.artifact.contentDigest, serviceName: config.serviceName, servicePort: config.servicePort,
+      ...(config.serviceTargetPort === undefined ? {} : { serviceTargetPort: config.serviceTargetPort }),
       retentionSeconds: config.retentionSeconds, readinessTimeoutMs: Math.min(invocation.timeoutMs, config.readinessTimeoutSeconds * 1000),
       retentionMode: config.retentionMode, secretReferences: config.secretReferences,
       ...(config.testCredentials ? { testCredentials: config.testCredentials } : {}) },

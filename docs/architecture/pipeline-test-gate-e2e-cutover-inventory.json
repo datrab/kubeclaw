@@ -1,0 +1,17 @@
+{
+  "schemaVersion":"suite-cutover-inventory.v1","suite":"e2e","successor":"kubeclaw.e2e-suite@1","parityItemCount":30,
+  "authority":{"old":"deleted","replacement":"kubeclaw.playwright@1","state":"replacement-only"},
+  "legacyFilesToDelete":["skills/buster/plugins/buster-suite-runtime/src/runtime/suites/e2e.ts"],
+  "replacementFilesRequired":["skills/buster/plugins/playwright/plugin.json","skills/buster/plugins/playwright/src/provider.js","skills/buster/engine/test-gates/browser-playwright-runtime.ts","contracts/pipeline-test-gate/v1/suites/e2e.v1.json","tests/verification/e2e/nova-e2e-production-preflight.mts"],
+  "requiredAbsence":[
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/protocol.ts","token":"'e2e'"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts","token":"e2e"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/services/capabilities.ts","token":"case 'e2e'"},
+    {"file":"tests/verification/e2e/run-v2-production-pipeline.mts","token":"'e2e',"},
+    {"file":"examples/progress.json","token":"\"e2e\""},
+    {"file":"docs/examples/progress-json/end-to-end.json","token":"\"e2e\""},
+    {"file":"tests/verification/live/prism-production-failures.mjs","token":"\"e2e\""}
+  ],
+  "retainedSharedSurfaces":["canonical artifact store","canonical Nova-to-Buster dispatch","project-owned Playwright configuration"],
+  "verification":{"solePathTests":["tests/verification/contracts/check-pipeline-e2e-cutover.mts"],"dualAuthorityTests":["tests/verification/contracts/check-pipeline-e2e-cutover.mts"],"absenceTests":["tests/verification/contracts/check-pipeline-e2e-cutover.mts"]}
+}

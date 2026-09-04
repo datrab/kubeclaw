@@ -50,6 +50,16 @@ assert.match(prismNetworkPolicies,
 assert.doesNotMatch(networkPolicies,
   /name:\s*kubeclaw-agents-ingress[\s\S]*cidr:\s*0\.0\.0\.0\/0[\s\S]*port:\s*18789/,
   'agent gateway ports must not be open to arbitrary ingress');
+assert.match(networkPolicies, /name:\s*kubeclaw-allow-dns-egress[\s\S]*port:\s*53/,
+  'shared Buster workers must retain the namespace DNS egress baseline');
+assert.match(busterValues, /name:\s*buster-browser-cgroup[\s\S]*mountPath:\s*\/var\/run\/kubeclaw-browser-cgroup/,
+  'Buster must mount the dedicated browser cgroup subtree');
+assert.match(busterValues, /name:\s*buster-browser-cgroup[\s\S]*path:\s*\/sys\/fs\/cgroup\/kubeclaw-buster-browser/,
+  'Buster must use the narrow host browser cgroup subtree');
+assert.doesNotMatch(busterValues, /mountPath:\s*\/sys\/fs\/cgroup\s*$/m,
+  'Buster must not mount the host cgroup root');
+assert.match(networkPolicies, /name:\s*kubeclaw-agents-egress[\s\S]*port:\s*6379[\s\S]*port:\s*6333/,
+  'lease policies must remain additive to the shared worker service egress baseline');
 assert.match(deploy, /PRISM_\$\{upper\}_IMAGE_DIGEST must be sha256:/,
   'Prism deployment must require immutable image digests');
 assert.doesNotMatch(deploy, /rollout restart deployment\/"\$prism_workload"/,
@@ -404,6 +414,8 @@ for (const values of [novaValues, busterValues, prismAgentValues]) {
 }
 assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
 assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
+assert.doesNotMatch(networkPolicies, /name:\s*kubeclaw-buster-managed-test-egress/,
+  'Buster E2E egress must be a lease-scoped controller resource, not a namespace-wide static grant');
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
   'all Buster plan runtime probes must use the loopback-only internal HTTP endpoint');
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
@@ -729,7 +741,7 @@ assert.match(
 );
 assert.doesNotMatch(
   busterValues,
-  /procMount:\s*Unmasked|SYS_ADMIN|privileged:\s*true|\/sys\/fs\/cgroup|buster-command-cgroup/,
+  /procMount:\s*Unmasked|SYS_ADMIN|privileged:\s*true|mountPath:\s*\/sys\/fs\/cgroup\s*$|buster-command-cgroup/m,
   'the nested suite sandbox fix must not broaden the Buster pod privilege boundary',
 );
 assert.match(

@@ -321,6 +321,9 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	if err := c.verifyNamespaceOwnership(ctx, item, namespaceName); err != nil {
 		return err
 	}
+	if err := c.ensureBusterE2EEgressPolicy(ctx, item, namespaceName); err != nil {
+		return err
+	}
 	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
 	if err != nil {
 		return err
@@ -371,6 +374,9 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 		return err
 	}
 	if err := c.ensureNamespaceNetworkPolicy(ctx, item, namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureBusterE2EEgressPolicy(ctx, item, namespaceName); err != nil {
 		return err
 	}
 	if err := c.ensureControllerSecretAccess(ctx, namespaceName); err != nil {
@@ -606,6 +612,84 @@ func (c *controller) ensureNamespaceNetworkPolicy(ctx context.Context, item *lea
 	return c.createOrPatch(ctx,
 		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/networkpolicies",
 		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/networkpolicies/"+name, manifest, nil)
+}
+
+func busterE2EEgressPolicyName(item *lease) string {
+	digest := sha256.Sum256([]byte(item.Metadata.Name + "|" + item.Metadata.UID))
+	return "buster-e2e-" + hex.EncodeToString(digest[:8])
+}
+
+func busterE2EEgressPolicy(item *lease, controllerNamespace, namespaceName string) (map[string]interface{}, error) {
+	servicePort := intValue(item.Spec["servicePort"], 0)
+	if servicePort < 1 || servicePort > 65535 {
+		return nil, fmt.Errorf("invalid E2E service port %d", servicePort)
+	}
+	serviceTargetPort := intValue(item.Spec["serviceTargetPort"], servicePort)
+	if serviceTargetPort < 1 || serviceTargetPort > 65535 {
+		return nil, fmt.Errorf("invalid E2E service target port %d", serviceTargetPort)
+	}
+	allowedPorts := []interface{}{map[string]interface{}{"protocol": "TCP", "port": serviceTargetPort}}
+	if servicePort != serviceTargetPort {
+		allowedPorts = append(allowedPorts, map[string]interface{}{"protocol": "TCP", "port": servicePort})
+	}
+	return map[string]interface{}{
+		"apiVersion": "networking.k8s.io/v1", "kind": "NetworkPolicy",
+		"metadata": map[string]interface{}{"name": busterE2EEgressPolicyName(item), "namespace": controllerNamespace, "labels": ownerLabels(item, namespaceName)},
+		"spec": map[string]interface{}{
+			"podSelector": map[string]interface{}{"matchLabels": map[string]interface{}{
+				"app.kubernetes.io/name": "kubeclaw", "app.kubernetes.io/component": "buster",
+			}},
+			"policyTypes": []interface{}{"Egress"},
+			"egress": []interface{}{
+				map[string]interface{}{
+					"to": []interface{}{map[string]interface{}{
+						"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{"kubernetes.io/metadata.name": "kube-system"}},
+						"podSelector":       map[string]interface{}{"matchLabels": map[string]interface{}{"k8s-app": "kube-dns"}},
+					}},
+					"ports": []interface{}{map[string]interface{}{"protocol": "UDP", "port": 53}, map[string]interface{}{"protocol": "TCP", "port": 53}},
+				},
+				map[string]interface{}{
+					"to": []interface{}{map[string]interface{}{
+						"namespaceSelector": map[string]interface{}{"matchLabels": map[string]interface{}{
+							"kubeclaw/buster-lease":     leaseLabelValue(item),
+							"kubeclaw/buster-lease-uid": sanitizeLabelValue(item.Metadata.UID, "uid-missing"),
+						}},
+						"podSelector": map[string]interface{}{"matchLabels": map[string]interface{}{
+							"kubeclaw/e2e-target": "true",
+						}},
+					}},
+					"ports": allowedPorts,
+				},
+			},
+		},
+	}, nil
+}
+
+// ensureBusterE2EEgressPolicy grants the Buster pod only the declared Service
+// port in this lease's namespace and only to the explicitly labelled E2E
+// target pods. The source process has a matching Landlock TCP-port rule.
+func (c *controller) ensureBusterE2EEgressPolicy(ctx context.Context, item *lease, namespaceName string) error {
+	manifest, err := busterE2EEgressPolicy(item, c.namespace, namespaceName)
+	if err != nil {
+		return err
+	}
+	name := busterE2EEgressPolicyName(item)
+	return c.createOrPatch(ctx,
+		"/apis/networking.k8s.io/v1/namespaces/"+c.namespace+"/networkpolicies",
+		"/apis/networking.k8s.io/v1/namespaces/"+c.namespace+"/networkpolicies/"+name, manifest, nil)
+}
+
+func (c *controller) deleteBusterE2EEgressPolicy(ctx context.Context, item *lease) error {
+	err := c.kube(ctx, http.MethodDelete,
+		"/apis/networking.k8s.io/v1/namespaces/"+c.namespace+"/networkpolicies/"+busterE2EEgressPolicyName(item),
+		map[string]interface{}{"gracePeriodSeconds": 0}, "application/json", nil)
+	if err != nil {
+		var apiErr *apiError
+		if !errors.As(err, &apiErr) || apiErr.statusCode != http.StatusNotFound {
+			return err
+		}
+	}
+	return nil
 }
 
 // ensureNamespaceResourceLimits puts an enforced ceiling below the cluster
@@ -1273,7 +1357,7 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 	if err != nil {
 		var apiErr *apiError
 		if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
-			return nil
+			return c.deleteBusterE2EEgressPolicy(ctx, item)
 		}
 		return err
 	}
@@ -1284,6 +1368,9 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 		labels["kubeclaw/buster-lease"] != item.Metadata.Name ||
 		(!legacyOwned && labels["kubeclaw/buster-lease-uid"] != item.Metadata.UID) {
 		return fmt.Errorf("%w: refusing to delete namespace %s", errNamespaceOwnershipMismatch, namespaceName)
+	}
+	if err := c.deleteBusterE2EEgressPolicy(ctx, item); err != nil {
+		return err
 	}
 	return c.deleteNamespace(ctx, namespaceName)
 }
@@ -1582,7 +1669,7 @@ func ownerLabels(item *lease, namespaceName string) map[string]string {
 	return map[string]string{
 		"app.kubernetes.io/name":                     "kubeclaw",
 		"kubeclaw/managed-by":                        "buster-namespace-controller",
-		"kubeclaw/buster-lease":                      item.Metadata.Name,
+		"kubeclaw/buster-lease":                      leaseLabelValue(item),
 		"kubeclaw/buster-lease-uid":                  sanitizeLabelValue(item.Metadata.UID, "uid-missing"),
 		"kubeclaw/buster-purpose":                    sanitizeLabelValue(stringValueDefault(item.Spec["purpose"], "pretest"), "pretest"),
 		"openclaw.io/buster-scope":                   sanitizeLabelValue(firstNonEmpty(labels["openclaw.io/buster-scope"], item.Metadata.Name), "unknown"),
@@ -1591,6 +1678,10 @@ func ownerLabels(item *lease, namespaceName string) map[string]string {
 		"pod-security.kubernetes.io/audit":           "restricted",
 		"pod-security.kubernetes.io/warn":            "restricted",
 	}
+}
+
+func leaseLabelValue(item *lease) string {
+	return sanitizeLabelValue(item.Metadata.Name, "lease-missing")
 }
 
 func exposureChanged(status map[string]interface{}, exposure map[string]interface{}) bool {

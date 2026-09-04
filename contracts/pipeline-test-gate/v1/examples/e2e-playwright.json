@@ -1,0 +1,5 @@
+{
+  "project":"example","facts":{"changedPaths":["tests/e2e/home.spec.ts"],"moduleType":"service","pipelineStage":"test"},
+  "policy":{"defaultTimeoutMs":600000,"maximumTimeoutMs":900000,"maximumRetryCount":1,"maximumMatrixSize":1,"maximumNodes":4,"defaultConcurrencyLimit":1,"maximumConcurrencyLimits":{"browser-playwright":1},"defaultLimits":{"cpuMillis":600000,"memoryBytes":2147483648,"logBytes":16777216,"artifactBytes":268435456,"artifactFiles":256,"processes":64},"maximumLimits":{"cpuMillis":900000,"memoryBytes":4294967296,"logBytes":16777216,"artifactBytes":268435456,"artifactFiles":256,"processes":64}},
+  "scope":{"tests":{"playwright":{"uses":"kubeclaw.playwright@1","mode":"blocking","retries":0,"concurrencyGroup":"browser-playwright","config":{"url":"http://127.0.0.1:18080","projectDirectory":".","configFile":"playwright.config.ts","workers":2,"timeoutMs":600000}}},"concurrencyLimits":{"browser-playwright":1}}
+}

@@ -88,13 +88,8 @@ function missingBusterCapabilities(capabilities: unknown, required: unknown = []
   return normalizeBusterCapabilities(required).filter((capability) => !current.has(capability));
 }
 
-export function requiredCapabilitiesForSuite(suiteName: string, _context: Record<string, any> = {}): string[] {
-  switch (suiteName) {
-    case 'e2e':
-      return [BUSTER_CAPABILITIES.BROWSER_AUTOMATION];
-    default:
-      return [];
-  }
+export function requiredCapabilitiesForSuite(_suiteName: string, _context: Record<string, any> = {}): string[] {
+  return [];
 }
 
 const DEFAULT_OPERATOR_ALERT_PATH = path.join('.swarm', 'logs', 'pipeline', 'operator-alerts.jsonl');

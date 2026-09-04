@@ -20,7 +20,7 @@ Unresolved conflicts: none.
 
 | Role | Packages | Plugins | External capabilities |
 | --- | ---: | ---: | --- |
-| buster | 11 | 22 | git.repository.read, test.plan.execute |
+| buster | 11 | 23 | git.repository.read, test.plan.execute |
 | nova | 10 | 30 | test.suite.execute |
 | prism | 11 | 6 | git.repository.read |
 
@@ -42,7 +42,7 @@ Unresolved conflicts: none.
 | stage | 17 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | observer | 6 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | adapter | 19 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
-| test provider | 12 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
+| test provider | 13 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | report adapter | 1 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 
 Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
@@ -62,6 +62,7 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.kubernetes-fixture | 1.0.0 | buster | test provider: deployment | requires: kubernetes.fixture<br>provides: none | `skills/buster/plugins/kubernetes-fixture/plugin.json` |
 | kubeclaw.lighthouse | 1.0.0 | buster | test provider: lighthouse | requires: browser.lighthouse<br>provides: none | `skills/buster/plugins/lighthouse/plugin.json` |
 | kubeclaw.openapi | 1.0.0 | buster | test provider: operations | requires: network.http<br>provides: none | `skills/buster/plugins/openapi/plugin.json` |
+| kubeclaw.playwright | 1.0.0 | buster | test provider: playwright | requires: browser.playwright<br>provides: none | `skills/buster/plugins/playwright/plugin.json` |
 | kubeclaw.size-budget | 1.0.0 | buster | test provider: artifact | requires: none<br>provides: none | `skills/buster/plugins/size-budget/plugin.json` |
 | kubeclaw.tailscale-exposure | 1.0.0 | buster | test provider: exposure | requires: kubernetes.exposure<br>provides: none | `skills/buster/plugins/tailscale-exposure/plugin.json` |
 | kubeclaw.test-agent | 1.0.0 | buster | stage: test (kubeclaw.test.execution) | requires: command.execute, test.plan.execute, test.suite.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/buster/plugins/test-agent/plugin.json` |

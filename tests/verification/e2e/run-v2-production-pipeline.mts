@@ -25,7 +25,7 @@ const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const SPARK_MODEL = 'openai/gpt-5.3-codex-spark';
 const ALL_SUITES = Object.freeze([
   'a11y', 'perf',
-  'security', 'visual-reg', 'e2e',
+  'security',
 ]);
 const BUSTER_CAPABILITIES = Object.freeze([
   'browser_automation', 'lighthouse', 'discord_media',

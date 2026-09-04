@@ -2,15 +2,15 @@
   "schemaVersion": "plugin-system-inventory-v2",
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "summary": {
-    "packages": 46,
-    "packageRoots": 47,
+    "packages": 47,
+    "packageRoots": 48,
     "stages": 17,
     "observers": 6,
     "adapters": 19,
-    "testProviders": 12,
+    "testProviders": 13,
     "reportAdapters": 1,
-    "registrations": 55,
-    "files": 848
+    "registrations": 56,
+    "files": 857
   },
   "runtime": {
     "roots": [
@@ -28,6 +28,7 @@
       "skills/buster/engine/test-gates/artifacts.ts",
       "skills/buster/engine/test-gates/browser-axe-runtime.ts",
       "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
       "skills/buster/engine/test-gates/browser-visual-runtime.ts",
       "skills/buster/engine/test-gates/composite-capability-runtime.ts",
       "skills/buster/engine/test-gates/container-build-runtime.ts",
@@ -271,7 +272,6 @@
         "skills/buster/plugins/buster-suite-runtime/src/runtime/services/runtime.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/services/telemetry.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/services/verdict-schema.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/e2e.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/repo-paths.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
@@ -469,6 +469,30 @@
         {
           "kind": "test-provider",
           "id": "operations"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.playwright",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/playwright",
+      "manifest": "skills/buster/plugins/playwright/plugin.json",
+      "files": [
+        "skills/buster/plugins/playwright/package.json",
+        "skills/buster/plugins/playwright/plugin.json",
+        "skills/buster/plugins/playwright/README.md",
+        "skills/buster/plugins/playwright/schemas/config.schema.json",
+        "skills/buster/plugins/playwright/src/provider.js",
+        "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+        "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+        "skills/buster/plugins/playwright/tests/live-function.test.ts",
+        "skills/buster/plugins/playwright/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "playwright"
         }
       ]
     },
@@ -1677,6 +1701,12 @@
     },
     {
       "kind": "test-provider",
+      "id": "playwright",
+      "packageId": "kubeclaw.playwright",
+      "registrationId": "kubeclaw.playwright:playwright"
+    },
+    {
+      "kind": "test-provider",
       "id": "artifact",
       "packageId": "kubeclaw.size-budget",
       "registrationId": "kubeclaw.size-budget:artifact"
@@ -1949,6 +1979,7 @@
     "skills/buster/engine/test-gates/artifacts.ts",
     "skills/buster/engine/test-gates/browser-axe-runtime.ts",
     "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+    "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
     "skills/buster/engine/test-gates/browser-visual-runtime.ts",
     "skills/buster/engine/test-gates/composite-capability-runtime.ts",
     "skills/buster/engine/test-gates/container-build-runtime.ts",
@@ -2042,7 +2073,6 @@
     "skills/buster/plugins/buster-suite-runtime/src/runtime/services/runtime.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/services/telemetry.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/services/verdict-schema.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/e2e.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/repo-paths.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
@@ -2115,6 +2145,15 @@
     "skills/buster/plugins/openapi/src/provider.js",
     "skills/buster/plugins/openapi/tests/live-function.test.ts",
     "skills/buster/plugins/openapi/tsconfig.json",
+    "skills/buster/plugins/playwright/README.md",
+    "skills/buster/plugins/playwright/package.json",
+    "skills/buster/plugins/playwright/plugin.json",
+    "skills/buster/plugins/playwright/schemas/config.schema.json",
+    "skills/buster/plugins/playwright/src/provider.js",
+    "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+    "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+    "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "skills/buster/plugins/playwright/tsconfig.json",
     "skills/buster/plugins/size-budget/README.md",
     "skills/buster/plugins/size-budget/package.json",
     "skills/buster/plugins/size-budget/plugin.json",

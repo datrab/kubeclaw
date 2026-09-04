@@ -318,7 +318,7 @@ that declaration. Nova lint checks those files before deployment.
 | Suite | Config Key | Key Fields |
 |---|---|---|
 | `api` | `api` | `spec_file`, `thresholds: { max_failures }` |
-| `e2e` | `e2e` | `tests_dir`, `timeout_ms`, `thresholds: { max_failures }` |
+| `e2e` | retired | Declare `kubeclaw.playwright@1` with the project Playwright configuration in `.swarm/pipeline.json` |
 | `visual-reg` | retired | Declare `kubeclaw.visual@1` with reviewed manifest and profile files in `.swarm/pipeline.json` |
 | `a11y` | `a11y` | `tags`, `path`, `thresholds: { critical, serious }` |
 | `perf` | `perf` | `thresholds: { performance, accessibility }` |

@@ -15,6 +15,7 @@ export { NetworkHttpCapabilityInvoker } from '../test-gates/network-http-runtime
 export { BrowserAxeCapabilityInvoker } from '../test-gates/browser-axe-runtime.ts';
 export { BrowserLighthouseCapabilityInvoker } from '../test-gates/browser-lighthouse-runtime.ts';
 export { BrowserVisualCapabilityInvoker } from '../test-gates/browser-visual-runtime.ts';
+export { BrowserPlaywrightCapabilityInvoker } from '../test-gates/browser-playwright-runtime.ts';
 export type {
   BusterPlanJobStoreOptions,
   BusterRemotePlanServiceOptions,

@@ -161,6 +161,18 @@ test('progress scaffold rejects retired visual-reg configuration without a suite
   assert.match(runFailure(root, ['--project', 'demo', '--apply']), /LEGACY_VISUAL_CONFIGURATION_RETIRED/);
 });
 
+test('progress scaffold rejects retired e2e selection', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: ['e2e'], test_config: { e2e: { tests_dir: 'tests/e2e', timeout_ms: 60000 } } } }, gates: {} }, null, 2)}\n`);
+  assert.match(runFailure(root, ['--project', 'demo', '--apply']), /LEGACY_E2E_CONFIGURATION_RETIRED/);
+});
+
+test('progress scaffold rejects retired e2e configuration without a suite selector', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: [], test_config: { e2e: { tests_dir: 'tests/e2e' } } } }, gates: {} }, null, 2)}\n`);
+  assert.match(runFailure(root, ['--project', 'demo', '--apply']), /LEGACY_E2E_CONFIGURATION_RETIRED/);
+});
+
 test('progress scaffold migrates legacy health settings into provider plan nodes', () => {
   const root = makeRepo();
   const swarm = createBasicProject(root);

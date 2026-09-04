@@ -103,3 +103,15 @@ These contracts represent the data parts of the following accepted decisions:
 
 Later phases must still implement the behavior behind these fields. A schema
 does not prove execution behavior.
+
+## Common E2E provider result
+
+`schemas/e2e-result.v1.schema.json` defines the portable E2E result used by
+Playwright and future Cypress, Selenium, Appium, or custom providers. It keeps
+case identities, projects, browser identities, attempts, errors, exact counts,
+and the native report format independent from one tool. Buster validates the
+schema digest and count relations before it accepts a provider result.
+
+`examples/e2e-result-cypress.json` is a second-provider conformance record. It
+proves contract portability only. Real acceptance for a Cypress provider would
+still require a real Cypress execution proof.

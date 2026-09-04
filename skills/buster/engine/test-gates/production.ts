@@ -158,6 +158,11 @@ export function loadProductionBusterRemotePlanRuntime(
   }
   const browserVisualSource = value.browserVisual === undefined ? null : object(value.browserVisual, 'browserVisual');
   if (allowedCapabilities.has('browser.visual') && !browserVisualSource) throw new Error('BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED');
+  const browserPlaywrightSource = value.browserPlaywright === undefined ? null : object(value.browserPlaywright, 'browserPlaywright');
+  if (allowedCapabilities.has('browser.playwright') && !browserPlaywrightSource) throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED');
+  const browserPlaywrightCgroup = typeof browserPlaywrightSource?.cgroupRoot === 'string'
+    && browserPlaywrightSource.cgroupRoot.length > 0 ? browserPlaywrightSource.cgroupRoot : undefined;
+  if (browserPlaywrightSource && !browserPlaywrightCgroup) throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CGROUP_REQUIRED');
   const stateRoot = path.resolve(directory, value.stateRoot as string);
   const service = new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(stateRoot, {
@@ -282,6 +287,28 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumResultBytes: integer(browserVisualSource.maximumResultBytes, 'browserVisual.maximumResultBytes'),
       maximumScreenshotBytes: integer(browserVisualSource.maximumScreenshotBytes, 'browserVisual.maximumScreenshotBytes'),
       maximumMasksPerCombination: integer(browserVisualSource.maximumMasksPerCombination, 'browserVisual.maximumMasksPerCombination'),
+    } } : {}),
+    ...(browserPlaywrightSource ? { browserPlaywright: {
+      allowedOrigins: optionalStringArray(browserPlaywrightSource.allowedOrigins, 'browserPlaywright.allowedOrigins'),
+      allowedTargetPorts: integerArray(browserPlaywrightSource.allowedTargetPorts, 'browserPlaywright.allowedTargetPorts', 65535),
+      playwrightExecutable: path.resolve(directory, String(browserPlaywrightSource.playwrightExecutable)),
+      sandboxExecutable: path.resolve(directory, String(browserPlaywrightSource.sandboxExecutable)),
+      runtimeNodeModules: path.resolve(directory, String(browserPlaywrightSource.runtimeNodeModules)),
+      browsersPath: path.resolve(directory, String(browserPlaywrightSource.browsersPath)),
+      readOnlyRoots: stringArray(browserPlaywrightSource.readOnlyRoots, 'browserPlaywright.readOnlyRoots'),
+      maximumWorkers: integer(browserPlaywrightSource.maximumWorkers, 'browserPlaywright.maximumWorkers'),
+      maximumExecutionMs: integer(browserPlaywrightSource.maximumExecutionMs, 'browserPlaywright.maximumExecutionMs'),
+      maximumOutputBytes: integer(browserPlaywrightSource.maximumOutputBytes, 'browserPlaywright.maximumOutputBytes'),
+      maximumResultBytes: integer(browserPlaywrightSource.maximumResultBytes, 'browserPlaywright.maximumResultBytes'),
+      maximumArtifactBytes: integer(browserPlaywrightSource.maximumArtifactBytes, 'browserPlaywright.maximumArtifactBytes'),
+      maximumArtifactFiles: integer(browserPlaywrightSource.maximumArtifactFiles, 'browserPlaywright.maximumArtifactFiles'),
+      maximumProcesses: integer(browserPlaywrightSource.maximumProcesses, 'browserPlaywright.maximumProcesses'),
+      maximumMemoryBytes: integer(browserPlaywrightSource.maximumMemoryBytes, 'browserPlaywright.maximumMemoryBytes'),
+      maximumCpuMillis: integer(browserPlaywrightSource.maximumCpuMillis, 'browserPlaywright.maximumCpuMillis'),
+      terminationGraceMs: integer(browserPlaywrightSource.terminationGraceMs, 'browserPlaywright.terminationGraceMs'),
+      cgroupRoot: path.resolve(directory, browserPlaywrightCgroup!),
+      runAsUid: integer(browserPlaywrightSource.runAsUid, 'browserPlaywright.runAsUid'),
+      runAsGid: integer(browserPlaywrightSource.runAsGid, 'browserPlaywright.runAsGid'),
     } } : {}),
   });
   const tlsSource = value.tls === undefined ? null : object(value.tls, 'tls');
