@@ -79,12 +79,9 @@ function validateK8s(config: any, context: Context, diagnostics: Diagnostic[], f
 
 function validateApiAndVisual(config: any, suites: string[], context: Context, diagnostics: Diagnostic[], field: string) {
   if (suites.includes('api')) requireExistingSwarmFile(context, config.api?.spec_file, diagnostics, `${field}.api.spec_file`);
-  if (!suites.includes('visual-reg')) return;
-  const visual = config['visual-reg'];
-  if (isPlainObject(visual) && visual.path !== undefined) {
-    diagnostics.push(diagnostic('form_check', `${field}.visual-reg.path is removed; use paths_file`, `${field}.visual-reg.path`));
+  if (suites.includes('visual-reg')) {
+    diagnostics.push(diagnostic('form_check', `LEGACY_VISUAL_CONFIGURATION_RETIRED:${field}: define kubeclaw.visual@1 in .swarm/pipeline.json`, `${field}.visual-reg`));
   }
-  requireExistingSwarmFile(context, visual?.paths_file, diagnostics, `${field}.visual-reg.paths_file`);
 }
 
 function validateLocalSuites(config: any, suites: string[], context: Context, diagnostics: Diagnostic[], field: string) {
@@ -99,6 +96,9 @@ export function validateTestConfig(
   diagnostics: Diagnostic[],
   field: string,
 ) {
+  if (isPlainObject(testConfig) && isPlainObject(testConfig['visual-reg'])) {
+    diagnostics.push(diagnostic('form_check', `LEGACY_VISUAL_CONFIGURATION_RETIRED:${field}: define kubeclaw.visual@1 in .swarm/pipeline.json`, `${field}.visual-reg`));
+  }
   if (!Array.isArray(suites) || suites.length === 0) return;
   if (!isPlainObject(testConfig)) {
     diagnostics.push(diagnostic('form_check', `${field} must be an object when test_suites are configured`, field));

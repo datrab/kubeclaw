@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { toBusterPlan, toForgeAssignments } from "../pipeline-adapter/index.ts";
-test("approved Prism targets map to the existing Buster suites", () => {
+test("approved Prism targets map to the visual provider declaration", () => {
   const plan = toBusterPlan({
     baselineDigest: `sha256:${"a".repeat(64)}`,
     projectId: "demo",
@@ -16,8 +16,10 @@ test("approved Prism targets map to the existing Buster suites", () => {
       },
     ],
   });
-  assert.deepEqual(plan.suites, ["visual-reg", "a11y", "e2e"]);
-  assert.equal(plan.paths[0]?.viewport.width, 1440);
+  assert.equal(plan.visual.uses, "kubeclaw.visual@1");
+  assert.deepEqual(plan.visual.config.targets, ["home-wide"]);
+  assert.deepEqual(plan.legacySuites, ["a11y", "e2e"]);
+  assert.equal(plan.targets[0]?.viewport.width, 1440);
   assert.equal(plan.baselineDigest.length, 71);
 });
 test("invalid baseline digests fail closed", () => {

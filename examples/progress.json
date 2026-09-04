@@ -704,7 +704,6 @@
         "health",
         "a11y",
         "perf",
-        "visual-reg",
         "e2e",
         "unit"
       ],
@@ -714,9 +713,6 @@
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "visual-reg": {
-          "baseline_dir": ".swarm/modules/15-dashboard-core-pages/baselines"
         },
         "e2e": {
           "tests_dir": ".swarm/modules/15-dashboard-core-pages/tests"
@@ -747,7 +743,6 @@
         "health",
         "a11y",
         "perf",
-        "visual-reg",
         "e2e",
         "unit"
       ],
@@ -757,9 +752,6 @@
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "visual-reg": {
-          "baseline_dir": ".swarm/modules/16-resource-pages/baselines"
         },
         "e2e": {
           "tests_dir": ".swarm/modules/16-resource-pages/tests"
@@ -790,7 +782,6 @@
         "health",
         "a11y",
         "perf",
-        "visual-reg",
         "e2e",
         "unit"
       ],
@@ -800,9 +791,6 @@
           "project_dir": "Projects/kubecommand/src",
           "build_cmd": "cd frontend && npm install && npm run build",
           "image": "docker.io/library/node:20-slim"
-        },
-        "visual-reg": {
-          "baseline_dir": ".swarm/modules/17-feature-pages/baselines"
         },
         "e2e": {
           "tests_dir": ".swarm/modules/17-feature-pages/tests"

@@ -1,0 +1,32 @@
+{
+  "schemaVersion":"suite-cutover-inventory.v1","suite":"visual-reg","successor":"kubeclaw.visual@1","parityItemCount":30,
+  "authority":{"old":"deleted","replacement":"kubeclaw.visual@1","state":"replacement-only"},
+  "legacyFilesToDelete":[
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-multi.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-image.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-delivery.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-discord.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts",
+    "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot-cli.ts"
+  ],
+  "replacementFilesRequired":[
+    "skills/buster/plugins/visual/plugin.json","skills/buster/plugins/visual/src/provider.js",
+    "skills/buster/engine/test-gates/browser-visual-runtime.ts","contracts/pipeline-test-gate/v1/suites/visual.v1.json",
+    "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v1.schema.json"
+  ],
+  "requiredAbsence":[
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/protocol.ts","token":"'visual-reg'"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts","token":"visual-reg"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/services/capabilities.ts","token":"case 'visual-reg'"},
+    {"file":"examples/progress.json","token":"visual-reg"},
+    {"file":"skills/prism/pipeline-adapter/index.ts","token":"\"visual-reg\""},
+    {"file":"skills/nova/project_setup/SKILL.md","token":"`visual-reg`"}
+  ],
+  "retainedSharedSurfaces":["contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json","canonical artifact store","canonical notification observers"],
+  "verification":{
+    "solePathTests":["tests/verification/contracts/check-pipeline-visual-cutover.mts"],
+    "dualAuthorityTests":["tests/verification/contracts/check-pipeline-visual-cutover.mts"],
+    "absenceTests":["tests/verification/contracts/check-pipeline-visual-cutover.mts"]
+  }
+}

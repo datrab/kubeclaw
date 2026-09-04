@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "kubeclaw.visual-baselines.v1",
+  "baselineBundleDigest": "sha256:cedabfc38b697ce34f1fa22fbc8e65dd304d422be04bc47d5235a3b2d05ed9b9",
+  "entries": [
+    {
+      "id": "home-desktop",
+      "route": "/",
+      "profile": "chromium-desktop",
+      "baselineFile": ".swarm/visual/home-desktop.png",
+      "sha256": "sha256:f5a1d4ed36b461dd33baad7c61a2947d7e0f61b66d77814dae2be65e03a65c79",
+      "browser": "chromium",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageConditions": {
+        "colorScheme": "light",
+        "reducedMotion": "reduce",
+        "locale": "en-US",
+        "timezoneId": "UTC",
+        "deviceScaleFactor": 1,
+        "hasTouch": false,
+        "isMobile": false,
+        "fullPage": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"kubeclaw.visual-baselines.v1",
+  "baselineBundleDigest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "entries":[{
+    "id":"home-desktop","route":"/","profile":"chromium-desktop","baselineFile":".swarm/visual/home-desktop.png",
+    "sha256":"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "browser":"chromium","viewport":{"width":1440,"height":900},
+    "pageConditions":{"colorScheme":"light","reducedMotion":"reduce","locale":"en-US","timezoneId":"UTC","deviceScaleFactor":1,"hasTouch":false,"isMobile":false,"fullPage":true}
+  }]
+}

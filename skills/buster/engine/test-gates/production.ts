@@ -156,6 +156,8 @@ export function loadProductionBusterRemotePlanRuntime(
   if (allowedCapabilities.has('browser.lighthouse') && !browserLighthouseSource) {
     throw new Error('BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED');
   }
+  const browserVisualSource = value.browserVisual === undefined ? null : object(value.browserVisual, 'browserVisual');
+  if (allowedCapabilities.has('browser.visual') && !browserVisualSource) throw new Error('BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED');
   const stateRoot = path.resolve(directory, value.stateRoot as string);
   const service = new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(stateRoot, {
@@ -269,6 +271,17 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumRuns: integer(browserLighthouseSource.maximumRuns, 'browserLighthouse.maximumRuns'),
       maximumExecutionMs: integer(browserLighthouseSource.maximumExecutionMs, 'browserLighthouse.maximumExecutionMs'),
       maximumResultBytes: integer(browserLighthouseSource.maximumResultBytes, 'browserLighthouse.maximumResultBytes'),
+    } } : {}),
+    ...(browserVisualSource ? { browserVisual: {
+      allowedOrigins: optionalStringArray(browserVisualSource.allowedOrigins, 'browserVisual.allowedOrigins'),
+      allowedBrowsers: stringArray(browserVisualSource.allowedBrowsers, 'browserVisual.allowedBrowsers') as ('chromium' | 'firefox' | 'webkit')[],
+      browserExecutables: browserExecutableMap(browserVisualSource.browserExecutables, 'browserVisual.browserExecutables'),
+      maximumCombinations: integer(browserVisualSource.maximumCombinations, 'browserVisual.maximumCombinations'),
+      maximumConcurrency: integer(browserVisualSource.maximumConcurrency, 'browserVisual.maximumConcurrency'),
+      maximumExecutionMs: integer(browserVisualSource.maximumExecutionMs, 'browserVisual.maximumExecutionMs'),
+      maximumResultBytes: integer(browserVisualSource.maximumResultBytes, 'browserVisual.maximumResultBytes'),
+      maximumScreenshotBytes: integer(browserVisualSource.maximumScreenshotBytes, 'browserVisual.maximumScreenshotBytes'),
+      maximumMasksPerCombination: integer(browserVisualSource.maximumMasksPerCombination, 'browserVisual.maximumMasksPerCombination'),
     } } : {}),
   });
   const tlsSource = value.tls === undefined ? null : object(value.tls, 'tls');

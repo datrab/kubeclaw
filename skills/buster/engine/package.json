@@ -18,6 +18,8 @@
     "js-yaml": "^4.3.1",
     "lighthouse": "13.4.1",
     "playwright": "1.62.1",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
     "ws": "^8.18.3"
   }
 }

@@ -89,7 +89,7 @@ Typecheck the scaffold tool after changing it:
 npm run progress:scaffold:typecheck
 ```
 
-The validator is strict for checkable facts: required keys, enum values, safe paths, module/gate references, module `FORGE.md` files, gate instruction files, `api` specs, visual-reg metadata, and stale removed fields. It form-checks dynamic project intent such as notes, gate quality, and future Forge-produced app files.
+The validator is strict for checkable facts: required keys, enum values, safe paths, module/gate references, module `FORGE.md` files, gate instruction files, `api` specs, and stale removed fields. It form-checks dynamic project intent such as notes, gate quality, and future Forge-produced app files.
 
 ### 5. progress.json Shape
 
@@ -241,7 +241,8 @@ node /app/skills/pipeline.ts --project <project> --nova-channel <id> --resume
 | `security` | ✅ | ❌ |
 | `kubeclaw.direct-command@1` plan nodes | ✅ (pytest) | ✅ (vitest) |
 | `a11y`, `perf` | ❌ | ✅ |
-| `visual-reg`, `e2e` | ❌ | ✅ (needs baselines) |
+| `e2e` | ❌ | ✅ (needs test declarations) |
+| `kubeclaw.visual@1` plan nodes | ❌ | ✅ (needs reviewed manifest, profiles, and PNG baselines) |
 | `kubeclaw.kubernetes-fixture@1` plan nodes | ✅ (deployment modules) | ❌ |
 | Root `kubeclaw.lint.full` declaration | ✅ (Kubernetes inputs) | ✅ (Kubernetes inputs) |
 

@@ -10,7 +10,7 @@
     "perf": { "state": "migrated", "successor": "kubeclaw.lighthouse@1" },
     "bundle": { "state": "migrated", "successor": "kubeclaw.size-budget@1" },
     "security": { "state": "unmigrated", "successor": "kubeclaw.security-suite@1" },
-    "visual-reg": { "state": "unmigrated", "successor": "kubeclaw.visual@1" },
+    "visual-reg": { "state": "migrated", "successor": "kubeclaw.visual@1" },
     "api": { "state": "migrated", "successor": "kubeclaw.api-suite@1" },
     "e2e": { "state": "unmigrated", "successor": "kubeclaw.e2e-suite@1" },
     "unit": { "state": "migrated", "successor": "kubeclaw.direct-command@1" }

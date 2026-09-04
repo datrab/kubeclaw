@@ -27,6 +27,7 @@
         "kubeclaw.api-flow",
         "kubeclaw.axe",
         "kubeclaw.lighthouse",
+        "kubeclaw.visual",
         "kubeclaw.command-runner",
         "kubeclaw.network-http",
         "kubeclaw.openapi",
@@ -1149,6 +1150,73 @@
       ]
     },
     {
+      "id": "kubeclaw.visual",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/visual/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.visual",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "visual",
+          "contractId": "kubeclaw.visual@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "browser.visual"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "kubeclaw.agent-observability",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -2227,7 +2295,7 @@
     "stage": 17,
     "observer": 6,
     "adapter": 19,
-    "test provider": 11,
+    "test provider": 12,
     "report adapter": 1
   },
   "capabilityIds": [

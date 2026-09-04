@@ -20,7 +20,7 @@ Unresolved conflicts: none.
 
 | Role | Packages | Plugins | External capabilities |
 | --- | ---: | ---: | --- |
-| buster | 11 | 21 | git.repository.read, test.plan.execute |
+| buster | 11 | 22 | git.repository.read, test.plan.execute |
 | nova | 10 | 30 | test.suite.execute |
 | prism | 11 | 6 | git.repository.read |
 
@@ -42,7 +42,7 @@ Unresolved conflicts: none.
 | stage | 17 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | observer | 6 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | adapter | 19 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
-| test provider | 11 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
+| test provider | 12 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | report adapter | 1 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 
 Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
@@ -65,6 +65,7 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.size-budget | 1.0.0 | buster | test provider: artifact | requires: none<br>provides: none | `skills/buster/plugins/size-budget/plugin.json` |
 | kubeclaw.tailscale-exposure | 1.0.0 | buster | test provider: exposure | requires: kubernetes.exposure<br>provides: none | `skills/buster/plugins/tailscale-exposure/plugin.json` |
 | kubeclaw.test-agent | 1.0.0 | buster | stage: test (kubeclaw.test.execution) | requires: command.execute, test.plan.execute, test.suite.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/buster/plugins/test-agent/plugin.json` |
+| kubeclaw.visual | 1.0.0 | buster | test provider: visual | requires: browser.visual<br>provides: none | `skills/buster/plugins/visual/plugin.json` |
 | kubeclaw.agent-observability | 1.0.0 | buster, nova, prism | observer: ingester<br>observer: evidence | requires: telemetry.emit, artifacts.write<br>provides: none | `skills/common/plugins/agent-observability/plugin.json` |
 | kubeclaw.artifact-store | 1.0.0 | buster, nova, prism | adapter: artifact-store | requires: none<br>provides: artifacts.read, artifacts.write | `skills/common/plugins/artifact-store/plugin.json` |
 | kubeclaw.command-runner | 1.0.0 | buster | adapter: command | requires: none<br>provides: command.execute | `skills/common/plugins/command-runner/plugin.json` |

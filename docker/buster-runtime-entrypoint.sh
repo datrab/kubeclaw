@@ -165,7 +165,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
-  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse'],
+  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual'],
   directCommand: {
     executableCatalog: {
       node: '/usr/local/bin/node',
@@ -232,6 +232,16 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumRuns: 80,
     maximumExecutionMs: 180000,
     maximumResultBytes: 67108864,
+  },
+  browserVisual: {
+    allowedOrigins: exactBrowserOrigins,
+    allowedBrowsers: ['chromium', 'firefox', 'webkit'],
+    maximumCombinations: 64,
+    maximumConcurrency: 4,
+    maximumExecutionMs: 120000,
+    maximumResultBytes: 134217728,
+    maximumScreenshotBytes: 16777216,
+    maximumMasksPerCombination: 32,
   },
 }, null, 2)}\n`);
 NODE

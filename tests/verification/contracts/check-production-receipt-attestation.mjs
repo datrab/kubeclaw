@@ -93,6 +93,28 @@ const kubernetesSigned = attestProductionReceipt({ ...httpUnsigned,
 assert.deepEqual(verifyProductionReceipt(kubernetesSigned, keys.publicKey, {
   expectedRevision: revision, expectedBusterRevision: busterRevision,
 }), []);
+const browserReceiptBase = { ...httpUnsigned, immutableImage: `registry.example.invalid/app@${digest}`,
+  imageDigest: digest, resources: { leaseName: 'test-browser', namespace: 'test-browser',
+    serviceName: 'browser-preflight', servicePort: 80 } };
+for (const receipt of [
+  { ...browserReceiptBase, schemaVersion: 'nova-a11y-production-preflight.v1', suite: 'a11y',
+    browserEnginesVerified: ['chromium', 'firefox', 'webkit'] },
+  { ...browserReceiptBase, schemaVersion: 'nova-lighthouse-production-preflight.v1', suite: 'perf',
+    lighthouseVersion: '13.4.1', reportCount: 3 },
+  { ...browserReceiptBase, schemaVersion: 'nova-visual-production-preflight.v1', suite: 'visual-reg',
+    browserVersion: 'real-browser-version' },
+]) {
+  const browserSigned = attestProductionReceipt(receipt, keys.privateKey);
+  assert.deepEqual(verifyProductionReceipt(browserSigned, keys.publicKey, {
+    expectedRevision: revision, expectedBusterRevision: busterRevision,
+  }), []);
+  const wrongImage = attestProductionReceipt({ ...receipt, imageDigest: `sha256:${'c'.repeat(64)}` }, keys.privateKey);
+  assert.ok(verifyProductionReceipt(wrongImage, keys.publicKey, { expectedRevision: revision })
+    .includes('workload image proof is incomplete'));
+  const noImport = attestProductionReceipt({ ...receipt, evidenceImported: false }, keys.privateKey);
+  assert.ok(verifyProductionReceipt(noImport, keys.publicKey, { expectedRevision: revision })
+    .includes('browser evidence import proof is incomplete'));
+}
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'production-receipt-attestation-'));
 try {
   const unsignedPath = path.join(temporary, 'unsigned.json');

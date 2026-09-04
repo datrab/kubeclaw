@@ -114,7 +114,7 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   assert.equal(JSON.stringify(progress).includes('"health"'), false);
 });
 
-test('progress scaffold rejects removed visual-reg path alias', () => {
+test('progress scaffold rejects all retired visual-reg configuration', () => {
   const root = makeRepo();
   const swarm = createBasicProject(root);
   writeFile(path.join(swarm, 'baselines/visual-paths.json'), '[]\n');
@@ -146,8 +146,19 @@ test('progress scaffold rejects removed visual-reg path alias', () => {
 
   const output = runFailure(root, ['--project', 'demo', '--apply']);
 
-  assert.match(output, /visual-reg\.path is removed; use paths_file/);
-  assert.match(output, /visual-reg\.paths_file must be a non-empty string/);
+  assert.match(output, /LEGACY_VISUAL_CONFIGURATION_RETIRED/);
+  assert.match(output, /kubeclaw\.visual@1/);
+});
+
+test('progress scaffold rejects retired visual-reg configuration without a suite selector', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  const scaffoldPath = path.join(swarm, 'progress.scaffold.json');
+  writeFile(scaffoldPath, `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1,
+    description: 'Demo project', notes: [], policy: {}, execution_order: ['01-foundation'], modules: {
+      '01-foundation': { title: 'Foundation', dir: '01-foundation', depends_on: [], stages: ['forge', 'buster'],
+        test_suites: [], test_config: { 'visual-reg': { path: 'legacy.json' } } },
+    }, gates: {} }, null, 2)}\n`);
+  assert.match(runFailure(root, ['--project', 'demo', '--apply']), /LEGACY_VISUAL_CONFIGURATION_RETIRED/);
 });
 
 test('progress scaffold migrates legacy health settings into provider plan nodes', () => {

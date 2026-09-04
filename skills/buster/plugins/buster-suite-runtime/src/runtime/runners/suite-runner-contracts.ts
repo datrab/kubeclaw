@@ -20,7 +20,7 @@ export interface SuiteContext extends Record<string, unknown> {
   repoRoot: string; payload: SuiteRunnerPayload; moduleId: string; runId: string | null; gateId: string | null;
   gateType: string | null; dispatchId: string | null; sessionKey: string | null; project: string;
   config: Record<string, unknown>; capabilities: readonly string[]; resultsDir: string; testsLogDir: string | null;
-  screenshotsDir: string; logDir: string | null; pipelineLogPath: string | null; pipelineRunLogPath: string | null;
+  logDir: string | null; pipelineLogPath: string | null; pipelineRunLogPath: string | null;
   logSink: LogSink | null; attempt: number | undefined; telemetryContext: unknown; suiteResults: Record<string, SuiteVerdict>;
   registerRuntimeCleanup: (cleanup: () => Promise<void> | void) => void; suiteAbortSignal?: AbortSignal; suiteDeadlineMs?: number;
 }

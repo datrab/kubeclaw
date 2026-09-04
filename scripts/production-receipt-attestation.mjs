@@ -11,6 +11,9 @@ const RECEIPT_SCHEMAS = new Set([
   'kubernetes-fixture-production-preflight.v1',
   'nova-container-build-production-preflight.v4',
   'nova-http-production-preflight.v1',
+  'nova-a11y-production-preflight.v1',
+  'nova-lighthouse-production-preflight.v1',
+  'nova-visual-production-preflight.v1',
   'nova-tailscale-production-preflight.v1',
   'nova-unit-production-preflight.v2',
 ]);
@@ -156,6 +159,30 @@ function validateProductionReceiptPayload(value, options = {}) {
       || target.username || target.password || target.search || target.hash)) errors.push('HTTP target is invalid');
     if (!Number.isSafeInteger(value.httpStatus) || value.httpStatus < 200 || value.httpStatus > 299
       || value.networkRequestVerified !== true) errors.push('HTTP request proof is incomplete');
+  } else if (['nova-a11y-production-preflight.v1', 'nova-lighthouse-production-preflight.v1',
+    'nova-visual-production-preflight.v1'].includes(value.schemaVersion)) {
+    const expectedSuite = { 'nova-a11y-production-preflight.v1': 'a11y',
+      'nova-lighthouse-production-preflight.v1': 'perf',
+      'nova-visual-production-preflight.v1': 'visual-reg' }[value.schemaVersion];
+    if (value.suite !== expectedSuite) errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.cleanupVerified !== true
+      || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
+    if (value.evidenceImported !== true || value.mocks !== 0 || value.emulators !== 0) {
+      errors.push('browser evidence import proof is incomplete');
+    }
+    if (typeof value.immutableImage !== 'string' || !DIGEST.test(value.imageDigest ?? '')
+      || !value.immutableImage.endsWith(`@${value.imageDigest}`)) errors.push('workload image proof is incomplete');
+    if (!value.resources?.leaseName || !value.resources?.namespace || value.resources?.servicePort !== 80) {
+      errors.push('resource identity is incomplete');
+    }
+    if (value.schemaVersion === 'nova-a11y-production-preflight.v1'
+      && JSON.stringify([...(value.browserEnginesVerified ?? [])].sort()) !== JSON.stringify(['chromium', 'firefox', 'webkit'])) {
+      errors.push('accessibility browser proof is incomplete');
+    }
+    if (value.schemaVersion === 'nova-lighthouse-production-preflight.v1'
+      && (value.lighthouseVersion !== '13.4.1' || value.reportCount !== 3)) errors.push('Lighthouse proof is incomplete');
+    if (value.schemaVersion === 'nova-visual-production-preflight.v1'
+      && (typeof value.browserVersion !== 'string' || !value.browserVersion)) errors.push('visual browser proof is incomplete');
   }
   return errors;
 }

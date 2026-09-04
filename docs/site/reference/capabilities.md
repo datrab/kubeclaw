@@ -18,6 +18,7 @@ This catalogue lists each grantable capability and every registration that decla
 | `artifacts.write` | `kubeclaw.test-agent:test`<br>`kubeclaw.agent-observability:evidence`<br>`kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.notification-observer:audit`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.case-study:case-study`<br>`kubeclaw.delivery-lint:delivery-lint`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.pipeline-review:review`<br>`kubeclaw.preflight-contract:validate`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.project-summary:summary`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit` |
 | `browser.axe` | `kubeclaw.axe:axe` |
 | `browser.lighthouse` | `kubeclaw.lighthouse:lighthouse` |
+| `browser.visual` | `kubeclaw.visual:visual` |
 | `command.execute` | `kubeclaw.direct-command:command`<br>`kubeclaw.test-agent:test`<br>`kubeclaw.command-runner:command` |
 | `container.build` | `kubeclaw.container-build:buildkit` |
 | `git.commit` | `kubeclaw.git-workspace:git`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.implementation-agent:implementation` |

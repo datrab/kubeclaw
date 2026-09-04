@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import http from 'node:http';
+import path from 'node:path';
+import { chromium } from 'playwright';
+
+const root=path.resolve('tests/verification/e2e/fixtures/nginx-project'); const output=path.join(root,'.swarm/visual');
+const types={'.html':'text/html','.css':'text/css','.json':'application/json'};
+const server=http.createServer((request,response)=>{const pathname=new URL(request.url??'/', 'http://fixture').pathname;const relative=pathname==='/'?'src/index.html':`src${pathname}`;const file=path.resolve(root,relative);if(!file.startsWith(`${root}${path.sep}`)||!fs.existsSync(file)){response.statusCode=404;response.end('missing');return;}response.setHeader('content-type',types[path.extname(file)]??'application/octet-stream');response.end(fs.readFileSync(file));});
+await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
+try{const address=server.address();if(!address||typeof address==='string')throw new Error('VISUAL_BASELINE_BIND_FAILED');const executable='/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';if(!fs.existsSync(executable))throw new Error('VISUAL_BASELINE_REAL_CHROMIUM_REQUIRED');
+  const browser=await chromium.launch({headless:true,executablePath:executable});try{const context=await browser.newContext({viewport:{width:1280,height:720},colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false,serviceWorkers:'block'});try{const page=await context.newPage();await page.goto(`http://127.0.0.1:${address.port}/`,{waitUntil:'networkidle'});await page.addStyleTag({content:'*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important;caret-color:transparent!important}'});const bytes=await page.screenshot({type:'png',fullPage:true,animations:'disabled',caret:'hide'});fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,'home-desktop.png'),bytes);const digest=`sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;fs.writeFileSync(path.join(output,'baselines.json'),`${JSON.stringify({schemaVersion:'kubeclaw.visual-baselines.v1',baselineBundleDigest:`sha256:${crypto.createHash('sha256').update(digest).digest('hex')}`,entries:[{id:'home-desktop',route:'/',profile:'chromium-desktop',baselineFile:'.swarm/visual/home-desktop.png',sha256:digest,browser:'chromium',viewport:{width:1280,height:720},pageConditions:{colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false,fullPage:true}}]},null,2)}\n`);}finally{await context.close();}}finally{await browser.close();}}
+finally{await new Promise(resolve=>server.close(resolve));}

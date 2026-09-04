@@ -47,6 +47,6 @@ export function publishSuiteArtifacts(telemetry:any,{moduleId,gateId,suiteName,r
   const artifacts=[];
   artifacts.push(publishArtifact(config,{logical_id:`quality/${workId}/${attempt}/${suiteName}/verdict`,kind:'suite-verdict',media_type:'application/json',bytes:JSON.stringify(result),producer:telemetry.emitter,content_class:'artifact',correlation}));
   const files=approvedArtifactFiles(suiteName,result.metadata||{},pipelineDir);
-  for(const[name,bytes]of files)artifacts.push(publishArtifact(config,{logical_id:`quality/${workId}/${attempt}/${suiteName}/${name}`,kind:suiteName==='visual-reg'?'visual-evidence':'suite-artifact',media_type:'application/octet-stream',bytes,producer:telemetry.emitter,content_class:'artifact',correlation}));
+  for(const[name,bytes]of files)artifacts.push(publishArtifact(config,{logical_id:`quality/${workId}/${attempt}/${suiteName}/${name}`,kind:'suite-artifact',media_type:'application/octet-stream',bytes,producer:telemetry.emitter,content_class:'artifact',correlation}));
   return artifacts;
 }

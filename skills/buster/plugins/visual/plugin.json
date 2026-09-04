@@ -1,0 +1,15 @@
+{
+  "id":"kubeclaw.visual","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0",
+  "stages":[],"observers":[],"adapters":[],
+  "testProviders":[{
+    "id":"visual","contractId":"kubeclaw.visual@1","kind":"test","module":"src/provider.js","export":"provider",
+    "configSchema":"schemas/config.schema.json",
+    "inputs":[
+      {"name":"deployment","kind":"value","required":false,"schemaId":"kubeclaw.kubernetes-deployment-fixture@1"},
+      {"name":"endpoint","kind":"value","required":false,"schemaId":"kubeclaw.public-endpoint-fixture@1"}
+    ],
+    "outputs":[],"requiredCapabilities":["browser.visual"],"retrySafe":true,"matrixFields":[],"reportFormats":[],
+    "evidenceTypes":["log","visual-baseline","visual-current","visual-difference","test-report"],
+    "evidenceDefaults":{"onPass":["log","visual-baseline","visual-current","visual-difference","test-report"],"onFail":["log","visual-baseline","visual-current","visual-difference","test-report"],"onError":["log"]}
+  }]
+}

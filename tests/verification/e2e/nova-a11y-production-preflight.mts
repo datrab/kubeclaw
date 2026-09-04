@@ -149,6 +149,7 @@ try {
     decision: result.remote.decision.state, evidenceDigests: imported.evidenceDigests,
     evidenceImported: true, runnerCleanupVerified: true, cleanupVerified: false,
     clusterCleanupObserved: false, browserEnginesVerified: ['chromium', 'firefox', 'webkit'],
+    immutableImage, imageDigest: image[1],
     resources: { leaseName: deployment.leaseName, namespace: deployment.namespace,
       serviceName: 'a11y-preflight', servicePort: 80 },
     boundary: 'Nova signed source to remote Buster isolated Axe provider plan', mocks: 0, emulators: 0 }, null, 2)}\n`);

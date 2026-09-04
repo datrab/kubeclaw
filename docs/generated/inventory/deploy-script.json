@@ -81,6 +81,7 @@
     "nova-http-preflight",
     "nova-a11y-preflight",
     "nova-lighthouse-preflight",
+    "nova-visual-preflight",
     "nova-tailscale-preflight",
     "nova-production-preflights",
     "worker-trust-e2e",
@@ -306,6 +307,7 @@
     "cmd_nova_http_preflight",
     "cmd_nova_a11y_preflight",
     "cmd_nova_lighthouse_preflight",
+    "cmd_nova_visual_preflight",
     "cmd_nova_tailscale_preflight",
     "cmd_nova_production_preflights",
     "cmd_worker_trust_e2e",
@@ -334,6 +336,6 @@
     "infra": 1077,
     "agents": 1393,
     "smoke": 1515,
-    "teardown": 2578
+    "teardown": 2604
   }
 }

@@ -1,0 +1,6 @@
+{
+  "schemaVersion":"test-suite-template.v1","contractId":"kubeclaw.visual-suite@1",
+  "tests":{"visual":{"uses":"kubeclaw.visual@1","mode":"blocking","retries":0,"concurrencyGroup":"browser-visual","config":{
+    "manifestFile":".swarm/visual/baselines.json","profileFile":".swarm/browser-profiles.json","targets":["home-desktop"],"comparisonProfile":"strict-v1"
+  }}},"fixtures":{},"concurrencyLimits":{"browser-visual":2}
+}

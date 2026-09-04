@@ -221,84 +221,12 @@ Every module should have at least 1 test hitting an endpoint from the previous m
 ---
 
 
-## Baselines for visual-reg
+## Visual regression baselines
 
-Only needed when `visual-reg` is in `test_suites`. Typical for frontend modules with real pages (not scaffolds).
+Do not put `visual-reg` in `test_suites` or `test_config`. Those fields are retired. Declare `kubeclaw.visual@1` in `.swarm/pipeline.json`.
 
-Visual-reg baseline path authority is module identity: Buster derives the baseline directory as `.swarm/modules/<module-dir>/baselines/`. Do not configure a baseline path in `progress.json`.
+The node requires a reviewed `kubeclaw.visual-baselines.v1` manifest, a shared `kubeclaw.browser-profiles.v1` profile file, and digest-bound PNG images. Select each route/profile pair by its manifest ID. The provider rejects missing files, path escape, digest mismatch, and capture identity mismatch.
 
-### Multi-Path Baselines (required)
+Baseline generation is a separate trusted workflow. Test execution never updates baseline files. Review a candidate and its difference evidence, approve it through the durable human gate, then apply all PNG and manifest digest changes in one commit. See the [visual user guide](../../../docs/architecture/pipeline-test-gate-visual-user-guide.md).
 
-For modules with multiple pages. The **approved Prism Baseline Bundle is the design source of truth**. Archviewer can show architecture documents as HTML. Buster visual-reg requires explicit generated baseline artifacts checked into `.swarm/modules/<module-dir>/baselines/` before the suite runs.
-
-**Setup:**
-
-1. Read the approved Prism Baseline Bundle and its assigned views.
-2. The preview must follow the [Prism conventions](prism-conventions.md):
-   - `<script type="application/json" data-routes>` manifest listing every page
-   - `?baselines=true` query param bypasses auth/login
-3. Place it at `.swarm/modules/<module-dir>/baselines/preview.html`.
-4. Generate reviewed baseline artifacts explicitly:
-
-```bash
-node /app/skills/pipeline/tools/screenshot.ts --generate-baselines \
-  .swarm/modules/15-dashboard-core-pages/baselines/preview.html \
-  .swarm/modules/15-dashboard-core-pages/baselines/
-```
-
-5. Review and commit the generated `paths.json` plus per-route `*-baseline.png` files before requesting `visual-reg`.
-
-**Required baseline layout:**
-
-```
-.swarm/modules/15-dashboard-core-pages/baselines/
-├── preview.html              ← Prism-generated source of truth
-├── paths.json                ← Explicit reviewed route metadata
-├── setup-baseline.png        ← Explicit reviewed baseline from preview
-├── dashboard-baseline.png
-├── pods-baseline.png
-├── deployments-baseline.png
-└── ...
-```
-
-**Regeneration:** when `preview.html` changes, rerun `screenshot.ts --generate-baselines`, review the new artifacts, and commit them. `visual-reg` does **not** auto-regenerate baselines and fails closed if explicit metadata is missing.
-
-### Baseline requirements
-
-The `visual-reg` suite now requires explicit multi-path metadata:
-
-| Found in module baseline directory | Behavior |
-|---|---|
-| `paths.json` plus matching `{name}-baseline.png` files | Compare each declared route against its reviewed baseline |
-| Missing/invalid `paths.json` | Typed contract failure |
-| Missing per-route baseline PNG | Typed contract failure |
-
-Single-path compatibility and implicit HTML-to-baseline generation are removed.
-
-### Config in progress.json
-
-Configure thresholds/Discord/pixelmatch behavior only:
-
-```json
-"visual-reg": {
-  "thresholds": { "max_diff_percent": 1.0 },
-  "discord": "summary"
-}
-```
-
-| Field | Default | Description |
-|---|---|---|
-| `thresholds` | `null` | `null` = informational (always PASS). Set for enforced mode |
-| `discord` | auto | `"summary"` (1 embed, >3 paths) or `"all"` (per-page messages, ≤3 paths) |
-| `pixelmatch.threshold` | `0.1` | Per-pixel color-distance threshold |
-
-### Auth in the Running App
-
-For multi-path, the running app must be accessible without manual login. Two mechanisms:
-
-| Context | How |
-|---|---|
-| **Preview HTML** (baseline generation) | `?baselines=true` query param skips setup page |
-| **Running app** (visual-reg suite) | Explicit credentials copied into the leased namespace and declared in the test contract |
-
-Test authentication must be declared through test credential Secrets and consumed by the leased-namespace deployment. Applications must not contain environment-specific auto-auth bypasses.
+Authentication belongs in the typed deployment contract. Do not add query-string bypasses or credentials to visual URLs.

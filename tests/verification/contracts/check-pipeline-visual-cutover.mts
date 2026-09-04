@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict'; import fs from 'node:fs';
+const inventory=JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-visual-cutover-inventory.json','utf8'));
+for(const file of inventory.legacyFilesToDelete) assert.equal(fs.existsSync(file),false,`legacy file remains: ${file}`);
+for(const file of inventory.replacementFilesRequired) assert.equal(fs.existsSync(file),true,`replacement missing: ${file}`);
+for(const check of inventory.requiredAbsence) assert.equal(fs.readFileSync(check.file,'utf8').includes(check.token),false,`legacy token remains: ${check.file}`);
+const bridge=JSON.parse(fs.readFileSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.json','utf8')); assert.equal(bridge.suites['visual-reg'].state,'migrated');
+const scaffold=fs.readFileSync('skills/nova/project_setup/tools/progress-scaffold-discovery.ts','utf8'); assert.match(scaffold,/LEGACY_VISUAL_CONFIGURATION_RETIRED/u);
+const workspace=fs.readFileSync('tests/verification/e2e/real-run-workspace.mjs','utf8'); assert.match(workspace,/uses: 'kubeclaw\.visual@1'/u);
+const role=JSON.parse(fs.readFileSync('packaging/runtime/roles/buster.json','utf8')); assert.equal(role.plugins.includes('kubeclaw.visual'),true);
+const deploy=fs.readFileSync('scripts/deploy.sh','utf8'); assert.match(deploy,/cmd_nova_visual_preflight/u); assert.match(deploy,/nova-visual-production-preflight\.mts/u);
+const receipt=fs.readFileSync('scripts/production-receipt-attestation.mjs','utf8'); assert.match(receipt,/nova-visual-production-preflight\.v1/u);
+const preflight=fs.readFileSync('tests/verification/e2e/nova-visual-production-preflight.mts','utf8'); assert.match(preflight,/immutableImage,imageDigest:image\[1\]/u);
+await import('./check-production-receipt-attestation.mjs');
+const status=JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-suite-migration-status.json','utf8')).suites.find((item:any)=>item.id==='visual-reg');
+assert.equal(status.sourceCutover,'complete'); assert.equal(status.productionAcceptance,'pending');
+console.log(JSON.stringify({ok:true,phase:'visual-cutover',authority:'provider-plan-only'}));

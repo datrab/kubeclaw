@@ -108,6 +108,7 @@ try {
     decisionDigest: result.remote.decision.decisionDigest, status: result.remote.status.state, decision: result.remote.decision.state,
     evidenceDigests: imported.evidenceDigests, evidenceImported: true, runnerCleanupVerified: true,
     cleanupVerified: false, clusterCleanupObserved: false, lighthouseVersion: '13.4.1', reportCount: 3,
+    immutableImage, imageDigest: image[1],
     resources: { leaseName: deployment.leaseName, namespace: deployment.namespace, serviceName: 'lighthouse-preflight', servicePort: 80 },
     boundary: 'Nova signed source to remote Buster isolated Lighthouse provider plan', mocks: 0, emulators: 0 }, null, 2)}\n`);
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }

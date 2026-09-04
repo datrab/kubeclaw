@@ -1049,6 +1049,10 @@ function instructionFiles(progress) {
             config: { purpose: 'performance', routes: ['/'], settingsFile: '.swarm/lighthouse-settings.json',
               profile: 'desktop', budget: 'fixture', runs: 3, timeoutMs: 120000 },
             inputs: deploymentInput },
+          visual: { uses: 'kubeclaw.visual@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-visual',
+            config: { manifestFile: '.swarm/visual/baselines.json', profileFile: '.swarm/browser-profiles.json',
+              targets: ['home-desktop'], comparisonProfile: 'strict-v1', timeoutMs: 60000 }, inputs: deploymentInput },
           'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
               ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
@@ -1075,7 +1079,7 @@ function instructionFiles(progress) {
         },
         concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
           manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1,
-          'api-flow': 1, openapi: 1, 'browser-axe': 2, 'browser-lighthouse': 1 },
+          'api-flow': 1, openapi: 1, 'browser-axe': 2, 'browser-lighthouse': 1, 'browser-visual': 1 },
       },
     },
   };
@@ -1112,6 +1116,8 @@ function instructionFiles(progress) {
       budgets: { fixture: { minimumScore: 50, maximumLcpMs: 5000, maximumCls: 0.25,
         maximumTbtMs: 1000 } },
     }, null, 2)}\n`,
+    'browser-profiles.json': fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/browser-profiles.json'), 'utf8'),
+    'visual/baselines.json': fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/visual/baselines.json'), 'utf8'),
     ...Object.fromEntries(apiFailureSpecs.map((file) => [file.replace(/^\.swarm\//u, ''), `${JSON.stringify({
       schemaVersion: 'kubeclaw.api-flow.v1',
       steps: [{ id: 'intentional-failure', path: '/v2/', expect: { status: 599 } }],

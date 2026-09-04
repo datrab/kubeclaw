@@ -2,15 +2,15 @@
   "schemaVersion": "plugin-system-inventory-v2",
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "summary": {
-    "packages": 45,
-    "packageRoots": 46,
+    "packages": 46,
+    "packageRoots": 47,
     "stages": 17,
     "observers": 6,
     "adapters": 19,
-    "testProviders": 11,
+    "testProviders": 12,
     "reportAdapters": 1,
-    "registrations": 54,
-    "files": 846
+    "registrations": 55,
+    "files": 848
   },
   "runtime": {
     "roots": [
@@ -28,11 +28,13 @@
       "skills/buster/engine/test-gates/artifacts.ts",
       "skills/buster/engine/test-gates/browser-axe-runtime.ts",
       "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "skills/buster/engine/test-gates/browser-visual-runtime.ts",
       "skills/buster/engine/test-gates/composite-capability-runtime.ts",
       "skills/buster/engine/test-gates/container-build-runtime.ts",
       "skills/buster/engine/test-gates/direct-command-runtime.ts",
       "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
       "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "skills/buster/engine/test-gates/pngjs.d.ts",
       "skills/buster/engine/test-gates/production.ts",
       "skills/buster/engine/test-gates/provider-child.mjs",
       "skills/buster/engine/test-gates/provider-loader.ts",
@@ -274,16 +276,9 @@
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/url-paths.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-delivery.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-discord.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-image.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-multi.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/telemetry.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/timing.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot-cli.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot-routes.ts",
-        "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts",
         "skills/buster/plugins/buster-suite-runtime/src/runtime/value-boundary.ts",
         "skills/buster/plugins/buster-suite-runtime/src/worker-context.ts",
         "skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts",
@@ -546,6 +541,28 @@
         {
           "kind": "stage",
           "id": "test"
+        }
+      ]
+    },
+    {
+      "id": "kubeclaw.visual",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "root": "skills/buster/plugins/visual",
+      "manifest": "skills/buster/plugins/visual/plugin.json",
+      "files": [
+        "skills/buster/plugins/visual/package.json",
+        "skills/buster/plugins/visual/plugin.json",
+        "skills/buster/plugins/visual/README.md",
+        "skills/buster/plugins/visual/schemas/config.schema.json",
+        "skills/buster/plugins/visual/src/provider.js",
+        "skills/buster/plugins/visual/tests/live-function.test.ts",
+        "skills/buster/plugins/visual/tsconfig.json"
+      ],
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "visual"
         }
       ]
     },
@@ -1677,6 +1694,12 @@
       "registrationId": "kubeclaw.test-agent:test"
     },
     {
+      "kind": "test-provider",
+      "id": "visual",
+      "packageId": "kubeclaw.visual",
+      "registrationId": "kubeclaw.visual:visual"
+    },
+    {
       "kind": "observer",
       "id": "ingester",
       "packageId": "kubeclaw.agent-observability",
@@ -1926,11 +1949,13 @@
     "skills/buster/engine/test-gates/artifacts.ts",
     "skills/buster/engine/test-gates/browser-axe-runtime.ts",
     "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+    "skills/buster/engine/test-gates/browser-visual-runtime.ts",
     "skills/buster/engine/test-gates/composite-capability-runtime.ts",
     "skills/buster/engine/test-gates/container-build-runtime.ts",
     "skills/buster/engine/test-gates/direct-command-runtime.ts",
     "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
     "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "skills/buster/engine/test-gates/pngjs.d.ts",
     "skills/buster/engine/test-gates/production.ts",
     "skills/buster/engine/test-gates/provider-child.mjs",
     "skills/buster/engine/test-gates/provider-loader.ts",
@@ -2022,16 +2047,9 @@
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/support.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/url-paths.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-delivery.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-discord.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-image.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg-multi.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/suites/visual-reg.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/telemetry.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/timing.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot-cli.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot-routes.ts",
-    "skills/buster/plugins/buster-suite-runtime/src/runtime/tools/screenshot.ts",
     "skills/buster/plugins/buster-suite-runtime/src/runtime/value-boundary.ts",
     "skills/buster/plugins/buster-suite-runtime/src/worker-context.ts",
     "skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts",
@@ -2124,6 +2142,13 @@
     "skills/buster/plugins/test-agent/tests/protocol.test.ts",
     "skills/buster/plugins/test-agent/tests/suite-first.test.ts",
     "skills/buster/plugins/test-agent/tsconfig.json",
+    "skills/buster/plugins/visual/README.md",
+    "skills/buster/plugins/visual/package.json",
+    "skills/buster/plugins/visual/plugin.json",
+    "skills/buster/plugins/visual/schemas/config.schema.json",
+    "skills/buster/plugins/visual/src/provider.js",
+    "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "skills/buster/plugins/visual/tsconfig.json",
     "skills/common/plugin-runtime/contracts/plugin-system/v2/README.md",
     "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
     "skills/common/plugin-runtime/foundation/BOUNDARIES.md",

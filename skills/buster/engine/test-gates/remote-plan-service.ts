@@ -36,6 +36,7 @@ import { TailscaleExposureCapabilityInvoker, type TailscaleExposureCapabilityInv
 import { NetworkHttpCapabilityInvoker, type NetworkHttpCapabilityInvokerOptions } from './network-http-runtime.ts';
 import { BrowserAxeCapabilityInvoker, type BrowserAxeCapabilityInvokerOptions } from './browser-axe-runtime.ts';
 import { BrowserLighthouseCapabilityInvoker, type BrowserLighthouseCapabilityInvokerOptions } from './browser-lighthouse-runtime.ts';
+import { BrowserVisualCapabilityInvoker, type BrowserVisualCapabilityInvokerOptions } from './browser-visual-runtime.ts';
 import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
 
 interface StoredPlanJob {
@@ -253,6 +254,7 @@ export interface BusterRemotePlanServiceOptions {
   readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
   readonly browserAxe?: BrowserAxeCapabilityInvokerOptions;
   readonly browserLighthouse?: BrowserLighthouseCapabilityInvokerOptions;
+  readonly browserVisual?: BrowserVisualCapabilityInvokerOptions;
   readonly now?: () => Date;
   readonly execute?: (
     job: RemotePlanJobV1,
@@ -575,6 +577,10 @@ export class BusterRemotePlanService {
         ? new BrowserLighthouseCapabilityInvoker(this.#options.browserLighthouse
           ?? (() => { throw new Error('BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED'); })())
         : null;
+      const browserVisual = this.#options.allowedCapabilities.has('browser.visual')
+        ? new BrowserVisualCapabilityInvoker(this.#options.browserVisual
+          ?? (() => { throw new Error('BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED'); })())
+        : null;
       const routes = new Map();
       if (directCommand) routes.set('command.execute', directCommand);
       if (containerBuild) routes.set('container.build', containerBuild);
@@ -583,6 +589,7 @@ export class BusterRemotePlanService {
       if (networkHttp) routes.set('network.http', networkHttp);
       if (browserAxe) routes.set('browser.axe', browserAxe);
       if (browserLighthouse) routes.set('browser.lighthouse', browserLighthouse);
+      if (browserVisual) routes.set('browser.visual', browserVisual);
       const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
       const run = this.#options.execute
         ? await this.#options.execute(job, paths, controller.signal)

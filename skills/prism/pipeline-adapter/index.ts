@@ -24,7 +24,16 @@ export function toBusterPlan(input: BaselineHandoff) {
     throw new Error("at least one fidelity target is required");
   return {
     baselineDigest: input.baselineDigest,
-    paths: input.targets.map((target) => ({
+    visual: {
+      uses: "kubeclaw.visual@1",
+      config: {
+        manifestFile: ".swarm/visual/baselines.json",
+        profileFile: ".swarm/browser-profiles.json",
+        targets: input.targets.map((target) => target.id),
+        comparisonProfile: "strict-v1",
+      },
+    },
+    targets: input.targets.map((target) => ({
       name: target.id,
       path: target.path,
       prism: {
@@ -35,7 +44,7 @@ export function toBusterPlan(input: BaselineHandoff) {
       },
       viewport: viewport[target.viewport],
     })),
-    suites: ["visual-reg", "a11y", "e2e"],
+    legacySuites: ["a11y", "e2e"],
   };
 }
 

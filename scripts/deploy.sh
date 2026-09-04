@@ -2169,7 +2169,7 @@ cmd_nova_a11y_preflight() {
     rm -f "$receipt_tmp"
     return 1
   fi
-  if ! node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); const engines=[...(v.browserEnginesVerified??[])].sort(); if(v.schemaVersion!=="nova-a11y-production-preflight.v1"||v.suite!=="a11y"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||JSON.stringify(engines)!==JSON.stringify(["chromium","firefox","webkit"])||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="a11y-preflight"||v.resources?.servicePort!==80) process.exit(1)' "$receipt_tmp"; then
+  if ! node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); const engines=[...(v.browserEnginesVerified??[])].sort(); if(v.schemaVersion!=="nova-a11y-production-preflight.v1"||v.suite!=="a11y"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.immutableImage!==process.argv[2]||!/^sha256:[a-f0-9]{64}$/.test(v.imageDigest??"")||!v.immutableImage.endsWith(`@${v.imageDigest}`)||JSON.stringify(engines)!==JSON.stringify(["chromium","firefox","webkit"])||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="a11y-preflight"||v.resources?.servicePort!==80) process.exit(1)' "$receipt_tmp" "$immutable_image"; then
     err "The accessibility production receipt is invalid."
     rm -f "$receipt_tmp"
     return 1
@@ -2237,7 +2237,7 @@ cmd_nova_lighthouse_preflight() {
     rm -f "$receipt_tmp"
     return 1
   fi
-  if ! node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(v.schemaVersion!=="nova-lighthouse-production-preflight.v1"||v.suite!=="perf"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.lighthouseVersion!=="13.4.1"||v.reportCount!==3||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="lighthouse-preflight"||v.resources?.servicePort!==80) process.exit(1)' "$receipt_tmp"; then
+  if ! node -e 'const fs=require("node:fs"); const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(v.schemaVersion!=="nova-lighthouse-production-preflight.v1"||v.suite!=="perf"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.immutableImage!==process.argv[2]||!/^sha256:[a-f0-9]{64}$/.test(v.imageDigest??"")||!v.immutableImage.endsWith(`@${v.imageDigest}`)||v.lighthouseVersion!=="13.4.1"||v.reportCount!==3||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="lighthouse-preflight"||v.resources?.servicePort!==80) process.exit(1)' "$receipt_tmp" "$immutable_image"; then
     err "The Lighthouse production receipt is invalid."
     rm -f "$receipt_tmp"
     return 1
@@ -2274,6 +2274,31 @@ cmd_nova_lighthouse_preflight() {
   fi
   rm -f "$receipt_tmp" "$receipt_unsigned"
   log "Nova → Buster Lighthouse production preflight passed"
+}
+
+cmd_nova_visual_preflight() {
+  header "Nova → Buster Visual Regression Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_VISUAL_PREFLIGHT_IMAGE:-}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned port-8080 HTTP image as argument 2 or KUBECLAW_VISUAL_PREFLIGHT_IMAGE."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_file runtime_repo_root runtime_revision buster_runtime_revision lease_name namespace_name
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  [[ $runtime_repo_root == /home/node/.openclaw/workspace/git-repo ]] || { err "The deployed Nova REPO_ROOT does not match the chart contract."; return 1; }
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  [[ $runtime_revision =~ ^[a-f0-9]{40,64}$ ]] || { err "The deployed Nova source revision is invalid."; return 1; }
+  receipt_tmp=$(mktemp); receipt_file="$REPO_DIR/dist/verification/visual-production-receipt.json"
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- env "KUBECLAW_VISUAL_PREFLIGHT_IMAGE=$immutable_image" node "$runtime_repo_root/tests/verification/e2e/nova-visual-production-preflight.mts" | tee "$receipt_tmp"; then rm -f "$receipt_tmp"; return 1; fi
+  if ! node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));if(v.schemaVersion!=="nova-visual-production-preflight.v1"||v.suite!=="visual-reg"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.immutableImage!==process.argv[2]||!/^sha256:[a-f0-9]{64}$/.test(v.imageDigest??"")||!v.immutableImage.endsWith(`@${v.imageDigest}`)||typeof v.browserVersion!=="string"||!v.browserVersion||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="real-pipeline-e2e-nginx"||v.resources?.servicePort!==80)process.exit(1)' "$receipt_tmp" "$immutable_image"; then err "The visual production receipt is invalid."; rm -f "$receipt_tmp"; return 1; fi
+  lease_name=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.resources.leaseName)' "$receipt_tmp"); namespace_name=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.resources.namespace)' "$receipt_tmp")
+  if ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m || ! kubectl wait --for=delete "busternamespacelease/$lease_name" -n "$NAMESPACE" --timeout=2m; then err "Timed out while waiting for visual preflight cleanup."; rm -f "$receipt_tmp"; return 1; fi
+  if [[ -n $(kubectl get namespace "$namespace_name" --ignore-not-found -o name) || -n $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then err "The visual preflight left cluster resources."; rm -f "$receipt_tmp"; return 1; fi
+  receipt_unsigned=$(mktemp); node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));fs.writeFileSync(process.argv[2],`${JSON.stringify({...v,cleanupVerified:true,clusterCleanupObserved:true},null,2)}\n`,{mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]] || ! sign_and_store_production_receipt "$receipt_unsigned" "$receipt_file" "$runtime_revision"; then rm -f "$receipt_tmp" "$receipt_unsigned"; return 1; fi
+  rm -f "$receipt_tmp" "$receipt_unsigned"; log "Nova → Buster visual production preflight passed"
 }
 
 cmd_nova_tailscale_preflight() {
@@ -2390,7 +2415,7 @@ const expectedSuiteIds = [
 const actualSuiteIds = suites.map((suite) => suite.id).sort();
 const required = suites.filter((suite) => Object.hasOwn(suite, 'productionAcceptance'))
   .map((suite) => suite.id).sort();
-const orchestrated = ['a11y', 'build', 'health', 'k8s', 'perf', 'tailscale-preview', 'unit'];
+const orchestrated = ['a11y', 'build', 'health', 'k8s', 'perf', 'tailscale-preview', 'unit', 'visual-reg'];
 const incomplete = suites.filter((suite) => suite.implementation !== 'complete'
   || suite.sourceCutover !== 'complete').map((suite) => suite.id);
 if (JSON.stringify(actualSuiteIds) !== JSON.stringify(expectedSuiteIds)) {
@@ -2420,6 +2445,7 @@ NODE
   cmd_nova_http_preflight nova-http-preflight "$immutable_image"
   cmd_nova_a11y_preflight nova-a11y-preflight "$immutable_image"
   cmd_nova_lighthouse_preflight nova-lighthouse-preflight "$immutable_image"
+  cmd_nova_visual_preflight nova-visual-preflight "$immutable_image"
   cmd_nova_tailscale_preflight nova-tailscale-preflight "$immutable_image"
 
   log "All production-required suite preflights passed"
@@ -2642,6 +2668,9 @@ case "${1:-}" in
   nova-lighthouse-preflight)
     cmd_nova_lighthouse_preflight "$@"
     ;;
+  nova-visual-preflight)
+    cmd_nova_visual_preflight "$@"
+    ;;
   nova-tailscale-preflight)
     cmd_nova_tailscale_preflight "$@"
     ;;
@@ -2738,6 +2767,8 @@ case "${1:-}" in
     echo "                    Verify Chromium, Firefox, WebKit, and Axe through Nova and Buster v2"
     echo "  nova-lighthouse-preflight [image]"
     echo "                    Verify real Lighthouse performance through Nova and Buster v2"
+    echo "  nova-visual-preflight [image]"
+    echo "                    Verify real browser visual comparison through Nova and Buster v2"
     echo "  nova-tailscale-preflight [image]"
     echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
     echo "  nova-production-preflights [image]"

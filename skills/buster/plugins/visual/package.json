@@ -1,0 +1,1 @@
+{"name":"@kubeclaw/plugin-visual","private":true,"type":"module","scripts":{"test":"node tests/live-function.test.ts"},"dependencies":{"@kubeclaw/buster-engine":"*"},"devDependencies":{}}

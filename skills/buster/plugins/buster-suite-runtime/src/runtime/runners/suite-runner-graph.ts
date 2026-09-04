@@ -46,7 +46,7 @@ function contextForRun(opts: SuiteRunnerOptions, payload: SuiteRunnerPayload, re
     gateId: payload.gate_id ?? null, gateType: payload.gate_type ?? null, dispatchId: payload.dispatch_id ?? null,
     sessionKey: payload.session_key ?? null, project: resolved.project, config,
     capabilities: resolveContextCapabilities({ capabilities: opts.capabilities, payload }), resultsDir: RESULTS_DIR,
-    testsLogDir: resultsDir, screenshotsDir: resultsDir ? path.join(resultsDir, 'visual-reg') : path.join(RESULTS_DIR, 'visual-reg'),
+    testsLogDir: resultsDir,
     logDir: opts.logDir ?? null, pipelineLogPath: opts.pipelineLogPath ?? null, pipelineRunLogPath: opts.pipelineRunLogPath ?? null,
     logSink: createSuiteLogSink(logPath, opts.moduleId), attempt: opts.attempt, telemetryContext: opts.telemetryContext,
     suiteResults: suiteMap, registerRuntimeCleanup: (cleanup) => cleanups.push(cleanup) };

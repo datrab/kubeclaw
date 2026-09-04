@@ -1,163 +1,95 @@
-# Prism Preview Conventions
+# Prism visual baseline conventions
 
-Prism generates HTML preview files for frontend modules. These previews serve as **design references** and as the **source of truth for visual regression baselines**.
+Prism supplies approved design targets. The visual test provider compares the deployed application with reviewed PNG baseline files.
 
-The visual-regression plugin reads the preview, extracts routes, screenshots
-every page, and writes `paths.json` plus baseline PNGs. For this to work, every
-preview must follow two conventions.
+## Authority boundary
 
-## Convention 1: Route Manifest (`data-routes`)
+- Prism supplies approved target identity and design intent.
+- Git stores the reviewed baseline manifest, shared browser profiles, and PNG files.
+- `kubeclaw.visual@1` captures and compares the deployed application.
+- The test provider cannot create or replace a baseline.
+- A human must review and apply every baseline change in a separate workflow.
 
-Every preview must include a JSON manifest in a `<script>` tag with `type="application/json"` and the `data-routes` attribute:
+## Required files
 
-```html
-<head>
-  <!-- Route manifest for Prism baseline generator — DO NOT REMOVE -->
-  <script type="application/json" data-routes>
-  [
-    { "name": "setup",     "nav": "Get Started" },
-    { "name": "dashboard", "nav": "Dashboard" },
-    { "name": "pods",      "nav": "Pods" },
-    { "name": "settings",  "nav": "Settings" }
-  ]
-  </script>
-</head>
+Store these files in the project repository:
+
+```text
+.swarm/
+├── browser-profiles.json
+└── visual/
+    ├── baselines.json
+    └── images/
+        ├── setup-desktop.png
+        └── home-desktop.png
 ```
 
-### Fields
+`browser-profiles.json` uses `kubeclaw.browser-profiles.v1`. Each named profile fixes the browser, viewport, color scheme, reduced-motion setting, locale, time zone, scale, and mobile conditions.
 
-| Field | Required | Description |
-|---|---|---|
-| `name` | yes | URL-safe slug. Becomes `{name}-baseline.png` and `path: "/{name}"` in paths.json |
-| `nav` | yes | Exact text label of the clickable nav item. Used by Playwright's `text=` selector |
+`visual/baselines.json` uses `kubeclaw.visual-baselines.v1`. Each entry records:
 
-### Rules
+- a stable target ID;
+- an origin-local route;
+- one named browser profile;
+- the baseline PNG path and SHA-256 digest;
+- the browser, viewport, and page conditions.
 
-- **Every visible page must have an entry.** Missing entries = untested pages.
-- `name` must be a valid filename slug: lowercase, alphanumeric, hyphens. No spaces, no special chars.
-- `nav` must match the visible navigation text **exactly** (case-sensitive). Playwright clicks `text="Dashboard"` — if the sidebar says "DASHBOARD", it won't match.
-- The **setup/login page** uses `name: "setup"`. The generator screenshots it without auth bypass (separate page load without `?baselines=true`). All other pages are screenshotted with auth bypass active.
-- Order matters: the generator clicks routes in manifest order. Put the setup page first if it exists.
+The manifest can also record a digest for the complete baseline image set. The provider verifies all identities and digests before capture.
 
-### How the Generator Uses It
+## Provider declaration
 
-1. Reads manifest from HTML via regex (no browser needed for parsing)
-2. Opens preview with `?baselines=true` → auth bypassed, lands on first authenticated page
-3. For `name: "setup"`: opens a separate page **without** `?baselines=true` to capture the login state
-4. For all other routes: clicks `text="<nav>"` on the main page → waits 400ms for render → screenshots
-5. Writes `{name}-baseline.png` per route + `paths.json` to output dir
+Declare the visual node in `.swarm/pipeline.json`:
 
-## Convention 2: Auth Bypass (`?baselines=true`)
-
-Previews with authentication (login page, setup wizard, API key entry) must skip auth when opened with `?baselines=true` query parameter:
-
-```jsx
-// At the top of the App component (outside the function for React/Babel previews)
-const _baselinesMode = new URLSearchParams(window.location.search).get('baselines') === 'true';
-
-function App() {
-  const [auth, setAuth] = useState(_baselinesMode);
-  const [page, setPage] = useState(_baselinesMode ? 'dashboard' : 'setup');
-  
-  if (!auth) return <SetupPage onLogin={() => { setAuth(true); setPage('dashboard'); }} />;
-  // ... rest of app
+```json
+{
+  "uses": "kubeclaw.visual@1",
+  "needs": ["deployment"],
+  "inputs": {
+    "deployment": {
+      "from": "deployment",
+      "output": "deployment"
+    }
+  },
+  "config": {
+    "manifestFile": ".swarm/visual/baselines.json",
+    "profileFile": ".swarm/browser-profiles.json",
+    "targets": ["setup-desktop", "home-desktop"],
+    "comparisonProfile": "strict-v1"
+  }
 }
 ```
 
-### Rules
+The deployment fixture supplies the allowed application origin. Do not put credentials, query-based authentication bypasses, or an arbitrary URL in a Prism handoff.
 
-- The bypass must set the app into a fully authenticated state — all navigation must work.
-- The initial page after bypass should be the default authenticated page (usually `dashboard`).
-- Without `?baselines=true` (or with `?baselines=false`), the preview must behave normally (show login).
-- The bypass is a **preview-only** feature. The running application uses explicit namespace-scoped test credentials instead.
+## Stable capture rules
 
-## Auth in the Real App vs. Preview
+The Buster browser capability:
 
-| Context | Auth Bypass Mechanism | Used By |
-|---|---|---|
-| **Preview HTML** (local file, `file://`) | `?baselines=true` query param | Baseline generator (`screenshot.ts`) |
-| **Running app** (leased namespace, `http://`) | Explicit test credentials are injected through namespace-scoped Secrets | Visual-reg suite (`visual-reg.ts`) |
+1. opens only the typed deployment or public endpoint origin;
+2. blocks service workers, WebSockets, WebRTC, and cross-origin subresources;
+3. waits for network readiness;
+4. disables animation, transition, and caret rendering;
+5. applies only target-specific masks from the provider declaration;
+6. takes a full-page PNG with a pinned real browser build;
+7. stores baseline, current, difference, and structured report evidence.
 
-The two mechanisms are deliberately separate. The preview is a static HTML file opened via `file://` protocol — no backend, no env vars. The running app has a backend with env vars but no query param parsing.
+Masks are for data that cannot be made stable. Keep each mask narrow. The report records every applied selector.
 
-## File Placement
+## Baseline change workflow
 
-Preview HTML files live in the baselines directory:
+Test execution never changes Git baselines.
 
-```
-.swarm/modules/<module-dir>/baselines/
-├── preview.html                    ← Prism-generated (with data-routes + ?baselines=true)
-├── paths.json                      ← Generated by screenshot.ts, then reviewed/committed
-├── setup-baseline.png              ← Generated by screenshot.ts, then reviewed/committed
-├── dashboard-baseline.png          ← Generated by screenshot.ts, then reviewed/committed
-├── pods-baseline.png               ← Generated by screenshot.ts, then reviewed/committed
-└── ...
-```
+1. Create candidate images with a separate maintainer tool or reviewed browser session.
+2. Update the manifest digests and identities.
+3. Review each old image, candidate image, and difference image.
+4. Approve the change through the normal durable human gate.
+5. Apply and commit the approved PNG and manifest changes.
+6. Run `kubeclaw.visual@1` against the committed state.
 
-## Regeneration
+Discord and other notification systems can deliver evidence links. They cannot approve a baseline or change the test verdict.
 
-Baselines are **not** regenerated automatically by `visual-reg`. When the preview changes, rerun the generator, review the resulting `paths.json` and baseline PNGs, and commit them before requesting visual regression.
+## Prism handoff
 
-Manual regeneration via CLI:
+`toBusterPlan` returns a `kubeclaw.visual@1` declaration and the selected target metadata. The approved Prism bundle digest remains part of the handoff. The application pipeline must use the reviewed Git manifest and profiles before it executes the node.
 
-```bash
-node /app/skills/pipeline/tools/screenshot.ts --generate-baselines \
-  .swarm/modules/15-dashboard-core-pages/baselines/preview.html \
-  .swarm/modules/15-dashboard-core-pages/baselines/
-```
-
-## Minimal Example
-
-A preview with 3 pages (login + 2 authenticated pages):
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <script type="application/json" data-routes>
-  [
-    { "name": "setup", "nav": "Connect" },
-    { "name": "home",  "nav": "Home" },
-    { "name": "about", "nav": "About" }
-  ]
-  </script>
-</head>
-<body>
-  <div id="root"></div>
-  <script type="text/babel">
-  const { useState } = React;
-  const _bm = new URLSearchParams(window.location.search).get('baselines') === 'true';
-
-  function App() {
-    const [auth, setAuth] = useState(_bm);
-    const [page, setPage] = useState(_bm ? 'home' : 'setup');
-
-    if (!auth) return <button onClick={() => { setAuth(true); setPage('home'); }}>Connect</button>;
-
-    return (
-      <div>
-        <nav>
-          <span onClick={() => setPage('home')} style={{cursor:'pointer'}}>Home</span>
-          <span onClick={() => setPage('about')} style={{cursor:'pointer'}}>About</span>
-        </nav>
-        {page === 'home' && <h1>Home Page</h1>}
-        {page === 'about' && <h1>About Page</h1>}
-      </div>
-    );
-  }
-
-  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
-</body>
-</html>
-```
-
-Running `node /app/skills/pipeline/tools/screenshot.ts --generate-baselines preview.html ./baselines/` produces:
-
-```
-baselines/
-├── paths.json              → [{ name: "setup", path: "/" }, { name: "home", path: "/home" }, { name: "about", path: "/about" }]
-├── setup-baseline.png      → Screenshot of the Connect button (no auth bypass)
-├── home-baseline.png       → Screenshot of "Home Page" (with auth bypass)
-└── about-baseline.png      → Screenshot of "About Page" (with auth bypass)
-```
+Legacy `visual-reg`, `paths.json`, direct screenshot scripts, and automatic baseline generation are retired.

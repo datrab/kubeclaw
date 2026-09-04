@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"suite-documentation-manifest.v1","suite":"visual-reg","provider":"kubeclaw.visual@1",
+  "projectSchema":"skills/buster/plugins/visual/schemas/config.schema.json",
+  "documents":{"userGuide":"docs/architecture/pipeline-test-gate-visual-user-guide.md","operatorGuide":"docs/architecture/pipeline-test-gate-visual-operator-guide.md","configurationReference":"docs/architecture/pipeline-test-gate-visual-configuration-reference.md","errorReference":"docs/architecture/pipeline-test-gate-visual-error-reference.md","securityModel":"docs/architecture/pipeline-test-gate-visual-security-model.md"},
+  "operatorFields":["allowedOrigins","allowedBrowsers","browserExecutables","maximumCombinations","maximumConcurrency","maximumExecutionMs","maximumResultBytes","maximumScreenshotBytes","maximumMasksPerCombination"],
+  "sourceFilesWithErrors":["skills/buster/plugins/visual/src/provider.js","skills/buster/engine/test-gates/browser-visual-runtime.ts","skills/buster/engine/test-gates/production.ts"],
+  "errorPrefixes":["VISUAL_","BROWSER_VISUAL_"],"additionalErrors":["LEGACY_VISUAL_CONFIGURATION_RETIRED"],
+  "configurationMarkerFields":["manifestFile","profileFile","targets"],
+  "exampleFiles":["contracts/pipeline-test-gate/v1/examples/visual-config.json"]
+}
