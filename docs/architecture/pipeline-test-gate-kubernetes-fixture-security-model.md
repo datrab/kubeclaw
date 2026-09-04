@@ -36,6 +36,13 @@ rejects all other resource kinds.
 The engine applies the exact checked bytes. It does not rewrite namespace or
 image fields.
 
+PersistentVolumeClaims and StatefulSet claim templates must select an
+operator-approved storage class (or an explicitly allowed default class) and
+request a positive whole-byte quantity. Per-claim and aggregate byte limits
+bound storage consumption before any cluster request is made. StatefulSet
+template storage is multiplied by the requested replica count.
+Generic ephemeral volumes are denied; use an explicit bounded claim instead.
+
 ## Image Boundary
 
 The operator allowlist restricts registry repositories. Each image must use a
@@ -58,5 +65,6 @@ create the namespace again.
 
 ## Limits
 
-The operator limits manifest bytes, resource count, retention, and execution
-time. The plan also limits provider memory, CPU, processes, logs, and evidence.
+The operator limits manifest bytes, resource count, per-claim and aggregate
+persistent storage, retention, and execution time. The plan also limits
+provider memory, CPU, processes, logs, and evidence.

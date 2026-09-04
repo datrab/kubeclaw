@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { KubernetesFixtureCapabilityInvoker } from '@kubeclaw/buster-engine';
+import { KubernetesFixtureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts';
 
 const pluginRoot = path.resolve('skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
@@ -73,9 +73,18 @@ assert.equal(plan.links[0]?.mediaType, 'application/vnd.kubeclaw.checked-kuberne
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-implementation-'));
 try {
   const executable = fs.realpathSync('/usr/local/bin/kubectl');
+  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
+    controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+    allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+    allowedStorageClasses: ['example.com/fast'], allowDefaultStorageClass: false,
+    maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+    maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
+    maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 }), /KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID/u);
   const capability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+    allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+    maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
     maximumManifestBytes: 1024 * 1024,
     maximumResources: 64, maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 });
   await assert.rejects(() => capability.invoke('kubernetes.fixture', { operation: 'prepare',
@@ -103,6 +112,39 @@ try {
       serviceName: 'app', servicePort: 8080, retentionSeconds: 300, retentionMode: 'delete',
       readinessTimeoutMs: 10_000, secretReferences: ['not-approved'],
     } } as any, new AbortController().signal), /KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/u);
+
+  const fixtureRequest = (name: string, storageDocuments: string) => {
+    const manifest = `${validManifest}---\napiVersion: v1\nkind: Service\nmetadata:\n  name: app\nspec:\n  ports:\n    - port: 8080\n      targetPort: 8080\n${storageDocuments}`;
+    const manifestPath = path.join(temporary, `${name}.yaml`);
+    fs.writeFileSync(manifestPath, manifest);
+    return { operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:attempt:${name}` },
+      payload: { leaseName: `test-${name}`, namespaceName: `test-${name}`, namespacePrefix: 'test', project: 'proof',
+        immutableImage: `registry.local/app@${digest}`, imageDigest: digest, manifestPath,
+        manifestDigest: `sha256:${crypto.createHash('sha256').update(manifest).digest('hex')}`,
+        serviceName: 'app', servicePort: 8080, retentionSeconds: 300, retentionMode: 'delete',
+        readinessTimeoutMs: 10_000, secretReferences: [] } } as any;
+  };
+  const invokeFixture = (request: any) => capability.invoke('kubernetes.fixture', request, new AbortController().signal);
+  await assert.rejects(() => invokeFixture(fixtureRequest('storage-class', `---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: data\nspec:\n  storageClassName: forbidden\n  resources:\n    requests:\n      storage: 1Gi\n`)), /KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED:forbidden/u);
+  await assert.rejects(() => invokeFixture(fixtureRequest('claim-size', `---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: data\nspec:\n  storageClassName: fast\n  resources:\n    requests:\n      storage: 11Gi\n`)), /KUBERNETES_FIXTURE_PVC_SIZE_DENIED:data/u);
+  await assert.rejects(() => invokeFixture(fixtureRequest('total-size', `---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: first\nspec:\n  storageClassName: fast\n  resources:\n    requests:\n      storage: 8Gi\n---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: second\nspec:\n  storageClassName: fast\n  resources:\n    requests:\n      storage: 8Gi\n`)), /KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED/u);
+  await assert.rejects(() => invokeFixture(fixtureRequest('claim-template', `---\napiVersion: apps\/v1\nkind: StatefulSet\nmetadata:\n  name: stateful\nspec:\n  serviceName: app\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n          securityContext:\n            runAsNonRoot: true\n            allowPrivilegeEscalation: false\n            capabilities:\n              drop: [ALL]\n  volumeClaimTemplates:\n    - metadata:\n        name: state\n      spec:\n        storageClassName: fast\n        resources:\n          requests:\n            storage: 11Gi\n`)), /KUBERNETES_FIXTURE_PVC_SIZE_DENIED:state/u);
+  await assert.rejects(() => invokeFixture(fixtureRequest('replica-total', `---\napiVersion: apps\/v1\nkind: StatefulSet\nmetadata:\n  name: replicated\nspec:\n  replicas: 16\n  serviceName: app\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n          securityContext:\n            runAsNonRoot: true\n            allowPrivilegeEscalation: false\n            capabilities:\n              drop: [ALL]\n  volumeClaimTemplates:\n    - metadata:\n        name: state\n      spec:\n        storageClassName: fast\n        resources:\n          requests:\n            storage: 1Gi\n`)), /KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED/u);
+  await assert.rejects(() => invokeFixture(fixtureRequest('ephemeral-volume', `---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: ephemeral\nspec:\n  securityContext:\n    runAsNonRoot: true\n    seccompProfile:\n      type: RuntimeDefault\n  containers:\n    - name: app\n      image: registry.local/app@${digest}\n      securityContext:\n        runAsNonRoot: true\n        allowPrivilegeEscalation: false\n        capabilities:\n          drop: [ALL]\n  volumes:\n    - name: data\n      ephemeral:\n        volumeClaimTemplate:\n          spec:\n            storageClassName: fast\n            resources:\n              requests:\n                storage: 100Gi\n`)), /KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED/u);
+
+  const validationCapability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary,
+    kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
+    leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
+    allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+    maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+    maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
+    maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000,
+    execute: async () => ({ stdout: 'no\n', stderr: '' }) });
+  for (const [index, quantity] of ['1.5Gi', '1000m', '1e3'].entries()) {
+    const request = fixtureRequest(`quantity-${index}`, `---\napiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: data\nspec:\n  storageClassName: fast\n  resources:\n    requests:\n      storage: ${JSON.stringify(quantity)}\n`);
+    await assert.rejects(() => validationCapability.invoke('kubernetes.fixture', request,
+      new AbortController().signal), /KUBERNETES_FIXTURE_RBAC_DENIED:create/u);
+  }
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 
 console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-implementation', authority: 'replacement-only',

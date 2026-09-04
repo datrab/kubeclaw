@@ -12,6 +12,8 @@ const DIGEST = /^sha256:[a-f0-9]{64}$/u;
 const IMMUTABLE_IMAGE = /^([A-Za-z0-9.-]+(?::[0-9]{1,5})?\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u;
 const MAX_TIMER_MS = 2_147_483_647;
 const MAX_NAMESPACE_PREFIX_LENGTH = 42;
+const STORAGE_CLASS_NAME = /^[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)*$/u;
+const STORAGE_QUANTITY = /^(?:\+)?([0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:(Ki|Mi|Gi|Ti|Pi|Ei)|(n|u|m|k|K|M|G|T|P|E)|([eE][+-]?[0-9]+))?$/u;
 const CLUSTER_SCOPED_KINDS = new Set([
   'APIService', 'CertificateSigningRequest', 'ClusterRole', 'ClusterRoleBinding',
   'CSIDriver', 'CSINode', 'CustomResourceDefinition', 'FlowSchema', 'IngressClass',
@@ -74,10 +76,14 @@ export interface KubernetesFixtureCapabilityInvokerOptions {
   readonly allowedNamespacePrefixes: readonly string[];
   readonly allowedRegistryPrefixes: readonly string[];
   readonly allowedSecretReferences: readonly string[];
+  readonly allowedStorageClasses: readonly string[];
+  readonly allowDefaultStorageClass: boolean;
   readonly runnerSubject?: string;
   readonly credentialReaderSubject?: string;
   readonly maximumManifestBytes: number;
   readonly maximumResources: number;
+  readonly maximumPersistentVolumeClaimBytes: number;
+  readonly maximumPersistentVolumeTotalBytes: number;
   readonly maximumRetentionSeconds: number;
   readonly maximumExecutionMs: number;
   readonly pollIntervalMs?: number;
@@ -187,6 +193,77 @@ function podSpecs(document: JsonObject): JsonObject[] {
   return [];
 }
 
+function storageBytes(value: unknown): bigint {
+  const quantity = text(value, 'persistentVolumeClaim.storage', 64);
+  const parsed = STORAGE_QUANTITY.exec(quantity);
+  if (!parsed) throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
+  const mantissa = parsed[1]!;
+  const decimalPlaces = mantissa.includes('.') ? mantissa.length - mantissa.indexOf('.') - 1 : 0;
+  let numerator = BigInt(mantissa.replace('.', ''));
+  let denominator = 10n ** BigInt(decimalPlaces);
+  const binaryPowers = new Map([['Ki', 10n], ['Mi', 20n], ['Gi', 30n], ['Ti', 40n], ['Pi', 50n], ['Ei', 60n]]);
+  const decimalPowers = new Map([['n', -9], ['u', -6], ['m', -3], ['k', 3], ['K', 3],
+    ['M', 6], ['G', 9], ['T', 12], ['P', 15], ['E', 18]]);
+  if (parsed[2]) numerator *= 1n << binaryPowers.get(parsed[2])!;
+  const exponent = parsed[3] ? decimalPowers.get(parsed[3])!
+    : parsed[4] ? Number.parseInt(parsed[4].slice(1), 10) : 0;
+  if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 63) {
+    throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
+  }
+  if (exponent >= 0) numerator *= 10n ** BigInt(exponent);
+  else denominator *= 10n ** BigInt(-exponent);
+  if (numerator < 1n || numerator % denominator !== 0n) {
+    throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
+  }
+  return numerator / denominator;
+}
+
+function persistentVolumeClaims(document: JsonObject): { name: string; spec: JsonObject; copies: bigint }[] {
+  if (document.kind === 'PersistentVolumeClaim') {
+    const metadata = object(document.metadata, 'persistentVolumeClaim.metadata');
+    return [{ name: text(metadata.name, 'persistentVolumeClaim.metadata.name', 253),
+      spec: object(document.spec, 'persistentVolumeClaim.spec'), copies: 1n }];
+  }
+  if (document.kind !== 'StatefulSet') return [];
+  const spec = object(document.spec, 'statefulSet.spec');
+  const replicas = spec.replicas ?? 1;
+  if (!Number.isSafeInteger(replicas) || Number(replicas) < 0) {
+    throw new Error('KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID');
+  }
+  const templates = spec.volumeClaimTemplates ?? [];
+  if (!Array.isArray(templates)) throw new Error('KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID');
+  return templates.map((raw) => {
+    const template = object(raw, 'statefulSet.volumeClaimTemplate');
+    const metadata = object(template.metadata, 'statefulSet.volumeClaimTemplate.metadata');
+    return { name: text(metadata.name, 'statefulSet.volumeClaimTemplate.metadata.name', 253),
+      spec: object(template.spec, 'statefulSet.volumeClaimTemplate.spec'), copies: BigInt(Number(replicas)) };
+  });
+}
+
+interface PersistentVolumePolicy {
+  readonly allowedStorageClasses: ReadonlySet<string>;
+  readonly allowDefaultStorageClass: boolean;
+  readonly maximumClaimBytes: bigint;
+  readonly maximumTotalBytes: bigint;
+}
+
+function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {
+  const storageClass = spec.storageClassName;
+  if (storageClass === undefined) {
+    if (!policy.allowDefaultStorageClass) throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED');
+  } else {
+    const selected = text(storageClass, 'persistentVolumeClaim.storageClassName', 253);
+    if (!policy.allowedStorageClasses.has(selected)) {
+      throw new Error(`KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED:${selected}`);
+    }
+  }
+  const resources = object(spec.resources, 'persistentVolumeClaim.resources');
+  const requests = object(resources.requests, 'persistentVolumeClaim.resources.requests');
+  const bytes = storageBytes(requests.storage);
+  if (bytes > policy.maximumClaimBytes) throw new Error(`KUBERNETES_FIXTURE_PVC_SIZE_DENIED:${name}`);
+  return bytes;
+}
+
 function validatePodSecurity(spec: JsonObject): void {
   if (spec.hostNetwork === true || spec.hostPID === true || spec.hostIPC === true) {
     throw new Error('KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED');
@@ -200,6 +277,9 @@ function validatePodSecurity(spec: JsonObject): void {
   const volumes = Array.isArray(spec.volumes) ? spec.volumes : [];
   if (volumes.some((volume) => object(volume, 'pod.volume').hostPath !== undefined)) {
     throw new Error('KUBERNETES_FIXTURE_HOST_PATH_DENIED');
+  }
+  if (volumes.some((volume) => object(volume, 'pod.volume').ephemeral !== undefined)) {
+    throw new Error('KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED');
   }
   for (const field of ['initContainers', 'containers']) {
     const containers = spec[field];
@@ -231,7 +311,8 @@ function validatePodSecurity(spec: JsonObject): void {
 
 function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number,
   allowedRegistryPrefixes: readonly string[], serviceName: string, servicePort: number,
-  expectedServiceTargetPort: number | null): { resources: number; workloads: number; serviceTargetPort: number } {
+  expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy):
+  { resources: number; workloads: number; serviceTargetPort: number } {
   let loaded: unknown[] = [];
   try { loadAll(bytes.toString('utf8'), (value) => { loaded.push(value); }); }
   catch (error) { throw new Error('KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED', { cause: error }); }
@@ -243,6 +324,7 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
   let serviceTargetPortName: string | null = null;
   let resolvedServiceTargetPort: number | null = null;
   const namedContainerPorts = new Map<string, Set<number>>();
+  let persistentVolumeTotalBytes = 0n;
   for (const document of documents) {
     const apiVersion = text(document.apiVersion, 'apiVersion', 128);
     const kind = text(document.kind, 'kind', 128);
@@ -252,6 +334,13 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
     if (!ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
     if (metadata.namespace !== undefined) throw new Error(`KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED:${kind}`);
     if (!apiVersion.includes('/') && apiVersion !== 'v1') throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
+    for (const claim of persistentVolumeClaims(document)) {
+      persistentVolumeTotalBytes += validatePersistentVolumeClaim(claim.name, claim.spec, persistentVolumePolicy)
+        * claim.copies;
+      if (persistentVolumeTotalBytes > persistentVolumePolicy.maximumTotalBytes) {
+        throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED');
+      }
+    }
     if (kind === 'Service') {
       const spec = object(document.spec, 'service.spec');
       const type = spec.type ?? 'ClusterIP';
@@ -355,10 +444,14 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
   readonly #namespacePrefixes: ReadonlySet<string>;
   readonly #registryPrefixes: readonly string[];
   readonly #secretReferences: ReadonlySet<string>;
+  readonly #allowedStorageClasses: ReadonlySet<string>;
+  readonly #allowDefaultStorageClass: boolean;
   readonly #runnerSubject: string;
   readonly #credentialReaderSubject: string;
   readonly #maximumManifestBytes: number;
   readonly #maximumResources: number;
+  readonly #maximumPersistentVolumeClaimBytes: bigint;
+  readonly #maximumPersistentVolumeTotalBytes: bigint;
   readonly #maximumRetentionSeconds: number;
   readonly #maximumExecutionMs: number;
   readonly #pollIntervalMs: number;
@@ -383,6 +476,12 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (options.allowedSecretReferences.some((item) => !SECRET_NAME.test(item))) {
       throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID');
     }
+    if (options.allowedStorageClasses.some((item) => item.length > 253 || !STORAGE_CLASS_NAME.test(item))) {
+      throw new Error('KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID');
+    }
+    if (typeof options.allowDefaultStorageClass !== 'boolean') {
+      throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_POLICY_INVALID');
+    }
     const runnerSubject = options.runnerSubject ?? `${options.controllerNamespace}/agent-buster`;
     const credentialReaderSubject = options.credentialReaderSubject ?? `${options.controllerNamespace}/agent-nova`;
     if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(runnerSubject)
@@ -390,6 +489,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       throw new Error('KUBERNETES_FIXTURE_SUBJECT_INVALID');
     }
     for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],
+      [options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],
       [options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {
       if (!Number.isSafeInteger(value) || value < 1) throw new Error(`KUBERNETES_FIXTURE_${label}_LIMIT_INVALID`);
     }
@@ -399,10 +499,17 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     this.#namespacePrefixes = new Set(options.allowedNamespacePrefixes);
     this.#registryPrefixes = [...options.allowedRegistryPrefixes];
     this.#secretReferences = new Set(options.allowedSecretReferences);
+    this.#allowedStorageClasses = new Set(options.allowedStorageClasses);
+    this.#allowDefaultStorageClass = options.allowDefaultStorageClass;
     this.#runnerSubject = runnerSubject;
     this.#credentialReaderSubject = credentialReaderSubject;
     this.#maximumManifestBytes = options.maximumManifestBytes;
     this.#maximumResources = options.maximumResources;
+    this.#maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);
+    this.#maximumPersistentVolumeTotalBytes = BigInt(options.maximumPersistentVolumeTotalBytes);
+    if (this.#maximumPersistentVolumeTotalBytes < this.#maximumPersistentVolumeClaimBytes) {
+      throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID');
+    }
     this.#maximumRetentionSeconds = options.maximumRetentionSeconds;
     this.#maximumExecutionMs = Math.min(options.maximumExecutionMs, MAX_TIMER_MS);
     this.#pollIntervalMs = options.pollIntervalMs ?? 1_000;
@@ -558,7 +665,12 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
     }
     const facts = inspectManifest(bytes, immutableImage, this.#maximumResources, this.#registryPrefixes,
-      serviceName, servicePort, expectedServiceTargetPort);
+      serviceName, servicePort, expectedServiceTargetPort, {
+        allowedStorageClasses: this.#allowedStorageClasses,
+        allowDefaultStorageClass: this.#allowDefaultStorageClass,
+        maximumClaimBytes: this.#maximumPersistentVolumeClaimBytes,
+        maximumTotalBytes: this.#maximumPersistentVolumeTotalBytes,
+      });
     const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, this.#maximumRetentionSeconds);
     const retentionMode = text(payload.retentionMode, 'retentionMode', 6);
     if (retentionMode !== 'delete' && retentionMode !== 'retain') {
