@@ -110,6 +110,7 @@ function schemaValue(schema, root = schema) {
       'redis://127.0.0.1:6379',
       'a'.repeat(64),
       `sha256:${'a'.repeat(64)}`,
+      `repository-review:${'a'.repeat(64)}`,
       'artifact:test',
       '/tmp/kubeclaw-live-test',
     ];
