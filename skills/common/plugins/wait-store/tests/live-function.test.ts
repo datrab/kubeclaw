@@ -89,6 +89,32 @@ try {
     },
     signal: cancelled.signal,
   }), /ADAPTER_CANCELLED/);
+  let cancellationChecks = 0;
+  const cancelledAfterRead = {
+    get aborted() { cancellationChecks += 1; return cancellationChecks > 1; },
+  } as AbortSignal;
+  await assert.rejects(adapter.invoke({
+    ...fenced,
+    request: {
+      requestId: 'cancel-after-read', idempotencyKey: 'cancel-after-read', attempt,
+      capability: 'signal.wait', operation: 'create',
+      resource: { type: 'wait.journal', canonicalId: 'pipeline' }, payload,
+    },
+    signal: cancelledAfterRead,
+  }), /ADAPTER_CANCELLED/, 'cancellation after the store read must prevent append');
+  let fenceChecks = 0;
+  await assert.rejects(adapter.invoke({
+    fence: { assertCurrent() {
+      fenceChecks += 1;
+      if (fenceChecks > 1) throw new Error('RESOURCE_FENCE_EXPIRED');
+    } },
+    request: {
+      requestId: 'fence-after-read', idempotencyKey: 'fence-after-read', attempt,
+      capability: 'signal.wait', operation: 'create',
+      resource: { type: 'wait.journal', canonicalId: 'pipeline' }, payload,
+    },
+    signal,
+  }), /RESOURCE_FENCE_EXPIRED/, 'an expired fence after the store read must prevent append');
   const state = JSON.parse(fs.readFileSync(storePath, 'utf8'));
   state.records[0].payload.wait = {
       schemaVersion: 'wait-request.v2',

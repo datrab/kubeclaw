@@ -173,6 +173,18 @@ function parsePayload(payload: Record<string, unknown>): Omit<WaitRequest, 'sche
   return parseWait(payload, false) as Omit<WaitRequest, 'schemaVersion' | 'waitId'>;
 }
 
+function assertAuthorized(
+  confidential: boolean | undefined,
+  fence: { assertCurrent(): void } | undefined,
+  signal: AbortSignal,
+): void {
+  if (!confidential) {
+    if (!fence) throw new Error('RESOURCE_FENCE_REQUIRED');
+    fence.assertCurrent();
+  }
+  if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+}
+
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const root = context.config.root;
   if (typeof root !== 'string' || root.length === 0) throw new Error('root is required');
@@ -191,10 +203,10 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   return {
     async ready() { await store.read<StoredWait>(waitStream); },
     async invoke({ request, signal, confidential, fence }) {
-      if (!confidential) fence.assertCurrent();
-      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+      assertAuthorized(confidential, fence, signal);
       if (request.capability !== 'signal.wait') throw new Error('WAIT_OPERATION_UNSUPPORTED');
       const existing = (await store.read<StoredWait>(waitStream)).map(storedRecord);
+      assertAuthorized(confidential, fence, signal);
       if (request.operation === 'read') {
         return { waits: existing.map((record) => record.wait) };
       }
