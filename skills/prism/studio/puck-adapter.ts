@@ -142,7 +142,28 @@ const defaultChildren = (type: string, base: string): PrismNode[] =>
               props: { label: "Help", variant: "quiet", action: "help" },
             },
           ]
-        : [];
+      : [];
+const completeChildren = (
+  type: string,
+  base: string,
+  explicit: PrismNode[],
+): PrismNode[] => {
+  if (!explicit.length) return defaultChildren(type, base);
+  if ((type !== "split" && type !== "overlay") || explicit.length >= 2)
+    return explicit;
+  const completed = [...explicit];
+  const ids = new Set(completed.map((child) => child.id));
+  const defaults = defaultChildren(type, base);
+  const candidates = [
+    ...defaults.slice(explicit.length),
+    ...defaults.slice(0, explicit.length),
+  ];
+  for (const child of candidates) {
+    if (!ids.has(child.id)) completed.push(child);
+    if (completed.length === 2) break;
+  }
+  return completed;
+};
 const toPrismNode = (
   item: PuckItem,
   document: PrismDocument,
@@ -156,9 +177,7 @@ const toPrismNode = (
   const explicitChildren = childItems(item).map((child, childIndex) =>
     toPrismNode(child, document, childIndex),
   );
-  const children = explicitChildren.length
-    ? explicitChildren
-    : defaultChildren(type, id);
+  const children = completeChildren(type, id, explicitChildren);
   return {
     id,
     type,

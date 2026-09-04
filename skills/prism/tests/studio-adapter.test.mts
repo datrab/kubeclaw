@@ -32,6 +32,31 @@ test("Puck insertion becomes a typed canonical operation", () => {
   assert.match((operation as any).node.id, /^node-/);
   assert.equal((operation as any).node.props.action, "preview-action");
 });
+test("Puck completes a split with one explicit child", () => {
+  const operation = puckChangeToOperation(
+    fixture as any,
+    {
+      root: { props: {} },
+      content: [
+        { type: "Heading", props: { id: "title", text: "Deployments" } },
+        {
+          type: "PrismBlock",
+          props: {
+            id: "details-split",
+            nodeType: "split",
+            content: [
+              { type: "Text", props: { id: "details-primary", text: "Primary" } },
+            ],
+          },
+        },
+      ],
+    } as any,
+  );
+  assert.equal(operation?.type, "node.insert");
+  assert.equal((operation as any).node.children.length, 2);
+  assert.equal((operation as any).node.children[0].id, "details-primary");
+  assert.equal((operation as any).node.children[1].id, "details-split-region-2");
+});
 test("an empty canvas renders a safe empty state", () => {
   const empty = {
     ...fixture,
