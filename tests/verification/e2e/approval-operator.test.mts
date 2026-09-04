@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -7,10 +6,25 @@ import test from 'node:test';
 import { execFileSync, spawn } from 'node:child_process';
 
 import { runApprovalOperator } from './approval-operator.mts';
+import { approvalDecisionPath, readApprovalDecisionForWait } from './approval-decision-store.mts';
 
 function decisionPathFor(statePath: string, waitId: string): string {
-  return `${statePath}.decision-${crypto.createHash('sha256').update(waitId).digest('hex')}.json`;
+  return approvalDecisionPath(statePath, waitId);
 }
+
+test('decision reader ignores terminal values in the mutable discovery file', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-approval-store-'));
+  const statePath = path.join(root, 'approval.json');
+  try {
+    fs.writeFileSync(statePath, '{"wait_id":"wait:immutable","status":"APPROVED"}\n');
+    assert.equal(readApprovalDecisionForWait(statePath, 'wait:immutable'), null);
+    fs.writeFileSync(decisionPathFor(statePath, 'wait:immutable'),
+      '{"wait_id":"wait:immutable","status":"REJECTED"}\n');
+    assert.equal(readApprovalDecisionForWait(statePath, 'wait:immutable')?.status, 'REJECTED');
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
 
 test('approval operator help does not require state path', () => {
   const output = execFileSync(process.execPath, [path.join(import.meta.dirname, 'approval-operator.mts'), '--help'], { encoding: 'utf8' });
