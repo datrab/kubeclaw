@@ -137,7 +137,9 @@ function terminalStateFromDecision(
   };
 }
 
-async function publishApprovalSignal({ state }: { readonly state: ApprovalState }) {
+// The pipeline consumes the immutable decision sidecar directly. This receipt
+// describes that durable signal for diagnostics; it does not publish a second effect.
+function approvalSignalReceipt({ state }: { readonly state: ApprovalState }) {
   return {
     stream: 'v2:direct-resume-signal',
     id: state.wait_id || `approval:${state.gate_id || 'operator-approval'}`,
@@ -184,14 +186,16 @@ export async function runApprovalOperator({
         return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_DECISION_IDENTITY_MISMATCH', status, observations };
       }
       if (status === 'APPROVED' || status === 'REJECTED' || status === 'TIMED_OUT' || status === 'CANCELLED') {
-        return { ok: true, phase: 'approval-operator-existing-terminal', status, observations };
+        const receipt = approvalSignalReceipt({ state: existingDecision });
+        return { ok: true, phase: 'approval-operator-existing-terminal', status,
+          approval_signal: { stream: receipt.stream, redis_id: receipt.id }, observations };
       }
       return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_UNEXPECTED_DECISION', status, observations };
     }
 
     const next = terminalStateFromDecision(state, decision, reason);
     if (!atomicCreateJson(decisionPath, next)) continue;
-    const published = await publishApprovalSignal({ state: next });
+    const published = approvalSignalReceipt({ state: next });
     return {
       ok: true,
       phase: 'approval-operator-resolved',
