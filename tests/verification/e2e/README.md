@@ -56,7 +56,7 @@ Nova may act as a contained Buster-compatible worker only where the real Buster 
 
 The simulator is not allowed to fabricate a pass.
 
-The approval operator is not a gate bypass. It waits for the production approval runner to create `.swarm/operator-approval-gate-status.json`, then writes the same terminal state an operator command would write. The production approval signal adapter, wait state, decision artifact, telemetry, and summary paths still have to process that state.
+The approval operator is not a gate bypass. It waits for the production approval runner to create `.swarm/operator-approval-gate-status.json`, then atomically creates an immutable decision sidecar bound to that wait ID and consumed by the runner. Competing operators cannot replace an existing decision, and an older wait's decision cannot be replayed. The production approval signal adapter, wait state, decision artifact, telemetry, and summary paths still have to process that decision.
 
 ## Failure Policy
 

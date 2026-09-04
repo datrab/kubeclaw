@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 
 interface ApprovalState {
   readonly wait_id?: string;
@@ -84,11 +85,26 @@ function readJsonIfPresent(filePath: string): ApprovalState | null {
   }
 }
 
-function atomicWriteJson(filePath: string, value: ApprovalState): void {
+function decisionPathFor(statePath: string, waitId: string): string {
+  const identity = crypto.createHash('sha256').update(waitId).digest('hex');
+  return `${statePath}.decision-${identity}.json`;
+}
+
+function atomicCreateJson(filePath: string, value: ApprovalState): boolean {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  const tmpPath = `${filePath}.real-e2e-${process.pid}.tmp`;
-  fs.writeFileSync(tmpPath, `${JSON.stringify(value, null, 2)}\n`);
-  fs.renameSync(tmpPath, filePath);
+  const tmpPath = `${filePath}.${process.pid}-${crypto.randomUUID()}.tmp`;
+  try {
+    fs.writeFileSync(tmpPath, `${JSON.stringify(value, null, 2)}\n`, { flag: 'wx', mode: 0o600 });
+    try {
+      fs.linkSync(tmpPath, filePath);
+      return true;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'EEXIST') return false;
+      throw error;
+    }
+  } finally {
+    fs.rmSync(tmpPath, { force: true });
+  }
 }
 
 function terminalStateFromDecision(
@@ -149,17 +165,32 @@ export async function runApprovalOperator({
       await delay(pollMs);
       continue;
     }
-
-    const status = String(state.status ?? '').trim().toUpperCase();
-    if (status === 'APPROVED' || status === 'REJECTED' || status === 'TIMED_OUT' || status === 'CANCELLED') {
-      return { ok: true, phase: 'approval-operator-existing-terminal', status, observations };
+    const stateStatus = String(state.status ?? '').trim().toUpperCase();
+    if (stateStatus === 'APPROVED' || stateStatus === 'REJECTED' || stateStatus === 'TIMED_OUT' || stateStatus === 'CANCELLED') {
+      return { ok: true, phase: 'approval-operator-existing-terminal', status: stateStatus, observations };
     }
-    if (status !== 'PENDING_APPROVAL') {
-      return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_UNEXPECTED_STATE', status, observations };
+    if (stateStatus !== 'PENDING_APPROVAL') {
+      return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_UNEXPECTED_STATE', status: stateStatus, observations };
+    }
+    if (typeof state.wait_id !== 'string' || state.wait_id.length === 0) {
+      return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_WAIT_ID_MISSING', observations };
+    }
+
+    const decisionPath = decisionPathFor(statePath, state.wait_id);
+    const existingDecision = readJsonIfPresent(decisionPath);
+    if (existingDecision) {
+      const status = String(existingDecision.status ?? '').trim().toUpperCase();
+      if (existingDecision.wait_id !== state.wait_id || existingDecision.gate_id !== state.gate_id) {
+        return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_DECISION_IDENTITY_MISMATCH', status, observations };
+      }
+      if (status === 'APPROVED' || status === 'REJECTED' || status === 'TIMED_OUT' || status === 'CANCELLED') {
+        return { ok: true, phase: 'approval-operator-existing-terminal', status, observations };
+      }
+      return { ok: false, reason: 'REAL_E2E_APPROVAL_OPERATOR_UNEXPECTED_DECISION', status, observations };
     }
 
     const next = terminalStateFromDecision(state, decision, reason);
-    atomicWriteJson(statePath, next);
+    if (!atomicCreateJson(decisionPath, next)) continue;
     const published = await publishApprovalSignal({ state: next });
     return {
       ok: true,
