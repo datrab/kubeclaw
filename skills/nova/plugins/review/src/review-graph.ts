@@ -149,8 +149,13 @@ export function buildReviewGraph(
   snapshot: ReviewSnapshotInventory, inputRelations: readonly ReviewMapRelation[],
 ): ReviewGraph {
   const nodes = new Map<string, ReviewGraphNode>();
-  for (const file of snapshot.files.filter(({ included }) => included)) {
-    nodes.set(file.path, Object.freeze({ id: file.path, kind: 'file', sizeBytes: file.sizeBytes }));
+  const relationEndpoints = new Set(inputRelations.flatMap(({ from, to }) => [from, to]));
+  for (const file of snapshot.files) {
+    if (file.included) {
+      nodes.set(file.path, Object.freeze({ id: file.path, kind: 'file', sizeBytes: file.sizeBytes }));
+    } else if (relationEndpoints.has(file.path)) {
+      nodes.set(file.path, Object.freeze({ id: file.path, kind: 'resource', sizeBytes: 0 }));
+    }
   }
   for (const relation of inputRelations) for (const id of [relation.from, relation.to]) {
     if (!nodes.has(id) && id.startsWith('resource:')) nodes.set(id, Object.freeze({ id, kind: 'resource', sizeBytes: 0 }));

@@ -15,6 +15,7 @@ const files = [
   { path: 'services/api/go.mod', objectId: '7'.repeat(40), mode: '100644', sizeBytes: 16 },
   { path: 'web/index.html', objectId: '8'.repeat(40), mode: '100644', sizeBytes: 17 },
   { path: '.dockerignore', objectId: '9'.repeat(40), mode: '100644', sizeBytes: 18 },
+  { path: 'package-lock.json', objectId: 'b'.repeat(40), mode: '100644', sizeBytes: 20 },
 ];
 const proof = { head, files, inventoryDigest: sha256Text(canonicalJson(files)) };
 const first = parseReviewSnapshotInventory(proof);
@@ -27,6 +28,7 @@ assert.deepEqual(first.files.map(({ path, role, included }) => ({ path, role, in
   { path: 'assets/logo.png', role: 'binary', included: false },
   { path: 'go.mod', role: 'configuration', included: true },
   { path: 'linked.ts', role: 'symlink', included: false },
+  { path: 'package-lock.json', role: 'generated', included: false },
   { path: 'services/api/go.mod', role: 'configuration', included: true },
   { path: 'src/main.ts', role: 'source', included: true },
   { path: 'tests/fixtures/screenshot.png', role: 'binary', included: false },

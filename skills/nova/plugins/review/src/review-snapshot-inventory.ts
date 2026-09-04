@@ -47,6 +47,14 @@ function knownBinaryFile(file: string): boolean {
   return /\.(?:7z|avi|avif|bmp|bz2|db|eot|gif|gz|ico|jpe?g|lockb|mov|mp3|mp4|ogg|otf|pdf|png|rar|sqlite3?|tar|tiff?|tgz|ttf|wasm|wav|webm|webp|woff2?|xz|zip)$/u.test(file);
 }
 
+function generatedLockfile(file: string): boolean {
+  return new Set([
+    'bun.lock', 'bun.lockb', 'cargo.lock', 'composer.lock', 'gemfile.lock', 'go.sum',
+    'npm-shrinkwrap.json', 'package-lock.json', 'pipfile.lock', 'pnpm-lock.yaml', 'poetry.lock',
+    'uv.lock', 'yarn.lock',
+  ]).has(pathBasename(file));
+}
+
 function safePath(value: unknown): string {
   if (typeof value !== 'string' || !value || value.startsWith('/') || value.includes('\\')
     || value.includes(':') || value.split('/').some((part) => !part || part === '.' || part === '..')) {
@@ -61,6 +69,7 @@ function roleFor(file: string, mode: string): { role: ReviewFileRole; exclusionR
   if (/(?:^|\/)(?:vendor|third_party|node_modules)(?:\/|$)/u.test(lower)) {
     return { role: 'vendor', exclusionReason: 'vendored' };
   }
+  if (generatedLockfile(lower)) return { role: 'generated', exclusionReason: 'generated_lockfile' };
   if (/(?:^|\/)(?:dist|build|generated)(?:\/|$)|\.generated\.[^.]+$/u.test(lower)) return { role: 'generated' };
   if (knownBinaryFile(lower)) return { role: 'binary', exclusionReason: 'unsupported_or_binary' };
   if (/(?:^|\/)(?:test|tests|__tests__)(?:\/|$)|\.(?:test|spec)\.[^.]+$/u.test(lower)) return { role: 'test' };
