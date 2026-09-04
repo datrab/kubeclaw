@@ -685,6 +685,11 @@ assert.doesNotMatch(
   /"codex":\s*\{\}/,
   'ACP runtimes must not be registered as a second OpenClaw agent',
 );
+assert.doesNotMatch(litellmDeployment, /nodePort:\s*30050/u,
+  'the LiteLLM manifest must not hard-code a cluster-wide NodePort');
+assert.match(deploy,
+  /LITELLM_NODE_PORT[\s\S]*30000[\s\S]*32767[\s\S]*kubectl patch service litellm[\s\S]*nodePort[^\n]*LITELLM_NODE_PORT/u,
+  'LiteLLM deployment must validate and apply its configured NodePort');
 assert.doesNotMatch(
   gatewayConfig,
   /"list":\s*\[/,
