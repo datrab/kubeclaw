@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import type { AdapterActivationContext, AdapterInstance, EventIdentity } from '@kubeclaw/plugin-sdk';
 
 export const SUPPORTED_HOOKS = Object.freeze([
-  'agent_end', 'llm_input', 'llm_output', 'subagent_spawned', 'subagent_ended',
+  'agent_end', 'llm_input', 'llm_output', 'subagent_spawned', 'subagent_delivery_target', 'subagent_ended',
   'before_tool_call', 'after_tool_call', 'model_call_started',
   'model_call_ended', 'session_start', 'session_end',
 ]);

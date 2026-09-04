@@ -13,6 +13,7 @@
         "plugin.kubeclaw.openclaw-agent-events.llm-input",
         "plugin.kubeclaw.openclaw-agent-events.llm-output",
         "plugin.kubeclaw.openclaw-agent-events.subagent-spawned",
+        "plugin.kubeclaw.openclaw-agent-events.subagent-delivery-target",
         "plugin.kubeclaw.openclaw-agent-events.subagent-ended",
         "plugin.kubeclaw.openclaw-agent-events.before-tool-call",
         "plugin.kubeclaw.openclaw-agent-events.after-tool-call",
@@ -41,6 +42,7 @@
       "export": "recordEvidence",
       "subscriptions": [
         "plugin.kubeclaw.openclaw-agent-events.agent-end",
+        "plugin.kubeclaw.openclaw-agent-events.subagent-delivery-target",
         "plugin.kubeclaw.openclaw-agent-events.subagent-ended",
         "plugin.kubeclaw.openclaw-agent-events.model-call-ended",
         "plugin.kubeclaw.openclaw-agent-events.session-end"
