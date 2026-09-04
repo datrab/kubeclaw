@@ -46,4 +46,39 @@ const resumed = await runWithReviewCache(units, identity, durableStore, execute)
 assert.deepEqual({ hits: resumed.hits, misses: resumed.misses }, { hits: 1, misses: 1 },
   'a completed unit is durable even when a later unit prevents the batch executor from returning');
 
+class ConcurrencyStore extends MemoryStore {
+  active = 0; maximumActive = 0;
+  async read(key) {
+    this.active += 1; this.maximumActive = Math.max(this.maximumActive, this.active);
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    this.active -= 1; return super.read(key);
+  }
+}
+const concurrentUnits = Array.from({ length: 32 }, (_, index) => ({ id: `concurrent-${index}`,
+  digest: `sha256:${index.toString(16).padStart(64, '0')}` }));
+const concurrencyStore = new ConcurrencyStore();
+await runWithReviewCache(concurrentUnits, identity, concurrencyStore, execute);
+concurrencyStore.maximumActive = 0;
+await runWithReviewCache(concurrentUnits, identity, concurrencyStore, execute);
+assert.equal(concurrencyStore.maximumActive, 16, 'cache reads use the bounded parallelism limit');
+
+class FailingReadStore extends MemoryStore {
+  active = 0; started = 0;
+  async read() {
+    this.active += 1; this.started += 1; const ordinal = this.started;
+    try {
+      await new Promise((resolve) => setTimeout(resolve, ordinal === 1 ? 1 : 10));
+      if (ordinal === 1) throw new Error('simulated read failure');
+      return undefined;
+    } finally { this.active -= 1; }
+  }
+}
+const failingStore = new FailingReadStore();
+await assert.rejects(runWithReviewCache(concurrentUnits, identity, failingStore, execute), /simulated read failure/u);
+assert.equal(failingStore.active, 0, 'all in-flight cache reads settle before rejection');
+assert.ok(failingStore.started <= 16, 'workers claim no additional reads after a failure');
+await assert.rejects(runWithReviewCache([units[0]], identity, {
+  async read() { return Promise.reject(undefined); }, async write() {},
+}, execute), (error) => error === undefined);
+
 console.log(JSON.stringify({ ok: true, suite: 'review-content-cache' }));

@@ -35,6 +35,7 @@ export interface ReviewCacheRun<T> {
 }
 
 export class ReviewContentCacheIntegrityError extends Error {}
+const CACHE_READ_CONCURRENCY = 16;
 
 export function reviewCacheKey(
   unitDigest: `sha256:${string}`, identity: ReviewCacheIdentity,
@@ -83,6 +84,27 @@ export function parseReviewCacheRecord(
   return record as unknown as ReviewCacheRecord;
 }
 
+async function readCacheEntries(
+  ordered: readonly ReviewCacheUnit[], cacheKeys: ReadonlyMap<string, `sha256:${string}`>, store: ReviewCacheStore,
+): Promise<readonly unknown[]> {
+  const output: unknown[] = new Array(ordered.length);
+  const failures: ({ readonly error: unknown } | undefined)[] = new Array(ordered.length);
+  let cursor = 0, halted = false;
+  const worker = async (): Promise<void> => {
+    while (!halted && cursor < ordered.length) {
+      const index = cursor; cursor += 1;
+      const unit = ordered[index];
+      if (!unit) throw new ReviewContentCacheIntegrityError('review cache read index is invalid');
+      try { output[index] = await store.read(cacheKeys.get(unit.id) as `sha256:${string}`); }
+      catch (error) { failures[index] = { error }; halted = true; }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(CACHE_READ_CONCURRENCY, ordered.length) }, worker));
+  const failure = failures.find((value) => value !== undefined);
+  if (failure !== undefined) throw failure.error;
+  return Object.freeze(output);
+}
+
 // eslint-disable-next-line max-lines-per-function, complexity -- Cache read, streaming checkpoint, and final completeness form one transaction.
 export async function runWithReviewCache<T>(
   units: readonly ReviewCacheUnit[], identity: ReviewCacheIdentity, store: ReviewCacheStore,
@@ -94,10 +116,10 @@ export async function runWithReviewCache<T>(
     throw new ReviewContentCacheIntegrityError('review cache unit IDs are duplicated');
   }
   const values = new Map<string, T>(), misses: ReviewCacheUnit[] = [];
-  const cacheKeys = new Map<string, `sha256:${string}`>(); let hits = 0;
-  for (const unit of ordered) {
-    const key = reviewCacheKey(unit.digest, identity); cacheKeys.set(unit.id, key);
-    const cached = await store.read(key);
+  const cacheKeys = new Map(ordered.map((unit) => [unit.id, reviewCacheKey(unit.digest, identity)]));
+  const cachedEntries = await readCacheEntries(ordered, cacheKeys, store); let hits = 0;
+  for (const [index, unit] of ordered.entries()) {
+    const cached = cachedEntries[index];
     if (cached === undefined) { misses.push(unit); continue; }
     let parsed: ReviewCacheRecord;
     try { parsed = parseReviewCacheRecord(cached, unit, identity); } catch (error) {
