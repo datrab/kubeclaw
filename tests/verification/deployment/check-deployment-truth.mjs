@@ -58,6 +58,11 @@ assert.match(busterValues, /name:\s*buster-browser-cgroup[\s\S]*mountPath:\s*\/v
   'Buster must mount the dedicated browser cgroup subtree');
 assert.match(busterValues, /name:\s*buster-browser-cgroup[\s\S]*path:\s*\/sys\/fs\/cgroup\/kubeclaw-buster-browser/,
   'Buster must use the narrow host browser cgroup subtree');
+assert.match(
+  busterRuntimeEntrypoint,
+  /canonical_browser_playwright_cgroup_root="\$\(realpath "\$browser_playwright_cgroup_root"\)"[\s\S]*expected_browser_playwright_cgroup_root="\$\(realpath -m \/var\/run\/kubeclaw-browser-cgroup\)"[\s\S]*canonical_browser_playwright_cgroup_root" != "\$expected_browser_playwright_cgroup_root/,
+  'Buster must compare canonical cgroup paths so the Debian /var/run symlink cannot reject the approved mount',
+);
 assert.doesNotMatch(busterValues, /mountPath:\s*\/sys\/fs\/cgroup\s*$/m,
   'Buster must not mount the host cgroup root');
 assert.match(networkPolicies, /name:\s*kubeclaw-agents-egress[\s\S]*port:\s*6379[\s\S]*port:\s*6333/,

@@ -63,7 +63,9 @@ done
 # accounting because short-lived descendants could escape a sample.
 test -d "$browser_playwright_cgroup_root"
 test -f "$browser_playwright_cgroup_root/cgroup.controllers"
-if [ "$(realpath "$browser_playwright_cgroup_root")" != "/var/run/kubeclaw-browser-cgroup" ]; then
+canonical_browser_playwright_cgroup_root="$(realpath "$browser_playwright_cgroup_root")"
+expected_browser_playwright_cgroup_root="$(realpath -m /var/run/kubeclaw-browser-cgroup)"
+if [ "$canonical_browser_playwright_cgroup_root" != "$expected_browser_playwright_cgroup_root" ]; then
   echo "browser Playwright cgroup root is unsafe" >&2
   exit 1
 fi
