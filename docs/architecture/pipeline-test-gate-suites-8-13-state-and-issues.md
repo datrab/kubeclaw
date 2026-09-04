@@ -10,7 +10,7 @@ Autoreview then exercised the full patch repeatedly. It found and drove fixes fo
 
 The workflow documents were improved after the audit. They now distinguish fixed operator origins, runner-derived fixture scope, suffix-only reads, provider authority, and the later production cycle. The implementation, parity, and cutover plans remain separate so a source result cannot imply production acceptance.
 
-No mock, fake HTTP service, fake WebSocket result, or capability emulator is used. Tests use real loopback servers and the real isolated provider runner. The known repository dependency audit reports 25 existing findings: 22 moderate and three high. This suite did not add a vulnerable runtime dependency. Production acceptance is deferred to the controlled cycle after all 13 source cutovers. There is no Suite 8 infrastructure blocker at source closeout.
+No mock, fake HTTP service, fake WebSocket result, or capability emulator is used. Tests use real loopback servers and the real isolated provider runner. The known repository dependency audit reports 25 existing findings: 22 moderate and three high. This suite did not add a vulnerable runtime dependency. `nova-api-preflight` now sends a signed five-node plan through Nova and Buster, deploys a real Kubernetes fixture, runs HTTP, API Flow, and OpenAPI against its typed endpoint, imports evidence, verifies fixture deletion, and stores a signed receipt. Production acceptance is deferred to the controlled cycle after all 13 source cutovers. There is no Suite 8 infrastructure blocker at source closeout.
 
 ## Suite 9: Accessibility
 

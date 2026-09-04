@@ -12,4 +12,13 @@ An errored node indicates invalid configuration, denied authority, a malformed c
 
 Use `npm run verify:test-gate:api-cutover` for the complete source gate. It runs real loopback HTTP and WebSocket services. It also runs the three-node suite in isolated provider processes. No Kubernetes deployment is required for this contained gate.
 
-The final production cycle uses the shared Nova-to-Buster preflight after all 13 source cutovers. Until that cycle passes, record infrastructure faults in the shared suite state document. Do not change a source result to hide a missing cluster, image, DNS, or credential dependency.
+After all 13 source cutovers, deploy the exact Nova and Buster revisions. Run:
+
+```bash
+./scripts/deploy.sh nova-api-preflight \
+  registry.example.invalid/kubeclaw/preflight@sha256:REAL_64_HEX_DIGEST
+```
+
+The image must listen on port `8080` and return HTTP status 200 for `/`. The command creates a real Kubernetes fixture. It sends a signed five-node plan from Nova to Buster. Buster runs the real HTTP, API Flow, and OpenAPI providers against the typed deployment endpoint. Nova imports their evidence and blocking decision. The command then observes namespace and lease deletion and stores a signed API receipt.
+
+The combined `nova-production-preflights` command includes this API proof. Until that controlled cycle passes, record infrastructure faults in the shared suite state document. Do not change a source result to hide a missing cluster, image, DNS, or credential dependency.
