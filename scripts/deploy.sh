@@ -1971,7 +1971,7 @@ cmd_nova_kubernetes_fixture_preflight() {
   header "Nova → Buster Kubernetes Fixture Production Preflight"
   require_command kubectl
   local immutable_image=${2:-${KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE:-}}
-  local secret_name=kubeclaw-fixture-preflight
+  local secret_name=${3:-${KUBECLAW_KUBERNETES_PREFLIGHT_SECRET:-kubeclaw-fixture-preflight}}
   if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
     err "Provide a digest-pinned workload image as argument 2 or KUBECLAW_KUBERNETES_PREFLIGHT_IMAGE."
     return 1
