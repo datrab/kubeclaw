@@ -10,10 +10,10 @@
 
 ## Disposition summary
 
-- Latest inventory: 36 accepted/current, 3 already fixed by removal, 2 rejected, 1 needs additional reproduction.
+- Latest inventory: 35 accepted/current, 3 already fixed by removal, 3 rejected, 1 needs additional reproduction.
 - Older inventory: 1 accepted/current regression and 12 already fixed.
 - Additional sibling regression found during revalidation: 1 accepted/current.
-- Actionable backlog: 38 items (3 P1, 30 P2, 5 P3).
+- Actionable backlog: 37 items (3 P1, 29 P2, 5 P3).
 
 The live-PID resource-lock item is not accepted as a defect yet. Current tests explicitly preserve an expired lock while its process is alive to prevent dual execution. A task-lifecycle reproduction is required before changing that safety boundary.
 
@@ -54,7 +54,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 | ID | Disposition | Sev | Owner / package | Root-cause group | Current evidence | Validation |
 |---|---|---:|---|---|---|---|
 | C01 | accepted/current | P3 | namespace-controller | simplification | `nullIfEmpty` remains defined and has no caller. | V24 + `rg -n 'nullIfEmpty' cmd/buster-namespace-controller/main.go` |
-| C02 | accepted/current | P2 | plugin-foundation/observability | state-recovery | `evaluateCompleteness` still calls `admittedTail(pipelineRunId, 1)` and compares that one-record set to each closure `recordCount`. | V10 |
+| C02 | rejected | P2 | plugin-foundation/observability | state-recovery | `admittedTail(pipelineRunId, 1)` reads every matching record from canonical cursor 1; the second argument is a starting cursor, not a record limit. The existing late-record regression admits sequence 2 and proves completeness becomes partial because both records are evaluated. | V10 |
 | C03 | accepted/current | P2 | namespace-controller | deployment-operations | `BUSTER_CONTROLLER_POLL_MS` is converted directly to a duration; zero and negative values reach both sleep loops. | V24 |
 | C04 | accepted/current | P2 | agent-observability contract | contracts-data | `isJsonSafe` recurses into arrays without adding/removing the array in `seen`; a self-array reaches stack exhaustion. | contract typecheck plus direct source trace |
 | C05 | accepted/current | P2 | nova-core/execution | state-recovery | `Date.parse(invalid)` is `NaN`; `now >= NaN` is false, so `RevocableLease.assertActive` accepts an invalid expiry. | V11 |
@@ -126,7 +126,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 2. P1 merge/cleanup result semantics (`C25`).
 3. P1 immutable LiteLLM deployment (`C30`).
 4. P2 security/trust: `C12`, `C13`, `C35`, `C40`, `N01`.
-5. P2 state/recovery/concurrency: `C02`, `C05`, `C07`, `C26`, `C28`, `C31`; keep `C34` outside the fix queue until reproduced.
+5. P2 state/recovery/concurrency: `C05`, `C07`, `C26`, `C28`, `C31`; keep `C34` outside the fix queue until reproduced.
 6. P2 contracts/data integrity: `C04`, `C10`, `C11`, `C14`, `C20`, `C22`, `C32`, `C36`, `C42`.
 7. P2 deployment/operations: `C03`, `C06`, `C15`, `C17`, `C21`, `C29`, `C37`, `C38`, `C41`, `O04`.
 8. P3 simplification: `C01`, `C23`, `C27`, `C33`, `C39`.
