@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 
+import { buildReviewInventoryLookup } from '../src/review-inventory-lookup.ts';
+
 import { sha256Text } from '@kubeclaw/plugin-sdk';
 
 import { expandReviewContext, selectReviewContext } from '../src/review-context-selection.ts';
@@ -128,5 +130,16 @@ assert.throws(() => selectReviewContext([
   { ...changed, reasons: Array.from({ length: 16 }, () => ({ kind: 'changed' })) },
 ], scope, gate), /must contain 1-15 items/u);
 assert.throws(() => selectReviewContext([changed], scope, { ...gate }), /not trusted/u);
+
+const inventory = ['apps/one/src/index.ts', 'apps/one/src/lib.ts', 'apps/two/src/index.ts', 'docs/guide.md']
+  .map((path, index) => ({ path, objectId: String(index).padStart(40, '0'), mode: '100644', sizeBytes: 1,
+    role: 'source', included: true }));
+const lookup = buildReviewInventoryLookup(inventory);
+assert.deepEqual(lookup.resolve('docs/guide.md').map(({ path }) => path), ['docs/guide.md']);
+assert.deepEqual(lookup.resolve('apps/one').map(({ path }) => path),
+  ['apps/one/src/index.ts', 'apps/one/src/lib.ts']);
+assert.deepEqual(lookup.resolve('lib.ts').map(({ path }) => path), ['apps/one/src/lib.ts']);
+assert.deepEqual(lookup.resolve('index.ts'), [], 'ambiguous suffixes are not selected');
+assert.deepEqual(lookup.resolve('missing.ts'), []);
 
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.review', suite: 'review-context-selection' }));
