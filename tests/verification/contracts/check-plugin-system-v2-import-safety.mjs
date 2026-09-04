@@ -25,7 +25,7 @@ const enabled = new Set([
   ...snapshot.adapters.keys(),
 ]);
 const activated = await core.activateRegistry(snapshot, enabled);
-assert.equal(activated.stages.size, 17);
+assert.equal(activated.stages.size, 18);
 assert.equal(activated.observers.size, 6);
 assert.equal(activated.adapters.size, 18);
 console.log(JSON.stringify({
