@@ -1,4 +1,4 @@
-import net from 'node:net';
+import net, { isIP } from 'node:net';
 import tls from 'node:tls';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -187,7 +187,11 @@ async function probeGateway(): Promise<CapabilityResult> {
       endpoint.search = '';
       endpoint.hash = '';
     }
+    const hostname = endpoint.hostname.replace(/^\[|\]$/gu, '');
+    const loopback = hostname === 'localhost' || hostname === '::1'
+      || (isIP(hostname) === 4 && hostname.split('.')[0] === '127');
     if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password
+      || (endpoint.protocol === 'http:' && !loopback)
       || endpoint.pathname !== '/tools/invoke') throw new Error('invalid endpoint');
   } catch {
     return { capability: 'gateway', ok: false, reason: 'INFRA_OPENCLAW_GATEWAY_ENDPOINT_INVALID' };

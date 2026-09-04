@@ -74,3 +74,25 @@ test('gateway capability distinguishes tool-policy denial from authentication fa
     else process.env.OPENCLAW_GATEWAY_TOOLS_URL = originalUrl;
   }
 });
+
+test('gateway capability refuses to transmit its bearer token over external HTTP', async () => {
+  const originalFetch = globalThis.fetch;
+  const originalToken = process.env.OPENCLAW_GATEWAY_TOKEN;
+  const originalUrl = process.env.OPENCLAW_GATEWAY_TOOLS_URL;
+  let called = false;
+  try {
+    process.env.OPENCLAW_GATEWAY_TOKEN = 'must-not-leave-over-plaintext';
+    process.env.OPENCLAW_GATEWAY_TOOLS_URL = 'http://gateway.example.test/tools/invoke';
+    globalThis.fetch = async () => { called = true; throw new Error('must not be called'); };
+    const [result] = await probeCapabilities(['gateway']);
+    assert.deepEqual(result, { capability: 'gateway', ok: false,
+      reason: 'INFRA_OPENCLAW_GATEWAY_ENDPOINT_INVALID' });
+    assert.equal(called, false);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalToken === undefined) delete process.env.OPENCLAW_GATEWAY_TOKEN;
+    else process.env.OPENCLAW_GATEWAY_TOKEN = originalToken;
+    if (originalUrl === undefined) delete process.env.OPENCLAW_GATEWAY_TOOLS_URL;
+    else process.env.OPENCLAW_GATEWAY_TOOLS_URL = originalUrl;
+  }
+});
