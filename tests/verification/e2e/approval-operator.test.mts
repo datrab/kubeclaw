@@ -56,6 +56,10 @@ test('approval operator resolves the v2 file-backed wait contract', async () => 
     const decision = JSON.parse(fs.readFileSync(decisionPathFor(statePath, 'wait:test'), 'utf8'));
     assert.equal(decision.status, 'APPROVED');
     assert.equal(decision.decision_by, 'real-e2e-operator');
+    const retried = await runApprovalOperator({ statePath, decision: 'deny', timeoutMs: 1_000, pollMs: 10 });
+    assert.equal(retried.phase, 'approval-operator-existing-terminal');
+    assert.equal(retried.status, 'APPROVED');
+    assert.deepEqual(retried.approval_signal, { stream: 'v2:direct-resume-signal', redis_id: 'wait:test' });
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
     if (previous === undefined) delete process.env.REAL_E2E_V2_RUNTIME;
