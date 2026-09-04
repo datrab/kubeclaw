@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';
-import { TailscaleExposureCapabilityInvoker } from '@kubeclaw/buster-engine';
+import { TailscaleExposureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/tailscale-exposure-runtime.ts';
 
 const pluginRoot = path.resolve('skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
@@ -43,5 +44,116 @@ const capability = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '
 await assert.rejects(() => capability.invoke('kubernetes.exposure', { operation: 'prepare',
   resource: { type: 'kubernetes.exposure', canonicalId: 'invalid' }, payload: {} } as any,
 new AbortController().signal), /TAILSCALE_EXPOSURE_CAPABILITY_REQUEST_INVALID/u);
+const cancellation = new AbortController();
+const patches: string[] = [];
+const expiresAt = new Date(Date.now() + 60_000).toISOString();
+let exposureOwner: string | undefined;
+let resourceVersion = '1';
+const cancellable = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '/usr/local/bin/kubectl',
+  controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+  allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+  async execute(_command, args) {
+    if (args[0] === 'auth') return { stdout: 'yes\n' };
+    if (args[0] === 'get') return { stdout: JSON.stringify({
+      metadata: { name: 'preview-one', resourceVersion,
+        ...(exposureOwner ? { annotations: { 'kubeclaw.forgestack.ai/exposure-owner': exposureOwner } } : {}) },
+      spec: { namespaceName: 'test-one', serviceName: 'service-one', servicePort: 8080 },
+      status: { phase: 'Ready', exposurePhase: 'Pending', namespaceName: 'test-one', expiresAt },
+    }) };
+    if (args[0] === 'patch') {
+      const body = String(args[args.indexOf('-p') + 1]);
+      patches.push(body);
+      const patch = JSON.parse(body);
+      if (body.includes('final-preview')) {
+        exposureOwner = patch.metadata.annotations['kubeclaw.forgestack.ai/exposure-owner'];
+        resourceVersion = '2';
+        cancellation.abort();
+      } else {
+        assert.equal(patch.metadata.resourceVersion, '2');
+        exposureOwner = undefined;
+        resourceVersion = '3';
+      }
+      return { stdout: '{}' };
+    }
+    throw new Error(`unexpected kubectl operation: ${args.join(' ')}`);
+  },
+});
+await assert.rejects(() => cancellable.invoke('kubernetes.exposure', { operation: 'prepare',
+  resource: { type: 'kubernetes.exposure', canonicalId: 'kubernetes-exposure:attempt:test' },
+  payload: { leaseName: 'preview-one', namespace: 'test-one', serviceName: 'service-one', servicePort: 8080,
+    expiresAt, path: '/', readinessTimeoutMs: 10_000 } } as any, cancellation.signal),
+/TAILSCALE_EXPOSURE_CANCELLED/u);
+assert.equal(patches.length, 2);
+assert.match(patches[0]!, /final-preview/u);
+assert.match(patches[1]!, /"provider":"off"/u);
+const rollbackFailure = Object.freeze(new Error('rollback unavailable'));
+let failedOwner: string | undefined;
+const failedRollback = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '/usr/local/bin/kubectl',
+  controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+  allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+  async execute(_command, args) {
+    if (args[0] === 'auth') return { stdout: 'yes\n' };
+    if (args[0] === 'get') return { stdout: JSON.stringify({
+      metadata: { name: 'preview-one', resourceVersion: '2',
+        ...(failedOwner ? { annotations: { 'kubeclaw.forgestack.ai/exposure-owner': failedOwner } } : {}) },
+      spec: { namespaceName: 'test-one', serviceName: 'service-one', servicePort: 8080 },
+      status: { phase: 'Ready', exposurePhase: 'Failed', namespaceName: 'test-one', expiresAt, message: 'enable failed' },
+    }) };
+    if (args[0] === 'patch' && String(args[args.indexOf('-p') + 1]).includes('final-preview')) {
+      const patch = JSON.parse(String(args[args.indexOf('-p') + 1]));
+      failedOwner = patch.metadata.annotations['kubeclaw.forgestack.ai/exposure-owner'];
+      return { stdout: '{}' };
+    }
+    if (args[0] === 'patch') throw rollbackFailure;
+    throw new Error(`unexpected kubectl operation: ${args.join(' ')}`);
+  },
+});
+await assert.rejects(
+  () => failedRollback.invoke('kubernetes.exposure', { operation: 'prepare',
+    resource: { type: 'kubernetes.exposure', canonicalId: 'kubernetes-exposure:attempt:test' },
+    payload: { leaseName: 'preview-one', namespace: 'test-one', serviceName: 'service-one', servicePort: 8080,
+      expiresAt, path: '/', readinessTimeoutMs: 10_000 } } as any, new AbortController().signal),
+  (error: unknown) => error instanceof AggregateError
+    && error.message === 'TAILSCALE_EXPOSURE_ROLLBACK_FAILED'
+    && String(error.errors[0]).includes('TAILSCALE_EXPOSURE_CONTROLLER_FAILED')
+    && error.errors[1] === rollbackFailure,
+);
+const staleCancellation = new AbortController();
+const stalePatches: string[] = [];
+let staleOwner: string | undefined;
+let supersededOwner: string | undefined;
+const staleRollback = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '/usr/local/bin/kubectl',
+  controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+  allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+  async execute(_command, args) {
+    if (args[0] === 'auth') return { stdout: 'yes\n' };
+    if (args[0] === 'get') return { stdout: JSON.stringify({
+      metadata: { name: 'preview-one', resourceVersion: '3',
+        ...(staleOwner ? { annotations: { 'kubeclaw.forgestack.ai/exposure-owner': staleOwner } } : {}) },
+      spec: { namespaceName: 'test-one', serviceName: 'service-one', servicePort: 8080 },
+      status: { phase: 'Ready', exposurePhase: 'Pending', namespaceName: 'test-one', expiresAt },
+    }) };
+    if (args[0] === 'patch') {
+      const body = String(args[args.indexOf('-p') + 1]);
+      stalePatches.push(body);
+      if (body.includes('final-preview')) {
+        const patch = JSON.parse(body);
+        supersededOwner = patch.metadata.annotations['kubeclaw.forgestack.ai/exposure-owner'];
+        staleOwner = randomUUID();
+        assert.notEqual(staleOwner, supersededOwner,
+          'a newer prepare for the same canonical resource must have a distinct owner');
+        staleCancellation.abort();
+      }
+      return { stdout: '{}' };
+    }
+    throw new Error(`unexpected kubectl operation: ${args.join(' ')}`);
+  },
+});
+await assert.rejects(() => staleRollback.invoke('kubernetes.exposure', { operation: 'prepare',
+  resource: { type: 'kubernetes.exposure', canonicalId: 'kubernetes-exposure:attempt:stale' },
+  payload: { leaseName: 'preview-one', namespace: 'test-one', serviceName: 'service-one', servicePort: 8080,
+    expiresAt, path: '/', readinessTimeoutMs: 10_000 } } as any, staleCancellation.signal),
+/TAILSCALE_EXPOSURE_CANCELLED/u);
+assert.equal(stalePatches.length, 1, 'a stale rollback must not disable the newer exposure owner');
 console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-implementation', providerKind: 'fixture',
   typedLinks: true, narrowCapability: true, mocks: 0, emulators: 0 }));
