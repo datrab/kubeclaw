@@ -37,6 +37,14 @@ try {
   assert.equal(first.sourceSnapshot.tree, `git:${tree}`);
   assert.equal(verifySourceSnapshotAttestation(first.sourceSnapshot, 'nova:production', attestationPublicKey), true);
   assert.equal(verifySourceSnapshotAttestation(first.sourceSnapshot, 'nova:production', wrongPublicKey), false);
+  assert.equal(verifySourceSnapshotAttestation({ ...first.sourceSnapshot, attestation: {
+    ...first.sourceSnapshot.attestation, schemaVersion: 'source-snapshot-attestation.v2',
+  } } as typeof first.sourceSnapshot, 'nova:production', attestationPublicKey), false,
+  'the verifier must reject an unrecognized attestation schema');
+  assert.equal(verifySourceSnapshotAttestation({ ...first.sourceSnapshot, attestation: {
+    ...first.sourceSnapshot.attestation, algorithm: 'rsa-pss',
+  } } as typeof first.sourceSnapshot, 'nova:production', attestationPublicKey), false,
+  'the verifier must reject an algorithm that does not describe the verified signature');
   assert.equal(verifySourceSnapshotAttestation({ ...first.sourceSnapshot,
     repositoryId: 'repository:tampered' }, 'nova:production', attestationPublicKey), false);
   assert.equal(first.sourceSnapshot.archiveContentDigest, second.sourceSnapshot.archiveContentDigest,
