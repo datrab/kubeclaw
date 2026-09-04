@@ -69,6 +69,9 @@ assert(workloads.includes("runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000
   "Prism application pods must use a numeric non-root identity; the images declare the named node user");
 assert(jobs.includes("runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000"),
   "Prism migration jobs must use the control image's numeric non-root identity");
+assert.match(jobs,
+  /name: restore-proof[\s\S]*cleanup\(\)\{[\s\S]*trap - EXIT[\s\S]*dropdb --if-exists prism_restore_proof[\s\S]*trap cleanup EXIT[\s\S]*pg_restore --dbname=prism_restore_proof/u,
+  "Prism restore proof must unconditionally drop its temporary database while preserving the original failure");
 assert.match(jobs,/name: bootstrap-database-roles[\s\S]*mountPath: \/tmp[\s\S]*name: migrate[\s\S]*mountPath: \/tmp[\s\S]*name: tmp[\s\S]*emptyDir:/u,
   "Prism migration containers need a writable temporary filesystem under a read-only root");
 assert.match(source,/capture_prism_migration_logs[\s\S]*bootstrap-database-roles migrate[\s\S]*Prism Helm deployment failed; captured migration output follows/u,
