@@ -248,6 +248,13 @@ interface PersistentVolumePolicy {
 }
 
 function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {
+  if (spec.volumeName !== undefined || spec.selector !== undefined
+    || spec.dataSource !== undefined || spec.dataSourceRef !== undefined) {
+    throw new Error(`KUBERNETES_FIXTURE_PVC_SOURCE_DENIED:${name}`);
+  }
+  if (spec.volumeMode !== undefined && spec.volumeMode !== 'Filesystem') {
+    throw new Error(`KUBERNETES_FIXTURE_PVC_VOLUME_MODE_DENIED:${name}`);
+  }
   const storageClass = spec.storageClassName;
   if (storageClass === undefined) {
     if (!policy.allowDefaultStorageClass) throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED');
