@@ -39,6 +39,9 @@ export function projectPreferences(
   events: PreferenceEvent[],
   now = Date.now(),
 ): PreferenceProfile {
+  for (const event of events) {
+    validatePrism<PreferenceEvent>("preferenceEvent", event);
+  }
   const retracted = new Set(
     events
       .filter((event) => event.action === "retracted")
@@ -103,3 +106,4 @@ export function projectPreferences(
   }
   return result;
 }
+import { validatePrism } from "@kubeclaw/prism-contracts-v1";

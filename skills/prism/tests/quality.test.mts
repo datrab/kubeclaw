@@ -107,3 +107,22 @@ test("preference projections decay and remain retractable", () => {
   );
   assert.equal(projected["craft:personal:tools:precise"]?.projection, "craft");
 });
+test("preference projections reject invalid occurrence timestamps", () => {
+  const invalidEvent = (occurredAt: string) => ({
+      schema: "prism.preference-event.v1",
+      eventId: "invalid-time",
+      userId: "user-one",
+      action: "liked",
+      traits: ["precise"],
+      context: { domain: "tools" },
+      source: "explicit",
+      learningScope: "personal",
+      occurredAt,
+    } as const);
+  for (const occurredAt of ["not-a-timestamp", "2024-02-30T00:00:00Z", "2026-09-04"]) {
+    assert.throws(
+      () => projectPreferences([invalidEvent(occurredAt)]),
+      /PRISM_INPUT_INVALID: preferenceEvent/,
+    );
+  }
+});
