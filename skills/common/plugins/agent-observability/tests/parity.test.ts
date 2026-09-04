@@ -5,6 +5,10 @@ import { pathToFileURL } from 'node:url';
 
 const { projectAgentEvent } = await import(pathToFileURL(path.resolve('src/observers.ts')).href);
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
+const deliveryTargetType = 'plugin.kubeclaw.openclaw-agent-events.subagent-delivery-target';
+for (const observer of manifest.observers) {
+  assert.equal(observer.subscriptions.includes(deliveryTargetType), true, `${observer.id} must observe delivery targets`);
+}
 const subscriptions = new Set(manifest.observers.flatMap((entry) => entry.subscriptions));
 for (const [index, type] of [...subscriptions].entries()) {
   const delivery = {
@@ -32,4 +36,3 @@ for (const [index, type] of [...subscriptions].entries()) {
   assert.doesNotMatch(JSON.stringify(first), /must-not-survive/);
 }
 console.log(JSON.stringify({ ok: true, plugin: manifest.id, suite: 'parity' }));
-
