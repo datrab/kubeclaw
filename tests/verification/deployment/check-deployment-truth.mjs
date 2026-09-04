@@ -18,6 +18,7 @@ const exists = (relativePath) =>
 
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
+const swarmConfig = read('charts/kubeclaw/files/config/swarm.config.json');
 const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const prismJobs = read('charts/prism/templates/jobs.yaml');
 const prismValues = read('charts/prism/values.yaml');
@@ -529,6 +530,16 @@ assert.match(
   chart,
   /Object\.hasOwn\(config\.channels\.discord, 'groupAllowFrom'\)[\s\S]*delete config\.channels\.discord\.groupAllowFrom[\s\S]*doctor --fix --non-interactive/,
   'the startup migration must remove retired Discord groupAllowFrom before Doctor validation',
+);
+assert.doesNotMatch(
+  swarmConfig,
+  /discord_webhook_url/,
+  'the persistent swarm config source must not contain a runtime webhook placeholder',
+);
+assert.match(
+  chart,
+  /temporaryPath=`\$\{p\}\.kubeclaw-normalize\.tmp`[\s\S]*writeFileSync\(temporaryPath[\s\S]*mode: 0o600[\s\S]*renameSync\(temporaryPath,p\)/,
+  'legacy swarm config normalization must atomically replace ConfigMap-derived read-only files',
 );
 assert.match(
   gatewayConfig,

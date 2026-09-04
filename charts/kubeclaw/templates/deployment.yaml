@@ -620,7 +620,7 @@ spec:
                 echo "    swarm.config.json written from chart source"
               fi
               if [ -f "/config/swarm.config.json" ]; then
-                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(config,"discord_webhook_url")) { delete config.discord_webhook_url; fs.writeFileSync(p, JSON.stringify(config,null,2)+"\n"); } console.log("    swarm.config.json source normalized without runtime webhook secrets");'
+                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(config,"discord_webhook_url")) { delete config.discord_webhook_url; const temporaryPath=`${p}.kubeclaw-normalize.tmp`; fs.writeFileSync(temporaryPath, JSON.stringify(config,null,2)+"\n", { mode: 0o600 }); fs.renameSync(temporaryPath,p); } console.log("    swarm.config.json source normalized without runtime webhook secrets");'
               fi
               if [ -f "/init-swarm-config/.semgrep.yml" ]; then
                 if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then
