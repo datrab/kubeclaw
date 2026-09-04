@@ -70,13 +70,14 @@ const promptTarget = {
   tokenizerEncoding: 'o200k_base', maxPromptBytes: 100_000, maxInputTokens: 10_000,
   maxOutputTokens: 1_000, maxContextTokens: 11_000,
 };
-const controlledPayload = { protocol: 'review', task: 'review', runtimePromptBudget: {
+const controlledPayload = { protocol: 'review', task: 'review', runtimeDispatchAttempt: 2, runtimePromptBudget: {
   schemaVersion: 'runtime-prompt-budget.v1', tokenizerEncoding: 'o200k_base',
   reservedPromptBytes: 20_000, reservedInputTokens: 2_000,
   maxPromptBytes: 20_000, maxInputTokens: 2_000, maxOutputTokens: 1_000, maxContextTokens: 3_000,
 } };
 const preparedTask = prepareOpenClawTask(controlledPayload, '/work/.results/result.json', promptTarget);
 assert.equal(preparedTask.includes('runtimePromptBudget'), false);
+assert.equal(preparedTask.includes('runtimeDispatchAttempt'), false);
 assert.match(preparedTask, /return the same raw JSON as your final response/u);
 assert.throws(() => prepareOpenClawTask({ ...controlledPayload, runtimePromptBudget: {
   ...controlledPayload.runtimePromptBudget, tokenizerEncoding: 'cl100k_base',
@@ -412,7 +413,7 @@ try {
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
     assert.equal(JSON.parse(spawnRequests[0].body).sessionKey, 'agent:codex:nova-review-controller');
-    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:collector-v3:payload:[a-f0-9]{64}$/u);
+    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:collector-v4:attempt:0:payload:[a-f0-9]{64}$/u);
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');

@@ -163,6 +163,7 @@ assert.equal(dispatches, first.length);
 let semanticDispatches = 0;
 const semanticContext = { async invoke(_capability, request) {
   semanticDispatches += 1;
+  assert.equal(request.payload.runtimeDispatchAttempt, semanticDispatches - 1);
   const dispatched = request.payload.review.job;
   const sourceEvidence = dispatched.source.map(({ digest: value }) => ({ kind: 'reviewed-source', digest: value }));
   const evidence = semanticDispatches === 1

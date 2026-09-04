@@ -69,9 +69,15 @@ function runtimePromptBudget(value: unknown): RuntimePromptBudget | undefined {
 }
 function dispatchPayload(payload: JsonRecord): Readonly<{ modelPayload: JsonRecord; budget?: RuntimePromptBudget }> {
   const budget = runtimePromptBudget(payload.runtimePromptBudget);
-  if (!budget) return { modelPayload: payload };
-  const { runtimePromptBudget: _control, ...modelPayload } = payload;
-  return { modelPayload, budget };
+  const { runtimePromptBudget: _control, runtimeDispatchAttempt: _attempt, ...modelPayload } = payload;
+  return { modelPayload, ...(budget ? { budget } : {}) };
+}
+function runtimeDispatchAttempt(value: unknown): number {
+  if (value === undefined) return 0;
+  if (!Number.isSafeInteger(value) || Number(value) < 0 || Number(value) > 100) {
+    throw new Error('OPENCLAW_RUNTIME_DISPATCH_ATTEMPT_INVALID');
+  }
+  return Number(value);
 }
 async function beforeAbort<T>(operation: () => Promise<T>, signal: AbortSignal): Promise<T> {
   if (signal.aborted) throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
@@ -241,8 +247,9 @@ export async function dispatchOpenClaw(
   }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
-  const transport = target.collectorMode ? 'collector-v3' : 'session-v1';
-  const stableDispatchId = `${transport}:payload:${crypto.createHash('sha256')
+  const transport = target.collectorMode ? 'collector-v4' : 'session-v1';
+  const attempt = runtimeDispatchAttempt(payload.runtimeDispatchAttempt);
+  const stableDispatchId = `${transport}:attempt:${attempt}:payload:${crypto.createHash('sha256')
     .update(canonicalJson(dispatchPayload(payload).modelPayload)).digest('hex')}`;
   const result = resultLocation(target, stableDispatchId);
   assertDispatchActive(dispatchSignal);

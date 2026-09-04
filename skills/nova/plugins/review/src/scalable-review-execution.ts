@@ -31,7 +31,8 @@ async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispat
     assertReviewDeadline(deadlineEpochMs, 'scalable review');
     try {
       const basePayload = buildScalableReviewDispatchPayload(value);
-      const payload = beforeDispatch?.(basePayload) ?? basePayload;
+      const prepared = beforeDispatch?.(basePayload) ?? basePayload;
+      const payload = Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt });
       const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
         operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent }, payload,
       }), deadlineEpochMs, 'scalable review');

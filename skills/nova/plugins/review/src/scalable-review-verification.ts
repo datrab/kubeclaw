@@ -319,7 +319,8 @@ async function dispatchVerificationJob(
     assertReviewDeadline(deadlineEpochMs, 'verification');
     try {
       const basePayload = buildScalableVerificationDispatchPayload(value);
-      const payload = beforeDispatch?.(basePayload) ?? basePayload;
+      const prepared = beforeDispatch?.(basePayload) ?? basePayload;
+      const payload = Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt });
       const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
         operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
         payload,
