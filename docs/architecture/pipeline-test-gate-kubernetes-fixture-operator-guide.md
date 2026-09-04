@@ -29,14 +29,24 @@ Buster remote runtime configuration.
     "allowedNamespacePrefixes": ["test"],
     "allowedRegistryPrefixes": ["registry-local.kubeclaw.svc.cluster.local:5001/apps"],
     "allowedSecretReferences": ["test-registry"],
+    "allowedStorageClasses": ["fixture-storage"],
+    "allowDefaultStorageClass": false,
     "maximumManifestBytes": 4194304,
     "maximumResources": 128,
+    "maximumPersistentVolumeClaimBytes": 10737418240,
+    "maximumPersistentVolumeTotalBytes": 21474836480,
     "maximumRetentionSeconds": 86400,
     "maximumExecutionMs": 300000,
     "pollIntervalMs": 1000
   }
 }
 ```
+
+PersistentVolumeClaims are admitted only when their requested storage is a
+positive, whole-byte Kubernetes quantity within both configured byte limits.
+Explicit `storageClassName` values must be allowlisted. A missing
+`storageClassName` is accepted only when `allowDefaultStorageClass` is true.
+The same policy applies to StatefulSet `volumeClaimTemplates`.
 
 ## Verify RBAC
 

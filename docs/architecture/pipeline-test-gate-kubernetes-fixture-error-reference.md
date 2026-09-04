@@ -37,6 +37,10 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_NAMESPACE_PREFIXES_INVALID`: configure allowed DNS labels.
 - `KUBERNETES_FIXTURE_REGISTRY_PREFIXES_INVALID`: configure allowed registry repositories.
 - `KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID`: configure valid approved Secret names.
+- `KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID`: configure valid Kubernetes storage class names.
+- `KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_POLICY_INVALID`: configure an explicit boolean default-class policy.
+- `KUBERNETES_FIXTURE_PVC_SIZE_LIMIT_INVALID`: configure a positive safe-integer per-claim byte limit.
+- `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID`: configure an aggregate byte limit at least as large as the per-claim limit.
 - `KUBERNETES_FIXTURE_SUBJECT_INVALID`: configure valid namespace and ServiceAccount names.
 - `KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID`: configure 50 through 10000 milliseconds.
 
@@ -71,6 +75,13 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED`: remove cluster-scoped resources.
 - `KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED`: use an approved namespaced resource kind.
 - `KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED`: remove explicit namespaces.
+- `KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED`: select an approved storage class instead of the cluster default.
+- `KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED`: select an operator-approved storage class.
+- `KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID`: request a positive, whole-byte Kubernetes storage quantity.
+- `KUBERNETES_FIXTURE_PVC_SIZE_DENIED`: reduce the individual persistent-volume claim request.
+- `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED`: reduce aggregate persistent-volume claim requests.
+- `KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID`: provide a valid StatefulSet volume-claim-template list.
+- `KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID`: use a non-negative safe-integer replica count.
 - `KUBERNETES_FIXTURE_CONTAINERS_INVALID`: correct the pod container list.
 - `KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED`: use immutable images.
 - `KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED`: use an approved image repository for every container.
@@ -79,6 +90,7 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED`: use an internal ClusterIP Service.
 - `KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED`: remove host network, PID, and IPC access.
 - `KUBERNETES_FIXTURE_HOST_PATH_DENIED`: remove hostPath volumes.
+- `KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED`: use an explicitly bounded PersistentVolumeClaim instead.
 - `KUBERNETES_FIXTURE_HOST_PORT_DENIED`: remove host ports.
 - `KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED`: set pod and container non-root controls.
 - `KUBERNETES_FIXTURE_SECCOMP_REQUIRED`: set a supported seccomp profile.
