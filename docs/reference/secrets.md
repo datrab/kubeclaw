@@ -38,7 +38,7 @@ Generated from: `my-values/setup-secrets.sh`
 
 | Secret | Namespace | Required when | Keys | Setup source |
 | --- | --- | --- | --- | --- |
-| `openclaw-shared-secrets` | `NAMESPACE` | always; litellmApiKey is required when KUBECLAW_DEPLOY_LITELLM is enabled | `gatewayToken-forge`, `gatewayToken-echo`, `gatewayToken-buster`, `busterV2Token`, `gatewayToken-nova`, `stitchApiKey`, `discordToken-forge`, `discordToken-echo`, `discordToken-buster`, `discordToken-nova`, `discordWebhook`, `litellmApiKey` | setup_shared_secret, line 547 |
+| `openclaw-shared-secrets` | `NAMESPACE` | always; litellmApiKey is required when KUBECLAW_DEPLOY_LITELLM is enabled | `gatewayToken-forge`, `gatewayToken-echo`, `gatewayToken-buster`, `busterV2Token`, `gatewayToken-nova`, `gatewayToken-prism`, `stitchApiKey`, `discordToken-forge`, `discordToken-echo`, `discordToken-buster`, `discordToken-nova`, `discordWebhook`, `litellmApiKey` | setup_shared_secret, line 547 |
 | `redis-secrets` | `NAMESPACE` | always | `redis-password` | setup_redis_secret, line 650 |
 | `pipeline-test-gate-source-attestation` | `NAMESPACE` | Nova-to-Buster committed-source dispatch is enabled | `privateKey`, `publicKey` | setup_pipeline_source_attestation_secret, line 612 |
 | `postgresql-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_POSTGRESQL is enabled | `postgres-password`, `litellm-password` | setup_postgresql_secret, line 685 |
