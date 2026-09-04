@@ -44,6 +44,7 @@
       "path": ".github/workflows/build-ops-mcp.yaml",
       "name": "Build Ops MCP Image",
       "triggers": [
+        "pull_request",
         "push",
         "workflow_dispatch"
       ],
