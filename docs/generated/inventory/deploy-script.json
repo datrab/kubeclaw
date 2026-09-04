@@ -196,6 +196,10 @@
       "description": "true|false (default: true)"
     },
     {
+      "name": "LITELLM_NODE_PORT",
+      "description": "LiteLLM Service NodePort (default: 30050)"
+    },
+    {
       "name": "KUBECLAW_DEPLOY_SPIRE",
       "description": "true|false (default: true)"
     },
@@ -231,6 +235,7 @@
     "KUBECLAW_DEPLOY_POSTGRESQL": "true",
     "KUBECLAW_DEPLOY_QDRANT": "true",
     "KUBECLAW_DEPLOY_LITELLM": "true",
+    "LITELLM_NODE_PORT": "30050",
     "KUBECLAW_DEPLOY_SPIRE": "true",
     "ALLOW_PARTIAL_INFRA": "false",
     "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:rootless"
@@ -336,12 +341,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 852,
-    "secrets": 897,
-    "tailscale": 988,
-    "infra": 1079,
-    "agents": 1395,
-    "smoke": 1517,
-    "teardown": 2738
+    "setup": 855,
+    "secrets": 900,
+    "tailscale": 991,
+    "infra": 1082,
+    "agents": 1405,
+    "smoke": 1527,
+    "teardown": 2748
   }
 }

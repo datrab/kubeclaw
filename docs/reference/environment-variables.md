@@ -33,6 +33,7 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `KUBECLAW_SECRET_SETUP_MODE` | auto\|interactive\|noninteractive (default: auto) |  | `auto` |
 | `KUBECLAW_SECRETS_OVERWRITE` | true\|false (default: false) |  | `false` |
 | `KUBECLAW_WORKSPACE_PROMPT` | auto\|true\|false (default: auto) | `auto` |  |
+| `LITELLM_NODE_PORT` | LiteLLM Service NodePort (default: 30050) | `30050` |  |
 | `NAMESPACE` | Target namespace (default: kubeclaw) | `kubeclaw` | `kubeclaw` |
 | `NOVA_CODE_BUNDLE_ARCHIVE_URL` | Resolved Nova bundle archive URL for code deploy |  |  |
 | `NOVA_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Nova source commit for code deploy |  |  |

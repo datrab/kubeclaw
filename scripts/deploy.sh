@@ -55,6 +55,7 @@
 #   KUBECLAW_DEPLOY_POSTGRESQL    true|false (default: true)
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
+#   LITELLM_NODE_PORT             LiteLLM Service NodePort (default: 30050)
 #   KUBECLAW_DEPLOY_SPIRE         true|false (default: true)
 #   ALLOW_PARTIAL_INFRA           true|false (default: false)
 #   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Rootless BuildKit probe image (default: moby/buildkit:rootless)
@@ -81,6 +82,7 @@ KUBECLAW_WORKSPACE_NAMESPACE_FILE="${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_
 KUBECLAW_DEPLOY_POSTGRESQL="${KUBECLAW_DEPLOY_POSTGRESQL:-true}"
 KUBECLAW_DEPLOY_QDRANT="${KUBECLAW_DEPLOY_QDRANT:-true}"
 KUBECLAW_DEPLOY_LITELLM="${KUBECLAW_DEPLOY_LITELLM:-true}"
+LITELLM_NODE_PORT="${LITELLM_NODE_PORT:-30050}"
 KUBECLAW_DEPLOY_SPIRE="${KUBECLAW_DEPLOY_SPIRE:-true}"
 SPIFFE_HELM_REPO="${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}"
 SPIRE_CRDS_CHART_VERSION="${SPIRE_CRDS_CHART_VERSION:-0.6.0}"
@@ -117,6 +119,7 @@ export NAMESPACE
 export KUBECLAW_DEPLOY_POSTGRESQL
 export KUBECLAW_DEPLOY_QDRANT
 export KUBECLAW_DEPLOY_LITELLM
+export LITELLM_NODE_PORT
 export KUBECLAW_DEPLOY_SPIRE
 export KUBECLAW_DEPLOY_PRISM PRISM_NAMESPACE PRISM_RELEASE PRISM_VALUES_FILE PRISM_AGENT_VALUES_FILE
 export ALLOW_PARTIAL_INFRA
@@ -1133,6 +1136,11 @@ cmd_infra() {
 
   if component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
     header "Infrastructure: LiteLLM"
+    if [[ ! $LITELLM_NODE_PORT =~ ^[0-9]+$ ]] \
+      || (( LITELLM_NODE_PORT < 30000 || LITELLM_NODE_PORT > 32767 )); then
+      err "LITELLM_NODE_PORT must be an integer in the Kubernetes NodePort range 30000-32767."
+      return 1
+    fi
     # LiteLLM config as ConfigMap
     kubectl create configmap litellm-config \
       --namespace "$NAMESPACE" \
@@ -1141,6 +1149,8 @@ cmd_infra() {
 
     # LiteLLM Deployment + Service (no Helm chart — plain manifest)
     kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/litellm-deployment.yaml"
+    kubectl patch service litellm -n "$NAMESPACE" --type=merge \
+      -p "{\"spec\":{\"ports\":[{\"name\":\"http\",\"port\":4000,\"targetPort\":4000,\"nodePort\":$LITELLM_NODE_PORT,\"protocol\":\"TCP\"}]}}"
     info "Waiting for LiteLLM to be ready..."
     wait_for_rollout_required "LiteLLM" deployment/litellm -n "$NAMESPACE" --timeout=120s
     log "LiteLLM deployed"
