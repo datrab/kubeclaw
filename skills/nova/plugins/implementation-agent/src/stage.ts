@@ -30,8 +30,8 @@ async function dispatchImplementation(
 
 async function integrateWorkspace(
   input: ImplementationInput, completion: ImplementationCompletion, context: PluginInvocationContext,
-): Promise<void> {
-  if (!input.workspace || completion.status !== 'ready_for_testing') return;
+): Promise<boolean> {
+  if (!input.workspace || completion.status !== 'ready_for_testing') return false;
   await context.invoke('git.commit', {
     operation: 'commit', resource: { type: 'git.workspace', canonicalId: input.workspace.workspacePath },
     payload: { paths: completion.changedPaths, message: input.workspace.commitMessage },
@@ -40,6 +40,7 @@ async function integrateWorkspace(
     operation: 'merge', resource: { type: 'git.repository', canonicalId: input.workspace.mergeTarget },
     payload: { sourceRef: input.workspace.branch },
   });
+  return true;
 }
 
 async function removeWorkspace(input: ImplementationInput, context: PluginInvocationContext): Promise<void> {
@@ -63,11 +64,13 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('implementation agent is not configured');
   let completion;
   let workspaceCreated = false;
+  let workspaceIntegrated = false;
   let workspaceFailure: Error | undefined;
+  let cleanupFailure: Error | undefined;
   try {
     workspaceCreated = await createWorkspace(input, context);
     completion = await dispatchImplementation(agent, input, context);
-    await integrateWorkspace(input, completion, context);
+    workspaceIntegrated = await integrateWorkspace(input, completion, context);
   } catch (error) {
     workspaceFailure = error instanceof Error ? error : new Error(String(error));
   } finally {
@@ -75,7 +78,9 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
       try {
         await removeWorkspace(input, context);
       } catch (error) {
-        workspaceFailure ??= error instanceof Error ? error : new Error(String(error));
+        const failure = error instanceof Error ? error : new Error(String(error));
+        if (workspaceIntegrated) cleanupFailure = failure;
+        else workspaceFailure ??= failure;
       }
     }
   }
@@ -85,6 +90,22 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
     payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: completion },
   });
   const artifacts = [stored.artifact as ArtifactRef];
+  if (cleanupFailure) {
+    const cleanup = await context.invoke('artifacts.write', {
+      operation: 'put_json',
+      resource: { type: 'artifact.object', canonicalId: `implementation-cleanup:${input.moduleId}:${input.attempt}` },
+      payload: {
+        namespace: 'kubeclaw.implementation-agent',
+        mediaType: 'application/json',
+        value: {
+          schemaVersion: 'implementation-cleanup.v1',
+          status: 'failed',
+          message: cleanupFailure.message,
+        },
+      },
+    });
+    artifacts.push(cleanup.artifact as ArtifactRef);
+  }
   return completion.status === 'ready_for_testing'
     ? { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts }
     : { schemaVersion: 'stage-result.v2', outcome: 'blocked',
