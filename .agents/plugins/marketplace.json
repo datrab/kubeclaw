@@ -8,7 +8,7 @@
       "name": "kubeclaw-ops",
       "source": {
         "source": "local",
-        "path": "../../plugins/kubeclaw-ops"
+        "path": "./plugins/kubeclaw-ops"
       },
       "policy": {
         "installation": "AVAILABLE",
