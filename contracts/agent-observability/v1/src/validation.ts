@@ -68,11 +68,12 @@ function isJsonSafe(value: unknown, seen = new Set<object>()): value is AgentObs
   if (value === null) return true;
   if (typeof value === 'string' || typeof value === 'boolean') return true;
   if (typeof value === 'number') return Number.isFinite(value);
-  if (Array.isArray(value)) return value.every((item) => isJsonSafe(item, seen));
-  if (!isPlainObject(value)) return false;
+  if (!Array.isArray(value) && !isPlainObject(value)) return false;
   if (seen.has(value)) return false;
   seen.add(value);
-  const ok = Object.values(value).every((item) => item !== undefined && isJsonSafe(item, seen));
+  const ok = Array.isArray(value)
+    ? value.every((item) => isJsonSafe(item, seen))
+    : Object.values(value).every((item) => item !== undefined && isJsonSafe(item, seen));
   seen.delete(value);
   return ok;
 }

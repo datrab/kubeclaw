@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "test": "node tests/validation.test.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   }
 }
