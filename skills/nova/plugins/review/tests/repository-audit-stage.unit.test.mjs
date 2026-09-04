@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import { executeRepositoryAudit } from '../src/repository-audit-stage.ts';
+import { repositoryCompleteness } from '../src/repository-audit-results.ts';
 import { REVIEW_HARD_LIMITS } from '../src/review-hard-limits.ts';
 import { blockedReviewStage } from '../src/review-stage-result.ts';
 
@@ -120,7 +121,45 @@ assert.equal(cold.outcome, 'passed');
 assert.equal(cold.facts['review.repository_review_cache_misses'], 1);
 assert.equal(cold.facts['review.repository_review_cache_hits'], 0);
 assert.equal(cold.facts['review.repository_actual_model_calls'], 1);
+assert.equal(cold.facts['review.repository_retry_model_calls'], 0);
+assert.equal(cold.facts['review.repository_reserved_prompt_bytes'] > 0, true);
 assert.equal(cold.facts['review.repository_reserved_input_tokens'] > 0, true);
+assert.equal(cold.facts['review.repository_completeness_state'], 'all-requested-work-completed');
+assert.equal(cold.facts['review.repository_provider_usage_available'], 0);
+const coldReport = [...valuesByDigest.values()].find(({ schemaVersion }) => schemaVersion === 'repository-review-report.v1');
+assert.ok(coldReport);
+assert.equal(coldReport.usage.novaReservations.reservedPromptBytes > 0, true);
+assert.equal(coldReport.usage.novaReservations.modelPayloadBytes > 0, true);
+assert.equal(coldReport.usage.novaReservations.reservedPromptBytes
+  > coldReport.usage.novaReservations.modelPayloadBytes, true);
+assert.equal(coldReport.usage.novaReservations.byPhase.initial.calls, 1);
+assert.equal(coldReport.usage.execution.retryCalls, 0);
+assert.equal(coldReport.usage.execution.preflightModelCalls, 0);
+assert.deepEqual(coldReport.usage.provider, { status: 'unavailable', freshInputTokens: null,
+  cachedInputTokens: null, outputTokens: null,
+  reason: 'runtime.dispatch does not expose provider token accounting to the review stage' });
+assert.equal(coldReport.completeness.state, 'all-requested-work-completed');
+assert.equal(coldReport.completeness.allRequestedContextReviewed, true);
+assert.equal(coldReport.completeness.allRequestedWorkCompleted, true);
+const policyComplete = repositoryCompleteness({ primary: { requested: 4, completed: 4, failed: 0 },
+  contextExpansion: { requested: 3, selected: 2, deferred: 1, completed: 2, failed: 0 },
+  verification: { requested: 5, selected: 5, deferred: 0, completed: 5, failed: 0 } });
+assert.equal(policyComplete.state, 'policy-complete');
+assert.equal(policyComplete.allRequestedContextReviewed, false);
+assert.equal(policyComplete.allRequestedWorkCompleted, false);
+assert.deepEqual(policyComplete.contextExpansion,
+  { requested: 3, selected: 2, completed: 2, policyDeferred: 1, failed: 0 });
+const verificationDeferred = repositoryCompleteness({ primary: { requested: 4, completed: 4, failed: 0 },
+  contextExpansion: { requested: 2, selected: 2, deferred: 0, completed: 2, failed: 0 },
+  verification: { requested: 5, selected: 4, deferred: 1, completed: 4, failed: 0 } });
+assert.equal(verificationDeferred.state, 'policy-complete');
+assert.equal(verificationDeferred.allRequestedContextReviewed, true);
+assert.equal(verificationDeferred.allRequestedWorkCompleted, false);
+const executionIncomplete = repositoryCompleteness({ primary: { requested: 4, completed: 3, failed: 1 },
+  contextExpansion: { requested: 2, selected: 2, deferred: 0, completed: 2, failed: 0 },
+  verification: { requested: 5, selected: 5, deferred: 0, completed: 5, failed: 0 } });
+assert.equal(executionIncomplete.state, 'execution-incomplete');
+assert.equal(executionIncomplete.primary.failed, 1);
 assert.equal(runtimeCalls, 1);
 const wrongRuntimeContext = cachedContext(), wrongRuntimeInvoke = wrongRuntimeContext.invoke.bind(wrongRuntimeContext);
 wrongRuntimeContext.invoke = async (capability, request) => {

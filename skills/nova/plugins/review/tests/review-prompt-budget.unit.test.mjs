@@ -42,6 +42,12 @@ const limits = { tokenizerEncoding: 'o200k_base', maxPromptBytesPerJob: 10_000, 
 const budget = new ReviewDispatchBudget(limits, 123_456);
 const prepared = budget.reserve({ task: 'one' });
 assert.equal(budget.snapshot().calls, 1);
+assert.equal(budget.snapshot().initialCalls, 1);
+assert.equal(budget.snapshot().contextExpansionCalls, 0);
+assert.equal(budget.snapshot().reservedPromptBytes, budget.snapshot().initialPromptBytes);
+assert.equal(budget.snapshot().reservedPromptBytes, prepared.runtimePromptBudget.reservedPromptBytes);
+assert.equal(budget.snapshot().modelPayloadBytes, measureReviewPayload({ task: 'one' }).bytes);
+assert.equal(budget.snapshot().initialPayloadBytes, measureReviewPayload({ task: 'one' }).bytes);
 assert.equal(prepared.runtimePromptBudget.tokenizerEncoding, 'o200k_base');
 assert.equal(prepared.runtimePromptBudget.deadlineEpochMs, 123_456);
 assert.throws(() => budget.reserve({ task: 'This second request exhausts the shared total token budget.' }),
@@ -51,6 +57,8 @@ phaseBudget.reserve({ task: 'one' }, 'context-expansion');
 assert.throws(() => phaseBudget.reserve({ task: 'This retry exceeds its phase reserve.' }, 'context-expansion'),
   /context-expansion token budget/u);
 assert.equal(phaseBudget.snapshot().contextExpansionInputTokens > 0, true);
+assert.equal(phaseBudget.snapshot().contextExpansionCalls, 1);
+assert.equal(phaseBudget.snapshot().contextExpansionPromptBytes > 0, true);
 const byteBudget = new ReviewDispatchBudget({ ...limits, maxPromptBytesPerJob: 5, maxTotalInputTokens: 20_000 });
 assert.throws(() => byteBudget.reserve({ task: 'too large' }), /byte budget/u);
 

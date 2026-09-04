@@ -1,5 +1,92 @@
 import type { ScalableReviewCompilation } from './scalable-review-compiler.ts';
 
+interface FollowUpCounts {
+  readonly requested: number;
+  readonly selected: number;
+  readonly deferred: number;
+  readonly completed: number;
+  readonly failed: number;
+}
+
+interface DispatchUsage {
+  readonly calls: number;
+  readonly reservedPromptBytes: number;
+  readonly modelPayloadBytes: number;
+  readonly reservedInputTokens: number;
+  readonly reservedOutputTokens: number;
+  readonly reservedEstimatedCostUsd: number;
+  readonly initialCalls: number;
+  readonly contextExpansionCalls: number;
+  readonly verificationCalls: number;
+  readonly initialPromptBytes: number;
+  readonly contextExpansionPromptBytes: number;
+  readonly verificationPromptBytes: number;
+  readonly initialPayloadBytes: number;
+  readonly contextExpansionPayloadBytes: number;
+  readonly verificationPayloadBytes: number;
+  readonly initialInputTokens: number;
+  readonly contextExpansionInputTokens: number;
+  readonly verificationInputTokens: number;
+}
+
+export function repositoryUsageAccounting(
+  dispatch: DispatchUsage, firstAttemptModelCalls: number,
+): Readonly<Record<string, unknown>> {
+  return Object.freeze({
+    schemaVersion: 'repository-review-usage.v1',
+    novaReservations: Object.freeze({
+      reservedPromptBytes: dispatch.reservedPromptBytes,
+      modelPayloadBytes: dispatch.modelPayloadBytes,
+      inputTokens: dispatch.reservedInputTokens,
+      outputTokens: dispatch.reservedOutputTokens,
+      estimatedCostUsd: dispatch.reservedEstimatedCostUsd,
+      byPhase: Object.freeze({
+        initial: Object.freeze({ calls: dispatch.initialCalls, reservedPromptBytes: dispatch.initialPromptBytes,
+          modelPayloadBytes: dispatch.initialPayloadBytes, inputTokens: dispatch.initialInputTokens }),
+        contextExpansion: Object.freeze({ calls: dispatch.contextExpansionCalls,
+          reservedPromptBytes: dispatch.contextExpansionPromptBytes,
+          modelPayloadBytes: dispatch.contextExpansionPayloadBytes,
+          inputTokens: dispatch.contextExpansionInputTokens }),
+        verification: Object.freeze({ calls: dispatch.verificationCalls,
+          reservedPromptBytes: dispatch.verificationPromptBytes,
+          modelPayloadBytes: dispatch.verificationPayloadBytes,
+          inputTokens: dispatch.verificationInputTokens }),
+      }),
+    }),
+    execution: Object.freeze({ modelCalls: dispatch.calls,
+      retryCalls: Math.max(0, dispatch.calls - firstAttemptModelCalls), preflightModelCalls: 0 }),
+    provider: Object.freeze({ status: 'unavailable', freshInputTokens: null, cachedInputTokens: null,
+      outputTokens: null,
+      reason: 'runtime.dispatch does not expose provider token accounting to the review stage' }),
+  });
+}
+
+export function repositoryCompleteness(values: {
+  readonly primary: { readonly requested: number; readonly completed: number; readonly failed: number };
+  readonly contextExpansion: FollowUpCounts;
+  readonly verification: FollowUpCounts;
+}): Readonly<Record<string, unknown>> {
+  const allRequestedContextReviewed = values.contextExpansion.deferred === 0;
+  const executionFailures = values.primary.failed + values.contextExpansion.failed + values.verification.failed;
+  const allRequestedWorkCompleted = allRequestedContextReviewed && values.verification.deferred === 0
+    && executionFailures === 0;
+  return Object.freeze({
+    schemaVersion: 'repository-review-completeness.v1',
+    state: executionFailures > 0 ? 'execution-incomplete'
+      : allRequestedWorkCompleted ? 'all-requested-work-completed' : 'policy-complete',
+    allRequestedContextReviewed,
+    allRequestedWorkCompleted,
+    primary: Object.freeze({ requested: values.primary.requested, selected: values.primary.requested,
+      completed: values.primary.completed, policyDeferred: 0, failed: values.primary.failed }),
+    contextExpansion: Object.freeze({ requested: values.contextExpansion.requested,
+      selected: values.contextExpansion.selected, completed: values.contextExpansion.completed,
+      policyDeferred: values.contextExpansion.deferred, failed: values.contextExpansion.failed }),
+    verification: Object.freeze({ requested: values.verification.requested,
+      selected: values.verification.selected, completed: values.verification.completed,
+      policyDeferred: values.verification.deferred, failed: values.verification.failed }),
+  });
+}
+
 export function repositoryPlanFacts(
   head: string, compilation: ScalableReviewCompilation, reportDigest: string,
 ): Readonly<Record<string, string | number>> {
@@ -45,6 +132,7 @@ export function repositoryExecutionFacts(values: {
   readonly reviewCacheHits: number; readonly reviewCacheMisses: number;
   readonly verificationCacheHits: number; readonly verificationCacheMisses: number;
   readonly actualModelCalls: number; readonly reservedInputTokens: number;
+  readonly reservedPromptBytes: number; readonly retryModelCalls: number;
   readonly reservedOutputTokens: number; readonly reservedEstimatedCostUsd: number;
   readonly contextExpansions: number;
   readonly incompleteJobs: number; readonly unverifiedProposals: number;
@@ -65,6 +153,8 @@ export function repositoryExecutionFacts(values: {
     'review.repository_verification_cache_hits': values.verificationCacheHits,
     'review.repository_verification_cache_misses': values.verificationCacheMisses,
     'review.repository_actual_model_calls': values.actualModelCalls,
+    'review.repository_retry_model_calls': values.retryModelCalls,
+    'review.repository_reserved_prompt_bytes': values.reservedPromptBytes,
     'review.repository_reserved_input_tokens': values.reservedInputTokens,
     'review.repository_reserved_output_tokens': values.reservedOutputTokens,
     'review.repository_reserved_estimated_cost_usd': values.reservedEstimatedCostUsd,
@@ -73,7 +163,15 @@ export function repositoryExecutionFacts(values: {
     'review.repository_unverified_proposals': values.unverifiedProposals,
     'review.repository_requested_context_expansions': values.requestedContextExpansions,
     'review.repository_deferred_context_expansions': values.deferredContextExpansions,
+    'review.repository_selected_context_expansions': values.contextExpansions,
+    'review.repository_completed_context_expansions': values.contextExpansions,
+    'review.repository_failed_context_expansions': 0,
     'review.repository_requested_verifications': values.requestedVerifications,
     'review.repository_deferred_verifications': values.deferredVerifications,
+    'review.repository_completed_verifications': values.requestedVerifications - values.deferredVerifications,
+    'review.repository_failed_verifications': 0,
+    'review.repository_completeness_state': values.deferredContextExpansions === 0
+      && values.deferredVerifications === 0 ? 'all-requested-work-completed' : 'policy-complete',
+    'review.repository_provider_usage_available': 0,
   });
 }
