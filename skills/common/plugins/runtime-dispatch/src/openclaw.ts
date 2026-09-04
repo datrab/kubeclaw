@@ -247,7 +247,11 @@ export async function dispatchOpenClaw(
   }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
-  const transport = target.collectorMode ? 'collector-v4' : 'session-v1';
+  // Rotate the collector generation when a previously terminal collector result can no longer
+  // be trusted. The generation is intentionally outside modelPayload so it changes only the
+  // transport identity: valid review-cache entries remain reusable while poisoned OpenClaw
+  // collector completions cannot be reattached after an authenticated package upgrade.
+  const transport = target.collectorMode ? 'collector-v5' : 'session-v1';
   const attempt = runtimeDispatchAttempt(payload.runtimeDispatchAttempt);
   const stableDispatchId = `${transport}:attempt:${attempt}:payload:${crypto.createHash('sha256')
     .update(canonicalJson(dispatchPayload(payload).modelPayload)).digest('hex')}`;

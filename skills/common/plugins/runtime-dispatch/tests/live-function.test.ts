@@ -413,7 +413,7 @@ try {
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
     assert.equal(JSON.parse(spawnRequests[0].body).sessionKey, 'agent:codex:nova-review-controller');
-    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:collector-v4:attempt:0:payload:[a-f0-9]{64}$/u);
+    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:collector-v5:attempt:0:payload:[a-f0-9]{64}$/u);
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');
