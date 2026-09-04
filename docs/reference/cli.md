@@ -45,6 +45,7 @@ Generated from: `scripts/deploy.sh`
 - `nova-kubernetes-fixture-preflight`
 - `nova-http-preflight`
 - `nova-a11y-preflight`
+- `nova-api-preflight`
 - `nova-lighthouse-preflight`
 - `nova-visual-preflight`
 - `nova-e2e-preflight`

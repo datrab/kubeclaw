@@ -80,6 +80,7 @@
     "nova-kubernetes-fixture-preflight",
     "nova-http-preflight",
     "nova-a11y-preflight",
+    "nova-api-preflight",
     "nova-lighthouse-preflight",
     "nova-visual-preflight",
     "nova-e2e-preflight",
@@ -307,6 +308,7 @@
     "cmd_nova_unit_preflight",
     "cmd_nova_kubernetes_fixture_preflight",
     "cmd_nova_http_preflight",
+    "cmd_nova_api_preflight",
     "cmd_nova_a11y_preflight",
     "cmd_nova_lighthouse_preflight",
     "cmd_nova_visual_preflight",
@@ -334,12 +336,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 851,
-    "secrets": 896,
-    "tailscale": 987,
-    "infra": 1078,
-    "agents": 1394,
-    "smoke": 1516,
-    "teardown": 2662
+    "setup": 852,
+    "secrets": 897,
+    "tailscale": 988,
+    "infra": 1079,
+    "agents": 1395,
+    "smoke": 1517,
+    "teardown": 2732
   }
 }
