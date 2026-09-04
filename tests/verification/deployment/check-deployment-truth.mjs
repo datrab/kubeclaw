@@ -34,6 +34,7 @@ const novaValues = read('my-values/nova-values.yaml');
 const busterValues = read('my-values/buster-values.yaml');
 const prismAgentValues = read('my-values/prism-agent-values.yaml');
 const litellmConfig = read('my-values/infra/litellm-config.yaml');
+const litellmDeployment = read('my-values/infra/litellm-deployment.yaml');
 const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
@@ -623,6 +624,11 @@ assert.doesNotMatch(
   /"codex":\s*\{\}/,
   'ACP runtimes must not be registered as a second OpenClaw agent',
 );
+assert.doesNotMatch(litellmDeployment, /nodePort:\s*30050/u,
+  'the LiteLLM manifest must not hard-code a cluster-wide NodePort');
+assert.match(deploy,
+  /LITELLM_NODE_PORT[\s\S]*30000[\s\S]*32767[\s\S]*kubectl patch service litellm[\s\S]*nodePort[^\n]*LITELLM_NODE_PORT/u,
+  'LiteLLM deployment must validate and apply its configured NodePort');
 assert.doesNotMatch(
   gatewayConfig,
   /"list":\s*\[/,
