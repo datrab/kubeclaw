@@ -185,6 +185,23 @@ try {
   )).exitCode, 0);
   assert.equal(fs.readFileSync(path.join(workspace, 'remote.txt'), 'utf8'), 'upstream change\n');
 
+  git(repository, ['checkout', '-b', 'sync-source']);
+  fs.writeFileSync(path.join(repository, 'whitespace.txt'), 'canonical\n');
+  git(repository, ['add', 'whitespace.txt']);
+  gitWithIdentity(repository, ['commit', '-m', 'add sync source']);
+  fs.writeFileSync(path.join(workspace, 'whitespace.txt'), 'canonical \n');
+  const whitespaceSync = await invoke(
+    adapter,
+    'git.sync',
+    'sync_paths',
+    fs.realpathSync(workspace),
+    { ref: 'sync-source', paths: ['whitespace.txt'] },
+  );
+  assert.deepEqual(whitespaceSync.synced, [{ path: 'whitespace.txt', action: 'updated' }]);
+  assert.equal(fs.readFileSync(path.join(workspace, 'whitespace.txt'), 'utf8'), 'canonical\n');
+  git(workspace, ['reset', 'HEAD', '--', 'whitespace.txt']);
+  fs.rmSync(path.join(workspace, 'whitespace.txt'));
+
   git(repository, ['checkout', '-b', 'merge-source']);
   fs.writeFileSync(path.join(repository, 'merge.txt'), 'merged content\n');
   git(repository, ['add', 'merge.txt']);

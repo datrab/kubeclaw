@@ -42,7 +42,7 @@ async function syncPaths(ctx: GitContext, workspace: string, invocation: Adapter
     try { remote = await ctx.runner.run(workspace, ['show', `${ref}:${file}`], signal); } catch { missing.push(file); continue; }
     const destination = path.join(workspace, file);
     const local = fs.existsSync(destination) ? fs.readFileSync(destination, 'utf8') : undefined;
-    if (local !== undefined && local.trim() === String(remote.stdout).trim()) continue;
+    if (local !== undefined && local === String(remote.stdout)) continue;
     await ctx.runner.run(workspace, ['checkout', ref, '--', file], signal);
     synced.push({ path: file, action: local === undefined ? 'created' : 'updated' });
   }
