@@ -3,7 +3,10 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const { activateWithSdk, normalizeAgentEvent } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+const { activateWithSdk, normalizeAgentEvent, SUPPORTED_HOOKS } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+const configSchema = JSON.parse(fs.readFileSync('schemas/config.schema.json', 'utf8'));
+assert.equal(SUPPORTED_HOOKS.includes('subagent_delivery_target'), true);
+assert.equal(configSchema.properties.hooks.items.enum.includes('subagent_delivery_target'), true);
 const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 assert.equal(normalizeAgentEvent({}), undefined);
@@ -67,6 +70,23 @@ assert.equal(handlers.size, 0);
 assert.throws(() => activateWithSdk({
   registration: {}, config: { hooks: ['unknown'] }, async invoke() {}, async emit() {},
 }, sdk), /AGENT_EVENT_HOOK_UNSUPPORTED/);
+const deliveryEvents = [];
+const deliveryHandlers = new Map();
+const deliveryAdapter = activateWithSdk({
+  registration: {}, config: { hooks: ['subagent_delivery_target'] },
+  async invoke() { throw new Error('unexpected dependency'); },
+  async emit(type) { deliveryEvents.push(type); },
+}, {
+  on(hook, handler) {
+    deliveryHandlers.set(hook, handler);
+    return () => deliveryHandlers.delete(hook);
+  },
+});
+await deliveryAdapter.ready();
+deliveryHandlers.get('subagent_delivery_target')({ run_id: 'run:delivery' });
+await deliveryAdapter.invoke({ ...fenced, request, signal: new AbortController().signal });
+assert.deepEqual(deliveryEvents, ['plugin.kubeclaw.openclaw-agent-events.subagent-delivery-target']);
+await deliveryAdapter.shutdown(new AbortController().signal);
 const partialHandlers = new Map();
 let partialReleased = 0;
 const partial = activateWithSdk({
