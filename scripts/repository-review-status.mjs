@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { repositoryReviewRunRoot } from './lib/repository-review-run-root.mjs';
 
 function argumentsMap(values) {
   const output = new Map();
@@ -113,12 +114,18 @@ for (const artifact of unique.values()) {
     if (report.schemaVersion === 'repository-review-plan.v1') planReport = true;
   }
 }
-const eventFile = path.join(path.resolve(platform.storageRoot), 'runs', runId, 'events.jsonl');
+const eventFile = path.join(repositoryReviewRunRoot(platform.storageRoot, runId), 'events.jsonl');
 const stages = {}, terminal = { status: 'running', occurredAt: undefined };
 let lastEventAt;
 const dispatches = new Map(), recentFailures = [], attemptIds = new Set();
 if (fs.existsSync(eventFile)) for (const line of lastLines(eventFile)) {
-  const event = JSON.parse(line).entry;
+  let event;
+  try {
+    event = JSON.parse(line).entry;
+  } catch (_error) {
+    continue;
+  }
+  if (!event) continue;
   if (typeof event.identity?.attemptId === 'string') attemptIds.add(event.identity.attemptId);
   if (typeof event.occurredAt === 'string') lastEventAt = event.occurredAt;
   const effectId = event.identity?.effectId;

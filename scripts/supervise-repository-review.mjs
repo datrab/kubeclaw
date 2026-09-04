@@ -3,6 +3,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
+import { repositoryReviewRunRoot } from './lib/repository-review-run-root.mjs';
 
 const SAMPLE_INTERVAL_MS = 15_000;
 
@@ -235,7 +236,8 @@ async function main(values) {
     let mode = args.get('initial-mode') ?? 'auto';
     if (!['auto', 'start', 'recover'].includes(mode)) throw new Error('REVIEW_SUPERVISOR_INITIAL_MODE_INVALID');
     const platformConfig = optionalJson(platform);
-    const eventFile = path.join(path.resolve(platformConfig?.storageRoot ?? ''), 'runs', runId, 'events.jsonl');
+    const eventFile = path.join(repositoryReviewRunRoot(platformConfig?.storageRoot ?? '', runId),
+      'events.jsonl');
     if (mode === 'auto') mode = fs.existsSync(eventFile) ? 'recover' : 'start';
     if (mode === 'start') runPreflight(args, cwd);
     for (let attempt = 1; attempt <= maximumRecoveries + 1; attempt += 1) {

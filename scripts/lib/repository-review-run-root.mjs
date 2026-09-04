@@ -1,17 +1,17 @@
-import fs from 'node:fs';
 import { createHash } from 'node:crypto';
+import fs from 'node:fs';
 import path from 'node:path';
 
 const RUN_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/u;
 const MAX_LEGACY_EVENT_BYTES = 256 * 1024;
 
-function journalContainsRunId(events: string, runId: string): boolean {
+function journalContainsRunId(events, runId) {
   const descriptor = fs.openSync(events, 'r');
   try {
     const buffer = Buffer.alloc(64 * 1024);
     let offset = 0, lineBytes = 0, oversized = false;
-    let parts: Buffer[] = [];
-    const append = (part: Buffer): void => {
+    let parts = [];
+    const append = (part) => {
       if (oversized || part.length === 0) return;
       if (lineBytes + part.length > MAX_LEGACY_EVENT_BYTES) {
         parts = []; lineBytes = 0; oversized = true;
@@ -19,12 +19,12 @@ function journalContainsRunId(events: string, runId: string): boolean {
       }
       parts.push(Buffer.from(part)); lineBytes += part.length;
     };
-    const matches = (): boolean => {
+    const matches = () => {
       if (oversized || lineBytes === 0) return false;
       try {
         const record = JSON.parse(Buffer.concat(parts, lineBytes).toString('utf8'));
         return (record?.entry?.identity?.runId ?? record?.identity?.runId) === runId;
-      } catch {
+      } catch (_error) {
         return false;
       }
     };
@@ -51,7 +51,7 @@ function journalContainsRunId(events: string, runId: string): boolean {
   }
 }
 
-export function runRoot(storageRoot: string, runId: string): string {
+export function repositoryReviewRunRoot(storageRoot, runId) {
   if (!RUN_ID.test(runId)) throw new Error(`PIPELINE_RUN_ID_INVALID:${runId}`);
   const runsRoot = path.resolve(storageRoot, 'runs');
   const key = createHash('sha256').update(runId, 'utf8').digest('hex');

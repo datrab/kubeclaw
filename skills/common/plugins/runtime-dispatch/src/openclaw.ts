@@ -34,7 +34,10 @@ const SUCCESSFUL_SESSION_STATES = new Set(['completed', 'complete', 'done', 'suc
 const SPAWN_QUEUES = new WeakMap<AdapterActivationContext, Map<string, Promise<void>>>();
 
 export function assertOpenClawSessionCompleted(session: OpenClawSessionState, expectedModel: string): void {
-  if (!SUCCESSFUL_SESSION_STATES.has(session.state)) throw new Error('OPENCLAW_SESSION_FAILED');
+  if (!SUCCESSFUL_SESSION_STATES.has(session.state)) {
+    if (session.schemaError) throw new Error(`OPENCLAW_COLLECTOR_SCHEMA_INVALID:${session.schemaError}`);
+    throw new Error(`OPENCLAW_SESSION_FAILED:${session.state}`);
+  }
   if (session.model !== expectedModel) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
 }
 
@@ -238,7 +241,7 @@ export async function dispatchOpenClaw(
   }), dispatchSignal);
   const token = requiredText(secret.value, 'TOKEN');
   const startedAt = new Date().toISOString();
-  const transport = target.collectorMode ? 'collector-v2' : 'session-v1';
+  const transport = target.collectorMode ? 'collector-v3' : 'session-v1';
   const stableDispatchId = `${transport}:payload:${crypto.createHash('sha256')
     .update(canonicalJson(dispatchPayload(payload).modelPayload)).digest('hex')}`;
   const result = resultLocation(target, stableDispatchId);

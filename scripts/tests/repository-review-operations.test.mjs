@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
+import { runRoot } from '../../skills/nova/core/execution/run-root.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '..', '..');
 
@@ -18,7 +19,7 @@ function appendEvent(file, entry) {
   fs.appendFileSync(file, `${JSON.stringify({ entry })}\n`);
 }
 
-function fixture() {
+function fixture({ legacy = false, legacyPreambleBytes = 0, oversizedLegacyRecord = false } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'review-operations-'));
   const artifacts = path.join(root, 'artifacts');
   const storage = path.join(root, 'state');
@@ -26,7 +27,9 @@ function fixture() {
   const platform = path.join(root, 'platform.json');
   const heartbeat = path.join(root, 'heartbeat.json');
   const resources = path.join(root, 'resources.jsonl');
-  const events = path.join(storage, 'runs', runId, 'events.jsonl');
+  const runKey = crypto.createHash('sha256').update(runId, 'utf8').digest('hex');
+  const events = path.join(storage, 'runs',
+    legacy ? runId.replaceAll(':', '_') : `v2-${runKey}`, 'events.jsonl');
   writeJson(platform, { storageRoot: storage, adapters: {
     'kubeclaw.artifact-store:artifact-store': { artifactRoot: artifacts },
   } });
@@ -42,6 +45,17 @@ function fixture() {
     artifactId: 'repository-review-prepared:test', digest: `sha256:${digest}`,
     producer: { runId, stageId: 'plan', attemptId: 'attempt:1', attemptNumber: 1 },
   } }] });
+  if (legacyPreambleBytes > 0) {
+    const line = `${JSON.stringify({ entry: { type: 'diagnostic', payload: { value: 'x'.repeat(1_000) } } })}\n`;
+    fs.mkdirSync(path.dirname(events), { recursive: true });
+    while ((fs.existsSync(events) ? fs.statSync(events).size : 0) < legacyPreambleBytes) {
+      fs.appendFileSync(events, line);
+    }
+  }
+  if (oversizedLegacyRecord) {
+    fs.mkdirSync(path.dirname(events), { recursive: true });
+    fs.appendFileSync(events, `{\"oversized\":\"${'x'.repeat(512 * 1024)}\"\n`);
+  }
   appendEvent(events, { type: 'run.started', occurredAt: new Date().toISOString(),
     identity: { runId, attemptId: 'attempt:fixture' } });
   return { root, artifacts, storage, runId, platform, heartbeat, resources, events };
@@ -98,8 +112,45 @@ test('compact status and formatter report live state without scanning source jou
   assert.match(formatted.stdout, /Monitoring remains enabled/u);
 });
 
-test('supervisor preserves a single lease and records a terminal child attempt', () => {
+test('compact status gives a durable terminal event priority over a stale heartbeat', () => {
   const value = fixture();
+  const blockedAt = new Date(Date.now() - 60_000).toISOString();
+  appendEvent(value.events, { type: 'run.blocked', occurredAt: blockedAt,
+    identity: { runId: value.runId } });
+  writeJson(value.heartbeat, { updatedAt: new Date(Date.now() - 3_600_000).toISOString(),
+    processAlive: false, attempt: 8, mode: 'administrative-reopen' });
+
+  const status = spawnSync(process.execPath, [path.join(repositoryRoot, 'scripts', 'repository-review-status.mjs'),
+    '--platform', value.platform, '--run-id', value.runId, '--heartbeat', value.heartbeat,
+    '--resource-log', value.resources], { encoding: 'utf8' });
+  assert.equal(status.status, 0, status.stderr);
+  const parsed = JSON.parse(status.stdout);
+  assert.equal(parsed.status, 'blocked');
+  assert.equal(parsed.liveness, 'terminal');
+  assert.equal(parsed.terminalAt, blockedAt);
+  assert.equal(parsed.lastEventAt, blockedAt);
+});
+
+test('compact status discovers a legacy identity after large and oversized records', () => {
+  const value = fixture({
+    legacy: true, legacyPreambleBytes: 300 * 1024, oversizedLegacyRecord: true,
+  });
+  assert.equal(runRoot(value.storage, value.runId), path.dirname(value.events));
+  const blockedAt = new Date().toISOString();
+  appendEvent(value.events, { type: 'run.blocked', occurredAt: blockedAt,
+    identity: { runId: value.runId } });
+
+  const status = spawnSync(process.execPath, [path.join(repositoryRoot, 'scripts', 'repository-review-status.mjs'),
+    '--platform', value.platform, '--run-id', value.runId, '--heartbeat', value.heartbeat,
+    '--resource-log', value.resources], { encoding: 'utf8' });
+  assert.equal(status.status, 0, status.stderr);
+  const parsed = JSON.parse(status.stdout);
+  assert.equal(parsed.status, 'blocked');
+  assert.equal(parsed.terminalAt, blockedAt);
+});
+
+test('supervisor preserves a single lease and records a terminal child attempt', () => {
+  const value = fixture({ legacy: true });
   const bin = path.join(value.root, 'bin');
   const capture = path.join(value.root, 'npm-arguments.json');
   fs.mkdirSync(bin);

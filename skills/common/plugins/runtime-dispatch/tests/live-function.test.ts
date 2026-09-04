@@ -27,6 +27,9 @@ for (const state of ['completed', 'complete', 'done', 'succeeded', 'idle', 'ende
 for (const state of ['failed', 'error', 'cancelled', 'canceled', 'unknown']) {
   assert.throws(() => assertOpenClawSessionCompleted({ terminal: true, state, model: 'declared' }, 'declared'), /OPENCLAW_SESSION_FAILED/u);
 }
+assert.throws(() => assertOpenClawSessionCompleted({ terminal: true, state: 'failed', model: 'declared',
+  schemaError: 'structured_output was not called' }, 'declared'),
+/OPENCLAW_COLLECTOR_SCHEMA_INVALID:structured_output was not called/u);
 assert.throws(() => assertOpenClawSessionCompleted(
   { terminal: true, state: 'done', model: 'fallback' }, 'declared'), /OPENCLAW_SESSION_MODEL_MISMATCH/u);
 assert.throws(() => assertOpenClawSessionCompleted(
@@ -409,7 +412,7 @@ try {
     assert.equal(spawnRequests.length, 1);
     const spawnArgs = JSON.parse(spawnRequests[0].body).args;
     assert.equal(JSON.parse(spawnRequests[0].body).sessionKey, 'agent:codex:nova-review-controller');
-    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:collector-v2:payload:[a-f0-9]{64}$/u);
+    assert.match(JSON.parse(spawnRequests[0].body).idempotencyKey, /^spawn:collector-v3:payload:[a-f0-9]{64}$/u);
     assert.equal(spawnArgs.cwd, gatewayCwd);
     assert.equal(String(spawnArgs.task).split('Review gateway behavior.').length - 1, 1,
       'the adapter must serialize the assignment once');
