@@ -19,6 +19,22 @@ func TestKubernetesHTTPClientRequiresServiceAccountCA(t *testing.T) {
 	}
 }
 
+func TestControllerPollIntervalRejectsNonPositiveValues(t *testing.T) {
+	for _, value := range []string{"0", "-1", "9223372036855", "not-a-number"} {
+		t.Run(value, func(t *testing.T) {
+			t.Setenv("BUSTER_CONTROLLER_POLL_MS", value)
+			if _, err := controllerPollInterval(); err == nil {
+				t.Fatalf("expected BUSTER_CONTROLLER_POLL_MS=%s to be rejected", value)
+			}
+		})
+	}
+	t.Setenv("BUSTER_CONTROLLER_POLL_MS", "1")
+	interval, err := controllerPollInterval()
+	if err != nil || interval != time.Millisecond {
+		t.Fatalf("unexpected positive poll interval: interval=%s err=%v", interval, err)
+	}
+}
+
 func testController(t *testing.T) *controller {
 	t.Helper()
 	allowed, err := parseAllowedAccess(`[
