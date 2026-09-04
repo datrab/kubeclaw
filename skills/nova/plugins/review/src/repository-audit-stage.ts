@@ -18,7 +18,8 @@ import { buildScalableVerificationDispatchPayload, buildScalableVerificationJobs
 import { compareCodeUnits } from './review-ordering.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
-import { repositoryExecutionFacts, repositoryPlanFacts } from './repository-audit-results.ts';
+import { repositoryCompleteness, repositoryExecutionFacts, repositoryPlanFacts,
+  repositoryUsageAccounting } from './repository-audit-results.ts';
 import { estimatedReviewCostUsd, reserveReviewAttempts, reserveReviewRuntimePrompt, selectFittingCandidates,
   ReviewDispatchBudget, type ReviewDispatchPhase } from './review-prompt-budget.ts';
 import { assertReviewRuntimeIdentity, ReviewRuntimeAttestationError, reviewRuntimeIdentityDigest,
@@ -73,8 +74,24 @@ interface VerificationAccounting {
   readonly reservedOutputTokens: number; readonly estimatedCostUsd: number; readonly estimatedWallTimeSeconds: number;
 }
 interface DispatchAccountingSnapshot {
+  readonly calls: number;
+  readonly reservedPromptBytes: number;
+  readonly modelPayloadBytes: number;
   readonly reservedInputTokens: number;
+  readonly reservedOutputTokens: number;
   readonly reservedEstimatedCostUsd: number;
+  readonly initialCalls: number;
+  readonly contextExpansionCalls: number;
+  readonly verificationCalls: number;
+  readonly initialPromptBytes: number;
+  readonly contextExpansionPromptBytes: number;
+  readonly verificationPromptBytes: number;
+  readonly initialPayloadBytes: number;
+  readonly contextExpansionPayloadBytes: number;
+  readonly verificationPayloadBytes: number;
+  readonly initialInputTokens: number;
+  readonly contextExpansionInputTokens: number;
+  readonly verificationInputTokens: number;
 }
 
 function parseInput(value: unknown): AuditInput {
@@ -676,6 +693,18 @@ async function runRepositoryAudit(
         facts: repositoryPlanFacts(revision.head, compilation, artifact.digest) };
     }
     const verified = await verifiedReduction({ revision, snapshot, compilation }, config, policy.digest, context);
+    // The combined review summary includes both initial and context-expansion cache misses.
+    const firstAttemptModelCalls = verified.summary.review.misses + verified.summary.verification.misses;
+    const usage = repositoryUsageAccounting(verified.dispatchAccounting, firstAttemptModelCalls);
+    // Selected follow-up failures cannot reach this report: review preflight and completedReduction fail closed above.
+    const completeness = repositoryCompleteness({
+      primary: { requested: compilation.accounting.primaryJobs,
+        completed: compilation.accounting.primaryJobs, failed: 0 },
+      contextExpansion: { ...verified.followUp.contextExpansion,
+        completed: verified.followUp.contextExpansion.selected, failed: 0 },
+      verification: { ...verified.followUp.verification,
+        completed: verified.followUp.verification.selected, failed: 0 },
+    });
     const report = Object.freeze({ schemaVersion: 'repository-review-report.v1', head: revision.head,
       snapshotDigest: snapshot.digest, compilationDigest: compilation.digest, map: compilation.artifacts,
       profile: parsed.reviewProfile, accounting: compilation.accounting,
@@ -683,6 +712,7 @@ async function runRepositoryAudit(
       contextExpansions: verified.contextExpansions,
       followUp: verified.followUp,
       dispatchAccounting: verified.dispatchAccounting,
+      usage, completeness,
       verificationAccounting: verified.verificationAccounting, reduction: verified.reduction });
     const identity = sha256Text(canonicalJson(report));
     const artifact = await storeRepositoryReport(report, identity, context);
@@ -697,6 +727,8 @@ async function runRepositoryAudit(
         verificationCacheHits: verified.summary.verification.hits,
         verificationCacheMisses: verified.summary.verification.misses,
         actualModelCalls: verified.dispatchAccounting.calls,
+        retryModelCalls: Math.max(0, verified.dispatchAccounting.calls - firstAttemptModelCalls),
+        reservedPromptBytes: verified.dispatchAccounting.reservedPromptBytes,
         reservedInputTokens: verified.dispatchAccounting.reservedInputTokens,
         reservedOutputTokens: verified.dispatchAccounting.reservedOutputTokens,
         reservedEstimatedCostUsd: verified.dispatchAccounting.reservedEstimatedCostUsd,

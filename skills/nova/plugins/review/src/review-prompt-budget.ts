@@ -109,7 +109,12 @@ export class ReviewDispatchBudget {
   readonly #deadlineEpochMs: number | undefined;
   #reservedInputTokens = 0;
   #reservedOutputTokens = 0;
+  #reservedPromptBytes = 0;
+  #modelPayloadBytes = 0;
   readonly #phaseInputTokens = new Map<ReviewDispatchPhase, number>();
+  readonly #phasePromptBytes = new Map<ReviewDispatchPhase, number>();
+  readonly #phasePayloadBytes = new Map<ReviewDispatchPhase, number>();
+  readonly #phaseCalls = new Map<ReviewDispatchPhase, number>();
   #calls = 0;
 
   constructor(limits: ReviewDispatchLimits, deadlineEpochMs?: number) {
@@ -148,7 +153,12 @@ export class ReviewDispatchBudget {
       throw new Error(`review dispatch cost budget exceeded: ${cost}:${this.#limits.maxEstimatedCostUsd}`);
     }
     this.#reservedInputTokens = inputTokens; this.#reservedOutputTokens = outputTokens;
+    this.#reservedPromptBytes += measured.bytes;
+    this.#modelPayloadBytes += measured.payloadBytes;
     this.#phaseInputTokens.set(phase, phaseInputTokens); this.#calls += 1;
+    this.#phasePromptBytes.set(phase, (this.#phasePromptBytes.get(phase) ?? 0) + measured.bytes);
+    this.#phasePayloadBytes.set(phase, (this.#phasePayloadBytes.get(phase) ?? 0) + measured.payloadBytes);
+    this.#phaseCalls.set(phase, (this.#phaseCalls.get(phase) ?? 0) + 1);
     return Object.freeze({ ...payload, runtimePromptBudget: Object.freeze({
       schemaVersion: 'runtime-prompt-budget.v1', tokenizerEncoding: this.#limits.tokenizerEncoding,
       reservedPromptBytes: measured.bytes, reservedInputTokens: measured.tokens,
@@ -160,10 +170,25 @@ export class ReviewDispatchBudget {
     }) });
   }
 
-  snapshot(): Readonly<{ calls: number; reservedInputTokens: number; reservedOutputTokens: number;
+  snapshot(): Readonly<{ calls: number; reservedPromptBytes: number; modelPayloadBytes: number;
+    initialCalls: number; contextExpansionCalls: number; verificationCalls: number;
+    initialPromptBytes: number; contextExpansionPromptBytes: number; verificationPromptBytes: number;
+    initialPayloadBytes: number; contextExpansionPayloadBytes: number; verificationPayloadBytes: number;
+    reservedInputTokens: number; reservedOutputTokens: number;
     initialInputTokens: number; contextExpansionInputTokens: number; verificationInputTokens: number;
     reservedEstimatedCostUsd: number }> {
-    return Object.freeze({ calls: this.#calls, reservedInputTokens: this.#reservedInputTokens,
+    return Object.freeze({ calls: this.#calls, reservedPromptBytes: this.#reservedPromptBytes,
+      modelPayloadBytes: this.#modelPayloadBytes,
+      initialCalls: this.#phaseCalls.get('initial') ?? 0,
+      contextExpansionCalls: this.#phaseCalls.get('context-expansion') ?? 0,
+      verificationCalls: this.#phaseCalls.get('verification') ?? 0,
+      initialPromptBytes: this.#phasePromptBytes.get('initial') ?? 0,
+      contextExpansionPromptBytes: this.#phasePromptBytes.get('context-expansion') ?? 0,
+      verificationPromptBytes: this.#phasePromptBytes.get('verification') ?? 0,
+      initialPayloadBytes: this.#phasePayloadBytes.get('initial') ?? 0,
+      contextExpansionPayloadBytes: this.#phasePayloadBytes.get('context-expansion') ?? 0,
+      verificationPayloadBytes: this.#phasePayloadBytes.get('verification') ?? 0,
+      reservedInputTokens: this.#reservedInputTokens,
       reservedOutputTokens: this.#reservedOutputTokens,
       initialInputTokens: this.#phaseInputTokens.get('initial') ?? 0,
       contextExpansionInputTokens: this.#phaseInputTokens.get('context-expansion') ?? 0,
