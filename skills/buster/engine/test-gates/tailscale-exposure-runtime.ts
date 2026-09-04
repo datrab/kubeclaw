@@ -207,7 +207,11 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     try {
       await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
         '--type=merge', '-p', JSON.stringify(patch)], null, signal, 15_000);
-      const ready = await this.#wait(leaseName, 'Ready', signal, timeoutMs); const status = object(ready.status, 'lease.status');
+      const ready = await this.#wait(leaseName, 'Ready', signal, timeoutMs);
+      const readyMetadata = object(ready.metadata, 'lease.metadata');
+      const readyAnnotations = object(readyMetadata.annotations ?? {}, 'lease.metadata.annotations');
+      if (readyAnnotations[EXPOSURE_OWNER_ANNOTATION] !== owner) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
+      const status = object(ready.status, 'lease.status');
       if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
       const urlText = text(status.previewUrl, 'previewUrl', 2048); const url = new URL(urlText);
       if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.origin + url.pathname !== urlText) {

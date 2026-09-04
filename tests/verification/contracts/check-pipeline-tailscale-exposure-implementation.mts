@@ -155,5 +155,42 @@ await assert.rejects(() => staleRollback.invoke('kubernetes.exposure', { operati
     expiresAt, path: '/', readinessTimeoutMs: 10_000 } } as any, staleCancellation.signal),
 /TAILSCALE_EXPOSURE_CANCELLED/u);
 assert.equal(stalePatches.length, 1, 'a stale rollback must not disable the newer exposure owner');
+const ownershipPatches: string[] = [];
+let requestedOwner: string | undefined;
+let ownershipReads = 0;
+const supersededReady = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '/usr/local/bin/kubectl',
+  controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+  allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+  async execute(_command, args) {
+    if (args[0] === 'auth') return { stdout: 'yes\n' };
+    if (args[0] === 'get') {
+      ownershipReads += 1;
+      const newerOwner = requestedOwner === undefined ? undefined : randomUUID();
+      return { stdout: JSON.stringify({
+        metadata: { name: 'preview-one', resourceVersion: String(ownershipReads),
+          ...(newerOwner ? { annotations: { 'kubeclaw.forgestack.ai/exposure-owner': newerOwner } } : {}) },
+        spec: { namespaceName: 'test-one', serviceName: 'service-one', servicePort: 8080 },
+        status: { phase: 'Ready', exposurePhase: requestedOwner === undefined ? 'Pending' : 'Ready',
+          namespaceName: 'test-one', expiresAt, previewUrl: 'https://preview.ts.net/',
+          exposureHostname: 'preview.ts.net', createdAt: new Date().toISOString() },
+      }) };
+    }
+    if (args[0] === 'patch') {
+      const body = String(args[args.indexOf('-p') + 1]);
+      ownershipPatches.push(body);
+      const patch = JSON.parse(body);
+      requestedOwner = patch.metadata.annotations['kubeclaw.forgestack.ai/exposure-owner'];
+      return { stdout: '{}' };
+    }
+    throw new Error(`unexpected kubectl operation: ${args.join(' ')}`);
+  },
+});
+await assert.rejects(() => supersededReady.invoke('kubernetes.exposure', { operation: 'prepare',
+  resource: { type: 'kubernetes.exposure', canonicalId: 'kubernetes-exposure:attempt:superseded-ready' },
+  payload: { leaseName: 'preview-one', namespace: 'test-one', serviceName: 'service-one', servicePort: 8080,
+    expiresAt, path: '/', readinessTimeoutMs: 10_000 } } as any, new AbortController().signal),
+/TAILSCALE_EXPOSURE_LEASE_CHANGED/u);
+assert.equal(ownershipPatches.length, 1,
+  'a superseded prepare must neither report success nor disable the newer exposure owner');
 console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-implementation', providerKind: 'fixture',
   typedLinks: true, narrowCapability: true, mocks: 0, emulators: 0 }));
