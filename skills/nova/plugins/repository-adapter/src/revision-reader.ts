@@ -102,12 +102,13 @@ function scopedChange(record: ChangedPathRecord, prefixes: readonly string[]): C
   return undefined;
 }
 
-function assertAncestor(root: string, base: string, head: string): void {
+function verifiedAncestor(root: string, base: string, head: string): true {
   const result = spawnSync('git', ['-C', root, 'merge-base', '--is-ancestor', base, head], {
     encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
   });
   if (result.status === 1) throw new Error('REPOSITORY_BASE_NOT_ANCESTOR');
   if (result.status !== 0) throw new Error('REPOSITORY_REVISION_INVALID');
+  return true;
 }
 
 function changedLineRanges(output: Buffer): readonly ChangedLineRange[] {
@@ -208,10 +209,16 @@ export class RevisionReader {
     return { head, proof: this.#proof(head, attemptId) };
   }
 
+  verifyAncestry(payload: Readonly<Record<string, unknown>>, attemptId: string) {
+    const base = fullObjectId(payload.base, 'base');
+    const head = this.#assertProof(payload, attemptId);
+    return { base, head, ancestryVerified: verifiedAncestor(this.#root, base, head) };
+  }
+
   changedManifest(payload: Readonly<Record<string, unknown>>, attemptId: string) {
     const base = fullObjectId(payload.base, 'base');
     const head = this.#assertProof(payload, attemptId);
-    assertAncestor(this.#root, base, head);
+    verifiedAncestor(this.#root, base, head);
     const allowedPrefixes = allowedScopePrefixes(payload.allowedPrefixes);
     const changedPaths = parseChangedManifest(git(
       this.#root,
@@ -311,7 +318,7 @@ export class RevisionReader {
     const path = repositoryRelativePath(pathInput);
     const base = fullObjectId(payload.base, 'base');
     const head = this.#assertProof(payload, attemptId);
-    assertAncestor(this.#root, base, head);
+    verifiedAncestor(this.#root, base, head);
     const ranges = changedLineRanges(git(
       this.#root,
       [

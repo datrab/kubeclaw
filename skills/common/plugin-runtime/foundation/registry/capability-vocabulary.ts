@@ -41,7 +41,7 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
   'artifacts.write': definition(['put_json'], ['artifact.object'], ['allowedNamespaces']),
   'runtime.dispatch': definition(['dispatch'], ['runtime.agent'], ['allowedAgents']),
   'git.repository.read': definition(
-    ['read_text', 'freeze_head', 'changed_manifest', 'read_revision_text', 'changed_line_ranges', 'list_revision_paths',
+    ['read_text', 'freeze_head', 'verify_ancestry', 'changed_manifest', 'read_revision_text', 'changed_line_ranges', 'list_revision_paths',
       'inventory_revision', 'find_revision_references'],
     ['git.repository.path'],
     ['allowedPrefixes'],
