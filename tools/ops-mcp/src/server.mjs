@@ -24,7 +24,6 @@ const allowedOrigins = new Set(
 function jsonText(value) {
   return {
     content: [{ type: 'text', text: JSON.stringify(value, null, 2) }],
-    structuredContent: value,
   };
 }
 
@@ -336,6 +335,7 @@ function requestAuthorized(req) {
 }
 
 function originAllowed(req) {
+  if (allowedOrigins.size === 0) return true;
   const origin = req.headers.origin;
   if (!origin) return true;
   return allowedOrigins.has(origin);
