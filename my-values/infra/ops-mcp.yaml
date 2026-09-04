@@ -1,0 +1,130 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubeclaw-ops-mcp
+  namespace: kubeclaw
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kubeclaw-ops-mcp-readonly
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces", "pods", "pods/log", "services", "events"]
+    verbs: ["get", "list"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+    verbs: ["get", "list"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["applications"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubeclaw-ops-mcp-readonly
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubeclaw-ops-mcp-readonly
+subjects:
+  - kind: ServiceAccount
+    name: kubeclaw-ops-mcp
+    namespace: kubeclaw
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ops-mcp
+  namespace: kubeclaw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ops-mcp
+    spec:
+      serviceAccountName: kubeclaw-ops-mcp
+      imagePullSecrets:
+        - name: ghcr-secret
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: ops-mcp
+          image: ghcr.io/datrab/kubeclaw-ops-mcp:latest
+          imagePullPolicy: Always
+          env:
+            - name: OPS_DEFAULT_NAMESPACE
+              value: kubeclaw
+            - name: ARGOCD_NAMESPACE
+              value: argocd
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ops-mcp
+  namespace: kubeclaw
+spec:
+  selector:
+    app.kubernetes.io/name: ops-mcp
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+  type: ClusterIP
+---
+# Optional private operator endpoint for testing from devices in the tailnet.
+# ChatGPT itself should use Secure MCP Tunnel rather than this private URL.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ops-mcp
+  namespace: kubeclaw
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: ops-mcp
+      port:
+        number: 8080
+  tls:
+    - hosts:
+        - ops-mcp
