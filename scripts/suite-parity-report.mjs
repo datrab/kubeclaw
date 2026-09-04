@@ -3,7 +3,9 @@ import fs from 'node:fs';
 const [, , ledgerPath, targetPath] = process.argv;
 if (!ledgerPath || !targetPath) throw new Error('usage: suite-parity-report.mjs <ledger.json> <report.md> [--check]');
 const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
-const entries = Object.entries(ledger.entries).sort(([left], [right]) => left.localeCompare(right));
+const entries = Object.entries(ledger.entries).sort(([left], [right]) => (
+  left < right ? -1 : left > right ? 1 : 0
+));
 const count = (value) => entries.filter(([, entry]) => entry.disposition === value).length;
 const lines = [
   `# ${ledger.title}`,
