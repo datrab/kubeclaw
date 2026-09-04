@@ -5,6 +5,7 @@ const chartValues=readFileSync(new URL("../../../charts/prism/values.yaml",impor
 const chartSchema=readFileSync(new URL("../../../charts/prism/values.schema.json",import.meta.url),"utf8");
 const workloads=readFileSync(new URL("../../../charts/prism/templates/workloads.yaml",import.meta.url),"utf8");
 const jobs=readFileSync(new URL("../../../charts/prism/templates/jobs.yaml",import.meta.url),"utf8");
+const secretInventory=JSON.parse(readFileSync(new URL("../../../docs/generated/inventory/secret-setup.json",import.meta.url),"utf8"));
 const ingestion=readFileSync(new URL("../../../charts/prism/templates/ingestion.yaml",import.meta.url),"utf8");
 const postgresql=readFileSync(new URL("../../../charts/prism/templates/postgresql.yaml",import.meta.url),"utf8");
 const networkPolicy=readFileSync(new URL("../../../charts/prism/templates/networkpolicy.yaml",import.meta.url),"utf8");
@@ -48,6 +49,9 @@ for(const sourceText of [agentValues,agentBridge]){
     "Prism prompts must not couple runtime contracts to the project checkout");
 }
 assert(source.includes("Missing image pull Secret: ${PRISM_NAMESPACE}/${PRISM_IMAGE_PULL_SECRET_NAME}"),"Prism must preflight its configured pull Secret");
+const sharedSecret=secretInventory.secrets.find((secret)=>secret.name==="openclaw-shared-secrets");
+assert(sharedSecret?.keys.includes("gatewayToken-prism"),
+  "the shared Secret inventory must declare Prism's gateway token key");
 assert(source.includes("secretsToCopy: [prism-test-runtime, prism-test-postgresql-auth, prism-test-ghcr, openclaw-shared-secrets, git-deploy-key-nova]"),"leased Prism acceptance must copy the OpenClaw agent and isolated fixture Secrets through the broker");
 assert(source.includes("[[ $lease_phase == Ready ]]"),"leased Prism acceptance must fail closed unless the broker reports Ready");
 assert(chartValues.includes("digest: \"\""),"Prism chart values must require image digests from deployment authority");

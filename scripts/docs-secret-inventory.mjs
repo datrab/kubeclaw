@@ -9,6 +9,7 @@ const SECRET_SPECS = [
       'gatewayToken-buster',
       'busterV2Token',
       'gatewayToken-nova',
+      'gatewayToken-prism',
       'stitchApiKey',
       'discordToken-forge',
       'discordToken-echo',
