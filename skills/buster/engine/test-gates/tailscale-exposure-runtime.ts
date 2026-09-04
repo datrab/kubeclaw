@@ -1,10 +1,12 @@
 import { spawn } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
 
 const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;
 const MAX_TIMER_MS = 2_147_483_647;
+const EXPOSURE_OWNER_ANNOTATION = 'kubeclaw.forgestack.ai/exposure-owner';
 type JsonObject = Record<string, unknown>;
 type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
   => Promise<{ stdout?: string; stderr?: string }>;
@@ -163,6 +165,28 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     return { serviceName: text(spec.serviceName, 'serviceName', 63),
       servicePort: integer(spec.servicePort, 'servicePort', 1, 65535), expiresAt };
   }
+  async #rollbackFailedPrepare(leaseName: string, owner: string, originalError: unknown): Promise<void> {
+    const timeoutMs = Math.min(15_000, this.#maximumExecutionMs);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const lease = await this.#lease(leaseName, controller.signal);
+      const metadata = object(lease.metadata, 'lease.metadata');
+      const annotations = object(metadata.annotations ?? {}, 'lease.metadata.annotations');
+      if (annotations[EXPOSURE_OWNER_ANNOTATION] !== owner) return;
+      const resourceVersion = text(metadata.resourceVersion, 'lease.metadata.resourceVersion', 64);
+      const patch = JSON.stringify({
+        metadata: { resourceVersion, annotations: { [EXPOSURE_OWNER_ANNOTATION]: null } },
+        spec: { purpose: 'gate', exposure: { provider: 'off' } },
+      });
+      await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
+        '--type=merge', '-p', patch], null, controller.signal, timeoutMs);
+    } catch (rollbackError) {
+      throw new AggregateError([originalError, rollbackError], 'TAILSCALE_EXPOSURE_ROLLBACK_FAILED');
+    } finally {
+      clearTimeout(timer);
+    }
+  }
   async #prepare(payload: JsonObject, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     const leaseName = text(payload.leaseName, 'leaseName', 63); if (!DNS_LABEL.test(leaseName)) throw new Error('TAILSCALE_EXPOSURE_LEASE_NAME_INVALID');
     const namespace = this.#namespace(payload.namespace); const timeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1, this.#maximumExecutionMs);
@@ -176,22 +200,29 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       if (allowed !== 'yes') throw new Error(`TAILSCALE_EXPOSURE_RBAC_DENIED:${verb}`);
     }
     const before = await this.#lease(leaseName, signal); const verified = this.#verifyLease(before, payload, namespace);
-    const patch = { spec: { purpose: 'final-preview', exposure: { provider: 'tailscale-ingress',
-      serviceName: verified.serviceName, servicePort: verified.servicePort, path, ...(hostname ? { hostname } : {}) } } };
-    await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
-      '--type=merge', '-p', JSON.stringify(patch)], null, signal, 15_000);
-    const ready = await this.#wait(leaseName, 'Ready', signal, timeoutMs); const status = object(ready.status, 'lease.status');
-    if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
-    const urlText = text(status.previewUrl, 'previewUrl', 2048); const url = new URL(urlText);
-    if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.origin + url.pathname !== urlText) {
-      throw new Error('TAILSCALE_EXPOSURE_URL_INVALID');
+    const owner = randomUUID();
+    const patch = { metadata: { annotations: { [EXPOSURE_OWNER_ANNOTATION]: owner } },
+      spec: { purpose: 'final-preview', exposure: { provider: 'tailscale-ingress',
+        serviceName: verified.serviceName, servicePort: verified.servicePort, path, ...(hostname ? { hostname } : {}) } } };
+    try {
+      await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
+        '--type=merge', '-p', JSON.stringify(patch)], null, signal, 15_000);
+      const ready = await this.#wait(leaseName, 'Ready', signal, timeoutMs); const status = object(ready.status, 'lease.status');
+      if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
+      const urlText = text(status.previewUrl, 'previewUrl', 2048); const url = new URL(urlText);
+      if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.origin + url.pathname !== urlText) {
+        throw new Error('TAILSCALE_EXPOSURE_URL_INVALID');
+      }
+      const publicHost = url.hostname.toLowerCase();
+      if (!this.#suffixes.some((item) => publicHost.endsWith(item) && publicHost.length > item.length)) throw new Error('TAILSCALE_EXPOSURE_HOST_DENIED');
+      if (status.exposureHostname !== publicHost) throw new Error('TAILSCALE_EXPOSURE_HOST_MISMATCH');
+      return Object.freeze({ ok: true, leaseName, namespace, url: urlText, hostname: publicHost,
+        createdAt: text(status.createdAt, 'createdAt', 64), expiresAt: verified.expiresAt,
+        releaseAction: `kubectl patch busternamespacelease ${leaseName} -n ${this.#controllerNamespace} --type=merge --patch '{"spec":{"purpose":"gate","exposure":{"provider":"off"}}}'` });
+    } catch (error) {
+      await this.#rollbackFailedPrepare(leaseName, owner, error);
+      throw error;
     }
-    const publicHost = url.hostname.toLowerCase();
-    if (!this.#suffixes.some((item) => publicHost.endsWith(item) && publicHost.length > item.length)) throw new Error('TAILSCALE_EXPOSURE_HOST_DENIED');
-    if (status.exposureHostname !== publicHost) throw new Error('TAILSCALE_EXPOSURE_HOST_MISMATCH');
-    return Object.freeze({ ok: true, leaseName, namespace, url: urlText, hostname: publicHost,
-      createdAt: text(status.createdAt, 'createdAt', 64), expiresAt: verified.expiresAt,
-      releaseAction: `kubectl patch busternamespacelease ${leaseName} -n ${this.#controllerNamespace} --type=merge --patch '{"spec":{"purpose":"gate","exposure":{"provider":"off"}}}'` });
   }
   async #release(payload: JsonObject, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     const leaseName = text(payload.leaseName, 'leaseName', 63); if (!DNS_LABEL.test(leaseName)) throw new Error('TAILSCALE_EXPOSURE_LEASE_NAME_INVALID');
