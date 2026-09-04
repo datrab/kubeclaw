@@ -75,6 +75,7 @@ process; the Gateway containers do not expose interactive stdin.
 - `commands.ownerAllowFrom` configures OpenClaw owner-only command authority from chart values.
 - `tools.profile`, `tools.sessions.visibility`, `tools.sessions_spawn.attachments.enabled`, and the OpenClaw 2026.8 `tools.exec.mode`/`timeoutSeconds` keys configure the runtime tool posture.
 - `channels.discord.enabled`, `channels.discord.token`, `channels.discord.threadBindings.spawnSessions`, and `channels.discord.execApprovals.approvers` are rendered from chart values and Discord values. The token is an env SecretRef to `DISCORD_TOKEN`.
+- OpenClaw 2026.9 uses `channels.discord.guilds.<id>.users` for guild sender authorization. The chart normalizes `commands.allowFromDiscord` into `channels.discord.guilds.*.users` and removes the retired Discord `groupAllowFrom` field from persistent configurations before Doctor runs.
 - The managed source deliberately omits retired OpenClaw tuning keys. In particular, command owner rendering now uses the built-in raw format; Discord retry/event-queue tuning and gateway health restart thresholds use built-in defaults.
 
 ## Verification

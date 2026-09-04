@@ -515,6 +515,21 @@ assert.doesNotMatch(
   /"ownership":\s*"explicit"/,
   'single-agent configurations must not declare multi-agent ownership',
 );
+assert.doesNotMatch(
+  gatewayConfig,
+  /"groupAllowFrom"/,
+  'OpenClaw 2026.9 rejects the retired Discord groupAllowFrom field',
+);
+assert.match(
+  gatewayConfig,
+  /\$discordGuildUsers[\s\S]*trimPrefix "discord:" \(trimPrefix "user:" \$sender\)[\s\S]*"guilds": \{[\s\S]*"\*": \{[\s\S]*"users": \{\{ \$discordGuildUsers \| uniq \| toJson \}\}/,
+  'Discord guild authorization must normalize the configured sender IDs into guild users',
+);
+assert.match(
+  chart,
+  /Object\.hasOwn\(config\.channels\.discord, 'groupAllowFrom'\)[\s\S]*delete config\.channels\.discord\.groupAllowFrom[\s\S]*doctor --fix --non-interactive/,
+  'the startup migration must remove retired Discord groupAllowFrom before Doctor validation',
+);
 assert.match(
   gatewayConfig,
   /"systemAgent":\s*\{\s*"agentId":\s*"main"/,

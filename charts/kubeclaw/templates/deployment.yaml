@@ -184,6 +184,12 @@ spec:
                 changed = true;
                 console.log('==> Reassigned heartbeat ownership to main');
               }
+              if (config?.channels?.discord
+                  && Object.hasOwn(config.channels.discord, 'groupAllowFrom')) {
+                delete config.channels.discord.groupAllowFrom;
+                changed = true;
+                console.log('==> Removed retired Discord groupAllowFrom configuration');
+              }
               const isBroadDefaultDiscordBinding = (binding) => {
                 const match = binding?.match;
                 return !binding?.type
@@ -547,6 +553,12 @@ spec:
                   config.agents.defaults.systemAgent = managedSystemAgent;
                   console.log('    synchronized managed system agent owner');
                 }
+              }
+
+              if (config?.channels?.discord
+                  && Object.hasOwn(config.channels.discord, 'groupAllowFrom')) {
+                delete config.channels.discord.groupAllowFrom;
+                console.log('    removed retired Discord groupAllowFrom configuration');
               }
 
               fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\n`);

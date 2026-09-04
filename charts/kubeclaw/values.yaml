@@ -413,7 +413,9 @@ commands:
   # Channel-qualified operator IDs for OpenClaw owner-only commands.
   # Example: ["discord:123456789012345678"]
   ownerAllowFrom: []
-  # Discord user IDs allowed to run commands (array of "user:<id>" strings)
+  # Discord user IDs allowed to use DMs, commands, and guild channels. Bare,
+  # "user:", and "discord:" forms are accepted here; guild policy renders
+  # canonical bare IDs under channels.discord.guilds.*.users.
   allowFromDiscord: []
 
 # =============================================================================

@@ -1,3 +1,7 @@
+{{- $discordGuildUsers := list -}}
+{{- range $sender := (.Values.commands.allowFromDiscord | default list) -}}
+{{- $discordGuildUsers = append $discordGuildUsers (trimPrefix "discord:" (trimPrefix "user:" $sender)) -}}
+{{- end }}
 # ConfigMap: OpenClaw gateway configuration (openclaw.json)
 apiVersion: v1
 kind: ConfigMap
@@ -201,7 +205,6 @@ data:
             "id": "DISCORD_TOKEN"
           },
           "allowFrom": {{ .Values.commands.allowFromDiscord | default list | toJson }},
-          "groupAllowFrom": {{ .Values.commands.allowFromDiscord | default list | toJson }},
           "groupPolicy": "allowlist",
           "streaming": {
             "mode": "partial"
@@ -211,6 +214,9 @@ data:
           },
           "guilds": {
             "*": {
+              {{- if $discordGuildUsers }}
+              "users": {{ $discordGuildUsers | uniq | toJson }},
+              {{- end }}
               "requireMention": true
             }
           },
