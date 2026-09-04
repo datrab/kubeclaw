@@ -42,6 +42,8 @@ request a positive whole-byte quantity. Per-claim and aggregate byte limits
 bound storage consumption before any cluster request is made. StatefulSet
 template storage is multiplied by the requested replica count.
 Generic ephemeral volumes are denied; use an explicit bounded claim instead.
+Claims cannot pre-bind a volume, select cluster volumes, clone another data
+source, or request raw block mode.
 
 ## Image Boundary
 

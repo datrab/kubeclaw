@@ -80,6 +80,8 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID`: request a positive, whole-byte Kubernetes storage quantity.
 - `KUBERNETES_FIXTURE_PVC_SIZE_DENIED`: reduce the individual persistent-volume claim request.
 - `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED`: reduce aggregate persistent-volume claim requests.
+- `KUBERNETES_FIXTURE_PVC_SOURCE_DENIED`: remove pre-binding, selectors, and cross-resource data sources.
+- `KUBERNETES_FIXTURE_PVC_VOLUME_MODE_DENIED`: use the filesystem volume mode.
 - `KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID`: provide a valid StatefulSet volume-claim-template list.
 - `KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID`: use a non-negative safe-integer replica count.
 - `KUBERNETES_FIXTURE_CONTAINERS_INVALID`: correct the pod container list.
