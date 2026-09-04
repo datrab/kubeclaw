@@ -61,8 +61,8 @@ assert.doesNotMatch(busterValues, /mountPath:\s*\/sys\/fs\/cgroup\s*$/m,
   'Buster must not mount the host cgroup root');
 assert.match(networkPolicies, /name:\s*kubeclaw-agents-egress[\s\S]*port:\s*6379[\s\S]*port:\s*6333/,
   'lease policies must remain additive to the shared worker service egress baseline');
-assert.match(deploy, /PRISM_\$\{upper\}_IMAGE_DIGEST must be sha256:/,
-  'Prism deployment must require immutable image digests');
+assert.match(deploy, /Prism \$\{kind\} image digest is missing or invalid; set PRISM_\$\{upper\}_IMAGE_DIGEST or images\.\$\{kind\}\.digest/,
+  'Prism deployment must require immutable image digests from an override or production values');
 assert.doesNotMatch(deploy, /rollout restart deployment\/"\$prism_workload"/,
   'Prism deployment must not restart immutable workloads to pull mutable tags');
 

@@ -17,6 +17,13 @@ Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
 
+Production Prism image digests are pinned in `my-values/prism-values.yaml`.
+`deploy.sh prism` reads those pins automatically; operators do not need to
+export digest variables for a normal deployment. A controlled override can set
+`PRISM_CONTROL_IMAGE_DIGEST`, `PRISM_STUDIO_IMAGE_DIGEST`,
+`PRISM_WORKER_IMAGE_DIGEST`, or `PRISM_INGESTION_IMAGE_DIGEST`. Both configured
+and overridden values must be immutable `sha256:` digests.
+
 The agent release always receives the published Prism runtime code bundle for
 the resolved `main` commit. That bundle contains the version-matched canonical
 schema and fixture under `/app/skills/packages/prism-contract`; Prism does not

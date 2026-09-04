@@ -1532,7 +1532,13 @@ prism_image_overrides() {
     repository="PRISM_${upper}_IMAGE_REPOSITORY"; digest="PRISM_${upper}_IMAGE_DIGEST"
     [[ -z ${!repository:-} ]] || printf '%s\n' --set-string "images.${kind}.repository=${!repository}"
     selected_digest="${!digest:-}"
-    [[ $selected_digest =~ ^sha256:[0-9a-f]{64}$ ]] || { err "PRISM_${upper}_IMAGE_DIGEST must be sha256:<64 lowercase hex characters>"; return 1; }
+    if [[ -z $selected_digest ]]; then
+      selected_digest="$(yaml_get_nested_section_key "$PRISM_VALUES_FILE" images "$kind" digest)"
+    fi
+    [[ $selected_digest =~ ^sha256:[0-9a-f]{64}$ ]] || {
+      err "Prism ${kind} image digest is missing or invalid; set PRISM_${upper}_IMAGE_DIGEST or images.${kind}.digest in ${PRISM_VALUES_FILE}"
+      return 1
+    }
     printf '%s\n' --set-string "images.${kind}.digest=${selected_digest}"
     printf '%s\n' --set-string "images.${kind}.pullPolicy=IfNotPresent"
   done

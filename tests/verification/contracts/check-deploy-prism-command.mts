@@ -28,7 +28,9 @@ assert.match(source,/cmd_prism\(\)[\s\S]*require_spiffe_csi_driver[\s\S]*cmd_pri
 assert.match(source,/cmd_prism\(\)[\s\S]*require_helm_release_idle "\$PRISM_RELEASE" "\$PRISM_NAMESPACE"[\s\S]*require_helm_release_idle agent-prism "\$PRISM_NAMESPACE"[\s\S]*cmd_prism_secrets/u,
   "Prism deployment must reject pending operations for both owned Helm releases before changing cluster state");
 assert(!source.includes("PRISM_APPROVER_USERS"),"Prism deployment must not require an approver allowlist");
-assert(source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must require an immutable control image digest");
+assert(source.includes("PRISM_CONTROL_IMAGE_DIGEST"),"Prism deployment must support an immutable control image digest override");
+assert(source.includes('selected_digest="$(yaml_get_nested_section_key "$PRISM_VALUES_FILE" images "$kind" digest)"'),
+  "Prism deployment must fall back to production values-file image digests");
 assert(!source.includes("reconcile_prism_provider_secret"),"Prism worker deployment must not own model-provider credentials");
 assert(source.includes("PRISM_AGENT_VALUES_FILE"),"Prism must deploy its OpenClaw agent release");
 assert.match(source,/prism:archive_url[\s\S]*PRISM_CODE_BUNDLE_ARCHIVE_URL[\s\S]*cmd_prism\(\)[\s\S]*append_code_bundle_override_file[\s\S]*-f "\$prism_bundle_override"/u,
@@ -53,9 +55,12 @@ assert(chartValues.includes("imagePullSecrets:"),"Prism chart defaults must conf
 assert(imageWorkflow.includes("type=raw,value=latest"),"Prism image workflow must publish the default chart tag");
 assert.match(studioServer,/prismProxyResponseHeaders\(upstream\.headers\)[\s\S]*setHeader\("set-cookie", forwarded\.setCookies\)/u,
   "Prism Studio must forward the session and CSRF Set-Cookie headers as separate values");
-for(const values of [chartValues,productionValues])for(const kind of ["control","studio","worker","ingestion"])
-  assert(values.includes(`${kind}: { repository: ghcr.io/datrab/kubeclaw-prism-${kind}, digest: \"\"`),
-    `Prism ${kind} values must require an immutable digest`);
+for(const kind of ["control","studio","worker","ingestion"]){
+  assert(chartValues.includes(`${kind}: { repository: ghcr.io/datrab/kubeclaw-prism-${kind}, digest: \"\"`),
+    `Prism ${kind} chart defaults must require a deployment-authority digest`);
+  assert.match(productionValues,new RegExp(`${kind}:\\r?\\n\\s+repository: ghcr\\.io/datrab/kubeclaw-prism-${kind}\\r?\\n\\s+digest: \"sha256:[0-9a-f]{64}\"`),
+    `Prism ${kind} production values must pin an immutable digest`);
+}
 assert(/imagePullSecrets:\r?\n  - name: ghcr-secret/u.test(productionValues),"Prism production values must reuse the Nova/Buster GHCR Secret");
 assert(productionValues.includes("studio: { replicas: 1"),"Prism Studio must default to one production replica");
 assert(productionValues.includes("worker: { replicas: 1"),"Prism Worker must default to one production replica");

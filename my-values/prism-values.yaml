@@ -1,8 +1,21 @@
+# Published by the image workflow for commit c81752e8.
 images:
-  control: { repository: ghcr.io/datrab/kubeclaw-prism-control, digest: "", pullPolicy: IfNotPresent }
-  studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, digest: "", pullPolicy: IfNotPresent }
-  worker: { repository: ghcr.io/datrab/kubeclaw-prism-worker, digest: "", pullPolicy: IfNotPresent }
-  ingestion: { repository: ghcr.io/datrab/kubeclaw-prism-ingestion, digest: "", pullPolicy: IfNotPresent }
+  control:
+    repository: ghcr.io/datrab/kubeclaw-prism-control
+    digest: "sha256:5ea059c199c8e32089f56274b606a4cceed22050e62671392399b06fffafd8d4"
+    pullPolicy: IfNotPresent
+  studio:
+    repository: ghcr.io/datrab/kubeclaw-prism-studio
+    digest: "sha256:42e4bd9dbc4cc4d359092adb16909a02468cd2364f63d68b8b3f9aedeba7578b"
+    pullPolicy: IfNotPresent
+  worker:
+    repository: ghcr.io/datrab/kubeclaw-prism-worker
+    digest: "sha256:5b29b46e9ff5da6c55984843f78e1e2540b44787ee11434bc3075003e58f9f89"
+    pullPolicy: IfNotPresent
+  ingestion:
+    repository: ghcr.io/datrab/kubeclaw-prism-ingestion
+    digest: "sha256:ac71fc5e718ea9e6ad41f97281431c97523729b121048db7ec1f0c899d4e162c"
+    pullPolicy: IfNotPresent
 imagePullSecrets:
   - name: ghcr-secret
 control: { replicas: 1, resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } } }
