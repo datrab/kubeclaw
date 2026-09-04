@@ -24,6 +24,10 @@ function endpointFrom(value: unknown, id: string): URL {
   return endpoint;
 }
 
+function loopback(endpoint: URL): boolean {
+  return ['127.0.0.1', 'localhost', '::1', '[::1]'].includes(endpoint.hostname);
+}
+
 function record(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
@@ -67,8 +71,11 @@ function targetFrom(id: string, value: unknown): Target {
     if (authentication === 'hmac' && (typeof value.tokenSecret !== 'string' || !ID.test(value.tokenSecret))) {
       throw new Error(`RUNTIME_CONFIG_INVALID:tokenSecret:${id}`);
     }
+    if (authentication === 'hmac' && endpoint.protocol !== 'https:' && !loopback(endpoint)) {
+      throw new Error(`RUNTIME_CONFIG_INVALID:plaintextHmac:${id}`);
+    }
     if (authentication === 'spiffe-proxy'
-      && !['127.0.0.1', 'localhost', '::1'].includes(endpoint.hostname)) {
+      && !loopback(endpoint)) {
       throw new Error(`RUNTIME_CONFIG_INVALID:spiffeProxy:${id}`);
     }
     const maxRequestBytes = boundedInteger(value.maxRequestBytes, 1_048_576, id, 'maxRequestBytes');
