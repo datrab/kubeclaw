@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { resolveExecutable } from './support/resolve-executable.mts';
 
 const baseline = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-kubernetes-fixture-baseline.json', 'utf8'));
 const ledger = JSON.parse(fs.readFileSync('docs/architecture/pipeline-test-gate-kubernetes-fixture-parity-ledger.json', 'utf8'));
@@ -18,7 +21,18 @@ for (const [id, entry] of Object.entries(ledger.entries) as [string, any][]) {
 const legacyPath = 'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s.ts';
 assert.equal(fs.existsSync(legacyPath), false);
 
-assert.equal(fs.existsSync('/usr/local/bin/kubectl'), true, 'real kubectl is required');
+resolveExecutable('kubectl');
+const executableRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-kubectl-path-'));
+try {
+  const target = path.join(executableRoot, 'kubectl-1.31');
+  const executable = path.join(executableRoot, 'kubectl');
+  fs.writeFileSync(target, '#!/bin/sh\nexit 0\n', { mode: 0o700 });
+  fs.symlinkSync(path.basename(target), executable);
+  assert.equal(resolveExecutable('kubectl', executableRoot), fs.realpathSync(target));
+  assert.throws(() => resolveExecutable('kubectl', ''), /EXECUTABLE_NOT_FOUND:kubectl/u);
+} finally {
+  fs.rmSync(executableRoot, { recursive: true, force: true });
+}
 const chart = fs.readFileSync('charts/kubeclaw/templates/buster-namespace-controller.yaml', 'utf8');
 const controller = fs.readFileSync('cmd/buster-namespace-controller/main.go', 'utf8');
 assert.doesNotMatch(chart, /pods\/portforward/u);

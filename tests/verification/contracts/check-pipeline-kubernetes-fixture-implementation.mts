@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { KubernetesFixtureCapabilityInvoker } from '@kubeclaw/buster-engine';
+import { resolveExecutable } from './support/resolve-executable.mts';
 
 const pluginRoot = path.resolve('skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
@@ -72,7 +73,7 @@ assert.equal(plan.links[0]?.mediaType, 'application/vnd.kubeclaw.checked-kuberne
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-implementation-'));
 try {
-  const executable = fs.realpathSync('/usr/local/bin/kubectl');
+  const executable = resolveExecutable('kubectl');
   const capability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
