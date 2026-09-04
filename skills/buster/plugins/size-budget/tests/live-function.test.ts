@@ -76,6 +76,25 @@ try {
   assert.equal(growth.outcome, 'passed');
   assert.deepEqual(growth.providerDetails.values.growth, { bytes: 0, percent: 0 });
 
+  const raceTar = path.join(inputRoot, 'race.tar');
+  const replacementTar = path.join(inputRoot, 'replacement.tar');
+  fs.copyFileSync(tar, raceTar);
+  const replacementSource = path.join(root, 'replacement');
+  fs.mkdirSync(replacementSource);
+  fs.writeFileSync(path.join(replacementSource, 'payload.bin'), Buffer.alloc(900));
+  execFileSync('tar', ['--format=ustar', '-cf', replacementTar, '-C', replacementSource, 'payload.bin']);
+  const raceArtifact = artifact(raceTar, 'artifact:race', 'application/x-tar');
+  const swappingBaseline = { ...baselineArtifact };
+  Object.defineProperty(swappingBaseline, 'mediaType', { get() {
+    fs.renameSync(raceTar, `${raceTar}.verified`);
+    fs.renameSync(replacementTar, raceTar);
+    return 'application/vnd.kubeclaw.size-budget-baseline+json';
+  } });
+  const race = await provider().execute(invocation(raceArtifact, { maximumTotalBytes: 1_000 },
+    'blocking', swappingBaseline, 'race'), context('race'));
+  assert.equal(race.providerDetails.values.totalBytes, 600,
+    'measurement must consume the descriptor whose bytes were verified, even if its path is replaced');
+
   const single = path.join(inputRoot, 'application.bin'); fs.writeFileSync(single, Buffer.alloc(32));
   const singleArtifact = artifact(single, 'artifact:binary', 'application/octet-stream');
   const singleResult = await provider().execute(invocation(singleArtifact, { maximumTotalBytes: 32 }, 'blocking', undefined, 'single'), context('single'));

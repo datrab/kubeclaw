@@ -106,6 +106,7 @@ async function verifiedFile(artifact, label, maximumBytes, signal) {
   }
   const candidate = fs.realpathSync(fileURLToPath(artifact.storageUrl));
   const handle = await fs.promises.open(candidate, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+  let verified = false;
   try {
     const before = await handle.stat();
     if (!before.isFile() || before.size !== artifact.sizeBytes) throw new Error(`SIZE_BUDGET_INPUT_SIZE_MISMATCH:${label}`);
@@ -125,8 +126,11 @@ async function verifiedFile(artifact, label, maximumBytes, signal) {
       throw new Error(`SIZE_BUDGET_INPUT_SIZE_MISMATCH:${label}`);
     }
     if (`sha256:${hash.digest('hex')}` !== artifact.contentDigest) throw new Error(`SIZE_BUDGET_INPUT_DIGEST_MISMATCH:${label}`);
-    return candidate;
-  } finally { await handle.close(); }
+    verified = true;
+    return handle;
+  } finally {
+    if (!verified) await handle.close();
+  }
 }
 
 function tarString(block, start, length) {
@@ -161,7 +165,7 @@ function checksum(block) {
 }
 
 async function scanTar(file, compressed, signal) {
-  const source = fs.createReadStream(file, { highWaterMark: 64 * 1024 });
+  const source = fs.createReadStream('', { fd: file.fd, autoClose: false, start: 0, highWaterMark: 64 * 1024 });
   const stream = compressed ? source.pipe(createGunzip()) : source;
   const files = [];
   const names = new Set();
@@ -244,9 +248,19 @@ async function baseline(artifact, signal) {
   if (!artifact) return null;
   if (artifact.mediaType !== 'application/vnd.kubeclaw.size-budget-baseline+json') throw new Error('SIZE_BUDGET_BASELINE_MEDIA_TYPE_INVALID');
   const source = await verifiedFile(artifact, 'baseline', MAXIMUM_BASELINE_BYTES, signal);
-  cancelled(signal);
   let value;
-  try { value = JSON.parse(fs.readFileSync(source, 'utf8')); } catch { throw new Error('SIZE_BUDGET_BASELINE_INVALID'); }
+  try {
+    const bytes = Buffer.allocUnsafe(artifact.sizeBytes);
+    let position = 0;
+    while (position < bytes.length) {
+      cancelled(signal);
+      const { bytesRead } = await source.read(bytes, position, bytes.length - position, position);
+      if (bytesRead === 0) throw new Error('SIZE_BUDGET_BASELINE_INVALID');
+      position += bytesRead;
+    }
+    try { value = JSON.parse(bytes.toString('utf8')); }
+    catch { throw new Error('SIZE_BUDGET_BASELINE_INVALID'); }
+  } finally { await source.close(); }
   if (!value || value.schemaVersion !== 'size-budget-baseline.v1' || !Number.isSafeInteger(value.totalBytes)
     || value.totalBytes < 0 || typeof value.sourceDigest !== 'string') throw new Error('SIZE_BUDGET_BASELINE_INVALID');
   return value;
@@ -292,11 +306,15 @@ export function provider() {
     const artifact = input(invocation, 'build-output', true);
     const baselineArtifact = input(invocation, 'baseline', false);
     const source = await verifiedFile(artifact, 'build-output', MAXIMUM_INPUT_BYTES, context.signal);
-    const previous = await baseline(baselineArtifact, context.signal);
-    if ((config.maximumGrowthBytes !== null || config.maximumGrowthPercent !== null) && !previous) {
-      throw new Error('SIZE_BUDGET_BASELINE_REQUIRED');
-    }
-    const measured = await measurements(config, artifact, source, context.signal);
+    let previous;
+    let measured;
+    try {
+      previous = await baseline(baselineArtifact, context.signal);
+      if ((config.maximumGrowthBytes !== null || config.maximumGrowthPercent !== null) && !previous) {
+        throw new Error('SIZE_BUDGET_BASELINE_REQUIRED');
+      }
+      measured = await measurements(config, artifact, source, context.signal);
+    } finally { await source.close(); }
     const change = previous ? growth(measured.totalBytes, previous.totalBytes) : null;
     const checks = [];
     if (config.maximumTotalBytes !== null) checks.push({ id: 'total', passed: measured.totalBytes <= config.maximumTotalBytes,
