@@ -90,7 +90,12 @@ export function verifySourceSnapshotAttestation(
   expectedAuthority: string,
   publicKey: string | Buffer,
 ): boolean {
-  if (value.creatorAuthority !== expectedAuthority || value.attestation.authority !== expectedAuthority) return false;
+  if (
+    value.creatorAuthority !== expectedAuthority
+    || value.attestation.authority !== expectedAuthority
+    || value.attestation.schemaVersion !== 'source-snapshot-attestation.v1'
+    || value.attestation.algorithm !== 'ed25519'
+  ) return false;
   try {
     const key = crypto.createPublicKey(publicKey);
     return key.asymmetricKeyType === 'ed25519'
