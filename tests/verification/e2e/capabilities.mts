@@ -172,6 +172,53 @@ async function probeBuildkit(): Promise<CapabilityResult> {
   }
 }
 
+async function probeGateway(): Promise<CapabilityResult> {
+  const token = process.env.OPENCLAW_GATEWAY_TOKEN;
+  if (!token) return { capability: 'gateway', ok: false, reason: 'INFRA_MISSING_OPENCLAW_GATEWAY_TOKEN' };
+  let endpoint: URL;
+  try {
+    const configured = process.env.OPENCLAW_GATEWAY_TOOLS_URL;
+    if (configured) endpoint = new URL(configured);
+    else {
+      endpoint = new URL(process.env.OPENCLAW_GATEWAY_URL || 'http://127.0.0.1:18789');
+      if (endpoint.protocol === 'ws:') endpoint.protocol = 'http:';
+      if (endpoint.protocol === 'wss:') endpoint.protocol = 'https:';
+      endpoint.pathname = '/tools/invoke';
+      endpoint.search = '';
+      endpoint.hash = '';
+    }
+    if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password
+      || endpoint.pathname !== '/tools/invoke') throw new Error('invalid endpoint');
+  } catch {
+    return { capability: 'gateway', ok: false, reason: 'INFRA_OPENCLAW_GATEWAY_ENDPOINT_INVALID' };
+  }
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST', redirect: 'error',
+      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ tool: 'agents_list', action: 'json', args: {} }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (response.status === 401) {
+      return { capability: 'gateway', ok: false, reason: 'INFRA_OPENCLAW_GATEWAY_AUTH_FAILED' };
+    }
+    if (response.status === 403) {
+      return { capability: 'gateway', ok: false, reason: 'INFRA_OPENCLAW_GATEWAY_POLICY_DENIED' };
+    }
+    if (!response.ok) {
+      return { capability: 'gateway', ok: false, reason: `INFRA_OPENCLAW_GATEWAY_HTTP_${response.status}` };
+    }
+    const body = await response.json() as Record<string, unknown>;
+    if (body.ok !== true) {
+      return { capability: 'gateway', ok: false, reason: 'INFRA_OPENCLAW_GATEWAY_PROBE_FAILED' };
+    }
+    return { capability: 'gateway', ok: true, reason: null,
+      evidence: { authenticated: true, tool: 'agents_list' } };
+  } catch {
+    return { capability: 'gateway', ok: false, reason: 'INFRA_OPENCLAW_GATEWAY_UNAVAILABLE' };
+  }
+}
+
 export async function probeCapabilities(
   requested: readonly Capability[],
   options: { readonly announceDiscord?: boolean } = {},
@@ -179,9 +226,7 @@ export async function probeCapabilities(
   const unique = [...new Set(requested)];
   return Promise.all(unique.map(async (capability): Promise<CapabilityResult> => {
     if (capability === 'gateway') {
-      return process.env.OPENCLAW_GATEWAY_TOKEN
-        ? { capability, ok: true, reason: null }
-        : { capability, ok: false, reason: 'INFRA_MISSING_OPENCLAW_GATEWAY_TOKEN' };
+      return probeGateway();
     }
     if (capability === 'discord') return probeDiscord(options.announceDiscord === true);
     if (capability === 'redis') return probeRedis();
