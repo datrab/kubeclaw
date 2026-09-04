@@ -12,6 +12,7 @@ fs.mkdirSync(deniedRoot);
 const executable = fs.realpathSync(process.execPath);
 
 const { activate } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+const { CommandRunner } = await import(pathToFileURL(path.resolve('src/runner.ts')).href);
 function createAdapter(overrides = {}) {
   return activate({
     registration: {},
@@ -144,6 +145,27 @@ const shutdownResult = await running;
 assert.equal(shutdownResult.exitCode, null);
 assert.equal(shutdownResult.signal, 'SIGKILL');
 await assert.rejects(run(shutdownAdapter, []), /ADAPTER_SHUTTING_DOWN/);
+
+const unsandboxedBoundary = new CommandRunner({
+  maxOutputBytes: 128,
+  maxExecutionMs: 2_000,
+  terminationGraceMs: 25,
+});
+try {
+  await assert.rejects(
+    unsandboxedBoundary.run({
+      executable,
+      args: ['-e', 'process.stdout.write("unconfined")'],
+      cwd: workingRoot,
+      writableRoot: workingRoot,
+      readOnlyRoots: [deniedRoot],
+    }, new AbortController().signal),
+    /COMMAND_SANDBOX_REQUIRED/,
+    'filesystem boundary arguments must never be ignored by direct execution',
+  );
+} finally {
+  await unsandboxedBoundary.shutdown();
+}
 
 fs.rmSync(temporary, { recursive: true, force: true });
 console.log(JSON.stringify({

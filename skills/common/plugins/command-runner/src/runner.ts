@@ -151,6 +151,10 @@ export class CommandRunner {
       ? { executable: executableOrRequest, args: argsOrSignal as readonly string[], cwd: cwd!, environment: {} }
       : executableOrRequest;
     const signal = (typeof executableOrRequest === 'string' ? legacySignal : argsOrSignal) as AbortSignal;
+    if (!this.#options.sandboxExecutable
+      && (request.writableRoot !== undefined || request.readOnlyRoots !== undefined)) {
+      throw new Error('COMMAND_SANDBOX_REQUIRED');
+    }
     const limits = request.limits ?? {};
     const maxOutputBytes = Math.min(this.#options.maxOutputBytes,
       positive(limits.maxOutputBytes, this.#options.maxOutputBytes));
