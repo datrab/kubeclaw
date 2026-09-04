@@ -217,6 +217,26 @@ assert.match(
   /mkdir -p \/app \/home\/builder/,
   'the Buster runtime must create /app before assigning its ownership',
 );
+assert.match(
+  busterGatewayDockerfile,
+  /COPY docker\/buster-gateway-tools\/package\.json docker\/buster-gateway-tools\/package-lock\.json \/opt\/kubeclaw-tools\//u,
+  'the Buster gateway JavaScript tools must be installed from a committed lockfile',
+);
+assert.equal(
+  exists('docker/buster-gateway-tools/package-lock.json'),
+  true,
+  'the Buster gateway JavaScript tool lockfile must be committed',
+);
+assert.match(
+  busterGatewayDockerfile,
+  /npm ci --prefix \/opt\/kubeclaw-tools --ignore-scripts --no-audit --no-fund/u,
+  'the Buster gateway must use the committed JavaScript tool lockfile',
+);
+assert.doesNotMatch(
+  busterGatewayDockerfile,
+  /npm install -g/u,
+  'the Buster gateway must not resolve global JavaScript tools outside a lockfile',
+);
 for (const [label, dockerfile] of [
   ['Buster runtime image', busterRuntimeDockerfile],
   ['Prism worker image', prismWorkerDockerfile],

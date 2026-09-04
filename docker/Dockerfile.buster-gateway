@@ -89,14 +89,18 @@ RUN packages=(ca-certificates curl git openssh-client jq ripgrep tree) \
 && for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
 && apt-get install -y --no-install-recommends "${packages[@]}" \
 && rm -rf /var/lib/apt/lists/* \
-&& mkdir -p /app/skills /root/.npm \
-&& npm config set cache /root/.npm --global \
-&& npm install -g ioredis@5.11.1
+&& mkdir -p /app/skills /root/.npm
+
+COPY docker/buster-gateway-tools/package.json docker/buster-gateway-tools/package-lock.json /opt/kubeclaw-tools/
+
+RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
+&& node -e "require('/opt/kubeclaw-tools/node_modules/ioredis')" \
+&& npm config set cache /root/.npm --global
 
 COPY --from=gateway-assets /out/extensions/kubeclaw-agent-observer /app/dist/extensions/kubeclaw-agent-observer
 COPY --from=gateway-assets /out/openclaw-plugin-home /opt/openclaw-plugin-home
 
-ENV NODE_PATH=/usr/local/lib/node_modules:/app/node_modules \
+ENV NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
 NPM_CONFIG_CACHE=/root/.npm \
 HOME=/home/node
 

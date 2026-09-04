@@ -1,0 +1,8 @@
+{
+  "name": "kubeclaw-buster-gateway-tools",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "ioredis": "5.11.1"
+  }
+}
