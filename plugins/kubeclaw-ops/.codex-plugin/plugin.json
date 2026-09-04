@@ -1,0 +1,22 @@
+{
+  "name": "kubeclaw-ops",
+  "version": "0.1.0",
+  "description": "Read-only Kubernetes and Argo CD troubleshooting workflows for the KubeClaw cluster.",
+  "repository": "https://github.com/datrab/kubeclaw",
+  "license": "MIT",
+  "keywords": ["kubernetes", "argocd", "gitops", "sre", "operations"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "KubeClaw Ops",
+    "shortDescription": "Inspect Argo and Kubernetes from ChatGPT",
+    "longDescription": "A safe read-only operations plugin for inspecting Argo CD health, Kubernetes workloads, events and bounded pod logs.",
+    "developerName": "datrab",
+    "category": "Developer Tools",
+    "capabilities": ["Read"],
+    "defaultPrompt": [
+      "Use KubeClaw Ops to tell me what is unhealthy in the cluster.",
+      "Use KubeClaw Ops to investigate why Prism is failing.",
+      "Use KubeClaw Ops to summarize the current Argo CD deployment state."
+    ]
+  }
+}
