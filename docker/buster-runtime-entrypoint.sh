@@ -218,8 +218,11 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
     allowedRegistryPrefixes: [`${registry}/kubeclaw`],
     allowedSecretReferences: (process.env.BUSTER_ALLOWED_SOURCE_SECRETS || '').split(',').filter(Boolean),
+    allowedStorageClasses: [], allowDefaultStorageClass: true,
     maximumManifestBytes: 1048576,
-    maximumResources: 64, maximumRetentionSeconds: 604800, maximumExecutionMs: 900000, pollIntervalMs: 1000,
+    maximumResources: 64, maximumPersistentVolumeClaimBytes: 10737418240,
+    maximumPersistentVolumeTotalBytes: 21474836480,
+    maximumRetentionSeconds: 604800, maximumExecutionMs: 900000, pollIntervalMs: 1000,
   },
   tailscaleExposure: {
     kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,

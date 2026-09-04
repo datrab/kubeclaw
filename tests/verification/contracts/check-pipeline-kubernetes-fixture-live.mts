@@ -96,7 +96,10 @@ try {
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: [`${registryHost}/${repositoryName}`],
     allowedSecretReferences: [],
-    maximumManifestBytes: 4 * 1024 * 1024, maximumResources: 64, maximumRetentionSeconds: 3600,
+    allowedStorageClasses: [], allowDefaultStorageClass: true,
+    maximumManifestBytes: 4 * 1024 * 1024, maximumResources: 64,
+    maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 20 * 1024 ** 3,
+    maximumRetentionSeconds: 3600,
     maximumExecutionMs: 180_000, pollIntervalMs: 500 });
   const capabilities = new CompositeTestProviderCapabilityInvoker(new Map([
     ['command.execute', direct], ['kubernetes.fixture', kubernetes],

@@ -16,6 +16,11 @@ function integer(value: unknown, label: string, minimum = 1): number {
   return value as number;
 }
 
+function boolean(value: unknown, label: string): boolean {
+  if (typeof value !== 'boolean') throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${label}`);
+  return value;
+}
+
 function stringMap(value: unknown, label: string): ReadonlyMap<string, string> {
   const source = object(value, label);
   if (Object.values(source).some((item) => typeof item !== 'string' || item.length === 0)) {
@@ -225,8 +230,16 @@ export function loadProductionBusterRemotePlanRuntime(
       allowedRegistryPrefixes: stringArray(kubernetesFixtureSource.allowedRegistryPrefixes, 'kubernetesFixture.allowedRegistryPrefixes'),
       allowedSecretReferences: optionalStringArray(kubernetesFixtureSource.allowedSecretReferences,
         'kubernetesFixture.allowedSecretReferences'),
+      allowedStorageClasses: optionalStringArray(kubernetesFixtureSource.allowedStorageClasses,
+        'kubernetesFixture.allowedStorageClasses'),
+      allowDefaultStorageClass: boolean(kubernetesFixtureSource.allowDefaultStorageClass,
+        'kubernetesFixture.allowDefaultStorageClass'),
       maximumManifestBytes: integer(kubernetesFixtureSource.maximumManifestBytes, 'kubernetesFixture.maximumManifestBytes'),
       maximumResources: integer(kubernetesFixtureSource.maximumResources, 'kubernetesFixture.maximumResources'),
+      maximumPersistentVolumeClaimBytes: integer(kubernetesFixtureSource.maximumPersistentVolumeClaimBytes,
+        'kubernetesFixture.maximumPersistentVolumeClaimBytes'),
+      maximumPersistentVolumeTotalBytes: integer(kubernetesFixtureSource.maximumPersistentVolumeTotalBytes,
+        'kubernetesFixture.maximumPersistentVolumeTotalBytes'),
       maximumRetentionSeconds: integer(kubernetesFixtureSource.maximumRetentionSeconds, 'kubernetesFixture.maximumRetentionSeconds'),
       maximumExecutionMs: integer(kubernetesFixtureSource.maximumExecutionMs, 'kubernetesFixture.maximumExecutionMs'),
       ...(kubernetesFixtureSource.pollIntervalMs === undefined ? {} : {
