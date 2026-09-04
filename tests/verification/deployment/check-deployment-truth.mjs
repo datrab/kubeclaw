@@ -38,6 +38,8 @@ const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
 const networkPolicies = read('my-values/infra/network-policies.yaml');
+const expectedOpenClawVersion = '2026.9.1';
+const expectedOpenClawDigest = 'sha256:6afe42854c87471188b9c4f8dce6bbc14005a48d8e1592846548b32508754f84';
 
 assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
   'Prism chart must use digest references without forced pulls');
@@ -146,8 +148,11 @@ for (const [label, dockerfile] of [
   ['Buster gateway image', busterGatewayDockerfile],
 ]) {
   const baseVersion = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:([^@\s]+)/mu)?.[1];
+  const baseDigest = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:[^@\s]+@(sha256:[a-f0-9]{64})/mu)?.[1];
   const pluginVersion = dockerfile.match(/^ARG OPENCLAW_PLUGIN_VERSION=([^\s]+)/mu)?.[1];
   assert.ok(baseVersion, `${label} must pin an OpenClaw base version`);
+  assert.equal(baseVersion, expectedOpenClawVersion, `${label} must use the approved OpenClaw release`);
+  assert.equal(baseDigest, expectedOpenClawDigest, `${label} must pin the verified OpenClaw OCI index`);
   assert.equal(
     pluginVersion,
     baseVersion,
@@ -182,7 +187,7 @@ assert.match(
 );
 assert.match(
   values,
-  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.8\.2"[\s\S]*"npm:@openclaw\/discord@2026\.8\.2"/,
+  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.9\.1"[\s\S]*"npm:@openclaw\/discord@2026\.9\.1"/,
   'official OpenClaw plugins must be pinned to the gateway release and installed with trusted npm provenance',
 );
 assert.doesNotMatch(
@@ -233,7 +238,7 @@ assert.match(
   'the live BuildKit proof must execute from Nova through the v2 capability graph',
 );
 const productionPreflights = deploy.match(
-  /cmd_nova_production_preflights\(\) \{[\s\S]*?\n\}\n\ncmd_worker_trust_e2e/u,
+  /cmd_nova_production_preflights\(\) \{[\s\S]*?\r?\n\}\r?\n\r?\ncmd_worker_trust_e2e/u,
 )?.[0];
 assert.ok(productionPreflights, 'the combined production suite preflight command must exist');
 assert.match(

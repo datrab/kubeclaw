@@ -26,7 +26,7 @@ Init refreshes persisted `openclaw.json` so LiteLLM, memory search, and Discord 
 
 The managed OpenClaw roster contains exactly one entry, `main`. It intentionally
 omits both the legacy `entries.main.default` marker and multi-agent
-`agents.ownership`; OpenClaw 2026.8.2 rejects a legacy default marker combined
+`agents.ownership`; OpenClaw 2026.9.1 rejects a legacy default marker combined
 with explicit ownership, while neither marker is needed for a sole-agent
 roster. `agents.defaults.systemAgent.agentId` assigns system work to `main`.
 Discord-enabled releases separately bind the `default` Discord account to
