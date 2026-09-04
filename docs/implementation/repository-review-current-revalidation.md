@@ -10,10 +10,10 @@
 
 ## Disposition summary
 
-- Latest inventory: 37 accepted/current, 3 already fixed by removal, 1 rejected, 1 needs additional reproduction.
+- Latest inventory: 36 accepted/current, 3 already fixed by removal, 2 rejected, 1 needs additional reproduction.
 - Older inventory: 1 accepted/current regression and 12 already fixed.
 - Additional sibling regression found during revalidation: 1 accepted/current.
-- Actionable backlog: 39 items (4 P1, 30 P2, 5 P3).
+- Actionable backlog: 38 items (3 P1, 30 P2, 5 P3).
 
 The live-PID resource-lock item is not accepted as a defect yet. Current tests explicitly preserve an expired lock while its process is alive to prevent dual execution. A task-lifecycle reproduction is required before changing that safety boundary.
 
@@ -40,7 +40,7 @@ Commands below were run from the frozen worktree unless noted.
 - `V17`: `node --test skills/prism/tests/studio-adapter.test.mts` — 8/8 passed.
 - `V18`: `node --test contracts/prism/v1/tests/contracts.test.mts` — passed.
 - `V19`: `node tests/verification/deployment/check-deployment-truth.mjs` — passed.
-- `V20`: P1 boundary harness: confidential secret resolution returned a value with zero fence calls.
+- `V20`: `node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs` plus `npm test --prefix skills/common/plugins/runtime-dispatch` — passed; caller tracing confirms the lease check and attempt cancellation signal wrap confidential dependency invocation.
 - `V21`: P1 boundary harness: unsandboxed `CommandRunner` read `/etc/hostname` despite a `/tmp` writable root.
 - `V22`: P1 boundary harness: merge completed, cleanup threw, and the implementation stage returned `blocked`.
 - `V23`: P1 manifest harness: mutable LiteLLM image, `Always` pull policy, environment Secret, and mounted Secret all present.
@@ -71,7 +71,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 | C16 | already fixed | P2 | retired buster-suite-runtime | state-recovery | The non-atomic legacy JSONL publisher was deleted in `b728fb9d4`; current artifact storage uses owned durable stores rather than this file. | `git show --stat b728fb9d4`; replacement-path search |
 | C17 | accepted/current | P2 | Prism deployment/docs | deployment-operations | Values reference `gatewayToken-prism`; the documented `openclaw-shared-secrets` required-key list still omits it. | V19 |
 | C18 | rejected | P2 | real-E2E matrix | contracts-data | The runnable test imports `failure-scenarios.mjs`, which exports both APIs with compatible signatures. The cited `.mts` file is not that test's dependency. The real suite passes 18/18. | V15 |
-| C19 | accepted/current | P1 | secret-resolver | security-trust | Confidential resolution skips `fence.assertCurrent` and returns the mapped environment secret. Direct harness observed zero fence calls. | V01, V20 |
+| C19 | rejected | P1 | secret-resolver | security-trust | Confidential invocations cannot receive a resource fence by SDK contract. The real plugin caller runs `lease.assertActive()` before invocation, propagates the attempt cancellation signal, and the resolver checks that signal immediately before the environment read. A direct adapter harness bypasses these mandatory core guards; requiring a fence breaks valid confidential runtime dispatch. | V01, V20 |
 | C20 | accepted/current | P2 | agent-observability | contracts-data | Contract declares delivery-target ingress, but neither ingester nor evidence observer subscribes to the emitted delivery-target topic. | V05 |
 | C21 | accepted/current | P2 | buster kubernetes-fixture runtime | deployment-operations | Admission allowlists PVC kind but validates neither requested storage, class, nor aggregate capacity. | V12 |
 | C22 | accepted/current | P2 | Prism preferences | contracts-data | Invalid `occurredAt` survives projection and produces `NaN` age/effective score. | V16 |
@@ -122,15 +122,14 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 
 ## Remediation order
 
-1. P1 secret fencing (`C19`).
-2. P1 command isolation contract (`C24`).
-3. P1 merge/cleanup result semantics (`C25`).
-4. P1 immutable LiteLLM deployment (`C30`).
-5. P2 security/trust: `C12`, `C13`, `C35`, `C40`, `N01`.
-6. P2 state/recovery/concurrency: `C02`, `C05`, `C07`, `C26`, `C28`, `C31`; keep `C34` outside the fix queue until reproduced.
-7. P2 contracts/data integrity: `C04`, `C10`, `C11`, `C14`, `C20`, `C22`, `C32`, `C36`, `C42`.
-8. P2 deployment/operations: `C03`, `C06`, `C15`, `C17`, `C21`, `C29`, `C37`, `C38`, `C41`, `O04`.
-9. P3 simplification: `C01`, `C23`, `C27`, `C33`, `C39`.
-10. Review-plugin reporting, current-branch revalidation, backlog output, and measured efficiency changes.
+1. P1 command isolation contract (`C24`).
+2. P1 merge/cleanup result semantics (`C25`).
+3. P1 immutable LiteLLM deployment (`C30`).
+4. P2 security/trust: `C12`, `C13`, `C35`, `C40`, `N01`.
+5. P2 state/recovery/concurrency: `C02`, `C05`, `C07`, `C26`, `C28`, `C31`; keep `C34` outside the fix queue until reproduced.
+6. P2 contracts/data integrity: `C04`, `C10`, `C11`, `C14`, `C20`, `C22`, `C32`, `C36`, `C42`.
+7. P2 deployment/operations: `C03`, `C06`, `C15`, `C17`, `C21`, `C29`, `C37`, `C38`, `C41`, `O04`.
+8. P3 simplification: `C01`, `C23`, `C27`, `C33`, `C39`.
+9. Review-plugin reporting, current-branch revalidation, backlog output, and measured efficiency changes.
 
 Each logical change gets its own regression test, focused/package/contract gates, exact-diff Auto Review, manual disposition of every review comment, and a clean rerun before commit and push.
