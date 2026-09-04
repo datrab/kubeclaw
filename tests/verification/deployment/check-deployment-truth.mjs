@@ -38,7 +38,6 @@ const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
 const networkPolicies = read('my-values/infra/network-policies.yaml');
-const openClawRuntimePatch = read('docker/openclaw-runtime-patch/apply.mjs');
 
 assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
   'Prism chart must use digest references without forced pulls');
@@ -147,31 +146,6 @@ for (const [label, dockerfile] of [
   ['general image', generalDockerfile],
   ['Buster gateway image', busterGatewayDockerfile],
 ]) {
-  assert.match(
-    dockerfile,
-    /ARG OPENCLAW_SOURCE_COMMIT=2e2aa1136152d8462f242270825cbfad63d9c6dc/,
-    `${label} must rebuild the exact source commit used by the pinned OpenClaw 2026.8.2 image`,
-  );
-  assert.match(
-    dockerfile,
-    /openclaw\/archive\/\$\{OPENCLAW_SOURCE_COMMIT\}\.tar\.gz[\s\S]*OPENCLAW_SOURCE_ARCHIVE_SHA256[\s\S]*sha256sum -c -/,
-    `${label} must authenticate the pinned OpenClaw source archive`,
-  );
-  assert.match(
-    dockerfile,
-    /node \/tmp\/apply-openclaw-runtime-patch\.mjs \/src[\s\S]*pnpm build/,
-    `${label} must apply the collector repair before rebuilding the complete runtime`,
-  );
-  assert.match(
-    dockerfile,
-    /test -s \/src\/dist\/control-ui\/index\.html/,
-    `${label} must prove pnpm build produced the Control UI before replacing dist`,
-  );
-  assert.match(
-    dockerfile,
-    /RUN rm -rf \/app\/dist\s*\nCOPY --from=openclaw-runtime-build \/src\/dist\/ \/app\/dist\//,
-    `${label} must replace, rather than merge, the upstream runtime bundles`,
-  );
   const baseVersion = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:([^@\s]+)/mu)?.[1];
   const pluginVersion = dockerfile.match(/^ARG OPENCLAW_PLUGIN_VERSION=([^\s]+)/mu)?.[1];
   assert.ok(baseVersion, `${label} must pin an OpenClaw base version`);
@@ -196,22 +170,6 @@ for (const [label, dockerfile] of [
     `${label} must not duplicate the multi-gigabyte plugin seed during the build`,
   );
 }
-
-assert.match(
-  openClawRuntimePatch,
-  /previousCompletion\.schemaError === "structured_output was not called"/,
-  'the image patch must be limited to the late structured-output race',
-);
-assert.match(
-  openClawRuntimePatch,
-  /entry\.execution\.outcome\?\.status === "ok"/,
-  'the image patch must not promote an execution failure to collector success',
-);
-assert.match(
-  openClawRuntimePatch,
-  /consumeSwarmStructuredOutput\(runId\)/,
-  'the image patch must clear the stale process-local structured-output cache after reconciliation',
-);
 
 assert.match(
   chart,

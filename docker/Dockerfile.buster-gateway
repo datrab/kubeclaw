@@ -2,51 +2,11 @@
 # image-build and Kubernetes tooling are reached through bounded v2 adapters.
 
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.8.2@sha256:5d25165995041caa6a7175bec82b25ad98c44eb269bb42435da8e27ec06e6be4
-ARG OPENCLAW_SOURCE_COMMIT=2e2aa1136152d8462f242270825cbfad63d9c6dc
-ARG OPENCLAW_SOURCE_ARCHIVE_SHA256=79ea85fe5ffb1f86278a728e6f6f0c1033c0bdb08525239bcc076fd75adae962
-ARG OPENCLAW_NODE_BUILD_IMAGE=docker.io/library/node:24-bookworm@sha256:934240a162082fd8b8a2f90cd5114446443f1eba1c5378f6687167ca405e6584
-ARG OPENCLAW_BUN_IMAGE=docker.io/oven/bun:1.4.0@sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6
-
-# hadolint ignore=DL3006
-FROM ${OPENCLAW_BUN_IMAGE} AS openclaw-bun
-
-# hadolint ignore=DL3006
-FROM ${OPENCLAW_NODE_BUILD_IMAGE} AS openclaw-runtime-build
-ARG OPENCLAW_SOURCE_COMMIT
-ARG OPENCLAW_SOURCE_ARCHIVE_SHA256
-WORKDIR /src
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN corepack enable
-# hadolint ignore=DL3020
-ADD \
-https://github.com/openclaw/openclaw/archive/${OPENCLAW_SOURCE_COMMIT}.tar.gz \
-/tmp/openclaw-source.tar.gz
-RUN printf '%s  %s\n' "${OPENCLAW_SOURCE_ARCHIVE_SHA256}" /tmp/openclaw-source.tar.gz \
-| sha256sum -c - \
-&& tar -xzf /tmp/openclaw-source.tar.gz --strip-components=1 -C /src \
-&& rm /tmp/openclaw-source.tar.gz \
-&& test "$(node -p "require('./package.json').version")" = "2026.8.2"
-COPY --from=openclaw-bun /usr/local/bin/bun /usr/local/bin/bun
-COPY docker/openclaw-runtime-patch/apply.mjs /tmp/apply-openclaw-runtime-patch.mjs
-RUN node /tmp/apply-openclaw-runtime-patch.mjs /src
-RUN --mount=type=cache,id=openclaw-patched-pnpm-store,target=/root/.local/share/pnpm/store,sharing=locked \
-NODE_OPTIONS=--max-old-space-size=2048 pnpm install --frozen-lockfile
-RUN NODE_OPTIONS=--max-old-space-size=8192 \
-OPENCLAW_RUN_NODE_SKIP_DTS_BUILD=1 \
-pnpm build \
-&& grep -R -q 'canReconcileLateSuccess' /src/dist \
-&& test -s /src/dist/control-ui/index.html \
-&& printf '%s\n' "${OPENCLAW_SOURCE_COMMIT}" > /src/dist/.kubeclaw-openclaw-source \
-&& printf '%s\n' 'collector-late-structured-output-reconciliation-v1' \
-> /src/dist/.kubeclaw-runtime-patch
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS gateway-assets
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN rm -rf /app/dist
-COPY --from=openclaw-runtime-build /src/dist/ /app/dist/
 
 COPY tsconfig.base.json /tmp/tsconfig.base.json
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
@@ -100,9 +60,6 @@ USER node
 FROM ${OPENCLAW_BASE}
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN rm -rf /app/dist
-COPY --from=openclaw-runtime-build /src/dist/ /app/dist/
 
 ARG DEBIAN_SNAPSHOT=20260901T000000Z
 
