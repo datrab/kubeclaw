@@ -140,7 +140,10 @@ func newController() (*controller, error) {
 
 	ttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)
 	maxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)
-	pollMs := envInt("BUSTER_CONTROLLER_POLL_MS", 3000)
+	pollInterval, err := controllerPollInterval()
+	if err != nil {
+		return nil, err
+	}
 
 	ctrl := &controller{
 		namespace:          namespace,
@@ -149,7 +152,7 @@ func newController() (*controller, error) {
 		allowedPrefixes:    prefixes,
 		defaultTTL:         time.Duration(ttlSeconds) * time.Second,
 		maxTTL:             time.Duration(maxTTLSeconds) * time.Second,
-		pollInterval:       time.Duration(pollMs) * time.Millisecond,
+		pollInterval:       pollInterval,
 		finalizer:          apiGroup + "/buster-namespace-cleanup",
 		apiURL:             "https://" + host + ":" + port,
 		token:              token,
@@ -1996,6 +1999,18 @@ func envInt(name string, fallback int) int {
 		return fallback
 	}
 	return parsed
+}
+
+func controllerPollInterval() (time.Duration, error) {
+	value := strings.TrimSpace(os.Getenv("BUSTER_CONTROLLER_POLL_MS"))
+	if value == "" {
+		value = "3000"
+	}
+	pollMs, err := strconv.ParseInt(value, 10, 64)
+	if err != nil || pollMs <= 0 || pollMs > (1<<63-1)/int64(time.Millisecond) {
+		return 0, errors.New("BUSTER_CONTROLLER_POLL_MS must be positive")
+	}
+	return time.Duration(pollMs) * time.Millisecond, nil
 }
 
 func splitCSV(value string) []string {
