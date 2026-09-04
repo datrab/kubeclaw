@@ -1,66 +1,11 @@
 import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
-import { listConfiguredTargetFiles } from './discovery.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
-import {
-  objectRecord as recordValue,
-  selectPresentValue,
-  textValue,
-} from '../support/value-boundary.ts';
+import { textValue } from '../support/value-boundary.ts';
 import { selectTruthyValue } from '../support/optional-absence.ts';
-import {
-  isJavaScriptOrTypeScriptProject,
-  LINT_VULNERABILITY_FOUND,
-  npmAuditSeverity,
-  registerTool,
-  requireString,
-} from './tool-registry-core.ts';
-
-function auditPackageLock(ctx: any, lockfile: string): any[] {
-  const packageRoot = path.dirname(lockfile);
-  const result = requireToolExecution(safeExec('npm', ['audit', '--json', '--omit=dev'], {
-    cwd: packageRoot,
-    timeout: ctx.tool.timeout_ms,
-  }), 'npm-audit');
-  const parsed = tryParseJson(result.stdout);
-  if (!parsed.ok) return failParse(ctx, 'npm-audit', parsed, result, path.join(packageRoot, 'package.json'));
-  if (parsed.data?.error) {
-    const auditError = recordValue(parsed.data.error);
-    const message = selectPresentValue(auditError.summary, auditError.message, typeof parsed.data.error === 'string' ? parsed.data.error : '', 'npm audit returned an operational error');
-    throw Object.assign(new Error(message), { code: 'npm-audit-execution-failed' });
-  }
-  const findings = Object.entries(recordValue(parsed.data?.vulnerabilities)).map(([name, vuln]) => ({
-    file: path.join(packageRoot, 'package.json'),
-    line: null,
-    column: null,
-    severity: npmAuditSeverity(vuln.severity),
-    code: `npm:${vuln.severity}`,
-    message: `${name}: ${selectPresentValue(vuln.title, vuln.via?.[0]?.title, LINT_VULNERABILITY_FOUND)} (${vuln.severity})`,
-  }));
-  if (result.exitCode !== 0 && findings.length === 0) return failParse(ctx, 'npm-audit', { error: 'non-zero exit without vulnerability findings' }, result, path.join(packageRoot, 'package.json'));
-  return findings;
-}
-
-// ── npm audit (Dependency security) ──
-registerTool({
-  id: 'npm-audit',
-  name: 'npm audit',
-  binary: 'npm',
-  tier: 'full',
-  detect: isJavaScriptOrTypeScriptProject,
-  run: (ctx: any) => {
-    const lockfiles = listConfiguredTargetFiles(ctx, (file: string) => path.basename(file) === 'package-lock.json');
-    const findings = lockfiles.flatMap((lockfile: string) => auditPackageLock(ctx, lockfile));
-
-    return {
-      errors: findings.filter((f: any) => f.severity === 'error').length,
-      warnings: findings.filter((f: any) => f.severity === 'warning').length,
-      findings,
-    };
-  },
-});
+import { registerTool } from './tool-registry-core.ts';
 // ── mypy (Python type checking) ──
 registerTool({
   id: 'mypy',
@@ -112,43 +57,6 @@ registerTool({
     return {
       errors: findings.filter((f: any) => f.severity === 'error').length,
       warnings: findings.filter((f: any) => f.severity === 'warning').length,
-      findings,
-    };
-  },
-});
-// ── pip-audit (Python dependency security) ──
-registerTool({
-  id: 'pip-audit',
-  name: 'pip-audit',
-  binary: 'pip-audit',
-  tier: 'full',
-  detect: (ctx: any) => ctx.projectTypes.has('python'),
-  run: (ctx: any) => {
-    const result = requireToolExecution(safeExec('pip-audit', ['--format', 'json'], {
-      cwd: ctx.repoRoot,
-      timeout: ctx.tool.timeout_ms,
-    }), 'pip-audit');
-
-    const parsed = tryParseJson(result.stdout);
-    if (!parsed.ok) return failParse(ctx, 'pip-audit', parsed, result, path.join(ctx.repoRoot, 'requirements.txt'));
-
-    const dependencyEntries = Array.isArray(parsed.data?.dependencies)
-      ? parsed.data.dependencies
-      : (Array.isArray(parsed.data) ? parsed.data : []);
-    const findings = dependencyEntries
-      .filter((dep: any) => dep.vulns?.length > 0)
-      .flatMap((dep: any) => dep.vulns.map((vuln: any) => ({
-        file: 'requirements.txt',
-        line: null,
-        column: null,
-        severity: 'error',
-        code: selectTruthyValue(() => (vuln.id), () => ('pip-audit')),
-        message: `${dep.name} ${dep.version}: ${requireString(vuln.description, 'pip-audit vulnerability description')}`,
-      })));
-
-    return {
-      errors: findings.length,
-      warnings: 0,
       findings,
     };
   },

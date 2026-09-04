@@ -485,36 +485,6 @@ async function checkKubectlAvailable() {
   return { ok: version.ok, reason: version.ok ? null : 'INFRA_KUBECTL_FAILED', result: version };
 }
 
-async function checkBusterV2Worker() {
-  let endpoint;
-  try {
-    endpoint = resolveProviderCapability(
-      parseCapabilityProviders(),
-      'buster',
-      'test.suite.execute',
-    ).endpoint;
-  } catch {
-    return { ok: false, reason: 'INFRA_MISSING_TEST_SUITE_PROVIDER' };
-  }
-  try {
-    const response = await fetch(`${endpoint.replace(/\/+$/u, '')}/healthz`, {
-      signal: AbortSignal.timeout(20_000),
-    });
-    const body = await response.json();
-    const ok = response.ok
-      && body?.schemaVersion === 'buster-suite-worker-health.v2'
-      && body?.ready === true;
-    return { ok, reason: ok ? null : 'INFRA_BUSTER_V2_WORKER_UNREADY', endpoint, body };
-  } catch (error) {
-    return {
-      ok: false,
-      reason: 'INFRA_BUSTER_V2_WORKER_UNREACHABLE',
-      endpoint,
-      error: error?.message || String(error),
-    };
-  }
-}
-
 async function checkBusterPlanRuntime() {
   let endpoint;
   try {
@@ -659,7 +629,6 @@ export async function runCapabilityProbe({ mode = 'full' } = {}) {
   await runCheck(checks, 'Git branch roundtrip', 'git_branch_roundtrip', checkGitBranchRoundTrip);
   await runCheck(checks, 'Discord production delivery receipt', 'discord_delivery', () => checkDiscordDelivery(openclawConfig));
   await runCheck(checks, 'kubectl available', 'kubectl', checkKubectlAvailable);
-  await runCheck(checks, 'Buster v2 worker available', 'buster-v2', checkBusterV2Worker);
   await runCheck(checks, 'Buster plan runtime available', 'buster-plan', checkBusterPlanRuntime);
   await runCheck(checks, 'Nova → Buster real BuildKit image proof', 'nova_buildkit_proof', checkNovaBuildkitProof);
   await runCheck(checks, 'Kubernetes API reachable', 'kubernetes_api', checkKubernetesApi);

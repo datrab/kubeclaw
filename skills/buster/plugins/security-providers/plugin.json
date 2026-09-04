@@ -1,0 +1,50 @@
+{
+  "id": "kubeclaw.security-providers",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [], "observers": [], "adapters": [],
+  "testProviders": [
+    {
+      "id": "headers", "contractId": "kubeclaw.security-headers@1", "kind": "test",
+      "module": "src/headers.js", "export": "provider", "configSchema": "schemas/headers.schema.json",
+      "inputs": [{ "name": "deployment", "kind": "value", "required": true, "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" }],
+      "outputs": [], "requiredCapabilities": ["network.http"], "retrySafe": true, "matrixFields": ["path"],
+      "reportFormats": [], "evidenceTypes": ["log"],
+      "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+    },
+    {
+      "id": "dependency-trivy", "contractId": "kubeclaw.dependency-scan-trivy@1", "kind": "test",
+      "module": "src/dependency.js", "export": "provider", "configSchema": "schemas/dependency.schema.json",
+      "inputs": [], "outputs": [], "requiredCapabilities": ["security.scan"], "retrySafe": true, "matrixFields": [],
+      "reportFormats": [], "evidenceTypes": ["log"],
+      "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+    },
+    {
+      "id": "image-trivy", "contractId": "kubeclaw.image-scan-trivy@1", "kind": "test",
+      "module": "src/image.js", "export": "provider", "configSchema": "schemas/image.schema.json",
+      "inputs": [{ "name": "image", "kind": "value", "required": true, "schemaId": "kubeclaw.container-image@1" }],
+      "outputs": [], "requiredCapabilities": ["security.scan"], "retrySafe": true, "matrixFields": [],
+      "reportFormats": [], "evidenceTypes": ["log"],
+      "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+    },
+    {
+      "id": "kubernetes-policy", "contractId": "kubeclaw.kubernetes-policy-security@1", "kind": "test",
+      "module": "src/kubernetes-policy.js", "export": "provider", "configSchema": "schemas/kubernetes-policy.schema.json",
+      "inputs": [{ "name": "checked-manifest", "kind": "artifact", "required": true, "mediaTypes": ["application/vnd.kubeclaw.checked-kubernetes-yaml"] }],
+      "outputs": [], "requiredCapabilities": ["security.scan"], "retrySafe": true, "matrixFields": [],
+      "reportFormats": [], "evidenceTypes": ["log"],
+      "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+    },
+    {
+      "id": "kubernetes-runtime", "contractId": "kubeclaw.kubernetes-runtime-security@1", "kind": "test",
+      "module": "src/kubernetes-runtime.js", "export": "provider", "configSchema": "schemas/kubernetes-runtime.schema.json",
+      "inputs": [
+        { "name": "deployment", "kind": "value", "required": true, "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" },
+        { "name": "checked-manifest", "kind": "artifact", "required": true, "mediaTypes": ["application/vnd.kubeclaw.checked-kubernetes-yaml"] }
+      ],
+      "outputs": [], "requiredCapabilities": ["kubernetes.runtime-security"], "retrySafe": true, "matrixFields": [],
+      "reportFormats": [], "evidenceTypes": ["log"],
+      "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+    }
+  ]
+}

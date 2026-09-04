@@ -18,7 +18,6 @@
     "secrets.read": "kubeclaw.secret-resolver:secrets",
     "network.http": "kubeclaw.network-http:http",
     "command.execute": "kubeclaw.command-runner:command",
-    "test.suite.execute": "kubeclaw.buster-suite-runtime:suite",
     "test.plan.execute": "kubeclaw.remote-test-gate:plan",
     "lint.execute": "kubeclaw.lint:executor",
     "transport.publish": "kubeclaw.transport-publisher:publisher",
@@ -68,7 +67,6 @@
       "command.execute",
       "container.build",
       "kubernetes.fixture",
-      "test.suite.execute",
       "lint.execute"
     ],
     "operator.notify": [

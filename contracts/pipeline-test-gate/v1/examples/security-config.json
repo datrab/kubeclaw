@@ -1,0 +1,7 @@
+[
+  { "profile": "api-http-v1", "paths": ["/"], "requestTimeoutMs": 10000, "policy": { "profile": "strict-v1" } },
+  { "projectDirectory": ".", "timeoutMs": 300000, "policy": { "profile": "strict-v1" } },
+  { "timeoutMs": 300000, "policy": { "profile": "strict-v1" } },
+  { "timeoutMs": 120000, "policy": { "profile": "strict-v1" } },
+  { "timeoutMs": 120000, "policy": { "profile": "strict-v1" } }
+]

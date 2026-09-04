@@ -582,6 +582,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         labels: { 'openclaw.io/buster-scope': request.resource.canonicalId.replace(/[^A-Za-z0-9._-]/gu, '-').slice(0, 63) } },
       spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
         purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
+        verifiedImage: immutableImage, manifestDigest,
         ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
         secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
     };

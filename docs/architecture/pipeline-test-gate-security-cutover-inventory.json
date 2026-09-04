@@ -1,0 +1,17 @@
+{
+  "schemaVersion":"suite-cutover-inventory.v1","suite":"security","successor":"kubeclaw.security-suite@1","parityItemCount":33,
+  "authority":{"old":"deleted","replacement":"kubeclaw.security-providers","state":"replacement-only"},
+  "legacyFilesToDelete":["skills/buster/plugins/buster-suite-runtime/src/runtime/suites/security.ts","skills/buster/plugins/buster-suite-runtime/src/adapter.ts","skills/buster/plugins/buster-suite-runtime/src/worker.ts","skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts","skills/buster/plugins/buster-suite-runtime/src/worker-context.ts","skills/buster/plugins/buster-suite-runtime/tests/live-function.test.ts"],
+  "replacementFilesRequired":["contracts/pipeline-test-gate/v1/suites/security.v1.json","skills/buster/plugins/security-providers/plugin.json","skills/buster/engine/test-gates/security-scan-runtime.ts","skills/buster/engine/test-gates/kubernetes-runtime-security.ts","tests/verification/contracts/check-pipeline-security-remote-vertical.mts"],
+  "requiredAbsence":[
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/runtime/runners/suite-runner.ts","token":"securitySuite"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/src/protocol.ts","token":"'security'"},
+    {"file":"skills/buster/plugins/buster-suite-runtime/plugin.json","token":"test.suite.execute"},
+    {"file":"packaging/runtime/roles/buster.json","token":"kubeclaw.buster-suite-runtime"},
+    {"file":"docker/buster-runtime-entrypoint.sh","token":"18892"},
+    {"file":"my-values/buster-values.yaml","token":"buster-legacy"},
+    {"file":"my-values/nova-values.yaml","token":"test.suite.execute"}
+  ],
+  "retainedSharedSurfaces":["canonical artifact store","canonical Nova-to-Buster plan dispatch","namespace-controller runtime observation"],
+  "verification":{"solePathTests":["tests/verification/contracts/check-pipeline-security-cutover.mts"],"dualAuthorityTests":["tests/verification/contracts/check-pipeline-security-cutover.mts"],"absenceTests":["tests/verification/contracts/check-pipeline-security-cutover.mts"]}
+}

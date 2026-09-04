@@ -1,14 +1,6 @@
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import { buildRequest, parseVerdict, type SuiteEvidence, type TestInput } from './protocol.ts';
 
-interface BusterSuiteResult {
-  readonly suite: string;
-  readonly status: string;
-  readonly reason?: string;
-  readonly error?: string;
-  readonly findings?: readonly { readonly message?: string }[];
-}
-
 function providerEvidence(response: Readonly<Record<string, unknown>>): readonly SuiteEvidence[] {
   if (response.schemaVersion !== 'test-plan-receipt.v1' || response.provider !== 'buster-plan-v1'
     || typeof response.resultDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(response.resultDigest)) {
@@ -44,85 +36,6 @@ async function executeProviderPlan(input: TestInput, context: PluginInvocationCo
   return { evidence: providerEvidence(response), execution: response };
 }
 
-function validateSuiteReceipt(result: Readonly<Record<string, unknown>>): void {
-  const receipt = result.receipt as Readonly<Record<string, unknown>> | undefined;
-  if (
-    !receipt
-    || typeof receipt !== 'object'
-    || Array.isArray(receipt)
-    || receipt.schemaVersion !== 'test-suite-receipt.v1'
-    || typeof receipt.provider !== 'string'
-    || receipt.provider.length === 0
-    || typeof receipt.jobId !== 'string'
-    || receipt.jobId.length === 0
-    || typeof receipt.completedAt !== 'string'
-    || !Number.isFinite(Date.parse(receipt.completedAt))
-    || typeof receipt.resultDigest !== 'string'
-    || !/^[a-f0-9]{64}$/u.test(receipt.resultDigest)
-  ) {
-    throw new Error('TEST_SUITE_RECEIPT_INVALID');
-  }
-}
-
-function busterSummary(result: BusterSuiteResult): string {
-  const findings = Array.isArray(result.findings)
-    ? result.findings
-      .map((finding) => finding?.message)
-      .filter((message): message is string => typeof message === 'string' && message.length > 0)
-    : [];
-  return [
-    `status=${result.status}`,
-    result.reason,
-    result.error,
-    ...findings,
-  ].filter((entry): entry is string => typeof entry === 'string' && entry.length > 0)
-    .join('\n')
-    .slice(0, 2_048);
-}
-
-async function executeTestSuitePlan(
-  input: TestInput,
-  context: PluginInvocationContext,
-): Promise<Readonly<{ evidence: readonly SuiteEvidence[]; execution: unknown | null }>> {
-  const result = await context.invoke('test.suite.execute', {
-    operation: 'run',
-    resource: {
-      type: 'test.suite-plan',
-      canonicalId: `${input.runId}:${input.taskId}:${input.attempt}`,
-    },
-    payload: {
-      repositoryRoot: input.suitePlan.repositoryRoot,
-      suites: input.suitePlan.suites,
-      testConfig: input.suitePlan.testConfig,
-      task: input.suitePlan.task,
-      moduleId: input.suitePlan.moduleId,
-      attempt: input.attempt,
-    },
-  });
-  validateSuiteReceipt(result);
-  if (!Array.isArray(result.results) || result.results.length === 0) {
-    throw new Error('BUSTER_SUITE_RESULT_INVALID');
-  }
-  const evidence = result.results.map((value) => {
-    if (
-      !value
-      || typeof value !== 'object'
-      || Array.isArray(value)
-      || typeof value.suite !== 'string'
-      || typeof value.status !== 'string'
-    ) {
-      throw new Error('BUSTER_SUITE_RESULT_INVALID');
-    }
-    const suiteResult = value as BusterSuiteResult;
-    return Object.freeze({
-      suite: suiteResult.suite,
-      passed: suiteResult.status === 'PASS',
-      summary: busterSummary(suiteResult),
-    });
-  });
-  return { evidence, execution: result };
-}
-
 async function executeCommandSuites(
   input: TestInput,
   context: PluginInvocationContext,
@@ -130,14 +43,11 @@ async function executeCommandSuites(
   evidence: readonly SuiteEvidence[];
   suiteExecution: unknown | null;
 }>> {
+  if (input.suitePlan.suites.length > 0) throw new Error('LEGACY_TEST_SUITE_RETIRED');
   const provider = await executeProviderPlan(input, context);
-  const buster = input.suitePlan.suites.length > 0
-    ? await executeTestSuitePlan(input, context)
-    : { evidence: [] as readonly SuiteEvidence[], execution: null };
   const evidence: SuiteEvidence[] = [
     ...input.suiteEvidence,
     ...provider.evidence,
-    ...buster.evidence,
   ];
   for (const suite of input.commandSuites ?? []) {
     const result = await context.invoke('command.execute', {
@@ -158,7 +68,7 @@ async function executeCommandSuites(
     });
   }
   if (evidence.length === 0) throw new Error('TEST_SUITES_REQUIRED');
-  return { evidence, suiteExecution: { provider: provider.execution, legacy: buster.execution } };
+  return { evidence, suiteExecution: { provider: provider.execution } };
 }
 
 export async function execute(input:TestInput,context:PluginInvocationContext):Promise<StageResult>{

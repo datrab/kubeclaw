@@ -29,7 +29,6 @@ const prismControlDockerfile = read('docker/Dockerfile.prism-control');
 const prismStudioDockerfile = read('docker/Dockerfile.prism-studio');
 const prismWorkerDockerfile = read('docker/Dockerfile.prism-worker');
 const busterRuntimeEntrypoint = read('docker/buster-runtime-entrypoint.sh');
-const busterWorker = read('skills/buster/plugins/buster-suite-runtime/src/worker.ts');
 const values = read('charts/kubeclaw/values.yaml');
 const novaValues = read('my-values/nova-values.yaml');
 const busterValues = read('my-values/buster-values.yaml');
@@ -277,7 +276,7 @@ assert.doesNotMatch(
 );
 assert.match(
   novaValues,
-  /capabilityProviders:\s*\n\s+buster:\s*\n\s+agentRole:\s*buster\s*\n\s+capabilities:[\s\S]*runtime\.dispatch:[\s\S]*adapter:\s*openclaw[\s\S]*port:\s*18789[\s\S]*test\.suite\.execute:[\s\S]*adapter:\s*buster-suite-v2[\s\S]*port:\s*18892[\s\S]*test\.plan\.execute:[\s\S]*adapter:\s*buster-plan-v1[\s\S]*port:\s*18891/,
+  /capabilityProviders:\s*\n\s+buster:\s*\n\s+agentRole:\s*buster\s*\n\s+capabilities:[\s\S]*runtime\.dispatch:[\s\S]*adapter:\s*openclaw[\s\S]*port:\s*18789[\s\S]*test\.plan\.execute:[\s\S]*adapter:\s*buster-plan-v1[\s\S]*port:\s*18891/,
   'Nova must identify Buster through the provider-role contract',
 );
 assert.match(
@@ -306,16 +305,6 @@ assert.match(
   /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{[\s\S]*"enabled"[\s\S]*"maxEventBytes"[\s\S]*"maxQueuePerStream"[\s\S]*"hookTimeoutMs"/,
   'the host-native observer must receive its required runtime configuration',
 );
-assert.match(
-  busterWorker,
-  /--reuid[\s\S]*--clear-groups[\s\S]*\/usr\/bin\/unshare[\s\S]*--user[\s\S]*--map-current-user[\s\S]*--pid[\s\S]*--kill-child=SIGKILL[\s\S]*\/usr\/bin\/setpriv[\s\S]*--no-new-privs[\s\S]*--bounding-set=-all/,
-  'suite jobs must switch identity before entering a killable namespace and drop all authority inside it',
-);
-assert.doesNotMatch(
-  busterWorker,
-  /--mount-proc/,
-  'suite jobs must not remount the container-runtime-masked procfs from a nested user namespace',
-);
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 const busterRuntimePortBlock = busterValues.match(
   /extraContainers:[\s\S]*?\n    ports:\s*\n(?<ports>[\s\S]*?)\n    startupProbe:/u,
@@ -323,7 +312,7 @@ const busterRuntimePortBlock = busterValues.match(
 assert.ok(busterRuntimePortBlock, 'Buster runtime port block is missing');
 const busterRuntimePortNames = [...busterRuntimePortBlock.matchAll(/^\s+- name:\s*(\S+)\s*$/gmu)]
   .map((match) => match[1]);
-assert.deepEqual(busterRuntimePortNames, ['plan-runtime', 'legacy-runtime']);
+assert.deepEqual(busterRuntimePortNames, ['plan-runtime']);
 for (const portName of busterRuntimePortNames) {
   assert.ok(portName.length <= 15, `Buster runtime port name exceeds Kubernetes limit: ${portName}`);
 }
@@ -374,7 +363,7 @@ assert.match(
 );
 assert.match(
   deploy,
-  /reconcile_buster_runtime_ports[\s\S]*?go-template=[\s\S]*?runtime_index[\s\S]*?--type=json[\s\S]*?\\"op\\":\\"test[\s\S]*?buster-v2-runtime[\s\S]*?\\"op\\":\\"replace[\s\S]*?plan-runtime[\s\S]*?28891[\s\S]*?legacy-runtime[\s\S]*?28892[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+reconcile_buster_runtime_ports/u,
+  /reconcile_buster_runtime_ports[\s\S]*?go-template=[\s\S]*?runtime_index[\s\S]*?--type=json[\s\S]*?\\"op\\":\\"test[\s\S]*?buster-v2-runtime[\s\S]*?\\"op\\":\\"replace[\s\S]*?plan-runtime[\s\S]*?28891[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+reconcile_buster_runtime_ports/u,
   'Buster deploy must replace stale runtime port metadata before Helm upgrades',
 );
 assert.match(
@@ -388,7 +377,7 @@ assert.match(
   'agent upgrades must discard stale release values and roll back failed waits atomically',
 );
 assert.match(busterValues, /name:\s*plan-runtime[\s\S]*containerPort:\s*28891/);
-assert.match(busterValues, /name:\s*legacy-runtime[\s\S]*containerPort:\s*28892/);
+assert.doesNotMatch(busterValues, /legacy-runtime|28892/);
 assert.match(
   busterValues,
   /startupDoctor:[\s\S]*nodeOptions:\s*"--max-old-space-size=3072"[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*4Gi\s*\}[\s\S]*initSetup:[\s\S]*requests:\s*\{\s*cpu:\s*500m,\s*memory:\s*1Gi\s*\}[\s\S]*limits:\s*\{\s*cpu:\s*"2",\s*memory:\s*8Gi\s*\}/,
@@ -401,7 +390,7 @@ assert.match(
 );
 assert.match(
   busterValues,
-  /service:\s*\n\s+extraPorts:\s*\n\s+- name:\s*buster-plan\s*\n\s+port:\s*18891\s*\n\s+targetPort:\s*buster-plan\s*\n\s+- name:\s*buster-legacy\s*\n\s+port:\s*18892\s*\n\s+targetPort:\s*buster-legacy/,
+  /service:\s*\n\s+extraPorts:\s*\n\s+- name:\s*buster-plan\s*\n\s+port:\s*18891\s*\n\s+targetPort:\s*buster-plan/,
   'the Buster Service must target the public Envoy ports, not the local suite runtime ports',
 );
 assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/);
@@ -412,8 +401,9 @@ for (const values of [novaValues, busterValues, prismAgentValues]) {
   assert.doesNotMatch(values, /Ravencrypt|ForgeStack/,
     'production agent values must not retain a legacy repository identity');
 }
-assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
-assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*18891[\s\S]*port:\s*18892/);
+assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*18891/);
+assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*18891/);
+assert.doesNotMatch(networkPolicies, /18892/);
 assert.doesNotMatch(networkPolicies, /name:\s*kubeclaw-buster-managed-test-egress/,
   'Buster E2E egress must be a lease-scoped controller resource, not a namespace-wide static grant');
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
@@ -436,8 +426,8 @@ assert.doesNotMatch(
 );
 assert.match(
   busterValues,
-  /BUSTER_PLAN_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/plan-jobs[\s\S]*BUSTER_LEGACY_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/legacy-jobs[\s\S]*name:\s*buster-v2-state[\s\S]*mountPath:\s*\/var\/lib\/buster-v2/,
-  'plan and legacy state must use separate directories on the sidecar-only volume',
+  /BUSTER_PLAN_STATE_DIR[\s\S]*\/var\/lib\/buster-v2\/plan-jobs[\s\S]*name:\s*buster-v2-state[\s\S]*mountPath:\s*\/var\/lib\/buster-v2/,
+  'plan state must use the sidecar-only volume',
 );
 assert.match(
   busterValues,
@@ -792,14 +782,15 @@ assert.match(
 );
 assert.match(
   busterRuntimeEntrypoint,
-  /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"[\s\S]*chown -R root:builder "\$legacy_state_dir" "\$legacy_run_dir"/,
-  'each Buster runtime must own the directories whose modes it initializes without CAP_FOWNER',
+  /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"/,
+  'the Buster plan runtime must own the directories whose modes it initializes without CAP_FOWNER',
 );
 assert.match(
   busterRuntimeEntrypoint,
-  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts[\s\S]*printf '%s' "\$worker_token" \| BUSTER_V2_PORT="\$\{BUSTER_LEGACY_PORT:-18892\}"[\s\S]*BUSTER_V2_STATE_DIR="\$legacy_state_dir"[\s\S]*setpriv[\s\S]*--groups 1000,1002[\s\S]*buster-suite-runtime\/src\/worker\.ts/,
-  'the plan runtime and legacy worker must retain only their required token and BuildKit socket access',
+  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts/,
+  'the plan runtime must retain only its required token and BuildKit socket access',
 );
+assert.doesNotMatch(busterRuntimeEntrypoint, /BUSTER_LEGACY|18892|buster-suite-runtime\/src\/worker\.ts/);
 assert.match(
   deploy,
   /app\.kubernetes\.io\/instance=\$\{release\},app\.kubernetes\.io\/component=\$\{role\}[\s\S]*pod="\$\(agent_pod_name "\$release"\)"[\s\S]*kubectl exec -n "\$NAMESPACE" "\$pod" -c kubeclaw/,
@@ -929,7 +920,7 @@ if (helm.error?.code !== 'ENOENT') {
   );
   assert.match(
     novaHelm.stdout,
-    /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*127\.0\.0\.1:28891[\s\S]*127\.0\.0\.1:28892/,
+    /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*127\.0\.0\.1:28891/,
   );
   assert.match(novaHelm.stdout,
     /port_value:\s*28891[\s\S]*agent-buster[\s\S]*port_value:\s*18891[\s\S]*agent-buster/,

@@ -28,7 +28,7 @@ const phase5 = JSON.parse(fs.readFileSync(
   'utf8',
 ));
 
-assert.equal(core.CAPABILITY_IDS.length, 25);
+assert.equal(core.CAPABILITY_IDS.length, 24);
 assert.equal(Object.isFrozen(core.CAPABILITY_DEFINITIONS), true);
 assert(
   core.CAPABILITY_DEFINITIONS['git.repository.read'].operations.includes('inventory_revision'),
@@ -372,14 +372,6 @@ const cases = [
     operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: 'kubernetes-exposure:attempt:test' },
     payload: { namespace: 'test-app' },
   }, { payload: { namespace: 'prod-app' } }],
-  ['test.suite.execute', {
-    allowedSuites: ['unit'], allowedRoots: [repositoryRoot],
-  }, {
-    operation: 'run', resource: { type: 'test.suite-plan', canonicalId: 'module' },
-    payload: { repositoryRoot, suites: ['unit'] },
-  }, {
-    payload: { repositoryRoot, suites: ['deployment'] },
-  }],
   ['test.plan.execute', {
     allowedRoots: [repositoryRoot],
   }, {

@@ -51,6 +51,12 @@ spec:
                   message: "serviceName is immutable"
                 - rule: "has(self.servicePort) == has(oldSelf.servicePort) && (!has(self.servicePort) || self.servicePort == oldSelf.servicePort)"
                   message: "servicePort is immutable"
+                - rule: "has(self.serviceTargetPort) == has(oldSelf.serviceTargetPort) && (!has(self.serviceTargetPort) || self.serviceTargetPort == oldSelf.serviceTargetPort)"
+                  message: "serviceTargetPort is immutable"
+                - rule: "has(self.verifiedImage) == has(oldSelf.verifiedImage) && (!has(self.verifiedImage) || self.verifiedImage == oldSelf.verifiedImage)"
+                  message: "verifiedImage is immutable"
+                - rule: "has(self.manifestDigest) == has(oldSelf.manifestDigest) && (!has(self.manifestDigest) || self.manifestDigest == oldSelf.manifestDigest)"
+                  message: "manifestDigest is immutable"
                 - rule: "has(self.cleanupPolicy) == has(oldSelf.cleanupPolicy) && (!has(self.cleanupPolicy) || self.cleanupPolicy == oldSelf.cleanupPolicy)"
                   message: "cleanupPolicy is immutable"
                 - rule: "has(self.ttlSeconds) == has(oldSelf.ttlSeconds) && (!has(self.ttlSeconds) || self.ttlSeconds == oldSelf.ttlSeconds)"
@@ -96,6 +102,17 @@ spec:
                   type: integer
                   minimum: 1
                   maximum: 65535
+                serviceTargetPort:
+                  type: integer
+                  minimum: 1
+                  maximum: 65535
+                verifiedImage:
+                  type: string
+                  maxLength: 2048
+                  pattern: '^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$'
+                manifestDigest:
+                  type: string
+                  pattern: '^sha256:[a-f0-9]{64}$'
                 cleanupPolicy:
                   type: string
                   enum: ["delete", "retain"]
@@ -205,4 +222,48 @@ spec:
                   type: string
                 message:
                   type: string
+                runtimeSecurity:
+                  type: object
+                  properties:
+                    phase:
+                      type: string
+                      enum: ["Observed", "Unavailable"]
+                    observedAt:
+                      type: string
+                      format: date-time
+                    manifestDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    immutableImage:
+                      type: string
+                      maxLength: 2048
+                    podCount:
+                      type: integer
+                      minimum: 0
+                    serviceCount:
+                      type: integer
+                      minimum: 0
+                    resultDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    totalFindingCount:
+                      type: integer
+                      minimum: 0
+                    omittedFindingCount:
+                      type: integer
+                      minimum: 0
+                    message:
+                      type: string
+                    findings:
+                      type: array
+                      maxItems: 4096
+                      items:
+                        type: object
+                        properties:
+                          id: { type: string, maxLength: 256 }
+                          severity: { type: string, enum: ["critical", "high", "medium", "low", "info"] }
+                          message: { type: string, maxLength: 4096 }
+                          resource: { type: string, maxLength: 512 }
+                        required: ["id", "severity", "message", "resource"]
+                  required: ["phase"]
 {{- end }}

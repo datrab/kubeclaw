@@ -2,13 +2,6 @@
   "schemaVersion": "pipeline-runtime-external-capabilities.v1",
   "sources": [
     {
-      "id": "buster-service",
-      "roles": ["nova"],
-      "capabilities": ["test.suite.execute"],
-      "contract": "pipeline-test-gate.v1",
-      "kind": "authenticated-service"
-    },
-    {
       "id": "worker-workspace",
       "roles": ["buster", "prism"],
       "capabilities": ["git.repository.read"],

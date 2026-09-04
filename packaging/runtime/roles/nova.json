@@ -53,11 +53,5 @@
     "kubeclaw.review"
   ],
   "extensions": ["kubeclaw-agent-observer"],
-  "externalCapabilities": [
-    {
-      "id": "test.suite.execute",
-      "source": "buster-service",
-      "reason": "Nova requests test execution from Buster. Nova does not install the Buster engine."
-    }
-  ]
+  "externalCapabilities": []
 }

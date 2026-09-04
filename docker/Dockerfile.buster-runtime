@@ -10,6 +10,9 @@ ARG KUBECLAW_BUILD_REVISION=unknown
 ARG KUBECTL_VERSION=1.35.6
 ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
 ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
+ARG TRIVY_VERSION=0.74.0
+ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a
+ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5
 
 COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 # The dated Debian snapshot pins the complete dependency graph coherently.
@@ -44,11 +47,19 @@ COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
 
 RUN set -eux; \
     arch="${TARGETARCH:-amd64}"; \
-    case "$arch" in amd64) kubectl_sha="$KUBECTL_SHA256_AMD64" ;; arm64) kubectl_sha="$KUBECTL_SHA256_ARM64" ;; *) exit 1 ;; esac; \
+    case "$arch" in \
+      amd64) kubectl_sha="$KUBECTL_SHA256_AMD64"; trivy_arch=64bit; trivy_sha="$TRIVY_SHA256_AMD64" ;; \
+      arm64) kubectl_sha="$KUBECTL_SHA256_ARM64"; trivy_arch=ARM64; trivy_sha="$TRIVY_SHA256_ARM64" ;; \
+      *) exit 1 ;; \
+    esac; \
     curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /tmp/kubectl; \
     printf '%s  %s\n' "$kubectl_sha" /tmp/kubectl | sha256sum -c -; \
     install -m 0755 /tmp/kubectl /usr/local/bin/kubectl; \
-    rm /tmp/kubectl; \
+    trivy_archive="trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz"; \
+    curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}" -o "/tmp/${trivy_archive}"; \
+    printf '%s  %s\n' "$trivy_sha" "/tmp/${trivy_archive}" | sha256sum -c -; \
+    tar -xzf "/tmp/${trivy_archive}" -C /usr/local/bin trivy; \
+    rm /tmp/kubectl "/tmp/${trivy_archive}"; \
     groupmod --new-name builder node; \
     usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \
     groupadd --gid 1001 buster-suite; \
@@ -57,7 +68,7 @@ RUN set -eux; \
     usermod --append --groups buster-suite,buster-buildkit builder; \
     printf 'builder:100000:65536\n' >> /etc/subuid; \
     printf 'builder:100000:65536\n' >> /etc/subgid; \
-    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \
+    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit; \
     chown -R builder:builder /app /home/builder /run/user/1000; \
     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
@@ -88,9 +99,14 @@ RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
 RUN node /app/node_modules/playwright/cli.js install --with-deps chromium firefox webkit \
     && chown -R builder:builder /ms-playwright
 
-COPY skills/buster/plugins/buster-suite-runtime /app/buster-suite-runtime
-RUN rm -rf /app/buster-suite-runtime/tests \
-    && chown -R builder:builder /app/buster-suite-runtime
+# Freeze the vulnerability database into this immutable worker image. A new
+# worker image is the controlled database update unit; execution stays offline.
+RUN setpriv --reuid=1000 --regid=1000 --init-groups \
+      env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-db-only \
+    && setpriv --reuid=1000 --regid=1000 --init-groups \
+      env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-java-db-only \
+    && test -s /home/builder/.cache/trivy/db/trivy.db \
+    && test -s /home/builder/.cache/trivy/java-db/trivy-java.db
 
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
 RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
@@ -110,8 +126,7 @@ ENV HOME=/home/builder \
     BUSTER_V2_RUNNER_GID=1001 \
     BUSTER_V2_BUILDKIT_GID=1002 \
     BUSTER_V2_KUBERNETES_CREDENTIALS=/var/run/buster-worker/kubernetes \
-    BUSTER_PLAN_PORT=18891 \
-    BUSTER_LEGACY_PORT=18892
+    BUSTER_PLAN_PORT=18891
 
 # The production supervisor starts with only the capabilities declared by the
 # pod securityContext. The entrypoint immediately launches BuildKit as the
@@ -119,7 +134,7 @@ ENV HOME=/home/builder \
 # solely to enter a per-job identity before dropping every capability.
 # hadolint ignore=DL3002
 USER 0:0
-EXPOSE 18891 18892
+EXPOSE 18891
 WORKDIR /home/builder
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/buster-runtime-entrypoint"]
 

@@ -109,14 +109,13 @@ if (priorImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE;
 else process.env.REAL_E2E_DEPLOYMENT_IMAGE = priorImage;
 try {
   const generatedProgress = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'progress.json'), 'utf8'));
-  assert.equal(generatedProgress.gates['final-buster'].test_suites.includes('k8s'), false);
-  assert.equal(Object.hasOwn(generatedProgress.gates['final-buster'].test_config, 'k8s'), false);
+  assert.equal(generatedProgress.gates['final-buster'].test_suites?.includes('k8s') ?? false, false);
+  assert.equal(Object.hasOwn(generatedProgress.gates['final-buster'].test_config ?? {}, 'k8s'), false);
   const scope = loadPipelineTestScope(path.join(workspace.swarmDir, 'pipeline.json'),
     { moduleId: null, gateId: 'final-buster' });
   const fixture = scope.declaration.fixtures?.['kubernetes-deployment'];
   assert.equal(fixture?.uses, 'kubeclaw.kubernetes-fixture@1');
-  assert.match(String(fixture?.config?.image?.reference), /@sha256:[a-f0-9]{64}$/u);
-  assert.match(String(fixture?.config?.image?.digest), /^sha256:[a-f0-9]{64}$/u);
+  assert.equal(fixture?.config?.image, undefined);
   assert.deepEqual(fixture?.inputs?.image, {
     from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
   });

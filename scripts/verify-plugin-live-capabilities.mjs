@@ -8,6 +8,16 @@ const root = path.resolve(import.meta.dirname, '..');
 const pluginRoots = ['common', 'nova', 'buster']
   .map((role) => path.join(root, 'skills', role, 'plugins'));
 
+function hasLiveRegistration(packageRoot) {
+  const manifestPath = ['plugin.json', 'openclaw.plugin.json']
+    .map((name) => path.join(packageRoot, name))
+    .find((candidate) => fs.existsSync(candidate));
+  if (!manifestPath) return false;
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  return ['stages', 'observers', 'adapters', 'testProviders']
+    .some((key) => Array.isArray(manifest[key]) && manifest[key].length > 0);
+}
+
 const packages = pluginRoots.flatMap((pluginRoot) => fs.readdirSync(pluginRoot, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => path.join(pluginRoot, entry.name)))
@@ -15,7 +25,7 @@ const packages = pluginRoots.flatMap((pluginRoot) => fs.readdirSync(pluginRoot, 
     && (
       fs.existsSync(path.join(packageRoot, 'plugin.json'))
       || fs.existsSync(path.join(packageRoot, 'openclaw.plugin.json'))
-    ))
+    ) && hasLiveRegistration(packageRoot))
   .sort();
 
 for (const packageRoot of packages) {

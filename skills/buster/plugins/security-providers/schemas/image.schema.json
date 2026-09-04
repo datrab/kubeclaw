@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "type": "object", "additionalProperties": false,
+  "required": ["policy"],
+  "properties": { "timeoutMs": { "type": "integer", "minimum": 1000, "maximum": 900000 },
+    "policy": { "$ref": "#/$defs/policy" } },
+  "$defs": {
+    "policy": { "type": "object", "additionalProperties": false, "required": ["profile"],
+      "properties": {
+        "profile": { "const": "strict-v1" },
+        "acceptances": { "type": "array", "maxItems": 128, "items": { "$ref": "#/$defs/acceptance" } }
+      } },
+    "acceptance": { "type": "object", "additionalProperties": false, "required": ["findingId", "reason", "expiresAt"],
+      "properties": {
+        "findingId": { "type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[A-Za-z0-9._:@/-]+$" },
+        "reason": { "type": "string", "minLength": 8, "maxLength": 1024 },
+        "expiresAt": { "type": "string", "format": "date-time" }
+      } }
+  }
+}

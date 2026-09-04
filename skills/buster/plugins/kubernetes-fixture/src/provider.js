@@ -120,7 +120,11 @@ export function provider() {
         counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [],
         metrics: [{ name: 'kubernetes_fixture_resources', value: Number(result.resourceCount ?? 0) },
           { name: 'kubernetes_fixture_pods', value: Number(result.podCount ?? 0) }], evidenceFiles: [], reports: [],
-        outputs: [{ name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1', value: deployment }],
+        outputs: [
+          { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1', value: deployment },
+          { name: 'image', kind: 'value', schemaId: 'kubeclaw.container-image@1',
+            value: { schemaVersion: 'container-image.v1', reference: config.immutableImage, digest: config.imageDigest } },
+        ],
         exitCode: null, signal: null, providerDetails: details({ leaseName: result.leaseName, namespace: result.namespace,
           manifestDigest: manifest.artifact.contentDigest, immutableImage: config.immutableImage,
           retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };

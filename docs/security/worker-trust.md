@@ -143,7 +143,6 @@ application Service on port `8080`.
 | Local address | Remote destination | Purpose |
 | --- | --- | --- |
 | `127.0.0.1:28891` | `agent-buster:18891` | Buster plan execution. |
-| `127.0.0.1:28892` | `agent-buster:18892` | Buster legacy suite execution. |
 | `127.0.0.1:28080` | `agent-prism:8080` (Envoy target `18082`) | Prism OpenClaw dispatch. |
 
 Nova sends plain HTTP only to its loopback Envoy listener. Envoy sends mTLS to
@@ -154,18 +153,14 @@ the destination proxy.
 | Pod address | Local destination | Purpose |
 | --- | --- | --- |
 | `0.0.0.0:18891` | `127.0.0.1:28891` | Buster plan execution. |
-| `0.0.0.0:18892` | `127.0.0.1:28892` | Buster legacy suite execution. |
 
-The Buster Service targets only the Envoy listeners on `18891` and `18892`.
-Its named target ports are `buster-plan` and `buster-legacy`. The runtime ports
-use the distinct names `plan-runtime` and `legacy-runtime`; each Service target
-name must occur only once in the pod. Kubernetes limits container port names to
-15 characters.
+The Buster Service targets only the Envoy listener on `18891`. Its named target
+port is `buster-plan`. The runtime port uses the distinct name `plan-runtime`.
 
-The Buster runtimes listen on the pod network at `28891` and `28892` so kubelet
-HTTP probes can reach them. No Service targets these ports, and the production
-NetworkPolicy does not permit ingress to them. Envoy forwards accepted traffic
-to `127.0.0.1:28891` or `127.0.0.1:28892`. Worker Core accepts the forwarded
+The Buster runtime listens on the pod network at `28891` so kubelet HTTP probes
+can reach it. No Service targets this port, and the production NetworkPolicy
+does not permit ingress to it. Envoy forwards accepted traffic to
+`127.0.0.1:28891`. Worker Core accepts the forwarded
 SPIFFE identity only when the immediate TCP peer is loopback.
 
 ### Prism listeners
@@ -275,7 +270,7 @@ NetworkPolicy provides a second authorization layer. It does not replace mTLS.
 
 The shared policies permit these routes:
 
-- Nova to Buster on TCP ports `18891` and `18892`.
+- Nova to Buster on TCP port `18891`.
 - Nova to Prism control on TCP port `8443`.
 - Nova to managed Prism lease namespaces on TCP port `8443`.
 

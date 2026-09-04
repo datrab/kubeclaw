@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -643,5 +644,126 @@ func TestSourceSecretAllowlistIsDenyByDefault(t *testing.T) {
 	ctrl.allowedSourceSecrets = map[string]bool{"prism-provider": true}
 	if !ctrl.allowedSourceSecrets["prism-provider"] || ctrl.allowedSourceSecrets["other"] {
 		t.Fatal("source Secret allowlist is not exact")
+	}
+}
+
+func TestInspectRuntimeSecurityStateUsesProductionControllerRules(t *testing.T) {
+	image := "registry.local/app@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+	secure := map[string]map[string]interface{}{
+		"pods": {"items": []interface{}{map[string]interface{}{
+			"metadata": map[string]interface{}{"name": "app"},
+			"spec": map[string]interface{}{
+				"automountServiceAccountToken": false,
+				"securityContext":              map[string]interface{}{"runAsNonRoot": true, "seccompProfile": map[string]interface{}{"type": "RuntimeDefault"}},
+				"containers": []interface{}{map[string]interface{}{"name": "app", "image": image,
+					"securityContext": map[string]interface{}{"allowPrivilegeEscalation": false, "runAsNonRoot": true,
+						"capabilities": map[string]interface{}{"drop": []interface{}{"ALL"}}}}},
+			},
+		}}},
+		"services": {"items": []interface{}{map[string]interface{}{"metadata": map[string]interface{}{"name": "app"},
+			"spec": map[string]interface{}{"type": "ClusterIP"}}}},
+		"roles": {"items": []interface{}{}}, "rolebindings": {"items": []interface{}{}}, "ingresses": {"items": []interface{}{}},
+	}
+	findings, pods, services := inspectRuntimeSecurityState(secure, image)
+	if len(findings) != 0 || pods != 1 || services != 1 {
+		t.Fatalf("secure production state was not accepted: findings=%v pods=%d services=%d", findings, pods, services)
+	}
+
+	unsafeCapabilities := secure
+	unsafeCapabilities["pods"] = map[string]interface{}{"items": []interface{}{map[string]interface{}{
+		"metadata": map[string]interface{}{"name": "capability-add"},
+		"spec": map[string]interface{}{
+			"automountServiceAccountToken": false,
+			"securityContext":              map[string]interface{}{"runAsNonRoot": true, "seccompProfile": map[string]interface{}{"type": "RuntimeDefault"}},
+			"containers": []interface{}{map[string]interface{}{"name": "app", "image": image,
+				"securityContext": map[string]interface{}{"allowPrivilegeEscalation": false, "runAsNonRoot": true,
+					"capabilities": map[string]interface{}{"drop": []interface{}{"ALL"}, "add": []interface{}{"NET_RAW"}}}}},
+			"ephemeralContainers": []interface{}{map[string]interface{}{"name": "debug", "image": "debug:latest",
+				"securityContext": map[string]interface{}{"privileged": true, "runAsNonRoot": true,
+					"allowPrivilegeEscalation": false, "capabilities": map[string]interface{}{"drop": []interface{}{"ALL"}}}}},
+		},
+	}}}
+	findings, _, _ = inspectRuntimeSecurityState(unsafeCapabilities, image)
+	capabilityIDs := map[string]bool{}
+	for _, raw := range findings {
+		capabilityIDs[stringValue(securityObject(raw)["id"])] = true
+	}
+	for _, id := range []string{"runtime:capability-add:app:container-security", "runtime:capability-add:debug:image", "runtime:capability-add:debug:container-security"} {
+		if !capabilityIDs[id] {
+			t.Fatalf("unsafe normal or ephemeral container was not rejected: %v", findings)
+		}
+	}
+
+	unsafe := map[string]map[string]interface{}{
+		"pods": {"items": []interface{}{map[string]interface{}{"metadata": map[string]interface{}{"name": "bad"},
+			"spec": map[string]interface{}{"hostNetwork": true, "containers": []interface{}{map[string]interface{}{
+				"name": "bad", "image": "mutable:latest", "securityContext": map[string]interface{}{},
+			}}}}}},
+		"services": {"items": []interface{}{map[string]interface{}{"metadata": map[string]interface{}{"name": "public"},
+			"spec": map[string]interface{}{"type": "LoadBalancer"}}}},
+		"roles":        {"items": []interface{}{map[string]interface{}{"metadata": map[string]interface{}{"name": "project-admin"}}}},
+		"rolebindings": {"items": []interface{}{}},
+		"ingresses":    {"items": []interface{}{map[string]interface{}{"metadata": map[string]interface{}{"name": "public"}}}},
+	}
+	findings, _, _ = inspectRuntimeSecurityState(unsafe, image)
+	ids := map[string]bool{}
+	for _, raw := range findings {
+		ids[stringValue(securityObject(raw)["id"])] = true
+	}
+	for _, id := range []string{"runtime:bad:host-namespace", "runtime:bad:token", "runtime:bad:pod-security",
+		"runtime:bad:bad:image", "runtime:bad:bad:container-security", "runtime:service:public:exposure",
+		"runtime:roles:project-admin", "runtime:ingress:public"} {
+		if !ids[id] {
+			t.Fatalf("production runtime-security rule did not report %s: %v", id, findings)
+		}
+	}
+}
+
+func TestRuntimeSecurityFindingsFitTheCRD(t *testing.T) {
+	longID := "runtime:" + strings.Repeat("p", 253) + ":" + strings.Repeat("c", 63) + ":container-security"
+	finding := securityFinding(longID, "high", "unsafe", "Pod/long")
+	boundedID := stringValue(finding["id"])
+	if len(boundedID) > 256 || !strings.Contains(boundedID, ":sha256:") {
+		t.Fatalf("finding ID was not bounded with stable identity: %q", boundedID)
+	}
+	findings := make([]interface{}, 4100)
+	for index := range findings {
+		findings[index] = securityFinding(fmt.Sprintf("runtime:role:%05d", index), "high", "unsafe", "Role/test")
+	}
+	bounded, total, omitted := boundedRuntimeSecurityFindings(findings)
+	if len(bounded) > 4096 || total != 4100 || omitted != total-(len(bounded)-1) {
+		t.Fatalf("unexpected finding bounds: len=%d total=%d omitted=%d", len(bounded), total, omitted)
+	}
+	overflow := securityObject(bounded[len(bounded)-1])
+	if stringValue(overflow["id"]) != "runtime:findings:overflow" || stringValue(overflow["severity"]) != "critical" {
+		t.Fatalf("missing fail-closed overflow finding: %v", overflow)
+	}
+	large := make([]interface{}, 1000)
+	for index := range large {
+		large[index] = securityFinding(fmt.Sprintf("runtime:large:%05d", index), "high", strings.Repeat("x", 4096), "Pod/test")
+	}
+	byteBounded, _, byteOmitted := boundedRuntimeSecurityFindings(large)
+	if serializedFindingBytes(byteBounded) > 512*1024 || byteOmitted == 0 || stringValue(securityObject(byteBounded[len(byteBounded)-1])["id"]) != "runtime:findings:overflow" {
+		t.Fatalf("serialized finding budget did not fail closed: bytes=%d omitted=%d", serializedFindingBytes(byteBounded), byteOmitted)
+	}
+}
+
+func TestRuntimeSecurityResultDigestUsesCanonicalPayload(t *testing.T) {
+	findings := []interface{}{map[string]interface{}{"severity": "high", "id": "runtime:test"}}
+	if got := runtimeSecurityResultDigest(findings, 1, 0, 1, 1); got != "sha256:acd84670aa1116d19fd0c754654f945113aa5eef220f80a0f9ada5514a1b2d08" {
+		t.Fatalf("unexpected canonical runtime-security digest: %s", got)
+	}
+}
+
+func TestRuntimeSecurityRefreshAvoidsStatusPatchLoop(t *testing.T) {
+	now := time.Date(2026, 9, 4, 6, 0, 0, 0, time.UTC)
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-4 * time.Second).Format(time.RFC3339)}, now) {
+		t.Fatal("fresh runtime-security status must not refresh on each controller poll")
+	}
+	if !runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Observed", "observedAt": now.Add(-5 * time.Second).Format(time.RFC3339)}, now) {
+		t.Fatal("runtime-security status must refresh at the bounded interval")
+	}
+	if runtimeSecurityRefreshDue(map[string]interface{}{"phase": "Unavailable"}, now) {
+		t.Fatal("immutable leases without security inputs must not patch unchanged unavailable status")
 	}
 }

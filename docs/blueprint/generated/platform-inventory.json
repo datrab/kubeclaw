@@ -29,13 +29,13 @@
         "kubeclaw.lighthouse",
         "kubeclaw.visual",
         "kubeclaw.playwright",
+        "kubeclaw.security-providers",
         "kubeclaw.command-runner",
         "kubeclaw.network-http",
         "kubeclaw.openapi",
         "kubeclaw.runtime-dispatch",
         "kubeclaw.secret-resolver",
         "kubeclaw.telemetry-store",
-        "kubeclaw.buster-suite-runtime",
         "kubeclaw.container-build",
         "kubeclaw.coverage-budget",
         "kubeclaw.direct-command",
@@ -112,13 +112,7 @@
       "extensions": [
         "kubeclaw-agent-observer"
       ],
-      "externalCapabilities": [
-        {
-          "id": "test.suite.execute",
-          "source": "buster-service",
-          "reason": "Nova requests test execution from Buster. Nova does not install the Buster engine."
-        }
-      ]
+      "externalCapabilities": []
     },
     {
       "role": "prism",
@@ -340,25 +334,8 @@
       "kind": "pipeline-plugin",
       "file": "skills/buster/plugins/buster-suite-runtime/plugin.json",
       "docsTarget": "/extend/plugin-catalogue/kubeclaw.buster-suite-runtime",
-      "bundledBy": [
-        "buster"
-      ],
-      "registrations": [
-        {
-          "id": "suite",
-          "module": "src/adapter.ts",
-          "export": "activate",
-          "providesCapabilities": [
-            "test.suite.execute"
-          ],
-          "requiredCapabilities": [
-            "network.http",
-            "secrets.read"
-          ],
-          "configSchema": "schemas/config.schema.json",
-          "kind": "adapter"
-        }
-      ]
+      "bundledBy": [],
+      "registrations": []
     },
     {
       "id": "kubeclaw.container-build",
@@ -848,6 +825,12 @@
               "kind": "value",
               "required": true,
               "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "image",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.container-image@1"
             }
           ],
           "requiredCapabilities": [
@@ -1063,6 +1046,208 @@
       ]
     },
     {
+      "id": "kubeclaw.security-providers",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/security-providers/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.security-providers",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "headers",
+          "contractId": "kubeclaw.security-headers@1",
+          "kind": "test provider",
+          "module": "src/headers.js",
+          "export": "provider",
+          "configSchema": "schemas/headers.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "retrySafe": true,
+          "matrixFields": [
+            "path"
+          ],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        {
+          "id": "dependency-trivy",
+          "contractId": "kubeclaw.dependency-scan-trivy@1",
+          "kind": "test provider",
+          "module": "src/dependency.js",
+          "export": "provider",
+          "configSchema": "schemas/dependency.schema.json",
+          "inputs": [],
+          "outputs": [],
+          "requiredCapabilities": [
+            "security.scan"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        {
+          "id": "image-trivy",
+          "contractId": "kubeclaw.image-scan-trivy@1",
+          "kind": "test provider",
+          "module": "src/image.js",
+          "export": "provider",
+          "configSchema": "schemas/image.schema.json",
+          "inputs": [
+            {
+              "name": "image",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.container-image@1"
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "security.scan"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        {
+          "id": "kubernetes-policy",
+          "contractId": "kubeclaw.kubernetes-policy-security@1",
+          "kind": "test provider",
+          "module": "src/kubernetes-policy.js",
+          "export": "provider",
+          "configSchema": "schemas/kubernetes-policy.schema.json",
+          "inputs": [
+            {
+              "name": "checked-manifest",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "application/vnd.kubeclaw.checked-kubernetes-yaml"
+              ]
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "security.scan"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        },
+        {
+          "id": "kubernetes-runtime",
+          "contractId": "kubeclaw.kubernetes-runtime-security@1",
+          "kind": "test provider",
+          "module": "src/kubernetes-runtime.js",
+          "export": "provider",
+          "configSchema": "schemas/kubernetes-runtime.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "checked-manifest",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "application/vnd.kubeclaw.checked-kubernetes-yaml"
+              ]
+            }
+          ],
+          "outputs": [],
+          "requiredCapabilities": [
+            "kubernetes.runtime-security"
+          ],
+          "retrySafe": true,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "kubeclaw.size-budget",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -1209,7 +1394,6 @@
           "requiredCapabilities": [
             "command.execute",
             "test.plan.execute",
-            "test.suite.execute",
             "runtime.dispatch",
             "artifacts.write"
           ],
@@ -1969,7 +2153,6 @@
           "export": "execute",
           "requiredCapabilities": [
             "test.plan.execute",
-            "test.suite.execute",
             "runtime.dispatch",
             "artifacts.write"
           ],
@@ -2365,8 +2548,8 @@
   "registrationCounts": {
     "stage": 17,
     "observer": 6,
-    "adapter": 19,
-    "test provider": 13,
+    "adapter": 18,
+    "test provider": 18,
     "report adapter": 1
   },
   "capabilityIds": [
@@ -2391,7 +2574,6 @@
     "kubernetes.fixture",
     "kubernetes.exposure",
     "lint.execute",
-    "test.suite.execute",
     "test.plan.execute",
     "transport.publish",
     "agent.events.subscribe"

@@ -911,18 +911,6 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
         forge_model: model,
         timeout_minutes: busterGateTimeoutMinutes,
         max_fix_cycles: 0,
-        test_suites: ['security'],
-        capabilities: ['browser_automation'],
-        test_config: {
-          serve: {
-            type: 'server',
-            project_dir: projectSrc,
-            start_cmd: 'nginx -g "daemon off;"',
-            image: releaseCandidateImage,
-            port: 8080,
-          },
-          security: { paths: ['/'], thresholds: { max_missing_headers: 0 } },
-        },
       },
       'final-review': {
         type: 'review',
@@ -1057,6 +1045,28 @@ function instructionFiles(progress) {
             needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-playwright',
             config: { projectDirectory: '.', configFile: '.swarm/playwright.config.ts', workers: 2,
               timeoutMs: 120000 }, inputs: deploymentInput },
+          'security-headers': { uses: 'kubeclaw.security-headers@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'security-headers',
+            config: { profile: 'api-http-v1', paths: ['/'], policy: { profile: 'strict-v1' } },
+            inputs: deploymentInput },
+          'dependency-security': { uses: 'kubeclaw.dependency-scan-trivy@1', mode: 'blocking', retries: 0,
+            concurrencyGroup: 'security-dependency', config: { projectDirectory: projectSrc,
+              policy: { profile: 'strict-v1' } } },
+          'image-security': { uses: 'kubeclaw.image-scan-trivy@1', mode: 'blocking', retries: 0,
+            needs: ['container-build'], concurrencyGroup: 'security-image',
+            config: { policy: { profile: 'strict-v1' } }, inputs: {
+              image: { from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1' } } },
+          'kubernetes-policy-security': { uses: 'kubeclaw.kubernetes-policy-security@1', mode: 'blocking', retries: 0,
+            needs: ['checked-manifest'], concurrencyGroup: 'security-kubernetes-policy',
+            config: { policy: { profile: 'strict-v1' } }, inputs: {
+              'checked-manifest': { from: 'checked-manifest', output: 'artifact-1',
+                mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' } } },
+          'kubernetes-runtime-security': { uses: 'kubeclaw.kubernetes-runtime-security@1', mode: 'blocking', retries: 0,
+            needs: ['kubernetes-deployment'], concurrencyGroup: 'security-kubernetes-runtime',
+            config: { policy: { profile: 'strict-v1' } }, inputs: {
+              deployment: deploymentInput.deployment,
+              'checked-manifest': { from: 'checked-manifest', output: 'artifact-1',
+                mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' } } },
           'public-http-health': { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
             needs: ['tailscale-exposure'], concurrencyGroup: 'http', config: {
               ...(publicHttpOverride ? { url: publicHttpOverride } : {}), path: '/', expectedStatuses: [200],
@@ -1066,7 +1076,7 @@ function instructionFiles(progress) {
         fixtures: {
           'kubernetes-deployment': { uses: 'kubeclaw.kubernetes-fixture@1', retries: 0,
             needs: ['size-budget', 'container-build'],
-            concurrencyGroup: 'kubernetes-fixture', config: { image: fixtureConfig.image,
+            concurrencyGroup: 'kubernetes-fixture', config: {
               serviceName: 'real-pipeline-e2e-nginx',
               servicePort: 18080, namespacePrefix: fixtureConfig.namespace_prefix ?? 'test',
               retention: { mode: fixtureConfig.retention_mode ?? 'delete',
@@ -1084,7 +1094,8 @@ function instructionFiles(progress) {
         concurrencyLimits: { unit: 1, 'size-budget': 1, 'container-build': 1,
           manifest: 1, 'kubernetes-fixture': 1, 'tailscale-exposure': 1, http: 1,
           'api-flow': 1, openapi: 1, 'browser-axe': 2, 'browser-lighthouse': 1, 'browser-visual': 1,
-          'browser-playwright': 1 },
+          'browser-playwright': 1, 'security-headers': 2, 'security-dependency': 1,
+          'security-image': 1, 'security-kubernetes-policy': 1, 'security-kubernetes-runtime': 1 },
       },
     },
   };

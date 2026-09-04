@@ -14,6 +14,7 @@
 #   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster
 #   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster
 #   ./deploy.sh nova-a11y-preflight Verify real browser accessibility through Nova and Buster
+#   ./deploy.sh nova-security-preflight Verify all five security providers through Nova and Buster
 #   ./deploy.sh nova-tailscale-preflight Verify a public endpoint through Nova, Buster, Kubernetes, and Tailscale
 #   ./deploy.sh nova-production-preflights <image> Run all required proofs after all source cutovers
 #   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer
@@ -1198,7 +1199,7 @@ reconcile_buster_runtime_ports() {
   local deployment="agent-buster"
   local runtime_index=""
   local current_ports=""
-  local expected_ports=$'plan-runtime:28891:TCP\nlegacy-runtime:28892:TCP'
+  local expected_ports=$'plan-runtime:28891:TCP'
 
   if ! kubectl get deployment "$deployment" -n "$NAMESPACE" >/dev/null 2>&1; then
     return 0
@@ -1218,23 +1219,23 @@ reconcile_buster_runtime_ports() {
 
   warn "Reconciling stale Buster runtime port metadata before Helm upgrade"
   kubectl patch deployment "$deployment" -n "$NAMESPACE" --type=json --patch \
-    "[{\"op\":\"test\",\"path\":\"/spec/template/spec/containers/${runtime_index}/name\",\"value\":\"buster-v2-runtime\"},{\"op\":\"replace\",\"path\":\"/spec/template/spec/containers/${runtime_index}/ports\",\"value\":[{\"name\":\"plan-runtime\",\"containerPort\":28891,\"protocol\":\"TCP\"},{\"name\":\"legacy-runtime\",\"containerPort\":28892,\"protocol\":\"TCP\"}]}]"
+    "[{\"op\":\"test\",\"path\":\"/spec/template/spec/containers/${runtime_index}/name\",\"value\":\"buster-v2-runtime\"},{\"op\":\"replace\",\"path\":\"/spec/template/spec/containers/${runtime_index}/ports\",\"value\":[{\"name\":\"plan-runtime\",\"containerPort\":28891,\"protocol\":\"TCP\"}]}]"
 }
 
 verify_buster_port_routing() {
   local runtime_ports=""
   local proxy_ports=""
   local service_ports=""
-  local expected_runtime=$'plan-runtime:28891:TCP\nlegacy-runtime:28892:TCP'
-  local expected_proxy=$'buster-plan:18891:TCP\nbuster-legacy:18892:TCP'
-  local expected_service=$'buster-plan:18891:buster-plan\nbuster-legacy:18892:buster-legacy'
+  local expected_runtime=$'plan-runtime:28891:TCP'
+  local expected_proxy=$'buster-plan:18891:TCP'
+  local expected_service=$'buster-plan:18891:buster-plan'
 
   runtime_ports="$(kubectl get deployment agent-buster -n "$NAMESPACE" \
     -o 'jsonpath={range .spec.template.spec.containers[?(@.name=="buster-v2-runtime")].ports[*]}{.name}{":"}{.containerPort}{":"}{.protocol}{"\n"}{end}')"
   proxy_ports="$(kubectl get deployment agent-buster -n "$NAMESPACE" \
     -o 'jsonpath={range .spec.template.spec.containers[?(@.name=="worker-trust-proxy")].ports[*]}{.name}{":"}{.containerPort}{":"}{.protocol}{"\n"}{end}')"
   service_ports="$(kubectl get service agent-buster -n "$NAMESPACE" \
-    -o 'jsonpath={range .spec.ports[?(@.name=="buster-plan")]}{.name}{":"}{.port}{":"}{.targetPort}{"\n"}{end}{range .spec.ports[?(@.name=="buster-legacy")]}{.name}{":"}{.port}{":"}{.targetPort}{"\n"}{end}')"
+    -o 'jsonpath={range .spec.ports[?(@.name=="buster-plan")]}{.name}{":"}{.port}{":"}{.targetPort}{"\n"}{end}')"
 
   if [[ $runtime_ports != "$expected_runtime" || $proxy_ports != "$expected_proxy" || $service_ports != "$expected_service" ]]; then
     err "Buster port routing invariant failed"
@@ -2331,6 +2332,31 @@ cmd_nova_e2e_preflight() {
   rm -f "$receipt_tmp" "$receipt_unsigned"; log "Nova → Buster end-to-end production preflight passed"
 }
 
+cmd_nova_security_preflight() {
+  header "Nova → Buster Security Production Preflight"
+  require_command kubectl
+  local immutable_image=${2:-${KUBECLAW_SECURITY_PREFLIGHT_IMAGE:-}}
+  if [[ ! $immutable_image =~ ^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$ ]]; then
+    err "Provide a digest-pinned port-8080 HTTP image with the required security headers."
+    return 1
+  fi
+  local receipt_tmp receipt_unsigned receipt_file runtime_repo_root runtime_revision buster_runtime_revision lease_name namespace_name
+  runtime_repo_root=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- printenv REPO_ROOT)
+  [[ $runtime_repo_root == /home/node/.openclaw/workspace/git-repo ]] || { err "The deployed Nova REPO_ROOT does not match the chart contract."; return 1; }
+  runtime_revision=$(kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- git -C "$runtime_repo_root" rev-parse --verify HEAD)
+  [[ $runtime_revision =~ ^[a-f0-9]{40,64}$ ]] || { err "The deployed Nova source revision is invalid."; return 1; }
+  receipt_tmp=$(mktemp); receipt_file="$REPO_DIR/dist/verification/security-production-receipt.json"
+  if ! kubectl exec -n "$NAMESPACE" deployment/agent-nova -c kubeclaw -- env "KUBECLAW_SECURITY_PREFLIGHT_IMAGE=$immutable_image" node "$runtime_repo_root/tests/verification/e2e/nova-security-production-preflight.mts" | tee "$receipt_tmp"; then rm -f "$receipt_tmp"; return 1; fi
+  if ! node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));const expected=["dependency-trivy","headers","image-trivy","kubernetes-policy-trivy","kubernetes-runtime"];if(v.schemaVersion!=="nova-security-production-preflight.v1"||v.suite!=="security"||v.ok!==true||v.decision!=="passed"||v.status!=="completed"||v.runnerCleanupVerified!==true||v.cleanupVerified!==false||v.clusterCleanupObserved!==false||v.evidenceImported!==true||v.immutableImage!==process.argv[2]||!/^sha256:[a-f0-9]{64}$/.test(v.imageDigest??"")||!v.immutableImage.endsWith(`@${v.imageDigest}`)||JSON.stringify([...(v.providersVerified??[])].sort())!==JSON.stringify(expected)||v.mocks!==0||v.emulators!==0||!v.resources?.leaseName||!v.resources?.namespace||v.resources?.serviceName!=="security-preflight"||v.resources?.servicePort!==80)process.exit(1)' "$receipt_tmp" "$immutable_image"; then err "The security production receipt is invalid."; rm -f "$receipt_tmp"; return 1; fi
+  lease_name=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.resources.leaseName)' "$receipt_tmp"); namespace_name=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.resources.namespace)' "$receipt_tmp")
+  if ! kubectl wait --for=delete "namespace/$namespace_name" --timeout=2m || ! kubectl wait --for=delete "busternamespacelease/$lease_name" -n "$NAMESPACE" --timeout=2m; then err "Timed out while waiting for security preflight cleanup."; rm -f "$receipt_tmp"; return 1; fi
+  if [[ -n $(kubectl get namespace "$namespace_name" --ignore-not-found -o name) || -n $(kubectl get busternamespacelease "$lease_name" -n "$NAMESPACE" --ignore-not-found -o name) ]]; then err "The security preflight left cluster resources."; rm -f "$receipt_tmp"; return 1; fi
+  receipt_unsigned=$(mktemp); node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));fs.writeFileSync(process.argv[2],`${JSON.stringify({...v,cleanupVerified:true,clusterCleanupObserved:true},null,2)}\n`,{mode:0o600})' "$receipt_tmp" "$receipt_unsigned"
+  buster_runtime_revision=$(node -e 'const fs=require("node:fs");const v=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(v.busterRuntimeRevision)' "$receipt_unsigned")
+  if [[ ! $buster_runtime_revision =~ ^[a-f0-9]{40,64}$ ]] || ! sign_and_store_production_receipt "$receipt_unsigned" "$receipt_file" "$runtime_revision"; then rm -f "$receipt_tmp" "$receipt_unsigned"; return 1; fi
+  rm -f "$receipt_tmp" "$receipt_unsigned"; log "Nova → Buster security production preflight passed"
+}
+
 cmd_nova_tailscale_preflight() {
   header "Nova → Buster Tailscale Production Preflight"
   require_command kubectl
@@ -2445,7 +2471,7 @@ const expectedSuiteIds = [
 const actualSuiteIds = suites.map((suite) => suite.id).sort();
 const required = suites.filter((suite) => Object.hasOwn(suite, 'productionAcceptance'))
   .map((suite) => suite.id).sort();
-const orchestrated = ['a11y', 'build', 'e2e', 'health', 'k8s', 'perf', 'tailscale-preview', 'unit', 'visual-reg'];
+const orchestrated = ['a11y', 'build', 'e2e', 'health', 'k8s', 'perf', 'security', 'tailscale-preview', 'unit', 'visual-reg'];
 const incomplete = suites.filter((suite) => suite.implementation !== 'complete'
   || suite.sourceCutover !== 'complete').map((suite) => suite.id);
 if (JSON.stringify(actualSuiteIds) !== JSON.stringify(expectedSuiteIds)) {
@@ -2477,6 +2503,7 @@ NODE
   cmd_nova_lighthouse_preflight nova-lighthouse-preflight "$immutable_image"
   cmd_nova_visual_preflight nova-visual-preflight "$immutable_image"
   cmd_nova_e2e_preflight nova-e2e-preflight "$immutable_image"
+  cmd_nova_security_preflight nova-security-preflight "$immutable_image"
   cmd_nova_tailscale_preflight nova-tailscale-preflight "$immutable_image"
 
   log "All production-required suite preflights passed"
@@ -2705,6 +2732,9 @@ case "${1:-}" in
   nova-e2e-preflight)
     cmd_nova_e2e_preflight "$@"
     ;;
+  nova-security-preflight)
+    cmd_nova_security_preflight "$@"
+    ;;
   nova-tailscale-preflight)
     cmd_nova_tailscale_preflight "$@"
     ;;
@@ -2805,6 +2835,8 @@ case "${1:-}" in
     echo "                    Verify real browser visual comparison through Nova and Buster v2"
     echo "  nova-e2e-preflight [image]"
     echo "                    Verify real Playwright end-to-end execution through Nova and Buster v2"
+    echo "  nova-security-preflight [image]"
+    echo "                    Verify all five real security providers through Nova and Buster v2"
     echo "  nova-tailscale-preflight [image]"
     echo "                    Verify Kubernetes and Tailscale through Nova and Buster v2"
     echo "  nova-production-preflights [image]"

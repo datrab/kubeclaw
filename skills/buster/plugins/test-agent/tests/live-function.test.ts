@@ -53,7 +53,6 @@ const server = http.createServer((request, response) => {
     }
     assert.equal(request.url, '/dispatch');
     assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'real-unit' && suite.passed === true), true);
-    assert.equal(payload.suiteEvidence.some((suite) => suite.suite === 'security' && suite.passed === true), true);
     fs.writeFileSync(path.join(temporary, 'transcript.log'), transcript);
     response.writeHead(200, { 'content-type': 'application/json' });
     response.end(JSON.stringify({ result: {
@@ -98,7 +97,6 @@ try {
     enabledRegistrations: enabled,
     providers: new Map([
       ['command.execute', 'kubeclaw.command-runner:command'],
-      ['test.suite.execute', 'kubeclaw.buster-suite-runtime:suite'],
       ['test.plan.execute', 'kubeclaw.remote-test-gate:plan'],
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
@@ -108,7 +106,6 @@ try {
     grants: new Map([
       ['kubeclaw.test-agent:test', new Map([
         ['command.execute', { allowedExecutables: [nodeExecutable], allowedWorkingRoots: [temporary] }],
-        ['test.suite.execute', { allowedSuites: ['security'], allowedRoots: [temporary] }],
         ['test.plan.execute', { allowedRoots: [temporary] }],
         ['runtime.dispatch', { allowedAgents: ['buster'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.test-agent'] }],
@@ -116,10 +113,6 @@ try {
       ['kubeclaw.runtime-dispatch:runtime', new Map([
         ['network.http', { allowedOrigins: [origin] }],
         ['secrets.read', { allowedNames: ['buster.agent'] }],
-      ])],
-      ['kubeclaw.buster-suite-runtime:suite', new Map([
-        ['network.http', { allowedOrigins: [origin] }],
-        ['secrets.read', { allowedNames: ['buster.worker'] }],
       ])],
       ['kubeclaw.remote-test-gate:plan', new Map([
         ['secrets.read', { allowedNames: ['buster.worker'] }],
@@ -138,17 +131,6 @@ try {
         maxOutputBytes: 65_536,
         maxExecutionMs: 5_000,
         terminationGraceMs: 100,
-      }],
-      ['kubeclaw.buster-suite-runtime:suite', {
-        endpoint: origin,
-        tokenSecret: 'buster.worker',
-        allowedRepositoryRoots: [temporary],
-        unmigratedSuites: ['security'],
-        suiteCapabilities: ['image_build'],
-        gitExecutable: fs.realpathSync(execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim()),
-        maxArchiveBytes: 8_388_608,
-        maxSuiteTimeoutMs: 5_000,
-        pollMs: 100,
       }],
       ['kubeclaw.remote-test-gate:plan', {
         endpoint: origin,
@@ -190,10 +172,8 @@ try {
             suiteEvidence: [],
             suitePlan: {
               repositoryRoot: temporary,
-              suites: ['security'],
-              testConfig: { suite_timeout_ms: 5_000,
-                serve: { type: 'local', port: address.port },
-                security: { paths: ['/'] } },
+              suites: [],
+              testConfig: {},
               task: {},
             },
             commandSuites: [{

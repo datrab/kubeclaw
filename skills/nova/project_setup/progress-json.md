@@ -322,9 +322,14 @@ that declaration. Nova lint checks those files before deployment.
 | `visual-reg` | retired | Declare `kubeclaw.visual@1` with reviewed manifest and profile files in `.swarm/pipeline.json` |
 | `a11y` | `a11y` | `tags`, `path`, `thresholds: { critical, serious }` |
 | `perf` | `perf` | `thresholds: { performance, accessibility }` |
-| `security` | `security` | `paths`, `check_cors`, `thresholds: { max_missing_headers }` |
+| `security` | retired | Declare the five `kubeclaw.security-*@1` and Trivy provider nodes in `.swarm/pipeline.json` |
 
 Without `thresholds` → informational (always PASS). With `thresholds` → enforced (can FAIL).
+
+Security configuration is not accepted through `test_suites` or `test_config`.
+Declare the header, dependency, image, static Kubernetes, and runtime Kubernetes
+providers explicitly. See
+`docs/architecture/pipeline-test-gate-security-user-guide.md`.
 
 Bundle limits are not a current legacy suite configuration. Project setup
 migrates an existing `bundle` selection only when `bundle.www_dir` names the

@@ -5,9 +5,9 @@ Do not edit this page directly.
 
 ## Summary
 
-- Replacement implemented: 12 of 13.
+- Replacement implemented: 13 of 13.
 - Parity proved: 2 of 13.
-- Source cutover complete: 12 of 13.
+- Source cutover complete: 13 of 13.
 - Cut over and deleted: 2 of 13.
 
 ## Suites
@@ -26,4 +26,4 @@ Do not edit this page directly.
 | `perf` | `kubeclaw.lighthouse@1` | complete | in-progress | complete | pending | in-progress |
 | `visual-reg` | `kubeclaw.visual@1` | complete | in-progress | complete | pending | in-progress |
 | `e2e` | `kubeclaw.e2e-suite@1` | complete | in-progress | complete | pending | in-progress |
-| `security` | `kubeclaw.security-suite@1` | pending | pending | pending | not required | pending |
+| `security` | `kubeclaw.security-suite@1` | complete | in-progress | complete | pending | in-progress |

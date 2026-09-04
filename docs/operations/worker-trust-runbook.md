@@ -170,7 +170,7 @@ helm template prism charts/prism \
 5. Inspect protected resources.
 
 ```bash
-rg -n "worker-trust-proxy|csi.spiffe.io|spiffe://|18891|18892|8443" "$render_dir"
+rg -n "worker-trust-proxy|csi.spiffe.io|spiffe://|18891|8443" "$render_dir"
 ```
 
 Expected result: each protected workload has an Envoy sidecar and CSI socket.

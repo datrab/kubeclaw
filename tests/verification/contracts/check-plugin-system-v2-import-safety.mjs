@@ -27,7 +27,7 @@ const enabled = new Set([
 const activated = await core.activateRegistry(snapshot, enabled);
 assert.equal(activated.stages.size, 17);
 assert.equal(activated.observers.size, 6);
-assert.equal(activated.adapters.size, 19);
+assert.equal(activated.adapters.size, 18);
 console.log(JSON.stringify({
   ok: true,
   contract: 'plugin-system-v2-import-safety',

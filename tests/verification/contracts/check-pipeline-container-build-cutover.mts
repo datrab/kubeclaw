@@ -46,14 +46,14 @@ assert.match(read('tests/verification/e2e/nova-buildkit-production-preflight.mts
 const entrypoint = read('docker/buster-runtime-entrypoint.sh');
 assert.match(entrypoint, /remote-plan-cli\.ts/u);
 assert.match(entrypoint, /allowedCapabilities: \[[^\]]*'container\.build'[^\]]*\]/u);
-assert.match(entrypoint, /BUSTER_LEGACY_PORT/u);
-assert.match(entrypoint, /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"[\s\S]*chown -R root:builder "\$legacy_state_dir" "\$legacy_run_dir"/u);
+assert.doesNotMatch(entrypoint, /BUSTER_LEGACY_PORT|legacy_state_dir|legacy_run_dir/u);
+assert.match(entrypoint, /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"/u);
 const busterValues = read('my-values/buster-values.yaml');
 assert.match(busterValues, /name: buster-plan[\s\S]*port: 18891/u);
-assert.match(busterValues, /name: buster-legacy[\s\S]*port: 18892/u);
+assert.doesNotMatch(busterValues, /buster-legacy|18892/u);
 const novaValues = read('my-values/nova-values.yaml');
 assert.match(novaValues, /test\.plan\.execute:[\s\S]*adapter: buster-plan-v1[\s\S]*scheme: http[\s\S]*port: 18891/u);
-assert.match(novaValues, /test\.suite\.execute:[\s\S]*adapter: buster-suite-v2[\s\S]*port: 18892/u);
+assert.doesNotMatch(novaValues, /test\.suite\.execute|buster-suite-v2|18892/u);
 const secretSetup = read('my-values/setup-secrets.sh');
 const deploy = read('scripts/deploy.sh');
 assert.match(secretSetup, /setup_pipeline_source_attestation_secret/u);

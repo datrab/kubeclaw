@@ -723,6 +723,7 @@ function failingApiSpecPath(message) {
 }
 
 function setFailingApi(mod, specPath) {
+  mod.test_config ||= {};
   mod.test_suites = [...new Set([...(mod.test_suites || []), 'api'])];
   mod.test_config.api = { spec_file: specPath };
 }

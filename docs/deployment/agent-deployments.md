@@ -2,7 +2,7 @@
 
 Nova, Buster, and the single logical Prism agent use OpenClaw gateway deployments. Pipeline execution is
 provided by the shared v2 core and installed plugin packages. Buster runs the
-plan runtime and the remaining legacy suite worker beside its gateway. Nova
+plan runtime beside its gateway. Nova
 runs Archviewer beside its gateway to serve Nova-authored HTML architecture
 presentations. Archviewer is independent from Prism Studio and has no design or
 Baseline Bundle authority.
@@ -24,10 +24,6 @@ capabilityProviders:
       runtime.dispatch:
         adapter: openclaw
         port: 18789
-      test.suite.execute:
-        adapter: buster-suite-v2
-        port: 18892
-        proxyPort: 28892
       test.plan.execute:
         adapter: buster-plan-v1
         scheme: http
@@ -55,7 +51,6 @@ Nova application
   -> Buster runtime 127.0.0.1:28891
 ```
 
-The legacy route has the same shape with ports `28892` and `18892`.
 Envoy does not proxy the OpenClaw gateway route on port `18789`.
 
 Prism is different from Buster: Nova does not call its application Control API
@@ -75,10 +70,8 @@ on GitHub artifact attestations or any external signing service.
 Confirm Nova has its gateway, `archviewer`, and `worker-trust-proxy` containers.
 Its `archviewer` port is `3456`, exposed through the dedicated NodePort `30456`.
 Confirm Buster has its gateway, `buster-v2-runtime`, and `worker-trust-proxy`. Confirm Envoy
-exposes plan port `18891` and legacy suite port `18892`. The Service must target
-the Envoy port names `buster-plan` and `buster-legacy`. The runtime port names
-must remain distinct as `plan-runtime` and `legacy-runtime` on ports `28891` and
-`28892`. Kubernetes limits these names to 15 characters.
+exposes only plan port `18891`. The Service must target the Envoy port name
+`buster-plan`. The runtime port remains `plan-runtime` on port `28891`.
 No Service may target the runtime ports. Neither deployment contains
 `buster-pipeline`.
 
@@ -96,13 +89,11 @@ processes. It does not accept a test-double boundary.
 Registry activation failures indicate invalid package, provider, trust, or
 grant configuration.
 
-A Kubernetes warning about a duplicate `buster-plan` or `buster-legacy` port
-indicates stale port metadata from an older Buster Deployment. The deploy script
-replaces the runtime port list before the Helm upgrade. The resulting runtime
-ports must be `plan-runtime:28891` and `legacy-runtime:28892`; the Envoy ports
-must be `buster-plan:18891` and `buster-legacy:18892`. The deploy script verifies
-the runtime, proxy, and Service port mappings after the Helm upgrade and fails if
-the Service can bypass Envoy.
+A Kubernetes warning about a duplicate `buster-plan` port indicates stale port
+metadata from an older Buster Deployment. The deploy script replaces the runtime
+port list before the Helm upgrade. The resulting ports must be
+`plan-runtime:28891` and `buster-plan:18891`. The deploy script verifies the
+runtime, proxy, and Service mappings and fails if the Service can bypass Envoy.
 
 An OpenClaw `missing-package-dir` error that points to
 `/tmp/openclaw-plugin-home` indicates plugin metadata from an image build path.

@@ -117,6 +117,14 @@ for (const receipt of [
   assert.ok(verifyProductionReceipt(noImport, keys.publicKey, { expectedRevision: revision })
     .includes('browser evidence import proof is incomplete'));
 }
+const securityReceipt = { ...browserReceiptBase, schemaVersion: 'nova-security-production-preflight.v1', suite: 'security',
+  providersVerified: ['headers', 'dependency-trivy', 'image-trivy', 'kubernetes-policy-trivy', 'kubernetes-runtime'],
+  resources: { leaseName: 'test-security', namespace: 'test-security', serviceName: 'security-preflight', servicePort: 80 } };
+assert.deepEqual(verifyProductionReceipt(attestProductionReceipt(securityReceipt, keys.privateKey), keys.publicKey, {
+  expectedRevision: revision, expectedBusterRevision: busterRevision,
+}), []);
+assert.ok(verifyProductionReceipt(attestProductionReceipt({ ...securityReceipt, providersVerified: ['headers'] }, keys.privateKey),
+  keys.publicKey, { expectedRevision: revision }).includes('security provider proof is incomplete'));
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'production-receipt-attestation-'));
 try {
   const unsignedPath = path.join(temporary, 'unsigned.json');

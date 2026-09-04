@@ -33,6 +33,12 @@
           "kind": "value",
           "required": true,
           "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+        },
+        {
+          "name": "image",
+          "kind": "value",
+          "required": true,
+          "schemaId": "kubeclaw.container-image@1"
         }
       ],
       "requiredCapabilities": ["kubernetes.fixture"],

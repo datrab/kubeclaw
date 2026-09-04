@@ -553,28 +553,6 @@
       "exclude": []
     },
     {
-      "id": "npm-audit",
-      "required": true,
-      "category": "dependencies",
-      "scope": "repository",
-      "tier": "full",
-      "timeout_ms": 30000,
-      "blocking_severity": "warning",
-      "languages": [
-        "javascript",
-        "typescript"
-      ],
-      "config_path": null,
-      "targets": [
-        "."
-      ],
-      "include": [
-        "**/package.json",
-        "**/package-lock.json"
-      ],
-      "exclude": []
-    },
-    {
       "id": "mypy",
       "required": true,
       "category": "types",
@@ -591,27 +569,6 @@
       ],
       "include": [
         "**/*.py"
-      ],
-      "exclude": []
-    },
-    {
-      "id": "pip-audit",
-      "required": true,
-      "category": "dependencies",
-      "scope": "repository",
-      "tier": "full",
-      "timeout_ms": 60000,
-      "blocking_severity": "warning",
-      "languages": [
-        "python"
-      ],
-      "config_path": null,
-      "targets": [
-        "."
-      ],
-      "include": [
-        "requirements.txt",
-        "**/requirements.txt"
       ],
       "exclude": []
     },

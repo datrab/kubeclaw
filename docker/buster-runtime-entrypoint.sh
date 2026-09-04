@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required for the legacy compatibility endpoint}"
+worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required when SPIFFE transport is unavailable}"
 trusted_peer_spiffe_id="${BUSTER_TRUSTED_PEER_SPIFFE_ID:-}"
 unset BUSTER_V2_TOKEN
 socket="${BUILDKIT_HOST:?BUILDKIT_HOST is required}"
@@ -32,23 +32,16 @@ setpriv \
   >/tmp/buildkitd.log 2>&1 &
 buildkit_pid=$!
 worker_pid=""
-legacy_pid=""
 runtime_config_root="${BUSTER_PLAN_CONFIG_ROOT:-/tmp/buster-plan-config}"
 kube_service_account_root="${BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT:-/var/run/buster-worker/kubernetes}"
 plan_state_dir="${BUSTER_PLAN_STATE_DIR:-/var/lib/buster-v2/plan-jobs}"
 plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/tmp/buster-plan-runs}"
-legacy_state_dir="${BUSTER_LEGACY_STATE_DIR:-/var/lib/buster-v2/legacy-jobs}"
-legacy_run_dir="${BUSTER_LEGACY_RUN_DIR:-/tmp/buster-legacy-runs}"
 browser_playwright_cgroup_root="${BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT:?BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT is required}"
 
 cleanup() {
   if [ -n "$worker_pid" ]; then
     kill "$worker_pid" 2>/dev/null || true
     wait "$worker_pid" 2>/dev/null || true
-  fi
-  if [ -n "$legacy_pid" ]; then
-    kill "$legacy_pid" 2>/dev/null || true
-    wait "$legacy_pid" 2>/dev/null || true
   fi
   kill "$buildkit_pid" 2>/dev/null || true
   wait "$buildkit_pid" 2>/dev/null || true
@@ -108,19 +101,16 @@ setpriv \
 # BuildKit readiness checks can connect after the ownership transition above.
 # worker.ts clears all supplementary groups and capabilities before suite code.
 : "${BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:?BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY is required}"
-mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir" "$legacy_state_dir" "$legacy_run_dir"
+mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir"
 # The supervisor intentionally lacks CAP_DAC_OVERRIDE and CAP_FOWNER. Keep the
 # generated-config directory owned by root until every file has been written;
 # otherwise handing the directory to builder here prevents the supervisor from
 # creating the kubeconfig and runtime JSON below. State and run directories are
 # handed off immediately because only the workers write to them. The plan
-# runtime runs as builder. The legacy supervisor keeps UID 0 so that it can
-# enter the per-job UID and GID. It does not have CAP_FOWNER, so it must own
-# its state and run directories before worker-context.ts applies their modes.
+# runtime runs as builder.
 chown -R root:root "$runtime_config_root"
 chmod 0750 "$runtime_config_root"
 chown -R builder:builder "$plan_state_dir" "$plan_run_dir"
-chown -R root:builder "$legacy_state_dir" "$legacy_run_dir"
 test -r "$kube_service_account_root/token"
 test -r "$kube_service_account_root/ca.crt"
 test -r "$kube_service_account_root/namespace"
@@ -191,7 +181,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
-  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright'],
+  allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security'],
   directCommand: {
     executableCatalog: {
       node: '/usr/local/bin/node',
@@ -291,6 +281,23 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     runAsUid: 1001,
     runAsGid: 1000,
   },
+  securityScan: {
+    trivyExecutable: '/usr/local/bin/trivy',
+    allowedRegistryPrefixes: [`${registry}/kubeclaw`],
+    maximumExecutionMs: 900000,
+    maximumOutputBytes: 67108864,
+    cacheDirectory: '/home/builder/.cache/trivy',
+  },
+  kubernetesRuntimeSecurity: {
+    kubectlExecutable: '/usr/local/bin/kubectl',
+    controllerNamespace: process.env.CONTROLLER_NAMESPACE,
+    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
+    allowedNamespacePrefixes: ['test'],
+    maximumExecutionMs: 300000,
+    maximumOutputBytes: 16777216,
+    pollIntervalMs: 1000,
+    maximumObservationAgeMs: 10000,
+  },
 }, null, 2)}\n`);
 NODE
 chmod 0640 "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
@@ -310,11 +317,5 @@ else
     node /app/skills/buster/engine/remote-plan-cli.ts --config "$runtime_config_root/runtime.json" &
 fi
 worker_pid=$!
-
-printf '%s' "$worker_token" | BUSTER_V2_PORT="${BUSTER_LEGACY_PORT:-18892}" \
-  BUSTER_V2_STATE_DIR="$legacy_state_dir" BUSTER_V2_RUN_DIR="$legacy_run_dir" setpriv \
-  --groups 1000,1002 \
-  node /app/buster-suite-runtime/src/worker.ts &
-legacy_pid=$!
 
 wait "$worker_pid"

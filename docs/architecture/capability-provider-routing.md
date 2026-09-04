@@ -26,10 +26,6 @@ capabilityProviders:
       runtime.dispatch:
         adapter: openclaw
         port: 18789
-      test.suite.execute:
-        adapter: buster-suite-v2
-        port: 18892
-        proxyPort: 28892
       test.plan.execute:
         adapter: buster-plan-v1
         scheme: http
@@ -58,21 +54,20 @@ pipeline core
   -> canonical capability response
 ```
 
-For Buster, `test.plan.execute` reaches the provider-plan runtime.
-`test.suite.execute` reaches the worker for suites that are not migrated.
-`runtime.dispatch` reaches the OpenClaw gateway. The receivers share one
-Kubernetes Service and use separate ports.
+For Buster, `test.plan.execute` reaches the provider-plan runtime and
+`runtime.dispatch` reaches the OpenClaw gateway. All 13 suites use provider
+plans. The retired suite-worker route has no listener, Service port, adapter,
+or capability grant.
 
 An alternative provider can implement `runtime.dispatch` with Kagent, Pi,
 LangChain, ACP, a custom Python HTTP service, or a local process by installing
-another adapter. It can implement `test.suite.execute` with an unrelated runner.
-Neither change requires pipeline-core code.
+another adapter. Neither change requires pipeline-core code.
 
 ## Composition and authority
 
 Extensions own ordering between capabilities. A Buster judgment extension must
-hold grants for both `test.suite.execute` and `runtime.dispatch`. It must obtain
-a valid terminal suite receipt before dispatching reasoning. Missing or invalid
+hold grants for both `test.plan.execute` and `runtime.dispatch`. It must obtain
+a valid terminal plan receipt before dispatching reasoning. Missing or invalid
 evidence blocks the extension; core never embeds a Buster-specific scheduling
 branch.
 

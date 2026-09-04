@@ -102,6 +102,9 @@ export function validateTestConfig(
   if (isPlainObject(testConfig) && isPlainObject(testConfig.e2e)) {
     diagnostics.push(diagnostic('form_check', `LEGACY_E2E_CONFIGURATION_RETIRED:${field}: define kubeclaw.playwright@1 in .swarm/pipeline.json`, `${field}.e2e`));
   }
+  if (isPlainObject(testConfig) && isPlainObject(testConfig.security)) {
+    diagnostics.push(diagnostic('form_check', `LEGACY_SECURITY_CONFIGURATION_RETIRED:${field}: define explicit security provider nodes in .swarm/pipeline.json`, `${field}.security`));
+  }
   if (!Array.isArray(suites) || suites.length === 0) return;
   if (!isPlainObject(testConfig)) {
     diagnostics.push(diagnostic('form_check', `${field} must be an object when test_suites are configured`, field));

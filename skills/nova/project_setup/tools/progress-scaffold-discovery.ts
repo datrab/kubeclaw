@@ -99,6 +99,7 @@ function sanitizedTestConfig(value: unknown, suites: string[]): AnyRecord | unde
   delete config.perf;
   delete config['visual-reg'];
   delete config.e2e;
+  delete config.security;
   if (isPlainObject(config.serve)) {
     for (const field of ['health_path', 'health_retries', 'health_base_delay', 'health_timeout',
       'smoke_paths', 'smoke_expected_text', 'deployment_yaml', 'secret_yaml']) delete config.serve[field];
@@ -381,6 +382,7 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   legacyPerfSelected: boolean;
   legacyVisualSelected: boolean;
   legacyE2eSelected: boolean;
+  legacySecuritySelected: boolean;
   projectSrcDir: string; repositoryRoot: string; swarmDir: string; scopeId: string;
 }): AnyRecord {
   const scope = objectOrEmpty(existingScope);
@@ -405,6 +407,9 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   if (isPlainObject(objectOrEmpty(testConfig).e2e) || options.legacyE2eSelected) {
     throw new Error(`LEGACY_E2E_CONFIGURATION_RETIRED:${options.scopeId}: define a project-owned Playwright config and kubeclaw.playwright@1 in .swarm/pipeline.json`);
   }
+  if (isPlainObject(objectOrEmpty(testConfig).security) || options.legacySecuritySelected) {
+    throw new Error(`LEGACY_SECURITY_CONFIGURATION_RETIRED:${options.scopeId}: define explicit kubeclaw.security-headers@1, dependency-scan-trivy@1, image-scan-trivy@1, kubernetes-policy-security@1, and kubernetes-runtime-security@1 nodes in .swarm/pipeline.json`);
+  }
   if (options.addExposure && !deploymentNode) {
     throw new Error(`LEGACY_TAILSCALE_PREVIEW_CONFIGURATION_RETIRED:${options.scopeId}: define kubeclaw.kubernetes-fixture@1 before Tailscale exposure`);
   }
@@ -418,6 +423,8 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   const existingContainerBuild = Object.entries(tests).find(([, test]) => isPlainObject(test)
     && test.uses === 'kubeclaw.container-build@1');
   const hasContainerBuild = existingContainerBuild !== undefined;
+  const hasDependencySecurity = Object.values(tests).some((test) => isPlainObject(test)
+    && test.uses === 'kubeclaw.dependency-scan-trivy@1');
   const existingSizeBudget = Object.entries(tests).find(([, test]) => isPlainObject(test) && test.uses === 'kubeclaw.size-budget@1');
   const hasSizeBudget = existingSizeBudget !== undefined;
   const generatedA11y = options.addA11y ? legacyA11yNode(testConfig, options.scopeId, deploymentNode) : null;
@@ -426,7 +433,10 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
   const generatedBuild = !hasContainerBuild && options.addContainerBuild
     ? { 'container-build': legacyBuildNode(testConfig, options.projectSrcDir, options.repositoryRoot, options.scopeId) }
     : {};
-  const combinedTests = { ...tests, ...generatedBuild, ...generatedBudget, ...exposure.tests,
+  const combinedTests = { ...tests,
+    ...(!hasDependencySecurity ? { 'dependency-security': { uses: 'kubeclaw.dependency-scan-trivy@1', mode: 'blocking', retries: 0,
+      concurrencyGroup: 'security-dependency', config: { projectDirectory: '.', policy: { profile: 'strict-v1' } } } } : {}),
+    ...generatedBuild, ...generatedBudget, ...exposure.tests,
     ...(options.addApi && !Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.api-flow@1')
       ? { 'api-flow': legacyApiNode(testConfig, options.repositoryRoot, options.projectSrcDir, options.scopeId, deploymentNode) } : {}),
     ...(options.addA11y && !Object.values(tests).some((test) => isPlainObject(test) && test.uses === 'kubeclaw.axe@1')
@@ -453,6 +463,7 @@ function scopeWithProviders(existingScope: unknown, testConfig: unknown, options
       ...(options.addExposure ? { 'tailscale-exposure': 1 } : {}),
       ...(options.addApi ? { api: 1 } : {}),
       ...(options.addA11y ? { 'browser-axe': 2 } : {}),
+      'security-dependency': 1,
       ...objectOrEmpty(scope.concurrencyLimits) } };
 }
 
@@ -488,6 +499,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         legacyPerfSelected: Array.isArray(selected) && selected.includes('perf'),
         legacyVisualSelected: Array.isArray(selected) && selected.includes('visual-reg'),
         legacyE2eSelected: Array.isArray(selected) && selected.includes('e2e'),
+        legacySecuritySelected: Array.isArray(selected) && selected.includes('security'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];
@@ -508,6 +520,7 @@ function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord
         legacyPerfSelected: Array.isArray(selected) && selected.includes('perf'),
         legacyVisualSelected: Array.isArray(selected) && selected.includes('visual-reg'),
         legacyE2eSelected: Array.isArray(selected) && selected.includes('e2e'),
+        legacySecuritySelected: Array.isArray(selected) && selected.includes('security'),
         legacyUnitSelected: Array.isArray(selected) && selected.includes('unit'), projectSrcDir,
         repositoryRoot: context.repoRoot, swarmDir: context.swarmDir, scopeId: id,
       })];

@@ -289,7 +289,7 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const progress = readJson(path.join(workspace.swarmDir, 'progress.json'));
   const { requests, receipts } = effectRequestsAndReceipts(effects);
   const stageFailures = EXPECTED_STAGES.filter((stageId) => result.stages?.[stageId] !== 'succeeded');
-  const suiteEffects = [...requests.values()].filter((request) => request.capability === 'test.suite.execute');
+  const planEffects = [...requests.values()].filter((request) => request.capability === 'test.plan.execute');
   const runtimeEffects = [...requests.values()].filter((request) => request.capability === 'runtime.dispatch');
   const deliveries = readJsonLines(path.join(runRoot, 'observer-deliveries.jsonl'))
     .filter((record) => record?.entry?.observerId === 'kubeclaw.notification-observer:notifications');
@@ -333,21 +333,24 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
       : [{ artifactId: artifact.artifactId, changedPaths, checksPassed, mutationsExist }];
   });
   const moduleBusterFailures = testArtifacts.flatMap(({ artifact, value }) => {
-    const suites = value?.suiteExecution?.results;
-    return Array.isArray(suites)
-      && suites.length > 0
-      && suites.every((suite) => suite?.status === 'PASS')
+    const receipt = value?.suiteExecution?.provider;
+    return receipt?.schemaVersion === 'test-plan-receipt.v1'
+      && receipt?.decision?.state === 'passed'
       && value?.verdict?.verdict === 'PASS'
       ? []
-      : [{ artifactId: artifact.artifactId, suites: suites ?? null }];
+      : [{ artifactId: artifact.artifactId, receipt: receipt ?? null }];
   });
-  const requiredFinalSuites = progress?.gates?.['final-buster']?.test_suites ?? [];
+  const requiredFinalSuites = ['security-headers', 'dependency-security', 'image-security',
+    'kubernetes-policy-security', 'kubernetes-runtime-security'];
   const finalBusterFailures = qualityArtifacts.flatMap(({ artifact, value }) => {
-    const passed = new Set((value?.suiteExecution?.results ?? [])
-      .filter((suite) => suite?.status === 'PASS')
-      .map((suite) => suite.suite));
-    const missing = requiredFinalSuites.filter((suite) => !passed.has(suite));
-    return missing.length === 0 && value?.verdict?.outcome === 'passed'
+    const receipt = value?.suiteExecution?.provider;
+    const nodeIds = new Set((receipt?.decision?.nodes ?? [])
+      .filter((node) => ['passed', 'advisory_failure'].includes(node?.effect))
+      .map((node) => node.nodeId));
+    const missing = requiredFinalSuites.filter((suite) => !nodeIds.has(suite));
+    return receipt?.schemaVersion === 'test-plan-receipt.v1'
+      && receipt?.decision?.state === 'passed'
+      && missing.length === 0 && value?.verdict?.outcome === 'passed'
       ? []
       : [{ artifactId: artifact.artifactId, missing }];
   });
@@ -385,9 +388,9 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
       && events.some((record) => record?.entry?.type === 'wait.resolved')
       ? evidencePass('v2_approval_wait_resume')
       : evidenceFail('v2_approval_wait_resume', 'REAL_E2E_V2_APPROVAL_EVIDENCE_MISSING'),
-    suiteEffects.length >= 5
-      ? evidencePass('v2_buster_effects', { count: suiteEffects.length })
-      : evidenceFail('v2_buster_effects', 'REAL_E2E_V2_BUSTER_SUITE_EFFECTS_MISSING', { count: suiteEffects.length }),
+    planEffects.length >= 5
+      ? evidencePass('v2_buster_plan_effects', { count: planEffects.length })
+      : evidenceFail('v2_buster_plan_effects', 'REAL_E2E_V2_BUSTER_PLAN_EFFECTS_MISSING', { count: planEffects.length }),
     runtimeEffects.length >= 12
       ? evidencePass('v2_agent_effects', { count: runtimeEffects.length })
       : evidenceFail('v2_agent_effects', 'REAL_E2E_V2_AGENT_DISPATCH_EFFECTS_MISSING', { count: runtimeEffects.length }),

@@ -97,10 +97,6 @@ const lint: Handler = (grant, request, constraints) => {
   if (!within(directory, allowed(constraints, 'allowedRoots'), existing) || !allowed(constraints, 'allowedProjects').includes(request.resource.canonicalId)) denied(grant, directory);
   if (!within(policy, allowed(constraints, 'allowedPolicyRoots'), existing)) denied(grant, policy);
 };
-const suites: Handler = (grant, request, constraints) => {
-  const root = payloadText(request, 'repositoryRoot'); if (!within(root, allowed(constraints, 'allowedRoots'), existing)) denied(grant, root);
-  const values = request.payload.suites; if (!Array.isArray(values) || values.length === 0 || values.some((suite) => typeof suite !== 'string' || !allowed(constraints, 'allowedSuites').includes(suite))) denied(grant, 'suites');
-};
 const testPlan: Handler = (grant, request, constraints) => {
   const root = payloadText(request, 'repositoryRoot');
   const allowedRoots = allowed(constraints, 'allowedRoots');
@@ -120,7 +116,7 @@ const telemetry: Handler = (grant, request, constraints) => { if (!allowed(const
 const HANDLERS: Readonly<Record<string, Handler>> = Object.freeze({
   'git.repository.read':relativeRead,'git.workspace.create':git,'git.workspace.remove':git,'git.commit':git,'git.merge':git,'git.sync':git,
   'artifacts.read':artifact,'artifacts.write':artifact,'runtime.dispatch':agent,'network.http':network,'secrets.read':secret,
-  'command.execute':command,'container.build':containerBuild,'kubernetes.fixture':kubernetesFixture,'kubernetes.exposure':kubernetesExposure,'lint.execute':lint,'test.suite.execute':suites,'test.plan.execute':testPlan,'state.read':state,'state.append':state,
+  'command.execute':command,'container.build':containerBuild,'kubernetes.fixture':kubernetesFixture,'kubernetes.exposure':kubernetesExposure,'lint.execute':lint,'test.plan.execute':testPlan,'state.read':state,'state.append':state,
   'operator.request':target,'transport.publish':target,'signal.wait':signal,'telemetry.emit':telemetry,'agent.events.subscribe':source,
 });
 

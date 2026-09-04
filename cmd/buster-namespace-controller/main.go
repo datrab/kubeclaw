@@ -17,6 +17,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -27,6 +28,7 @@ const (
 	serviceAccountTokenPath     = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 	serviceAccountCAPath        = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 	leasePlural                 = "busternamespaceleases"
+	runtimeSecurityRefreshAfter = 5 * time.Second
 )
 
 var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")
@@ -335,8 +337,17 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	for key, value := range credentials {
 		exposure[key] = value
 	}
+	runtimeSecurity := objectValue(item.Status["runtimeSecurity"])
+	if runtimeSecurityRefreshDue(runtimeSecurity, time.Now().UTC()) {
+		var err error
+		runtimeSecurity, err = c.runtimeSecurityStatus(ctx, item, namespaceName)
+		if err != nil {
+			return err
+		}
+	}
 	digest := leaseSpecDigest(item.Spec)
-	if !exposureChanged(item.Status, exposure) && stringValue(item.Status["specDigest"]) == digest {
+	if !exposureChanged(item.Status, exposure) && stringValue(item.Status["specDigest"]) == digest &&
+		runtimeSecurityStatusEqual(item.Status["runtimeSecurity"], runtimeSecurity) {
 		return nil
 	}
 	next := copyStatusWithoutCredentials(item.Status)
@@ -344,6 +355,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	for key, value := range exposure {
 		next[key] = value
 	}
+	next["runtimeSecurity"] = runtimeSecurity
 	credentialsReady := boolValue(next["credentialsAvailable"]) || stringValue(next["credentialsRef"]) == ""
 	exposureReady := stringValue(next["exposurePhase"]) == "Ready" || stringValue(next["exposurePhase"]) == "Off"
 	next["conditions"] = []interface{}{
@@ -354,6 +366,215 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 		leaseCondition("ExposureReady", exposureReady, ternaryString(exposureReady, "Available", "Pending")),
 	}
 	return c.patchStatus(ctx, item.Metadata.Name, next)
+}
+
+func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) bool {
+	phase := stringValue(snapshot["phase"])
+	if phase == "Unavailable" {
+		return false
+	}
+	if phase != "Observed" {
+		return true
+	}
+	observedAt, err := time.Parse(time.RFC3339, stringValue(snapshot["observedAt"]))
+	if err != nil || observedAt.After(now.Add(5*time.Second)) {
+		return true
+	}
+	return now.Sub(observedAt) >= runtimeSecurityRefreshAfter
+}
+
+func runtimeSecurityStatusEqual(left interface{}, right map[string]interface{}) bool {
+	leftBytes, leftErr := json.Marshal(left)
+	rightBytes, rightErr := json.Marshal(right)
+	return leftErr == nil && rightErr == nil && bytes.Equal(leftBytes, rightBytes)
+}
+
+func securityFinding(id string, severity string, message string, resource string) map[string]interface{} {
+	if len(id) > 256 {
+		digest := sha256.Sum256([]byte(id))
+		id = id[:184] + ":sha256:" + hex.EncodeToString(digest[:])
+	}
+	return map[string]interface{}{"id": id, "severity": severity, "message": message, "resource": resource}
+}
+
+func boundedRuntimeSecurityFindings(findings []interface{}) ([]interface{}, int, int) {
+	total := len(findings)
+	ordered := append([]interface{}{}, findings...)
+	sort.SliceStable(ordered, func(i, j int) bool {
+		return stringValue(securityObject(ordered[i])["id"]) < stringValue(securityObject(ordered[j])["id"])
+	})
+	const maximumFindings = 4096
+	const maximumSerializedBytes = 512 * 1024
+	bounded := make([]interface{}, 0, min(total, maximumFindings))
+	sizes := make([]int, 0, min(total, maximumFindings))
+	serializedBytes := 2
+	for _, finding := range ordered {
+		encoded, err := json.Marshal(finding)
+		if err != nil {
+			break
+		}
+		separatorBytes := 0
+		if len(bounded) > 0 {
+			separatorBytes = 1
+		}
+		if len(bounded) >= maximumFindings || serializedBytes+separatorBytes+len(encoded) > maximumSerializedBytes {
+			break
+		}
+		bounded = append(bounded, finding)
+		sizes = append(sizes, len(encoded))
+		serializedBytes += separatorBytes + len(encoded)
+	}
+	if len(bounded) == total {
+		return bounded, total, 0
+	}
+	for {
+		omitted := total - len(bounded)
+		overflow := securityFinding("runtime:findings:overflow", "critical",
+			fmt.Sprintf("Runtime security omitted %d findings after the bounded evidence limit.", omitted), "Namespace")
+		encodedOverflow, _ := json.Marshal(overflow)
+		separatorBytes := 0
+		if len(bounded) > 0 {
+			separatorBytes = 1
+		}
+		if len(bounded)+1 <= maximumFindings && serializedBytes+separatorBytes+len(encodedOverflow) <= maximumSerializedBytes {
+			candidate := append(append([]interface{}{}, bounded...), overflow)
+			return candidate, total, omitted
+		}
+		last := len(sizes) - 1
+		serializedBytes -= sizes[last]
+		if last > 0 {
+			serializedBytes--
+		}
+		sizes = sizes[:last]
+		bounded = bounded[:len(bounded)-1]
+	}
+}
+
+func serializedFindingBytes(findings []interface{}) int {
+	encoded, err := json.Marshal(findings)
+	if err != nil {
+		return int(^uint(0) >> 1)
+	}
+	return len(encoded)
+}
+
+func securityObject(value interface{}) map[string]interface{} {
+	if object, ok := value.(map[string]interface{}); ok {
+		return object
+	}
+	return map[string]interface{}{}
+}
+
+func securityItems(value map[string]interface{}) []interface{} {
+	return interfaceSlice(value["items"])
+}
+
+func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immutableImage string) ([]interface{}, int, int) {
+	findings := []interface{}{}
+	for _, rawPod := range securityItems(state["pods"]) {
+		pod := securityObject(rawPod)
+		metadata := securityObject(pod["metadata"])
+		spec := securityObject(pod["spec"])
+		podName := stringValueDefault(metadata["name"], "unknown")
+		if boolValue(spec["hostNetwork"]) || boolValue(spec["hostPID"]) || boolValue(spec["hostIPC"]) {
+			findings = append(findings, securityFinding("runtime:"+podName+":host-namespace", "critical", "Pod uses a host namespace.", "Pod/"+podName))
+		}
+		if value, exists := spec["automountServiceAccountToken"]; !exists || value != false {
+			findings = append(findings, securityFinding("runtime:"+podName+":token", "high", "Pod does not disable automatic service-account token mounting.", "Pod/"+podName))
+		}
+		podSecurity := securityObject(spec["securityContext"])
+		if podSecurity["runAsNonRoot"] != true || stringValue(securityObject(podSecurity["seccompProfile"])["type"]) != "RuntimeDefault" {
+			findings = append(findings, securityFinding("runtime:"+podName+":pod-security", "high", "Pod runtime security context is incomplete.", "Pod/"+podName))
+		}
+		containers := append(interfaceSlice(spec["initContainers"]), interfaceSlice(spec["containers"])...)
+		containers = append(containers, interfaceSlice(spec["ephemeralContainers"])...)
+		for _, rawContainer := range containers {
+			container := securityObject(rawContainer)
+			containerName := stringValueDefault(container["name"], "unknown")
+			if stringValue(container["image"]) != immutableImage {
+				findings = append(findings, securityFinding("runtime:"+podName+":"+containerName+":image", "critical", "Runtime image differs from the verified immutable image.", "Pod/"+podName))
+			}
+			security := securityObject(container["securityContext"])
+			capabilities := securityObject(security["capabilities"])
+			dropsAll := false
+			for _, value := range interfaceSlice(capabilities["drop"]) {
+				if stringValue(value) == "ALL" {
+					dropsAll = true
+				}
+			}
+			addsCapabilities := len(interfaceSlice(capabilities["add"])) > 0
+			if boolValue(security["privileged"]) || security["allowPrivilegeEscalation"] != false || security["runAsNonRoot"] != true || !dropsAll || addsCapabilities {
+				findings = append(findings, securityFinding("runtime:"+podName+":"+containerName+":container-security", "high", "Container runtime security context is incomplete.", "Pod/"+podName))
+			}
+		}
+	}
+	for _, rawService := range securityItems(state["services"]) {
+		service := securityObject(rawService)
+		metadata := securityObject(service["metadata"])
+		spec := securityObject(service["spec"])
+		name := stringValueDefault(metadata["name"], "unknown")
+		if stringValueDefault(spec["type"], "ClusterIP") != "ClusterIP" || len(interfaceSlice(spec["externalIPs"])) > 0 {
+			findings = append(findings, securityFinding("runtime:service:"+name+":exposure", "critical", "Service has unexpected external exposure.", "Service/"+name))
+		}
+	}
+	allowedRBAC := map[string]bool{"buster-controller-secrets": true, "buster-namespace-deployer": true, "buster-namespace-tester": true}
+	for _, kind := range []string{"roles", "rolebindings"} {
+		for _, rawResource := range securityItems(state[kind]) {
+			name := stringValueDefault(securityObject(securityObject(rawResource)["metadata"])["name"], "unknown")
+			if !allowedRBAC[name] {
+				findings = append(findings, securityFinding("runtime:"+kind+":"+name, "high", "Test workload created namespace RBAC.", kind+"/"+name))
+			}
+		}
+	}
+	for _, rawIngress := range securityItems(state["ingresses"]) {
+		name := stringValueDefault(securityObject(securityObject(rawIngress)["metadata"])["name"], "unknown")
+		findings = append(findings, securityFinding("runtime:ingress:"+name, "critical", "Test workload created an Ingress.", "Ingress/"+name))
+	}
+	return findings, len(securityItems(state["pods"])), len(securityItems(state["services"]))
+}
+
+func (c *controller) runtimeSecurityStatus(ctx context.Context, item *lease, namespaceName string) (map[string]interface{}, error) {
+	immutableImage := stringValue(item.Spec["verifiedImage"])
+	manifestDigest := stringValue(item.Spec["manifestDigest"])
+	if immutableImage == "" || manifestDigest == "" {
+		return map[string]interface{}{"phase": "Unavailable", "message": "Lease has no verified security inputs"}, nil
+	}
+	resources := map[string]string{
+		"pods":         "/api/v1/namespaces/" + namespaceName + "/pods",
+		"services":     "/api/v1/namespaces/" + namespaceName + "/services",
+		"roles":        "/apis/rbac.authorization.k8s.io/v1/namespaces/" + namespaceName + "/roles",
+		"rolebindings": "/apis/rbac.authorization.k8s.io/v1/namespaces/" + namespaceName + "/rolebindings",
+		"ingresses":    "/apis/networking.k8s.io/v1/namespaces/" + namespaceName + "/ingresses",
+	}
+	state := map[string]map[string]interface{}{}
+	for name, resourcePath := range resources {
+		var response map[string]interface{}
+		if err := c.kube(ctx, http.MethodGet, resourcePath, nil, "application/json", &response); err != nil {
+			return nil, err
+		}
+		state[name] = response
+	}
+	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage)
+	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings)
+	resultDigest := runtimeSecurityResultDigest(findings, totalFindingCount, omittedFindingCount, podCount, serviceCount)
+	return map[string]interface{}{"phase": "Observed", "observedAt": time.Now().UTC().Format(time.RFC3339),
+		"manifestDigest": manifestDigest, "immutableImage": immutableImage, "findings": findings,
+		"totalFindingCount": totalFindingCount, "omittedFindingCount": omittedFindingCount,
+		"podCount": podCount, "serviceCount": serviceCount,
+		"resultDigest": resultDigest}, nil
+}
+
+func runtimeSecurityResultDigest(findings []interface{}, totalFindingCount, omittedFindingCount, podCount, serviceCount int) string {
+	observedState := map[string]interface{}{
+		"findings":            findings,
+		"totalFindingCount":   totalFindingCount,
+		"omittedFindingCount": omittedFindingCount,
+		"podCount":            podCount,
+		"serviceCount":        serviceCount,
+	}
+	encoded, _ := json.Marshal(observedState)
+	digest := sha256.Sum256(encoded)
+	return "sha256:" + hex.EncodeToString(digest[:])
 }
 
 func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceName string) error {

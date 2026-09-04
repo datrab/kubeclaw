@@ -1486,7 +1486,6 @@ spec:
             - { name: envoy-health, containerPort: 19000, protocol: TCP }
             {{- if eq .Values.agentRole "buster" }}
             - { name: buster-plan, containerPort: 18891, protocol: TCP }
-            - { name: buster-legacy, containerPort: 18892, protocol: TCP }
             {{- else if eq .Values.agentRole "prism" }}
             - { name: prism-dispatch, containerPort: 18082, protocol: TCP }
             {{- end }}

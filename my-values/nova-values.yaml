@@ -100,10 +100,6 @@ capabilityProviders:
       runtime.dispatch:
         adapter: openclaw
         port: 18789
-      test.suite.execute:
-        adapter: buster-suite-v2
-        port: 18892
-        proxyPort: 28892
       test.plan.execute:
         adapter: buster-plan-v1
         scheme: http

@@ -161,7 +161,7 @@ test('scenario module scope keeps module retry cases to the exercised module', (
     assert.equal(progress.arch_validation.enabled, false);
     assert.equal(progress.arch_validation.agent_enabled, false);
     assert.deepEqual(progress.gates['module-review'].contract.module_ids, ['01-nginx']);
-    assert.equal(progress.gates['final-buster'].test_config.unit, undefined);
+    assert.equal(progress.gates['final-buster'].test_config?.unit, undefined);
   });
 });
 
@@ -189,7 +189,7 @@ test('scenario module scope preserves the full graph for graph-owned scenarios',
     assert.deepEqual(Object.keys(progress.modules), ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
     assert.deepEqual(progress.real_e2e.module_scope, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
     assert.deepEqual(progress.execution_order, ['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
-    assert.equal(progress.gates['final-buster'].test_config.unit, undefined);
+    assert.equal(progress.gates['final-buster'].test_config?.unit, undefined);
   });
 });
 
@@ -778,9 +778,12 @@ test('generated review contract assigns Kubernetes fixture authority to final Bu
     assert.match(finalBuster, /HTTP provider must validate the app through the internal Service URL/);
     assert.match(finalBuster, /Do not ask Forge, Echo, or reusable module manifests to create final-preview lease or Ingress resources/);
     assert.match(finalBuster, /Do not add Role or RoleBinding resources for `pods\/portforward`/);
-    assert.deepEqual(finalGate.test_suites, ['security']);
-    assert.deepEqual(finalGate.test_config.security, { paths: ['/'], thresholds: { max_missing_headers: 0 } });
-    assert.equal(finalGate.test_config.unit, undefined);
+    assert.equal(finalGate.test_suites, undefined);
+    assert.equal(finalGate.test_config, undefined);
+    assert.deepEqual(
+      Object.keys(pipeline.gates['final-buster'].tests).filter((id) => id.includes('security')),
+      ['security-headers', 'dependency-security', 'image-security', 'kubernetes-policy-security', 'kubernetes-runtime-security'],
+    );
     assert.equal(pipeline.modules['01-nginx'].suites.unit.uses, 'kubeclaw.unit-suite@1');
     assert.equal(
       pipeline.modules['01-nginx'].suites.unit.add.command.config.executable,
@@ -805,18 +808,15 @@ test('generated review contract assigns Kubernetes fixture authority to final Bu
     assert.equal(pipeline.gates['final-buster'].tests.health.uses, 'kubeclaw.http@1');
     assert.equal(pipeline.gates['final-buster'].tests.health.inputs.deployment.from, 'kubernetes-deployment');
     assert.equal(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].uses, 'kubeclaw.kubernetes-fixture@1');
+    assert.equal(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].config.image, undefined);
     assert.deepEqual(pipeline.lint, {
       uses: 'kubeclaw.lint.full', policyProject: 'workspace',
       rawManifests: [`Projects/${progress.project}/src/k8s/deployment.yaml`], helmCharts: [],
     });
     assert.match(manifest, /name: REDIS_HOST\s+value: redis\.default\.svc\.cluster\.local/u);
-    assert.match(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].config.image.reference, /@sha256:[a-f0-9]{64}$/);
     assert.equal(finalGate.contract.preview_infrastructure_ref, 'contracts.preview_infrastructure');
-    assert.match(finalGate.test_config.serve.image, /@sha256:[a-f0-9]{64}$/);
-    assert.equal(finalGate.test_config.serve.dockerfile, undefined);
-    assert.equal(finalGate.test_config.k8s, undefined);
-    assert.equal(finalGate.test_config.manifest, undefined);
-    assert.equal(finalGate.test_config.tailscale_preview, undefined);
+    assert.equal(finalGate.test_config, undefined);
+    assert.equal(finalGate.test_suites, undefined);
     assert.equal(pipeline.gates['final-buster'].fixtures['tailscale-exposure'].uses,
       'kubeclaw.tailscale-exposure@1');
     assert.equal(pipeline.gates['final-buster'].tests['public-http-health'].inputs.endpoint.from,

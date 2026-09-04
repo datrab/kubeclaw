@@ -38,6 +38,9 @@ import { BrowserAxeCapabilityInvoker, type BrowserAxeCapabilityInvokerOptions } 
 import { BrowserLighthouseCapabilityInvoker, type BrowserLighthouseCapabilityInvokerOptions } from './browser-lighthouse-runtime.ts';
 import { BrowserVisualCapabilityInvoker, type BrowserVisualCapabilityInvokerOptions } from './browser-visual-runtime.ts';
 import { BrowserPlaywrightCapabilityInvoker, type BrowserPlaywrightCapabilityInvokerOptions } from './browser-playwright-runtime.ts';
+import { SecurityScanCapabilityInvoker, type SecurityScanCapabilityInvokerOptions } from './security-scan-runtime.ts';
+import { KubernetesRuntimeSecurityCapabilityInvoker,
+  type KubernetesRuntimeSecurityCapabilityInvokerOptions } from './kubernetes-runtime-security.ts';
 import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
 
 interface StoredPlanJob {
@@ -257,6 +260,8 @@ export interface BusterRemotePlanServiceOptions {
   readonly browserLighthouse?: BrowserLighthouseCapabilityInvokerOptions;
   readonly browserVisual?: BrowserVisualCapabilityInvokerOptions;
   readonly browserPlaywright?: Omit<BrowserPlaywrightCapabilityInvokerOptions, 'workspaceRoot'>;
+  readonly securityScan?: Omit<SecurityScanCapabilityInvokerOptions, 'workspaceRoot'>;
+  readonly kubernetesRuntimeSecurity?: Omit<KubernetesRuntimeSecurityCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly now?: () => Date;
   readonly execute?: (
     job: RemotePlanJobV1,
@@ -588,6 +593,17 @@ export class BusterRemotePlanService {
           ...(this.#options.browserPlaywright ?? (() => { throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED'); })()),
           workspaceRoot,
         }) : null;
+      const securityScan = this.#options.allowedCapabilities.has('security.scan')
+        ? new SecurityScanCapabilityInvoker({
+          ...(this.#options.securityScan ?? (() => { throw new Error('BUSTER_SECURITY_SCAN_CONFIG_REQUIRED'); })()),
+          workspaceRoot: jobRoot,
+        }) : null;
+      const kubernetesRuntimeSecurity = this.#options.allowedCapabilities.has('kubernetes.runtime-security')
+        ? new KubernetesRuntimeSecurityCapabilityInvoker({
+          ...(this.#options.kubernetesRuntimeSecurity
+            ?? (() => { throw new Error('BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED'); })()),
+          workspaceRoot: jobRoot,
+        }) : null;
       const routes = new Map();
       if (directCommand) routes.set('command.execute', directCommand);
       if (containerBuild) routes.set('container.build', containerBuild);
@@ -598,6 +614,8 @@ export class BusterRemotePlanService {
       if (browserLighthouse) routes.set('browser.lighthouse', browserLighthouse);
       if (browserVisual) routes.set('browser.visual', browserVisual);
       if (browserPlaywright) routes.set('browser.playwright', browserPlaywright);
+      if (securityScan) routes.set('security.scan', securityScan);
+      if (kubernetesRuntimeSecurity) routes.set('kubernetes.runtime-security', kubernetesRuntimeSecurity);
       const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
       const run = this.#options.execute
         ? await this.#options.execute(job, paths, controller.signal)

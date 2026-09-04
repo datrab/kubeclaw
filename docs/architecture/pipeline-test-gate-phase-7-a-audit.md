@@ -107,9 +107,9 @@ The transport owns no pipeline policy.
 The following surfaces remain only for old-suite migration:
 
 - `skills/buster/plugins/buster-suite-runtime/src/protocol.ts`
-- `skills/buster/plugins/buster-suite-runtime/src/adapter.ts`
-- `skills/buster/plugins/buster-suite-runtime/src/worker.ts`
-- `skills/buster/plugins/buster-suite-runtime/src/worker-runner.ts`
+- the retired Buster suite adapter;
+- the retired Buster suite worker;
+- the retired Buster suite worker runner.
 - The compiled `SUPPORTED_SUITES` list.
 - The compiled suite capability map.
 - Old suite result summaries and receipts.

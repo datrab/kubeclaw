@@ -85,6 +85,9 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   assert.deepEqual(scaffold.modules['01-foundation'].test_suites, []);
   assert.equal(scaffold.modules['01-foundation'].test_config?.unit, undefined);
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].uses, 'kubeclaw.http@1');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['dependency-security'].uses,
+    'kubeclaw.dependency-scan-trivy@1');
+  assert.equal(scaffold.pipeline.modules['01-foundation'].tests['dependency-security'].mode, 'blocking');
   assert.equal(scaffold.pipeline.modules['01-foundation'].tests['http-health'].config.path, '/');
   assert.equal(scaffold.gates['module-01-review'].on_fail, 'stop');
   assert.ok(scaffold.execution_order.some((entry) => entry.startsWith('TODO:')));
@@ -109,6 +112,8 @@ test('progress scaffold writes a fillable form and apply writes progress.json af
   assert.equal(progress.gates['module-01-review'].on_fail, 'stop');
   const pipeline = readJson(path.join(swarm, 'pipeline.json'));
   assert.equal(pipeline.modules['01-foundation'].tests['http-health'].uses, 'kubeclaw.http@1');
+  assert.equal(pipeline.modules['01-foundation'].tests['dependency-security'].uses,
+    'kubeclaw.dependency-scan-trivy@1');
   assert.equal(pipeline.modules['01-foundation'].tests['http-health'].config.url, 'http://service.demo.svc.cluster.local:3000');
   assert.equal(JSON.stringify(progress).includes('health_path'), false);
   assert.equal(JSON.stringify(progress).includes('"health"'), false);
@@ -171,6 +176,20 @@ test('progress scaffold rejects retired e2e configuration without a suite select
   const root = makeRepo(); const swarm = createBasicProject(root);
   writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: [], test_config: { e2e: { tests_dir: 'tests/e2e' } } } }, gates: {} }, null, 2)}\n`);
   assert.match(runFailure(root, ['--project', 'demo', '--apply']), /LEGACY_E2E_CONFIGURATION_RETIRED/);
+});
+
+test('progress scaffold rejects retired security selection', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: ['security'], test_config: { security: { paths: ['/'] } } } }, gates: {} }, null, 2)}\n`);
+  const output = runFailure(root, ['--project', 'demo', '--apply']);
+  assert.match(output, /LEGACY_SECURITY_CONFIGURATION_RETIRED/);
+  assert.match(output, /security provider nodes/);
+});
+
+test('progress scaffold rejects retired security configuration without a suite selector', () => {
+  const root = makeRepo(); const swarm = createBasicProject(root);
+  writeFile(path.join(swarm, 'progress.scaffold.json'), `${JSON.stringify({ _schema: 'progress-scaffold/v1', project: 'demo', version: 1, description: 'Demo project', notes: [], policy: {}, execution_order: ['app'], modules: { app: { title: 'App', dir: 'app', depends_on: [], stages: ['buster'], test_suites: [], test_config: { security: { paths: ['/'] } } } }, gates: {} }, null, 2)}\n`);
+  assert.match(runFailure(root, ['--project', 'demo', '--apply']), /LEGACY_SECURITY_CONFIGURATION_RETIRED/);
 });
 
 test('progress scaffold migrates legacy health settings into provider plan nodes', () => {

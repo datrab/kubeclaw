@@ -148,10 +148,10 @@ async function probeBuildkit(): Promise<CapabilityResult> {
     endpoint = resolveProviderCapability(
       parseCapabilityProviders(),
       'buster',
-      'test.suite.execute',
+      'test.plan.execute',
     ).endpoint;
   } catch {
-    return { capability: 'buildkit', ok: false, reason: 'INFRA_MISSING_TEST_SUITE_PROVIDER' };
+    return { capability: 'buildkit', ok: false, reason: 'INFRA_MISSING_TEST_PLAN_PROVIDER' };
   }
   try {
     const response = await fetch(`${endpoint.replace(/\/+$/u, '')}/healthz`, {
@@ -159,16 +159,16 @@ async function probeBuildkit(): Promise<CapabilityResult> {
     });
     const body = await response.json() as Record<string, unknown>;
     const ok = response.ok
-      && body.schemaVersion === 'buster-suite-worker-health.v2'
+      && body.schemaVersion === 'buster-plan-health.v1'
       && body.ready === true;
     return {
       capability: 'buildkit',
       ok,
-      reason: ok ? null : 'INFRA_BUSTER_V2_WORKER_UNREADY',
+      reason: ok ? null : 'INFRA_BUSTER_PLAN_RUNTIME_UNREADY',
       evidence: { endpoint, remoteWorker: true },
     };
   } catch {
-    return { capability: 'buildkit', ok: false, reason: 'INFRA_BUSTER_V2_WORKER_UNAVAILABLE' };
+    return { capability: 'buildkit', ok: false, reason: 'INFRA_BUSTER_PLAN_RUNTIME_UNAVAILABLE' };
   }
 }
 

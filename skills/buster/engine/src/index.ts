@@ -16,6 +16,8 @@ export { BrowserAxeCapabilityInvoker } from '../test-gates/browser-axe-runtime.t
 export { BrowserLighthouseCapabilityInvoker } from '../test-gates/browser-lighthouse-runtime.ts';
 export { BrowserVisualCapabilityInvoker } from '../test-gates/browser-visual-runtime.ts';
 export { BrowserPlaywrightCapabilityInvoker } from '../test-gates/browser-playwright-runtime.ts';
+export { SecurityScanCapabilityInvoker } from '../test-gates/security-scan-runtime.ts';
+export { KubernetesRuntimeSecurityCapabilityInvoker } from '../test-gates/kubernetes-runtime-security.ts';
 export type {
   BusterPlanJobStoreOptions,
   BusterRemotePlanServiceOptions,

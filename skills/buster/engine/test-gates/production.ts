@@ -163,6 +163,13 @@ export function loadProductionBusterRemotePlanRuntime(
   const browserPlaywrightCgroup = typeof browserPlaywrightSource?.cgroupRoot === 'string'
     && browserPlaywrightSource.cgroupRoot.length > 0 ? browserPlaywrightSource.cgroupRoot : undefined;
   if (browserPlaywrightSource && !browserPlaywrightCgroup) throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CGROUP_REQUIRED');
+  const securityScanSource = value.securityScan === undefined ? null : object(value.securityScan, 'securityScan');
+  if (allowedCapabilities.has('security.scan') && !securityScanSource) throw new Error('BUSTER_SECURITY_SCAN_CONFIG_REQUIRED');
+  const kubernetesRuntimeSecuritySource = value.kubernetesRuntimeSecurity === undefined
+    ? null : object(value.kubernetesRuntimeSecurity, 'kubernetesRuntimeSecurity');
+  if (allowedCapabilities.has('kubernetes.runtime-security') && !kubernetesRuntimeSecuritySource) {
+    throw new Error('BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED');
+  }
   const stateRoot = path.resolve(directory, value.stateRoot as string);
   const service = new BusterRemotePlanService({
     store: new FileBusterPlanJobStore(stateRoot, {
@@ -309,6 +316,31 @@ export function loadProductionBusterRemotePlanRuntime(
       cgroupRoot: path.resolve(directory, browserPlaywrightCgroup!),
       runAsUid: integer(browserPlaywrightSource.runAsUid, 'browserPlaywright.runAsUid'),
       runAsGid: integer(browserPlaywrightSource.runAsGid, 'browserPlaywright.runAsGid'),
+    } } : {}),
+    ...(securityScanSource ? { securityScan: {
+      trivyExecutable: path.resolve(directory, String(securityScanSource.trivyExecutable)),
+      allowedRegistryPrefixes: stringArray(securityScanSource.allowedRegistryPrefixes,
+        'securityScan.allowedRegistryPrefixes'),
+      maximumExecutionMs: integer(securityScanSource.maximumExecutionMs, 'securityScan.maximumExecutionMs'),
+      maximumOutputBytes: integer(securityScanSource.maximumOutputBytes, 'securityScan.maximumOutputBytes'),
+      cacheDirectory: path.resolve(directory, String(securityScanSource.cacheDirectory)),
+    } } : {}),
+    ...(kubernetesRuntimeSecuritySource ? { kubernetesRuntimeSecurity: {
+      kubectlExecutable: path.resolve(directory, String(kubernetesRuntimeSecuritySource.kubectlExecutable)),
+      controllerNamespace: String(kubernetesRuntimeSecuritySource.controllerNamespace),
+      leaseApiGroup: String(kubernetesRuntimeSecuritySource.leaseApiGroup),
+      allowedNamespacePrefixes: stringArray(kubernetesRuntimeSecuritySource.allowedNamespacePrefixes,
+        'kubernetesRuntimeSecurity.allowedNamespacePrefixes'),
+      maximumExecutionMs: integer(kubernetesRuntimeSecuritySource.maximumExecutionMs,
+        'kubernetesRuntimeSecurity.maximumExecutionMs'),
+      maximumOutputBytes: integer(kubernetesRuntimeSecuritySource.maximumOutputBytes,
+        'kubernetesRuntimeSecurity.maximumOutputBytes'),
+      maximumObservationAgeMs: integer(kubernetesRuntimeSecuritySource.maximumObservationAgeMs,
+        'kubernetesRuntimeSecurity.maximumObservationAgeMs'),
+      ...(kubernetesRuntimeSecuritySource.pollIntervalMs === undefined ? {} : {
+        pollIntervalMs: integer(kubernetesRuntimeSecuritySource.pollIntervalMs,
+          'kubernetesRuntimeSecurity.pollIntervalMs'),
+      }),
     } } : {}),
   });
   const tlsSource = value.tls === undefined ? null : object(value.tls, 'tls');

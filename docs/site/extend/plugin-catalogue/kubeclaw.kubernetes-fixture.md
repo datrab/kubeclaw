@@ -50,6 +50,7 @@ Inputs:
 Outputs:
 
 - `deployment`: value; required.
+- `image`: value; required.
 
 ## Failure Behavior
 

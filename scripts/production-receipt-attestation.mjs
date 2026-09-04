@@ -15,6 +15,7 @@ const RECEIPT_SCHEMAS = new Set([
   'nova-lighthouse-production-preflight.v1',
   'nova-visual-production-preflight.v1',
   'nova-e2e-production-preflight.v1',
+  'nova-security-production-preflight.v1',
   'nova-tailscale-production-preflight.v1',
   'nova-unit-production-preflight.v2',
 ]);
@@ -160,6 +161,18 @@ function validateProductionReceiptPayload(value, options = {}) {
       || target.username || target.password || target.search || target.hash)) errors.push('HTTP target is invalid');
     if (!Number.isSafeInteger(value.httpStatus) || value.httpStatus < 200 || value.httpStatus > 299
       || value.networkRequestVerified !== true) errors.push('HTTP request proof is incomplete');
+  } else if (value.schemaVersion === 'nova-security-production-preflight.v1') {
+    if (value.suite !== 'security') errors.push('suite identity is invalid');
+    if (value.runnerCleanupVerified !== true || value.cleanupVerified !== true
+      || value.clusterCleanupObserved !== true) errors.push('cleanup or import proof is incomplete');
+    const expectedProviders = ['dependency-trivy', 'headers', 'image-trivy', 'kubernetes-policy-trivy', 'kubernetes-runtime'];
+    if (JSON.stringify([...(value.providersVerified ?? [])].sort()) !== JSON.stringify(expectedProviders)
+      || typeof value.immutableImage !== 'string' || !DIGEST.test(value.imageDigest ?? '')
+      || !value.immutableImage.endsWith(`@${value.imageDigest}`)) errors.push('security provider proof is incomplete');
+    if (!value.resources?.leaseName || !value.resources?.namespace
+      || value.resources?.serviceName !== 'security-preflight' || value.resources?.servicePort !== 80) {
+      errors.push('resource identity is incomplete');
+    }
   } else if (['nova-a11y-production-preflight.v1', 'nova-lighthouse-production-preflight.v1',
     'nova-visual-production-preflight.v1', 'nova-e2e-production-preflight.v1'].includes(value.schemaVersion)) {
     const expectedSuite = { 'nova-a11y-production-preflight.v1': 'a11y',

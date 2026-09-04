@@ -4,19 +4,5 @@
   "packageVersion": "1.0.0",
   "stages": [],
   "observers": [],
-  "adapters": [
-    {
-      "id": "suite",
-      "module": "src/adapter.ts",
-      "export": "activate",
-      "providesCapabilities": [
-        "test.suite.execute"
-      ],
-      "requiredCapabilities": [
-        "network.http",
-        "secrets.read"
-      ],
-      "configSchema": "schemas/config.schema.json"
-    }
-  ]
+  "adapters": []
 }

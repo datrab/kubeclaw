@@ -48,6 +48,7 @@ Generated from: `scripts/deploy.sh`
 - `nova-lighthouse-preflight`
 - `nova-visual-preflight`
 - `nova-e2e-preflight`
+- `nova-security-preflight`
 - `nova-tailscale-preflight`
 - `nova-production-preflights`
 - `worker-trust-e2e`

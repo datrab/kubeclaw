@@ -92,7 +92,8 @@ assert.doesNotMatch(networkPolicy,/name: prism-default-deny\s*\}\s*\n?spec:\s*\{
   "Prism default-deny must never select every pod in a shared namespace");
 assert.doesNotMatch(networkPolicy,/name: prism-dns\s*\}\s*\n?spec:\s*\n?\s*podSelector:\s*\{\s*\}/u,
   "Prism DNS allowance must not broaden egress for every pod in a shared namespace");
-for(const port of ["18891","18892"])assert(namespacePolicies.includes(`port: ${port}`),`Nova/Buster NetworkPolicies must include test-gate port ${port}`);
+assert(namespacePolicies.includes('port: 18891'),'Nova/Buster NetworkPolicies must include the provider-plan port 18891');
+assert(!namespacePolicies.includes('port: 18892'),'Nova/Buster NetworkPolicies must not retain the retired suite-worker port 18892');
 assert(!control.includes('roles.includes("approver")'),"any authenticated Prism user must be able to approve");
 assert(/all\)[\s\S]*?cmd_prism[\s\S]*?cmd_agents/.test(source),"deploy all must install Prism before agents");
 assert(source.includes('PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"'),"Prism must default to the KubeClaw namespace");

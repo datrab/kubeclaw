@@ -21,7 +21,7 @@ Unresolved conflicts: none.
 | Role | Packages | Plugins | External capabilities |
 | --- | ---: | ---: | --- |
 | buster | 11 | 23 | git.repository.read, test.plan.execute |
-| nova | 10 | 30 | test.suite.execute |
+| nova | 10 | 30 | none |
 | prism | 11 | 6 | git.repository.read |
 
 ## Contracts
@@ -41,11 +41,11 @@ Unresolved conflicts: none.
 | --- | ---: | --- |
 | stage | 17 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | observer | 6 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
-| adapter | 19 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
-| test provider | 13 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
+| adapter | 18 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
+| test provider | 18 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | report adapter | 1 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 
-Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
+Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 
 ## Plugin packages
 
@@ -53,7 +53,7 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | --- | --- | --- | --- | --- | --- |
 | kubeclaw.api-flow | 1.0.0 | buster | test provider: flow | requires: network.http<br>provides: none | `skills/buster/plugins/api-flow/plugin.json` |
 | kubeclaw.axe | 1.0.0 | buster | test provider: axe | requires: browser.axe<br>provides: none | `skills/buster/plugins/axe/plugin.json` |
-| kubeclaw.buster-suite-runtime | 1.0.0 | buster | adapter: suite | requires: network.http, secrets.read<br>provides: test.suite.execute | `skills/buster/plugins/buster-suite-runtime/plugin.json` |
+| kubeclaw.buster-suite-runtime | 1.0.0 | not role-bundled | none | requires: none<br>provides: none | `skills/buster/plugins/buster-suite-runtime/plugin.json` |
 | kubeclaw.container-build | 1.0.0 | buster | test provider: buildkit | requires: container.build<br>provides: none | `skills/buster/plugins/container-build/plugin.json` |
 | kubeclaw.coverage-budget | 1.0.0 | buster | test provider: lcov | requires: none<br>provides: none | `skills/buster/plugins/coverage-budget/plugin.json` |
 | kubeclaw.direct-command | 1.0.0 | buster | test provider: command | requires: command.execute<br>provides: none | `skills/buster/plugins/direct-command/plugin.json` |
@@ -63,9 +63,10 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.lighthouse | 1.0.0 | buster | test provider: lighthouse | requires: browser.lighthouse<br>provides: none | `skills/buster/plugins/lighthouse/plugin.json` |
 | kubeclaw.openapi | 1.0.0 | buster | test provider: operations | requires: network.http<br>provides: none | `skills/buster/plugins/openapi/plugin.json` |
 | kubeclaw.playwright | 1.0.0 | buster | test provider: playwright | requires: browser.playwright<br>provides: none | `skills/buster/plugins/playwright/plugin.json` |
+| kubeclaw.security-providers | 1.0.0 | buster | test provider: headers<br>test provider: dependency-trivy<br>test provider: image-trivy<br>test provider: kubernetes-policy<br>test provider: kubernetes-runtime | requires: network.http, security.scan, kubernetes.runtime-security<br>provides: none | `skills/buster/plugins/security-providers/plugin.json` |
 | kubeclaw.size-budget | 1.0.0 | buster | test provider: artifact | requires: none<br>provides: none | `skills/buster/plugins/size-budget/plugin.json` |
 | kubeclaw.tailscale-exposure | 1.0.0 | buster | test provider: exposure | requires: kubernetes.exposure<br>provides: none | `skills/buster/plugins/tailscale-exposure/plugin.json` |
-| kubeclaw.test-agent | 1.0.0 | buster | stage: test (kubeclaw.test.execution) | requires: command.execute, test.plan.execute, test.suite.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/buster/plugins/test-agent/plugin.json` |
+| kubeclaw.test-agent | 1.0.0 | buster | stage: test (kubeclaw.test.execution) | requires: command.execute, test.plan.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/buster/plugins/test-agent/plugin.json` |
 | kubeclaw.visual | 1.0.0 | buster | test provider: visual | requires: browser.visual<br>provides: none | `skills/buster/plugins/visual/plugin.json` |
 | kubeclaw.agent-observability | 1.0.0 | buster, nova, prism | observer: ingester<br>observer: evidence | requires: telemetry.emit, artifacts.write<br>provides: none | `skills/common/plugins/agent-observability/plugin.json` |
 | kubeclaw.artifact-store | 1.0.0 | buster, nova, prism | adapter: artifact-store | requires: none<br>provides: artifacts.read, artifacts.write | `skills/common/plugins/artifact-store/plugin.json` |
@@ -86,7 +87,7 @@ Capability vocabulary: 25 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.wait-store | 1.0.0 | nova | adapter: waits | requires: none<br>provides: signal.wait | `skills/common/plugins/wait-store/plugin.json` |
 | kubeclaw.architecture-validator | 1.0.0 | nova | stage: architecture (kubeclaw.validate.architecture) | requires: runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/architecture-validator/plugin.json` |
 | kubeclaw.blueprint-sync | 1.0.0 | nova | stage: sync (kubeclaw.generate.blueprint-sync) | requires: git.sync, git.commit, state.append, artifacts.write<br>provides: none | `skills/nova/plugins/blueprint-sync/plugin.json` |
-| kubeclaw.buster-quality-gate | 1.0.0 | nova | stage: quality (kubeclaw.test.quality-evaluation) | requires: test.plan.execute, test.suite.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/buster-quality-gate/plugin.json` |
+| kubeclaw.buster-quality-gate | 1.0.0 | nova | stage: quality (kubeclaw.test.quality-evaluation) | requires: test.plan.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/buster-quality-gate/plugin.json` |
 | kubeclaw.case-study | 1.0.0 | nova | stage: case-study (kubeclaw.report.case-study) | requires: runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/case-study/plugin.json` |
 | kubeclaw.delivery-lint | 1.0.0 | nova | stage: delivery-lint (kubeclaw.lint.delivery) | requires: git.repository.read, artifacts.write<br>provides: none | `skills/nova/plugins/delivery-lint/plugin.json` |
 | kubeclaw.human-approval | 1.0.0 | nova | stage: approval (kubeclaw.decision.human-approval)<br>stage: architecture-approval (kubeclaw.decision.architecture-approval) | requires: operator.request, signal.wait, artifacts.read<br>provides: none | `skills/nova/plugins/human-approval/plugin.json` |

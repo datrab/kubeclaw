@@ -5,6 +5,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 import { verifyProductionReceipt } from './production-receipt-attestation.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -23,7 +24,7 @@ const allowedDisposition = new Set(['preserved', 'improved', 'removed-defect', '
 const gitRevision = /^[a-f0-9]{40,64}$/u;
 const digest = /^sha256:[a-f0-9]{64}$/u;
 const productionReceiptTrustedPublicKeyFile = '/etc/kubeclaw/production-receipt-authority.pub';
-const productionRequiredSuites = new Set(['unit', 'build', 'k8s', 'health', 'tailscale-preview', 'a11y', 'perf', 'visual-reg', 'e2e']);
+const productionRequiredSuites = new Set(['unit', 'build', 'k8s', 'health', 'tailscale-preview', 'a11y', 'perf', 'visual-reg', 'e2e', 'security']);
 const productionReceiptIdentity = new Map([
   ['unit', { schemaVersion: 'nova-unit-production-preflight.v2', suite: 'unit' }],
   ['build', { schemaVersion: 'nova-container-build-production-preflight.v4', suite: 'build' }],
@@ -33,6 +34,7 @@ const productionReceiptIdentity = new Map([
   ['perf', { schemaVersion: 'nova-lighthouse-production-preflight.v1', suite: 'perf' }],
   ['visual-reg', { schemaVersion: 'nova-visual-production-preflight.v1', suite: 'visual-reg' }],
   ['e2e', { schemaVersion: 'nova-e2e-production-preflight.v1', suite: 'e2e' }],
+  ['security', { schemaVersion: 'nova-security-production-preflight.v1', suite: 'security' }],
   ['tailscale-preview', {
     schemaVersion: 'nova-tailscale-production-preflight.v1', suite: 'tailscale-preview',
   }],
@@ -294,9 +296,12 @@ function checkSchemaDocumentation() {
   for (const manifestPath of documentationManifests()) {
     const manifest = readJson(manifestPath);
     for (const document of Object.values(manifest.documents)) if (!exists(document)) errors.push(`${manifestPath}: missing ${document}`);
-    if (!exists(manifest.projectSchema)) { errors.push(`${manifestPath}: project schema is missing`); continue; }
+    const projectSchemas = manifest.projectSchemas ?? [manifest.projectSchema];
+    if (!Array.isArray(projectSchemas) || projectSchemas.length < 1 || projectSchemas.some((schema) => !exists(schema))) {
+      errors.push(`${manifestPath}: project schema is missing`); continue;
+    }
     const reference = fs.readFileSync(path.join(root, manifest.documents.configurationReference), 'utf8');
-    for (const field of schemaLeafPaths(readJson(manifest.projectSchema))) {
+    for (const projectSchema of projectSchemas) for (const field of schemaLeafPaths(readJson(projectSchema))) {
       if (!reference.includes(`\`${field}\``)) errors.push(`${manifest.documents.configurationReference}: undocumented project field ${field}`);
     }
     for (const field of manifest.operatorFields ?? []) {
@@ -335,14 +340,20 @@ function checkExamples() {
       errors.push(`${manifestPath}: configurationMarkerFields are invalid`);
       continue;
     }
-    const validate = new Ajv2020({ allErrors: true, strict: true }).compile(readJson(manifest.projectSchema));
+    const projectSchemas = manifest.projectSchemas ?? [manifest.projectSchema];
+    const validators = projectSchemas.map((schema) => {
+      const ajv = new Ajv2020({ allErrors: true, strict: true });
+      addFormats(ajv);
+      return ajv.compile(readJson(schema));
+    });
     const validateConfig = (config, label) => {
-      if (!validate(config)) {
-        const details = validate.errors?.map((error) => `${error.instancePath || '/'} ${error.message}`).join('; ');
+      if (!validators.some((validate) => validate(config))) {
+        const details = validators.flatMap((validate) => validate.errors ?? [])
+          .map((error) => `${error.instancePath || '/'} ${error.message}`).join('; ');
         errors.push(`${label}: provider schema rejected example: ${details}`);
       }
     };
-    for (const example of manifest.exampleFiles) {
+    for (const example of manifest.exampleFiles ?? []) {
       if (!exists(example)) { errors.push(`${manifestPath}: missing example ${example}`); continue; }
       const value = readJson(example);
       const configs = findConfigs(value, markers);

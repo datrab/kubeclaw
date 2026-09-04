@@ -45,7 +45,7 @@ If production config or infrastructure is missing, these wrappers fail before st
 - real architecture validator, deterministic checks, and validator agent path
 - real Buster gate, Echo gate, approval gate, pipeline review agent, and pipeline summary
 - real Buster namespace lease and Kubernetes deployment path
-- a real Nova → Buster `test.suite.execute` job that builds and pushes an image
+- a real Nova → Buster `test.plan.execute` job that builds and pushes an image
   with rootless BuildKit, deploys it, health-checks it, and verifies the OCI
   manifest digest from Nova
 - real Tailscale preview URL reachability when the operator is installed

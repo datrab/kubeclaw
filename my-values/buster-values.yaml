@@ -82,9 +82,6 @@ service:
     - name: buster-plan
       port: 18891
       targetPort: buster-plan
-    - name: buster-legacy
-      port: 18892
-      targetPort: buster-legacy
 
 extraContainers:
   - name: buster-v2-runtime
@@ -105,16 +102,10 @@ extraContainers:
         value: spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova
       - name: BUSTER_PLAN_PORT
         value: "28891"
-      - name: BUSTER_LEGACY_PORT
-        value: "28892"
       - name: BUSTER_PLAN_STATE_DIR
         value: /var/lib/buster-v2/plan-jobs
       - name: BUSTER_PLAN_RUN_DIR
         value: /tmp/buster-plan-runs
-      - name: BUSTER_LEGACY_STATE_DIR
-        value: /var/lib/buster-v2/legacy-jobs
-      - name: BUSTER_LEGACY_RUN_DIR
-        value: /tmp/buster-legacy-runs
       - name: BUSTER_V2_MAX_ARCHIVE_BYTES
         value: "67108864"
       - name: BUSTER_V2_MAX_EXTRACTED_BYTES
@@ -138,9 +129,6 @@ extraContainers:
     ports:
       - name: plan-runtime
         containerPort: 28891
-        protocol: TCP
-      - name: legacy-runtime
-        containerPort: 28892
         protocol: TCP
     startupProbe:
       httpGet:

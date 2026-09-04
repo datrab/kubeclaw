@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"suite-documentation-manifest.v1","suite":"security","provider":"kubeclaw.security-suite@1",
+  "documents":{"userGuide":"docs/architecture/pipeline-test-gate-security-user-guide.md","operatorGuide":"docs/architecture/pipeline-test-gate-security-operator-guide.md","configurationReference":"docs/architecture/pipeline-test-gate-security-configuration-reference.md","errorReference":"docs/architecture/pipeline-test-gate-security-error-reference.md","securityModel":"docs/architecture/pipeline-test-gate-security-security-model.md"},
+  "projectSchemas":["skills/buster/plugins/security-providers/schemas/headers.schema.json","skills/buster/plugins/security-providers/schemas/dependency.schema.json","skills/buster/plugins/security-providers/schemas/image.schema.json","skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json","skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json"],
+  "sourceFilesWithErrors":["skills/buster/plugins/security-providers/src/common.js","skills/buster/engine/test-gates/security-scan-runtime.ts","skills/buster/engine/test-gates/kubernetes-runtime-security.ts"],
+  "errorPrefixes":["SECURITY_","DEPENDENCY_SCAN_","IMAGE_SCAN_","KUBERNETES_POLICY_","KUBERNETES_RUNTIME_SECURITY_"],
+  "additionalErrors":["LEGACY_SECURITY_CONFIGURATION_RETIRED"],
+  "configurationMarkerFields":["paths","projectDirectory","timeoutMs"],
+  "exampleFiles":["contracts/pipeline-test-gate/v1/examples/security-config.json"]
+}

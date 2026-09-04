@@ -38,7 +38,7 @@ data:
                       - name: envoy.filters.http.router
                         typed_config: { "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router }
       {{- if eq .Values.agentRole "nova" }}
-      {{- range $listener := list (dict "name" "buster-plan" "port" 28891 "cluster" "buster-plan") (dict "name" "buster-legacy" "port" 28892 "cluster" "buster-legacy") (dict "name" "prism-agent" "port" 28080 "cluster" "prism-agent") }}
+      {{- range $listener := list (dict "name" "buster-plan" "port" 28891 "cluster" "buster-plan") (dict "name" "prism-agent" "port" 28080 "cluster" "prism-agent") }}
         - name: {{ $listener.name }}-egress
           address: { socket_address: { address: 127.0.0.1, port_value: {{ $listener.port }} } }
           filter_chains:
@@ -50,7 +50,7 @@ data:
                     cluster: {{ $listener.cluster }}
       {{- end }}
       {{- else if eq .Values.agentRole "buster" }}
-      {{- range $listener := list (dict "name" "buster-plan" "port" 18891 "localPort" 28891) (dict "name" "buster-legacy" "port" 18892 "localPort" 28892) }}
+      {{- range $listener := list (dict "name" "buster-plan" "port" 18891 "localPort" 28891) }}
         - name: {{ $listener.name }}-ingress
           address: { socket_address: { address: 0.0.0.0, port_value: {{ $listener.port }} } }
           filter_chains:
@@ -143,7 +143,7 @@ data:
             cluster_name: spire-agent
             endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }]
       {{- if eq .Values.agentRole "nova" }}
-      {{- range $cluster := list (dict "name" "buster-plan" "host" "agent-buster" "port" 18891 "peer" "agent-buster") (dict "name" "buster-legacy" "host" "agent-buster" "port" 18892 "peer" "agent-buster") (dict "name" "prism-agent" "host" "agent-prism" "port" 8080 "peer" "agent-prism") }}
+      {{- range $cluster := list (dict "name" "buster-plan" "host" "agent-buster" "port" 18891 "peer" "agent-buster") (dict "name" "prism-agent" "host" "agent-prism" "port" 8080 "peer" "agent-prism") }}
         - name: {{ $cluster.name }}
           connect_timeout: 3s
           type: STRICT_DNS
@@ -179,7 +179,7 @@ data:
       {{- end }}
       {{- end }}
       {{- if eq .Values.agentRole "buster" }}
-      {{- range $cluster := list (dict "name" "buster-plan" "port" 28891) (dict "name" "buster-legacy" "port" 28892) }}
+      {{- range $cluster := list (dict "name" "buster-plan" "port" 28891) }}
         - name: {{ $cluster.name }}-local
           connect_timeout: 1s
           type: STATIC

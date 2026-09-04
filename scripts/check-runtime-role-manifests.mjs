@@ -136,7 +136,12 @@ for (const role of ['nova', 'buster', 'prism']) {
   if (!fs.existsSync(rolePluginRoot)) continue;
   const ownedPluginIds = fs.readdirSync(rolePluginRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && fs.existsSync(path.join(rolePluginRoot, entry.name, 'plugin.json')))
-    .map((entry) => JSON.parse(fs.readFileSync(path.join(rolePluginRoot, entry.name, 'plugin.json'), 'utf8')).id);
+    .flatMap((entry) => {
+      const plugin = JSON.parse(fs.readFileSync(path.join(rolePluginRoot, entry.name, 'plugin.json'), 'utf8'));
+      const registrationCount = ['stages', 'observers', 'adapters', 'testProviders']
+        .reduce((count, field) => count + (Array.isArray(plugin[field]) ? plugin[field].length : 0), 0);
+      return registrationCount > 0 ? [plugin.id] : [];
+    });
   for (const pluginId of ownedPluginIds) assert(manifest.plugins.includes(pluginId), `${role} omits its plugin: ${pluginId}`);
 }
 

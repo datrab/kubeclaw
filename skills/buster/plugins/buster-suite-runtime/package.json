@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/protocol.test.ts && node tests/security-boundaries.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+    "test": "node tests/package-boundary.test.mjs"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.13.0",

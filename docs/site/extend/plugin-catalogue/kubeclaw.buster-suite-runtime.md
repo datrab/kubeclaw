@@ -9,7 +9,7 @@ Last verified: generated during publication
 
 ## Purpose
 
-This package provides 1 registered extension through the canonical plugin runtime.
+This package provides 0 registered extensions through the canonical plugin runtime.
 
 ## When To Use It
 
@@ -26,21 +26,6 @@ Use this package when a granted capability needs one of its declared adapters.
 
 | Kind | ID | Public contract or type | Module | Export |
 | --- | --- | --- | --- | --- |
-| capability adapter | `suite` | `suite` | `src/adapter.ts` | `activate` |
-
-## capability adapter: suite
-
-Public identifier: `suite`.
-
-Required capabilities: `network.http`, `secrets.read`
-
-Provided capabilities: `test.suite.execute`
-
-Configuration schema: `schemas/config.schema.json`
-
-Input schema: None.
-
-Result schema: None.
 
 ## Failure Behavior
 
@@ -56,14 +41,13 @@ Run:
 npm test --prefix skills/buster/plugins/buster-suite-runtime
 ```
 
-Package tests found: 4.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/buster-suite-runtime/plugin.json`
 - Package root: `skills/buster/plugins/buster-suite-runtime`
 - Authored package guide: `skills/buster/plugins/buster-suite-runtime/README.md`
-- Test: `skills/buster/plugins/buster-suite-runtime/tests/live-function.test.ts`
 - Test: `skills/buster/plugins/buster-suite-runtime/tests/package-boundary.test.mjs`
 - Test: `skills/buster/plugins/buster-suite-runtime/tests/protocol.test.ts`
 - Test: `skills/buster/plugins/buster-suite-runtime/tests/security-boundaries.test.ts`

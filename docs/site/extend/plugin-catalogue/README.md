@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 49 packages.
+The catalogue contains 50 packages.
 
 ## Stage Packages
 
@@ -39,7 +39,6 @@ The catalogue contains 49 packages.
 ## Capability adapter Packages
 
 - [kubeclaw.artifact-store](kubeclaw.artifact-store.md)
-- [kubeclaw.buster-suite-runtime](kubeclaw.buster-suite-runtime.md)
 - [kubeclaw.command-runner](kubeclaw.command-runner.md)
 - [kubeclaw.git-workspace](kubeclaw.git-workspace.md)
 - [kubeclaw.lint](kubeclaw.lint.md)
@@ -68,6 +67,7 @@ The catalogue contains 49 packages.
 - [kubeclaw.lighthouse](kubeclaw.lighthouse.md)
 - [kubeclaw.openapi](kubeclaw.openapi.md)
 - [kubeclaw.playwright](kubeclaw.playwright.md)
+- [kubeclaw.security-providers](kubeclaw.security-providers.md)
 - [kubeclaw.size-budget](kubeclaw.size-budget.md)
 - [kubeclaw.tailscale-exposure](kubeclaw.tailscale-exposure.md)
 - [kubeclaw.visual](kubeclaw.visual.md)

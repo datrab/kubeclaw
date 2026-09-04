@@ -49,7 +49,7 @@ const packages = discoverPackages({
 const registry = buildRegistry(packages);
 assert.equal(registry.stages.size, 17);
 assert.equal(registry.observers.size, 6);
-assert.equal(registry.adapters.size, 19);
+assert.equal(registry.adapters.size, 18);
 for (const [type, owner] of registry.stages) {
   assert.ok(type.startsWith('kubeclaw.'), `stage type is not namespaced: ${type}`);
   assert.ok(owner.package.manifest.id.startsWith('kubeclaw.'), `stage owner is not a package: ${type}`);

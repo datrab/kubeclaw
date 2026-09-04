@@ -7,14 +7,14 @@ const providers = parseCapabilityProviders(JSON.stringify({
     capabilities: {
       'runtime.dispatch': { adapter: 'openclaw', endpoint: 'http://agent-buster:18789' },
       'test.plan.execute': { adapter: 'buster-plan-v1', endpoint: 'https://agent-buster:18891' },
-      'test.suite.execute': { adapter: 'buster-suite-v2', endpoint: 'http://agent-buster:18892' },
+      'test.plan.execute': { adapter: 'buster-plan-v1', endpoint: 'https://agent-buster:18891' },
     },
   },
   security: {
     agentRole: 'security',
     capabilities: {
       'runtime.dispatch': { adapter: 'kagent', endpoint: 'http://security-agent:8080' },
-      'test.suite.execute': { adapter: 'custom-python', endpoint: 'http://security-runner:9000' },
+      'security.scan': { adapter: 'custom-python', endpoint: 'http://security-runner:9000' },
     },
   },
 }));
@@ -23,15 +23,11 @@ assert.deepEqual(resolveProviderCapability(providers, 'buster', 'runtime.dispatc
   adapter: 'openclaw',
   endpoint: 'http://agent-buster:18789',
 });
-assert.deepEqual(resolveProviderCapability(providers, 'buster', 'test.suite.execute'), {
-  adapter: 'buster-suite-v2',
-  endpoint: 'http://agent-buster:18892',
-});
 assert.deepEqual(resolveProviderCapability(providers, 'buster', 'test.plan.execute'), {
   adapter: 'buster-plan-v1', endpoint: 'https://agent-buster:18891',
 });
 assert.equal(resolveProviderCapability(providers, 'security', 'runtime.dispatch').adapter, 'kagent');
-assert.equal(resolveProviderCapability(providers, 'security', 'test.suite.execute').adapter, 'custom-python');
+assert.equal(resolveProviderCapability(providers, 'security', 'security.scan').adapter, 'custom-python');
 assert.throws(() => resolveProviderCapability(providers, 'buster', 'security.scan.execute'), /ROUTE_NOT_FOUND/u);
 assert.throws(() => parseCapabilityProviders('{}'), /CATALOG_INVALID/u);
 assert.throws(() => parseCapabilityProviders(JSON.stringify({

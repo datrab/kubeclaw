@@ -92,4 +92,105 @@ The final controller review found two Kubernetes edge cases. Lease names can exc
 
 ## Suite 13: Security
 
-Security remains pending. No implementation or completion claim has been made for it in this record.
+Phase 8 adds five independent providers: security headers, dependency
+vulnerabilities, immutable image vulnerabilities, static Kubernetes policy,
+and controller-observed Kubernetes runtime security. The contained proof uses
+a real HTTP server, Trivy 0.74.0 with its real advisory database, a real
+digest-pinned Alpine image, a real checked Kubernetes manifest, the isolated
+Buster runner, and authenticated Nova-to-Buster dispatch. It uses no mock
+scanner, fake advisory database, Kubernetes emulator, or compatibility
+wrapper.
+
+Phase 9 maps 33 baseline items to executable evidence or an explicit recorded
+legacy fact. Seven behaviors are preserved, 21 are improved, and five old
+defects are removed. The general lint registry no longer runs `npm audit` or
+`pip-audit`; the dependency provider is the sole vulnerability authority.
+Temporary acceptances bind the exact finding identity and expiry. Expired and
+unused acceptances remain visible. Scanner errors remain execution errors.
+
+Phase 10 deletes the legacy security runtime and the final legacy suite
+transport. Project setup rejects retired security fields. The production
+workspace declares all five provider nodes and links the image and manifest
+through typed provider outputs. A suite-specific preflight sends a signed plan
+through Nova and Buster, imports evidence, observes Kubernetes cleanup, and
+stores a signed receipt.
+
+The fresh-context architecture audit found material defects in the first
+closeout candidate. The accepted fixes add the missing CRD fields and bounded
+runtime-security status, give the controller the exact collection-read verbs
+used by production, move runtime evaluation into the production Go controller,
+add production-rule Go tests, remove duplicate dependency-scan authority,
+normalize dependency findings, remove legacy security fields from the real
+workspace, require all five node identities in evidence, use only the typed
+container-build image input, add negative project-setup tests, and strengthen
+the semantic Phase 8 and Phase 9 gates. The audit proposal to retain a second
+TypeScript runtime oracle was rejected. Production now has one controller
+implementation for that decision.
+
+The workflow documents were improved after the audit. Phase 8 now requires a
+rendered CRD and RBAC proof plus the production Go rule test. Phase 9 now
+requires a sole-authority check and normalized finding fields. Phase 10 now
+requires the real workspace to contain all five explicit nodes and no retired
+configuration.
+
+This development environment does not provide a real Kubernetes cluster. No
+emulator is used in its place. The live controller, cleanup, and signed-receipt
+proof remains pending for the controlled production cycle. This is the only
+Suite 13 infrastructure blocker at source closeout.
+
+Terra/high autoreview found and drove more fail-closed corrections. Runtime
+inspection now rejects privileged containers, added Linux capabilities, and
+unsafe ephemeral containers. The controller refreshes observations on each
+poll and Buster rejects stale observations. Runtime findings have bounded
+counts, identifiers, and serialized bytes. Trivy disables telemetry and uses
+its local database for contained dependency and image scans. The controller
+adds one critical overflow finding when it truncates runtime evidence.
+
+The review also found an artifact-boundary mismatch and an HTTP path escape.
+The runtime-security provider accepts an absolute manifest path only after the
+capability resolves it inside the authorized repository root. Security-header
+paths reject backslashes, and the provider verifies that the final URL keeps
+the deployment origin before it sends a request. Real negative tests cover
+both boundaries. One overflow-count finding was rejected after inspection:
+the controller recomputes the omitted count after each reserved-slot removal,
+and its Go regression test verifies the final count.
+
+The final authority review found that removal of the old lint-based dependency
+scanners could leave a project without dependency scanning. Project setup now
+adds the blocking Trivy dependency provider to every Buster scope. The normal
+production pipeline rejects a resolved scope that does not contain this
+provider. Thus, the replacement is mandatory while `npm audit` and `pip-audit`
+remain removed as duplicate authorities.
+
+The following integrity review found that Buster accepted only the format of
+the controller result digest. The controller and Buster now use the same
+canonical findings-and-counts payload. Buster recomputes the digest and rejects
+the observation when the value differs. Go and TypeScript tests use the same
+fixed vector to prove that both implementations agree.
+
+The next review found that declared truncation could omit its fail-closed
+marker, and that composite scanner identifiers could exceed the common result
+limit. Buster now requires exact count accounting and a final critical
+`runtime:findings:overflow` item whenever the controller omits findings.
+Dependency and Kubernetes-policy identifiers now use a stable SHA-256 suffix
+when their complete normalized identity exceeds 256 characters.
+
+Image findings also include the Trivy result target in their bounded identity.
+This prevents two occurrences of the same vulnerability and package in
+different image targets from collapsing into one duplicate identifier.
+Individual identity components also use a hash suffix when they exceed their
+component limit. Two long paths or resource identifiers with the same prefix
+therefore remain distinct.
+
+The exact-state review found two production defects after the concurrent-main
+sync. Ready leases could patch a new observation on every controller poll, and
+offline Java dependency scans lacked the Trivy Java index database. The
+controller now refreshes runtime observations at a bounded five-second
+interval and skips an unchanged status patch. The Buster image now downloads
+and verifies both Trivy databases during the image build. Runtime scans disable
+both database update paths.
+
+The final exact-state Terra/high autoreview reported no accepted or actionable
+finding and confidence 0.72. The complete plugin-system, migration,
+documentation-publication, runtime-packaging, deployment-truth, signed-receipt,
+and 61-case real-workspace gates passed on the synchronized `main` base.

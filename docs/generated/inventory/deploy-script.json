@@ -83,6 +83,7 @@
     "nova-lighthouse-preflight",
     "nova-visual-preflight",
     "nova-e2e-preflight",
+    "nova-security-preflight",
     "nova-tailscale-preflight",
     "nova-production-preflights",
     "worker-trust-e2e",
@@ -310,6 +311,7 @@
     "cmd_nova_lighthouse_preflight",
     "cmd_nova_visual_preflight",
     "cmd_nova_e2e_preflight",
+    "cmd_nova_security_preflight",
     "cmd_nova_tailscale_preflight",
     "cmd_nova_production_preflights",
     "cmd_worker_trust_e2e",
@@ -332,12 +334,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 850,
-    "secrets": 895,
-    "tailscale": 986,
-    "infra": 1077,
-    "agents": 1393,
-    "smoke": 1515,
-    "teardown": 2635
+    "setup": 851,
+    "secrets": 896,
+    "tailscale": 987,
+    "infra": 1078,
+    "agents": 1394,
+    "smoke": 1516,
+    "teardown": 2662
   }
 }

@@ -23,13 +23,6 @@ import { writeRunLintPolicy } from './manifest-lint-production.mts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const SPARK_MODEL = 'openai/gpt-5.3-codex-spark';
-const ALL_SUITES = Object.freeze([
-  'a11y', 'perf',
-  'security',
-]);
-const BUSTER_CAPABILITIES = Object.freeze([
-  'browser_automation', 'lighthouse', 'discord_media',
-]);
 
 function writeJson(file: string, value: unknown): void {
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -223,16 +216,6 @@ async function main(): Promise<void> {
   const gatewayOrigin = 'http://127.0.0.1:18789';
   const gatewayEndpoint = `${gatewayOrigin}/tools/invoke`;
   const remoteProviders = parseCapabilityProviders();
-  const busterSuiteRoute = resolveProviderCapability(
-    remoteProviders,
-    'buster',
-    'test.suite.execute',
-  );
-  if (busterSuiteRoute.adapter !== 'buster-suite-v2') {
-    throw new Error(`REAL_E2E_TEST_SUITE_ADAPTER_UNSUPPORTED:${busterSuiteRoute.adapter}`);
-  }
-  const busterWorkerEndpoint = busterSuiteRoute.endpoint;
-  const busterWorkerOrigin = busterSuiteRoute.endpoint;
   if (!process.env.BUSTER_V2_TOKEN) {
     throw new Error('REAL_E2E_BUSTER_V2_CONFIG_MISSING');
   }
@@ -275,7 +258,6 @@ async function main(): Promise<void> {
   ];
   const runtimeGrants = { allowedAgents: targetIds };
   const artifact = (namespace: string) => ({ allowedNamespaces: [namespace] });
-  const suiteGrant = { allowedSuites: ALL_SUITES, allowedRoots: [repo] };
   const gitWorkspaceGrant = {
     allowedRoots: [repo, workspaces],
     allowedWorkspaceRoots: [workspaces],
@@ -297,7 +279,6 @@ async function main(): Promise<void> {
   const providers = {
     'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
     'artifacts.write': 'kubeclaw.artifact-store:artifact-store',
-    'test.suite.execute': 'kubeclaw.buster-suite-runtime:suite',
     'test.plan.execute': 'kubeclaw.remote-test-gate:plan',
     'lint.execute': 'kubeclaw.lint:executor',
     'command.execute': 'kubeclaw.command-runner:command',
@@ -328,7 +309,6 @@ async function main(): Promise<void> {
     },
     'kubeclaw.test-agent:test': {
       'command.execute': { allowedExecutables: [process.execPath], allowedWorkingRoots: [repo] },
-      'test.suite.execute': suiteGrant,
       'test.plan.execute': { allowedRoots: [repo] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.test-agent'),
@@ -363,7 +343,6 @@ async function main(): Promise<void> {
       },
     },
     'kubeclaw.buster-quality-gate:quality': {
-      'test.suite.execute': suiteGrant,
       'test.plan.execute': { allowedRoots: [repo] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.buster-quality-gate'),
@@ -375,10 +354,6 @@ async function main(): Promise<void> {
       'git.repository.read': { allowedPrefixes: ['.swarm/runtime-results/'] },
       'network.http': { allowedOrigins: [gatewayOrigin, new URL(busterGatewayOrigin).origin] },
       'secrets.read': { allowedNames: ['openclaw.gateway', 'buster.gateway', 'buster.worker'] },
-    },
-    'kubeclaw.buster-suite-runtime:suite': {
-      'network.http': { allowedOrigins: [busterWorkerOrigin] },
-      'secrets.read': { allowedNames: ['buster.worker'] },
     },
     'kubeclaw.remote-test-gate:plan': {
       'secrets.read': { allowedNames: ['buster.worker', 'buster.source-private-key'] },
@@ -404,7 +379,7 @@ async function main(): Promise<void> {
     'buster.final': runtimeTarget(
       busterGatewayEndpoint, busterRepositoryRoot, busterRepositoryRoot, model, thinking, roles.buster,
       '.swarm/runtime-results', 'buster.gateway',
-      `${busterWorkerEndpoint}/v2/runtime-results`, 'buster.worker',
+      undefined, undefined,
     ),
     'echo.final-review': runtimeTarget(gatewayEndpoint, repo, repo, model, thinking, roles.echo, '.swarm/runtime-results'),
   };
@@ -432,8 +407,8 @@ async function main(): Promise<void> {
       roles.buster,
       '.swarm/runtime-results',
       'buster.gateway',
-      `${busterWorkerEndpoint}/v2/runtime-results`,
-      'buster.worker',
+      undefined,
+      undefined,
     );
   }
   const pluginRoots = [
@@ -466,6 +441,9 @@ async function main(): Promise<void> {
         defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 2,
         maximumMatrixSize: 16, maximumNodes: 128, defaultConcurrencyLimit: 1,
         maximumConcurrencyLimits: concurrency } });
+    if (!plan.nodes.some((node) => node.provider.contractId === 'kubeclaw.dependency-scan-trivy@1')) {
+      throw new Error(`REAL_E2E_MANDATORY_DEPENDENCY_SECURITY_MISSING:${stageId}`);
+    }
     const grants = Object.fromEntries(plan.nodes.map((node) => {
       const provider = providerRegistry.testProviderContracts.get(node.provider.contractId);
       if (!provider) throw new Error(`REAL_E2E_PROVIDER_MISSING:${node.provider.contractId}`);
@@ -488,17 +466,6 @@ async function main(): Promise<void> {
       'kubeclaw.lint:executor': {
         allowedRepositoryRoots: [repo],
         allowedPolicyRoots: [path.dirname(lintPolicyPath)],
-      },
-      'kubeclaw.buster-suite-runtime:suite': {
-        endpoint: busterWorkerEndpoint,
-        tokenSecret: 'buster.worker',
-        allowedRepositoryRoots: [repo],
-        unmigratedSuites: ALL_SUITES,
-        suiteCapabilities: BUSTER_CAPABILITIES,
-        gitExecutable,
-        maxArchiveBytes: 67_108_864,
-        maxSuiteTimeoutMs: 1_800_000,
-        pollMs: 2_000,
       },
       'kubeclaw.remote-test-gate:plan': {
         endpoint: busterPlanRoute.endpoint,
@@ -535,7 +502,6 @@ async function main(): Promise<void> {
         allowedOrigins: [
           gatewayOrigin,
           new URL(busterGatewayOrigin).origin,
-          busterWorkerOrigin,
           webhookOrigin,
         ],
         allowedMethods: ['GET', 'POST', 'DELETE'],

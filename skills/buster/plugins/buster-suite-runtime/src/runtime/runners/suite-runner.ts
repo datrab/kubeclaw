@@ -1,5 +1,4 @@
 // Suite Runner — deterministic registry and public orchestration boundary.
-import securitySuite from '../suites/security.ts';
 import type { SuiteVerdict } from '../services/verdict-schema.ts';
 import { createSuiteRunnerValidationError } from './suite-runner-contracts.ts';
 import type { SuiteContext, SuiteFunction, SuiteResult, SuiteRunnerOptions } from './suite-runner-contracts.ts';
@@ -8,12 +7,10 @@ import { runSuiteWithTimeout } from './suite-runner-execution.ts';
 import { buildDetailedSuiteSummary, collectReadySuites as collectReady, executeSuites } from './suite-runner-graph.ts';
 
 const SUITE_REGISTRY: Readonly<Record<string, SuiteFunction>> = Object.freeze({
-  security: securitySuite,
 }) as unknown as Readonly<Record<string, SuiteFunction>>;
 
-export const EXECUTION_ORDER = ['security'];
+export const EXECUTION_ORDER: string[] = [];
 export const DEPENDENCIES: Record<string, string[]> = {
-  security: [],
 };
 
 export function validateSuiteNames(suites: readonly unknown[]): string[] {

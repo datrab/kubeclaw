@@ -94,7 +94,6 @@ try {
   const granted = core.resolveCapabilityGrants(snapshot, {
     enabledRegistrations: enabled,
     providers: new Map([
-      ['test.suite.execute', 'kubeclaw.buster-suite-runtime:suite'],
       ['test.plan.execute', 'kubeclaw.remote-test-gate:plan'],
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
@@ -103,7 +102,6 @@ try {
     ]),
     grants: new Map([
       ['kubeclaw.buster-quality-gate:quality', new Map([
-        ['test.suite.execute', { allowedSuites: ['security'], allowedRoots: [temporary] }],
         ['test.plan.execute', { allowedRoots: [temporary] }],
         ['runtime.dispatch', { allowedAgents: ['gate'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.buster-quality-gate'] }],
@@ -111,10 +109,6 @@ try {
       ['kubeclaw.runtime-dispatch:runtime', new Map([
         ['network.http', { allowedOrigins: [origin] }],
         ['secrets.read', { allowedNames: ['gate.agent'] }],
-      ])],
-      ['kubeclaw.buster-suite-runtime:suite', new Map([
-        ['network.http', { allowedOrigins: [origin] }],
-        ['secrets.read', { allowedNames: ['buster.worker'] }],
       ])],
       ['kubeclaw.remote-test-gate:plan', new Map([
         ['secrets.read', { allowedNames: ['buster.worker'] }],
@@ -146,17 +140,6 @@ try {
       }],
       ['kubeclaw.artifact-store:artifact-store', {
         artifactRoot: path.join(temporary, 'artifacts'),
-      }],
-      ['kubeclaw.buster-suite-runtime:suite', {
-        endpoint: origin,
-        tokenSecret: 'buster.worker',
-        allowedRepositoryRoots: [temporary],
-        unmigratedSuites: ['security'],
-        suiteCapabilities: ['image_build'],
-        gitExecutable: fs.realpathSync('/usr/bin/git'),
-        maxArchiveBytes: 8_388_608,
-        maxSuiteTimeoutMs: 5_000,
-        pollMs: 100,
       }],
       ['kubeclaw.remote-test-gate:plan', {
         endpoint: origin,
@@ -195,13 +178,11 @@ try {
             gateId: 'quality',
             attempt: 1,
             task: 'Evaluate.',
-            suiteEvidence: [],
+            suiteEvidence: [{ suite: 'security', passed: true, summary: 'provider plan passed' }],
             suitePlan: {
               repositoryRoot: temporary,
-              suites: ['security'],
-              testConfig: { suite_timeout_ms: 5_000,
-                serve: { type: 'local', port: address.port },
-                security: { paths: ['/'] } },
+              suites: [],
+              testConfig: {},
               task: {},
             },
           },
