@@ -59,6 +59,8 @@ interface AuditCacheRunSummary {
 }
 interface AuditCacheSummary {
   readonly review: AuditCacheRunSummary;
+  readonly initialReview: AuditCacheRunSummary;
+  readonly contextExpansion: AuditCacheRunSummary;
   readonly verification: AuditCacheRunSummary;
 }
 interface AuditRuntime {
@@ -402,12 +404,14 @@ async function verifiedReduction(
     compilationDigest: compilation.digest, contextExpansion: contextExpansionFollowUp,
   }), context)];
   let finalJobs = compilation.jobs, reviewResults = firstResults, reviewRuns = [reviewRun];
+  let expansionRun: ReviewCacheRun<ScalableReviewJobResult> | undefined;
   let expansionAccounting: Readonly<{ inputTokens: number; estimatedCostUsd: number; estimatedWallTimeSeconds: number }>
     = Object.freeze({ inputTokens: 0, estimatedCostUsd: 0, estimatedWallTimeSeconds: 0 });
   if (expandedJobs.length > 0) {
     expansionAccounting = selectedExpansion.accounting;
     const expandedRun = await cachedReviewJobs(expandedJobs, reviewIdentity,
       { ...runtime, execution: execution('context-expansion') });
+    expansionRun = expandedRun;
     const replacement = new Map(expandedJobs.map((job) => [job.id, job]));
     finalJobs = Object.freeze(compilation.jobs.map((job) => replacement.get(job.id) ?? job));
     reviewResults = finalJobs.map((job, index) => (
@@ -458,6 +462,8 @@ async function verifiedReduction(
       verification: verificationFollowUp }), followUpArtifacts: Object.freeze(followUpArtifacts),
     summary: {
     review: combinedCacheSummary(reviewIdentity, reviewRuns),
+    initialReview: cacheSummary(reviewIdentity, reviewRun),
+    contextExpansion: expansionRun ? cacheSummary(reviewIdentity, expansionRun) : emptyCacheSummary(reviewIdentity),
     verification: cacheSummary(verificationIdentity, verificationRun),
   } satisfies AuditCacheSummary };
 }
@@ -619,6 +625,10 @@ function cacheSummary<T>(identity: ReviewCacheIdentity, run: ReviewCacheRun<T>):
       .sort(([left], [right]) => compareCodeUnits(left, right)))) });
 }
 
+function emptyCacheSummary(identity: ReviewCacheIdentity): AuditCacheRunSummary {
+  return Object.freeze({ identity, hits: 0, misses: 0, keySetDigest: sha256Text(canonicalJson([])) });
+}
+
 function combinedCacheSummary<T>(
   identity: ReviewCacheIdentity, runs: readonly ReviewCacheRun<T>[],
 ): AuditCacheRunSummary {
@@ -722,6 +732,10 @@ async function runRepositoryAudit(
         confirmedSimplifications: verified.reduction.confirmed.filter(({ finding }) => finding.category === 'simplification').length,
         rejectedSimplifications: verified.reduction.rejected.filter(({ finding }) => finding.category === 'simplification').length,
         reviewCacheHits: verified.summary.review.hits, reviewCacheMisses: verified.summary.review.misses,
+        initialReviewCacheHits: verified.summary.initialReview.hits,
+        initialReviewCacheMisses: verified.summary.initialReview.misses,
+        contextExpansionCacheHits: verified.summary.contextExpansion.hits,
+        contextExpansionCacheMisses: verified.summary.contextExpansion.misses,
         verificationCacheHits: verified.summary.verification.hits,
         verificationCacheMisses: verified.summary.verification.misses,
         actualModelCalls: verified.dispatchAccounting.calls,

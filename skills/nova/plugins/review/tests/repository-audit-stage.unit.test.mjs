@@ -120,6 +120,8 @@ const cold = await executeRepositoryAudit({}, cachedContext());
 assert.equal(cold.outcome, 'passed');
 assert.equal(cold.facts['review.repository_review_cache_misses'], 1);
 assert.equal(cold.facts['review.repository_review_cache_hits'], 0);
+assert.equal(cold.facts['review.repository_initial_review_cache_misses'], 1);
+assert.equal(cold.facts['review.repository_context_expansion_cache_misses'], 0);
 assert.equal(cold.facts['review.repository_actual_model_calls'], 1);
 assert.equal(cold.facts['review.repository_retry_model_calls'], 0);
 assert.equal(cold.facts['review.repository_reserved_prompt_bytes'] > 0, true);
@@ -205,6 +207,8 @@ const warm = await executeRepositoryAudit({}, cachedContext([...preparedRefs, ..
 assert.equal(warm.outcome, 'passed');
 assert.equal(warm.facts['review.repository_review_cache_hits'], 1);
 assert.equal(warm.facts['review.repository_review_cache_misses'], 0);
+assert.equal(warm.facts['review.repository_initial_review_cache_hits'], 1);
+assert.equal(warm.facts['review.repository_context_expansion_cache_hits'], 0);
 assert.equal(runtimeCalls, runtimeCallsBeforeWarm, 'a warm audit does not dispatch the cached component again');
 const corrupt = await executeRepositoryAudit({}, cachedContext(cacheRefs, true, retryAttempt));
 assert.equal(corrupt.outcome, 'blocked');

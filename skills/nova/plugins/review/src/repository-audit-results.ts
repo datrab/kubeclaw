@@ -130,6 +130,8 @@ export function repositoryExecutionFacts(values: {
   readonly confirmed: number; readonly rejected: number;
   readonly confirmedSimplifications: number; readonly rejectedSimplifications: number;
   readonly reviewCacheHits: number; readonly reviewCacheMisses: number;
+  readonly initialReviewCacheHits: number; readonly initialReviewCacheMisses: number;
+  readonly contextExpansionCacheHits: number; readonly contextExpansionCacheMisses: number;
   readonly verificationCacheHits: number; readonly verificationCacheMisses: number;
   readonly actualModelCalls: number; readonly reservedInputTokens: number;
   readonly reservedPromptBytes: number; readonly retryModelCalls: number;
@@ -150,6 +152,10 @@ export function repositoryExecutionFacts(values: {
     'review.repository_rejected_simplifications': values.rejectedSimplifications,
     'review.repository_review_cache_hits': values.reviewCacheHits,
     'review.repository_review_cache_misses': values.reviewCacheMisses,
+    'review.repository_initial_review_cache_hits': values.initialReviewCacheHits,
+    'review.repository_initial_review_cache_misses': values.initialReviewCacheMisses,
+    'review.repository_context_expansion_cache_hits': values.contextExpansionCacheHits,
+    'review.repository_context_expansion_cache_misses': values.contextExpansionCacheMisses,
     'review.repository_verification_cache_hits': values.verificationCacheHits,
     'review.repository_verification_cache_misses': values.verificationCacheMisses,
     'review.repository_actual_model_calls': values.actualModelCalls,
