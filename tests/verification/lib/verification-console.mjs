@@ -41,6 +41,8 @@ export function installQuietRuntimeConsole({
     console.error = originalConsoleError;
     process.stdout.write = originalStdoutWrite;
     process.stderr.write = originalStderrWrite;
+    process.removeListener('uncaughtException', handleFailure);
+    process.removeListener('unhandledRejection', handleFailure);
     restored = true;
   }
 
