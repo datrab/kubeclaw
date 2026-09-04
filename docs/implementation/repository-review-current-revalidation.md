@@ -10,10 +10,10 @@
 
 ## Disposition summary
 
-- Latest inventory: 35 accepted/current, 3 already fixed by removal, 3 rejected, 1 needs additional reproduction.
+- Latest inventory: 34 accepted/current, 3 already fixed by removal, 4 rejected, 1 needs additional reproduction.
 - Older inventory: 1 accepted/current regression and 12 already fixed.
 - Additional sibling regression found during revalidation: 1 accepted/current.
-- Actionable backlog: 37 items (3 P1, 29 P2, 5 P3).
+- Actionable backlog: 36 items (3 P1, 28 P2, 5 P3).
 
 The live-PID resource-lock item is not accepted as a defect yet. Current tests explicitly preserve an expired lock while its process is alive to prevent dual execution. A task-lifecycle reproduction is required before changing that safety boundary.
 
@@ -46,6 +46,7 @@ Commands below were run from the frozen worktree unless noted.
 - `V23`: P1 manifest harness: mutable LiteLLM image, `Always` pull policy, environment Secret, and mounted Secret all present.
 - `V24`: `go test ./cmd/buster-namespace-controller` — not executable in this environment because Go is absent; current Go behavior was checked through source/caller tracing and must run in the fix worktree/CI.
 - `V25`: `npm test` in `spikes/prism/puck-adapter` — baseline package cannot resolve its declared Vitest runner; domain behavior was reproduced directly and the dependency defect is recorded with the item.
+- `V26`: Go 1.24.12 strict-decode harness with payload `9007199254740993` — rejected before decode as noncanonical RFC 8785 JSON; the canonicalizer maps the unrepresentable odd integer to the IEEE-754 value, so no valid canonical wire record reaches the alleged lossy round trip.
 
 Passing existing tests do not negate a finding when the reported branch is uncovered. Each accepted code fix must add a failing regression test first.
 
@@ -88,7 +89,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 | C33 | accepted/current | P3 | container-build preflight | deployment-operations | Temporary root is created before the initial `git rev-parse`, while cleanup starts only in the later `try`; revision failure leaks the tree. | container-build source trace |
 | C34 | needs additional reproduction | P2 | nova-core/effect locks | state-recovery | The reported behavior exists, but V11 explicitly requires an expired lock to remain while its owner process is alive to prevent dual execution. Reproduce a dead task within a live process and prove safe ownership transfer before changing policy. | V11 |
 | C35 | accepted/current | P2 | tailscale-exposure runtime | state-recovery | Cancellation/failure after the enabling patch has no compensating patch to turn exposure off. | tailscale implementation contracts plus source trace |
-| C36 | accepted/current | P2 | pipeline-observability Go contract | contracts-data | Strict decode canonicalizes raw bytes, then unmarshals payload into `any`; later digesting the re-marshaled value loses integers above 2^53. | V24 + cross-language contract trace |
+| C36 | rejected | P2 | pipeline-observability Go contract | contracts-data | The proposed `9007199254740993` regression is not valid RFC 8785 wire JSON: strict decode rejects it before unmarshalling because canonicalization changes the unrepresentable odd integer. Canonical numeric inputs that pass the wire gate already share the IEEE-754 representation used by the digest path. | V26 |
 | C37 | accepted/current | P2 | namespace-controller | deployment-operations | Validation accepts `cleanupPolicy=retain`; `expireLease` does not branch on it before namespace deletion. | V24 |
 | C38 | accepted/current | P2 | buster kubernetes-fixture runtime | deployment-operations | Lease/pod poll loops pass fixed 15-second child timeouts even when less remains; service polling already uses the correct remaining-deadline pattern. | V12 |
 | C39 | accepted/current | P3 | artifact-store tests | simplification | Package-boundary file list repeats `src/adapter.ts`. | package test plus source assertion |
@@ -127,7 +128,7 @@ Passing existing tests do not negate a finding when the reported branch is uncov
 3. P1 immutable LiteLLM deployment (`C30`).
 4. P2 security/trust: `C12`, `C13`, `C35`, `C40`, `N01`.
 5. P2 state/recovery/concurrency: `C05`, `C07`, `C26`, `C28`, `C31`; keep `C34` outside the fix queue until reproduced.
-6. P2 contracts/data integrity: `C04`, `C10`, `C11`, `C14`, `C20`, `C22`, `C32`, `C36`, `C42`.
+6. P2 contracts/data integrity: `C04`, `C10`, `C11`, `C14`, `C20`, `C22`, `C32`, `C42`.
 7. P2 deployment/operations: `C03`, `C06`, `C15`, `C17`, `C21`, `C29`, `C37`, `C38`, `C41`, `O04`.
 8. P3 simplification: `C01`, `C23`, `C27`, `C33`, `C39`.
 9. Review-plugin reporting, current-branch revalidation, backlog output, and measured efficiency changes.
