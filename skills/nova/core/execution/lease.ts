@@ -18,7 +18,9 @@ export class RevocableLease {
 
   assertActive(now = this.#now()): void {
     if (this.#contract.status !== 'active') throw new Error('PLUGIN_CONTEXT_REVOKED');
-    if (now.getTime() >= Date.parse(this.#contract.expiresAt)) throw new Error('PLUGIN_CONTEXT_EXPIRED');
+    const expiresAt = Date.parse(this.#contract.expiresAt);
+    if (!Number.isFinite(expiresAt)) throw new Error('PLUGIN_CONTEXT_EXPIRY_INVALID');
+    if (now.getTime() >= expiresAt) throw new Error('PLUGIN_CONTEXT_EXPIRED');
   }
 
   revoke(reason: Reason, revokedAt = new Date()): InvocationLease {

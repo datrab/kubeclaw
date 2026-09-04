@@ -93,6 +93,21 @@ const attempt = {
   attemptId: 'attempt:phase7:1',
   attemptNumber: 1,
 };
+const invalidExpiryLease = new core.RevocableLease({
+  schemaVersion: 'invocation-lease.v2',
+  leaseId: 'lease:invalid-expiry',
+  attempt,
+  status: 'active',
+  issuedAt: '2026-07-28T00:00:00.000Z',
+  expiresAt: 'not-a-timestamp',
+  revokedAt: null,
+  revocationReason: null,
+}, () => new Date('2026-07-28T00:00:01.000Z'));
+assert.throws(
+  () => invalidExpiryLease.assertActive(),
+  /PLUGIN_CONTEXT_EXPIRY_INVALID/,
+  'an invalid expiry must fail closed instead of producing a non-expiring active lease',
+);
 const owner = {
   pluginId: 'example.adapter',
   apiVersion: 'pipeline-plugin-v2',
