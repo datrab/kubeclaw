@@ -37,6 +37,20 @@ const findParent = (node: PrismNode, id: string): PrismNode | undefined => {
 
 const cloneNode = (node: PrismNode): PrismNode => structuredClone(node);
 
+const cloneSubtreeWithFreshIds = (node: PrismNode, rootId: string): PrismNode => {
+  const duplicate = cloneNode(node);
+  let descendant = 0;
+  const assign = (candidate: PrismNode, id: string): void => {
+    candidate.id = id;
+    for (const child of candidate.children ?? []) {
+      descendant += 1;
+      assign(child, `${rootId}-copy-${descendant.toString(36)}`);
+    }
+  };
+  assign(duplicate, rootId);
+  return duplicate;
+};
+
 export const applyOperation = (document: PrismDocument, operation: PrismOperation): PrismDocument => {
   const next = structuredClone(document);
   if (operation.type === "node.insert") {
@@ -54,8 +68,14 @@ export const applyOperation = (document: PrismDocument, operation: PrismOperatio
     const parent = findParent(next.root, operation.nodeId);
     if (!source || !parent || findNode(next.root, operation.newNodeId)) throw new Error("invalid duplicate");
     const index = (parent.children ?? []).findIndex((child) => child.id === operation.nodeId);
-    const duplicate = cloneNode(source);
-    duplicate.id = operation.newNodeId;
+    const duplicate = cloneSubtreeWithFreshIds(source, operation.newNodeId);
+    const duplicateIds: string[] = [];
+    const collectIds = (node: PrismNode): void => {
+      duplicateIds.push(node.id);
+      node.children?.forEach(collectIds);
+    };
+    collectIds(duplicate);
+    if (duplicateIds.some((id) => findNode(next.root, id))) throw new Error("invalid duplicate");
     parent.children!.splice(index + 1, 0, duplicate);
   } else if (operation.type === "node.move") {
     const source = findNode(next.root, operation.nodeId);
