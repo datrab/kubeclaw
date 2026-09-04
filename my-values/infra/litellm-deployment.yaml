@@ -24,8 +24,8 @@ spec:
     spec:
       containers:
         - name: litellm
-          image: ghcr.io/berriai/litellm:main-latest
-          imagePullPolicy: Always
+          image: ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580
+          imagePullPolicy: IfNotPresent
           args:
             - --config
             - /app/config.yaml

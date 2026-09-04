@@ -35,6 +35,7 @@ const novaValues = read('my-values/nova-values.yaml');
 const busterValues = read('my-values/buster-values.yaml');
 const prismAgentValues = read('my-values/prism-agent-values.yaml');
 const litellmConfig = read('my-values/infra/litellm-config.yaml');
+const litellmDeployment = read('my-values/infra/litellm-deployment.yaml');
 const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
@@ -44,6 +45,16 @@ const expectedOpenClawDigest = 'sha256:6afe42854c87471188b9c4f8dce6bbc14005a48d8
 
 assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
   'Prism chart must use digest references without forced pulls');
+assert.match(
+  litellmDeployment,
+  /image:\s*ghcr\.io\/berriai\/litellm@sha256:[a-f0-9]{64}/u,
+  'LiteLLM receives credentials and must use an immutable image digest',
+);
+assert.doesNotMatch(
+  litellmDeployment,
+  /imagePullPolicy:\s*Always/u,
+  'digest-pinned LiteLLM must not force redundant image pulls',
+);
 assert.match(prismWorkloads, /control\.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage/,
   'Prism control must not scale a shared ReadWriteOnce artifact volume across nodes');
 assert.match(prismNetworkPolicies,
