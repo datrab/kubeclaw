@@ -9,6 +9,21 @@ import { assertOpenClawOutputBudget, assertOpenClawPromptBudget, assertOpenClawS
   prepareOpenClawTask } from '../src/openclaw.ts';
 import { assertOpenClawToolAccepted, OpenClawToolRejectedError } from '../src/openclaw-response.ts';
 import { registeredSessionIdentity } from '../src/openclaw-session.ts';
+import { activate as activateRemoteDispatch } from '../src/adapter.ts';
+
+assert.throws(() => activateRemoteDispatch({
+  config: { targets: { remote: {
+    endpoint: 'http://runtime.example.test/dispatch',
+    authentication: 'hmac', tokenSecret: 'runtime.remote',
+  } } },
+} as never), /RUNTIME_CONFIG_INVALID:plaintextHmac:remote/u,
+'HMAC credentials and signed payloads must not cross an external plaintext transport');
+assert.doesNotThrow(() => activateRemoteDispatch({
+  config: { targets: { local: {
+    endpoint: 'http://127.0.0.1:8080/dispatch',
+    authentication: 'hmac', tokenSecret: 'runtime.local',
+  } } },
+} as never), 'loopback HTTP remains available for local provider processes');
 
 assert.doesNotThrow(() => assertOpenClawToolAccepted({
   ok: true, output: { details: { status: 'accepted', childSessionKey: 'child' } },
