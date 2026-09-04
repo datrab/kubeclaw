@@ -45,6 +45,11 @@ const IDENTITY_FIELDS = Object.freeze([
   'parent_session_key',
   'child_session_key',
 ]);
+// Agent timestamps originate from ECMAScript clocks. This ingress profile
+// accepts RFC 3339 date/time and offset syntax but deliberately excludes
+// leap-second notation, which ECMAScript cannot represent or validate.
+const RFC3339_INGRESS_TIMESTAMP = /^(\d{4})-(\d{2})-(\d{2})T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/iu;
+const DAYS_IN_MONTH = Object.freeze([0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
 
 export class AgentObservabilityContractError extends Error {
   errors: string[];
@@ -83,8 +88,19 @@ function validateTimestamp(value: unknown, errors: string[]): void {
     errors.push('ts must be a non-empty ISO timestamp string');
     return;
   }
-  const ms = Date.parse(value);
-  if (!Number.isFinite(ms)) errors.push('ts must be parseable as an ISO timestamp');
+  const match = RFC3339_INGRESS_TIMESTAMP.exec(value);
+  if (!match) {
+    errors.push('ts must be an RFC 3339 timestamp without leap-second notation');
+    return;
+  }
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const maximumDay = month === 2 && leapYear ? 29 : (DAYS_IN_MONTH[month] ?? 0);
+  if (day < 1 || day > maximumDay || !Number.isFinite(Date.parse(value))) {
+    errors.push('ts must be an RFC 3339 timestamp without leap-second notation');
+  }
 }
 
 function validateIdentity(identity: unknown, errors: string[]): void {
