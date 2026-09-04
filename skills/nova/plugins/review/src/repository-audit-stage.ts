@@ -17,6 +17,7 @@ import { buildScalableVerificationDispatchPayload, buildScalableVerificationJobs
   type ScalableVerificationJob, type ScalableVerificationJobResult } from './scalable-review-verification.ts';
 import { compareCodeUnits } from './review-ordering.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
+import { buildReviewInventoryLookup } from './review-inventory-lookup.ts';
 import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
 import { repositoryCompleteness, repositoryExecutionFacts, repositoryPlanFacts,
   repositoryUsageAccounting } from './repository-audit-results.ts';
@@ -361,13 +362,10 @@ async function verifiedReduction(
     const request = firstResults[index]?.parsed.ok ? firstResults[index].parsed.value.contextRequest : undefined;
     return request?.paths ?? [];
   }))].sort(compareCodeUnits);
+  const inventoryLookup = buildReviewInventoryLookup(snapshot.files);
   const resolvedRequests = new Map<string, readonly string[]>();
   for (const requestedPath of requestedPaths) {
-    const exact = snapshot.files.find(({ path }) => path === requestedPath);
-    const directory = exact ? [] : snapshot.files.filter(({ path }) => path.startsWith(`${requestedPath}/`));
-    const suffix = exact || directory.length > 0 ? []
-      : snapshot.files.filter(({ path }) => path.endsWith(`/${requestedPath}`));
-    const files = exact ? [exact] : directory.length > 0 ? directory : suffix.length === 1 ? suffix : [];
+    const files = inventoryLookup.resolve(requestedPath);
     if (files.length === 0 || files.some(({ mode, sizeBytes }) => !/^100[0-7]{3}$/u.test(mode)
       || sizeBytes > REVIEW_HARD_LIMITS.repositoryAuditFileBytes)) {
       throw new RepositoryAuditIntegrityError(`scalable review requested source is unavailable: ${requestedPath}`);
