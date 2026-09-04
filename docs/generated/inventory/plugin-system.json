@@ -4,13 +4,13 @@
   "summary": {
     "packages": 47,
     "packageRoots": 48,
-    "stages": 17,
+    "stages": 18,
     "observers": 6,
     "adapters": 18,
     "testProviders": 18,
     "reportAdapters": 1,
-    "registrations": 60,
-    "files": 797
+    "registrations": 61,
+    "files": 802
   },
   "runtime": {
     "roots": [
@@ -1425,6 +1425,7 @@
         "skills/nova/plugins/review/schemas/input.schema.json",
         "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
         "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+        "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
         "skills/nova/plugins/review/schemas/result.schema.json",
         "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
         "skills/nova/plugins/review/schemas/review-policy.v1.schema.json",
@@ -1446,6 +1447,8 @@
         "skills/nova/plugins/review/src/repository-audit-cache.ts",
         "skills/nova/plugins/review/src/repository-audit-results.ts",
         "skills/nova/plugins/review/src/repository-audit-stage.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
         "skills/nova/plugins/review/src/repository-review-profile.ts",
         "skills/nova/plugins/review/src/review-bundle-bounds.ts",
         "skills/nova/plugins/review/src/review-bundle-contract.ts",
@@ -1474,6 +1477,7 @@
         "skills/nova/plugins/review/src/review-import-scanner.ts",
         "skills/nova/plugins/review/src/review-import-syntax.ts",
         "skills/nova/plugins/review/src/review-invariants.ts",
+        "skills/nova/plugins/review/src/review-inventory-lookup.ts",
         "skills/nova/plugins/review/src/review-json.ts",
         "skills/nova/plugins/review/src/review-local-aliases.ts",
         "skills/nova/plugins/review/src/review-map-artifacts.ts",
@@ -1531,6 +1535,7 @@
         "skills/nova/plugins/review/tests/package-boundary.test.mjs",
         "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
         "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs",
+        "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs",
         "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs",
         "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs",
         "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs",
@@ -1584,6 +1589,10 @@
         {
           "kind": "stage",
           "id": "repository-audit"
+        },
+        {
+          "kind": "stage",
+          "id": "repository-revalidation"
         }
       ]
     }
@@ -1948,6 +1957,12 @@
       "id": "repository-audit",
       "packageId": "kubeclaw.review",
       "registrationId": "kubeclaw.review:repository-audit"
+    },
+    {
+      "kind": "stage",
+      "id": "repository-revalidation",
+      "packageId": "kubeclaw.review",
+      "registrationId": "kubeclaw.review:repository-revalidation"
     }
   ],
   "files": [
@@ -2591,6 +2606,7 @@
     "skills/nova/plugins/review/schemas/input.schema.json",
     "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
     "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+    "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
     "skills/nova/plugins/review/schemas/result.schema.json",
     "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
     "skills/nova/plugins/review/schemas/review-policy.v1.schema.json",
@@ -2612,6 +2628,8 @@
     "skills/nova/plugins/review/src/repository-audit-cache.ts",
     "skills/nova/plugins/review/src/repository-audit-results.ts",
     "skills/nova/plugins/review/src/repository-audit-stage.ts",
+    "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+    "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
     "skills/nova/plugins/review/src/repository-review-profile.ts",
     "skills/nova/plugins/review/src/review-bundle-bounds.ts",
     "skills/nova/plugins/review/src/review-bundle-contract.ts",
@@ -2640,6 +2658,7 @@
     "skills/nova/plugins/review/src/review-import-scanner.ts",
     "skills/nova/plugins/review/src/review-import-syntax.ts",
     "skills/nova/plugins/review/src/review-invariants.ts",
+    "skills/nova/plugins/review/src/review-inventory-lookup.ts",
     "skills/nova/plugins/review/src/review-json.ts",
     "skills/nova/plugins/review/src/review-local-aliases.ts",
     "skills/nova/plugins/review/src/review-map-artifacts.ts",
@@ -2697,6 +2716,7 @@
     "skills/nova/plugins/review/tests/package-boundary.test.mjs",
     "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
     "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs",
+    "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs",
     "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs",
     "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs",
     "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs",
