@@ -82,4 +82,38 @@ try {
 } finally {
   delete process.env[secret]; await new Promise((resolve)=>server.close(resolve)); fs.rmSync(temporary,{recursive:true,force:true});
 }
+
+const { execute } = await import(pathToFileURL(path.resolve('src/stage.ts')).href);
+const cleanupArtifacts: Array<Record<string, unknown>> = [];
+const cleanupCalls: string[] = [];
+const cleanupResult = await execute({
+  runId: 'run-cleanup', moduleId: 'api', attempt: 1, task: 'Implement API.', headBefore: 'b'.repeat(40),
+  workspace: {
+    repositoryRoot: '/repository', workspacePath: '/workspace', branch: 'implementation-api',
+    baseRef: 'main', mergeTarget: '/repository', commitMessage: 'Implement API',
+  },
+}, {
+  contract: { config: { agent: 'forge' } },
+  async invoke(capability, request) {
+    cleanupCalls.push(capability);
+    if (capability === 'runtime.dispatch') return { result: {
+      status: 'ready_for_testing', summary: 'Implemented.', changedPaths: ['src/api.ts'],
+      checks: [{ name: 'unit', passed: true }],
+      session: {
+        sessionId: 'session:cleanup', startedAt: '2026-07-28T00:00:00.000Z',
+        completedAt: '2026-07-28T00:00:01.000Z', transcriptDigest: 'c'.repeat(64),
+        handoffs: 0, termination: 'completed',
+      },
+    } };
+    if (capability === 'git.workspace.remove') throw new Error('cleanup failed after merge');
+    if (capability === 'artifacts.write') {
+      cleanupArtifacts.push(request.payload.value);
+      return { artifact: { artifactId: `artifact:${cleanupArtifacts.length}` } };
+    }
+    return {};
+  },
+});
+assert.equal(cleanupCalls.includes('git.merge'), true);
+assert.equal(cleanupResult.outcome, 'passed', 'post-merge cleanup failure must not contradict the completed merge');
+assert.equal(cleanupArtifacts.some((value) => value?.schemaVersion === 'implementation-cleanup.v1'), true);
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.implementation-agent', suite: 'live-function' }));
