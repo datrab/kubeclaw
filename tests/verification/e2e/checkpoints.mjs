@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 
 import {
   DEFAULT_CHECKPOINT_FIXTURE_FAMILY,
@@ -443,6 +444,22 @@ function safeName(value) {
     .replace(/^-+|-+$/g, '') || 'checkpoint';
 }
 
+function replaceDirectory(source, target) {
+  const previous = path.join(
+    path.dirname(target),
+    `.kubeclaw-replacement-${crypto.randomUUID()}`,
+  );
+  const hadTarget = fs.existsSync(target);
+  if (hadTarget) fs.renameSync(target, previous);
+  try {
+    fs.renameSync(source, target);
+  } catch (error) {
+    if (hadTarget && fs.existsSync(previous) && !fs.existsSync(target)) fs.renameSync(previous, target);
+    throw error;
+  }
+  if (hadTarget) fs.rmSync(previous, { recursive: true, force: true });
+}
+
 export function defaultCheckpointRoot(repoRoot) {
   return path.join(repoRoot, '.swarm', 'real-e2e', 'checkpoints');
 }
@@ -503,8 +520,7 @@ export function captureCheckpoint({ checkpointRoot, checkpoint, workspace, seedI
       fs.copyFileSync(workspace.runConfigPath, path.join(checkpointTmpDir, path.basename(workspace.runConfigPath)));
     }
     const manifest = writeCheckpointManifest({ checkpointDir: checkpointTmpDir, checkpoint, workspace, seedId });
-    fs.rmSync(checkpointDir, { recursive: true, force: true });
-    fs.renameSync(checkpointTmpDir, checkpointDir);
+    replaceDirectory(checkpointTmpDir, checkpointDir);
     return { checkpoint, checkpoint_dir: checkpointDir, manifest };
   } catch (error) {
     fs.rmSync(checkpointTmpDir, { recursive: true, force: true });
@@ -698,8 +714,7 @@ export function restoreCheckpointProjectSource({ checkpointDir, checkpoint, work
     const sourceRunDir = path.join(runsDir, runIdToMove.replaceAll(':', '_'));
     const targetRunDir = path.join(runsDir, workspace.runId.replaceAll(':', '_'));
     if (fs.existsSync(sourceRunDir)) {
-      fs.rmSync(targetRunDir, { recursive: true, force: true });
-      fs.renameSync(sourceRunDir, targetRunDir);
+      replaceDirectory(sourceRunDir, targetRunDir);
     }
   }
 

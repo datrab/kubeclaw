@@ -191,6 +191,36 @@ test('capture and restore preserve only canonical v2 state and rewrite run ident
   }
 });
 
+test('checkpoint replacement preserves the previous bundle when publication fails', () => {
+  const source = fixture();
+  const checkpointRoot = defaultCheckpointRoot(source.root);
+  const first = captureCheckpoint({
+    checkpointRoot, checkpoint: 'pre-forge', workspace: source.workspace, seedId: 'replace-failure',
+  });
+  const marker = path.join(first.checkpoint_dir, 'previous-bundle-marker');
+  write(marker, 'authoritative\n');
+  const rename = fs.renameSync;
+  let injected = false;
+  fs.renameSync = (from, to) => {
+    if (!injected && String(from).includes('.tmp-') && to === first.checkpoint_dir) {
+      injected = true;
+      const error = new Error('injected checkpoint publication failure');
+      error.code = 'EIO';
+      throw error;
+    }
+    return rename(from, to);
+  };
+  try {
+    assert.throws(() => captureCheckpoint({
+      checkpointRoot, checkpoint: 'pre-forge', workspace: source.workspace, seedId: 'replace-failure',
+    }), /injected checkpoint publication failure/u);
+    assert.equal(fs.readFileSync(marker, 'utf8'), 'authoritative\n');
+  } finally {
+    fs.renameSync = rename;
+    fs.rmSync(source.root, { recursive: true, force: true });
+  }
+});
+
 test('scenario plans expose v2 hook contracts', () => {
   const plan = checkpointPlanForScenario('buster-module-failure');
   assert.equal(plan.checkpoint, 'pre-module-buster');
