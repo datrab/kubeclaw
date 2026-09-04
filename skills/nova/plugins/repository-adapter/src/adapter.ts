@@ -51,6 +51,9 @@ async function invokeRepository(
 type RepositoryRequest = AdapterInvocation['request'];
 const REVISION_OPERATIONS = {
   freeze_head: (reader: RevisionReader, _request: RepositoryRequest, attemptId: string) => reader.freezeHead(attemptId),
+  verify_ancestry: (reader: RevisionReader, request: RepositoryRequest, attemptId: string) => (
+    reader.verifyAncestry(request.payload, attemptId)
+  ),
   changed_manifest: (reader: RevisionReader, request: RepositoryRequest, attemptId: string) => (
     reader.changedManifest(request.payload, attemptId)
   ),

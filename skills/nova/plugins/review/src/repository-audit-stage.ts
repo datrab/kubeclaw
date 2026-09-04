@@ -187,7 +187,7 @@ async function repositoryDocuments(
   return { documents: Object.freeze(documents), sourceDigests };
 }
 
-async function compileRepositoryAudit(
+export async function compileRepositoryAudit(
   parsed: AuditInput, context: PluginInvocationContext,
   revision: Awaited<ReturnType<typeof freezeReviewRevision>>,
 ) {

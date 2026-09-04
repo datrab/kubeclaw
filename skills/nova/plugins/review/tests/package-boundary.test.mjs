@@ -22,6 +22,11 @@ assert.equal(manifest.stages[1].module, 'src/repository-audit-stage.ts');
 assert.equal(manifest.stages[1].configSchema, 'schemas/repository-audit-config.schema.json');
 assert.deepEqual(manifest.stages[1].requiredCapabilities,
   ['runtime.dispatch', 'git.repository.read', 'artifacts.read', 'artifacts.write']);
+assert.equal(manifest.stages[2].id, 'repository-revalidation');
+assert.equal(manifest.stages[2].module, 'src/repository-revalidation-stage.ts');
+assert.equal(manifest.stages[2].inputSchema, 'schemas/repository-revalidation-input.schema.json');
+assert.deepEqual(manifest.stages[2].requiredCapabilities,
+  ['runtime.dispatch', 'git.repository.read', 'artifacts.read', 'artifacts.write']);
 assert.equal(echoReviewOutputSchema.additionalProperties, false);
 assert.equal(Object.hasOwn(echoReviewOutputSchema.properties, 'status'), false);
 assert.equal(fs.existsSync('src/contracts.ts'), false);

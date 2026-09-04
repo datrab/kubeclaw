@@ -81,6 +81,8 @@ try {
   execFileSync('git', ['-C', repository, 'commit', '-qm', 'late stage change']);
   const stageHead = execFileSync('git', ['-C', repository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
   const frozen = await invoke('freeze_head', '.');
+  assert.deepEqual(await invoke('verify_ancestry', '.', { base, head: frozen.head, proof: frozen.proof }),
+    { base, head: frozen.head, ancestryVerified: true });
   assert.equal(frozen.head, stageHead, 'head freezes when review starts, not when the adapter activates');
   assert.match(frozen.proof, /^[0-9a-f]{64}$/u);
   const revision = { head: frozen.head, proof: frozen.proof };

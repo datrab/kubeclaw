@@ -32,6 +32,21 @@
       "configSchema": "schemas/repository-audit-config.schema.json",
       "inputSchema": "schemas/repository-audit-input.schema.json",
       "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "repository-revalidation",
+      "type": "kubeclaw.audit.repository-review-revalidation",
+      "module": "src/repository-revalidation-stage.ts",
+      "export": "executeRepositoryRevalidation",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "git.repository.read",
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/repository-audit-config.schema.json",
+      "inputSchema": "schemas/repository-revalidation-input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
     }
   ],
   "observers": [],
