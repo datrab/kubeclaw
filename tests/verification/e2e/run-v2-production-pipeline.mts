@@ -20,6 +20,7 @@ import type { ResumeSignal } from '../../../skills/common/plugin-runtime/sdk/src
 import { parseProductionPipelineArgs } from './production-pipeline-args.mts';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
 import { writeRunLintPolicy } from './manifest-lint-production.mts';
+import { readApprovalDecisionForWait } from './approval-decision-store.mts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const SPARK_MODEL = 'openai/gpt-5.3-codex-spark';
@@ -157,11 +158,8 @@ async function waitForOperator(
 ): Promise<ResumeSignal> {
   const deadline = Date.now() + 10 * 60_000;
   while (Date.now() < deadline) {
-    const decisionIdentity = crypto.createHash('sha256').update(waitId).digest('hex');
-    const decisionFile = `${file}.decision-${decisionIdentity}.json`;
-    for (const candidate of [file, decisionFile]) {
-      if (!fs.existsSync(candidate)) continue;
-      const state = readJson(candidate);
+    const state = readApprovalDecisionForWait(file, waitId);
+    if (state) {
       const status = String(state.status ?? '').toUpperCase();
       if (status === 'APPROVED' || status === 'REJECTED') {
         if (state.wait_id !== waitId) throw new Error('REAL_E2E_OPERATOR_DECISION_IDENTITY_MISMATCH');
