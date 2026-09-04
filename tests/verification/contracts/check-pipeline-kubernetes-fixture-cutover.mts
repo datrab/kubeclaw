@@ -26,6 +26,10 @@ const productionRunner = fs.readFileSync('tests/verification/e2e/run-v2-producti
 assert.doesNotMatch(productionRunner.match(/ALL_SUITES[\s\S]*?\]\);/u)?.[0] ?? '', /['"]k8s['"]/u);
 const deployScript = fs.readFileSync('scripts/deploy.sh', 'utf8');
 assert.match(deployScript, /nova-kubernetes-fixture-preflight/u);
+const kubernetesPreflight = deployScript.match(/cmd_nova_kubernetes_fixture_preflight\(\) \{[\s\S]*?\n\}/u)?.[0] ?? '';
+assert.match(kubernetesPreflight,
+  /local secret_name=\$\{3:-\$\{KUBECLAW_KUBERNETES_PREFLIGHT_SECRET:-kubeclaw-fixture-preflight\}\}/u,
+  'the Kubernetes fixture preflight must honor its selected Secret argument and environment fallback');
 assert.match(deployScript, /kubernetes-fixture-production-receipt\.json/u);
 assert.match(deployScript, /deployment\/agent-nova[\s\S]*nova-kubernetes-fixture-production-preflight\.mts/u);
 assert.match(deployScript, /approved Secret copying/u);
