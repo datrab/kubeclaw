@@ -13,7 +13,10 @@ ARGOCD_HELM_REPO="${ARGOCD_HELM_REPO:-https://argoproj.github.io/argo-helm}"
 command -v helm >/dev/null || { echo "helm is required" >&2; exit 1; }
 command -v kubectl >/dev/null || { echo "kubectl is required" >&2; exit 1; }
 
-helm repo add argo "$ARGOCD_HELM_REPO" >/dev/null 2>&1 || true
+# Keep the local alias deterministic. If an `argo` repo already exists with a
+# different URL, --force-update replaces it instead of silently using stale or
+# unintended chart metadata.
+helm repo add argo "$ARGOCD_HELM_REPO" --force-update >/dev/null
 helm repo update argo >/dev/null
 
 kubectl create namespace "$ARGOCD_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
