@@ -2,6 +2,10 @@
   "name": "kubeclaw-ops",
   "version": "0.1.0",
   "description": "Read-only Kubernetes and Argo CD troubleshooting workflows for the KubeClaw cluster.",
+  "author": {
+    "name": "datrab",
+    "url": "https://github.com/datrab"
+  },
   "repository": "https://github.com/datrab/kubeclaw",
   "license": "MIT",
   "keywords": ["kubernetes", "argocd", "gitops", "sre", "operations"],
