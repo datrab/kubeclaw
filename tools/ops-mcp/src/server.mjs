@@ -373,7 +373,9 @@ function buildServer() {
         tailLines: String(tailLines),
         timestamps: 'true',
         previous: String(previous),
-        limitBytes: String(MAX_LOG_BYTES),
+        // Ask Kubernetes for one sentinel byte beyond the advertised response
+        // ceiling so we can reliably report server-side truncation.
+        limitBytes: String(MAX_LOG_BYTES + 1),
       });
       if (container) params.set('container', container);
 
@@ -382,10 +384,9 @@ function buildServer() {
         { asText: true },
       );
       const originalBytes = Buffer.byteLength(logs, 'utf8');
-      let truncated = false;
-      if (originalBytes > MAX_LOG_BYTES) {
+      const truncated = originalBytes > MAX_LOG_BYTES;
+      if (truncated) {
         logs = Buffer.from(logs, 'utf8').subarray(originalBytes - MAX_LOG_BYTES).toString('utf8');
-        truncated = true;
       }
 
       return jsonText({
@@ -420,7 +421,16 @@ function originAllowed(req) {
 }
 
 const httpServer = createServer((req, res) => {
-  const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`);
+  let url;
+  try {
+    // Never use the untrusted Host header to construct the parser base; only
+    // request-target pathname/query parsing is required here.
+    url = new URL(req.url ?? '/', 'http://localhost');
+  } catch {
+    res.writeHead(400, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ error: 'invalid_request_target' }));
+    return;
+  }
 
   if (url.pathname === '/healthz') {
     res.writeHead(200, { 'content-type': 'application/json' });
