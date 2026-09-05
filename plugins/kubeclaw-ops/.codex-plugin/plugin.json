@@ -1,26 +1,26 @@
 {
   "name": "kubeclaw-ops",
-  "version": "0.1.0",
-  "description": "Read-only Kubernetes and Argo CD troubleshooting workflows for the KubeClaw cluster.",
+  "version": "0.2.0",
+  "description": "Read-only Kubernetes, Argo CD and Cilium/Hubble troubleshooting workflows for the KubeClaw cluster.",
   "author": {
     "name": "datrab",
     "url": "https://github.com/datrab"
   },
   "repository": "https://github.com/datrab/kubeclaw",
   "license": "MIT",
-  "keywords": ["kubernetes", "argocd", "gitops", "sre", "operations"],
+  "keywords": ["kubernetes", "argocd", "cilium", "hubble", "gitops", "sre", "operations"],
   "skills": "./skills/",
   "interface": {
     "displayName": "KubeClaw Ops",
-    "shortDescription": "Inspect Argo and Kubernetes from ChatGPT",
-    "longDescription": "A safe read-only operations plugin for inspecting Argo CD health, Kubernetes workloads, events and bounded pod logs.",
+    "shortDescription": "Inspect Argo, Kubernetes and Hubble from ChatGPT",
+    "longDescription": "A safe read-only operations plugin for correlating Argo CD health, Kubernetes workloads and events, bounded pod logs, and normalized Cilium Hubble network flows.",
     "developerName": "datrab",
     "category": "Developer Tools",
     "capabilities": ["Read"],
     "defaultPrompt": [
       "Use KubeClaw Ops to tell me what is unhealthy in the cluster.",
-      "Use KubeClaw Ops to investigate why Prism is failing.",
-      "Use KubeClaw Ops to summarize the current Argo CD deployment state."
+      "Use KubeClaw Ops to investigate why Prism cannot reach its dependency and check Hubble drops.",
+      "Use KubeClaw Ops to summarize the current Argo CD deployment and network state."
     ]
   }
 }
