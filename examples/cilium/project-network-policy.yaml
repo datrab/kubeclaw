@@ -1,50 +1,19 @@
-# Example project-owned namespace + policy.
+# Example project-owned namespace + explicit allow policy.
 #
-# Copy this pattern into the project that owns the workload. Project onboarding
-# does not require a central Cilium edit or a namespace policy-profile label.
+# Ordinary workload namespaces are automatically selected by the central
+# `dtlabs-workload-default-deny` and `dtlabs-workload-allow-dns` cluster policies.
+# A project therefore MUST NOT copy a default-deny/DNS baseline and does not need
+# a custom namespace policy-profile label. It owns only the connectivity that is
+# specific to its workloads.
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: example-project
 ---
-# Every project owns its own isolation baseline. An empty ingress/egress LIST is
-# intentional: selecting every endpoint with no allow rules enables default-deny
-# in both directions for this namespace.
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: project-default-deny
-  namespace: example-project
-spec:
-  endpointSelector: {}
-  ingress: []
-  egress: []
----
-# DNS is part of the small reusable project baseline. Keeping it beside the
-# project avoids namespace-label-based cluster policy while remaining explicit.
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: project-allow-dns
-  namespace: example-project
-spec:
-  endpointSelector: {}
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: UDP
-            - port: "53"
-              protocol: TCP
----
-# Add workload-specific CiliumNetworkPolicy objects here. Because these resources
-# are namespaced, Argo/Helm/Kustomize can ship policy together with the owning
-# project without any central Cilium change.
+# Example: allow only pods of this application to initiate TCP/8080 connections
+# to other pods of the same application in the same namespace. Replace this with
+# the smallest set of flows the real project needs.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -62,3 +31,11 @@ spec:
         - ports:
             - port: "8080"
               protocol: TCP
+
+# Contract for a new project:
+#   1. create its namespace;
+#   2. deploy its workloads/services;
+#   3. deploy only explicit project-specific CiliumNetworkPolicy allows.
+#
+# Before step 3 succeeds, ordinary workload traffic is already fail-closed by the
+# central cluster baseline; DNS is the only generic egress allowance.
