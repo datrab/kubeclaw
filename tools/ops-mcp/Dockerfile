@@ -14,7 +14,8 @@ ENV NODE_ENV=production \
     HOST=0.0.0.0 \
     NODE_EXTRA_CA_CERTS=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
-USER node
+USER 1000:1000
 EXPOSE 8080
 
 CMD ["node", "src/server.mjs"]
+

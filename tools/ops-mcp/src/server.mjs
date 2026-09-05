@@ -1,3 +1,4 @@
+import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
@@ -57,8 +58,9 @@ async function kubeRequest(path, { asText = false } = {}) {
   return body;
 }
 
-async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item } = {}) {
-  let continuation = null;
+async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item, maxPages = Infinity, continueToken = null } = {}) {
+  let continuation = continueToken;
+  const deadline = Number.isFinite(maxPages) ? Date.now() + 30_000 : Infinity;
   const items = [];
   let pages = 0;
 
@@ -71,9 +73,9 @@ async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem 
     items.push(...(page.items ?? []).map(mapItem));
     pages += 1;
     continuation = page?.metadata?.continue || null;
-  } while (continuation);
+  } while (continuation && pages < maxPages && Date.now() < deadline);
 
-  return { items, pages };
+  return { items, pages, continuation, partial: Boolean(continuation) };
 }
 
 function deploymentSummary(item) {
@@ -189,7 +191,10 @@ function buildServer() {
     {
       title: 'List Argo CD applications',
       description: 'Read Argo CD Application sync and health state from the argocd namespace.',
-      inputSchema: z.object({}),
+      inputSchema: z.object({
+        limit: z.number().int().min(1).max(200).default(50),
+        continueToken: z.string().max(16384).optional(),
+      }),
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
@@ -197,10 +202,11 @@ function buildServer() {
         openWorldHint: false,
       },
     },
-    async () => {
+    async ({ limit, continueToken }) => {
       const data = await kubeList(
         `/apis/argoproj.io/v1alpha1/namespaces/${encodeURIComponent(ARGO_NAMESPACE)}/applications`,
         {
+          pageSize: limit, maxPages: 1, continueToken,
           mapItem: item => ({
             ...trimObjectMetadata(item),
             project: item?.spec?.project ?? null,
@@ -218,6 +224,8 @@ function buildServer() {
         namespace: ARGO_NAMESPACE,
         applications: data.items,
         pagesScanned: data.pages,
+        nextContinueToken: data.continuation,
+        partial: data.partial,
       });
     },
   );
@@ -353,12 +361,13 @@ function buildServer() {
     {
       title: 'Get bounded pod logs',
       description:
-        'Read a bounded tail of pod logs for troubleshooting. Does not exec into containers and never returns more than 64 KiB.',
+        'Read up to 64 KiB of log text (JSON metadata is additional). Default: recent tail. sinceTime reads from a chosen timestamp in still available logs; no historical cursor or until filter is available. Content is not redacted; inspect observation before drawing conclusions.',
       inputSchema: z.object({
         namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
         pod: z.string().min(1),
         container: z.string().min(1).optional(),
-        tailLines: z.number().int().min(1).max(500).default(200),
+        tailLines: z.number().int().min(1).max(500).optional(),
+        sinceTime: z.iso.datetime({ offset: true }).optional(),
         previous: z.boolean().default(false),
       }),
       annotations: {
@@ -368,35 +377,36 @@ function buildServer() {
         openWorldHint: false,
       },
     },
-    async ({ namespace, pod, container, tailLines, previous }) => {
+    async ({ namespace, pod, container, tailLines, sinceTime, previous }) => {
+      const effectiveTailLines = tailLines ?? (sinceTime ? undefined : 200);
       const params = new URLSearchParams({
-        tailLines: String(tailLines),
         timestamps: 'true',
         previous: String(previous),
         // Ask Kubernetes for one sentinel byte beyond the advertised response
         // ceiling so we can reliably report server-side truncation.
         limitBytes: String(MAX_LOG_BYTES + 1),
       });
+      if (effectiveTailLines !== undefined) params.set('tailLines', String(effectiveTailLines));
+      if (sinceTime) params.set('sinceTime', sinceTime);
       if (container) params.set('container', container);
 
       let logs = await kubeRequest(
         `/api/v1/namespaces/${encodeURIComponent(namespace)}/pods/${encodeURIComponent(pod)}/log?${params.toString()}`,
         { asText: true },
       );
-      const originalBytes = Buffer.byteLength(logs, 'utf8');
-      const truncated = originalBytes > MAX_LOG_BYTES;
-      if (truncated) {
-        logs = Buffer.from(logs, 'utf8').subarray(originalBytes - MAX_LOG_BYTES).toString('utf8');
-      }
+      const observation = logObservation(logs, { sinceTime, tailLines: effectiveTailLines });
+      logs = observation.text;
 
       return jsonText({
         namespace,
         pod,
         container: container ?? null,
         previous,
-        tailLines,
+        tailLines: effectiveTailLines ?? null,
+        sinceTime: sinceTime ?? null,
+        observation: { ...observation, text: undefined },
         limitBytes: MAX_LOG_BYTES,
-        truncated,
+        truncated: observation.byteLimited,
         logs,
       });
     },
@@ -456,11 +466,15 @@ const httpServer = createServer((req, res) => {
     return;
   }
 
-  void nodeMcpHandler(req, res);
+  Promise.resolve().then(() => nodeMcpHandler(req, res)).catch(() => {
+    if (res.headersSent) { res.destroy(); return; }
+    res.writeHead(500, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ error: 'request_failed' }));
+  });
 });
 
 httpServer.listen(PORT, HOST, () => {
-  console.error(`kubeclaw-ops-mcp listening on http://${HOST}:${PORT}/mcp`);
+  console.error(`kubeclaw-ops-mcp listening on http://${HOST}:${httpServer.address().port}/mcp`);
 });
 
 async function shutdown(signal) {
@@ -472,3 +486,4 @@ async function shutdown(signal) {
 
 process.on('SIGTERM', () => void shutdown('SIGTERM'));
 process.on('SIGINT', () => void shutdown('SIGINT'));
+

@@ -26,13 +26,18 @@ The MCP server has no Kubernetes write verbs, no Secret access and no pod exec c
 
 ## 1. Merge the bootstrap PR
 
-After merge, GitHub Actions builds and publishes:
+GitHub Actions publishes commit-tagged images and prints the full immutable digest
+in the build summary. There is no `latest` deployment path. For an unmerged
+candidate, run **Build Ops MCP Image → Run workflow** on its exact branch and
+record the source commit plus returned digest. PR checks themselves do not publish.
 
-```text
-ghcr.io/datrab/kubeclaw-ops-mcp:latest
+```bash
+export OPS_MCP_IMAGE='ghcr.io/datrab/kubeclaw-ops-mcp@sha256:REPLACE_WITH_REAL_BUILD_DIGEST'
 ```
 
-For the bootstrap this uses `latest`. Once Argo manages this component, pin deployments to an immutable SHA/digest.
+The manifest intentionally contains `REQUIRES_DIGEST`; render it using the helper.
+For Argo, commit the rendered manifest to the one directory owned by its Application.
+Do not let bootstrap scripts and Argo compete over the same resources.
 
 ## 2. Deploy Argo CD
 
@@ -52,7 +57,7 @@ The Argo UI is exposed privately through the existing Tailscale Kubernetes Opera
 ## 3. Deploy the read-only Ops MCP server
 
 ```bash
-kubectl apply -f my-values/infra/ops-mcp.yaml
+./scripts/deploy-ops-mcp.sh apply
 kubectl rollout status deployment/ops-mcp -n kubeclaw --timeout=180s
 kubectl get ingress -n kubeclaw ops-mcp
 ```
@@ -155,3 +160,36 @@ Not allowed:
 - direct deployment mutations
 
 Deployment changes remain GitOps changes through GitHub + Argo CD.
+
+
+## Ordered rollout and ownership
+
+1. Correct/review both PRs. Deploy Argo from PR #1 (chart pinned to 10.8.0).
+2. Register the private repository using a read-only deploy key through Argo;
+   keep credentials out of Git. Create a platform AppProject with explicit source
+   repositories and destinations; do not delegate its cluster-resource powers.
+3. Define explicit Applications for reviewed resource directories. Do not point
+   an Application at the whole `my-values/infra` directory: it mixes Helm values,
+   Secrets templates and manifests with different owners. Start manual sync and
+   no prune; inspect diffs before enabling automation per Application.
+4. Deploy/test the #1 MCP and tunnel while Flannel still runs. Confirm actual
+   Kubernetes and Argo tools, not just `/healthz`. MCP is read-only; Argo performs
+   approved Git-driven changes, never the MCP.
+5. Stage the #2 image and Cilium policies separately for the maintenance window.
+   #2 Ops bootstrap needs Cilium CRDs and `ops-mcp-network-policies.yaml`; use #1
+   until the CNI cutover. Hubble cannot work before Relay exists.
+6. Complete the Cilium runbook and then test Hubble. Keep independent host access:
+   Argo, the tunnel and MCP can be temporarily unavailable during a CNI change.
+
+## Diagnostic content and continuation
+
+This trusted platform MCP may send requested logs/flows to GPT without content
+redaction or Secret scanners. Byte limits are per response, not per investigation.
+Pod-log text is at most 64 KiB (JSON metadata is additional). `sinceTime` reads still
+available logs from a chosen timestamp; omit `tailLines` for this mode. Otherwise
+the default tail is 200 lines. Inspect the returned observation and continue using
+supported filters; no `until` or lossless historical cursor is promised. Rotation,
+pod deletion and previous-container retention can make data unavailable.
+
+Argo Application lists are paged (default 50, maximum 200 per call). Follow
+`nextContinueToken` while `partial` is true; one page is not the whole cluster.
