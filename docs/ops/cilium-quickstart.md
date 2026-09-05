@@ -116,7 +116,7 @@ This is a migration safety boundary, not a place for application workloads and n
 
 Cilium enforces both CNP and ordinary Kubernetes NetworkPolicy.
 
-Do not convert a KNP to CNP merely for consistency. Semantics matter more than CRD uniformity.
+Do not convert a KNP to CNP merely for consistency. Semantics and ownership clarity matter more than CRD uniformity.
 
 For example, in Kubernetes NetworkPolicy:
 
@@ -127,7 +127,9 @@ from:
 
 means "all pods in this policy's namespace".
 
-That is exactly what `kubeclaw-agents-ingress` needs, so that rule deliberately remains KNP. A superficially similar empty Cilium endpoint selector can have broader identity semantics and should not be used as a mechanical translation.
+A namespaced Cilium `fromEndpoints` / `toEndpoints` selector without an explicit namespace is also scoped to the CNP's own namespace by default. Cross-namespace Cilium rules become explicit by selecting another namespace identity or namespace labels.
+
+`kubeclaw-agents-ingress` deliberately remains KNP because the standard Kubernetes rule already expresses the requirement exactly and portably; there is no security or operational benefit in translating it just for CRD uniformity.
 
 ## Hubble + GPT Ops
 
