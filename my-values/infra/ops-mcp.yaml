@@ -68,6 +68,8 @@ spec:
               value: kubeclaw
             - name: ARGOCD_NAMESPACE
               value: argocd
+            - name: HUBBLE_SERVER
+              value: hubble-relay.cilium.svc.cluster.local:4245
           ports:
             - name: http
               containerPort: 8080
