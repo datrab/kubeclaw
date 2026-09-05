@@ -1,13 +1,70 @@
 # Cluster/platform-owned Cilium policy only.
 #
-# Keep this file limited to generic platform guardrails and protection of
-# platform-owned networking services. Application/service connectivity and
-# project namespace isolation belong in each owning project's policy manifests.
+# This file defines cluster invariants. It must not become a catalogue of
+# project-specific ports, peers, hostnames or application dependencies.
 #
-# Deliberately avoid namespace-label-driven policy profiles here. At large
-# namespace counts those labels become additional identity/log metadata and
-# couple project onboarding to central platform policy. New projects should be
-# able to appear without changing this file.
+# Policy model:
+#   * ordinary workload namespaces are fail-closed automatically;
+#   * DNS is the only generic workload egress allowance;
+#   * projects add explicit namespaced CiliumNetworkPolicy allow rules;
+#   * no custom Namespace policy-profile labels or admission injector are used.
+#
+# The small exclusion list below contains bootstrap/control-plane namespaces
+# whose networking must be migrated with dedicated, tested policies rather than
+# accidentally breaking cluster administration during the first CNI cutover.
+# New application/project namespaces MUST NOT be added to this list.
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: dtlabs-workload-default-deny
+spec:
+  description: Default deny ingress and egress for every ordinary workload namespace.
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: NotIn
+        values:
+          - kube-system
+          - cilium
+          - tailscale
+          - argocd
+  enableDefaultDeny:
+    ingress: true
+    egress: true
+  # Empty LISTS are intentional. A rule containing `- {}` would be an allow-all.
+  ingress: []
+  egress: []
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: dtlabs-workload-allow-dns
+spec:
+  description: Allow ordinary workloads to resolve DNS without changing their default-deny state by itself.
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: NotIn
+        values:
+          - kube-system
+          - cilium
+          - tailscale
+          - argocd
+  enableDefaultDeny:
+    ingress: false
+    egress: false
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
 ---
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
