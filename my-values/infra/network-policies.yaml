@@ -2,6 +2,7 @@
 #
 # Cilium itself is central cluster infrastructure. These rules belong here
 # because they describe KubeClaw workload connectivity inside namespace kubeclaw.
+# New projects own an equivalent small baseline plus their own allow rules.
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -9,10 +10,9 @@ metadata:
   name: kubeclaw-default-deny
 spec:
   endpointSelector: {}
-  ingress:
-    - {}
-  egress:
-    - {}
+  # Empty LISTS are intentional. A rule containing `- {}` would allow all.
+  ingress: []
+  egress: []
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -182,19 +182,16 @@ spec:
       app.kubernetes.io/name: kubeclaw
       app.kubernetes.io/component: nova
   egress:
+    # Use Cilium's intrinsic pod-namespace identity label rather than a custom
+    # Kubernetes Namespace label. This also covers short-lived Prism test
+    # namespaces without adding namespace-label metadata to every endpoint/log.
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: kubeclaw
             app.kubernetes.io/component: prism
-      toPorts:
-        - ports:
-            - protocol: TCP
-              port: "18082"
-    - toEndpoints:
-        - matchLabels:
-            "io.cilium.k8s.namespace.labels.kubeclaw/managed-by": buster-namespace-controller
-            app.kubernetes.io/name: kubeclaw
-            app.kubernetes.io/component: prism
+          matchExpressions:
+            - key: k8s:io.kubernetes.pod.namespace
+              operator: Exists
       toPorts:
         - ports:
             - protocol: TCP
@@ -424,6 +421,24 @@ spec:
         - ports:
             - protocol: TCP
               port: "443"
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: ops-mcp-hubble-relay-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cilium
+            k8s-app: hubble-relay
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: "4245"
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
