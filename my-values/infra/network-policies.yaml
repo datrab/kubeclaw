@@ -1,36 +1,8 @@
-# KubeClaw project-owned Cilium policy.
+# KubeClaw project-owned Cilium allow policy.
 #
-# Cilium itself is central cluster infrastructure. These rules belong here
-# because they describe KubeClaw workload connectivity inside namespace kubeclaw.
-# New projects own an equivalent small baseline plus their own allow rules.
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: kubeclaw-default-deny
-spec:
-  endpointSelector: {}
-  # Empty LISTS are intentional. A rule containing `- {}` would allow all.
-  ingress: []
-  egress: []
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: kubeclaw-allow-dns-egress
-spec:
-  endpointSelector: {}
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-      toPorts:
-        - ports:
-            - protocol: UDP
-              port: "53"
-            - protocol: TCP
-              port: "53"
+# The central `dtlabs-workload-default-deny` and `dtlabs-workload-allow-dns`
+# CiliumClusterwideNetworkPolicy objects already select the kubeclaw namespace.
+# This file therefore contains only KubeClaw-specific explicit allows.
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -182,16 +154,24 @@ spec:
       app.kubernetes.io/name: kubeclaw
       app.kubernetes.io/component: nova
   egress:
-    # Use Cilium's intrinsic pod-namespace identity label rather than a custom
-    # Kubernetes Namespace label. This also covers short-lived Prism test
-    # namespaces without adding namespace-label metadata to every endpoint/log.
+    # Production Prism in the owning kubeclaw namespace.
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kubeclaw
+            app.kubernetes.io/name: kubeclaw
+            app.kubernetes.io/component: prism
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: "18082"
+    # Short-lived Prism test namespaces are trusted only when the Buster
+    # namespace controller owns the namespace. This existing ownership label is
+    # a trust boundary, not a general namespace policy-profile mechanism.
     - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: kubeclaw
             app.kubernetes.io/component: prism
-          matchExpressions:
-            - key: k8s:io.kubernetes.pod.namespace
-              operator: Exists
+            io.cilium.k8s.namespace.labels.kubeclaw/managed-by: buster-namespace-controller
       toPorts:
         - ports:
             - protocol: TCP
@@ -401,6 +381,10 @@ spec:
             app.kubernetes.io/name: ops-mcp-tunnel
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: tailscale
+            tailscale.com/managed: "true"
+            tailscale.com/parent-resource-type: ingress
+            tailscale.com/parent-resource: ops-mcp
+            tailscale.com/parent-resource-ns: kubeclaw
       toPorts:
         - ports:
             - protocol: TCP
