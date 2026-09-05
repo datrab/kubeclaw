@@ -50,7 +50,11 @@ flannel-backend: none
 disable-network-policy: true
 ```
 
-Treat this as a maintenance-window dataplane migration. Keep SSH/console access to the node and do not run the first install through the generic `scripts/deploy.sh all` path.
+The bootstrap in this repository intentionally implements a disruptive **single-node replacement** using the existing K3s `10.42.0.0/16` pod CIDR. It is not Cilium's multi-node live migration procedure. The script refuses its first install when more than one Kubernetes node is present.
+
+For a future multi-node cluster, use the upstream migration procedure instead: install Cilium as a secondary overlay with a distinct migration CIDR/encapsulation, disable policy enforcement during coexistence, then cordon/drain and migrate nodes individually.
+
+Treat the current single-node replacement as a maintenance-window dataplane migration. Keep SSH/console access to the node and do not run the first install through the generic `scripts/deploy.sh all` path.
 
 The bootstrap requires an explicit acknowledgement:
 
@@ -58,18 +62,22 @@ The bootstrap requires an explicit acknowledgement:
 CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh
 ```
 
-Upgrades of an existing `cilium/cilium` release do not require the acknowledgement.
+Existing Pods keep the CNI configuration associated with their existing Pod sandbox. After the first Cilium install, reboot the K3s node so those sandboxes are recreated under Cilium. Re-run `./scripts/deploy-cilium.sh` after the node returns and verify application connectivity before enabling the native project policies.
+
+Upgrades of an existing `cilium/cilium` release do not require the first-install acknowledgement.
 
 ### Merge/cutover gate
 
 This branch is a dataplane migration, not a dormant feature flag. `my-values/infra/network-policies.yaml` contains Cilium CRDs after this change, so the operational sequence is intentional:
 
 1. Check out this branch during the maintenance window.
-2. Apply the K3s CNI configuration above and restart K3s according to the node plan.
-3. Run `CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh` and verify the Cilium dataplane.
-4. Run `./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply` and verify traffic/Hubble verdicts.
-5. Run `./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup` only after verification.
-6. Merge the PR only after the Cilium CRDs and dataplane are established on the target cluster.
+2. Add `flannel-backend: none` and `disable-network-policy: true` to the K3s configuration and restart K3s.
+3. Run `CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh`.
+4. Reboot the node after Cilium is installed so all old Flannel pod sandboxes are recycled.
+5. Re-run `./scripts/deploy-cilium.sh` and verify Cilium plus application connectivity.
+6. Run `CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply` and inspect policy/Hubble verdicts.
+7. Run `CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup` only after verification.
+8. Merge the PR only after the Cilium CRDs and dataplane are established on the target cluster.
 
 This ordering prevents a pre-Cilium `deploy.sh infra` run from trying to apply CRDs that do not exist yet and prevents deleting the old policies before every native replacement exists.
 
@@ -92,11 +100,11 @@ Kube-proxy replacement can be evaluated later as its own change after the Cilium
 The static KubeClaw base policies are expressed as `CiliumNetworkPolicy`. The migration is intentionally two-phase so a failed conversion cannot create an accidental allow-all window:
 
 ```bash
-./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply
+CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply
 kubectl -n kubeclaw get ciliumnetworkpolicies
 
 # Verify application traffic and policy verdicts, then:
-./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup
+CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup
 ```
 
 The `cleanup` phase verifies every native replacement before deleting any superseded static Kubernetes `NetworkPolicy` object.
