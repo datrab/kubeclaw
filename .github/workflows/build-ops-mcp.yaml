@@ -4,11 +4,17 @@ on:
   pull_request:
     paths:
       - 'tools/ops-mcp/**'
+      - 'my-values/infra/**'
+      - 'scripts/*cilium*'
+      - 'examples/cilium/**'
       - '.github/workflows/build-ops-mcp.yaml'
   push:
     branches: [main]
     paths:
       - 'tools/ops-mcp/**'
+      - 'my-values/infra/**'
+      - 'scripts/*cilium*'
+      - 'examples/cilium/**'
       - '.github/workflows/build-ops-mcp.yaml'
   workflow_dispatch:
 
@@ -41,6 +47,12 @@ jobs:
         run: |
           npm ci --ignore-scripts
           npm test
+
+      - name: Test Cilium policy contracts
+        run: |
+          python3 -m pip install PyYAML==6.0.3
+          python3 tools/ops-mcp/test/policy_contract_test.py
+          bash -n scripts/deploy-cilium.sh scripts/migrate-kubeclaw-network-policies-to-cilium.sh
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4

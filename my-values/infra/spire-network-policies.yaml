@@ -1,0 +1,114 @@
+# SPIRE-owned connectivity for release spire, hardened chart 0.30.0 and
+# my-values/infra/spire-values.yaml. Parent chart uses nameOverride server/agent.
+# Apply before resuming SPIRE after CNI cutover. DNS comes from central baseline.
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: spire-server-ingress
+  namespace: spire-server
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: server
+      app.kubernetes.io/instance: spire
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: spire-system
+            app.kubernetes.io/name: agent
+            app.kubernetes.io/instance: spire
+      toPorts:
+        - ports:
+            - port: "8081"
+              protocol: TCP
+    # Default agent attests through localhost kubelet and uses hostNetwork.
+    - fromEntities: [host, remote-node]
+      toPorts:
+        - ports:
+            - port: "8081"
+              protocol: TCP
+    - fromEntities: [kube-apiserver]
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: spire-server-api-egress
+  namespace: spire-server
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: io.cilium.k8s.policy.serviceaccount
+        operator: In
+        values:
+          - spire-server
+          - spire-server-post-install
+          - spire-server-post-upgrade
+          - spire-server-pre-upgrade
+          - spire-server-pre-delete
+  egress:
+    - toEntities: [kube-apiserver]
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "6443"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: spire-agent-egress
+  namespace: spire-system
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: agent
+      app.kubernetes.io/instance: spire
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: spire-server
+            app.kubernetes.io/name: server
+            app.kubernetes.io/instance: spire
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "8081"
+              protocol: TCP
+    - toEntities: [host, remote-node]
+      toPorts:
+        - ports:
+            - port: "10250"
+              protocol: TCP
+    - toEntities: [kube-apiserver]
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "6443"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: spiffe-csi-api-egress
+  namespace: spire-system
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: spiffe-csi-driver
+      app.kubernetes.io/instance: spire
+  egress:
+    - toEntities: [kube-apiserver]
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "6443"
+              protocol: TCP

@@ -1,0 +1,141 @@
+# Cluster/platform-owned Cilium policy only.
+#
+# This file defines cluster invariants. It must not become a catalogue of
+# project-specific ports, peers, hostnames or application dependencies.
+#
+# Policy model:
+#   * ordinary workload namespaces are fail-closed automatically;
+#   * DNS is the only generic workload egress allowance;
+#   * projects add only explicit namespaced CNP/KNP allow rules;
+#   * no custom Namespace policy-profile labels or admission injector are used.
+#
+# The small exclusion list below contains bootstrap/control-plane namespaces
+# whose networking must be migrated with dedicated, tested policies rather than
+# accidentally breaking cluster administration during the first CNI cutover.
+# Paperless is an explicit owner-approved temporary exception for this cutover.
+# Remove it after Paperless connectivity is inventoried and tested. No new project exceptions.
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: dtlabs-workload-default-deny
+spec:
+  description: Default deny ingress and egress for every ordinary workload namespace.
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: NotIn
+        values:
+          - kube-system
+          - cilium
+          - tailscale
+          - argocd
+          - paperless
+  enableDefaultDeny:
+    ingress: true
+    egress: true
+  # Empty LISTS are intentional. A rule containing `- {}` would be an allow-all.
+  ingress: []
+  egress: []
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: dtlabs-workload-allow-dns
+spec:
+  description: Allow ordinary workloads to resolve DNS without changing their default-deny state by itself.
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: NotIn
+        values:
+          - kube-system
+          - cilium
+          - tailscale
+          - argocd
+          - paperless
+  enableDefaultDeny:
+    ingress: false
+    egress: false
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: dtlabs-cilium-health
+spec:
+  description: Allow Cilium health endpoints to test node connectivity.
+  endpointSelector:
+    matchLabels:
+      reserved:health: ""
+  ingress:
+    - fromEntities:
+        - remote-node
+  egress:
+    - toEntities:
+        - remote-node
+---
+# Hubble Relay's client-facing gRPC endpoint is intentionally plaintext inside
+# the cluster to keep the Ops MCP integration small. Protect that endpoint with
+# Cilium identity instead of exposing it as an unauthenticated cluster-wide API.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: hubble-relay-consumers
+  namespace: cilium
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s-app: hubble-relay
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kubeclaw
+            app.kubernetes.io/name: ops-mcp
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cilium
+            k8s-app: hubble-ui
+      toPorts:
+        - ports:
+            - port: "4245"
+              protocol: TCP
+    # Keep kubelet/node-origin health traffic functional without opening the
+    # Relay API to arbitrary workloads.
+    - fromEntities:
+        - host
+        - remote-node
+      toPorts:
+        - ports:
+            - port: "4245"
+              protocol: TCP
+            - port: "4222"
+              protocol: TCP
+---
+# UI is accessible through kubectl port-forward only in v1; no pod client allow.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: hubble-ui-private
+  namespace: cilium
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s-app: hubble-ui
+  enableDefaultDeny:
+    ingress: true
+  ingress: []
+
+# Future cluster-wide deny rules belong here only when they are truly global
+# platform guardrails (for example blocking a cloud metadata endpoint or a
+# management subnet). Project-specific ports, peers and Internet destinations
+# must remain with the project that owns the workload.

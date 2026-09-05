@@ -50,6 +50,9 @@
       ],
       "pathFilters": [
         "tools/ops-mcp/**",
+        "my-values/infra/**",
+        "scripts/*cilium*",
+        "examples/cilium/**",
         ".github/workflows/build-ops-mcp.yaml"
       ],
       "schedules": [],

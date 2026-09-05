@@ -20,7 +20,7 @@ spec:
       - apiGroups:   [""]
         apiVersions: ["v1"]
         resources:   ["namespaces"]
-        operations:  ["CREATE", "DELETE"]
+        operations:  ["CREATE", "UPDATE", "DELETE"]
   matchConditions:
     - name: is-buster-namespace-actor
       expression: >
@@ -30,13 +30,21 @@ spec:
         "system:serviceaccount:kubeclaw:agent-buster-namespace-controller"
   validations:
     - expression: >
+        request.operation != "UPDATE" || (
+          oldObject.metadata.name.startsWith("test-") &&
+          has(oldObject.metadata.labels) &&
+          "kubeclaw/managed-by" in oldObject.metadata.labels &&
+          oldObject.metadata.labels["kubeclaw/managed-by"] == "buster-namespace-controller"
+        )
+      message: The controller cannot adopt an existing unowned namespace by updating its labels.
+    - expression: >
         request.userInfo.username !=
         "system:serviceaccount:kubeclaw:agent-buster"
       message: >
         Buster must request BusterNamespaceLease objects instead of creating or
         deleting namespaces directly.
     - expression: >
-        request.operation == "CREATE"
+        request.operation != "DELETE"
           ? (
               object.metadata.name.startsWith("test-") &&
               has(object.metadata.labels) &&
@@ -52,7 +60,7 @@ spec:
                 "buster-namespace-controller"
             )
       message: >
-        The Buster namespace controller may only create or delete managed
+        The Buster namespace controller may only create, update or delete managed
         namespaces with prefix "test-".
 ---
 apiVersion: admissionregistration.k8s.io/v1
@@ -63,3 +71,40 @@ spec:
   policyName: buster-namespace-fence
   validationActions:
     - Deny
+
+---
+# Reserve the trust-bearing label against ordinary namespace creators/updaters.
+# Platform break-glass uses system:masters. Add future GitOps identity explicitly
+# here before delegating ownership; do not authorize arbitrary namespace admins.
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: buster-namespace-owner-label
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["namespaces"]
+        operations: ["CREATE", "UPDATE"]
+  variables:
+    - name: oldOwner
+      expression: 'oldObject != null && has(oldObject.metadata.labels) && "kubeclaw/managed-by" in oldObject.metadata.labels ? oldObject.metadata.labels["kubeclaw/managed-by"] : ""'
+    - name: newOwner
+      expression: 'has(object.metadata.labels) && "kubeclaw/managed-by" in object.metadata.labels ? object.metadata.labels["kubeclaw/managed-by"] : ""'
+  validations:
+    - expression: >
+        variables.oldOwner == variables.newOwner ||
+        (variables.oldOwner != "buster-namespace-controller" && variables.newOwner != "buster-namespace-controller") ||
+        request.userInfo.groups.exists(g, g == "system:masters") ||
+        request.userInfo.username == "system:serviceaccount:kubeclaw:agent-buster-namespace-controller"
+      message: Only the platform or Buster namespace controller may change the reserved namespace ownership label.
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: buster-namespace-owner-label-binding
+spec:
+  policyName: buster-namespace-owner-label
+  validationActions: [Deny]

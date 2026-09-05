@@ -1086,6 +1086,11 @@ cmd_infra() {
       err "SPIRE values file not found: $SPIRE_VALUES_FILE"
       return 1
     fi
+    # Existing-cluster Cilium path: policy must precede Helm hook/readiness waits.
+    kubectl get namespace spire-server spire-system >/dev/null || {
+      err "Prepare SPIRE namespaces and Helm ownership as documented before first Cilium-era SPIRE install"; return 1;
+    }
+    kubectl apply -f "$INFRA_DIR/spire-network-policies.yaml"
     add_helm_repo_once spiffe "$SPIFFE_HELM_REPO"
     helm repo update >/dev/null
     helm upgrade --install spire-crds spiffe/spire-crds \
@@ -1171,7 +1176,8 @@ cmd_infra() {
   log "Registry Local deployed"
 
   header "Infrastructure: Buster Namespace Fence (VAP)"
-  kubectl apply -f "$INFRA_DIR/buster-namespace-fence.yaml"
+  [[ "$NAMESPACE" =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ && ${#NAMESPACE} -le 63 ]] || { err "Invalid namespace"; return 1; }
+  sed "s/system:serviceaccount:kubeclaw:/system:serviceaccount:${NAMESPACE}:/g" "$INFRA_DIR/buster-namespace-fence.yaml" | kubectl apply -f -
   log "Buster namespace fence applied"
 
   header "Infrastructure: Network Policies"
@@ -2966,3 +2972,4 @@ case "${1:-}" in
     exit 1
     ;;
 esac
+

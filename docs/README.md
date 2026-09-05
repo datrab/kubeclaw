@@ -11,6 +11,12 @@ The other directories contain source material, decisions, implementation records
 
 Publication uses an explicit allowlist. Phase audits, plans, raw inventories, templates, and migration records stay outside public navigation and search.
 
+## Cilium networking
+
+For the current platform-networking design, start with the short [`Cilium in 5 minutes`](ops/cilium-quickstart.md) guide. It explains the terminology and everyday model without assuming prior Cilium knowledge.
+
+The detailed architecture, policy semantics and one-time K3s/Flannel cutover runbook live in [`ops/cilium-networking.md`](ops/cilium-networking.md), which is the technical source of truth.
+
 ## Commands
 
 ```bash
@@ -25,3 +31,6 @@ The build resolves evidence to the exact Git revision. It also emits a digest an
 ## Transformation Record
 
 The approved [documentation blueprint](blueprint/README.md) classifies existing documentation and defines the publication workflow.
+
+Review fixes and outstanding live release checks: [PR remediation](ops/review-remediation.md).
+
