@@ -17,6 +17,7 @@ const HUBBLE_BIN = process.env.HUBBLE_BIN ?? '/usr/local/bin/hubble';
 const HUBBLE_SERVER = process.env.HUBBLE_SERVER ?? 'hubble-relay.cilium.svc.cluster.local:4245';
 const MAX_LOG_BYTES = 64 * 1024;
 const MAX_HUBBLE_BUFFER_BYTES = 2 * 1024 * 1024;
+const LIST_PAGE_SIZE = 500;
 const EVENT_PAGE_SIZE = 500;
 
 const optionalBearerToken = process.env.OPS_MCP_BEARER_TOKEN?.trim() || null;
@@ -62,6 +63,25 @@ async function kubeRequest(path, { asText = false } = {}) {
   return body;
 }
 
+async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item } = {}) {
+  let continuation = null;
+  const items = [];
+  let pages = 0;
+
+  do {
+    const query = new URLSearchParams(params);
+    query.set('limit', String(pageSize));
+    if (continuation) query.set('continue', continuation);
+
+    const page = await kubeRequest(`${path}?${query.toString()}`);
+    items.push(...(page.items ?? []).map(mapItem));
+    pages += 1;
+    continuation = page?.metadata?.continue || null;
+  } while (continuation);
+
+  return { items, pages };
+}
+
 function deploymentSummary(item) {
   return {
     ...trimObjectMetadata(item),
@@ -84,12 +104,13 @@ function statefulSetSummary(item) {
 
 function podSummary(item) {
   const statuses = item?.status?.containerStatuses ?? [];
+  const readyCondition = (item?.status?.conditions ?? []).find(condition => condition?.type === 'Ready');
   return {
     ...trimObjectMetadata(item),
     phase: item?.status?.phase ?? null,
     node: item?.spec?.nodeName ?? null,
     podIP: item?.status?.podIP ?? null,
-    ready: statuses.length > 0 && statuses.every(status => status.ready === true),
+    ready: readyCondition?.status === 'True',
     restarts: statuses.reduce((sum, status) => sum + (status.restartCount ?? 0), 0),
     containers: statuses.map(status => ({
       name: status.name,
@@ -106,12 +127,17 @@ function eventSummary(item) {
     type: item?.type ?? null,
     reason: item?.reason ?? null,
     message: item?.message ?? null,
-    count: item?.count ?? 1,
+    count: item?.series?.count ?? item?.count ?? 1,
     object: item?.involvedObject
       ? `${item.involvedObject.kind ?? 'Object'}/${item.involvedObject.name ?? '?'}`
       : null,
-    firstTimestamp: item?.firstTimestamp ?? item?.eventTime ?? null,
-    lastTimestamp: item?.lastTimestamp ?? item?.eventTime ?? item?.metadata?.creationTimestamp ?? null,
+    firstTimestamp: item?.eventTime ?? item?.firstTimestamp ?? item?.metadata?.creationTimestamp ?? null,
+    lastTimestamp:
+      item?.series?.lastObservedTime ??
+      item?.lastTimestamp ??
+      item?.eventTime ??
+      item?.metadata?.creationTimestamp ??
+      null,
   };
 }
 
@@ -141,8 +167,8 @@ async function recentEvents(namespace, objectName, limit) {
     scanned += pageEvents.length;
     pages += 1;
 
-    // Scan every continuation page, but retain only the newest caller-requested
-    // summaries so large event histories do not become an MCP memory problem.
+    // Keep only the newest requested events while still scanning every page.
+    // This avoids materializing an unbounded namespace event history in memory.
     events = sortEvents([...events, ...pageEvents]).slice(0, limit);
     continuation = page?.metadata?.continue || null;
   } while (continuation);
@@ -279,22 +305,26 @@ function buildServer() {
       },
     },
     async () => {
-      const data = await kubeRequest(
-        `/apis/argoproj.io/v1alpha1/namespaces/${encodeURIComponent(ARGO_NAMESPACE)}/applications?limit=200`,
+      const data = await kubeList(
+        `/apis/argoproj.io/v1alpha1/namespaces/${encodeURIComponent(ARGO_NAMESPACE)}/applications`,
+        {
+          mapItem: item => ({
+            ...trimObjectMetadata(item),
+            project: item?.spec?.project ?? null,
+            destinationNamespace: item?.spec?.destination?.namespace ?? null,
+            sync: item?.status?.sync?.status ?? 'Unknown',
+            revision: item?.status?.sync?.revision ?? null,
+            health: item?.status?.health?.status ?? 'Unknown',
+            healthMessage: item?.status?.health?.message ?? null,
+            operationPhase: item?.status?.operationState?.phase ?? null,
+            operationMessage: item?.status?.operationState?.message ?? null,
+          }),
+        },
       );
       return jsonText({
         namespace: ARGO_NAMESPACE,
-        applications: (data.items ?? []).map(item => ({
-          ...trimObjectMetadata(item),
-          project: item?.spec?.project ?? null,
-          destinationNamespace: item?.spec?.destination?.namespace ?? null,
-          sync: item?.status?.sync?.status ?? 'Unknown',
-          revision: item?.status?.sync?.revision ?? null,
-          health: item?.status?.health?.status ?? 'Unknown',
-          healthMessage: item?.status?.health?.message ?? null,
-          operationPhase: item?.status?.operationState?.phase ?? null,
-          operationMessage: item?.status?.operationState?.message ?? null,
-        })),
+        applications: data.items,
+        pagesScanned: data.pages,
       });
     },
   );
@@ -318,38 +348,52 @@ function buildServer() {
     async ({ namespace }) => {
       const ns = encodeURIComponent(namespace);
       const [deployments, statefulsets, pods, jobs, services, ingresses] = await Promise.all([
-        kubeRequest(`/apis/apps/v1/namespaces/${ns}/deployments?limit=200`),
-        kubeRequest(`/apis/apps/v1/namespaces/${ns}/statefulsets?limit=200`),
-        kubeRequest(`/api/v1/namespaces/${ns}/pods?limit=500`),
-        kubeRequest(`/apis/batch/v1/namespaces/${ns}/jobs?limit=200`),
-        kubeRequest(`/api/v1/namespaces/${ns}/services?limit=200`),
-        kubeRequest(`/apis/networking.k8s.io/v1/namespaces/${ns}/ingresses?limit=200`),
+        kubeList(`/apis/apps/v1/namespaces/${ns}/deployments`, { mapItem: deploymentSummary }),
+        kubeList(`/apis/apps/v1/namespaces/${ns}/statefulsets`, { mapItem: statefulSetSummary }),
+        kubeList(`/api/v1/namespaces/${ns}/pods`, { mapItem: podSummary }),
+        kubeList(`/apis/batch/v1/namespaces/${ns}/jobs`, {
+          mapItem: item => ({
+            ...trimObjectMetadata(item),
+            succeeded: item?.status?.succeeded ?? 0,
+            failed: item?.status?.failed ?? 0,
+            active: item?.status?.active ?? 0,
+            completionTime: item?.status?.completionTime ?? null,
+          }),
+        }),
+        kubeList(`/api/v1/namespaces/${ns}/services`, {
+          mapItem: item => ({
+            ...trimObjectMetadata(item),
+            type: item?.spec?.type ?? null,
+            clusterIP: item?.spec?.clusterIP ?? null,
+            ports: item?.spec?.ports ?? [],
+          }),
+        }),
+        kubeList(`/apis/networking.k8s.io/v1/namespaces/${ns}/ingresses`, {
+          mapItem: item => ({
+            ...trimObjectMetadata(item),
+            ingressClassName: item?.spec?.ingressClassName ?? null,
+            hosts: (item?.spec?.rules ?? []).map(rule => rule.host).filter(Boolean),
+            loadBalancer: item?.status?.loadBalancer ?? null,
+          }),
+        }),
       ]);
 
       return jsonText({
         namespace,
-        deployments: (deployments.items ?? []).map(deploymentSummary),
-        statefulsets: (statefulsets.items ?? []).map(statefulSetSummary),
-        pods: (pods.items ?? []).map(podSummary),
-        jobs: (jobs.items ?? []).map(item => ({
-          ...trimObjectMetadata(item),
-          succeeded: item?.status?.succeeded ?? 0,
-          failed: item?.status?.failed ?? 0,
-          active: item?.status?.active ?? 0,
-          completionTime: item?.status?.completionTime ?? null,
-        })),
-        services: (services.items ?? []).map(item => ({
-          ...trimObjectMetadata(item),
-          type: item?.spec?.type ?? null,
-          clusterIP: item?.spec?.clusterIP ?? null,
-          ports: item?.spec?.ports ?? [],
-        })),
-        ingresses: (ingresses.items ?? []).map(item => ({
-          ...trimObjectMetadata(item),
-          ingressClassName: item?.spec?.ingressClassName ?? null,
-          hosts: (item?.spec?.rules ?? []).map(rule => rule.host).filter(Boolean),
-          loadBalancer: item?.status?.loadBalancer ?? null,
-        })),
+        deployments: deployments.items,
+        statefulsets: statefulsets.items,
+        pods: pods.items,
+        jobs: jobs.items,
+        services: services.items,
+        ingresses: ingresses.items,
+        pagesScanned: {
+          deployments: deployments.pages,
+          statefulsets: statefulsets.pages,
+          pods: pods.pages,
+          jobs: jobs.pages,
+          services: services.pages,
+          ingresses: ingresses.pages,
+        },
       });
     },
   );
