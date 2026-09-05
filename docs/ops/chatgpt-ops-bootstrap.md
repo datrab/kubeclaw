@@ -57,13 +57,16 @@ kubectl rollout status deployment/ops-mcp -n kubeclaw --timeout=180s
 kubectl get ingress -n kubeclaw ops-mcp
 ```
 
-Basic cluster-local health check:
+Basic health check without opening an additional NetworkPolicy path:
 
 ```bash
-kubectl run ops-mcp-check \
-  --rm -i --restart=Never \
-  --image=curlimages/curl:8.17.0 \
-  -- curl -fsS http://ops-mcp.kubeclaw.svc.cluster.local:8080/healthz
+kubectl -n kubeclaw port-forward svc/ops-mcp 18080:8080
+```
+
+In a second terminal:
+
+```bash
+curl -fsS http://127.0.0.1:18080/healthz
 ```
 
 Expected response:
@@ -71,6 +74,8 @@ Expected response:
 ```json
 {"ok":true,"service":"kubeclaw-ops-mcp"}
 ```
+
+Stop the temporary port-forward after the check. The service itself remains private and the namespace NetworkPolicy does not need a diagnostic exception.
 
 ## 4. Create an OpenAI Secure MCP Tunnel
 
