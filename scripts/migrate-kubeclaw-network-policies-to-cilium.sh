@@ -25,18 +25,18 @@ EOF
 fi
 
 # The cluster-owned baseline replaces the legacy KubeClaw default-deny + DNS
-# NetworkPolicy objects. Project-owned CNPs replace only KubeClaw-specific allow
-# rules. Dynamic/chart-owned Kubernetes NetworkPolicy objects (for example
-# temporary Buster namespaces and Prism) intentionally remain portable KNP and
-# are enforced by Cilium directly.
+# NetworkPolicy objects. Most project rules move to CiliumNetworkPolicy. A small
+# number deliberately remain portable Kubernetes NetworkPolicy when the native
+# KNP semantics are simpler and safer (for example same-namespace podSelector
+# scoping). Cilium enforces both APIs.
 baseline_policies=(
   dtlabs-workload-default-deny
   dtlabs-workload-allow-dns
 )
 
-replacement_policies=(
+replacement_cilium_policies=(
   kubeclaw-agents-egress
-  kubeclaw-agents-ingress
+  kubeclaw-buster-namespace-controller-api-egress
   kubeclaw-nova-buster-test-gates
   kubeclaw-buster-test-gates-from-nova
   kubeclaw-nova-prism-agent-trust
@@ -55,11 +55,14 @@ replacement_policies=(
   ops-mcp-tunnel-egress
 )
 
+retained_portable_policies=(
+  kubeclaw-agents-ingress
+)
+
 legacy_policies=(
   kubeclaw-default-deny
   kubeclaw-allow-dns-egress
   kubeclaw-agents-egress
-  kubeclaw-agents-ingress
   kubeclaw-nova-buster-test-gates
   kubeclaw-buster-test-gates-from-nova
   kubeclaw-nova-prism-agent-trust
@@ -90,29 +93,34 @@ case "$MODE" in
 
     kubectl apply -n "$NAMESPACE" -f "$POLICY_FILE"
     echo
-    echo "Cilium project allow policies applied on top of the central fail-closed baseline."
+    echo "Project network allow policies applied on top of the central fail-closed baseline."
     echo "Verify before cleanup:"
     echo "  kubectl get ciliumclusterwidenetworkpolicies"
     echo "  kubectl -n $NAMESPACE get ciliumnetworkpolicies"
+    echo "  kubectl -n $NAMESPACE get networkpolicies"
     echo "  kubectl -n cilium exec ds/cilium -c cilium-agent -- cilium-dbg policy get"
     echo
     echo "After verification, remove superseded static Kubernetes NetworkPolicy objects with:"
     echo "  CILIUM_DATAPLANE_VERIFIED=true $0 cleanup"
     ;;
   cleanup)
-    # Fail closed: verify both central baseline policies and every project-native
-    # replacement before deleting any legacy object. A partial/invalid Cilium
-    # apply must never create an allow-all gap.
+    # Fail closed: verify the central baseline and every replacement before
+    # deleting any superseded legacy object. A partial/invalid Cilium apply must
+    # never create an allow-all gap.
     for policy in "${baseline_policies[@]}"; do
       kubectl get ciliumclusterwidenetworkpolicy "$policy" >/dev/null
     done
-    for policy in "${replacement_policies[@]}"; do
+    for policy in "${replacement_cilium_policies[@]}"; do
       kubectl -n "$NAMESPACE" get ciliumnetworkpolicy "$policy" >/dev/null
+    done
+    for policy in "${retained_portable_policies[@]}"; do
+      kubectl -n "$NAMESPACE" get networkpolicy "$policy" >/dev/null
     done
     for policy in "${legacy_policies[@]}"; do
       kubectl -n "$NAMESPACE" delete networkpolicy "$policy" --ignore-not-found
     done
     echo "Superseded static Kubernetes NetworkPolicy objects removed from namespace $NAMESPACE."
+    echo "Retained portable policies remain enforced by Cilium: ${retained_portable_policies[*]}"
     ;;
   *)
     echo "usage: $0 [apply|cleanup]" >&2
