@@ -6,7 +6,7 @@
 # Policy model:
 #   * ordinary workload namespaces are fail-closed automatically;
 #   * DNS is the only generic workload egress allowance;
-#   * projects add explicit namespaced CiliumNetworkPolicy allow rules;
+#   * projects add only explicit namespaced CNP/KNP allow rules;
 #   * no custom Namespace policy-profile labels or admission injector are used.
 #
 # The small exclusion list below contains bootstrap/control-plane namespaces
