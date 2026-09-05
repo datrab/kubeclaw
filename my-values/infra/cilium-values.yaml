@@ -1,0 +1,35 @@
+# Central Cilium installation values for the kubeclaw cluster.
+#
+# Cilium is cluster infrastructure. Namespace/project policy belongs with the
+# workload that owns the namespace; see docs/ops/cilium-networking.md.
+namespaceOverride: cilium
+
+operator:
+  replicas: 1
+
+# Keep kube-proxy for the first migration. kube-proxy replacement is a separate,
+# observable change once the Cilium dataplane is proven stable.
+kubeProxyReplacement: false
+
+# Match the normal K3s pod CIDR while replacing Flannel with Cilium as the CNI.
+ipam:
+  mode: cluster-pool
+  operator:
+    clusterPoolIPv4PodCIDRList:
+      - 10.42.0.0/16
+    clusterPoolIPv4MaskSize: 24
+
+routingMode: tunnel
+tunnelProtocol: vxlan
+policyEnforcementMode: default
+
+cni:
+  exclusive: true
+  uninstall: false
+
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true

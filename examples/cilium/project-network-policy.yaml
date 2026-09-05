@@ -1,0 +1,50 @@
+# Example project-owned namespace + policy.
+# Copy this pattern into the project that owns the workload; do not add
+# project-specific allow rules to the central Cilium installation.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-project
+  labels:
+    # Opt into the generic cluster-owned default-deny guardrail.
+    networking.kubeclaw.io/profile: default-deny
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: example-project-dns
+  namespace: example-project
+spec:
+  endpointSelector: {}
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+---
+# Add workload-specific CiliumNetworkPolicy objects here. Because this resource
+# is namespaced, Argo/Helm/Kustomize can ship it alongside the owning project.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: example-project-app
+  namespace: example-project
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: example-project
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: example-project
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP

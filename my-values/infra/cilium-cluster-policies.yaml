@@ -1,0 +1,42 @@
+# Cluster-owned Cilium policy only.
+#
+# Keep this file limited to generic platform guardrails. Application/service
+# connectivity belongs in the owning project's CiliumNetworkPolicy manifests.
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: kubeclaw-cilium-health
+spec:
+  description: Allow Cilium health endpoints to test node connectivity.
+  endpointSelector:
+    matchLabels:
+      reserved:health: ""
+  ingress:
+    - fromEntities:
+        - remote-node
+  egress:
+    - toEntities:
+        - remote-node
+---
+# Opt-in baseline for future project namespaces. A project enables this generic
+# baseline by placing this label on its Namespace:
+#   networking.kubeclaw.io/profile: default-deny
+#
+# The project then owns every required allow rule in its own repository/release.
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: kubeclaw-project-default-deny
+spec:
+  description: Default deny for project namespaces that explicitly opt in.
+  endpointSelector:
+    matchExpressions:
+      - key: io.cilium.k8s.namespace.labels.networking.kubeclaw.io/profile
+        operator: In
+        values:
+          - default-deny
+  ingress:
+    - {}
+  egress:
+    - {}
