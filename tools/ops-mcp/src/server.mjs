@@ -11,6 +11,7 @@ const SERVICE_ACCOUNT_DIR = '/var/run/secrets/kubernetes.io/serviceaccount';
 const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
 const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
 const MAX_LOG_BYTES = 64 * 1024;
+const EVENT_PAGE_SIZE = 500;
 
 const optionalBearerToken = process.env.OPS_MCP_BEARER_TOKEN?.trim() || null;
 const allowedOrigins = new Set(
@@ -114,6 +115,33 @@ function sortEvents(events) {
     const bt = Date.parse(b.lastTimestamp ?? '') || 0;
     return bt - at;
   });
+}
+
+async function recentEvents(namespace, objectName, limit) {
+  let continuation = null;
+  let events = [];
+  let scanned = 0;
+  let pages = 0;
+
+  do {
+    const params = new URLSearchParams({ limit: String(EVENT_PAGE_SIZE) });
+    if (objectName) params.set('fieldSelector', `involvedObject.name=${objectName}`);
+    if (continuation) params.set('continue', continuation);
+
+    const page = await kubeRequest(
+      `/api/v1/namespaces/${encodeURIComponent(namespace)}/events?${params.toString()}`,
+    );
+    const pageEvents = (page.items ?? []).map(eventSummary);
+    scanned += pageEvents.length;
+    pages += 1;
+
+    // Keep only the newest requested events while still scanning every page.
+    // This avoids materializing an unbounded namespace event history in memory.
+    events = sortEvents([...events, ...pageEvents]).slice(0, limit);
+    continuation = page?.metadata?.continue || null;
+  } while (continuation);
+
+  return { events, scanned, pages };
 }
 
 function buildServer() {
@@ -265,13 +293,14 @@ function buildServer() {
       },
     },
     async ({ namespace, objectName, limit }) => {
-      const params = new URLSearchParams({ limit: '500' });
-      if (objectName) params.set('fieldSelector', `involvedObject.name=${objectName}`);
-      const data = await kubeRequest(
-        `/api/v1/namespaces/${encodeURIComponent(namespace)}/events?${params.toString()}`,
-      );
-      const events = sortEvents((data.items ?? []).map(eventSummary)).slice(0, limit);
-      return jsonText({ namespace, objectName: objectName ?? null, events });
+      const result = await recentEvents(namespace, objectName, limit);
+      return jsonText({
+        namespace,
+        objectName: objectName ?? null,
+        events: result.events,
+        scannedEvents: result.scanned,
+        pagesScanned: result.pages,
+      });
     },
   );
 
@@ -300,6 +329,7 @@ function buildServer() {
         tailLines: String(tailLines),
         timestamps: 'true',
         previous: String(previous),
+        limitBytes: String(MAX_LOG_BYTES),
       });
       if (container) params.set('container', container);
 
@@ -320,6 +350,7 @@ function buildServer() {
         container: container ?? null,
         previous,
         tailLines,
+        limitBytes: MAX_LOG_BYTES,
         truncated,
         logs,
       });
