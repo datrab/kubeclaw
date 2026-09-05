@@ -20,8 +20,8 @@ done
 
 # This bootstrap deliberately implements the simple disruptive replacement path
 # for the current single-node K3s cluster. A multi-node cluster requires the
-# upstream Cilium CNI migration procedure (secondary overlay + per-node cutover)
-# and must not accidentally use this same-CIDR replacement script.
+# upstream Cilium CNI migration procedure and must not accidentally use this
+# same-CIDR replacement script.
 if ! helm status "$CILIUM_RELEASE" -n "$CILIUM_NAMESPACE" >/dev/null 2>&1; then
   FIRST_INSTALL=true
   NODE_COUNT="$(kubectl get nodes -o name | wc -l | tr -d ' ')"
@@ -30,8 +30,7 @@ if ! helm status "$CILIUM_RELEASE" -n "$CILIUM_NAMESPACE" >/dev/null 2>&1; then
 Refusing the disruptive Cilium replacement on a ${NODE_COUNT}-node cluster.
 
 This bootstrap intentionally supports the single-node K3s replacement path only.
-For multiple nodes, use Cilium's documented live CNI migration with a distinct
-migration CIDR/overlay and a controlled per-node cutover.
+For multiple nodes, use Cilium's documented controlled CNI migration procedure.
 EOF
     exit 2
   fi
@@ -40,15 +39,21 @@ EOF
     cat >&2 <<'EOF'
 Refusing first Cilium install without an explicit K3s migration acknowledgement.
 
-Before continuing, configure the K3s server for Cilium as the primary CNI.
-/etc/rancher/k3s/config.yaml must include at least:
+Before continuing, the EFFECTIVE K3s server configuration must set at least:
 
   flannel-backend: none
   disable-network-policy: true
 
-This is a disruptive single-node maintenance-window replacement, not Cilium's
-multi-node live migration path. Keep SSH/console access to the node. After the
-K3s configuration has been changed and K3s restarted, run:
+K3s normally reads /etc/rancher/k3s/config.yaml, but it may use another path via
+--config/K3S_CONFIG_FILE. The /etc/rancher name is K3s' standard filesystem path;
+it does not imply that Rancher Manager is installed.
+
+Also account for stale KUBE-ROUTER iptables policy rules after disabling K3s'
+network-policy controller; see docs/ops/cilium-networking.md before proceeding.
+
+This is a disruptive single-node maintenance-window replacement. Keep direct
+SSH/console recovery access. After the actual K3s configuration has been checked,
+changed and restarted, run:
 
   CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh
 
@@ -79,6 +84,12 @@ done
 
 kubectl apply -f "$CILIUM_CLUSTER_POLICIES"
 
+# These two policies are the fail-closed contract for every ordinary workload
+# namespace. Do not report bootstrap success if either object failed to persist.
+for policy in dtlabs-workload-default-deny dtlabs-workload-allow-dns; do
+  kubectl get ciliumclusterwidenetworkpolicy "$policy" >/dev/null
+ done
+
 for deployment in hubble-relay hubble-ui; do
   if kubectl -n "$CILIUM_NAMESPACE" get "deployment/$deployment" >/dev/null 2>&1; then
     kubectl -n "$CILIUM_NAMESPACE" rollout status "deployment/$deployment" --timeout=5m
@@ -88,6 +99,7 @@ done
 cat <<EOF
 
 Cilium ${CILIUM_VERSION} is installed in namespace ${CILIUM_NAMESPACE}.
+The central workload default-deny + DNS baseline is present.
 
 Check:
   kubectl -n ${CILIUM_NAMESPACE} get pods
@@ -98,17 +110,18 @@ Hubble UI (private local access):
   kubectl -n ${CILIUM_NAMESPACE} port-forward svc/hubble-ui 12000:80
   # open http://127.0.0.1:12000
 
-Project policy is intentionally NOT applied by this script. Each project owns
-its namespaced policy objects and deploys them with that project.
+Project policy is intentionally NOT applied by this script. Projects inherit the
+central fail-closed baseline automatically and deploy only explicit namespaced
+allow policies with their own workloads.
 EOF
 
 if [[ "$FIRST_INSTALL" == "true" ]]; then
   cat <<'EOF'
 
 IMPORTANT — finish the CNI replacement before applying native project policy:
-  1. Reboot the K3s node so pod sandboxes created by Flannel are recycled.
+  1. Reboot/recycle the K3s node so old Flannel pod sandboxes are recreated.
   2. Re-run ./scripts/deploy-cilium.sh after the node is reachable.
-  3. Verify Cilium is healthy and application traffic works.
+  3. Verify Cilium, Hubble and required application traffic.
   4. Only then run the policy migration with CILIUM_DATAPLANE_VERIFIED=true.
 
 Do not merge this migration PR into the operational branch before that cutover
