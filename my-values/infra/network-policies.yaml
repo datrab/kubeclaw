@@ -1,8 +1,13 @@
-# KubeClaw project-owned Cilium allow policy.
+# KubeClaw project-owned network allow policies.
 #
 # The central `dtlabs-workload-default-deny` and `dtlabs-workload-allow-dns`
 # CiliumClusterwideNetworkPolicy objects already select the kubeclaw namespace.
 # This file therefore contains only KubeClaw-specific explicit allows.
+#
+# Most rules use CiliumNetworkPolicy. `kubeclaw-agents-ingress` deliberately
+# remains a portable Kubernetes NetworkPolicy because its `podSelector: {}`
+# source expresses exactly "all pods in this policy's namespace" without
+# hard-coding or templating the deployment namespace. Cilium enforces KNP too.
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -78,33 +83,55 @@ spec:
             - protocol: TCP
               port: "443"
 ---
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
+# Keep this rule portable on purpose. In Kubernetes NetworkPolicy a bare
+# podSelector source is inherently scoped to this policy's namespace, which is
+# exactly the desired behavior even when NAMESPACE is customized.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
   name: kubeclaw-agents-ingress
 spec:
-  endpointSelector:
+  podSelector:
     matchLabels:
       app.kubernetes.io/name: kubeclaw
     matchExpressions:
       - key: app.kubernetes.io/component
         operator: NotIn
         values: [prism]
+  policyTypes:
+    - Ingress
   ingress:
-    - fromEndpoints:
-        - {}
+    - from:
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: 18789
+        - protocol: TCP
+          port: 18790
+    # Archviewer is intentionally exposed through its NodePort.
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 3456
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kubeclaw-buster-namespace-controller-api-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: buster-namespace-controller
+  egress:
+    - toEntities:
+        - kube-apiserver
       toPorts:
         - ports:
             - protocol: TCP
-              port: "18789"
-            - protocol: TCP
-              port: "18790"
-    - fromEntities:
-        - world
-      toPorts:
-        - ports:
-            - protocol: TCP
-              port: "3456"
+              port: "443"
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -154,10 +181,11 @@ spec:
       app.kubernetes.io/name: kubeclaw
       app.kubernetes.io/component: nova
   egress:
-    # Production Prism in the owning kubeclaw namespace.
+    # Production Prism is selected by workload identity only. Because this is a
+    # namespaced CNP, this selector retains the CNP's owning-namespace scope and
+    # therefore follows a custom NAMESPACE without hard-coding `kubeclaw`.
     - toEndpoints:
         - matchLabels:
-            k8s:io.kubernetes.pod.namespace: kubeclaw
             app.kubernetes.io/name: kubeclaw
             app.kubernetes.io/component: prism
       toPorts:
