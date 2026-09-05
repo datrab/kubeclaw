@@ -1,16 +1,23 @@
-import { createServer } from 'node:http';
+import { execFile } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { promisify } from 'node:util';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
 
+const execFileAsync = promisify(execFile);
 const PORT = Number.parseInt(process.env.PORT ?? '8080', 10);
 const HOST = process.env.HOST ?? '0.0.0.0';
 const KUBE_API = process.env.KUBERNETES_API_URL ?? 'https://kubernetes.default.svc';
 const SERVICE_ACCOUNT_DIR = '/var/run/secrets/kubernetes.io/serviceaccount';
 const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
 const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
+const HUBBLE_BIN = process.env.HUBBLE_BIN ?? '/usr/local/bin/hubble';
+const HUBBLE_SERVER = process.env.HUBBLE_SERVER ?? 'hubble-relay.cilium.svc.cluster.local:4245';
 const MAX_LOG_BYTES = 64 * 1024;
+const MAX_HUBBLE_BUFFER_BYTES = 2 * 1024 * 1024;
+const EVENT_PAGE_SIZE = 500;
 
 const optionalBearerToken = process.env.OPS_MCP_BEARER_TOKEN?.trim() || null;
 const allowedOrigins = new Set(
@@ -116,16 +123,144 @@ function sortEvents(events) {
   });
 }
 
+async function recentEvents(namespace, objectName, limit) {
+  let continuation = null;
+  let events = [];
+  let scanned = 0;
+  let pages = 0;
+
+  do {
+    const params = new URLSearchParams({ limit: String(EVENT_PAGE_SIZE) });
+    if (objectName) params.set('fieldSelector', `involvedObject.name=${objectName}`);
+    if (continuation) params.set('continue', continuation);
+
+    const page = await kubeRequest(
+      `/api/v1/namespaces/${encodeURIComponent(namespace)}/events?${params.toString()}`,
+    );
+    const pageEvents = (page.items ?? []).map(eventSummary);
+    scanned += pageEvents.length;
+    pages += 1;
+
+    // Scan every continuation page, but retain only the newest caller-requested
+    // summaries so large event histories do not become an MCP memory problem.
+    events = sortEvents([...events, ...pageEvents]).slice(0, limit);
+    continuation = page?.metadata?.continue || null;
+  } while (continuation);
+
+  return { events, scanned, pages };
+}
+
+function endpointSummary(endpoint) {
+  return {
+    namespace: endpoint?.namespace ?? null,
+    pod: endpoint?.pod_name ?? endpoint?.podName ?? null,
+    identity: endpoint?.identity ?? null,
+  };
+}
+
+function l4Summary(l4) {
+  const tcp = l4?.TCP ?? l4?.tcp;
+  if (tcp) {
+    return {
+      protocol: 'TCP',
+      sourcePort: tcp.source_port ?? tcp.sourcePort ?? null,
+      destinationPort: tcp.destination_port ?? tcp.destinationPort ?? null,
+      flags: tcp.flags ?? null,
+    };
+  }
+
+  const udp = l4?.UDP ?? l4?.udp;
+  if (udp) {
+    return {
+      protocol: 'UDP',
+      sourcePort: udp.source_port ?? udp.sourcePort ?? null,
+      destinationPort: udp.destination_port ?? udp.destinationPort ?? null,
+    };
+  }
+
+  const icmpv4 = l4?.ICMPv4 ?? l4?.icmpv4;
+  if (icmpv4) return { protocol: 'ICMPv4', type: icmpv4.type ?? null, code: icmpv4.code ?? null };
+
+  const icmpv6 = l4?.ICMPv6 ?? l4?.icmpv6;
+  if (icmpv6) return { protocol: 'ICMPv6', type: icmpv6.type ?? null, code: icmpv6.code ?? null };
+
+  return null;
+}
+
+function hubbleFlowSummary(response) {
+  const flow = response?.flow ?? response;
+  const ip = flow?.IP ?? flow?.ip ?? {};
+  return {
+    time: flow?.time ?? response?.time ?? null,
+    verdict: flow?.verdict ?? null,
+    dropReason: flow?.drop_reason_desc ?? flow?.dropReasonDesc ?? null,
+    trafficDirection: flow?.traffic_direction ?? flow?.trafficDirection ?? null,
+    node: flow?.node_name ?? flow?.nodeName ?? response?.node_name ?? response?.nodeName ?? null,
+    source: endpointSummary(flow?.source),
+    destination: endpointSummary(flow?.destination),
+    sourceIP: ip?.source ?? null,
+    destinationIP: ip?.destination ?? null,
+    l4: l4Summary(flow?.l4),
+    summary: flow?.Summary ?? flow?.summary ?? null,
+  };
+}
+
+async function getHubbleFlows({ namespace, pod, verdict, since, limit }) {
+  const args = [
+    'observe',
+    '--server', HUBBLE_SERVER,
+    '--output', 'json',
+    '--silent-errors',
+    '--last', String(limit),
+    '--since', since,
+    '--namespace', namespace,
+  ];
+  if (pod) args.push('--pod', `${namespace}/${pod}`);
+  if (verdict) args.push('--verdict', verdict);
+
+  try {
+    const { stdout } = await execFileAsync(HUBBLE_BIN, args, {
+      encoding: 'utf8',
+      timeout: 12_000,
+      maxBuffer: MAX_HUBBLE_BUFFER_BYTES,
+      env: {
+        PATH: process.env.PATH,
+        HOME: '/tmp',
+      },
+    });
+
+    const flows = stdout
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean)
+      .map(line => JSON.parse(line))
+      .map(hubbleFlowSummary)
+      .slice(-limit);
+
+    return { flows, rawBytes: Buffer.byteLength(stdout, 'utf8') };
+  } catch (error) {
+    const code = error?.code ?? 'unknown';
+    const stderr = String(error?.stderr ?? '').slice(-2048);
+    if (code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') {
+      throw new Error(
+        'Hubble flow query exceeded the bounded MCP buffer. Narrow namespace/pod/verdict or use a shorter since window.',
+      );
+    }
+    throw new Error(`Hubble query failed (${code})${stderr ? `: ${stderr}` : ''}`);
+  }
+}
+
 function buildServer() {
   const server = new McpServer(
     {
       name: 'kubeclaw-ops',
-      version: '0.1.0',
+      version: '0.2.0',
     },
     {
       instructions:
         'Read-only operations interface for the kubeclaw Kubernetes cluster. ' +
-        'Use observations from Argo CD, Kubernetes workload state, events and bounded pod logs. ' +
+        'Correlate Argo CD, Kubernetes workload state, events, bounded pod logs and bounded Hubble network flows. ' +
+        'For connectivity or policy symptoms, inspect dropped Hubble flows before guessing at network causes. ' +
         'Never claim that a deployment or repair was performed: this server has no write capability.',
     },
   );
@@ -265,13 +400,14 @@ function buildServer() {
       },
     },
     async ({ namespace, objectName, limit }) => {
-      const params = new URLSearchParams({ limit: '500' });
-      if (objectName) params.set('fieldSelector', `involvedObject.name=${objectName}`);
-      const data = await kubeRequest(
-        `/api/v1/namespaces/${encodeURIComponent(namespace)}/events?${params.toString()}`,
-      );
-      const events = sortEvents((data.items ?? []).map(eventSummary)).slice(0, limit);
-      return jsonText({ namespace, objectName: objectName ?? null, events });
+      const result = await recentEvents(namespace, objectName, limit);
+      return jsonText({
+        namespace,
+        objectName: objectName ?? null,
+        events: result.events,
+        scannedEvents: result.scanned,
+        pagesScanned: result.pages,
+      });
     },
   );
 
@@ -300,6 +436,7 @@ function buildServer() {
         tailLines: String(tailLines),
         timestamps: 'true',
         previous: String(previous),
+        limitBytes: String(MAX_LOG_BYTES),
       });
       if (container) params.set('container', container);
 
@@ -320,8 +457,44 @@ function buildServer() {
         container: container ?? null,
         previous,
         tailLines,
+        limitBytes: MAX_LOG_BYTES,
         truncated,
         logs,
+      });
+    },
+  );
+
+  server.registerTool(
+    'get_hubble_flows',
+    {
+      title: 'Get bounded Hubble network flows',
+      description:
+        'Read a small filtered set of Cilium Hubble flows for one namespace, optionally one pod and verdict. Returns normalized flow facts without endpoint label sets.',
+      inputSchema: z.object({
+        namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
+        pod: z.string().min(1).optional(),
+        verdict: z.enum(['FORWARDED', 'DROPPED', 'AUDIT', 'REDIRECTED', 'ERROR', 'TRACED', 'TRANSLATED']).optional(),
+        since: z.string().regex(/^[1-9][0-9]*(ms|s|m|h)$/).default('5m'),
+        limit: z.number().int().min(1).max(50).default(20),
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
+    },
+    async args => {
+      const result = await getHubbleFlows(args);
+      return jsonText({
+        namespace: args.namespace,
+        pod: args.pod ?? null,
+        verdict: args.verdict ?? null,
+        since: args.since,
+        limit: args.limit,
+        relay: HUBBLE_SERVER,
+        rawBytesRead: result.rawBytes,
+        flows: result.flows,
       });
     },
   );
