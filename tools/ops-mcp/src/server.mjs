@@ -480,7 +480,9 @@ function buildServer() {
         tailLines: String(tailLines),
         timestamps: 'true',
         previous: String(previous),
-        limitBytes: String(MAX_LOG_BYTES),
+        // Ask Kubernetes for one sentinel byte beyond the public MCP limit so
+        // server-side truncation is detectable without downloading unbounded logs.
+        limitBytes: String(MAX_LOG_BYTES + 1),
       });
       if (container) params.set('container', container);
 
@@ -562,7 +564,10 @@ function originAllowed(req) {
 }
 
 const httpServer = createServer((req, res) => {
-  const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`);
+  // Only the pathname is needed. Use a fixed trusted base instead of the
+  // untrusted Host header so a malformed Host cannot throw ERR_INVALID_URL and
+  // terminate the process.
+  const url = new URL(req.url ?? '/', 'http://localhost');
 
   if (url.pathname === '/healthz') {
     res.writeHead(200, { 'content-type': 'application/json' });
