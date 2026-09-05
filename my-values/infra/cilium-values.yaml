@@ -31,5 +31,12 @@ hubble:
   enabled: true
   relay:
     enabled: true
+    # Keep Relay private ClusterIP and expose the native gRPC port directly.
+    # KubeClaw Ops MCP consumes this read-only API from inside the cluster.
+    servicePort: 4245
+    service:
+      type: ClusterIP
   ui:
     enabled: true
+    service:
+      type: ClusterIP
