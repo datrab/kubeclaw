@@ -12,7 +12,6 @@ const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
 const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
 const MAX_LOG_BYTES = 64 * 1024;
 
-const token = readFileSync(`${SERVICE_ACCOUNT_DIR}/token`, 'utf8').trim();
 const optionalBearerToken = process.env.OPS_MCP_BEARER_TOKEN?.trim() || null;
 const allowedOrigins = new Set(
   (process.env.MCP_ALLOWED_ORIGINS ?? '')
@@ -35,10 +34,14 @@ function trimObjectMetadata(item) {
   };
 }
 
+function readServiceAccountToken() {
+  return readFileSync(`${SERVICE_ACCOUNT_DIR}/token`, 'utf8').trim();
+}
+
 async function kubeRequest(path, { asText = false } = {}) {
   const response = await fetch(`${KUBE_API}${path}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${readServiceAccountToken()}`,
       Accept: asText ? 'text/plain' : 'application/json',
     },
     signal: AbortSignal.timeout(10_000),

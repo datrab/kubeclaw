@@ -111,6 +111,51 @@ spec:
       targetPort: http
   type: ClusterIP
 ---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ops-mcp-ingress
+  namespace: kubeclaw
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ops-mcp-tunnel
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: tailscale
+      ports:
+        - protocol: TCP
+          port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ops-mcp-kubernetes-api-egress
+  namespace: kubeclaw
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  policyTypes:
+    - Egress
+  egress:
+    # Portable NetworkPolicy cannot express a Kubernetes Service identity or FQDN.
+    # Keep this temporary HTTPS allowance until the next Cilium migration, where
+    # it will be replaced with a service/FQDN-aware rule for kubernetes.default.svc.
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 443
+---
 # Optional private operator endpoint for testing from devices in the tailnet.
 # ChatGPT itself should use Secure MCP Tunnel rather than this private URL.
 apiVersion: networking.k8s.io/v1

@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ARGOCD_NAMESPACE="${ARGOCD_NAMESPACE:-argocd}"
-ARGOCD_RELEASE="${ARGOCD_RELEASE:-argocd}"
-ARGOCD_VALUES_FILE="${ARGOCD_VALUES_FILE:-my-values/infra/argocd-values.yaml}"
-ARGOCD_TAILSCALE_INGRESS="${ARGOCD_TAILSCALE_INGRESS:-my-values/infra/argocd-tailscale-ingress.yaml}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(dirname "$SCRIPT_DIR")"
+
+ARGOCD_NAMESPACE="argocd"
+ARGOCD_RELEASE="argocd"
+ARGOCD_VALUES_FILE="${ARGOCD_VALUES_FILE:-$REPO_DIR/my-values/infra/argocd-values.yaml}"
+ARGOCD_TAILSCALE_INGRESS="${ARGOCD_TAILSCALE_INGRESS:-$REPO_DIR/my-values/infra/argocd-tailscale-ingress.yaml}"
 ARGOCD_HELM_REPO="${ARGOCD_HELM_REPO:-https://argoproj.github.io/argo-helm}"
 
 command -v helm >/dev/null || { echo "helm is required" >&2; exit 1; }
@@ -23,16 +26,16 @@ helm upgrade --install "$ARGOCD_RELEASE" argo/argo-cd \
 
 kubectl apply -f "$ARGOCD_TAILSCALE_INGRESS"
 
-cat <<'EOF'
+cat <<EOF
 
 Argo CD installed.
 The Tailscale Kubernetes Operator will publish the private ingress in your tailnet.
 
 Check:
-  kubectl -n argocd get pods
-  kubectl -n argocd get ingress argocd
+  kubectl -n $ARGOCD_NAMESPACE get pods
+  kubectl -n $ARGOCD_NAMESPACE get ingress argocd
 
 Initial admin password:
-  argocd admin initial-password -n argocd
+  argocd admin initial-password -n $ARGOCD_NAMESPACE
 
 EOF
