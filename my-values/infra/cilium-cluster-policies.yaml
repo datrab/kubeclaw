@@ -1,8 +1,8 @@
-# Cluster-owned Cilium policy only.
+# Cluster/platform-owned Cilium policy only.
 #
-# Keep this file limited to generic platform guardrails. Application/service
-# connectivity and namespace isolation belong in each owning project's
-# namespaced CiliumNetworkPolicy manifests.
+# Keep this file limited to generic platform guardrails and protection of
+# platform-owned networking services. Application/service connectivity and
+# project namespace isolation belong in each owning project's policy manifests.
 #
 # Deliberately avoid namespace-label-driven policy profiles here. At large
 # namespace counts those labels become additional identity/log metadata and
@@ -23,6 +23,36 @@ spec:
         - remote-node
   egress:
     - toEntities:
+        - remote-node
+---
+# Hubble Relay's client-facing gRPC endpoint is intentionally plaintext inside
+# the cluster to keep the Ops MCP integration small. Protect that endpoint with
+# Cilium identity instead of exposing it as an unauthenticated cluster-wide API.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: hubble-relay-consumers
+  namespace: cilium
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s-app: hubble-relay
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kubeclaw
+            app.kubernetes.io/name: ops-mcp
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cilium
+            k8s-app: hubble-ui
+      toPorts:
+        - ports:
+            - port: "4245"
+              protocol: TCP
+    # Keep kubelet/node-origin health traffic functional without opening the
+    # Relay API to arbitrary workloads.
+    - fromEntities:
+        - host
         - remote-node
 
 # Future cluster-wide deny rules belong here only when they are truly global
