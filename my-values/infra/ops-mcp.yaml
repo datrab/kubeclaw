@@ -127,9 +127,18 @@ spec:
         - podSelector:
             matchLabels:
               app.kubernetes.io/name: ops-mcp-tunnel
+        # Trust only the Tailscale proxy generated for this exact Ingress, not
+        # every pod that happens to run in the operator namespace. These labels
+        # are the operator's documented parent-resource identity for proxies.
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: tailscale
+          podSelector:
+            matchLabels:
+              tailscale.com/managed: "true"
+              tailscale.com/parent-resource-type: ingress
+              tailscale.com/parent-resource: ops-mcp
+              tailscale.com/parent-resource-ns: kubeclaw
       ports:
         - protocol: TCP
           port: 8080
