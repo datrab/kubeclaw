@@ -1,184 +1,387 @@
-# Cilium networking architecture
+# Cilium networking architecture and operations
 
-## Design goals
+This document is the source of truth for KubeClaw's Cilium design, policy ownership, first K3s cutover, validation and future edge architecture.
 
-The networking layer should remain simple when the cluster grows from a few namespaces to thousands:
+The target is intentionally simple: the central networking platform should require approximately the same amount of configuration with 10 project namespaces or 10,000.
 
-- Cilium is central cluster infrastructure.
-- Project networking policy is owned by the project.
-- Creating a project namespace does not require changing central Cilium policy.
-- Custom Namespace labels are not used as a policy-profile/injection mechanism.
-- Default-deny remains explicit and local to each project.
-- Hubble provides bounded network evidence to the read-only GPT Ops path.
-- Public ingress, private operator access and outbound fixed-IP egress remain separate concerns.
+## 1. Executive summary
 
-The central platform should have approximately the same configuration whether the cluster contains 10 or 10,000 project namespaces.
+The platform contract is:
 
-## Ownership model
+```text
+central platform
+  Cilium CNI/dataplane
+  + global workload default-deny
+  + global workload DNS allow
+  + Hubble
+  + true cluster-wide guardrails
+              |
+              v
+project namespace
+  workload manifests
+  + only project-specific explicit allow policies
+```
 
-Cilium runs centrally in the `cilium` namespace. The central layer owns only:
+The important properties are:
 
-- CNI/dataplane configuration
-- Hubble / Relay / UI
-- cluster-wide networking features
-- genuinely global security guardrails
-- future Gateway API / Egress Gateway platform configuration
+- Cilium is central infrastructure in namespace `cilium`.
+- Ordinary workload namespaces are fail-closed automatically.
+- Ingress and egress are denied unless explicitly allowed.
+- DNS is the only generic workload egress allowance.
+- Projects own their application-specific connectivity rules.
+- Creating an ordinary project namespace does not require editing central Cilium configuration.
+- No custom Namespace policy-profile label or admission-time policy injector is required.
+- Hubble is the network evidence source for the read-only GPT Ops MCP.
+- Public ingress, private operator access and fixed-source-IP egress are separate concerns.
+- The first Flannel -> Cilium replacement is a controlled maintenance operation. Normal operation after that is Git/GitOps-driven.
 
-It must not become a catalogue of application-specific ports, peers or external destinations.
+## 2. Non-negotiable invariants
 
-Project connectivity is declared beside the project that needs it:
+### 2.1 Fail closed for ordinary workloads
 
-- central Cilium values: `my-values/infra/cilium-values.yaml`
-- central generic guardrails: `my-values/infra/cilium-cluster-policies.yaml`
-- KubeClaw project policy: `my-values/infra/network-policies.yaml`
-- future projects: namespaced `CiliumNetworkPolicy` resources in that project's Helm/Kustomize/manifest tree
+Every ordinary workload endpoint is selected by the central `dtlabs-workload-default-deny` CiliumClusterwideNetworkPolicy.
 
-`CiliumNetworkPolicy` is namespaced, so Argo/Helm/Kustomize can ship policy with the workload without editing the central Cilium release.
+The policy uses Cilium's intrinsic Kubernetes namespace identity:
 
-## Namespace-scale contract: no custom policy-profile labels
+```yaml
+endpointSelector:
+  matchExpressions:
+    - key: io.kubernetes.pod.namespace
+      operator: NotIn
+      values:
+        - kube-system
+        - cilium
+        - tailscale
+        - argocd
+```
 
-Do not use a custom Namespace label such as `platform.dtlabs.ch/network-profile=restricted` as the mechanism that activates project isolation.
+There is no opt-in label. A newly created application namespace is therefore covered automatically unless somebody deliberately adds it to the central platform exclusion list.
 
-At high namespace counts, custom namespace labels become additional metadata that may propagate into endpoint identities, observability data and downstream logging systems. They also couple ordinary project creation to centrally understood profiles.
+The isolation rule is explicit:
 
-Instead every project owns a tiny, reusable networking baseline in its own release:
+```yaml
+enableDefaultDeny:
+  ingress: true
+  egress: true
+ingress: []
+egress: []
+```
+
+An empty list means no traffic is allowed by that policy. Do not replace the lists with `- {}`: an empty rule object is an unrestricted allow rule in Cilium.
+
+Cilium policy enforcement is additive for allows. The central policy establishes the default-deny state; namespaced project policies add only the flows the application needs.
+
+Official references:
+
+- Cilium policy enforcement modes: https://docs.cilium.io/en/stable/security/policy/intro/
+- Cilium Kubernetes/cluster-wide policy: https://docs.cilium.io/en/stable/security/policy/kubernetes/
+
+### 2.2 DNS is the only generic application allowance
+
+The second central policy, `dtlabs-workload-allow-dns`, allows TCP/UDP 53 only to `kube-dns` in `kube-system`.
+
+It sets:
+
+```yaml
+enableDefaultDeny:
+  ingress: false
+  egress: false
+```
+
+This is deliberate. The DNS policy must not be the object that turns a workload into default-deny if the main baseline is temporarily absent during reconciliation. The separate default-deny policy owns that responsibility.
+
+The initial baseline is L3/L4 only. It does not add a wildcard DNS L7 rule. This keeps the default datapath simple and avoids forcing every workload DNS request through L7 policy solely for baseline enforcement. Projects that later use `toFQDNs` or need DNS L7 visibility can opt into the DNS proxy semantics required by those policies.
+
+### 2.3 Project policy is explicit allow only
+
+A project does not own or duplicate the cluster baseline. It owns only its real communication contract.
+
+Example:
 
 ```yaml
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: project-default-deny
-  namespace: example-project
+  name: api-to-postgres
+  namespace: my-project
 spec:
-  endpointSelector: {}
-  ingress: []
-  egress: []
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: project-allow-dns
-  namespace: example-project
-spec:
-  endpointSelector: {}
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: api
   egress:
     - toEndpoints:
         - matchLabels:
-            k8s:io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
+            app.kubernetes.io/name: postgres
       toPorts:
         - ports:
-            - { port: "53", protocol: UDP }
-            - { port: "53", protocol: TCP }
+            - port: "5432"
+              protocol: TCP
 ```
 
-Then the project adds only its real application flows.
+The reference pattern is `examples/cilium/project-network-policy.yaml`.
 
-The empty `ingress: []` and `egress: []` lists are intentional. A rule containing `- {}` is an unrestricted allow rule in Cilium and must not be used for default-deny.
+### 2.4 Central Cilium never becomes an application firewall catalogue
 
-This makes project onboarding mechanically simple:
+Do not add rules such as these to `cilium-cluster-policies.yaml`:
+
+```text
+kinea -> postgres:5432
+shop -> redis:6379
+prism -> nova:18082
+```
+
+Those belong to the repositories/releases that own the workloads.
+
+Central policy is reserved for invariants that are truly cluster-wide.
+
+## 3. Ownership model
+
+### Platform-owned
+
+The platform owns:
+
+- Cilium Helm release and version
+- CNI/dataplane choices
+- IPAM and routing mode
+- Hubble / Relay / UI
+- global workload baseline
+- genuine global deny/guardrail rules
+- protection of platform-owned networking APIs such as Hubble Relay
+- future Gateway API infrastructure
+- future Egress Gateway infrastructure
+- later host/network encryption controls
+
+Current files:
+
+```text
+my-values/infra/cilium-values.yaml
+my-values/infra/cilium-cluster-policies.yaml
+scripts/deploy-cilium.sh
+```
+
+### Project-owned
+
+Each project owns:
+
+- its namespace manifest, Helm chart or Kustomize tree
+- workload labels/service accounts
+- ingress allows into its workloads
+- egress allows from its workloads
+- FQDN/L7 rules when genuinely required
+- future HTTPRoute objects that expose that project through the public Gateway
+
+KubeClaw's own example is:
+
+```text
+my-values/infra/network-policies.yaml
+```
+
+### Platform namespaces
+
+The first migration intentionally excludes these bootstrap/control-plane namespaces from the ordinary workload baseline:
+
+```text
+kube-system
+cilium
+tailscale
+argocd
+```
+
+This is a safety boundary for the initial CNI migration, not permission to run application workloads there.
+
+Ordinary projects MUST NOT be added to the exclusion list to work around a missing policy. Missing connectivity must be solved with a narrow allow rule in the owning project.
+
+Longer term, platform namespaces can receive their own individually tested fail-closed policies. They are not put under a generic application baseline during the first CNI cutover because breaking DNS, Cilium, Tailscale or Argo would also remove the recovery/control plane used to diagnose the problem.
+
+## 4. Scaling to thousands of namespaces
+
+Adding namespace #10,000 must look like namespace #10:
 
 ```text
 create namespace
-      +
-deploy local deny/DNS baseline
-      +
-deploy project-specific allow rules
-      =
-done
+      |
+      | central CCNP already selects it
+      v
+default-deny + DNS baseline already active
+      |
+      v
+deploy workload + project-specific allows
 ```
 
-Namespace #10,000 requires no central Cilium edit.
+Central Cilium changes required:
 
-`examples/cilium/project-network-policy.yaml` is the reference project pattern.
+```text
+0
+```
 
-## Labels and identity
+This avoids:
 
-Avoiding custom Namespace labels does not mean avoiding labels entirely. Cilium's security model is identity-based and Kubernetes workloads already require stable workload labels.
+- one central policy object per project
+- one central namespace allow-list per project
+- custom namespace profile labels
+- an admission/injection controller whose only purpose is creating baseline policy
+- duplicated default-deny/DNS manifests in every project
 
-Keep network identity selectors focused on low-cardinality, durable workload facts such as:
+### Identity cardinality
 
-- namespace identity already supplied by Kubernetes/Cilium
+Cilium is identity-based. High namespace count by itself is not the only scaling concern; high-cardinality identity-relevant labels are more important.
+
+Use stable selectors such as:
+
+- intrinsic namespace identity
 - `app.kubernetes.io/name`
 - `app.kubernetes.io/component`
-- service account identity when a stronger trust boundary is needed
+- Cilium service-account identity when a stronger boundary is useful
 
-Do not make volatile metadata such as commit SHA, build ID, timestamp or random deployment identifiers part of network-policy selectors.
+Avoid using volatile labels for policy identity:
 
-The project owns those selectors; the central Cilium release does not need to know them.
+- commit SHA
+- build ID
+- timestamp
+- random deployment/run UUID
+- pod-template hash
 
-## Native Cilium policy vs Kubernetes NetworkPolicy
+Cilium documents identity-relevant label filtering specifically for large environments:
+https://docs.cilium.io/en/stable/operations/performance/scalability/identity-relevant-labels/
 
-Cilium enforces both `CiliumNetworkPolicy` and standard Kubernetes `NetworkPolicy`.
+Do not add a custom Cilium `labels`/identity filter in the first migration. Establish real cardinality/observability data first, then tune deliberately if needed.
 
-Use native `CiliumNetworkPolicy` where Cilium-specific identity, entities, FQDN, L7 or richer observability semantics are useful. Keep standard Kubernetes `NetworkPolicy` when the portable API expresses the contract without loss.
+## 5. Namespace labels: what we do and do not use
 
-For KubeClaw, the static base rules and Ops MCP rules are migrated to native Cilium policy. Two intentionally dynamic/project-owned sources remain standard Kubernetes policy and are still enforced by Cilium:
+We do **not** use a custom namespace label such as:
 
-- `charts/prism/templates/networkpolicy.yaml`
-- policies generated by `cmd/buster-namespace-controller/main.go` for short-lived pipeline namespaces
+```text
+platform.dtlabs.ch/network-profile=restricted
+```
 
-Neither path requires editing central Cilium configuration.
+to activate the baseline.
 
-## K3s migration boundary
+The global baseline uses Cilium's intrinsic `io.kubernetes.pod.namespace` identity, which already exists for Kubernetes endpoints.
 
-Cilium becomes the primary CNI rather than a permanent Flannel chaining layer. Before the first Cilium installation, K3s must disable its built-in Flannel CNI and network-policy controller:
+Namespace labels may still be valid security identities when they represent an actual ownership fact that already exists for another reason. KubeClaw has one deliberate example: short-lived namespaces created by the Buster namespace controller carry:
+
+```text
+kubeclaw/managed-by=buster-namespace-controller
+```
+
+The Nova -> Prism trust policy uses the corresponding Cilium namespace-label identity only to preserve that existing controller-owned trust boundary. It is not a general platform policy profile.
+
+Cilium's supported namespace-label form in `fromEndpoints` / `toEndpoints` is:
+
+```text
+io.cilium.k8s.namespace.labels.<label-key>
+```
+
+Reference: https://docs.cilium.io/en/stable/security/policy/kubernetes/
+
+## 6. Cross-namespace trust rules
+
+Never rely only on spoofable workload labels for a sensitive cross-namespace rule.
+
+Bad:
 
 ```yaml
-# /etc/rancher/k3s/config.yaml
-flannel-backend: none
-disable-network-policy: true
+toEndpoints:
+  - matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/component: prism
 ```
 
-The bootstrap in this repository intentionally implements a disruptive **single-node replacement** using the existing K3s `10.42.0.0/16` pod CIDR. It is not the multi-node live migration procedure. The script refuses first installation when more than one Kubernetes node is present.
+An unrelated namespace could deploy those same pod labels.
 
-For a future multi-node cluster, use Cilium's upstream migration procedure with a controlled node-by-node cutover.
+Prefer one or more stronger boundaries:
 
-Treat the current replacement as a maintenance-window dataplane migration and keep SSH/console access to the node.
+- explicit namespace identity for a known permanent namespace
+- namespace ownership label maintained by a trusted controller
+- service account identity
+- cluster identity when ClusterMesh is introduced later
 
-The first install requires explicit acknowledgement:
+KubeClaw Nova -> Prism therefore distinguishes:
 
-```bash
-CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh
+1. permanent Prism in namespace `kubeclaw`;
+2. temporary Prism only in namespaces carrying Buster's trusted controller-ownership label.
+
+## 7. Cilium policy types
+
+Cilium can enforce multiple policy APIs at the same time.
+
+### CiliumClusterwideNetworkPolicy
+
+Use for true platform-wide invariants:
+
+- workload baseline
+- Cilium health
+- future hard-deny management ranges
+- future cloud metadata protections
+
+Only the platform should be allowed to create or modify CCNP objects.
+
+### CiliumNetworkPolicy
+
+Preferred for project rules that need Cilium-specific functionality:
+
+- identity entities such as `kube-apiserver`
+- FQDN egress
+- L7 rules
+- richer cross-namespace identities
+
+CNP is namespaced, which gives the desired ownership boundary.
+
+### Kubernetes NetworkPolicy
+
+Keep it when the portable Kubernetes API expresses the contract correctly.
+
+Cilium enforces Kubernetes NetworkPolicy too. KubeClaw deliberately keeps these dynamic/chart-owned paths portable:
+
+- `charts/prism/templates/networkpolicy.yaml`
+- NetworkPolicies generated by `cmd/buster-namespace-controller/main.go`
+
+They do not require a central Cilium edit.
+
+## 8. Policy governance
+
+The intended enterprise permission model is:
+
+```text
+platform automation/service account
+  can manage CiliumClusterwideNetworkPolicy
+
+project automation/service account
+  can manage CiliumNetworkPolicy only in its own namespace
+  cannot manage cluster-wide policy
 ```
 
-Existing Pods keep the CNI configuration associated with their existing Pod sandbox. After the first install, reboot/recycle the node's pods, re-run the Cilium bootstrap and verify application connectivity before cutting over native project policy.
+The first repository bootstrap does not need a separate Kyverno/Gatekeeper deployment simply to achieve this model. Kubernetes RBAC should be the first control.
 
-### Merge/cutover gate
+Later, native ValidatingAdmissionPolicy or another admission-policy engine can be added for policy-quality rules such as rejecting obviously dangerous project allows. Add that only when there is a concrete governance requirement.
 
-This PR is a dataplane migration, not a dormant feature flag:
+## 9. Initial dataplane configuration
 
-1. Check out this branch during the maintenance window.
-2. Configure K3s with `flannel-backend: none` and `disable-network-policy: true` and restart K3s.
-3. Run `CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh`.
-4. Reboot the node so old Flannel pod sandboxes are recreated under Cilium.
-5. Re-run `./scripts/deploy-cilium.sh` and verify Cilium plus application connectivity.
-6. Run `CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply`.
-7. Inspect Cilium/Hubble verdicts and application traffic.
-8. Run `CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup` only after verification.
-9. Merge only after the target cluster has the Cilium CRDs and dataplane established.
+The first rollout deliberately minimizes simultaneous changes:
 
-The cleanup script verifies every native replacement before removing legacy static Kubernetes NetworkPolicy objects.
+```text
+Cilium:                  1.20.1 (pinned)
+namespace:               cilium
+routing:                 VXLAN tunnel
+IPAM:                    cluster-pool
+pod CIDR:                10.42.0.0/16
+per-node allocation:     /24
+kube-proxy:              retained
+kubeProxyReplacement:    false
+policyEnforcementMode:   default
+Hubble:                  enabled
+Hubble Relay:            enabled, ClusterIP
+Hubble UI:               enabled, ClusterIP
+Gateway API:             not enabled in this cutover
+```
 
-## Initial dataplane choices
+The Helm values are in `my-values/infra/cilium-values.yaml`.
 
-The first rollout deliberately keeps the change surface small:
+`namespaceOverride: cilium` intentionally keeps the Cilium platform in its own namespace rather than the common `kube-system` installation layout.
 
-- Cilium `1.20.1` pinned by the bootstrap script
-- dedicated `cilium` namespace
-- cluster-pool IPAM using `10.42.0.0/16`
-- VXLAN tunnel routing
-- kube-proxy retained (`kubeProxyReplacement: false`)
-- policy enforcement mode `default`
-- Hubble + Relay + UI enabled
-- Hubble UI and Relay remain private ClusterIP services
-- no public Cilium Gateway yet
+## 10. Hubble + GPT Ops
 
-Kube-proxy replacement is intentionally a later change after the dataplane and policy migration are stable.
-
-## Hubble + GPT Ops
-
-Hubble is the network-evidence layer for the existing read-only Ops MCP.
+Hubble is the network-evidence layer for the read-only KubeClaw Ops MCP.
 
 ```text
 ChatGPT
@@ -186,8 +389,8 @@ ChatGPT
    | OpenAI Secure MCP Tunnel
    v
 KubeClaw Ops MCP
-   |---------------------> Kubernetes API
-   |---------------------> Argo CD Applications
+   |----------------------> Argo CD Applications
+   |----------------------> Kubernetes API
    |
    +---- bounded query ---> Hubble Relay :4245
                                 |
@@ -195,52 +398,426 @@ KubeClaw Ops MCP
                          Cilium / eBPF flows
 ```
 
-The MCP image contains the Hubble CLI copied from the exact pinned Cilium image. It connects directly to the private `hubble-relay` ClusterIP; no Kubernetes `exec`, new service, log exporter, Vector pipeline or persistent flow database is required.
+There is deliberately no extra flow collector or persistent Hubble database in this path.
 
-`get_hubble_flows` is deliberately constrained:
+The MCP image contains the Hubble CLI copied from the same pinned Cilium image family. The image build validates that the binary executes.
 
-- namespace is required/defaulted
-- optional pod and verdict filter
-- short bounded time window
+`get_hubble_flows` is bounded:
+
+- namespace-scoped by default
+- optional pod/verdict filters
+- bounded time range
 - maximum 50 returned flows
-- subprocess timeout and 2 MiB raw-output buffer
-- full endpoint label sets are discarded before the MCP response
-- only compact facts such as namespace/pod, IP, L4, verdict, drop reason, direction, node and summary are returned
+- subprocess timeout
+- 2 MiB raw-output ceiling
+- endpoint label sets removed from the ChatGPT response
+- compact facts only: namespace/pod, IP, L4, verdict, drop reason, direction, node and summary
 
-This allows GPT Ops to answer questions such as:
+This is intentional for both security and scale. GPT Ops should request evidence, not ingest the cluster's entire flow history.
+
+### Expected troubleshooting order
+
+For a question such as:
 
 ```text
 Why can Prism not reach PostgreSQL?
 ```
 
-by correlating:
+GPT Ops should normally inspect:
 
-1. Argo desired/sync state
-2. Kubernetes lifecycle/events
-3. Hubble `DROPPED` flows
-4. bounded application logs only when needed
+1. Argo desired/sync/health state;
+2. Kubernetes workload readiness;
+3. Kubernetes events;
+4. Hubble drops/flows;
+5. bounded application logs only when needed.
 
-The objective is evidence-based troubleshooting without turning Hubble into another high-volume logging pipeline.
+This makes policy failures distinguishable from scheduling, image, probe and application failures.
 
-For manual UI access during bootstrap:
+### Hubble Relay security
+
+Hubble Relay is private ClusterIP and its client-facing gRPC port is not a public API.
+
+`hubble-relay-consumers` allows TCP/4245 only from:
+
+- `ops-mcp` in `kubeclaw`;
+- Hubble UI in `cilium`;
+- host/remote-node traffic needed for platform health.
+
+The GPT MCP remains read-only and does not get Kubernetes Secrets, exec, patch, update or delete permissions.
+
+### Manual Hubble access
+
+UI:
 
 ```bash
 kubectl -n cilium port-forward svc/hubble-ui 12000:80
 ```
 
-For local CLI debugging:
+CLI from the Cilium agent:
 
 ```bash
-kubectl -n cilium exec ds/cilium -c cilium-agent -- hubble observe --since 3m --verdict DROPPED
+kubectl -n cilium exec ds/cilium -c cilium-agent -- \
+  hubble observe --since 3m --verdict DROPPED
 ```
 
-## Future edge architecture
+Useful checks:
 
-Cilium is the intended long-term policy and gateway layer, but ingress and egress are separate concerns.
+```bash
+kubectl -n cilium get pods
+kubectl -n cilium get svc hubble-relay hubble-ui
+kubectl get ciliumclusterwidenetworkpolicies
+kubectl get ciliumnetworkpolicies -A
+```
 
-### Public inbound traffic: Cilium Gateway API
+## 11. First K3s / Flannel -> Cilium cutover
 
-Future public host routing should use Cilium Gateway API / Envoy, for example:
+This section applies only to the first CNI replacement. It is not the normal deployment workflow after Cilium is established.
+
+### Important terminology
+
+The default K3s configuration path is:
+
+```text
+/etc/rancher/k3s/config.yaml
+```
+
+That directory name is part of K3s itself. Using this file does **not** mean Rancher Manager is installed or required.
+
+K3s also supports another config path via `--config` / `K3S_CONFIG_FILE`, so inspect the running service before editing anything.
+
+Official K3s configuration reference:
+https://docs.k3s.io/installation/configuration
+
+### Why host access is required once
+
+K3s normally starts Flannel and its own kube-router-derived network-policy controller. Cilium is replacing those pieces, so Kubernetes manifests alone cannot safely perform the entire first transition.
+
+Official K3s custom-CNI guidance requires/recommends:
+
+```text
+--flannel-backend=none
+--disable-network-policy
+```
+
+Reference: https://docs.k3s.io/networking/basic-network-options
+
+### Preflight: do this while at the host
+
+Before changing K3s:
+
+```bash
+kubectl get nodes -o wide
+kubectl get pods -A -o wide
+kubectl get networkpolicy -A
+kubectl get svc -A
+```
+
+Confirm the cluster is still single-node. `scripts/deploy-cilium.sh` also refuses the initial replacement when it sees more than one node.
+
+Inspect how K3s is actually launched:
+
+```bash
+systemctl cat k3s
+ps aux | grep '[k]3s server'
+```
+
+Inspect the default config only if that is the active configuration source:
+
+```bash
+sudo test -f /etc/rancher/k3s/config.yaml && \
+  sudo cat /etc/rancher/k3s/config.yaml
+```
+
+Back it up before editing:
+
+```bash
+sudo cp /etc/rancher/k3s/config.yaml \
+  /etc/rancher/k3s/config.yaml.pre-cilium
+```
+
+If the file does not exist or a custom config path is used, do not create/edit the default path blindly; update the actual K3s configuration source instead.
+
+### Required K3s configuration
+
+The effective K3s server configuration must include:
+
+```yaml
+flannel-backend: none
+disable-network-policy: true
+```
+
+Keep kube-proxy enabled for this first Cilium release. Do not add `disable-kube-proxy` yet.
+
+### Old kube-router policy rules
+
+K3s documents an important migration detail: disabling its network-policy controller does **not** remove already-programmed kube-router iptables policy rules.
+
+After disabling the controller, stale `KUBE-ROUTER` rules must be removed on every node. K3s documents either `k3s-killall.sh` or targeted iptables cleanup.
+
+For this controlled migration, inspect the rules first:
+
+```bash
+sudo iptables-save | grep KUBE-ROUTER
+sudo ip6tables-save | grep KUBE-ROUTER
+```
+
+The documented targeted cleanup is:
+
+```bash
+sudo sh -c 'iptables-save | grep -v KUBE-ROUTER | iptables-restore'
+sudo sh -c 'ip6tables-save | grep -v KUBE-ROUTER | ip6tables-restore'
+```
+
+Reference: https://docs.k3s.io/networking/networking-services
+
+Do this as part of the maintenance procedure, not casually from a remote session without recovery access.
+
+### First install sequence
+
+The exact host steps must be confirmed against the actual machine before execution, but the intended sequence is:
+
+1. Maintenance window and working SSH/console recovery access.
+2. Verify current K3s config/service arguments.
+3. Back up the effective K3s config.
+4. Configure `flannel-backend: none` and `disable-network-policy: true`.
+5. Restart K3s.
+6. Remove stale KUBE-ROUTER policy rules as documented by K3s.
+7. From the checked-out Cilium PR branch, run:
+
+```bash
+CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh
+```
+
+8. Reboot/recycle the node so Pods with old Flannel sandboxes are recreated using Cilium.
+9. After the node is reachable, run:
+
+```bash
+./scripts/deploy-cilium.sh
+```
+
+10. Verify the dataplane and application traffic before migrating policy objects.
+
+Existing Pods do not magically change CNI in-place; their Pod sandbox must be recreated.
+
+### Why the script has safety gates
+
+First install requires:
+
+```text
+CILIUM_K3S_READY=true
+```
+
+The policy migration requires:
+
+```text
+CILIUM_DATAPLANE_VERIFIED=true
+```
+
+These are deliberate human gates around a disruptive one-time infrastructure transition.
+
+The initial script also refuses the replacement if the cluster has more than one node. A future multi-node cluster requires Cilium's controlled migration procedure instead of this same-CIDR single-node shortcut.
+
+## 12. Dataplane verification before policy cutover
+
+Do not infer health from `Running` alone.
+
+Minimum checks:
+
+```bash
+kubectl get nodes
+kubectl -n cilium get pods -o wide
+kubectl -n cilium rollout status daemonset/cilium
+kubectl -n cilium rollout status deployment/cilium-operator
+kubectl -n cilium rollout status deployment/hubble-relay
+kubectl get pods -A -o wide
+```
+
+Inspect Cilium endpoint health/policy state:
+
+```bash
+kubectl -n cilium exec ds/cilium -c cilium-agent -- cilium-dbg status
+kubectl -n cilium exec ds/cilium -c cilium-agent -- cilium-dbg endpoint list
+```
+
+Check Hubble for unexpected drops while exercising important application paths:
+
+```bash
+kubectl -n cilium exec ds/cilium -c cilium-agent -- \
+  hubble observe --since 5m --verdict DROPPED
+```
+
+Verify at minimum the current critical flows relevant to KubeClaw:
+
+- Kubernetes DNS
+- Redis
+- Qdrant
+- LiteLLM
+- PostgreSQL
+- registry-local / registry-mirror
+- Nova <-> Buster gates
+- Nova -> trusted Prism endpoint
+- Ops MCP -> Kubernetes API
+- Ops MCP -> Hubble Relay
+- Ops tunnel -> Ops MCP and OpenAI tunnel control plane
+
+Only after those checks should `CILIUM_DATAPLANE_VERIFIED=true` be asserted.
+
+## 13. NetworkPolicy -> Cilium policy migration
+
+Apply the KubeClaw explicit allow policies:
+
+```bash
+CILIUM_DATAPLANE_VERIFIED=true \
+  ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply
+```
+
+The migration script first verifies that both central baseline CCNPs exist:
+
+```text
+dtlabs-workload-default-deny
+dtlabs-workload-allow-dns
+```
+
+Then it applies the namespaced KubeClaw allow rules.
+
+Inspect:
+
+```bash
+kubectl get ciliumclusterwidenetworkpolicies
+kubectl -n kubeclaw get ciliumnetworkpolicies
+kubectl -n cilium exec ds/cilium -c cilium-agent -- cilium-dbg policy get
+```
+
+Exercise real traffic and inspect Hubble.
+
+Only then clean up superseded static Kubernetes NetworkPolicy objects:
+
+```bash
+CILIUM_DATAPLANE_VERIFIED=true \
+  ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup
+```
+
+Cleanup is fail-closed: it verifies the central baseline and every expected namespaced Cilium replacement before deleting any superseded static NetworkPolicy.
+
+Dynamic/chart-owned NetworkPolicy objects are intentionally not removed.
+
+## 14. Project onboarding after migration
+
+A normal new project does not use the Cilium bootstrap scripts.
+
+Its GitOps tree should conceptually contain:
+
+```text
+project/
+  namespace.yaml
+  deployment.yaml
+  service.yaml
+  network/
+    app-ingress.yaml
+    database-egress.yaml
+    external-api-egress.yaml   # only if needed
+```
+
+No project baseline manifest is required. Once the namespace exists, the central fail-closed CCNP already applies.
+
+Recommended rollout order for a new app:
+
+1. namespace;
+2. explicit network policies;
+3. workloads/services.
+
+Argo sync waves or equivalent ordering can make that deterministic. Even if a workload appears before its project allows, the result is fail-closed rather than accidentally open.
+
+## 15. Policy authoring rules
+
+### Prefer identity over IP
+
+Prefer:
+
+```text
+app A -> app B -> TCP/5432
+```
+
+over hard-coded Pod IPs.
+
+Pod IPs are ephemeral; Cilium identities survive rescheduling when stable labels remain the same.
+
+### Cross-namespace means explicit namespace/trust identity
+
+For a permanent dependency, include the namespace identity. For controller-created ephemeral namespaces, use a controller-owned trust marker or dedicated service account when appropriate.
+
+### Internet access is not a baseline
+
+Do not give every project `world:443` centrally.
+
+A project that genuinely needs Internet/API access declares it explicitly. Prefer FQDN policy later when the destination is a stable hostname and the operational trade-off is justified.
+
+### Use the lowest layer that solves the requirement
+
+Default choice:
+
+```text
+L3/L4 identity + port
+```
+
+Use L7 HTTP/DNS rules only when the security requirement needs them. L7 enforcement introduces proxying and more policy complexity; it should not be enabled merely because Cilium supports it.
+
+### Deny rules are global guardrails, not project workarounds
+
+Cilium deny rules take precedence over allow policies. They are useful later for immutable platform restrictions such as management ranges or metadata endpoints.
+
+Use them sparingly and centrally because a deny can override otherwise valid project connectivity.
+
+Reference: https://docs.cilium.io/en/stable/security/policy/deny/
+
+## 16. Observability without creating a logging problem
+
+Hubble is a queryable network-observability plane, not automatically a requirement to persist every flow forever.
+
+Current strategy:
+
+```text
+Hubble retains/streams operational flow data
+        |
+        +--> Hubble UI for humans
+        |
+        `--> bounded GPT Ops queries on demand
+```
+
+Do not export all endpoint labelsets and all flows through Vector by default.
+
+If long-term flow retention is introduced later, define explicit:
+
+- retention duration
+- sampling/filtering
+- label allow-list
+- storage budget
+- tenant/project boundaries
+
+before enabling a broad exporter.
+
+## 17. Future private platform entrypoint
+
+Private operational surfaces remain Tailscale-only.
+
+Target examples:
+
+```text
+platform.dtlabs.ch  -> private platform entrypoint
+prism.dtlabs.ch     -> private Prism/operator surface
+Argo                -> private
+Hubble              -> private
+```
+
+`platform.dtlabs.ch` is a DNS/access name, **not** a Cilium namespace-profile label.
+
+For a custom TLS certificate on a Tailscale-only hostname, DNS-01 is the preferred ACME pattern because the service does not have to become publicly reachable merely for certificate validation.
+
+Certificate lifecycle/cert-manager is a separate platform concern and should be implemented in its own change.
+
+## 18. Future public inbound: Cilium Gateway API
+
+Public products should eventually enter through Cilium Gateway API / Envoy:
 
 ```text
 Internet
@@ -248,41 +825,159 @@ Internet
 Cilium Gateway
    |-- dtlabs.ch ----------------------> DT Labs website
    |-- shop.pferdevilla-kunterbunt.de -> webshop
-   `-- future SaaS hostname -----------> SaaS service
+   |-- app.example --------------------> future SaaS
+   `-- path/host routes ---------------> project Services
 ```
 
-Hostnames and later paths can be mapped to the appropriate Kubernetes Services with `HTTPRoute` objects owned by the relevant project.
+Projects should own their `HTTPRoute` objects; the platform owns the Gateway/listener infrastructure and public trust boundary.
 
-Gateway API is intentionally not enabled in this first CNI migration because the Cilium Gateway implementation depends on kube-proxy replacement/L7 proxy functionality. That should be a separate observable PR after the dataplane is stable.
+Do not enable this during the first CNI migration. Kube-proxy replacement and Gateway API are separate, observable changes after the base dataplane is stable.
 
-### Private operator surfaces: Tailscale
+## 19. Future outbound: Cilium Egress Gateway
 
-Operational endpoints remain private and are not routed through the public Gateway:
+Egress Gateway solves the opposite direction:
 
 ```text
-platform.dtlabs.ch  -> private platform entrypoint
-prism.dtlabs.ch     -> private Prism/operator UI
-Argo / Hubble       -> private platform services
+project pods
+     |
+     v
+Cilium Egress Gateway
+     |
+     | stable public source IP
+     v
+external SaaS / partner API
 ```
 
-Tailscale remains the access boundary for those services. `platform.dtlabs.ch` is a hostname/access concern, not a Cilium policy-profile label.
+This is valuable when an external provider requires source-IP allowlisting.
 
-A custom-domain TLS certificate for a Tailscale-only hostname should be handled separately from Cilium policy; a DNS-01 certificate flow is a natural fit because the service need not be publicly reachable for HTTP validation.
+It does not publish `dtlabs.ch` or other inbound services.
 
-### Outbound fixed source IP: Cilium Egress Gateway
+## 20. Future platform features, intentionally deferred
 
-Cilium Egress Gateway is reserved for outbound requirements, for example when an external SaaS or partner wants a fixed allow-listed source IP:
+Candidates after the initial Cilium migration is stable:
+
+- kube-proxy replacement
+- Cilium Gateway API
+- Egress Gateway
+- FQDN egress policies where useful
+- host firewall, starting in audit mode
+- transparent node-to-node encryption for multi-node deployments
+- ClusterMesh if multiple clusters become necessary
+- identity-relevant label tuning based on measured cardinality
+- Prometheus/Grafana Cilium/Hubble metrics
+- project RBAC/admission policy hardening
+
+Each should be a separate change with a measurable reason and rollback boundary.
+
+## 21. Rollback principles
+
+Before the first cutover:
+
+- preserve the current K3s config;
+- preserve current Kubernetes policy manifests;
+- keep direct host recovery access;
+- know how K3s is actually launched;
+- do not remove Flannel configuration until the maintenance window begins.
+
+Do not use `k3s-killall.sh` casually after Cilium is installed. K3s explicitly warns that Cilium interfaces/rules need special cleanup before stopping/uninstalling K3s with that script, otherwise host connectivity can be lost.
+
+Reference: https://docs.k3s.io/networking/basic-network-options
+
+A detailed command-by-command rollback should be chosen after inspecting the actual host configuration at cutover time. Do not invent a rollback procedure based on an assumed K3s install layout.
+
+## 22. Post-migration normal operating model
+
+After the one-time CNI migration, ordinary operations should not require logging into the host.
 
 ```text
-project pods -> Cilium Egress Gateway -> stable public source IP -> external API
+GitHub
+  |
+  v
+Argo CD
+  |
+  v
+Kubernetes desired state
+  |
+  +--> project workload
+  +--> project CiliumNetworkPolicy
+  `--> platform changes when intentionally approved
+
+Hubble + Kubernetes + Argo
+  |
+  v
+GPT Ops troubleshooting
 ```
 
-It is not used to publish `dtlabs.ch` inbound.
+Expected host-touch cases become exceptional:
 
-## Rule of thumb
+- K3s/node OS maintenance
+- kernel/network failure
+- CNI-level disaster recovery
+- storage/hardware issues
+- major cluster topology changes
 
-Change central Cilium when the concern is cluster networking itself.
+Application deploys and normal network-policy changes remain GitOps operations.
 
-Change a project when the concern is who that project's workloads may talk to or which hostname/path routes to that project.
+## 23. Change ownership cheat sheet
 
-Adding an ordinary project should not require a central Cilium policy change.
+| Change | Owner/location |
+| --- | --- |
+| New project namespace | project GitOps |
+| App A may call App B | project CNP |
+| App may call external API | project CNP/FQDN policy |
+| Global default-deny behavior | central Cilium policy |
+| Global DNS baseline | central Cilium policy |
+| Hubble Relay protection | central Cilium policy |
+| Cilium version/IPAM/routing | central Cilium values |
+| Public listener/IP | platform Gateway |
+| `dtlabs.ch` route to website | DT Labs HTTPRoute/project |
+| Private `platform.dtlabs.ch` | Tailscale/platform access |
+| Stable outbound public IP | Egress Gateway/platform + project selection |
+| Temporary Buster namespace ownership | Buster namespace controller |
+
+## 24. Definition of done for the first Cilium migration
+
+The migration is complete only when all of the following are true:
+
+- Cilium `1.20.1` is installed and healthy in `cilium`.
+- The node is Ready after old Flannel Pod sandboxes have been recycled.
+- The K3s built-in network-policy controller is disabled.
+- Stale KUBE-ROUTER network-policy iptables rules are no longer enforcing old policy.
+- `dtlabs-workload-default-deny` exists.
+- `dtlabs-workload-allow-dns` exists.
+- KubeClaw explicit Cilium allow policies exist.
+- Superseded static KubeClaw Kubernetes NetworkPolicies have been removed only after replacement verification.
+- Dynamic Prism/Buster Kubernetes NetworkPolicies continue to work under Cilium enforcement.
+- DNS and all listed critical application flows are verified.
+- Hubble Relay/UI are healthy and private.
+- GPT Ops can retrieve bounded Hubble flows through the read-only MCP path.
+- No unexpected sustained Hubble drops remain for required traffic.
+- Argo/Tailscale recovery paths remain reachable.
+- The PR is merged only after the actual target cluster cutover is verified.
+
+## 25. Upstream references
+
+Primary references for this design:
+
+- Cilium 1.20.1 policy enforcement: https://docs.cilium.io/en/stable/security/policy/intro/
+- Cilium Kubernetes constructs / namespaces / CCNP: https://docs.cilium.io/en/stable/security/policy/kubernetes/
+- Cilium Kubernetes policy API overview: https://docs.cilium.io/en/stable/network/kubernetes/policy/
+- Cilium deny policies: https://docs.cilium.io/en/stable/security/policy/deny/
+- Cilium identity-relevant label scalability: https://docs.cilium.io/en/stable/operations/performance/scalability/identity-relevant-labels/
+- Cilium L7 visibility: https://docs.cilium.io/en/stable/observability/visibility/
+- Cilium Helm values: https://docs.cilium.io/en/stable/helm-values/
+- K3s configuration: https://docs.k3s.io/installation/configuration
+- K3s custom CNI / Flannel replacement: https://docs.k3s.io/networking/basic-network-options
+- K3s embedded network-policy controller cleanup: https://docs.k3s.io/networking/networking-services
+
+## 26. Final rule of thumb
+
+```text
+If it changes how the cluster network works -> platform/Cilium.
+If it changes who an application may talk to -> that project.
+If it exposes an application publicly -> project route + platform Gateway.
+If it exposes an operator surface privately -> Tailscale.
+If it needs a stable outbound source IP -> Egress Gateway.
+```
+
+Adding an ordinary project must not require a central Cilium policy change.
