@@ -1,0 +1,185 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubeclaw-ops-mcp
+  namespace: kubeclaw
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kubeclaw-ops-mcp-readonly
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces", "pods", "pods/log", "services", "events"]
+    verbs: ["get", "list"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+    verbs: ["get", "list"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["applications"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubeclaw-ops-mcp-readonly
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubeclaw-ops-mcp-readonly
+subjects:
+  - kind: ServiceAccount
+    name: kubeclaw-ops-mcp
+    namespace: kubeclaw
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ops-mcp
+  namespace: kubeclaw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ops-mcp
+    spec:
+      serviceAccountName: kubeclaw-ops-mcp
+      imagePullSecrets:
+        - name: ghcr-secret
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: ops-mcp
+          image: ghcr.io/datrab/kubeclaw-ops-mcp:REQUIRES_DIGEST
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: OPS_DEFAULT_NAMESPACE
+              value: kubeclaw
+            - name: ARGOCD_NAMESPACE
+              value: argocd
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ops-mcp
+  namespace: kubeclaw
+spec:
+  selector:
+    app.kubernetes.io/name: ops-mcp
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ops-mcp-ingress
+  namespace: kubeclaw
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ops-mcp-tunnel
+        # Trust only the Tailscale proxy generated for this exact Ingress, not
+        # every pod that happens to run in the operator namespace. These labels
+        # are the operator's documented parent-resource identity for proxies.
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: tailscale
+          podSelector:
+            matchLabels:
+              tailscale.com/managed: "true"
+              tailscale.com/parent-resource-type: ingress
+              tailscale.com/parent-resource: ops-mcp
+              tailscale.com/parent-resource-ns: kubeclaw
+      ports:
+        - protocol: TCP
+          port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ops-mcp-kubernetes-api-egress
+  namespace: kubeclaw
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ops-mcp
+  policyTypes:
+    - Egress
+  egress:
+    # Portable NetworkPolicy cannot express a Kubernetes Service identity or FQDN.
+    # Keep this temporary HTTPS allowance until the next Cilium migration, where
+    # it will be replaced with a service/FQDN-aware rule for kubernetes.default.svc.
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 443
+---
+# Optional private operator endpoint for testing from devices in the tailnet.
+# ChatGPT itself should use Secure MCP Tunnel rather than this private URL.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ops-mcp
+  namespace: kubeclaw
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: ops-mcp
+      port:
+        number: 8080
+  tls:
+    - hosts:
+        - ops-mcp
+

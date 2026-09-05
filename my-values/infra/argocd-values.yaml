@@ -1,0 +1,14 @@
+# Argo CD bootstrap values for the kubeclaw cluster.
+#
+# Argo CD is exposed only through the private Tailscale ingress defined in
+# argocd-tailscale-ingress.yaml. TLS is terminated by the Tailscale proxy.
+
+configs:
+  params:
+    server.insecure: true
+
+server:
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: false

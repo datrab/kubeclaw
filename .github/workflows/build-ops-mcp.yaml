@@ -1,0 +1,89 @@
+name: Build Ops MCP Image
+
+on:
+  pull_request:
+    paths:
+      - 'tools/ops-mcp/**'
+      - '.github/workflows/build-ops-mcp.yaml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/ops-mcp/**'
+      - '.github/workflows/build-ops-mcp.yaml'
+  workflow_dispatch:
+
+concurrency:
+  group: ops-mcp-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: kubeclaw-ops-mcp
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Test Ops MCP
+        working-directory: tools/ops-mcp
+        run: |
+          npm ci --ignore-scripts
+          npm test
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate image metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=
+
+      - name: Build and optionally push
+        id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: tools/ops-mcp
+          file: tools/ops-mcp/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=ops-mcp
+          cache-to: type=gha,scope=ops-mcp,mode=max
+          provenance: mode=max
+          sbom: true
+
+      - name: Summary
+        run: |
+          echo '### kubeclaw-ops-mcp image' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '${{ steps.meta.outputs.tags }}' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          if [[ '${{ github.event_name }}' == 'pull_request' ]]; then
+            echo 'PR validation build only; image was not pushed.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Deploy: `${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}`' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
