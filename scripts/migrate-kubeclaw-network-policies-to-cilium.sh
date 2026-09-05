@@ -10,7 +10,11 @@ MODE="${1:-apply}"
 command -v kubectl >/dev/null || { echo "kubectl is required" >&2; exit 1; }
 kubectl get crd ciliumnetworkpolicies.cilium.io >/dev/null
 
-legacy_policies=(
+# Static KubeClaw policies have a 1:1 replacement with the same name. Dynamic
+# and chart-owned Kubernetes NetworkPolicy objects (for example temporary Buster
+# namespaces and Prism) intentionally remain portable KNP and are enforced by
+# Cilium directly.
+replacement_policies=(
   kubeclaw-default-deny
   kubeclaw-allow-dns-egress
   kubeclaw-agents-egress
@@ -40,18 +44,19 @@ case "$MODE" in
     echo "  kubectl -n $NAMESPACE get ciliumnetworkpolicies"
     echo "  kubectl -n cilium exec ds/cilium -c cilium-agent -- cilium-dbg policy get"
     echo
-    echo "After verification, remove the legacy Kubernetes NetworkPolicy objects with:"
+    echo "After verification, remove the superseded static Kubernetes NetworkPolicy objects with:"
     echo "  $0 cleanup"
     ;;
   cleanup)
-    # Fail closed: do not remove the legacy policy objects unless the replacement
-    # Cilium policies exist in the target namespace.
-    kubectl -n "$NAMESPACE" get ciliumnetworkpolicy kubeclaw-default-deny >/dev/null
-    kubectl -n "$NAMESPACE" get ciliumnetworkpolicy kubeclaw-allow-dns-egress >/dev/null
-    for policy in "${legacy_policies[@]}"; do
+    # Fail closed: verify every native replacement before deleting any legacy
+    # object. A partial/invalid Cilium apply must never create an allow-all gap.
+    for policy in "${replacement_policies[@]}"; do
+      kubectl -n "$NAMESPACE" get ciliumnetworkpolicy "$policy" >/dev/null
+    done
+    for policy in "${replacement_policies[@]}"; do
       kubectl -n "$NAMESPACE" delete networkpolicy "$policy" --ignore-not-found
     done
-    echo "Legacy Kubernetes NetworkPolicy objects removed from namespace $NAMESPACE."
+    echo "Superseded static Kubernetes NetworkPolicy objects removed from namespace $NAMESPACE."
     ;;
   *)
     echo "usage: $0 [apply|cleanup]" >&2
