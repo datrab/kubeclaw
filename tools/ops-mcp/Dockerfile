@@ -10,6 +10,7 @@ RUN npm install --omit=dev --ignore-scripts \
 
 COPY src ./src
 COPY --from=cilium-tools /usr/bin/hubble /usr/local/bin/hubble
+RUN /usr/local/bin/hubble version >/dev/null
 
 ENV NODE_ENV=production \
     PORT=8080 \
