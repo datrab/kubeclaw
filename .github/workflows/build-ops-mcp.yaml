@@ -12,6 +12,10 @@ on:
       - '.github/workflows/build-ops-mcp.yaml'
   workflow_dispatch:
 
+concurrency:
+  group: ops-mcp-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: kubeclaw-ops-mcp
