@@ -21,7 +21,7 @@ The external review report remains a historical assessment of those exact heads.
 | F13 | Example has ingress and egress; Pod Security example added | Project onboarding probe |
 | F14 | Reserved namespace-owner label CREATE/UPDATE VAP; controller UPDATE fence; custom namespace rendered; ownership/Pod Security contract explicit | Server dry-run and spoof tests; before untrusted delegation, dedicated namespaces/RBAC/AppProjects |
 | F15 | Capacity/identity/IPAM limits documented; Argo list pagination exposed | Capacity testing before 1k/10k scale; no current scale guarantee |
-| F16 | Ops-owned policy file and dependency-aware bootstrap; main infra path applies it | Recovery/bootstrap test |
+| F16 | Ops-owned policy file and dependency-aware bootstrap; general infra/project apply stays independent of Ops | Recovery/bootstrap test |
 | F17 | LiteLLM peers narrowed, registries use node identities; necessary agent/tunnel world contracts explicit | Verify actual tunnel endpoints and private NodePort firewall before narrowing/changing access |
 | F18 | UTF-8 boundary-safe 64 KiB log text; limits and metadata scope documented | Regression tests |
 
@@ -39,3 +39,10 @@ The external review report remains a historical assessment of those exact heads.
 A source-code fix is not a release approval. Outstanding live checks above must be
 recorded before the CNI cutover is called complete. Future Gateway API, Egress
 Gateway, kube-proxy replacement and persistent flow storage remain separate work.
+
+## Follow-up Codex review
+
+Both September 5 follow-up findings were valid. Ops rendering now respects
+`TAILSCALE_OPERATOR_NAMESPACE` without loosening parent-resource identity. General
+infra and project policy apply no longer require the fixed Ops namespace. Cleanup
+requires rendered Ops replacements only when it would remove existing Ops KNPs.

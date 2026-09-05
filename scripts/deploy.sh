@@ -1182,7 +1182,6 @@ cmd_infra() {
 
   header "Infrastructure: Network Policies"
   kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml"
-  kubectl apply -f "$INFRA_DIR/ops-mcp-network-policies.yaml"
   log "Network policies applied"
 
   deploy_tailscale_operator

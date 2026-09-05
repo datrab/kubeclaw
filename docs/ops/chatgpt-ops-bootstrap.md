@@ -289,3 +289,35 @@ pod deletion and previous-container retention can make data unavailable.
 
 Argo Application lists are paged (default 50, maximum 200 per call). Follow
 `nextContinueToken` while `partial` is true; one page is not the whole cluster.
+
+## Existing Tailscale operator namespace
+
+Pass the same `TAILSCALE_OPERATOR_NAMESPACE` used by your existing operator setup
+to `deploy-ops-mcp.sh` (default `tailscale`). Both render and apply use it for the
+proxy namespace selector while preserving all four exact parent-resource labels.
+The Ops namespace itself remains `kubeclaw`. This creates no additional operator.
+For GitOps, commit the rendered output so later syncs use the chosen namespace.
+
+```bash
+TAILSCALE_OPERATOR_NAMESPACE=private-access ./scripts/deploy-ops-mcp.sh render
+```
+
+In #2, `render` includes Ops CNPs before the workload manifests. For policy-only
+cutover staging, no image digest is needed:
+
+```bash
+TAILSCALE_OPERATOR_NAMESPACE=private-access ./scripts/deploy-ops-mcp.sh policies | kubectl apply -f -
+```
+
+The general `deploy.sh infra` and project migration `apply` do not deploy Ops.
+They work in a custom project namespace without requiring `kubeclaw` to exist.
+Before deleting legacy Ops KNPs, migration cleanup verifies the rendered Ops CNPs;
+pass the same operator namespace there too. If no legacy Ops KNP exists, cleanup
+does not require an Ops installation.
+
+The operator namespace setting above renders Ops peer trust; it does not change the
+central Cilium baseline's platform exclusions. The initial CNI configuration still
+assumes the platform namespace `tailscale`. If the operator actually runs elsewhere,
+review that platform namespace's exclusion or dedicated policies before the CNI
+cutover; otherwise default deny also selects the operator/proxy itself. This is a
+platform installation choice, never a per-project namespace exception.

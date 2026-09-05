@@ -678,8 +678,9 @@ ServiceAccounts and rendered labels; verify API, DNS and SVID renewal paths. Do 
    without Helm waiting for the whole release, waits for CRDs, applies the baseline,
    then verifies agent/operator rollout. The host-network operator has an explicit
    unschedulable toleration so cluster-pool IPAM can initialize. It never uncordons.
-6. Verify imported baseline on every agent. Apply KubeClaw and Ops Allows using
-   the migration script's `apply` mode after dataplane inspection. Apply the prepared
+6. Verify imported baseline on every agent. Apply KubeClaw Allows using the migration script's `apply` mode after dataplane
+   inspection. Stage Ops separately with `deploy-ops-mcp.sh policies` piped to
+   `kubectl apply -f -`, passing the configured Tailscale operator namespace. Apply the prepared
    SPIRE/other required project policies. Keep legacy KNPs for now. The baseline
    excludes Paperless, not arbitrary other namespaces.
 7. Deliberately uncordon, restore desired controllers/producers in dependency
