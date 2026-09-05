@@ -193,3 +193,15 @@ pod deletion and previous-container retention can make data unavailable.
 
 Argo Application lists are paged (default 50, maximum 200 per call). Follow
 `nextContinueToken` while `partial` is true; one page is not the whole cluster.
+
+## Existing Tailscale operator namespace
+
+Pass the same `TAILSCALE_OPERATOR_NAMESPACE` used by your existing operator setup
+to `deploy-ops-mcp.sh` (default `tailscale`). Both render and apply use it for the
+proxy namespace selector while preserving all four exact parent-resource labels.
+The Ops namespace itself remains `kubeclaw`. This creates no additional operator.
+For GitOps, commit the rendered output so later syncs use the chosen namespace.
+
+```bash
+TAILSCALE_OPERATOR_NAMESPACE=private-access ./scripts/deploy-ops-mcp.sh render
+```
