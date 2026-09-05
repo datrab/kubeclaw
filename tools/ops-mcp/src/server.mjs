@@ -1,12 +1,11 @@
-import { execFile } from 'node:child_process';
+import { boundedUtf8, logObservation } from './diagnostics.mjs';
+import { getHubbleFlows } from './hubble.mjs';
 import { readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { promisify } from 'node:util';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
 
-const execFileAsync = promisify(execFile);
 const PORT = Number.parseInt(process.env.PORT ?? '8080', 10);
 const HOST = process.env.HOST ?? '0.0.0.0';
 const KUBE_API = process.env.KUBERNETES_API_URL ?? 'https://kubernetes.default.svc';
@@ -16,7 +15,6 @@ const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
 const HUBBLE_BIN = process.env.HUBBLE_BIN ?? '/usr/local/bin/hubble';
 const HUBBLE_SERVER = process.env.HUBBLE_SERVER ?? 'hubble-relay.cilium.svc.cluster.local:4245';
 const MAX_LOG_BYTES = 64 * 1024;
-const MAX_HUBBLE_BUFFER_BYTES = 2 * 1024 * 1024;
 const LIST_PAGE_SIZE = 500;
 const EVENT_PAGE_SIZE = 500;
 
@@ -63,8 +61,9 @@ async function kubeRequest(path, { asText = false } = {}) {
   return body;
 }
 
-async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item } = {}) {
-  let continuation = null;
+async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item, maxPages = Infinity, continueToken = null } = {}) {
+  let continuation = continueToken;
+  const deadline = Number.isFinite(maxPages) ? Date.now() + 30_000 : Infinity;
   const items = [];
   let pages = 0;
 
@@ -77,9 +76,9 @@ async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem 
     items.push(...(page.items ?? []).map(mapItem));
     pages += 1;
     continuation = page?.metadata?.continue || null;
-  } while (continuation);
+  } while (continuation && pages < maxPages && Date.now() < deadline);
 
-  return { items, pages };
+  return { items, pages, continuation, partial: Boolean(continuation) };
 }
 
 function deploymentSummary(item) {
@@ -231,51 +230,6 @@ function hubbleFlowSummary(response) {
   };
 }
 
-async function getHubbleFlows({ namespace, pod, verdict, since, limit }) {
-  const args = [
-    'observe',
-    '--server', HUBBLE_SERVER,
-    '--output', 'json',
-    '--silent-errors',
-    '--last', String(limit),
-    '--since', since,
-    '--namespace', namespace,
-  ];
-  if (pod) args.push('--pod', `${namespace}/${pod}`);
-  if (verdict) args.push('--verdict', verdict);
-
-  try {
-    const { stdout } = await execFileAsync(HUBBLE_BIN, args, {
-      encoding: 'utf8',
-      timeout: 12_000,
-      maxBuffer: MAX_HUBBLE_BUFFER_BYTES,
-      env: {
-        PATH: process.env.PATH,
-        HOME: '/tmp',
-      },
-    });
-
-    const flows = stdout
-      .split('\n')
-      .map(line => line.trim())
-      .filter(Boolean)
-      .map(line => JSON.parse(line))
-      .map(hubbleFlowSummary)
-      .slice(-limit);
-
-    return { flows, rawBytes: Buffer.byteLength(stdout, 'utf8') };
-  } catch (error) {
-    const code = error?.code ?? 'unknown';
-    const stderr = String(error?.stderr ?? '').slice(-2048);
-    if (code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') {
-      throw new Error(
-        'Hubble flow query exceeded the bounded MCP buffer. Narrow namespace/pod/verdict or use a shorter since window.',
-      );
-    }
-    throw new Error(`Hubble query failed (${code})${stderr ? `: ${stderr}` : ''}`);
-  }
-}
-
 function buildServer() {
   const server = new McpServer(
     {
@@ -296,7 +250,10 @@ function buildServer() {
     {
       title: 'List Argo CD applications',
       description: 'Read Argo CD Application sync and health state from the argocd namespace.',
-      inputSchema: z.object({}),
+      inputSchema: z.object({
+        limit: z.number().int().min(1).max(200).default(50),
+        continueToken: z.string().max(16384).optional(),
+      }),
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
@@ -304,10 +261,11 @@ function buildServer() {
         openWorldHint: false,
       },
     },
-    async () => {
+    async ({ limit, continueToken }) => {
       const data = await kubeList(
         `/apis/argoproj.io/v1alpha1/namespaces/${encodeURIComponent(ARGO_NAMESPACE)}/applications`,
         {
+          pageSize: limit, maxPages: 1, continueToken,
           mapItem: item => ({
             ...trimObjectMetadata(item),
             project: item?.spec?.project ?? null,
@@ -325,6 +283,8 @@ function buildServer() {
         namespace: ARGO_NAMESPACE,
         applications: data.items,
         pagesScanned: data.pages,
+        nextContinueToken: data.continuation,
+        partial: data.partial,
       });
     },
   );
@@ -460,12 +420,13 @@ function buildServer() {
     {
       title: 'Get bounded pod logs',
       description:
-        'Read a bounded tail of pod logs for troubleshooting. Does not exec into containers and never returns more than 64 KiB.',
+        'Read up to 64 KiB of log text (JSON metadata is additional). Default: recent tail. sinceTime reads from a chosen timestamp in still available logs; no historical cursor or until filter is available. Content is not redacted; inspect observation before drawing conclusions.',
       inputSchema: z.object({
         namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
         pod: z.string().min(1),
         container: z.string().min(1).optional(),
-        tailLines: z.number().int().min(1).max(500).default(200),
+        tailLines: z.number().int().min(1).max(500).optional(),
+        sinceTime: z.iso.datetime({ offset: true }).optional(),
         previous: z.boolean().default(false),
       }),
       annotations: {
@@ -475,36 +436,36 @@ function buildServer() {
         openWorldHint: false,
       },
     },
-    async ({ namespace, pod, container, tailLines, previous }) => {
+    async ({ namespace, pod, container, tailLines, sinceTime, previous }) => {
+      const effectiveTailLines = tailLines ?? (sinceTime ? undefined : 200);
       const params = new URLSearchParams({
-        tailLines: String(tailLines),
         timestamps: 'true',
         previous: String(previous),
         // Ask Kubernetes for one sentinel byte beyond the public MCP limit so
         // server-side truncation is detectable without downloading unbounded logs.
         limitBytes: String(MAX_LOG_BYTES + 1),
       });
+      if (effectiveTailLines !== undefined) params.set('tailLines', String(effectiveTailLines));
+      if (sinceTime) params.set('sinceTime', sinceTime);
       if (container) params.set('container', container);
 
       let logs = await kubeRequest(
         `/api/v1/namespaces/${encodeURIComponent(namespace)}/pods/${encodeURIComponent(pod)}/log?${params.toString()}`,
         { asText: true },
       );
-      const originalBytes = Buffer.byteLength(logs, 'utf8');
-      let truncated = false;
-      if (originalBytes > MAX_LOG_BYTES) {
-        logs = Buffer.from(logs, 'utf8').subarray(originalBytes - MAX_LOG_BYTES).toString('utf8');
-        truncated = true;
-      }
+      const observation = logObservation(logs, { sinceTime, tailLines: effectiveTailLines });
+      logs = observation.text;
 
       return jsonText({
         namespace,
         pod,
         container: container ?? null,
         previous,
-        tailLines,
+        tailLines: effectiveTailLines ?? null,
+        sinceTime: sinceTime ?? null,
+        observation: { ...observation, text: undefined },
         limitBytes: MAX_LOG_BYTES,
-        truncated,
+        truncated: observation.byteLimited,
         logs,
       });
     },
@@ -515,12 +476,14 @@ function buildServer() {
     {
       title: 'Get bounded Hubble network flows',
       description:
-        'Read a small filtered set of Cilium Hubble flows for one namespace, optionally one pod and verdict. Returns normalized flow facts without endpoint label sets.',
+        'Read a small filtered set of Cilium Hubble flows for one namespace, optionally one pod and verdict. Choose any still available absolute time window, max 15 minutes per call. Inspect partial status and continue with smaller/older windows. Exact pod match. No content redaction; no endpoint label sets.',
       inputSchema: z.object({
-        namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
-        pod: z.string().min(1).optional(),
+        namespace: z.string().max(63).regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/).default(DEFAULT_NAMESPACE),
+        pod: z.string().max(253).regex(/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/).optional(),
         verdict: z.enum(['FORWARDED', 'DROPPED', 'AUDIT', 'REDIRECTED', 'ERROR', 'TRACED', 'TRANSLATED']).optional(),
-        since: z.string().regex(/^[1-9][0-9]*(ms|s|m|h)$/).default('5m'),
+        startTime: z.iso.datetime({ offset: true }).optional(),
+        endTime: z.iso.datetime({ offset: true }).optional(),
+        node: z.string().max(253).regex(/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/).optional(),
         limit: z.number().int().min(1).max(50).default(20),
       }),
       annotations: {
@@ -531,17 +494,7 @@ function buildServer() {
       },
     },
     async args => {
-      const result = await getHubbleFlows(args);
-      return jsonText({
-        namespace: args.namespace,
-        pod: args.pod ?? null,
-        verdict: args.verdict ?? null,
-        since: args.since,
-        limit: args.limit,
-        relay: HUBBLE_SERVER,
-        rawBytesRead: result.rawBytes,
-        flows: result.flows,
-      });
+      return jsonText(await getHubbleFlows(args, hubbleFlowSummary));
     },
   );
 
@@ -564,10 +517,16 @@ function originAllowed(req) {
 }
 
 const httpServer = createServer((req, res) => {
-  // Only the pathname is needed. Use a fixed trusted base instead of the
-  // untrusted Host header so a malformed Host cannot throw ERR_INVALID_URL and
-  // terminate the process.
-  const url = new URL(req.url ?? '/', 'http://localhost');
+  let url;
+  try {
+    // Never use the untrusted Host header to construct the parser base; only
+    // request-target pathname/query parsing is required here.
+    url = new URL(req.url ?? '/', 'http://localhost');
+  } catch {
+    res.writeHead(400, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ error: 'invalid_request_target' }));
+    return;
+  }
 
   if (url.pathname === '/healthz') {
     res.writeHead(200, { 'content-type': 'application/json' });
@@ -593,11 +552,15 @@ const httpServer = createServer((req, res) => {
     return;
   }
 
-  void nodeMcpHandler(req, res);
+  Promise.resolve().then(() => nodeMcpHandler(req, res)).catch(() => {
+    if (res.headersSent) { res.destroy(); return; }
+    res.writeHead(500, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ error: 'request_failed' }));
+  });
 });
 
 httpServer.listen(PORT, HOST, () => {
-  console.error(`kubeclaw-ops-mcp listening on http://${HOST}:${PORT}/mcp`);
+  console.error(`kubeclaw-ops-mcp listening on http://${HOST}:${httpServer.address().port}/mcp`);
 });
 
 async function shutdown(signal) {
@@ -609,3 +572,4 @@ async function shutdown(signal) {
 
 process.on('SIGTERM', () => void shutdown('SIGTERM'));
 process.on('SIGINT', () => void shutdown('SIGINT'));
+

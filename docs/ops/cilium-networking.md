@@ -105,7 +105,14 @@ endpointSelector:
         - cilium
         - tailscale
         - argocd
+        - paperless # explicit temporary owner-approved exception
 ```
+
+Paperless is temporarily excluded by explicit owner decision to preserve its existing
+connectivity. This is not a reusable project-onboarding escape hatch. It still
+experiences the CNI interruption; existing Paperless KNPs remain effective. Confirm
+its actual namespace is exactly `paperless` before the cutover. Website downtime is
+accepted. KubeClaw pipeline and Paperless recovery are mandatory release criteria.
 
 There is no opt-in profile label. A new normal application namespace is covered automatically.
 
@@ -233,13 +240,14 @@ Future projects should keep equivalent policies with their own project/release r
 
 ### Platform namespaces
 
-The first migration excludes:
+The first migration excludes four platform namespaces plus the temporary Paperless exception:
 
 ```text
 kube-system
 cilium
 tailscale
 argocd
+paperless (temporary owner-approved application exception)
 ```
 
 from the generic application baseline.
@@ -630,28 +638,60 @@ sudo sh -c 'ip6tables-save | grep -v KUBE-ROUTER | ip6tables-restore'
 
 Perform this only after the old policy controller is disabled and as part of the maintenance procedure with recovery access.
 
-### 11.5 Install Cilium
+### 11.5 Controlled single-node replacement
 
-After the effective K3s configuration is verified, updated and K3s restarted:
+Deploy and configure Argo, then the PR #1 MCP/tunnel while Flannel still works.
+Verify their real tools and a successful KubeClaw pipeline run before networking
+changes. Build the PR #2 MCP candidate by workflow_dispatch and record its digest.
+Do not auto-sync Cilium as an ordinary unattended Application rollout.
 
-```bash
-CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh
-```
+Before the maintenance window, prepare policies for every required dependency.
+SPIRE in `spire-server`/`spire-system` is NOT excluded. Apply the SPIRE-owned
+`my-values/infra/spire-network-policies.yaml` before resuming it. These rules follow
+the pinned hardened chart 0.30.0 (server/agent names, API and webhook, agent gRPC
+8081 behind Service 443, CSI and hook API access). Compare actual chart overrides,
+ServiceAccounts and rendered labels; verify API, DNS and SVID renewal paths. Do not proceed until that inventory is complete.
 
-The script:
+1. Record successful KubeClaw pipeline and Paperless checks. Stop accepting new
+   pipeline work, finish or checkpoint active tasks; suspend CronJobs/producers.
+   Preserve controller replica counts and Jobs. Pause Argo auto-sync so it cannot
+   undo deliberate maintenance changes. Back up database/storage appropriately.
+2. Cordon the single node. No workload may bypass this with `nodeName` or an
+   unschedulable toleration during maintenance; inventory DaemonSets separately.
+3. On the host, save effective K3s config, unit/drop-ins, CNI configs/binaries,
+   iptables/ip6tables rules and interfaces/routes. Record exact restore paths.
+   Stop K3s; use the installed K3s stop/killall maintenance procedure to stop old
+   containers/sandboxes. Do not uninstall K3s or remove PVC/storage data.
+4. Disable Flannel and the old policy controller in EFFECTIVE K3s configuration.
+   Move only the recorded old Flannel CNI config out of the active CNI directory
+   while stopped; preserve it for rollback. Inspect/clean legacy rules as above.
+   Restart K3s without the old CNI. Ordinary pods cannot acquire an old network.
+   The initial installer checks the local CRI and rejects any ready non-host
+   sandbox, including retries of failed Helm releases.
+5. Run on the host with kubectl/Helm and CRI permissions:
 
-- verifies Helm/kubectl;
-- refuses the first install on a multi-node cluster;
-- requires the explicit migration acknowledgement;
-- installs pinned Cilium in namespace `cilium`;
-- waits for Cilium/Operator and required CRDs;
-- applies central cluster policies;
-- verifies both workload-baseline CCNP objects exist;
-- waits for Hubble Relay/UI where present.
+   ```bash
+   CILIUM_K3S_READY=true ./scripts/deploy-cilium.sh install
+   ```
 
-Existing Pods can retain networking created by their old CNI sandbox. For this disruptive single-node migration, recycle/reboot the node as documented so workloads are recreated on the Cilium dataplane.
+   The script always requires one cordoned node for `install`, installs Cilium
+   without Helm waiting for the whole release, waits for CRDs, applies the baseline,
+   then verifies agent/operator rollout. The host-network operator has an explicit
+   unschedulable toleration so cluster-pool IPAM can initialize. It never uncordons.
+6. Verify imported baseline on every agent. Apply KubeClaw and Ops Allows using
+   the migration script's `apply` mode after dataplane inspection. Apply the prepared
+   SPIRE/other required project policies. Keep legacy KNPs for now. The baseline
+   excludes Paperless, not arbitrary other namespaces.
+7. Deliberately uncordon, restore desired controllers/producers in dependency
+   order and wait for recreated pods. Verify every ordinary pod is Cilium-managed,
+   not merely Ready. Now check Hubble Relay/UI and the digest-pinned #2 MCP.
+8. Run the positive/negative and pipeline checks below, cleanup legacy Allows,
+   then repeat checks. Keep the legacy KubeClaw default-deny safety belt through
+   cleanup; retiring this redundant deny is a separate verified action.
 
-Run the bootstrap again after the node is reachable to verify the installed release.
+A partial install is not permission to bypass these gates. `upgrade` requires the
+explicit `kubeclaw-cutover-verified` ConfigMap in `cilium`, created only after all
+post-cleanup checks. Existence of a Helm release alone never grants upgrade mode.
 
 ---
 
@@ -715,19 +755,25 @@ Exercise real application traffic and inspect Hubble.
 Only after verification:
 
 ```bash
-CILIUM_DATAPLANE_VERIFIED=true \
+CILIUM_DATAPLANE_VERIFIED=true CILIUM_TRAFFIC_VERIFIED=true \
   ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh cleanup
 ```
 
-Cleanup is fail-closed. Before deleting superseded static KNP objects it verifies:
+The verification helper requires Python 3 and PyYAML 6.0.3 on the operator machine.
+Install these before maintenance. It performs server-side dry-run validation, then
+compares source specs strictly, including unexpected extra fields.
 
-1. both central baseline CCNPs exist;
-2. every expected CNP replacement exists;
-3. every intentionally retained portable static KNP exists.
+Cleanup compares source policy specs with live specs and checks
+current endpoint desired/realized revisions through `verify-cilium-policies.py`.
+It additionally requires the explicit traffic-test acknowledgement. These checks
+are complementary: object existence or endpoint revision alone is not proof that
+all required traffic works. Legacy Allows can mask a bad replacement, so repeat
+positive tests after cleanup and use fresh isolated pods for negative tests.
 
-Dynamic/chart-owned KNP objects are not removed.
-
-`kubeclaw-agents-ingress` is intentionally retained and is not considered legacy after the migration.
+Dynamic/chart-owned KNP objects are untouched. `kubeclaw-agents-ingress` remains
+portable; legacy `kubeclaw-default-deny` is deliberately retained through cleanup.
+The fixed deletion list contains only previously superseded static Allows. CNP
+replacement names come from manifests rather than a second hardcoded list.
 
 ---
 
@@ -896,15 +942,29 @@ Before changing the host:
 
 During the CNI cutover:
 
-- do not delete old policy objects before Cilium dataplane and replacement policy are proven;
-- if Cilium installation/dataplane fails, stop and restore the known-good K3s/CNI configuration rather than widening policy blindly;
-- account for stale iptables state in either direction of a CNI transition.
+- Before any new Cilium sandbox exists: keep the node cordoned, stop K3s and
+  Cilium processes, restore the recorded K3s/Flannel config and CNI configuration,
+  then restart and verify old networking before resuming controllers.
+- After Cilium sandboxes exist: quiesce workloads again, cordon and stop K3s and
+  all affected sandboxes. Stop/uninstall Cilium through the recorded Helm recovery
+  path while API access is available, and verify it cannot rewrite CNI config.
+  `cni.uninstall: false` intentionally leaves files behind: remove/move the recorded
+  Cilium CNI file explicitly before restoring Flannel. Do not leave both active.
+- Restore known-good K3s settings, Flannel config/binaries and pre-cutover project
+  KNP manifests. Native CNPs have no enforcement effect under Flannel. Recreate
+  pods under Flannel, then repeat pipeline/Paperless tests before enabling producers.
+- Inspect residual Cilium routes/interfaces/BPF and firewall state using the
+  version-matched recovery instructions; do not blindly restore a live iptables
+  snapshot over a running kube-proxy/controller. A controlled host reboot may be
+  appropriate after restoring configuration. Keep independent host access throughout.
+- If exact CNI paths or restoration steps are unknown, stop at preflight. This
+  document is not authorization for generic filesystem deletion or firewall flushing.
 
 During project-policy migration:
 
 - `apply` is additive;
 - verify real traffic/Hubble first;
-- `cleanup` deletes only superseded legacy KNP objects after all expected replacement/retained objects exist.
+- `cleanup` deletes superseded legacy Allows after spec/revision checks and traffic acknowledgement; retains the old default-deny and requires post-cleanup testing.
 
 Do not use emergency `allow world` rules as a generic rollback mechanism.
 
@@ -1001,3 +1061,106 @@ scripts/migrate-kubeclaw-network-policies-to-cilium.sh
 docs/ops/cilium-quickstart.md
 examples/cilium/project-network-policy.yaml
 ```
+
+## Review closure: operational contracts
+
+### Diagnostic portions, not content censorship
+
+Hubble accepts absolute `startTime`/`endTime`, at most 15 minutes per call, default
+last five minutes. Old windows are allowed. At most 50 flows are returned; stdout
+and stderr share a 2 MiB raw budget, timeout is 12 seconds, at most two child
+processes run concurrently. Normalized flow JSON has a 192 KiB budget; individual
+Summary text has an 8 KiB technical ceiling. Metadata is additional. UTF-8 boundaries
+are preserved. No content scanner or redaction is applied. Complete endpoint
+labelsets are omitted as agreed. These limits are per call, not per investigation.
+
+Inspect status, reasons, warnings and returnedWindow. Relay errors, lost events,
+unknown messages, saturation and buffer/timeout exits produce partial results.
+Continue with smaller/older windows or exact pod/node filters. Identical timestamps
+and peer ring-buffer overwrite preclude a lossless historical cursor. Empty results
+are not evidence of coverage or absence of drops. Pod-log continuation limitations
+are documented in `chatgpt-ops-bootstrap.md`.
+
+Relay's node allowance is restricted to TCP 4245/4222; ordinary clients use 4245.
+The UI has its own ingress isolation and is accessed via authenticated kubectl
+port-forward only. Its backend explicitly targets `hubble-relay:4245`.
+
+### KubeClaw release evidence
+
+Record before and after: Nova requests a lease; Buster controller reconciles it;
+Buster builds/pushes/pulls a candidate through registries; test namespace and Prism
+start; Nova reaches production and temporary Prism; test gates finish; cleanup
+completes. Include API clients Nova/Buster/controller and Ops on the actual K3s
+API backend port (443 Service / normally 6443 backend). Also verify Redis, Qdrant,
+LiteLLM/PostgreSQL and SPIRE SVID renewal, not just current cached credentials.
+Use the existing repository pipeline entrypoints and retain its run IDs/outcomes.
+
+Fresh ordinary namespace probes must demonstrate DNS-only baseline, blocked
+same/cross-namespace and external connections without Allows, then successful
+explicit bilateral Allows. Test unauthorized Relay/UI/MCP and spoofed Prism peers.
+Repeat pipeline and Paperless UI/document processing after legacy cleanup.
+Only then record the cutover marker:
+
+```bash
+kubectl -n cilium create configmap kubeclaw-cutover-verified \
+  --from-literal=checks=pipeline-paperless-negative-probes-post-cleanup-passed
+```
+
+### Ownership and capacity
+
+Ordinary project owners must not write platform namespaces, namespace trust labels,
+CCNPs or privileged ServiceAccounts. The Buster VAP now reserves its ownership label
+on CREATE/UPDATE and renders the actor namespace from NAMESPACE in deploy.sh.
+Platform break-glass is explicitly system:masters; authorize a future GitOps actor
+narrowly before handing it namespace ownership. Shared KubeClaw/Ops is a trusted
+platform namespace, not a boundary for untrusted pod creators. Before delegation,
+use dedicated namespaces and enforce restricted Pod Security as in the example.
+Do not blanket-enforce restricted on existing workloads without compatibility tests.
+
+With policyEnforcementMode=default, deleting the baseline can remove isolation.
+HostNetwork/privileged pods and unmanaged old CNI sandboxes are outside the ordinary
+endpoint guarantee. Protect policy ownership and disallow such pods in delegated
+projects; do not advertise unconditional fail-closed under arbitrary admin actions.
+
+Central policy count is O(1); identities/endpoints/services are not. A /16 with /24
+per node has 256 node blocks. Budget workloads per namespace, pod churn, API/etcd,
+kube-proxy service load, BPF maps and identity allocation before 1k/10k namespaces.
+A stable shared namespace label is not automatically extra identity cardinality;
+unique per-lease UID labels are. Existing lease UID selectors are security-relevant:
+do not strip them globally. Exclude new Git SHA/build ID/timestamp/UUID labels from
+security identity design; inspect actual effective identity labels first.
+
+### Explicit broad contracts
+
+Agent world TCP22/80/443 remains deliberate for Git/package/provider access. Tunnel
+world TCP443 remains a documented v1 outbound contract until actual tunnel endpoint
+names/rotation are verified; do not invent a hostname allowlist that breaks access.
+LiteLLM ingress is now limited to same-namespace KubeClaw clients. Registry pulls
+allow explicit host/remote-node identities rather than all RFC1918 clients.
+Archviewer NodePort TCP3456 still requires a proven host/Tailscale firewall boundary
+before private-only claims; replacing it with existing Tailscale ingress is a later
+access change. No general Allow-All is introduced to make tests pass.
+
+The PostgreSQL example above describes sender egress only: the database needs its
+own matching ingress Allow. Replies on an established allowed connection are stateful;
+this is not a requirement for a second reverse initiated connection.
+
+### SPIRE namespace ownership on a fresh Cilium cluster
+
+The current cutover uses the already existing SPIRE namespaces. `deploy.sh infra`
+requires them before applying policies, to avoid deadlocking Helm hooks under default
+deny. For a genuinely fresh cluster, create `spire-server` for the release and
+prepare `spire-system` with the ownership its chart expects before applying policies:
+
+```bash
+kubectl create namespace spire-server
+kubectl create namespace spire-system
+kubectl label namespace spire-system app.kubernetes.io/managed-by=Helm
+kubectl annotate namespace spire-system meta.helm.sh/release-name=spire meta.helm.sh/release-namespace=spire-server
+kubectl apply -f my-values/infra/spire-network-policies.yaml
+```
+
+These fresh-cluster commands intentionally fail on existing namespaces; never relabel
+an unrelated existing namespace for adoption. The chart keeps its namespace resource
+ownership. Do not flip namespace creation off on an existing Helm release as a
+shortcut: removing that managed Namespace from a release can delete its workloads.

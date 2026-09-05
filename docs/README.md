@@ -31,3 +31,6 @@ The build resolves evidence to the exact Git revision. It also emits a digest an
 ## Transformation Record
 
 The approved [documentation blueprint](blueprint/README.md) classifies existing documentation and defines the publication workflow.
+
+Review fixes and outstanding live release checks: [PR remediation](ops/review-remediation.md).
+

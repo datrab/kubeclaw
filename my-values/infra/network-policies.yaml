@@ -132,6 +132,8 @@ spec:
         - ports:
             - protocol: TCP
               port: "443"
+            - protocol: TCP
+              port: "6443"
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -272,8 +274,9 @@ spec:
     matchLabels:
       app: litellm
   ingress:
-    - fromEntities:
-        - all
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: kubeclaw
       toPorts:
         - ports:
             - protocol: TCP
@@ -341,10 +344,8 @@ spec:
               port: "5000"
             - protocol: TCP
               port: "5001"
-    - fromCIDR:
-        - 10.0.0.0/8
-        - 172.16.0.0/12
-        - 192.168.0.0/16
+    # Kubelet/container-runtime image pulls, including future nodes.
+    - fromEntities: [host, remote-node]
       toPorts:
         - ports:
             - protocol: TCP
@@ -368,10 +369,8 @@ spec:
         - ports:
             - protocol: TCP
               port: "5000"
-    - fromCIDR:
-        - 10.0.0.0/8
-        - 172.16.0.0/12
-        - 192.168.0.0/16
+    # Kubelet/container-runtime image pulls, including future nodes.
+    - fromEntities: [host, remote-node]
       toPorts:
         - ports:
             - protocol: TCP
@@ -395,82 +394,24 @@ spec:
             - protocol: TCP
               port: "443"
 ---
+# Nova and Buster request leases using their existing RBAC. Other agents do not.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: ops-mcp-ingress
+  name: kubeclaw-lease-clients-api-egress
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: ops-mcp
-  ingress:
-    - fromEndpoints:
-        - matchLabels:
-            app.kubernetes.io/name: ops-mcp-tunnel
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: tailscale
-            tailscale.com/managed: "true"
-            tailscale.com/parent-resource-type: ingress
-            tailscale.com/parent-resource: ops-mcp
-            tailscale.com/parent-resource-ns: kubeclaw
-      toPorts:
-        - ports:
-            - protocol: TCP
-              port: "8080"
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: ops-mcp-kubernetes-api-egress
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: ops-mcp
+      app.kubernetes.io/name: kubeclaw
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values: [nova, buster]
   egress:
-    - toEntities:
-        - kube-apiserver
+    - toEntities: [kube-apiserver]
       toPorts:
         - ports:
-            - protocol: TCP
-              port: "443"
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: ops-mcp-hubble-relay-egress
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: ops-mcp
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: cilium
-            k8s-app: hubble-relay
-      toPorts:
-        - ports:
-            - protocol: TCP
-              port: "4245"
----
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
-metadata:
-  name: ops-mcp-tunnel-egress
-spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: ops-mcp-tunnel
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            app.kubernetes.io/name: ops-mcp
-      toPorts:
-        - ports:
-            - protocol: TCP
-              port: "8080"
-    - toEntities:
-        - world
-      toPorts:
-        - ports:
-            - protocol: TCP
-              port: "443"
+            - port: "443"
+              protocol: TCP
+            - port: "6443"
+              protocol: TCP

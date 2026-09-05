@@ -12,7 +12,8 @@
 # The small exclusion list below contains bootstrap/control-plane namespaces
 # whose networking must be migrated with dedicated, tested policies rather than
 # accidentally breaking cluster administration during the first CNI cutover.
-# New application/project namespaces MUST NOT be added to this list.
+# Paperless is an explicit owner-approved temporary exception for this cutover.
+# Remove it after Paperless connectivity is inventoried and tested. No new project exceptions.
 ---
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
@@ -29,6 +30,7 @@ spec:
           - cilium
           - tailscale
           - argocd
+          - paperless
   enableDefaultDeny:
     ingress: true
     egress: true
@@ -51,6 +53,7 @@ spec:
           - cilium
           - tailscale
           - argocd
+          - paperless
   enableDefaultDeny:
     ingress: false
     egress: false
@@ -111,6 +114,26 @@ spec:
     - fromEntities:
         - host
         - remote-node
+      toPorts:
+        - ports:
+            - port: "4245"
+              protocol: TCP
+            - port: "4222"
+              protocol: TCP
+---
+# UI is accessible through kubectl port-forward only in v1; no pod client allow.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: hubble-ui-private
+  namespace: cilium
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s-app: hubble-ui
+  enableDefaultDeny:
+    ingress: true
+  ingress: []
 
 # Future cluster-wide deny rules belong here only when they are truly global
 # platform guardrails (for example blocking a cloud metadata endpoint or a

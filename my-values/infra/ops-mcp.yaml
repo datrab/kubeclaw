@@ -61,8 +61,8 @@ spec:
           type: RuntimeDefault
       containers:
         - name: ops-mcp
-          image: ghcr.io/datrab/kubeclaw-ops-mcp:latest
-          imagePullPolicy: Always
+          image: ghcr.io/datrab/kubeclaw-ops-mcp:REQUIRES_DIGEST
+          imagePullPolicy: IfNotPresent
           env:
             - name: OPS_DEFAULT_NAMESPACE
               value: kubeclaw
@@ -130,3 +130,4 @@ spec:
   tls:
     - hosts:
         - ops-mcp
+

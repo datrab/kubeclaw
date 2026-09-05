@@ -5,6 +5,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 NAMESPACE="${NAMESPACE:-kubeclaw}"
 POLICY_FILE="${POLICY_FILE:-$REPO_DIR/my-values/infra/network-policies.yaml}"
+OPS_POLICY_FILE="$REPO_DIR/my-values/infra/ops-mcp-network-policies.yaml"
+BASELINE_FILE="$REPO_DIR/my-values/infra/cilium-cluster-policies.yaml"
 MODE="${1:-apply}"
 
 command -v kubectl >/dev/null || { echo "kubectl is required" >&2; exit 1; }
@@ -34,33 +36,7 @@ baseline_policies=(
   dtlabs-workload-allow-dns
 )
 
-replacement_cilium_policies=(
-  kubeclaw-agents-egress
-  kubeclaw-buster-namespace-controller-api-egress
-  kubeclaw-nova-buster-test-gates
-  kubeclaw-buster-test-gates-from-nova
-  kubeclaw-nova-prism-agent-trust
-  kubeclaw-redis-ingress
-  kubeclaw-clawdeck-redis-egress
-  kubeclaw-qdrant-ingress
-  kubeclaw-litellm-ingress
-  kubeclaw-litellm-egress
-  kubeclaw-postgresql-ingress
-  kubeclaw-registry-local-ingress
-  kubeclaw-registry-mirror-ingress
-  kubeclaw-registry-mirror-egress
-  ops-mcp-ingress
-  ops-mcp-kubernetes-api-egress
-  ops-mcp-hubble-relay-egress
-  ops-mcp-tunnel-egress
-)
-
-retained_portable_policies=(
-  kubeclaw-agents-ingress
-)
-
 legacy_policies=(
-  kubeclaw-default-deny
   kubeclaw-allow-dns-egress
   kubeclaw-agents-egress
   kubeclaw-nova-buster-test-gates
@@ -92,6 +68,7 @@ case "$MODE" in
     done
 
     kubectl apply -n "$NAMESPACE" -f "$POLICY_FILE"
+    kubectl apply -f "$OPS_POLICY_FILE"
     echo
     echo "Project network allow policies applied on top of the central fail-closed baseline."
     echo "Verify before cleanup:"
@@ -104,23 +81,15 @@ case "$MODE" in
     echo "  CILIUM_DATAPLANE_VERIFIED=true $0 cleanup"
     ;;
   cleanup)
-    # Fail closed: verify the central baseline and every replacement before
-    # deleting any superseded legacy object. A partial/invalid Cilium apply must
-    # never create an allow-all gap.
-    for policy in "${baseline_policies[@]}"; do
-      kubectl get ciliumclusterwidenetworkpolicy "$policy" >/dev/null
-    done
-    for policy in "${replacement_cilium_policies[@]}"; do
-      kubectl -n "$NAMESPACE" get ciliumnetworkpolicy "$policy" >/dev/null
-    done
-    for policy in "${retained_portable_policies[@]}"; do
-      kubectl -n "$NAMESPACE" get networkpolicy "$policy" >/dev/null
-    done
+    # Keep the legacy default-deny as a redundant safety belt through cleanup.
+    # It may be retired separately after post-cleanup negative tests; no allow gap.
+    [[ "${CILIUM_TRAFFIC_VERIFIED:-false}" == true ]] || { echo 'Pipeline and negative traffic tests must pass; set CILIUM_TRAFFIC_VERIFIED=true.' >&2; exit 2; }
+    python3 "$SCRIPT_DIR/verify-cilium-policies.py" "$NAMESPACE" "$BASELINE_FILE" "$POLICY_FILE" "$OPS_POLICY_FILE"
     for policy in "${legacy_policies[@]}"; do
       kubectl -n "$NAMESPACE" delete networkpolicy "$policy" --ignore-not-found
     done
     echo "Superseded static Kubernetes NetworkPolicy objects removed from namespace $NAMESPACE."
-    echo "Retained portable policies remain enforced by Cilium: ${retained_portable_policies[*]}"
+    echo "Retained: kubeclaw-agents-ingress and legacy kubeclaw-default-deny. Repeat traffic tests now."
     ;;
   *)
     echo "usage: $0 [apply|cleanup]" >&2

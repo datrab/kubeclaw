@@ -108,6 +108,7 @@ kube-system
 cilium
 tailscale
 argocd
+paperless (temporary owner-approved application exception)
 ```
 
 This is a migration safety boundary, not a place for application workloads and not a permanent security exemption. Platform namespaces are hardened separately after the CNI cutover is stable.
@@ -221,3 +222,23 @@ Gateway API and Egress Gateway are later changes. They are intentionally not mix
 ## Where to go next
 
 For implementation details, exact manifests, preflight commands, rollback, K3s configuration, policy migration, Hubble Relay security, identity cardinality and Definition of Done, read [`cilium-networking.md`](cilium-networking.md).
+
+## This cutover: availability and exceptions
+
+Paperless is an explicit temporary default-deny exception in namespace `paperless`.
+It is still restarted during the cluster-wide CNI change. Website downtime is
+accepted; KubeClaw pipeline and Paperless functionality must pass before completion.
+Argo and the read-only MCP are installed/tested first under Flannel. During the CNI
+change they may be unavailable; separate host access is already available.
+
+Flannel and Cilium are CNI implementations. Existing pod network sandboxes are not
+converted in place: recreate pods after the controlled network change. A manifest
+sync with no Pod-template change does not restart pods. Application code and
+Services normally stay the same; required network Allows must be correct. Preserve
+PVCs; stop/checkpoint active pipeline work. Follow the detail runbook, not a rolling
+restart across overlapping same-CIDR networks.
+
+Hubble answers are bounded portions, with freely chosen historical time windows
+while data still exists. Continue querying when evidence is insufficient. No log
+or Summary content is redacted; technical truncation and missing observations are
+explicit. No permanent log database is required for this first step.

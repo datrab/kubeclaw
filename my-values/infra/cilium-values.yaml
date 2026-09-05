@@ -6,6 +6,21 @@ namespaceOverride: cilium
 
 operator:
   replicas: 1
+  hostNetwork: true
+  # IPAM must start while ordinary workloads remain cordoned during cutover.
+  tolerations:
+    - key: node.kubernetes.io/unschedulable
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoSchedule
 
 # Keep kube-proxy for the first migration. kube-proxy replacement is a separate,
 # observable change once the Cilium dataplane is proven stable.
@@ -42,5 +57,9 @@ hubble:
         enabled: false
   ui:
     enabled: true
+    backend:
+      extraEnv:
+        - name: FLOWS_API_ADDR
+          value: hubble-relay:4245
     service:
       type: ClusterIP

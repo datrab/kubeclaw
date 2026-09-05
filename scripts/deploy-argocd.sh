@@ -6,6 +6,7 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 ARGOCD_NAMESPACE="argocd"
 ARGOCD_RELEASE="argocd"
+ARGOCD_CHART_VERSION="10.8.0"
 ARGOCD_VALUES_FILE="${ARGOCD_VALUES_FILE:-$REPO_DIR/my-values/infra/argocd-values.yaml}"
 ARGOCD_TAILSCALE_INGRESS="${ARGOCD_TAILSCALE_INGRESS:-$REPO_DIR/my-values/infra/argocd-tailscale-ingress.yaml}"
 ARGOCD_HELM_REPO="${ARGOCD_HELM_REPO:-https://argoproj.github.io/argo-helm}"
@@ -23,6 +24,7 @@ kubectl create namespace "$ARGOCD_NAMESPACE" --dry-run=client -o yaml | kubectl 
 
 helm upgrade --install "$ARGOCD_RELEASE" argo/argo-cd \
   --namespace "$ARGOCD_NAMESPACE" \
+  --version "$ARGOCD_CHART_VERSION" \
   --values "$ARGOCD_VALUES_FILE" \
   --wait \
   --timeout 10m
@@ -42,3 +44,4 @@ Initial admin password:
   argocd admin initial-password -n $ARGOCD_NAMESPACE
 
 EOF
+
