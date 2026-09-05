@@ -10,6 +10,19 @@ MODE="${1:-apply}"
 command -v kubectl >/dev/null || { echo "kubectl is required" >&2; exit 1; }
 kubectl get crd ciliumnetworkpolicies.cilium.io >/dev/null
 
+if [[ "${CILIUM_DATAPLANE_VERIFIED:-false}" != "true" ]]; then
+  cat >&2 <<'EOF'
+Refusing project-policy cutover without an explicit dataplane verification.
+
+Existing pods retain the CNI configuration of the pod sandbox that created them.
+For the single-node Flannel -> Cilium replacement, reboot/recycle the node's pods,
+verify Cilium and application connectivity, then run for example:
+
+  CILIUM_DATAPLANE_VERIFIED=true ./scripts/migrate-kubeclaw-network-policies-to-cilium.sh apply
+EOF
+  exit 2
+fi
+
 # Static KubeClaw policies have a 1:1 replacement with the same name. Dynamic
 # and chart-owned Kubernetes NetworkPolicy objects (for example temporary Buster
 # namespaces and Prism) intentionally remain portable KNP and are enforced by
@@ -45,7 +58,7 @@ case "$MODE" in
     echo "  kubectl -n cilium exec ds/cilium -c cilium-agent -- cilium-dbg policy get"
     echo
     echo "After verification, remove the superseded static Kubernetes NetworkPolicy objects with:"
-    echo "  $0 cleanup"
+    echo "  CILIUM_DATAPLANE_VERIFIED=true $0 cleanup"
     ;;
   cleanup)
     # Fail closed: verify every native replacement before deleting any legacy
