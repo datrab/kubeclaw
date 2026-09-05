@@ -1,19 +1,32 @@
 # Example project-owned namespace + policy.
-# Copy this pattern into the project that owns the workload; do not add
-# project-specific allow rules to the central Cilium installation.
+#
+# Copy this pattern into the project that owns the workload. Project onboarding
+# does not require a central Cilium edit or a namespace policy-profile label.
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: example-project
-  labels:
-    # Opt into the generic cluster-owned default-deny guardrail.
-    networking.kubeclaw.io/profile: default-deny
 ---
+# Every project owns its own isolation baseline. An empty ingress/egress LIST is
+# intentional: selecting every endpoint with no allow rules enables default-deny
+# in both directions for this namespace.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: example-project-dns
+  name: project-default-deny
+  namespace: example-project
+spec:
+  endpointSelector: {}
+  ingress: []
+  egress: []
+---
+# DNS is part of the small reusable project baseline. Keeping it beside the
+# project avoids namespace-label-based cluster policy while remaining explicit.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: project-allow-dns
   namespace: example-project
 spec:
   endpointSelector: {}
@@ -29,8 +42,9 @@ spec:
             - port: "53"
               protocol: TCP
 ---
-# Add workload-specific CiliumNetworkPolicy objects here. Because this resource
-# is namespaced, Argo/Helm/Kustomize can ship it alongside the owning project.
+# Add workload-specific CiliumNetworkPolicy objects here. Because these resources
+# are namespaced, Argo/Helm/Kustomize can ship policy together with the owning
+# project without any central Cilium change.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
