@@ -40,6 +40,7 @@ node_modules/
 !/docker/buster-gateway-tools/package-lock.json
 !/skills/common/plugins/openclaw-agent-observer/package-lock.json
 !/spikes/prism/*/package-lock.json
+!/tools/ops-mcp/package-lock.json
 **/dist/
 **/dist-studio/
 **/test-results/
