@@ -46,6 +46,7 @@ replacement_policies=(
   kubeclaw-registry-mirror-egress
   ops-mcp-ingress
   ops-mcp-kubernetes-api-egress
+  ops-mcp-hubble-relay-egress
   ops-mcp-tunnel-egress
 )
 
