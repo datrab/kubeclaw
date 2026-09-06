@@ -18,6 +18,7 @@ test('central versions update actual build/deployment files and reject drift wit
     const manifest = JSON.parse(fs.readFileSync(path.join(copy, 'versions.json'), 'utf8'));
     // A synthetic version tests propagation only; it is never built or declared a real release.
     manifest.openclaw.version = '2099.1.1';
+    manifest.buildArgs.KUBECTL_VERSION = '1.99.9';
     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
     const before = fs.readFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), 'utf8');
     assert.throws(() => syncVersions(copy), /Version drift/);
@@ -29,6 +30,9 @@ test('central versions update actual build/deployment files and reject drift wit
       assert.ok(dockerfile.includes('ARG OPENCLAW_PLUGIN_VERSION=2099.1.1'));
     }
     assert.ok(fs.readFileSync(path.join(copy, 'charts/kubeclaw/values.yaml'), 'utf8').includes('npm:@openclaw/acpx@2099.1.1'));
+    const policy = fs.readFileSync(path.join(copy, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8');
+    assert.ok(policy.includes('"kubernetes_version": "1.99.9"'));
+    assert.ok(policy.includes('/v1.99.9-standalone-strict/'));
     assert.deepEqual(syncVersions(copy).changed, []);
     assert.deepEqual(syncVersions(copy, false).changed, []);
     fs.appendFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), '\nARG UNMANAGED_VERSION=1.0\n');

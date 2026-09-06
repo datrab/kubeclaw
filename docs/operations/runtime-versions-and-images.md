@@ -2,7 +2,7 @@
 
 ## Ownership
 
-`versions.json` is the authoritative source for Docker base references, Docker-installed tool versions, recorded binary checksums, Debian snapshots and the OpenClaw release. Edit this file, then run `npm run versions:sync`. Do not independently edit the generated version fields in Dockerfiles, chart metadata, official plugin specifications, observer build metadata or the Trivy installer.
+`versions.json` is the authoritative source for Docker base references, Docker-installed tool versions, recorded binary checksums, Debian snapshots and the OpenClaw release. Edit this file, then run `npm run versions:sync`. Do not independently edit the generated version fields in Dockerfiles, chart metadata, official plugin specifications, observer build metadata, Kubernetes lint schema paths or the Trivy installer.
 
 The central file is JSON so the build workflow and generator can read it with Node's standard library before installing any dependencies. A Markdown inventory would require a second parser and would not be an executable source of truth.
 
@@ -11,6 +11,7 @@ The central file is JSON so the build workflow and generator can read it with No
 | `kubeclaw-nova` | Nova orchestration and the existing Forge/Echo development and verification environment; retains linters, analyzers, browser and BuildKit client |
 | `kubeclaw-prism-agent` | Prism OpenClaw gateway, native Prism plugin and request bridge; no Nova toolchain or locally installed browser |
 | `kubeclaw-buster-gateway` | Buster OpenClaw gateway and agent integration |
+| `kubeclaw-codex-ops`, `kubeclaw-ops-mcp` | Operations access images; retain their separate Node and CLI versions through central references |
 | `kubeclaw-buster-runtime` | Buster deterministic suite execution and rootless BuildKit |
 | `kubeclaw-prism-control`, `-studio`, `-worker`, `-ingestion` | Separate Prism application, rendering and ingestion services |
 
@@ -24,6 +25,8 @@ Generated defaults remain committed in native files. This permits ordinary `dock
 
 Application dependencies remain in their native manifests and lockfiles, including the two tool directories. They are not copied into the central file. Helm dependency locks, CI action references, cluster-service versions and persistent protocol/schema versions remain separate authorities; the runtime manifest does not yet manage those ecosystems. Python and Go tool top-level versions are centralized, but that alone does not lock every transitive dependency fetched by their installers.
 
+The ops-pod keeps its existing kubectl/Helm versions in an explicit image override, including the Helm version used by its CI tests. Its Dockerfile and the MCP Dockerfile consume centrally managed, digest-pinned Node bases.
+
 The default Debian snapshot applies to the OpenClaw images. Buster's worker retains its explicitly named snapshot override. Changing OpenClaw does not automatically advance an unrelated OS snapshot. Changing a downloaded binary requires updating its corresponding architecture checksums as well as its version. Several upstream tools still supply their checksum files at build time; those are not equivalent to a committed checksum pin.
 
 ## Upgrade procedure
@@ -31,7 +34,7 @@ The default Debian snapshot applies to the OpenClaw images. Buster's worker reta
 1. Resolve the desired upstream release and obtain the actual registry manifest digest. For downloaded tools, obtain and verify the architecture-specific checksums. Do not invent a digest or retain an old digest under a new release label.
 2. Edit `versions.json`. OpenClaw's official `acpx` and `discord` packages must exist at the selected release; they are baked and later installed offline.
 3. Run `npm run versions:sync`, `npm run versions:check`, and `node --test tests/verification/deployment/versions.test.mjs`. Review the central change and every generated diff together.
-4. Run the mandatory reliability workflow and role image acceptance. The latter builds actual Nova, Prism and Buster gateway images, disables networking during acceptance, exercises offline plugin installation, verifies the installed OpenClaw version and diagnostic SDK, checks role tools and runs the real Prism bridge health endpoint. Missing binaries or failed installations fail the job.
+4. Run the mandatory reliability workflow and role image acceptance. The latter builds actual Nova, Prism and Buster gateway images, disables networking during acceptance, exercises offline plugin installation, verifies the installed OpenClaw version and diagnostic SDK, checks role tools and runs the real Prism bridge health endpoint under the image's default non-root user. Missing binaries or failed installations fail the job.
 5. Build and publish release images only after both workflows pass. Record the resulting immutable image digests and promote those artifacts for deployment. A version in this manifest identifies a build input; it is not a deployment receipt.
 
 The regression test changes a version in a temporary repository copy and verifies propagation, drift rejection without mutation, idempotent generation and invalid-input rejection. Its synthetic release is only a generator fixture. It is never built and does not count as provider or runtime compatibility evidence.

@@ -3,6 +3,8 @@ name: Build Ops Images
 on:
   pull_request:
     paths:
+      - 'versions.json'
+      - 'scripts/versions.mjs'
       - 'tools/ops-mcp/**'
       - 'ops/pod/**'
       - 'charts/ops-pod/**'
@@ -11,6 +13,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'versions.json'
+      - 'scripts/versions.mjs'
       - 'tools/ops-mcp/**'
       - 'ops/pod/**'
       - 'charts/ops-pod/**'
@@ -50,6 +54,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22'
+
+      - name: Check central runtime versions
+        run: node scripts/versions.mjs --check
 
       - name: Test Ops MCP
         working-directory: tools/ops-mcp

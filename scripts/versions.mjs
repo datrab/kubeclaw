@@ -26,18 +26,20 @@ export function versionOutputs(root) {
   validate(args);
   const outputs = new Map();
   const used = new Set();
-  const dockerfiles = fs.readdirSync(path.join(root, 'docker')).filter(file => file.startsWith('Dockerfile.')).sort();
+  const dockerfiles = new Map(fs.readdirSync(path.join(root, 'docker')).filter(file => file.startsWith('Dockerfile.')).sort()
+    .map(file => [file.slice('Dockerfile.'.length), `docker/${file}`]));
+  dockerfiles.set('ops-pod', 'ops/pod/Dockerfile');
+  dockerfiles.set('ops-mcp', 'tools/ops-mcp/Dockerfile');
   for (const [image, overrides] of Object.entries(manifest.imageOverrides ?? {})) {
-    if (!dockerfiles.includes(`Dockerfile.${image}`)) throw new Error(`Unknown image override: ${image}`);
+    if (!dockerfiles.has(image)) throw new Error(`Unknown image override: ${image}`);
     if (Object.keys(overrides).some(key => key.startsWith('OPENCLAW_'))) throw new Error('OpenClaw versions must match across roles');
     validate(overrides);
   }
-  for (const file of dockerfiles) {
-    const name = `docker/${file}`;
-    const overrides = manifest.imageOverrides?.[file.slice('Dockerfile.'.length)] ?? {};
+  for (const [image, name] of dockerfiles) {
+    const overrides = manifest.imageOverrides?.[image] ?? {};
     const usedOverrides = new Set();
     const content = read(name).replace(/^ARG ([A-Z0-9_]+)=(\S+)$/gm, (line, key) => {
-      if (key === 'KUBECLAW_BUILD_REVISION') return line;
+      if (['KUBECLAW_BUILD_REVISION', 'TARGETARCH'].includes(key)) return line;
       if (!Object.hasOwn(args, key)) throw new Error(`${name}: unmanaged version argument ${key}`);
       used.add(key);
       if (Object.hasOwn(overrides, key)) usedOverrides.add(key);
@@ -59,8 +61,14 @@ export function versionOutputs(root) {
   replaceOne('charts/kubeclaw/Chart.yaml', /^appVersion:.*$/m, `appVersion: "${manifest.openclaw.version}"`);
   for (const plugin of ['acpx', 'discord']) replaceOne('charts/kubeclaw/values.yaml',
     new RegExp(`^    - "npm:@openclaw/${plugin}@[^"\\n]+"$`, 'm'), `    - "npm:@openclaw/${plugin}@${manifest.openclaw.version}"`);
+  replaceOne('charts/kubeclaw/files/config/lint-policy.json', /"kubernetes_version": "[^"]+"/,
+    `"kubernetes_version": "${args.KUBECTL_VERSION}"`);
+  replaceOne('charts/kubeclaw/files/config/lint-policy.json', /"schema_location": "[^"]+"/,
+    `"schema_location": "/opt/kubeclaw-kubernetes-schemas/v${args.KUBECTL_VERSION}-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json"`);
   replaceOne('skills/common/plugins/openclaw-agent-observer/package.json', /"openclawVersion": "[^"]+"/,
     `"openclawVersion": "${manifest.openclaw.version}"`);
+  replaceOne('.github/workflows/build-ops-mcp.yaml', /^          version: v\d+\.\d+\.\d+$/m,
+    `          version: ${manifest.imageOverrides['ops-pod'].HELM_VERSION}`);
   for (const [shellKey, key] of [['TRIVY_VERSION', 'TRIVY_VERSION'], ['TRIVY_AMD64_SHA256', 'TRIVY_SHA256_AMD64'], ['TRIVY_ARM64_SHA256', 'TRIVY_SHA256_ARM64']])
     replaceOne('scripts/scan-runtime-images.sh', new RegExp(`^readonly ${shellKey}="[^"]+"$`, 'm'), `readonly ${shellKey}="${args[key]}"`);
   return outputs;

@@ -34,3 +34,6 @@ The approved [documentation blueprint](blueprint/README.md) classifies existing 
 These are repository source documents; adding them here does not add them to the
 published site's explicit allowlist.
 
+## Runtime Image Operations
+
+- [Runtime versions and role images](operations/runtime-versions-and-images.md): central version authority, Nova/Prism separation, image acceptance and upgrades.

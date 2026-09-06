@@ -55,6 +55,8 @@
         "workflow_dispatch"
       ],
       "pathFilters": [
+        "versions.json",
+        "scripts/versions.mjs",
         "tools/ops-mcp/**",
         "ops/pod/**",
         "charts/ops-pod/**",
@@ -67,6 +69,7 @@
       ],
       "commandAndActionRefs": [
         "bash ops/pod/test-image.sh \"$TEST_IMAGE",
+        "node scripts/versions.mjs --check",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v6",
         "uses: azure/setup-helm@v4.3.1",

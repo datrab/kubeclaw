@@ -5,6 +5,29 @@ set -euo pipefail
 role="${1:?role required}"
 version="${2:?OpenClaw version required}"
 case "$role" in nova|prism-agent|buster-gateway) ;; *) exit 2 ;; esac
+if [[ "${3:-}" == runtime ]]; then
+  if [[ "$role" == nova ]]; then test "$(id -u)" -eq 0; else test "$(id -u)" -eq 1000; fi
+  cd /app
+  node -e 'const sdk=require("openclaw/plugin-sdk/diagnostic-runtime"); if(typeof sdk.onDiagnosticEvent!=="function") process.exit(1)'
+  if [[ "$role" == prism-agent ]]; then
+  PORT=18080 node /opt/kubeclaw-prism/agent-bridge.mjs &
+  bridge_pid=$!
+  trap 'kill "$bridge_pid" 2>/dev/null || true' EXIT
+  node --input-type=module -e '
+    import { setTimeout } from "node:timers/promises";
+    let lastError;
+    for(let attempt=0; attempt<50; attempt++) {
+      try {
+        const response=await fetch("http://127.0.0.1:18080/health");
+        if(response.status!==200 || (await response.json()).status!=="ready") throw Error("Invalid bridge response");
+        process.exit(0);
+      } catch(error) { lastError=error; await setTimeout(100); }
+    }
+    throw lastError;
+  '
+  fi
+  exit 0
+fi
 openclaw --version | grep -F "$version"
 cd /app
 node -e 'const sdk=require("openclaw/plugin-sdk/diagnostic-runtime"); if(typeof sdk.onDiagnosticEvent!=="function") process.exit(1)'
@@ -43,21 +66,7 @@ fi
 if [[ "$role" == prism-agent ]]; then
   node --check /app/dist/extensions/kubeclaw-prism/index.mjs
   node --check /opt/kubeclaw-prism/agent-bridge.mjs
-  PORT=18080 node /opt/kubeclaw-prism/agent-bridge.mjs &
-  bridge_pid=$!
-  trap 'kill "$bridge_pid" 2>/dev/null || true' EXIT
-  node --input-type=module -e '
-    import { setTimeout } from "node:timers/promises";
-    let lastError;
-    for(let attempt=0; attempt<50; attempt++) {
-      try {
-        const response=await fetch("http://127.0.0.1:18080/health");
-        if(response.status!==200 || (await response.json()).status!=="ready") throw Error("Invalid bridge response");
-        process.exit(0);
-      } catch(error) { lastError=error; await setTimeout(100); }
-    }
-    throw lastError;
-  '
+
 else
   test ! -e /opt/kubeclaw-prism/agent-bridge.mjs
 fi

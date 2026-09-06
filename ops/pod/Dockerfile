@@ -1,4 +1,7 @@
-FROM node:22.23.2-bookworm-slim AS tools
+# Version defaults are generated from versions.json; run npm run versions:sync.
+ARG OPS_NODE_BASE=node:22.23.2-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+
+FROM ${OPS_NODE_BASE} AS tools
 ARG TARGETARCH=amd64
 ARG KUBECTL_VERSION=v1.34.1
 ARG HELM_VERSION=v3.19.0
@@ -13,7 +16,7 @@ RUN curl -fsSLo kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/
     && echo "$(cut -d ' ' -f1 helm.sha256)  helm.tar.gz" | sha256sum -c - \
     && tar -xzf helm.tar.gz && mv "linux-${TARGETARCH}/helm" helm && chmod 0755 kubectl helm
 
-FROM node:22.23.2-bookworm-slim
+FROM ${OPS_NODE_BASE}
 RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates git openssh-client gh jq curl python3 tini ripgrep netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
