@@ -59,22 +59,22 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [contract.plugin-system](components/contract.plugin-system.md) | Aktiv: Registryparser und SDK-Generator; fünf Registrierungssurfaces | unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.worker](components/contract.worker.md) | Buster/Prism Envelope + Executor; Binding-/Trust-Helfer nur testgenutzt | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.test-gate](components/contract.test-gate.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [contract.observability](components/contract.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [contract.observability](components/contract.observability.md) | Aktiv: Buster → Outbox/Admission/AttemptStore → Nova/ClawDeck; Go nur Referenztest | vorhanden / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.agent-events](components/contract.agent-events.md) | Extension-Producervertrag; Redis-Ingressconsumer im Repository nicht gefunden | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.telemetry](components/contract.telemetry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.prism](components/contract.prism.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [lib.sdk](components/lib.sdk.md) | Aktiv: Core-Kontexte, Plugins, Revisionauflösung und Agent-Task-Formatierung | unvollständig | abgeschlossen | `85ddfcbf` |
-| [foundation.registry](components/foundation.registry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [foundation.config](components/foundation.config.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [foundation.registry](components/foundation.registry.md) | Aktiv: Nova/Buster und Installervalidierung | veraltet und unvollständig | abgeschlossen | `85ddfcbfc15e` |
+| [foundation.config](components/foundation.config.md) | Aktiv: Nova CLI/Projekt und Buster.production → Plattformloader → Registry | unvollständig | abgeschlossen | `85ddfcbf` |
 | [foundation.isolation](components/foundation.isolation.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [foundation.packages](components/foundation.packages.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [foundation.observability](components/foundation.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | teilweise geprüft | `85ddfcbf` |
+| [foundation.packages](components/foundation.packages.md) | Exportierte Betreiber-Library; Install/Remove-Aufrufer nur Vertragstests gefunden | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
+| [foundation.observability](components/foundation.observability.md) | Aktiv: Records/Blobs, Outbox/Admission, Worker-Results; ClawDeck-View nur Testconsumer | vorhanden / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.state](components/nova.state.md) | Aktive FileJournal-/FileMutex-Nutzung; PluginStateJournal nur Testaufrufer | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |
 | [nova.effects](components/nova.effects.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.execution](components/nova.execution.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.lifecycle](components/nova.lifecycle.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [nova.telemetry](components/nova.telemetry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [nova.observability](components/nova.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [nova.telemetry](components/nova.telemetry.md) | Aktiv: Engine/Admin → serialisierte Observerdrains; CLI → Audit aus Journal | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
+| [nova.observability](components/nova.observability.md) | Recoveryhook aktiv; Planwriter nur Tests; keine belegte Lifecycleübernahme | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.test-gates](components/nova.test-gates.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.entry](components/nova.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.scaffold](components/nova.scaffold.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |

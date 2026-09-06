@@ -25,3 +25,13 @@ oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
 | plugin-contract-sdk-repro.mjs / .txt | Originalparser nimmt leeres Manifest an; Original-SDK serialisiert Sparsearray ungültig und undefined/null gleich. |
 | agent-contract-tests.txt | Pakettest/Typecheck bestanden; zusätzlicher Tiefenfehler im Originalvalidator reproduziert. |
 | agent-contract-depth.mjs | 10000 Ebenen in ca. 20 KiB gültigem JSON führen zu RangeError. |
+
+| Weitere Datei | Aussage |
+|---|---|
+| observability-contract-tests.txt | TS-Assertions durchlaufen; Gesamttest wegen fehlendem Go Exit1, keine Sprachparität bestätigt. |
+| observability-storage-tests.txt / admission-replay.mjs | Delivery/Attempt/View bestanden; unvalidiertes Admission-Replay original reproduziert. |
+| nova-observability-tests.txt | Original-Reconciliation mit realen Stores und synthetischen Vertragsresults bestanden. |
+| nova-telemetry-tests.txt | Audit/Observer bestanden; Phase12 an überholter Observerzahl fehlgeschlagen. |
+| platform-config-tests.txt | Original-Platformconfigtest bestanden. |
+| package-install-tests.txt / install-report-syntax.mjs | Originalinstallationstest bestanden; fehlende Reportadaptersyntaxprüfung reproduziert. |
+| registry-tests.txt / registry-schema-reload.mjs | Registry/Provider/Reporttests bestanden; Import-Safety (Observerzahl) und Capability-Security (unvollständige Policyfixture) fehlgeschlagen; `$id`-Reloaddefekt reproduziert. |

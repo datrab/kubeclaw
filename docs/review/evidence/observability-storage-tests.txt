@@ -1,0 +1,16 @@
+$ node tests/verification/contracts/check-pipeline-observability-durable-delivery.mts
+{"ok":true,"phase":"5.7-C","durableReplay":true,"quarantine":true,"bounded":true}
+
+exit=0
+$ node tests/verification/contracts/check-pipeline-observability-durable-attempts.mts
+{"ok":true,"phase":"5.7-D","durableResults":true,"durableEvidence":true,"staleClaimsRejected":true}
+
+exit=0
+$ node tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts
+{"ok":true,"phase":"5.7-F","rawPreserved":true,"normalizedJoined":true,"gapsVisible":true,"liveTail":true}
+
+exit=0
+$ node docs/review/evidence/admission-replay.mjs
+PCR-OBS-001: restarted production admission store returns altered payload with invalid digest and unchanged original wire bytes
+
+exit=0

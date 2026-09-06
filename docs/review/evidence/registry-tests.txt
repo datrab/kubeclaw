@@ -1,0 +1,63 @@
+$ node tests/verification/contracts/check-plugin-system-v2-registry.mjs
+{"ok":true,"contract":"plugin-system-v2-registry"}
+EXIT 0
+$ node tests/verification/contracts/check-plugin-system-v2-import-safety.mjs
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+5 !== 6
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-plugin-system-v2-import-safety.mjs:29:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 5,
+  expected: 6,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+EXIT 1
+$ node tests/verification/contracts/check-pipeline-test-provider-registry.mts
+{"ok":true,"packages":1,"testProviders":2,"snapshotDigest":"sha256:5f26ae9b6cdd8109e179c6e5a0739aaaf36d856618c19e02e2e8e44ff2429cf9"}
+EXIT 0
+$ node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
+{"ok":true,"packages":2,"adapters":3,"junitCandidates":2,"snapshotDigest":"sha256:5e35ecfcd8c244ff05e962d7b682cc936ec908c5c9c3b4349d1428418d77f6ac"}
+EXIT 0
+$ node tests/verification/contracts/check-plugin-system-v2-capability-security.mjs
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+Caught error:
+
+RegistryError: Required capability has no selected provider: artifacts.read
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs:163:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: RegistryError: Required capability has no selected provider: artifacts.read
+      at selectedProvider (file:///workspace/scratch/4e25cf57c177/kubeclaw/skills/common/plugin-runtime/foundation/registry/capabilities.ts:110:11)
+      at enableProviders (file:///workspace/scratch/4e25cf57c177/kubeclaw/skills/common/plugin-runtime/foundation/registry/capabilities.ts:155:55)
+      at Module.resolveCapabilityGrants (file:///workspace/scratch/4e25cf57c177/kubeclaw/skills/common/plugin-runtime/foundation/registry/capabilities.ts:192:21)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs:163:26
+      at getActual (node:assert:611:5)
+      at strict.throws (node:assert:759:24)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-plugin-system-v2-capability-security.mjs:163:8 {
+    code: 'REGISTRY_CAPABILITY_PROVIDER_MISSING',
+    details: {}
+  },
+  expected: [Function (anonymous)],
+  operator: 'throws',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+EXIT 1
+$ node docs/review/evidence/registry-schema-reload.mjs
+{"observed":"REGISTRY_MANIFEST_INVALID","cause":"schema with key or id \"https://review.invalid/config\" already exists"}
+EXIT 0

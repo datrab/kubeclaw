@@ -1,112 +1,91 @@
-# Fortsetzungsstand — Auftrag nicht vollständig abgeschlossen
+# Fortsetzungsstand — laufender Gesamtauftrag
 
-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
-Branch: `docs/pipeline-component-review-20260906`.
-Nur Review-Dokumentation geändert. Kein Merge, Deployment, Veröffentlichung oder
-CI-Auftrag. Der Umfang wird bei Fortsetzung nicht verkürzt.
+Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`. 93 Einheiten; derzeit 15 abgeschlossen.
+Der Auftrag wird autonom bis zu allen 93 Reviews fortgeführt; dieser Stand ist
+ein Speichercheckpoint, kein Abschluss und keine Verkürzung verbleibender Reviews.
+Nur docs/review geändert; keine Funktionsreparatur, Veröffentlichung, Deployment
+oder CI angefordert. Branch: `docs/pipeline-component-review-20260906`.
 
 ## Abdeckung
 
-93 vorläufig abgegrenzte Einheiten; die vollständige Laufzeitzuordnung ist offen.
+- **abgeschlossen (15)**: lib.prompt-contract, kubeclaw.state-store, contract.plugin-system, contract.worker, contract.observability, contract.agent-events, lib.sdk, foundation.registry, foundation.config, foundation.packages, foundation.observability, nova.state, nova.telemetry, nova.observability, worker.core.
 
-| Status | Anzahl | Komponenten |
-|---|---:|---|
-| abgeschlossen | 8 | lib.prompt-contract, nova.state, kubeclaw.state-store, contract.worker, worker.core, contract.plugin-system, lib.sdk, contract.agent-events |
-| teilweise geprüft | 3 | foundation.observability, prism.service-worker, prism.service-control |
-| ungeprüft | 82 | alle weiteren Einträge des Inventars |
+- **teilweise geprüft (2)**: prism.service-control, prism.service-worker.
 
-Abgeschlossen bedeutet Implementierung/Schnittstellen/Tests untersucht, nicht
-fehlerfrei, alle vorgeschlagenen Regressionstests ausgeführt oder live bestätigt.
-Die 82 ungeprüften Dateien enthalten Registrierungs-/Suchbelege und Einstiege,
-keine automatisch erzeugten fachlichen Abschlussurteile.
+- **ungeprüft (76)**: kubeclaw.agent-observability, kubeclaw.artifact-store, kubeclaw.command-runner, kubeclaw.git-workspace, kubeclaw.network-http, kubeclaw.notification-observer, kubeclaw.openclaw-agent-events, kubeclaw-agent-observer, kubeclaw.operator-messaging, kubeclaw.redis-transport, kubeclaw.runtime-dispatch, kubeclaw.secret-resolver, kubeclaw.telemetry-observer, kubeclaw.telemetry-store, kubeclaw.transport-publisher, kubeclaw.wait-store, kubeclaw.architecture-validator, kubeclaw.blueprint-sync, kubeclaw.buster-quality-gate, kubeclaw.case-study, kubeclaw.delivery-lint, kubeclaw.human-approval, kubeclaw.implementation-agent, kubeclaw.lint, kubeclaw.pipeline-review, kubeclaw.preflight-contract, kubeclaw.prism-design, kubeclaw.project-summary, kubeclaw.remote-test-gate, kubeclaw.repository-adapter, kubeclaw.review, kubeclaw.api-flow, kubeclaw.axe, kubeclaw.container-build, kubeclaw.coverage-budget, kubeclaw.direct-command, kubeclaw.http, kubeclaw.junit-report, kubeclaw.kubernetes-fixture, kubeclaw.lighthouse, kubeclaw.openapi, kubeclaw.playwright, kubeclaw.security-providers, kubeclaw.size-budget, kubeclaw.tailscale-exposure, kubeclaw.visual, contract.test-gate, contract.telemetry, contract.prism, foundation.isolation, nova.effects, nova.execution, nova.lifecycle, nova.test-gates, nova.entry, nova.scaffold, buster.engine, buster.entry, prism.control, prism.corpus, prism.directions, prism.domain, prism.engine, prism.evaluation, prism.pipeline-adapter, prism.preferences, prism.renderer, prism.storage, prism.studio, prism.service-ingestion, prism.service-studio, prism.service-agent-bridge, prism.service-common, prism.entry, prism.extension, buster.namespace-controller.
+
+- **Nachprüfung erforderlich (0)**: keine.
+
+## Unmittelbare Fortsetzung
+
+1. Gemeinsame Verträge contract.test-gate, contract.telemetry, contract.prism
+   vollständig prüfen. Foundation.isolation, Nova effects/
+   execution/lifecycle/test-gates und Entry-/Projektcompiler danach abschließen.
+2. Inventarvollständigkeit weiterhin offen: tatsächliche Role-Bundle-Auswahl im
+   Builder, dynamische Imports, Hilfsskripte außerhalb skills, Spike-/Legacy-
+   Nutzung. Stabile 93 Abgrenzungen nicht durch generische Kurzreviews ersetzen.
+3. Prism.service-worker teilweise: Service/Executorpfad geprüft; Engine,
+   Storage, Browserlifecycle und relevante Tests fehlen. Prism.service-control
+   teilweise: nur runWorker/Workerübergabe; übrige Routen/Transaktionen fehlen.
+4. Alle übrigen Komponenten gemäß Inventar nach Verträgen/Core einzeln bearbeiten.
 
 ## Offene Befunde
 
-| ID | Grad | Nachweis / Auswirkung |
-|---|---|---|
-| PCR-STATE-001 | mittel | Real reproduziert: Journal-Cache und persistierte Payload divergieren nach Mutation. |
-| PCR-STATE-002 | hoch | Real reproduziert: 266 überlappende kritische Sektionen bei 1200 Original-Mutex-Aufrufen in 12 Prozessen. |
-| PCR-PROMPT-001 | niedrig | Real reproduziert: derzeit ungenutzter Serializer verliert Werte/ist für Getter nicht deterministisch. |
-| PCR-PRISM-WORKER-001 | hoch | Beidseitiger Code-Trace: loggender Worker ohne Pflicht-Logstore kann fachlichen Erfolg nicht erfolgreich abschließen. |
-| PCR-PRISM-WORKER-002 | hoch | Code-Trace: kumulative Prozess-CPU wird als Versuch-CPU gegen 4000 ms geprüft. |
-| PCR-PRISM-CONTROL-001 | mittel | Code-Trace: Control nimmt completed ohne neutrale Schema-/Digest-/Attemptbindung an. |
-| PCR-WORKER-001 | mittel | Begründeter Verdacht: reservierte Claimzeit umfasst vier, möglicher Abschluss fünf separate Phasenbudgets. |
+Details und Regression bei jeweiliger Eigentümerkomponente:
 
-Details, Auslöser, Grenzen, Ursachenbehebung und Regression je Eigentümerdatei.
-Prism-Dienstdefekte sind nicht als ausgeführter Live-Test ausgegeben. Worker-
-Claim-Budget bleibt bis echter Timing-Verifikation ausdrücklich Verdacht.
+- [12. PCR-PROMPT-001 — Akzeptierte Nicht-JSON-Eigenschaften gehen verloren](components/lib.prompt-contract.md).
+- [PCR-CONTRACT-PLUGIN-001 — Leeres Plugin passiert die Manifestvalidierung](components/contract.plugin-system.md).
+- [PCR-AGENT-CONTRACT-001 — Tiefe gültige JSON-Nutzlast überläuft Validatorstack](components/contract.agent-events.md).
+- [PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten](components/lib.sdk.md).
+- [PCR-SDK-002 — Deklarierter Workspacebuild nicht ausführbar](components/lib.sdk.md).
+- [PCR-OBS-001 — Persistierte Admission-/Attemptzustände umgehen Replayvalidierung](components/foundation.observability.md).
+- [PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt](components/foundation.observability.md).
+- [PCR-STATE-001 — Journal-Cache enthält fremd veränderbare Payloads](components/nova.state.md).
+- [PCR-STATE-002 — Stale-Lock-Übernahme ist nicht an beobachteten Besitzer gebunden](components/nova.state.md).
+- [PCR-TELEM-001 — Release-Verifikation erwartet entfernten Auditobserver](components/nova.telemetry.md).
+- [12. PCR-WORKER-001 — Claim-Deadline deckt nicht alle Abschlussphasen ab](components/worker.core.md).
+- [PCR-PRISM-CONTROL-001 — Worker-Ergebnis ohne Envelope-Bindung angenommen](components/prism.service-control.md).
+- [PCR-PRISM-WORKER-001 — Pflicht-Logspeicher fehlt am Executor-Aufruf](components/prism.service-worker.md).
+- [PCR-PRISM-WORKER-002 — CPU-Messung zählt die gesamte Prozesslebensdauer](components/prism.service-worker.md).
 
-## Tests und Voraussetzungen
+Die Repros betreffen Originalimplementierungen und reale temporäre Dateien/
+Prozesse. Code-Traces und Verdachtsbefunde sind ausdrücklich davon getrennt.
 
-Unverändert ausgeführt und bestanden:
+- [PCR-PACKAGES-001 — Reportadaptersyntax nicht geprüft](components/foundation.packages.md).
+- [PCR-REGISTRY-001 — Globaler Schemacache verhindert Reload](components/foundation.registry.md).
+- [PCR-REGISTRY-002 — Securitytest bricht vor Autorisierungsmatrix ab](components/foundation.registry.md).
 
-- Lifecycle-Repair und SIGKILL-Wait-Recovery (2 node:test-Fälle).
-- Blobbudget/Rekonstruktion mit echten konkurrierenden Prozessen (1 Fall).
-- Journal-Scale mit 16 MiB und Phase7-Vertragsskript.
-- state-store-, prompt-contract- und blueprint-sync-Paketbefehle.
-- Worker-Vertrags-, SPIFFE-Parser-, Attempt-Executor- und LocalRuntime-Skripte.
+## Tests / blockierte Nachweise
 
-Vollständige Protokolle unter `evidence/`. Defektreproduktionen bestätigen
-fehlerhaftes Verhalten und sind keine positiven Regressionsergebnisse nach Fix.
-Alle gestarteten Testbefehle sind beendet. Keine neuen Testdoubles, keine
-Ersatzimplementierungen zum Erzwingen grüner Tests. Bestehende Worker-Testoperationen
-haben simulierte Hooks/Ressourcen; ihre Aussage ist auf Core-Steuerfluss begrenzt.
-Blueprint-Test nutzt echte Git-/Dateioperationen, aber MemoryResourceLockManager.
+Logs unter evidence/README.md und in jeder Komponente. Bisher bestanden:
+Lifecycle/Journal/State/Prompt/Blueprint, Worker-Vertrag/Executor/Runtime,
+Plugin-Vertrag/SDK-Generator, echte Git-Revisiontests, Promptbudget, Agentvertrag/
+Typecheck, Delivery/Attempt/View, Nova-Reconciliation, Audit/Observer-Recovery,
+Platformconfig. Einige vorhandene Worker-/Reconciliationtests verwenden
+synthetische Vertragsresults/Operationen; keine echten Worker-/Agenten behauptet.
 
-Node v24.19.0; node_modules aus lokaler inhaltsgleicher Arbeitskopie kopiert,
-relative Workspace-Links auf die eigene Arbeitskopie verifiziert. Kein frisches
-npm ci und kein Clean-Install-Nachweis. Nicht ausgeführt: echte Prism-Dienste mit
-Postgres/Browser, vollständige isolierte Provider-Suite, Live-Agenten, Cluster,
-Host-Crash und sämtliche weiteren Paketsuiten. Voraussetzungen nicht durch
-Mocks ersetzt. Historisch berichtete CI-Ergebnisse gelten nur für ihren Commit.
+Fehlgeschlagen: SDK-Workspacebuild (fehlende tsconfig.json), Phase12-Releasecheck
+(überholte Observerzahl 6 statt5). Blockiert: Observability-Cross-Language-Test
+(Go fehlt, Gesamtbefehl Exit1 trotz durchlaufener vorheriger TS-Assertions).
+Nicht ausgeführt: CI, Livecluster/-agenten, echte Prism-Services mit Postgres/
+Browser, Clean-Install und flächendeckende Crash-/ENOSPC-Tests. Dependencykopie
+stammt weiterhin aus identischem lokalem Ausgangscode; Node v24.19.0.
 
-## Unmittelbarer nächster Schritt und Reihenfolge
+## Neue Einordnungen und Qualitätsstand
 
-1. Inventar vervollständigen: tatsächliche Plattform-Auswahl im Role-Bundle-Builder
-   und dessen Konfigurationsinputs verfolgen, dynamische Imports, Pipeline-Hilfs-
-   skripte außerhalb skills und Spike-/Legacy-Nutzung überprüfen. Buster-Engine
-   ggf. sinnvoll unterteilen. responsibility/infra-Zuordnungen ungeprüfter Einheiten
-   sind noch offen. Das Inventar darf noch nicht als vollständig bezeichnet werden.
-2. Gemeinsame Vertragsreviews fortsetzen: Test-Gate,
-   Observability/Agent-Events/Telemetry/Prism. Worker-Vertrag ist abgeschlossen.
-3. Foundation-Persistenz: `durable-attempts.ts` vollständig lesen (767 Zeilen),
-   Completion/Evidence-Commitpunkte gegen Buster-Runner und Nova-Reconciler prüfen.
-   `durable-records.ts` und `durable-delivery.ts` sind gelesen, übrige Delivery-/
-   Attempt-Tests und `clawdeck-view.ts` fehlen. Blob-Test wurde vollständig gelesen.
-4. Nova Effects/Execution/Lifecycle/Telemetry systematisch abschließen. Bisher
-   gelesene Abhängigkeitsabschnitte sind in nova.state verzeichnet; kein Abschluss
-   dieser übergeordneten Komponenten behauptet. Mutex-Befund dort verlinken.
-5. Alle 82 übrigen Einheiten einzeln weiterbearbeiten. Prism-Control hat nur
-   runWorker-Abgleich, Prism-Worker den Service-/Executor-Pfad: Engine, Storage,
-   Browser-Lifecycle, Tests und weitere Control-Routen bleiben offen.
+Schema Revision3 ergänzt Serialisierung/Getter/Sparsearray/Tiefen-/Knotenbudget
+und deklarierte Paket-/Generierungsvoraussetzungen. Rückprüfung früherer
+Abschlüsse im README dokumentiert. Foundation-Admission replayt anders als
+RecordStore unvalidierte Metadaten; tatsächlicher Fehler reproduziert.
+Agent-Bridge-Redisconsumer und Nova-Reconciliation-Planwriter im Produktcode
+nicht gefunden. Gleichnamige v2-Observer bzw. Remoteimporte sind andere Pfade.
+Nicht vorschnell als durchgängig aktive Pipelineverbindungen dokumentieren.
 
-## Historische Befunde / Dokumentationslücken
+Alte Audits nur für gelesene Eigentümerpfade erneut bewertet; ihre „clean“- und
+CI-Aussagen gelten nicht ungeprüft für aktuellen Code. Fremde Änderungen nicht
+überschreiben, Remote-Branch vor Update erneut lesen, niemals force-push.
 
-`docs/architecture/pipeline-reliability-remediation.md` wurde gelesen und gegen
-berührte Pfade geprüft: torn-tail/incremental journal implementiert und lokal
-bestätigt, weitergehender Konkurrenzschutz durch PCR-STATE-002 widerlegt;
-Storage-Retention W6 weiterhin offen. Weitere ältere Auditberichte sind
-inventarisiert, aber noch nicht systematisch erneut geprüft.
-
-Veraltet: Worker-Contract-README nennt inzwischen implementierte Phasen als Zukunft;
-Prompt-Bibliothek behauptet stärkere Serialisierungsgarantien als umgesetzt.
-Unvollständig: Mutex-/Payload-Ownership-Grenzen, State-Store-Retention und
-Abbruchsemantik, verpflichtende Worker-Logspeicherung, Ressourcenmessung und
-Empfängerbindung. Produktdokumentation bleibt unverändert.
-
-## Fortsetzungsregeln
-
-README enthält Schema Revision 2 und Nachprüfungsregel. Neue Erkenntnisse nicht
-nur auf kommende Komponenten anwenden. Baseline vor Weiterarbeit vergleichen;
-abweichende Codeversionen gezielt nachprüfen. Nur docs/review schreiben;
-Branch vor Update erneut lesen, nie force-pushen. Commits mit [skip ci].
-Keine privaten Betriebswerte/Secrets übernehmen. Infrastruktur bleibt Folgeauftrag.
-
-Fortschritt bei Wiederaufnahme: contract.plugin-system und lib.sdk abgeschlossen.
-PCR-CONTRACT-PLUGIN-001 (leeres Manifest), PCR-SDK-001 (ungültige/kollidierende
-Serialisierung), PCR-SDK-002 (Paketbuild TS5058) neu. Vier zugehörige Prüfkommandos
-bestanden, Paketbuild fehlgeschlagen; Logs und Reproduktion in evidence/.
-
-contract.agent-events abgeschlossen: API/Producerseite/fehlende Consumerzuordnung
-geprüft; PCR-AGENT-CONTRACT-001 Stacküberlauf mit echter 20-KiB-JSON-Eingabe.
-Pakettest und Typecheck bestanden. Generierte Extensionkopie lokal nicht vorhanden.
+Registry jetzt vollständig geprüft; 3 Registrytests bestanden, Import-Safety und
+Capability-Security fehlgeschlagen (Details/noch nicht erreichte Assertions im
+Review). Nächster konkreter Schritt: Foundation.isolation vier Quelldateien
+und vorhandene Prozess-/Sandboxprüfungen, danach restliche Verträge/Core.

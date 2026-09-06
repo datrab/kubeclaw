@@ -1,0 +1,8 @@
+$ node tests/verification/contracts/check-plugin-system-v2-installation.mjs
+{"ok":true,"contract":"plugin-system-v2-installation"}
+
+exit=0
+$ node docs/review/evidence/install-report-syntax.mjs
+PCR-PACKAGES-001: production installer accepts syntactically invalid report-adapter-only package
+
+exit=0
