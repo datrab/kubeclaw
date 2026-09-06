@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import * as core from '@kubeclaw/nova-core';
-import type { ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
 /** Actual core, remote adapter, Buster service, isolated assertion and artifact store.
  * The local evaluator executes a source assertion; this does not claim LLM quality.
@@ -12,6 +12,12 @@ export async function verifyQualityProviderRuntime(options: {
   repository: string; stateRoot: string; endpoint: string; token: string;
   privateKey: string; plan: ResolvedTestPlanV1; revision: string; expected: 'passed' | 'request_fix';
 }) {
+  // These are independent executions, not a replay of one logical attempt.
+  // Reusing run/stage/attempt while changing source correctly causes a conflict.
+  const runId = `${options.plan.runId}:quality:${options.expected}`;
+  const { planDigest: _originalDigest, ...original } = options.plan;
+  const unsigned = { ...original, runId };
+  const plan = { ...unsigned, planDigest: resolvedTestPlanDigest(unsigned) };
   const repository = path.resolve('.');
   const temporary = options.repository;
   const endpoint = options.endpoint;
@@ -29,7 +35,7 @@ export async function verifyQualityProviderRuntime(options: {
       dispatches += 1;
       try {
         const payload = JSON.parse(body);
-        assert.equal(payload.identity.runId, options.plan.runId);
+        assert.equal(payload.identity.runId, runId);
         assert.equal(payload.identity.attempt, 1);
         assert.ok(payload.suiteEvidence.length > 1);
         assert.ok(payload.suiteEvidence.every((item: { passed: boolean }) => item.passed));
@@ -139,14 +145,14 @@ export async function verifyQualityProviderRuntime(options: {
         stages: [{ id: 'quality', type: 'kubeclaw.test.quality-evaluation', dependsOn: [],
           config: { agent: 'gate' }, input: { gateId: 'quality', task: 'Evaluate verified source checks.',
             providerPlan: { repositoryRoot: temporary, repositoryId: 'repository:phase7-real',
-              plan: options.plan, grants: { 'real-provider': [] }, maximumConcurrency: 1,
+              plan, grants: { 'real-provider': [] }, maximumConcurrency: 1,
               submittedAt: options.plan.createdAt, timeoutMs: 30000, revision: options.revision } },
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 45000 } }],
       }, registry: granted, activated, adapters,
       orchestratorIssuerId: 'quality-proof',
       journal: new core.FileJournal(path.join(options.stateRoot, 'events.jsonl')),
     });
-    const result = await runner.run(options.plan.runId);
+    const result = await runner.run(runId);
     const events = fs.readFileSync(path.join(options.stateRoot, 'events.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);
     const completed = events.filter(event => event.type === 'attempt.completed');
     assert.equal(completed.at(-1)?.payload.result?.outcome, options.expected, JSON.stringify({ result, completed }));

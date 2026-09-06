@@ -186,7 +186,7 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
     const abort = () => { try { chrome?.kill(); } catch { /* Best-effort abort cleanup. */ } };
     signal.addEventListener('abort', abort, { once: true });
     try {
-      chrome = await launch({ chromePath: this.#options.chromeExecutable, chromeFlags: [
+      chrome = await launch({ logLevel: 'error', chromePath: this.#options.chromeExecutable, chromeFlags: [
         '--headless=new', '--disable-gpu', '--disable-dev-shm-usage',
         '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
         `--proxy-server=http://127.0.0.1:${proxy.port}`, '--proxy-bypass-list=<-loopback>',
