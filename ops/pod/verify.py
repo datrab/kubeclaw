@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Real in-pod MCP verification; no fixture responses or outage injection."""
 import json
+import os
 from pathlib import Path
 import urllib.request
 
@@ -24,6 +25,6 @@ def call(method, params):
 assert not Path('/var/run/secrets/kubernetes.io/serviceaccount/token').exists(), 'Codex must not mount the observer token'
 tools = call('tools/list', {})['tools']
 assert any(tool['name'] == 'namespace_overview' for tool in tools)
-call('tools/call', {'name': 'namespace_overview', 'arguments': {'namespace': 'kubeclaw'}})
+call('tools/call', {'name': 'namespace_overview', 'arguments': {'namespace': os.environ['OPS_DEFAULT_NAMESPACE']}})
 call('tools/call', {'name': 'platform_cluster_state', 'arguments': {'resource': 'nodes'}})
 print('PASS: actual MCP tools, Kubernetes reads and Codex credential isolation. Pairing and pipeline health require separate live observation.')

@@ -33,6 +33,7 @@ export function createKubeRequest({
           bytes += chunk.length;
           if (bytes > maxBytes) {
             const error = new Error('Kubernetes response exceeds the byte limit; narrow the query');
+            error.code = 'KUBERNETES_RESPONSE_TOO_LARGE';
             reject(error);
             req.destroy(error);
             return;
@@ -57,5 +58,41 @@ export function createKubeRequest({
       req.on('error', reject);
       req.end();
     });
+  };
+}
+
+// Shared by workload and event pagination; failed attempts do not consume pages.
+export function createKubeList(kubeRequest) {
+  return async function kubeList(path, { pageSize = 500, params = {}, mapItem = item => item, maxPages = Infinity, continueToken = null } = {}) {
+    if (!Number.isInteger(pageSize) || pageSize < 1) throw new Error('pageSize must be a positive integer');
+    let continuation = continueToken;
+    const deadline = Number.isFinite(maxPages) ? Date.now() + 30_000 : Infinity;
+    const items = [];
+    let pages = 0;
+
+    do {
+      const query = new URLSearchParams(params);
+      query.set('limit', String(pageSize));
+      if (continuation) query.set('continue', continuation);
+
+      let page;
+      while (true) {
+        try {
+          page = await kubeRequest(`${path}?${query.toString()}`);
+          break;
+        } catch (error) {
+          // Retry only oversized pages, preserving selectors and continuation.
+          // Never relax the transport ceiling, and fail if even one item is too big.
+          if (error.code !== 'KUBERNETES_RESPONSE_TOO_LARGE' || pageSize === 1 || Date.now() >= deadline) throw error;
+          pageSize = Math.max(1, Math.floor(pageSize / 2));
+          query.set('limit', String(pageSize));
+        }
+      }
+      items.push(...(page.items ?? []).map(mapItem));
+      pages += 1;
+      continuation = page?.metadata?.continue || null;
+    } while (continuation && pages < maxPages && Date.now() < deadline);
+
+    return { items, pages, continuation, partial: Boolean(continuation) };
   };
 }

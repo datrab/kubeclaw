@@ -84,3 +84,12 @@ test('the actual pinned Codex CLI accepts the installed MCP config and exposes p
     assert.equal(spawnSync(codex, ['login', 'status'], { env, stdio: 'pipe' }).status, 1);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('custom observer namespace is shared by MCP and the Codex verification process', () => {
+  const resources = render(['--set', 'defaultNamespace=platform', '--set', 'rbac.namespaces[0]=platform']);
+  const pod = resources.find(x => x.kind === 'StatefulSet').spec.template.spec;
+  for (const container of pod.containers) {
+    assert.equal(container.env.find(x => x.name === 'OPS_DEFAULT_NAMESPACE').value, 'platform');
+  }
+  assert.deepEqual(resources.filter(x => x.kind === 'RoleBinding').map(x => x.metadata.namespace), ['platform']);
+});

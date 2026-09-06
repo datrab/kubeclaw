@@ -46,7 +46,7 @@ case ${1:-help} in
     # Negative control uses the MCP's REAL mounted observer token. Only a 403
     # counts as success; missing files, network failure and 401 fail the check.
     "${k[@]}" -n "$namespace" exec "$pod" -c ops-mcp -- node --input-type=module -e \
-      'import {createKubeRequest} from "/app/src/kubernetes.mjs"; try {await createKubeRequest()("/api/v1/namespaces/kubeclaw/secrets");process.exit(1)} catch(e) {if(!e.message.includes("Kubernetes API 403:"))throw e; console.log("PASS: observer Secret access denied by API");}'
+      'import {createKubeRequest} from "/app/src/kubernetes.mjs"; try {await createKubeRequest()("/api/v1/namespaces/" + encodeURIComponent(process.env.OPS_DEFAULT_NAMESPACE) + "/secrets");process.exit(1)} catch(e) {if(!e.message.includes("Kubernetes API 403:"))throw e; console.log("PASS: observer Secret access denied by API");}'
     ;;
   *) echo "Usage: $0 deploy|login|github-login|pair|shell|status|verify"; exit 1 ;;
 esac

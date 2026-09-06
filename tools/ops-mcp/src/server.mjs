@@ -1,7 +1,7 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
-import { createKubeRequest } from './kubernetes.mjs';
+import { createKubeRequest, createKubeList } from './kubernetes.mjs';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
@@ -12,7 +12,7 @@ const kubeRequest = createKubeRequest();
 const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
 const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
 const MAX_LOG_BYTES = 64 * 1024;
-const LIST_PAGE_SIZE = 500;
+const kubeList = createKubeList(kubeRequest);
 const EVENT_PAGE_SIZE = 500;
 
 const optionalBearerToken = (process.env.OPS_MCP_BEARER_TOKEN_FILE
@@ -43,25 +43,6 @@ function trimObjectMetadata(item) {
   };
 }
 
-async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item, maxPages = Infinity, continueToken = null } = {}) {
-  let continuation = continueToken;
-  const deadline = Number.isFinite(maxPages) ? Date.now() + 30_000 : Infinity;
-  const items = [];
-  let pages = 0;
-
-  do {
-    const query = new URLSearchParams(params);
-    query.set('limit', String(pageSize));
-    if (continuation) query.set('continue', continuation);
-
-    const page = await kubeRequest(`${path}?${query.toString()}`);
-    items.push(...(page.items ?? []).map(mapItem));
-    pages += 1;
-    continuation = page?.metadata?.continue || null;
-  } while (continuation && pages < maxPages && Date.now() < deadline);
-
-  return { items, pages, continuation, partial: Boolean(continuation) };
-}
 
 function deploymentSummary(item) {
   return {
@@ -137,12 +118,12 @@ async function recentEvents(namespace, objectName, limit) {
   let pages = 0;
 
   do {
-    const params = new URLSearchParams({ limit: String(EVENT_PAGE_SIZE) });
+    const params = new URLSearchParams();
     if (objectName) params.set('fieldSelector', `involvedObject.name=${objectName}`);
-    if (continuation) params.set('continue', continuation);
 
-    const page = await kubeRequest(
-      `/api/v1/namespaces/${encodeURIComponent(namespace)}/events?${params.toString()}`,
+    const page = await kubeList(
+      `/api/v1/namespaces/${encodeURIComponent(namespace)}/events`,
+      { pageSize: EVENT_PAGE_SIZE, params, maxPages: 1, continueToken: continuation },
     );
     const pageEvents = (page.items ?? []).map(eventSummary);
     scanned += pageEvents.length;
@@ -151,7 +132,7 @@ async function recentEvents(namespace, objectName, limit) {
     // Keep only the newest requested events while still scanning every page.
     // This avoids materializing an unbounded namespace event history in memory.
     events = sortEvents([...events, ...pageEvents]).slice(0, limit);
-    continuation = page?.metadata?.continue || null;
+    continuation = page.continuation;
   } while (continuation);
 
   return { events, scanned, pages };

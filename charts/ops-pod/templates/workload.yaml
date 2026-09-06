@@ -51,6 +51,7 @@ spec:
           image: {{ .Values.codexImage | quote }}
           env:
             - {name: HOME, value: /home/node}
+            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
             {{- if .Values.githubSecret }}
             - name: GH_TOKEN
               valueFrom:
