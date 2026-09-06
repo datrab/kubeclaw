@@ -22,7 +22,7 @@ Pod itself is unreachable; this design does not replace that path.
 | Ops MCP | None | Read-only Kubernetes observer, exact discovered namespaces; nodes and global Cilium policies |
 | Optional Tailscale | Separate 1 GiB PVC | Outbound SOCKS5 on localhost:1055, subject to tailnet grants |
 
-Default CPU/memory requests total 125m/320Mi; limits total 2.5 CPU/3456Mi without
+Default CPU/memory requests total 125m/320Mi; limits total 2.5 CPU/3584Mi without
 Tailscale. These are initial scheduling budgets, not measured consumption. Local
 builds may need larger limits. Storage uses the cluster's default StorageClass
 unless overridden. With local-path storage, PVCs remain dependent on their node.

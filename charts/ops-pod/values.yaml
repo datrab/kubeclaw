@@ -16,7 +16,7 @@ resources:
     limits: {cpu: "2", memory: 3Gi}
   mcp:
     requests: {cpu: 25m, memory: 64Mi}
-    limits: {cpu: 500m, memory: 384Mi}
+    limits: {cpu: 500m, memory: 512Mi}
 
 rbac:
   # The deployment helper discovers existing platform namespaces. RoleBindings
