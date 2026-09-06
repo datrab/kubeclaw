@@ -1,21 +1,27 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
+import { createKubeRequest, createKubeList } from './kubernetes.mjs';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
 
 const PORT = Number.parseInt(process.env.PORT ?? '8080', 10);
 const HOST = process.env.HOST ?? '0.0.0.0';
-const KUBE_API = process.env.KUBERNETES_API_URL ?? 'https://kubernetes.default.svc';
-const SERVICE_ACCOUNT_DIR = '/var/run/secrets/kubernetes.io/serviceaccount';
+const kubeRequest = createKubeRequest();
 const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
 const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
 const MAX_LOG_BYTES = 64 * 1024;
-const LIST_PAGE_SIZE = 500;
+const kubeList = createKubeList(kubeRequest);
 const EVENT_PAGE_SIZE = 500;
 
-const optionalBearerToken = process.env.OPS_MCP_BEARER_TOKEN?.trim() || null;
+const optionalBearerToken = (process.env.OPS_MCP_BEARER_TOKEN_FILE
+  ? readFileSync(process.env.OPS_MCP_BEARER_TOKEN_FILE, 'utf8').trim()
+  : process.env.OPS_MCP_BEARER_TOKEN?.trim()) || null;
+if (process.env.OPS_LOCAL_ONLY === '1' &&
+    (HOST !== '127.0.0.1' || !optionalBearerToken || optionalBearerToken.length < 32)) {
+  throw new Error('Local-only MCP requires HOST=127.0.0.1 and a bearer token of at least 32 characters');
+}
 const allowedOrigins = new Set(
   (process.env.MCP_ALLOWED_ORIGINS ?? '')
     .split(',')
@@ -37,46 +43,6 @@ function trimObjectMetadata(item) {
   };
 }
 
-function readServiceAccountToken() {
-  return readFileSync(`${SERVICE_ACCOUNT_DIR}/token`, 'utf8').trim();
-}
-
-async function kubeRequest(path, { asText = false } = {}) {
-  const response = await fetch(`${KUBE_API}${path}`, {
-    headers: {
-      Authorization: `Bearer ${readServiceAccountToken()}`,
-      Accept: asText ? 'text/plain' : 'application/json',
-    },
-    signal: AbortSignal.timeout(10_000),
-  });
-
-  const body = asText ? await response.text() : await response.json();
-  if (!response.ok) {
-    const detail = asText ? body : body?.message ?? JSON.stringify(body);
-    throw new Error(`Kubernetes API ${response.status}: ${detail}`);
-  }
-  return body;
-}
-
-async function kubeList(path, { pageSize = LIST_PAGE_SIZE, params = {}, mapItem = item => item, maxPages = Infinity, continueToken = null } = {}) {
-  let continuation = continueToken;
-  const deadline = Number.isFinite(maxPages) ? Date.now() + 30_000 : Infinity;
-  const items = [];
-  let pages = 0;
-
-  do {
-    const query = new URLSearchParams(params);
-    query.set('limit', String(pageSize));
-    if (continuation) query.set('continue', continuation);
-
-    const page = await kubeRequest(`${path}?${query.toString()}`);
-    items.push(...(page.items ?? []).map(mapItem));
-    pages += 1;
-    continuation = page?.metadata?.continue || null;
-  } while (continuation && pages < maxPages && Date.now() < deadline);
-
-  return { items, pages, continuation, partial: Boolean(continuation) };
-}
 
 function deploymentSummary(item) {
   return {
@@ -152,12 +118,12 @@ async function recentEvents(namespace, objectName, limit) {
   let pages = 0;
 
   do {
-    const params = new URLSearchParams({ limit: String(EVENT_PAGE_SIZE) });
+    const params = new URLSearchParams();
     if (objectName) params.set('fieldSelector', `involvedObject.name=${objectName}`);
-    if (continuation) params.set('continue', continuation);
 
-    const page = await kubeRequest(
-      `/api/v1/namespaces/${encodeURIComponent(namespace)}/events?${params.toString()}`,
+    const page = await kubeList(
+      `/api/v1/namespaces/${encodeURIComponent(namespace)}/events`,
+      { pageSize: EVENT_PAGE_SIZE, params, maxPages: 1, continueToken: continuation },
     );
     const pageEvents = (page.items ?? []).map(eventSummary);
     scanned += pageEvents.length;
@@ -166,7 +132,7 @@ async function recentEvents(namespace, objectName, limit) {
     // Keep only the newest requested events while still scanning every page.
     // This avoids materializing an unbounded namespace event history in memory.
     events = sortEvents([...events, ...pageEvents]).slice(0, limit);
-    continuation = page?.metadata?.continue || null;
+    continuation = page.continuation;
   } while (continuation);
 
   return { events, scanned, pages };
@@ -185,6 +151,40 @@ function buildServer() {
         'Never claim that a deployment or repair was performed: this server has no write capability.',
     },
   );
+
+  if (process.env.OPS_LOCAL_ONLY === '1') {
+    server.registerTool('platform_cluster_state', {
+      title: 'Nodes and global Cilium policies',
+      description: 'Read node health or global Cilium policies through the host API. Does not execute in nodes or Cilium pods.',
+      inputSchema: z.object({ resource: z.enum(['nodes', 'ciliumclusterwidenetworkpolicies']), continueToken: z.string().max(16384).optional() }),
+      annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    }, async ({ resource, continueToken }) => {
+      const path = resource === 'nodes' ? '/api/v1/nodes' : '/apis/cilium.io/v2/ciliumclusterwidenetworkpolicies';
+      const page = await kubeList(path, { pageSize: 50, maxPages: 1, continueToken,
+        mapItem: item => resource === 'nodes'
+          ? { ...trimObjectMetadata(item), conditions: item.status?.conditions, nodeInfo: item.status?.nodeInfo, capacity: item.status?.capacity }
+          : { ...trimObjectMetadata(item), spec: item.spec, specs: item.specs, status: item.status },
+      });
+      return jsonText({ ...page, nextContinueToken: page.continuation });
+    });
+    server.registerTool('platform_network_state', {
+      title: 'Platform network state',
+      description: 'Read Cilium workloads or namespaced policies through the direct Kubernetes API. Missing Cilium CRDs are reported as unavailable, not healthy.',
+      inputSchema: z.object({
+        namespace: z.string().regex(/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/).default(DEFAULT_NAMESPACE),
+        resource: z.enum(['daemonsets', 'networkpolicies', 'ciliumnetworkpolicies']),
+        continueToken: z.string().max(16384).optional(),
+      }),
+      annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    }, async ({ namespace, resource, continueToken }) => {
+      const groups = { daemonsets: 'apps/v1', networkpolicies: 'networking.k8s.io/v1', ciliumnetworkpolicies: 'cilium.io/v2' };
+      const page = await kubeList(`/apis/${groups[resource]}/namespaces/${namespace}/${resource}`, {
+        pageSize: 50, maxPages: 1, continueToken,
+        mapItem: item => ({ ...trimObjectMetadata(item), spec: item.spec, status: item.status }),
+      });
+      return jsonText({ ...page, nextContinueToken: page.continuation });
+    });
+  }
 
   server.registerTool(
     'list_argocd_applications',
@@ -486,4 +486,3 @@ async function shutdown(signal) {
 
 process.on('SIGTERM', () => void shutdown('SIGTERM'));
 process.on('SIGINT', () => void shutdown('SIGINT'));
-
