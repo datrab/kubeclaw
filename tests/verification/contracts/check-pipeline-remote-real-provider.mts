@@ -166,6 +166,8 @@ export function provider() {
     assert.equal(broken.remote.decision.state, 'failed');
     assert.equal(broken.remote.stageResult.outcome, 'request_fix');
     assert.notEqual(broken.remote.decision.decisionDigest, executed.remote.decision.decisionDigest);
+    await assert.rejects(() => busterStore.complete(broken.remote.status.jobId, storedResult, new Date().toISOString()), /BUSTER_REMOTE_RESULT_IDENTITY_MISMATCH/);
+    assert.equal((await busterStore.get(broken.remote.status.jobId)).payload.status.result?.contentDigest, broken.remote.status.result?.contentDigest);
     await verifyQualityProviderRuntime({ repository, stateRoot: path.join(temporary, 'quality-failed'),
       endpoint: `http://127.0.0.1:${address.port}`, token, privateKey: sourceAttestationPrivateKey.toString(), plan,
       revision: execFileSync('git', ['-C', repository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), expected: 'request_fix' });

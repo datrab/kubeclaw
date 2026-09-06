@@ -26,7 +26,7 @@ import {
   type DurableRecord,
   type DurableRecordLimits,
 } from '@kubeclaw/plugin-foundation/observability/durable-records';
-import { ensureDirectoryDurable } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
+import { ensureDirectoryDurable, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
 import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';
 import { TestPlanRunner, type TestPlanRunResult } from './runner.ts';
 import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
@@ -63,6 +63,8 @@ export class FileBusterPlanJobStore {
   readonly #results: FileDurableBlobStore;
   readonly #maximumArchiveBytes: number;
   readonly #maximumResultBytes: number;
+  readonly #maximumResultStoreBytes: number;
+  readonly #admissionLock: string;
   readonly #trustedSourceAuthority: string;
   readonly #sourceAttestationPublicKey: string | Buffer;
 
@@ -73,6 +75,8 @@ export class FileBusterPlanJobStore {
     if (!Number.isSafeInteger(options.maximumResultBytes) || options.maximumResultBytes < 1) {
       throw new Error('BUSTER_REMOTE_RESULT_LIMIT_INVALID');
     }
+    this.#admissionLock = path.join(path.resolve(root), 'job-admission');
+    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
     this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
@@ -116,13 +120,22 @@ export class FileBusterPlanJobStore {
 
   async accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
     this.#preflight(job);
-    const existingRecord = (await this.records()).find((item) => item.idempotencyKey === job.idempotencyKey);
+    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));
+  }
+
+  async #accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
+    const records = await this.records();
+    const existingRecord = records.find((item) => item.idempotencyKey === job.idempotencyKey);
     if (existingRecord) {
       if (existingRecord.payload.job.jobId !== job.jobId
         || existingRecord.payload.job.requestDigest !== job.requestDigest) {
         throw new Error('BUSTER_REMOTE_JOB_CONFLICT');
       }
       return structuredClone(existingRecord.payload.status);
+    }
+    const reservedBytes = records.reduce((sum, record) => sum + (record.payload.status.result?.sizeBytes ?? this.#maximumResultBytes), 0);
+    if (!Number.isSafeInteger(reservedBytes) || reservedBytes + this.#maximumResultBytes > this.#maximumResultStoreBytes) {
+      throw new Error('BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED');
     }
     const status: RemotePlanStatusV1 = {
       schemaVersion: 'buster-plan-status.v1', jobId: job.jobId,
@@ -190,12 +203,19 @@ export class FileBusterPlanJobStore {
 
   async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {
     validatePipelineTestGateContract('remotePlanResult', result);
+    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));
+  }
+
+  async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {
+    const current = await this.get(jobId);
+    const job = current.payload.job;
+    if (result.jobId !== jobId || result.planId !== job.plan.planId
+      || result.planDigest !== job.plan.planDigest || result.runId !== job.plan.runId) throw new Error('BUSTER_REMOTE_RESULT_IDENTITY_MISMATCH');
     const bytes = Buffer.from(canonicalJson(result));
     if (bytes.byteLength > this.#maximumResultBytes) throw new Error('BUSTER_REMOTE_RESULT_SIZE_EXCEEDED');
-    const storedResult = await this.#results.put(bytes);
-    const current = await this.get(jobId);
+    const contentDigest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
     if (current.payload.status.state === 'completed') {
-      if (current.payload.status.result?.contentDigest !== storedResult.digest
+      if (current.payload.status.result?.contentDigest !== contentDigest
         || current.payload.status.result.resultDigest !== result.resultDigest) {
         throw new Error('BUSTER_REMOTE_RESULT_CONFLICT');
       }
@@ -204,6 +224,7 @@ export class FileBusterPlanJobStore {
     if (current.payload.status.state !== 'running') {
       throw new Error(`BUSTER_REMOTE_JOB_STATE_CONFLICT:${current.payload.status.state}`);
     }
+    const storedResult = await this.#results.put(bytes);
     const status: RemotePlanStatusV1 = {
       ...current.payload.status,
       state: 'completed',

@@ -149,7 +149,9 @@ const busterStore = new FileBusterPlanJobStore(path.join(temporary, 'buster-stat
   recordLimits: { maximumRecords: 100, maximumBytes: 16 * 1024 * 1024, maximumRecordBytes: 8 * 1024 * 1024 },
   maximumArchiveBytes: 1024 * 1024,
   maximumResultBytes: 16 * 1024 * 1024,
-  maximumResultStoreBytes: 64 * 1024 * 1024,
+  // This suite isolates transport/queue behavior; result-reservation.test.mts
+  // separately verifies strict capacity rejection with competing processes.
+  maximumResultStoreBytes: 100 * 16 * 1024 * 1024,
   trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
 });
 const executionCounts = new Map<string, number>();
