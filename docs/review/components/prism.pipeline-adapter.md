@@ -29,7 +29,7 @@ Dokumentationsstatus: unvollständig (Abgleich offen).
 
 ## Aufrufer- und Abhängigkeitsbelege
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
 
 - `docs/architecture/pipeline-test-gate-visual-cutover-inventory.json:23`
 - `docs/implementation/prism-implementation-plan.md:220`

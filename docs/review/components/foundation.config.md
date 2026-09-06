@@ -29,7 +29,7 @@ Dokumentationsstatus: unvollständig (Abgleich offen).
 
 ## Aufrufer- und Abhängigkeitsbelege
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
 
 - `charts/kubeclaw/files/config/eslint.config.mjs:43`
 - `tests/verification/e2e/run-v2-production-pipeline.mts:18`

@@ -17,11 +17,11 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [kubeclaw.openclaw-agent-events](components/kubeclaw.openclaw-agent-events.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw-agent-observer](components/kubeclaw-agent-observer.md) | OpenClaw-Extension; Rollen: nova, buster, prism | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.operator-messaging](components/kubeclaw.operator-messaging.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [lib.prompt-contract](components/lib.prompt-contract.md) | Registrierungslose Bibliothek; Produktionsimporte nicht gefunden | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |
+| [lib.prompt-contract](components/lib.prompt-contract.md) | Ungenutzt im verfolgten Produktionscode; nur eigene Tests | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [kubeclaw.redis-transport](components/kubeclaw.redis-transport.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.runtime-dispatch](components/kubeclaw.runtime-dispatch.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.secret-resolver](components/kubeclaw.secret-resolver.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [kubeclaw.state-store](components/kubeclaw.state-store.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [kubeclaw.state-store](components/kubeclaw.state-store.md) | Nova: blueprint-sync → state.append; produktiver state.read-Aufrufer nicht gefunden | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |
 | [kubeclaw.telemetry-observer](components/kubeclaw.telemetry-observer.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.telemetry-store](components/kubeclaw.telemetry-store.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.transport-publisher](components/kubeclaw.transport-publisher.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
@@ -57,7 +57,7 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [kubeclaw.tailscale-exposure](components/kubeclaw.tailscale-exposure.md) | Ausgeliefert in: buster; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.visual](components/kubeclaw.visual.md) | Ausgeliefert in: buster; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.plugin-system](components/contract.plugin-system.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [contract.worker](components/contract.worker.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [contract.worker](components/contract.worker.md) | Buster/Prism Envelope + Executor; Binding-/Trust-Helfer nur testgenutzt | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.test-gate](components/contract.test-gate.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.observability](components/contract.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.agent-events](components/contract.agent-events.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
@@ -68,8 +68,8 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [foundation.config](components/foundation.config.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [foundation.isolation](components/foundation.isolation.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [foundation.packages](components/foundation.packages.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [foundation.observability](components/foundation.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [nova.state](components/nova.state.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | teilweise geprüft | `85ddfcbf` |
+| [foundation.observability](components/foundation.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | teilweise geprüft | `85ddfcbf` |
+| [nova.state](components/nova.state.md) | Aktive FileJournal-/FileMutex-Nutzung; PluginStateJournal nur Testaufrufer | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |
 | [nova.effects](components/nova.effects.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.execution](components/nova.execution.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.lifecycle](components/nova.lifecycle.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
@@ -78,7 +78,7 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [nova.test-gates](components/nova.test-gates.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.entry](components/nova.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.scaffold](components/nova.scaffold.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [worker.core](components/worker.core.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [worker.core](components/worker.core.md) | Buster: Runtime + Executor; Prism: Executor direkt | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [buster.engine](components/buster.engine.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [buster.entry](components/buster.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.control](components/prism.control.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
@@ -92,8 +92,8 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [prism.renderer](components/prism.renderer.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.storage](components/prism.storage.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.studio](components/prism.studio.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [prism.service-control](components/prism.service-control.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
-| [prism.service-worker](components/prism.service-worker.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
+| [prism.service-control](components/prism.service-control.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | teilweise geprüft | `85ddfcbf` |
+| [prism.service-worker](components/prism.service-worker.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | teilweise geprüft | `85ddfcbf` |
 | [prism.service-ingestion](components/prism.service-ingestion.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.service-studio](components/prism.service-studio.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.service-agent-bridge](components/prism.service-agent-bridge.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |

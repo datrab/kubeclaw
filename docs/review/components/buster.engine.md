@@ -86,7 +86,7 @@ Dokumentationsstatus: unvollständig (Abgleich offen).
 
 ## Aufrufer- und Abhängigkeitsbelege
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
 
 - `charts/kubeclaw/files/config/knip.json:59`
 - `docker/buster-runtime-entrypoint.sh:319`

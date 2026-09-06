@@ -1,12 +1,13 @@
 # nova.state — Journal und registrierungsgebundener Zustand
 
-Review-Status: teilweise geprüft. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
 Vollständig gelesen: `skills/nova/core/state/journal.ts`, `file-mutex.ts`,
 `plugins.ts`, `README.md`. Tests: Journal-/Plugin-State-Abschnitte von
 `check-plugin-system-v2-phase7.mjs`, kompletter `check-nova-journal-scale.mts`,
-`tests/verification/reliability/lifecycle.test.mts`. Noch offen: alle
-Produktionskonsumenten und konkrete Auswirkung der Alias-Mutation auf ihre Reducer.
+`tests/verification/reliability/lifecycle.test.mts`. Schnittstellenkonsumenten nachgeprüft: FileEffectJournal, Runner/StageExecutor,
+ArtifactCheckpointRecorder, Observer-Delivery, Audit und Reconciler-Einstieg.
+Die vollständigen fachlichen Reviews dieser Konsumenten bleiben eigene Inventarpunkte.
 
 ## 1–3. Verantwortung, Schnittstellen und Persistenz
 
@@ -126,3 +127,19 @@ Zusätzliche Nutzungsprüfung: `PluginStateJournal` wird im Produktionscode nur
 exportiert, nicht instanziiert; direkte Instanziierungen liegen in Vertragstests.
 Der aktive `state.append`-Pfad von blueprint-sync nutzt den separaten state-store.
 Das macht FileJournal nicht obsolet: Effects und Lifecycle nutzen ihn tatsächlich.
+
+## Abgeschlossener Gegenstellenabgleich
+
+`FileEffectJournal` übernimmt Request/Receipt in seine Maps und gibt diese
+Referenzen zurück (`effects/journal.ts:108–150,215–229`): dort existiert dieselbe
+Ownership-Grenze; PCR-STATE-001 bleibt zentral hier geführt. `runner.ts:56–59`
+appendiert Lifecycle-Payloads ohne Kopie. `stage-executor.ts:90–94` tut dies für
+Plugin-Domain-Events. `telemetry/observer-delivery.ts:18–28` übergibt `record.entry`
+als Event an den Observer, also eine konkrete nachgelagerte mutable Referenz.
+Dagegen kopiert ArtifactCheckpointRecorder Artefakte beim Aufnehmen/Lesen; Audit
+erzeugt eine neue redigierte Projektion. Reconciler liest vor der Entscheidung
+mit refresh. Das belegt betroffene Aufrufgrenzen, keinen manipulierten Live-Run.
+
+Keiner der untersuchten direkten Transaktionsaufrufer nutzt einen async-Callback.
+Synchronität ist für FileMutex Voraussetzung und im Review-Schema festgehalten.
+Die weiteren Auswirkungen sind Gegenstand der Effects-/Observer-/Core-Reviews.

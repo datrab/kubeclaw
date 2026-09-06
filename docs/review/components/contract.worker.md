@@ -1,78 +1,103 @@
-# contract.worker
+# contract.worker — neutraler Worker-Core-Vertrag v1
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung, Grenzen und tatsächliche Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+`contracts/pipeline-worker-core/v1`: sämtliche src-Dateien, Schema und README
+untersucht. Das Paket exportiert Types, Digest-, Validierungs- und Trust-Helfer.
+Rollenpakete Nova/Buster/Prism enthalten den Vertrag. WorkerAttemptExecutor und
+LocalWorkerRuntime importieren und validieren ihn; Buster baut ihn in
+`engine/test-gates/runner.ts:1530–1600`; Prism in
+`engine/worker-envelope.ts:20–36`, angenommen von `server/worker.ts:150–156`.
+Keine Test-/Design-Gate-Entscheidung im Vertrag.
 
-- `contracts/pipeline-worker-core/v1`
+Die Exporte `checkWorkerAttemptMessageBinding`, `checkWorkerCancellationBinding`,
+`checkWorkerAttemptEnvelopeConsistency`, `signWorkerTrustEnvelope` und
+`verifyWorkerTrustEnvelope` haben nach repositoryweiter Symbolsuchen keine
+Produktionsaufrufer, nur Vertragstests. Nicht automatisch als aktive
+Sicherheitskontrollen beschreiben. Tatsächliche Source-/Transport-Authentisierung
+hat andere Implementierungspfade, die separat reviewt werden müssen.
 
-Entrypoints: `package.json exports / Schema-Dateien`.
+## 2. Nachrichten und beide Schnittstellenseiten
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+12 öffentliche Definitionen: Trust-Envelope, Lifecycle-State, Profile,
+Registration, Health, Claim, Attempt-Envelope, Progress, LogPart, Cancellation,
+EvidenceRef und Result. Schema schließt unbekannte Felder an Nachrichtengrenzen
+und begrenzt Sammlungen; registrierbare Zukunftsprotokolle sind erlaubt,
+ausführbares v1-Envelope akzeptiert nur worker-protocol.v1.
 
-Paketabhängigkeiten: `ajv`, `ajv-formats`
+Ajv-Schema plus relationErrors prüfen Capacity-Summe, aktive IDs, Worker-Typ,
+Profile-/Attempt-/Result-Digests, Zeitreihenfolge, Capability-Untermenge,
+eindeutige Input-/Paketnamen und Cleanup/Result-Konsistenz. Der Vertrag validiert
+nicht automatisch fachliche Specialist-Schemas; deren ID/Digest und Werte
+muss die Engine zusammen prüfen. Prism worker-binding tut dies beim Eintritt
+und Ergebnis; Buster hat seinen eigenen Provider-Vertrag.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+Buster persistWorkerCompletion vergleicht Versuch, Claim, Generation und Worker
+mit dem Envelope (`runner.ts:1758–1768`). Prism-Control prüft beim HTTP-Ergebnis
+nur state=completed; der neutrale Validator wird dort nicht benutzt. Dieser
+Schnittstellenbefund gehört zu [prism.service-control](prism.service-control.md),
+nicht zum Schema. Schemaexistenz bedeutet keine Prüfung am Empfänger.
 
-## Tests und Dokumentation
+## 3–6. Zustand, Fehler, Retry und Recovery
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+Nur lazy kompilierte Validatoren im Prozess; keine Persistenz oder externen
+Mutationen. Validierung wirft PipelineWorkerCoreContractError bzw. liefert
+{ok, errors}; Binding-Helfer setzen bereits typisierte/validierte Inputs voraus.
+Es sind keine kombinierten Decoder. Hash-/Validierungsfunktionen synchron;
+keine Abort-/Timeout-/Retry- oder Duplikatverwaltung in dieser Komponente.
 
-- `skills/prism/tests/engine.test.mts`
-- `tests/verification/contracts/check-pipeline-observability-durable-attempts.mts`
-- `tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts`
-- `tests/verification/contracts/check-pipeline-test-plan-runner.mts`
-- `tests/verification/contracts/check-pipeline-worker-attempt-executor.mts`
-- `tests/verification/contracts/check-pipeline-worker-core-contracts.mts`
-- `tests/verification/contracts/check-pipeline-worker-local-runtime.mts`
-- `tests/verification/contracts/check-plugin-system-v2-boundaries.mjs`
+Profil-Digest schließt sein eigenes Feld aus, Attempt-Digest zusätzlich Claim,
+Result-Digest zusätzlich Receipt. Deshalb muss Claim-Änderung separat gebunden
+werden. Consistency-Helfer erlaubt nur Verlängerung derselben Claim-Identität.
+Lokaler Runtime-Replay-Schutz und persistente Dienst-Idempotenz liegen außerhalb.
+Signaturen prüfen Zeit, Issuer/Audience/Purpose und Ed25519-Key; Nonce-Replay-
+Speicherung, subject/context-Erwartungswerte und Key-Auswahl bleiben beim Aufrufer.
+Kein automatisches Schlüssel-/Receipt-Recovery.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauen
 
-- `contracts/pipeline-worker-core/v1/README.md`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/blueprint/05-decision-record-catalogue.md`
-- `docs/security/worker-trust.md`
+Unsignierte Digests sind Integritätsidentitäten, keine Authentisierung.
+verifyWorkerTrustEnvelope vergleicht keine vom Aufrufer erwarteten subject/context-
+Digests; diese sind zwar mitsigniert, müssten aber fachlich separat gebunden werden.
+Derzeit nur testgenutzter Export, kein daraus abgeleiteter Produktionsbypass.
+Worker-Core-XFCC-Prüfung liegt in worker.core. Zertifikate/Proxy-Sanitisierung und
+Schlüsselbereitstellung sind Infrastrukturannahmen, kein Bestandteil dieses Audits.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8–9. Grenzen und Vereinfachung
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+Schema beschränkt Timer auf Node-Timerbereich und Logs auf 16 MiB; rekursive
+JSON-Werte haben lokal Array-/Objektlimits, aber keine globale Tiefe/Bytegrenze.
+WorkerAttemptExecutor legt deshalb eigenen Vorfilter (Bytes/Tiefe/Nodes) davor.
+Andere direkte Validatoraufrufer müssen den Wire-Body vor Parsing begrenzen.
+canonicalJson setzt JSON-artige Werte voraus, keine allgemeine sichere Traversierung
+beliebiger zyklischer JavaScript-Objekte. Keine Dateiaufbewahrung/Aufräumaufgabe.
 
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:71`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:108`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:109`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:110`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:111`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:112`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:113`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:114`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:115`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:116`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:278`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:279`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:280`
-- `docs/blueprint/04-evidence-matrix.md:33`
-- `docs/blueprint/05-decision-record-catalogue.md:26`
-- `docs/security/worker-trust.md:488`
-- `package.json:8`
-- `package.json:139`
-- `packaging/runtime/package-ownership.json:23`
-- `scripts/docs-blueprint-generate.mjs:138`
-- `skills/buster/engine/package.json:13`
-- `skills/buster/engine/test-gates/runner.ts:40`
-- `skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts:7`
-- `skills/common/plugin-runtime/foundation/observability/durable-attempts.ts:20`
-- `skills/common/plugin-runtime/foundation/package.json:17`
-- `skills/nova/core/observability/reconciler.ts:4`
-- `skills/nova/core/package.json:13`
-- `skills/prism/engine/worker-binding.ts:4`
-- `skills/prism/engine/worker-envelope.ts:2`
-- `skills/prism/package.json:31`
+Mehrere unbenutzte Binding-/Trust-Helfer neben manuellen produktiven Prüfungen
+sind eine Wartungslücke. Bei späterem Umbau einen kanonischen validierten
+Ein-/Ausgangspfad wählen und tatsächlich obsolete Exporte entfernen, ohne
+zusätzlichen Kompatibilitätsadapter. Erst Tests und Gegenstellen angleichen.
 
-## Offene Prüfpfade
+## 10. Tests und Aussagekraft
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+`tests/verification/contracts/check-pipeline-worker-core-contracts.mts`
+vollständig untersucht und unverändert bestanden: alle öffentlichen Schemas,
+zusätzliche Felder, Capacity, Claim-Zeiten, Capability-Untermenge, Timer/Loglimit,
+Result-Digest/Status, Binding, Claim-Verlängerung, Unicode-Keyordnung und echte
+Ed25519-/RSA-Negativprüfungen. Kryptografie ist echt; Envelope-/Result-Daten sind
+Testdaten, kein laufender Worker. `check-worker-trust-spiffe.mts` ebenfalls gelesen
+und bestanden; Headerparser-Test, kein mTLS-Handshake.
+
+Fehlende Nachweise: jeder produktive Empfänger muss dieselben Bindings erzwingen;
+Stress mit maximaler rekursiver Eingabe; Cross-Language-Digestparität, falls ein
+weiterer Worker implementiert wird. Ausführung in `../evidence/worker-contract-tests.txt`.
+
+## 11–12. Dokumentation, Befunde und Unsicherheiten
+
+README spricht noch von zukünftigem Phase-5.5-B-Executor und nur lokaler Buster-
+Nutzung. Executor und Prism-Dienst sind längst vorhanden: Status veraltet.
+Digest-Auslassungen sind korrekt dokumentiert; konkrete Validator-vs-Binding-
+Grenze und tatsächlich ungenutzte Helfer fehlen. Kein neuer bestätigter Fehler
+in der neutralen Validatorimplementierung festgestellt. Das ist kein vollständiger
+Laufzeitnachweis der Worker-Systeme; deren Einzelreviews bleiben offen.

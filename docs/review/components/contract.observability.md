@@ -36,7 +36,7 @@ Dokumentationsstatus: unvollständig (Abgleich offen).
 
 ## Aufrufer- und Abhängigkeitsbelege
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
 
 - `contracts/pipeline-test-gate/v1/package.json:19`
 - `contracts/pipeline-test-gate/v1/src/remote.ts:2`

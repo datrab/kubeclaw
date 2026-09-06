@@ -1,58 +1,79 @@
-# foundation.observability
+# foundation.observability — dauerhafte Records, Blobs und Observability
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: teilweise geprüft. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+Vollständig gelesen: `skills/common/plugin-runtime/foundation/observability/
+durable-records.ts`, `durable-delivery.ts`, `README.md`. Noch ungeprüft:
+`durable-attempts.ts` (767 Zeilen) und `clawdeck-view.ts`; sämtliche übrigen
+Vertragstests der Delivery-/Attempt-Pfade. Die Komponente darf noch nicht als
+abgeschlossen gelten; sinnvolle Aufteilung in Records/Delivery/Attempts/Projection
+beim Fortsetzen prüfen, ohne bereits vergebene Befund-IDs umzubenennen.
 
-## Verantwortung, Grenzen und Einstieg
+## Verantwortung, Nutzung und Schnittstellen
 
-- `skills/common/plugin-runtime/foundation/observability`
+FileDurableRecordStore: append/read/transition mit stream + idempotencyKey,
+kanonischem Payload-Digest, Sequenz pro Stream und globalen Limits.
+FileDurableBlobStore: content-addressed put/get, optionale aggregierte Bytequote.
+Aktive Konsumenten: state-store, telemetry-store, artifact-store, wait-store,
+operator-messaging, transport-publisher sowie Nova Remote-Dispatch/-Import und
+Buster Remote-Plan-Service. Exakte Importpfade im maschinenlesbaren Inventar.
 
-Entrypoints: `package.json Subpath-Exports`.
+FileProducerOutbox: kanonischen Record vor Transport speichern; pending,
+acknowledge, compact. FileObservabilityAdmissionStore: ingress validieren,
+Identity/Digest deduplizieren, Cursor vergeben, ungültige/konfliktbehaftete
+Records quarantänisieren, Gaps und unresolved items verwalten. Redis ist kein
+Ersatz für diese Bestätigung. DurableAttemptStore besitzt eine weitere Grenze
+für Evidence/Result/Closures, noch zu untersuchen.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## Gelesene Zustands-/Nebenwirkungspfade
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Record-Store serialisiert Payload unabhängig, prüft beim Replay jeden Digest,
+Streamsequenz und Identitätsduplikate. transition ist CAS auf erwartetem
+Payload-Digest. Neue Datei wird mit mode0600 geschrieben, fsynced, umbenannt,
+Verzeichnis fsynced. Directory-Erzeugung fsynct Eltern; keine Symlink-Verzeichnisse.
+Kernel-flock wird durch Kindprozess gehalten; Prozessende/geschlossene stdin
+beendet Halter. Timeout 5 Sekunden. Tempdateien der Zustandsdatei werden unter
+Sperre entfernt. Store-Lock gilt pro Verzeichnis, nicht pro Stream.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+Blob-put prüft bestehende Bytes, legt temporäre Datei fsynced an, veröffentlicht
+per Hardlink und fsynct das Verzeichnis. Get prüft finalen Dateityp und tatsächlichen
+Digest. Aggregierte Quote zählt Dateien unter blobs und wird mit flock serialisiert.
+Nach SIGKILL liegengebliebene Blob-Tempdateien/Verzeichnisrennen noch verifizieren;
+der Record-Temp-Cleanup ist nicht automatisch Blob-Cleanup.
 
-## Tests und Dokumentation
+## Grenzen und offene Review-Pfade
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+- Globaler JSON-Store wird für Reads/Änderungen vollständig geladen und validiert;
+  keine inkrementelle Datenbank. Globale Records-/Bytegrenze; kein Record-GC/API
+  zur Freigabe bei ausgeschöpftem Store. W6 des Reliability-Berichts damit am Code
+  bestätigt als verbleibende Architektur-/Retention-Arbeit.
+- Blob get liest vollständig; der Konstruktor begrenzt put, get hat vor readFile
+  keine stat.size-Prüfung gegen maxBytes. Geschütztes Storage ist Voraussetzung;
+  Verhalten bei extern vergrößertem/korruptem Blob noch real prüfen.
+- Outbox/Admission laden JSON über readDurableState ohne dieselbe vollständige
+  Replay-Validierung wie RecordStore. Integrität bereits persistierter Admission-
+  Daten und Konsumentenprüfung noch nachvollziehen; kein unbelegter Defektabschluss.
+- Keine Abort-Signale an Store-Operationen. Abbruch während Queue/flock kann nicht
+  allein aus Adapter-Eintrittsprüfung abgeleitet werden; state-store-Review nennt
+  konkrete Verifikation an der Core-Grenze.
+- Ausstehend: host crash, ENOSPC, mehrere lange Queue-Waiter, beschädigte
+  Admission-Datei, Nonce/Closure-Recovery, Aufbewahrung mit Idempotenz-Tombstones.
 
-- `tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts`
-- `tests/verification/contracts/check-pipeline-observability-durable-attempts.mts`
-- `tests/verification/contracts/check-pipeline-observability-durable-delivery.mts`
-- `tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs`
-- `tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts`
-- `tests/verification/contracts/check-pipeline-test-plan-runner.mts`
-- `tests/verification/reliability/blob-budget.test.mts`
+## Tests / Dokumentation
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+Unverändert ausgeführter `tests/verification/reliability/blob-budget.test.mts`
+bestanden: echte Blobs, Rekonstruktion, Idempotenz und konkurrierende Prozesse.
+Testdatei vollständig gelesen; sie verwendet Original-Store und echte konkurrierende
+Node-Prozesse, keine Dateisystem-Mocks. State-store- und Blueprint-
+Tests bestanden; letztere nutzen echte Git-/Dateioperationen. Diese Ergebnisse
+beweisen keine Admission-/AttemptStore- oder Cluster-Abnahme.
 
-- `docs/blueprint/04-evidence-matrix.md`
-- `skills/common/plugin-runtime/foundation/observability/README.md`
+README nennt Embedded-Profil, flock, Limits, ausdrücklich fehlende Admission-
+Kompaktierung und zukünftigen DB-Treiber. Diese Aussagen entsprechen den gelesenen
+Pfaden. Konkrete Paketabhängigkeiten: Linux-flock/sh/cat, geschütztes persistentes
+Filesystem mit verlässlichem fsync/rename/Hardlink. Crash-/Quoten-/Recovery-
+Betriebsanleitung und gesamter Attempt-Pfad bleiben unvollständig dokumentiert.
 
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
-
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:141`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:118`
-- `docs/blueprint/04-evidence-matrix.md:43`
-- `tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts:6`
-- `tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts:11`
-- `tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts:12`
-- `tests/verification/contracts/check-pipeline-observability-durable-attempts.mts:17`
-- `tests/verification/contracts/check-pipeline-observability-durable-attempts.mts:22`
-- `tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:6`
-- `tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:10`
-- `tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts:13`
-- `tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts:14`
-- `tests/verification/contracts/check-pipeline-test-plan-runner.mts:30`
-- `tests/verification/reliability/blob-budget.test.mts:16`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+Nächster Schritt: DurableAttemptStore vollständig lesen, seine Blob-/Result-
+Commitreihenfolge gegen Buster-Completion und Nova-Reconciler prüfen; anschließend
+alle direkt zugehörigen echten Tests samt Negativkontrollen untersuchen.

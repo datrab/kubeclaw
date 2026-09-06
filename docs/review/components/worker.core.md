@@ -1,80 +1,131 @@
-# worker.core
+# worker.core — neutraler Versuchsexecutor und lokale Worker-Lifecycle
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung, Grenzen und Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig untersucht: `skills/worker/core/worker/{attempt-executor,local-runtime,
+trust,digest}.ts`, `src/index.ts`, Package-/Boundary-Dokument. Executor führt eine
+Operation aus, LocalWorkerRuntime verwaltet lokale Aufnahme/Drain/Replay,
+Trust-Helfer prüft weitergereichte SPIFFE-Identität. Keine Scheduling-/Gate-Policy.
+Buster `engine/test-gates/runner.ts:1601–1635` nutzt Runtime + Executor; Prism
+`server/worker.ts:152–156` nur Executor. Die beiden Integrationsarten haben
+unterschiedliche Kapazitäts-/Claim-Schutzgrenzen.
 
-- `skills/worker/core`
+## 2. Schnittstellen und Gegenstellen
 
-Entrypoints: `src/index.ts`.
+WorkerAttemptEnvelope → prepare/execute/measure/cleanup/collectEvidence/
+finalizeResult → WorkerAttemptResult. Der Core prüft neutralen Vertrag,
+Profildigest, Attemptdigest und Größen-/Identitätsgrenzen. Fachliche Schema-
+Auswertung gehört der Operation; finaler neutraler Result wird erneut validiert,
+bei ungültigem Operationsergebnis als errored normalisiert und tief eingefroren.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Buster liefert einen Operationadapter, kombiniert Run-/Claim-Signale, unterdrückt
+Core-Logretention zugunsten seines eigenen Evidence-Pfades und persistiert/bindet
+Completion danach. Prism loggt dagegen ohne storeFullLog: siehe
+[PCR-PRISM-WORKER-001](prism.service-worker.md). Seine CPU-Messung erfüllt den
+Attempt-Vertrag nicht: PCR-PRISM-WORKER-002. Keine doppelten Befunde hier.
 
-Paketabhängigkeiten: `@kubeclaw/pipeline-worker-core-contract`
+## 3–4. Zustand und Fehler
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+Executor kopiert Envelope vor Start, hält genau ein Execution-Promise und gibt
+bei wiederholtem execute denselben Abschluss zurück. Keine eigene dauerhafte
+Receipt-Ablage; Receipt-Digest ist keine Authentisierung. Replay über einen neuen
+Executor ist nicht dadurch ausgeschlossen.
 
-## Tests und Dokumentation
+Operation muss Limits synchron vorbereiten und bei terminate wirklich beenden.
+Fehler-/Cancel-/Timeoutpfade verlangen terminate; Messung wird vor Cleanup
+kopiert und gegen Limits geprüft. Fehlerhafte Cleanup oder fehlende Messung
+führen zu errored. Bereits gesammelte gültige Evidenz bleibt bei bestimmten
+Folgefehlern erhalten; ungültige neutrale Resultate werden fail-closed ersetzt.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 5–6. Zeit, Abbruch, Duplikate und Restart
 
-- `tests/verification/contracts/check-pipeline-runtime-role-surfaces.mts`
-- `tests/verification/contracts/check-pipeline-worker-attempt-executor.mts`
-- `tests/verification/contracts/check-pipeline-worker-local-runtime.mts`
-- `tests/verification/contracts/check-runtime-bundle-isolation.mjs`
-- `tests/verification/contracts/check-worker-trust-spiffe.mts`
-- `tests/verification/deployment/check-deployment-truth.mjs`
+Executor prüft Queue/Claim vor Start und nach prepare, setzt Ausführungsdeadline,
+begrenzt Termination, Messung, Cleanup, Evidenz, Logspeicherung und Finalisierung
+jeweils separat. Promise.race stoppt keinen ignorierenden Operationcode;
+Abbruchdurchsetzung bleibt Operation-/Prozessgrenze. Späte Logs nach dem
+terminalen Snapshot werden ignoriert; Fortschritts-/Live-Log-Callbacks sind
+best effort. Voll-Logspeicherung verlangt bei Retention tatsächlichen Digest/Größe.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+LocalWorkerRuntime nimmt nur ready an, prüft Worker/Profile/Protokoll und
+Claim-Zeit, reserviert synchron Kapazität, merkt Attempt-ID bis Claim-Ende und
+verweigert Replay bei vollem Gedächtnis. Claim-Ablauf abortiert den Versuch und
+wird nochmals bei Rückkehr geprüft. Drain wartet, bricht ab, wartet begrenzt
+nach und wird bei ausbleibender Beendigung unhealthy. Kein Neustartpersistenz-
+vertrag: Dienste müssen Aufnahme/Ergebnis und logische Idempotenz dauerhaft halten.
 
-- `docs/DOCUMENTATION_TOPIC_MAP.md`
-- `docs/architecture/pipeline-runtime-packaging.md`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md`
-- `docs/architecture/pipeline-worker-core-phase-5-5-d-audit.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/blueprint/05-decision-record-catalogue.md`
-- `docs/security/worker-trust.md`
-- `docs/site/understand/worker-trust.md`
-- `skills/worker/core/BOUNDARIES.md`
+## 7. Vertrauen
 
-## Aufrufer- und Abhängigkeitsbelege
+XFCC-Parser akzeptiert genau eine URI, keine Ketten/duplizierten Header; Allowlist
+muss gültig/nichtleer sein. authorizeProxiedSpiffePeer verlangt Loopback. Dies
+ersetzt keine mTLS-/Header-Sanitisierung und authentifiziert keinen anderen
+Prozess im gleichen Netzwerk-Namespace. Prüfannahme: geschützter lokaler Proxy,
+richtige Service-Allowlist, isolierte Operationen. Keine Infrastrukturprüfung.
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+## 8–9. Grenzen und Architektur
 
-- `charts/kubeclaw/files/config/knip.json:692`
-- `docs/DOCUMENTATION_TOPIC_MAP.md:5`
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:43`
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:57`
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:71`
-- `docs/architecture/pipeline-runtime-packaging.md:103`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:109`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:115`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:116`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:117`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:121`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:321`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:322`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:424`
-- `docs/architecture/pipeline-worker-core-phase-5-5-d-audit.md:28`
-- `docs/blueprint/04-evidence-matrix.md:34`
-- `docs/blueprint/05-decision-record-catalogue.md:26`
-- `docs/security/worker-trust.md:6`
-- `docs/security/worker-trust.md:487`
-- `docs/site/understand/worker-trust.md:6`
-- `package.json:18`
-- `packaging/runtime/package-ownership.json:13`
-- `scripts/check-runtime-package-ownership.mjs:78`
-- `scripts/docs-blueprint-generate.mjs:138`
-- `scripts/generate-knip-config.mjs:119`
-- `scripts/plugin-system-inventory.mjs:23`
-- `skills/buster/engine/package.json:17`
-- `skills/buster/engine/src/index.ts:1`
-- `skills/buster/engine/test-gates/remote-plan-http.ts:6`
-- `skills/buster/engine/test-gates/runner.ts:45`
+Envelope bis 16 MiB, Tiefe 64, 100000 Traversierungsnodes; Logs bis 16 MiB und
+10000 Parts. Result-/Evidence-Limits aus Envelope. Callback-Promises werden nicht
+als begrenzte Delivery-Queue abgearbeitet; Empfänger müssen selbst Backpressure
+leisten. Lokale Runtime: Kapazität max.4096; Replay max.1000000, Default65536.
+Keine Ressourcenmessung/OS-Limits durch Core selbst. Vertrauen in Operation.prepare/
+measure/terminate ist Teil der Erweiterungsgrenze, keine Sandboxgarantie.
 
-## Offene Prüfpfade
+Die Aufteilung ist sinnvoll, aber Wrapper-Nutzung muss verbindlich sein: ein
+Service, der nur Executor aufruft, erbt keine Runtime-Kapazität/Replay-Sperre.
+Gemeinsame absolute Claim-Deadline über alle Abschlussphasen wäre einfacher als
+mehrere voneinander unabhängige Zeitbudgets und unterschiedliche Wrapper-Garantien.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests und Aussagekraft
+
+Untersucht und unverändert bestanden:
+`check-pipeline-worker-attempt-executor.mts` (750 Zeilen),
+`check-pipeline-worker-local-runtime.mts` (165 Zeilen),
+`check-worker-trust-spiffe.mts` und Worker-Vertragstest.
+Belege `../evidence/worker-core-tests.txt`, `worker-contract-tests.txt`.
+
+Coverage: gleiche Executorinstanz, kopiertes Envelope, falsche Digests,
+Tiefe/Größe/Logcount/Unicode, Timeout und Prepare-Deadline, Cancel/Cleanup,
+fehlerhafte Ressourcen, Evidence-Fehler, Voll-Log fehlt/kaputt/hängt, späte Logs,
+Termination wirft/hängt, ungültiges Result, zurückspringende Uhr, Runtime-Aufnahme,
+Drain, Kapazität, Replayspeicher, echte Claim-Timer und verspätetes Result.
+
+Executor-Testoperation ist ein bestehendes Testdouble mit gelieferten Ressourcen
+und simulierten Hooks; bestandene Tests beweisen Core-Steuerfluss, weder echte
+Prozessbeendigung noch cgroup-Grenzen, Browser- oder Agentverhalten. Keine neuen
+Mocks/Ersetzungen eingeführt. Fehler am Original-Prism-Aufruf bleiben trotz
+bestandener neutraler Tests sichtbar. Vollständiger Claim-Abschluss-Test fehlt.
+
+## 11. Dokumentation
+
+BOUNDARIES.md beschreibt Zuständigkeit korrekt, aber keine Betriebs-/Integrations-
+regeln. Worker-Vertrags-README ist zeitlich veraltet. `docs/security/worker-trust.md`
+kennzeichnet Live-Cluster-Proof ausdrücklich als ausstehend, korrekt nicht als
+Laufzeitnachweis übernommen. Dokumentationsstatus: unvollständig/veraltet;
+verbindliche Wrapper-, Logstore-, Termination- und Restart-Verträge fehlen.
+
+## 12. PCR-WORKER-001 — Claim-Deadline deckt nicht alle Abschlussphasen ab
+
+- Schweregrad: mittel; direkter Executor-Aufrufer kann ein Ergebnis nach Ablauf
+  des Claims als completed erhalten. Buster-Wrapper verwirft verspätete Ergebnisse,
+  direkte Prism-Nutzung hat diesen zusätzlichen Schutz nicht.
+- Evidenzklasse: begründeter Verdacht mit konkret nachvollziehbarem Zeitablauf;
+  echter kombinierter Timing-Test noch ausstehend.
+- Beleg: `attempt-executor.ts:249–255` reserviert timeout + 4×cleanupTimeout;
+  `:408–410` entfernt nach execute den Timer. Danach können Messung, Cleanup,
+  collectEvidence, storeFullLog und finalizeResult jeweils ein cleanupTimeout
+  beanspruchen. `:603–620` prüft am Schluss Abort, aber nicht aktuelle Claim-Zeit.
+- Ablauf: Claim deckt reservierte vier Abschlussbudgets knapp; fünf erfolgreiche
+  Hooks verbrauchen zusammen mehr als vier Budgets, ohne einzeln auszulaufen.
+  Finales Result wird nach Claimablauf erzeugt. LocalWorkerRuntime würde beim
+  Rücksprung ablehnen, Executor allein kann completed liefern.
+- Auswirkung: uneinheitliche Claimgültigkeit abhängig vom Wrapper; keine Aussage,
+  dass der aktuelle Prism-Pfad bereits alle fünf optionalen Hooks nutzt.
+- Ursachenbehebung: eine absolute Claim-Deadline durch alle Phasen führen und
+  vor terminaler Bestätigung erneut prüfen; Abschlussbudget aus tatsächlich
+  vorhandenen Phasen ableiten. Operationabbruch weiterhin echt durchsetzen.
+- Verifikation: echte kleine Operation mit realen Dateievidenzen und kontrolliert
+  langsamen Abschlussphasen ausführen, einmal direkt und einmal über Runtime;
+  beide müssen späten Erfolg verweigern. Zusätzlich Nachweis, dass auslaufende
+  Hooks keine unkontrollierten Nebenwirkungen nach dem Result fortsetzen.

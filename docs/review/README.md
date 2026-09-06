@@ -25,7 +25,7 @@ jedes relevanten Übergangs gemeinsam prüfen. Vollständige Projekt-E2E-Traces
 sind ein Folgeauftrag. Infrastruktur nur als Abhängigkeit/Annahme erfassen;
 auffällige Infrastrukturfragen separat zur Folgeprüfung notieren.
 
-## Lebendes gemeinsames Review-Schema (Revision 1)
+## Lebendes gemeinsames Review-Schema (Revision 2)
 
 Jede fachlich abgeschlossene Review-Datei muss folgende Kriterien konkret
 behandeln; nicht anwendbare Kriterien begründen:
@@ -46,6 +46,12 @@ behandeln; nicht anwendbare Kriterien begründen:
 Zusätzlich bei Persistenz: Bestätigung vor/nach fsync, Verzeichnisdauerhaftigkeit,
 Eigentum an veränderlichen Objekten, Lock-Reclamation mit mehreren Prozessen,
 PID-Namensräume, Wiederholung nach verlorenem ACK und Integrität beim Replay.
+Bei Worker-/Dienstgrenzen zusätzlich die Summe aller Abschlussphasen gegen die
+absolute Claim-Deadline, tatsächliche Logspeicher-Verdrahtung, messbare Ressourcen
+pro Versuch und Ergebnisbindung beim Empfänger prüfen. Revision 2: diese Kriterien
+wurden in worker.core, contract.worker und den begonnenen Prism-Dienstreviews
+berücksichtigt; state-store/nova.state/prompt-contract enthalten keine solchen
+Worker-Hooks und benötigen deshalb keine Rückstufung.
 Bei neuer Erkenntnis Schema hier erweitern; betroffene bereits abgeschlossene
 Reviews explizit zur Nachprüfung markieren und ihren Status aktualisieren.
 

@@ -31,7 +31,7 @@ Dokumentationsstatus: unvollständig (Abgleich offen).
 
 ## Aufrufer- und Abhängigkeitsbelege
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Vollständige Liste im `../inventory-data.json`.
+Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
 
 - `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:29`
 - `tests/verification/contracts/check-plugin-system-v2-phase12.mts:7`
