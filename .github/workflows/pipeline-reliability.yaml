@@ -88,3 +88,24 @@ jobs:
           sudo apparmor_parser -r /etc/apparmor.d/kubeclaw-ci-chromium
       - name: Run real browser provider assertions and negative controls
         run: npm test --prefix skills/buster/plugins/${{ matrix.provider }}
+
+  security-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KUBECLAW_TOOL_CACHE: /tmp/kubeclaw-security-tools
+      KUBECLAW_SECURITY_TEST_CACHE: /tmp/kubeclaw-security-db
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install checksum-verified Trivy and real advisory database
+        run: |
+          trivy_executable="$(bash scripts/scan-runtime-images.sh --executable)"
+          echo "KUBECLAW_SECURITY_TEST_TRIVY=$trivy_executable" >> "$GITHUB_ENV"
+          "$trivy_executable" image --download-db-only --cache-dir "$KUBECLAW_SECURITY_TEST_CACHE"
+      - name: Exercise real scanner and HTTP negative controls
+        run: npm test --workspace @kubeclaw/plugin-security-providers

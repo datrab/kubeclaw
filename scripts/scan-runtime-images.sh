@@ -10,6 +10,7 @@ usage() {
 Usage: scripts/scan-runtime-images.sh IMAGE@sha256:DIGEST [IMAGE@sha256:DIGEST ...]
 
 Scan published runtime images with the pinned Trivy release.
+Use --executable to install/verify Trivy and print its executable path.
 
 Private GHCR images require TRIVY_USERNAME and TRIVY_PASSWORD, or valid
 registry credentials in the local container configuration.
@@ -73,6 +74,11 @@ install_trivy() {
 
 if [[ ${1:-} == "--help" || ${1:-} == "-h" ]]; then
   usage
+  exit 0
+fi
+
+if [[ ${1:-} == "--executable" ]]; then
+  install_trivy "$(uname -m)"
   exit 0
 fi
 

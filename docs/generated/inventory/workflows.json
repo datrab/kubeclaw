@@ -118,7 +118,8 @@
       "schedules": [],
       "jobs": [
         "core-reliability",
-        "browser-reliability"
+        "browser-reliability",
+        "security-reliability"
       ],
       "commandAndActionRefs": [
         "node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs",
@@ -130,6 +131,7 @@
         "npm run typecheck:skills",
         "npm run verify:reliability",
         "npm test --prefix skills/buster/plugins/${{ matrix.provider }}",
+        "npm test --workspace @kubeclaw/plugin-security-providers",
         "sudo apt-get update && sudo apt-get install -y shellcheck shfmt",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
