@@ -22,7 +22,7 @@ async function readImplementation(artifact: ArtifactRef, context: PluginInvocati
     || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) throw new Error('SOURCE_IMPLEMENTATION_ARTIFACT_CORRUPT');
   const result = response.value as { sourceRevision?: unknown; headBefore?: unknown; status?: unknown } | null;
   if (!result || result.status !== 'ready_for_testing' || typeof result.sourceRevision !== 'string'
-    || !/^[a-f0-9]{40}$/u.test(result.sourceRevision)) throw new Error('SOURCE_IMPLEMENTATION_REVISION_INVALID');
+    || !/^(?:[a-f0-9]{40}|[a-f0-9]{64})(?![\s\S])/u.test(result.sourceRevision)) throw new Error('SOURCE_IMPLEMENTATION_REVISION_INVALID');
   return { sourceRevision: result.sourceRevision, headBefore: result.headBefore };
 }
 
@@ -30,7 +30,7 @@ async function readImplementation(artifact: ArtifactRef, context: PluginInvocati
 export async function resolveSourceRevision(input: { readonly revision?: string; readonly sourceStageId?: string }, context: PluginInvocationContext): Promise<string> {
   if ((input.revision !== undefined) === (input.sourceStageId !== undefined)) throw new Error('SOURCE_REVISION_SELECTION_INVALID');
   if (input.revision !== undefined) {
-    if (!/^[a-f0-9]{40}$/u.test(input.revision)) throw new Error('SOURCE_REVISION_INVALID');
+    if (!/^(?:[a-f0-9]{40}|[a-f0-9]{64})(?![\s\S])/u.test(input.revision)) throw new Error('SOURCE_REVISION_INVALID');
     return input.revision;
   }
   const candidates = implementationArtifacts(input.sourceStageId!, context);
@@ -44,6 +44,6 @@ export async function resolveImplementationRevisions(sourceStageId: string, cont
   const latest = atAttempt(candidates, Math.max(...candidates.map(artifact => artifact.producer.attemptNumber)));
   const first = await readImplementation(initial, context);
   const last = initial === latest ? first : await readImplementation(latest, context);
-  if (typeof first.headBefore !== 'string' || !/^[a-f0-9]{40}$/u.test(first.headBefore)) throw new Error('SOURCE_IMPLEMENTATION_BASE_INVALID');
+  if (typeof first.headBefore !== 'string' || !/^(?:[a-f0-9]{40}|[a-f0-9]{64})(?![\s\S])/u.test(first.headBefore)) throw new Error('SOURCE_IMPLEMENTATION_BASE_INVALID');
   return { base: first.headBefore, head: last.sourceRevision };
 }

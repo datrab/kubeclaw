@@ -16,12 +16,13 @@ import { getReviewPolicyProfile } from '../../../skills/nova/plugins/review/src/
 
 // Integration scope: real Git, durable artifact storage and review preparation.
 // No agent verdicts or provider results are supplied by this test.
-test('module review binds real implementation artifacts, retains its repair baseline and rejects unrelated HEAD', async () => {
+for (const objectFormat of ['sha1', 'sha256']) {
+test(`module review binds real ${objectFormat} implementation artifacts, retains its repair baseline and rejects unrelated HEAD`, async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'review-candidate-'));
   const repo = path.join(root, 'repo');
   fs.mkdirSync(repo);
   const git = (...args: string[]) => execFileSync('git', args, { cwd: repo, encoding: 'utf8' }).trim();
-  git('init', '-q'); git('config', 'user.name', 'Integration'); git('config', 'user.email', 'integration@example.invalid');
+  git('init', '-q', `--object-format=${objectFormat}`); git('config', 'user.name', 'Integration'); git('config', 'user.email', 'integration@example.invalid');
   const commit = (file: string, content: string) => {
     fs.mkdirSync(path.dirname(path.join(repo, file)), { recursive: true });
     fs.writeFileSync(path.join(repo, file), content);
@@ -56,6 +57,15 @@ test('module review binds real implementation artifacts, retains its repair base
     await record('implement-beta', 1, moduleA, moduleB);
     assert.deepEqual(await resolveImplementationRevisions('implement-alpha', context), { base: baseline, head: moduleA });
     assert.deepEqual(await resolveImplementationRevisions('implement-beta', context), { base: moduleA, head: moduleB });
+    assert.equal(await resolveSourceRevision({ revision: moduleB }, context), moduleB);
+    for (const invalid of ['a'.repeat(39), 'a'.repeat(41), 'a'.repeat(63), 'a'.repeat(65), 'g'.repeat(64), moduleB + '\n']) {
+      await assert.rejects(() => resolveSourceRevision({ revision: invalid }, context), /SOURCE_REVISION_INVALID/);
+      const stage = `invalid-${++sequence}`;
+      await record(stage, 1, baseline, invalid);
+      await assert.rejects(() => resolveSourceRevision({ sourceStageId: stage }, context), /SOURCE_IMPLEMENTATION_REVISION_INVALID/);
+      await record(`${stage}-base`, 1, invalid, moduleB);
+      await assert.rejects(() => resolveImplementationRevisions(`${stage}-base`, context), /SOURCE_IMPLEMENTATION_BASE_INVALID/);
+    }
     const policy = resolveReviewPolicy({ builtIn: getReviewPolicyProfile('gate') });
     const inputFor = async () => {
       const content = { requirement: 'beta must export 2' };
@@ -94,10 +104,11 @@ test('module review binds real implementation artifacts, retains its repair base
     refs[1] = { ...refs[1]!, sizeBytes: originalSize + 1 };
     await assert.rejects(() => resolveImplementationRevisions('implement-beta', context), /ARTIFACT_CORRUPT/);
     refs[1] = { ...refs[1]!, sizeBytes: originalSize };
-    refs.push(refs[2]!);
+    refs.push(refs.find(ref => ref.producer.stageId === 'implement-beta' && ref.producer.attemptNumber === 2)!);
     await assert.rejects(() => resolveImplementationRevisions('implement-beta', context), /MISSING_OR_AMBIGUOUS/);
   } finally {
     await repository.shutdown(); await artifacts.shutdown();
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+}
