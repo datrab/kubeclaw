@@ -88,6 +88,7 @@ try {
         'artifacts.write': artifactGrant('kubeclaw.architecture-validator'),
       }),
       'kubeclaw.implementation-agent:implementation': grant({
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate', 'kubeclaw.test-agent'] },
         'runtime.dispatch': runtimeGrant,
         'artifacts.write': artifactGrant('kubeclaw.implementation-agent'),
       }),

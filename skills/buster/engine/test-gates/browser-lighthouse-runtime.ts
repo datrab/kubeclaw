@@ -1,3 +1,4 @@
+import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -44,23 +45,7 @@ function origin(value: string, code: string): string {
   return parsed.origin;
 }
 
-function inputOrigins(inputs: readonly ResolvedInputV1[]): Set<string> {
-  const result = new Set<string>();
-  for (const input of inputs) {
-    if (input.kind !== 'value' || !input.value || typeof input.value !== 'object' || Array.isArray(input.value)) continue;
-    const value = input.value as JsonObject;
-    if (input.schemaId === 'kubeclaw.public-endpoint-fixture@1' && typeof value.url === 'string') {
-      try { result.add(new URL(value.url).origin); } catch { /* Invalid fixture data is not authority. */ }
-    }
-    if (input.schemaId === 'kubeclaw.kubernetes-deployment-fixture@1' && Array.isArray(value.endpoints)) {
-      for (const endpoint of value.endpoints) if (endpoint && typeof endpoint === 'object'
-        && typeof (endpoint as JsonObject).url === 'string') {
-        try { result.add(new URL((endpoint as JsonObject).url as string).origin); } catch { /* Invalid fixture data is not authority. */ }
-      }
-    }
-  }
-  return result;
-}
+
 
 function profile(raw: unknown): { name: string; settings: JsonObject } {
   const value = object(raw, 'BROWSER_LIGHTHOUSE_PROFILE_INVALID');
@@ -188,9 +173,10 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
 
   async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal,
     inputs: readonly ResolvedInputV1[] = []): Promise<Readonly<Record<string, unknown>>> {
+    signal = fixtureAuthoritySignal(inputs, signal);
     if (capability !== 'browser.lighthouse' || request.operation !== 'audit') throw new Error('BROWSER_LIGHTHOUSE_OPERATION_DENIED');
     if (request.resource.type !== 'network.url') throw new Error('BROWSER_LIGHTHOUSE_RESOURCE_INVALID');
-    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...inputOrigins(inputs)]);
+    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...fixtureOrigins(inputs)]);
     if (!allowed.has(target.origin) || target.username || target.password) throw new Error('BROWSER_LIGHTHOUSE_ORIGIN_DENIED');
     const payload = object(request.payload, 'BROWSER_LIGHTHOUSE_REQUEST_INVALID');
     if (!Array.isArray(payload.runs) || payload.runs.length === 0 || payload.runs.length > this.#options.maximumRuns) {

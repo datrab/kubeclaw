@@ -28,3 +28,35 @@ test('suffix matching cannot contact an unrelated real HTTP service; exact origi
     assert.equal(contacts, 2, 'redirect target must never be contacted');
   } finally { server.closeAllConnections(); await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())); }
 });
+
+test('fixture leases reject expired authority before contact and cancel a real in-flight request at expiry', async () => {
+  let contacts = 0;
+  const server = http.createServer((request, response) => {
+    contacts += 1;
+    if (request.url !== '/pending') response.end('leased response');
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  const port = (server.address() as import('node:net').AddressInfo).port;
+  const origin = `http://127.0.0.1:${port}`;
+  const invoker = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [],
+    allowedPorts: [port], maximumResponseBytes: 4096, maximumExecutionMs: 10000 });
+  const request = (route: string) => ({ operation: 'request', resource: { type: 'network.url', canonicalId: origin + route }, payload: {} });
+  const inputs = (expiresAt: string) => [{ name: 'deployment', kind: 'value' as const,
+    schemaId: 'kubeclaw.kubernetes-deployment-fixture@1', value: { schemaVersion: 'kubernetes-deployment-fixture.v1',
+      expiresAt, endpoints: [{ name: 'api', url: origin }] } }];
+  try {
+    await assert.rejects(() => invoker.invoke('network.http', request('/'), new AbortController().signal,
+      inputs(new Date(Date.now() - 1000).toISOString())), /FIXTURE_AUTHORITY_EXPIRED/);
+    await assert.rejects(() => invoker.invoke('network.http', request('/'), new AbortController().signal,
+      inputs('invalid-date')), /FIXTURE_AUTHORITY_INVALID/);
+    assert.equal(contacts, 0);
+    const valid = await invoker.invoke('network.http', request('/'), new AbortController().signal,
+      inputs(new Date(Date.now() + 60000).toISOString()));
+    assert.equal(valid.body, 'leased response');
+    const expiry = Date.now() + 1000;
+    await assert.rejects(() => invoker.invoke('network.http', request('/pending'), new AbortController().signal,
+      inputs(new Date(expiry).toISOString())), /HTTP_REQUEST_CANCELLED/);
+    assert.equal(contacts, 2, 'the pending request genuinely reached the server');
+    assert.ok(Date.now() >= expiry, 'expiry cancelled the in-flight request');
+  } finally { server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); }
+});

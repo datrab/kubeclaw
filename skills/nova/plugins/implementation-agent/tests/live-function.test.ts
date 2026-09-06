@@ -50,10 +50,10 @@ try {
   const enabled = new Set(['kubeclaw.implementation-agent:implementation']);
   const granted = core.resolveCapabilityGrants(snapshot, {
     enabledRegistrations: enabled,
-    providers: new Map([['runtime.dispatch','kubeclaw.runtime-dispatch:runtime'],['network.http','kubeclaw.network-http:http'],['secrets.read','kubeclaw.secret-resolver:secrets'],['artifacts.write','kubeclaw.artifact-store:artifact-store'],
+    providers: new Map([['runtime.dispatch','kubeclaw.runtime-dispatch:runtime'],['network.http','kubeclaw.network-http:http'],['secrets.read','kubeclaw.secret-resolver:secrets'],['artifacts.read','kubeclaw.artifact-store:artifact-store'],['artifacts.write','kubeclaw.artifact-store:artifact-store'],
       ['git.workspace.create','kubeclaw.git-workspace:git'],['git.workspace.remove','kubeclaw.git-workspace:git'],['git.commit','kubeclaw.git-workspace:git'],['git.merge','kubeclaw.git-workspace:git']]),
     grants: new Map([
-      ['kubeclaw.implementation-agent:implementation', new Map([['runtime.dispatch',{allowedAgents:['forge']}],['artifacts.write',{allowedNamespaces:['kubeclaw.implementation-agent']}],
+      ['kubeclaw.implementation-agent:implementation', new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.lint','kubeclaw.review','kubeclaw.buster-quality-gate']}],['runtime.dispatch',{allowedAgents:['forge']}],['artifacts.write',{allowedNamespaces:['kubeclaw.implementation-agent']}],
         ['git.workspace.create',{allowedRoots:[temporary],allowedWorkspaceRoots:[temporary]}],['git.workspace.remove',{allowedRoots:[temporary],allowedWorkspaceRoots:[temporary]}],
         ['git.commit',{allowedRoots:[temporary]}],['git.merge',{allowedRoots:[temporary]}]])],
       ['kubeclaw.runtime-dispatch:runtime', new Map([['network.http',{allowedOrigins:[origin]}],['secrets.read',{allowedNames:['forge.agent']} ]])],

@@ -1,3 +1,4 @@
+import { repairEvidence } from './repair-evidence.ts';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import {
   buildRequest,
@@ -20,11 +21,11 @@ async function createWorkspace(input: ImplementationInput, context: PluginInvoca
 }
 
 async function dispatchImplementation(
-  agent: string, input: ImplementationInput, context: PluginInvocationContext,
+  agent: string, input: ImplementationInput, context: PluginInvocationContext, evidence: string | undefined,
 ): Promise<ImplementationCompletion> {
   const response = await context.invoke('runtime.dispatch', {
     operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
-    payload: buildRequest(agent, input, [context.contract.guidance?.helperPrompt, context.contract.guidance?.repairRequest ? JSON.stringify(context.contract.guidance.repairRequest) : undefined].filter(Boolean).join('\n\n')),
+    payload: buildRequest(agent, input, [context.contract.guidance?.helperPrompt, evidence].filter(Boolean).join('\n\n')),
   });
   return parseCompletion(response.result, input);
 }
@@ -74,10 +75,11 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
   let workspaceFailure: Error | undefined;
   let cleanupFailure: Error | undefined;
   try {
+    const evidence = await repairEvidence(context);
     const baseRevision = await createWorkspace(input, context);
     workspaceCreated = baseRevision !== undefined;
     if (baseRevision) input = { ...input, headBefore: baseRevision };
-    completion = await dispatchImplementation(agent, input, context);
+    completion = await dispatchImplementation(agent, input, context, evidence);
     workspaceIntegrated = await integrateWorkspace(input, completion, context);
   } catch (error) {
     workspaceFailure = error instanceof Error ? error : new Error(String(error));

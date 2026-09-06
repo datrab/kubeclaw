@@ -111,3 +111,12 @@ Project compilation now selects review revisions by implementation stage identit
 The real Git and durable artifact integration regression covers two module revision ranges, a subsequent repair, hydrated source contents, unrelated HEAD changes, missing/ambiguous artifact selection and corrupt reference metadata. It does not fabricate an agent verdict or establish full two-module agent acceptance. The source/extracted compiler checks also assert the generated review binding. Project platforms must grant review reads for both implementation and review artifact namespaces.
 
 This narrows W2 candidate binding; lint candidate binding, complete agent execution, legacy scaffold/E2E migration and the other closure work above remain open.
+
+
+## Verified repair evidence and fixture authority
+
+Implementation now hydrates the core-issued repair request's actual JSON artifact contents before creating a worktree or dispatching Forge. Producer/run identity, digest and byte counts are verified; 32 artifacts and a 256 KiB complete handoff are hard bounds. Invalid or oversized evidence blocks instead of becoming a partial prompt. The regression uses the durable artifact adapter and real stored findings. Implementation registrations now require artifact read grants for their requesting gates.
+
+The lint stage validates the full report contract and recomputed tool summary before persisting or judging it. Removed partial-summary passing fixtures; real tool execution remains the acceptance test. CI installs shellcheck and shfmt and requires the full lint package.
+
+HTTP and the four browser runtimes now share typed fixture origin and expiry validation. Each invocation rechecks expiry, and its cancellation signal is bounded by the earliest input fixture expiry. Real HTTP regressions prove zero contacts with expired authority and cancellation of an in-flight request. This does not prove controller revocation or deployed CNI enforcement.

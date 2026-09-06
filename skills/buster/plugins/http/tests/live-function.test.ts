@@ -61,12 +61,12 @@ try {
   assert.equal(expected404.outcome, 'passed');
 
   const deployment = { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
-    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'web', url: origin }] } };
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), endpoints: [{ name: 'web', url: origin }] } };
   const linked = await provider().execute(invocation({ endpointName: 'web', path: '/ok' }, 'linked', [deployment]), context());
   assert.equal(linked.outcome, 'passed');
 
   const publicEndpoint = { name: 'endpoint', kind: 'value', schemaId: 'kubeclaw.public-endpoint-fixture@1',
-    value: { schemaVersion: 'public-endpoint-fixture.v1', provider: 'tailscale-ingress',
+    value: { schemaVersion: 'public-endpoint-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), provider: 'tailscale-ingress',
       url: `${origin}/ok`, hostname: 'preview.example.ts.net' } };
   const publicLinked = await provider().execute(invocation({}, 'public-linked', [publicEndpoint]), context());
   assert.equal(publicLinked.outcome, 'passed');
@@ -123,7 +123,7 @@ try {
   new AbortController().signal), /HTTP_REQUEST_HEADER_DENIED/u);
   assert.equal(contacts, contactsBeforeDeniedRequests, 'denied origins, methods and headers never contact the real server');
   const deploymentInput = [{ name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
-    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'api', url: origin }] } }] as any;
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), endpoints: [{ name: 'api', url: origin }] } }] as any;
   const scopedMutation = await suffixOnly.invoke('network.http', { operation: 'request',
     resource: { type: 'network.url', canonicalId: suffixUrl },
     payload: { method: 'POST', headers: { authorization: 'test' }, body: '{}' } } as any,

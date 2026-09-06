@@ -302,6 +302,7 @@ async function main(): Promise<void> {
       'artifacts.write': artifact('kubeclaw.architecture-validator'),
     },
     'kubeclaw.implementation-agent:implementation': {
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate', 'kubeclaw.test-agent'] },
       'runtime.dispatch': runtimeGrants,
       'git.workspace.create': gitWorkspaceGrant,
       'git.workspace.remove': gitWorkspaceGrant,

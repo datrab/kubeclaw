@@ -1,3 +1,4 @@
+import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 /// <reference path="./pngjs.d.ts" />
 import crypto from 'node:crypto';
 import pixelmatch from 'pixelmatch';
@@ -59,23 +60,7 @@ function canonicalOrigin(value: string, code: string): string {
     || url.search || url.hash) throw new Error(code);
   return url.origin;
 }
-function inputOrigins(inputs: readonly ResolvedInputV1[]): Set<string> {
-  const result = new Set<string>();
-  for (const input of inputs) {
-    if (input.kind !== 'value' || !input.value || typeof input.value !== 'object' || Array.isArray(input.value)) continue;
-    const value = input.value as JsonObject;
-    if (input.schemaId === 'kubeclaw.public-endpoint-fixture@1' && typeof value.url === 'string') {
-      try { result.add(new URL(value.url).origin); } catch { /* Invalid fixture data is not authority. */ }
-    }
-    if (input.schemaId === 'kubeclaw.kubernetes-deployment-fixture@1' && Array.isArray(value.endpoints)) {
-      for (const endpoint of value.endpoints) if (endpoint && typeof endpoint === 'object'
-        && typeof (endpoint as JsonObject).url === 'string') {
-        try { result.add(new URL((endpoint as JsonObject).url as string).origin); } catch { /* Unauthorized. */ }
-      }
-    }
-  }
-  return result;
-}
+
 function profile(raw: unknown): { name: string; browser: BrowserName; context: BrowserContextOptions } {
   const value = object(raw, 'BROWSER_VISUAL_PROFILE_INVALID');
   if (typeof value.name !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/u.test(value.name)
@@ -138,6 +123,7 @@ export class BrowserVisualCapabilityInvoker implements TestProviderCapabilityInv
 
   async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal,
     inputs: readonly ResolvedInputV1[] = []): Promise<Readonly<Record<string, unknown>>> {
+    signal = fixtureAuthoritySignal(inputs, signal);
     if (capability !== 'browser.visual') throw new Error('BROWSER_VISUAL_OPERATION_DENIED');
     if (request.operation === 'compare') {
       if (signal.aborted) throw new Error('BROWSER_VISUAL_CANCELLED');
@@ -177,7 +163,7 @@ export class BrowserVisualCapabilityInvoker implements TestProviderCapabilityInv
     if (request.operation !== 'capture') throw new Error('BROWSER_VISUAL_OPERATION_DENIED');
     if (signal.aborted) throw new Error('BROWSER_VISUAL_CANCELLED');
     if (request.resource.type !== 'network.url') throw new Error('BROWSER_VISUAL_RESOURCE_INVALID');
-    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...inputOrigins(inputs)]);
+    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...fixtureOrigins(inputs)]);
     if (!allowed.has(target.origin) || target.username || target.password) throw new Error('BROWSER_VISUAL_ORIGIN_DENIED');
     const payload = object(request.payload, 'BROWSER_VISUAL_REQUEST_INVALID');
     if (!Array.isArray(payload.combinations) || !payload.combinations.length

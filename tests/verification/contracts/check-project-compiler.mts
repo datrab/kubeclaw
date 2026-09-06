@@ -82,7 +82,7 @@ try {
       'git.repository.read': 'kubeclaw.repository-adapter:repository', 'lint.execute': 'kubeclaw.lint:executor', 'test.plan.execute': 'kubeclaw.remote-test-gate:plan',
     },
     grants: {
-      'kubeclaw.implementation-agent:implementation': { 'runtime.dispatch': { allowedAgents: ['forge'] }, 'artifacts.write': artifact('kubeclaw.implementation-agent'),
+      'kubeclaw.implementation-agent:implementation': { 'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate'] }, 'runtime.dispatch': { allowedAgents: ['forge'] }, 'artifacts.write': artifact('kubeclaw.implementation-agent'),
         'git.workspace.create': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.workspace.remove': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.commit': { allowedRoots: [repo, workspaces] }, 'git.merge': { allowedRoots: [repo, workspaces] } },

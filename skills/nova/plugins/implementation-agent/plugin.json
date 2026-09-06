@@ -14,6 +14,7 @@
         "git.workspace.remove",
         "git.commit",
         "git.merge",
+        "artifacts.read",
         "artifacts.write"
       ],
       "configSchema": "schemas/config.schema.json",
