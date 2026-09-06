@@ -10,7 +10,7 @@
     "testProviders": 18,
     "reportAdapters": 1,
     "registrations": 61,
-    "files": 804
+    "files": 805
   },
   "runtime": {
     "roots": [
@@ -112,6 +112,7 @@
       "skills/nova/core/execution/artifact-checkpoints.ts",
       "skills/nova/core/execution/authorization.ts",
       "skills/nova/core/execution/context.ts",
+      "skills/nova/core/execution/effect-recovery.ts",
       "skills/nova/core/execution/engine-admin.ts",
       "skills/nova/core/execution/engine-run.ts",
       "skills/nova/core/execution/engine-runtime.ts",
@@ -2367,6 +2368,7 @@
     "skills/nova/core/execution/artifact-checkpoints.ts",
     "skills/nova/core/execution/authorization.ts",
     "skills/nova/core/execution/context.ts",
+    "skills/nova/core/execution/effect-recovery.ts",
     "skills/nova/core/execution/engine-admin.ts",
     "skills/nova/core/execution/engine-run.ts",
     "skills/nova/core/execution/engine-runtime.ts",

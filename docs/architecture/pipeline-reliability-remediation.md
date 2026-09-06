@@ -39,7 +39,7 @@ The new HTTP regression verifies that forbidden requests never contact its real 
 
 ## External effects and derived views
 
-Recovery now checks the durable effect journal before starting adapters. Accepted effects without receipts stop with `RECOVERY_EFFECT_OUTCOME_UNRESOLVED`. Interrupted attempts with completed external invocations stop with `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED`: a new execution attempt must not silently submit the same mutation again. An adapter invocation failure blocks for reconciliation instead of using the ordinary retry budget. Real HTTP mutations followed by SIGKILL before and after receipt persistence both remain at exactly one mutation on recovery. A third case drops the response after the service commits; Nova blocks after one invocation despite a three-attempt budget. This is a safety boundary; read-only external receipt reconciliation and automatic logical continuation remain unfinished.
+Recovery now checks the durable effect journal before starting adapters. Accepted effects without receipts stop with `RECOVERY_EFFECT_OUTCOME_UNRESOLVED`. Interrupted attempts with completed external invocations stop with `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED`: a new execution attempt must not silently submit the same mutation again. An external adapter invocation failure blocks for reconciliation instead of using the ordinary retry budget. Checkpoint-safe local artifact operations and read-only capabilities retain their existing retry behavior. Real HTTP mutations followed by SIGKILL before and after receipt persistence both remain at exactly one mutation on recovery. A third case drops the response after the service commits; Nova blocks after one invocation despite a three-attempt budget. This is a safety boundary; read-only external receipt reconciliation and automatic logical continuation remain unfinished.
 
 Test execution graphs are now derived on read from complete verified imports. The separate graph writer and its production wiring were deleted. A graph storage failure therefore cannot veto a gate decision, and a new reader can reconstruct the graph from the durable import alone. Import records now use `nova-test-gate-import.v2` and retain the original plan and source identity without copying the source archive. Historical v1 records require the old runtime or explicit migration; no historical job identity is guessed.
 
@@ -50,6 +50,14 @@ The mandatory isolated-provider check also commits deliberately broken source an
 ## Remote CI evidence
 
 Draft PR #3 commit `5183d2a07339b3e17593baff78ac355da5bd58bb` passed Pipeline reliability run `34016665755` and Docs Checks run `34016665734`. GitHub's runner successfully executed the mandatory real isolated provider, Helm validation and production role assembly. That evidence applies to that commit, not subsequent changes or deployed acceptance.
+
+## Broader package verification
+
+All 49 plugin packages' declared test commands were executed locally. The first pass had 40 passing packages and nine failures. HTTP and delivery-lint exposed regression gaps: HTTP denial diagnostics now retain method/WebSocket distinctions while rejecting every unauthorized request before contact; checkpoint-safe local artifact failures retain their prior retry behavior. Both package suites passed after the fixes and are now included in mandatory CI.
+
+The operator cancellation test also exposed a CI timing race. It now synchronizes on actual server receipt and response-connection closure, replacing fixed sleeps and the request-body close event. The real transport cancellation assertion remains mandatory.
+
+Remaining local failures include absent Chromium/browser assets (axe, lighthouse, Playwright, visual), absent Trivy database (security providers), absent shellcheck/shfmt (lint), and the review compiler's million-line performance bound (52.4 seconds against 45 seconds). No missing prerequisite or performance failure was converted to a passing result. A package command stopping early does not prove its later tests.
 
 ## Remaining closure work
 

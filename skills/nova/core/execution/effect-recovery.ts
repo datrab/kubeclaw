@@ -7,6 +7,10 @@ import type { FileJournal } from '../state/journal.ts';
 // or repeated reads. External mutations require an explicit continuation.
 const CHECKPOINT_OPERATIONS = new Set(['artifacts.read', 'artifacts.write', 'git.repository.read', 'state.read']);
 
+export function requiresExternalContinuation(capability: string): boolean {
+  return !CHECKPOINT_OPERATIONS.has(capability);
+}
+
 export async function assertEffectRecoverySafe(runRoot: string, runId: string, definition: PipelineDefinition,
   events: FileJournal<LifecycleEvent | PluginDomainEvent>): Promise<void> {
   const effects = new FileEffectJournal(path.join(runRoot, 'effects.jsonl'));
@@ -19,7 +23,7 @@ export async function assertEffectRecoverySafe(runRoot: string, runId: string, d
     && entry.identity.runId === runId && ['attempt.completed', 'attempt.cancelled', 'attempt.timed_out'].includes(entry.type)
     ? [entry.identity.attemptId] : []));
   const interrupted = entries.filter(({ request, receiptStatus }) =>
-    !finished.has(request.attempt.attemptId) && !CHECKPOINT_OPERATIONS.has(request.capability)
+    !finished.has(request.attempt.attemptId) && requiresExternalContinuation(request.capability)
       && receiptStatus !== undefined).map(({ request }) => request.effectId);
   if (interrupted.length) throw new Error(`RECOVERY_EXTERNAL_CONTINUATION_REQUIRED:${interrupted.join(',')}`);
 }

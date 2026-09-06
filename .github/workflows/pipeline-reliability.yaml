@@ -28,6 +28,8 @@ jobs:
           npm test --workspace @kubeclaw/plugin-test-agent
           npm test --workspace @kubeclaw/plugin-runtime-dispatch
           npm test --workspace @kubeclaw/plugin-operator-messaging
+          npm test --prefix skills/buster/plugins/http
+          npm test --prefix skills/nova/plugins/delivery-lint
       - uses: azure/setup-helm@v4
       - name: Validate Buster persistent storage manifests
         run: |

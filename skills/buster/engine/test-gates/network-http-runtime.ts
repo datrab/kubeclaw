@@ -209,7 +209,6 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     const configuredExactOrigin = this.#allowedOrigins.has(url.origin);
     if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);
     const exactOrigin = configuredExactOrigin || deploymentOrigins(inputs).has(url.origin);
-    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${url.origin}`);
     return Object.freeze({ url, exactOrigin });
   }
 
@@ -235,6 +234,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     }
     const method = typeof payload.method === 'string' ? payload.method.toUpperCase() : 'GET';
     if (!METHODS.has(method) || !this.#allowedMethods.has(method)) throw new Error(`HTTP_REQUEST_METHOD_DENIED:${method}`);
+    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}:${url.origin}`);
     const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,
       'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);
     const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,

@@ -5,6 +5,7 @@ import type { GrantedRegistry } from '@kubeclaw/plugin-foundation/registry/capab
 import { isConfidentialCapability } from '@kubeclaw/plugin-foundation/registry/capabilities';
 import { FrozenMap } from '@kubeclaw/plugin-foundation/registry/frozen-map';
 import type { EffectCoordinator } from '../effects/coordinator.ts';
+import { requiresExternalContinuation } from './effect-recovery.ts';
 import { AdapterStarter } from './adapter-startup.ts';
 import { adapterOwner } from './adapter-support.ts';
 
@@ -53,7 +54,11 @@ export class AdapterRuntime {
     const invocation = { idempotencyKey, attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
     if (isConfidentialCapability(capability)) return this.#options.effects.invokeConfidential(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
     const receipt = await this.#options.effects.invoke(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
-    if (receipt.status !== 'completed') throw new Error(`EFFECT_OUTCOME_UNRESOLVED:${receipt.effectId}:${receipt.error?.message ?? 'adapter invocation failed'}`); return receipt.result ?? {};
+    if (receipt.status !== 'completed') {
+      const message = receipt.error?.message ?? 'adapter invocation failed';
+      throw new Error(requiresExternalContinuation(capability) ? `EFFECT_OUTCOME_UNRESOLVED:${receipt.effectId}:${message}` : message);
+    }
+    return receipt.result ?? {};
   }
 
   shutdown(): Promise<void> {
