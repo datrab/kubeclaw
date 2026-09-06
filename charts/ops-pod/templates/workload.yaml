@@ -1,0 +1,158 @@
+{{- $name := .Release.Name -}}
+{{- if not (regexMatch "^.+@sha256:[a-f0-9]{64}$" .Values.codexImage) }}
+{{- fail "codexImage must be an immutable image@sha256:digest" }}
+{{- end }}
+{{- if not (regexMatch "^.+@sha256:[a-f0-9]{64}$" .Values.mcpImage) }}
+{{- fail "mcpImage must be an immutable image@sha256:digest" }}
+{{- end }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+spec:
+  clusterIP: None
+  selector: {app.kubernetes.io/name: {{ $name }}}
+  ports:
+    - name: health
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $name }}
+spec:
+  serviceName: {{ $name }}
+  replicas: 1
+  revisionHistoryLimit: 3
+  # A single persistent CLI identity/workspace must never have two writers.
+  updateStrategy: {type: RollingUpdate}
+  selector:
+    matchLabels: {app.kubernetes.io/name: {{ $name }}}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: {{ $name }}}
+    spec:
+      serviceAccountName: {{ $name }}
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: codex
+          image: {{ .Values.codexImage | quote }}
+          env:
+            - {name: HOME, value: /home/node}
+            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
+            {{- if .Values.githubSecret }}
+            - name: GH_TOKEN
+              valueFrom:
+                secretKeyRef: {name: {{ .Values.githubSecret }}, key: token}
+            {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: {{ toYaml .Values.resources.codex | nindent 12 }}
+          volumeMounts:
+            - {name: home, mountPath: /home/node}
+            - {name: workspace, mountPath: /workspace}
+            - {name: codex-tmp, mountPath: /tmp}
+            - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
+          readinessProbe:
+            exec:
+              command: [python3, -c, "import json; s=json.load(open('/tmp/codex-ops-status.json')); raise SystemExit(0 if s['phase']=='remote-process-running' else 1)"]
+            periodSeconds: 10
+            timeoutSeconds: 3
+          # No auth/relay/API dependent liveness probe: kubectl exec must remain
+          # available while login/pairing or the OpenAI service is unavailable.
+        - name: ops-mcp
+          image: {{ .Values.mcpImage | quote }}
+          env:
+            - {name: HOST, value: "127.0.0.1"}
+            - {name: OPS_LOCAL_ONLY, value: "1"}
+            - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
+            - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}
+            - {name: OPS_MCP_BEARER_TOKEN_FILE, value: /var/run/kubeclaw-ops/bearer/token}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: {{ toYaml .Values.resources.mcp | nindent 12 }}
+          volumeMounts:
+            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
+          readinessProbe:
+            exec:
+              command: [node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            exec:
+              command: [node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            timeoutSeconds: 3
+        {{- if .Values.tailscale.enabled }}
+        - name: tailscale
+          image: {{ .Values.tailscale.image | quote }}
+          env:
+            - {name: TS_USERSPACE, value: "true"}
+            - {name: TS_AUTH_ONCE, value: "true"}
+            - {name: TS_KUBE_SECRET, value: ""}
+            - {name: TS_STATE_DIR, value: /var/lib/tailscale}
+            - {name: TS_SOCKET, value: /tmp/tailscaled.sock}
+            - {name: TS_SOCKS5_SERVER, value: "127.0.0.1:1055"}
+            - {name: TS_HOSTNAME, value: {{ .Values.tailscale.hostname | quote }}}
+            - {name: TS_EXTRA_ARGS, value: {{ .Values.tailscale.extraArgs | quote }}}
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef: {name: {{ .Values.tailscale.authSecret }}, key: authkey}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: {{ toYaml .Values.tailscale.resources | nindent 12 }}
+          volumeMounts:
+            - {name: tailscale-state, mountPath: /var/lib/tailscale}
+            - {name: tailscale-tmp, mountPath: /tmp}
+        {{- end }}
+      volumes:
+        - name: bearer
+          secret:
+            secretName: {{ .Values.bearerSecret }}
+            defaultMode: 0440
+        - name: kube-api
+          projected:
+            defaultMode: 0440
+            sources:
+              - serviceAccountToken: {path: token, expirationSeconds: 3600}
+              - configMap:
+                  name: kube-root-ca.crt
+                  items: [{key: ca.crt, path: ca.crt}]
+        - {name: codex-tmp, emptyDir: {sizeLimit: 1Gi}}
+        {{- if .Values.tailscale.enabled }}
+        - {name: tailscale-tmp, emptyDir: {sizeLimit: 64Mi}}
+        - name: tailscale-state
+          persistentVolumeClaim: {claimName: {{ $name }}-tailscale}
+        {{- end }}
+  volumeClaimTemplates:
+    {{- range $volume := list "home" "workspace" }}
+    - metadata: {name: {{ $volume }}}
+      spec:
+        accessModes: [ReadWriteOnce]
+        {{- if $.Values.persistence.storageClass }}
+        storageClassName: {{ $.Values.persistence.storageClass | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ if eq $volume "home" }}2Gi{{ else }}{{ $.Values.persistence.size }}{{ end }}
+    {{- end }}

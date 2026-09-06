@@ -1,0 +1,43 @@
+# Images must be immutable digests from the Ops image workflow.
+codexImage: ""
+mcpImage: ""
+imagePullSecrets:
+  - name: ghcr-secret
+bearerSecret: codex-ops-bearer
+githubSecret: "" # optional Secret with key `token`, mounted in Codex only
+
+persistence:
+  size: 20Gi
+  storageClass: "" # existing cluster default
+
+resources:
+  codex:
+    requests: {cpu: 100m, memory: 256Mi}
+    limits: {cpu: "2", memory: 3Gi}
+  mcp:
+    requests: {cpu: 25m, memory: 64Mi}
+    limits: {cpu: 500m, memory: 512Mi}
+
+rbac:
+  # The deployment helper discovers existing platform namespaces. RoleBindings
+  # must not refer to namespaces that do not exist yet.
+  namespaces: [kubeclaw]
+argoNamespace: argocd
+defaultNamespace: kubeclaw
+
+networkPolicy:
+  enabled: true
+  cilium: false # helper detects Cilium CRDs; adds explicit kube-apiserver entity
+  apiServerCIDRs: [] # helper discovers Kubernetes endpoint IPs
+  apiServerPort: 6443
+
+tailscale:
+  enabled: false
+  image: ghcr.io/tailscale/tailscale:v1.102.3
+  authSecret: codex-ops-tailscale # key: authkey
+  hostname: kubeclaw-ops
+  extraArgs: "--accept-dns=false"
+  # Userspace SOCKS on localhost:1055; no NET_ADMIN, host networking or operator.
+  resources:
+    requests: {cpu: 25m, memory: 64Mi}
+    limits: {cpu: 500m, memory: 256Mi}

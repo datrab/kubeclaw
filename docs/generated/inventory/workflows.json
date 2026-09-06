@@ -48,7 +48,7 @@
     },
     {
       "path": ".github/workflows/build-ops-mcp.yaml",
-      "name": "Build Ops MCP Image",
+      "name": "Build Ops Images",
       "triggers": [
         "pull_request",
         "push",
@@ -56,6 +56,9 @@
       ],
       "pathFilters": [
         "tools/ops-mcp/**",
+        "ops/pod/**",
+        "charts/ops-pod/**",
+        "scripts/deploy-ops-pod.sh",
         ".github/workflows/build-ops-mcp.yaml"
       ],
       "schedules": [],
@@ -63,8 +66,10 @@
         "build"
       ],
       "commandAndActionRefs": [
+        "bash ops/pod/test-image.sh \"$TEST_IMAGE",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v6",
+        "uses: azure/setup-helm@v4.3.1",
         "uses: docker/build-push-action@v7",
         "uses: docker/login-action@v4",
         "uses: docker/metadata-action@v6",
