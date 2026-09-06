@@ -1,88 +1,36 @@
 import assert from 'node:assert/strict';
-import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import type { AdapterActivationContext, AdapterInvocation, ArtifactRef, PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { activate } from '../../../../common/plugins/artifact-store/src/adapter.ts';
 import { execute } from '../src/architecture-approval.ts';
 
-function context(findings: readonly Readonly<Record<string, unknown>>[]) {
-  const calls: Array<{ capability: string; request: Readonly<Record<string, unknown>> }> = [];
-  const value = {
-    contract: {
-      config: { target: 'discord', issuerId: 'operator-1', timeoutMinutes: 10 },
-      guidance: undefined,
-      lease: {
-        attempt: {
-          runId: 'run:architecture-approval',
-          stageId: 'architecture-approval',
-          attemptId: 'attempt:1',
-          attemptNumber: 1,
-        },
-      },
-    },
-    invoke: async (capability: string, request: Readonly<Record<string, unknown>>) => {
-      calls.push({ capability, request });
-      if (capability === 'artifacts.read') return { value: { findings } };
-      if (capability === 'operator.request') return { accepted: true };
-      if (capability === 'signal.wait') {
-        const payload = request.payload as Readonly<Record<string, unknown>>;
-        return {
-          created: true,
-          wait: {
-            schemaVersion: 'wait-request.v2',
-            waitId: 'wait:architecture-approval',
-            kind: 'signal',
-            signalType: payload.signalType,
-            authorizedIssuer: payload.authorizedIssuer,
-            expiresAt: payload.expiresAt,
-            request: payload.request,
-          },
-        };
-      }
-      throw new Error(`unexpected capability: ${capability}`);
-    },
-  } as unknown as PluginInvocationContext;
-  return { value, calls };
-}
-
-const input = {
-  summary: 'Review architecture findings before Forge.',
-  artifactId: 'architecture-validation',
-  namespace: 'kubeclaw.architecture-validator',
-};
-
-const clean = context([]);
-assert.equal((await execute(input, clean.value)).outcome, 'passed');
-assert.deepEqual(clean.calls.map((call) => call.capability), ['artifacts.read']);
-
-const warning = context([{
-  id: 'ARCHITECTURE_BOUNDARY_RISK',
-  severity: 'warn',
-  explanation: 'The integration boundary is unclear.',
-  remediation: 'Declare the API owner.',
-}]);
-const pending = await execute(input, warning.value);
-assert.equal(pending.outcome, 'wait');
-assert.deepEqual(
-  warning.calls.map((call) => call.capability),
-  ['artifacts.read', 'operator.request', 'signal.wait'],
-);
-const operatorPayload = warning.calls[1]!.request.payload as Readonly<Record<string, unknown>>;
-assert.match(String(operatorPayload.summary), /ARCHITECTURE_BOUNDARY_RISK/);
-assert.match(String(operatorPayload.summary), /Declare the API owner/);
-
-const multiline = context([{
-  id: 'MULTILINE_FINDING',
-  severity: 'error',
-  explanation: 'The boundary spans\nmultiple components.',
-  remediation: 'Declare the owner.\nDocument the handoff.',
-}]);
-assert.equal((await execute(input, multiline.value)).outcome, 'wait');
-const multilineSummary = String(
-  (multiline.calls[1]!.request.payload as Readonly<Record<string, unknown>>).summary,
-);
-assert.doesNotMatch(multilineSummary, /[\r\n]/u);
-assert.match(multilineSummary, /multiple components/);
-
-console.log(JSON.stringify({
-  ok: true,
-  plugin: 'kubeclaw.human-approval',
-  suite: 'architecture-approval-unit',
-}));
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'architecture-approval-'));
+const adapter = activate({ config: { artifactRoot: root } } as AdapterActivationContext);
+const producer = { runId: 'architecture:run', stageId: 'architecture', attemptNumber: 1, attemptId: 'architecture:1' };
+const input = { summary: 'Review architecture findings before Forge.', artifactId: 'architecture-validation', namespace: 'kubeclaw.architecture-validator' };
+let sequence = 0;
+const invoke = async (capability: string, request: any) => adapter.invoke({ confidential: true,
+  signal: new AbortController().signal, request: { ...request, capability, attempt: producer, idempotencyKey: `artifact:${++sequence}` },
+} as AdapterInvocation);
+const context = (artifacts: ArtifactRef[]) => ({ contract: { artifacts, lease: { attempt: producer } }, invoke }) as unknown as PluginInvocationContext;
+const write = async (value: unknown) => (await invoke('artifacts.write', { operation: 'put_json',
+  resource: { type: 'artifact.object', canonicalId: input.artifactId },
+  payload: { namespace: input.namespace, mediaType: 'application/json', value } })).artifact as ArtifactRef;
+try {
+  await adapter.ready();
+  const clean = await write({ verdict: 'passed', findings: [], checkedFiles: ['design.md'], summary: 'Consistent.' });
+  assert.equal((await execute(input, context([clean]))).outcome, 'passed');
+  // A later stored report must not replace the exact artifact supplied by the core.
+  const blocked = await write({ verdict: 'blocked', findings: [], summary: 'Invalid.' });
+  assert.equal((await execute(input, context([clean]))).outcome, 'passed');
+  await assert.rejects(() => execute(input, context([blocked])), /REPORT_NOT_PASSED/);
+  await assert.rejects(() => execute(input, context([])), /REFERENCE_MISSING_OR_AMBIGUOUS/);
+  await assert.rejects(() => execute(input, context([clean, blocked])), /REFERENCE_MISSING_OR_AMBIGUOUS/);
+  await assert.rejects(() => execute(input, context([{ ...clean, producer: { ...producer, runId: 'another:run' } }])), /REFERENCE_MISSING_OR_AMBIGUOUS/);
+  await assert.rejects(() => execute(input, context([{ ...clean, sizeBytes: clean.sizeBytes + 1 }])), /CONTENT_INVALID/);
+  const malformed = await write({ verdict: 'passed' });
+  await assert.rejects(() => execute(input, context([malformed])), /FINDINGS_INVALID/);
+} finally { await adapter.shutdown(); fs.rmSync(root, { recursive: true, force: true }); }
+console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.human-approval', suite: 'architecture-durable-evidence' }));

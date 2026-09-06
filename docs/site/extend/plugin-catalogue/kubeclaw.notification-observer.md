@@ -9,7 +9,7 @@ Last verified: generated during publication
 
 ## Purpose
 
-This package provides 3 registered extensions through the canonical plugin runtime.
+This package provides 2 registered extensions through the canonical plugin runtime.
 
 ## When To Use It
 
@@ -28,7 +28,6 @@ Use this package when an immutable lifecycle record must reach one of its declar
 | --- | --- | --- | --- | --- |
 | observer | `notifications` | `notifications` | `src/observer.ts` | `observe` |
 | observer | `preview-delivery` | `preview-delivery` | `src/observer.ts` | `deliverPreview` |
-| observer | `audit` | `audit` | `src/observer.ts` | `recordAudit` |
 
 ## observer: notifications
 
@@ -49,20 +48,6 @@ Result schema: None.
 Public identifier: `preview-delivery`.
 
 Required capabilities: `operator.request`
-
-Provided capabilities: None.
-
-Configuration schema: `schemas/config.schema.json`
-
-Input schema: None.
-
-Result schema: None.
-
-## observer: audit
-
-Public identifier: `audit`.
-
-Required capabilities: `artifacts.write`
 
 Provided capabilities: None.
 

@@ -16,7 +16,8 @@ async function createWorkspace(ctx: GitContext, invocation: AdapterInvocation): 
   await ctx.runner.run(repository, ['worktree', 'add', '-b', branch, '--', workspace, gitToken(request.payload.baseRef, 'baseRef')], signal);
   const canonical = canonicalExistingDirectory(workspace, 'workspacePath');
   if (!pathInside(canonical, ctx.workspaceRoot)) throw new Error(`GIT_PATH_DENIED:${canonical}`);
-  return { workspace: canonical };
+  const revision = await ctx.runner.run(canonical, ['rev-parse', '--verify', 'HEAD'], signal);
+  return { workspace: canonical, sourceRevision: String(revision.stdout).trim() };
 }
 
 async function removeWorkspace(ctx: GitContext, invocation: AdapterInvocation): Promise<Result> {
@@ -54,9 +55,15 @@ async function workspaceOperation(ctx: GitContext, workspace: string, invocation
   if (request.capability === 'git.commit' && request.operation === 'commit') {
     const paths = scopedPaths(request.payload.paths, workspace);
     await ctx.runner.run(workspace, ['add', '--', ...paths], signal);
-    return ctx.runner.run(workspace, ['commit', '-m', commitMessage(request.payload.message), '--', ...paths], signal);
+    const result = await ctx.runner.run(workspace, ['commit', '-m', commitMessage(request.payload.message), '--', ...paths], signal);
+    const revision = await ctx.runner.run(workspace, ['rev-parse', '--verify', 'HEAD'], signal);
+    return { ...result, sourceRevision: String(revision.stdout).trim() };
   }
-  if (request.capability === 'git.merge' && request.operation === 'merge') return ctx.runner.run(workspace, ['merge', '--no-edit', '--no-ff', gitToken(request.payload.sourceRef, 'sourceRef')], signal);
+  if (request.capability === 'git.merge' && request.operation === 'merge') {
+    const result = await ctx.runner.run(workspace, ['merge', '--no-edit', '--no-ff', gitToken(request.payload.sourceRef, 'sourceRef')], signal);
+    const revision = await ctx.runner.run(workspace, ['rev-parse', '--verify', 'HEAD'], signal);
+    return { ...result, sourceRevision: String(revision.stdout).trim() };
+  }
   if (request.capability === 'git.sync' && request.operation === 'sync_paths') return syncPaths(ctx, workspace, invocation);
   if (request.capability === 'git.sync' && request.operation === 'fetch') return ctx.runner.run(workspace, ['fetch', '--prune', '--', gitToken(request.payload.remote ?? 'origin', 'remote')], signal);
   if (request.capability === 'git.sync' && request.operation === 'rebase') return ctx.runner.run(workspace, ['rebase', '--', gitRef(request.payload.upstreamRef, 'upstreamRef')], signal);

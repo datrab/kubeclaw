@@ -5,6 +5,7 @@ import ts from 'typescript';
 
 const root = path.resolve(import.meta.dirname, '..');
 const baseConfig = path.join(root, 'tsconfig.base.json');
+execFileSync(process.execPath, ['skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs'], { cwd: root, stdio: 'inherit' });
 const sourceConfigs = execFileSync('find', [
   'contracts', 'skills', 'tests',
   '-name', 'tsconfig.json',

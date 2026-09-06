@@ -1,0 +1,90 @@
+name: Promote image release
+on:
+  workflow_dispatch:
+    inputs:
+      family:
+        description: Image family to select
+        required: true
+        type: choice
+        default: runtime
+        options: [runtime, ops]
+      source_run_id:
+        description: Successful main build run ID for the selected image family
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+  packages: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_FAMILY: ${{ inputs.family }}
+      SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Verify source run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]]
+          case "$RELEASE_FAMILY" in
+            runtime) source_workflow=.github/workflows/build-images.yaml ;;
+            ops) source_workflow=.github/workflows/build-ops-mcp.yaml ;;
+            *) exit 1 ;;
+          esac
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID" > "$RUNNER_TEMP/source-run.json"
+          jq -e --arg workflow "$source_workflow" '.conclusion == "success" and .head_branch == "main" and .path == $workflow and (.event == "push" or .event == "workflow_dispatch")' "$RUNNER_TEMP/source-run.json"
+          echo "SOURCE_COMMIT=$(jq -r .head_sha "$RUNNER_TEMP/source-run.json")" >> "$GITHUB_ENV"
+          attempt="$(jq -r .run_attempt "$RUNNER_TEMP/source-run.json")"
+          mkdir -p releases
+          gh release download "$RELEASE_FAMILY-images-$RUN_ID-$attempt" --repo "$GITHUB_REPOSITORY" --pattern "$RELEASE_FAMILY-images.json" --dir releases --clobber
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Prepare release selection and values
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/updates/verify-release-source.mjs
+          node scripts/updates/materialize-release.mjs "--family=$RELEASE_FAMILY"
+      - name: Scan the selected immutable artifacts before proposing promotion
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ github.token }}
+        run: |
+          mapfile -t images < <(jq -r '.images[]' "releases/$RELEASE_FAMILY-images.json")
+          bash scripts/scan-runtime-images.sh "${images[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proposed-runtime-release
+          path: releases/
+          if-no-files-found: error
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ vars.DEPENDENCY_APP_ID }}
+          private-key: ${{ secrets.DEPENDENCY_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+      - name: Open release selection PR
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          branch="release/$RELEASE_FAMILY-$RUN_ID"
+          git switch -c "$branch"
+          git config user.name kubeclaw-updates
+          git config user.email kubeclaw-updates@users.noreply.github.com
+          git add releases
+          git commit -m "Select tested $RELEASE_FAMILY images from run $RUN_ID"
+          gh auth setup-git
+          git push origin "$branch"
+          printf 'Select immutable image digests from successful main run %s, source commit %s. No images are rebuilt and no deployment is performed. Review the generated values before rollout.\n' "$RUN_ID" "$SOURCE_COMMIT" > "$RUNNER_TEMP/release-body.md"
+          gh pr create --base main --head "$branch" --title "Select $RELEASE_FAMILY release $RUN_ID" --body-file "$RUNNER_TEMP/release-body.md"

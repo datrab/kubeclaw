@@ -1,3 +1,4 @@
+import { applyRepair, repairRequest, type RepairRequest } from './remediation.ts';
 import type {
   LifecycleEvent,
   PipelineDefinition,
@@ -148,6 +149,10 @@ export function applyRecoveryEvent(
   if (!stageId) return;
   const current = states.get(stageId);
   if (!current) return;
+  if (event.type === 'stage.waiting' && event.payload.repairRequest) {
+    states.set(stageId, { ...current, ...budgets(event, current) });
+    applyRepair(states, event.payload.repairRequest as unknown as RepairRequest); return;
+  }
   if (event.type === 'attempt.created') {
     const attemptNumber = count(event.payload.attemptNumber);
     states.set(stageId, { ...current, attemptNumber: Math.max(current.attemptNumber, attemptNumber), attemptsUsed: Math.max(current.attemptsUsed, attemptNumber) });
@@ -155,12 +160,20 @@ export function applyRecoveryEvent(
   }
   if (event.type === 'wait.resolved') {
     const { wait: _wait, ...withoutWait } = current;
-    states.set(stageId, { ...withoutWait, status: 'pending' });
+    const signal = event.payload.signal as import('@kubeclaw/plugin-sdk').ResumeSignal;
+    if (!signal || signal.waitId !== event.identity.waitId) throw new Error('RECOVERY_WAIT_SIGNAL_INVALID');
+    states.set(stageId, { ...withoutWait, status: 'pending', continuationGuidance: signal.payload });
     return;
   }
   const recovered = recoverAttemptResult(definition, event, current, orchestratorIssuerId)
     ?? stageEventState(event, current, states);
-  if (recovered) states.set(stageId, recovered);
+  if (recovered?.remediationTarget && event.type === 'attempt.completed' && (event.payload.result as StageResult)?.outcome === 'request_fix') {
+    states.set(stageId, recovered);
+    applyRepair(states, repairRequest(definition.stages, stageId, recovered.remediationTarget, recovered.remediationCyclesUsed, event.payload.result as StageResult)); return;
+  }
+  if (recovered) {
+    states.set(stageId, recovered);
+  }
 }
 
 export function resetInterruptedStages(states: StateMap): void {

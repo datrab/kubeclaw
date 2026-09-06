@@ -6,7 +6,7 @@
     "path": "pipeline.ts",
     "output": "pipeline.ts",
     "import": "@kubeclaw/nova-core",
-    "execute": "@kubeclaw/nova-core/cli"
+    "execute": "@kubeclaw/nova-project/cli"
   },
   "packages": [
     "plugin-sdk",
@@ -18,7 +18,8 @@
     "telemetry-contract",
     "pipeline-test-gate-contract",
     "pipeline-worker-core-contract",
-    "pipeline-observability-contract"
+    "pipeline-observability-contract",
+    "nova-project"
   ],
   "plugins": [
     "kubeclaw.agent-observability",
@@ -52,6 +53,8 @@
     "kubeclaw.repository-adapter",
     "kubeclaw.review"
   ],
-  "extensions": ["kubeclaw-agent-observer"],
+  "extensions": [
+    "kubeclaw-agent-observer"
+  ],
   "externalCapabilities": []
 }

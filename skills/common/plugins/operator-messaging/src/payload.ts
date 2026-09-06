@@ -1,7 +1,7 @@
 import type { EffectRequest } from '@kubeclaw/plugin-sdk';
 
 const MESSAGE_TYPE = /^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$/;
-const PAYLOAD_KEYS = new Set(['type', 'message', 'eventId', 'runId', 'stageId', 'artifactId', 'artifact', 'approvalId', 'summary', 'fields', 'footer', 'occurredAt', 'severity', 'title', 'reasonCode', 'signalType', 'authorizedIssuer', 'expiresAt']);
+const PAYLOAD_KEYS = new Set(['type', 'projectId', 'waitId', 'message', 'eventId', 'runId', 'stageId', 'artifactId', 'artifact', 'approvalId', 'summary', 'fields', 'footer', 'occurredAt', 'severity', 'title', 'reasonCode', 'signalType', 'authorizedIssuer', 'expiresAt']);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -77,7 +77,7 @@ function validateIssuer(value: unknown): void {
 
 function validateKnownFields(raw: Record<string, unknown>): void {
   const strings: ReadonlyArray<readonly [string, number, boolean?]> = [
-    ['message', 16_384], ['eventId', 512], ['runId', 512], ['stageId', 512, true],
+    ['projectId', 512], ['waitId', 512], ['message', 16_384], ['eventId', 512], ['runId', 512], ['stageId', 512, true],
     ['artifactId', 512, true], ['approvalId', 512], ['summary', 16_384], ['footer', 2_048],
     ['severity', 32], ['title', 512], ['reasonCode', 256, true], ['signalType', 256],
   ];

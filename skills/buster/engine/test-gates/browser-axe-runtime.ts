@@ -1,3 +1,4 @@
+import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 import { AxeBuilder } from '@axe-core/playwright';
 import { chromium, firefox, webkit, type Browser, type BrowserContextOptions } from 'playwright';
 import type { ResolvedInputV1 } from '@kubeclaw/pipeline-test-gate-contract';
@@ -55,23 +56,7 @@ function disableWebRtc(): void {
   }
 }
 
-function inputOrigins(inputs: readonly ResolvedInputV1[]): Set<string> {
-  const origins = new Set<string>();
-  for (const input of inputs) {
-    if (input.kind !== 'value' || !input.value || typeof input.value !== 'object' || Array.isArray(input.value)) continue;
-    const value = input.value as JsonObject;
-    if (input.schemaId === 'kubeclaw.public-endpoint-fixture@1' && typeof value.url === 'string') {
-      try { origins.add(new URL(value.url).origin); } catch { /* Invalid fixture data remains unauthorized. */ }
-    }
-    if (input.schemaId === 'kubeclaw.kubernetes-deployment-fixture@1' && Array.isArray(value.endpoints)) {
-      for (const endpoint of value.endpoints) if (endpoint && typeof endpoint === 'object'
-        && typeof (endpoint as JsonObject).url === 'string') {
-        try { origins.add(new URL((endpoint as JsonObject).url as string).origin); } catch { /* Unauthorized. */ }
-      }
-    }
-  }
-  return origins;
-}
+
 
 function stringArray(value: unknown, code: string, maximum: number): string[] {
   if (!Array.isArray(value) || value.length > maximum
@@ -154,9 +139,10 @@ export class BrowserAxeCapabilityInvoker implements TestProviderCapabilityInvoke
 
   async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal,
     inputs: readonly ResolvedInputV1[] = []): Promise<Readonly<Record<string, unknown>>> {
+    signal = fixtureAuthoritySignal(inputs, signal);
     if (capability !== 'browser.axe' || request.operation !== 'scan') throw new Error('BROWSER_AXE_OPERATION_DENIED');
     if (request.resource.type !== 'network.url') throw new Error('BROWSER_AXE_RESOURCE_INVALID');
-    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...inputOrigins(inputs)]);
+    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...fixtureOrigins(inputs)]);
     if (!allowed.has(target.origin) || target.username || target.password) throw new Error('BROWSER_AXE_ORIGIN_DENIED');
     const payload = object(request.payload, 'BROWSER_AXE_REQUEST_INVALID');
     if (!Array.isArray(payload.combinations) || payload.combinations.length === 0

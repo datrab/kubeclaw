@@ -1,8 +1,12 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+ARG CONTROLLER_GO_BASE=golang:1.22-bookworm@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253
+ARG CONTROLLER_RUNTIME_BASE=gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+
 # =============================================================================
 # KubeClaw Namespace Controller
 # =============================================================================
 # Lightweight Go controller runtime for Buster namespace leases.
-FROM golang:1.22-bookworm AS build
+FROM ${CONTROLLER_GO_BASE} AS build
 
 WORKDIR /app
 
@@ -12,7 +16,7 @@ COPY cmd/buster-namespace-controller /app/cmd/buster-namespace-controller
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
   go build -trimpath -ldflags="-s -w" -o /out/buster-namespace-controller ./cmd/buster-namespace-controller
 
-FROM gcr.io/distroless/static-debian12:nonroot
+FROM ${CONTROLLER_RUNTIME_BASE}
 
 COPY --from=build /out/buster-namespace-controller /app/buster-namespace-controller
 

@@ -74,9 +74,9 @@ try {
   assert.equal(result.stages.get('delivery')?.status, 'succeeded');
   const persistedRunRoot = runRoot(path.join(temporary, 'state'), 'run:engine-test');
   const snapshot = JSON.parse(fs.readFileSync(
-    path.join(persistedRunRoot, 'registry-snapshot.json'),
+    path.join(persistedRunRoot, 'run-snapshot.json'),
     'utf8',
-  ));
+  )).registry;
   const packageIds = snapshot.packages.map(([id]) => id).sort();
   assert.equal(packageIds.length, 31, 'run snapshot must record the complete discovered registry');
   for (const id of [
@@ -88,7 +88,7 @@ try {
     'kubeclaw.telemetry-store',
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
   assert.equal(snapshot.registrations.stages.length, 17);
-  assert.equal(snapshot.registrations.observers.length, 6);
+  assert.equal(snapshot.registrations.observers.length, 5);
   assert.equal(snapshot.registrations.adapters.length, 18);
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));

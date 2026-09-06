@@ -948,16 +948,14 @@ function instructionFiles(progress) {
   const deployableHandoff = fullModuleGraph
     ? 'release assembly module Buster'
     : 'module Buster';
-  const deploymentInput = { deployment: { from: 'kubernetes-deployment', output: 'deployment',
-    schemaId: 'kubeclaw.kubernetes-deployment-fixture@1' } };
-  const publicEndpointInput = { endpoint: { from: 'tailscale-exposure', output: 'exposure',
-    schemaId: 'kubeclaw.public-endpoint-fixture@1' } };
+  const deploymentInput = { deployment: { from: 'kubernetes-deployment', output: 'deployment' } };
+  const publicEndpointInput = { endpoint: { from: 'tailscale-exposure', output: 'exposure' } };
   const publicHttpOverride = progress.real_e2e?.public_http_url_override;
   const publicHttpInput = publicHttpOverride ? undefined : publicEndpointInput;
   const publicExpectedText = progress.real_e2e?.public_http_expected_text ?? 'REAL_E2E_NGINX_OK';
   const fixtureConfig = progress.real_e2e?.kubernetes_fixture ?? {};
   const sizeBudgetTests = (scopeId) => {
-    const archive = `.swarm/size-budget-${safeRunIdSegment(scopeId)}.tar`;
+    const archive = `${projectSrc}/.swarm/size-budget-${safeRunIdSegment(scopeId)}.tar`;
     return {
       'size-budget-artifact': { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 0,
         concurrencyGroup: 'size-budget', config: { executable: 'tar',
@@ -984,22 +982,25 @@ function instructionFiles(progress) {
       suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
         command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
           concurrencyGroup: 'unit', config: { executable: 'npm', args: ['run', `verify:${moduleId}`],
-            workingDirectory: '.', resultMode: 'exit-code' } },
+            workingDirectory: projectSrc, resultMode: 'exit-code' } },
       } } },
       tests: {
         ...sizeBudgetTests(moduleId),
+        'dependency-security': { uses: 'kubeclaw.dependency-scan-trivy@1', mode: 'blocking', retries: 0,
+          concurrencyGroup: 'security-dependency', config: { projectDirectory: projectSrc,
+            policy: { profile: 'strict-v1' } } },
         health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
           needs: ['size-budget'], concurrencyGroup: 'http', config: { url: 'http://registry-local.kubeclaw.svc.cluster.local:5001',
             path: '/v2/', expectedStatuses: [200], requestTimeoutMs: 10000 } },
       },
-      concurrencyLimits: { unit: 2, 'size-budget': 1, http: 2 },
+      concurrencyLimits: { unit: 2, 'size-budget': 1, http: 2, 'security-dependency': 1 },
     }])),
     gates: {
       'final-buster': {
         suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
           command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
             concurrencyGroup: 'unit', config: { executable: 'npm',
-              args: ['run', `verify:${releaseCandidateModuleId(moduleIds)}`], workingDirectory: '.',
+              args: ['run', `verify:${releaseCandidateModuleId(moduleIds)}`], workingDirectory: projectSrc,
               resultMode: 'exit-code' } },
         } } },
         tests: {
@@ -1021,11 +1022,11 @@ function instructionFiles(progress) {
               expectedText: 'REAL_E2E_NGINX_OK', requestTimeoutMs: 10000 }, inputs: deploymentInput },
           'api-flow': { uses: 'kubeclaw.api-flow@1', mode: 'blocking', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'api-flow',
-            config: { flowFile: '.swarm/api-flow-success.json', requestTimeoutMs: 10000 },
+            config: { flowFile: `${projectSrc}/.swarm/api-flow-success.json`, requestTimeoutMs: 10000 },
             inputs: deploymentInput },
           openapi: { uses: 'kubeclaw.openapi@1', mode: 'blocking', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'openapi',
-            config: { specFile: '.swarm/openapi-success.json', operations: [
+            config: { specFile: `${projectSrc}/.swarm/openapi-success.json`, operations: [
               { operationId: 'getHome', expectedStatuses: [200] },
             ], requestTimeoutMs: 10000 }, inputs: deploymentInput },
           axe: { uses: 'kubeclaw.axe@1', mode: 'blocking', retries: 0,
@@ -1034,16 +1035,16 @@ function instructionFiles(progress) {
             inputs: deploymentInput },
           performance: { uses: 'kubeclaw.lighthouse@1', mode: 'blocking', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-lighthouse',
-            config: { purpose: 'performance', routes: ['/'], settingsFile: '.swarm/lighthouse-settings.json',
+            config: { purpose: 'performance', routes: ['/'], settingsFile: `${projectSrc}/.swarm/lighthouse-settings.json`,
               profile: 'desktop', budget: 'fixture', runs: 3, timeoutMs: 120000 },
             inputs: deploymentInput },
           visual: { uses: 'kubeclaw.visual@1', mode: 'blocking', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-visual',
-            config: { manifestFile: '.swarm/visual/baselines.json', profileFile: '.swarm/browser-profiles.json',
+            config: { manifestFile: `${projectSrc}/.swarm/visual/baselines.json`, profileFile: `${projectSrc}/.swarm/browser-profiles.json`,
               targets: ['home-desktop'], comparisonProfile: 'strict-v1', timeoutMs: 60000 }, inputs: deploymentInput },
           playwright: { uses: 'kubeclaw.playwright@1', mode: 'blocking', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'browser-playwright',
-            config: { projectDirectory: '.', configFile: '.swarm/playwright.config.ts', workers: 2,
+            config: { projectDirectory: projectSrc, configFile: '.swarm/playwright.config.ts', workers: 2,
               timeoutMs: 120000 }, inputs: deploymentInput },
           'security-headers': { uses: 'kubeclaw.security-headers@1', mode: 'blocking', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'security-headers',
@@ -1055,7 +1056,7 @@ function instructionFiles(progress) {
           'image-security': { uses: 'kubeclaw.image-scan-trivy@1', mode: 'blocking', retries: 0,
             needs: ['container-build'], concurrencyGroup: 'security-image',
             config: { policy: { profile: 'strict-v1' } }, inputs: {
-              image: { from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1' } } },
+              image: { from: 'container-build', output: 'image' } } },
           'kubernetes-policy-security': { uses: 'kubeclaw.kubernetes-policy-security@1', mode: 'blocking', retries: 0,
             needs: ['checked-manifest'], concurrencyGroup: 'security-kubernetes-policy',
             config: { policy: { profile: 'strict-v1' } }, inputs: {
@@ -1085,7 +1086,7 @@ function instructionFiles(progress) {
               secretReferences: fixtureConfig.secret_references ?? [] }, inputs: {
               'checked-manifest': { from: 'checked-manifest', output: 'artifact-1',
                 mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml' },
-              image: { from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1' },
+              image: { from: 'container-build', output: 'image' },
             } },
           'tailscale-exposure': { uses: 'kubeclaw.tailscale-exposure@1', retries: 0,
             needs: ['kubernetes-deployment'], concurrencyGroup: 'tailscale-exposure',
@@ -1104,13 +1105,15 @@ function instructionFiles(progress) {
     const flowFile = legacy?.test_config?.api?.spec_file;
     if (typeof flowFile !== 'string') return;
     scope.tests['intentional-api-failure'] = { uses: 'kubeclaw.api-flow@1', mode: 'blocking', retries: 0,
-      concurrencyGroup: 'api-flow', config: { flowFile,
+      concurrencyGroup: 'api-flow', config: { flowFile: `${projectSrc}/${flowFile}`,
         url: 'http://registry-local.kubeclaw.svc.cluster.local:5001' } };
     scope.concurrencyLimits['api-flow'] = 1;
     apiFailureSpecs.push(flowFile);
   };
   for (const moduleId of moduleIds) addApiFailure(unitPipeline.modules[moduleId], progress.modules[moduleId]);
   addApiFailure(unitPipeline.gates['final-buster'], progress.gates?.['final-buster']);
+  const visualBaseline = JSON.parse(fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/visual/baselines.json'), 'utf8'));
+  visualBaseline.entries = visualBaseline.entries.map((entry) => ({ ...entry, baselineFile: `${projectSrc}/${entry.baselineFile}` }));
   const files = {
     'pipeline.json': `${JSON.stringify(unitPipeline, null, 2)}\n`,
     'api-flow-success.json': `${JSON.stringify({
@@ -1133,7 +1136,7 @@ function instructionFiles(progress) {
         maximumTbtMs: 1000 } },
     }, null, 2)}\n`,
     'browser-profiles.json': fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/browser-profiles.json'), 'utf8'),
-    'visual/baselines.json': fs.readFileSync(path.join(FIXTURE_DIR, '.swarm/visual/baselines.json'), 'utf8'),
+    'visual/baselines.json': `${JSON.stringify(visualBaseline, null, 2)}\n`,
     'playwright.config.ts': [
       "import { defineConfig } from '@playwright/test';",
       "export default defineConfig({ testDir: './e2e', retries: 1, use: { baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL, screenshot: 'only-on-failure', trace: 'retain-on-failure' }, projects: [{ name: 'chromium', use: { browserName: 'chromium' } }] });",

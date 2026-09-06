@@ -1,3 +1,4 @@
+import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -19,10 +20,16 @@ const validSettings = {
   },
 };
 fs.writeFileSync(settingsPath, JSON.stringify(validSettings));
+let forbiddenContacts = 0;
+const forbiddenServer = http.createServer((_request, response) => { forbiddenContacts += 1; response.end('forbidden'); });
+await new Promise<void>(resolve => forbiddenServer.listen(0, '127.0.0.1', resolve));
+const forbiddenAddress = forbiddenServer.address();
+if (!forbiddenAddress || typeof forbiddenAddress === 'string') throw new Error('LIGHTHOUSE_TEST_BIND_FAILED');
+const forbiddenOrigin = `http://127.0.0.1:${forbiddenAddress.port}`;
 const server = http.createServer((request, response) => {
   response.setHeader('content-type', 'text/html; charset=utf-8');
   if (request.url === '/egress') {
-    response.end('<!doctype html><html lang="en"><head><title>Egress</title></head><body><main><img alt="x" src="http://example.invalid/denied.png"></main></body></html>');
+    response.end(`<!doctype html><html lang="en"><head><title>Egress</title></head><body><main><img alt="x" src="${forbiddenOrigin}/denied.png"></main></body></html>`);
     return;
   }
   response.end('<!doctype html><html lang="en"><head><title>Fast page</title><meta name="viewport" content="width=device-width"></head><body><main><h1>Ready</h1><p>Real Lighthouse page.</p></main></body></html>');
@@ -30,7 +37,7 @@ const server = http.createServer((request, response) => {
 await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
 const address = server.address(); if (!address || typeof address === 'string') throw new Error('LIGHTHOUSE_TEST_BIND_FAILED');
 const origin = `http://127.0.0.1:${address.port}`;
-const chromeExecutable = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
+const chromeExecutable = chromium.executablePath();
 assert.equal(fs.existsSync(chromeExecutable), true, 'real Chromium is required');
 const capability = new BrowserLighthouseCapabilityInvoker({ allowedOrigins: [origin], chromeExecutable,
   maximumRuns: 16, maximumExecutionMs: 180000, maximumResultBytes: 64 * 1024 * 1024 });
@@ -67,8 +74,9 @@ try {
   await assert.rejects(() => provider().execute({ ...invocation, configuration: { values: {
     ...invocation.configuration.values, routes: ['/egress'], budget: 'permissive', runs: 3,
   } } }, context), /BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED/u);
+  assert.equal(forbiddenContacts, 0, 'audited off-origin traffic must never contact the server');
 } finally {
-  await new Promise<void>((resolve) => server.close(() => resolve()));
+  await Promise.all([server, forbiddenServer].map(server => new Promise<void>(resolve => server.close(() => resolve()))));
   fs.rmSync(root, { recursive: true, force: true });
 }
 console.log(JSON.stringify({ ok: true, provider: 'lighthouse', realChrome: true, realLighthouse: true, mocks: 0, wrappers: 0 }));

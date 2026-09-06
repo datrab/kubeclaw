@@ -16,9 +16,11 @@ const artifact = {
   },
 };
 
-assert.equal(resultForReport({ summary: { tools_failed: 0, total_blocking: 0 } }, artifact).outcome, 'passed');
-assert.equal(resultForReport({ summary: { tools_failed: 0, total_blocking: 2 } }, artifact).outcome, 'request_fix');
-assert.equal(resultForReport({ summary: { tools_failed: 1, total_blocking: 0 } }, artifact).outcome, 'blocked');
-assert.equal(resultForReport({ summary: { tools_failed: 1, total_blocking: 2 } }, artifact).outcome, 'blocked');
+// Partial summaries used to become passing gates. Only complete validated reports
+// may be judged; actual passing/failing tool execution is covered by live-function.
+for (const report of [{}, { summary: {} }, { summary: { tools_failed: 0, total_blocking: 0 } },
+  { summary: { tools_failed: -1, total_blocking: NaN } }]) {
+  assert.throws(() => resultForReport(report, artifact), /report.schema_version/);
+}
 
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.lint', suite: 'unit' }));
+console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.lint', suite: 'invalid-report-rejection' }));

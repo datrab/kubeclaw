@@ -1,3 +1,5 @@
+import { applyRepair, repairRequest } from '../lifecycle/remediation.ts';
+import type { ExecutionGraph } from './graph.ts';
 import crypto from 'node:crypto';
 import type { LifecycleEvent, StageDefinition, StageResult } from '@kubeclaw/plugin-sdk';
 import type { LifecycleDecision, StageRuntimeState } from '../lifecycle/reducer.ts';
@@ -14,12 +16,13 @@ type TerminalStatus = 'failed' | 'blocked' | 'cancelled';
 export interface BatchOutcome { readonly terminal?: TerminalStatus; readonly paused: boolean }
 
 export class DecisionRecorder {
+  readonly #graph: ExecutionGraph;
   readonly #states: Map<string, StageRuntimeState>; readonly #append: AppendLifecycleEvent; readonly #issuer: string;
   readonly #force: (stageId: string) => void; readonly #checkpoints: ArtifactCheckpointRecorder;
   #terminal: TerminalStatus | undefined; #paused = false;
   constructor(states: Map<string, StageRuntimeState>, append: AppendLifecycleEvent, issuer: string,
-    force: (stageId: string) => void, checkpoints: ArtifactCheckpointRecorder) {
-    this.#states = states; this.#append = append; this.#issuer = issuer; this.#force = force; this.#checkpoints = checkpoints;
+    force: (stageId: string) => void, checkpoints: ArtifactCheckpointRecorder, graph: ExecutionGraph) {
+    this.#graph = graph; this.#states = states; this.#append = append; this.#issuer = issuer; this.#force = force; this.#checkpoints = checkpoints;
   }
 
   record(runId: string, completed: CompletedStageDecision): void {
@@ -67,9 +70,13 @@ export class DecisionRecorder {
     if (decision.action.type !== 'schedule_remediation') return;
     const targetId = decision.action.stageId; const remediation = this.#states.get(targetId)!;
     if (['blocked', 'failed', 'cancelled'].includes(remediation.status)) { this.#terminalRemediation(runId, definition.id, targetId, decision.state, remediation.status); return; }
-    this.#append('stage.waiting', { runId, stageId: definition.id }, { attemptsUsed: decision.state.attemptsUsed, remediationCyclesUsed: decision.state.remediationCyclesUsed, remediationStageId: targetId });
-    this.#states.set(targetId, { ...remediation, status: 'pending', remediationReturnTo: definition.id });
-    this.#append('stage.scheduled', { runId, stageId: targetId }, { reason: 'remediation', remediationReturnTo: definition.id }); this.#force(targetId);
+    const request = repairRequest(this.#graph.stages(), definition.id, targetId, decision.state.remediationCyclesUsed, decision.result);
+    if (remediation.remediationReturnTo && remediation.remediationReturnTo !== definition.id) {
+      this.#terminalRemediation(runId, definition.id, targetId, decision.state, 'blocked'); return;
+    }
+    this.#append('stage.waiting', { runId, stageId: definition.id }, { attemptsUsed: decision.state.attemptsUsed,
+      remediationCyclesUsed: decision.state.remediationCyclesUsed, remediationStageId: targetId, repairRequest: request });
+    applyRepair(this.#states, request); this.#force(targetId);
   }
 
   #terminalRemediation(runId: string, stageId: string, targetId: string, state: StageRuntimeState, targetStatus: StageRuntimeState['status']): void {
@@ -119,7 +126,7 @@ export class DecisionRecorder {
     if (!requester) throw new Error(`GRAPH_REMEDIATION_RETURN_MISSING:${returnTo}`);
     const { remediationReturnTo: _returnTo, ...withoutReturn } = state; const { remediationTarget: _target, ...requesterWithoutTarget } = requester;
     this.#states.set(stageId, withoutReturn); this.#states.set(returnTo, { ...requesterWithoutTarget, status: 'pending' });
-    this.#append('stage.scheduled', { runId, stageId: returnTo }, { reason: 'remediation_completed', remediationStageId: stageId }); this.#force(returnTo);
+    this.#append('stage.scheduled', { runId, stageId: returnTo }, { reason: 'remediation_completed', remediationStageId: stageId });
   }
 
   #recordTerminal(status: TerminalStatus): void {

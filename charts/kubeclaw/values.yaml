@@ -23,7 +23,8 @@ agentRole: "nova"
 image:
   # General image for Nova, Forge, and Echo. Buster production values select
   # the dedicated minimal gateway image instead.
-  repository: ghcr.io/datrab/kubeclaw-general
+  digest: ""
+  repository: ghcr.io/datrab/kubeclaw-nova
   tag: "latest"
   pullPolicy: Always
 
@@ -89,8 +90,8 @@ initSetup:
 pluginSeed:
   installMode: "official-npm-v1"
   specs:
-    - "npm:@openclaw/acpx@2026.9.1"
-    - "npm:@openclaw/discord@2026.9.1"
+    - "npm:@openclaw/acpx@2026.9.2"
+    - "npm:@openclaw/discord@2026.9.2"
 
 # =============================================================================
 # CAPABILITY PROVIDERS
@@ -121,6 +122,7 @@ workerTrust:
     envoy:
       repository: envoyproxy/envoy
       tag: v1.39.0
+      digest: "sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66"
       pullPolicy: IfNotPresent
       resources:
         requests: { cpu: 50m, memory: 64Mi }
@@ -493,3 +495,9 @@ extraVolumes: []
 
 # -- Extra volume mounts for the main kubeclaw container
 extraVolumeMounts: []
+
+busterRuntimePersistence:
+  enabled: false
+  claimName: ""
+  size: 64Gi
+  storageClass: ""

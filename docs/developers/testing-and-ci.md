@@ -10,5 +10,5 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 ```
 
 The real model-backed harness is
-`tests/verification/e2e/run-real-pipeline-e2e.mts` and is run deliberately at
+`tests/verification/e2e/run-real-pipeline-e2e.mjs` and is run deliberately at
 release cutover because it consumes external agent capacity.

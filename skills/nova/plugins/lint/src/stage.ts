@@ -1,7 +1,11 @@
+import { resolveSourceRevision } from '@kubeclaw/plugin-sdk';
+import { validateLintReport } from './engine/report-contract.ts';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 
 interface LintInput {
   readonly workingDirectory: string;
+  readonly sourceStageId?: string;
+  readonly revision?: string;
   readonly project?: string;
   readonly modulePath?: string;
   readonly changedFiles?: readonly string[];
@@ -17,17 +21,13 @@ function requiredConfig(config: Readonly<Record<string, unknown>>, key: string):
   return value;
 }
 
-function numeric(value: unknown): number {
-  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
-}
-
 export function resultForReport(
   report: Readonly<Record<string, unknown>>,
   artifact: ArtifactRef,
 ): StageResult {
-  const summary = report.summary as Readonly<Record<string, unknown>> | undefined;
-  const failedTools = numeric(summary?.tools_failed);
-  const blocking = numeric(summary?.total_blocking);
+  const validated = validateLintReport(report);
+  const failedTools = validated.summary.tools_failed;
+  const blocking = validated.summary.total_blocking;
   if (failedTools > 0) {
     return {
       schemaVersion: 'stage-result.v2',
@@ -58,11 +58,14 @@ async function execute(
   context: PluginInvocationContext,
   tier: 'pre-check' | 'full',
 ): Promise<StageResult> {
+  const sourceRevision = input.sourceStageId !== undefined || input.revision !== undefined
+    ? await resolveSourceRevision(input, context) : undefined;
   const response = await context.invoke('lint.execute', {
     operation: 'run_report',
     resource: { type: 'lint.project', canonicalId: input.project || input.workingDirectory },
     payload: {
       workingDirectory: input.workingDirectory,
+      ...(sourceRevision === undefined ? {} : { sourceRevision }),
       policyPath: requiredConfig(context.contract.config, 'policyPath'),
       policyProject: requiredConfig(context.contract.config, 'policyProject'),
       tier,
@@ -77,7 +80,8 @@ async function execute(
       includeExperimental: context.contract.config.includeExperimental === true,
     },
   });
-  const report = response.report as Readonly<Record<string, unknown>>;
+  if (sourceRevision !== undefined && response.sourceRevision !== sourceRevision) throw new Error('LINT_SOURCE_REVISION_MISMATCH');
+  const report = { ...validateLintReport(response.report), ...(sourceRevision === undefined ? {} : { sourceRevision }) };
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json',
     resource: { type: 'artifact.object', canonicalId: `lint:${tier}:${input.project || 'project'}` },

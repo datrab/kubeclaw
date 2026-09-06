@@ -176,7 +176,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: controller
-          image: "{{ .Values.busterNamespaceBroker.controller.image.repository }}:{{ .Values.busterNamespaceBroker.controller.image.tag }}"
+          image: {{ include "kubeclaw.image" .Values.busterNamespaceBroker.controller.image | quote }}
           imagePullPolicy: {{ .Values.busterNamespaceBroker.controller.image.pullPolicy }}
           command:
             - /app/buster-namespace-controller

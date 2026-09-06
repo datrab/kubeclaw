@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
 import os from 'node:os';
@@ -17,6 +18,7 @@ import { testContract as policyContract } from '../src/kubernetes-policy.js';
 
 const root = fs.realpathSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../..'));
 const cacheCandidates = [
+  ...(process.env.KUBECLAW_SECURITY_TEST_CACHE ? [process.env.KUBECLAW_SECURITY_TEST_CACHE] : []),
   path.join(os.homedir(), '.cache/trivy'),
   path.join(os.homedir(), '.cache/.cache/trivy'),
   '/tmp/.cache/trivy',
@@ -24,7 +26,7 @@ const cacheCandidates = [
 const cachePath = cacheCandidates.find((candidate) => fs.existsSync(candidate));
 if (!cachePath) throw new Error('SECURITY_TEST_TRIVY_DATABASE_MISSING');
 const cache = fs.realpathSync(cachePath);
-const trivy = fs.realpathSync('/usr/local/bin/trivy');
+const trivy = fs.realpathSync(process.env.KUBECLAW_SECURITY_TEST_TRIVY ?? '/usr/local/bin/trivy');
 const scan = new SecurityScanCapabilityInvoker({ workspaceRoot: root, trivyExecutable: trivy,
   allowedRegistryPrefixes: ['docker.io/library'], maximumExecutionMs: 300_000,
   maximumOutputBytes: 64 * 1024 * 1024, cacheDirectory: cache });
@@ -40,7 +42,10 @@ function invocation(provider: string, values: Record<string, unknown>, inputs: u
 }
 
 const strict = { profile: 'strict-v1' };
-const server = http.createServer((_request, response) => {
+fs.mkdirSync(path.join(root, '.swarm'), { recursive: true });
+const fixtures = fs.mkdtempSync(path.join(root, '.swarm/security-live-'));
+const server = http.createServer((request, response) => {
+  if (request.url === '/missing-headers') { response.end(); return; }
   response.setHeader('x-content-type-options', 'nosniff');
   response.setHeader('content-security-policy', "default-src 'none'");
   response.setHeader('referrer-policy', 'no-referrer');
@@ -65,10 +70,13 @@ try {
   assert.equal(safePart(`${sharedPrefix}a`).length, 120);
   assert.notEqual(safePart(`${sharedPrefix}a`), safePart(`${sharedPrefix}b`));
   const deployment = { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
-    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'app', url: origin }] } };
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', expiresAt: new Date(Date.now() + 900_000).toISOString(), endpoints: [{ name: 'app', url: origin }] } };
   const headers = await headersProvider().execute(invocation('headers', { profile: 'api-http-v1', paths: ['/'], policy: strict }, [deployment]), context);
   assert.equal(headers.outcome, 'passed');
   assert.equal(headers.providerDetails.values.resolvedRules.length, 4);
+  const missingHeaders = await headersProvider().execute(invocation('missing-headers', { profile: 'api-http-v1', paths: ['/missing-headers'], policy: strict }, [deployment]), context);
+  assert.equal(missingHeaders.outcome, 'failed');
+  assert.ok(missingHeaders.findings.length > 0);
   await assert.rejects(() => headersProvider().execute(invocation('headers', {
     profile: 'api-http-v1', paths: ['/\\attacker.example/'], policy: strict,
   }, [deployment]), context), /SECURITY_HEADERS_PATHS_INVALID/u);
@@ -82,8 +90,23 @@ try {
   ]).map((item) => item.id);
   assert.equal(new Set(imageIdentities).size, 2);
 
-  const dependency = await dependencyProvider().execute(invocation('dependency', { projectDirectory: '.', policy: strict }), context);
-  assert.match(dependency.outcome, /^(?:passed|failed)$/u);
+  const healthy = path.join(fixtures, 'healthy'); const vulnerable = path.join(fixtures, 'vulnerable');
+  for (const directory of [healthy, vulnerable]) {
+    fs.mkdirSync(directory);
+    fs.writeFileSync(path.join(directory, 'package.json'), JSON.stringify({ name: 'scanner-proof', version: '1.0.0', private: true }));
+  }
+  // Real npm lockfiles; no scanner output or advisory database is fabricated.
+  execFileSync('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'], { cwd: healthy, timeout: 60000, stdio: 'pipe' });
+  execFileSync('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'lodash@4.17.20'], { cwd: vulnerable, timeout: 60000, stdio: 'pipe' });
+  const cleanDependency = await dependencyProvider().execute(invocation('dependency-clean', { projectDirectory: path.relative(root, healthy), policy: strict }), context);
+  assert.equal(cleanDependency.outcome, 'passed');
+  const dependency = await dependencyProvider().execute(invocation('dependency-vulnerable', { projectDirectory: path.relative(root, vulnerable), policy: strict }), context);
+  assert.equal(dependency.outcome, 'failed');
+  // https://github.com/advisories/GHSA-35jh-r3h4-6jhm
+  const knownVulnerability = dependency.findings.find((item: any) => item.rule === 'CVE-2021-23337');
+  assert.ok(knownVulnerability, 'Trivy must detect the known vulnerable dependency');
+  assert.ok(dependency.providerDetails.values.normalizedFindings.some((item: any) => item.id === knownVulnerability.id
+    && item.package === 'lodash' && item.installedVersion === '4.17.20'));
   assert.equal(dependency.providerDetails.values.scanner, 'dependency-trivy');
   assert.match(dependency.providerDetails.values.resultDigest, /^sha256:[a-f0-9]{64}$/u);
   for (const finding of dependency.providerDetails.values.normalizedFindings) {
@@ -112,7 +135,8 @@ try {
 
 } finally {
   await new Promise<void>((resolve) => server.close(() => resolve()));
+  fs.rmSync(fixtures, { recursive: true, force: true });
 }
 
-console.log(JSON.stringify({ ok: true, providers: 5, realHttp: true, realTrivy: true,
+console.log(JSON.stringify({ ok: true, providers: 4, realHttp: true, realTrivy: true,
   realAdvisoryDatabase: true, realImage: true, runtimeClusterAcceptance: 'pending', mocks: 0, emulators: 0 }));

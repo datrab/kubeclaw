@@ -336,22 +336,23 @@ try {
   ).digest);
 
   const runRoot = resolveRunRoot(platform.storageRoot, 'run:phase6');
-  const storedGraph = JSON.parse(fs.readFileSync(path.join(runRoot, 'graph-snapshot.json'), 'utf8'));
+  const storedGraph = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')).graph;
   assert.equal(storedGraph.digest, result.identity.graphDigest);
-  const registrySnapshotFile = path.join(runRoot, 'registry-snapshot.json');
+  const registrySnapshotFile = path.join(runRoot, 'run-snapshot.json');
   const registrySnapshot = fs.readFileSync(registrySnapshotFile, 'utf8');
   const incompleteRegistrySnapshot = JSON.parse(registrySnapshot);
-  incompleteRegistrySnapshot.packages = [];
+  incompleteRegistrySnapshot.registry.packages = [];
   fs.writeFileSync(
     registrySnapshotFile,
     `${JSON.stringify(incompleteRegistrySnapshot, null, 2)}\n`,
   );
   await assert.rejects(
     () => core.recoverPipelineV2(platform, definition, 'run:phase6'),
-    /RECOVERY_PINNED_PACKAGE_SET_MISMATCH/,
+    /RUN_SNAPSHOT_INTEGRITY_INVALID/,
     'recovery rejects an incomplete pinned package set',
   );
   fs.writeFileSync(registrySnapshotFile, registrySnapshot);
+  await assert.rejects(() => core.recoverPipelineV2({ ...platform, observers: { 'test.graph-plugin:lifecycle-recorder': { journalPath: observerJournal + '.changed' } } }, definition, 'run:phase6'), /RECOVERY_RUNTIME_CONFIGURATION_MISMATCH/);
   const events = fs.readFileSync(path.join(runRoot, 'events.jsonl'), 'utf8')
     .trim()
     .split('\n')
@@ -644,10 +645,9 @@ try {
   const oldIdentity = { pluginId: 'kubeclaw.review', apiVersion: 'pipeline-plugin-v2',
     packageVersion: '2.0.0', contentDigest: `sha256:${'1'.repeat(64)}` };
   const newIdentity = { ...oldIdentity, packageVersion: '2.0.1', contentDigest: `sha256:${'2'.repeat(64)}` };
-  fs.writeFileSync(path.join(upgradeRoot, 'registry-snapshot.json'), JSON.stringify({
-    packages: [['kubeclaw.review', { package: oldIdentity }]],
-  }));
-  const upgradedRuntime = { snapshot: { packages: new Map([['kubeclaw.review', {
+  const { writeRunSnapshots, graphSnapshot } = await import('../../../skills/nova/core/execution/engine-snapshots.ts');
+  writeRunSnapshots(upgradeRoot, graphSnapshot(definition), { configuration: {}, packages: [['kubeclaw.review', { package: oldIdentity }]] });
+  const upgradedRuntime = { configuration: {}, snapshot: { packages: new Map([['kubeclaw.review', {
     provenance: { package: newIdentity },
   }]]) } };
   assert.throws(() => verifyPinnedPackages(upgradeRoot, upgradedRuntime), /RECOVERY_PINNED_PACKAGE_VERSION_MISMATCH/u);

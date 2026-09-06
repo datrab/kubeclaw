@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { AppState, Data, PuckAction } from "@puckeditor/core";
-import { actionToOperation, projectDocument } from "../src/adapter.js";
-import { applyOperation, type PrismDocument } from "../src/domain.js";
+import { actionToOperation, projectDocument } from "../src/adapter.ts";
+import { applyOperation, type PrismDocument } from "../src/domain.ts";
 
 const document: PrismDocument = {
   revision: 1,

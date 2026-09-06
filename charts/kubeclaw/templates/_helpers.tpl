@@ -127,3 +127,15 @@ Resolve the Stitch API key secret key.
 stitchApiKey
 {{- end -}}
 {{- end -}}
+
+{{/* A release overlay selects an immutable artifact; development values may retain tags. */}}
+{{- define "kubeclaw.image" -}}
+{{- if .digest -}}
+{{- if not (regexMatch "^sha256:[a-f0-9]{64}$" .digest) -}}
+{{- fail "image.digest must be sha256 followed by 64 lowercase hex characters" -}}
+{{- end -}}
+{{- printf "%s@%s" .repository .digest -}}
+{{- else -}}
+{{- printf "%s:%s" .repository .tag -}}
+{{- end -}}
+{{- end -}}

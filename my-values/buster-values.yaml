@@ -105,7 +105,7 @@ extraContainers:
       - name: BUSTER_PLAN_STATE_DIR
         value: /var/lib/buster-v2/plan-jobs
       - name: BUSTER_PLAN_RUN_DIR
-        value: /tmp/buster-plan-runs
+        value: /var/lib/buster-v2/runs
       - name: BUSTER_V2_MAX_ARCHIVE_BYTES
         value: "67108864"
       - name: BUSTER_V2_MAX_EXTRACTED_BYTES
@@ -189,8 +189,8 @@ extraVolumes:
   # Only the v2 sidecar mounts this authoritative receipt store. The Buster
   # gateway and submitted suite code cannot read or mutate worker state.
   - name: buster-v2-state
-    emptyDir:
-      sizeLimit: 64Mi
+    persistentVolumeClaim:
+      claimName: agent-buster-runtime-state
   - name: buster-api-token
     # The chart's pod security context fixes fsGroup at 1000. Kubernetes
     # therefore presents these 0440 projected files to the non-root worker as
@@ -248,3 +248,10 @@ workspace:
     never repair product code. Pipeline lifecycle authority stays in v2 core.
   identity: |
     Buster 💥 — Destructive tester. Cold, precise, relentless.
+
+# Dedicated authoritative job and evidence storage, mounted only by the runtime.
+busterRuntimePersistence:
+  enabled: true
+  claimName: agent-buster-runtime-state
+  size: 64Gi
+  storageClass: ""

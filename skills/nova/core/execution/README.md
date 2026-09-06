@@ -14,8 +14,7 @@ At run creation, core validates and freezes:
 - stage configuration, input, attempt/remediation budgets, and timeouts;
 - maximum run concurrency.
 
-The canonical graph is sorted and digest-pinned in `graph-snapshot.json`.
-`registry-snapshot.json` records the same digest with the frozen stage owners.
+The canonical graph, registry and effective runtime configuration are published atomically in `run-snapshot.json`, with a verified content digest. Old runs must continue on their pinned runtime; snapshots are not reinterpreted across formats.
 Resume fails closed when either package provenance or graph identity differs.
 
 Scheduling is registration-driven. This directory contains no Forge, Buster,

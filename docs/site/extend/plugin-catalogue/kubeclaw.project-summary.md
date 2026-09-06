@@ -32,7 +32,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.report.project-summary`.
 
-Required capabilities: `artifacts.write`
+Required capabilities: `artifacts.read`, `artifacts.write`
 
 Provided capabilities: None.
 
@@ -56,7 +56,7 @@ Run:
 npm test --prefix skills/nova/plugins/project-summary
 ```
 
-Package tests found: 4.
+Package tests found: 3.
 
 ## Source Evidence
 
@@ -65,5 +65,4 @@ Package tests found: 4.
 - Authored package guide: `skills/nova/plugins/project-summary/README.md`
 - Test: `skills/nova/plugins/project-summary/tests/live-function.test.ts`
 - Test: `skills/nova/plugins/project-summary/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/project-summary/tests/parity.test.ts`
 - Test: `skills/nova/plugins/project-summary/tests/summary.test.mjs`

@@ -111,6 +111,9 @@ export async function prepareReview(
   input: ReviewStageInput, policy: ResolvedReviewPolicy, context: PluginInvocationContext,
 ): Promise<PreparedReview> {
   const revision = await freezeReviewRevision(context);
+  if (input.revisions.head !== undefined && revision.head !== input.revisions.head) {
+    throw new ReviewRepositoryProofError('REVIEW_CANDIDATE_CHANGED');
+  }
   const repository = await readChangedScope(input.revisions.base, revision, input.scope.allowedPrefixes, context);
   const candidates = await reviewCandidates(input, repository, revision, policy, context);
   const initial = initialSelection(candidates, repository.scope, policy);

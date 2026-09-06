@@ -1,3 +1,5 @@
+import { FileDurableRecordStore, FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -133,17 +135,31 @@ function evidenceFail(code, reason, details = {}) {
   return { code, ok: false, reason, ...details };
 }
 
-function artifactBlob(root, artifact) {
-  const digest = String(artifact?.digest || '');
-  if (!/^sha256:[a-f0-9]{64}$/.test(digest)) {
-    throw new Error(`REAL_E2E_ARTIFACT_DIGEST_INVALID:${artifact?.artifactId || 'unknown'}`);
+export async function readRunArtifacts(root, runId, namespaces) {
+  const records = new FileDurableRecordStore(root, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });
+  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);
+  const artifacts = [];
+  for (const namespace of namespaces) {
+    for (const record of await records.read(`artifacts/${namespace}`)) {
+      const artifact = record.payload;
+      if (artifact.producer?.runId !== runId) continue;
+      if (artifact.namespace !== namespace || artifact.mediaType !== 'application/json') throw new Error('REAL_E2E_ARTIFACT_METADATA_INVALID');
+      const bytes = await blobs.get(artifact.digest);
+      if (bytes.byteLength !== artifact.sizeBytes) throw new Error('REAL_E2E_ARTIFACT_SIZE_MISMATCH');
+      artifacts.push({ artifact, value: JSON.parse(bytes.toString('utf8')) });
+    }
   }
-  const hash = digest.slice('sha256:'.length);
-  const file = path.join(root, 'blobs', 'sha256', hash.slice(0, 2), `${hash.slice(2)}.json`);
-  const bytes = fs.readFileSync(file);
-  const actual = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-  if (actual !== digest) throw new Error(`REAL_E2E_ARTIFACT_DIGEST_MISMATCH:${artifact.artifactId}`);
-  return JSON.parse(bytes.toString('utf8'));
+  return artifacts;
+}
+
+function latestStageArtifacts(artifacts) {
+  const latest = new Map();
+  for (const { artifact } of artifacts) {
+    const { stageId, attemptNumber } = artifact.producer;
+    if (!Number.isSafeInteger(attemptNumber) || attemptNumber < 1) throw new Error('REAL_E2E_ARTIFACT_ATTEMPT_INVALID');
+    latest.set(stageId, Math.max(latest.get(stageId) ?? 0, attemptNumber));
+  }
+  return artifacts.filter(({ artifact }) => artifact.producer.attemptNumber === latest.get(artifact.producer.stageId));
 }
 
 function effectRequestsAndReceipts(records) {
@@ -285,7 +301,10 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const runRoot = runRootFor(result);
   const events = readJsonLines(path.join(runRoot, 'events.jsonl'));
   const effects = readJsonLines(path.join(runRoot, 'effects.jsonl'));
-  const catalog = readJsonLines(path.join(result.artifactRoot, 'catalog.jsonl'));
+  const storedArtifacts = await readRunArtifacts(result.artifactRoot, result.runId, [
+    'kubeclaw.architecture-validator', 'kubeclaw.implementation-agent', 'kubeclaw.buster-quality-gate', 'kubeclaw.project-summary', 'kubeclaw.review', 'kubeclaw.lint',
+  ]);
+  const catalog = storedArtifacts.map(({ artifact }) => artifact);
   const progress = readJson(path.join(workspace.swarmDir, 'progress.json'));
   const { requests, receipts } = effectRequestsAndReceipts(effects);
   const stageFailures = EXPECTED_STAGES.filter((stageId) => result.stages?.[stageId] !== 'succeeded');
@@ -308,12 +327,19 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const roleMismatches = Object.entries(EXPECTED_ROLES)
     .filter(([stageId, role]) => stageRoles[stageId] !== role)
     .map(([stageId, role]) => ({ stageId, expected: role, actual: stageRoles[stageId] ?? null }));
-  const artifacts = (namespace) => catalog
-    .filter((artifact) => artifact.namespace === namespace)
-    .map((artifact) => ({ artifact, value: artifactBlob(result.artifactRoot, artifact) }));
-  const implementationArtifacts = artifacts('kubeclaw.implementation-agent');
-  const testArtifacts = artifacts('kubeclaw.test-agent');
-  const qualityArtifacts = artifacts('kubeclaw.buster-quality-gate');
+  const artifacts = (namespace) => storedArtifacts.filter(({ artifact }) => artifact.namespace === namespace);
+  const implementationArtifacts = latestStageArtifacts(artifacts('kubeclaw.implementation-agent'));
+  const gateArtifacts = latestStageArtifacts(artifacts('kubeclaw.buster-quality-gate'));
+  const testArtifacts = gateArtifacts.filter(({ artifact }) => artifact.producer.stageId.startsWith('buster-') && !artifact.artifactId.includes(':decision:'));
+  const qualityArtifacts = gateArtifacts.filter(({ artifact }) => artifact.producer.stageId === 'final-buster' && !artifact.artifactId.includes(':decision:'));
+  const decisionFor = (artifact) => {
+    const matches = gateArtifacts.filter(item => item.artifact.producer.stageId === artifact.producer.stageId
+      && item.artifact.producer.attemptNumber === artifact.producer.attemptNumber && item.artifact.artifactId.includes(':decision:'));
+    if (matches.length !== 1) throw new Error('REAL_E2E_NATIVE_DECISION_MISSING_OR_AMBIGUOUS');
+    const decision = parseGateDecision(matches[0].value);
+    if (decision.runId !== result.runId) throw new Error('REAL_E2E_NATIVE_DECISION_RUN_MISMATCH');
+    return decision;
+  };
   const implementationFailures = implementationArtifacts.flatMap(({ artifact, value }) => {
     const changedPaths = Array.isArray(value?.changedPaths) ? value.changedPaths : [];
     const checksPassed = Array.isArray(value?.checks)
@@ -333,26 +359,22 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
       : [{ artifactId: artifact.artifactId, changedPaths, checksPassed, mutationsExist }];
   });
   const moduleBusterFailures = testArtifacts.flatMap(({ artifact, value }) => {
-    const receipt = value?.suiteExecution?.provider;
-    return receipt?.schemaVersion === 'test-plan-receipt.v1'
-      && receipt?.decision?.state === 'passed'
-      && value?.verdict?.verdict === 'PASS'
-      ? []
-      : [{ artifactId: artifact.artifactId, receipt: receipt ?? null }];
+    try {
+      const decision = decisionFor(artifact);
+      return decision.state === 'passed' && value?.verdict?.outcome === 'passed'
+        && value.decisionDigest === decision.decisionDigest ? [] : [{ artifactId: artifact.artifactId }];
+    } catch (error) { return [{ artifactId: artifact.artifactId, error: String(error) }]; }
   });
   const requiredFinalSuites = ['security-headers', 'dependency-security', 'image-security',
     'kubernetes-policy-security', 'kubernetes-runtime-security'];
   const finalBusterFailures = qualityArtifacts.flatMap(({ artifact, value }) => {
-    const receipt = value?.suiteExecution?.provider;
-    const nodeIds = new Set((receipt?.decision?.nodes ?? [])
-      .filter((node) => ['passed', 'advisory_failure'].includes(node?.effect))
-      .map((node) => node.nodeId));
-    const missing = requiredFinalSuites.filter((suite) => !nodeIds.has(suite));
-    return receipt?.schemaVersion === 'test-plan-receipt.v1'
-      && receipt?.decision?.state === 'passed'
-      && missing.length === 0 && value?.verdict?.outcome === 'passed'
-      ? []
-      : [{ artifactId: artifact.artifactId, missing }];
+    try {
+      const decision = decisionFor(artifact);
+      const nodeIds = new Set(decision.nodes.filter(node => ['passed', 'advisory_failure'].includes(node.effect)).map(node => node.nodeId));
+      const missing = requiredFinalSuites.filter(suite => !nodeIds.has(suite));
+      return decision.state === 'passed' && missing.length === 0 && value?.verdict?.outcome === 'passed'
+        && value.decisionDigest === decision.decisionDigest ? [] : [{ artifactId: artifact.artifactId, missing }];
+    } catch (error) { return [{ artifactId: artifact.artifactId, error: String(error) }]; }
   });
   const forgeCommitCount = String(result.gitLog || '').split('\n')
     .filter((line) => /\[forge:(?:01|02|03|04)-nginx\]/.test(line)).length;
@@ -364,8 +386,7 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const requiredArtifacts = [
     ['kubeclaw.architecture-validator', 1],
     ['kubeclaw.implementation-agent', 4],
-    ['kubeclaw.test-agent', 4],
-    ['kubeclaw.buster-quality-gate', 1],
+    ['kubeclaw.buster-quality-gate', 10],
     ['kubeclaw.project-summary', 1],
   ];
   const checks = [

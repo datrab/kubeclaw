@@ -4,7 +4,6 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const {
-  auditRecord,
   lifecycleNotification,
   observe,
   previewNotification,
@@ -86,21 +85,4 @@ const preview = previewNotification({
 });
 assert.doesNotMatch(JSON.stringify(preview), /must-not-survive/);
 
-const auditDelivery = {
-  deliveryId: 'delivery:audit',
-  attemptNumber: 9,
-  event: {
-    eventId: 'event:audit',
-    sequence: 7,
-    type: 'run.failed',
-    identity: { runId: 'run:1' },
-    occurredAt: '2026-07-28T00:00:00Z',
-    causationId: null,
-    payload: { token: 'must-not-survive', nested: { authorization: 'Bearer secret' } },
-  },
-};
-const audit = auditRecord(auditDelivery);
-assert.equal(audit.payload.token, '[redacted]');
-assert.equal(audit.payload.nested.authorization, '[redacted]');
-assert.equal(JSON.stringify(audit), JSON.stringify(auditRecord({ ...auditDelivery, attemptNumber: 10 })));
 console.log(JSON.stringify({ ok: true, plugin: manifest.id, suite: 'parity' }));

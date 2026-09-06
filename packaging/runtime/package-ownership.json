@@ -12,6 +12,7 @@
     { "id": "nova-core", "source": "skills/nova/core", "owner": "nova", "roles": ["nova"], "bundle": { "kind": "node-package" } },
     { "id": "worker-core", "source": "skills/worker/core", "owner": "worker", "roles": ["buster", "prism"], "bundle": { "kind": "node-package" } },
     { "id": "buster-engine", "source": "skills/buster/engine", "owner": "buster", "roles": ["buster"], "bundle": { "kind": "node-package" } },
+    { "id": "nova-project", "source": "skills/nova/project", "owner": "nova", "roles": ["nova"], "bundle": { "kind": "node-package" } },
     { "id": "nova-runtime", "source": "skills/nova", "owner": "nova", "roles": ["nova"], "bundle": { "kind": "entrypoint" } },
     { "id": "buster-runtime", "source": "skills/buster", "owner": "buster", "roles": ["buster"], "bundle": { "kind": "entrypoint" } },
     { "id": "prism-engine", "source": "skills/prism", "owner": "prism", "roles": ["prism"], "bundle": { "kind": "node-package" } },

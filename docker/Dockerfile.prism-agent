@@ -1,0 +1,114 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+# Prism's OpenClaw design agent. Rendering and previews run in the separate
+# Prism services; this image contains no Nova verification toolchain.
+
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
+
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE} AS gateway-assets
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+COPY tsconfig.base.json /tmp/tsconfig.base.json
+COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
+COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
+WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
+
+RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+&& rm -rf src/generated/agent-observability \
+&& mkdir -p src/generated/agent-observability \
+&& cp -R /tmp/contracts/agent-observability/v1/src/. src/generated/agent-observability/ \
+&& ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
+&& node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
+&& (cd /app && node -e "const sdk=require('openclaw/plugin-sdk/diagnostic-runtime'); if(typeof sdk.onDiagnosticEvent!=='function') throw new Error('OpenClaw diagnostic SDK contract unavailable')") \
+&& mkdir -p /out/extensions/kubeclaw-agent-observer \
+&& cp -R \
+/tmp/skills/common/plugins/openclaw-agent-observer/package.json \
+/tmp/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json \
+/tmp/skills/common/plugins/openclaw-agent-observer/src \
+/tmp/skills/common/plugins/openclaw-agent-observer/dist \
+/out/extensions/kubeclaw-agent-observer/
+
+ARG OPENCLAW_PLUGIN_VERSION=2026.9.2
+ARG TARGETARCH
+
+RUN set -eux; \
+mkdir -p /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache /out/openclaw-plugin-home/packs; \
+HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install "npm:@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --force --accept-capabilities; \
+HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install "npm:@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --force --accept-capabilities; \
+acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
+test -n "$acpx_root"; \
+discord_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/discord' -print -quit)"; \
+test -n "$discord_root"; \
+project_root="${acpx_root%/node_modules/@openclaw/acpx}"; \
+case "${TARGETARCH:-amd64}" in \
+amd64) keep_codex=codex-acp-linux-x64; keep_claude=claude-agent-sdk-linux-x64; keep_esbuild=linux-x64 ;; \
+arm64) keep_codex=codex-acp-linux-arm64; keep_claude=claude-agent-sdk-linux-arm64; keep_esbuild=linux-arm64 ;; \
+*) exit 1 ;; \
+esac; \
+test ! -d "$project_root/node_modules/@zed-industries" || find "$project_root/node_modules/@zed-industries" -mindepth 1 -maxdepth 1 -type d -name 'codex-acp-*' ! -name "$keep_codex" -exec rm -rf -- {} +; \
+test ! -d "$project_root/node_modules/@anthropic-ai" || find "$project_root/node_modules/@anthropic-ai" -mindepth 1 -maxdepth 1 -type d -name 'claude-agent-sdk-*' ! -name "$keep_claude" -exec rm -rf -- {} +; \
+test ! -d "$project_root/node_modules/@esbuild" || find "$project_root/node_modules/@esbuild" -mindepth 1 -maxdepth 1 -type d ! -name "$keep_esbuild" -exec rm -rf -- {} +; \
+npm pack "$acpx_root" --pack-destination /out/openclaw-plugin-home/packs >/dev/null; \
+npm pack "$discord_root" --pack-destination /out/openclaw-plugin-home/packs >/dev/null; \
+cp -a /tmp/openclaw-plugin-npm-cache /out/openclaw-plugin-home/npm-cache; \
+test "$(find /out/openclaw-plugin-home/packs -maxdepth 1 -type f -name '*.tgz' | wc -l)" -eq 2; \
+find /out/openclaw-plugin-home -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > /out/openclaw-plugin-home/.kubeclaw-plugin-cache-version; \
+rm -rf /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache
+
+USER node
+
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE}
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ARG DEBIAN_SNAPSHOT=20260901T000000Z
+
+RUN test -s /etc/ssl/certs/ca-certificates.crt \
+&& printf '%s\n' \
+'Types: deb' \
+"URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
+'Suites: bookworm bookworm-updates' \
+'Components: main' \
+'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+'' \
+'Types: deb' \
+"URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
+'Suites: bookworm-security' \
+'Components: main' \
+'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+> /etc/apt/sources.list.d/debian.sources \
+&& rm -f /etc/apt/sources.list \
+&& printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
+
+# The snapshot pins the complete dependency graph coherently.
+
+# hadolint ignore=DL3008
+RUN packages=(ca-certificates curl git openssh-client jq ripgrep tree) \
+&& apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
+&& for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
+&& apt-get install -y --no-install-recommends "${packages[@]}" \
+&& rm -rf /var/lib/apt/lists/* \
+&& mkdir -p /app/skills /root/.npm
+
+COPY docker/openclaw-tools/package.json docker/openclaw-tools/package-lock.json /opt/kubeclaw-tools/
+
+RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
+&& node -e "require('/opt/kubeclaw-tools/node_modules/ioredis')" \
+&& npm config set cache /root/.npm --global
+
+COPY --from=gateway-assets /out/extensions/kubeclaw-agent-observer /app/dist/extensions/kubeclaw-agent-observer
+COPY --from=gateway-assets /out/openclaw-plugin-home /opt/openclaw-plugin-home
+
+ENV NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
+NPM_CONFIG_CACHE=/root/.npm \
+HOME=/home/node
+
+USER node
+
+COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
+COPY skills/prism/server/agent-bridge.mjs /opt/kubeclaw-prism/agent-bridge.mjs
+
+LABEL org.opencontainers.image.title="KubeClaw Prism Agent"
+LABEL org.opencontainers.image.description="OpenClaw design agent and request bridge with Prism tools"

@@ -803,7 +803,7 @@ test('generated review contract assigns Kubernetes fixture authority to final Bu
     assert.deepEqual(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].needs,
       ['size-budget', 'container-build']);
     assert.deepEqual(pipeline.gates['final-buster'].fixtures['kubernetes-deployment'].inputs.image, {
-      from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+      from: 'container-build', output: 'image',
     });
     assert.equal(pipeline.gates['final-buster'].tests.health.uses, 'kubeclaw.http@1');
     assert.equal(pipeline.gates['final-buster'].tests.health.inputs.deployment.from, 'kubernetes-deployment');
@@ -1298,7 +1298,7 @@ test('final deployment uses the fixture provider and a dependent HTTP check', as
     assert.equal(gate.tests['container-build'].uses, 'kubeclaw.container-build@1');
     assert.deepEqual(gate.fixtures['kubernetes-deployment'].needs, ['size-budget', 'container-build']);
     assert.deepEqual(gate.fixtures['kubernetes-deployment'].inputs.image, {
-      from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+      from: 'container-build', output: 'image',
     });
     assert.equal(gate.fixtures['kubernetes-deployment'].config.retention.mode, 'delete');
     assert.equal(gate.tests.health.uses, 'kubeclaw.http@1');

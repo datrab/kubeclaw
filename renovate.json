@@ -1,0 +1,493 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":pinAllExceptPeerDependencies"
+  ],
+  "enabledManagers": [
+    "npm",
+    "gomod",
+    "github-actions",
+    "helmv3",
+    "helm-values",
+    "custom.regex"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"(?:[A-Z_]+_BASE|envoy|renovate|testRegistry)\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"openclaw\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "openclaw/openclaw",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"RUFF_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "ruff",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"MYPY_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "mypy",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"PIP_AUDIT_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "pip-audit",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"SEMGREP_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "semgrep",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GO_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "golang",
+      "datasourceTemplate": "golang-version"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"STATICCHECK_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "dominikh/go-tools",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"STATICCHECK_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "dominikh/go-tools",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "loose",
+      "autoReplaceStringTemplate": "\"STATICCHECK_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GOVULNCHECK_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "golang.org/x/vuln",
+      "datasourceTemplate": "go",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GOVULNCHECK_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "golang.org/x/vuln",
+      "datasourceTemplate": "go",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"GOVULNCHECK_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GOCYCLO_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "fzipp/gocyclo",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GOCYCLO_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "fzipp/gocyclo",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"GOCYCLO_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"HADOLINT_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "hadolint/hadolint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"HADOLINT_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "hadolint/hadolint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"HADOLINT_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"KUBECONFORM_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "yannh/kubeconform",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"KUBECONFORM_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "yannh/kubeconform",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"KUBECONFORM_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"KUBECTL_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "kubernetes/kubernetes",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"KUBECTL_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "kubernetes/kubernetes",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"KUBECTL_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"HELM_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "helm/helm",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"HELM_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "helm/helm",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"HELM_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"SHFMT_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "mvdan/sh",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"SHFMT_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "mvdan/sh",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"SHFMT_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"TERRAFORM_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "hashicorp/terraform",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"TERRAFORM_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "hashicorp/terraform",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"TERRAFORM_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"TFLINT_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "terraform-linters/tflint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"TFLINT_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "terraform-linters/tflint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"TFLINT_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"TRIVY_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "aquasecurity/trivy",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"TRIVY_VERSION\": \"v(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "aquasecurity/trivy",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "\"TRIVY_VERSION\": \"v{{{newValue}}}\""
+    }
+  ],
+  "timezone": "Etc/UTC",
+  "schedule": [
+    "before 6am on monday"
+  ],
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "dependencyDashboard": true,
+  "automerge": false,
+  "prConcurrentLimit": 4,
+  "prHourlyLimit": 2,
+  "rangeStrategy": "pin",
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/fixtures/**",
+    "**/dist/**"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPackageNames": [
+        "node",
+        "docker.io/library/node"
+      ],
+      "allowedVersions": "/^(22|24)([.-]|$)/"
+    },
+    {
+      "matchManagers": [
+        "helm-values"
+      ],
+      "matchPackageNames": [
+        "envoyproxy/envoy",
+        "/^ghcr.io/datrab/kubeclaw-/"
+      ],
+      "enabled": false,
+      "description": "Envoy is centrally generated; our images are promoted from tested release manifests."
+    },
+    {
+      "matchFileNames": [
+        "versions.json"
+      ],
+      "postUpgradeTasks": {
+        "commands": [
+          "node /opt/kubeclaw-updates/updates/refresh-versions.mjs"
+        ],
+        "fileFilters": [
+          "versions.json",
+          "docker/**",
+          "ops/pod/Dockerfile",
+          "tools/ops-mcp/Dockerfile",
+          "charts/**",
+          "skills/common/plugins/openclaw-agent-observer/package.json",
+          "scripts/scan-runtime-images.sh",
+          ".github/workflows/*.yaml"
+        ],
+        "executionMode": "branch"
+      }
+    },
+    {
+      "matchPackageNames": [
+        "kubernetes/kubernetes"
+      ],
+      "matchCurrentVersion": "/^1\\.34\\./",
+      "allowedVersions": "/^1\\.34\\./"
+    },
+    {
+      "matchPackageNames": [
+        "kubernetes/kubernetes"
+      ],
+      "matchCurrentVersion": "/^1\\.35\\./",
+      "allowedVersions": "/^1\\.35\\./"
+    },
+    {
+      "matchPackageNames": [
+        "openclaw/openclaw"
+      ],
+      "ignoreUnstable": false,
+      "allowedVersions": "/^[0-9]{4}\\.[0-9]+\\.[0-9]+(-[0-9]+)?$/"
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "pinDigests": true
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": [
+      "at any time"
+    ],
+    "minimumReleaseAge": "0 days",
+    "dependencyDashboardApproval": false,
+    "automerge": false,
+    "labels": [
+      "security"
+    ]
+  }
+}

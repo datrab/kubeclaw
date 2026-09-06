@@ -34,7 +34,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.lint.pre-check`.
 
-Required capabilities: `lint.execute`, `artifacts.write`
+Required capabilities: `lint.execute`, `artifacts.write`, `artifacts.read`
 
 Provided capabilities: None.
 
@@ -48,7 +48,7 @@ Result schema: `schemas/result.schema.json`
 
 Public identifier: `kubeclaw.lint.full`.
 
-Required capabilities: `lint.execute`, `artifacts.write`
+Required capabilities: `lint.execute`, `artifacts.write`, `artifacts.read`
 
 Provided capabilities: None.
 

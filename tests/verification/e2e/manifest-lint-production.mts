@@ -17,6 +17,7 @@ export function writeRunLintPolicy(
   stateRoot: string,
   declaration: PipelineLintDeclaration,
 ): string {
+  const kubernetesVersion = readJson(path.join(repositoryRoot, 'versions.json')).buildArgs.KUBECTL_VERSION;
   const source = path.join(repositoryRoot, 'charts/kubeclaw/files/config');
   const target = path.join(stateRoot, 'lint-config');
   fs.rmSync(target, { recursive: true, force: true });
@@ -41,8 +42,8 @@ export function writeRunLintPolicy(
       raw_manifests: declaration.rawManifests,
       helm_charts: declaration.helmCharts,
       policy_packs: ['kubeclaw-default'],
-      kubernetes_version: '1.35.6',
-      schema_location: '/opt/kubeclaw-kubernetes-schemas/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json',
+      kubernetes_version: kubernetesVersion,
+      schema_location: `/opt/kubeclaw-kubernetes-schemas/v${kubernetesVersion}-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json`,
       limits: { max_files: 128, max_file_bytes: 1_048_576, max_rendered_bytes: 10_485_760, max_documents: 2048 },
     },
   }];

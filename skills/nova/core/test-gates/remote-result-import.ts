@@ -1,5 +1,5 @@
-import crypto from 'node:crypto';
 import type { StageResult } from '@kubeclaw/plugin-sdk';
+import crypto from 'node:crypto';
 import {
   attemptResultDigest,
   nodeResultDigest,
@@ -20,42 +20,19 @@ import {
 } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import type { RemotePlanEvidenceTransport, RemotePlanResultTransport } from './remote-dispatch.ts';
 
-export type GateDecisionState = 'passed' | 'failed' | 'execution_error' | 'review_required' | 'cancelled';
-export type GateNodeEffect = 'passed' | 'failed' | 'advisory_failure' | 'execution_error' | 'review_required' | 'skipped';
+import { gateDecisionStageResult, type GateDecisionV1, type GateDecisionState, type GateNodeDecisionV1, type GateNodeEffect, type AgentEvidenceReviewRequestV1 } from '@kubeclaw/pipeline-test-gate-contract';
+export { gateDecisionStageResult, type GateDecisionV1, type GateDecisionState, type GateNodeDecisionV1, type GateNodeEffect, type AgentEvidenceReviewRequestV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
-export interface GateNodeDecisionV1 {
-  readonly nodeId: string;
-  readonly kind: 'test' | 'fixture';
-  readonly mode: 'blocking' | 'advisory' | null;
-  readonly effect: GateNodeEffect;
-  readonly reason: string;
+type GateImportSource = Pick<RemotePlanJobV1, 'jobId' | 'pipelineStageId' | 'plan'> & { readonly sourceRevision: string };
+
+function importSource(job: RemotePlanJobV1): GateImportSource {
+  return { jobId: job.jobId, pipelineStageId: job.pipelineStageId, plan: structuredClone(job.plan), sourceRevision: job.sourceSnapshot.revision };
 }
 
-export interface AgentEvidenceReviewRequestV1 {
-  readonly schemaVersion: 'agent-evidence-review-request.v1';
-  readonly agent: string;
-  readonly planId: string;
-  readonly runId: string;
-  readonly nodeId: string;
-  readonly attemptId: string;
-  readonly evidenceDigests: string[];
-}
-
-export interface GateDecisionV1 {
-  readonly schemaVersion: 'test-gate-decision.v1';
+interface StoredGateImportV2 {
+  readonly schemaVersion: 'nova-test-gate-import.v2';
   readonly jobId: string;
-  readonly planId: string;
-  readonly runId: string;
-  readonly state: GateDecisionState;
-  readonly nodes: GateNodeDecisionV1[];
-  readonly reviews: AgentEvidenceReviewRequestV1[];
-  readonly resultDigest: string | null;
-  readonly decisionDigest: string;
-}
-
-interface StoredGateImportV1 {
-  readonly schemaVersion: 'nova-test-gate-import.v1';
-  readonly jobId: string;
+  readonly source: GateImportSource;
   readonly requestDigest: string;
   readonly remoteResultDigest: string | null;
   readonly remoteResult: RemotePlanResultV1 | null;
@@ -68,6 +45,8 @@ export interface NovaTestExecutionGraphV1 {
   readonly schemaVersion: 'nova-test-execution-graph.v1';
   readonly runId: string;
   readonly parentStageId: string;
+  readonly jobId: string;
+  readonly sourceRevision: string;
   readonly planId: string;
   readonly planDigest: string;
   readonly nodes: RemotePlanJobV1['plan']['nodes'];
@@ -78,48 +57,18 @@ export interface NovaTestExecutionGraphV1 {
   readonly decisionDigest: string;
 }
 
-/**
- * Nova's durable projection of the test subgraph owned by one pipeline stage.
- * It is a graph view, not a second scheduler or workflow authority.
- */
-export class FileNovaTestExecutionGraphStore {
-  readonly #records: FileDurableRecordStore;
-  constructor(root: string, limits: DurableRecordLimits) {
-    this.#records = new FileDurableRecordStore(root, limits);
-  }
-  async record(job: RemotePlanJobV1, result: RemotePlanResultV1 | null,
-    decision: GateDecisionV1): Promise<NovaTestExecutionGraphV1> {
-    const parentStageId = job.pipelineStageId;
-    const graph: NovaTestExecutionGraphV1 = {
-      schemaVersion: 'nova-test-execution-graph.v1',
-      runId: job.plan.runId,
-      parentStageId,
-      planId: job.plan.planId,
-      planDigest: job.plan.planDigest,
-      nodes: structuredClone(job.plan.nodes),
-      links: structuredClone(job.plan.links),
-      attempts: structuredClone(result?.attempts ?? []),
-      results: structuredClone(result?.nodes ?? []),
-      reviews: structuredClone(decision.reviews),
-      decisionDigest: decision.decisionDigest,
-    };
-    const graphKey = `graph:${crypto.createHash('sha256')
-      .update(`${graph.runId}\0${graph.parentStageId}`, 'utf8').digest('hex')}`;
-    try {
-      const stored = await this.#records.append('test-execution-graphs', graphKey, graph);
-      return structuredClone(stored.record.payload as NovaTestExecutionGraphV1);
-    } catch (error) {
-      if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw error;
-      const existing = (await this.#records.read<NovaTestExecutionGraphV1>('test-execution-graphs'))
-        .find((record) => record.idempotencyKey === graphKey)?.payload;
-      if (!existing || !same(existing, graph)) throw new Error('NOVA_TEST_EXECUTION_GRAPH_CONFLICT');
-      return structuredClone(existing);
-    }
-  }
-  async read(): Promise<readonly NovaTestExecutionGraphV1[]> {
-    return (await this.#records.read<NovaTestExecutionGraphV1>('test-execution-graphs'))
-      .map((record) => structuredClone(record.payload));
-  }
+// A graph is derived from the verified import, never a second write authority.
+function executionGraph(job: GateImportSource, result: RemotePlanResultV1 | null,
+  decision: GateDecisionV1): NovaTestExecutionGraphV1 {
+  return {
+    schemaVersion: 'nova-test-execution-graph.v1',
+    runId: job.plan.runId, parentStageId: job.pipelineStageId, jobId: job.jobId,
+    sourceRevision: job.sourceRevision, planId: job.plan.planId,
+    planDigest: job.plan.planDigest, nodes: structuredClone(job.plan.nodes),
+    links: structuredClone(job.plan.links), attempts: structuredClone(result?.attempts ?? []),
+    results: structuredClone(result?.nodes ?? []), reviews: structuredClone(decision.reviews),
+    decisionDigest: decision.decisionDigest,
+  };
 }
 
 function same(left: unknown, right: unknown): boolean {
@@ -262,18 +211,23 @@ function decide(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: Remote
 export class FileNovaGateImportStore {
   readonly #records: FileDurableRecordStore;
   readonly #blobs: FileDurableBlobStore;
-  readonly #graph: FileNovaTestExecutionGraphStore | null;
-  constructor(root: string, options: { recordLimits: DurableRecordLimits; maximumEvidenceStoreBytes: number;
-    graphStore?: FileNovaTestExecutionGraphStore }) {
+  constructor(root: string, options: { recordLimits: DurableRecordLimits; maximumEvidenceStoreBytes: number }) {
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
     this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes);
-    this.#graph = options.graphStore ?? null;
+  }
+  async readExecutionGraphs(): Promise<readonly NovaTestExecutionGraphV1[]> {
+    return (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))
+      .filter(record => record.payload.state === 'complete')
+      .map(({ payload }) => {
+        if (payload.schemaVersion !== 'nova-test-gate-import.v2') throw new Error('NOVA_REMOTE_IMPORT_SCHEMA_UNSUPPORTED');
+        return executionGraph(payload.source, payload.remoteResult, payload.decision);
+      });
   }
   async record(job: RemotePlanJobV1, status: RemotePlanStatusV1, remoteResult: RemotePlanResultV1 | null,
     decision: GateDecisionV1,
     evidence: readonly { artifact: ArtifactRefV1; bytes: Uint8Array }[]): Promise<GateDecisionV1> {
     const digests = evidence.map((item) => item.artifact.contentDigest).sort();
-    const pending: StoredGateImportV1 = { schemaVersion: 'nova-test-gate-import.v1', jobId: job.jobId,
+    const pending: StoredGateImportV2 = { schemaVersion: 'nova-test-gate-import.v2', jobId: job.jobId, source: importSource(job),
       requestDigest: job.requestDigest, remoteResultDigest: remoteResult?.resultDigest ?? null,
       remoteResult: remoteResult ? structuredClone(remoteResult) : null,
       evidenceDigests: digests, decision, state: 'pending_evidence' };
@@ -282,27 +236,25 @@ export class FileNovaGateImportStore {
       appended = await this.#records.append('remote-gate-imports', job.jobId, pending);
     } catch (error) {
       if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw error;
-      const record = (await this.#records.read<StoredGateImportV1>('remote-gate-imports'))
+      const record = (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))
         .find((item) => item.idempotencyKey === job.jobId);
       if (!record) throw error;
       const existing = record.payload;
-      if (existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
+      if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
         || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, evidence.map((item) => item.artifact.contentDigest).sort())) {
         throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
       }
       if (existing.state === 'complete') {
-        if (this.#graph) await this.#graph.record(job, existing.remoteResult, existing.decision);
         return structuredClone(existing.decision);
       }
       appended = { appended: false, record };
     }
-    const existing = appended.record.payload as StoredGateImportV1;
-    if (existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
+    const existing = appended.record.payload as StoredGateImportV2;
+    if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
       || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, digests)) {
       throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
     }
     if (existing.state === 'complete') {
-      if (this.#graph) await this.#graph.record(job, existing.remoteResult, existing.decision);
       return structuredClone(existing.decision);
     }
     for (const item of evidence) {
@@ -311,10 +263,9 @@ export class FileNovaGateImportStore {
         throw new Error('NOVA_REMOTE_EVIDENCE_STORE_MISMATCH');
       }
     }
-    if (this.#graph) await this.#graph.record(job, remoteResult, decision);
-    const complete: StoredGateImportV1 = { ...pending, state: 'complete' };
+    const complete: StoredGateImportV2 = { ...pending, state: 'complete' };
     const stored = await this.#records.transition('remote-gate-imports', job.jobId, appended.record.payloadDigest, complete);
-    return structuredClone((stored.payload as StoredGateImportV1).decision);
+    return structuredClone((stored.payload as StoredGateImportV2).decision);
   }
 }
 
@@ -362,19 +313,6 @@ export class NovaRemoteGateImporter {
     }
     return this.#store.record(job, status, result, decision, evidence);
   }
-}
-
-export function gateDecisionStageResult(decision: GateDecisionV1): StageResult {
-  const details = { jobId: decision.jobId, planId: decision.planId, decisionDigest: decision.decisionDigest,
-    failedNodes: decision.nodes.filter((node) => ['failed', 'execution_error'].includes(node.effect)).map((node) => node.nodeId),
-    advisoryFailures: decision.nodes.filter((node) => node.effect === 'advisory_failure').map((node) => node.nodeId) };
-  if (decision.state === 'passed') return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [],
-    facts: { testGateDecision: decision.decisionDigest, advisoryFailures: details.advisoryFailures.length } };
-  if (decision.state === 'failed') return { schemaVersion: 'stage-result.v2', outcome: 'request_fix', artifacts: [],
-    reason: { code: 'test_gate.failed', message: 'Blocking test checks failed.', details } };
-  return { schemaVersion: 'stage-result.v2', outcome: decision.state === 'cancelled' ? 'cancelled' : 'blocked', artifacts: [],
-    reason: { code: decision.state === 'review_required' ? 'test_gate.review_required' : 'test_gate.execution_error',
-      message: decision.state === 'review_required' ? 'Configured evidence review is required.' : 'The remote test gate did not complete safely.', details } };
 }
 
 export interface RemotePlanTerminalDispatcher {

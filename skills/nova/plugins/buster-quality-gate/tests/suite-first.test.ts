@@ -1,38 +1,21 @@
 import assert from 'node:assert/strict';
-import { execute } from '../src/stage.ts';
+import fs from 'node:fs';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 
-const base = {
-  runId: 'run-1', gateId: 'quality', attempt: 1, task: 'Evaluate.',
-  suiteEvidence: [{ suite: 'provider', passed: true, summary: 'passed' }],
-  suitePlan: { repositoryRoot: '/repo', suites: [], testConfig: {}, task: {} },
-};
-
-{
-  const invoked: string[] = [];
-  const result = await execute({ ...base, suitePlan: { ...base.suitePlan, suites: ['security'] } }, {
-    contract: { config: { agent: 'buster' } },
-    async invoke(capability: string) { invoked.push(capability); throw new Error('MUST_NOT_INVOKE'); },
-  } as never);
-  assert.equal(result.outcome, 'blocked');
-  assert.match(result.reason?.message ?? '', /LEGACY_TEST_SUITE_RETIRED/u);
-  assert.deepEqual(invoked, []);
+const ajv = new Ajv2020({ strict: false });
+addFormats(ajv);
+const validate = ajv.compile(JSON.parse(fs.readFileSync(new URL('../schemas/input.schema.json', import.meta.url), 'utf8')));
+const input = { gateId: 'quality', task: 'Evaluate.' };
+assert.equal(validate(input), false, 'a provider plan is mandatory');
+assert.equal(validate({ ...input, suiteEvidence: [{ suite: 'security', passed: true, summary: 'claimed pass' }],
+  suitePlan: { repositoryRoot: '/repo', suites: [], testConfig: {}, task: {} } }), false,
+'caller-owned success is not gate authority');
+const plan = { repositoryRoot: '/repo', repositoryId: 'repo', plan: {}, grants: {}, maximumConcurrency: 1,
+  submittedAt: '2026-09-06T00:00:00Z', timeoutMs: 1000, revision: 'a'.repeat(40) };
+assert.equal(validate({ ...input, providerPlan: plan }), true);
+for (const retired of ['suiteEvidence', 'suitePlan', 'runId', 'attempt']) {
+  assert.equal(validate({ ...input, providerPlan: plan, [retired]: null }), false, retired);
 }
-
-{
-  const invoked: string[] = [];
-  const result = await execute(base, {
-    contract: { config: { agent: 'buster' } },
-    async invoke(capability: string) {
-      invoked.push(capability);
-      if (capability === 'runtime.dispatch') return { result: {
-        outcome: 'passed', summary: 'Passed.', failureClass: 'none', findings: [],
-      } };
-      if (capability === 'artifacts.write') return { artifact: {} };
-      throw new Error(`UNEXPECTED_CAPABILITY:${capability}`);
-    },
-  } as never);
-  assert.equal(result.outcome, 'passed');
-  assert.deepEqual(invoked, ['runtime.dispatch', 'artifacts.write']);
-}
-
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.buster-quality-gate', suite: 'provider-only' }));
+assert.equal(validate({ ...input, providerPlan: { ...plan, sourceStageId: 'implementation' } }), false);
+console.log(JSON.stringify({ ok: true, suite: 'quality-input-authority' }));

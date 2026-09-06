@@ -1,0 +1,152 @@
+name: Pipeline reliability
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  core-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Check central versions and reject drift
+        run: |
+          npm run versions:check
+          node --test tests/verification/deployment/versions.test.mjs
+      - name: Typecheck source packages
+        run: npm run typecheck:skills
+      - name: Exercise journals, process death, real Git, HTTP and Playwright reports
+        run: npm run verify:reliability
+      - name: Validate project compiler and installed stage contracts
+        run: node tests/verification/contracts/check-project-compiler.mts
+      - name: Validate production graph and native gate evidence
+        run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs
+      - name: Install real shell lint tools
+        run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
+      - name: Check affected stage and adapter contracts
+        run: |
+          npm test --workspace @kubeclaw/plugin-prism-design
+          npm test --workspace @kubeclaw/plugin-notification-observer
+          npm test --workspace @kubeclaw/plugin-human-approval
+          npm test --workspace @kubeclaw/plugin-project-summary
+          npm test --workspace @kubeclaw/plugin-lint
+          npm test --workspace @kubeclaw/plugin-implementation-agent
+          npm test --workspace @kubeclaw/plugin-buster-quality-gate
+          npm test --workspace @kubeclaw/plugin-runtime-dispatch
+          npm test --workspace @kubeclaw/plugin-operator-messaging
+          npm test --prefix skills/buster/plugins/http
+          npm test --prefix skills/nova/plugins/delivery-lint
+          npm test --workspace @kubeclaw/plugin-review
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.18.4
+      - name: Validate Buster persistent storage manifests
+        run: |
+          node tests/verification/deployment/check-role-chart.mjs
+          node tests/verification/deployment/check-deployment-truth.mjs
+          helm lint charts/kubeclaw -f my-values/buster-values.yaml
+          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml > /tmp/buster-rendered.yaml
+      - name: Build isolation launcher
+        run: npm run plugin-system:sandbox:build
+      - name: Exercise real isolated provider transport and evidence import
+        run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
+      - name: Assemble production role packages
+        run: |
+          mkdir -p dist
+          bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
+          node tests/verification/contracts/check-project-compiler.mts "dist/nova-${GITHUB_SHA}.tgz"
+
+  browser-reliability:
+    strategy:
+      fail-fast: false
+      matrix:
+        provider: [axe, lighthouse, visual, playwright]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /tmp/kubeclaw-playwright-browsers
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install browsers matching the locked Playwright package
+        run: node node_modules/playwright/cli.js install --with-deps chromium
+      - name: Build isolation launcher
+        run: npm run plugin-system:sandbox:build
+      - name: Permit the installed Chromium sandbox on the CI host
+        if: matrix.provider == 'lighthouse'
+        run: |
+          kubeclaw_chromium_executable="$(node -e 'process.stdout.write(require("playwright").chromium.executablePath())')"
+          sudo tee /etc/apparmor.d/kubeclaw-ci-chromium >/dev/null <<EOF
+          abi <abi/4.0>,
+          include <tunables/global>
+          profile kubeclaw-ci-chromium "$kubeclaw_chromium_executable" flags=(unconfined) {
+            userns,
+          }
+          EOF
+          sudo apparmor_parser -r /etc/apparmor.d/kubeclaw-ci-chromium
+      - name: Run real browser provider assertions and negative controls
+        run: npm test --prefix skills/buster/plugins/${{ matrix.provider }}
+
+  security-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KUBECLAW_TOOL_CACHE: /tmp/kubeclaw-security-tools
+      KUBECLAW_SECURITY_TEST_CACHE: /tmp/kubeclaw-security-db
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install checksum-verified Trivy and real advisory database
+        run: |
+          trivy_executable="$(bash scripts/scan-runtime-images.sh --executable)"
+          echo "KUBECLAW_SECURITY_TEST_TRIVY=$trivy_executable" >> "$GITHUB_ENV"
+          "$trivy_executable" image --download-db-only --cache-dir "$KUBECLAW_SECURITY_TEST_CACHE"
+      - name: Exercise real scanner and HTTP negative controls
+        run: npm test --workspace @kubeclaw/plugin-security-providers
+
+  prism-postgres-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: kubeclaw_test
+          POSTGRES_PASSWORD: transaction_test_only
+          POSTGRES_DB: kubeclaw_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kubeclaw_test -d kubeclaw_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Verify real PostgreSQL transaction ownership and concurrent revisions
+        env:
+          KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE: postgres://kubeclaw_test:transaction_test_only@127.0.0.1:5432/kubeclaw_test
+        run: node tests/verification/contracts/check-prism-postgres-transactions.mts

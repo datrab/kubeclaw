@@ -1,0 +1,12 @@
+{
+  "name": "@kubeclaw/nova-project",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./compiler.ts", "./cli": "./cli.ts" },
+  "dependencies": {
+    "@kubeclaw/nova-core": "*",
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/plugin-foundation": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*"
+  }
+}

@@ -1,0 +1,21 @@
+{{- if .Values.busterRuntimePersistence.enabled }}
+{{- if ne (int .Values.replicaCount) 1 }}
+{{- fail "The Buster file store requires exactly one service writer" }}
+{{- end }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ required "busterRuntimePersistence.claimName is required" .Values.busterRuntimePersistence.claimName }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- with .Values.busterRuntimePersistence.storageClass }}
+  storageClassName: {{ . }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.busterRuntimePersistence.size }}
+{{- end }}

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -81,6 +82,7 @@ function registry(type) {
     providers: new Map([
       ['lint.execute', 'kubeclaw.lint:executor'],
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
+    ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([
       [registration, new Map([
@@ -90,6 +92,7 @@ function registry(type) {
           allowedPolicyRoots: [temporary],
         }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.lint'] }],
+      ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
       ])],
     ]),
   });
@@ -133,6 +136,7 @@ async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', option
               workingDirectory: fixtureRepository,
               project: 'fixture',
               changedFiles,
+              ...(options.revision ? { revision: options.revision } : {}),
             },
             on: { request_fix: 'lint-remediation' },
             execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120000 },
@@ -146,6 +150,7 @@ async function run(changedFiles, runId, type = 'kubeclaw.lint.pre-check', option
               workingDirectory: fixtureRepository,
               project: 'fixture',
               changedFiles,
+              ...(options.revision ? { revision: options.revision } : {}),
             },
             execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120000 },
           },
@@ -200,6 +205,20 @@ try {
     const completed = events.findLast((record) => record.entry?.type === 'attempt.completed');
     assert.equal(completed?.entry?.payload?.reason?.code, 'core.plugin_runtime_failed');
   }
+  const git = (args) => execFileSync('git', ['-C', fixtureRepository, ...args], { encoding: 'utf8' }).trim();
+  git(['init', '-q']);
+  git(['add', '.']);
+  git(['-c', 'user.name=Lint', '-c', 'user.email=lint@example.invalid', 'commit', '-qm', 'actual shell defect']);
+  const brokenRevision = git(['rev-parse', 'HEAD']);
+  fs.writeFileSync(path.join(fixtureRepository, 'invalid.sh'), '#!/bin/sh\nprintf "%s\\n" "fixed"\n');
+  git(['add', '.']);
+  git(['-c', 'user.name=Lint', '-c', 'user.email=lint@example.invalid', 'commit', '-qm', 'repair shell defect']);
+  const fixedRevision = git(['rev-parse', 'HEAD']);
+  assert.equal((await run(['invalid.sh'], 'candidate-broken', 'kubeclaw.lint.full', { revision: brokenRevision })).status, 'blocked');
+  fs.writeFileSync(path.join(fixtureRepository, 'invalid.sh'), '#!/bin/sh\necho "$missing"\n');
+  assert.equal((await run(['invalid.sh'], 'candidate-fixed', 'kubeclaw.lint.full', { revision: fixedRevision })).status, 'succeeded');
+  assert.equal(git(['rev-parse', 'HEAD']), fixedRevision);
+  assert.match(fs.readFileSync(path.join(fixtureRepository, 'invalid.sh'), 'utf8'), /missing/);
   const catalog = JSON.parse(fs.readFileSync(path.join(artifacts, 'records', 'store.json'), 'utf8')).records;
   assert.ok(catalog.length >= 4);
 } finally {

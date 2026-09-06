@@ -1,4 +1,3 @@
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createProductionNovaTestGate } from '@kubeclaw/nova-core';
@@ -71,6 +70,7 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
   }
   validatePipelineTestGateContract('resolvedTestPlan', request.payload.plan);
   const plan = request.payload.plan as ResolvedTestPlanV1;
+  if (plan.runId !== request.attempt.runId) throw new Error('REMOTE_TEST_GATE_RUN_MISMATCH');
   const token = config.tokenSecret ? await secret(context, config.tokenSecret) : undefined;
   const privateKey = await secret(context, config.privateKeySecret);
   const gate = createProductionNovaTestGate({ stateRoot: config.stateRoot, endpoint: config.endpoint,
@@ -83,18 +83,14 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
     recordLimits: { maximumRecords: 10_000, maximumBytes: 1024 * 1024 * 1024,
       maximumRecordBytes: 64 * 1024 * 1024 } });
   const result = await gate.execute({ idempotencyKey: request.idempotencyKey,
-    pipelineStageId: plan.planId, plan, repositoryRoot,
+    pipelineStageId: request.attempt.stageId, plan, repositoryRoot,
+    revision: string(request.payload.revision, 'REMOTE_TEST_GATE_REVISION_REQUIRED'),
     repositoryId: string(request.payload.repositoryId, 'REMOTE_TEST_GATE_REPOSITORY_ID_INVALID'),
     grants: grants(request.payload.grants, plan),
     maximumConcurrency: positiveInteger(request.payload.maximumConcurrency, 64, 'REMOTE_TEST_GATE_CONCURRENCY_INVALID'),
     submittedAt: string(request.payload.submittedAt, 'REMOTE_TEST_GATE_SUBMITTED_AT_INVALID'),
     timeoutMs: positiveInteger(request.payload.timeoutMs, 7_200_000, 'REMOTE_TEST_GATE_TIMEOUT_INVALID'), signal });
-  const reference = result.remote.status.result;
-  if (!reference) throw new Error('REMOTE_TEST_GATE_RESULT_MISSING');
-  return Object.freeze({ schemaVersion: 'test-plan-receipt.v1', provider: 'buster-plan-v1',
-    jobId: result.remote.status.jobId, completedAt: result.remote.status.updatedAt,
-    resultDigest: reference.contentDigest, decision: result.remote.decision,
-    receiptDigest: crypto.createHash('sha256').update(JSON.stringify(result.remote.decision)).digest('hex') });
+  return Object.freeze({ ...result.remote.decision });
 }
 
 export function activate(context: AdapterActivationContext): AdapterInstance {

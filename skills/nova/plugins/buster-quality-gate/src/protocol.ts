@@ -1,15 +1,19 @@
-interface TestSuitePlan {
- readonly repositoryRoot:string;
- readonly suites:readonly string[];
- readonly testConfig:Readonly<Record<string,unknown>>;
- readonly task:Readonly<Record<string,unknown>>;
- readonly moduleId?:string;
+export interface ProviderPlanInput{readonly revision?:string;readonly sourceStageId?:string;readonly repositoryRoot:string;readonly repositoryId:string;readonly plan:Readonly<Record<string,unknown>>;readonly grants:Readonly<Record<string,readonly string[]>>;readonly maximumConcurrency:number;readonly submittedAt:string;readonly timeoutMs:number}
+export interface GateInput {
+ readonly gateId: string;
+ readonly task: string;
+ readonly providerPlan: ProviderPlanInput;
 }
-interface ProviderPlanInput{readonly repositoryRoot:string;readonly repositoryId:string;readonly plan:Readonly<Record<string,unknown>>;readonly grants:Readonly<Record<string,readonly string[]>>;readonly maximumConcurrency:number;readonly submittedAt:string;readonly timeoutMs:number}
-export interface GateInput{readonly runId:string;readonly gateId:string;readonly attempt:number;readonly task:string;readonly suiteEvidence:readonly{readonly suite:string;readonly passed:boolean;readonly summary:string}[];readonly suitePlan:TestSuitePlan;readonly providerPlan?:ProviderPlanInput}
+export interface JudgedGateInput {
+ readonly runId: string;
+ readonly gateId: string;
+ readonly attempt: number;
+ readonly task: string;
+ readonly suiteEvidence: readonly { readonly suite: string; readonly passed: boolean; readonly summary: string }[];
+}
 type GateOutcome='passed'|'request_fix'|'blocked';
 export interface GateVerdict{readonly outcome:GateOutcome;readonly runId:string;readonly gateId:string;readonly attempt:number;readonly summary:string;readonly failureClass:'none'|'test_failure'|'contract'|'configuration'|'infrastructure'|'rate_limit'|'timeout';readonly findings:readonly string[]}
-export function buildRequest(agent:string,input:GateInput):Readonly<Record<string,unknown>>{
+export function buildRequest(agent:string,input:JudgedGateInput):Readonly<Record<string,unknown>>{
  const failureClasses=['none','test_failure','contract','configuration','infrastructure','rate_limit','timeout'];
  return{protocol:'kubeclaw.buster-quality-gate.v2',agent,identity:{runId:input.runId,gateId:input.gateId,attempt:input.attempt},
   task:[input.task,'Return only the agent-owned output object described by outputContract.','Do not copy protocol, agent, identity, task, suiteEvidence, allowedOutcomes, failureClasses, or outputContract into the output.','Runtime/core bind run, gate, and attempt identity.'].join('\n\n'),suiteEvidence:input.suiteEvidence,
@@ -26,12 +30,12 @@ function verdictSource(value:unknown):Record<string,unknown>{
  if(!Array.isArray(source.findings)||source.findings.length>128||source.findings.some((item)=>typeof item!=='string'||!item.trim()||item.length>4096))throw new Error('gate findings are invalid');
  return source;
 }
-function assertVerdictConsistency(source:Record<string,unknown>,input:GateInput):void{
+function assertVerdictConsistency(source:Record<string,unknown>,input:JudgedGateInput):void{
  const findings=source.findings as unknown[];
  if(source.outcome==='passed'&&(source.failureClass!=='none'||findings.length>0||input.suiteEvidence.some((suite)=>!suite.passed)))throw new Error('passed verdict contradicts evidence');
  if(source.outcome!=='passed'&&(source.failureClass==='none'||findings.length===0))throw new Error('non-passing verdict requires a failure class and findings');
 }
-export function parseVerdict(value:unknown,input:GateInput):GateVerdict{
+export function parseVerdict(value:unknown,input:JudgedGateInput):GateVerdict{
  const source=verdictSource(value);
  assertVerdictConsistency(source,input);
  return{outcome:source.outcome as GateOutcome,runId:input.runId,gateId:input.gateId,attempt:input.attempt,summary:source.summary as string,

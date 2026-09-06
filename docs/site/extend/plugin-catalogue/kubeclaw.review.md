@@ -9,7 +9,7 @@ Last verified: generated during publication
 
 ## Purpose
 
-This package provides 2 registered extensions through the canonical plugin runtime.
+This package provides 3 registered extensions through the canonical plugin runtime.
 
 ## When To Use It
 
@@ -28,6 +28,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 | --- | --- | --- | --- | --- |
 | stage | `review` | `kubeclaw.decision.review` | `src/stage.ts` | `execute` |
 | stage | `repository-audit` | `kubeclaw.audit.repository-review` | `src/repository-audit-stage.ts` | `executeRepositoryAudit` |
+| stage | `repository-revalidation` | `kubeclaw.audit.repository-review-revalidation` | `src/repository-revalidation-stage.ts` | `executeRepositoryRevalidation` |
 
 ## stage: review
 
@@ -57,6 +58,20 @@ Input schema: `schemas/repository-audit-input.schema.json`
 
 Result schema: `schemas/result.schema.json`
 
+## stage: repository-revalidation
+
+Public identifier: `kubeclaw.audit.repository-review-revalidation`.
+
+Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
+
+Provided capabilities: None.
+
+Configuration schema: `schemas/repository-audit-config.schema.json`
+
+Input schema: `schemas/repository-revalidation-input.schema.json`
+
+Result schema: `schemas/result.schema.json`
+
 ## Failure Behavior
 
 Registry validation rejects a missing module, export, schema, or capability declaration.
@@ -71,7 +86,7 @@ Run:
 npm test --prefix skills/nova/plugins/review
 ```
 
-Package tests found: 53.
+Package tests found: 54.
 
 ## Source Evidence
 
@@ -88,6 +103,7 @@ Package tests found: 53.
 - Test: `skills/nova/plugins/review/tests/package-boundary.test.mjs`
 - Test: `skills/nova/plugins/review/tests/protocol.unit.test.mjs`
 - Test: `skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs`
+- Test: `skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs`
 - Test: `skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs`
 - Test: `skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs`
 - Test: `skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs`

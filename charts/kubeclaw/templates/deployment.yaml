@@ -70,7 +70,7 @@ spec:
         # to chmod or atomically replace those files. The workspace PVC is not
         # mounted here and is therefore outside this ownership repair.
         - name: openclaw-state-permissions
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
             - /bin/sh
@@ -104,7 +104,7 @@ spec:
         # state database still needs a schema migration. This must run before
         # init-setup because init-setup invokes the OpenClaw plugin CLI.
         - name: openclaw-state-migration
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           # OpenClaw 2026.8.1 gates doctor-owned state migrations on TTY
           # presence even when --fix was explicitly requested. Allocate a PTY
@@ -295,7 +295,7 @@ spec:
         {{- end }}
 
         - name: init-setup
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             {{- if .Values.runAsRoot }}
@@ -1219,7 +1219,7 @@ spec:
 
         # ── OpenClaw Gateway ──
         - name: kubeclaw
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: {{- toYaml .Values.gateway.command | nindent 12 }}
 
@@ -1491,7 +1491,7 @@ spec:
         {{- end }}
         {{- if .Values.workerTrust.spiffe.enabled }}
         - name: worker-trust-proxy
-          image: "{{ .Values.workerTrust.spiffe.envoy.repository }}:{{ .Values.workerTrust.spiffe.envoy.tag }}"
+          image: "{{ .Values.workerTrust.spiffe.envoy.repository }}:{{ .Values.workerTrust.spiffe.envoy.tag }}@{{ .Values.workerTrust.spiffe.envoy.digest }}"
           imagePullPolicy: {{ .Values.workerTrust.spiffe.envoy.pullPolicy }}
           args: ["-c", "/etc/kubeclaw-worker-trust/envoy.yaml", "--service-cluster", {{ printf "kubeclaw-%s" .Values.agentRole | quote }}]
           ports:

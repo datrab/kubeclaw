@@ -355,6 +355,7 @@ const server = createServer(async (request, response) => {
         result: {
           bundleDigest: baseline.rows[0].bundle_digest,
           artifactId: baseline.rows[0].bundle_artifact_id,
+          archiveBase64: Buffer.from(await artifacts.get(baseline.rows[0].bundle_artifact_id)).toString("base64"),
         },
       });
     }
@@ -369,23 +370,13 @@ const server = createServer(async (request, response) => {
       if (new Set(input.designs.map((item)=>item.key)).size !== 3) throw new Error("Prism direction keys must be unique");
       const documents=input.designs.map((item)=>validatePrism<PrismDocument>("designDocument",item.document));
       assertMaterialDirectionDiversity(documents);
-      const project=await pool.query<{id:string}>("SELECT id FROM prism.project WHERE external_id=$1",[input.projectId]);
-      if(!project.rows[0])throw new Error("active Prism project not found");
-      const active=await pool.query<{id:string}>("SELECT id FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[project.rows[0].id]);
-      if(!active.rows[0])throw new Error("active Prism design request not found");
-      const existing=await pool.query<{id:string;source_document_id:string}>("SELECT d.id,d.source_document_id FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id WHERE d.project_id=$1 AND doc.design_request_id=$2 ORDER BY d.created_at,d.id",[project.rows[0].id,active.rows[0].id]);
-      if(existing.rows.length===3)return json(response,200,{status:"already-created",projectId:project.rows[0].id,documentId:existing.rows[0]!.source_document_id,studioUrl:`${process.env.PRISM_STUDIO_PUBLIC_URL??"https://prism-studio"}?project=${project.rows[0].id}&document=${existing.rows[0]!.source_document_id}`});
-      if(existing.rows.length)throw new Error("partial Prism design set exists; operator repair is required");
-      const created:Array<{directionId:string;documentId:string;key:string}>=[];
-      for(let index=0;index<input.designs.length;index++){
-        const item=input.designs[index]!;const document=documents[index]!;
-        if(!item.key||!item.title||!item.summary)throw new Error("each Prism design requires key, title, and summary");
-        const documentId=await repository.createDocument(project.rows[0].id,`direction-${item.key}`,document,"agent:prism",active.rows[0].id);
-        const current=await repository.current(documentId);const content=JSON.stringify(document);const directionId=randomUUID();
-        await pool.query("INSERT INTO prism.direction(id,project_id,source_document_id,source_revision_id,direction_key,title,summary,proposal,content_digest,state,evidence) VALUES($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,'proposed',$10::jsonb)",[directionId,project.rows[0].id,documentId,current.id,item.key,item.title,item.summary,content,sha256(content),JSON.stringify(item.evidence??{})]);
-        created.push({directionId,documentId,key:item.key});
-      }
-      return json(response,201,{status:"created",projectId:project.rows[0].id,documentId:created[0]!.documentId,directions:created,studioUrl:`${process.env.PRISM_STUDIO_PUBLIC_URL??"https://prism-studio"}?project=${project.rows[0].id}&document=${created[0]!.documentId}`});
+      const designs = input.designs.map((item, index) => {
+        if (!item.key || !item.title || !item.summary) throw new Error("each Prism design requires key, title, and summary");
+        return { key: item.key, title: item.title, summary: item.summary, document: documents[index]!, ...(item.evidence ? { evidence: item.evidence } : {}) };
+      });
+      const result = await repository.createDirectionSet(input.projectId, designs);
+      return json(response, result.status === 'created' ? 201 : 200, { ...result,
+        studioUrl: `${process.env.PRISM_STUDIO_PUBLIC_URL ?? "https://prism-studio"}?project=${result.projectId}&document=${result.documentId}` });
     }
     if (url.pathname === "/v1/agent/revisions" && request.method === "POST") {
       if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");

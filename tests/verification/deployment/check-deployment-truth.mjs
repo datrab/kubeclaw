@@ -23,7 +23,7 @@ const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const prismJobs = read('charts/prism/templates/jobs.yaml');
 const prismValues = read('charts/prism/values.yaml');
 const prismNetworkPolicies = read('charts/prism/templates/networkpolicy.yaml');
-const generalDockerfile = read('docker/Dockerfile.general');
+const novaDockerfile = read('docker/Dockerfile.nova');
 const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
 const prismControlDockerfile = read('docker/Dockerfile.prism-control');
@@ -40,8 +40,10 @@ const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
 const networkPolicies = read('my-values/infra/network-policies.yaml');
-const expectedOpenClawVersion = '2026.9.1';
-const expectedOpenClawDigest = 'sha256:6afe42854c87471188b9c4f8dce6bbc14005a48d8e1592846548b32508754f84';
+const versions = JSON.parse(read('versions.json'));
+const expectedOpenClawVersion = versions.openclaw.version;
+const expectedOpenClawDigest = versions.openclaw.digest;
+const prismAgentDockerfile = read('docker/Dockerfile.prism-agent');
 
 assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
   'Prism chart must use digest references without forced pulls');
@@ -114,7 +116,7 @@ assert.equal(
 );
 
 for (const relativePath of [
-  'docker/Dockerfile.general',
+  'docker/Dockerfile.nova',
   'docker/Dockerfile.buster-gateway',
   'docker/Dockerfile.buster-runtime',
   'docker/buster-runtime-entrypoint.sh',
@@ -150,8 +152,9 @@ for (const buildInput of [
 }
 
 for (const [label, dockerfile] of [
-  ['general image', generalDockerfile],
+  ['Nova image', novaDockerfile],
   ['Buster gateway image', busterGatewayDockerfile],
+  ['Prism agent image', prismAgentDockerfile],
 ]) {
   assert.match(
     dockerfile,
@@ -161,8 +164,9 @@ for (const [label, dockerfile] of [
 }
 
 for (const [label, dockerfile] of [
-  ['general image', generalDockerfile],
+  ['Nova image', novaDockerfile],
   ['Buster gateway image', busterGatewayDockerfile],
+  ['Prism agent image', prismAgentDockerfile],
 ]) {
   const baseVersion = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:([^@\s]+)/mu)?.[1];
   const baseDigest = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:[^@\s]+@(sha256:[a-f0-9]{64})/mu)?.[1];
@@ -207,11 +211,10 @@ assert.match(
   /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
   'the setup container must preserve official plugin provenance while installing from the offline image cache',
 );
-assert.match(
-  values,
-  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.9\.1"[\s\S]*"npm:@openclaw\/discord@2026\.9\.1"/,
-  'official OpenClaw plugins must be pinned to the gateway release and installed with trusted npm provenance',
-);
+for (const plugin of ['acpx', 'discord']) {
+  assert.ok(values.includes(`"npm:@openclaw/${plugin}@${expectedOpenClawVersion}"`),
+    'offline plugin specifications must match the central gateway release');
+}
 assert.doesNotMatch(
   chart,
   /rm -rf \/config\/state|openclaw-plugin-home\/state/,
@@ -225,11 +228,11 @@ assert.match(
 );
 assert.match(
   busterGatewayDockerfile,
-  /COPY docker\/buster-gateway-tools\/package\.json docker\/buster-gateway-tools\/package-lock\.json \/opt\/kubeclaw-tools\//u,
+  /COPY docker\/openclaw-tools\/package\.json docker\/openclaw-tools\/package-lock\.json \/opt\/kubeclaw-tools\//u,
   'the Buster gateway JavaScript tools must be installed from a committed lockfile',
 );
 assert.equal(
-  exists('docker/buster-gateway-tools/package-lock.json'),
+  exists('docker/openclaw-tools/package-lock.json'),
   true,
   'the Buster gateway JavaScript tool lockfile must be committed',
 );
@@ -308,10 +311,6 @@ assert.match(
   /image_inputs:[\s\S]*- 'tsconfig\.base\.json'/,
   'shared TypeScript configuration changes must trigger image builds',
 );
-assert.ok(
-  workflow.includes('(-[0-9]+)?$'),
-  'the OpenClaw release check must accept numbered correction releases',
-);
 assert.doesNotMatch(chart, /execution-buildkit|execution-api-token|executionRuntime/);
 assert.doesNotMatch(values, /executionRuntime|moby\/buildkit/);
 assert.doesNotMatch(novaValues, /BUILDKIT_HOST|executionRuntime|moby\/buildkit/);
@@ -333,7 +332,7 @@ assert.match(
 assert.doesNotMatch(chart, /BUSTER_V2_ENDPOINT|BUSTER_GATEWAY_ORIGIN|busterGateway/);
 assert.match(
   busterRuntimeDockerfile,
-  /FROM moby\/buildkit:v[\w.-]+-rootless@sha256:[a-f0-9]{64} AS buildkit/,
+  /ARG BUILDKIT_BASE=moby\/buildkit:v[\w.-]+-rootless@sha256:[a-f0-9]{64}[\s\S]*FROM \$\{BUILDKIT_BASE\} AS buildkit/,
   'Buster must own a digest-pinned rootless BuildKit runtime',
 );
 assert.match(
@@ -477,8 +476,8 @@ assert.match(
 );
 assert.match(
   busterValues,
-  /name:\s*buster-v2-state[\s\S]*emptyDir:[\s\S]*sizeLimit:\s*64Mi/,
-  'worker state must be bounded and absent from the shared workspace PVC',
+  /name:\s*buster-v2-state\s+persistentVolumeClaim:\s+claimName:\s*agent-buster-runtime-state/,
+  'authoritative worker receipts must survive Pod replacement in their dedicated PVC',
 );
 assert.doesNotMatch(novaValues, /\.kubeclaw\.svc\.cluster\.local/);
 assert.match(
@@ -888,8 +887,6 @@ assert.match(
   'fresh gateway configs must include the Prism plugin only for agent-prism',
 );
 for (const toolProof of [
-  /playwright install --with-deps chromium/,
-  /k6 version/,
   /hadolint --version/,
   /kubeconform -v/,
   /kubectl version --client=true/,
@@ -899,9 +896,9 @@ for (const toolProof of [
   /shellcheck/,
 ]) {
   assert.match(
-    generalDockerfile,
+    novaDockerfile,
     toolProof,
-    `the authoritative Nova runtime lost deterministic suite tooling: ${toolProof}`,
+    `the authoritative Nova runtime lost static-analysis tooling: ${toolProof}`,
   );
 }
 assert.doesNotMatch(

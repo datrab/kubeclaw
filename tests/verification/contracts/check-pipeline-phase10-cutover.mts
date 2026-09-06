@@ -83,7 +83,6 @@ assert.doesNotMatch(busterValues, /^\s*(?:path|mountPath):\s*\/sys\/fs\/cgroup\s
   'the Buster deployment must not mount the host cgroup root');
 
 for (const manifestPath of [
-  'skills/buster/plugins/test-agent/plugin.json',
   'skills/nova/plugins/buster-quality-gate/plugin.json',
 ]) {
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as {
@@ -109,3 +108,5 @@ assert.match(deployScript, /sign_and_store_production_receipt/u);
 
 console.log(JSON.stringify({ ok: true, phase: 10, cutover: 'unit', parityItems: inventory.parityItemCount,
   legacyAuthority: 'absent', replacementAuthority: 'required' }));
+
+assert.equal(fs.existsSync('skills/buster/plugins/test-agent'), false, 'retired test-agent orchestration must not ship in the worker role');

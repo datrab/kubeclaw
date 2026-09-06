@@ -194,6 +194,9 @@ export function loadProductionBusterRemotePlanRuntime(
     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
     tarExecutable: path.resolve(directory, value.tarExecutable as string),
     maximumExtractedBytes: integer(value.maximumExtractedBytes, 'maximumExtractedBytes'),
+    maximumActiveJobs: integer(value.maximumActiveJobs ?? 2, 'maximumActiveJobs'),
+    maximumQueuedJobs: integer(value.maximumQueuedJobs ?? 16, 'maximumQueuedJobs'),
+    maximumConcurrentAttempts: integer(value.maximumConcurrentAttempts ?? 64, 'maximumConcurrentAttempts'),
     allowedCapabilities,
     ...(directCommandSource ? { directCommand: {
       executableCatalog: stringMap(directCommandSource.executableCatalog, 'directCommand.executableCatalog'),

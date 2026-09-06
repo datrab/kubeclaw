@@ -6,7 +6,12 @@
     "strict": true,
     "jsx": "react-jsx",
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts"
+  ]
 }

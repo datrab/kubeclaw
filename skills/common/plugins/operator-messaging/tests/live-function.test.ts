@@ -18,6 +18,16 @@ const previousSecret = process.env[secretEnvironmentName];
 const previousEndpoint = process.env[endpointEnvironmentName];
 process.env[secretEnvironmentName] = secretValue;
 const deliveries = [];
+const slowReceived = Promise.withResolvers();
+const slowClosed = Promise.withResolvers();
+async function beforeDeadline(operation, message) {
+  let timer;
+  try {
+    return await Promise.race([operation, new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(message)), 5000);
+    })]);
+  } finally { clearTimeout(timer); }
+}
 const server = http.createServer((request, response) => {
   const chunks = [];
   request.on('data', (chunk) => chunks.push(chunk));
@@ -30,15 +40,19 @@ const server = http.createServer((request, response) => {
       body,
     });
     if (request.url === '/slow') {
-      request.once('close', () => {
-        deliveries.at(-1).closed = true;
-      });
-      setTimeout(() => {
+      const delivery = deliveries.at(-1);
+      const timeout = setTimeout(() => {
         if (!response.writableEnded) {
           response.writeHead(202, { 'content-type': 'application/json' });
           response.end(JSON.stringify({ messageId: 'slow-message' }));
         }
-      }, 5_000);
+      }, 10000);
+      response.once('close', () => {
+        clearTimeout(timeout);
+        delivery.closed = !response.writableEnded;
+        slowClosed.resolve();
+      });
+      slowReceived.resolve();
       return;
     }
     if (request.url === '/fail') {
@@ -304,10 +318,11 @@ try {
     signal: midflight.signal,
     idempotencyKey: 'operator:midflight-cancel',
   });
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  const cancelledDelivery = assert.rejects(slow, /ADAPTER_CANCELLED|aborted/i);
+  await beforeDeadline(slowReceived.promise, 'slow delivery never reached the real server');
   midflight.abort();
-  await assert.rejects(slow, /ADAPTER_CANCELLED|aborted/i);
-  await new Promise((resolve) => setTimeout(resolve, 25));
+  await cancelledDelivery;
+  await beforeDeadline(slowClosed.promise, 'cancellation did not close the response connection');
   assert.equal(deliveries.find((delivery) => delivery.url === '/slow')?.closed, true);
   assert.equal(
     (await effectJournal.receipt('operator:midflight-cancel'))?.status,

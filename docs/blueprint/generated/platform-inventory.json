@@ -43,8 +43,7 @@
         "kubeclaw.kubernetes-fixture",
         "kubeclaw.tailscale-exposure",
         "kubeclaw.http",
-        "kubeclaw.size-budget",
-        "kubeclaw.test-agent"
+        "kubeclaw.size-budget"
       ],
       "extensions": [
         "kubeclaw-agent-observer"
@@ -75,7 +74,8 @@
         "telemetry-contract",
         "pipeline-test-gate-contract",
         "pipeline-worker-core-contract",
-        "pipeline-observability-contract"
+        "pipeline-observability-contract",
+        "nova-project"
       ],
       "plugins": [
         "kubeclaw.agent-observability",
@@ -1368,34 +1368,6 @@
       ]
     },
     {
-      "id": "kubeclaw.test-agent",
-      "version": "1.0.0",
-      "kind": "pipeline-plugin",
-      "file": "skills/buster/plugins/test-agent/plugin.json",
-      "docsTarget": "/extend/plugin-catalogue/kubeclaw.test-agent",
-      "bundledBy": [
-        "buster"
-      ],
-      "registrations": [
-        {
-          "id": "test",
-          "type": "kubeclaw.test.execution",
-          "module": "src/stage.ts",
-          "export": "execute",
-          "requiredCapabilities": [
-            "command.execute",
-            "test.plan.execute",
-            "runtime.dispatch",
-            "artifacts.write"
-          ],
-          "configSchema": "schemas/config.schema.json",
-          "inputSchema": "schemas/input.schema.json",
-          "resultSchema": "schemas/result.schema.json",
-          "kind": "stage"
-        }
-      ]
-    },
-    {
       "id": "kubeclaw.visual",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -1483,6 +1455,7 @@
             "plugin.kubeclaw.openclaw-agent-events.llm-input",
             "plugin.kubeclaw.openclaw-agent-events.llm-output",
             "plugin.kubeclaw.openclaw-agent-events.subagent-spawned",
+            "plugin.kubeclaw.openclaw-agent-events.subagent-delivery-target",
             "plugin.kubeclaw.openclaw-agent-events.subagent-ended",
             "plugin.kubeclaw.openclaw-agent-events.before-tool-call",
             "plugin.kubeclaw.openclaw-agent-events.after-tool-call",
@@ -1512,6 +1485,7 @@
           "export": "recordEvidence",
           "subscriptions": [
             "plugin.kubeclaw.openclaw-agent-events.agent-end",
+            "plugin.kubeclaw.openclaw-agent-events.subagent-delivery-target",
             "plugin.kubeclaw.openclaw-agent-events.subagent-ended",
             "plugin.kubeclaw.openclaw-agent-events.model-call-ended",
             "plugin.kubeclaw.openclaw-agent-events.session-end"
@@ -1696,54 +1670,6 @@
           },
           "requiredCapabilities": [
             "operator.request"
-          ],
-          "configSchema": "schemas/config.schema.json",
-          "checkpointSchema": "schemas/checkpoint.schema.json",
-          "kind": "observer"
-        },
-        {
-          "id": "audit",
-          "module": "src/observer.ts",
-          "export": "recordAudit",
-          "subscriptions": [
-            "run.created",
-            "run.started",
-            "run.succeeded",
-            "run.failed",
-            "run.blocked",
-            "run.cancelled",
-            "stage.started",
-            "stage.waiting",
-            "stage.retrying",
-            "stage.skipped",
-            "stage.succeeded",
-            "stage.failed",
-            "stage.blocked",
-            "stage.cancelled",
-            "attempt.created",
-            "attempt.dispatched",
-            "attempt.completed",
-            "attempt.timed_out",
-            "attempt.cancelled",
-            "effect.requested",
-            "effect.accepted",
-            "effect.completed",
-            "effect.failed",
-            "artifact.created",
-            "wait.created",
-            "wait.resolved",
-            "orchestrator.required"
-          ],
-          "delivery": "at_least_once",
-          "ordering": "per_run",
-          "failurePolicy": {
-            "mode": "required",
-            "maxAttempts": 3,
-            "backoffMs": 250,
-            "timeoutMs": 10000
-          },
-          "requiredCapabilities": [
-            "artifacts.write"
           ],
           "configSchema": "schemas/config.schema.json",
           "checkpointSchema": "schemas/checkpoint.schema.json",
@@ -2145,7 +2071,8 @@
           "requiredCapabilities": [
             "test.plan.execute",
             "runtime.dispatch",
-            "artifacts.write"
+            "artifacts.write",
+            "artifacts.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
@@ -2268,6 +2195,7 @@
             "git.workspace.remove",
             "git.commit",
             "git.merge",
+            "artifacts.read",
             "artifacts.write"
           ],
           "configSchema": "schemas/config.schema.json",
@@ -2294,7 +2222,8 @@
           "export": "executePreCheck",
           "requiredCapabilities": [
             "lint.execute",
-            "artifacts.write"
+            "artifacts.write",
+            "artifacts.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
@@ -2308,7 +2237,8 @@
           "export": "executeFull",
           "requiredCapabilities": [
             "lint.execute",
-            "artifacts.write"
+            "artifacts.write",
+            "artifacts.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
@@ -2425,6 +2355,7 @@
           "module": "src/stage.ts",
           "export": "execute",
           "requiredCapabilities": [
+            "artifacts.read",
             "artifacts.write"
           ],
           "configSchema": "schemas/config.schema.json",
@@ -2523,6 +2454,22 @@
           "inputSchema": "schemas/repository-audit-input.schema.json",
           "resultSchema": "schemas/result.schema.json",
           "kind": "stage"
+        },
+        {
+          "id": "repository-revalidation",
+          "type": "kubeclaw.audit.repository-review-revalidation",
+          "module": "src/repository-revalidation-stage.ts",
+          "export": "executeRepositoryRevalidation",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "git.repository.read",
+            "artifacts.read",
+            "artifacts.write"
+          ],
+          "configSchema": "schemas/repository-audit-config.schema.json",
+          "inputSchema": "schemas/repository-revalidation-input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "kind": "stage"
         }
       ]
     },
@@ -2538,7 +2485,7 @@
   ],
   "registrationCounts": {
     "stage": 17,
-    "observer": 6,
+    "observer": 5,
     "adapter": 18,
     "test provider": 18,
     "report adapter": 1
@@ -2700,6 +2647,17 @@
         "owner": "buster",
         "roles": [
           "buster"
+        ],
+        "bundle": {
+          "kind": "node-package"
+        }
+      },
+      {
+        "id": "nova-project",
+        "source": "skills/nova/project",
+        "owner": "nova",
+        "roles": [
+          "nova"
         ],
         "bundle": {
           "kind": "node-package"

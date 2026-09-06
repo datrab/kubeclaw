@@ -3,7 +3,9 @@ import http from 'node:http';
 import { NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
 import { provider } from '../src/provider.js';
 
+let contacts = 0;
 const server = http.createServer((request, response) => {
+  contacts++;
   if (request.url === '/ok') {
     response.setHeader('content-type', 'text/html; charset=utf-8');
     response.end('healthy marker');
@@ -59,12 +61,12 @@ try {
   assert.equal(expected404.outcome, 'passed');
 
   const deployment = { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
-    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'web', url: origin }] } };
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), endpoints: [{ name: 'web', url: origin }] } };
   const linked = await provider().execute(invocation({ endpointName: 'web', path: '/ok' }, 'linked', [deployment]), context());
   assert.equal(linked.outcome, 'passed');
 
   const publicEndpoint = { name: 'endpoint', kind: 'value', schemaId: 'kubeclaw.public-endpoint-fixture@1',
-    value: { schemaVersion: 'public-endpoint-fixture.v1', provider: 'tailscale-ingress',
+    value: { schemaVersion: 'public-endpoint-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), provider: 'tailscale-ingress',
       url: `${origin}/ok`, hostname: 'preview.example.ts.net' } };
   const publicLinked = await provider().execute(invocation({}, 'public-linked', [publicEndpoint]), context());
   assert.equal(publicLinked.outcome, 'passed');
@@ -100,20 +102,28 @@ try {
     resource: { type: 'network.url', canonicalId: `${origin}/ok` }, payload: {} } as any,
   new AbortController().signal), /HTTP_WEBSOCKET_DENIED/u);
   const suffixOnly = new NetworkHttpCapabilityInvoker({ allowedOrigins: [], allowedHostSuffixes: ['.0.0.1'],
-    allowedPorts: [address.port], allowedMethods: ['GET', 'POST'], allowedRequestHeaders: ['accept', 'authorization'],
+    allowedPorts: [address.port], allowedMethods: ['GET', 'HEAD', 'POST'], allowedRequestHeaders: ['accept', 'authorization'],
     allowWebSocket: true, maximumRequestBytes: 1024, maximumResponseBytes: 1024, maximumExecutionMs: 1000 });
   const suffixUrl = `${origin}/ok`;
+  const contactsBeforeDeniedRequests = contacts;
   await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'request',
     resource: { type: 'network.url', canonicalId: suffixUrl }, payload: { method: 'POST' } } as any,
   new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:POST/u);
   await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'request',
     resource: { type: 'network.url', canonicalId: suffixUrl }, payload: { headers: { authorization: 'denied' } } } as any,
-  new AbortController().signal), /HTTP_REQUEST_HEADER_DENIED/u);
+  new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:GET/u);
   await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'websocket',
     resource: { type: 'network.url', canonicalId: suffixUrl }, payload: {} } as any,
   new AbortController().signal), /HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED/u);
+  await assert.rejects(() => suffixOnly.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: suffixUrl }, payload: { method: 'HEAD' } },
+  new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:HEAD/u);
+  await assert.rejects(() => capability.invoke('network.http', { operation: 'request',
+    resource: { type: 'network.url', canonicalId: suffixUrl }, payload: { headers: { authorization: 'denied' } } },
+  new AbortController().signal), /HTTP_REQUEST_HEADER_DENIED/u);
+  assert.equal(contacts, contactsBeforeDeniedRequests, 'denied origins, methods and headers never contact the real server');
   const deploymentInput = [{ name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
-    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', endpoints: [{ name: 'api', url: origin }] } }] as any;
+    value: { schemaVersion: 'kubernetes-deployment-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), endpoints: [{ name: 'api', url: origin }] } }] as any;
   const scopedMutation = await suffixOnly.invoke('network.http', { operation: 'request',
     resource: { type: 'network.url', canonicalId: suffixUrl },
     payload: { method: 'POST', headers: { authorization: 'test' }, body: '{}' } } as any,

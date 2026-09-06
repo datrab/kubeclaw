@@ -5,7 +5,49 @@ import { buildRuntimeAgentTask, RUNTIME_RESULT_FILE_MAX_BYTES } from '@kubeclaw/
 import { ReviewDispatchBudget, countReviewTextTokens, estimatedReviewCostUsd, reserveReviewAttempts,
   measureReviewPayload, reserveReviewRuntimePrompt, selectFittingCandidates } from '../src/review-prompt-budget.ts';
 
-assert.equal(countReviewTextTokens('review exact source') > 0, true);
+// Golden counts captured from js-tiktoken 1.0.21 before replacing it.
+const tokenVectors = [
+  {
+    "text": "",
+    "o200k_base": 0,
+    "cl100k_base": 0
+  },
+  {
+    "text": "hello world",
+    "o200k_base": 2,
+    "cl100k_base": 2
+  },
+  {
+    "text": "hello 👋 世界 مرحبا café\n",
+    "o200k_base": 8,
+    "cl100k_base": 14
+  },
+  {
+    "text": "\ud800",
+    "o200k_base": 1,
+    "cl100k_base": 1
+  },
+  {
+    "text": "  \t\n",
+    "o200k_base": 2,
+    "cl100k_base": 1
+  },
+  {
+    "text": "export const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\nexport const ready = true;\n",
+    "o200k_base": 300,
+    "cl100k_base": 300
+  },
+  {
+    "text": "{\"task\":\"review\",\"source\":\"const x = \\\"🧪\\\";\\n\",\"paths\":[\"src/你好.ts\",\"a\\\\b\"]}",
+    "o200k_base": 30,
+    "cl100k_base": 30
+  }
+];
+for (const vector of tokenVectors) for (const encoding of ['o200k_base', 'cl100k_base']) {
+  assert.equal(countReviewTextTokens(vector.text, encoding), vector[encoding], 'token budgets must retain exact counts');
+}
+for (const encoding of ['o200k_base', 'cl100k_base']) assert.throws(() => countReviewTextTokens('<|endoftext|>', encoding));
+
 assert.equal(measureReviewPayload({ task: 'review', source: 'const value = true;' }).bytes > 0, true);
 assert.equal(estimatedReviewCostUsd({ inputTokens: 1_000_000, outputTokens: 100_000,
   inputUsdPerMillionTokens: 10, outputUsdPerMillionTokens: 30 }), 13);

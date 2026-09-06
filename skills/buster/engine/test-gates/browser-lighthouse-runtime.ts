@@ -1,9 +1,12 @@
+import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import http from 'node:http';
 import https from 'node:https';
 import net from 'node:net';
 import lighthouse from 'lighthouse';
-import { launch, type LaunchedChrome } from 'chrome-launcher';
+import { Launcher } from 'chrome-launcher';
 import type { ResolvedInputV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
@@ -42,23 +45,7 @@ function origin(value: string, code: string): string {
   return parsed.origin;
 }
 
-function inputOrigins(inputs: readonly ResolvedInputV1[]): Set<string> {
-  const result = new Set<string>();
-  for (const input of inputs) {
-    if (input.kind !== 'value' || !input.value || typeof input.value !== 'object' || Array.isArray(input.value)) continue;
-    const value = input.value as JsonObject;
-    if (input.schemaId === 'kubeclaw.public-endpoint-fixture@1' && typeof value.url === 'string') {
-      try { result.add(new URL(value.url).origin); } catch { /* Invalid fixture data is not authority. */ }
-    }
-    if (input.schemaId === 'kubeclaw.kubernetes-deployment-fixture@1' && Array.isArray(value.endpoints)) {
-      for (const endpoint of value.endpoints) if (endpoint && typeof endpoint === 'object'
-        && typeof (endpoint as JsonObject).url === 'string') {
-        try { result.add(new URL((endpoint as JsonObject).url as string).origin); } catch { /* Invalid fixture data is not authority. */ }
-      }
-    }
-  }
-  return result;
-}
+
 
 function profile(raw: unknown): { name: string; settings: JsonObject } {
   const value = object(raw, 'BROWSER_LIGHTHOUSE_PROFILE_INVALID');
@@ -149,6 +136,26 @@ async function withTimeout<T>(promise: Promise<T>, milliseconds: number): Promis
   } finally { if (timer !== undefined) clearTimeout(timer); }
 }
 
+function assertAuditedOrigin(log: unknown, targetOrigin: string): void {
+  if (!Array.isArray(log) || log.length === 0) throw new Error('BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING');
+  let observedTarget = false;
+  for (const raw of log) {
+    const event = object(raw, 'BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    if (event.method === 'Network.webSocketCreated' || event.method === 'Network.webTransportCreated') {
+      throw new Error('BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED');
+    }
+    if (event.method !== 'Network.requestWillBeSent') continue;
+    const params = object(event.params, 'BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    const request = object(params.request, 'BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    if (typeof request.url !== 'string') throw new Error('BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    const destination = new URL(request.url);
+    if (!['http:', 'https:'].includes(destination.protocol)) continue;
+    if (destination.origin !== targetOrigin) throw new Error(`BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED:${destination.origin}`);
+    observedTarget = true;
+  }
+  if (!observedTarget) throw new Error('BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING');
+}
+
 export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilityInvoker {
   readonly #options: BrowserLighthouseCapabilityInvokerOptions;
   readonly #origins: ReadonlySet<string>;
@@ -166,9 +173,10 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
 
   async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal,
     inputs: readonly ResolvedInputV1[] = []): Promise<Readonly<Record<string, unknown>>> {
+    signal = fixtureAuthoritySignal(inputs, signal);
     if (capability !== 'browser.lighthouse' || request.operation !== 'audit') throw new Error('BROWSER_LIGHTHOUSE_OPERATION_DENIED');
     if (request.resource.type !== 'network.url') throw new Error('BROWSER_LIGHTHOUSE_RESOURCE_INVALID');
-    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...inputOrigins(inputs)]);
+    const target = new URL(request.resource.canonicalId); const allowed = new Set([...this.#origins, ...fixtureOrigins(inputs)]);
     if (!allowed.has(target.origin) || target.username || target.password) throw new Error('BROWSER_LIGHTHOUSE_ORIGIN_DENIED');
     const payload = object(request.payload, 'BROWSER_LIGHTHOUSE_REQUEST_INVALID');
     if (!Array.isArray(payload.runs) || payload.runs.length === 0 || payload.runs.length > this.#options.maximumRuns) {
@@ -182,30 +190,50 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
       if (!['performance', 'seo', 'best-practices'].includes(String(run.purpose))) throw new Error('BROWSER_LIGHTHOUSE_PURPOSE_INVALID');
       return { route: run.route, purpose: run.purpose as Purpose, profile: profile(run.profile) };
     });
-    const proxy = await exactOriginProxy(target.origin); let chrome: LaunchedChrome | undefined;
+    const proxy = await exactOriginProxy(target.origin); let chrome: Launcher | undefined;
+    const profileDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-lighthouse-'));
     const abort = () => { try { chrome?.kill(); } catch { /* Best-effort abort cleanup. */ } };
     signal.addEventListener('abort', abort, { once: true });
     try {
-      chrome = await launch({ chromePath: this.#options.chromeExecutable, chromeFlags: [
+      chrome = new Launcher({ userDataDir: profileDirectory, chromePath: this.#options.chromeExecutable, chromeFlags: [
         '--headless=new', '--disable-gpu', '--disable-dev-shm-usage',
         '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
         `--proxy-server=http://127.0.0.1:${proxy.port}`, '--proxy-bypass-list=<-loopback>',
         ...(process.getuid?.() === 0 ? ['--no-sandbox'] : []),
       ] });
+      try { await chrome.launch(); }
+      catch (error) {
+        const log = path.join(profileDirectory, 'chrome-err.log');
+        let diagnostic = '';
+        if (fs.existsSync(log)) {
+          const descriptor = fs.openSync(log, 'r');
+          try { const bytes = Buffer.alloc(16384); diagnostic = bytes.subarray(0, fs.readSync(descriptor, bytes, 0, bytes.length, 0)).toString('utf8'); }
+          finally { fs.closeSync(descriptor); }
+        }
+        throw new Error(`BROWSER_LIGHTHOUSE_LAUNCH_FAILED:${error instanceof Error ? error.message : String(error)}:${diagnostic}`);
+      }
+      const port = chrome.port;
+      if (typeof port !== 'number' || !Number.isInteger(port) || port < 1) throw new Error('BROWSER_LIGHTHOUSE_DEBUG_PORT_INVALID');
       const results = [];
       for (const run of runs) {
         if (signal.aborted) throw new Error('BROWSER_LIGHTHOUSE_CANCELLED');
         const url = new URL(run.route, `${target.origin}/`);
         const startedAt = Date.now();
         const output = await withTimeout(lighthouse(url.href, {
-          port: chrome.port, output: 'json', logLevel: 'silent', onlyCategories: [run.purpose],
+          port, output: 'json', logLevel: 'silent', onlyCategories: [run.purpose],
         }, { extends: 'lighthouse:default', settings: run.profile.settings }), timeoutMs);
         if (!output) throw new Error('BROWSER_LIGHTHOUSE_RESULT_INVALID');
-        if (proxy.denied.size) throw new Error('BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED');
+        // The proxy denies every other origin, including Chrome's background
+        // services. Gate the audited page using its actual CDP network evidence;
+        // an unrelated browser service must not be reported as a page defect.
+        assertAuditedOrigin(output.artifacts.DevtoolsLog, target.origin);
         results.push({ route: run.route, purpose: run.purpose, profile: run.profile.name,
           durationMs: Date.now() - startedAt, report: output.lhr });
       }
-      const response = { schemaVersion: 'browser-lighthouse-result.v1', results };
+      const response = { schemaVersion: 'browser-lighthouse-result.v1', results,
+        blockedProxyOrigins: [...new Set([...proxy.denied].slice(0, 32).map(value => {
+          const url = new URL(value, target.origin); return url.origin === 'null' ? `${url.protocol}//${url.host}` : url.origin;
+        }))].sort() };
       if (Buffer.byteLength(JSON.stringify(response)) > this.#options.maximumResultBytes) {
         throw new Error('BROWSER_LIGHTHOUSE_RESULT_BYTES_EXCEEDED');
       }
@@ -214,6 +242,7 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
       signal.removeEventListener('abort', abort);
       try { chrome?.kill(); } catch { /* Best-effort final cleanup. */ }
       await proxy.close();
+      fs.rmSync(profileDirectory, { recursive: true, force: true });
     }
   }
 }

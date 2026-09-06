@@ -22,6 +22,7 @@ export interface StageRuntimeState {
   readonly attemptNumber: number;
   readonly attemptsUsed: number;
   readonly remediationCyclesUsed: number;
+  readonly continuationGuidance?: Readonly<Record<string, unknown>>;
   readonly facts?: Readonly<Record<string, string | number | boolean | null>>;
   readonly wait?: WaitRequest;
   readonly retryAt?: string;

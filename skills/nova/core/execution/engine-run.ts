@@ -5,6 +5,7 @@ import type { AdministrativeReopenDecision, LifecycleEvent, PipelineDefinition, 
 import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { recoverStageStates } from '../lifecycle/recovery.ts';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
+import { assertEffectRecoverySafe } from './effect-recovery.ts';
 import { FileJournal } from '../state/journal.ts';
 import type { PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
 import { PipelineRunner } from './runner.ts';
@@ -17,6 +18,7 @@ import { reconcileNovaObservabilityOnRecovery } from '../observability/reconcile
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
 
 export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted'>): Promise<PipelineRunResult> {
+  await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events);
   const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
   const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
   try { return await new PipelineRunner({ definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
@@ -81,7 +83,7 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
     const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
     const created = validateWaitHistory(events, runId, signal.waitId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
     recordSignal(runRoot, signal); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
-    const initialStates = resumeStates(recovered, waiting.stageId);
+    const initialStates = recoveryStates(definition, events, runId, platform.orchestratorIssuerId);
     return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates,
       resumeGuidance: new Map([[waiting.stageId, signal.payload]]), resume: true });
   });
@@ -111,8 +113,4 @@ function recordWaitResolution(events: FileJournal<LifecycleEvent | PluginDomainE
   if (exists) return; lease.throwIfAborted(); events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`,
     sequence, type: 'wait.resolved', identity: { runId, stageId: waiting.stageId, waitId: signal.waitId },
     occurredAt: new Date().toISOString(), causationId: signal.signalId, payload: { signal } }));
-}
-function resumeStates(recovered: ReadonlyMap<string, StageRuntimeState>, resumedStageId: string): Map<string, StageRuntimeState> {
-  const states = new Map(recovered); const state = states.get(resumedStageId)!; const { wait: _wait, ...withoutWait } = state;
-  states.set(resumedStageId, { ...withoutWait, status: 'pending' }); return states;
 }

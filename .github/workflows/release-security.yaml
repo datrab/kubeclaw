@@ -1,0 +1,43 @@
+name: Release security rescan
+on:
+  schedule:
+    - cron: '45 5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: read
+  issues: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: node scripts/versions.mjs --check
+      - name: Scan pinned inputs and selected release with current advisory data
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/updates/scan-releases.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-security-reports
+          path: dist/trivy
+          if-no-files-found: error
+      - name: Track a failed security rescan
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title='Release security rescan needs attention'
+          printf 'Daily verification failed. Inspect [the scan run](https://github.com/%s/actions/runs/%s) and its reports. This may be a vulnerability, a scanner failure, or a missing initial release selection. No failed scan counts as a pass.\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > "$RUNNER_TEMP/security-issue.md"
+          number="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Release security rescan needs attention") | .number' | head -1)"
+          if test -n "$number"; then
+            gh issue edit "$number" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/security-issue.md"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/security-issue.md"
+          fi

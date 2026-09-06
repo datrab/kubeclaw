@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "openclaw": {
+    "version": "2026.9.2",
+    "digest": "sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250"
+  },
+  "buildArgs": {
+    "ARCHVIEWER_BASE": "docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de",
+    "BUILDKIT_BASE": "moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c",
+    "BUSTER_NODE_BASE": "node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e",
+    "CONTROLLER_GO_BASE": "golang:1.22-bookworm@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253",
+    "CONTROLLER_RUNTIME_BASE": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+    "DEBIAN_SNAPSHOT": "20260901T000000Z",
+    "GOCYCLO_VERSION": "v0.6.0",
+    "GOVULNCHECK_VERSION": "v1.1.4",
+    "GO_SHA256_AMD64": "5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053",
+    "GO_SHA256_ARM64": "fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49",
+    "GO_VERSION": "1.26.5",
+    "HADOLINT_VERSION": "2.12.0",
+    "HELM_VERSION": "3.18.4",
+    "KUBECONFORM_VERSION": "0.6.4",
+    "KUBECTL_SHA256_AMD64": "5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926",
+    "KUBECTL_SHA256_ARM64": "c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b",
+    "KUBECTL_VERSION": "1.35.6",
+    "KUBERNETES_JSON_SCHEMA_COMMIT": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+    "MYPY_VERSION": "2.3.0",
+    "NODE_BASE": "node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d",
+    "OPS_MCP_NODE_BASE": "node:22.23.2-alpine3.24@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32",
+    "OPS_NODE_BASE": "node:22.23.2-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5",
+    "PIP_AUDIT_VERSION": "2.10.1",
+    "RUFF_VERSION": "0.15.22",
+    "SEMGREP_VERSION": "1.170.0",
+    "SHFMT_SHA256_AMD64": "fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1",
+    "SHFMT_SHA256_ARM64": "32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7",
+    "SHFMT_VERSION": "3.13.1",
+    "STATICCHECK_VERSION": "2026.1",
+    "TERRAFORM_SHA256_AMD64": "73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2",
+    "TERRAFORM_SHA256_ARM64": "7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d",
+    "TERRAFORM_VERSION": "1.15.7",
+    "TFLINT_SHA256_AMD64": "cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537",
+    "TFLINT_SHA256_ARM64": "560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb",
+    "TFLINT_VERSION": "0.64.0",
+    "TRIVY_SHA256_AMD64": "2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a",
+    "TRIVY_SHA256_ARM64": "b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5",
+    "TRIVY_VERSION": "0.74.0"
+  },
+  "imageOverrides": {
+    "buster-runtime": {
+      "DEBIAN_SNAPSHOT": "20260713T000000Z",
+      "SEMGREP_VERSION": "1.170.1"
+    },
+    "ops-pod": {
+      "KUBECTL_VERSION": "v1.34.1",
+      "HELM_VERSION": "v3.19.0"
+    }
+  },
+  "infrastructure": {
+    "envoy": "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66"
+  },
+  "automation": {
+    "renovate": "renovate/renovate:44.65.5@sha256:4e10f76a79f1c597f427f83c788a9f5b14a6295784c4cb68307b89b0a954abce",
+    "testRegistry": "registry:3@sha256:1be55279f18a2fe1a74edf2664cac61c1bea305b7b4642dab412e7affdcb3e33"
+  }
+}

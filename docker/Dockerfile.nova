@@ -1,0 +1,291 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+
+# =============================================================================
+# KubeClaw Nova — Root Environment for Nova, Forge, Echo
+# =============================================================================
+
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
+
+
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE}
+
+# Root is the declared Nova/Forge/Echo runtime mode.
+
+# hadolint ignore=DL3002
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Anchor Debian packages to the snapshot matching the pinned OpenClaw base.
+
+ARG DEBIAN_SNAPSHOT=20260901T000000Z
+
+RUN test -s /etc/ssl/certs/ca-certificates.crt \
+&& printf '%s\n' \
+'Types: deb' \
+"URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \
+'Suites: bookworm bookworm-updates' \
+'Components: main' \
+'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+'' \
+'Types: deb' \
+"URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \
+'Suites: bookworm-security' \
+'Components: main' \
+'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \
+> /etc/apt/sources.list.d/debian.sources \
+&& rm -f /etc/apt/sources.list \
+&& printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
+
+# System and static-analysis tools. Browser and container execution belong to Buster.
+# Package resolution is pinned by DEBIAN_SNAPSHOT rather than per-package
+# versions, keeping the complete dependency graph coherent.
+
+# hadolint ignore=DL3008
+RUN packages=( \
+sudo curl git openssh-client jq nano tree net-tools iputils-ping dnsutils ripgrep \
+build-essential python3 python3-pip python3-venv python-is-python3 \
+netcat-openbsd nmap shellcheck unzip yamllint \
+) \
+&& apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
+&& for package in "${packages[@]}"; do apt-cache show "${package}" >/dev/null; done \
+&& apt-get install -y --no-install-recommends "${packages[@]}" \
+&& rm -rf /var/lib/apt/lists/*
+
+
+# Locked JavaScript runtime and verification tools.
+
+COPY docker/nova-tools/package.json docker/nova-tools/package-lock.json /opt/kubeclaw-tools/
+
+RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
+&& /opt/kubeclaw-tools/node_modules/.bin/depcruise --version \
+&& /opt/kubeclaw-tools/node_modules/.bin/knip --version \
+&& /opt/kubeclaw-tools/node_modules/.bin/jscpd --version \
+&& mkdir -p /root/.npm
+
+ENV PATH=/opt/kubeclaw-tools/node_modules/.bin:${PATH} \
+NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
+NPM_CONFIG_CACHE=/root/.npm
+
+
+# Exact Python tool versions keep resolver output stable.
+
+ARG RUFF_VERSION=0.15.22
+ARG MYPY_VERSION=2.3.0
+ARG PIP_AUDIT_VERSION=2.10.1
+ARG SEMGREP_VERSION=1.170.0
+
+RUN pip install --break-system-packages --no-cache-dir \
+"ruff==${RUFF_VERSION}" \
+"mypy==${MYPY_VERSION}" \
+"pip-audit==${PIP_AUDIT_VERSION}" \
+&& python3 -m venv /opt/semgrep \
+&& /opt/semgrep/bin/pip install --no-cache-dir "semgrep==${SEMGREP_VERSION}" \
+&& ln -s /opt/semgrep/bin/semgrep /usr/local/bin/semgrep \
+&& ruff --version \
+&& mypy --version \
+&& pip-audit --version \
+&& semgrep --version
+
+# Pinned Go toolchain and Go-native analyzers.
+
+ARG TARGETARCH
+ARG GO_SHA256_AMD64=5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053
+ARG GO_SHA256_ARM64=fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49
+ARG SHFMT_SHA256_AMD64=fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1
+ARG SHFMT_SHA256_ARM64=32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7
+ARG TERRAFORM_SHA256_AMD64=73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2
+ARG TERRAFORM_SHA256_ARM64=7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d
+ARG TFLINT_SHA256_AMD64=cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537
+ARG TFLINT_SHA256_ARM64=560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb
+ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a
+ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5
+ARG GO_VERSION=1.26.5
+ARG STATICCHECK_VERSION=2026.1
+ARG GOVULNCHECK_VERSION=v1.1.4
+ARG GOCYCLO_VERSION=v0.6.0
+
+RUN set -eux; \
+arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
+case "$arch" in \
+amd64) go_sha="${GO_SHA256_AMD64}" ;; \
+arm64) go_sha="${GO_SHA256_ARM64}" ;; \
+*) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
+esac; \
+go_archive="go${GO_VERSION}.linux-${arch}.tar.gz"; \
+curl -fsSL "https://go.dev/dl/${go_archive}" -o "/tmp/${go_archive}"; \
+printf '%s  %s\n' "$go_sha" "/tmp/${go_archive}" | sha256sum -c -; \
+tar -C /usr/local -xzf "/tmp/${go_archive}"; \
+rm "/tmp/${go_archive}"
+
+ENV PATH=/usr/local/go/bin:${PATH}
+
+RUN --mount=type=cache,target=/tmp/kubeclaw-go-build \
+--mount=type=cache,target=/tmp/kubeclaw-go-mod \
+export GOCACHE=/tmp/kubeclaw-go-build GOMODCACHE=/tmp/kubeclaw-go-mod \
+&& GOBIN=/usr/local/bin go install "honnef.co/go/tools/cmd/staticcheck@${STATICCHECK_VERSION}" \
+&& GOBIN=/usr/local/bin go install "golang.org/x/vuln/cmd/govulncheck@${GOVULNCHECK_VERSION}" \
+&& GOBIN=/usr/local/bin go install "github.com/fzipp/gocyclo/cmd/gocyclo@${GOCYCLO_VERSION}" \
+&& go version \
+&& staticcheck -version \
+&& govulncheck -version \
+&& gocyclo -avg-short "$(go env GOROOT)/src/errors/errors.go" >/dev/null
+
+# Pinned, checksum-verified binary tools for amd64 and arm64.
+
+ARG HADOLINT_VERSION=2.12.0
+ARG KUBECONFORM_VERSION=0.6.4
+ARG KUBECTL_VERSION=1.35.6
+ARG KUBERNETES_JSON_SCHEMA_COMMIT=c8f4e61c63bc529749125ac566bccc6986e08d45
+ARG HELM_VERSION=3.18.4
+ARG SHFMT_VERSION=3.13.1
+ARG TERRAFORM_VERSION=1.15.7
+ARG TFLINT_VERSION=0.64.0
+ARG TRIVY_VERSION=0.74.0
+
+RUN set -eux; \
+arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
+case "$arch" in \
+amd64) hadolint_arch="x86_64"; shfmt_sha="${SHFMT_SHA256_AMD64}"; terraform_sha="${TERRAFORM_SHA256_AMD64}"; tflint_sha="${TFLINT_SHA256_AMD64}"; trivy_arch="64bit"; trivy_sha="${TRIVY_SHA256_AMD64}" ;; \
+arm64) hadolint_arch="arm64"; shfmt_sha="${SHFMT_SHA256_ARM64}"; terraform_sha="${TERRAFORM_SHA256_ARM64}"; tflint_sha="${TFLINT_SHA256_ARM64}"; trivy_arch="ARM64"; trivy_sha="${TRIVY_SHA256_ARM64}" ;; \
+*) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
+esac; \
+tmp="$(mktemp -d)"; \
+hadolint_file="hadolint-Linux-${hadolint_arch}"; \
+curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}" -o "$tmp/$hadolint_file"; \
+curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}.sha256" -o "$tmp/${hadolint_file}.sha256"; \
+hadolint_sha="$(awk '{ print $1 }' "$tmp/${hadolint_file}.sha256")"; \
+printf '%s  %s\n' "$hadolint_sha" "$tmp/$hadolint_file" | sha256sum -c -; \
+install -m 0755 "$tmp/$hadolint_file" /usr/local/bin/hadolint; \
+shfmt_file="shfmt_v${SHFMT_VERSION}_linux_${arch}"; \
+curl -fsSL "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/${shfmt_file}" -o "$tmp/$shfmt_file"; \
+printf '%s  %s\n' "$shfmt_sha" "$tmp/$shfmt_file" | sha256sum -c -; \
+install -m 0755 "$tmp/$shfmt_file" /usr/local/bin/shfmt; \
+terraform_archive="terraform_${TERRAFORM_VERSION}_linux_${arch}.zip"; \
+curl -fsSL "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${terraform_archive}" -o "$tmp/$terraform_archive"; \
+printf '%s  %s\n' "$terraform_sha" "$tmp/$terraform_archive" | sha256sum -c -; \
+unzip -q "$tmp/$terraform_archive" -d "$tmp/terraform"; \
+install -m 0755 "$tmp/terraform/terraform" /usr/local/bin/terraform; \
+tflint_archive="tflint_linux_${arch}.zip"; \
+curl -fsSL "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/${tflint_archive}" -o "$tmp/$tflint_archive"; \
+printf '%s  %s\n' "$tflint_sha" "$tmp/$tflint_archive" | sha256sum -c -; \
+unzip -q "$tmp/$tflint_archive" -d "$tmp/tflint"; \
+install -m 0755 "$tmp/tflint/tflint" /usr/local/bin/tflint; \
+trivy_archive="trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz"; \
+curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}" -o "$tmp/$trivy_archive"; \
+printf '%s  %s\n' "$trivy_sha" "$tmp/$trivy_archive" | sha256sum -c -; \
+tar -xzf "$tmp/$trivy_archive" -C /usr/local/bin trivy; \
+kubeconform_archive="kubeconform-linux-${arch}.tar.gz"; \
+curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/${kubeconform_archive}" -o "$tmp/$kubeconform_archive"; \
+curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/CHECKSUMS" -o "$tmp/kubeconform-checksums.txt"; \
+kubeconform_sha="$(awk -v file="$kubeconform_archive" '$2 == file { print $1 }' "$tmp/kubeconform-checksums.txt")"; \
+printf '%s  %s\n' "$kubeconform_sha" "$tmp/$kubeconform_archive" | sha256sum -c -; \
+tar -xzf "$tmp/$kubeconform_archive" -C /usr/local/bin kubeconform; \
+kubectl_file="kubectl-${arch}"; \
+curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o "$tmp/$kubectl_file"; \
+kubectl_sha="$(curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl.sha256")"; \
+printf '%s  %s\n' "$kubectl_sha" "$tmp/$kubectl_file" | sha256sum -c -; \
+install -m 0755 "$tmp/$kubectl_file" /usr/local/bin/kubectl; \
+helm_archive="helm-v${HELM_VERSION}-linux-${arch}.tar.gz"; \
+curl -fsSL "https://get.helm.sh/${helm_archive}" -o "$tmp/$helm_archive"; \
+helm_sha="$(curl -fsSL "https://get.helm.sh/${helm_archive}.sha256sum" | awk '{ print $1 }')"; \
+printf '%s  %s\n' "$helm_sha" "$tmp/$helm_archive" | sha256sum -c -; \
+tar -xzf "$tmp/$helm_archive" -C "$tmp"; \
+install -m 0755 "$tmp/linux-${arch}/helm" /usr/local/bin/helm; \
+rm -rf "$tmp"; \
+hadolint --version; \
+shfmt --version; \
+terraform version -json; \
+tflint --version; \
+trivy --version; \
+kubeconform -v; \
+kubectl version --client=true; \
+helm version --short
+
+# The experimental manifest-lint replacement must never fetch validation
+# schemas while a pipeline runs. The image contains one exact, strict schema
+# tree that matches KUBECTL_VERSION. The legacy authoritative adapter remains
+# unchanged until its parity proof and cutover.
+
+RUN set -eux; \
+schema_repo="$(mktemp -d)"; \
+git -C "$schema_repo" init; \
+git -C "$schema_repo" remote add origin https://github.com/yannh/kubernetes-json-schema.git; \
+git -C "$schema_repo" config core.sparseCheckout true; \
+printf '%s\n' "v${KUBECTL_VERSION}-standalone-strict/" > "$schema_repo/.git/info/sparse-checkout"; \
+git -C "$schema_repo" fetch --depth 1 --filter=blob:none origin "$KUBERNETES_JSON_SCHEMA_COMMIT"; \
+test "$(git -C "$schema_repo" rev-parse FETCH_HEAD)" = "$KUBERNETES_JSON_SCHEMA_COMMIT"; \
+git -C "$schema_repo" checkout --detach FETCH_HEAD; \
+install -d /opt/kubeclaw-kubernetes-schemas; \
+cp -a "$schema_repo/v${KUBECTL_VERSION}-standalone-strict" /opt/kubeclaw-kubernetes-schemas/; \
+test -s "/opt/kubeclaw-kubernetes-schemas/v${KUBECTL_VERSION}-standalone-strict/deployment-apps-v1.json"; \
+rm -rf "$schema_repo"
+
+# Agent skill code is delivered by the code-bundle overlay at deploy time.
+# Terraform validation uses only explicitly pre-provisioned provider packages.
+
+RUN mkdir -p /app/skills /opt/terraform-provider-mirror
+
+# The observer is self-contained and must not import from /app/skills.
+
+COPY tsconfig.base.json /tmp/tsconfig.base.json
+COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
+COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
+
+WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
+
+RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+&& rm -rf src/generated/agent-observability \
+&& mkdir -p src/generated/agent-observability \
+&& cp -R /tmp/contracts/agent-observability/v1/src/. src/generated/agent-observability/ \
+&& ./node_modules/.bin/tsc -p /tmp/contracts/agent-observability/v1/tsconfig.build.json \
+&& node scripts/build.mjs --tsc ./node_modules/.bin/tsc \
+&& (cd /app && node -e "const sdk=require('openclaw/plugin-sdk/diagnostic-runtime'); if(typeof sdk.onDiagnosticEvent!=='function') throw new Error('OpenClaw diagnostic SDK contract unavailable')") \
+&& mkdir -p /app/dist/extensions/kubeclaw-agent-observer \
+&& cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
+&& rm -rf /tmp/skills /tmp/contracts
+
+WORKDIR /app
+
+# Official plugins are pinned and baked into an OpenClaw home seed so startup
+# never requires a network install.
+
+ARG OPENCLAW_PLUGIN_VERSION=2026.9.2
+
+RUN set -eux; \
+mkdir -p /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache /opt/openclaw-plugin-home/packs; \
+HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install "npm:@openclaw/acpx@${OPENCLAW_PLUGIN_VERSION}" --force --accept-capabilities; \
+HOME=/tmp/openclaw-plugin-home NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache openclaw plugins install "npm:@openclaw/discord@${OPENCLAW_PLUGIN_VERSION}" --force --accept-capabilities; \
+acpx_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/acpx' -print -quit)"; \
+test -n "$acpx_root"; \
+discord_root="$(find /tmp/openclaw-plugin-home/.openclaw/npm/projects -type d -path '*/node_modules/@openclaw/discord' -print -quit)"; \
+test -n "$discord_root"; \
+project_root="${acpx_root%/node_modules/@openclaw/acpx}"; \
+case "${TARGETARCH:-amd64}" in \
+amd64) keep_codex=codex-acp-linux-x64; keep_claude=claude-agent-sdk-linux-x64; keep_esbuild=linux-x64 ;; \
+arm64) keep_codex=codex-acp-linux-arm64; keep_claude=claude-agent-sdk-linux-arm64; keep_esbuild=linux-arm64 ;; \
+*) exit 1 ;; \
+esac; \
+test ! -d "$project_root/node_modules/@zed-industries" || find "$project_root/node_modules/@zed-industries" -mindepth 1 -maxdepth 1 -type d -name 'codex-acp-*' ! -name "$keep_codex" -exec rm -rf -- {} +; \
+test ! -d "$project_root/node_modules/@anthropic-ai" || find "$project_root/node_modules/@anthropic-ai" -mindepth 1 -maxdepth 1 -type d -name 'claude-agent-sdk-*' ! -name "$keep_claude" -exec rm -rf -- {} +; \
+test ! -d "$project_root/node_modules/@esbuild" || find "$project_root/node_modules/@esbuild" -mindepth 1 -maxdepth 1 -type d ! -name "$keep_esbuild" -exec rm -rf -- {} +; \
+npm pack "$acpx_root" --pack-destination /opt/openclaw-plugin-home/packs >/dev/null; \
+npm pack "$discord_root" --pack-destination /opt/openclaw-plugin-home/packs >/dev/null; \
+cp -a /tmp/openclaw-plugin-npm-cache /opt/openclaw-plugin-home/npm-cache; \
+test "$(find /opt/openclaw-plugin-home/packs -maxdepth 1 -type f -name '*.tgz' | wc -l)" -eq 2; \
+rm -rf /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache
+
+WORKDIR /opt/openclaw-plugin-home
+
+RUN find packs npm-cache -type f -print0 \
+| sort -z \
+| xargs -0 sha256sum \
+| sha256sum \
+| awk '{print $1}' > /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version
+
+WORKDIR /app
+
+ENV HOME=/home/node
+
+LABEL org.opencontainers.image.title="KubeClaw Nova (Root Mode)"
+LABEL org.opencontainers.image.description="Root environment for Nova, Forge, and Echo with locked verification tools"

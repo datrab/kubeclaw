@@ -2,13 +2,24 @@ name: Build Runtime Images And Skill Bundles
 on:
   push:
     branches: [main]
-  # Nightly check for base image updates (OpenClaw releases)
-  schedule:
-    - cron: '0 3 * * *'  # 3am UTC daily
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
 jobs:
+  update-policy:
+    uses: ./.github/workflows/update-checks.yaml
+    permissions:
+      contents: read
+      actions: read
+  reliability:
+    uses: ./.github/workflows/pipeline-reliability.yaml
+    permissions:
+      contents: read
+  role-images:
+    uses: ./.github/workflows/role-images.yaml
+    if: github.event_name != 'schedule'
+    permissions:
+      contents: read
   detect-build-inputs:
     name: Detect Image Build Inputs
     runs-on: ubuntu-latest
@@ -27,6 +38,10 @@ jobs:
           filters: |
             image_inputs:
               - '.dockerignore'
+              - 'versions.json'
+              - 'scripts/versions.mjs'
+              - 'scripts/check-role-image.sh'
+              - 'scripts/prepare-image-build-runner.sh'
               - 'tsconfig.base.json'
               - 'package.json'
               - 'package-lock.json'
@@ -40,99 +55,12 @@ jobs:
               - 'skills/prism/**'
               - 'skills/worker/core/**'
               - 'contracts/pipeline-worker-core/v1/**'
-  check-base-image:
-    name: Check pinned OpenClaw base
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-      - name: Verify the pinned base is current
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          mapfile -t pinned_refs < <(
-            sed -n 's/^ARG OPENCLAW_BASE=//p' \
-              docker/Dockerfile.general \
-              docker/Dockerfile.buster-gateway \
-              | sort -u
-          )
-          if [[ ${#pinned_refs[@]} -ne 1 ]]; then
-            echo "OpenClaw Dockerfiles must share one pinned base reference" >&2
-            printf 'Found: %s\n' "${pinned_refs[@]}" >&2
-            exit 1
-          fi
-          pinned_ref="${pinned_refs[0]}"
-          pinned_image="${pinned_ref%@*}"
-          pinned_version="${pinned_image##*:}"
-          pinned_digest="${pinned_ref##*@}"
-          release_json="$(
-            curl --fail --silent --show-error --location \
-              --retry 3 --retry-all-errors \
-              --connect-timeout 10 --max-time 60 \
-              --header "Accept: application/vnd.github+json" \
-              --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-              --header "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/openclaw/openclaw/releases/latest
-          )"
-          latest_version="$(jq -r '.tag_name // empty' <<<"$release_json")"
-          latest_version="${latest_version#v}"
-          latest_ref="ghcr.io/openclaw/openclaw:${latest_version}"
-          if [[ ! "$pinned_digest" =~ ^sha256:[0-9a-f]{64}$ ]]; then
-            echo "Invalid pinned OpenClaw digest: $pinned_digest" >&2
-            exit 1
-          fi
-          if [[ ! "$latest_version" =~ ^[0-9]{4}\.[0-9]+\.[0-9]+(-[0-9]+)?$ ]]; then
-            echo "Could not resolve the latest stable OpenClaw release" >&2
-            exit 1
-          fi
-          inspect_error="$(mktemp)"
-          trap 'rm -f "$inspect_error"' EXIT
-          latest_digest=""
-          for attempt in 1 2 3; do
-            if inspect_output="$(
-              docker buildx imagetools inspect \
-                "$latest_ref" 2>"$inspect_error"
-            )"; then
-              latest_digest="$(
-                awk '$1 == "Digest:" { print $2; exit }' \
-                  <<<"$inspect_output"
-              )"
-              break
-            fi
-            if [[ "$attempt" -lt 3 ]]; then
-              sleep $((attempt * 5))
-            fi
-          done
-          if [[ ! "$latest_digest" =~ ^sha256:[0-9a-f]{64}$ ]]; then
-            echo "Could not resolve the OpenClaw ${latest_version} image" >&2
-            echo "digest after 3 attempts" >&2
-            cat "$inspect_error" >&2
-            exit 1
-          fi
-          {
-            echo "### OpenClaw base image"
-            echo ""
-            echo "- Pinned: \`$pinned_ref\`"
-            echo "- Latest stable release: \`$latest_ref@$latest_digest\`"
-          } >> "$GITHUB_STEP_SUMMARY"
-          if [[ "$latest_version" != "$pinned_version" ||
-                "$latest_digest" != "$pinned_digest" ]]; then
-            echo "Pinned OpenClaw base is out of date." >&2
-            echo "Update its version, digest, and Debian snapshot." >&2
-            exit 1
-          fi
   build:
     name: Build & Push
     runs-on: ubuntu-latest
-    needs: detect-build-inputs
+    needs: [detect-build-inputs, reliability, role-images, update-policy]
     if: |
-      always() &&
+      always() && needs.reliability.result == 'success' && needs.role-images.result == 'success' && needs.update-policy.result == 'success' &&
       (github.event_name == 'workflow_dispatch' ||
        (github.event_name == 'push' && needs.detect-build-inputs.outputs.image_inputs_changed == 'true'))
     permissions:
@@ -142,9 +70,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: general
-            dockerfile: docker/Dockerfile.general
-            image_suffix: kubeclaw-general
+          - name: nova
+            dockerfile: docker/Dockerfile.nova
+            image_suffix: kubeclaw-nova
+          - name: prism-agent
+            dockerfile: docker/Dockerfile.prism-agent
+            image_suffix: kubeclaw-prism-agent
           - name: buster-gateway
             dockerfile: docker/Dockerfile.buster-gateway
             image_suffix: kubeclaw-buster-gateway
@@ -172,6 +103,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Provision image build capacity
+        run: bash scripts/prepare-image-build-runner.sh
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
       - name: Login to GHCR
@@ -186,9 +119,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}
           tags: |
-            type=raw,value=latest
-            type=sha,prefix=
-            type=raw,value={{date 'YYYY.MM.DD'}}
+            type=sha,prefix=candidate-,format=long
       - name: Build & Push
         id: build
         uses: docker/build-push-action@v7
@@ -204,6 +135,28 @@ jobs:
             KUBECLAW_BUILD_REVISION=${{ github.sha }}
           provenance: mode=max
           sbom: true
+      - name: Verify the exact published role artifact
+        if: contains(fromJSON('["nova","prism-agent","buster-gateway"]'), matrix.name)
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}
+          ROLE: ${{ matrix.name }}
+        run: |
+          docker pull "$IMAGE"
+          version="$(node -p 'require("./versions.json").openclaw.version')"
+          docker run --rm --network none --user 0 --entrypoint bash -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" "$IMAGE" /check-role-image.sh "$ROLE" "$version"
+          docker run --rm --network none --entrypoint bash -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" "$IMAGE" /check-role-image.sh "$ROLE" "$version" runtime
+      - name: Record immutable build receipt
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}
+          IMAGE_NAME: ${{ matrix.name }}
+        run: |
+          mkdir -p dist/image-receipts
+          node -e 'require("fs").writeFileSync(`dist/image-receipts/${process.env.IMAGE_NAME}.json`, JSON.stringify({name:process.env.IMAGE_NAME,image:process.env.IMAGE,commit:process.env.GITHUB_SHA})+"\n")'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-receipt-${{ matrix.name }}
+          path: dist/image-receipts/*.json
+          if-no-files-found: error
       - name: Summary
         run: |
           echo "### ${{ matrix.name }} image pushed" >> $GITHUB_STEP_SUMMARY
@@ -216,9 +169,9 @@ jobs:
   bundle-skills:
     name: Package & Publish Skill Bundles
     runs-on: ubuntu-latest
-    needs: detect-build-inputs
+    needs: [detect-build-inputs, reliability, role-images, update-policy]
     if: |
-      always() &&
+      always() && needs.reliability.result == 'success' && needs.role-images.result == 'success' && needs.update-policy.result == 'success' &&
       (github.event_name == 'push' ||
        github.event_name == 'workflow_dispatch')
     permissions:
@@ -306,7 +259,7 @@ jobs:
       - name: Configure published Prism images
         run: |
           set -euo pipefail
-          tag="${GITHUB_SHA:0:7}"
+          tag="candidate-${GITHUB_SHA}"
           for kind in control studio worker ingestion; do
             upper="${kind^^}"
             echo "PRISM_${upper}_IMAGE_REPOSITORY=ghcr.io/${GITHUB_REPOSITORY_OWNER}/kubeclaw-prism-${kind}" >> "$GITHUB_ENV"
@@ -317,3 +270,12 @@ jobs:
           PRISM_E2E_USER: ${{ secrets.PRISM_E2E_USER }}
           PRISM_E2E_USE_LEASE: "true"
         run: bash scripts/deploy.sh prism-e2e
+  preserve-receipts:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    uses: ./.github/workflows/publish-image-receipts.yaml
+    with:
+      family: runtime
+    permissions:
+      contents: write
+      actions: read

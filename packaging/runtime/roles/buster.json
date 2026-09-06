@@ -42,8 +42,7 @@
     "kubeclaw.kubernetes-fixture",
     "kubeclaw.tailscale-exposure",
     "kubeclaw.http",
-    "kubeclaw.size-budget",
-    "kubeclaw.test-agent"
+    "kubeclaw.size-budget"
   ],
   "extensions": ["kubeclaw-agent-observer"],
   "externalCapabilities": [

@@ -3,7 +3,14 @@
   "generatedFrom": [
     ".github/workflows/build-images.yaml",
     ".github/workflows/build-ops-mcp.yaml",
-    ".github/workflows/docs-checks.yaml"
+    ".github/workflows/dependency-updates.yaml",
+    ".github/workflows/docs-checks.yaml",
+    ".github/workflows/pipeline-reliability.yaml",
+    ".github/workflows/promote-runtime.yaml",
+    ".github/workflows/publish-image-receipts.yaml",
+    ".github/workflows/release-security.yaml",
+    ".github/workflows/role-images.yaml",
+    ".github/workflows/update-checks.yaml"
   ],
   "workflows": [
     {
@@ -11,26 +18,32 @@
       "name": "Build Runtime Images And Skill Bundles",
       "triggers": [
         "push",
-        "schedule",
         "workflow_dispatch"
       ],
       "pathFilters": [],
-      "schedules": [
-        "0 3 * * *"
-      ],
+      "schedules": [],
       "jobs": [
+        "update-policy",
+        "reliability",
+        "role-images",
         "detect-build-inputs",
-        "check-base-image",
         "build",
         "bundle-skills",
-        "prism-live-acceptance"
+        "prism-live-acceptance",
+        "preserve-receipts"
       ],
       "commandAndActionRefs": [
         "bash scripts/deploy.sh prism-e2e",
+        "bash scripts/prepare-image-build-runner.sh",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
+        "uses: ./.github/workflows/pipeline-reliability.yaml",
+        "uses: ./.github/workflows/publish-image-receipts.yaml",
+        "uses: ./.github/workflows/role-images.yaml",
+        "uses: ./.github/workflows/update-checks.yaml",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
+        "uses: actions/upload-artifact@v4",
         "uses: azure/setup-helm@v4",
         "uses: azure/setup-kubectl@v4",
         "uses: docker/build-push-action@v7",
@@ -49,6 +62,8 @@
         "workflow_dispatch"
       ],
       "pathFilters": [
+        "versions.json",
+        "scripts/versions.mjs",
         "tools/ops-mcp/**",
         "ops/pod/**",
         "charts/ops-pod/**",
@@ -57,17 +72,42 @@
       ],
       "schedules": [],
       "jobs": [
-        "build"
+        "build",
+        "preserve-receipts"
       ],
       "commandAndActionRefs": [
         "bash ops/pod/test-image.sh \"$TEST_IMAGE",
+        "bash tools/ops-mcp/test-image.sh \"$TEST_IMAGE",
+        "node scripts/versions.mjs --check",
+        "uses: ./.github/workflows/publish-image-receipts.yaml",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v6",
+        "uses: actions/upload-artifact@v4",
         "uses: azure/setup-helm@v4.3.1",
         "uses: docker/build-push-action@v7",
         "uses: docker/login-action@v4",
         "uses: docker/metadata-action@v6",
         "uses: docker/setup-buildx-action@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/dependency-updates.yaml",
+      "name": "Dependency updates",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "pathFilters": [],
+      "schedules": [
+        "15 4 * * *"
+      ],
+      "jobs": [
+        "renovate"
+      ],
+      "commandAndActionRefs": [
+        "test -n \"$APP_ID\" && test -n \"$APP_KEY",
+        "uses: actions/checkout@v6",
+        "uses: actions/create-github-app-token@v2"
       ]
     },
     {
@@ -106,6 +146,164 @@
         "npm run docs:inventory && npm run docs:generate",
         "uses: actions/checkout@v4",
         "uses: actions/setup-node@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/pipeline-reliability.yaml",
+      "name": "Pipeline reliability",
+      "triggers": [
+        "pull_request",
+        "push",
+        "workflow_call"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "core-reliability",
+        "browser-reliability",
+        "security-reliability",
+        "prism-postgres-reliability"
+      ],
+      "commandAndActionRefs": [
+        "node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs",
+        "node node_modules/playwright/cli.js install --with-deps chromium",
+        "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "node tests/verification/contracts/check-prism-postgres-transactions.mts",
+        "node tests/verification/contracts/check-project-compiler.mts",
+        "npm ci --ignore-scripts",
+        "npm run plugin-system:sandbox:build",
+        "npm run typecheck:skills",
+        "npm run verify:reliability",
+        "npm run versions:check",
+        "npm test --prefix skills/buster/plugins/${{ matrix.provider }}",
+        "npm test --workspace @kubeclaw/plugin-security-providers",
+        "sudo apt-get update && sudo apt-get install -y shellcheck shfmt",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: azure/setup-helm@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/promote-runtime.yaml",
+      "name": "Promote image release",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "prepare"
+      ],
+      "commandAndActionRefs": [
+        "npm ci --ignore-scripts --no-audit --no-fund",
+        "uses: actions/checkout@v6",
+        "uses: actions/create-github-app-token@v2",
+        "uses: actions/setup-node@v5",
+        "uses: actions/upload-artifact@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/publish-image-receipts.yaml",
+      "name": "Preserve image release receipts",
+      "triggers": [
+        "workflow_call"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "preserve"
+      ],
+      "commandAndActionRefs": [
+        "uses: actions/checkout@v6",
+        "uses: actions/download-artifact@v4",
+        "uses: actions/setup-node@v5"
+      ]
+    },
+    {
+      "path": ".github/workflows/release-security.yaml",
+      "name": "Release security rescan",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "pathFilters": [],
+      "schedules": [
+        "45 5 * * *"
+      ],
+      "jobs": [
+        "scan"
+      ],
+      "commandAndActionRefs": [
+        "node scripts/updates/scan-releases.mjs",
+        "node scripts/versions.mjs --check",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: actions/upload-artifact@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/role-images.yaml",
+      "name": "Role image acceptance",
+      "triggers": [
+        "pull_request",
+        "workflow_dispatch",
+        "workflow_call"
+      ],
+      "pathFilters": [
+        "package.json",
+        "package-lock.json",
+        "skills/**",
+        "docker/**",
+        "versions.json",
+        ".dockerignore",
+        "tsconfig.base.json",
+        "scripts/versions.mjs",
+        "scripts/check-role-image.sh",
+        "scripts/prepare-image-build-runner.sh",
+        ".github/workflows/role-images.yaml",
+        "skills/common/plugins/openclaw-agent-observer/**",
+        "contracts/agent-observability/v1/**",
+        "skills/prism/openclaw-plugin/**",
+        "skills/prism/server/agent-bridge.mjs",
+        "charts/kubeclaw/**"
+      ],
+      "schedules": [],
+      "jobs": [
+        "image",
+        "buster-build",
+        "application-builds"
+      ],
+      "commandAndActionRefs": [
+        "bash scripts/prepare-image-build-runner.sh",
+        "node scripts/versions.mjs --check",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: docker/build-push-action@v7",
+        "uses: docker/setup-buildx-action@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/update-checks.yaml",
+      "name": "Update policy acceptance",
+      "triggers": [
+        "pull_request",
+        "workflow_call"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "policy",
+        "envoy",
+        "upstream-checksums"
+      ],
+      "commandAndActionRefs": [
+        "bash tests/verification/deployment/check-envoy-image.sh \"$(node -p 'require(\"./versions.json\").infrastructure.envoy')",
+        "node scripts/updates/check-upstream-refresh.mjs",
+        "node scripts/updates/verify-release-source.mjs",
+        "npm ci --ignore-scripts --no-audit --no-fund",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: azure/setup-helm@v4"
       ]
     }
   ]

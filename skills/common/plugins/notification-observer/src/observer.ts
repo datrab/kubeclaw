@@ -191,35 +191,3 @@ export async function observe(delivery: ObserverDelivery, context: PluginInvocat
 export async function deliverPreview(delivery: ObserverDelivery, context: PluginInvocationContext): Promise<void> {
   await publish(previewNotification(delivery), context);
 }
-
-export function auditRecord(delivery: ObserverDelivery): Readonly<Record<string, unknown>> {
-  return Object.freeze({
-    schemaVersion: 'pipeline-audit-event.v2',
-    deliveryId: delivery.deliveryId,
-    eventId: delivery.event.eventId,
-    sequence: delivery.event.sequence,
-    type: delivery.event.type,
-    identity: sanitize(delivery.event.identity),
-    occurredAt: delivery.event.occurredAt,
-    causationId: delivery.event.causationId,
-    payload: sanitize(delivery.event.payload),
-  });
-}
-
-export async function recordAudit(
-  delivery: ObserverDelivery,
-  context: PluginInvocationContext,
-): Promise<void> {
-  await context.invoke('artifacts.write', {
-    operation: 'put_json',
-    resource: {
-      type: 'artifact.object',
-      canonicalId: `pipeline-audit:${delivery.event.eventId}`,
-    },
-    payload: {
-      namespace: 'kubeclaw.pipeline-audit',
-      mediaType: 'application/json',
-      value: auditRecord(delivery),
-    },
-  });
-}

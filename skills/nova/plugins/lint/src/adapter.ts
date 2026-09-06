@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { withLintCandidate } from './candidate.ts';
 import path from 'node:path';
 
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
@@ -71,8 +72,12 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const payload = requestPayload(request.payload);
       const workingDirectory = requireInside(payload.workingDirectory, repositoryRoots, 'LINT_WORKING_DIRECTORY');
       const policyPath = requireInside(payload.policyPath, policyRoots, 'LINT_POLICY_PATH');
-      const report = await executeLintReport({ ...payload, workingDirectory, policyPath });
-      return { report };
+      const revision = request.payload.sourceRevision;
+      if (revision !== undefined && (typeof revision !== 'string' || !/^[a-f0-9]{40}$/u.test(revision))) throw new Error('LINT_SOURCE_REVISION_INVALID');
+      const run = (root: string) => executeLintReport({ ...payload, workingDirectory: root, policyPath });
+      const report = revision === undefined ? await run(workingDirectory)
+        : await withLintCandidate(workingDirectory, revision, run);
+      return { report, ...(revision === undefined ? {} : { sourceRevision: revision }) };
     },
     async shutdown() {},
   };

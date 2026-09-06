@@ -47,7 +47,7 @@ const packages = discoverPackages({
   },
 });
 const registry = buildRegistry(packages);
-assert.equal(registry.stages.size, 18);
+assert.equal(registry.stages.size, 17);
 assert.equal(registry.observers.size, 6);
 assert.equal(registry.adapters.size, 18);
 for (const [type, owner] of registry.stages) {
@@ -56,7 +56,7 @@ for (const [type, owner] of registry.stages) {
 }
 
 const entrypoint = fs.readFileSync(path.join(root, 'skills/nova/pipeline.ts'), 'utf8');
-assert.match(entrypoint, /\.\/core\/cli\.ts/u);
+assert.match(entrypoint, /\.\/project\/cli\.ts/u);
 assert.doesNotMatch(entrypoint, /pipeline\/cli\.ts|compatib/u);
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));

@@ -39,7 +39,7 @@ Phase 12 made v2 the sole runtime authority.
 ## Release Evidence
 
 - `tests/verification/contracts/check-plugin-system-v2-phase12.mts`
-- `tests/verification/e2e/run-real-pipeline-e2e.mts`
+- The original TypeScript smoke harness has been retired. The current system runner is `tests/verification/e2e/run-real-pipeline-e2e.mjs`.
 - `tests/verification/deployment/check-deployment-truth.mjs`
 
 The original Phase 12 smoke run used `openai/gpt-5.6-sol` and succeeded across architecture,

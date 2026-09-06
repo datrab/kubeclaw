@@ -1,0 +1,114 @@
+name: Role image acceptance
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'skills/**'
+      - 'docker/**'
+      - 'versions.json'
+      - '.dockerignore'
+      - 'tsconfig.base.json'
+      - 'scripts/versions.mjs'
+      - 'scripts/check-role-image.sh'
+      - 'scripts/prepare-image-build-runner.sh'
+      - '.github/workflows/role-images.yaml'
+      - 'skills/common/plugins/openclaw-agent-observer/**'
+      - 'contracts/agent-observability/v1/**'
+      - 'skills/prism/openclaw-plugin/**'
+      - 'skills/prism/server/agent-bridge.mjs'
+      - 'charts/kubeclaw/**'
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        role: [nova, prism-agent, buster-gateway]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: node scripts/versions.mjs --check
+      - name: Provision image build capacity
+        run: bash scripts/prepare-image-build-runner.sh
+      # Match the isolated BuildKit driver used by the publishing workflow.
+      - uses: docker/setup-buildx-action@v4
+      - name: Build actual role image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.${{ matrix.role }}
+          load: true
+          push: false
+          tags: kubeclaw-role:proof
+          cache-from: type=gha,scope=role-proof-${{ matrix.role }}
+          cache-to: type=gha,scope=role-proof-${{ matrix.role }},mode=min,ignore-error=true
+      - name: Verify installed runtime, offline plugins and role tools
+        env:
+          ROLE: ${{ matrix.role }}
+        run: |
+          version="$(node -p 'require("./versions.json").openclaw.version')"
+          docker run --rm --network none --user 0 --entrypoint bash \
+            -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" \
+            kubeclaw-role:proof /check-role-image.sh "$ROLE" "$version"
+          docker run --rm --network none --entrypoint bash \
+            -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" \
+            kubeclaw-role:proof /check-role-image.sh "$ROLE" "$version" runtime
+  buster-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - run: bash scripts/prepare-image-build-runner.sh
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.buster-runtime
+          load: true
+          tags: kubeclaw-buster:proof
+          cache-from: type=gha,scope=role-proof-buster-runtime
+          cache-to: type=gha,scope=role-proof-buster-runtime,mode=min,ignore-error=true
+      - name: Permit nested user namespaces in the disposable build proof container
+        run: |
+          sudo tee /etc/apparmor.d/kubeclaw-ci-build-proof >/dev/null <<'EOF'
+          abi <abi/4.0>,
+          include <tunables/global>
+          profile kubeclaw-ci-build-proof flags=(unconfined) {
+            userns,
+          }
+          EOF
+          sudo apparmor_parser -r /etc/apparmor.d/kubeclaw-ci-build-proof
+      - name: Run Buster's real build provider and browser
+        run: |
+          registry="$(node -p 'require("./versions.json").automation.testRegistry')"
+          docker run -d --name proof-registry -p 127.0.0.1:5000:5000 "$registry"
+          trap 'docker logs proof-registry; docker rm -f proof-registry' EXIT
+          # An isolated disposable CI container permits nested rootless namespaces.
+          # This is not a deployment security-context acceptance test.
+          docker run --rm --privileged --security-opt apparmor=kubeclaw-ci-build-proof --network host --entrypoint bash             -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro"             kubeclaw-buster:proof /proof.sh
+  application-builds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [archviewer, namespace-controller, prism-control, prism-studio, prism-worker, prism-ingestion]
+    steps:
+      - uses: actions/checkout@v6
+      - run: bash scripts/prepare-image-build-runner.sh
+      - uses: docker/setup-buildx-action@v4
+      - name: Build the actual application image, including its native build gates
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.${{ matrix.image }}
+          cache-from: type=gha,scope=proof-${{ matrix.image }}
+          cache-to: type=gha,scope=proof-${{ matrix.image }},mode=min,ignore-error=true

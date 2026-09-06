@@ -3,7 +3,7 @@
 agentRole: "prism"
 
 image:
-  repository: ghcr.io/datrab/kubeclaw-general
+  repository: ghcr.io/datrab/kubeclaw-prism-agent
   tag: "latest"
   pullPolicy: Always
 imagePullSecrets:
@@ -67,7 +67,7 @@ extraEnv:
 
 extraContainers:
   - name: prism-agent-bridge
-    image: ghcr.io/datrab/kubeclaw-general:latest
+    image: ghcr.io/datrab/kubeclaw-prism-agent:latest
     imagePullPolicy: Always
     command: [node, /opt/kubeclaw-prism/agent-bridge.mjs]
     env:

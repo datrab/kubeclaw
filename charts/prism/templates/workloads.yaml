@@ -97,7 +97,7 @@ spec:
           livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         - name: worker-trust-proxy
-          image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}"
+          image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}"
           imagePullPolicy: {{ $.Values.workerTrust.spiffe.envoy.pullPolicy }}
           args: ["-c", {{ printf "/etc/kubeclaw-worker-trust/%s.yaml" $name | quote }}, "--service-cluster", {{ printf "prism-%s" $name | quote }}]
           ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }]

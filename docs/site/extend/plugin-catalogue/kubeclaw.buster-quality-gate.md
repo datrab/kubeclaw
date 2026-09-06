@@ -32,7 +32,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.test.quality-evaluation`.
 
-Required capabilities: `test.plan.execute`, `runtime.dispatch`, `artifacts.write`
+Required capabilities: `test.plan.execute`, `runtime.dispatch`, `artifacts.write`, `artifacts.read`
 
 Provided capabilities: None.
 

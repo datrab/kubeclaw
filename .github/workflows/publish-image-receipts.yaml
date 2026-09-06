@@ -1,0 +1,35 @@
+name: Preserve image release receipts
+on:
+  workflow_call:
+    inputs:
+      family:
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: read
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: image-receipt-*
+          merge-multiple: true
+          path: receipt-input
+      - name: Preserve immutable source record beyond CI artifact retention
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FAMILY: ${{ inputs.family }}
+          SOURCE_RUN_ID: ${{ github.run_id }}
+          SOURCE_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          case "$FAMILY" in runtime|ops) ;; *) exit 1 ;; esac
+          node scripts/updates/release-images.mjs receipt-input "$GITHUB_SHA" "receipt-output/$FAMILY-images.json" "$FAMILY"
+          tag="$FAMILY-images-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          printf 'Immutable %s image receipts for source commit %s, workflow run %s attempt %s. Eligibility additionally requires that source attempt to finish successfully.\n' "$FAMILY" "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" > "$RUNNER_TEMP/receipt-notes.md"
+          gh release create "$tag" "receipt-output/$FAMILY-images.json" --target "$GITHUB_SHA" --title "$FAMILY image receipts $GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" --notes-file "$RUNNER_TEMP/receipt-notes.md" --latest=false

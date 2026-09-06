@@ -1,3 +1,4 @@
+import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 import crypto from 'node:crypto';
 import WebSocket from 'ws';
 import type { ResolvedInputV1 } from '@kubeclaw/pipeline-test-gate-contract';
@@ -6,8 +7,6 @@ import type { TestProviderCapabilityInvoker } from './runner.ts';
 const MAX_TIMER_MS = 2_147_483_647;
 const METHODS = new Set(['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT']);
 const DENIED_HEADERS = new Set(['connection', 'content-length', 'host', 'proxy-authorization', 'transfer-encoding', 'upgrade']);
-const SUFFIX_SAFE_METHODS = new Set(['GET', 'HEAD']);
-const SUFFIX_SAFE_HEADERS = new Set(['accept']);
 
 export interface NetworkHttpCapabilityInvokerOptions {
   readonly allowedOrigins: readonly string[];
@@ -42,22 +41,6 @@ function canonicalSuffix(value: string): string {
   return normalized;
 }
 
-function deploymentOrigins(inputs: readonly ResolvedInputV1[] | undefined): ReadonlySet<string> {
-  const origins = new Set<string>();
-  for (const input of inputs ?? []) {
-    if (input.kind !== 'value' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1'
-      || !input.value || typeof input.value !== 'object' || Array.isArray(input.value)) continue;
-    const deployment = input.value as Record<string, unknown>;
-    if (deployment.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(deployment.endpoints)
-      || deployment.endpoints.length > 64) continue;
-    for (const endpoint of deployment.endpoints) {
-      if (!endpoint || typeof endpoint !== 'object' || Array.isArray(endpoint)
-        || typeof (endpoint as Record<string, unknown>).url !== 'string') continue;
-      try { origins.add(canonicalOrigin(String((endpoint as Record<string, unknown>).url))); } catch { /* Invalid fixture data grants nothing. */ }
-    }
-  }
-  return origins;
-}
 
 function requestHeaders(value: unknown, allowed: ReadonlySet<string>, closeConnection = true): Record<string, string> {
   if (value === undefined) return {
@@ -204,7 +187,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
       && hostname.length > suffix.length);
     const configuredExactOrigin = this.#allowedOrigins.has(url.origin);
     if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);
-    const exactOrigin = configuredExactOrigin || deploymentOrigins(inputs).has(url.origin);
+    const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);
     return Object.freeze({ url, exactOrigin });
   }
 
@@ -215,6 +198,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
       throw new Error('HTTP_CAPABILITY_REQUEST_INVALID');
     }
     if (signal.aborted) throw new Error('HTTP_REQUEST_CANCELLED');
+    signal = fixtureAuthoritySignal(inputs ?? [], signal);
     const { url, exactOrigin } = this.#target(request.resource.canonicalId, inputs);
     const payload = exactPayload(request.payload);
     if (request.operation === 'websocket') {
@@ -230,7 +214,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     }
     const method = typeof payload.method === 'string' ? payload.method.toUpperCase() : 'GET';
     if (!METHODS.has(method) || !this.#allowedMethods.has(method)) throw new Error(`HTTP_REQUEST_METHOD_DENIED:${method}`);
-    if (!exactOrigin && !SUFFIX_SAFE_METHODS.has(method)) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}`);
+    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}:${url.origin}`);
     const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,
       'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);
     const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,
@@ -243,7 +227,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     try {
       const body = ['GET', 'HEAD'].includes(method) ? undefined
         : requestBody(payload.body, this.#maximumRequestBytes);
-      const permittedHeaders = exactOrigin ? this.#allowedRequestHeaders : SUFFIX_SAFE_HEADERS;
+      const permittedHeaders = this.#allowedRequestHeaders;
       response = await fetch(url, { method, headers: requestHeaders(payload.headers, permittedHeaders),
         ...(body === undefined ? {} : { body }), redirect: 'manual', signal: combined });
       if (response.status >= 300 && response.status < 400) throw new Error('HTTP_RESPONSE_REDIRECT_DENIED');
@@ -261,6 +245,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
       });
     } catch (error) {
       if (signal.aborted) throw new Error('HTTP_REQUEST_CANCELLED');
+    signal = fixtureAuthoritySignal(inputs ?? [], signal);
       if (timeout.aborted) throw new Error('HTTP_REQUEST_TIMEOUT');
       if (error instanceof Error && error.message.startsWith('HTTP_')) throw error;
       throw new Error(`HTTP_REQUEST_FAILED:${error instanceof Error ? error.name : 'unknown'}`);

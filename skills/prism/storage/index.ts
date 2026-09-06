@@ -114,9 +114,58 @@ export class ContentAddressedArtifactStore {
   }
 }
 
+type Database = Queryable & { connect?: () => Promise<Queryable & { release(): void }> };
+
+export async function inTransaction<T>(db: Database, execute: (connection: Queryable) => Promise<T>): Promise<T> {
+  const connection = db.connect ? await db.connect() : db;
+  try {
+    await connection.query("BEGIN");
+    try {
+      const result = await execute(connection);
+      await connection.query("COMMIT");
+      return result;
+    } catch (error) {
+      await connection.query("ROLLBACK");
+      throw error;
+    }
+  } finally {
+    if ("release" in connection && typeof connection.release === "function") connection.release();
+  }
+}
+
+async function insertDocument(connection: Queryable, projectId: string, key: string, document: PrismDocument, user: string, designRequestId?: string): Promise<string> {
+    const documentId = randomUUID();
+    const revisionId = randomUUID();
+    const content = JSON.stringify(document);
+    const contentDigest = digest(content);
+      await connection.query("SELECT id FROM prism.project WHERE id=$1 FOR SHARE",[projectId]);
+      if(designRequestId){const active=await connection.query("SELECT id FROM prism.design_request WHERE id=$1 AND project_id=$2 AND status='active'",[designRequestId,projectId]);if(!active.rows[0])throw new Error("active Prism design request changed before document creation");}
+      await connection.query(
+        "INSERT INTO prism.design_document(id,project_id,document_key,design_request_id) VALUES($1,$2,$3,$4)",
+        [documentId, projectId, key, designRequestId ?? null],
+      );
+      await connection.query(
+        "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7)",
+        [
+          revisionId,
+          documentId,
+          document.meta.revision,
+          document.meta.schema,
+          content,
+          contentDigest,
+          user,
+        ],
+      );
+      await connection.query(
+        "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2",
+        [revisionId, documentId],
+      );
+    return documentId;
+}
+
 export class RevisionRepository {
-  private readonly db: Queryable;
-  constructor(db: Queryable) {
+  private readonly db: Database;
+  constructor(db: Database) {
     this.db = db;
   }
   async createProject(externalId: string, name: string): Promise<string> {
@@ -134,40 +183,40 @@ export class RevisionRepository {
     user: string,
     designRequestId?: string,
   ): Promise<string> {
-    const documentId = randomUUID();
-    const revisionId = randomUUID();
-    const content = JSON.stringify(document);
-    const contentDigest = digest(content);
-    await this.db.query("BEGIN");
-    try {
-      await this.db.query("SELECT id FROM prism.project WHERE id=$1 FOR SHARE",[projectId]);
-      if(designRequestId){const active=await this.db.query("SELECT id FROM prism.design_request WHERE id=$1 AND project_id=$2 AND status='active'",[designRequestId,projectId]);if(!active.rows[0])throw new Error("active Prism design request changed before document creation");}
-      await this.db.query(
-        "INSERT INTO prism.design_document(id,project_id,document_key,design_request_id) VALUES($1,$2,$3,$4)",
-        [documentId, projectId, key, designRequestId ?? null],
-      );
-      await this.db.query(
-        "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7)",
-        [
-          revisionId,
-          documentId,
-          document.meta.revision,
-          document.meta.schema,
-          content,
-          contentDigest,
-          user,
-        ],
-      );
-      await this.db.query(
-        "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2",
-        [revisionId, documentId],
-      );
-      await this.db.query("COMMIT");
-    } catch (error) {
-      await this.db.query("ROLLBACK");
-      throw error;
-    }
-    return documentId;
+    return inTransaction(this.db, connection => insertDocument(connection, projectId, key, document, user, designRequestId));
+  }
+
+  async createDirectionSet(projectKey: string, designs: readonly { key: string; title: string; summary: string; document: PrismDocument; evidence?: Record<string, unknown> }[]) {
+    if (designs.length !== 3 || new Set(designs.map(item => item.key)).size !== 3
+      || designs.some(item => !item.key || !item.title || !item.summary || item.document.meta.projectId !== projectKey)) throw new Error("invalid Prism design set");
+    return inTransaction(this.db, async connection => {
+      const project = await connection.query<{ id: string }>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE", [projectKey]);
+      if (!project.rows[0]) throw new Error("active Prism project not found");
+      const projectId = project.rows[0].id;
+      const active = await connection.query<{ id: string }>("SELECT id FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1", [projectId]);
+      if (!active.rows[0]) throw new Error("active Prism design request not found");
+      const requestId = active.rows[0].id;
+      const existing = await connection.query<{ id: string; source_document_id: string; direction_key: string; content_digest: string }>("SELECT d.id,d.source_document_id,d.direction_key,d.content_digest FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id WHERE d.project_id=$1 AND doc.design_request_id=$2 ORDER BY d.direction_key", [projectId, requestId]);
+      if (existing.rows.length) {
+        if (existing.rows.length !== 3 || existing.rows.some(row => {
+          const design = designs.find(item => item.key === row.direction_key);
+          return !design || row.content_digest !== digest(JSON.stringify(design.document));
+        })) throw new Error("Prism design set conflicts with existing generation");
+        return { status: 'already-created', projectId, documentId: existing.rows[0]!.source_document_id,
+          directions: existing.rows.map(row => ({ directionId: row.id, documentId: row.source_document_id, key: row.direction_key })) };
+      }
+      const directions = [];
+      for (const item of designs) {
+        const documentId = await insertDocument(connection, projectId, `direction-${item.key}`, item.document, 'agent:prism', requestId);
+        const current = await new RevisionRepository(connection).current(documentId);
+        const directionId = randomUUID();
+        const content = JSON.stringify(item.document);
+        await connection.query("INSERT INTO prism.direction(id,project_id,source_document_id,source_revision_id,direction_key,title,summary,proposal,content_digest,state,evidence) VALUES($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,'proposed',$10::jsonb)",
+          [directionId, projectId, documentId, current.id, item.key, item.title, item.summary, content, digest(content), JSON.stringify(item.evidence ?? {})]);
+        directions.push({ directionId, documentId, key: item.key });
+      }
+      return { status: 'created', projectId, documentId: directions[0]!.documentId, directions };
+    });
   }
   async current(
     documentId: string,
@@ -256,13 +305,12 @@ export class RevisionRepository {
     operation: PrismOperation,
     user: string,
   ): Promise<PrismDocument> {
-    await this.db.query("BEGIN");
-    try {
-      const current = await this.current(documentId);
+    return inTransaction(this.db, async (connection) => {
+      const current = await new RevisionRepository(connection).current(documentId);
       const next = applyOperation(current.document, operation);
       const id = randomUUID();
       const content = JSON.stringify(next);
-      await this.db.query(
+      await connection.query(
         "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,parent_revision_id,operation,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7,$8::jsonb,$9)",
         [
           id,
@@ -276,17 +324,13 @@ export class RevisionRepository {
           user,
         ],
       );
-      const updated = await this.db.query(
+      const updated = await connection.query(
         "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2 AND current_revision_id=$3 RETURNING id",
         [id, documentId, current.id],
       );
       if (!updated.rows[0]) throw new Error("revision conflict");
-      await this.db.query("COMMIT");
       return next;
-    } catch (error) {
-      await this.db.query("ROLLBACK");
-      throw error;
-    }
+    });
   }
   async replace(
     documentId: string,
@@ -295,14 +339,13 @@ export class RevisionRepository {
     operation: Record<string, unknown>,
     user: string,
   ): Promise<PrismDocument> {
-    await this.db.query("BEGIN");
-    try {
-      const current = await this.current(documentId);
+    return inTransaction(this.db, async (connection) => {
+      const current = await new RevisionRepository(connection).current(documentId);
       if (current.id !== expectedRevisionId)
         throw new Error("revision conflict");
       const id = randomUUID();
       const content = JSON.stringify(document);
-      await this.db.query(
+      await connection.query(
         "INSERT INTO prism.design_revision(id,document_id,revision,schema_id,content,content_digest,parent_revision_id,operation,created_by) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7,$8::jsonb,$9)",
         [
           id,
@@ -316,16 +359,12 @@ export class RevisionRepository {
           user,
         ],
       );
-      const updated = await this.db.query(
+      const updated = await connection.query(
         "UPDATE prism.design_document SET current_revision_id=$1 WHERE id=$2 AND current_revision_id=$3 RETURNING id",
         [id, documentId, current.id],
       );
       if (!updated.rows[0]) throw new Error("revision conflict");
-      await this.db.query("COMMIT");
       return document;
-    } catch (error) {
-      await this.db.query("ROLLBACK");
-      throw error;
-    }
+    });
   }
 }

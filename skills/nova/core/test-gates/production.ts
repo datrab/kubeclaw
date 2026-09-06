@@ -10,7 +10,6 @@ import {
 } from './remote-dispatch.ts';
 import {
   FileNovaGateImportStore,
-  FileNovaTestExecutionGraphStore,
   NovaRemoteGateImporter,
   NovaRemoteTestGate,
 } from './remote-result-import.ts';
@@ -107,7 +106,6 @@ export function createProductionNovaTestGate(
     store: new FileNovaGateImportStore(path.join(options.stateRoot, 'imports'), {
       recordLimits: options.recordLimits,
       maximumEvidenceStoreBytes: options.maximumEvidenceStoreBytes,
-      graphStore: new FileNovaTestExecutionGraphStore(path.join(options.stateRoot, 'execution-graph'), options.recordLimits),
     }),
     evidence: transport,
     results: transport,

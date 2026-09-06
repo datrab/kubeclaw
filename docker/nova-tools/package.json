@@ -1,0 +1,20 @@
+{
+  "name": "kubeclaw-nova-tools",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@qdrant/js-client-rest": "1.18.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "dependency-cruiser": "18.1.0",
+    "eslint": "10.7.0",
+    "ioredis": "5.11.1",
+    "js-yaml": "5.2.2",
+    "jscpd": "5.0.12",
+    "knip": "6.27.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.64.0",
+    "uuid": "14.0.1",
+    "ws": "8.21.1"
+  }
+}

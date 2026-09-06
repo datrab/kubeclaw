@@ -2,15 +2,15 @@
   "schemaVersion": "plugin-system-inventory-v2",
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "summary": {
-    "packages": 47,
-    "packageRoots": 48,
-    "stages": 18,
-    "observers": 6,
+    "packages": 46,
+    "packageRoots": 47,
+    "stages": 17,
+    "observers": 5,
     "adapters": 18,
     "testProviders": 18,
     "reportAdapters": 1,
-    "registrations": 61,
-    "files": 802
+    "registrations": 59,
+    "files": 798
   },
   "runtime": {
     "roots": [
@@ -33,6 +33,7 @@
       "skills/buster/engine/test-gates/composite-capability-runtime.ts",
       "skills/buster/engine/test-gates/container-build-runtime.ts",
       "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "skills/buster/engine/test-gates/fixture-authority.ts",
       "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
       "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
       "skills/buster/engine/test-gates/network-http-runtime.ts",
@@ -89,6 +90,7 @@
       "skills/common/plugin-runtime/sdk/src/index.ts",
       "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
       "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "skills/common/plugin-runtime/sdk/src/source-revision.ts",
       "skills/common/plugin-runtime/sdk/src/testing/index.ts",
       "skills/common/plugin-runtime/sdk/src/values.ts",
       "skills/common/plugin-runtime/sdk/tsconfig.build.json",
@@ -111,6 +113,7 @@
       "skills/nova/core/execution/artifact-checkpoints.ts",
       "skills/nova/core/execution/authorization.ts",
       "skills/nova/core/execution/context.ts",
+      "skills/nova/core/execution/effect-recovery.ts",
       "skills/nova/core/execution/engine-admin.ts",
       "skills/nova/core/execution/engine-run.ts",
       "skills/nova/core/execution/engine-runtime.ts",
@@ -129,6 +132,7 @@
       "skills/nova/core/lifecycle/recovery-state.ts",
       "skills/nova/core/lifecycle/recovery.ts",
       "skills/nova/core/lifecycle/reducer.ts",
+      "skills/nova/core/lifecycle/remediation.ts",
       "skills/nova/core/observability/reconciler.ts",
       "skills/nova/core/package.json",
       "skills/nova/core/src/index.ts",
@@ -137,6 +141,7 @@
       "skills/nova/core/state/journal.ts",
       "skills/nova/core/state/plugins.ts",
       "skills/nova/core/telemetry/README.md",
+      "skills/nova/core/telemetry/audit.ts",
       "skills/nova/core/telemetry/observer-delivery.ts",
       "skills/nova/core/telemetry/observer-recovery.ts",
       "skills/nova/core/telemetry/observers.ts",
@@ -497,34 +502,6 @@
       ]
     },
     {
-      "id": "kubeclaw.test-agent",
-      "version": "1.0.0",
-      "kind": "pipeline-plugin",
-      "root": "skills/buster/plugins/test-agent",
-      "manifest": "skills/buster/plugins/test-agent/plugin.json",
-      "files": [
-        "skills/buster/plugins/test-agent/package.json",
-        "skills/buster/plugins/test-agent/plugin.json",
-        "skills/buster/plugins/test-agent/README.md",
-        "skills/buster/plugins/test-agent/schemas/config.schema.json",
-        "skills/buster/plugins/test-agent/schemas/input.schema.json",
-        "skills/buster/plugins/test-agent/schemas/result.schema.json",
-        "skills/buster/plugins/test-agent/src/protocol.ts",
-        "skills/buster/plugins/test-agent/src/stage.ts",
-        "skills/buster/plugins/test-agent/tests/live-function.test.ts",
-        "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
-        "skills/buster/plugins/test-agent/tests/protocol.test.ts",
-        "skills/buster/plugins/test-agent/tests/suite-first.test.ts",
-        "skills/buster/plugins/test-agent/tsconfig.json"
-      ],
-      "registrations": [
-        {
-          "kind": "stage",
-          "id": "test"
-        }
-      ]
-    },
-    {
       "id": "kubeclaw.visual",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -699,10 +676,6 @@
         {
           "kind": "observer",
           "id": "preview-delivery"
-        },
-        {
-          "kind": "observer",
-          "id": "audit"
         }
       ]
     },
@@ -1176,6 +1149,7 @@
         "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
         "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
         "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
         "skills/nova/plugins/implementation-agent/src/stage.ts",
         "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
         "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
@@ -1204,6 +1178,7 @@
         "skills/nova/plugins/lint/schemas/input.schema.json",
         "skills/nova/plugins/lint/schemas/result.schema.json",
         "skills/nova/plugins/lint/src/adapter.ts",
+        "skills/nova/plugins/lint/src/candidate.ts",
         "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
         "skills/nova/plugins/lint/src/engine/constants.ts",
         "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
@@ -1324,8 +1299,11 @@
         "skills/nova/plugins/prism-design/schemas/config.schema.json",
         "skills/nova/plugins/prism-design/schemas/input.schema.json",
         "skills/nova/plugins/prism-design/schemas/result.schema.json",
+        "skills/nova/plugins/prism-design/src/archive.ts",
         "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/plugins/prism-design/tests/archive.test.ts",
         "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+        "skills/nova/plugins/prism-design/tests/wait.test.ts",
         "skills/nova/plugins/prism-design/tsconfig.json"
       ],
       "registrations": [
@@ -1352,7 +1330,6 @@
         "skills/nova/plugins/project-summary/src/summary.ts",
         "skills/nova/plugins/project-summary/tests/live-function.test.ts",
         "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/project-summary/tests/parity.test.ts",
         "skills/nova/plugins/project-summary/tests/summary.test.mjs",
         "skills/nova/plugins/project-summary/tsconfig.json"
       ],
@@ -1707,12 +1684,6 @@
       "registrationId": "kubeclaw.tailscale-exposure:exposure"
     },
     {
-      "kind": "stage",
-      "id": "test",
-      "packageId": "kubeclaw.test-agent",
-      "registrationId": "kubeclaw.test-agent:test"
-    },
-    {
       "kind": "test-provider",
       "id": "visual",
       "packageId": "kubeclaw.visual",
@@ -1765,12 +1736,6 @@
       "id": "preview-delivery",
       "packageId": "kubeclaw.notification-observer",
       "registrationId": "kubeclaw.notification-observer:preview-delivery"
-    },
-    {
-      "kind": "observer",
-      "id": "audit",
-      "packageId": "kubeclaw.notification-observer",
-      "registrationId": "kubeclaw.notification-observer:audit"
     },
     {
       "kind": "adapter",
@@ -1979,6 +1944,7 @@
     "skills/buster/engine/test-gates/composite-capability-runtime.ts",
     "skills/buster/engine/test-gates/container-build-runtime.ts",
     "skills/buster/engine/test-gates/direct-command-runtime.ts",
+    "skills/buster/engine/test-gates/fixture-authority.ts",
     "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
     "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
     "skills/buster/engine/test-gates/network-http-runtime.ts",
@@ -2104,19 +2070,6 @@
     "skills/buster/plugins/tailscale-exposure/src/provider.js",
     "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
     "skills/buster/plugins/tailscale-exposure/tsconfig.json",
-    "skills/buster/plugins/test-agent/README.md",
-    "skills/buster/plugins/test-agent/package.json",
-    "skills/buster/plugins/test-agent/plugin.json",
-    "skills/buster/plugins/test-agent/schemas/config.schema.json",
-    "skills/buster/plugins/test-agent/schemas/input.schema.json",
-    "skills/buster/plugins/test-agent/schemas/result.schema.json",
-    "skills/buster/plugins/test-agent/src/protocol.ts",
-    "skills/buster/plugins/test-agent/src/stage.ts",
-    "skills/buster/plugins/test-agent/tests/live-function.test.ts",
-    "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
-    "skills/buster/plugins/test-agent/tests/protocol.test.ts",
-    "skills/buster/plugins/test-agent/tests/suite-first.test.ts",
-    "skills/buster/plugins/test-agent/tsconfig.json",
     "skills/buster/plugins/visual/README.md",
     "skills/buster/plugins/visual/package.json",
     "skills/buster/plugins/visual/plugin.json",
@@ -2165,6 +2118,7 @@
     "skills/common/plugin-runtime/sdk/src/index.ts",
     "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
     "skills/common/plugin-runtime/sdk/src/runtime.ts",
+    "skills/common/plugin-runtime/sdk/src/source-revision.ts",
     "skills/common/plugin-runtime/sdk/src/testing/index.ts",
     "skills/common/plugin-runtime/sdk/src/values.ts",
     "skills/common/plugin-runtime/sdk/tsconfig.build.json",
@@ -2364,6 +2318,7 @@
     "skills/nova/core/execution/artifact-checkpoints.ts",
     "skills/nova/core/execution/authorization.ts",
     "skills/nova/core/execution/context.ts",
+    "skills/nova/core/execution/effect-recovery.ts",
     "skills/nova/core/execution/engine-admin.ts",
     "skills/nova/core/execution/engine-run.ts",
     "skills/nova/core/execution/engine-runtime.ts",
@@ -2382,6 +2337,7 @@
     "skills/nova/core/lifecycle/recovery-state.ts",
     "skills/nova/core/lifecycle/recovery.ts",
     "skills/nova/core/lifecycle/reducer.ts",
+    "skills/nova/core/lifecycle/remediation.ts",
     "skills/nova/core/observability/reconciler.ts",
     "skills/nova/core/package.json",
     "skills/nova/core/src/index.ts",
@@ -2390,6 +2346,7 @@
     "skills/nova/core/state/journal.ts",
     "skills/nova/core/state/plugins.ts",
     "skills/nova/core/telemetry/README.md",
+    "skills/nova/core/telemetry/audit.ts",
     "skills/nova/core/telemetry/observer-delivery.ts",
     "skills/nova/core/telemetry/observer-recovery.ts",
     "skills/nova/core/telemetry/observers.ts",
@@ -2485,6 +2442,7 @@
     "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
     "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
     "skills/nova/plugins/implementation-agent/src/protocol.ts",
+    "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
     "skills/nova/plugins/implementation-agent/src/stage.ts",
     "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
     "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
@@ -2498,6 +2456,7 @@
     "skills/nova/plugins/lint/schemas/input.schema.json",
     "skills/nova/plugins/lint/schemas/result.schema.json",
     "skills/nova/plugins/lint/src/adapter.ts",
+    "skills/nova/plugins/lint/src/candidate.ts",
     "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
     "skills/nova/plugins/lint/src/engine/constants.ts",
     "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
@@ -2565,8 +2524,11 @@
     "skills/nova/plugins/prism-design/schemas/config.schema.json",
     "skills/nova/plugins/prism-design/schemas/input.schema.json",
     "skills/nova/plugins/prism-design/schemas/result.schema.json",
+    "skills/nova/plugins/prism-design/src/archive.ts",
     "skills/nova/plugins/prism-design/src/stage.ts",
+    "skills/nova/plugins/prism-design/tests/archive.test.ts",
     "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+    "skills/nova/plugins/prism-design/tests/wait.test.ts",
     "skills/nova/plugins/prism-design/tsconfig.json",
     "skills/nova/plugins/project-summary/README.md",
     "skills/nova/plugins/project-summary/package.json",
@@ -2578,7 +2540,6 @@
     "skills/nova/plugins/project-summary/src/summary.ts",
     "skills/nova/plugins/project-summary/tests/live-function.test.ts",
     "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
-    "skills/nova/plugins/project-summary/tests/parity.test.ts",
     "skills/nova/plugins/project-summary/tests/summary.test.mjs",
     "skills/nova/plugins/project-summary/tsconfig.json",
     "skills/nova/plugins/remote-test-gate/README.md",
