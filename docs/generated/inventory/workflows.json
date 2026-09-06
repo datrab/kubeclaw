@@ -117,9 +117,11 @@
       "pathFilters": [],
       "schedules": [],
       "jobs": [
-        "core-reliability"
+        "core-reliability",
+        "browser-reliability"
       ],
       "commandAndActionRefs": [
+        "node node_modules/playwright/cli.js install --with-deps chromium",
         "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
         "node tests/verification/contracts/check-project-compiler.mts",
         "npm ci --ignore-scripts",

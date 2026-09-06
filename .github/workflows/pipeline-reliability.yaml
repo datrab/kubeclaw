@@ -49,3 +49,26 @@ jobs:
           bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
           node tests/verification/contracts/check-project-compiler.mts "dist/nova-${GITHUB_SHA}.tgz"
+
+  browser-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /tmp/kubeclaw-playwright-browsers
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install browsers matching the locked Playwright package
+        run: node node_modules/playwright/cli.js install --with-deps chromium
+      - name: Build isolation launcher
+        run: npm run plugin-system:sandbox:build
+      - name: Run real browser provider assertions and negative controls
+        run: |
+          npm test --prefix skills/buster/plugins/axe
+          npm test --prefix skills/buster/plugins/lighthouse
+          npm test --prefix skills/buster/plugins/visual
+          npm test --prefix skills/buster/plugins/playwright

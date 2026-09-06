@@ -1,3 +1,4 @@
+import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -30,7 +31,7 @@ const server = http.createServer((request, response) => {
 await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
 const address = server.address(); if (!address || typeof address === 'string') throw new Error('LIGHTHOUSE_TEST_BIND_FAILED');
 const origin = `http://127.0.0.1:${address.port}`;
-const chromeExecutable = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
+const chromeExecutable = chromium.executablePath();
 assert.equal(fs.existsSync(chromeExecutable), true, 'real Chromium is required');
 const capability = new BrowserLighthouseCapabilityInvoker({ allowedOrigins: [origin], chromeExecutable,
   maximumRuns: 16, maximumExecutionMs: 180000, maximumResultBytes: 64 * 1024 * 1024 });

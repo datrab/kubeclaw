@@ -252,7 +252,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   },
   browserLighthouse: {
     allowedOrigins: exactBrowserOrigins,
-    chromeExecutable: '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell',
+    chromeExecutable: require('/app/node_modules/playwright').chromium.executablePath(),
     maximumRuns: 80,
     maximumExecutionMs: 180000,
     maximumResultBytes: 67108864,

@@ -1,3 +1,4 @@
+import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -28,7 +29,7 @@ const server = http.createServer((request, response) => {
 await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
 const address = server.address(); if (!address || typeof address === 'string') throw new Error('VISUAL_TEST_BIND_FAILED');
 const origin = `http://127.0.0.1:${address.port}`;
-const executable = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
+const executable = chromium.executablePath();
 assert.equal(fs.existsSync(executable), true, 'real Chromium is required');
 const profile = { name: 'desktop', browser: 'chromium', viewport: { width: 640, height: 480 }, colorScheme: 'light',
   reducedMotion: 'reduce', locale: 'en-US', timezoneId: 'UTC', deviceScaleFactor: 1 };

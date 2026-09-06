@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url';
 import { BrowserPlaywrightCapabilityInvoker } from '@kubeclaw/buster-engine';
 import { provider } from '../src/provider.js';
 
+const browsersPath = process.env.PLAYWRIGHT_BROWSERS_PATH;
+if (!browsersPath || !path.isAbsolute(browsersPath)) throw new Error('PLAYWRIGHT_TEST_BROWSER_PATH_REQUIRED');
 const sourceRoot = path.resolve(import.meta.dirname, '../../../../..');
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'playwright-provider-'));
 const repository = path.join(root, 'repository');
@@ -24,8 +26,8 @@ const deniedOrigin = `http://127.0.0.1:${deniedAddress.port}`;
 const capability = new BrowserPlaywrightCapabilityInvoker({ workspaceRoot: root, allowedOrigins: [origin], playwrightExecutable: executable,
   allowedTargetPorts: [address.port],
   sandboxExecutable: fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')),
-  readOnlyRoots: ['/app', '/ms-playwright', '/usr', '/lib', '/lib64', '/etc/fonts', '/etc/hosts', '/etc/nsswitch.conf', '/etc/resolv.conf', '/etc/ssl', '/proc', '/sys', '/dev'],
-  runtimeNodeModules: path.join(sourceRoot, 'node_modules'), browsersPath: '/ms-playwright', maximumWorkers: 1, maximumExecutionMs: 120000,
+  readOnlyRoots: [sourceRoot, browsersPath, '/usr', '/lib', '/lib64', '/etc/fonts', '/etc/hosts', '/etc/nsswitch.conf', '/etc/resolv.conf', '/etc/ssl', '/proc', '/sys', '/dev'],
+  runtimeNodeModules: path.join(sourceRoot, 'node_modules'), browsersPath, maximumWorkers: 1, maximumExecutionMs: 120000,
   maximumOutputBytes: 4 * 1024 * 1024, maximumResultBytes: 64 * 1024 * 1024, maximumArtifactBytes: 64 * 1024 * 1024,
   maximumArtifactFiles: 32, maximumProcesses: 64, maximumMemoryBytes: 4 * 1024 * 1024 * 1024,
   maximumCpuMillis: 120000, terminationGraceMs: 5000, allowSampledResourceLimits: true });
@@ -47,7 +49,7 @@ try {
   assert.equal(passed.providerDetails.values.resourceEnforcement, 'sampled');
   assert.equal(passed.providerDetails.values.browserProjects.includes('real-chromium'), true); assert.equal(passed.evidenceFiles.some((item: any) => item.type === 'test-report'), true);
   fs.writeFileSync(path.join(repository, 'specs/cross-origin.spec.ts'), `import { test, expect } from '@playwright/test';\ntest('exact origin proxy',async({page})=>{const response=await page.goto(${JSON.stringify(deniedOrigin)});expect(response?.status()).toBe(403);});\n`);
-  fs.writeFileSync(path.join(repository, 'cross-origin.config.ts'), `import { defineConfig } from '@playwright/test';\nexport default defineConfig({testMatch:/cross-origin\\.spec\\.ts/,projects:[{name:'real-chromium',use:{browserName:'chromium',headless:true,launchOptions:{executablePath:'/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell'}}}]});\n`);
+  fs.writeFileSync(path.join(repository, 'cross-origin.config.ts'), `import { defineConfig } from '@playwright/test';\nexport default defineConfig({testMatch:/cross-origin\\.spec\\.ts/,projects:[{name:'real-chromium',use:{browserName:'chromium',headless:true}}]});\n`);
   const deniedResult: any = await capability.invoke('browser.playwright', { operation: 'run', resource: { type: 'network.url', canonicalId: origin }, payload: { repository: 'repository', projectDirectory: '.', configFile: 'cross-origin.config.ts', workers: 1, timeoutMs: 60000, limits: { maximumProcesses: 64, maximumMemoryBytes: 4 * 1024 * 1024 * 1024, maximumCpuMillis: 120000, maximumOutputBytes: 4 * 1024 * 1024, maximumResultBytes: 64 * 1024 * 1024, maximumArtifactBytes: 64 * 1024 * 1024, maximumArtifactFiles: 32 } } }, signal);
   assert.equal(deniedResult.exitCode, 0); assert.equal(deniedOriginHits, 0);
   fs.rmSync(path.join(repository, 'specs/cross-origin.spec.ts')); fs.rmSync(path.join(repository, 'cross-origin.config.ts'));
@@ -55,7 +57,7 @@ try {
   const failed = await provider().execute(invocation, context); assert.equal(failed.outcome, 'failed'); assert.deepEqual(failed.counts, { total: 3, passed: 1, failed: 1, skipped: 1 }); assert.equal(failed.findings.length, 1);
   const failedCase = failed.providerDetails.values.testCases.find((item: any) => item.status === 'failed');
   assert.ok(failedCase); assert.equal(failedCase.attempts, 2);
-  fs.writeFileSync(path.join(repository, 'empty.config.ts'), `import { defineConfig } from '@playwright/test';\nexport default defineConfig({ testMatch: /never-match\\.spec\\.ts/, projects: [{ name: 'real-chromium', use: { browserName: 'chromium', headless: true, launchOptions: { executablePath: '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell' } } }] });\n`);
+  fs.writeFileSync(path.join(repository, 'empty.config.ts'), `import { defineConfig } from '@playwright/test';\nexport default defineConfig({ testMatch: /never-match\\.spec\\.ts/, projects: [{ name: 'real-chromium', use: { browserName: 'chromium', headless: true } }] });\n`);
   await assert.rejects(() => provider().execute({ ...invocation, configuration: { values: { ...invocation.configuration.values, configFile: 'empty.config.ts' } } }, context), /PLAYWRIGHT_ZERO_TESTS/u);
   const processLimited = { ...invocation, limits: { ...invocation.limits, processes: 1 } };
   await assert.rejects(() => provider().execute(processLimited, context), /BROWSER_PLAYWRIGHT_PROCESS_LIMIT_EXCEEDED/u);

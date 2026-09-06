@@ -1,3 +1,4 @@
+import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -47,7 +48,7 @@ const server = http.createServer((request, response) => {
 await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
 const address = server.address(); if (!address || typeof address === 'string') throw new Error('AXE_TEST_BIND_FAILED');
 const origin = `http://127.0.0.1:${address.port}`;
-const localBrowser = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
+const localBrowser = chromium.executablePath();
 const capability = new BrowserAxeCapabilityInvoker({ allowedOrigins: [origin], allowedBrowsers: ['chromium'],
   ...(fs.existsSync(localBrowser) ? { browserExecutables: { chromium: localBrowser } } : {}), maximumCombinations: 8,
   maximumConcurrency: 2, maximumExecutionMs: 30_000, maximumResultBytes: 8 * 1024 * 1024,

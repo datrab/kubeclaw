@@ -9,6 +9,5 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
   },
-  projects: [{ name: 'real-chromium', use: { browserName: 'chromium', headless: true,
-    launchOptions: { executablePath: '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell' } } }],
+  projects: [{ name: 'real-chromium', use: { browserName: 'chromium', headless: true } }],
 });

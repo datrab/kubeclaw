@@ -92,3 +92,7 @@ Full legacy scaffold/E2E migration and actual two-module agent execution remain 
 New runs use `run-snapshot.json`. Existing two-file snapshots are not silently upgraded using today's configuration: that would invent historical authority. Keep the old runtime version available for draining/recovering those runs until an explicit migration with verified historical configuration is provided. Do not roll out the snapshot/storage changes without that drain/migration and restore proof.
 
 A green first-milestone suite closes only its stated regression boundaries. The holistic review remains open until the remaining code and live acceptance evidence exist.
+
+## Browser prerequisites and runtime selection
+
+Buster's Lighthouse runtime configuration and browser provider tests contained a pinned Chromium 1228 path while the lockfile selected a later Playwright browser build. The runtime now obtains Chromium's executable from the installed Playwright package; Playwright fixtures use its normal browser selection. The isolated Playwright test takes an explicit browser installation root and the actual checkout path instead of assuming `/app` exists. A separate mandatory CI job installs matching Chromium and executes the four real browser-provider package suites, including their existing negative controls. These changes require that job's evidence; local browser assets remain unavailable.
