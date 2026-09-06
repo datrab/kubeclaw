@@ -5,6 +5,7 @@ on:
       - 'docker/**'
       - 'versions.json'
       - '.dockerignore'
+      - 'tsconfig.base.json'
       - 'scripts/versions.mjs'
       - 'scripts/check-role-image.sh'
       - '.github/workflows/role-images.yaml'

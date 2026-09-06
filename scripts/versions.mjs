@@ -69,6 +69,8 @@ export function versionOutputs(root) {
     `"openclawVersion": "${manifest.openclaw.version}"`);
   replaceOne('.github/workflows/build-ops-mcp.yaml', /^          version: v\d+\.\d+\.\d+$/m,
     `          version: ${manifest.imageOverrides['ops-pod'].HELM_VERSION}`);
+  replaceOne('.github/workflows/pipeline-reliability.yaml', /^          version: v\d+\.\d+\.\d+$/m,
+    `          version: v${args.HELM_VERSION}`);
   for (const [shellKey, key] of [['TRIVY_VERSION', 'TRIVY_VERSION'], ['TRIVY_AMD64_SHA256', 'TRIVY_SHA256_AMD64'], ['TRIVY_ARM64_SHA256', 'TRIVY_SHA256_ARM64']])
     replaceOne('scripts/scan-runtime-images.sh', new RegExp(`^readonly ${shellKey}="[^"]+"$`, 'm'), `readonly ${shellKey}="${args[key]}"`);
   return outputs;

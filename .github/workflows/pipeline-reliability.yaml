@@ -46,6 +46,8 @@ jobs:
           npm test --prefix skills/nova/plugins/delivery-lint
           npm test --workspace @kubeclaw/plugin-review
       - uses: azure/setup-helm@v4
+        with:
+          version: v3.18.4
       - name: Validate Buster persistent storage manifests
         run: |
           node tests/verification/deployment/check-role-chart.mjs
