@@ -129,3 +129,15 @@ verbindliche Wrapper-, Logstore-, Termination- und Restart-Verträge fehlen.
   langsamen Abschlussphasen ausführen, einmal direkt und einmal über Runtime;
   beide müssen späten Erfolg verweigern. Zusätzlich Nachweis, dass auslaufende
   Hooks keine unkontrollierten Nebenwirkungen nach dem Result fortsetzen.
+
+
+Nachprüfung nach Schema Revision4: attempt-executor.ts:280 decodiert jeden
+Byte-Logaufruf separat mit Buffer.toString('utf8'). Providerloader.ts:173 reicht
+reale stderr-Buffer weiter; :263 decodiert base64-RPC-Logchunks zu Buffern. Damit
+ist [PCR-ISOLATION-003](foundation.isolation.md) auch für erhaltene Workerlogs
+relevant: UTF-8 kann an Chunksplit verloren gehen. Zentraler Befund bleibt dort;
+Worker-Verifikation zusätzlich mit Originalexecutor und zwei Byte-Logs innerhalb
+eines Mehrbytezeichens, gespeicherter Log muss exakte ursprüngliche Zeichen zeigen.
+Dieser Worker-spezifische Repro wurde nicht ausgeführt (Codepfad geprüft).
+Executor startet selbst keinen Prozess; Supervisorbeendigung ist Verantwortung
+der jeweiligen Operationterminate-Implementierung und bei buster.engine zu prüfen.

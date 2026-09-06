@@ -195,3 +195,7 @@ Buster-Aktivierung und Budgetannahmen fehlen).
   Fixture des echten Registrytests; anschließend gesamte Autorisierungsmatrix
   ausführen. Kein Entfernen der produktiven artifacts.read-Anforderung oder
   Ersatzprovider, um die bisherige Fixture grün zu bekommen.
+
+Isolationsgegenstelle abgeschlossen: [foundation.isolation](foundation.isolation.md)
+führt PCR-ISOLATION-001 bis004 (Hostpipefehler, Supervisorbeendigung, UTF-8,
+Memorygrenze). Externe Registryaktivierung übernimmt diese Risiken.

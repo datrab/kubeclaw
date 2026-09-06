@@ -35,3 +35,8 @@ oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
 | platform-config-tests.txt | Original-Platformconfigtest bestanden. |
 | package-install-tests.txt / install-report-syntax.mjs | Originalinstallationstest bestanden; fehlende Reportadaptersyntaxprüfung reproduziert. |
 | registry-tests.txt / registry-schema-reload.mjs | Registry/Provider/Reporttests bestanden; Import-Safety (Observerzahl) und Capability-Security (unvollständige Policyfixture) fehlgeschlagen; `$id`-Reloaddefekt reproduziert. |
+
+| Weitere Datei | Aussage |
+|---|---|
+| isolation-tests.txt / isolation-utf8.mjs | Original-C-Build bestanden; Sandboxstart Procblocker, Phase11/External-engine unbehandeltes EPIPE, Bundlecheck erster Supervisorfall fehlgeschlagen. Originalprotokoll ohne Sandbox reproduziert UTF-8-Verlust. |
+| telemetry-contract-tests.txt / telemetry-contract-check.mjs | Generatorcheck blockiert durch fehlendes gofmt; Hashes132/Schema122/Golden geprüft, Null-run-Schwächung reproduziert. Anfangsfehler der Reviewprobe und Korrektur sichtbar. |

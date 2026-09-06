@@ -61,12 +61,12 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [contract.test-gate](components/contract.test-gate.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.observability](components/contract.observability.md) | Aktiv: Buster → Outbox/Admission/AttemptStore → Nova/ClawDeck; Go nur Referenztest | vorhanden / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.agent-events](components/contract.agent-events.md) | Extension-Producervertrag; Redis-Ingressconsumer im Repository nicht gefunden | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
-| [contract.telemetry](components/contract.telemetry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [contract.telemetry](components/contract.telemetry.md) | Abgelöste Assets; ausgeliefert, keine aktiven Aufrufer gefunden | veraltet und unvollständig | abgeschlossen | `85ddfcbfc15e` |
 | [contract.prism](components/contract.prism.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [lib.sdk](components/lib.sdk.md) | Aktiv: Core-Kontexte, Plugins, Revisionauflösung und Agent-Task-Formatierung | unvollständig | abgeschlossen | `85ddfcbf` |
 | [foundation.registry](components/foundation.registry.md) | Aktiv: Nova/Buster und Installervalidierung | veraltet und unvollständig | abgeschlossen | `85ddfcbfc15e` |
 | [foundation.config](components/foundation.config.md) | Aktiv: Nova CLI/Projekt und Buster.production → Plattformloader → Registry | unvollständig | abgeschlossen | `85ddfcbf` |
-| [foundation.isolation](components/foundation.isolation.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [foundation.isolation](components/foundation.isolation.md) | Aktiv: Nova-Isolation und Buster-Launcher | veraltet und unvollständig | abgeschlossen | `85ddfcbfc15e` |
 | [foundation.packages](components/foundation.packages.md) | Exportierte Betreiber-Library; Install/Remove-Aufrufer nur Vertragstests gefunden | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [foundation.observability](components/foundation.observability.md) | Aktiv: Records/Blobs, Outbox/Admission, Worker-Results; ClawDeck-View nur Testconsumer | vorhanden / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.state](components/nova.state.md) | Aktive FileJournal-/FileMutex-Nutzung; PluginStateJournal nur Testaufrufer | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |

@@ -25,7 +25,7 @@ jedes relevanten Übergangs gemeinsam prüfen. Vollständige Projekt-E2E-Traces
 sind ein Folgeauftrag. Infrastruktur nur als Abhängigkeit/Annahme erfassen;
 auffällige Infrastrukturfragen separat zur Folgeprüfung notieren.
 
-## Lebendes gemeinsames Review-Schema (Revision 3)
+## Lebendes gemeinsames Review-Schema (Revision 4)
 
 Jede fachlich abgeschlossene Review-Datei muss folgende Kriterien konkret
 behandeln; nicht anwendbare Kriterien begründen:
@@ -63,6 +63,18 @@ Observability-Serializer. Worker-Core prüft Tiefe/Knoten vor Ausführung; sein 
 setzt JSON-Wirewerte voraus. SDK/Pluginvertrag/Agentvertrag wurden bereits mit
 diesen Kriterien geprüft. Deshalb keine unbemerkte Rückstufung; noch ungeprüfte
 Serializer-/Empfängerpfade werden bei ihren Eigentümern weiterverfolgt.
+Revision 4: Bei Prozess-/Streamgrenzen Pipefehler, Chunkgrenzen/UTF-8,
+Backpressure/offene RPCs und vollständiges Reaping des tatsächlich gestarteten
+Prozessbaums prüfen. Bei generierten Verträgen gemeinsame Feldüberschreibung,
+Union-/Required-/Nullabbildung und fehlende Generatorvoraussetzungen prüfen.
+Rückprüfung: nova.state decodiert vollständige newline-abgeschlossene Dateibereiche,
+keine beliebigen Streamchunks; Foundation-Storelock benutzt festen ASCII-Marker
+und stdin-Ende, keinen Supervisor-SIGKILL. Worker-Core hat keine eigenen
+Prozesshandles, verlangt Operationterminate; sein Byte-Logpfad zeigt dagegen
+dieselbe Chunkdecodierung wie PCR-ISOLATION-003 und ist im Workerreview ergänzt.
+SDK/Agent-/Worker-/Observabilityverträge wurden auf ihre jeweiligen Generator-/
+Validierungsformen geprüft; der Telemetrie-v1-Generatorbefund gilt nicht pauschal
+für sie. Buster-/Prism- und Transportgegenstellen folgen in ihren Einzelreviews.
 Bei neuer Erkenntnis Schema hier erweitern; betroffene bereits abgeschlossene
 Reviews explizit zur Nachprüfung markieren und ihren Status aktualisieren.
 

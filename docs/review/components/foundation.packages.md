@@ -122,3 +122,8 @@ Runtimeaktivierung aller Surfaces.
 Restunsicherheit: tatsächlicher Operatorpfad und spätere sichere Aktivierung,
 keine ungelesenen Installationspfade. Gemeinsamer EmptyManifest-Schemafehler
 verbleibt bei [contract.plugin-system](contract.plugin-system.md).
+
+Nachprüfung: Phase11 Originaltest inzwischen ausgeführt; Installation/Trustaufbau
+laufen bis zur ersten isolierten Invocation, dann unbehandeltes EPIPE. Restliche
+Assertions nicht erreicht; [Isolationreview](foundation.isolation.md) führt die
+Ursache PCR-ISOLATION-001 und Umgebungsblocker. Kein kompletter Phase11-Pass.
