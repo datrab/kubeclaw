@@ -1,3 +1,4 @@
+import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -113,6 +114,8 @@ export function provider() {
     maximumResultBytes: 16 * 1024 * 1024, shutdownTimeoutMs: 5_000 });
   const address = await runtime.start();
   try {
+    fs.mkdirSync(path.join(temporary, 'nova-state'), { recursive: true });
+    fs.writeFileSync(path.join(temporary, 'nova-state', 'execution-graph'), 'unavailable projection path');
     const gate = createProductionNovaTestGate({
       stateRoot: path.join(temporary, 'nova-state'), endpoint: `http://127.0.0.1:${address.port}`, token,
       sourceAuthority: 'nova:production', sourceAttestationPrivateKey,
@@ -134,6 +137,12 @@ export function provider() {
     }
     assert.equal(executed.remote.decision.state, 'passed', JSON.stringify({ executed: executed.remote, storedResult }));
     assert.equal(executed.remote.status.state, 'completed');
+    const imported = new FileNovaGateImportStore(path.join(temporary, 'nova-state', 'imports'), { recordLimits: records, maximumEvidenceStoreBytes: 16 * 1024 * 1024 });
+    const [graph] = await imported.readExecutionGraphs();
+    assert.equal(graph?.jobId, executed.remote.status.jobId);
+    assert.equal(graph?.decisionDigest, executed.remote.decision.decisionDigest);
+    assert.deepEqual(graph?.attempts, storedResult.attempts);
+    assert.deepEqual(graph?.results, storedResult.nodes);
     assert.equal(executed.remote.status.result?.sizeBytes > 0, true);
   } finally { await runtime.stop(); }
 } finally {

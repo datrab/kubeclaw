@@ -37,6 +37,18 @@ The persistent mount and admission code are implementation changes, not proof of
 
 The new HTTP regression verifies that forbidden requests never contact its real server. The Playwright regression executes both a working assertion and a deliberately broken assertion, and verifies that Playwright's zero-exit all-skipped report cannot pass the blocking gate. The Git cleanup regression replaced an unconditional mock and caught an invalid StageResult fact name.
 
+## External effects and derived views
+
+Recovery now checks the durable effect journal before starting adapters. Accepted effects without receipts stop with `RECOVERY_EFFECT_OUTCOME_UNRESOLVED`. Interrupted attempts with completed external invocations stop with `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED`: a new execution attempt must not silently submit the same mutation again. An adapter invocation failure blocks for reconciliation instead of using the ordinary retry budget. Real HTTP mutations followed by SIGKILL before and after receipt persistence both remain at exactly one mutation on recovery. A third case drops the response after the service commits; Nova blocks after one invocation despite a three-attempt budget. This is a safety boundary; read-only external receipt reconciliation and automatic logical continuation remain unfinished.
+
+Test execution graphs are now derived on read from complete verified imports. The separate graph writer and its production wiring were deleted. A graph storage failure therefore cannot veto a gate decision, and a new reader can reconstruct the graph from the durable import alone. Import records now use `nova-test-gate-import.v2` and retain the original job. Historical v1 records require the old runtime or explicit migration; no historical job identity is guessed.
+
+Implementation cleanup now runs only after a confirmed merge. Unintegrated or uncertain worktrees remain available, with their location recorded in the durable blocked result or implementation artifact. A real Git worktree regression writes files, loses the dispatch response, and verifies that the files survive, dispatch occurs once, and no removal is requested.
+
+## Remote CI evidence
+
+Draft PR #3 commit `5183d2a07339b3e17593baff78ac355da5bd58bb` passed Pipeline reliability run `34016665755` and Docs Checks run `34016665734`. GitHub's runner successfully executed the mandatory real isolated provider, Helm validation and production role assembly. That evidence applies to that commit, not subsequent changes or deployed acceptance.
+
 ## Remaining closure work
 
 | Workstream / review finding | Required next result |

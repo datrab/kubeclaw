@@ -122,6 +122,7 @@ export class StageExecutor {
   }
 
   #failure(error: unknown): StageResult {
+    if (error instanceof Error && /^EFFECT_(?:OUTCOME_UNRESOLVED|RECOVERY_)/u.test(error.message)) return { schemaVersion: 'stage-result.v2', outcome: 'blocked', reason: { code: 'core.effect_reconciliation_required', message: error.message }, artifacts: [] };
     const cancelled = this.#options.signal?.aborted === true; const timedOut = error instanceof Error && error.message === 'PLUGIN_ATTEMPT_TIMEOUT';
     return { schemaVersion: 'stage-result.v2', outcome: cancelled ? 'cancelled' : timedOut ? 'timed_out' : 'retry', reason: {
       code: cancelled ? 'core.attempt_cancelled' : timedOut ? 'core.attempt_timed_out' : 'core.plugin_runtime_failed',

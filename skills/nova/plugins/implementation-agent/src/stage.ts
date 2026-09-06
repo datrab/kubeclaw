@@ -56,9 +56,11 @@ async function removeWorkspace(input: ImplementationInput, context: PluginInvoca
   });
 }
 
-function blockedFailure(error: Error | undefined): StageResult {
+function blockedFailure(error: Error | undefined, input: ImplementationInput, retained: boolean): StageResult {
   return { schemaVersion: 'stage-result.v2', outcome: 'blocked',
-    reason: { code: 'implementation.invalid_completion', message: error?.message ?? 'implementation completion missing' }, artifacts: [] };
+    reason: { code: error?.message.startsWith('EFFECT_') ? 'implementation.effect_reconciliation_required' : 'implementation.invalid_completion',
+      message: error?.message ?? 'implementation completion missing',
+      ...(retained && input.workspace ? { details: { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, headBefore: input.headBefore } } : {}) }, artifacts: [] };
 }
 
 export async function execute(input: ImplementationInput, context: PluginInvocationContext): Promise<StageResult> {
@@ -80,20 +82,20 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
   } catch (error) {
     workspaceFailure = error instanceof Error ? error : new Error(String(error));
   } finally {
-    if (input.workspace && workspaceCreated) {
+    if (input.workspace && workspaceIntegrated) {
       try {
         await removeWorkspace(input, context);
       } catch (error) {
         const failure = error instanceof Error ? error : new Error(String(error));
-        if (workspaceIntegrated) cleanupFailure = failure;
-        else workspaceFailure ??= failure;
+        cleanupFailure = failure;
       }
     }
   }
-  if (workspaceFailure || !completion) return blockedFailure(workspaceFailure);
+  if (workspaceFailure || !completion) return blockedFailure(workspaceFailure, input, workspaceCreated && !workspaceIntegrated);
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `implementation:${input.moduleId}:${input.attempt}` },
-    payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore } },
+    payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore,
+      ...(workspaceCreated && !workspaceIntegrated && input.workspace ? { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch } : {}) } },
   });
   const artifacts = [stored.artifact as ArtifactRef];
   if (cleanupFailure) {

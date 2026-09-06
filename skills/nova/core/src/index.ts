@@ -62,7 +62,7 @@ export {
   RemotePlanTransportError,
 } from '../test-gates/remote-dispatch.ts';
 export type { RemotePlanEvidenceTransport, RemotePlanJobInput, RemotePlanResultTransport, RemotePlanTransport } from '../test-gates/remote-dispatch.ts';
-export { FileNovaGateImportStore, FileNovaTestExecutionGraphStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult } from '../test-gates/remote-result-import.ts';
+export { FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult } from '../test-gates/remote-result-import.ts';
 export type { NovaTestExecutionGraphV1 } from '../test-gates/remote-result-import.ts';
 export type { AgentEvidenceReviewRequestV1, GateDecisionV1, GateDecisionState, GateNodeDecisionV1, GateNodeEffect, RemotePlanTerminalDispatcher } from '../test-gates/remote-result-import.ts';
 export { createProductionNovaTestGate, ProductionNovaTestGate,

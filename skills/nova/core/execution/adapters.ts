@@ -53,7 +53,7 @@ export class AdapterRuntime {
     const invocation = { idempotencyKey, attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
     if (isConfidentialCapability(capability)) return this.#options.effects.invokeConfidential(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
     const receipt = await this.#options.effects.invoke(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
-    if (receipt.status !== 'completed') throw new Error(receipt.error?.message ?? 'adapter effect failed'); return receipt.result ?? {};
+    if (receipt.status !== 'completed') throw new Error(`EFFECT_OUTCOME_UNRESOLVED:${receipt.effectId}:${receipt.error?.message ?? 'adapter invocation failed'}`); return receipt.result ?? {};
   }
 
   shutdown(): Promise<void> {

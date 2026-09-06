@@ -13,7 +13,7 @@ import {
 } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
 import { createRemotePlanJob } from '../../../skills/nova/core/test-gates/remote-dispatch.ts';
 import {
-  FileNovaGateImportStore, FileNovaTestExecutionGraphStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult,
+  FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, gateDecisionStageResult,
 } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
 
 const digest = `sha256:${'a'.repeat(64)}`;
@@ -127,23 +127,18 @@ assert.equal(passed.decision.state, 'passed');
 assert.equal(gateDecisionStageResult(passed.decision).outcome, 'passed');
 {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-canonical-test-graph-'));
-  const graphStore = new FileNovaTestExecutionGraphStore(path.join(root, 'graph'), recordLimits);
   const job = createRemotePlanJob({ idempotencyKey: 'import:canonical-graph', pipelineStageId: 'stage:test-gate', plan: plan('blocking', 'buster'),
     sourceSnapshot, repositoryArchive: archive, grants: new Map([['test', []]]), maximumConcurrency: 1,
     submittedAt: '2026-08-10T03:00:00.000Z' });
   const terminal = completed(job, { outcome: 'failed', artifact });
-  const importer = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(path.join(root, 'imports'),
-    { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024, graphStore }),
+  const store = new FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 });
+  // A poisoned obsolete projection location must have no effect on authority.
+  fs.writeFileSync(path.join(root, 'execution-graph'), 'not a directory');
+  const importer = new NovaRemoteGateImporter({ store,
     evidence: { evidence: async () => evidenceBytes }, results: { result: async () => terminal.result },
     maximumEvidenceBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024 });
-  const seedImporter = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(path.join(root, 'seed-import'),
-    { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 }),
-    evidence: { evidence: async () => evidenceBytes }, results: { result: async () => terminal.result },
-    maximumEvidenceBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024 });
-  const expectedDecision = await seedImporter.import(job, terminal.status);
-  await graphStore.record(job, terminal.result, expectedDecision);
   const decision = await importer.import(job, terminal.status);
-  const [graph] = await graphStore.read();
+  const [graph] = await store.readExecutionGraphs();
   assert.equal(graph?.runId, job.plan.runId);
   assert.equal(graph?.parentStageId, job.pipelineStageId);
   assert.equal(graph?.planDigest, job.plan.planDigest);
@@ -153,32 +148,9 @@ assert.equal(gateDecisionStageResult(passed.decision).outcome, 'passed');
   assert.deepEqual(graph?.reviews.map((review) => review.nodeId), ['test']);
   assert.equal(graph?.decisionDigest, decision.decisionDigest);
   await importer.import(job, terminal.status);
-  assert.equal((await graphStore.read()).length, 1, 'graph projection must be idempotent');
-  await assert.rejects(() => graphStore.record(job, terminal.result,
-    { ...decision, decisionDigest: digest }), /NOVA_TEST_EXECUTION_GRAPH_CONFLICT/u,
-  'a divergent graph projection must not replace the durable winner');
-  fs.rmSync(root, { recursive: true, force: true });
-}
-{
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-complete-import-graph-backfill-'));
-  const job = createRemotePlanJob({ idempotencyKey: 'import:graph-backfill', pipelineStageId: 'stage:test-gate',
-    plan: plan('blocking', null), sourceSnapshot, repositoryArchive: archive,
-    grants: new Map([['test', []]]), maximumConcurrency: 1, submittedAt: '2026-08-10T03:00:00.000Z' });
-  const terminal = completed(job, { outcome: 'passed', artifact });
-  const importRoot = path.join(root, 'imports');
-  const transport = { evidence: async () => evidenceBytes };
-  const results = { result: async () => terminal.result };
-  const original = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(importRoot,
-    { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 }), evidence: transport, results,
-    maximumEvidenceBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024 });
-  await original.import(job, terminal.status);
-  const graphStore = new FileNovaTestExecutionGraphStore(path.join(root, 'graph'), recordLimits);
-  const upgraded = new NovaRemoteGateImporter({ store: new FileNovaGateImportStore(importRoot,
-    { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024, graphStore }), evidence: transport, results,
-    maximumEvidenceBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024 });
-  await upgraded.import(job, terminal.status);
-  assert.equal((await graphStore.read()).length, 1,
-    'replaying an import completed before D-091 must backfill the canonical graph');
+  assert.equal((await store.readExecutionGraphs()).length, 1, 'graph projection must be idempotent');
+  const reopened = new FileNovaGateImportStore(path.join(root, 'imports'), { recordLimits, maximumEvidenceStoreBytes: 1024 * 1024 });
+  assert.deepEqual(await reopened.readExecutionGraphs(), await store.readExecutionGraphs(), 'fresh reader rebuilds from durable imports');
   fs.rmSync(root, { recursive: true, force: true });
 }
 {

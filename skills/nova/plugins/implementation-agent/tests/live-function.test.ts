@@ -12,6 +12,7 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-implementation
 const agentWorkspace = path.join(temporary, 'agent-workspace');
 let workerWorkspace = agentWorkspace;
 let lockedRepository: string | undefined;
+let loseResponse = false;
 fs.mkdirSync(path.join(agentWorkspace, 'src'), { recursive: true });
 const transcript = 'start forge\nhandoff task\nwrite src/api.ts\nrun unit\ncomplete\n';
 const transcriptDigest = crypto.createHash('sha256').update(transcript).digest('hex');
@@ -20,6 +21,7 @@ const server = http.createServer((_request, response) => {
   fs.writeFileSync(path.join(workerWorkspace, 'src/api.ts'), 'export const ready = true;\n');
   execFileSync(process.execPath, ['--input-type=module', '-e', `import assert from 'node:assert/strict'; import { ready } from ${JSON.stringify(new URL('file://' + path.join(workerWorkspace, 'src/api.ts')).href)}; assert.equal(ready, true);`]);
   fs.writeFileSync(path.join(workerWorkspace, 'transcript.log'), transcript);
+  if (loseResponse) { response.destroy(); return; }
   if (lockedRepository) execFileSync('git', ['-C', lockedRepository, 'worktree', 'lock', workerWorkspace]);
   response.writeHead(200, { 'content-type': 'application/json' });
   response.end(JSON.stringify({ result: {
@@ -114,6 +116,31 @@ try {
     assert.equal(removalReceipt?.status, 'failed');
     assert.match(removalReceipt?.error?.message ?? '', /locked working tree/);
     assert.ok(fs.existsSync(workerWorkspace), 'failed cleanup remains available for recovery');
+
+    // Lose the dispatch response after real writes in an unlocked worktree.
+    // Nova must retain those writes and avoid retrying or removing the worktree.
+    const retainedRepository = lockedRepository;
+    lockedRepository = undefined;
+    loseResponse = true;
+    workerWorkspace = path.join(temporary, 'worktrees', 'uncertain');
+    const uncertainEvents = path.join(temporary, 'uncertain-events.jsonl');
+    const uncertain = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:uncertain', maxConcurrency: 1, stages: [{
+      id: 'implementation', type: 'kubeclaw.agent.implementation', dependsOn: [], config: { agent: 'forge' },
+      input: { runId: 'stale-input', moduleId: 'api', attempt: 99, task: 'Implement API.', headBefore,
+        workspace: { repositoryRoot: retainedRepository, workspacePath: workerWorkspace, branch: 'uncertain-work', baseRef: headBefore, mergeTarget: retainedRepository, commitMessage: 'Implement API' } },
+      execution: { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 10000 },
+    }] }, registry: granted, activated, adapters, journal: new core.FileJournal(uncertainEvents) });
+    const uncertainResult = await uncertain.run('run:uncertain');
+    assert.equal(uncertainResult.status, 'blocked');
+    assert.equal(uncertainResult.stages.get('implementation')?.attemptsUsed, 1);
+    assert.equal(fs.readFileSync(path.join(workerWorkspace, 'src/api.ts'), 'utf8'), 'export const ready = true;\n');
+    assert.match(execFileSync('git', ['-C', retainedRepository, 'worktree', 'list', '--porcelain'], { encoding: 'utf8' }), /uncertain-work/);
+    const uncertainRequests = new core.FileJournal(effectsPath).records().map(({ entry }) => entry)
+      .filter(entry => entry.type === 'requested' && entry.request.attempt.runId === 'run:uncertain');
+    assert.equal(uncertainRequests.filter(entry => entry.request.capability === 'runtime.dispatch').length, 1);
+    assert.equal(uncertainRequests.filter(entry => entry.request.capability === 'git.workspace.remove').length, 0);
+    const failedAttempt = new core.FileJournal(uncertainEvents).records().map(({ entry }) => entry).find(entry => entry.type === 'attempt.completed');
+    assert.equal(failedAttempt?.payload.result.reason.details.retainedWorkspace, workerWorkspace);
 
   } finally { await adapters.shutdown(); }
 } finally {

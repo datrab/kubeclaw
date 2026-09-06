@@ -187,6 +187,17 @@ export class FileEffectJournal implements EffectJournal {
       result: JSON.parse(serialized.toString('utf8')) as NonNullable<EffectReceipt['result']> });
   }
 
+  async recoveryEntries(): Promise<readonly { request: EffectRequest; accepted: boolean; receiptStatus?: EffectReceipt['status'] }[]> {
+    return this.#journal.transact((records) => {
+      this.#replay(records);
+      return [...this.#requests.values()].map(request => {
+        const receipt = this.#receipts.get(request.idempotencyKey);
+        return { request: structuredClone(request), accepted: this.#accepted.has(request.idempotencyKey),
+          ...(receipt ? { receiptStatus: receipt.status } : {}) };
+      });
+    });
+  }
+
   async receipt(idempotencyKey: string): Promise<EffectReceipt | undefined> {
     return this.#journal.transact((records) => {
       this.#replay(records);
