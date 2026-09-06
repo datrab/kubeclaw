@@ -1,7 +1,7 @@
 # Buster's OpenClaw gateway and native/ACP agent runtime. Deterministic test,
 # image-build and Kubernetes tooling are reached through bounded v2 adapters.
 
-ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.1@sha256:6afe42854c87471188b9c4f8dce6bbc14005a48d8e1592846548b32508754f84
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS gateway-assets
@@ -28,7 +28,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 /tmp/skills/common/plugins/openclaw-agent-observer/dist \
 /out/extensions/kubeclaw-agent-observer/
 
-ARG OPENCLAW_PLUGIN_VERSION=2026.9.1
+ARG OPENCLAW_PLUGIN_VERSION=2026.9.2
 ARG TARGETARCH
 
 RUN set -eux; \

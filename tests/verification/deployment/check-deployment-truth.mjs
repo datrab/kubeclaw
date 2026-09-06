@@ -40,8 +40,8 @@ const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
 const networkPolicies = read('my-values/infra/network-policies.yaml');
-const expectedOpenClawVersion = '2026.9.1';
-const expectedOpenClawDigest = 'sha256:6afe42854c87471188b9c4f8dce6bbc14005a48d8e1592846548b32508754f84';
+const expectedOpenClawVersion = '2026.9.2';
+const expectedOpenClawDigest = 'sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250';
 
 assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
   'Prism chart must use digest references without forced pulls');
@@ -209,7 +209,7 @@ assert.match(
 );
 assert.match(
   values,
-  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.9\.1"[\s\S]*"npm:@openclaw\/discord@2026\.9\.1"/,
+  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.9\.2"[\s\S]*"npm:@openclaw\/discord@2026\.9\.2"/,
   'official OpenClaw plugins must be pinned to the gateway release and installed with trusted npm provenance',
 );
 assert.doesNotMatch(
@@ -477,8 +477,8 @@ assert.match(
 );
 assert.match(
   busterValues,
-  /name:\s*buster-v2-state[\s\S]*emptyDir:[\s\S]*sizeLimit:\s*64Mi/,
-  'worker state must be bounded and absent from the shared workspace PVC',
+  /name:\s*buster-v2-state\s+persistentVolumeClaim:\s+claimName:\s*agent-buster-runtime-state/,
+  'authoritative worker receipts must survive Pod replacement in their dedicated PVC',
 );
 assert.doesNotMatch(novaValues, /\.kubeclaw\.svc\.cluster\.local/);
 assert.match(

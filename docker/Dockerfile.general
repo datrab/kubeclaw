@@ -2,7 +2,7 @@
 # KubeClaw General — Root Environment for Nova, Forge, Echo
 # =============================================================================
 
-ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.1@sha256:6afe42854c87471188b9c4f8dce6bbc14005a48d8e1592846548b32508754f84
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
 
 FROM moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c AS buildkit-client
 
@@ -254,7 +254,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 # Official plugins are pinned and baked into an OpenClaw home seed so startup
 # never requires a network install.
 
-ARG OPENCLAW_PLUGIN_VERSION=2026.9.1
+ARG OPENCLAW_PLUGIN_VERSION=2026.9.2
 
 RUN set -eux; \
 mkdir -p /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache /opt/openclaw-plugin-home/packs; \
