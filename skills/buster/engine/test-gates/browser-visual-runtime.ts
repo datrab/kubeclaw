@@ -1,5 +1,5 @@
-import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 /// <reference path="./pngjs.d.ts" />
+import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 import crypto from 'node:crypto';
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';

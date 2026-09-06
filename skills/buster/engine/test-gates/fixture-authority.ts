@@ -18,7 +18,7 @@ function fixtures(inputs: readonly ResolvedInputV1[]): Record<string, unknown>[]
 
 /** Revalidate at each capability invocation; expiry also cancels in-flight use. */
 export function fixtureAuthoritySignal(inputs: readonly ResolvedInputV1[], signal: AbortSignal): AbortSignal {
-  signal.throwIfAborted();
+  if (signal.aborted) return signal;
   const values = fixtures(inputs);
   if (!values.length) return signal;
   const remaining = Math.min(...values.map(value => Date.parse(value.expiresAt as string))) - Date.now();

@@ -74,7 +74,7 @@ export class FileBusterPlanJobStore {
       throw new Error('BUSTER_REMOTE_RESULT_LIMIT_INVALID');
     }
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
-    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultStoreBytes);
+    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
     this.#maximumResultBytes = options.maximumResultBytes;
     let sourcePublicKey: crypto.KeyObject;

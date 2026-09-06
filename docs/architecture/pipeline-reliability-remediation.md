@@ -120,3 +120,10 @@ Implementation now hydrates the core-issued repair request's actual JSON artifac
 The lint stage validates the full report contract and recomputed tool summary before persisting or judging it. Removed partial-summary passing fixtures; real tool execution remains the acceptance test. CI installs shellcheck and shfmt and requires the full lint package.
 
 HTTP and the four browser runtimes now share typed fixture origin and expiry validation. Each invocation rechecks expiry, and its cancellation signal is bounded by the earliest input fixture expiry. Real HTTP regressions prove zero contacts with expired authority and cancellation of an in-flight request. This does not prove controller revocation or deployed CNI enforcement.
+
+
+## Aggregate blob storage limits
+
+Buster's `maximumResultStoreBytes` now limits total result blob bytes separately from `maximumResultBytes`. Nova's artifact blob store also enforces its configured aggregate byte budget. Admission is serialized by a cross-process store lock and counts existing blob/temp files; duplicate immutable writes need no additional space. A real competing-process regression proves the budget cannot be oversubscribed and that reconstruction preserves it. The artifact-store package regression also passes with aggregate limits enabled.
+
+These limits are not pre-acceptance job reservations or a retention/import-ack protocol. Those storage lifecycle changes remain required before claiming W6 closure. Stores already over budget retain readable existing content and refuse new unique blobs; operators must preserve recovery evidence when reclaiming storage.

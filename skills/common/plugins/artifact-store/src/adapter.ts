@@ -142,7 +142,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     maximumBytes: Number(maximumStoreBytes),
     maximumRecordBytes: 64 * 1024,
   });
-  const blobs = new FileDurableBlobStore(configured, Number(maximum));
+  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));
   return {
     async ready() { await records.read<ArtifactRef>('artifacts/readiness'); },
     async invoke(invocation) { return invokeArtifact(records, blobs, Number(maximum), invocation); },
