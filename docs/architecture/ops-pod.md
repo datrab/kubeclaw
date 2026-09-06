@@ -125,6 +125,10 @@ storage does not provide recovery from loss of the storage node.
    the child; the supervisor allows ten seconds before killing an unresponsive
    child. The Pod termination grace period is 30 seconds.
 
+Interactive access through the deployment helper uses `/opt/codex/shell.sh` to
+load and export the mounted bearer for the new shell. It does not depend on
+inheriting the supervisor environment and refuses a missing/short credential.
+
 The status file is `/tmp/codex-ops-status.json`. Its `pairingVerified` field is
 always false: the supervisor does not observe or certify pairing. Codex readiness
 checks `remote-process-running`. There is no Codex liveness probe that restarts the

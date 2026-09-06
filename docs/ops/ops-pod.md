@@ -405,17 +405,19 @@ Check MCP health inside its container, because it listens on loopback:
 "${k[@]}" exec "$pod" -c ops-mcp -- node -e 'fetch("http://127.0.0.1:8080/healthz").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'
 ```
 
-The remote child inherits its bearer from the supervisor. A fresh `kubectl exec`
-shell does not inherit environment variables added by that Python process. For
-interactive Codex in such a shell, load the token without printing it:
+The remote child inherits its bearer from the supervisor. The supported `shell`
+helper starts `/opt/codex/shell.sh`, which reads the mounted bearer, validates it
+and exports it before opening Bash. No manual token export is needed:
 
 ```bash
 ./scripts/deploy-ops-pod.sh shell
-export KUBECLAW_MCP_TOKEN="$(cat /var/run/kubeclaw-ops/bearer/token)"
 codex mcp list
 ```
 
-Avoid shell tracing while handling credentials. A listed MCP entry proves config
+For direct `kubectl exec`, invoke `bash /opt/codex/shell.sh` as well: plain Bash
+does not inherit the supervisor environment. The wrapper refuses to start if the
+mounted credential is missing or too short. Avoid shell tracing while handling
+credentials. A listed MCP entry proves config
 loading; use the live verifier for actual calls. Do not start a second background
 remote-control supervisor in the same persistent home.
 

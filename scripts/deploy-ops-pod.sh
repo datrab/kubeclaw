@@ -36,7 +36,7 @@ case ${1:-help} in
     "${k[@]}" -n "$namespace" exec -it "$pod" -c codex -- gh auth login --hostname github.com --git-protocol https --web
     ;;
   pair) "${k[@]}" -n "$namespace" exec -it "$pod" -c codex -- codex remote-control pair ;;
-  shell) "${k[@]}" -n "$namespace" exec -it "$pod" -c codex -- bash ;;
+  shell) "${k[@]}" -n "$namespace" exec -it "$pod" -c codex -- bash /opt/codex/shell.sh ;;
   status)
     "${k[@]}" -n "$namespace" get pod "$pod" -o wide
     "${k[@]}" -n "$namespace" exec "$pod" -c codex -- cat /tmp/codex-ops-status.json

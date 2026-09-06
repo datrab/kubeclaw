@@ -23,7 +23,7 @@ RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force \
     && ln -s /opt/codex/node_modules/.bin/codex /usr/local/bin/codex \
     && codex --version && codex remote-control --help
 COPY --from=tools /downloads/kubectl /downloads/helm /usr/local/bin/
-COPY supervisor.py config.toml /opt/codex/
+COPY supervisor.py config.toml shell.sh /opt/codex/
 RUN mkdir -p /workspace /home/node/.codex && chown node:node /workspace /home/node/.codex
 ENV HOME=/home/node
 USER 1000:1000

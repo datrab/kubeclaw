@@ -16,6 +16,13 @@ for attempt in {1..30}; do
   if docker exec "$container" python3 -c "import json; assert json.load(open('/tmp/codex-ops-status.json'))['phase']=='waiting-for-login'" 2>/dev/null; then
     docker exec "$container" codex remote-control pair --help >/dev/null
     docker exec "$container" codex mcp list --json | python3 -c "import json,sys; assert any(x['name']=='kubeclaw_ops' for x in json.load(sys.stdin))"
+    docker exec "$container" bash /opt/codex/shell.sh -c 'test "$KUBECLAW_MCP_TOKEN" = "$(cat /var/run/kubeclaw-ops/bearer/token)" && codex mcp list --json' | python3 -c "import json,sys; assert any(x['name']=='kubeclaw_ops' for x in json.load(sys.stdin))"
+    mv "$temp/token" "$temp/saved-token"
+    if docker exec "$container" bash /opt/codex/shell.sh -c 'exit 0' >/dev/null 2>&1; then
+      echo 'FAIL: exec shell opened without the mounted MCP bearer' >&2
+      exit 1
+    fi
+    echo 'PASS: exec shell exports the mounted MCP bearer and refuses a missing credential'
     echo 'PASS: real non-root read-only container remains available for first login and loads MCP config'
     exit 0
   fi
