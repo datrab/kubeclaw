@@ -1,16 +1,20 @@
-name: Build Ops MCP Image
+name: Build Ops Images
 
 on:
   pull_request:
     paths:
       - 'tools/ops-mcp/**'
-      - 'ops/devbox/**'
+      - 'ops/pod/**'
+      - 'charts/ops-pod/**'
+      - 'scripts/deploy-ops-pod.sh'
       - '.github/workflows/build-ops-mcp.yaml'
   push:
     branches: [main]
     paths:
       - 'tools/ops-mcp/**'
-      - 'ops/devbox/**'
+      - 'ops/pod/**'
+      - 'charts/ops-pod/**'
+      - 'scripts/deploy-ops-pod.sh'
       - '.github/workflows/build-ops-mcp.yaml'
   workflow_dispatch:
 
@@ -20,11 +24,20 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: kubeclaw-ops-mcp
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: kubeclaw-ops-mcp
+            context: tools/ops-mcp
+          - image: kubeclaw-codex-ops
+            context: ops/pod
+    env:
+      IMAGE_NAME: ${{ matrix.image }}
     permissions:
       contents: read
       packages: write
@@ -40,6 +53,17 @@ jobs:
 
       - name: Test Ops MCP
         working-directory: tools/ops-mcp
+        run: |
+          npm ci --ignore-scripts
+          npm test
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.3.1
+        with:
+          version: v3.19.0
+
+      - name: Test Ops Pod and actual Codex CLI
+        working-directory: ops/pod
         run: |
           npm ci --ignore-scripts
           npm test
@@ -67,19 +91,26 @@ jobs:
         id: build
         uses: docker/build-push-action@v7
         with:
-          context: tools/ops-mcp
-          file: tools/ops-mcp/Dockerfile
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/Dockerfile
+          load: true
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=ops-mcp
-          cache-to: type=gha,scope=ops-mcp,mode=max
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,scope=${{ matrix.image }},mode=max
           provenance: mode=max
           sbom: true
 
+      - name: Smoke-test the actual Codex container without account credentials
+        if: matrix.image == 'kubeclaw-codex-ops'
+        env:
+          TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+        run: bash ops/pod/test-image.sh "$TEST_IMAGE"
+
       - name: Summary
         run: |
-          echo '### kubeclaw-ops-mcp image' >> "$GITHUB_STEP_SUMMARY"
+          echo '### ${{ matrix.image }} image' >> "$GITHUB_STEP_SUMMARY"
           echo '' >> "$GITHUB_STEP_SUMMARY"
           echo '${{ steps.meta.outputs.tags }}' >> "$GITHUB_STEP_SUMMARY"
           echo '' >> "$GITHUB_STEP_SUMMARY"

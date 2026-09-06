@@ -1,0 +1,10 @@
+# This non-root, capability-free container is the execution sandbox. No host
+# mounts, Kubernetes token or Docker socket are available to the Codex container.
+# Keep approvals enabled; avoid nested OS sandbox dependencies inside the pod.
+sandbox_mode = "danger-full-access"
+approval_policy = "on-request"
+cli_auth_credentials_store = "file"
+
+[mcp_servers.kubeclaw_ops]
+url = "http://127.0.0.1:8080/mcp"
+bearer_token_env_var = "KUBECLAW_MCP_TOKEN"

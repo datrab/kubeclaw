@@ -1,0 +1,6 @@
+apiVersion: v2
+name: kubeclaw-ops
+description: Permanent Codex Remote host with a local read-only Ops MCP
+type: application
+version: 0.1.0
+appVersion: "0.153.4"

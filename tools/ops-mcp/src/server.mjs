@@ -2,7 +2,6 @@ import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
 import { createKubeRequest } from './kubernetes.mjs';
-import { hostDiagnostics } from './host.mjs';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
@@ -19,9 +18,9 @@ const EVENT_PAGE_SIZE = 500;
 const optionalBearerToken = (process.env.OPS_MCP_BEARER_TOKEN_FILE
   ? readFileSync(process.env.OPS_MCP_BEARER_TOKEN_FILE, 'utf8').trim()
   : process.env.OPS_MCP_BEARER_TOKEN?.trim()) || null;
-if (process.env.OPS_EXTERNAL === '1' &&
+if (process.env.OPS_LOCAL_ONLY === '1' &&
     (HOST !== '127.0.0.1' || !optionalBearerToken || optionalBearerToken.length < 32)) {
-  throw new Error('External MCP requires HOST=127.0.0.1 and a bearer token of at least 32 characters');
+  throw new Error('Local-only MCP requires HOST=127.0.0.1 and a bearer token of at least 32 characters');
 }
 const allowedOrigins = new Set(
   (process.env.MCP_ALLOWED_ORIGINS ?? '')
@@ -172,7 +171,7 @@ function buildServer() {
     },
   );
 
-  if (process.env.OPS_EXTERNAL === '1') {
+  if (process.env.OPS_LOCAL_ONLY === '1') {
     server.registerTool('platform_cluster_state', {
       title: 'Nodes and global Cilium policies',
       description: 'Read node health or global Cilium policies through the host API. Does not execute in nodes or Cilium pods.',
@@ -187,12 +186,6 @@ function buildServer() {
       });
       return jsonText({ ...page, nextContinueToken: page.continuation });
     });
-    server.registerTool('host_diagnostics', {
-      title: 'Independent K3s host diagnostics',
-      description: 'Fixed read-only host snapshot over OS SSH; works without Kubernetes, Argo, Cilium or the pipeline. No commands or targets are accepted.',
-      inputSchema: z.object({}),
-      annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
-    }, async () => jsonText(await hostDiagnostics()));
     server.registerTool('platform_network_state', {
       title: 'Platform network state',
       description: 'Read Cilium workloads or namespaced policies through the direct Kubernetes API. Missing Cilium CRDs are reported as unavailable, not healthy.',
