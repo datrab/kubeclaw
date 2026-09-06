@@ -18,3 +18,10 @@ entsprechend umzukehren. Keine funktionalen Reparaturen in diesem Auftrag.
 Die Mutex-Messung ist ein Konkurrenz-Stresstest, keine deterministische Anzahl;
 ein fehlerfreier späterer Lauf muss null Überlappungen haben. Keine Cluster-
 oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
+
+| Neue Datei | Aussage |
+|---|---|
+| plugin-contract-sdk-tests.txt | Vier Prüfkommandos bestanden; SDK-Paketbuild TS5058 fehlgeschlagen. |
+| plugin-contract-sdk-repro.mjs / .txt | Originalparser nimmt leeres Manifest an; Original-SDK serialisiert Sparsearray ungültig und undefined/null gleich. |
+| agent-contract-tests.txt | Pakettest/Typecheck bestanden; zusätzlicher Tiefenfehler im Originalvalidator reproduziert. |
+| agent-contract-depth.mjs | 10000 Ebenen in ca. 20 KiB gültigem JSON führen zu RangeError. |

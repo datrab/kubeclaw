@@ -1,124 +1,124 @@
-# lib.sdk
+# lib.sdk — Öffentliche Plugin-API und Wertfunktionen
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Schema Revision 2. Alle handgeschriebenen SDK-Dateien, generierten
+öffentlichen Typformen, Generator, package.json und Buildkonfiguration untersucht.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–2. Verantwortung, Verwendung und Schnittstellen
 
-## Verantwortung, Grenzen und Einstieg
+`skills/common/plugin-runtime/sdk/src/index.ts` exportiert Schema-Typen,
+Wertfunktionen, Agent-Task-Formatierung und Source-Revision-Auflösung.
+`runtime.ts` definiert CapabilityInvocation, PluginInvocationContext, Adapter-
+Lifecycle/Fence/ConfidentialInvocation, EffectJournal, ObserverHandler,
+TestProvider und ReportAdapter. Keine eigene Registrierung oder Service.
+Exports `.` und `/testing` des Workspace-Pakets `@kubeclaw/plugin-sdk`;
+Testing enthält lediglich assertNever, keine simulierte Runtime.
 
-- `skills/common/plugin-runtime/sdk`
+Gegenstellen: Core.context liefert leasegeprüftes invoke/emit/artifact;
+Adapter erhalten AbortSignal und Fence oder ausdrücklich confidential ohne
+Fence. Registry aktiviert Factories, Core verwaltet Effektquittungen.
+Report-Adapter erhalten Bytes/Anzahlgrenzen, Provider Workspace/Signal/Log/
+Capabilityaufruf. Typen validieren Werte nicht. generated/contracts.ts bildet
+if/then teilweise als breite Typen ab, etwa optionales error bei failed receipt
+und beliebiges trustEvidence. Laufzeitschema bleibt verbindlich.
 
-Entrypoints: `package.json exports / Schema-Dateien`.
+source-revision.ts wird von buster-quality-gate, lint, review und project-summary
+aufgerufen. Wahl: explizites 40-/64-stelliges Git-Objekt oder genau ein
+Implementationartefakt der jüngsten Stageattempt desselben Runs. artifacts.read
+get_json erhält Digest/Namespace; Antwortdigest, Größe und kanonische Bytes
+werden gemeinsam geprüft. ready_for_testing ist Pflicht. Reparaturen bewahren
+erste headBefore-Basis und jüngsten Kandidaten. Leere/mehrdeutige Mengen und
+falsche Digests scheitern. Git-Existenz/HEAD prüft Repository/Review; kein
+Rückfall auf ambient HEAD.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3–6. Zustand, Fehler, Wiederholung und Neustart
 
-Paketabhängigkeiten: `@kubeclaw/pipeline-test-gate-contract`
+Keine eigene Persistenz, Sperren, Queue oder Retryschleife. Revisionauflösung
+liest immutable referenzierte Artefakte; Store muss diese aufbewahren. Fehler
+sind Missing/Ambiguous, Corrupt oder RevisionInvalid. Abbruch/Leasezeit liegt
+bei context.invoke im Core, kein zweiter SDK-Timer. Wertfunktionen sind synchron;
+canonicalJson rekursiert ohne Zyklus-/Tiefenlimit. Wiederaufnahme benötigt
+identische Serialisierung und verfügbare Artefakte. runtime-agent-task.ts
+formatiert die Anweisung zum atomaren Ergebnisfile; kein eigenes Rename und
+keine Agent-Ausgabevalidierung.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 7–9. Vertrauen, Ressourcen und Vereinfachung
 
-## Tests und Dokumentation
+Node crypto/Buffer und Test-Gate-Typen, keine konkrete Core-/Pluginimplementation
+importiert. Infrastruktur: TS-fähige Node-Runtime bzw. Buildpfad; autorisierter
+Artefaktspeicher für Revisionen. Resultpfad maximal 2048 UTF-8-Bytes. Gesamtprompt
+begrenzt runtime-dispatch/openclaw.ts:119–129. Prompttext ist weder Isolation
+noch Pfadautorisierung. Redaktion: Tiefe 16, Arrays/Objekte 1000 Einträge,
+Strings 65536 Zeichen, sensible Schlüsselnamen maskiert. Freitextgeheimnisse
+unter anderen Schlüsseln werden nicht erkannt; kein Beweis sicherer Rohlogs.
+Keine Retention außer in aufrufenden Stores.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+Implementation-Revisionauflösung koppelt allgemeines SDK an konkreten Namespace/
+Status. Langfristig expliziten kleinen Source-Evidence-Vertrag herauslösen,
+keinen zusätzlichen Kompatibilitätspfad. SDK, Worker-/Observabilityverträge,
+Snapshotcore und ungenutztes prompt-contract serialisieren unterschiedlich.
+Ein versionsbewusster gemeinsamer Datenvertrag ist einfacher als stilles
+Austauschen unter bereits persistierten Digests.
 
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts`
-- `skills/common/plugins/wait-store/tests/live-function.test.ts`
-- `skills/nova/plugins/human-approval/tests/architecture-approval.unit.test.ts`
-- `skills/nova/plugins/prism-design/tests/live-function.test.ts`
-- `skills/nova/plugins/prism-design/tests/wait.test.ts`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs`
-- `skills/nova/plugins/repository-adapter/tests/live-function.test.ts`
-- `skills/nova/plugins/review/tests/fixtures/review-governor.mjs`
-- `skills/nova/plugins/review/tests/live-function.test.ts`
-- `skills/nova/plugins/review/tests/protocol.unit.test.mjs`
-- `skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs`
-- `skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-context-production.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-governor.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-graph.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-slicing.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs`
-- `skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs`
-- `skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs`
-- `skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs`
-- `skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs`
-- `skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs`
-- `skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs`
-- `skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs`
-- `skills/nova/plugins/review/tests/stage.unit.test.mjs`
-- `tests/verification/contracts/check-pipeline-test-plan-runner.mts`
-- `tests/verification/contracts/check-plugin-system-v2-boundaries.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-phase12.mts`
-- `tests/verification/contracts/check-runtime-bundle-isolation.mjs`
-- `tests/verification/deployment/check-deployment-truth.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
-- `tests/verification/e2e/support/optional-absence.ts`
-- `tests/verification/reliability/audit-projection.test.mts`
-- `tests/verification/reliability/external-effect-recovery.test.mts`
-- `tests/verification/reliability/lifecycle.test.mts`
-- `tests/verification/reliability/observer-recovery.test.mts`
-- `tests/verification/reliability/repair-evidence.test.mts`
-- `tests/verification/reliability/review-candidate.test.mts`
+## 10. Tests und Nachweise
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+Gelesen und unverändert ausgeführt: review-candidate.test.mts (2 echte Git-Repos
+SHA1/SHA256, echter durable Artefaktadapter, echte Reviewvorbereitung; direkt
+zusammengesteckter Context ohne produktive Lease-/Fenceprüfung),
+review-prompt-budget.unit.test.mjs (reale Formatierung/Tokenisierung, kein Agent),
+Generator --check und Plugin-Vertragsskript. Alle vier bestanden.
+SDK-Abschnitt des Boundarytests untersucht, kein kompletter Boundary-Lauf
+behauptet. Keine dedizierte Pakettestsuite für values.ts gefunden.
+Deklarierter Paketbuild **fehlgeschlagen**, PCR-SDK-002.
+[Ausgaben](../evidence/plugin-contract-sdk-tests.txt).
 
-- `docs/DOCUMENTATION_TOPIC_MAP.md`
-- `docs/architecture/README.md`
-- `docs/architecture/pipeline-runtime-packaging.md`
-- `docs/architecture/plugin-system-vision.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/site/extend/README.md`
-- `skills/common/plugin-runtime/sdk/README.md`
+## 11. Dokumentation und historische Befunde
 
-## Aufrufer- und Abhängigkeitsbelege
+SDK-README unvollständig: keine Serialisierungs-/Redaktionsgarantien, Fehlercodes,
+Source-Revision-/Agent-Task-API oder Buildanleitung. Testing-Helfer beschränken
+sich auf assertNever. pipeline-reliability-remediation.md:109–111 beschreibt
+Artefaktbindung/Reparaturbaseline: durch Originalcode und erneut gelaufene
+Git-Tests bestätigt, keine Agent-Endabnahme. „Canonical“ darf nicht ungeprüft als
+portables JSON-Normalisierungsprotokoll verstanden werden.
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+## 12. Befunde
 
-- `charts/kubeclaw/files/config/knip.json:273`
-- `docs/DOCUMENTATION_TOPIC_MAP.md:12`
-- `docs/architecture/README.md:15`
-- `docs/architecture/pipeline-runtime-packaging.md:101`
-- `docs/architecture/plugin-system-vision.md:488`
-- `docs/blueprint/04-evidence-matrix.md:23`
-- `docs/site/extend/README.md:6`
-- `package.json:13`
-- `package.json:156`
-- `packaging/runtime/package-ownership.json:9`
-- `scripts/check-runtime-package-ownership.mjs:74`
-- `scripts/check-runtime-package-ownership.mjs:89`
-- `scripts/generate-knip-config.mjs:127`
-- `scripts/generate-plugin-sdk-types.mjs:6`
-- `scripts/generate-plugin-sdk-types.mjs:29`
-- `skills/buster/engine/package.json:16`
-- `skills/buster/engine/test-gates/browser-axe-runtime.ts:5`
-- `skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:11`
-- `skills/buster/engine/test-gates/browser-playwright-runtime.ts:11`
-- `skills/buster/engine/test-gates/browser-visual-runtime.ts:8`
-- `skills/buster/engine/test-gates/composite-capability-runtime.ts:2`
-- `skills/buster/engine/test-gates/container-build-runtime.ts:6`
-- `skills/buster/engine/test-gates/direct-command-runtime.ts:5`
-- `skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:6`
-- `skills/buster/engine/test-gates/provider-loader.ts:9`
-- `skills/buster/engine/test-gates/report-adapter-runtime.ts:9`
-- `skills/buster/engine/test-gates/runner.ts:30`
-- `skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:4`
-- `skills/buster/plugins/axe/package.json:1`
-- `skills/common/plugin-runtime/foundation/isolation/runner.ts:6`
+### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten
 
-## Offene Prüfpfade
+- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;
+  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.
+- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;
+  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,
+  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.
+- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;
+  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich
+  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).
+- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads
+  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein
+  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,
+  noch nicht durch mehrere Umgebungen gemessen.
+- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,
+  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und
+  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;
+  kein stiller Fallbackserializer.
+- **Regression:** Originalserializer-Negativ-/Localevektoren; echter
+  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes
+  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.
+  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,
+  nicht denselben Laufzeitpfad.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+### PCR-SDK-002 — Deklarierter Workspacebuild nicht ausführbar
+
+- **Niedrig, nachgewiesener Defekt:** Entwickler-/Paketbuild blockiert;
+  Root-Buildpfad nicht pauschal als defekt eingestuft.
+- **Beleg:** package.json:6 ruft `tsc --noEmit -p tsconfig.json`; vorhanden ist
+  nur tsconfig.build.json. Root package.json:156 nutzt letztere.
+- **Auslöser/Auswirkung:** `npm run build --workspace @kubeclaw/plugin-sdk`
+  endet mit TS5058/Exit 1. Fehlende Konfiguration, kein fehlendes externes Tool.
+- **Ursachenbehebung:** Paket-/Rootscript auf beabsichtigte gemeinsame
+  Buildkonfiguration ausrichten, keine divergierende Konfigkopie.
+- **Regression:** beide echten Buildaufrufe aus sauberem Checkout; deklarierte
+  Ausgaben bzw. beabsichtigte reine Typechecks überprüfen.
+
+Offene Nachweise: Negativregressionen nach späterer Reparatur, isolierte Agent-/
+Providerlaufzeit und Clean-Install. Keine fehlenden SDK-Implementierungsprüfpfade.

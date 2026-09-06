@@ -11,13 +11,13 @@ CI-Auftrag. Der Umfang wird bei Fortsetzung nicht verkürzt.
 
 | Status | Anzahl | Komponenten |
 |---|---:|---|
-| abgeschlossen | 5 | lib.prompt-contract, nova.state, kubeclaw.state-store, contract.worker, worker.core |
+| abgeschlossen | 8 | lib.prompt-contract, nova.state, kubeclaw.state-store, contract.worker, worker.core, contract.plugin-system, lib.sdk, contract.agent-events |
 | teilweise geprüft | 3 | foundation.observability, prism.service-worker, prism.service-control |
-| ungeprüft | 85 | alle weiteren Einträge des Inventars |
+| ungeprüft | 82 | alle weiteren Einträge des Inventars |
 
 Abgeschlossen bedeutet Implementierung/Schnittstellen/Tests untersucht, nicht
 fehlerfrei, alle vorgeschlagenen Regressionstests ausgeführt oder live bestätigt.
-Die 85 ungeprüften Dateien enthalten Registrierungs-/Suchbelege und Einstiege,
+Die 82 ungeprüften Dateien enthalten Registrierungs-/Suchbelege und Einstiege,
 keine automatisch erzeugten fachlichen Abschlussurteile.
 
 ## Offene Befunde
@@ -67,7 +67,7 @@ Mocks ersetzt. Historisch berichtete CI-Ergebnisse gelten nur für ihren Commit.
    skripte außerhalb skills und Spike-/Legacy-Nutzung überprüfen. Buster-Engine
    ggf. sinnvoll unterteilen. responsibility/infra-Zuordnungen ungeprüfter Einheiten
    sind noch offen. Das Inventar darf noch nicht als vollständig bezeichnet werden.
-2. Gemeinsame Vertragsreviews fortsetzen: plugin-system/v2 + SDK, Test-Gate,
+2. Gemeinsame Vertragsreviews fortsetzen: Test-Gate,
    Observability/Agent-Events/Telemetry/Prism. Worker-Vertrag ist abgeschlossen.
 3. Foundation-Persistenz: `durable-attempts.ts` vollständig lesen (767 Zeilen),
    Completion/Evidence-Commitpunkte gegen Buster-Runner und Nova-Reconciler prüfen.
@@ -76,7 +76,7 @@ Mocks ersetzt. Historisch berichtete CI-Ergebnisse gelten nur für ihren Commit.
 4. Nova Effects/Execution/Lifecycle/Telemetry systematisch abschließen. Bisher
    gelesene Abhängigkeitsabschnitte sind in nova.state verzeichnet; kein Abschluss
    dieser übergeordneten Komponenten behauptet. Mutex-Befund dort verlinken.
-5. Alle 85 übrigen Einheiten einzeln weiterbearbeiten. Prism-Control hat nur
+5. Alle 82 übrigen Einheiten einzeln weiterbearbeiten. Prism-Control hat nur
    runWorker-Abgleich, Prism-Worker den Service-/Executor-Pfad: Engine, Storage,
    Browser-Lifecycle, Tests und weitere Control-Routen bleiben offen.
 
@@ -101,3 +101,12 @@ nur auf kommende Komponenten anwenden. Baseline vor Weiterarbeit vergleichen;
 abweichende Codeversionen gezielt nachprüfen. Nur docs/review schreiben;
 Branch vor Update erneut lesen, nie force-pushen. Commits mit [skip ci].
 Keine privaten Betriebswerte/Secrets übernehmen. Infrastruktur bleibt Folgeauftrag.
+
+Fortschritt bei Wiederaufnahme: contract.plugin-system und lib.sdk abgeschlossen.
+PCR-CONTRACT-PLUGIN-001 (leeres Manifest), PCR-SDK-001 (ungültige/kollidierende
+Serialisierung), PCR-SDK-002 (Paketbuild TS5058) neu. Vier zugehörige Prüfkommandos
+bestanden, Paketbuild fehlgeschlagen; Logs und Reproduktion in evidence/.
+
+contract.agent-events abgeschlossen: API/Producerseite/fehlende Consumerzuordnung
+geprüft; PCR-AGENT-CONTRACT-001 Stacküberlauf mit echter 20-KiB-JSON-Eingabe.
+Pakettest und Typecheck bestanden. Generierte Extensionkopie lokal nicht vorhanden.

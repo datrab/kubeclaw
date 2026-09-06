@@ -56,14 +56,14 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [kubeclaw.size-budget](components/kubeclaw.size-budget.md) | Ausgeliefert in: buster; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.tailscale-exposure](components/kubeclaw.tailscale-exposure.md) | Ausgeliefert in: buster; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.visual](components/kubeclaw.visual.md) | Ausgeliefert in: buster; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [contract.plugin-system](components/contract.plugin-system.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [contract.plugin-system](components/contract.plugin-system.md) | Aktiv: Registryparser und SDK-Generator; fünf Registrierungssurfaces | unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.worker](components/contract.worker.md) | Buster/Prism Envelope + Executor; Binding-/Trust-Helfer nur testgenutzt | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.test-gate](components/contract.test-gate.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.observability](components/contract.observability.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [contract.agent-events](components/contract.agent-events.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [contract.agent-events](components/contract.agent-events.md) | Extension-Producervertrag; Redis-Ingressconsumer im Repository nicht gefunden | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.telemetry](components/contract.telemetry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [contract.prism](components/contract.prism.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [lib.sdk](components/lib.sdk.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [lib.sdk](components/lib.sdk.md) | Aktiv: Core-Kontexte, Plugins, Revisionauflösung und Agent-Task-Formatierung | unvollständig | abgeschlossen | `85ddfcbf` |
 | [foundation.registry](components/foundation.registry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [foundation.config](components/foundation.config.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [foundation.isolation](components/foundation.isolation.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |

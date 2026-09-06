@@ -1,0 +1,40 @@
+$ node tests/verification/contracts/check-plugin-system-v2-contracts.mjs
+{"ok":true,"contract":"pipeline-plugin-v2"}
+
+exit=0
+$ node scripts/generate-plugin-sdk-types.mjs --check
+
+exit=0
+$ node --test tests/verification/reliability/review-candidate.test.mts
+✔ module review binds real sha1 implementation artifacts, retains its repair baseline and rejects unrelated HEAD (755.515871ms)
+✔ module review binds real sha256 implementation artifacts, retains its repair baseline and rejects unrelated HEAD (656.384913ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1805.7575
+
+exit=0
+$ node skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs
+{"ok":true,"suite":"review-prompt-budget"}
+
+exit=0
+$ npm run build --workspace @kubeclaw/plugin-sdk
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> tsc --noEmit -p tsconfig.json
+
+error TS5058: The specified path does not exist: 'tsconfig.json'.
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /workspace/scratch/4e25cf57c177/kubeclaw/skills/common/plugin-runtime/sdk
+npm error workspace @kubeclaw/plugin-sdk
+npm error location /workspace/scratch/4e25cf57c177/kubeclaw/skills/common/plugin-runtime/sdk
+npm error command failed
+npm error command sh -c tsc --noEmit -p tsconfig.json
+
+exit=1

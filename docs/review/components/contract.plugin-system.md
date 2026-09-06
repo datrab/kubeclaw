@@ -1,54 +1,98 @@
-# contract.plugin-system
+# contract.plugin-system — Plugin-Protokoll v2
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Schema Revision 2. Code- und Vertragsprüfung; kein Live-Pipeline-Nachweis.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und tatsächliche Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Die vollständige `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json`
+ist die Quelle für Manifest-, Registrierungs-, Stage-, Effekt-, Zustands- und
+Beobachterformen. Kein eigener Dienst oder Plugin mit Nebenwirkungen.
+`scripts/generate-plugin-sdk-types.mjs` liest die öffentlichen `$defs` für das SDK.
+`foundation/registry/schema.ts` lädt dieselbe Datei, kompiliert Ajv2020 strict +
+formats und verwendet sie in parsePluginManifest/validateContractValue.
+`discovery.ts:131–159` liest JSON vor ausführbarem Code; `build.ts:221–295`
+verarbeitet fünf Registrierungssurfaces. Aktiv, keine bloße Zielbeschreibung
+oder abgelöste v1-Parallelimplementierung.
 
-- `skills/common/plugin-runtime/contracts/plugin-system/v2`
+## 2. Eingaben, Ausgaben und Gegenstellen
 
-Entrypoints: `package.json exports / Schema-Dateien`.
+Gelesen: alle 1061 Schemazeilen, README, kompletter Vertragstest und Generator.
+Geschlossene äußere Protokollobjekte, getrennte StageResult-Varianten;
+jsonObject, Payload, Config und Reason.details sind bewusst offene Nutzdaten.
+„Alle Objekte geschlossen“ gilt nicht rekursiv. Module-/Schemapfade sind relativ;
+Dateikanonisierung und Symlinkgrenzen erzwingt zusätzlich Registry.build.
+Manifest → Parser → Registry: stages/observers/adapters sind Pflichtarrays,
+testProviders/reportAdapters optional. build überführt Providerdeklarationen
+in Test-Gate-Verträge mit Package-Digest und validiert sie erneut.
+Core.stage-executor prüft das registrierte resultSchema; Core.engine-admin
+validiert administrativeReopenDecision. SDK-Typen sind keine Laufzeitvalidatoren.
+Schema verlangt IDs/Zeitformate, aber nicht deren zustandsabhängige Wahrheit.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3–6. Zustand, Fehler, Zeit und Wiederaufnahme
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Der Vertrag persistiert und sendet selbst nichts. EffectId/IdempotencyKey,
+Attempt/Lease/Wait-Identitäten, Quittungsstatus und Journal-/Checkpointsequenzen
+sind Daten für Core. Positive Zahlen sind keine praktischen Obergrenzen.
+Retry-/Remediationbudget, Zeitordnung, Signalberechtigung, monotone Fences,
+abgelaufene Leases und verlorene ACKs sind nicht mit Schema allein bewiesen;
+README nennt das ausdrücklich. Keine automatische Wiederholung oder
+Kompatibilitätskonvertierung. Persistierte v2-Daten erfordern bei Änderungen
+kontrollierte Migration; derselbe Versionsname garantiert keine Kompatibilität.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 7–9. Vertrauen, Ressourcen und Architektur
 
-## Tests und Dokumentation
+Provenance trägt Source, Digest, TrustScope und TrustEvidence; echte
+Attestationsprüfung/Allowlist bleibt Registry-Aufgabe. Plugin-Eventregex
+verlangt eine Namespaceform; Core.context prüft den tatsächlichen Pluginpräfix
+und Run. artifactRef verbietet äußere Hostpfadfelder, garantiert aber weder
+Existenz noch unveränderte Bytes. Infrastruktur: gemeinsam ausgeliefertes
+Schema/SDK und vertrauenswürdige Registry; keine eigene Transport-/Persistenz-
+infrastruktur. ID-/Pfadlängen und Providerports sind begrenzt, generische
+Arrays/Payloads nicht insgesamt byte-/tiefenbegrenzt. Das bleibt Eingangskontrolle.
+Eine Schemaquelle plus relationale Validatoren ist sinnvoll, keine zweite
+handgepflegte Form als Reparatur. Bedingte Schemas werden vom Typgenerator nur
+teilweise zu TypeScript-Garantien, siehe [SDK](lib.sdk.md).
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 10. Tests und tatsächliche Aussage
 
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs`
+`check-plugin-system-v2-contracts.mjs` vollständig untersucht und unverändert
+bestanden: reale Ajv-Validierung gültiger Hauptformen, falsche Versionen,
+Legacyfelder, Pfadescape, fremde Ergebnisfelder, fehlende Fehler-/Trustbelege.
+Generator --check bestanden. Nicht jedes `$defs` besitzt eigene Negativfälle;
+leere Registrierungsmengen und optionale anyOf-Zweige fehlten. Kein
+Ausführungstest der Aktivierung, Leasekontrolle oder Signalsicherheit.
+[Protokoll](../evidence/plugin-contract-sdk-tests.txt).
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 11. Dokumentationsabgleich
 
-- `docs/architecture/pipeline-test-gate-implementation-plan.md`
-- `docs/architecture/plugin-system-vision.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/site/extend/README.md`
-- `docs/site/extend/first-plugin.md`
-- `skills/common/plugin-runtime/contracts/plugin-system/v2/README.md`
+README als Zuständigkeitsbeschreibung vorhanden, zu Test-Provider/Report-Adapter,
+decisionFacts/stageLifecycle unvollständig; „target runtime“ verschleiert die
+aktive Verwendung. `docs/site/extend/first-plugin.md` zeigt ein gültiges Beispiel;
+seine Auswahl einer Surface sollte der Parser erzwingen.
+`plugin-system-vision.md:542–572` trennt korrekt Discovery/Aktivierung, fasst
+aber offene Nutzdaten zu pauschal als geschlossene Objekte zusammen. Kein
+ununtersuchter historischer Laufzeitaudit als bestätigt übernommen.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 12. Befund und Verifikation
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+### PCR-CONTRACT-PLUGIN-001 — Leeres Plugin passiert die Manifestvalidierung
 
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:66`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:110`
-- `docs/architecture/plugin-system-vision.md:572`
-- `docs/blueprint/04-evidence-matrix.md:23`
-- `docs/site/extend/README.md:6`
-- `docs/site/extend/first-plugin.md:6`
-- `packaging/runtime/package-ownership.json:11`
-- `scripts/docs-blueprint-generate.mjs:183`
-- `scripts/docs-publication.mjs:349`
-- `scripts/generate-plugin-sdk-types.mjs:5`
-- `scripts/generate-plugin-sdk-types.mjs:20`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:6`
+- **Niedrig, nachgewiesener Defekt:** begrenzter Konfigurationsfehler, kein
+  Sicherheitsbypass daraus abgeleitet.
+- **Beleg:** Schema pluginManifest.anyOf:335–341; Zweige für optionale
+  testProviders/reportAdapters ohne required. Parser schema.ts:44–61 übernimmt
+  Schemaentscheid; build.ts:231–295 fügt Paket hinzu, überspringt leere Schleifen.
+- **Auslöser/Ablauf:** gültige Paketmetadaten mit drei leeren Pflichtarrays und
+  ohne optionale Arrays. Optionaler anyOf-Zweig ist bei Abwesenheit wahr.
+- **Auswirkung:** leeres Plugin wird nicht an der vorgesehenen Grenze abgewiesen;
+  fehlende Funktion fällt erst beim späteren Aufrufer auf.
+- **Ursachenbehebung:** jeder anyOf-Zweig muss die zugehörige nichtleere Surface
+  auch als Pflichtfeld verlangen; keine Registry-Kompatibilitätssonderregel.
+- **Echter Nachweis:** [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs)
+  ruft Originalparser auf; [Ausgabe](../evidence/plugin-contract-sdk-repro.txt).
+  Regression: Matrix fehlender/leerer/gefüllter Arrays gegen denselben Parser;
+  alle fünf einzelnen Surfaces müssen weiterhin gültig sein.
 
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+Weitere offene Fragen sind implementationsabhängige Invarianten, keine fehlenden
+Prüfpfade dieses Datenvertrags. Zuständige Core-Reviews bleiben separat.

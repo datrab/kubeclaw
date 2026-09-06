@@ -25,7 +25,7 @@ jedes relevanten Übergangs gemeinsam prüfen. Vollständige Projekt-E2E-Traces
 sind ein Folgeauftrag. Infrastruktur nur als Abhängigkeit/Annahme erfassen;
 auffällige Infrastrukturfragen separat zur Folgeprüfung notieren.
 
-## Lebendes gemeinsames Review-Schema (Revision 2)
+## Lebendes gemeinsames Review-Schema (Revision 3)
 
 Jede fachlich abgeschlossene Review-Datei muss folgende Kriterien konkret
 behandeln; nicht anwendbare Kriterien begründen:
@@ -52,6 +52,17 @@ pro Versuch und Ergebnisbindung beim Empfänger prüfen. Revision 2: diese Krite
 wurden in worker.core, contract.worker und den begonnenen Prism-Dienstreviews
 berücksichtigt; state-store/nova.state/prompt-contract enthalten keine solchen
 Worker-Hooks und benötigen deshalb keine Rückstufung.
+Revision 3: Bei JSON-/Digestgrenzen auch Nicht-JSON-Werte, Sparsearrays, Getter,
+Zyklen, Tiefen-/Knotenlimits und sprachabhängige Sortierung untersuchen. Bytebudget
+nach Serialisierung schützt nicht vor vorherigem Ressourcenverbrauch. Deklarierte
+Paketbefehle und generierte Kopien auf tatsächliche Voraussetzungen prüfen.
+Nachprüfung am unveränderten Code: prompt-contract besitzt Tiefen-/Eintragslimits
+und seinen bereits erfassten Propertyverlust; nova.state serialisiert natives JSON
+und bleibt durch PCR-STATE-001 belastet; state-store nutzt den getrennten strikteren
+Observability-Serializer. Worker-Core prüft Tiefe/Knoten vor Ausführung; sein Vertrag
+setzt JSON-Wirewerte voraus. SDK/Pluginvertrag/Agentvertrag wurden bereits mit
+diesen Kriterien geprüft. Deshalb keine unbemerkte Rückstufung; noch ungeprüfte
+Serializer-/Empfängerpfade werden bei ihren Eigentümern weiterverfolgt.
 Bei neuer Erkenntnis Schema hier erweitern; betroffene bereits abgeschlossene
 Reviews explizit zur Nachprüfung markieren und ihren Status aktualisieren.
 
