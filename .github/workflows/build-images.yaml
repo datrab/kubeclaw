@@ -39,6 +39,8 @@ jobs:
               - '.dockerignore'
               - 'versions.json'
               - 'scripts/versions.mjs'
+              - 'scripts/check-role-image.sh'
+              - 'scripts/prepare-image-build-runner.sh'
               - 'tsconfig.base.json'
               - 'package.json'
               - 'package-lock.json'

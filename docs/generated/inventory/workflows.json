@@ -246,7 +246,8 @@
       "schedules": [],
       "jobs": [
         "image",
-        "buster-build"
+        "buster-build",
+        "application-builds"
       ],
       "commandAndActionRefs": [
         "bash scripts/prepare-image-build-runner.sh",
@@ -268,13 +269,16 @@
       "schedules": [],
       "jobs": [
         "policy",
-        "envoy"
+        "envoy",
+        "upstream-checksums"
       ],
       "commandAndActionRefs": [
         "bash tests/verification/deployment/check-envoy-image.sh \"$(node -p 'require(\"./versions.json\").infrastructure.envoy')",
+        "node scripts/updates/check-upstream-refresh.mjs",
         "npm ci --ignore-scripts --no-audit --no-fund",
         "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v5"
+        "uses: actions/setup-node@v5",
+        "uses: azure/setup-helm@v4"
       ]
     }
   ]

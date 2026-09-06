@@ -12,6 +12,7 @@ const next = JSON.parse(original);
 const before = JSON.parse(execFileSync('git', ['show', 'HEAD:versions.json'], { encoding: 'utf8' }));
 const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 async function get(url, headers = {}) {
+  if (new URL(url).hostname === 'api.github.com' && process.env.RENOVATE_TOKEN) headers = { ...headers, Authorization: `Bearer ${process.env.RENOVATE_TOKEN}` };
   const response = await fetch(url, { headers, signal: AbortSignal.timeout(120000) });
   if (!response.ok) throw new Error(`${response.status}: ${url}`);
   return response;
@@ -74,18 +75,24 @@ for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL']) {
   if (args[`${tool}_VERSION`] === before.buildArgs[`${tool}_VERSION`]) continue;
   const version = args[`${tool}_VERSION`].replace(/^v/, '');
   for (const arch of ['amd64', 'arm64']) {
+    console.log(`Verifying upstream ${tool} ${version} linux/${arch}`);
     let url, digest;
     if (tool === 'GO') {
       const releases = await (await get('https://go.dev/dl/?mode=json&include=all')).json();
       const artifact = releases.find(r => r.version === `go${version}`)?.files.find(f => f.os === 'linux' && f.arch === arch && f.kind === 'archive');
       if (!artifact) throw new Error(`Go release unavailable: ${version}/${arch}`);
       url = `https://go.dev/dl/${artifact.filename}`; digest = artifact.sha256;
+    } else if (tool === 'SHFMT') {
+      const release = await (await get(`https://api.github.com/repos/mvdan/sh/releases/tags/v${version}`)).json();
+      const asset = release.assets?.find(a => a.name === `shfmt_v${version}_linux_${arch}`);
+      if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published shfmt digest: ${version}/${arch}`);
+      url = asset.browser_download_url; digest = asset.digest.slice(7);
     } else if (tool === 'KUBECTL') {
       url = `https://dl.k8s.io/release/v${version}/bin/linux/${arch}/kubectl`; digest = (await text(`${url}.sha256`)).trim();
     } else {
-      const names = { SHFMT: `shfmt_v${version}_linux_${arch}`, TERRAFORM: `terraform_${version}_linux_${arch}.zip`, TFLINT: `tflint_linux_${arch}.zip`, TRIVY: `trivy_${version}_Linux-${arch === 'amd64' ? '64bit' : 'ARM64'}.tar.gz` };
-      const bases = { SHFMT: `https://github.com/mvdan/sh/releases/download/v${version}`, TERRAFORM: `https://releases.hashicorp.com/terraform/${version}`, TFLINT: `https://github.com/terraform-linters/tflint/releases/download/v${version}`, TRIVY: `https://github.com/aquasecurity/trivy/releases/download/v${version}` };
-      const lists = { SHFMT: `sha256sums.txt`, TERRAFORM: `terraform_${version}_SHA256SUMS`, TFLINT: 'checksums.txt', TRIVY: `trivy_${version}_checksums.txt` };
+      const names = { TERRAFORM: `terraform_${version}_linux_${arch}.zip`, TFLINT: `tflint_linux_${arch}.zip`, TRIVY: `trivy_${version}_Linux-${arch === 'amd64' ? '64bit' : 'ARM64'}.tar.gz` };
+      const bases = { TERRAFORM: `https://releases.hashicorp.com/terraform/${version}`, TFLINT: `https://github.com/terraform-linters/tflint/releases/download/v${version}`, TRIVY: `https://github.com/aquasecurity/trivy/releases/download/v${version}` };
+      const lists = { TERRAFORM: `terraform_${version}_SHA256SUMS`, TFLINT: 'checksums.txt', TRIVY: `trivy_${version}_checksums.txt` };
       url = `${bases[tool]}/${names[tool]}`; digest = await checksum(`${bases[tool]}/${lists[tool]}`, names[tool]);
     }
     args[`${tool}_SHA256_${arch.toUpperCase()}`] = await verified(url, digest);

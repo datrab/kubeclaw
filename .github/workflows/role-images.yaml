@@ -84,3 +84,21 @@ jobs:
           # An isolated disposable CI container permits nested rootless namespaces.
           # This is not a deployment security-context acceptance test.
           docker run --rm --privileged --network host --entrypoint bash             -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro"             kubeclaw-buster:proof /proof.sh
+  application-builds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [archviewer, namespace-controller, prism-control, prism-studio, prism-worker, prism-ingestion]
+    steps:
+      - uses: actions/checkout@v6
+      - run: bash scripts/prepare-image-build-runner.sh
+      - uses: docker/setup-buildx-action@v4
+      - name: Build the actual application image, including its native build gates
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.${{ matrix.image }}
+          cache-from: type=gha,scope=proof-${{ matrix.image }}
+          cache-to: type=gha,scope=proof-${{ matrix.image }},mode=min,ignore-error=true

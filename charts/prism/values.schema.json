@@ -1,15 +1,201 @@
 {
-  "$schema":"https://json-schema.org/draft/2020-12/schema",
-  "type":"object",
-  "$defs":{"image":{"type":"object","required":["repository","digest","pullPolicy"],"properties":{"repository":{"type":"string","minLength":1},"digest":{"type":"string","pattern":"^sha256:[0-9a-f]{64}$"},"pullPolicy":{"enum":["IfNotPresent","Never"]}},"additionalProperties":false}},
-  "required":["images","imagePullSecrets","control","studio","worker","postgresql","secrets","artifactStorage"],
-  "properties":{
-    "images":{"type":"object","required":["control","studio","worker","ingestion"],"properties":{"control":{"$ref":"#/$defs/image"},"studio":{"$ref":"#/$defs/image"},"worker":{"$ref":"#/$defs/image"},"ingestion":{"$ref":"#/$defs/image"}},"additionalProperties":false},
-    "imagePullSecrets":{"type":"array","minItems":1,"items":{"type":"object","required":["name"],"properties":{"name":{"type":"string","minLength":1}},"additionalProperties":false}},
-    "control":{"type":"object"},"studio":{"type":"object"},"worker":{"type":"object"},
-    "ingestion":{"type":"object"},"postgresql":{"type":"object"},"secrets":{"type":"object"},
-    "artifactStorage":{"type":"object"},
-    "workerTrust":{"type":"object","required":["spiffe"],"properties":{"spiffe":{"type":"object","required":["enabled","trustDomain","novaNamespace","novaServiceAccount","agentNamespace","agentServiceAccount","socketPath","csiDriver","envoy"],"properties":{"enabled":{"type":"boolean"},"trustDomain":{"type":"string","pattern":"^[a-z0-9.-]+$"},"novaNamespace":{"type":"string","pattern":"^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"},"novaServiceAccount":{"type":"string","pattern":"^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"},"agentNamespace":{"type":"string","pattern":"^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"},"agentServiceAccount":{"type":"string","pattern":"^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"},"socketPath":{"type":"string","pattern":"^/"},"csiDriver":{"type":"string","minLength":1},"envoy":{"type":"object","required":["repository","tag","pullPolicy","resources"],"properties":{"repository":{"type":"string","minLength":1},"tag":{"type":"string","minLength":1},"pullPolicy":{"enum":["Always","IfNotPresent","Never"]},"resources":{"type":"object"}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},
-    "tailscale":{"type":"object"}
-  },"additionalProperties":false
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$defs": {
+    "image": {
+      "type": "object",
+      "required": [
+        "repository",
+        "digest",
+        "pullPolicy"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "pullPolicy": {
+          "enum": [
+            "IfNotPresent",
+            "Never"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "images",
+    "imagePullSecrets",
+    "control",
+    "studio",
+    "worker",
+    "postgresql",
+    "secrets",
+    "artifactStorage"
+  ],
+  "properties": {
+    "images": {
+      "type": "object",
+      "required": [
+        "control",
+        "studio",
+        "worker",
+        "ingestion"
+      ],
+      "properties": {
+        "control": {
+          "$ref": "#/$defs/image"
+        },
+        "studio": {
+          "$ref": "#/$defs/image"
+        },
+        "worker": {
+          "$ref": "#/$defs/image"
+        },
+        "ingestion": {
+          "$ref": "#/$defs/image"
+        }
+      },
+      "additionalProperties": false
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "control": {
+      "type": "object"
+    },
+    "studio": {
+      "type": "object"
+    },
+    "worker": {
+      "type": "object"
+    },
+    "ingestion": {
+      "type": "object"
+    },
+    "postgresql": {
+      "type": "object"
+    },
+    "secrets": {
+      "type": "object"
+    },
+    "artifactStorage": {
+      "type": "object"
+    },
+    "workerTrust": {
+      "type": "object",
+      "required": [
+        "spiffe"
+      ],
+      "properties": {
+        "spiffe": {
+          "type": "object",
+          "required": [
+            "enabled",
+            "trustDomain",
+            "novaNamespace",
+            "novaServiceAccount",
+            "agentNamespace",
+            "agentServiceAccount",
+            "socketPath",
+            "csiDriver",
+            "envoy"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "trustDomain": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+$"
+            },
+            "novaNamespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "novaServiceAccount": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "agentNamespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "agentServiceAccount": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "socketPath": {
+              "type": "string",
+              "pattern": "^/"
+            },
+            "csiDriver": {
+              "type": "string",
+              "minLength": 1
+            },
+            "envoy": {
+              "type": "object",
+              "required": [
+                "repository",
+                "tag",
+                "pullPolicy",
+                "resources",
+                "digest"
+              ],
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tag": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pullPolicy": {
+                  "enum": [
+                    "Always",
+                    "IfNotPresent",
+                    "Never"
+                  ]
+                },
+                "resources": {
+                  "type": "object"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "tailscale": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
 }

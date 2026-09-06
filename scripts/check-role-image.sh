@@ -62,6 +62,20 @@ if [[ "$role" == nova ]]; then
   terraform version -json
   go version
   tsc --version
+  proof="$(mktemp -d)"
+  printf '#!/bin/sh\necho "$1"\n' > "$proof/good.sh"
+  printf '#!/bin/sh\necho $1\n' > "$proof/bad.sh"
+  shellcheck "$proof/good.sh"
+  if shellcheck "$proof/bad.sh"; then echo 'Shellcheck accepted an unquoted expansion' >&2; exit 1; fi
+  printf 'FROM scratch\nCOPY payload /payload\n' > "$proof/Dockerfile"
+  hadolint "$proof/Dockerfile"
+  printf 'FROM debian:bookworm-slim\nRUN apt-get update\n' > "$proof/Dockerfile.bad"
+  if hadolint "$proof/Dockerfile.bad"; then echo 'Hadolint accepted the defective Dockerfile' >&2; exit 1; fi
+  printf 'const value: number = 1;\n' > "$proof/good.ts"
+  printf 'const value: number = "wrong";\n' > "$proof/bad.ts"
+  tsc --noEmit --skipLibCheck "$proof/good.ts"
+  if tsc --noEmit --skipLibCheck "$proof/bad.ts"; then echo 'TypeScript accepted a type error' >&2; exit 1; fi
+  rm -rf "$proof"
   test ! -e /app/dist/extensions/kubeclaw-prism
 else
   for executable in semgrep ruff mypy shellcheck buildctl terraform tflint; do

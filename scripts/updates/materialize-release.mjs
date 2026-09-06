@@ -12,7 +12,7 @@ fs.mkdirSync('releases/values', { recursive: true });
 for (const role of ['nova', 'buster', 'prism-agent', 'prism']) {
   const values = yaml.load(fs.readFileSync(`my-values/${role}-values.yaml`, 'utf8'));
   if (role === 'prism') {
-    for (const service of ['control', 'studio', 'worker', 'ingestion']) values.images[service] = object(`prism-${service}`);
+    for (const service of ['control', 'studio', 'worker', 'ingestion']) { const image = object(`prism-${service}`); delete image.tag; values.images[service] = image; }
   } else {
     values.image = object(role === 'buster' ? 'buster-gateway' : role);
     for (const container of values.extraContainers ?? []) {
