@@ -1,10 +1,13 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c
+
 # =============================================================================
-# KubeClaw General — Root Environment for Nova, Forge, Echo
+# KubeClaw Nova — Root Environment for Nova, Forge, Echo
 # =============================================================================
 
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
 
-FROM moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c AS buildkit-client
+FROM ${BUILDKIT_BASE} AS buildkit-client
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE}
@@ -60,7 +63,7 @@ COPY --from=buildkit-client /usr/bin/buildctl /usr/local/bin/buildctl
 
 # Locked JavaScript runtime and verification tools.
 
-COPY docker/general-tools/package.json docker/general-tools/package-lock.json /opt/kubeclaw-tools/
+COPY docker/nova-tools/package.json docker/nova-tools/package-lock.json /opt/kubeclaw-tools/
 
 RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
 && /opt/kubeclaw-tools/node_modules/.bin/depcruise --version \
@@ -99,6 +102,16 @@ RUN pip install --break-system-packages --no-cache-dir \
 # Pinned Go toolchain and Go-native analyzers.
 
 ARG TARGETARCH
+ARG GO_SHA256_AMD64=5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053
+ARG GO_SHA256_ARM64=fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49
+ARG SHFMT_SHA256_AMD64=fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1
+ARG SHFMT_SHA256_ARM64=32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7
+ARG TERRAFORM_SHA256_AMD64=73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2
+ARG TERRAFORM_SHA256_ARM64=7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d
+ARG TFLINT_SHA256_AMD64=cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537
+ARG TFLINT_SHA256_ARM64=560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb
+ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a
+ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5
 ARG GO_VERSION=1.26.5
 ARG STATICCHECK_VERSION=2026.1
 ARG GOVULNCHECK_VERSION=v1.1.4
@@ -107,8 +120,8 @@ ARG GOCYCLO_VERSION=v0.6.0
 RUN set -eux; \
 arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
 case "$arch" in \
-amd64) go_sha="5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053" ;; \
-arm64) go_sha="fe4789e92b1f33358680864bbe8704289e7bb5fc207d80623c308935bd696d49" ;; \
+amd64) go_sha="${GO_SHA256_AMD64}" ;; \
+arm64) go_sha="${GO_SHA256_ARM64}" ;; \
 *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
 esac; \
 go_archive="go${GO_VERSION}.linux-${arch}.tar.gz"; \
@@ -143,8 +156,8 @@ ARG TRIVY_VERSION=0.74.0
 RUN set -eux; \
 arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
 case "$arch" in \
-amd64) hadolint_arch="x86_64"; shfmt_sha="fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1"; terraform_sha="73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2"; tflint_sha="cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537"; trivy_arch="64bit"; trivy_sha="2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a" ;; \
-arm64) hadolint_arch="arm64"; shfmt_sha="32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7"; terraform_sha="7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d"; tflint_sha="560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb"; trivy_arch="ARM64"; trivy_sha="b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5" ;; \
+amd64) hadolint_arch="x86_64"; shfmt_sha="${SHFMT_SHA256_AMD64}"; terraform_sha="${TERRAFORM_SHA256_AMD64}"; tflint_sha="${TFLINT_SHA256_AMD64}"; trivy_arch="64bit"; trivy_sha="${TRIVY_SHA256_AMD64}" ;; \
+arm64) hadolint_arch="arm64"; shfmt_sha="${SHFMT_SHA256_ARM64}"; terraform_sha="${TERRAFORM_SHA256_ARM64}"; tflint_sha="${TFLINT_SHA256_ARM64}"; trivy_arch="ARM64"; trivy_sha="${TRIVY_SHA256_ARM64}" ;; \
 *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
 esac; \
 tmp="$(mktemp -d)"; \
@@ -235,8 +248,6 @@ RUN mkdir -p /app/skills /opt/terraform-provider-mirror
 COPY tsconfig.base.json /tmp/tsconfig.base.json
 COPY contracts/agent-observability/v1/ /tmp/contracts/agent-observability/v1/
 COPY skills/common/plugins/openclaw-agent-observer/ /tmp/skills/common/plugins/openclaw-agent-observer/
-COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
-COPY skills/prism/server/agent-bridge.mjs /opt/kubeclaw-prism/agent-bridge.mjs
 
 WORKDIR /tmp/skills/common/plugins/openclaw-agent-observer
 
@@ -291,5 +302,5 @@ WORKDIR /app
 
 ENV HOME=/home/node
 
-LABEL org.opencontainers.image.title="KubeClaw General (Root Mode)"
+LABEL org.opencontainers.image.title="KubeClaw Nova (Root Mode)"
 LABEL org.opencontainers.image.description="Root environment for Nova, Forge, and Echo with locked verification tools"

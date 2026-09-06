@@ -1,3 +1,6 @@
+# Version defaults are generated from versions.json; run npm run versions:sync.
+ARG ARCHVIEWER_BASE=docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+
 # =============================================================================
 # KubeClaw Archviewer — Lightweight architecture presentation server
 # =============================================================================
@@ -8,7 +11,7 @@
 # Build:  docker build -f docker/Dockerfile.archviewer -t ghcr.io/datrab/kubeclaw-archviewer:latest .
 # Run:    docker run -p 3456:3456 -v ./designs:/designs ghcr.io/datrab/kubeclaw-archviewer:latest
 # =============================================================================
-FROM docker.io/library/nginx:1.29-alpine
+FROM ${ARCHVIEWER_BASE}
 
 COPY docker/archviewer.nginx.conf /etc/nginx/conf.d/default.conf
 

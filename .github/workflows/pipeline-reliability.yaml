@@ -17,6 +17,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Check central versions and reject drift
+        run: |
+          npm run versions:check
+          node --test tests/verification/deployment/versions.test.mjs
       - name: Typecheck source packages
         run: npm run typecheck:skills
       - name: Exercise journals, process death, real Git, HTTP and Playwright reports
@@ -44,6 +48,8 @@ jobs:
       - uses: azure/setup-helm@v4
       - name: Validate Buster persistent storage manifests
         run: |
+          node tests/verification/deployment/check-role-chart.mjs
+          node tests/verification/deployment/check-deployment-truth.mjs
           helm lint charts/kubeclaw -f my-values/buster-values.yaml
           helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml > /tmp/buster-rendered.yaml
       - name: Build isolation launcher

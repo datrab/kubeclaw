@@ -4,7 +4,8 @@
     ".github/workflows/build-images.yaml",
     ".github/workflows/build-ops-mcp.yaml",
     ".github/workflows/docs-checks.yaml",
-    ".github/workflows/pipeline-reliability.yaml"
+    ".github/workflows/pipeline-reliability.yaml",
+    ".github/workflows/role-images.yaml"
   ],
   "workflows": [
     {
@@ -21,6 +22,7 @@
       ],
       "jobs": [
         "reliability",
+        "role-images",
         "detect-build-inputs",
         "check-base-image",
         "build",
@@ -32,6 +34,7 @@
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
         "uses: ./.github/workflows/pipeline-reliability.yaml",
+        "uses: ./.github/workflows/role-images.yaml",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
         "uses: azure/setup-helm@v4",
@@ -132,12 +135,46 @@
         "npm run plugin-system:sandbox:build",
         "npm run typecheck:skills",
         "npm run verify:reliability",
+        "npm run versions:check",
         "npm test --prefix skills/buster/plugins/${{ matrix.provider }}",
         "npm test --workspace @kubeclaw/plugin-security-providers",
         "sudo apt-get update && sudo apt-get install -y shellcheck shfmt",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
         "uses: azure/setup-helm@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/role-images.yaml",
+      "name": "Role image acceptance",
+      "triggers": [
+        "pull_request",
+        "workflow_dispatch",
+        "workflow_call"
+      ],
+      "pathFilters": [
+        "docker/**",
+        "versions.json",
+        ".dockerignore",
+        "scripts/versions.mjs",
+        "scripts/check-role-image.sh",
+        ".github/workflows/role-images.yaml",
+        "skills/common/plugins/openclaw-agent-observer/**",
+        "contracts/agent-observability/v1/**",
+        "skills/prism/openclaw-plugin/**",
+        "skills/prism/server/agent-bridge.mjs",
+        "charts/kubeclaw/**"
+      ],
+      "schedules": [],
+      "jobs": [
+        "image"
+      ],
+      "commandAndActionRefs": [
+        "node scripts/versions.mjs --check",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: docker/build-push-action@v7",
+        "uses: docker/setup-buildx-action@v4"
       ]
     }
   ]

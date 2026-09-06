@@ -23,7 +23,7 @@ agentRole: "nova"
 image:
   # General image for Nova, Forge, and Echo. Buster production values select
   # the dedicated minimal gateway image instead.
-  repository: ghcr.io/datrab/kubeclaw-general
+  repository: ghcr.io/datrab/kubeclaw-nova
   tag: "latest"
   pullPolicy: Always
 

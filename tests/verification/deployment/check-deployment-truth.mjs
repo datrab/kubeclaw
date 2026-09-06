@@ -23,7 +23,7 @@ const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const prismJobs = read('charts/prism/templates/jobs.yaml');
 const prismValues = read('charts/prism/values.yaml');
 const prismNetworkPolicies = read('charts/prism/templates/networkpolicy.yaml');
-const generalDockerfile = read('docker/Dockerfile.general');
+const novaDockerfile = read('docker/Dockerfile.nova');
 const busterGatewayDockerfile = read('docker/Dockerfile.buster-gateway');
 const busterRuntimeDockerfile = read('docker/Dockerfile.buster-runtime');
 const prismControlDockerfile = read('docker/Dockerfile.prism-control');
@@ -40,8 +40,10 @@ const workflow = read('.github/workflows/build-images.yaml');
 const deploy = read('scripts/deploy.sh');
 const dockerignore = read('.dockerignore');
 const networkPolicies = read('my-values/infra/network-policies.yaml');
-const expectedOpenClawVersion = '2026.9.2';
-const expectedOpenClawDigest = 'sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250';
+const versions = JSON.parse(read('versions.json'));
+const expectedOpenClawVersion = versions.openclaw.version;
+const expectedOpenClawDigest = versions.openclaw.digest;
+const prismAgentDockerfile = read('docker/Dockerfile.prism-agent');
 
 assert.doesNotMatch(prismValues, /kubeclaw-prism-(?:control|studio|worker|ingestion)[^\n]*tag:|pullPolicy:\s*Always/,
   'Prism chart must use digest references without forced pulls');
@@ -114,7 +116,7 @@ assert.equal(
 );
 
 for (const relativePath of [
-  'docker/Dockerfile.general',
+  'docker/Dockerfile.nova',
   'docker/Dockerfile.buster-gateway',
   'docker/Dockerfile.buster-runtime',
   'docker/buster-runtime-entrypoint.sh',
@@ -150,8 +152,9 @@ for (const buildInput of [
 }
 
 for (const [label, dockerfile] of [
-  ['general image', generalDockerfile],
+  ['Nova image', novaDockerfile],
   ['Buster gateway image', busterGatewayDockerfile],
+  ['Prism agent image', prismAgentDockerfile],
 ]) {
   assert.match(
     dockerfile,
@@ -161,8 +164,9 @@ for (const [label, dockerfile] of [
 }
 
 for (const [label, dockerfile] of [
-  ['general image', generalDockerfile],
+  ['Nova image', novaDockerfile],
   ['Buster gateway image', busterGatewayDockerfile],
+  ['Prism agent image', prismAgentDockerfile],
 ]) {
   const baseVersion = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:([^@\s]+)/mu)?.[1];
   const baseDigest = dockerfile.match(/^ARG OPENCLAW_BASE=ghcr\.io\/openclaw\/openclaw:[^@\s]+@(sha256:[a-f0-9]{64})/mu)?.[1];
@@ -207,11 +211,10 @@ assert.match(
   /PLUGIN_INSTALL_MODE=\{\{ \.Values\.pluginSeed\.installMode \| quote \}\}[\s\S]*kubeclaw-plugin-install-mode[\s\S]*for plugin_spec in\{\{- range \.Values\.pluginSeed\.specs \}\}[\s\S]*NPM_CONFIG_OFFLINE=true[\s\S]*openclaw plugins install "\$\{plugin_spec\}" --force --pin --accept-capabilities/,
   'the setup container must preserve official plugin provenance while installing from the offline image cache',
 );
-assert.match(
-  values,
-  /pluginSeed:[\s\S]*installMode:\s*"official-npm-v1"[\s\S]*"npm:@openclaw\/acpx@2026\.9\.2"[\s\S]*"npm:@openclaw\/discord@2026\.9\.2"/,
-  'official OpenClaw plugins must be pinned to the gateway release and installed with trusted npm provenance',
-);
+for (const plugin of ['acpx', 'discord']) {
+  assert.ok(values.includes(`"npm:@openclaw/${plugin}@${expectedOpenClawVersion}"`),
+    'offline plugin specifications must match the central gateway release');
+}
 assert.doesNotMatch(
   chart,
   /rm -rf \/config\/state|openclaw-plugin-home\/state/,
@@ -225,11 +228,11 @@ assert.match(
 );
 assert.match(
   busterGatewayDockerfile,
-  /COPY docker\/buster-gateway-tools\/package\.json docker\/buster-gateway-tools\/package-lock\.json \/opt\/kubeclaw-tools\//u,
+  /COPY docker\/openclaw-tools\/package\.json docker\/openclaw-tools\/package-lock\.json \/opt\/kubeclaw-tools\//u,
   'the Buster gateway JavaScript tools must be installed from a committed lockfile',
 );
 assert.equal(
-  exists('docker/buster-gateway-tools/package-lock.json'),
+  exists('docker/openclaw-tools/package-lock.json'),
   true,
   'the Buster gateway JavaScript tool lockfile must be committed',
 );
@@ -333,7 +336,7 @@ assert.match(
 assert.doesNotMatch(chart, /BUSTER_V2_ENDPOINT|BUSTER_GATEWAY_ORIGIN|busterGateway/);
 assert.match(
   busterRuntimeDockerfile,
-  /FROM moby\/buildkit:v[\w.-]+-rootless@sha256:[a-f0-9]{64} AS buildkit/,
+  /ARG BUILDKIT_BASE=moby\/buildkit:v[\w.-]+-rootless@sha256:[a-f0-9]{64}[\s\S]*FROM \$\{BUILDKIT_BASE\} AS buildkit/,
   'Buster must own a digest-pinned rootless BuildKit runtime',
 );
 assert.match(
@@ -899,7 +902,7 @@ for (const toolProof of [
   /shellcheck/,
 ]) {
   assert.match(
-    generalDockerfile,
+    novaDockerfile,
     toolProof,
     `the authoritative Nova runtime lost deterministic suite tooling: ${toolProof}`,
   );

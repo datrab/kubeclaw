@@ -3,7 +3,12 @@
 **
 
 !docker/
-!docker/Dockerfile.general
+!docker/Dockerfile.nova
+!docker/Dockerfile.prism-agent
+!docker/nova-tools/
+!docker/nova-tools/**
+!docker/openclaw-tools/
+!docker/openclaw-tools/**
 !docker/Dockerfile.buster-gateway
 !docker/Dockerfile.buster-runtime
 !docker/Dockerfile.namespace-controller

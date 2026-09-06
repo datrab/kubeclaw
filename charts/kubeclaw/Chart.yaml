@@ -4,7 +4,7 @@ description: >-
   Autonomous multi-agent AI swarm on Kubernetes.
   Deterministic pipeline orchestration, sandboxed execution,
   confidence-weighted vector memory, and structured inter-agent communication.
-version: 1.0.0
+version: 1.0.1
 appVersion: "2026.9.2"
 type: application
 keywords:

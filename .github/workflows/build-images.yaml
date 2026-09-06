@@ -13,6 +13,11 @@ jobs:
     uses: ./.github/workflows/pipeline-reliability.yaml
     permissions:
       contents: read
+  role-images:
+    uses: ./.github/workflows/role-images.yaml
+    if: github.event_name != 'schedule'
+    permissions:
+      contents: read
   detect-build-inputs:
     name: Detect Image Build Inputs
     runs-on: ubuntu-latest
@@ -31,6 +36,8 @@ jobs:
           filters: |
             image_inputs:
               - '.dockerignore'
+              - 'versions.json'
+              - 'scripts/versions.mjs'
               - 'tsconfig.base.json'
               - 'package.json'
               - 'package-lock.json'
@@ -60,18 +67,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          mapfile -t pinned_refs < <(
-            sed -n 's/^ARG OPENCLAW_BASE=//p' \
-              docker/Dockerfile.general \
-              docker/Dockerfile.buster-gateway \
-              | sort -u
-          )
-          if [[ ${#pinned_refs[@]} -ne 1 ]]; then
-            echo "OpenClaw Dockerfiles must share one pinned base reference" >&2
-            printf 'Found: %s\n' "${pinned_refs[@]}" >&2
-            exit 1
-          fi
-          pinned_ref="${pinned_refs[0]}"
+          node scripts/versions.mjs --check
+          pinned_ref="$(node -e 'const v=require("./versions.json").openclaw; process.stdout.write(`ghcr.io/openclaw/openclaw:${v.version}@${v.digest}`)')"
           pinned_image="${pinned_ref%@*}"
           pinned_version="${pinned_image##*:}"
           pinned_digest="${pinned_ref##*@}"
@@ -128,15 +125,15 @@ jobs:
           if [[ "$latest_version" != "$pinned_version" ||
                 "$latest_digest" != "$pinned_digest" ]]; then
             echo "Pinned OpenClaw base is out of date." >&2
-            echo "Update its version, digest, and Debian snapshot." >&2
+            echo "Update versions.json and run npm run versions:sync." >&2
             exit 1
           fi
   build:
     name: Build & Push
     runs-on: ubuntu-latest
-    needs: [detect-build-inputs, reliability]
+    needs: [detect-build-inputs, reliability, role-images]
     if: |
-      always() && needs.reliability.result == 'success' &&
+      always() && needs.reliability.result == 'success' && needs.role-images.result == 'success' &&
       (github.event_name == 'workflow_dispatch' ||
        (github.event_name == 'push' && needs.detect-build-inputs.outputs.image_inputs_changed == 'true'))
     permissions:
@@ -146,9 +143,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: general
-            dockerfile: docker/Dockerfile.general
-            image_suffix: kubeclaw-general
+          - name: nova
+            dockerfile: docker/Dockerfile.nova
+            image_suffix: kubeclaw-nova
+          - name: prism-agent
+            dockerfile: docker/Dockerfile.prism-agent
+            image_suffix: kubeclaw-prism-agent
           - name: buster-gateway
             dockerfile: docker/Dockerfile.buster-gateway
             image_suffix: kubeclaw-buster-gateway
@@ -220,9 +220,9 @@ jobs:
   bundle-skills:
     name: Package & Publish Skill Bundles
     runs-on: ubuntu-latest
-    needs: [detect-build-inputs, reliability]
+    needs: [detect-build-inputs, reliability, role-images]
     if: |
-      always() && needs.reliability.result == 'success' &&
+      always() && needs.reliability.result == 'success' && needs.role-images.result == 'success' &&
       (github.event_name == 'push' ||
        github.event_name == 'workflow_dispatch')
     permissions:

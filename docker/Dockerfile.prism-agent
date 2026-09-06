@@ -1,6 +1,6 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-# Buster's OpenClaw gateway and native/ACP agent runtime. Deterministic test,
-# image-build and Kubernetes tooling are reached through bounded v2 adapters.
+# Prism's OpenClaw design agent. Rendering and previews run in the separate
+# Prism services; this image contains no Nova verification toolchain.
 
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
 
@@ -107,5 +107,8 @@ HOME=/home/node
 
 USER node
 
-LABEL org.opencontainers.image.title="KubeClaw Buster Gateway"
-LABEL org.opencontainers.image.description="Minimal OpenClaw gateway for Buster native and ACP agents"
+COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
+COPY skills/prism/server/agent-bridge.mjs /opt/kubeclaw-prism/agent-bridge.mjs
+
+LABEL org.opencontainers.image.title="KubeClaw Prism Agent"
+LABEL org.opencontainers.image.description="OpenClaw design agent and request bridge with Prism tools"
