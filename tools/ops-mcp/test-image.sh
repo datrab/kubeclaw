@@ -11,6 +11,12 @@ docker exec "$container" node --input-type=module -e '
   assert.equal(ready,true,"MCP did not become healthy");
   assert.equal((await fetch("http://127.0.0.1:8080/mcp",{method:"POST"})).status,401);
   const response=await fetch("http://127.0.0.1:8080/mcp", {method:"POST", headers:{"content-type":"application/json",accept:"application/json, text/event-stream",authorization:"Bearer ci-local-transport-proof-000000000000"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"initialize",params:{protocolVersion:"2025-11-25",capabilities:{},clientInfo:{name:"image-proof",version:"1.0.0"}}})});
-  assert.equal(response.status,200); const result=await response.json(); assert.ok(result.result?.serverInfo?.name); assert.equal(result.error,undefined);
-  console.log("Actual MCP container: health, authentication rejection and authenticated initialization passed; no Kubernetes call or stub used.");
+  assert.equal(response.status,200);
+  const body=await response.text();
+  // The supported 2025 MCP handshake uses SSE; modern requests may use JSON.
+  const result=response.headers.get("content-type")?.startsWith("text/event-stream")
+    ? body.split(/\r?\n\r?\n/).map(frame=>frame.split(/\r?\n/).filter(line=>line.startsWith("data:")).map(line=>line.slice(5).trimStart()).join("\n")).filter(Boolean).map(data=>JSON.parse(data)).find(message=>message.id===1)
+    : JSON.parse(body);
+  assert.ok(result); assert.ok(result.result?.serverInfo?.name); assert.equal(result.error,undefined);
+  console.log("Actual MCP service: health, authentication rejection and authenticated initialization passed; no Kubernetes call or stub used.");
 '

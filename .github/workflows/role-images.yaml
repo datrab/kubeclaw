@@ -76,6 +76,16 @@ jobs:
           tags: kubeclaw-buster:proof
           cache-from: type=gha,scope=role-proof-buster-runtime
           cache-to: type=gha,scope=role-proof-buster-runtime,mode=min,ignore-error=true
+      - name: Permit nested user namespaces in the disposable build proof container
+        run: |
+          sudo tee /etc/apparmor.d/kubeclaw-ci-build-proof >/dev/null <<'EOF'
+          abi <abi/4.0>,
+          include <tunables/global>
+          profile kubeclaw-ci-build-proof flags=(unconfined) {
+            userns,
+          }
+          EOF
+          sudo apparmor_parser -r /etc/apparmor.d/kubeclaw-ci-build-proof
       - name: Run Buster's real build provider and browser
         run: |
           registry="$(node -p 'require("./versions.json").automation.testRegistry')"
@@ -83,7 +93,7 @@ jobs:
           trap 'docker logs proof-registry; docker rm -f proof-registry' EXIT
           # An isolated disposable CI container permits nested rootless namespaces.
           # This is not a deployment security-context acceptance test.
-          docker run --rm --privileged --network host --entrypoint bash             -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro"             kubeclaw-buster:proof /proof.sh
+          docker run --rm --privileged --security-opt apparmor=kubeclaw-ci-build-proof --network host --entrypoint bash             -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro"             kubeclaw-buster:proof /proof.sh
   application-builds:
     runs-on: ubuntu-latest
     timeout-minutes: 45
