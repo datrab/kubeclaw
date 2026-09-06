@@ -8,9 +8,10 @@ export async function execute(input: GateInput, context: PluginInvocationContext
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('quality evaluator agent is not configured');
   // Only a verified remote import may supply gate evidence.
   if (!input.providerPlan) throw new Error('QUALITY_PROVIDER_PLAN_REQUIRED');
+  const sourceRevision = await resolveSourceRevision(input.providerPlan, context);
   const execution = await context.invoke('test.plan.execute', {
     operation: 'run', resource: { type: 'test.resolved-plan', canonicalId: input.providerPlan.repositoryRoot },
-    payload: { ...input.providerPlan, revision: await resolveSourceRevision(input.providerPlan, context) },
+    payload: { ...input.providerPlan, revision: sourceRevision },
   });
   const decision = parseGateDecision(execution);
   if (decision.runId !== context.contract.lease.attempt.runId) throw new Error('QUALITY_GATE_RUN_MISMATCH');
@@ -39,7 +40,7 @@ export async function execute(input: GateInput, context: PluginInvocationContext
   }
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `buster-quality:${input.gateId}:${judgedInput.attempt}` },
-    payload: { namespace: 'kubeclaw.buster-quality-gate', mediaType: 'application/json', value: { verdict, decisionDigest: decision.decisionDigest, suiteEvidence: judgedInput.suiteEvidence } },
+    payload: { namespace: 'kubeclaw.buster-quality-gate', mediaType: 'application/json', value: { verdict, sourceRevision, decisionDigest: decision.decisionDigest, suiteEvidence: judgedInput.suiteEvidence } },
   });
   artifacts.push(stored.artifact as ArtifactRef);
   if (verdict.outcome === 'passed') return { ...nativeResult, artifacts };

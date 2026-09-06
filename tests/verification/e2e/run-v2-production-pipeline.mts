@@ -315,6 +315,7 @@ async function main(): Promise<void> {
       'artifacts.write': artifact('kubeclaw.buster-quality-gate'),
     },
     'kubeclaw.project-summary:summary': {
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.implementation-agent', 'kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate'] },
       'artifacts.write': artifact('kubeclaw.project-summary'),
     },
     'kubeclaw.runtime-dispatch:openclaw': {
@@ -687,19 +688,8 @@ async function main(): Promise<void> {
       config: { agentRole: roles.nova },
       input: {
         projectId: projectName,
-        runId,
-        status: 'succeeded',
-        metrics: {
-          modulesTotal: moduleIds.length,
-          modulesPassed: moduleIds.length,
-          testsPassed: moduleIds.length + 1,
-          testsFailed: 0,
-          agentInvocations: moduleIds.length * 2 + 4,
-        },
-        diagnostics: [
-          `Model: ${model}`,
-          'Workflow: Architect -> Forge/Buster module DAG -> Echo -> approval -> final Buster -> final Echo',
-        ],
+        modules: moduleIds.map(moduleId => ({ moduleId, sourceStageId: `forge-${moduleId}`, testStageId: `buster-${moduleId}` })),
+        final: { sourceStageId: `forge-${moduleIds.at(-1)}`, lintStageId: 'manifest-lint', reviewStageId: 'final-review', testStageId: 'final-buster' },
       },
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 60_000 },
     },

@@ -156,3 +156,23 @@ Completion now validates job, plan, plan digest and run identity before storing 
 ## Mandatory scanner verification
 
 The reliability workflow now requires the security-provider suite using the repository's checksum-pinned Trivy installer and a real downloaded advisory database. The suite scans actual npm lockfiles and must detect the [documented lodash command-injection vulnerability](https://github.com/advisories/GHSA-35jh-r3h4-6jhm) in version 4.17.20, pass a clean fixture, reject missing HTTP security headers, and reject unsafe Kubernetes configuration. Its immutable-image scan retains actual findings without assuming a permanently clean image. The reported local provider count is four; runtime Kubernetes security remains a deployed acceptance test.
+
+
+## Approval, delivery and audit authority
+
+Human-approval requests now persist and validate the wait before sending an operator notification, and notifications contain the actual resumable wait ID. The real HTTP test checks the durable store at message receipt. Architecture approval selects the exact core-supplied report reference, validates its bytes and digest, rejects missing/ambiguous or nonpassing reports, and includes its digest in the approval summary. Its previous mocked stage test was replaced with actual artifact-store checks.
+
+Prism's wait handling incorrectly expected the requested resource name to equal the store-generated ID, making the real design-required route block. It now uses the returned ID and accepts an idempotent existing wait. Approved dispatch returns the actual archive bytes from Prism's content-addressed store. Nova verifies archive identity, file/checksum sets, approved bundle digest, required manifest references and safe paths before persisting the archive. Contract tests use the real wait and Prism artifact stores. These tests do not execute design generation, and compiler/Forge/Buster design-target materialization remains open.
+
+Project summary now publishes `delivery-manifest.v1` derived from verified core-supplied implementation, lint, review and native quality artifacts. Run identity comes from the lease. Each module quality verdict records and must match its implementation commit; final lint/review/quality must all match the final candidate. Caller-owned success counts, percentages and agent counts were deleted. The production harness supplies stage bindings. Artifact-contract tests verify real durable bytes and rejection of missing, corrupt, cross-run and stale-candidate evidence; they do not claim provider or agent execution.
+
+The required audit observer was removed. `readPipelineAudit` and `--platform <file> --audit <run-id>` rebuild redacted output from the hash-verified canonical journal, without any artifact projection write. A real journal regression proves deterministic rebuilding with unusable artifact storage and rejects altered journal history. Notification delivery remains independently bounded and best effort. Exhausted/uncertain notification replay still needs its own explicit protocol; no uncertain message is silently resent.
+
+These input/registration changes require existing graphs to drain on pinned runtimes. Full source checks and new package tests are mandatory CI gates; exact-head CI evidence must be recorded after publication.
+
+
+## Prism transaction ownership and partial generation
+
+Revision writes now reserve one PostgreSQL pool connection through commit or rollback. The three-direction generation is a single project-locked transaction; validation happens before writes, failed generation leaves no partial documents/directions, and an existing generation is checked for conflicting document content. The previous per-document transaction loop was deleted.
+
+A mandatory PostgreSQL CI job applies the production tables used by this regression and submits eight concurrent revisions through a two-connection pool. It requires exactly one accepted revision, verifies rollback after an actual SQL error, and uses an actual database trigger to fail the second direction insertion before verifying complete rollback and a successful retry. This is distinct from embedded-database tests and must pass before claiming the concurrency fix is verified.

@@ -88,7 +88,7 @@ try {
     'kubeclaw.telemetry-store',
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
   assert.equal(snapshot.registrations.stages.length, 17);
-  assert.equal(snapshot.registrations.observers.length, 6);
+  assert.equal(snapshot.registrations.observers.length, 5);
   assert.equal(snapshot.registrations.adapters.length, 18);
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));

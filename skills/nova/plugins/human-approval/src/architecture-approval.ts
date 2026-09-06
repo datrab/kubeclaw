@@ -1,4 +1,4 @@
-import type { PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, sha256Text, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 import { execute as executeApproval } from './stage.ts';
 
 interface ArchitectureApprovalInput {
@@ -84,12 +84,29 @@ export async function execute(
   context: PluginInvocationContext,
 ): Promise<StageResult> {
   const input = parseInput(rawInput);
+  const candidates = context.contract.artifacts.filter((artifact) =>
+    artifact.artifactId === input.artifactId && artifact.namespace === input.namespace
+    && artifact.producer.runId === context.contract.lease.attempt.runId);
+  const producers = new Set(candidates.map((artifact) => artifact.producer.stageId));
+  const latest = Math.max(...candidates.map((artifact) => artifact.producer.attemptNumber));
+  const selected = candidates.filter((artifact) => artifact.producer.attemptNumber === latest);
+  if (producers.size !== 1 || selected.length !== 1) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_MISSING_OR_AMBIGUOUS');
+  const artifact = selected[0]!;
+  if (artifact.mediaType !== 'application/json' || !Number.isSafeInteger(artifact.sizeBytes)
+    || artifact.sizeBytes < 1 || artifact.sizeBytes > 256 * 1024) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_INVALID');
   const response = await context.invoke('artifacts.read', {
-    operation: 'get_latest_json',
-    resource: { type: 'artifact.object', canonicalId: input.artifactId },
-    payload: { namespace: input.namespace },
-  }) as Readonly<Record<string, unknown>>;
-  const approvalPrefix = `${input.summary} Findings: `;
+    operation: 'get_json',
+    resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
+    payload: { namespace: artifact.namespace, digest: artifact.digest },
+  });
+  const serialized = canonicalJson(response.value);
+  if (response.digest !== artifact.digest || response.sizeBytes !== artifact.sizeBytes
+    || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) {
+    throw new Error('ARCHITECTURE_APPROVAL_CONTENT_INVALID');
+  }
+  const report = response.value as { verdict?: unknown } | null;
+  if (!report || report.verdict !== 'passed') throw new Error('ARCHITECTURE_APPROVAL_REPORT_NOT_PASSED');
+  const approvalPrefix = `${input.summary} Evidence: ${artifact.digest}. Findings: `;
   const findings = findingSummary(response.value, 10_000 - approvalPrefix.length);
   if (!findings) {
     return {

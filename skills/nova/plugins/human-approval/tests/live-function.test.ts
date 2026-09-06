@@ -27,6 +27,7 @@ const server = http.createServer((request, response) => {
       url: request.url,
       headers: request.headers,
       body: JSON.parse(Buffer.concat(chunks).toString('utf8')),
+      waitsAtReceipt: fs.existsSync(waitStorePath) ? storedWaits() : [],
     });
     response.writeHead(200, { 'content-type': 'application/json' });
     response.end(JSON.stringify({ id: `message-${received.length}` }));
@@ -201,6 +202,9 @@ try {
     .digest('hex');
   assert.equal(received[0].headers['x-kubeclaw-signature'], `v1=${expectedSignature}`);
   assert.equal(received[0].body.type, 'approval.requested');
+  assert.equal(received[0].body.waitId, pending.stage.wait.waitId);
+  assert.equal(received[0].waitsAtReceipt.length, 1);
+  assert.equal(received[0].waitsAtReceipt[0].wait.waitId, received[0].body.waitId);
   assert.equal(received[0].body.summary, 'Approve the production release.');
   assert.equal(received[0].body.authorizedIssuer.id, 'operator:release');
 

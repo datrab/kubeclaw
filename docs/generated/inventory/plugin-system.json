@@ -5,12 +5,12 @@
     "packages": 46,
     "packageRoots": 47,
     "stages": 17,
-    "observers": 6,
+    "observers": 5,
     "adapters": 18,
     "testProviders": 18,
     "reportAdapters": 1,
-    "registrations": 60,
-    "files": 795
+    "registrations": 59,
+    "files": 798
   },
   "runtime": {
     "roots": [
@@ -141,6 +141,7 @@
       "skills/nova/core/state/journal.ts",
       "skills/nova/core/state/plugins.ts",
       "skills/nova/core/telemetry/README.md",
+      "skills/nova/core/telemetry/audit.ts",
       "skills/nova/core/telemetry/observer-delivery.ts",
       "skills/nova/core/telemetry/observer-recovery.ts",
       "skills/nova/core/telemetry/observers.ts",
@@ -675,10 +676,6 @@
         {
           "kind": "observer",
           "id": "preview-delivery"
-        },
-        {
-          "kind": "observer",
-          "id": "audit"
         }
       ]
     },
@@ -1302,8 +1299,11 @@
         "skills/nova/plugins/prism-design/schemas/config.schema.json",
         "skills/nova/plugins/prism-design/schemas/input.schema.json",
         "skills/nova/plugins/prism-design/schemas/result.schema.json",
+        "skills/nova/plugins/prism-design/src/archive.ts",
         "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/plugins/prism-design/tests/archive.test.ts",
         "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+        "skills/nova/plugins/prism-design/tests/wait.test.ts",
         "skills/nova/plugins/prism-design/tsconfig.json"
       ],
       "registrations": [
@@ -1330,7 +1330,6 @@
         "skills/nova/plugins/project-summary/src/summary.ts",
         "skills/nova/plugins/project-summary/tests/live-function.test.ts",
         "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
-        "skills/nova/plugins/project-summary/tests/parity.test.ts",
         "skills/nova/plugins/project-summary/tests/summary.test.mjs",
         "skills/nova/plugins/project-summary/tsconfig.json"
       ],
@@ -1737,12 +1736,6 @@
       "id": "preview-delivery",
       "packageId": "kubeclaw.notification-observer",
       "registrationId": "kubeclaw.notification-observer:preview-delivery"
-    },
-    {
-      "kind": "observer",
-      "id": "audit",
-      "packageId": "kubeclaw.notification-observer",
-      "registrationId": "kubeclaw.notification-observer:audit"
     },
     {
       "kind": "adapter",
@@ -2353,6 +2346,7 @@
     "skills/nova/core/state/journal.ts",
     "skills/nova/core/state/plugins.ts",
     "skills/nova/core/telemetry/README.md",
+    "skills/nova/core/telemetry/audit.ts",
     "skills/nova/core/telemetry/observer-delivery.ts",
     "skills/nova/core/telemetry/observer-recovery.ts",
     "skills/nova/core/telemetry/observers.ts",
@@ -2530,8 +2524,11 @@
     "skills/nova/plugins/prism-design/schemas/config.schema.json",
     "skills/nova/plugins/prism-design/schemas/input.schema.json",
     "skills/nova/plugins/prism-design/schemas/result.schema.json",
+    "skills/nova/plugins/prism-design/src/archive.ts",
     "skills/nova/plugins/prism-design/src/stage.ts",
+    "skills/nova/plugins/prism-design/tests/archive.test.ts",
     "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+    "skills/nova/plugins/prism-design/tests/wait.test.ts",
     "skills/nova/plugins/prism-design/tsconfig.json",
     "skills/nova/plugins/project-summary/README.md",
     "skills/nova/plugins/project-summary/package.json",
@@ -2543,7 +2540,6 @@
     "skills/nova/plugins/project-summary/src/summary.ts",
     "skills/nova/plugins/project-summary/tests/live-function.test.ts",
     "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
-    "skills/nova/plugins/project-summary/tests/parity.test.ts",
     "skills/nova/plugins/project-summary/tests/summary.test.mjs",
     "skills/nova/plugins/project-summary/tsconfig.json",
     "skills/nova/plugins/remote-test-gate/README.md",

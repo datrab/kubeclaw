@@ -1674,54 +1674,6 @@
           "configSchema": "schemas/config.schema.json",
           "checkpointSchema": "schemas/checkpoint.schema.json",
           "kind": "observer"
-        },
-        {
-          "id": "audit",
-          "module": "src/observer.ts",
-          "export": "recordAudit",
-          "subscriptions": [
-            "run.created",
-            "run.started",
-            "run.succeeded",
-            "run.failed",
-            "run.blocked",
-            "run.cancelled",
-            "stage.started",
-            "stage.waiting",
-            "stage.retrying",
-            "stage.skipped",
-            "stage.succeeded",
-            "stage.failed",
-            "stage.blocked",
-            "stage.cancelled",
-            "attempt.created",
-            "attempt.dispatched",
-            "attempt.completed",
-            "attempt.timed_out",
-            "attempt.cancelled",
-            "effect.requested",
-            "effect.accepted",
-            "effect.completed",
-            "effect.failed",
-            "artifact.created",
-            "wait.created",
-            "wait.resolved",
-            "orchestrator.required"
-          ],
-          "delivery": "at_least_once",
-          "ordering": "per_run",
-          "failurePolicy": {
-            "mode": "required",
-            "maxAttempts": 3,
-            "backoffMs": 250,
-            "timeoutMs": 10000
-          },
-          "requiredCapabilities": [
-            "artifacts.write"
-          ],
-          "configSchema": "schemas/config.schema.json",
-          "checkpointSchema": "schemas/checkpoint.schema.json",
-          "kind": "observer"
         }
       ]
     },
@@ -2403,6 +2355,7 @@
           "module": "src/stage.ts",
           "export": "execute",
           "requiredCapabilities": [
+            "artifacts.read",
             "artifacts.write"
           ],
           "configSchema": "schemas/config.schema.json",
@@ -2532,7 +2485,7 @@
   ],
   "registrationCounts": {
     "stage": 17,
-    "observer": 6,
+    "observer": 5,
     "adapter": 18,
     "test provider": 18,
     "report adapter": 1

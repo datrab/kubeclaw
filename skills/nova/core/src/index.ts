@@ -117,3 +117,5 @@ export function createEmptyCoreKernel(): CoreKernel {
     registry: Object.freeze({ packages: Object.freeze([]), registrations: Object.freeze([]) }),
   });
 }
+
+export { readPipelineAudit } from '../telemetry/audit.ts';

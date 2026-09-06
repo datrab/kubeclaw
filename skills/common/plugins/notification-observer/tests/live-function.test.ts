@@ -39,7 +39,6 @@ const snapshot = core.buildRegistry(core.discoverPackages({
 const enabled = new Set([
   'kubeclaw.notification-observer:notifications',
   'kubeclaw.notification-observer:preview-delivery',
-  'kubeclaw.notification-observer:audit',
 ]);
 const granted = core.resolveCapabilityGrants(snapshot, {
   enabledRegistrations: enabled,
@@ -47,7 +46,6 @@ const granted = core.resolveCapabilityGrants(snapshot, {
     ['operator.request', 'kubeclaw.operator-messaging:operator'],
     ['network.http', 'kubeclaw.network-http:http'],
     ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
-    ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
   ]),
   grants: new Map([
     ['kubeclaw.notification-observer:notifications', new Map([
@@ -55,9 +53,6 @@ const granted = core.resolveCapabilityGrants(snapshot, {
     ])],
     ['kubeclaw.notification-observer:preview-delivery', new Map([
       ['operator.request', { allowedTargets: ['operators'] }],
-    ])],
-    ['kubeclaw.notification-observer:audit', new Map([
-      ['artifacts.write', { allowedNamespaces: ['kubeclaw.pipeline-audit'] }],
     ])],
     ['kubeclaw.operator-messaging:operator', new Map([
       ['network.http', { allowedOrigins: [origin] }],
@@ -72,7 +67,6 @@ const adapters = new core.AdapterRuntime({
   configs: new Map([
     ['kubeclaw.notification-observer:notifications', { target: 'operators' }],
     ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
-    ['kubeclaw.notification-observer:audit', {}],
     ['kubeclaw.operator-messaging:operator', {
       deliveryRoot: path.join(temporary, 'notification-deliveries'),
       targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'notification.webhook' } },
@@ -82,9 +76,7 @@ const adapters = new core.AdapterRuntime({
       allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'],
     }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'notification.webhook': secretName } }],
-    ['kubeclaw.artifact-store:artifact-store', {
-      artifactRoot: path.join(temporary, 'artifacts'),
-    }],
+
   ]),
   effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()),
   shutdownTimeoutMs: 1000, async emitDomainEvent() {},
@@ -112,23 +104,21 @@ try {
     configs: new Map([
       ['kubeclaw.notification-observer:notifications', { target: 'operators' }],
       ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
-      ['kubeclaw.notification-observer:audit', {}],
-    ]),
+      ]),
     wait: async () => {},
   });
-  assert.deepEqual(await observers.drain(), { delivered: 4, failures: [] });
+  assert.deepEqual(await observers.drain(), { delivered: 2, failures: [] });
   assert.deepEqual(await observers.drain(), { delivered: 0, failures: [] });
   assert.equal(messages.length, 2);
   assert.equal(messages[0].type, 'run.failed');
   assert.equal(messages[0].severity, 'error');
   assert.equal(messages[1].type, 'preview.artifact.available');
   assert.equal(messages[1].artifact.secret, undefined);
-  assert.equal(checkpoints.records().length, 4);
-  const auditCatalog = fs.readFileSync(
-    path.join(temporary, 'artifacts', 'records', 'store.json'),
-    'utf8',
-  );
-  assert.match(auditCatalog, /pipeline-audit:event:failed/);
+  assert.equal(checkpoints.records().length, 2);
+  const audit = core.readPipelineAudit(temporary, 'run:1');
+  assert.deepEqual(audit.events.map(event => event.eventId), ['event:failed', 'event:artifact']);
+  assert.doesNotMatch(JSON.stringify(audit), new RegExp(secret));
+  assert.equal(fs.existsSync(path.join(temporary, 'artifacts')), false);
   assert.doesNotMatch(fs.readFileSync(effectsPath, 'utf8'), new RegExp(secret));
 } finally {
   await adapters.shutdown();

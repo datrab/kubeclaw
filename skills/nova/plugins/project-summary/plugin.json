@@ -9,6 +9,7 @@
       "module": "src/stage.ts",
       "export": "execute",
       "requiredCapabilities": [
+        "artifacts.read",
         "artifacts.write"
       ],
       "configSchema": "schemas/config.schema.json",

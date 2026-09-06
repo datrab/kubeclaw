@@ -29,6 +29,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
       - name: Check affected stage and adapter contracts
         run: |
+          npm test --workspace @kubeclaw/plugin-prism-design
+          npm test --workspace @kubeclaw/plugin-notification-observer
+          npm test --workspace @kubeclaw/plugin-human-approval
+          npm test --workspace @kubeclaw/plugin-project-summary
           npm test --workspace @kubeclaw/plugin-lint
           npm test --workspace @kubeclaw/plugin-implementation-agent
           npm test --workspace @kubeclaw/plugin-buster-quality-gate
@@ -109,3 +113,32 @@ jobs:
           "$trivy_executable" image --download-db-only --cache-dir "$KUBECLAW_SECURITY_TEST_CACHE"
       - name: Exercise real scanner and HTTP negative controls
         run: npm test --workspace @kubeclaw/plugin-security-providers
+
+  prism-postgres-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: kubeclaw_test
+          POSTGRES_PASSWORD: transaction_test_only
+          POSTGRES_DB: kubeclaw_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kubeclaw_test -d kubeclaw_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Verify real PostgreSQL transaction ownership and concurrent revisions
+        env:
+          KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE: postgres://kubeclaw_test:transaction_test_only@127.0.0.1:5432/kubeclaw_test
+        run: node tests/verification/contracts/check-prism-postgres-transactions.mts

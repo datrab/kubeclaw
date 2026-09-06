@@ -9,7 +9,7 @@ assert.match(source, /buildSummary/);
 assert.match(source, /context\.invoke\('artifacts\.write'/);
 
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
-assert.deepEqual(manifest.stages[0].requiredCapabilities, ['artifacts.write']);
+assert.deepEqual(manifest.stages[0].requiredCapabilities, ['artifacts.read', 'artifacts.write']);
 assert.equal(manifest.stages[0].module, 'src/stage.ts');
 
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.project-summary', suite: 'package-boundary' }));

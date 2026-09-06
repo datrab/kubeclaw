@@ -6,7 +6,7 @@
 - Existing documentation files classified: 371/371.
 - Unclassified documentation files: 0.
 - Plugin manifests inventoried: 48/48.
-- Extension registrations inventoried: 60.
+- Extension registrations inventoried: 59.
 - Contract families linked in the evidence matrix: 6/6.
 - Missing local evidence paths: 0.
 - Unresolved source conflicts requiring pre-publication reverification: 0.

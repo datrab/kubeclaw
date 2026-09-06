@@ -2,9 +2,12 @@
   "name": "@kubeclaw/plugin-prism-design",
   "private": true,
   "type": "module",
-  "dependencies": { "@kubeclaw/plugin-sdk": "*" },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/prism-contracts-v1": "*"
+  },
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/live-function.test.ts"
+    "test": "node tests/live-function.test.ts && node tests/wait.test.ts && node tests/archive.test.ts"
   }
 }

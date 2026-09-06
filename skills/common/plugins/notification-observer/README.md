@@ -6,7 +6,4 @@ The `notifications` registration owns stable lifecycle summaries; the
 metadata rather than forwarding arbitrary artifact bodies. Each registration
 has independent grants, delivery attempts, and checkpoints.
 
-The `audit` registration consumes all canonical lifecycle/effect/wait events,
-writes one immutable redacted artifact per event, and uses the required
-failure policy. It has only the `artifacts.write` grant for the
-`kubeclaw.pipeline-audit` namespace.
+Audit is derived from Nova's authoritative event journal with `readPipelineAudit` or the core CLI's `--platform <file> --audit <run-id>` command. The redundant required audit observer and artifact writes were removed. Journal integrity is checked before producing redacted output; rebuilding requires no observer delivery or writable artifact store. Existing runs that enabled the retired registration must drain with their pinned runtime.

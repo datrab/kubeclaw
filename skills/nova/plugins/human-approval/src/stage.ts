@@ -22,18 +22,6 @@ export async function execute(
   const attempt = context.contract.lease.attempt;
   const approvalId = `approval:${attempt.runId}:${attempt.stageId}`;
   const expiresAt = calculateApprovalExpiresAt(new Date(), config.timeoutMinutes);
-  await context.invoke('operator.request', {
-    operation: 'publish',
-    resource: { type: 'operator.target', canonicalId: config.target },
-    payload: {
-      type: 'approval.requested',
-      approvalId,
-      summary: input.summary,
-      signalType: APPROVAL_SIGNAL_TYPE,
-      authorizedIssuer: { type: 'operator', id: config.issuerId },
-      expiresAt,
-    },
-  });
   const response = await context.invoke('signal.wait', {
     operation: 'create',
     resource: { type: 'signal.wait', canonicalId: approvalId },
@@ -45,9 +33,23 @@ export async function execute(
       request: { summary: input.summary },
     },
   });
-  return pendingApprovalResult(validateCreatedWait(response, {
+  const wait = validateCreatedWait(response, {
     issuerId: config.issuerId,
     expiresAt,
     summary: input.summary,
-  }));
+  });
+  await context.invoke('operator.request', {
+    operation: 'publish',
+    resource: { type: 'operator.target', canonicalId: config.target },
+    payload: {
+      type: 'approval.requested',
+      approvalId,
+      waitId: wait.waitId,
+      summary: input.summary,
+      signalType: APPROVAL_SIGNAL_TYPE,
+      authorizedIssuer: { type: 'operator', id: config.issuerId },
+      expiresAt,
+    },
+  });
+  return pendingApprovalResult(wait);
 }

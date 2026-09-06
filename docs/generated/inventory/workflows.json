@@ -119,12 +119,14 @@
       "jobs": [
         "core-reliability",
         "browser-reliability",
-        "security-reliability"
+        "security-reliability",
+        "prism-postgres-reliability"
       ],
       "commandAndActionRefs": [
         "node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs",
         "node node_modules/playwright/cli.js install --with-deps chromium",
         "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "node tests/verification/contracts/check-prism-postgres-transactions.mts",
         "node tests/verification/contracts/check-project-compiler.mts",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",

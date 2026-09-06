@@ -40,7 +40,7 @@ Unresolved conflicts: none.
 | Surface | Registrations found | Canonical contract |
 | --- | ---: | --- |
 | stage | 17 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
-| observer | 6 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
+| observer | 5 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | adapter | 18 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | test provider | 18 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
 | report adapter | 1 | `skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json` |
@@ -71,7 +71,7 @@ Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.command-runner | 1.0.0 | buster | adapter: command | requires: none<br>provides: command.execute | `skills/common/plugins/command-runner/plugin.json` |
 | kubeclaw.git-workspace | 1.0.0 | nova | adapter: git | requires: none<br>provides: git.workspace.create, git.workspace.remove, git.commit, git.merge, git.sync | `skills/common/plugins/git-workspace/plugin.json` |
 | kubeclaw.network-http | 1.0.0 | buster, nova, prism | adapter: http | requires: none<br>provides: network.http | `skills/common/plugins/network-http/plugin.json` |
-| kubeclaw.notification-observer | 1.1.0 | nova | observer: notifications<br>observer: preview-delivery<br>observer: audit | requires: operator.request, artifacts.write<br>provides: none | `skills/common/plugins/notification-observer/plugin.json` |
+| kubeclaw.notification-observer | 1.1.0 | nova | observer: notifications<br>observer: preview-delivery | requires: operator.request<br>provides: none | `skills/common/plugins/notification-observer/plugin.json` |
 | kubeclaw.openclaw-agent-events | 1.0.0 | nova | adapter: source | requires: none<br>provides: agent.events.subscribe | `skills/common/plugins/openclaw-agent-events/plugin.json` |
 | kubeclaw-agent-observer | 0.0.0 | not role-bundled | none | requires: none<br>provides: none | `skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json` |
 | kubeclaw.operator-messaging | 1.0.0 | nova | adapter: operator | requires: network.http, secrets.read<br>provides: operator.request | `skills/common/plugins/operator-messaging/plugin.json` |
@@ -94,7 +94,7 @@ Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.pipeline-review | 1.0.0 | nova | stage: review (kubeclaw.report.pipeline-review) | requires: runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/pipeline-review/plugin.json` |
 | kubeclaw.preflight-contract | 1.0.0 | nova | stage: validate (kubeclaw.validate.preflight-contract) | requires: git.repository.read, artifacts.write<br>provides: none | `skills/nova/plugins/preflight-contract/plugin.json` |
 | kubeclaw.prism-design | 1.0.0 | nova | stage: design (kubeclaw.design.prism) | requires: runtime.dispatch, artifacts.read, artifacts.write, operator.request, signal.wait<br>provides: none | `skills/nova/plugins/prism-design/plugin.json` |
-| kubeclaw.project-summary | 1.0.0 | nova | stage: summary (kubeclaw.report.project-summary) | requires: artifacts.write<br>provides: none | `skills/nova/plugins/project-summary/plugin.json` |
+| kubeclaw.project-summary | 1.0.0 | nova | stage: summary (kubeclaw.report.project-summary) | requires: artifacts.read, artifacts.write<br>provides: none | `skills/nova/plugins/project-summary/plugin.json` |
 | kubeclaw.remote-test-gate | 1.0.0 | nova | adapter: plan | requires: secrets.read<br>provides: test.plan.execute | `skills/nova/plugins/remote-test-gate/plugin.json` |
 | kubeclaw.repository-adapter | 1.0.0 | nova | adapter: repository | requires: none<br>provides: git.repository.read | `skills/nova/plugins/repository-adapter/plugin.json` |
 | kubeclaw.review | 1.0.0 | nova | stage: review (kubeclaw.decision.review)<br>stage: repository-audit (kubeclaw.audit.repository-review)<br>stage: repository-revalidation (kubeclaw.audit.repository-review-revalidation) | requires: runtime.dispatch, git.repository.read, artifacts.read, artifacts.write<br>provides: none | `skills/nova/plugins/review/plugin.json` |
