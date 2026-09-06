@@ -1,4 +1,4 @@
-import { sha256Text, type PluginInvocationContext, type StageResult, type WaitRequest } from '@kubeclaw/plugin-sdk';
+import { resolveImplementationRevisions, sha256Text, type PluginInvocationContext, type StageResult, type WaitRequest } from '@kubeclaw/plugin-sdk';
 
 import { assertEchoContextRequestRequirements } from './echo-context-request-parser.ts';
 import { parseEchoReviewDispatchResponse, type ParsedEchoReviewOutput } from './echo-review-parser.ts';
@@ -255,6 +255,12 @@ export async function execute(input: unknown, context: PluginInvocationContext):
   const wait = reviewWait(context);
   const preflight = preflightReviewInput(input, policy.policy.limits.maxBundleBytes);
   if (preflight !== 'within_limit') return invalidInputResult(`review input preflight failed: ${preflight}`, policy);
+  const candidate = input as Record<string, unknown>;
+  const revisions = candidate?.revisions as Record<string, unknown> | undefined;
+  if (revisions && Object.keys(revisions).length === 1 && typeof revisions.sourceStageId === 'string') {
+    const bound = await resolveImplementationRevisions(revisions.sourceStageId, context);
+    input = { ...candidate, revisions: bound };
+  }
   const parsedInput = parseReviewInput(input);
   if (!parsedInput.ok) return invalidInputResult(parsedInput.error, policy);
   return runReview(parsedInput.value, stageConfig, policy, wait, context);

@@ -38,11 +38,13 @@ Resolve provider plans from the real worker registry before compiling. Each plan
 
 Modules are sorted topologically with a stable identifier tie-break. A project uses one repository publication lane: implementation, full lint, scoped review, then native provider quality evaluation complete before another module starts. Explicit module dependencies remain in the graph. This prevents another module from advancing shared HEAD during those checks; it does not prevent changes by an unrelated process outside Nova.
 
-Lint, review and test repair requests target their module's implementation. Existing durable repair invalidation clears later results and schedules the checks again. Provider execution selects the actual implementation artifact's verified source revision, never ambient HEAD. Review receives the declared baseline and digest-bound requirements. The quality stage persists the native decision before returning a nonpassing disposition or dispatching its evaluator.
+Lint, review and test repair requests target their module's implementation. Existing durable repair invalidation clears later results and schedules the checks again. Provider execution selects the actual implementation artifact's verified source revision, never ambient HEAD. Review resolves the module’s original before-revision and latest candidate from verified implementation artifacts. It retains that baseline across repairs and blocks before agent dispatch if repository HEAD differs from the candidate. Requirements remain digest-bound. The review stage needs artifact read grants for both `kubeclaw.review` and `kubeclaw.implementation-agent`. The quality stage persists the native decision before returning a nonpassing disposition or dispatching its evaluator.
 
 ## Acceptance and migration limits
 
 The compiler regression uses real Git, resolved provider contracts, the installed stage registry and the extracted Nova launcher for two dependent modules. It executes zero implementation/review/test stages and is not an end-to-end agent acceptance test. The isolated-provider regression separately executes healthy and deliberately broken committed source through the real quality stage and remote adapter; its local evaluator is a deterministic source assertion, not an LLM quality claim.
+
+A separate integration regression uses real Git commits and durable artifact storage to verify two module revision ranges, cumulative repair review, actual source contents, tampered references, ambiguous artifacts, and rejection of an unrelated HEAD. It supplies no agent verdicts and does not establish full agent execution.
 
 This route does not yet replace the legacy project scaffold or all production E2E orchestration. Prism approval and baseline import, full verified evidence contents for repair/evaluation, final delivery manifests, automatic external-effect reconciliation and deployed acceptance remain open. Do not use compile success as evidence of those features.
 

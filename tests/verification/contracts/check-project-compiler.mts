@@ -55,6 +55,7 @@ try {
   assert.equal(compiled.definition.stages.length, 8);
   assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === 'implement-app').dependsOn, ['test-library']);
   for (const moduleId of ['library', 'app']) {
+    assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === `review-${moduleId}`).input.revisions, { sourceStageId: `implement-${moduleId}` });
     for (const phase of ['lint', 'review', 'test']) assert.equal(compiled.definition.stages.find((stage: any) => stage.id === `${phase}-${moduleId}`).on.request_fix, `implement-${moduleId}`);
     assert.equal(compiled.definition.stages.find((stage: any) => stage.id === `test-${moduleId}`).input.providerPlan.sourceStageId, `implement-${moduleId}`);
   }
@@ -86,7 +87,7 @@ try {
         'git.workspace.remove': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.commit': { allowedRoots: [repo, workspaces] }, 'git.merge': { allowedRoots: [repo, workspaces] } },
       'kubeclaw.lint:full': { 'lint.execute': { allowedRoots: [repo], allowedPolicyRoots: [temporary], allowedProjects: ['proof'] }, 'artifacts.write': artifact('kubeclaw.lint') },
-      'kubeclaw.review:review': { 'runtime.dispatch': { allowedAgents: ['echo'] }, 'git.repository.read': { allowedPrefixes: ['.'] }, 'artifacts.read': artifact('kubeclaw.review'), 'artifacts.write': artifact('kubeclaw.review') },
+      'kubeclaw.review:review': { 'runtime.dispatch': { allowedAgents: ['echo'] }, 'git.repository.read': { allowedPrefixes: ['.'] }, 'artifacts.read': { allowedNamespaces: ['kubeclaw.review', 'kubeclaw.implementation-agent'] }, 'artifacts.write': artifact('kubeclaw.review') },
       'kubeclaw.buster-quality-gate:quality': { 'runtime.dispatch': { allowedAgents: ['buster'] }, 'test.plan.execute': { allowedRoots: [repo] }, 'artifacts.read': artifact('kubeclaw.implementation-agent'), 'artifacts.write': artifact('kubeclaw.buster-quality-gate') },
       'kubeclaw.runtime-dispatch:runtime': { 'network.http': { allowedOrigins: origins }, 'secrets.read': { allowedNames: ['worker'] } },
       'kubeclaw.remote-test-gate:plan': { 'secrets.read': { allowedNames: ['worker', 'source-key'] } },

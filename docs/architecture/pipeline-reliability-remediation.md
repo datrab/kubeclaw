@@ -102,3 +102,12 @@ The browser matrix exposed Ubuntu's AppArmor restriction on unprivileged Chromiu
 After Chromium could start, the real Lighthouse check exposed another distinction: browser-service requests blocked by the proxy were being classified as audited-page defects. The proxy still denies every other origin. Page acceptance now requires Lighthouse's actual CDP network log, rejects off-origin HTTP(S), WebSocket and WebTransport activity, and fails when network evidence is absent. Bounded blocked-proxy origin diagnostics remain available. The page-egress negative control uses a real second HTTP server and asserts zero contact. This change requires fresh real-browser CI evidence.
 
 At commit `29a3e6b355687654ce24e6507f111be4737b122c`, all four browser jobs in Pipeline reliability run `34020889620` passed: Axe, Lighthouse, visual and isolated Playwright. These are real browser/provider checks with negative controls, including a deliberately impossible performance budget and zero contact to the forbidden page-egress server. This closes the previously missing CI browser prerequisites for those package suites; it does not establish deployed browser/CNI isolation or actual agent acceptance. The project guide is now included in Nova's package, and operator instructions no longer reference retired lint/project-setup paths.
+
+
+## Module review candidate binding
+
+Project compilation now selects review revisions by implementation stage identity. Review verifies the immutable implementation artifact contents, keeps the first implementation baseline across repairs, and uses the latest implementation candidate. It blocks before dispatch when the repository's frozen HEAD differs from that candidate. Explicit graph reviews with a declared base retain their existing behavior.
+
+The real Git and durable artifact integration regression covers two module revision ranges, a subsequent repair, hydrated source contents, unrelated HEAD changes, missing/ambiguous artifact selection and corrupt reference metadata. It does not fabricate an agent verdict or establish full two-module agent acceptance. The source/extracted compiler checks also assert the generated review binding. Project platforms must grant review reads for both implementation and review artifact namespaces.
+
+This narrows W2 candidate binding; lint candidate binding, complete agent execution, legacy scaffold/E2E migration and the other closure work above remain open.

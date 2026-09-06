@@ -10,7 +10,7 @@ import { SIMPLIFICATION_CANDIDATES_EVIDENCE_KIND } from './simplification-contra
 
 export interface ReviewStageInput {
   readonly task: ReviewBundleTask;
-  readonly revisions: { readonly base: string };
+  readonly revisions: { readonly base: string; readonly head?: string };
   readonly scope: {
     readonly allowedPrefixes: readonly string[];
     readonly ownershipPrefixes: readonly string[];
@@ -152,7 +152,7 @@ function parse(value: unknown): ReviewStageInput {
   const taskValue = plainRecord(input.task, 'task');
   exact(taskValue, ['id', 'statement'], 'task');
   const revisionsValue = plainRecord(input.revisions, 'revisions');
-  exact(revisionsValue, ['base'], 'revisions');
+  exact(revisionsValue, revisionsValue.head === undefined ? ['base'] : ['base', 'head'], 'revisions');
   const scopeValue = plainRecord(input.scope, 'scope');
   const scope = parseScope(scopeValue);
   const requirements = array(
@@ -173,6 +173,7 @@ function parse(value: unknown): ReviewStageInput {
     },
     revisions: {
       base: gitObject(revisionsValue.base, 'revisions.base'),
+      ...(revisionsValue.head === undefined ? {} : { head: gitObject(revisionsValue.head, 'revisions.head') }),
     },
     scope, requirements, evidence: evidenceItems, contextCandidates,
   });

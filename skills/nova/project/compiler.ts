@@ -120,7 +120,7 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
     stages.push({ id: lintId, type: 'kubeclaw.lint.full', dependsOn: [implementationId], config: module.lint,
       input: { workingDirectory: repository, project: projectId }, execution, on: { request_fix: implementationId } });
     stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId], config: module.review,
-      input: { task: { id: module.id, statement: module.task }, revisions: { base: baseline },
+      input: { task: { id: module.id, statement: module.task }, revisions: { sourceStageId: implementationId },
         scope: { allowedPrefixes: module.ownedPaths, ownershipPrefixes: module.ownedPaths }, requirements: module.requirements,
         evidence: [{ kind: 'project-requirements', digest: sha256Text(canonicalJson(evidence)), content: evidence }], contextCandidates: [] },
       execution, on: { request_fix: implementationId } });
