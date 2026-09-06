@@ -105,6 +105,7 @@ spec:
           image: {{ .Values.tailscale.image | quote }}
           env:
             - {name: TS_USERSPACE, value: "true"}
+            - {name: TS_AUTH_ONCE, value: "true"}
             - {name: TS_KUBE_SECRET, value: ""}
             - {name: TS_STATE_DIR, value: /var/lib/tailscale}
             - {name: TS_SOCKET, value: /tmp/tailscaled.sock}

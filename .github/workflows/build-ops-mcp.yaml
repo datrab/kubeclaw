@@ -87,26 +87,40 @@ jobs:
           tags: |
             type=sha,prefix=
 
-      - name: Build and optionally push
+      - name: Build and load for runtime validation
         id: build
         uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/Dockerfile
           load: true
-          push: ${{ github.event_name != 'pull_request' }}
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,scope=${{ matrix.image }},mode=max
-          provenance: mode=max
-          sbom: true
+          provenance: false
+          sbom: false
 
       - name: Smoke-test the actual Codex container without account credentials
         if: matrix.image == 'kubeclaw-codex-ops'
         env:
           TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
         run: bash ops/pod/test-image.sh "$TEST_IMAGE"
+
+      - name: Publish validated image with attestations
+        if: github.event_name != 'pull_request'
+        id: publish
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.image }}
+          provenance: mode=max
+          sbom: true
 
       - name: Summary
         run: |
@@ -117,6 +131,6 @@ jobs:
           if [[ '${{ github.event_name }}' == 'pull_request' ]]; then
             echo 'PR validation build only; image was not pushed.' >> "$GITHUB_STEP_SUMMARY"
           else
-            echo 'Deploy: `${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}`' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Deploy: `${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}@${{ steps.publish.outputs.digest }}`' >> "$GITHUB_STEP_SUMMARY"
           fi
 
