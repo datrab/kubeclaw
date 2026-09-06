@@ -1,0 +1,172 @@
+[
+  {
+    "id": "IFR-05-001",
+    "severity": "mittel",
+    "owner": "argocd.md"
+  },
+  {
+    "id": "IFR-26-001",
+    "severity": "hoch",
+    "owner": "backup-recovery.md"
+  },
+  {
+    "id": "IFR-10-001",
+    "severity": "hoch",
+    "owner": "buildkit.md"
+  },
+  {
+    "id": "IFR-22-001",
+    "severity": "mittel",
+    "owner": "ci-build.md"
+  },
+  {
+    "id": "IFR-02-001",
+    "severity": "hoch",
+    "owner": "cilium-migration.md"
+  },
+  {
+    "id": "IFR-01-001",
+    "severity": "mittel",
+    "owner": "cluster-bootstrap.md"
+  },
+  {
+    "id": "IFR-07-001",
+    "severity": "mittel",
+    "owner": "envoy.md"
+  },
+  {
+    "id": "IFR-12-001",
+    "severity": "mittel",
+    "owner": "litellm-postgresql.md"
+  },
+  {
+    "id": "IFR-14-001",
+    "severity": "mittel",
+    "owner": "litellm.md"
+  },
+  {
+    "id": "IFR-18-001",
+    "severity": "hoch",
+    "owner": "namespace-broker.md"
+  },
+  {
+    "id": "IFR-03-001",
+    "severity": "mittel",
+    "owner": "network-dns.md"
+  },
+  {
+    "id": "IFR-03-002",
+    "severity": "mittel",
+    "owner": "network-dns.md"
+  },
+  {
+    "id": "IFR-25-001",
+    "severity": "mittel",
+    "owner": "observability.md"
+  },
+  {
+    "id": "IFR-27-001",
+    "severity": "mittel",
+    "owner": "ops-mcp.md"
+  },
+  {
+    "id": "IFR-28-001",
+    "severity": "mittel",
+    "owner": "ops-pod.md"
+  },
+  {
+    "id": "IFR-15-001",
+    "severity": "mittel",
+    "owner": "prism-postgresql.md"
+  },
+  {
+    "id": "IFR-20-001",
+    "severity": "mittel",
+    "owner": "prism-workloads.md"
+  },
+  {
+    "id": "IFR-20-002",
+    "severity": "mittel",
+    "owner": "prism-workloads.md"
+  },
+  {
+    "id": "IFR-29-001",
+    "severity": "mittel",
+    "owner": "public-config.md"
+  },
+  {
+    "id": "IFR-13-001",
+    "severity": "mittel",
+    "owner": "qdrant.md"
+  },
+  {
+    "id": "IFR-11-001",
+    "severity": "mittel",
+    "owner": "redis.md"
+  },
+  {
+    "id": "IFR-08-001",
+    "severity": "hoch",
+    "owner": "registry-local.md"
+  },
+  {
+    "id": "IFR-08-002",
+    "severity": "mittel",
+    "owner": "registry-local.md"
+  },
+  {
+    "id": "IFR-09-001",
+    "severity": "mittel",
+    "owner": "registry-mirror.md"
+  },
+  {
+    "id": "IFR-23-001",
+    "severity": "mittel",
+    "owner": "release-promotion.md"
+  },
+  {
+    "id": "IFR-19-001",
+    "severity": "hoch",
+    "owner": "role-workloads.md"
+  },
+  {
+    "id": "IFR-19-002",
+    "severity": "mittel",
+    "owner": "role-workloads.md"
+  },
+  {
+    "id": "IFR-21-001",
+    "severity": "mittel",
+    "owner": "runtime-images.md"
+  },
+  {
+    "id": "IFR-17-001",
+    "severity": "hoch",
+    "owner": "secrets.md"
+  },
+  {
+    "id": "IFR-06-001",
+    "severity": "mittel",
+    "owner": "spire.md"
+  },
+  {
+    "id": "IFR-16-001",
+    "severity": "mittel",
+    "owner": "storage.md"
+  },
+  {
+    "id": "IFR-04-001",
+    "severity": "mittel",
+    "owner": "tailscale.md"
+  },
+  {
+    "id": "IFR-24-001",
+    "severity": "mittel",
+    "owner": "updates-security.md"
+  },
+  {
+    "id": "IFR-24-002",
+    "severity": "hoch",
+    "owner": "updates-security.md"
+  }
+]

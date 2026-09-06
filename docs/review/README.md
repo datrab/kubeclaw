@@ -112,3 +112,8 @@ Vor Fortsetzung Baseline gegen neuen Code vergleichen; unveränderte Komponenten
 nicht erneut von vorn prüfen. Übergabe nennt vollständig/teilweise/ungeprüft,
 offene Befunde, blockierte Tests und den konkreten nächsten Codepfad.
 Keine Secrets, privaten Konfigurationswerte oder Betriebsdaten übernehmen.
+
+## Ergänzendes Infrastrukturreview
+
+[Infrastruktur-Inventar](infrastructure/inventory.md) · [Lebender Infrastruktur-Leitfaden](infrastructure/README.md) · [Infrastruktur-Übergabe](infrastructure/handoff.md).
+29 Infrastruktur-Einheiten und sechs komponentenübergreifende Pfade sind statisch geprüft; Live-Nachweise bleiben ausdrücklich offen. Pipeline-Inventar und Pipeline-Befunde werden dadurch nicht ersetzt.
