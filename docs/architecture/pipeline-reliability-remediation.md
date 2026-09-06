@@ -127,3 +127,14 @@ HTTP and the four browser runtimes now share typed fixture origin and expiry val
 Buster's `maximumResultStoreBytes` now limits total result blob bytes separately from `maximumResultBytes`. Nova's artifact blob store also enforces its configured aggregate byte budget. Admission is serialized by a cross-process store lock and counts existing blob/temp files; duplicate immutable writes need no additional space. A real competing-process regression proves the budget cannot be oversubscribed and that reconstruction preserves it. The artifact-store package regression also passes with aggregate limits enabled.
 
 These limits are not pre-acceptance job reservations or a retention/import-ack protocol. Those storage lifecycle changes remain required before claiming W6 closure. Stores already over budget retain readable existing content and refuse new unique blobs; operators must preserve recovery evidence when reclaiming storage.
+
+
+## Retired experimental E2E entry points
+
+Removed the obsolete TypeScript smoke runner and its matrix runner. They used retired test authority and invalid review inputs; the smoke implementation also lacked the committed-workspace handoff. Active developer instructions and generated commands now point to the existing JavaScript system runner. Historical Phase 12 evidence remains historical, not acceptance for the current runtime. The JavaScript runner's production graph/scenario migration remains open and must be validated before live acceptance.
+
+## Production harness contract cutover
+
+The obsolete Buster worker test-agent package and its caller-owned command-suite contract have been deleted from the repository and production role manifest. Module and final test gates now use Nova's native quality-evaluation stage and verified GateDecision artifacts. The production harness publishes modules serially and supplies schema-valid requirement evidence to review stages. Its generated provider plans now include mandatory dependency security for each module, use repository-relative project paths, and derive fixture input schemas from registered contracts.
+
+The new offline production-graph test generates an actual fixture repository, invokes the production harness in dry-run mode, and validates the resulting graph and configuration against installed schemas. It does not execute agents or claim deployed acceptance. Counter-based repair declarations fail preflight with `REAL_E2E_RETRY_FIXTURE_REQUIRES_COMMITTED_DEFECT`; replacing those old scenarios with persistent defects and real repair evidence remains open.

@@ -23,6 +23,8 @@ jobs:
         run: npm run verify:reliability
       - name: Validate project compiler and installed stage contracts
         run: node tests/verification/contracts/check-project-compiler.mts
+      - name: Validate production graph and native gate evidence
+        run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs
       - name: Install real shell lint tools
         run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
       - name: Check affected stage and adapter contracts
@@ -30,7 +32,6 @@ jobs:
           npm test --workspace @kubeclaw/plugin-lint
           npm test --workspace @kubeclaw/plugin-implementation-agent
           npm test --workspace @kubeclaw/plugin-buster-quality-gate
-          npm test --workspace @kubeclaw/plugin-test-agent
           npm test --workspace @kubeclaw/plugin-runtime-dispatch
           npm test --workspace @kubeclaw/plugin-operator-messaging
           npm test --prefix skills/buster/plugins/http

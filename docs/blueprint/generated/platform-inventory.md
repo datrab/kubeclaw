@@ -20,8 +20,8 @@ Unresolved conflicts: none.
 
 | Role | Packages | Plugins | External capabilities |
 | --- | ---: | ---: | --- |
-| buster | 11 | 23 | git.repository.read, test.plan.execute |
-| nova | 10 | 30 | none |
+| buster | 11 | 22 | git.repository.read, test.plan.execute |
+| nova | 11 | 30 | none |
 | prism | 11 | 6 | git.repository.read |
 
 ## Contracts
@@ -65,7 +65,6 @@ Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.security-providers | 1.0.0 | buster | test provider: headers<br>test provider: dependency-trivy<br>test provider: image-trivy<br>test provider: kubernetes-policy<br>test provider: kubernetes-runtime | requires: network.http, security.scan, kubernetes.runtime-security<br>provides: none | `skills/buster/plugins/security-providers/plugin.json` |
 | kubeclaw.size-budget | 1.0.0 | buster | test provider: artifact | requires: none<br>provides: none | `skills/buster/plugins/size-budget/plugin.json` |
 | kubeclaw.tailscale-exposure | 1.0.0 | buster | test provider: exposure | requires: kubernetes.exposure<br>provides: none | `skills/buster/plugins/tailscale-exposure/plugin.json` |
-| kubeclaw.test-agent | 1.0.0 | buster | stage: test (kubeclaw.test.execution) | requires: command.execute, test.plan.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/buster/plugins/test-agent/plugin.json` |
 | kubeclaw.visual | 1.0.0 | buster | test provider: visual | requires: browser.visual<br>provides: none | `skills/buster/plugins/visual/plugin.json` |
 | kubeclaw.agent-observability | 1.0.0 | buster, nova, prism | observer: ingester<br>observer: evidence | requires: telemetry.emit, artifacts.write<br>provides: none | `skills/common/plugins/agent-observability/plugin.json` |
 | kubeclaw.artifact-store | 1.0.0 | buster, nova, prism | adapter: artifact-store | requires: none<br>provides: artifacts.read, artifacts.write | `skills/common/plugins/artifact-store/plugin.json` |
@@ -86,11 +85,11 @@ Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.wait-store | 1.0.0 | nova | adapter: waits | requires: none<br>provides: signal.wait | `skills/common/plugins/wait-store/plugin.json` |
 | kubeclaw.architecture-validator | 1.0.0 | nova | stage: architecture (kubeclaw.validate.architecture) | requires: runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/architecture-validator/plugin.json` |
 | kubeclaw.blueprint-sync | 1.0.0 | nova | stage: sync (kubeclaw.generate.blueprint-sync) | requires: git.sync, git.commit, state.append, artifacts.write<br>provides: none | `skills/nova/plugins/blueprint-sync/plugin.json` |
-| kubeclaw.buster-quality-gate | 1.0.0 | nova | stage: quality (kubeclaw.test.quality-evaluation) | requires: test.plan.execute, runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/buster-quality-gate/plugin.json` |
+| kubeclaw.buster-quality-gate | 1.0.0 | nova | stage: quality (kubeclaw.test.quality-evaluation) | requires: test.plan.execute, runtime.dispatch, artifacts.write, artifacts.read<br>provides: none | `skills/nova/plugins/buster-quality-gate/plugin.json` |
 | kubeclaw.case-study | 1.0.0 | nova | stage: case-study (kubeclaw.report.case-study) | requires: runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/case-study/plugin.json` |
 | kubeclaw.delivery-lint | 1.0.0 | nova | stage: delivery-lint (kubeclaw.lint.delivery) | requires: git.repository.read, artifacts.write<br>provides: none | `skills/nova/plugins/delivery-lint/plugin.json` |
 | kubeclaw.human-approval | 1.0.0 | nova | stage: approval (kubeclaw.decision.human-approval)<br>stage: architecture-approval (kubeclaw.decision.architecture-approval) | requires: operator.request, signal.wait, artifacts.read<br>provides: none | `skills/nova/plugins/human-approval/plugin.json` |
-| kubeclaw.implementation-agent | 1.0.0 | nova | stage: implementation (kubeclaw.agent.implementation) | requires: runtime.dispatch, git.workspace.create, git.workspace.remove, git.commit, git.merge, artifacts.write<br>provides: none | `skills/nova/plugins/implementation-agent/plugin.json` |
+| kubeclaw.implementation-agent | 1.0.0 | nova | stage: implementation (kubeclaw.agent.implementation) | requires: runtime.dispatch, git.workspace.create, git.workspace.remove, git.commit, git.merge, artifacts.read, artifacts.write<br>provides: none | `skills/nova/plugins/implementation-agent/plugin.json` |
 | kubeclaw.lint | 1.0.0 | nova | stage: pre-check (kubeclaw.lint.pre-check)<br>stage: full (kubeclaw.lint.full)<br>adapter: executor | requires: lint.execute, artifacts.write<br>provides: lint.execute | `skills/nova/plugins/lint/plugin.json` |
 | kubeclaw.pipeline-review | 1.0.0 | nova | stage: review (kubeclaw.report.pipeline-review) | requires: runtime.dispatch, artifacts.write<br>provides: none | `skills/nova/plugins/pipeline-review/plugin.json` |
 | kubeclaw.preflight-contract | 1.0.0 | nova | stage: validate (kubeclaw.validate.preflight-contract) | requires: git.repository.read, artifacts.write<br>provides: none | `skills/nova/plugins/preflight-contract/plugin.json` |
@@ -98,7 +97,7 @@ Capability vocabulary: 24 grantable capabilities and 4 core-only capabilities.
 | kubeclaw.project-summary | 1.0.0 | nova | stage: summary (kubeclaw.report.project-summary) | requires: artifacts.write<br>provides: none | `skills/nova/plugins/project-summary/plugin.json` |
 | kubeclaw.remote-test-gate | 1.0.0 | nova | adapter: plan | requires: secrets.read<br>provides: test.plan.execute | `skills/nova/plugins/remote-test-gate/plugin.json` |
 | kubeclaw.repository-adapter | 1.0.0 | nova | adapter: repository | requires: none<br>provides: git.repository.read | `skills/nova/plugins/repository-adapter/plugin.json` |
-| kubeclaw.review | 1.0.0 | nova | stage: review (kubeclaw.decision.review)<br>stage: repository-audit (kubeclaw.audit.repository-review) | requires: runtime.dispatch, git.repository.read, artifacts.read, artifacts.write<br>provides: none | `skills/nova/plugins/review/plugin.json` |
+| kubeclaw.review | 1.0.0 | nova | stage: review (kubeclaw.decision.review)<br>stage: repository-audit (kubeclaw.audit.repository-review)<br>stage: repository-revalidation (kubeclaw.audit.repository-review-revalidation) | requires: runtime.dispatch, git.repository.read, artifacts.read, artifacts.write<br>provides: none | `skills/nova/plugins/review/plugin.json` |
 | kubeclaw-prism | 0.1.0 | not role-bundled | none | requires: none<br>provides: none | `skills/prism/openclaw-plugin/openclaw.plugin.json` |
 
 ## Completeness boundary

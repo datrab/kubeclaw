@@ -2,15 +2,15 @@
   "schemaVersion": "plugin-system-inventory-v2",
   "generatedBy": "scripts/plugin-system-inventory.mjs",
   "summary": {
-    "packages": 47,
-    "packageRoots": 48,
-    "stages": 18,
+    "packages": 46,
+    "packageRoots": 47,
+    "stages": 17,
     "observers": 6,
     "adapters": 18,
     "testProviders": 18,
     "reportAdapters": 1,
-    "registrations": 61,
-    "files": 807
+    "registrations": 60,
+    "files": 794
   },
   "runtime": {
     "roots": [
@@ -497,34 +497,6 @@
         {
           "kind": "test-provider",
           "id": "exposure"
-        }
-      ]
-    },
-    {
-      "id": "kubeclaw.test-agent",
-      "version": "1.0.0",
-      "kind": "pipeline-plugin",
-      "root": "skills/buster/plugins/test-agent",
-      "manifest": "skills/buster/plugins/test-agent/plugin.json",
-      "files": [
-        "skills/buster/plugins/test-agent/package.json",
-        "skills/buster/plugins/test-agent/plugin.json",
-        "skills/buster/plugins/test-agent/README.md",
-        "skills/buster/plugins/test-agent/schemas/config.schema.json",
-        "skills/buster/plugins/test-agent/schemas/input.schema.json",
-        "skills/buster/plugins/test-agent/schemas/result.schema.json",
-        "skills/buster/plugins/test-agent/src/protocol.ts",
-        "skills/buster/plugins/test-agent/src/stage.ts",
-        "skills/buster/plugins/test-agent/tests/live-function.test.ts",
-        "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
-        "skills/buster/plugins/test-agent/tests/protocol.test.ts",
-        "skills/buster/plugins/test-agent/tests/suite-first.test.ts",
-        "skills/buster/plugins/test-agent/tsconfig.json"
-      ],
-      "registrations": [
-        {
-          "kind": "stage",
-          "id": "test"
         }
       ]
     },
@@ -1712,12 +1684,6 @@
       "registrationId": "kubeclaw.tailscale-exposure:exposure"
     },
     {
-      "kind": "stage",
-      "id": "test",
-      "packageId": "kubeclaw.test-agent",
-      "registrationId": "kubeclaw.test-agent:test"
-    },
-    {
       "kind": "test-provider",
       "id": "visual",
       "packageId": "kubeclaw.visual",
@@ -2110,19 +2076,6 @@
     "skills/buster/plugins/tailscale-exposure/src/provider.js",
     "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
     "skills/buster/plugins/tailscale-exposure/tsconfig.json",
-    "skills/buster/plugins/test-agent/README.md",
-    "skills/buster/plugins/test-agent/package.json",
-    "skills/buster/plugins/test-agent/plugin.json",
-    "skills/buster/plugins/test-agent/schemas/config.schema.json",
-    "skills/buster/plugins/test-agent/schemas/input.schema.json",
-    "skills/buster/plugins/test-agent/schemas/result.schema.json",
-    "skills/buster/plugins/test-agent/src/protocol.ts",
-    "skills/buster/plugins/test-agent/src/stage.ts",
-    "skills/buster/plugins/test-agent/tests/live-function.test.ts",
-    "skills/buster/plugins/test-agent/tests/package-boundary.test.mjs",
-    "skills/buster/plugins/test-agent/tests/protocol.test.ts",
-    "skills/buster/plugins/test-agent/tests/suite-first.test.ts",
-    "skills/buster/plugins/test-agent/tsconfig.json",
     "skills/buster/plugins/visual/README.md",
     "skills/buster/plugins/visual/package.json",
     "skills/buster/plugins/visual/plugin.json",

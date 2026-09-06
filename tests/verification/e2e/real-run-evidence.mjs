@@ -1,3 +1,4 @@
+import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -312,8 +313,17 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
     .filter((artifact) => artifact.namespace === namespace)
     .map((artifact) => ({ artifact, value: artifactBlob(result.artifactRoot, artifact) }));
   const implementationArtifacts = artifacts('kubeclaw.implementation-agent');
-  const testArtifacts = artifacts('kubeclaw.test-agent');
-  const qualityArtifacts = artifacts('kubeclaw.buster-quality-gate');
+  const gateArtifacts = artifacts('kubeclaw.buster-quality-gate');
+  const testArtifacts = gateArtifacts.filter(({ artifact }) => artifact.producer.stageId.startsWith('buster-') && !artifact.artifactId.includes(':decision:'));
+  const qualityArtifacts = gateArtifacts.filter(({ artifact }) => artifact.producer.stageId === 'final-buster' && !artifact.artifactId.includes(':decision:'));
+  const decisionFor = (artifact) => {
+    const matches = gateArtifacts.filter(item => item.artifact.producer.stageId === artifact.producer.stageId
+      && item.artifact.producer.attemptNumber === artifact.producer.attemptNumber && item.artifact.artifactId.includes(':decision:'));
+    if (matches.length !== 1) throw new Error('REAL_E2E_NATIVE_DECISION_MISSING_OR_AMBIGUOUS');
+    const decision = parseGateDecision(matches[0].value);
+    if (decision.runId !== result.runId) throw new Error('REAL_E2E_NATIVE_DECISION_RUN_MISMATCH');
+    return decision;
+  };
   const implementationFailures = implementationArtifacts.flatMap(({ artifact, value }) => {
     const changedPaths = Array.isArray(value?.changedPaths) ? value.changedPaths : [];
     const checksPassed = Array.isArray(value?.checks)
@@ -333,26 +343,22 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
       : [{ artifactId: artifact.artifactId, changedPaths, checksPassed, mutationsExist }];
   });
   const moduleBusterFailures = testArtifacts.flatMap(({ artifact, value }) => {
-    const receipt = value?.suiteExecution?.provider;
-    return receipt?.schemaVersion === 'test-plan-receipt.v1'
-      && receipt?.decision?.state === 'passed'
-      && value?.verdict?.verdict === 'PASS'
-      ? []
-      : [{ artifactId: artifact.artifactId, receipt: receipt ?? null }];
+    try {
+      const decision = decisionFor(artifact);
+      return decision.state === 'passed' && value?.verdict?.outcome === 'passed'
+        && value.decisionDigest === decision.decisionDigest ? [] : [{ artifactId: artifact.artifactId }];
+    } catch (error) { return [{ artifactId: artifact.artifactId, error: String(error) }]; }
   });
   const requiredFinalSuites = ['security-headers', 'dependency-security', 'image-security',
     'kubernetes-policy-security', 'kubernetes-runtime-security'];
   const finalBusterFailures = qualityArtifacts.flatMap(({ artifact, value }) => {
-    const receipt = value?.suiteExecution?.provider;
-    const nodeIds = new Set((receipt?.decision?.nodes ?? [])
-      .filter((node) => ['passed', 'advisory_failure'].includes(node?.effect))
-      .map((node) => node.nodeId));
-    const missing = requiredFinalSuites.filter((suite) => !nodeIds.has(suite));
-    return receipt?.schemaVersion === 'test-plan-receipt.v1'
-      && receipt?.decision?.state === 'passed'
-      && missing.length === 0 && value?.verdict?.outcome === 'passed'
-      ? []
-      : [{ artifactId: artifact.artifactId, missing }];
+    try {
+      const decision = decisionFor(artifact);
+      const nodeIds = new Set(decision.nodes.filter(node => ['passed', 'advisory_failure'].includes(node.effect)).map(node => node.nodeId));
+      const missing = requiredFinalSuites.filter(suite => !nodeIds.has(suite));
+      return decision.state === 'passed' && missing.length === 0 && value?.verdict?.outcome === 'passed'
+        && value.decisionDigest === decision.decisionDigest ? [] : [{ artifactId: artifact.artifactId, missing }];
+    } catch (error) { return [{ artifactId: artifact.artifactId, error: String(error) }]; }
   });
   const forgeCommitCount = String(result.gitLog || '').split('\n')
     .filter((line) => /\[forge:(?:01|02|03|04)-nginx\]/.test(line)).length;
@@ -364,8 +370,7 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const requiredArtifacts = [
     ['kubeclaw.architecture-validator', 1],
     ['kubeclaw.implementation-agent', 4],
-    ['kubeclaw.test-agent', 4],
-    ['kubeclaw.buster-quality-gate', 1],
+    ['kubeclaw.buster-quality-gate', 10],
     ['kubeclaw.project-summary', 1],
   ];
   const checks = [

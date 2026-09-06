@@ -32,7 +32,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.agent.implementation`.
 
-Required capabilities: `runtime.dispatch`, `git.workspace.create`, `git.workspace.remove`, `git.commit`, `git.merge`, `artifacts.write`
+Required capabilities: `runtime.dispatch`, `git.workspace.create`, `git.workspace.remove`, `git.commit`, `git.merge`, `artifacts.read`, `artifacts.write`
 
 Provided capabilities: None.
 

@@ -4,13 +4,13 @@
     "missing": []
   },
   "oldDocumentLedger": {
-    "expected": 368,
-    "rows": 368,
+    "expected": 371,
+    "rows": 371,
     "unclassified": []
   },
   "plugins": {
-    "manifests": 49,
-    "inventoried": 49,
+    "manifests": 48,
+    "inventoried": 48,
     "missingTargets": []
   },
   "registrations": {

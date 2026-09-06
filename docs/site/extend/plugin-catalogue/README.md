@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 49 packages.
+The catalogue contains 48 packages.
 
 ## Stage Packages
 
@@ -28,7 +28,6 @@ The catalogue contains 49 packages.
 - [kubeclaw.prism-design](kubeclaw.prism-design.md)
 - [kubeclaw.project-summary](kubeclaw.project-summary.md)
 - [kubeclaw.review](kubeclaw.review.md)
-- [kubeclaw.test-agent](kubeclaw.test-agent.md)
 
 ## Observer Packages
 

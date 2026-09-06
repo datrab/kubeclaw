@@ -223,7 +223,7 @@ function migration(filePath) {
   if (filePath === 'docs/README.md') return ['rewrite-and-keep', '/', 'Replace with the three independent reader entrances and global search.'];
   if (filePath.startsWith('docs/reference/')) return ['replace-with-generated-reference', `/reference/${name.replace(/\.md$/u, '')}`, 'Generate factual tables from code and add only concise human context.'];
   if (filePath.startsWith('docs/operators/')) return ['rewrite-and-keep', `/use/${name === 'README.md' ? '' : name.replace(/\.md$/u, '')}`, 'Rewrite as a self-contained operator task or concept; link to architecture only for optional depth.'];
-  if (filePath.startsWith('docs/operations/')) return ['rewrite-and-keep', `/use/operations/${name.replace(/\.md$/u, '')}`, 'Rewrite as a self-contained operator task and verify each command.'];
+  if (filePath.startsWith('docs/ops/') || filePath.startsWith('docs/operations/')) return ['rewrite-and-keep', `/use/operations/${name.replace(/\.md$/u, '')}`, 'Rewrite as a self-contained operator task and verify each command.'];
   if (filePath.startsWith('docs/runbooks/')) return ['rewrite-and-keep', `/use/runbooks/${name.replace(/\.md$/u, '')}`, 'Keep recovery procedures in the operator track and verify each recovery path.'];
   if (filePath.startsWith('docs/security/')) return ['split-rewrite-then-delete', '/architecture/security and /decisions', 'Separate current security controls from durable decisions and implementation history.'];
   if (filePath.startsWith('docs/user-guides/')) return ['rewrite-and-keep', `/use/${name.replace(/\.md$/u, '')}`, 'Rewrite as a self-contained user task and verify each normal journey.'];

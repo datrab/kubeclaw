@@ -16,7 +16,7 @@ import {
   validatePipelineRuntimeV2,
 } from '../../../skills/nova/core/src/index.ts';
 import { loadPlatformConfig } from '../../../skills/common/plugin-runtime/foundation/config/platform.ts';
-import type { ResumeSignal } from '../../../skills/common/plugin-runtime/sdk/src/index.ts';
+import { canonicalJson, type ResumeSignal } from '../../../skills/common/plugin-runtime/sdk/src/index.ts';
 import { parseProductionPipelineArgs } from './production-pipeline-args.mts';
 import { parseCapabilityProviders, resolveProviderCapability } from './provider-catalog.mjs';
 import { writeRunLintPolicy } from './manifest-lint-production.mts';
@@ -77,41 +77,6 @@ function moduleTask(
   ].join('\n');
 }
 
-function moduleCommandSuites(
-  moduleId: string,
-  module: Record<string, any>,
-  repo: string,
-): readonly Readonly<Record<string, unknown>>[] {
-  const declarations = module.real_e2e_command_suites;
-  if (declarations === undefined) return [];
-  if (!Array.isArray(declarations)) throw new Error(`REAL_E2E_COMMAND_SUITES_INVALID:${moduleId}`);
-  return declarations.map((declaration, index) => {
-    if (
-      !declaration
-      || typeof declaration !== 'object'
-      || Array.isArray(declaration)
-      || declaration.kind !== 'fail-once'
-      || declaration.suite !== 'retry-fixture'
-      || Object.keys(declaration).some((key) => !['kind', 'suite'].includes(key))
-    ) {
-      throw new Error(`REAL_E2E_COMMAND_SUITE_INVALID:${moduleId}:${index}`);
-    }
-    const marker = path.join(repo, '.swarm', 'logs', `real-e2e-retry-fixture-${safe(moduleId)}.txt`);
-    const code = [
-      'const fs=require("node:fs")',
-      'const marker=process.argv[1]',
-      'fs.mkdirSync(require("node:path").dirname(marker),{recursive:true})',
-      'if(!fs.existsSync(marker)){fs.writeFileSync(marker,"failed-once\\n");console.error("REAL_E2E_EXPECTED_RETRYABLE_FORGE_CODE_FAILURE");process.exit(1)}',
-      'console.log("REAL_E2E_RETRY_RECOVERED")',
-    ].join(';');
-    return Object.freeze({
-      suite: 'retry-fixture',
-      executable: process.execPath,
-      args: ['-e', code, marker],
-      workingDirectory: repo,
-    });
-  });
-}
 
 function grant(constraints: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
   return constraints;
@@ -202,7 +167,10 @@ async function main(): Promise<void> {
   if (!lintDeclaration) throw new Error('REAL_E2E_MANIFEST_LINT_DECLARATION_MISSING');
   const runId = String(progress.run_id ?? process.env.REAL_E2E_RUN_ID ?? `real-e2e:${crypto.randomUUID()}`);
   const modules = progress.modules as Record<string, Record<string, any>>;
-  const moduleIds = Object.keys(modules);
+  const moduleIds = Object.keys(modules).sort();
+  if (Object.values(modules).some(module => module.real_e2e_command_suites !== undefined)) {
+    throw new Error('REAL_E2E_RETRY_FIXTURE_REQUIRES_COMMITTED_DEFECT');
+  }
   if (moduleIds.length !== 4) throw new Error(`REAL_E2E_MODULE_TOPOLOGY_INVALID:${moduleIds.length}`);
   const stateRoot = path.join(swarm, 'v2-runtime');
   const artifacts = path.join(swarm, 'artifacts', 'v2');
@@ -302,7 +270,7 @@ async function main(): Promise<void> {
       'artifacts.write': artifact('kubeclaw.architecture-validator'),
     },
     'kubeclaw.implementation-agent:implementation': {
-      'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate', 'kubeclaw.test-agent'] },
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate'] },
       'runtime.dispatch': runtimeGrants,
       'git.workspace.create': gitWorkspaceGrant,
       'git.workspace.remove': gitWorkspaceGrant,
@@ -310,17 +278,10 @@ async function main(): Promise<void> {
       'git.merge': gitMutationGrant,
       'artifacts.write': artifact('kubeclaw.implementation-agent'),
     },
-    'kubeclaw.test-agent:test': {
-      'command.execute': { allowedExecutables: [process.execPath], allowedWorkingRoots: [repo] },
-      'test.plan.execute': { allowedRoots: [repo] },
-      'artifacts.read': { allowedNamespaces: ['kubeclaw.implementation-agent'] },
-      'runtime.dispatch': runtimeGrants,
-      'artifacts.write': artifact('kubeclaw.test-agent'),
-    },
     'kubeclaw.review:review': {
       'runtime.dispatch': runtimeGrants,
       'git.repository.read': { allowedPrefixes: ['.'] },
-      'artifacts.read': artifact('kubeclaw.review'),
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.review', 'kubeclaw.implementation-agent'] },
       'artifacts.write': artifact('kubeclaw.review'),
     },
     'kubeclaw.lint:full': {
@@ -357,7 +318,7 @@ async function main(): Promise<void> {
     },
     'kubeclaw.runtime-dispatch:openclaw': {
       'git.repository.read': { allowedPrefixes: ['.swarm/runtime-results/'] },
-      'network.http': { allowedOrigins: [gatewayOrigin, new URL(busterGatewayOrigin).origin] },
+      'network.http': { allowedOrigins: [...new Set([gatewayOrigin, new URL(busterGatewayOrigin).origin])] },
       'secrets.read': { allowedNames: ['openclaw.gateway', 'buster.gateway', 'buster.worker'] },
     },
     'kubeclaw.remote-test-gate:plan': {
@@ -504,11 +465,11 @@ async function main(): Promise<void> {
         maxFileBytes: 2_097_152,
       },
       'kubeclaw.network-http:http': {
-        allowedOrigins: [
+        allowedOrigins: [...new Set([
           gatewayOrigin,
           new URL(busterGatewayOrigin).origin,
           webhookOrigin,
-        ],
+        ])],
         allowedMethods: ['GET', 'POST', 'DELETE'],
         allowedHeaders: [
           'authorization',
@@ -603,6 +564,7 @@ async function main(): Promise<void> {
       execution: { maxAttempts: 2, maxRemediationCycles: 0, timeoutMs: 60_000 },
     },
   ];
+  let previousModuleGate: string | undefined;
   for (const moduleId of moduleIds) {
     const module = modules[moduleId]!;
     const dependencyTests = (module.depends_on as string[]).map((id) => `buster-${id}`);
@@ -610,7 +572,7 @@ async function main(): Promise<void> {
     stages.push({
       id: `forge-${moduleId}`,
       type: 'kubeclaw.agent.implementation',
-      dependsOn: ['architecture-approval', ...dependencyTests],
+      dependsOn: [...new Set(['architecture-approval', ...dependencyTests, ...(previousModuleGate ? [previousModuleGate] : [])])],
       config: { agent: `forge.${moduleId}`, agentRole: roles.forge },
       input: {
         runId,
@@ -631,57 +593,42 @@ async function main(): Promise<void> {
     });
     stages.push({
       id: `buster-${moduleId}`,
-      type: 'kubeclaw.test.execution',
+      type: 'kubeclaw.test.quality-evaluation',
       dependsOn: [`forge-${moduleId}`],
       on: { request_fix: `forge-${moduleId}` },
       config: { agent: `buster.${moduleId}`, agentRole: roles.buster },
       input: {
-        runId,
-        taskId: moduleId,
-        attempt: 1,
-        task: `Act as Buster for ${moduleId}. Judge the actual production suite results and reject any skipped, failed, or errored required check.`,
-        suiteEvidence: [],
+        gateId: `buster-${moduleId}`,
+        task: `Judge the verified production provider evidence for ${moduleId}.`,
         providerPlan: providerPlanFor({ moduleId, gateId: null }, `buster-${moduleId}`),
-        // This command is a pipeline-retry fault fixture. It is not a unit suite
-        // and cannot become unit gate authority.
-        commandSuites: moduleCommandSuites(moduleId, module, repo),
-        suitePlan: {
-          repositoryRoot: repo,
-          suites: module.test_suites,
-          testConfig: { ...module.test_config, suite_timeout_ms: 900_000 },
-          task: {
-            project: projectName,
-            run_id: runId,
-            module_id: moduleId,
-            task_type: 'module',
-            contracts: module.contracts,
-          },
-          moduleId,
-        },
       },
       execution: { maxAttempts: 2, maxRemediationCycles: 1, timeoutMs: 1_800_000 },
     });
+    previousModuleGate = `buster-${moduleId}`;
   }
+  const reviewInput = (id: string, statement: string) => {
+    const requirements = moduleIds.map(moduleId => ({ id: `REQ-${moduleId}`,
+      statement: `Module ${moduleId} satisfies its declared task and owned-path contract: ${moduleTask(moduleId, modules[moduleId]!, projectRelative, runId)}` }));
+    const content = { project: projectName, runId, requirements };
+    return { task: { id, statement }, revisions: { base: headBefore },
+      scope: { allowedPrefixes: [projectRelative], ownershipPrefixes: [projectRelative] }, requirements,
+      evidence: [{ kind: 'project-requirements', digest: `sha256:${crypto.createHash('sha256').update(canonicalJson(content)).digest('hex')}`, content }],
+      contextCandidates: [] };
+  };
   const busterStages = moduleIds.map((moduleId) => `buster-${moduleId}`);
   stages.push(
     {
       id: 'module-review',
+      on: { request_fix: `forge-${moduleIds.at(-1)}` },
       type: 'kubeclaw.decision.review',
       dependsOn: busterStages,
       config: { agent: 'echo.module-review' },
-      input: {
-        task: 'Act as Echo. Review the actual merged four-module repository after Forge and Buster. Inspect Git history, owned paths, module contracts, and run every module verification command. Return PASS only when the module graph and evidence are real.',
-        evidence: {
-          openedArtifacts: moduleIds.flatMap((id) => modules[id]!.owned_paths),
-          checkedContracts: Object.keys(progress.contracts ?? {}),
-          failedCommands: [],
-          unverifiedRequirements: [],
-        },
-      },
+      input: reviewInput('module-review', 'Review the merged module source against every declared requirement.'),
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1_200_000 },
     },
     {
       id: 'manifest-lint',
+      on: { request_fix: `forge-${moduleIds.at(-1)}` },
       type: 'kubeclaw.lint.full',
       dependsOn: ['module-review'],
       config: { policyPath: lintPolicyPath, policyProject: lintDeclaration.policyProject },
@@ -711,6 +658,7 @@ async function main(): Promise<void> {
     },
     {
       id: 'final-buster',
+      on: { request_fix: `forge-${moduleIds.at(-1)}` },
       type: 'kubeclaw.test.quality-evaluation',
       dependsOn: ['operator-approval'],
       config: { agent: 'buster.final', agentRole: roles.buster },
@@ -723,22 +671,11 @@ async function main(): Promise<void> {
     },
     {
       id: 'final-review',
+      on: { request_fix: `forge-${moduleIds.at(-1)}` },
       type: 'kubeclaw.decision.review',
       dependsOn: ['final-buster'],
       config: { agent: 'echo.final-review' },
-      input: {
-        task: 'Act as final Echo reviewer. Inspect the merged repository, Git history, Buster result artifacts, Kubernetes evidence, security evidence, and lifecycle journal. Return PASS only when the requested production workflow actually ran.',
-        evidence: {
-          openedArtifacts: [
-            'Projects', '.swarm/artifacts/v2', '.swarm/v2-runtime/telemetry',
-          ],
-          checkedContracts: [
-            'deployable artifact', 'runtime config', 'preview infrastructure',
-          ],
-          failedCommands: [],
-          unverifiedRequirements: [],
-        },
-      },
+      input: reviewInput('final-review', 'Review the release candidate source and all declared requirements after final provider verification.'),
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1_200_000 },
     },
     {
@@ -768,7 +705,7 @@ async function main(): Promise<void> {
   writeJson(pipelinePath, {
     schemaVersion: 'pipeline-definition.v2',
     id: 'kubeclaw:real-production-e2e',
-    maxConcurrency: 4,
+    maxConcurrency: 1,
     stages,
   });
   const platform = loadPlatformConfig(platformPath);
