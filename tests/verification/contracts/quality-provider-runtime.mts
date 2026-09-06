@@ -162,6 +162,7 @@ export async function verifyQualityProviderRuntime(options: {
       journal: new core.FileJournal(path.join(options.stateRoot, 'events.jsonl')),
     });
     const result = await runner.run(runId);
+    assert.equal(result.status, options.expected === 'passed' ? 'succeeded' : 'blocked');
     const events = fs.readFileSync(path.join(options.stateRoot, 'events.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);
     const completed = events.filter(event => event.type === 'attempt.completed');
     assert.equal(completed.at(-1)?.payload.result?.outcome, options.expected, JSON.stringify({ result, completed }));

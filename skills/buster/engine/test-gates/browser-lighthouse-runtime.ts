@@ -151,6 +151,26 @@ async function withTimeout<T>(promise: Promise<T>, milliseconds: number): Promis
   } finally { if (timer !== undefined) clearTimeout(timer); }
 }
 
+function assertAuditedOrigin(log: unknown, targetOrigin: string): void {
+  if (!Array.isArray(log) || log.length === 0) throw new Error('BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING');
+  let observedTarget = false;
+  for (const raw of log) {
+    const event = object(raw, 'BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    if (event.method === 'Network.webSocketCreated' || event.method === 'Network.webTransportCreated') {
+      throw new Error('BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED');
+    }
+    if (event.method !== 'Network.requestWillBeSent') continue;
+    const params = object(event.params, 'BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    const request = object(params.request, 'BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    if (typeof request.url !== 'string') throw new Error('BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID');
+    const destination = new URL(request.url);
+    if (!['http:', 'https:'].includes(destination.protocol)) continue;
+    if (destination.origin !== targetOrigin) throw new Error(`BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED:${destination.origin}`);
+    observedTarget = true;
+  }
+  if (!observedTarget) throw new Error('BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING');
+}
+
 export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilityInvoker {
   readonly #options: BrowserLighthouseCapabilityInvokerOptions;
   readonly #origins: ReadonlySet<string>;
@@ -206,20 +226,28 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
         }
         throw new Error(`BROWSER_LIGHTHOUSE_LAUNCH_FAILED:${error instanceof Error ? error.message : String(error)}:${diagnostic}`);
       }
+      const port = chrome.port;
+      if (typeof port !== 'number' || !Number.isInteger(port) || port < 1) throw new Error('BROWSER_LIGHTHOUSE_DEBUG_PORT_INVALID');
       const results = [];
       for (const run of runs) {
         if (signal.aborted) throw new Error('BROWSER_LIGHTHOUSE_CANCELLED');
         const url = new URL(run.route, `${target.origin}/`);
         const startedAt = Date.now();
         const output = await withTimeout(lighthouse(url.href, {
-          port: chrome.port, output: 'json', logLevel: 'silent', onlyCategories: [run.purpose],
+          port, output: 'json', logLevel: 'silent', onlyCategories: [run.purpose],
         }, { extends: 'lighthouse:default', settings: run.profile.settings }), timeoutMs);
         if (!output) throw new Error('BROWSER_LIGHTHOUSE_RESULT_INVALID');
-        if (proxy.denied.size) throw new Error('BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED');
+        // The proxy denies every other origin, including Chrome's background
+        // services. Gate the audited page using its actual CDP network evidence;
+        // an unrelated browser service must not be reported as a page defect.
+        assertAuditedOrigin(output.artifacts.DevtoolsLog, target.origin);
         results.push({ route: run.route, purpose: run.purpose, profile: run.profile.name,
           durationMs: Date.now() - startedAt, report: output.lhr });
       }
-      const response = { schemaVersion: 'browser-lighthouse-result.v1', results };
+      const response = { schemaVersion: 'browser-lighthouse-result.v1', results,
+        blockedProxyOrigins: [...new Set([...proxy.denied].slice(0, 32).map(value => {
+          const url = new URL(value, target.origin); return url.origin === 'null' ? `${url.protocol}//${url.host}` : url.origin;
+        }))].sort() };
       if (Buffer.byteLength(JSON.stringify(response)) > this.#options.maximumResultBytes) {
         throw new Error('BROWSER_LIGHTHOUSE_RESULT_BYTES_EXCEEDED');
       }
