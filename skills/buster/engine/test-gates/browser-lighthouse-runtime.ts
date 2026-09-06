@@ -1,9 +1,11 @@
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import http from 'node:http';
 import https from 'node:https';
 import net from 'node:net';
 import lighthouse from 'lighthouse';
-import { launch, type LaunchedChrome } from 'chrome-launcher';
+import { Launcher } from 'chrome-launcher';
 import type { ResolvedInputV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
@@ -182,16 +184,28 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
       if (!['performance', 'seo', 'best-practices'].includes(String(run.purpose))) throw new Error('BROWSER_LIGHTHOUSE_PURPOSE_INVALID');
       return { route: run.route, purpose: run.purpose as Purpose, profile: profile(run.profile) };
     });
-    const proxy = await exactOriginProxy(target.origin); let chrome: LaunchedChrome | undefined;
+    const proxy = await exactOriginProxy(target.origin); let chrome: Launcher | undefined;
+    const profileDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-lighthouse-'));
     const abort = () => { try { chrome?.kill(); } catch { /* Best-effort abort cleanup. */ } };
     signal.addEventListener('abort', abort, { once: true });
     try {
-      chrome = await launch({ logLevel: 'error', chromePath: this.#options.chromeExecutable, chromeFlags: [
+      chrome = new Launcher({ userDataDir: profileDirectory, chromePath: this.#options.chromeExecutable, chromeFlags: [
         '--headless=new', '--disable-gpu', '--disable-dev-shm-usage',
         '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
         `--proxy-server=http://127.0.0.1:${proxy.port}`, '--proxy-bypass-list=<-loopback>',
         ...(process.getuid?.() === 0 ? ['--no-sandbox'] : []),
       ] });
+      try { await chrome.launch(); }
+      catch (error) {
+        const log = path.join(profileDirectory, 'chrome-err.log');
+        let diagnostic = '';
+        if (fs.existsSync(log)) {
+          const descriptor = fs.openSync(log, 'r');
+          try { const bytes = Buffer.alloc(16384); diagnostic = bytes.subarray(0, fs.readSync(descriptor, bytes, 0, bytes.length, 0)).toString('utf8'); }
+          finally { fs.closeSync(descriptor); }
+        }
+        throw new Error(`BROWSER_LIGHTHOUSE_LAUNCH_FAILED:${error instanceof Error ? error.message : String(error)}:${diagnostic}`);
+      }
       const results = [];
       for (const run of runs) {
         if (signal.aborted) throw new Error('BROWSER_LIGHTHOUSE_CANCELLED');
@@ -214,6 +228,7 @@ export class BrowserLighthouseCapabilityInvoker implements TestProviderCapabilit
       signal.removeEventListener('abort', abort);
       try { chrome?.kill(); } catch { /* Best-effort final cleanup. */ }
       await proxy.close();
+      fs.rmSync(profileDirectory, { recursive: true, force: true });
     }
   }
 }
