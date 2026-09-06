@@ -35,18 +35,18 @@ jobs:
       - run: node scripts/versions.mjs --check
       - name: Provision image build capacity
         run: bash scripts/prepare-image-build-runner.sh
-      # The Docker driver builds directly into the store used by docker run.
-      # A second BuildKit store plus tar export exhausted disk on Nova.
+      # Match the isolated BuildKit driver used by the publishing workflow.
       - uses: docker/setup-buildx-action@v4
-        with:
-          driver: docker
       - name: Build actual role image
         uses: docker/build-push-action@v7
         with:
           context: .
           file: docker/Dockerfile.${{ matrix.role }}
+          load: true
           push: false
           tags: kubeclaw-role:proof
+          cache-from: type=gha,scope=role-proof-${{ matrix.role }}
+          cache-to: type=gha,scope=role-proof-${{ matrix.role }},mode=min,ignore-error=true
       - name: Verify installed runtime, offline plugins and role tools
         env:
           ROLE: ${{ matrix.role }}
