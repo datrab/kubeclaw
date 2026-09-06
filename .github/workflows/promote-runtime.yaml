@@ -1,0 +1,64 @@
+name: Promote runtime release
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Successful main Build Runtime Images And Skill Bundles run ID
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Verify source run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID" > "$RUNNER_TEMP/source-run.json"
+          jq -e '.conclusion == "success" and .head_branch == "main" and .path == ".github/workflows/build-images.yaml" and (.event == "push" or .event == "workflow_dispatch")' "$RUNNER_TEMP/source-run.json"
+          echo "SOURCE_COMMIT=$(jq -r .head_sha "$RUNNER_TEMP/source-run.json")" >> "$GITHUB_ENV"
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'image-receipt-*' --dir "$RUNNER_TEMP/image-receipts"
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Prepare release selection and values
+        run: |
+          node scripts/updates/release-images.mjs "$RUNNER_TEMP/image-receipts" "$SOURCE_COMMIT" releases/runtime-images.json
+          node scripts/updates/materialize-release.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proposed-runtime-release
+          path: releases/
+          if-no-files-found: error
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ vars.DEPENDENCY_APP_ID }}
+          private-key: ${{ secrets.DEPENDENCY_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+      - name: Open release selection PR
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          branch="release/runtime-$RUN_ID"
+          git switch -c "$branch"
+          git config user.name kubeclaw-updates
+          git config user.email kubeclaw-updates@users.noreply.github.com
+          git add releases
+          git commit -m "Select tested runtime images from run $RUN_ID"
+          gh auth setup-git
+          git push origin "$branch"
+          printf 'Select immutable image digests from successful main run %s, source commit %s. No images are rebuilt and no deployment is performed. Review the generated values before rollout.\n' "$RUN_ID" "$SOURCE_COMMIT" > "$RUNNER_TEMP/release-body.md"
+          gh pr create --base main --head "$branch" --title "Select runtime release $RUN_ID" --body-file "$RUNNER_TEMP/release-body.md"

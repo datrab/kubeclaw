@@ -77,8 +77,12 @@ RUN set -eux; \
     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
 
+ARG RUFF_VERSION=0.15.22
+ARG MYPY_VERSION=2.3.0
+ARG PIP_AUDIT_VERSION=2.10.1
+ARG SEMGREP_VERSION=1.170.1
 RUN pip install --break-system-packages --no-cache-dir \
-      ruff==0.15.22 mypy==2.3.0 pip-audit==2.10.1 semgrep==1.170.1
+      "ruff==${RUFF_VERSION}" "mypy==${MYPY_VERSION}" "pip-audit==${PIP_AUDIT_VERSION}" "semgrep==${SEMGREP_VERSION}"
 
 ENV PATH="/app/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \

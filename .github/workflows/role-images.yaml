@@ -2,6 +2,9 @@ name: Role image acceptance
 on:
   pull_request:
     paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'skills/**'
       - 'docker/**'
       - 'versions.json'
       - '.dockerignore'
@@ -58,3 +61,26 @@ jobs:
           docker run --rm --network none --entrypoint bash \
             -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" \
             kubeclaw-role:proof /check-role-image.sh "$ROLE" "$version" runtime
+  buster-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+      - run: bash scripts/prepare-image-build-runner.sh
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.buster-runtime
+          load: true
+          tags: kubeclaw-buster:proof
+          cache-from: type=gha,scope=role-proof-buster-runtime
+          cache-to: type=gha,scope=role-proof-buster-runtime,mode=min,ignore-error=true
+      - name: Run Buster's real build provider and browser
+        run: |
+          registry="$(node -p 'require("./versions.json").automation.testRegistry')"
+          docker run -d --name proof-registry -p 127.0.0.1:5000:5000 "$registry"
+          trap 'docker logs proof-registry; docker rm -f proof-registry' EXIT
+          # An isolated disposable CI container permits nested rootless namespaces.
+          # This is not a deployment security-context acceptance test.
+          docker run --rm --privileged --network host --entrypoint bash             -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro"             kubeclaw-buster:proof /proof.sh

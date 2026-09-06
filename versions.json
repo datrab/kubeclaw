@@ -18,7 +18,6 @@
     "GO_VERSION": "1.26.5",
     "HADOLINT_VERSION": "2.12.0",
     "HELM_VERSION": "3.18.4",
-    "K6_VERSION": "v0.54.0",
     "KUBECONFORM_VERSION": "0.6.4",
     "KUBECTL_SHA256_AMD64": "5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926",
     "KUBECTL_SHA256_ARM64": "c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b",
@@ -47,11 +46,19 @@
   },
   "imageOverrides": {
     "buster-runtime": {
-      "DEBIAN_SNAPSHOT": "20260713T000000Z"
+      "DEBIAN_SNAPSHOT": "20260713T000000Z",
+      "SEMGREP_VERSION": "1.170.1"
     },
     "ops-pod": {
       "KUBECTL_VERSION": "v1.34.1",
       "HELM_VERSION": "v3.19.0"
     }
+  },
+  "infrastructure": {
+    "envoy": "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66"
+  },
+  "automation": {
+    "renovate": "renovate/renovate:44.65.5@sha256:4e10f76a79f1c597f427f83c788a9f5b14a6295784c4cb68307b89b0a954abce",
+    "testRegistry": "registry:3@sha256:1be55279f18a2fe1a74edf2664cac61c1bea305b7b4642dab412e7affdcb3e33"
   }
 }

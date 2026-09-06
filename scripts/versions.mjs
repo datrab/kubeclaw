@@ -58,6 +58,16 @@ export function versionOutputs(root) {
     if ([...source.matchAll(new RegExp(regex.source, 'gm'))].length !== 1) throw new Error(`${file}: version field missing or ambiguous`);
     outputs.set(file, source.replace(regex, replacement));
   };
+  for (const reference of [manifest.infrastructure?.envoy, ...Object.values(manifest.automation ?? {})]) {
+    if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
+      throw new Error('Infrastructure and automation images require exact tags and digests');
+  }
+  const envoy = manifest.infrastructure.envoy.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
+  for (const file of ['charts/kubeclaw/values.yaml', 'charts/prism/values.yaml']) {
+    replaceOne(file, /^      repository: envoyproxy\/envoy$/m, `      repository: ${envoy[1]}`);
+    replaceOne(file, /^      tag: v[0-9.]+$/m, `      tag: ${envoy[2]}`);
+    replaceOne(file, /^      digest: "[^"]*"$/m, `      digest: "${envoy[3]}"`);
+  }
   replaceOne('charts/kubeclaw/Chart.yaml', /^appVersion:.*$/m, `appVersion: "${manifest.openclaw.version}"`);
   for (const plugin of ['acpx', 'discord']) replaceOne('charts/kubeclaw/values.yaml',
     new RegExp(`^    - "npm:@openclaw/${plugin}@[^"\\n]+"$`, 'm'), `    - "npm:@openclaw/${plugin}@${manifest.openclaw.version}"`);

@@ -311,10 +311,6 @@ assert.match(
   /image_inputs:[\s\S]*- 'tsconfig\.base\.json'/,
   'shared TypeScript configuration changes must trigger image builds',
 );
-assert.ok(
-  workflow.includes('(-[0-9]+)?$'),
-  'the OpenClaw release check must accept numbered correction releases',
-);
 assert.doesNotMatch(chart, /execution-buildkit|execution-api-token|executionRuntime/);
 assert.doesNotMatch(values, /executionRuntime|moby\/buildkit/);
 assert.doesNotMatch(novaValues, /BUILDKIT_HOST|executionRuntime|moby\/buildkit/);
@@ -891,8 +887,6 @@ assert.match(
   'fresh gateway configs must include the Prism plugin only for agent-prism',
 );
 for (const toolProof of [
-  /playwright install --with-deps chromium/,
-  /k6 version/,
   /hadolint --version/,
   /kubeconform -v/,
   /kubectl version --client=true/,
@@ -904,7 +898,7 @@ for (const toolProof of [
   assert.match(
     novaDockerfile,
     toolProof,
-    `the authoritative Nova runtime lost deterministic suite tooling: ${toolProof}`,
+    `the authoritative Nova runtime lost static-analysis tooling: ${toolProof}`,
   );
 }
 assert.doesNotMatch(

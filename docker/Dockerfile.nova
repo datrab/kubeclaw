@@ -1,5 +1,4 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c
 
 # =============================================================================
 # KubeClaw Nova — Root Environment for Nova, Forge, Echo
@@ -7,7 +6,6 @@ ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3e
 
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
 
-FROM ${BUILDKIT_BASE} AS buildkit-client
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE}
@@ -39,15 +37,14 @@ RUN test -s /etc/ssl/certs/ca-certificates.crt \
 && rm -f /etc/apt/sources.list \
 && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot
 
-# System tools. Playwright owns its Chromium binary and installs only the
-# corresponding OS libraries below, avoiding a second Debian Chromium copy.
+# System and static-analysis tools. Browser and container execution belong to Buster.
 # Package resolution is pinned by DEBIAN_SNAPSHOT rather than per-package
 # versions, keeping the complete dependency graph coherent.
 
 # hadolint ignore=DL3008
 RUN packages=( \
 sudo curl git openssh-client jq nano tree net-tools iputils-ping dnsutils ripgrep \
-build-essential python3 python3-pip python3-venv python-is-python3 ffmpeg \
+build-essential python3 python3-pip python3-venv python-is-python3 \
 netcat-openbsd nmap shellcheck unzip yamllint \
 ) \
 && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
@@ -55,11 +52,6 @@ netcat-openbsd nmap shellcheck unzip yamllint \
 && apt-get install -y --no-install-recommends "${packages[@]}" \
 && rm -rf /var/lib/apt/lists/*
 
-# Image builds are deterministic suite effects owned by the v2 command
-# adapter. The daemon is an isolated rootless sidecar; the authoritative Nova
-# runtime receives only its bounded Unix-socket client.
-
-COPY --from=buildkit-client /usr/bin/buildctl /usr/local/bin/buildctl
 
 # Locked JavaScript runtime and verification tools.
 
@@ -73,12 +65,8 @@ RUN npm ci --prefix /opt/kubeclaw-tools --ignore-scripts --no-audit --no-fund \
 
 ENV PATH=/opt/kubeclaw-tools/node_modules/.bin:${PATH} \
 NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
-PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
 NPM_CONFIG_CACHE=/root/.npm
 
-RUN playwright install --with-deps chromium \
-&& playwright --version \
-&& test -d /ms-playwright
 
 # Exact Python tool versions keep resolver output stable.
 
@@ -145,7 +133,6 @@ export GOCACHE=/tmp/kubeclaw-go-build GOMODCACHE=/tmp/kubeclaw-go-mod \
 
 # Pinned, checksum-verified binary tools for amd64 and arm64.
 
-ARG K6_VERSION=v0.54.0
 ARG HADOLINT_VERSION=2.12.0
 ARG KUBECONFORM_VERSION=0.6.4
 ARG KUBECTL_VERSION=1.35.6
@@ -164,12 +151,6 @@ arm64) hadolint_arch="arm64"; shfmt_sha="${SHFMT_SHA256_ARM64}"; terraform_sha="
 *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
 esac; \
 tmp="$(mktemp -d)"; \
-k6_archive="k6-${K6_VERSION}-linux-${arch}.tar.gz"; \
-curl -fsSL "https://github.com/grafana/k6/releases/download/${K6_VERSION}/${k6_archive}" -o "$tmp/$k6_archive"; \
-curl -fsSL "https://github.com/grafana/k6/releases/download/${K6_VERSION}/k6-${K6_VERSION}-checksums.txt" -o "$tmp/k6-checksums.txt"; \
-k6_sha="$(awk -v file="$k6_archive" '$2 == file { print $1 }' "$tmp/k6-checksums.txt")"; \
-printf '%s  %s\n' "$k6_sha" "$tmp/$k6_archive" | sha256sum -c -; \
-tar -xzf "$tmp/$k6_archive" --strip-components=1 -C /usr/local/bin "k6-${K6_VERSION}-linux-${arch}/k6"; \
 hadolint_file="hadolint-Linux-${hadolint_arch}"; \
 curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}" -o "$tmp/$hadolint_file"; \
 curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}.sha256" -o "$tmp/${hadolint_file}.sha256"; \
@@ -212,7 +193,6 @@ printf '%s  %s\n' "$helm_sha" "$tmp/$helm_archive" | sha256sum -c -; \
 tar -xzf "$tmp/$helm_archive" -C "$tmp"; \
 install -m 0755 "$tmp/linux-${arch}/helm" /usr/local/bin/helm; \
 rm -rf "$tmp"; \
-k6 version; \
 hadolint --version; \
 shfmt --version; \
 terraform version -json; \

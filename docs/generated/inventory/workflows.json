@@ -3,9 +3,13 @@
   "generatedFrom": [
     ".github/workflows/build-images.yaml",
     ".github/workflows/build-ops-mcp.yaml",
+    ".github/workflows/dependency-updates.yaml",
     ".github/workflows/docs-checks.yaml",
     ".github/workflows/pipeline-reliability.yaml",
-    ".github/workflows/role-images.yaml"
+    ".github/workflows/promote-runtime.yaml",
+    ".github/workflows/release-security.yaml",
+    ".github/workflows/role-images.yaml",
+    ".github/workflows/update-checks.yaml"
   ],
   "workflows": [
     {
@@ -13,18 +17,15 @@
       "name": "Build Runtime Images And Skill Bundles",
       "triggers": [
         "push",
-        "schedule",
         "workflow_dispatch"
       ],
       "pathFilters": [],
-      "schedules": [
-        "0 3 * * *"
-      ],
+      "schedules": [],
       "jobs": [
+        "update-policy",
         "reliability",
         "role-images",
         "detect-build-inputs",
-        "check-base-image",
         "build",
         "bundle-skills",
         "prism-live-acceptance"
@@ -36,8 +37,10 @@
         "npm run plugin-system:sandbox:build",
         "uses: ./.github/workflows/pipeline-reliability.yaml",
         "uses: ./.github/workflows/role-images.yaml",
+        "uses: ./.github/workflows/update-checks.yaml",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
+        "uses: actions/upload-artifact@v4",
         "uses: azure/setup-helm@v4",
         "uses: azure/setup-kubectl@v4",
         "uses: docker/build-push-action@v7",
@@ -78,6 +81,26 @@
         "uses: docker/login-action@v4",
         "uses: docker/metadata-action@v6",
         "uses: docker/setup-buildx-action@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/dependency-updates.yaml",
+      "name": "Dependency updates",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "pathFilters": [],
+      "schedules": [
+        "15 4 * * *"
+      ],
+      "jobs": [
+        "renovate"
+      ],
+      "commandAndActionRefs": [
+        "test -n \"$APP_ID\" && test -n \"$APP_KEY",
+        "uses: actions/checkout@v6",
+        "uses: actions/create-github-app-token@v2"
       ]
     },
     {
@@ -154,6 +177,47 @@
       ]
     },
     {
+      "path": ".github/workflows/promote-runtime.yaml",
+      "name": "Promote runtime release",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "prepare"
+      ],
+      "commandAndActionRefs": [
+        "npm ci --ignore-scripts --no-audit --no-fund",
+        "uses: actions/checkout@v6",
+        "uses: actions/create-github-app-token@v2",
+        "uses: actions/setup-node@v5",
+        "uses: actions/upload-artifact@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/release-security.yaml",
+      "name": "Release security rescan",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "pathFilters": [],
+      "schedules": [
+        "45 5 * * *"
+      ],
+      "jobs": [
+        "scan"
+      ],
+      "commandAndActionRefs": [
+        "node scripts/updates/scan-releases.mjs",
+        "node scripts/versions.mjs --check",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: actions/upload-artifact@v4"
+      ]
+    },
+    {
       "path": ".github/workflows/role-images.yaml",
       "name": "Role image acceptance",
       "triggers": [
@@ -162,6 +226,9 @@
         "workflow_call"
       ],
       "pathFilters": [
+        "package.json",
+        "package-lock.json",
+        "skills/**",
         "docker/**",
         "versions.json",
         ".dockerignore",
@@ -178,7 +245,8 @@
       ],
       "schedules": [],
       "jobs": [
-        "image"
+        "image",
+        "buster-build"
       ],
       "commandAndActionRefs": [
         "bash scripts/prepare-image-build-runner.sh",
@@ -187,6 +255,26 @@
         "uses: actions/setup-node@v5",
         "uses: docker/build-push-action@v7",
         "uses: docker/setup-buildx-action@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/update-checks.yaml",
+      "name": "Update policy acceptance",
+      "triggers": [
+        "pull_request",
+        "workflow_call"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "policy",
+        "envoy"
+      ],
+      "commandAndActionRefs": [
+        "bash tests/verification/deployment/check-envoy-image.sh \"$(node -p 'require(\"./versions.json\").infrastructure.envoy')",
+        "npm ci --ignore-scripts --no-audit --no-fund",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5"
       ]
     }
   ]

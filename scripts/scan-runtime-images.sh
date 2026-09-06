@@ -113,19 +113,25 @@ database_cache="${KUBECLAW_TOOL_CACHE:-$default_cache}/trivy/db"
 mkdir -p "$report_dir"
 mkdir -p "$database_cache"
 
+scan_failed=0
 for image in "$@"; do
   digest="${image##*@sha256:}"
   report="$report_dir/${digest}.txt"
   echo "Scanning $image with Trivy $TRIVY_VERSION"
-  "$trivy_executable" image \
+  if "$trivy_executable" image \
     --cache-dir "$database_cache" \
     --scanners vuln \
     --severity HIGH,CRITICAL \
-    --ignore-unfixed \
     --exit-code 1 \
     --format table \
     --output "$report" \
-    "$image"
+    "$image"; then
+    :
+  else
+    scan_failed=1
+  fi
   cat "$report"
   echo "Saved report: $report"
 done
+
+exit "$scan_failed"

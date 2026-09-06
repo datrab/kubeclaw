@@ -49,9 +49,19 @@ if [[ "$role" == nova ]]; then
   shellcheck --version
   ruff --version
   semgrep --version
-  buildctl --version
-  playwright --version
-  test -d /ms-playwright
+  for executable in buildctl buildkitd playwright lighthouse k6; do
+    if command -v "$executable" >/dev/null; then
+      echo "Unexpected Buster execution tool in Nova: $executable" >&2
+      exit 1
+    fi
+  done
+  test ! -e /ms-playwright
+  hadolint --version
+  kubeconform -v
+  helm version --short
+  terraform version -json
+  go version
+  tsc --version
   test ! -e /app/dist/extensions/kubeclaw-prism
 else
   for executable in semgrep ruff mypy shellcheck buildctl terraform tflint; do
