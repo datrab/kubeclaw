@@ -176,6 +176,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Provision image build capacity
+        run: bash scripts/prepare-image-build-runner.sh
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
       - name: Login to GHCR

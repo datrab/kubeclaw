@@ -31,6 +31,7 @@
       ],
       "commandAndActionRefs": [
         "bash scripts/deploy.sh prism-e2e",
+        "bash scripts/prepare-image-build-runner.sh",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
         "uses: ./.github/workflows/pipeline-reliability.yaml",
@@ -167,6 +168,7 @@
         "tsconfig.base.json",
         "scripts/versions.mjs",
         "scripts/check-role-image.sh",
+        "scripts/prepare-image-build-runner.sh",
         ".github/workflows/role-images.yaml",
         "skills/common/plugins/openclaw-agent-observer/**",
         "contracts/agent-observability/v1/**",
@@ -179,6 +181,7 @@
         "image"
       ],
       "commandAndActionRefs": [
+        "bash scripts/prepare-image-build-runner.sh",
         "node scripts/versions.mjs --check",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
