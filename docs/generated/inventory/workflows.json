@@ -50,6 +50,7 @@
       ],
       "pathFilters": [
         "tools/ops-mcp/**",
+        "ops/devbox/**",
         ".github/workflows/build-ops-mcp.yaml"
       ],
       "schedules": [],
