@@ -14,7 +14,7 @@ This catalogue lists each grantable capability and every registration that decla
 | Capability | Declared by |
 | --- | --- |
 | `agent.events.subscribe` | `kubeclaw.openclaw-agent-events:source` |
-| `artifacts.read` | `kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
+| `artifacts.read` | `kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
 | `artifacts.write` | `kubeclaw.agent-observability:evidence`<br>`kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.notification-observer:audit`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.case-study:case-study`<br>`kubeclaw.delivery-lint:delivery-lint`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.pipeline-review:review`<br>`kubeclaw.preflight-contract:validate`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.project-summary:summary`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
 | `browser.axe` | `kubeclaw.axe:axe` |
 | `browser.lighthouse` | `kubeclaw.lighthouse:lighthouse` |

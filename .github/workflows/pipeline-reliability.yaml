@@ -24,7 +24,7 @@ jobs:
       - name: Validate project compiler and installed stage contracts
         run: node tests/verification/contracts/check-project-compiler.mts
       - name: Validate production graph and native gate evidence
-        run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs
+        run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs
       - name: Install real shell lint tools
         run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
       - name: Check affected stage and adapter contracts

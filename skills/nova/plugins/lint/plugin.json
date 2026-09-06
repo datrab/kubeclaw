@@ -10,7 +10,8 @@
       "export": "executePreCheck",
       "requiredCapabilities": [
         "lint.execute",
-        "artifacts.write"
+        "artifacts.write",
+        "artifacts.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",
@@ -23,7 +24,8 @@
       "export": "executeFull",
       "requiredCapabilities": [
         "lint.execute",
-        "artifacts.write"
+        "artifacts.write",
+        "artifacts.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",

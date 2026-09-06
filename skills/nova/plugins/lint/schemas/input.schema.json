@@ -2,34 +2,75 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["workingDirectory"],
+  "required": [
+    "workingDirectory"
+  ],
   "properties": {
-    "workingDirectory": { "type": "string", "minLength": 1 },
-    "project": { "type": "string", "minLength": 1 },
-    "modulePath": { "type": "string", "minLength": 1 },
+    "workingDirectory": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modulePath": {
+      "type": "string",
+      "minLength": 1
+    },
     "changedFiles": {
       "type": "array",
       "uniqueItems": true,
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "kubernetes": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["rawManifests", "helmCharts"],
+      "required": [
+        "rawManifests",
+        "helmCharts"
+      ],
       "properties": {
         "rawManifests": {
           "type": "array",
           "maxItems": 256,
           "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "helmCharts": {
           "type": "array",
           "maxItems": 256,
           "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
+    },
+    "sourceStageId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    }
+  },
+  "not": {
+    "required": [
+      "sourceStageId",
+      "revision"
+    ],
+    "properties": {
+      "sourceStageId": {},
+      "revision": {}
     }
   }
 }

@@ -9,14 +9,14 @@ export function deliveryKey(observerId: string, eventId: string): string { retur
 function attemptKey(observerId: string, eventId: string, attempt: number): string { return `${deliveryKey(observerId, eventId)}\u0000${attempt}`; }
 function globalId(pluginId: string, localId: string): string { return `${pluginId}:${localId}`; }
 
-export interface ObserverRecovery { readonly checkpoints: Map<string, ObserverCheckpoint>; readonly attempts: Map<string, number> }
+export interface ObserverRecovery { readonly checkpoints: Map<string, ObserverCheckpoint>; readonly attempts: Map<string, number>; readonly completed: Set<string> }
 
 export function recoverObservers(options: ObserverRuntimeOptions): ObserverRecovery {
-  const events = validateEvents(options); const checkpoints = recoverCheckpoints(options, events); const attempts = recoverDeliveries(options, events);
+  const events = validateEvents(options); const checkpoints = recoverCheckpoints(options, events); const deliveries = recoverDeliveries(options, events);
   for (const [id, entry] of options.registry.snapshot.observers) {
     if (options.registry.grants.has(id)) validateReferencedValue(fs.realpathSync(path.join(entry.package.root, entry.registration.configSchema)), options.configs.get(id) ?? {});
   }
-  return { checkpoints, attempts };
+  return { checkpoints, ...deliveries };
 }
 
 function validateEvents(options: ObserverRuntimeOptions): Map<string, CanonicalEvent> {
@@ -68,7 +68,8 @@ function validTransition(delivery: ObserverDeliveryRecord, prior: ObserverDelive
     || (delivery.status !== 'failed' && delivery.error !== null) || (delivery.status === 'failed' && typeof delivery.error !== 'string'));
 }
 
-function recoverDeliveries(options: ObserverRuntimeOptions, events: ReadonlyMap<string, CanonicalEvent>): Map<string, number> {
+function recoverDeliveries(options: ObserverRuntimeOptions, events: ReadonlyMap<string, CanonicalEvent>): Pick<ObserverRecovery, 'attempts' | 'completed'> {
+  const completed = new Set<string>();
   const attempts = new Map<string, number>(); const states = new Map<string, ObserverDeliveryRecord['status']>();
   for (const { entry: delivery } of options.deliveries.records()) {
     if (!validDelivery(options, events, delivery)) throw new Error(`OBSERVER_DELIVERY_RECORD_INVALID:${delivery.observerId}:${delivery.eventId}`);
@@ -76,6 +77,7 @@ function recoverDeliveries(options: ObserverRuntimeOptions, events: ReadonlyMap<
     if (!validTransition(delivery, prior)) throw new Error(`OBSERVER_DELIVERY_TRANSITION_INVALID:${delivery.observerId}:${delivery.eventId}:${delivery.attemptNumber}`);
     states.set(key, delivery.status); const deliveryIdentity = deliveryKey(delivery.observerId, delivery.eventId);
     attempts.set(deliveryIdentity, Math.max(attempts.get(deliveryIdentity) ?? 0, delivery.attemptNumber));
+    if (delivery.status === 'completed') completed.add(deliveryIdentity);
   }
-  return attempts;
+  return { attempts, completed };
 }

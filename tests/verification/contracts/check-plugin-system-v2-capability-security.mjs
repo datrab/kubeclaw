@@ -78,6 +78,7 @@ const lintGranted = core.resolveCapabilityGrants(snapshot, {
   providers: new Map([
     ['lint.execute', 'kubeclaw.lint:executor'],
     ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
+    ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
   ]),
   grants: new Map([[
     lintStage,
@@ -88,6 +89,7 @@ const lintGranted = core.resolveCapabilityGrants(snapshot, {
         allowedPolicyRoots: ['/policy'],
       }],
       ['artifacts.write', { allowedNamespaces: ['kubeclaw.lint'] }],
+      ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
     ]),
   ]]),
 });
@@ -98,7 +100,7 @@ assert(!lintGranted.enabledRegistrations.has('kubeclaw.lint:full'));
 assert.equal('add' in lintGranted.enabledRegistrations, false);
 assert.deepEqual(
   [...lintGranted.availableCapabilities.get(lintStage)].sort(),
-  ['artifacts.write', 'lint.execute'],
+  ['artifacts.read', 'artifacts.write', 'lint.execute'],
 );
 assert.equal('add' in lintGranted.availableCapabilities.get(lintStage), false);
 const lintGrant = lintGranted.grants.get(lintStage).find(
@@ -119,6 +121,7 @@ assert.throws(() => core.resolveCapabilityGrants(snapshot, {
   providers: new Map([
     ['lint.execute', 'kubeclaw.lint:executor'],
     ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
+    ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
   ]),
   grants: new Map([
     [lintStage, new Map([
@@ -128,6 +131,7 @@ assert.throws(() => core.resolveCapabilityGrants(snapshot, {
         allowedPolicyRoots: ['/policy'],
       }],
       ['artifacts.write', { allowedNamespaces: ['kubeclaw.lint'] }],
+      ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
     ])],
     ['kubeclaw.lint:full', new Map()],
   ]),
@@ -137,6 +141,7 @@ assert.throws(() => core.resolveCapabilityGrants(snapshot, {
   providers: new Map([
     ['lint.execute', 'kubeclaw.lint:executor'],
     ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
+    ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
   ]),
   grants: new Map([[
     lintStage,

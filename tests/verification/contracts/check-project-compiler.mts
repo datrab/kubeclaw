@@ -86,7 +86,7 @@ try {
         'git.workspace.create': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.workspace.remove': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.commit': { allowedRoots: [repo, workspaces] }, 'git.merge': { allowedRoots: [repo, workspaces] } },
-      'kubeclaw.lint:full': { 'lint.execute': { allowedRoots: [repo], allowedPolicyRoots: [temporary], allowedProjects: ['proof'] }, 'artifacts.write': artifact('kubeclaw.lint') },
+      'kubeclaw.lint:full': { 'lint.execute': { allowedRoots: [repo], allowedPolicyRoots: [temporary], allowedProjects: ['proof'] }, 'artifacts.write': artifact('kubeclaw.lint'), 'artifacts.read': artifact('kubeclaw.implementation-agent') },
       'kubeclaw.review:review': { 'runtime.dispatch': { allowedAgents: ['echo'] }, 'git.repository.read': { allowedPrefixes: ['.'] }, 'artifacts.read': { allowedNamespaces: ['kubeclaw.review', 'kubeclaw.implementation-agent'] }, 'artifacts.write': artifact('kubeclaw.review') },
       'kubeclaw.buster-quality-gate:quality': { 'runtime.dispatch': { allowedAgents: ['buster'] }, 'test.plan.execute': { allowedRoots: [repo] }, 'artifacts.read': artifact('kubeclaw.implementation-agent'), 'artifacts.write': artifact('kubeclaw.buster-quality-gate') },
       'kubeclaw.runtime-dispatch:runtime': { 'network.http': { allowedOrigins: origins }, 'secrets.read': { allowedNames: ['worker'] } },

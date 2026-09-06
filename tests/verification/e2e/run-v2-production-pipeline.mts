@@ -288,9 +288,10 @@ async function main(): Promise<void> {
       'lint.execute': {
         allowedRoots: [repo],
         allowedPolicyRoots: [path.dirname(lintPolicyPath)],
-        allowedProjects: [lintDeclaration.policyProject],
+        allowedProjects: [projectName],
       },
       'artifacts.write': artifact('kubeclaw.lint'),
+      'artifacts.read': artifact('kubeclaw.implementation-agent'),
     },
     'kubeclaw.human-approval:approval': {
       'operator.request': { allowedTargets: ['discord'] },
@@ -634,6 +635,7 @@ async function main(): Promise<void> {
       config: { policyPath: lintPolicyPath, policyProject: lintDeclaration.policyProject },
       input: {
         workingDirectory: repo,
+        sourceStageId: `forge-${moduleIds.at(-1)}`,
         project: projectName,
         kubernetes: {
           rawManifests: lintDeclaration.rawManifests,

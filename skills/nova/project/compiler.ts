@@ -118,7 +118,7 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
           branch: `nova/${projectId}/${runNamespace}/${module.id}`, baseRef: 'HEAD', mergeTarget: repository,
           commitMessage: `[forge:${module.id}] ${projectId}` } }, execution });
     stages.push({ id: lintId, type: 'kubeclaw.lint.full', dependsOn: [implementationId], config: module.lint,
-      input: { workingDirectory: repository, project: projectId }, execution, on: { request_fix: implementationId } });
+      input: { workingDirectory: repository, project: projectId, sourceStageId: implementationId }, execution, on: { request_fix: implementationId } });
     stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId], config: module.review,
       input: { task: { id: module.id, statement: module.task }, revisions: { sourceStageId: implementationId },
         scope: { allowedPrefixes: module.ownedPaths, ownershipPrefixes: module.ownedPaths }, requirements: module.requirements,

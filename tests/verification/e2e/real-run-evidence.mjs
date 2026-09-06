@@ -1,3 +1,4 @@
+import { FileDurableRecordStore, FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -134,17 +135,31 @@ function evidenceFail(code, reason, details = {}) {
   return { code, ok: false, reason, ...details };
 }
 
-function artifactBlob(root, artifact) {
-  const digest = String(artifact?.digest || '');
-  if (!/^sha256:[a-f0-9]{64}$/.test(digest)) {
-    throw new Error(`REAL_E2E_ARTIFACT_DIGEST_INVALID:${artifact?.artifactId || 'unknown'}`);
+export async function readRunArtifacts(root, runId, namespaces) {
+  const records = new FileDurableRecordStore(root, { maximumRecords: 100000, maximumBytes: 256 * 1024 * 1024, maximumRecordBytes: 64 * 1024 });
+  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);
+  const artifacts = [];
+  for (const namespace of namespaces) {
+    for (const record of await records.read(`artifacts/${namespace}`)) {
+      const artifact = record.payload;
+      if (artifact.producer?.runId !== runId) continue;
+      if (artifact.namespace !== namespace || artifact.mediaType !== 'application/json') throw new Error('REAL_E2E_ARTIFACT_METADATA_INVALID');
+      const bytes = await blobs.get(artifact.digest);
+      if (bytes.byteLength !== artifact.sizeBytes) throw new Error('REAL_E2E_ARTIFACT_SIZE_MISMATCH');
+      artifacts.push({ artifact, value: JSON.parse(bytes.toString('utf8')) });
+    }
   }
-  const hash = digest.slice('sha256:'.length);
-  const file = path.join(root, 'blobs', 'sha256', hash.slice(0, 2), `${hash.slice(2)}.json`);
-  const bytes = fs.readFileSync(file);
-  const actual = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-  if (actual !== digest) throw new Error(`REAL_E2E_ARTIFACT_DIGEST_MISMATCH:${artifact.artifactId}`);
-  return JSON.parse(bytes.toString('utf8'));
+  return artifacts;
+}
+
+function latestStageArtifacts(artifacts) {
+  const latest = new Map();
+  for (const { artifact } of artifacts) {
+    const { stageId, attemptNumber } = artifact.producer;
+    if (!Number.isSafeInteger(attemptNumber) || attemptNumber < 1) throw new Error('REAL_E2E_ARTIFACT_ATTEMPT_INVALID');
+    latest.set(stageId, Math.max(latest.get(stageId) ?? 0, attemptNumber));
+  }
+  return artifacts.filter(({ artifact }) => artifact.producer.attemptNumber === latest.get(artifact.producer.stageId));
 }
 
 function effectRequestsAndReceipts(records) {
@@ -286,7 +301,10 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const runRoot = runRootFor(result);
   const events = readJsonLines(path.join(runRoot, 'events.jsonl'));
   const effects = readJsonLines(path.join(runRoot, 'effects.jsonl'));
-  const catalog = readJsonLines(path.join(result.artifactRoot, 'catalog.jsonl'));
+  const storedArtifacts = await readRunArtifacts(result.artifactRoot, result.runId, [
+    'kubeclaw.architecture-validator', 'kubeclaw.implementation-agent', 'kubeclaw.buster-quality-gate', 'kubeclaw.project-summary', 'kubeclaw.review', 'kubeclaw.lint',
+  ]);
+  const catalog = storedArtifacts.map(({ artifact }) => artifact);
   const progress = readJson(path.join(workspace.swarmDir, 'progress.json'));
   const { requests, receipts } = effectRequestsAndReceipts(effects);
   const stageFailures = EXPECTED_STAGES.filter((stageId) => result.stages?.[stageId] !== 'succeeded');
@@ -309,11 +327,9 @@ export async function verifyRealRunEvidence(workspace, { mode = 'full' } = {}) {
   const roleMismatches = Object.entries(EXPECTED_ROLES)
     .filter(([stageId, role]) => stageRoles[stageId] !== role)
     .map(([stageId, role]) => ({ stageId, expected: role, actual: stageRoles[stageId] ?? null }));
-  const artifacts = (namespace) => catalog
-    .filter((artifact) => artifact.namespace === namespace)
-    .map((artifact) => ({ artifact, value: artifactBlob(result.artifactRoot, artifact) }));
-  const implementationArtifacts = artifacts('kubeclaw.implementation-agent');
-  const gateArtifacts = artifacts('kubeclaw.buster-quality-gate');
+  const artifacts = (namespace) => storedArtifacts.filter(({ artifact }) => artifact.namespace === namespace);
+  const implementationArtifacts = latestStageArtifacts(artifacts('kubeclaw.implementation-agent'));
+  const gateArtifacts = latestStageArtifacts(artifacts('kubeclaw.buster-quality-gate'));
   const testArtifacts = gateArtifacts.filter(({ artifact }) => artifact.producer.stageId.startsWith('buster-') && !artifact.artifactId.includes(':decision:'));
   const qualityArtifacts = gateArtifacts.filter(({ artifact }) => artifact.producer.stageId === 'final-buster' && !artifact.artifactId.includes(':decision:'));
   const decisionFor = (artifact) => {

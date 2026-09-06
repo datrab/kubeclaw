@@ -33,11 +33,11 @@ export function isObserverDeliveryInput(event: CanonicalEvent): boolean {
 
 export class ObserverRuntime {
   readonly #options: ObserverRuntimeOptions; readonly #now: () => Date; readonly #wait: (milliseconds: number) => Promise<void>;
-  readonly #checkpoints: Map<string, ObserverCheckpoint>; readonly #attempts: Map<string, number>;
+  readonly #checkpoints: Map<string, ObserverCheckpoint>; readonly #attempts: Map<string, number>; readonly #completed: Set<string>;
   constructor(options: ObserverRuntimeOptions) {
     this.#options = options; this.#now = options.now ?? (() => new Date());
     this.#wait = options.wait ?? ((milliseconds) => new Promise((resolve) => { const timer = setTimeout(resolve, milliseconds); timer.unref(); }));
-    const recovered = recoverObservers(options); this.#checkpoints = recovered.checkpoints; this.#attempts = recovered.attempts;
+    const recovered = recoverObservers(options); this.#checkpoints = recovered.checkpoints; this.#attempts = recovered.attempts; this.#completed = recovered.completed;
   }
 
   #recordDelivery(observerId: string, event: CanonicalEvent, attemptNumber: number, status: ObserverDeliveryRecord['status'], error: string | null): void {
@@ -45,6 +45,7 @@ export class ObserverRuntime {
       observerId, runId: event.identity.runId, eventId: event.eventId, eventSequence: event.sequence, attemptNumber, status,
       recordedAt: this.#now().toISOString(), error });
     const key = deliveryKey(observerId, event.eventId); this.#attempts.set(key, Math.max(this.#attempts.get(key) ?? 0, attemptNumber));
+    if (status === 'completed') this.#completed.add(key);
   }
 
   #commitCheckpoint(observerId: string, event: CanonicalEvent): boolean {
@@ -92,12 +93,15 @@ export class ObserverRuntime {
   }
 
   async #attemptDelivery(observerId: string, record: JournalRecord<CanonicalEvent>, policy: { readonly maxAttempts: number; readonly backoffMs: number }): Promise<string | undefined> {
-    const event = record.entry; const prior = this.#attempts.get(deliveryKey(observerId, event.eventId)) ?? 0; let error: unknown;
-    for (let offset = 1; offset <= policy.maxAttempts; offset += 1) {
-      const attempt = prior + offset; this.#recordDelivery(observerId, event, attempt, 'started', null);
+    const event = record.entry; const key = deliveryKey(observerId, event.eventId);
+    if (this.#completed.has(key)) return undefined;
+    const prior = this.#attempts.get(key) ?? 0;
+    if (prior >= policy.maxAttempts) return 'OBSERVER_DELIVERY_ATTEMPTS_EXHAUSTED';
+    let error: unknown;
+    for (let attempt = prior + 1; attempt <= policy.maxAttempts; attempt += 1) { this.#recordDelivery(observerId, event, attempt, 'started', null);
       try { await deliverObserver(this.#options, this.#now, observerId, record, attempt); this.#recordDelivery(observerId, event, attempt, 'completed', null); return undefined; }
       catch (caught) { error = caught; this.#recordDelivery(observerId, event, attempt, 'failed', errorText(caught));
-        if (offset < policy.maxAttempts && policy.backoffMs > 0) await this.#wait(policy.backoffMs); }
+        if (attempt < policy.maxAttempts && policy.backoffMs > 0) await this.#wait(policy.backoffMs); }
     }
     return errorText(error);
   }

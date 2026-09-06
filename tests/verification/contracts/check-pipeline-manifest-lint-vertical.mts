@@ -51,6 +51,7 @@ function grantedRegistry() {
     providers: new Map([
       ['lint.execute', 'kubeclaw.lint:executor'],
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
+    ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([[registration, new Map([
       ['lint.execute', {
@@ -59,6 +60,7 @@ function grantedRegistry() {
         allowedPolicyRoots: [fixture.configuration],
       }],
       ['artifacts.write', { allowedNamespaces: ['kubeclaw.lint'] }],
+      ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
     ])]]),
   });
 }

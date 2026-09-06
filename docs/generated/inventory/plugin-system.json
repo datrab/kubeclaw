@@ -10,7 +10,7 @@
     "testProviders": 18,
     "reportAdapters": 1,
     "registrations": 60,
-    "files": 794
+    "files": 795
   },
   "runtime": {
     "roots": [
@@ -1181,6 +1181,7 @@
         "skills/nova/plugins/lint/schemas/input.schema.json",
         "skills/nova/plugins/lint/schemas/result.schema.json",
         "skills/nova/plugins/lint/src/adapter.ts",
+        "skills/nova/plugins/lint/src/candidate.ts",
         "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
         "skills/nova/plugins/lint/src/engine/constants.ts",
         "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
@@ -2461,6 +2462,7 @@
     "skills/nova/plugins/lint/schemas/input.schema.json",
     "skills/nova/plugins/lint/schemas/result.schema.json",
     "skills/nova/plugins/lint/src/adapter.ts",
+    "skills/nova/plugins/lint/src/candidate.ts",
     "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
     "skills/nova/plugins/lint/src/engine/constants.ts",
     "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
