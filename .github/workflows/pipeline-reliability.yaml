@@ -70,5 +70,17 @@ jobs:
         run: node node_modules/playwright/cli.js install --with-deps chromium
       - name: Build isolation launcher
         run: npm run plugin-system:sandbox:build
+      - name: Permit the installed Chromium sandbox on the CI host
+        if: matrix.provider == 'lighthouse'
+        run: |
+          kubeclaw_chromium_executable="$(node -e 'process.stdout.write(require("playwright").chromium.executablePath())')"
+          sudo tee /etc/apparmor.d/kubeclaw-ci-chromium >/dev/null <<EOF
+          abi <abi/4.0>,
+          include <tunables/global>
+          profile kubeclaw-ci-chromium "$kubeclaw_chromium_executable" flags=(unconfined) {
+            userns,
+          }
+          EOF
+          sudo apparmor_parser -r /etc/apparmor.d/kubeclaw-ci-chromium
       - name: Run real browser provider assertions and negative controls
         run: npm test --prefix skills/buster/plugins/${{ matrix.provider }}

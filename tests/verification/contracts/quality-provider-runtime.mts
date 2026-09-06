@@ -65,11 +65,12 @@ export async function verifyQualityProviderRuntime(options: {
     },
     now: () => new Date('2026-09-06T00:00:00Z'),
   }));
-  const enabled = new Set(['kubeclaw.buster-quality-gate:quality']);
+  const enabled = new Set(['kubeclaw.buster-quality-gate:quality', 'kubeclaw.preflight-contract:validate']);
   const granted = core.resolveCapabilityGrants(snapshot, {
     enabledRegistrations: enabled,
     providers: new Map([
       ['test.plan.execute', 'kubeclaw.remote-test-gate:plan'],
+      ['git.repository.read', 'kubeclaw.repository-adapter:repository'],
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
@@ -77,6 +78,10 @@ export async function verifyQualityProviderRuntime(options: {
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([
+      ['kubeclaw.preflight-contract:validate', new Map([
+        ['git.repository.read', { allowedPrefixes: ['.'] }],
+        ['artifacts.write', { allowedNamespaces: ['kubeclaw.preflight-contract'] }],
+      ])],
       ['kubeclaw.buster-quality-gate:quality', new Map([
         ['test.plan.execute', { allowedRoots: [temporary] }],
         ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
@@ -98,6 +103,7 @@ export async function verifyQualityProviderRuntime(options: {
     granted,
     activated,
     configs: new Map([
+      ['kubeclaw.repository-adapter:repository', { repositoryRoot: temporary }],
       ['kubeclaw.runtime-dispatch:runtime', {
         targets: { gate: { endpoint: `${origin}/dispatch`, tokenSecret: 'gate.agent' } },
       }],
@@ -142,7 +148,10 @@ export async function verifyQualityProviderRuntime(options: {
     const runner = new core.PipelineRunner({
       definition: {
         schemaVersion: 'pipeline-definition.v2', id: 'quality-real-provider', maxConcurrency: 1,
-        stages: [{ id: 'quality', type: 'kubeclaw.test.quality-evaluation', dependsOn: [],
+        stages: [{ id: 'preflight', type: 'kubeclaw.validate.preflight-contract', dependsOn: [], config: {},
+          input: { moduleId: 'module', modulePath: '.', ownedPaths: ['README.md'], serveDockerfile: 'README.md', apiSpecFile: null },
+          execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000 } },
+        { id: 'quality', type: 'kubeclaw.test.quality-evaluation', dependsOn: ['preflight'], on: { request_fix: 'preflight' },
           config: { agent: 'gate' }, input: { gateId: 'quality', task: 'Evaluate verified source checks.',
             providerPlan: { repositoryRoot: temporary, repositoryId: 'repository:phase7-real',
               plan, grants: { 'real-provider': [] }, maximumConcurrency: 1,
