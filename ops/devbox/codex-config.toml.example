@@ -1,0 +1,9 @@
+# Merge into the dedicated account's ~/.codex/config.toml.
+# OS accounts/credentials enforce authority even if an agent changes this file.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[mcp_servers.kubeclaw_ops]
+url = "http://127.0.0.1:8080/mcp"
+bearer_token_env_var = "KUBECLAW_MCP_TOKEN"
+# The root-owned service launcher loads this from the client-token file.

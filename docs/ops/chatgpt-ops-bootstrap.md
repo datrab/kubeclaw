@@ -2,6 +2,11 @@
 
 This runbook bootstraps a private, read-only ChatGPT operations path for the KubeClaw cluster.
 
+For a cluster-independent Codex/MCP recovery path, use the
+[external devbox plan and runbook](external-devbox.md). The in-cluster deployment
+below remains available during migration but cannot diagnose its own complete
+cluster outage.
+
 ## Target flow
 
 ```text

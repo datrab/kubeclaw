@@ -1,0 +1,4 @@
+# Install /etc/sudoers.d/kubeclaw-observer root:root 0440; validate with visudo -cf.
+# The empty argument string means NO arguments, not unrestricted arguments.
+kubeclaw-observer ALL=(root) NOPASSWD: /usr/local/libexec/kubeclaw-host-diagnostics ""
+kubeclaw-observer ALL=(root) NOPASSWD: /usr/local/libexec/kubeclaw-mint-ops-token ""

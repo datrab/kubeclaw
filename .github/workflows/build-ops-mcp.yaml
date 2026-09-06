@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - 'tools/ops-mcp/**'
+      - 'ops/devbox/**'
       - '.github/workflows/build-ops-mcp.yaml'
   push:
     branches: [main]
     paths:
       - 'tools/ops-mcp/**'
+      - 'ops/devbox/**'
       - '.github/workflows/build-ops-mcp.yaml'
   workflow_dispatch:
 
