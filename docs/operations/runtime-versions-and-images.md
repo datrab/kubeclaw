@@ -37,6 +37,8 @@ The default Debian snapshot applies to the OpenClaw images. Buster's worker reta
 4. Run the mandatory reliability workflow and role image acceptance. The latter builds actual Nova, Prism and Buster gateway images, disables networking during acceptance, exercises offline plugin installation, verifies the installed OpenClaw version and diagnostic SDK, checks role tools and runs the real Prism bridge health endpoint under the image's default non-root user. Missing binaries or failed installations fail the job.
 5. Build and publish release images only after both workflows pass. Record the resulting immutable image digests and promote those artifacts for deployment. A version in this manifest identifies a build input; it is not a deployment receipt.
 
+Image acceptance uses Docker's integrated image store so testing does not require a second BuildKit store and tar import. The hosted runner removes unused host SDKs and requires 30 GiB free before building. Insufficient capacity fails before the expensive work. Nova's Go compilation/module caches are build cache mounts, and the observer compilation workspace is removed after copying its runtime artifacts; installed toolchains and offline plugin caches remain available.
+
 The regression test changes a version in a temporary repository copy and verifies propagation, drift rejection without mutation, idempotent generation and invalid-input rejection. Its synthetic release is only a generator fixture. It is never built and does not count as provider or runtime compatibility evidence.
 
 ## Deployment and rollback

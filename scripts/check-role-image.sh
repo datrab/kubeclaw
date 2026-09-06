@@ -28,7 +28,7 @@ if [[ "${3:-}" == runtime ]]; then
   fi
   exit 0
 fi
-openclaw --version | grep -F "$version"
+openclaw --version | awk -v expected="$version" '{ for (i=1; i<=NF; i++) if ($i == expected) found=1; print } END { exit !found }'
 cd /app
 node -e 'const sdk=require("openclaw/plugin-sdk/diagnostic-runtime"); if(typeof sdk.onDiagnosticEvent!=="function") process.exit(1)'
 test -s /app/dist/extensions/kubeclaw-agent-observer/openclaw.plugin.json

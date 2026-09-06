@@ -132,7 +132,10 @@ rm "/tmp/${go_archive}"
 
 ENV PATH=/usr/local/go/bin:${PATH}
 
-RUN GOBIN=/usr/local/bin go install "honnef.co/go/tools/cmd/staticcheck@${STATICCHECK_VERSION}" \
+RUN --mount=type=cache,target=/tmp/kubeclaw-go-build \
+--mount=type=cache,target=/tmp/kubeclaw-go-mod \
+export GOCACHE=/tmp/kubeclaw-go-build GOMODCACHE=/tmp/kubeclaw-go-mod \
+&& GOBIN=/usr/local/bin go install "honnef.co/go/tools/cmd/staticcheck@${STATICCHECK_VERSION}" \
 && GOBIN=/usr/local/bin go install "golang.org/x/vuln/cmd/govulncheck@${GOVULNCHECK_VERSION}" \
 && GOBIN=/usr/local/bin go install "github.com/fzipp/gocyclo/cmd/gocyclo@${GOCYCLO_VERSION}" \
 && go version \
@@ -260,7 +263,9 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 && (cd /app && node -e "const sdk=require('openclaw/plugin-sdk/diagnostic-runtime'); if(typeof sdk.onDiagnosticEvent!=='function') throw new Error('OpenClaw diagnostic SDK contract unavailable')") \
 && mkdir -p /app/dist/extensions/kubeclaw-agent-observer \
 && cp -R package.json openclaw.plugin.json src dist /app/dist/extensions/kubeclaw-agent-observer/ \
-&& rm -rf /tmp/plugins /tmp/contracts
+&& rm -rf /tmp/skills /tmp/contracts
+
+WORKDIR /app
 
 # Official plugins are pinned and baked into an OpenClaw home seed so startup
 # never requires a network install.

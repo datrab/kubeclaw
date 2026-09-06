@@ -32,6 +32,16 @@ jobs:
         with:
           node-version: 24
       - run: node scripts/versions.mjs --check
+      - name: Provision disk capacity for the complete Nova toolchain
+        run: |
+          # These host SDKs are unused: role tools are installed inside the images.
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          df -h /var/lib/docker
+          available="$(df --output=avail -B1 /var/lib/docker | tail -n 1 | tr -d ' ')"
+          if (( available < 30 * 1024 * 1024 * 1024 )); then
+            echo "Role image acceptance requires at least 30 GiB free for build, export and runtime checks." >&2
+            exit 1
+          fi
       # The Docker driver builds directly into the store used by docker run.
       # A second BuildKit store plus tar export exhausted disk on Nova.
       - uses: docker/setup-buildx-action@v4
