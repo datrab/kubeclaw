@@ -79,7 +79,7 @@ export async function verifyQualityProviderRuntime(options: {
     ]),
     grants: new Map([
       ['kubeclaw.preflight-contract:validate', new Map([
-        ['git.repository.read', { allowedPrefixes: ['.'] }],
+        ['git.repository.read', { allowedPrefixes: ['module/'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.preflight-contract'] }],
       ])],
       ['kubeclaw.buster-quality-gate:quality', new Map([
@@ -149,7 +149,7 @@ export async function verifyQualityProviderRuntime(options: {
       definition: {
         schemaVersion: 'pipeline-definition.v2', id: 'quality-real-provider', maxConcurrency: 1,
         stages: [{ id: 'preflight', type: 'kubeclaw.validate.preflight-contract', dependsOn: [], config: {},
-          input: { moduleId: 'module', modulePath: '.', ownedPaths: ['README.md'], serveDockerfile: 'README.md', apiSpecFile: null },
+          input: { moduleId: 'module', modulePath: 'module', ownedPaths: ['README.md'], serveDockerfile: 'README.md', apiSpecFile: null },
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000 } },
         { id: 'quality', type: 'kubeclaw.test.quality-evaluation', dependsOn: ['preflight'], on: { request_fix: 'preflight' },
           config: { agent: 'gate' }, input: { gateId: 'quality', task: 'Evaluate verified source checks.',
@@ -162,9 +162,9 @@ export async function verifyQualityProviderRuntime(options: {
       journal: new core.FileJournal(path.join(options.stateRoot, 'events.jsonl')),
     });
     const result = await runner.run(runId);
-    assert.equal(result.status, options.expected === 'passed' ? 'succeeded' : 'blocked');
     const events = fs.readFileSync(path.join(options.stateRoot, 'events.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);
     const completed = events.filter(event => event.type === 'attempt.completed');
+    assert.equal(result.status, options.expected === 'passed' ? 'succeeded' : 'blocked', JSON.stringify({ states: [...result.stages], completed }));
     assert.equal(completed.at(-1)?.payload.result?.outcome, options.expected, JSON.stringify({ result, completed }));
     assert.equal(dispatches, options.expected === 'passed' ? 1 : 0, 'failed provider must never reach evaluator');
     const artifacts = fs.readFileSync(path.join(options.stateRoot, 'artifacts', 'records', 'store.json'), 'utf8');

@@ -38,7 +38,8 @@ try {
   fs.writeFileSync(path.join(packageRoot, 'package.json'), '{"type":"module"}\n');
   fs.mkdirSync(repository, { recursive: true });
   fs.writeFileSync(path.join(repository, 'README.md'), 'phase-7 real remote provider\n');
-  fs.writeFileSync(path.join(repository, 'FORGE.md'), 'Required deliverable: README.md\n');
+  fs.mkdirSync(path.join(repository, 'module'));
+  fs.writeFileSync(path.join(repository, 'module', 'FORGE.md'), 'Required deliverable: README.md\n');
   fs.writeFileSync(path.join(packageRoot, 'schemas', 'config.json'), JSON.stringify({
     $schema: 'https://json-schema.org/draft/2020-12/schema', type: 'object', additionalProperties: false,
   }));
@@ -72,7 +73,7 @@ export function provider() {
   execFileSync('git', ['-C', repository, 'init', '-q']);
   execFileSync('git', ['-C', repository, 'config', 'user.email', 'phase7@example.invalid']);
   execFileSync('git', ['-C', repository, 'config', 'user.name', 'Phase 7 Proof']);
-  execFileSync('git', ['-C', repository, 'add', 'README.md', 'FORGE.md']);
+  execFileSync('git', ['-C', repository, 'add', 'README.md', 'module/FORGE.md']);
   execFileSync('git', ['-C', repository, 'commit', '-qm', 'committed source']);
   fs.writeFileSync(path.join(repository, 'UNTRACKED.md'), 'must not cross the remote boundary\n');
 
