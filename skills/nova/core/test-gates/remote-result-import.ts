@@ -23,10 +23,16 @@ import type { RemotePlanEvidenceTransport, RemotePlanResultTransport } from './r
 import { gateDecisionStageResult, type GateDecisionV1, type GateDecisionState, type GateNodeDecisionV1, type GateNodeEffect, type AgentEvidenceReviewRequestV1 } from '@kubeclaw/pipeline-test-gate-contract';
 export { gateDecisionStageResult, type GateDecisionV1, type GateDecisionState, type GateNodeDecisionV1, type GateNodeEffect, type AgentEvidenceReviewRequestV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
+type GateImportSource = Pick<RemotePlanJobV1, 'jobId' | 'pipelineStageId' | 'plan'> & { readonly sourceRevision: string };
+
+function importSource(job: RemotePlanJobV1): GateImportSource {
+  return { jobId: job.jobId, pipelineStageId: job.pipelineStageId, plan: structuredClone(job.plan), sourceRevision: job.sourceSnapshot.revision };
+}
+
 interface StoredGateImportV2 {
   readonly schemaVersion: 'nova-test-gate-import.v2';
   readonly jobId: string;
-  readonly job: RemotePlanJobV1;
+  readonly source: GateImportSource;
   readonly requestDigest: string;
   readonly remoteResultDigest: string | null;
   readonly remoteResult: RemotePlanResultV1 | null;
@@ -52,12 +58,12 @@ export interface NovaTestExecutionGraphV1 {
 }
 
 // A graph is derived from the verified import, never a second write authority.
-function executionGraph(job: RemotePlanJobV1, result: RemotePlanResultV1 | null,
+function executionGraph(job: GateImportSource, result: RemotePlanResultV1 | null,
   decision: GateDecisionV1): NovaTestExecutionGraphV1 {
   return {
     schemaVersion: 'nova-test-execution-graph.v1',
     runId: job.plan.runId, parentStageId: job.pipelineStageId, jobId: job.jobId,
-    sourceRevision: job.sourceSnapshot.revision, planId: job.plan.planId,
+    sourceRevision: job.sourceRevision, planId: job.plan.planId,
     planDigest: job.plan.planDigest, nodes: structuredClone(job.plan.nodes),
     links: structuredClone(job.plan.links), attempts: structuredClone(result?.attempts ?? []),
     results: structuredClone(result?.nodes ?? []), reviews: structuredClone(decision.reviews),
@@ -214,14 +220,14 @@ export class FileNovaGateImportStore {
       .filter(record => record.payload.state === 'complete')
       .map(({ payload }) => {
         if (payload.schemaVersion !== 'nova-test-gate-import.v2') throw new Error('NOVA_REMOTE_IMPORT_SCHEMA_UNSUPPORTED');
-        return executionGraph(payload.job, payload.remoteResult, payload.decision);
+        return executionGraph(payload.source, payload.remoteResult, payload.decision);
       });
   }
   async record(job: RemotePlanJobV1, status: RemotePlanStatusV1, remoteResult: RemotePlanResultV1 | null,
     decision: GateDecisionV1,
     evidence: readonly { artifact: ArtifactRefV1; bytes: Uint8Array }[]): Promise<GateDecisionV1> {
     const digests = evidence.map((item) => item.artifact.contentDigest).sort();
-    const pending: StoredGateImportV2 = { schemaVersion: 'nova-test-gate-import.v2', jobId: job.jobId, job: structuredClone(job),
+    const pending: StoredGateImportV2 = { schemaVersion: 'nova-test-gate-import.v2', jobId: job.jobId, source: importSource(job),
       requestDigest: job.requestDigest, remoteResultDigest: remoteResult?.resultDigest ?? null,
       remoteResult: remoteResult ? structuredClone(remoteResult) : null,
       evidenceDigests: digests, decision, state: 'pending_evidence' };
@@ -234,7 +240,7 @@ export class FileNovaGateImportStore {
         .find((item) => item.idempotencyKey === job.jobId);
       if (!record) throw error;
       const existing = record.payload;
-      if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.job, job) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
+      if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
         || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, evidence.map((item) => item.artifact.contentDigest).sort())) {
         throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
       }
@@ -244,7 +250,7 @@ export class FileNovaGateImportStore {
       appended = { appended: false, record };
     }
     const existing = appended.record.payload as StoredGateImportV2;
-    if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.job, job) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
+    if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
       || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, digests)) {
       throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
     }

@@ -45,13 +45,16 @@ export function provider() {
   return { async execute(invocation, context) {
     const fs = await import('node:fs');
     const content = fs.readFileSync(context.workspaceRoot + '/' + invocation.workspace.repository + '/README.md', 'utf8');
-    if (content !== 'phase-7 real remote provider\\n') throw new Error('REMOTE_REPOSITORY_CONTENT_MISMATCH');
+    const assert = await import('node:assert/strict');
+    let failure = null;
+    try { assert.default.equal(content, 'phase-7 real remote provider\\n'); }
+    catch (error) { failure = String(error); }
     if (fs.existsSync(context.workspaceRoot + '/' + invocation.workspace.repository + '/UNTRACKED.md')) throw new Error('REMOTE_UNCOMMITTED_CONTENT_INCLUDED');
     fs.writeFileSync(context.workspaceRoot + '/' + invocation.workspace.evidence + '/provider-proof.txt', content);
-    return { schemaVersion: 'provider-result.v1', outcome: 'passed', summary: 'real isolated provider passed',
-      counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [],
+    return { schemaVersion: 'provider-result.v1', outcome: failure ? 'failed' : 'passed', summary: failure ?? 'real isolated provider passed',
+      counts: { total: 1, passed: failure ? 0 : 1, failed: failure ? 1 : 0, skipped: 0 }, findings: [], metrics: [],
       evidenceFiles: [{ evidenceId: 'provider-proof', type: 'log', file: 'provider-proof.txt', mediaType: 'text/plain' }],
-      reports: [], outputs: [], exitCode: 0, signal: null, providerDetails: null };
+      reports: [], outputs: [], exitCode: failure ? 1 : 0, signal: null, providerDetails: null };
   }, async cleanup() {} };
 }
 `);
@@ -144,6 +147,24 @@ export function provider() {
     assert.deepEqual(graph?.attempts, storedResult.attempts);
     assert.deepEqual(graph?.results, storedResult.nodes);
     assert.equal(executed.remote.status.result?.sizeBytes > 0, true);
+
+    // Change committed source so the same real assertion fails; never supply a
+    // canned failed provider response or substitute the worker/transport.
+    fs.writeFileSync(path.join(repository, 'README.md'), 'deliberately broken source\n');
+    execFileSync('git', ['-C', repository, 'add', 'README.md']);
+    execFileSync('git', ['-C', repository, 'commit', '-qm', 'negative control']);
+    const broken = await gate.execute({ idempotencyKey: 'phase7:real-provider:broken', pipelineStageId: 'stage:test-gate', plan,
+      repositoryRoot: repository, repositoryId: 'repository:phase7-real', grants: new Map([['real-provider', []]]),
+      maximumConcurrency: 1, submittedAt: '2026-08-12T08:01:00.000Z', timeoutMs: 30_000 });
+    assert.equal(broken.remote.decision.state, 'failed');
+    assert.equal(broken.remote.stageResult.outcome, 'request_fix');
+    assert.notEqual(broken.remote.decision.decisionDigest, executed.remote.decision.decisionDigest);
+    const graphs = await imported.readExecutionGraphs();
+    assert.equal(graphs.length, 2, 'two actual jobs on one stage keep separate graph identities');
+    assert.notEqual(graphs[0]?.sourceRevision, graphs[1]?.sourceRevision);
+    assert.ok(graphs.some(item => item.jobId === broken.remote.status.jobId && item.results.some(node => node.outcome === 'failed')));
+    const storedImports = fs.readFileSync(path.join(temporary, 'nova-state', 'imports', 'records', 'store.json'), 'utf8');
+    assert.equal(storedImports.includes('"repositoryArchive"'), false, 'graph source metadata must not duplicate source archives');
   } finally { await runtime.stop(); }
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
