@@ -121,6 +121,7 @@
       ],
       "commandAndActionRefs": [
         "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "node tests/verification/contracts/check-project-compiler.mts",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
         "npm run typecheck:skills",

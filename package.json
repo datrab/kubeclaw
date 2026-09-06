@@ -18,7 +18,8 @@
     "skills/worker/core",
     "skills/buster",
     "skills/buster/engine",
-    "skills/buster/plugins/*"
+    "skills/buster/plugins/*",
+    "skills/nova/project"
   ],
   "scripts": {
     "verify:nova-journal-scale": "node tests/verification/contracts/check-nova-journal-scale.mts",

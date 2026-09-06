@@ -21,50 +21,11 @@ execFileSync('git', ['config', 'user.email', 'test@kubeclaw.invalid'], { cwd: te
 execFileSync('git', ['add', '.'], { cwd: temporary });
 execFileSync('git', ['commit', '-qm', 'fixture'], { cwd: temporary });
 
-const server = http.createServer((request, response) => {
-  let body = '';
-  request.setEncoding('utf8');
-  request.on('data', (chunk) => { body += chunk; });
-  request.on('end', () => {
-    const payload = body ? JSON.parse(body) : {};
-    if (request.method === 'POST' && request.url === '/v2/jobs') {
-      response.writeHead(202, { 'content-type': 'application/json' });
-      response.end(JSON.stringify({ jobId: payload.jobId, state: 'accepted' }));
-      return;
-    }
-    if (request.method === 'GET' && request.url?.startsWith('/v2/jobs/')) {
-      const jobId = request.url.slice('/v2/jobs/'.length);
-      response.writeHead(200, { 'content-type': 'application/json' });
-      response.end(JSON.stringify({
-        schemaVersion: 'buster-suite-status.v2',
-        jobId,
-        state: 'completed',
-        result: {
-          schemaVersion: 'buster-suite-result.v2',
-          jobId,
-          results: [{ suite: 'security', status: 'PASS' }],
-          suiteSummary: 'security passed',
-          suiteDetailSummary: 'security passed',
-          criticalFailed: false,
-          completedAt: '2026-07-28T00:00:00.000Z',
-        },
-      }));
-      return;
-    }
-    assert.equal(request.url, '/dispatch');
-    assert.equal(payload.suiteEvidence.some(
-      (evidence: { suite: string; passed: boolean }) => evidence.suite === 'security' && evidence.passed,
-    ), true);
-    response.writeHead(200, { 'content-type': 'application/json' });
-    response.end(JSON.stringify({
-      result: {
-        outcome: 'passed',
-        summary: 'Passed.',
-        failureClass: 'none',
-        findings: [],
-      },
-    }));
-  });
+let contacts = 0;
+const server = http.createServer((_request, response) => {
+  contacts += 1;
+  response.writeHead(500);
+  response.end('No request is authorized for an invalid graph.');
 });
 await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 const address = server.address();
@@ -164,7 +125,7 @@ try {
   });
   await adapters.start();
   try {
-    const runner = new core.PipelineRunner({
+    assert.throws(() => new core.PipelineRunner({
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: 'pipeline:buster-quality',
@@ -194,13 +155,9 @@ try {
       activated,
       adapters,
       journal: new core.FileJournal(path.join(temporary, 'events.jsonl')),
-    });
-    assert.equal((await runner.run('run:buster-quality')).status, 'succeeded');
-    assert.match(
-      fs.readFileSync(path.join(temporary, 'artifacts', 'records', 'store.json'), 'utf8'),
-      /buster-quality:quality:1/u,
-    );
-    assert.equal(fs.readFileSync(effectsPath, 'utf8').includes(token), false);
+    }), /schema/);
+    assert.equal(contacts, 0, 'caller-owned evidence must fail before any external contact');
+
   } finally {
     await adapters.shutdown();
   }
@@ -214,5 +171,5 @@ try {
 console.log(JSON.stringify({
   ok: true,
   plugin: 'kubeclaw.buster-quality-gate',
-  suite: 'live-function',
+  suite: 'real-runtime-rejects-caller-evidence',
 }));

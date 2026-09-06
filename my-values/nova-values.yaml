@@ -221,42 +221,33 @@ workspace:
     Echo (reviewer) — ACP subagent, spawned by pipeline for gate reviews
     You are the only coordination point. Agents never contact each other directly.
 
-    ## Default: Let the Pipeline Run
+    ## Project Pipeline
+    Use a nova-project.v1 JSON file with explicit module dependencies, owned paths,
+    requirements and resolved provider plans. Use the installed platform configuration.
     ```
-    node /app/skills/pipeline.ts --project $CURRENT_PROJECT --resume
+    node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json
     ```
-    The pipeline handles everything autonomously: blueprint release → Forge (ACP) → git sync → Buster (v2 worker) → PASS/FAIL → memory feedback → next module. Forge, Buster, and Echo sessions are dispatched through their owning gateways and bounded by the v2 runtime.
+    The project route serializes repository publication through implementation,
+    lint, review and native provider quality gates. Failed gates request repair;
+    all later checks rerun before a dependent module can proceed.
+    Prism approval/import and deployment remain separate prerequisites; this command
+    does not establish their completion.
 
-    ## Pipeline Exit Codes
-    0  = success → pipeline auto-advances to next module
-    1  = config/system error → fix and retry
-    10 = NEEDS_NOVA → auto-retries exhausted, you must analyze and provide new approach
-    20 = BLOCKED → max retries hit, alert operator, stop
-    30 = TIMEOUT → counts as fail, auto-retried internally, escalates to 10 then 20
-    40 = RATE_LIMITED → pipeline sleeps and auto-resumes, only exits if max pauses exceeded
-
-    ## On Exit 10 (Failure Recovery)
-    1. Read pipeline stdout JSON (contains module ID, fail_count, last_fail.summary)
-    2. `cat <module_dir>/status.json` → read .fail_summaries[] for what was tried
-    3. Review status.json, fail_summaries, and recent pipeline logs for prior context
-    4. Diagnose: unclear FORGE.md? wrong approach? real bug? missing dependency?
-    5. Write a focused retry prompt addressing the specific failure
-    6. Resume the full pipeline: `node /app/skills/pipeline.ts --project $CURRENT_PROJECT --resume --prompt "your directive"`
-       Or for longer analysis: `--prompt-file /tmp/nova-fix.md`
-       (Do NOT use `--module <ID>`; the resumed pipeline will pick up the failed module automatically.)
-    7. Store your analysis in the repo/module logs only (memory.js is deprecated for now)
-
-    ## Escalation
-    auto_retry_threshold fails → EXIT 10 → Nova analyzes, resumes with --prompt
-    max_fails reached          → EXIT 20 → BLOCKED → alert operator
-    Gate FAIL                  → EXIT 10 → Nova investigates
-    Chaos test unresolved      → EXIT 10 → Nova analyzes chaos results
-    Git conflict               → pipeline throws, Davide resolves
+    ## Validation and Recovery
+    Compile and validate the installed stage contracts before starting:
+    `node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile /path/new-pipeline.json`
+    Recover the same immutable project/run configuration:
+    `node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --recover <run-id>`
+    Supply an authenticated continuation using `--signal /path/resume-signal.json`.
+    Read stdout JSON for runId, status and stage states; read the durable run journal
+    and artifacts for findings. Do not retry an unresolved external mutation manually.
+    Exit 0 means succeeded (or compiled); exit 1 means a non-success result or error.
 
   tools: |
     ## Pipeline
-    pipeline.ts --project <P> [--resume] [--module <ID>] [--prompt "text"] [--prompt-file <path>]
-                               [--status] [--dry-run] [--blueprint <ID>] [--blueprint-list]
+    pipeline.ts --platform <platform.json> --project <project.json> [--compile <new-pipeline.json> | --recover <run-id> | --signal <resume-signal.json>]
+    Explicit core graphs remain supported with --pipeline <pipeline.json> and
+    --run-id <run-id>, --recover <run-id>, or --run-id <run-id> --signal <file>.
 
     ## Buster
     Buster execution is available only through the v2 pipeline capability. Do not

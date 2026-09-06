@@ -1,3 +1,4 @@
+import { verifyQualityProviderRuntime } from './quality-provider-runtime.mts';
 import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -148,6 +149,10 @@ export function provider() {
     assert.deepEqual(graph?.results, storedResult.nodes);
     assert.equal(executed.remote.status.result?.sizeBytes > 0, true);
 
+    await verifyQualityProviderRuntime({ repository, stateRoot: path.join(temporary, 'quality-passed'),
+      endpoint: `http://127.0.0.1:${address.port}`, token, privateKey: sourceAttestationPrivateKey.toString(), plan,
+      revision: execFileSync('git', ['-C', repository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), expected: 'passed' });
+
     // Change committed source so the same real assertion fails; never supply a
     // canned failed provider response or substitute the worker/transport.
     fs.writeFileSync(path.join(repository, 'README.md'), 'deliberately broken source\n');
@@ -159,6 +164,9 @@ export function provider() {
     assert.equal(broken.remote.decision.state, 'failed');
     assert.equal(broken.remote.stageResult.outcome, 'request_fix');
     assert.notEqual(broken.remote.decision.decisionDigest, executed.remote.decision.decisionDigest);
+    await verifyQualityProviderRuntime({ repository, stateRoot: path.join(temporary, 'quality-failed'),
+      endpoint: `http://127.0.0.1:${address.port}`, token, privateKey: sourceAttestationPrivateKey.toString(), plan,
+      revision: execFileSync('git', ['-C', repository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), expected: 'request_fix' });
     const graphs = await imported.readExecutionGraphs();
     assert.equal(graphs.length, 2, 'two actual jobs on one stage keep separate graph identities');
     assert.notEqual(graphs[0]?.sourceRevision, graphs[1]?.sourceRevision);

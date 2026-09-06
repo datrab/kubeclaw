@@ -7,12 +7,7 @@ const input = {
   attempt: 1,
   task: 'Evaluate.',
   suiteEvidence: [{ suite: 'security', passed: true, summary: 'ok' }],
-  suitePlan: {
-    repositoryRoot: '/repo',
-    suites: ['security'],
-    testConfig: {},
-    task: {},
-  },
+
 };
 assert.equal(buildRequest('gate', input).protocol, 'kubeclaw.buster-quality-gate.v2');
 const valid = { outcome: 'passed' as const, summary: 'Passed.', failureClass: 'none' as const, findings: [] };

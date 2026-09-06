@@ -63,6 +63,14 @@ The compiler performance failure was traced with a CPU profile to tokenization. 
 
 Commit `2f243561e629c75913336beb748eaba9026e0726` passed Pipeline reliability run `34018162419` and Docs Checks run `34018162535`, including the real committed-defect negative control. Subsequent tokenizer changes require their own CI evidence.
 
+## Project compilation and quality authority
+
+The Nova bundle now includes a product-owned `nova-project.v1` compiler and launcher. It builds deterministic implementation/lint/review/quality graphs for module dependencies, with nonoverlapping ownership, digest-checked scoped provider plans, repair targets and a single repository publication lane. Compilation validates the installed stage contracts and grants before emitting a graph. Source and extracted-bundle checks cover two dependent modules; they execute zero stages and are not deployed acceptance. See [Nova project runtime](nova-project-runtime.md).
+
+The quality stage no longer accepts caller-owned suite evidence or retired suite-plan input. A provider plan is mandatory; run/attempt identity comes from the core. Every native decision is retained as an artifact, nonpassing decisions cannot dispatch an evaluator, and invocation failures retain core reconciliation semantics. The previous positive test that bypassed providers is replaced with a real-runtime rejection test. The mandatory isolated-provider check additionally exercises the actual quality stage for healthy and deliberately broken source; its evaluator executes a deterministic assertion rather than claiming real agent quality.
+
+Full legacy scaffold/E2E migration and actual two-module agent execution remain open. Existing snapshots require version-pinned draining because their quality-stage input contract differs.
+
 ## Remaining closure work
 
 | Workstream / review finding | Required next result |
@@ -71,7 +79,7 @@ Commit `2f243561e629c75913336beb748eaba9026e0726` passed Pipeline reliability ru
 | W2 / F4 candidate and repair | Deliver bounded verified artifact contents to Forge; bind baseline, requirement and candidate identities across all gates; handle ambiguous Git/dispatch effects and no-progress repair; prove parallel invalidation/recovery interleavings |
 | W3 / F5 recovery | Separate execution-attempt identity from logical effect identity; implement read-only receipt reconciliation for accepted/uncertain effects. Kill after external mutation and before receipt/checkpoint. Do not retry an uncertain mutation as ordinary work |
 | W4 / F2 Prism | Complete content-addressed architecture handoff, durable notification/approval race handling, archive verification/import, authenticated continuation and partial-generation recovery |
-| W5 / F1 supported route | Implement deterministic project/module compiler and packaged launcher; migrate callers and Nova/Buster stage ownership together; retire command-suite/legacy harness inputs only with a verified replacement |
+| W5 / F1 supported route | Verify the new compiler through actual module execution; migrate remaining callers and Nova/Buster stage ownership together; retire command-suite/legacy harness inputs only with a verified replacement |
 | W6 / F6 storage | Reserve storage before acceptance, enforce recovery/retention windows, acknowledge verified imports, preserve idempotency tombstones, and prove process/container/Pod replacement plus disk-full behavior |
 | W7 / F7 authority and coverage | Validate fixture leases at use time and equivalent browser authority; prove worker/CNI isolation and all 13 required capabilities with meaningful negative controls |
 | W8 agent testing/review | Provide bounded verified evidence to agents, complete review-required dispatch/result handling, make optional repository audit explicitly optional, and produce a candidate-bound delivery manifest |

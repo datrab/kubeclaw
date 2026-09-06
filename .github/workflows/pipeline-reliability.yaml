@@ -21,6 +21,8 @@ jobs:
         run: npm run typecheck:skills
       - name: Exercise journals, process death, real Git, HTTP and Playwright reports
         run: npm run verify:reliability
+      - name: Validate project compiler and installed stage contracts
+        run: node tests/verification/contracts/check-project-compiler.mts
       - name: Check affected stage and adapter contracts
         run: |
           npm test --workspace @kubeclaw/plugin-implementation-agent
@@ -46,3 +48,4 @@ jobs:
           bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
+          node tests/verification/contracts/check-project-compiler.mts "dist/nova-${GITHUB_SHA}.tgz"

@@ -454,6 +454,7 @@ async function main(): Promise<void> {
       return [node.id, [...provider.declaration.requiredCapabilities].sort()];
     }));
     return { repositoryRoot: repo, repositoryId: `repository:${projectName}`, plan, grants,
+      sourceStageId: `forge-${scope.moduleId ?? moduleIds.at(-1)}`,
       maximumConcurrency: 4, submittedAt: createdAt, timeoutMs: 2_100_000 };
   };
   const platformPath = path.join(stateRoot, 'platform.json');
@@ -713,28 +714,9 @@ async function main(): Promise<void> {
       dependsOn: ['operator-approval'],
       config: { agent: 'buster.final', agentRole: roles.buster },
       input: {
-        runId,
         gateId: 'final-buster',
-        attempt: 1,
-        task: 'Act as final Buster. Judge the actual provider results, Kubernetes readiness, namespace lease, HTTP checks, and security evidence. Pass only when every required proof is real.',
-        suiteEvidence: [],
+        task: 'Judge verified provider results. Reject failed, skipped or missing required proof.',
         providerPlan: providerPlanFor({ moduleId: null, gateId: 'final-buster' }, 'final-buster'),
-        suitePlan: {
-          repositoryRoot: repo,
-          suites: progress.gates['final-buster'].test_suites,
-          testConfig: {
-            ...progress.gates['final-buster'].test_config,
-            suite_timeout_ms: 1_500_000,
-          },
-          task: {
-            project: projectName,
-            run_id: runId,
-            gate_id: 'final-buster',
-            gate_type: 'final',
-            contracts: progress.gates['final-buster'].contract,
-          },
-          moduleId: moduleIds.at(-1),
-        },
       },
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 2_100_000 },
     },

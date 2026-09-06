@@ -3,110 +3,26 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "runId",
     "gateId",
-    "attempt",
     "task",
-    "suiteEvidence",
-    "suitePlan"
+    "providerPlan"
   ],
   "properties": {
-    "runId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 128
-    },
     "gateId": {
       "type": "string",
       "minLength": 1,
       "maxLength": 128
-    },
-    "attempt": {
-      "type": "integer",
-      "minimum": 1
     },
     "task": {
       "type": "string",
       "minLength": 1,
       "maxLength": 32768
     },
-    "suiteEvidence": {
-      "type": "array",
-      "maxItems": 128,
-      "items": {
-        "$ref": "#/$defs/evidence"
-      }
-    },
-    "suitePlan": {
-      "$ref": "#/$defs/suitePlan"
-    },
     "providerPlan": {
       "$ref": "#/$defs/providerPlan"
     }
   },
   "$defs": {
-    "evidence": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "suite",
-        "passed",
-        "summary"
-      ],
-      "properties": {
-        "suite": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 128
-        },
-        "passed": {
-          "type": "boolean"
-        },
-        "summary": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 2048
-        }
-      }
-    },
-    "suitePlan": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "repositoryRoot",
-        "suites",
-        "testConfig",
-        "task"
-      ],
-      "properties": {
-        "repositoryRoot": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 4096
-        },
-        "suites": {
-          "type": "array",
-          "maxItems": 32,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 128
-          }
-        },
-        "testConfig": {
-          "type": "object"
-        },
-        "task": {
-          "type": "object"
-        },
-        "moduleId": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 128
-        }
-      }
-    },
     "providerPlan": {
       "type": "object",
       "additionalProperties": false,

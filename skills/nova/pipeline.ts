@@ -10,5 +10,5 @@ if (
   process.argv[1]
   && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
 ) {
-  await import('./core/cli.ts');
+  await import('./project/cli.ts');
 }
