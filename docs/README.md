@@ -25,3 +25,12 @@ The build resolves evidence to the exact Git revision. It also emits a digest an
 ## Transformation Record
 
 The approved [documentation blueprint](blueprint/README.md) classifies existing documentation and defines the publication workflow.
+
+## Operations Infrastructure Sources
+
+- [Codex Ops Pod architecture](architecture/ops-pod.md): authority, runtime, networking, persistence and failure domains.
+- [Codex Ops Pod operations](ops/ops-pod.md): deployment, acceptance, diagnosis, upgrades, credential rotation and recovery.
+
+These are repository source documents; adding them here does not add them to the
+published site's explicit allowlist.
+

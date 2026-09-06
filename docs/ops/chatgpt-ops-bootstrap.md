@@ -32,7 +32,7 @@ The MCP server has no Kubernetes write verbs, no Secret access and no pod exec c
 
 GitHub Actions publishes commit-tagged images and prints the full immutable digest
 in the build summary. There is no `latest` deployment path. For an unmerged
-candidate, run **Build Ops MCP Image → Run workflow** on its exact branch and
+candidate, run **Build Ops Images → Run workflow** on its exact branch and
 record the source commit plus returned digest. PR checks themselves do not publish.
 
 ```bash
@@ -209,3 +209,4 @@ For GitOps, commit the rendered output so later syncs use the chosen namespace.
 ```bash
 TAILSCALE_OPERATOR_NAMESPACE=private-access ./scripts/deploy-ops-mcp.sh render
 ```
+

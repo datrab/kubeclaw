@@ -95,3 +95,11 @@ the [operator guide](pipeline-test-gate-container-build-operator-guide.md),
 [configuration reference](pipeline-test-gate-container-build-configuration-reference.md),
 [error reference](pipeline-test-gate-container-build-error-reference.md), and
 [security model](pipeline-test-gate-container-build-security-model.md).
+
+## Operations Infrastructure
+
+[Codex Ops Pod architecture](ops-pod.md) describes the persistent mobile Codex
+workspace, local MCP, observer authority, storage and recovery boundaries.
+The corresponding [operations runbook](../ops/ops-pod.md) covers deployment,
+live acceptance, troubleshooting, upgrades, credential rotation and restore.
+

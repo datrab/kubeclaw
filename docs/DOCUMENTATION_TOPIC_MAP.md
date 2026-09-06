@@ -11,3 +11,5 @@
 | Operations | `docs/operators/README.md`; `docs/operators/running-the-pipeline.md`; `docs/operators/recovery-runbook.md` | `skills/nova/core/cli.ts` |
 | Extension authoring | `docs/developers/README.md`; `docs/developers/authoring-plugin-pipelines.md`; `docs/developers/authoring-plugin-observers.md` | `skills/common/plugin-runtime/sdk/` |
 | Cutover history | `docs/architecture/plugin-system-phase12-changelog.md`; `docs/architecture/plugin-system-implementation-plan.md` | `tests/verification/contracts/check-plugin-system-v2-phase12.mts` |
+| Codex operations workspace | `docs/architecture/ops-pod.md`; `docs/ops/ops-pod.md` | `charts/ops-pod/`; `ops/pod/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |
+
