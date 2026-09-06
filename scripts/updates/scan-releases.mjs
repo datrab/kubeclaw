@@ -6,13 +6,15 @@ const inputs = [...Object.values(versions.buildArgs).filter(v => typeof v === 's
   `ghcr.io/openclaw/openclaw:${versions.openclaw.version}@${versions.openclaw.digest}`];
 let failure = false;
 // A scan of inputs cannot stand in for scanning the actually selected runtime release.
-if (!fs.existsSync('releases/runtime-images.json')) {
-  console.error('No runtime release selected. Run Promote runtime release after a successful main build.'); failure = true;
+for (const [family, count] of [['runtime', 10], ['ops', 2]]) {
+if (!fs.existsSync(`releases/${family}-images.json`)) {
+  console.error(`No ${family} release selected. Run Promote image release after a successful main build.`); failure = true;
 } else {
-  const release = JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8'));
-  if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit) || Object.keys(release.images ?? {}).length !== 10)
+  const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
+  if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit) || Object.keys(release.images ?? {}).length !== count)
     throw new Error('Invalid selected runtime release');
   inputs.push(...Object.values(release.images));
+}
 }
 for (const reference of new Set(inputs)) {
   const result = spawnSync('bash', ['scripts/scan-runtime-images.sh', reference], { stdio: 'inherit' });

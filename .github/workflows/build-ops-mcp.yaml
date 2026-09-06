@@ -92,9 +92,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=sha,prefix=
+            type=sha,prefix=candidate-,format=long
 
       - name: Build and load for runtime validation
+        if: github.event_name == 'pull_request'
         id: build
         uses: docker/build-push-action@v7
         with:
@@ -110,12 +111,18 @@ jobs:
           sbom: false
 
       - name: Smoke-test the actual Codex container without account credentials
-        if: matrix.image == 'kubeclaw-codex-ops'
+        if: github.event_name == 'pull_request' && matrix.image == 'kubeclaw-codex-ops'
         env:
           TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
         run: bash ops/pod/test-image.sh "$TEST_IMAGE"
 
-      - name: Publish validated image with attestations
+      - name: Smoke-test the actual MCP container
+        if: github.event_name == 'pull_request' && matrix.image == 'kubeclaw-ops-mcp'
+        env:
+          TEST_IMAGE: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+        run: bash tools/ops-mcp/test-image.sh "$TEST_IMAGE"
+
+      - name: Publish candidate image with attestations
         if: github.event_name != 'pull_request'
         id: publish
         uses: docker/build-push-action@v7
@@ -129,6 +136,26 @@ jobs:
           provenance: mode=max
           sbom: true
 
+      - name: Exercise the exact published artifact and record its receipt
+        if: github.event_name != 'pull_request'
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image }}@${{ steps.publish.outputs.digest }}
+        run: |
+          docker pull "$IMAGE"
+          if [[ "$IMAGE_NAME" == kubeclaw-codex-ops ]]; then
+            bash ops/pod/test-image.sh "$IMAGE"
+          else
+            bash tools/ops-mcp/test-image.sh "$IMAGE"
+          fi
+          mkdir -p dist/image-receipts
+          node -e 'const name=process.env.IMAGE_NAME.replace(/^kubeclaw-/, "");require("fs").writeFileSync(`dist/image-receipts/${name}.json`,JSON.stringify({name,image:process.env.IMAGE,commit:process.env.GITHUB_SHA})+"\n")'
+      - uses: actions/upload-artifact@v4
+        if: github.event_name != 'pull_request'
+        with:
+          name: image-receipt-${{ matrix.image }}
+          path: dist/image-receipts/*.json
+          if-no-files-found: error
+
       - name: Summary
         run: |
           echo '### ${{ matrix.image }} image' >> "$GITHUB_STEP_SUMMARY"
@@ -141,3 +168,12 @@ jobs:
             echo 'Deploy: `${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}@${{ steps.publish.outputs.digest }}`' >> "$GITHUB_STEP_SUMMARY"
           fi
 
+  preserve-receipts:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    uses: ./.github/workflows/publish-image-receipts.yaml
+    with:
+      family: ops
+    permissions:
+      contents: write
+      actions: read

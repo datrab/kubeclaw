@@ -17,9 +17,14 @@ export function collectReceipts(directory, commit, expected) {
   return { schemaVersion: 1, commit, images };
 }
 if (process.argv[1] === import.meta.filename) {
-  const [directory, commit, output] = process.argv.slice(2);
-  const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
+  const [directory, commit, output, family = "runtime"] = process.argv.slice(2);
+  if (!["runtime", "ops"].includes(family)) throw new Error("Unknown release family");
+  const names = family === 'ops' ? ['codex-ops', 'ops-mcp'] : ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
   const release = collectReceipts(directory, commit, names);
+  release.sourceRunId = Number(process.env.SOURCE_RUN_ID);
+  if (!Number.isSafeInteger(release.sourceRunId) || release.sourceRunId < 1) throw new Error("Verified source run ID required");
+  release.sourceRunAttempt = Number(process.env.SOURCE_RUN_ATTEMPT);
+  if (!Number.isSafeInteger(release.sourceRunAttempt) || release.sourceRunAttempt < 1) throw new Error("Verified source run attempt required");
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, JSON.stringify(release, null, 2) + '\n');
 }

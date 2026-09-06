@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import yaml from 'js-yaml';
-const release = JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8'));
+const family = process.argv.includes('--family=ops') ? 'ops' : 'runtime';
+const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
 if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit)) throw new Error('Invalid release manifest');
 const reference = name => {
   const image = release.images[name];
@@ -9,9 +10,10 @@ const reference = name => {
 };
 const object = name => { const [repository, digest] = reference(name).split('@'); return { repository, digest, tag: '', pullPolicy: 'IfNotPresent' }; };
 fs.mkdirSync('releases/values', { recursive: true });
-for (const role of ['nova', 'buster', 'prism-agent', 'prism']) {
-  const values = yaml.load(fs.readFileSync(`my-values/${role}-values.yaml`, 'utf8'));
-  if (role === 'prism') {
+for (const role of family === 'ops' ? ['ops'] : ['nova', 'buster', 'prism-agent', 'prism']) {
+  const values = role === 'ops' ? {} : yaml.load(fs.readFileSync(`my-values/${role}-values.yaml`, 'utf8'));
+  if (role === 'ops') { values.codexImage = reference('codex-ops'); values.mcpImage = reference('ops-mcp'); }
+  else if (role === 'prism') {
     for (const service of ['control', 'studio', 'worker', 'ingestion']) { const image = object(`prism-${service}`); delete image.tag; values.images[service] = image; }
   } else {
     values.image = object(role === 'buster' ? 'buster-gateway' : role);

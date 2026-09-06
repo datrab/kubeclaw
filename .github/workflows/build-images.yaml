@@ -10,6 +10,7 @@ jobs:
     uses: ./.github/workflows/update-checks.yaml
     permissions:
       contents: read
+      actions: read
   reliability:
     uses: ./.github/workflows/pipeline-reliability.yaml
     permissions:
@@ -269,3 +270,12 @@ jobs:
           PRISM_E2E_USER: ${{ secrets.PRISM_E2E_USER }}
           PRISM_E2E_USE_LEASE: "true"
         run: bash scripts/deploy.sh prism-e2e
+  preserve-receipts:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    uses: ./.github/workflows/publish-image-receipts.yaml
+    with:
+      family: runtime
+    permissions:
+      contents: write
+      actions: read

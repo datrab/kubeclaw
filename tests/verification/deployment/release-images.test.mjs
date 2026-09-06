@@ -45,5 +45,12 @@ test('generated release values render actual Helm charts with immutable role and
       assert.ok(refs.length > 0, `No rendered runtime images for ${role}`);
       for (const ref of refs) assert.ok(Object.values(images).includes(ref), `Mutable or incorrect runtime reference: ${ref}`);
     }
+    const opsImages = Object.fromEntries(['codex-ops', 'ops-mcp'].map((name, index) => [name, `ghcr.io/datrab/kubeclaw-${name}@sha256:${(index + 10).toString(16).repeat(64)}`]));
+    fs.writeFileSync(path.join(root, 'releases/ops-images.json'), JSON.stringify({ schemaVersion: 1, commit: 'b'.repeat(40), images: opsImages }));
+    execFileSync(process.execPath, [path.join(source, 'scripts/updates/materialize-release.mjs'), '--family=ops'], { cwd: root });
+    execFileSync(process.execPath, [path.join(source, 'scripts/updates/materialize-release.mjs'), '--family=ops', '--check'], { cwd: root });
+    const opsOutput = execFileSync('helm', ['template', 'ops', path.join(source, 'charts/ops-pod'), '-f', path.join(root, 'releases/values/ops.yaml'), '--set', 'networkPolicy.apiServerCIDRs[0]=192.0.2.1/32'], { encoding: 'utf8' });
+    const refs = parseAllDocuments(opsOutput).flatMap(doc => doc.toJSON()?.spec?.template?.spec?.containers ?? []).map(container => container.image);
+    for (const ref of Object.values(opsImages)) assert.ok(refs.includes(ref));
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

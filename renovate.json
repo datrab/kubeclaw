@@ -21,8 +21,7 @@
       "matchStrings": [
         "\"(?:[A-Z_]+_BASE|envoy|renovate|testRegistry)\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
       ],
-      "datasourceTemplate": "docker",
-      "pinDigests": true
+      "datasourceTemplate": "docker"
     },
     {
       "customType": "regex",
@@ -471,6 +470,12 @@
       ],
       "ignoreUnstable": false,
       "allowedVersions": "/^[0-9]{4}\\.[0-9]+\\.[0-9]+(-[0-9]+)?$/"
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "pinDigests": true
     }
   ],
   "vulnerabilityAlerts": {
