@@ -127,6 +127,11 @@ export function provider() {
     const resultRef = executed.remote.status.result!;
     const storedResult = JSON.parse((await service.result(executed.remote.status.jobId, resultRef.contentDigest,
       resultRef.sizeBytes)).toString('utf8'));
+    if (executed.remote.decision.state !== 'passed') {
+      for (const attempt of storedResult.attempts) for (const item of attempt.evidence) {
+        if (item.type === 'log') console.error((await service.evidence(executed.remote.status.jobId, item.artifact.contentDigest, item.artifact.sizeBytes)).toString('utf8'));
+      }
+    }
     assert.equal(executed.remote.decision.state, 'passed', JSON.stringify({ executed: executed.remote, storedResult }));
     assert.equal(executed.remote.status.state, 'completed');
     assert.equal(executed.remote.status.result?.sizeBytes > 0, true);

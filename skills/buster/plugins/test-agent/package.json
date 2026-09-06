@@ -7,6 +7,7 @@
     "test": "node tests/protocol.test.ts && node tests/suite-first.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {
-    "@kubeclaw/plugin-sdk": "*"
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*"
   }
 }

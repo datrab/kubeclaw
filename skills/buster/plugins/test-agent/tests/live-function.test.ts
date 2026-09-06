@@ -101,12 +101,14 @@ try {
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
+      ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([
       ['kubeclaw.test-agent:test', new Map([
         ['command.execute', { allowedExecutables: [nodeExecutable], allowedWorkingRoots: [temporary] }],
         ['test.plan.execute', { allowedRoots: [temporary] }],
+        ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
         ['runtime.dispatch', { allowedAgents: ['buster'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.test-agent'] }],
       ])],

@@ -1,5 +1,5 @@
 import type { AppState, Data, PuckAction } from "@puckeditor/core";
-import type { PrismDocument, PrismNode, PrismOperation } from "./domain.js";
+import type { PrismDocument, PrismNode, PrismOperation } from "./domain.ts";
 
 type PuckItem = Data["content"][number];
 

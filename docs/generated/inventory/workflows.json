@@ -3,7 +3,8 @@
   "generatedFrom": [
     ".github/workflows/build-images.yaml",
     ".github/workflows/build-ops-mcp.yaml",
-    ".github/workflows/docs-checks.yaml"
+    ".github/workflows/docs-checks.yaml",
+    ".github/workflows/pipeline-reliability.yaml"
   ],
   "workflows": [
     {
@@ -19,6 +20,7 @@
         "0 3 * * *"
       ],
       "jobs": [
+        "reliability",
         "detect-build-inputs",
         "check-base-image",
         "build",
@@ -29,6 +31,7 @@
         "bash scripts/deploy.sh prism-e2e",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
+        "uses: ./.github/workflows/pipeline-reliability.yaml",
         "uses: actions/checkout@v6",
         "uses: actions/setup-node@v5",
         "uses: azure/setup-helm@v4",
@@ -101,6 +104,30 @@
         "npm run docs:inventory && npm run docs:generate",
         "uses: actions/checkout@v4",
         "uses: actions/setup-node@v4"
+      ]
+    },
+    {
+      "path": ".github/workflows/pipeline-reliability.yaml",
+      "name": "Pipeline reliability",
+      "triggers": [
+        "pull_request",
+        "push",
+        "workflow_call"
+      ],
+      "pathFilters": [],
+      "schedules": [],
+      "jobs": [
+        "core-reliability"
+      ],
+      "commandAndActionRefs": [
+        "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "npm ci --ignore-scripts",
+        "npm run plugin-system:sandbox:build",
+        "npm run typecheck:skills",
+        "npm run verify:reliability",
+        "uses: actions/checkout@v6",
+        "uses: actions/setup-node@v5",
+        "uses: azure/setup-helm@v4"
       ]
     }
   ]

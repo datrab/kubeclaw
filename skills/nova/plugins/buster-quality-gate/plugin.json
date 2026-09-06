@@ -11,7 +11,8 @@
       "requiredCapabilities": [
         "test.plan.execute",
         "runtime.dispatch",
-        "artifacts.write"
+        "artifacts.write",
+        "artifacts.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",

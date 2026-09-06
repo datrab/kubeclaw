@@ -147,7 +147,9 @@ export function createBusterRemotePlanHttpServer(options: {
       send(response, 404, { error: 'not found' }, options.maximumResponseBytes);
     })().catch((error) => {
       const message = error instanceof Error ? error.message : String(error);
-      const status = message.includes('NOT_FOUND') ? 404
+      const status = message === 'BUSTER_REMOTE_ADMISSION_FULL' ? 429
+        : message === 'BUSTER_REMOTE_SHUTTING_DOWN' ? 503
+        : message.includes('NOT_FOUND') ? 404
         : message.includes('CONFLICT') ? 409
           : message.includes('SIZE_EXCEEDED') ? 413 : 400;
       if (!response.headersSent) send(response, status, { error: message }, options.maximumResponseBytes);

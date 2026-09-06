@@ -18,8 +18,9 @@ export async function execute(input:Input,context:PluginInvocationContext):Promi
     const response=await context.invoke("runtime.dispatch",{operation:"dispatch",resource:{type:"runtime.agent",canonicalId:settings.agent},payload:{request,idempotencyKey:`${input.runId}:prism:${input.architectureArtifact.contentDigest}:${phase}`}});const result=response.result as Record<string,unknown>;
     if(!approved||typeof result?.bundleDigest!=="string"){
       const waitId=`prism:${input.runId}:${input.projectId}`;const expiresAt=new Date(Date.now()+settings.timeoutMinutes*60_000).toISOString();
-      await context.invoke("operator.request",{operation:"publish",resource:{type:"operator.target",canonicalId:settings.target},payload:{type:"prism.approval.requested",projectId:input.projectId,waitId,signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt}});
+
       const created=await context.invoke("signal.wait",{operation:"create",resource:{type:"signal.wait",canonicalId:waitId},payload:{kind:"signal",signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt,request:{projectId:input.projectId}}});
+      await context.invoke("operator.request",{operation:"publish",resource:{type:"operator.target",canonicalId:settings.target},payload:{type:"prism.approval.requested",projectId:input.projectId,waitId,signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt}});
       const wait=waitFrom(created,{waitId,issuerId:settings.issuerId,expiresAt,projectId:input.projectId});return {schemaVersion:"stage-result.v2",outcome:"wait",reason:{code:"prism_design.approval_pending",message:"Waiting for an approved Prism Baseline Bundle."},artifacts:[],wait};
     }
     if(result.bundleDigest!==approved.bundleDigest)throw new Error("PRISM_DESIGN_APPROVED_BUNDLE_MISMATCH");

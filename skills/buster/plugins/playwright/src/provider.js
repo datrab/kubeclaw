@@ -31,6 +31,33 @@ function copyAttachment(evidence, raw, index, budget) {
 }
 function finding(id, title, message) { return { id: `playwright:${crypto.createHash('sha256').update(`${id}\0${title}\0${message}`).digest('hex').slice(0, 16)}`, severity: 'high', rule: 'playwright-test', message: `${title}: ${message}`.slice(0, 2048) }; }
 
+export function assessPlaywrightReport(report, config, mode) {
+    const tests = allTests(report); if (!tests.length) throw new Error('PLAYWRIGHT_ZERO_TESTS');
+    let passed = 0; let failed = 0; let skipped = 0; let unexecuted = 0; const findings = []; const testCases = [];
+    for (const [testIndex, entry] of tests.entries()) {
+      const results = Array.isArray(entry.test.results) ? entry.test.results : []; const status = entry.test.status;
+      if (!['expected', 'unexpected', 'flaky', 'skipped'].includes(status)) throw new Error('PLAYWRIGHT_CASE_STATUS_INVALID');
+      if (results.some((result) => !['passed', 'failed', 'timedOut', 'skipped', 'interrupted'].includes(result.status))) throw new Error('PLAYWRIGHT_CASE_RESULT_INVALID');
+      if (status === 'unexpected') { failed += 1; const last = results.at(-1); findings.push(finding(String(testIndex), entry.title, last?.error?.message ?? last?.error?.value ?? 'Test failed after retries.')); }
+      else if (status === 'skipped') skipped += 1; else if (!results.some((result) => result.status !== 'skipped')) unexecuted += 1; else passed += 1;
+      const project = typeof entry.test.projectName === 'string' && entry.test.projectName ? entry.test.projectName : null;
+      const caseStatus = status === 'unexpected' ? 'failed' : status === 'skipped' ? 'skipped' : results.some((result) => result.status !== 'skipped') ? 'passed' : 'unexecuted';
+      testCases.push({ id: `sha256:${crypto.createHash('sha256').update(`${testIndex}\0${entry.title}\0${project ?? ''}`).digest('hex')}`,
+        title: entry.title, project, browser: project, status: caseStatus, attempts: results.length,
+        errors: results.flatMap((result) => typeof result?.error?.message === 'string' ? [result.error.message.slice(0, 4096)] : []) });
+    }
+    const total = passed + failed + skipped + unexecuted;
+    const minimumExecuted = Math.max(mode === 'blocking' ? 1 : 0, config.minimumExecutedTests ?? 1);
+    if (passed + failed < minimumExecuted) findings.push(finding('coverage', 'Required execution', `Expected at least ${minimumExecuted} executed tests; observed ${passed + failed}.`));
+    for (const title of config.requiredTests ?? []) {
+      const matches = testCases.filter((test) => test.title === title);
+      if (matches.length !== 1 || !['passed', 'failed'].includes(matches[0].status)) findings.push(finding('required', title, 'Required test is missing, ambiguous, skipped or unexecuted.'));
+    }
+    if (unexecuted > 0) findings.push(finding('unexecuted', 'Incomplete execution', `${unexecuted} tests did not execute.`));
+    const outcome = failed > 0 || findings.length > 0 ? 'failed' : 'passed';
+    return { tests, passed, failed, skipped, unexecuted, findings, testCases, total, outcome };
+}
+
 export function provider() { return { async execute(invocation, context) {
   const config = object(invocation.configuration.values, 'PLAYWRIGHT_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);
   const repository = inside(workspace, invocation.workspace.repository, 'PLAYWRIGHT_WORKSPACE_INVALID'); const evidence = inside(workspace, invocation.workspace.evidence, 'PLAYWRIGHT_WORKSPACE_INVALID');
@@ -46,33 +73,21 @@ export function provider() { return { async execute(invocation, context) {
       maximumResultBytes: Math.min(Number.MAX_SAFE_INTEGER, invocation.limits.artifactBytes * 2 + invocation.limits.logBytes),
       maximumArtifactBytes: invocation.limits.artifactBytes, maximumArtifactFiles: invocation.limits.artifactFiles } } });
   if (command.schemaVersion !== 'browser-playwright-result.v1' || command.targetOrigin !== target || !Number.isSafeInteger(command.workers) || command.workers < 1 || command.workers > workers || !Array.isArray(command.artifacts) || !['cgroup-v2', 'sampled'].includes(command.resources?.enforcement)) throw new Error('PLAYWRIGHT_CAPABILITY_RESULT_INVALID');
-  try {
+  {
     const stdout = typeof command.stdout === 'string' ? command.stdout : ''; const stderr = typeof command.stderr === 'string' ? command.stderr : '';
     if (stdout) context.log('stdout', stdout); if (stderr) context.log('stderr', stderr);
     const report = object(command.report, 'PLAYWRIGHT_REPORT_INVALID'); const reportBytes = Buffer.from(`${JSON.stringify(report)}\n`); if (!reportBytes.length || reportBytes.byteLength > invocation.limits.artifactBytes) throw new Error('PLAYWRIGHT_REPORT_BYTES_EXCEEDED');
     if (!Array.isArray(report.suites) || !report.stats || typeof report.stats !== 'object') throw new Error('PLAYWRIGHT_REPORT_INVALID');
-    const tests = allTests(report); if (!tests.length) throw new Error('PLAYWRIGHT_ZERO_TESTS');
-    let passed = 0; let failed = 0; let skipped = 0; let unexecuted = 0; const findings = []; const testCases = [];
-    for (const [testIndex, entry] of tests.entries()) {
-      const results = Array.isArray(entry.test.results) ? entry.test.results : []; const status = entry.test.status;
-      if (status === 'unexpected') { failed += 1; const last = results.at(-1); findings.push(finding(String(testIndex), entry.title, last?.error?.message ?? last?.error?.value ?? 'Test failed after retries.')); }
-      else if (status === 'skipped') skipped += 1; else if (!results.length) unexecuted += 1; else passed += 1;
-      const project = typeof entry.test.projectName === 'string' && entry.test.projectName ? entry.test.projectName : null;
-      const caseStatus = status === 'unexpected' ? 'failed' : status === 'skipped' ? 'skipped' : results.length ? 'passed' : 'unexecuted';
-      testCases.push({ id: `sha256:${crypto.createHash('sha256').update(`${testIndex}\0${entry.title}\0${project ?? ''}`).digest('hex')}`,
-        title: entry.title, project, browser: project, status: caseStatus, attempts: results.length,
-        errors: results.flatMap((result) => typeof result?.error?.message === 'string' ? [result.error.message.slice(0, 4096)] : []) });
-    }
+    const { tests, passed, failed, skipped, unexecuted, findings, testCases, total, outcome } = assessPlaywrightReport(report, config, invocation.mode);
     if (command.artifacts.length + 1 > invocation.limits.artifactFiles) throw new Error('PLAYWRIGHT_ARTIFACT_FILE_LIMIT_EXCEEDED');
     if (command.exitCode !== 0 && failed === 0) throw new Error('PLAYWRIGHT_EXECUTION_FAILED');
     const budget = { bytes: invocation.limits.artifactBytes - reportBytes.byteLength, files: invocation.limits.artifactFiles - 1 }; const evidenceFiles = [];
     for (const [index, attachment] of command.artifacts.entries()) { const copied = copyAttachment(evidence, attachment, index + 1, budget); if (copied) evidenceFiles.push(copied); }
     const reportFile = 'playwright-report.json'; fs.writeFileSync(path.join(evidence, reportFile), reportBytes, { flag: 'wx', mode: 0o600 }); evidenceFiles.push({ evidenceId: 'playwright-report', type: 'test-report', file: reportFile, mediaType: 'application/vnd.kubeclaw.playwright+json' });
-    const total = passed + failed + skipped + unexecuted; const outcome = failed > 0 ? 'failed' : 'passed';
     return { schemaVersion: 'provider-result.v1', outcome, summary: `${total} Playwright test(s): ${passed} passed, ${failed} failed, ${skipped} skipped, ${unexecuted} unexecuted.`, counts: { total, passed, failed, skipped: skipped + unexecuted }, findings, metrics: [], evidenceFiles, reports: [], outputs: [], exitCode: Number.isSafeInteger(command.exitCode) ? command.exitCode : null, signal: typeof command.signal === 'string' ? command.signal : null,
       providerDetails: { schemaId: 'kubeclaw.e2e-result.v1', schemaDigest: 'sha256:fec4bcd487eb09590dee3c6d6228d6088963c5476747c8731db4d3a53a114637', values: {
         schemaVersion: 'e2e-result.v1', provider: 'playwright', targetOrigin: target, workers: command.workers,
         browserProjects: [...new Set(tests.map((entry) => entry.test.projectName).filter(Boolean))], testCases,
         counts: { total, passed, failed, skipped, unexecuted }, reportFormat: 'playwright-json', resourceEnforcement: command.resources.enforcement } } };
-  } finally { /* Capability owns and removes its temporary execution overlay. */ }
+  }
 } }; }

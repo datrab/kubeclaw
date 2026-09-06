@@ -10,7 +10,7 @@ const base = {
 {
   const invoked: string[] = [];
   const result = await execute({ ...base, suitePlan: { ...base.suitePlan, suites: ['unit'] } }, {
-    contract: { config: { agent: 'buster' } },
+    contract: { config: { agent: 'buster' }, lease: { attempt: { runId: 'run:core', stageId: 'test', attemptId: 'attempt:core', attemptNumber: 2 } } },
     async invoke(capability: string) { invoked.push(capability); throw new Error('MUST_NOT_INVOKE'); },
   } as never);
   assert.equal(result.outcome, 'blocked');
@@ -21,9 +21,10 @@ const base = {
 {
   const invoked: string[] = [];
   const result = await execute(base, {
-    contract: { config: { agent: 'buster' } },
-    async invoke(capability: string) {
+    contract: { config: { agent: 'buster' }, lease: { attempt: { runId: 'run:core', stageId: 'test', attemptId: 'attempt:core', attemptNumber: 2 } } },
+    async invoke(capability: string, request: { payload: { identity?: { runId: string; attempt: number } } }) {
       invoked.push(capability);
+      if (capability === 'runtime.dispatch') assert.deepEqual({ runId: request.payload.identity?.runId, attempt: request.payload.identity?.attempt }, { runId: 'run:core', attempt: 2 });
       if (capability === 'runtime.dispatch') return { result: {
         verdict: 'PASS', summary: 'Passed.', findings: [], session: {
           sessionId: 'session-1', startedAt: '2026-07-30T00:00:00.000Z',

@@ -35,7 +35,7 @@ worker_pid=""
 runtime_config_root="${BUSTER_PLAN_CONFIG_ROOT:-/tmp/buster-plan-config}"
 kube_service_account_root="${BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT:-/var/run/buster-worker/kubernetes}"
 plan_state_dir="${BUSTER_PLAN_STATE_DIR:-/var/lib/buster-v2/plan-jobs}"
-plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/tmp/buster-plan-runs}"
+plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/var/lib/buster-v2/runs}"
 browser_playwright_cgroup_root="${BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT:?BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT is required}"
 
 cleanup() {
@@ -179,6 +179,9 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   tarExecutable: '/usr/bin/tar',
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },
   maximumArchiveBytes: Number(process.env.BUSTER_V2_MAX_ARCHIVE_BYTES || 67108864),
+  maximumActiveJobs: Number(process.env.BUSTER_V2_MAX_ACTIVE_JOBS || 2),
+  maximumQueuedJobs: Number(process.env.BUSTER_V2_MAX_QUEUED_JOBS || 16),
+  maximumConcurrentAttempts: Number(process.env.BUSTER_V2_MAX_CONCURRENT_ATTEMPTS || 64),
   maximumExtractedBytes: Number(process.env.BUSTER_V2_MAX_EXTRACTED_BYTES || 536870912),
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,

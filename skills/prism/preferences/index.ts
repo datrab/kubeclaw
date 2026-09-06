@@ -15,7 +15,7 @@ export type PreferenceEvent = {
   action: PreferenceAction;
   target?: Record<string, unknown>;
   alternatives?: unknown[];
-  traits?: string[];
+  traits?: readonly string[];
   context: Record<string, unknown>;
   source: "explicit" | "observed";
   learningScope: "project" | "personal";

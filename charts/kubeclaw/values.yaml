@@ -493,3 +493,9 @@ extraVolumes: []
 
 # -- Extra volume mounts for the main kubeclaw container
 extraVolumeMounts: []
+
+busterRuntimePersistence:
+  enabled: false
+  claimName: ""
+  size: 64Gi
+  storageClass: ""

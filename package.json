@@ -201,9 +201,11 @@
     "e2e:real:prism:failures": "node tests/verification/live/prism-production-failures.mjs",
     "verify:prism:docs": "node scripts/docs-check-refs.mjs && node scripts/docs-blueprint-generate.mjs --check",
     "verify:prism:repository": "npm run verify:prism && npm run verify:prism:runtime-role && npm run verify:prism:images && npm run verify:prism:deploy-script && npm run verify:prism:nova-stage && npm run verify:prism:docs",
-    "verify:prism:production": "npm run verify:prism:repository && node tests/verification/live/check-prism-release-evidence.mjs"
+    "verify:prism:production": "npm run verify:prism:repository && node tests/verification/live/check-prism-release-evidence.mjs",
+    "verify:reliability": "node --test tests/verification/reliability/*.test.mts tests/verification/reliability/*.test.mjs && node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-pipeline-remote-result-import.mts && npm test --workspace @kubeclaw/plugin-git-workspace"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "eslint": "10.7.0",

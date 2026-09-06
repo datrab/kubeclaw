@@ -1,0 +1,44 @@
+name: Pipeline reliability
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  core-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Typecheck source packages
+        run: npm run typecheck:skills
+      - name: Exercise journals, process death, real Git, HTTP and Playwright reports
+        run: npm run verify:reliability
+      - name: Check affected stage and adapter contracts
+        run: |
+          npm test --workspace @kubeclaw/plugin-implementation-agent
+          npm test --workspace @kubeclaw/plugin-buster-quality-gate
+          npm test --workspace @kubeclaw/plugin-test-agent
+          npm test --workspace @kubeclaw/plugin-runtime-dispatch
+          npm test --workspace @kubeclaw/plugin-operator-messaging
+      - uses: azure/setup-helm@v4
+      - name: Validate Buster persistent storage manifests
+        run: |
+          helm lint charts/kubeclaw -f my-values/buster-values.yaml
+          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml > /tmp/buster-rendered.yaml
+      - name: Build isolation launcher
+        run: npm run plugin-system:sandbox:build
+      - name: Exercise real isolated provider transport and evidence import
+        run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
+      - name: Assemble production role packages
+        run: |
+          mkdir -p dist
+          bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"

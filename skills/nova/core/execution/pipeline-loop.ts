@@ -25,7 +25,10 @@ export class PipelineLoop {
       if (selection.length === 0) break;
       const decisions = await Promise.all(selection.slice(0, this.#services.maxConcurrency).map((stage) => this.#execute(identity.runId, stage)));
       const recorder = new DecisionRecorder(this.#states, this.#services.append, this.#services.options.orchestratorIssuerId,
-        (id) => this.#force(id), this.#services.checkpoints);
+        (id) => this.#force(id), this.#services.checkpoints, this.#services.graph);
+      // Record completed siblings before repair invalidation so their old results
+      // cannot overwrite a newly pending evaluation in this batch.
+      decisions.sort((a, b) => Number(a.decision.action.type === 'schedule_remediation') - Number(b.decision.action.type === 'schedule_remediation'));
       decisions.forEach((decision) => recorder.record(identity.runId, decision)); await this.#services.flush();
       const outcome = recorder.outcome();
       if (outcome.terminal) return this.#terminal(identity, outcome.terminal);
@@ -66,7 +69,7 @@ export class PipelineLoop {
     const requester = this.#states.get(state.remediationReturnTo); if (!requester) return;
     const { remediationTarget: _target, ...requesterWithoutTarget } = requester;
     const { remediationReturnTo, ...stageWithoutReturn } = state;
-    this.#states.set(remediationReturnTo, { ...requesterWithoutTarget, status: 'pending' }); this.#states.set(stageId, stageWithoutReturn); this.#force(remediationReturnTo);
+    this.#states.set(remediationReturnTo, { ...requesterWithoutTarget, status: 'pending' }); this.#states.set(stageId, stageWithoutReturn);
   }
 
   async #cancelled(identity: PipelineRunIdentity): Promise<PipelineRunResult | undefined> {
@@ -95,7 +98,7 @@ export class PipelineLoop {
     const forced = this.#nextForced(); if (!forced) return this.#services.graph.ready(completed, active);
     const definition = this.#services.graph.stage(forced); const returnTo = this.#states.get(forced)?.remediationReturnTo;
     const dependenciesReady = definition.dependsOn.every((dependency) => dependency === returnTo || completed.has(dependency));
-    if (!returnTo || dependenciesReady) return [definition];
+    if (dependenciesReady) return [definition];
     this.#force(forced); return this.#services.graph.ready(completed, active);
   }
 
@@ -122,7 +125,7 @@ export class PipelineLoop {
     this.#services.append('stage.started', { runId, stageId: definition.id }, { stageType: definition.type,
       ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });
     await this.#services.flush();
-    const decision = await this.#services.executor.execute(runId, current, this.#services.options.resumeGuidance?.get(definition.id));
+    const decision = await this.#services.executor.execute(runId, current, current.continuationGuidance ?? this.#services.options.resumeGuidance?.get(definition.id));
     return { definition, decision, administrativeOverride: override };
   }
 

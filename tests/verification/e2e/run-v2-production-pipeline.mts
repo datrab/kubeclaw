@@ -312,6 +312,7 @@ async function main(): Promise<void> {
     'kubeclaw.test-agent:test': {
       'command.execute': { allowedExecutables: [process.execPath], allowedWorkingRoots: [repo] },
       'test.plan.execute': { allowedRoots: [repo] },
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.implementation-agent'] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.test-agent'),
     },
@@ -346,6 +347,7 @@ async function main(): Promise<void> {
     },
     'kubeclaw.buster-quality-gate:quality': {
       'test.plan.execute': { allowedRoots: [repo] },
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.implementation-agent'] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.buster-quality-gate'),
     },

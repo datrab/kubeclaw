@@ -254,7 +254,7 @@ export async function dispatchOpenClaw(
   const transport = target.collectorMode ? 'collector-v5' : 'session-v1';
   const attempt = runtimeDispatchAttempt(payload.runtimeDispatchAttempt);
   const stableDispatchId = `${transport}:attempt:${attempt}:payload:${crypto.createHash('sha256')
-    .update(canonicalJson(dispatchPayload(payload).modelPayload)).digest('hex')}`;
+    .update(canonicalJson({ dispatchId, payload: dispatchPayload(payload).modelPayload })).digest('hex')}`;
   const result = resultLocation(target, stableDispatchId);
   assertDispatchActive(dispatchSignal);
   const spawning = spawnSession(context, target, token, payload, result.file, stableDispatchId, dispatchSignal);

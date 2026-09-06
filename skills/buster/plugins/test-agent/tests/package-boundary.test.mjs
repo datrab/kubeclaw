@@ -11,7 +11,7 @@ assert.match(source, /context\.invoke\('test\.plan\.execute'/);
 assert.match(source, /LEGACY_TEST_SUITE_RETIRED/u);
 
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
-assert.deepEqual(manifest.stages[0].requiredCapabilities, ['command.execute', 'test.plan.execute', 'runtime.dispatch', 'artifacts.write']);
+assert.deepEqual(manifest.stages[0].requiredCapabilities, ['command.execute', 'test.plan.execute', 'runtime.dispatch', 'artifacts.write', 'artifacts.read']);
 assert.equal(manifest.stages[0].module, 'src/stage.ts');
 
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.test-agent', suite: 'package-boundary' }));

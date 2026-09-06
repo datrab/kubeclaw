@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { AdministrativeReopenDecision, PipelineDefinition, ResumeSignal } from '@kubeclaw/plugin-sdk';
@@ -25,9 +26,10 @@ export function recordedPackageUpgrades(decisions: readonly AdministrativeReopen
   return decisions.flatMap((decision) => decision.continuation === 'retry' ? decision.packageUpgrades ?? [] : []);
 }
 export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[] = []): void {
-  const stored = JSON.parse(fs.readFileSync(path.join(runRoot, 'registry-snapshot.json'), 'utf8')) as unknown;
+  const stored = readRunSnapshot(runRoot).registry as unknown;
   const packages = stored && typeof stored === 'object' && !Array.isArray(stored) ? (stored as { packages?: unknown }).packages : undefined;
   if (!Array.isArray(packages)) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
+  if (canonicalJson((stored as Record<string, unknown>).configuration) !== canonicalJson(runtime.configuration)) throw new Error('RECOVERY_RUNTIME_CONFIGURATION_MISMATCH');
   const pinned = new Map<string, PinnedPackage>(); packages.forEach((value) => addPinnedPackage(value, pinned));
   if (canonicalJson([...runtime.snapshot.packages.keys()].sort()) !== canonicalJson([...pinned.keys()].sort())) throw new Error('RECOVERY_PINNED_PACKAGE_SET_MISMATCH');
   for (const pluginId of new Set(upgrades.map(({ pluginId }) => pluginId))) {
@@ -63,18 +65,34 @@ function assertPinnedPackage(pluginId: string, provenance: PinnedPackage, runtim
 }
 
 export function verifyPinnedGraph(runRoot: string, definition: PipelineDefinition): ExecutionGraphSnapshot {
-  const stored = JSON.parse(fs.readFileSync(path.join(runRoot, 'graph-snapshot.json'), 'utf8')) as ExecutionGraphSnapshot; const current = graphSnapshot(definition);
+  const stored = readRunSnapshot(runRoot).graph as ExecutionGraphSnapshot; const current = graphSnapshot(definition);
   if (stored.schemaVersion !== 'execution-graph-snapshot.v2') throw new Error('RECOVERY_GRAPH_SNAPSHOT_INVALID');
   if (stored.pipelineId !== current.pipelineId) throw new Error(`RECOVERY_PIPELINE_ID_MISMATCH:${stored.pipelineId}:${current.pipelineId}`);
   if (stored.digest !== current.digest) throw new Error(`RECOVERY_GRAPH_DIGEST_MISMATCH:${stored.digest}:${current.digest}`); return current;
 }
 
+interface RunSnapshot { readonly schemaVersion: 'run-snapshot.v1'; readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
+function snapshotDigest(value: unknown): string { return `sha256:${crypto.createHash('sha256').update(canonicalJson(value)).digest('hex')}`; }
+export function readRunSnapshot(runRoot: string): RunSnapshot {
+  const snapshot = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')) as RunSnapshot;
+  const { digest, ...unsigned } = snapshot;
+  if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+  return snapshot;
+}
 export function writeRunSnapshots(runRoot: string, graph: ExecutionGraphSnapshot, registry: Readonly<Record<string, unknown>>): void {
-  const files = [[path.join(runRoot, 'graph-snapshot.json'), graph], [path.join(runRoot, 'registry-snapshot.json'), registry]] as const;
-  if (files.some(([file]) => fs.existsSync(file))) throw new Error(`RUN_ALREADY_EXISTS:${runRoot}`);
-  const created: string[] = [];
-  try { for (const [file, value] of files) { fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`, { flag: 'wx' }); created.push(file); } }
-  catch (error) { for (const file of created.reverse()) { try { fs.unlinkSync(file); } catch { /* INTENTIONAL_NONCRITICAL(snapshot_rollback_failed): Preserve initialization failure. */ } } throw error; }
+  if (['run-snapshot.json', 'graph-snapshot.json', 'registry-snapshot.json'].some((name) => fs.existsSync(path.join(runRoot, name)))) throw new Error(`RUN_ALREADY_EXISTS:${runRoot}`);
+  const unsigned = { schemaVersion: 'run-snapshot.v1' as const, graph, registry };
+  const file = path.join(runRoot, 'run-snapshot.json');
+  const temporary = path.join(runRoot, `.snapshot-${crypto.randomUUID()}.tmp`);
+  const descriptor = fs.openSync(temporary, 'wx', 0o600);
+  try { fs.writeFileSync(descriptor, JSON.stringify({ ...unsigned, digest: snapshotDigest(unsigned) })); fs.fsyncSync(descriptor); }
+  finally { fs.closeSync(descriptor); }
+  try {
+    // Atomic no-replace publication: readers can never see half a snapshot pair.
+    fs.linkSync(temporary, file);
+    const directory = fs.openSync(runRoot, 'r');
+    try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+  } finally { fs.unlinkSync(temporary); }
 }
 
 export function frozenRegistryRecord(runtime: PreparedRuntime, definition: PipelineDefinition, graph: ExecutionGraphSnapshot): Readonly<Record<string, unknown>> {
@@ -83,7 +101,7 @@ export function frozenRegistryRecord(runtime: PreparedRuntime, definition: Pipel
     observers: [...runtime.snapshot.observers].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
     adapters: [...runtime.snapshot.adapters].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
   };
-  return Object.freeze({ apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
+  return Object.freeze({ configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
     enabledRegistrations: [...runtime.granted.enabledRegistrations].sort(), grants: [...runtime.granted.grants],
     selectedProviders: [...runtime.granted.selectedProviders].map(([capability, entry]) => ({ capability, provider: entry.provenance })),
     executionGraph: { pipelineId: graph.pipelineId, digest: graph.digest }, configuredStages: definition.stages.map((stage) => {

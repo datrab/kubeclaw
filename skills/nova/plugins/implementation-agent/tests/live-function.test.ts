@@ -10,12 +10,17 @@ const repository = path.resolve('../../../..');
 const core = await import(pathToFileURL(path.join(repository, 'skills/nova/core/src/index.ts')).href);
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-implementation-'));
 const agentWorkspace = path.join(temporary, 'agent-workspace');
+let workerWorkspace = agentWorkspace;
+let lockedRepository: string | undefined;
 fs.mkdirSync(path.join(agentWorkspace, 'src'), { recursive: true });
 const transcript = 'start forge\nhandoff task\nwrite src/api.ts\nrun unit\ncomplete\n';
 const transcriptDigest = crypto.createHash('sha256').update(transcript).digest('hex');
 const server = http.createServer((_request, response) => {
-  fs.writeFileSync(path.join(agentWorkspace, 'src/api.ts'), 'export const ready = true;\n');
-  fs.writeFileSync(path.join(agentWorkspace, 'transcript.log'), transcript);
+  fs.mkdirSync(path.join(workerWorkspace, 'src'), { recursive: true });
+  fs.writeFileSync(path.join(workerWorkspace, 'src/api.ts'), 'export const ready = true;\n');
+  execFileSync(process.execPath, ['--input-type=module', '-e', `import assert from 'node:assert/strict'; import { ready } from ${JSON.stringify(new URL('file://' + path.join(workerWorkspace, 'src/api.ts')).href)}; assert.equal(ready, true);`]);
+  fs.writeFileSync(path.join(workerWorkspace, 'transcript.log'), transcript);
+  if (lockedRepository) execFileSync('git', ['-C', lockedRepository, 'worktree', 'lock', workerWorkspace]);
   response.writeHead(200, { 'content-type': 'application/json' });
   response.end(JSON.stringify({ result: {
     status: 'ready_for_testing',
@@ -78,42 +83,41 @@ try {
     );
     assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/implementation:api:1/);
     assert.equal(fs.readFileSync(effectsPath,'utf8').includes('implementation-secret'),false);
+    // A locked real Git worktree makes cleanup fail after a real commit/merge.
+    // This verifies the lifecycle boundary without substituting a Git adapter.
+    lockedRepository = path.join(temporary, 'cleanup-repository');
+    fs.mkdirSync(lockedRepository);
+    execFileSync('git', ['-C', lockedRepository, 'init', '-q']);
+    execFileSync('git', ['-C', lockedRepository, 'config', 'user.name', 'KubeClaw Test']);
+    execFileSync('git', ['-C', lockedRepository, 'config', 'user.email', 'test@kubeclaw.invalid']);
+    fs.writeFileSync(path.join(lockedRepository, 'README.md'), 'cleanup test\n');
+    execFileSync('git', ['-C', lockedRepository, 'add', 'README.md']);
+    execFileSync('git', ['-C', lockedRepository, 'commit', '-qm', 'base']);
+    const headBefore = execFileSync('git', ['-C', lockedRepository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+    workerWorkspace = path.join(temporary, 'worktrees', 'cleanup');
+    const cleanup = new core.PipelineRunner({ definition: { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:cleanup', maxConcurrency: 1, stages: [{
+      id: 'implementation', type: 'kubeclaw.agent.implementation', dependsOn: [], config: { agent: 'forge' },
+      input: { runId: 'stale-input', moduleId: 'api', attempt: 99, task: 'Implement API.', headBefore,
+        workspace: { repositoryRoot: lockedRepository, workspacePath: workerWorkspace, branch: 'cleanup-work', baseRef: 'HEAD', mergeTarget: lockedRepository, commitMessage: 'Implement API' } },
+      execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 10000 },
+    }] }, registry: granted, activated, adapters, journal: new core.FileJournal(path.join(temporary, 'cleanup-events.jsonl')) });
+    const cleanupResult = await cleanup.run('run:cleanup');
+    assert.equal(cleanupResult.status, 'succeeded', new core.FileJournal(path.join(temporary, 'cleanup-events.jsonl')).records().filter(({ entry }) => entry.type === 'stage.blocked' || entry.type === 'stage.failed').map(({ entry }) => JSON.stringify(entry.payload.reason)).join('\n'));
+    const sourceRevision = execFileSync('git', ['-C', lockedRepository, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+    assert.notEqual(sourceRevision, headBefore);
+    assert.equal(cleanupResult.stages.get('implementation')?.facts?.['implementation.source_revision'], sourceRevision);
+    assert.equal(fs.readFileSync(path.join(lockedRepository, 'src/api.ts'), 'utf8'), 'export const ready = true;\n');
+    assert.match(fs.readFileSync(effectsPath, 'utf8'), /implementation-cleanup.v1/);
+    const effects = new core.FileJournal(effectsPath).records().map(({ entry }) => entry);
+    const removal = effects.find(entry => entry.type === 'requested' && entry.request.attempt.runId === 'run:cleanup' && entry.request.capability === 'git.workspace.remove');
+    const removalReceipt = effects.find(entry => entry.type === 'completed' && entry.receipt.effectId === removal?.request.effectId)?.receipt;
+    assert.equal(removalReceipt?.status, 'failed');
+    assert.match(removalReceipt?.error?.message ?? '', /locked working tree/);
+    assert.ok(fs.existsSync(workerWorkspace), 'failed cleanup remains available for recovery');
+
   } finally { await adapters.shutdown(); }
 } finally {
   delete process.env[secret]; await new Promise((resolve)=>server.close(resolve)); fs.rmSync(temporary,{recursive:true,force:true});
 }
 
-const { execute } = await import(pathToFileURL(path.resolve('src/stage.ts')).href);
-const cleanupArtifacts: Array<Record<string, unknown>> = [];
-const cleanupCalls: string[] = [];
-const cleanupResult = await execute({
-  runId: 'run-cleanup', moduleId: 'api', attempt: 1, task: 'Implement API.', headBefore: 'b'.repeat(40),
-  workspace: {
-    repositoryRoot: '/repository', workspacePath: '/workspace', branch: 'implementation-api',
-    baseRef: 'main', mergeTarget: '/repository', commitMessage: 'Implement API',
-  },
-}, {
-  contract: { config: { agent: 'forge' } },
-  async invoke(capability, request) {
-    cleanupCalls.push(capability);
-    if (capability === 'runtime.dispatch') return { result: {
-      status: 'ready_for_testing', summary: 'Implemented.', changedPaths: ['src/api.ts'],
-      checks: [{ name: 'unit', passed: true }],
-      session: {
-        sessionId: 'session:cleanup', startedAt: '2026-07-28T00:00:00.000Z',
-        completedAt: '2026-07-28T00:00:01.000Z', transcriptDigest: 'c'.repeat(64),
-        handoffs: 0, termination: 'completed',
-      },
-    } };
-    if (capability === 'git.workspace.remove') throw new Error('cleanup failed after merge');
-    if (capability === 'artifacts.write') {
-      cleanupArtifacts.push(request.payload.value);
-      return { artifact: { artifactId: `artifact:${cleanupArtifacts.length}` } };
-    }
-    return {};
-  },
-});
-assert.equal(cleanupCalls.includes('git.merge'), true);
-assert.equal(cleanupResult.outcome, 'passed', 'post-merge cleanup failure must not contradict the completed merge');
-assert.equal(cleanupArtifacts.some((value) => value?.schemaVersion === 'implementation-cleanup.v1'), true);
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.implementation-agent', suite: 'live-function' }));
+console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.implementation-agent', suite: 'http-worker-and-real-git' }));

@@ -40,8 +40,6 @@ function addRemediation(stage: StageDefinition, stages: ReadonlyMap<string, Stag
   if (target !== undefined && !stages.has(target)) throw new Error(`GRAPH_REMEDIATION_MISSING:${stage.id}:${target}`);
   if (target === stage.id) throw new Error(`GRAPH_SELF_REMEDIATION:${stage.id}`);
   if (target === undefined) return;
-  const existing = requesters.get(target);
-  if (existing) throw new Error(`GRAPH_SHARED_REMEDIATION_TARGET:${target}:${existing}:${stage.id}`);
   requesters.set(target, stage.id); edges.push(Object.freeze({ from: stage.id, to: target }));
 }
 
@@ -64,6 +62,11 @@ function ancestry(stages: ReadonlyMap<string, StageDefinition>): (stage: string,
 }
 
 function validateRemediation(stages: ReadonlyMap<string, StageDefinition>, edges: readonly Edge[], depends: ReturnType<typeof ancestry>): void {
+  for (const left of edges) for (const right of edges) {
+    if (left.to === right.to && left.from !== right.from && !depends(left.from, right.from) && !depends(right.from, left.from)) {
+      throw new Error(`GRAPH_SHARED_REMEDIATION_TARGET:${left.to}:${left.from}:${right.from}`);
+    }
+  }
   for (const { from, to } of edges) {
     if (from !== to && !stages.get(to)?.dependsOn.includes(from) && !depends(from, to)) throw new Error(`GRAPH_REMEDIATION_TARGET_UNORDERED:${from}:${to}`);
     for (const prerequisite of stages.get(to)?.dependsOn ?? []) {

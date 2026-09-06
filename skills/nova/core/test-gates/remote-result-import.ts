@@ -1,5 +1,5 @@
-import crypto from 'node:crypto';
 import type { StageResult } from '@kubeclaw/plugin-sdk';
+import crypto from 'node:crypto';
 import {
   attemptResultDigest,
   nodeResultDigest,
@@ -20,38 +20,8 @@ import {
 } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import type { RemotePlanEvidenceTransport, RemotePlanResultTransport } from './remote-dispatch.ts';
 
-export type GateDecisionState = 'passed' | 'failed' | 'execution_error' | 'review_required' | 'cancelled';
-export type GateNodeEffect = 'passed' | 'failed' | 'advisory_failure' | 'execution_error' | 'review_required' | 'skipped';
-
-export interface GateNodeDecisionV1 {
-  readonly nodeId: string;
-  readonly kind: 'test' | 'fixture';
-  readonly mode: 'blocking' | 'advisory' | null;
-  readonly effect: GateNodeEffect;
-  readonly reason: string;
-}
-
-export interface AgentEvidenceReviewRequestV1 {
-  readonly schemaVersion: 'agent-evidence-review-request.v1';
-  readonly agent: string;
-  readonly planId: string;
-  readonly runId: string;
-  readonly nodeId: string;
-  readonly attemptId: string;
-  readonly evidenceDigests: string[];
-}
-
-export interface GateDecisionV1 {
-  readonly schemaVersion: 'test-gate-decision.v1';
-  readonly jobId: string;
-  readonly planId: string;
-  readonly runId: string;
-  readonly state: GateDecisionState;
-  readonly nodes: GateNodeDecisionV1[];
-  readonly reviews: AgentEvidenceReviewRequestV1[];
-  readonly resultDigest: string | null;
-  readonly decisionDigest: string;
-}
+import { gateDecisionStageResult, type GateDecisionV1, type GateDecisionState, type GateNodeDecisionV1, type GateNodeEffect, type AgentEvidenceReviewRequestV1 } from '@kubeclaw/pipeline-test-gate-contract';
+export { gateDecisionStageResult, type GateDecisionV1, type GateDecisionState, type GateNodeDecisionV1, type GateNodeEffect, type AgentEvidenceReviewRequestV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
 interface StoredGateImportV1 {
   readonly schemaVersion: 'nova-test-gate-import.v1';
@@ -68,6 +38,8 @@ export interface NovaTestExecutionGraphV1 {
   readonly schemaVersion: 'nova-test-execution-graph.v1';
   readonly runId: string;
   readonly parentStageId: string;
+  readonly jobId: string;
+  readonly sourceRevision: string;
   readonly planId: string;
   readonly planDigest: string;
   readonly nodes: RemotePlanJobV1['plan']['nodes'];
@@ -94,6 +66,8 @@ export class FileNovaTestExecutionGraphStore {
       schemaVersion: 'nova-test-execution-graph.v1',
       runId: job.plan.runId,
       parentStageId,
+      jobId: job.jobId,
+      sourceRevision: job.sourceSnapshot.revision,
       planId: job.plan.planId,
       planDigest: job.plan.planDigest,
       nodes: structuredClone(job.plan.nodes),
@@ -104,7 +78,7 @@ export class FileNovaTestExecutionGraphStore {
       decisionDigest: decision.decisionDigest,
     };
     const graphKey = `graph:${crypto.createHash('sha256')
-      .update(`${graph.runId}\0${graph.parentStageId}`, 'utf8').digest('hex')}`;
+      .update(`${graph.runId}\0${graph.parentStageId}\0${graph.jobId}`, 'utf8').digest('hex')}`;
     try {
       const stored = await this.#records.append('test-execution-graphs', graphKey, graph);
       return structuredClone(stored.record.payload as NovaTestExecutionGraphV1);
@@ -362,19 +336,6 @@ export class NovaRemoteGateImporter {
     }
     return this.#store.record(job, status, result, decision, evidence);
   }
-}
-
-export function gateDecisionStageResult(decision: GateDecisionV1): StageResult {
-  const details = { jobId: decision.jobId, planId: decision.planId, decisionDigest: decision.decisionDigest,
-    failedNodes: decision.nodes.filter((node) => ['failed', 'execution_error'].includes(node.effect)).map((node) => node.nodeId),
-    advisoryFailures: decision.nodes.filter((node) => node.effect === 'advisory_failure').map((node) => node.nodeId) };
-  if (decision.state === 'passed') return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [],
-    facts: { testGateDecision: decision.decisionDigest, advisoryFailures: details.advisoryFailures.length } };
-  if (decision.state === 'failed') return { schemaVersion: 'stage-result.v2', outcome: 'request_fix', artifacts: [],
-    reason: { code: 'test_gate.failed', message: 'Blocking test checks failed.', details } };
-  return { schemaVersion: 'stage-result.v2', outcome: decision.state === 'cancelled' ? 'cancelled' : 'blocked', artifacts: [],
-    reason: { code: decision.state === 'review_required' ? 'test_gate.review_required' : 'test_gate.execution_error',
-      message: decision.state === 'review_required' ? 'Configured evidence review is required.' : 'The remote test gate did not complete safely.', details } };
 }
 
 export interface RemotePlanTerminalDispatcher {

@@ -59,7 +59,8 @@
         "extraEnv",
         "extraContainers",
         "extraVolumes",
-        "extraVolumeMounts"
+        "extraVolumeMounts",
+        "busterRuntimePersistence"
       ],
       "secretReferences": [
         {
@@ -158,7 +159,8 @@
         "extraVolumes",
         "busterNamespaceBroker",
         "resources",
-        "workspace"
+        "workspace",
+        "busterRuntimePersistence"
       ],
       "secretReferences": [
         {

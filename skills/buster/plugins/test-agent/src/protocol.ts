@@ -17,6 +17,7 @@ interface TestSuitePlan {
   readonly moduleId?: string;
 }
 export interface ProviderPlanInput {
+  readonly revision?: string; readonly sourceStageId?: string;
   readonly repositoryRoot: string;
   readonly repositoryId: string;
   readonly plan: Readonly<Record<string, unknown>>;

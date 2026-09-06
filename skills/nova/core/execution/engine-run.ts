@@ -81,7 +81,7 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
     const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
     const created = validateWaitHistory(events, runId, signal.waitId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
     recordSignal(runRoot, signal); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
-    const initialStates = resumeStates(recovered, waiting.stageId);
+    const initialStates = recoveryStates(definition, events, runId, platform.orchestratorIssuerId);
     return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates,
       resumeGuidance: new Map([[waiting.stageId, signal.payload]]), resume: true });
   });
@@ -111,8 +111,4 @@ function recordWaitResolution(events: FileJournal<LifecycleEvent | PluginDomainE
   if (exists) return; lease.throwIfAborted(); events.appendSequenced((sequence) => ({ schemaVersion: 'lifecycle-event.v2', eventId: `event:${crypto.randomUUID()}`,
     sequence, type: 'wait.resolved', identity: { runId, stageId: waiting.stageId, waitId: signal.waitId },
     occurredAt: new Date().toISOString(), causationId: signal.signalId, payload: { signal } }));
-}
-function resumeStates(recovered: ReadonlyMap<string, StageRuntimeState>, resumedStageId: string): Map<string, StageRuntimeState> {
-  const states = new Map(recovered); const state = states.get(resumedStageId)!; const { wait: _wait, ...withoutWait } = state;
-  states.set(resumedStageId, { ...withoutWait, status: 'pending' }); return states;
 }

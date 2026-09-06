@@ -6,8 +6,6 @@ import type { TestProviderCapabilityInvoker } from './runner.ts';
 const MAX_TIMER_MS = 2_147_483_647;
 const METHODS = new Set(['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT']);
 const DENIED_HEADERS = new Set(['connection', 'content-length', 'host', 'proxy-authorization', 'transfer-encoding', 'upgrade']);
-const SUFFIX_SAFE_METHODS = new Set(['GET', 'HEAD']);
-const SUFFIX_SAFE_HEADERS = new Set(['accept']);
 
 export interface NetworkHttpCapabilityInvokerOptions {
   readonly allowedOrigins: readonly string[];
@@ -45,6 +43,12 @@ function canonicalSuffix(value: string): string {
 function deploymentOrigins(inputs: readonly ResolvedInputV1[] | undefined): ReadonlySet<string> {
   const origins = new Set<string>();
   for (const input of inputs ?? []) {
+    if (input.kind === 'value' && input.schemaId === 'kubeclaw.public-endpoint-fixture@1' && input.value && typeof input.value === 'object' && !Array.isArray(input.value)) {
+      const endpoint = input.value as Record<string, unknown>;
+      if (endpoint.schemaVersion === 'public-endpoint-fixture.v1' && typeof endpoint.url === 'string') {
+        try { origins.add(new URL(endpoint.url).origin); } catch { /* Invalid fixture data grants nothing. */ }
+      }
+    }
     if (input.kind !== 'value' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1'
       || !input.value || typeof input.value !== 'object' || Array.isArray(input.value)) continue;
     const deployment = input.value as Record<string, unknown>;
@@ -205,6 +209,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     const configuredExactOrigin = this.#allowedOrigins.has(url.origin);
     if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);
     const exactOrigin = configuredExactOrigin || deploymentOrigins(inputs).has(url.origin);
+    if (!exactOrigin) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${url.origin}`);
     return Object.freeze({ url, exactOrigin });
   }
 
@@ -230,7 +235,6 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     }
     const method = typeof payload.method === 'string' ? payload.method.toUpperCase() : 'GET';
     if (!METHODS.has(method) || !this.#allowedMethods.has(method)) throw new Error(`HTTP_REQUEST_METHOD_DENIED:${method}`);
-    if (!exactOrigin && !SUFFIX_SAFE_METHODS.has(method)) throw new Error(`HTTP_REQUEST_EXACT_ORIGIN_REQUIRED:${method}`);
     const timeoutMs = positiveInteger(payload.timeoutMs ?? this.#maximumExecutionMs,
       'HTTP_REQUEST_TIMEOUT_INVALID', this.#maximumExecutionMs);
     const maximumResponseBytes = positiveInteger(payload.maximumResponseBytes ?? this.#maximumResponseBytes,
@@ -243,7 +247,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     try {
       const body = ['GET', 'HEAD'].includes(method) ? undefined
         : requestBody(payload.body, this.#maximumRequestBytes);
-      const permittedHeaders = exactOrigin ? this.#allowedRequestHeaders : SUFFIX_SAFE_HEADERS;
+      const permittedHeaders = this.#allowedRequestHeaders;
       response = await fetch(url, { method, headers: requestHeaders(payload.headers, permittedHeaders),
         ...(body === undefined ? {} : { body }), redirect: 'manual', signal: combined });
       if (response.status >= 300 && response.status < 400) throw new Error('HTTP_RESPONSE_REDIRECT_DENIED');

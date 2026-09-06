@@ -1,39 +1,15 @@
+import { resolveSourceRevision } from '@kubeclaw/plugin-sdk';
+import { parseGateDecision, gateDecisionEvidence, gateDecisionStageResult } from '@kubeclaw/pipeline-test-gate-contract';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import { buildRequest, parseVerdict, type SuiteEvidence, type TestInput } from './protocol.ts';
-
-function providerEvidence(response: Readonly<Record<string, unknown>>): readonly SuiteEvidence[] {
-  if (response.schemaVersion !== 'test-plan-receipt.v1' || response.provider !== 'buster-plan-v1'
-    || typeof response.resultDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(response.resultDigest)) {
-    throw new Error('TEST_PLAN_RECEIPT_INVALID');
-  }
-  const decision = response.decision as Readonly<Record<string, unknown>> | undefined;
-  if (!decision || !Array.isArray(decision.nodes) || !['passed', 'failed', 'blocked'].includes(String(decision.state))) {
-    throw new Error('TEST_PLAN_RECEIPT_INVALID');
-  }
-  const effects = new Set(['passed', 'failed', 'advisory_failure', 'execution_error', 'review_required', 'skipped']);
-  const nodes = decision.nodes.map((value) => {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('TEST_PLAN_RECEIPT_INVALID');
-    const node = value as Readonly<Record<string, unknown>>;
-    if (typeof node.nodeId !== 'string' || typeof node.effect !== 'string' || !effects.has(node.effect)) {
-      throw new Error('TEST_PLAN_RECEIPT_INVALID');
-    }
-    return Object.freeze({ suite: node.nodeId, passed: ['passed', 'advisory_failure'].includes(node.effect),
-      summary: `provider effect=${node.effect}` });
-  });
-  return Object.freeze([
-    Object.freeze({ suite: 'provider-plan', passed: decision.state === 'passed',
-      summary: `provider decision=${String(decision.state)}` }),
-    ...nodes,
-  ]);
-}
 
 async function executeProviderPlan(input: TestInput, context: PluginInvocationContext) {
   if (!input.providerPlan) return { evidence: [] as readonly SuiteEvidence[], execution: null };
   const response = await context.invoke('test.plan.execute', {
     operation: 'run', resource: { type: 'test.resolved-plan', canonicalId: input.providerPlan.repositoryRoot },
-    payload: { ...input.providerPlan },
+    payload: { ...input.providerPlan, revision: await resolveSourceRevision(input.providerPlan, context) },
   });
-  return { evidence: providerEvidence(response), execution: response };
+  return { evidence: gateDecisionEvidence(parseGateDecision(response)), execution: response };
 }
 
 async function executeCommandSuites(
@@ -72,6 +48,8 @@ async function executeCommandSuites(
 }
 
 export async function execute(input:TestInput,context:PluginInvocationContext):Promise<StageResult>{
+  input = { ...input, runId: context.contract.lease.attempt.runId, attempt: context.contract.lease.attempt.attemptNumber };
+
   const agent=context.contract.config.agent;
   if(typeof agent!=='string'||!agent.trim())throw new Error('test agent is not configured');
   let verdict;
@@ -82,6 +60,8 @@ export async function execute(input:TestInput,context:PluginInvocationContext):P
     const suiteEvidence = executed.evidence;
     finalSuiteEvidence = suiteEvidence;
     executionEvidence = executed.suiteExecution;
+    const native = (executed.suiteExecution as { provider?: unknown } | null)?.provider;
+    if (native) { const decision = parseGateDecision(native); if (decision.state !== 'passed') return gateDecisionStageResult(decision); }
     const judgedInput = { ...input, suiteEvidence };
     const response=await context.invoke('runtime.dispatch',{
       operation:'dispatch',

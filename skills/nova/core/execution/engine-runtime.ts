@@ -21,6 +21,7 @@ function nestedMap(value: Readonly<Record<string, Readonly<Record<string, Readon
 export function objectMap(value: Readonly<Record<string, Readonly<Record<string, unknown>>>>): ReadonlyMap<string, Readonly<Record<string, unknown>>> { return new Map(Object.entries(value)); }
 
 export interface PreparedRuntime {
+  readonly configuration: Readonly<Record<string, unknown>>;
   readonly snapshot: ReturnType<typeof buildRegistry>; readonly granted: ReturnType<typeof resolveCapabilityGrants>;
   readonly activated: Awaited<ReturnType<typeof activateRegistry>>;
 }
@@ -37,7 +38,7 @@ export async function prepareRuntime(platform: PlatformConfig, definition: Pipel
   validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
     stages: definition.stages.map((stage) => ({ type: stage.type, config: stage.config })), observers: objectMap(platform.observers), adapters: objectMap(platform.adapters),
   });
-  return { snapshot, granted, activated: await activateRegistry(snapshot, new Set(granted.grants.keys())) };
+  return { configuration: { providers: platform.providers, grants: platform.grants, adapters: platform.adapters, activeAdapters: platform.activeAdapters, observers: platform.observers }, snapshot, granted, activated: await activateRegistry(snapshot, new Set(granted.grants.keys())) };
 }
 
 function enabledRegistrations(platform: PlatformConfig, definition: PipelineDefinition, snapshot: ReturnType<typeof buildRegistry>): Set<string> {

@@ -10,7 +10,7 @@
     "testProviders": 18,
     "reportAdapters": 1,
     "registrations": 61,
-    "files": 802
+    "files": 804
   },
   "runtime": {
     "roots": [
@@ -89,6 +89,7 @@
       "skills/common/plugin-runtime/sdk/src/index.ts",
       "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
       "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "skills/common/plugin-runtime/sdk/src/source-revision.ts",
       "skills/common/plugin-runtime/sdk/src/testing/index.ts",
       "skills/common/plugin-runtime/sdk/src/values.ts",
       "skills/common/plugin-runtime/sdk/tsconfig.build.json",
@@ -129,6 +130,7 @@
       "skills/nova/core/lifecycle/recovery-state.ts",
       "skills/nova/core/lifecycle/recovery.ts",
       "skills/nova/core/lifecycle/reducer.ts",
+      "skills/nova/core/lifecycle/remediation.ts",
       "skills/nova/core/observability/reconciler.ts",
       "skills/nova/core/package.json",
       "skills/nova/core/src/index.ts",
@@ -2165,6 +2167,7 @@
     "skills/common/plugin-runtime/sdk/src/index.ts",
     "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
     "skills/common/plugin-runtime/sdk/src/runtime.ts",
+    "skills/common/plugin-runtime/sdk/src/source-revision.ts",
     "skills/common/plugin-runtime/sdk/src/testing/index.ts",
     "skills/common/plugin-runtime/sdk/src/values.ts",
     "skills/common/plugin-runtime/sdk/tsconfig.build.json",
@@ -2382,6 +2385,7 @@
     "skills/nova/core/lifecycle/recovery-state.ts",
     "skills/nova/core/lifecycle/recovery.ts",
     "skills/nova/core/lifecycle/reducer.ts",
+    "skills/nova/core/lifecycle/remediation.ts",
     "skills/nova/core/observability/reconciler.ts",
     "skills/nova/core/package.json",
     "skills/nova/core/src/index.ts",

@@ -74,9 +74,9 @@ try {
   assert.equal(result.stages.get('delivery')?.status, 'succeeded');
   const persistedRunRoot = runRoot(path.join(temporary, 'state'), 'run:engine-test');
   const snapshot = JSON.parse(fs.readFileSync(
-    path.join(persistedRunRoot, 'registry-snapshot.json'),
+    path.join(persistedRunRoot, 'run-snapshot.json'),
     'utf8',
-  ));
+  )).registry;
   const packageIds = snapshot.packages.map(([id]) => id).sort();
   assert.equal(packageIds.length, 31, 'run snapshot must record the complete discovered registry');
   for (const id of [

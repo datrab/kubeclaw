@@ -2,21 +2,237 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["runId", "taskId", "attempt", "task", "suiteEvidence", "suitePlan"],
+  "required": [
+    "runId",
+    "taskId",
+    "attempt",
+    "task",
+    "suiteEvidence",
+    "suitePlan"
+  ],
   "properties": {
-    "runId": { "type": "string", "minLength": 1, "maxLength": 128 },
-    "taskId": { "type": "string", "minLength": 1, "maxLength": 128 },
-    "attempt": { "type": "integer", "minimum": 1 },
-    "task": { "type": "string", "minLength": 1, "maxLength": 32768 },
-    "suiteEvidence": { "type": "array", "maxItems": 128, "items": { "$ref": "#/$defs/evidence" } },
-    "commandSuites": { "type": "array", "maxItems": 128, "items": { "$ref": "#/$defs/commandSuite" } },
-    "suitePlan": { "$ref": "#/$defs/suitePlan" },
-    "providerPlan": { "$ref": "#/$defs/providerPlan" }
+    "runId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "taskId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768
+    },
+    "suiteEvidence": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "$ref": "#/$defs/evidence"
+      }
+    },
+    "suitePlan": {
+      "$ref": "#/$defs/suitePlan"
+    },
+    "providerPlan": {
+      "$ref": "#/$defs/providerPlan"
+    },
+    "commandSuites": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "$ref": "#/$defs/commandSuite"
+      }
+    }
   },
   "$defs": {
-    "evidence": { "type": "object", "additionalProperties": false, "required": ["suite", "passed", "summary"], "properties": { "suite": { "type": "string", "minLength": 1, "maxLength": 128 }, "passed": { "type": "boolean" }, "summary": { "type": "string", "minLength": 1, "maxLength": 2048 } } },
-    "commandSuite": { "type": "object", "additionalProperties": false, "required": ["suite", "executable", "args", "workingDirectory"], "properties": { "suite": { "type": "string", "minLength": 1, "maxLength": 128 }, "executable": { "type": "string", "minLength": 1, "maxLength": 4096 }, "args": { "type": "array", "maxItems": 256, "items": { "type": "string", "maxLength": 4096 } }, "workingDirectory": { "type": "string", "minLength": 1, "maxLength": 4096 } } },
-    "suitePlan": { "type": "object", "additionalProperties": false, "required": ["repositoryRoot", "suites", "testConfig", "task"], "properties": { "repositoryRoot": { "type": "string", "minLength": 1, "maxLength": 4096 }, "suites": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 128 } }, "testConfig": { "type": "object" }, "task": { "type": "object" }, "moduleId": { "type": "string", "minLength": 1, "maxLength": 128 } } },
-    "providerPlan": { "type": "object", "additionalProperties": false, "required": ["repositoryRoot", "repositoryId", "plan", "grants", "maximumConcurrency", "submittedAt", "timeoutMs"], "properties": { "repositoryRoot": { "type": "string", "minLength": 1, "maxLength": 4096 }, "repositoryId": { "type": "string", "minLength": 1, "maxLength": 256 }, "plan": { "type": "object" }, "grants": { "type": "object", "additionalProperties": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } } }, "maximumConcurrency": { "type": "integer", "minimum": 1, "maximum": 64 }, "submittedAt": { "type": "string", "format": "date-time" }, "timeoutMs": { "type": "integer", "minimum": 1, "maximum": 7200000 } } }
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suite",
+        "passed",
+        "summary"
+      ],
+      "properties": {
+        "suite": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      }
+    },
+    "commandSuite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "suite",
+        "executable",
+        "args",
+        "workingDirectory"
+      ],
+      "properties": {
+        "suite": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "executable": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "args": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "workingDirectory": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      }
+    },
+    "suitePlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositoryRoot",
+        "suites",
+        "testConfig",
+        "task"
+      ],
+      "properties": {
+        "repositoryRoot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "suites": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "testConfig": {
+          "type": "object"
+        },
+        "task": {
+          "type": "object"
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "providerPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositoryRoot",
+        "repositoryId",
+        "plan",
+        "grants",
+        "maximumConcurrency",
+        "submittedAt",
+        "timeoutMs"
+      ],
+      "properties": {
+        "repositoryRoot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "repositoryId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plan": {
+          "type": "object"
+        },
+        "grants": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "maximumConcurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "submittedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200000
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "sourceStageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "revision": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            }
+          },
+          "required": [
+            "revision"
+          ]
+        },
+        {
+          "properties": {
+            "sourceStageId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sourceStageId"
+          ]
+        }
+      ]
+    }
   }
 }

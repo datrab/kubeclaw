@@ -251,6 +251,9 @@ export interface BusterRemotePlanServiceOptions {
   readonly tarExecutable: string;
   readonly maximumExtractedBytes: number;
   readonly allowedCapabilities: ReadonlySet<string>;
+  readonly maximumActiveJobs?: number;
+  readonly maximumQueuedJobs?: number;
+  readonly maximumConcurrentAttempts?: number;
   readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
@@ -357,6 +360,13 @@ export class BusterRemotePlanService {
   readonly #now: () => Date;
   readonly #active = new Map<string, AbortController>();
   readonly #executions = new Map<string, Promise<void>>();
+  readonly #queue = new Map<string, RemotePlanJobV1>();
+  readonly #weights = new Map<string, number>();
+  #submission: Promise<void> = Promise.resolve();
+  #stopping = false;
+  readonly #maximumActiveJobs: number;
+  readonly #maximumQueuedJobs: number;
+  readonly #maximumConcurrentAttempts: number;
 
   constructor(options: BusterRemotePlanServiceOptions) {
     if (!Number.isSafeInteger(options.maximumExtractedBytes) || options.maximumExtractedBytes < 1) {
@@ -367,6 +377,12 @@ export class BusterRemotePlanService {
     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
     this.#options = { ...options, tarExecutable: tar };
     this.#now = options.now ?? (() => new Date());
+    this.#maximumActiveJobs = options.maximumActiveJobs ?? 2;
+    this.#maximumQueuedJobs = options.maximumQueuedJobs ?? 16;
+    this.#maximumConcurrentAttempts = options.maximumConcurrentAttempts ?? 64;
+    for (const limit of [this.#maximumActiveJobs, this.#maximumQueuedJobs, this.#maximumConcurrentAttempts]) {
+      if (!Number.isSafeInteger(limit) || limit < 1) throw new Error('BUSTER_REMOTE_ADMISSION_LIMIT_INVALID');
+    }
   }
 
   #validateAuthority(job: RemotePlanJobV1): void {
@@ -392,11 +408,22 @@ export class BusterRemotePlanService {
   }
 
   async submit(job: RemotePlanJobV1): Promise<RemotePlanStatusV1> {
-    this.#options.store.validate(job);
-    this.#validateAuthority(job);
-    const status = await this.#options.store.accept(job, this.#now().toISOString());
-    if (status.state === 'accepted' && !this.#active.has(job.jobId)) this.#start(job);
-    return status;
+    this.#options.store.validate(job); this.#validateAuthority(job);
+    let release!: () => void;
+    const prior = this.#submission;
+    this.#submission = new Promise<void>((resolve) => { release = resolve; });
+    await prior;
+    try {
+      if (this.#stopping) throw new Error('BUSTER_REMOTE_SHUTTING_DOWN');
+      const known = (await this.#options.store.records()).find((record) => record.payload.job.jobId === job.jobId);
+      if (!known) {
+        if (job.maximumConcurrency > this.#maximumConcurrentAttempts) throw new Error('BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT');
+        if (this.#queue.size >= this.#maximumQueuedJobs) throw new Error('BUSTER_REMOTE_ADMISSION_FULL');
+      }
+      const status = await this.#options.store.accept(job, this.#now().toISOString());
+      if (status.state === 'accepted' && !this.#active.has(job.jobId)) this.#start(job);
+      return status;
+    } finally { release(); }
   }
 
   async status(jobId: string): Promise<RemotePlanStatusV1> {
@@ -460,6 +487,7 @@ export class BusterRemotePlanService {
     const status = await this.#options.store.transition(
       jobId, ['accepted', 'running', 'cancelling'], 'cancelling', this.#now().toISOString(),
     );
+    this.#queue.delete(jobId);
     this.#active.get(jobId)?.abort(new Error('BUSTER_REMOTE_CANCELLED'));
     if (!this.#active.has(jobId)) {
       return this.#options.store.transition(
@@ -476,6 +504,7 @@ export class BusterRemotePlanService {
         try {
           this.#options.store.validate(job);
           this.#validateAuthority(job);
+          if (job.maximumConcurrency > this.#maximumConcurrentAttempts) throw new Error('BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT');
           this.#start(job);
         } catch (error) {
           await this.#options.store.transition(job.jobId, ['accepted'], 'failed', this.#now().toISOString(), {
@@ -499,6 +528,7 @@ export class BusterRemotePlanService {
     if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1) {
       throw new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID');
     }
+    this.#stopping = true; this.#queue.clear();
     for (const controller of this.#active.values()) {
       controller.abort(new Error('BUSTER_REMOTE_SHUTDOWN'));
     }
@@ -517,14 +547,22 @@ export class BusterRemotePlanService {
   }
 
   #start(job: RemotePlanJobV1): void {
-    if (this.#active.has(job.jobId)) return;
-    const controller = new AbortController();
-    this.#active.set(job.jobId, controller);
-    const execution = this.#execute(job, controller).finally(() => {
-      this.#active.delete(job.jobId);
-      this.#executions.delete(job.jobId);
-    });
-    this.#executions.set(job.jobId, execution);
+    if (this.#stopping || this.#active.has(job.jobId)) return;
+    this.#queue.set(job.jobId, job); this.#drain();
+  }
+
+  #drain(): void {
+    if (this.#stopping) return;
+    for (const [id, job] of this.#queue) {
+      const used = [...this.#weights.values()].reduce((a, b) => a + b, 0);
+      if (this.#active.size >= this.#maximumActiveJobs || used + job.maximumConcurrency > this.#maximumConcurrentAttempts) return;
+      this.#queue.delete(id);
+      const controller = new AbortController(); this.#active.set(id, controller); this.#weights.set(id, job.maximumConcurrency);
+      const execution = this.#execute(job, controller).finally(() => {
+        this.#active.delete(id); this.#executions.delete(id); this.#weights.delete(id); this.#drain();
+      });
+      this.#executions.set(id, execution);
+    }
   }
 
   async #execute(job: RemotePlanJobV1, controller: AbortController): Promise<void> {

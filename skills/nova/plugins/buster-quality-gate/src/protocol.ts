@@ -5,7 +5,7 @@ interface TestSuitePlan {
  readonly task:Readonly<Record<string,unknown>>;
  readonly moduleId?:string;
 }
-interface ProviderPlanInput{readonly repositoryRoot:string;readonly repositoryId:string;readonly plan:Readonly<Record<string,unknown>>;readonly grants:Readonly<Record<string,readonly string[]>>;readonly maximumConcurrency:number;readonly submittedAt:string;readonly timeoutMs:number}
+interface ProviderPlanInput{readonly revision?:string;readonly sourceStageId?:string;readonly repositoryRoot:string;readonly repositoryId:string;readonly plan:Readonly<Record<string,unknown>>;readonly grants:Readonly<Record<string,readonly string[]>>;readonly maximumConcurrency:number;readonly submittedAt:string;readonly timeoutMs:number}
 export interface GateInput{readonly runId:string;readonly gateId:string;readonly attempt:number;readonly task:string;readonly suiteEvidence:readonly{readonly suite:string;readonly passed:boolean;readonly summary:string}[];readonly suitePlan:TestSuitePlan;readonly providerPlan?:ProviderPlanInput}
 type GateOutcome='passed'|'request_fix'|'blocked';
 export interface GateVerdict{readonly outcome:GateOutcome;readonly runId:string;readonly gateId:string;readonly attempt:number;readonly summary:string;readonly failureClass:'none'|'test_failure'|'contract'|'configuration'|'infrastructure'|'rate_limit'|'timeout';readonly findings:readonly string[]}

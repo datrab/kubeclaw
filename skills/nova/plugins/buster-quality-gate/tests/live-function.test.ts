@@ -98,11 +98,13 @@ try {
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
+      ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([
       ['kubeclaw.buster-quality-gate:quality', new Map([
         ['test.plan.execute', { allowedRoots: [temporary] }],
+        ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
         ['runtime.dispatch', { allowedAgents: ['gate'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.buster-quality-gate'] }],
       ])],

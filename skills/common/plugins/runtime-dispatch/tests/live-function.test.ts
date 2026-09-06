@@ -462,8 +462,8 @@ try {
       new AbortController().signal,
     );
     assert.deepEqual(recoveredGateway, gateway);
-    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn').length, 1,
-      'a retry with a new engine idempotency key reattaches by stable model payload identity');
+    assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_spawn').length, 2,
+      'a distinct engine operation must not reuse an earlier result solely because model payloads match');
     assert.equal(received.filter((entry) => JSON.parse(entry.body).tool === 'sessions_history').length, 0);
     await assert.rejects(gatewayAdapters.invoke(
       'runtime.dispatch',
