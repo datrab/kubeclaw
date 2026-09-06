@@ -57,7 +57,11 @@ All 49 plugin packages' declared test commands were executed locally. The first 
 
 The operator cancellation test also exposed a CI timing race. It now synchronizes on actual server receipt and response-connection closure, replacing fixed sleeps and the request-body close event. The real transport cancellation assertion remains mandatory.
 
-Remaining local failures include absent Chromium/browser assets (axe, lighthouse, Playwright, visual), absent Trivy database (security providers), absent shellcheck/shfmt (lint), and the review compiler's million-line performance bound (52.4 seconds against 45 seconds). No missing prerequisite or performance failure was converted to a passing result. A package command stopping early does not prove its later tests.
+Remaining local failures include absent Chromium/browser assets (axe, lighthouse, Playwright, visual), absent Trivy database (security providers), absent shellcheck/shfmt (lint), and, initially, the review compiler's million-line performance bound (52.4 seconds against 45 seconds). No missing prerequisite or performance failure was converted to a passing result. A package command stopping early does not prove its later tests.
+
+The compiler performance failure was traced with a CPU profile to tokenization. Both review budgeting and runtime dispatch now use the WASM implementation of the same tokenizer; the obsolete JavaScript implementation and its unused dependency were removed. Exact token IDs matched across 101 real source/text samples under both supported encodings. Golden count checks preserve Unicode and special-token behavior. The million-line compilation passed in 25.9 seconds with the original 45-second bound, and the full review and runtime-dispatch suites passed. An extracted Nova bundle executed both encodings successfully; CI now requires the full review suite and this bundle check. After these fixes, 43 of the 49 package commands have passed locally; the six remaining package failures require missing browser, scanner or shell-lint prerequisites.
+
+Commit `2f243561e629c75913336beb748eaba9026e0726` passed Pipeline reliability run `34018162419` and Docs Checks run `34018162535`, including the real committed-defect negative control. Subsequent tokenizer changes require their own CI evidence.
 
 ## Remaining closure work
 

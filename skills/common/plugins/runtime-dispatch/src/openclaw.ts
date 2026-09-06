@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, type AdapterActivationContext } from '@kubeclaw/plugin-sdk';
-import { getEncoding } from 'js-tiktoken';
+import { get_encoding } from 'tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
 import { openClawToolDetails, record } from './openclaw-response.ts';
@@ -29,7 +29,7 @@ interface RuntimePromptBudget {
   readonly maxOutputTokens: number; readonly maxContextTokens: number;
   readonly deadlineEpochMs?: number;
 }
-const ENCODERS = new Map<OpenClawTarget['tokenizerEncoding'], ReturnType<typeof getEncoding>>();
+const ENCODERS = new Map<OpenClawTarget['tokenizerEncoding'], ReturnType<typeof get_encoding>>();
 const SUCCESSFUL_SESSION_STATES = new Set(['completed', 'complete', 'done', 'succeeded', 'idle', 'ended', 'closed']);
 const SPAWN_QUEUES = new WeakMap<AdapterActivationContext, Map<string, Promise<void>>>();
 
@@ -43,7 +43,7 @@ export function assertOpenClawSessionCompleted(session: OpenClawSessionState, ex
 
 function promptTokens(text: string, name: OpenClawTarget['tokenizerEncoding']): number {
   let encoder = ENCODERS.get(name);
-  if (!encoder) { encoder = getEncoding(name); ENCODERS.set(name, encoder); }
+  if (!encoder) { encoder = get_encoding(name); ENCODERS.set(name, encoder); }
   return encoder.encode(text).length;
 }
 

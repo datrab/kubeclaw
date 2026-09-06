@@ -30,6 +30,7 @@ jobs:
           npm test --workspace @kubeclaw/plugin-operator-messaging
           npm test --prefix skills/buster/plugins/http
           npm test --prefix skills/nova/plugins/delivery-lint
+          npm test --workspace @kubeclaw/plugin-review
       - uses: azure/setup-helm@v4
       - name: Validate Buster persistent storage manifests
         run: |
@@ -44,3 +45,4 @@ jobs:
           mkdir -p dist
           bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
