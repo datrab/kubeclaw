@@ -62,7 +62,7 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [contract.observability](components/contract.observability.md) | Aktiv: Buster → Outbox/Admission/AttemptStore → Nova/ClawDeck; Go nur Referenztest | vorhanden / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.agent-events](components/contract.agent-events.md) | Extension-Producervertrag; Redis-Ingressconsumer im Repository nicht gefunden | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [contract.telemetry](components/contract.telemetry.md) | Abgelöste Assets; ausgeliefert, keine aktiven Aufrufer gefunden | veraltet und unvollständig | abgeschlossen | `85ddfcbfc15e` |
-| [contract.prism](components/contract.prism.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [contract.prism](components/contract.prism.md) | Aktiv: Worker/Engine/Domain/Control/Novaarchive | unvollständig und teilweise veraltet | abgeschlossen | `85ddfcbfc15e` |
 | [lib.sdk](components/lib.sdk.md) | Aktiv: Core-Kontexte, Plugins, Revisionauflösung und Agent-Task-Formatierung | unvollständig | abgeschlossen | `85ddfcbf` |
 | [foundation.registry](components/foundation.registry.md) | Aktiv: Nova/Buster und Installervalidierung | veraltet und unvollständig | abgeschlossen | `85ddfcbfc15e` |
 | [foundation.config](components/foundation.config.md) | Aktiv: Nova CLI/Projekt und Buster.production → Plattformloader → Registry | unvollständig | abgeschlossen | `85ddfcbf` |
@@ -84,7 +84,7 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [prism.control](components/prism.control.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.corpus](components/prism.corpus.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.directions](components/prism.directions.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
-| [prism.domain](components/prism.domain.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [prism.domain](components/prism.domain.md) | Aktiv: Engine/Storage/Studio; transition ohne gefundenen Aufrufer | unvollständig und teilweise veraltet | abgeschlossen | `85ddfcbfc15e` |
 | [prism.engine](components/prism.engine.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.evaluation](components/prism.evaluation.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.pipeline-adapter](components/prism.pipeline-adapter.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |

@@ -1,0 +1,52 @@
+$ original Prism generator in isolated identical source copy
+EXIT 0
+GENERATED_BYTES_IDENTICAL True 3b1e0b5e00296f938945d85d0608fefed41fc285898871e709498abcaf95ac28
+$ node contracts/prism/v1/tests/contracts.test.mts
+Prism v1 contract fixtures passed
+EXIT 0
+$ node_modules/.bin/tsc --noEmit -p contracts/prism/v1/tsconfig.json
+EXIT 0
+$ node docs/review/evidence/prism-contract-repro.mjs
+{"invalidComponentPatchAccepted":true,"originalRendererRejected":true}
+file:///workspace/scratch/4e25cf57c177/kubeclaw/docs/review/evidence/prism-contract-repro.mjs:17
+const size=Buffer.byteLength(JSON.stringify(deep));
+                                  ^
+
+RangeError: Maximum call stack size exceeded
+    at JSON.stringify (<anonymous>)
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/docs/review/evidence/prism-contract-repro.mjs:17:35
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+EXIT 1
+
+Reviewprobe korrigiert: tiefe gültige Wirebytes iterativ erzeugen, statt vor dem Produktvalidator JSON.stringify auf verschachteltem Objekt auszuführen.
+$ node docs/review/evidence/prism-contract-repro.mjs
+{"invalidComponentPatchAccepted":true,"originalRendererRejected":true}
+{"depth":3000,"bytes":239726,"error":"RangeError"}
+EXIT 0
+$ node --test skills/prism/tests/domain.test.mts skills/prism/tests/engine.test.mts
+✔ operations are immutable and reject stale revisions (16.467066ms)
+✔ batch fails without partial mutation (0.435678ms)
+✔ responsive patches resolve without changing canonical source (0.686571ms)
+✔ engine generates, renders, evaluates and publishes idempotently (10.896303ms)
+✔ the generic worker carries an opaque Prism operation (2.116234ms)
+✔ the worker binding rejects unknown operations (0.221874ms)
+✔ concurrent retries share one provider execution (0.480296ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.656371ms)
+✔ an idempotency key cannot identify different requests (0.669242ms)
+✔ Prism creates a valid neutral worker envelope (93.283067ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 527.952327
+EXIT 0
+$ node skills/nova/plugins/prism-design/tests/archive.test.ts
+{"ok":true,"suite":"prism-real-archive-integrity","designGeneration":false}
+EXIT 0

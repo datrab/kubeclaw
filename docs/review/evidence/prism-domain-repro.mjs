@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+import {applyOperation,resolveView} from '../../../skills/prism/domain/index.ts';
+import {validatePrism} from '../../../contracts/prism/v1/src/index.ts';
+const fixture=JSON.parse(fs.readFileSync('contracts/prism/v1/fixtures/minimal-web.json','utf8'));
+const source=structuredClone(fixture);source.views.home.root.children=[{id:'parent',type:'stack',props:{direction:'vertical'},children:[{id:'child',type:'stack',props:{direction:'vertical'},children:[]}]}];source.views.home.states.default.patches={};for(const v of Object.values(source.views.home.responsive))v.patches={};validatePrism('designDocument',source);
+const result=applyOperation(source,{type:'node.move',baseRevision:1,nodeId:'parent',parentId:'child',index:0});assert.equal(result.views.home.root.children.length,0);assert.equal(source.views.home.root.children.length,1);console.log(JSON.stringify({moveDescendantAccepted:true,resultRevision:result.meta.revision,remainingChildren:0}));
+assert.throws(()=>applyOperation(source,{type:'node.duplicate',baseRevision:1,nodeId:'parent',newNodeId:'copy-parent'}),/duplicate node ID: child/);console.log(JSON.stringify({nonLeafDuplicateRejected:true}));
+const patches=structuredClone(fixture);patches.views.home.states.default.patches.title={content:'State title'};patches.views.home.responsive.wide.patches.title={hidden:true};validatePrism('designDocument',patches);const resolved=resolveView(patches,'home');const title=resolved.children.find(n=>n.id==='title');assert.equal(title.props.hidden,true);assert.equal(title.props.content,'Deployments');console.log(JSON.stringify({stateTitle:'State title',resolvedTitle:title.props.content,viewportHidden:title.props.hidden}));

@@ -40,3 +40,8 @@ oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
 |---|---|
 | isolation-tests.txt / isolation-utf8.mjs | Original-C-Build bestanden; Sandboxstart Procblocker, Phase11/External-engine unbehandeltes EPIPE, Bundlecheck erster Supervisorfall fehlgeschlagen. Originalprotokoll ohne Sandbox reproduziert UTF-8-Verlust. |
 | telemetry-contract-tests.txt / telemetry-contract-check.mjs | Generatorcheck blockiert durch fehlendes gofmt; Hashes132/Schema122/Golden geprüft, Null-run-Schwächung reproduziert. Anfangsfehler der Reviewprobe und Korrektur sichtbar. |
+
+| Weitere Datei | Aussage |
+|---|---|
+| prism-contract-tests.txt / prism-contract-repro.mjs | Original-Vertragsprüfungen und Generatorvergleich bestanden; ungültige Patchreferenz und Stacküberlauf reproduziert. |
+| prism-domain-tests.txt / prism-domain-repro.mjs | Original-Domaintests bestanden; Datenverlust bei Verschiebung in Nachfahren, nicht rekursive Duplikation und Patchprioritätsfehler reproduziert. |
