@@ -1,0 +1,17 @@
+$ node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs
+{"ok":true,"contract":"plugin-system-v2-lifecycle"}
+
+EXIT 0
+$ node --test tests/verification/reliability/lifecycle.test.mts
+✔ repair through the real recorder and journal reruns lint before Echo and Buster (13.447621ms)
+✔ SIGKILL after durable wait resolution preserves the exact approved continuation (97.15573ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 354.4899
+
+EXIT 0

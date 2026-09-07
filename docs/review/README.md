@@ -25,7 +25,7 @@ jedes relevanten Übergangs gemeinsam prüfen. Vollständige Projekt-E2E-Traces
 sind ein Folgeauftrag. Infrastruktur nur als Abhängigkeit/Annahme erfassen;
 auffällige Infrastrukturfragen separat zur Folgeprüfung notieren.
 
-## Lebendes gemeinsames Review-Schema (Revision 4)
+## Lebendes gemeinsames Review-Schema (Revision 5)
 
 Jede fachlich abgeschlossene Review-Datei muss folgende Kriterien konkret
 behandeln; nicht anwendbare Kriterien begründen:
@@ -75,6 +75,24 @@ dieselbe Chunkdecodierung wie PCR-ISOLATION-003 und ist im Workerreview ergänzt
 SDK/Agent-/Worker-/Observabilityverträge wurden auf ihre jeweiligen Generator-/
 Validierungsformen geprüft; der Telemetrie-v1-Generatorbefund gilt nicht pauschal
 für sie. Buster-/Prism- und Transportgegenstellen folgen in ihren Einzelreviews.
+Revision 5: Bei mehrstufigen Abschlussprotokollen jeden relevanten gültigen
+Journalpräfix zwischen kanonischem Result und abgeleiteten Wait-/Artefakt-/
+Stageeinträgen betrachten. Nicht nur Endzustand und echtes SIGKILL nach dem
+letzten Commit prüfen. Modellierte Präfixe ausdrücklich von einem tatsächlichen
+Prozessabbruch unterscheiden. Erfolgreiche Recovery darf keine notwendigen
+Projektionen verlieren oder eine nicht fortsetzbare Warteanforderung erzeugen.
+Nachprüfung der abgeschlossenen Grenzen: nova.execution/nova.lifecycle enthalten
+PCR-EXEC-001/002 und Originalpräfixproben. nova.effects wurde für Request/
+accepted/Receipt/Audit und Sidecarfolge geprüft; Audit nach Receipt und
+verwaiste Sidecars bleiben dort als Grenzen sichtbar. nova.state/state-store
+besitzen keine eigene mehrstufige Wait-/Stageprojektion; ihre Journal-/
+Transaktionsgrenzen und Objektaliasbefunde bleiben maßgeblich. Nova-
+Observability und Observerdelivery haben eigene persistierte Reconciliation-/
+Deliveryzustände (siehe deren Reviews), keine Zuständigkeit für die fehlenden
+Core-Wait-/Artefaktprojektionen. Kein bestandener Gesamt-Crashnachweis daraus.
+Andere abgeschlossene reine Verträge/Registry/Config/SDK/Prism-Domainfunktionen
+führen kein solches persistiertes Abschlussprotokoll selbst aus; die noch
+ungeprüften Dienst-/Storage-/Adaptergrenzen müssen dieses Kriterium anwenden.
 Bei neuer Erkenntnis Schema hier erweitern; betroffene bereits abgeschlossene
 Reviews explizit zur Nachprüfung markieren und ihren Status aktualisieren.
 

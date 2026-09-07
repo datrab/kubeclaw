@@ -49,3 +49,6 @@ oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
 | test-gate-contract-tests.txt / test-gate-contract-repro.mjs | Fünf Originalprüfkommandos bestanden; Zusatzschema-/Beispielchecks und DeclaredEvidence-Typabweichung. Korrigierte Reviewprobe dokumentiert. |
 
 | effects-tests.txt / effect-lock-leak.mjs | Original-Capabilityruntimeprüfung bestanden; zwei echte Filejournale reproduzieren Lock-Leck nach konkurrierendem Konflikt. Phase7-Lauf siehe vorhandene Evidenz. |
+
+| nova-execution-tests.txt / orchestrator-wait-window.mjs / result-artifact-window.mjs | Vier Original-Coreprüfkommandos bestanden; zwei gültige Journalpräfixe reproduzieren Wait-/Artefaktprojektionsfehler. |
+| nova-lifecycle-tests.txt | Original-Lifecycleregeln und echter Recorder-/Journal-/SIGKILL-Replaytest bestanden. |

@@ -71,8 +71,8 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [foundation.observability](components/foundation.observability.md) | Aktiv: Records/Blobs, Outbox/Admission, Worker-Results; ClawDeck-View nur Testconsumer | vorhanden / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.state](components/nova.state.md) | Aktive FileJournal-/FileMutex-Nutzung; PluginStateJournal nur Testaufrufer | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |
 | [nova.effects](components/nova.effects.md) | Aktive Adaptereffektkoordination, Filejournale und gemeinsame Ressourcenlocks; Memoryvarianten in Tests | unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
-| [nova.execution](components/nova.execution.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [nova.lifecycle](components/nova.lifecycle.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [nova.execution](components/nova.execution.md) | Aktiver Nova-Core: Graph/Attempts, Capabilitykontexte, Recovery/Resume/Admin, Snapshots und Artefaktprojektion | veraltet | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
+| [nova.lifecycle](components/nova.lifecycle.md) | Aktiver Resultreducer, Journalreplay und gemeinsame Remediationinvalidierung | unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [nova.telemetry](components/nova.telemetry.md) | Aktiv: Engine/Admin → serialisierte Observerdrains; CLI → Audit aus Journal | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.observability](components/nova.observability.md) | Recoveryhook aktiv; Planwriter nur Tests; keine belegte Lifecycleübernahme | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.test-gates](components/nova.test-gates.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |

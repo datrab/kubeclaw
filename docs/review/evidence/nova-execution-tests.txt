@@ -1,0 +1,18 @@
+$ node tests/verification/contracts/check-plugin-system-v2-phase6.mjs
+{"ok":true,"contract":"plugin-system-v2-phase6"}
+
+EXIT 0
+$ node tests/verification/contracts/check-plugin-system-v2-resume.mjs
+{"ok":true,"contract":"plugin-system-v2-resume"}
+
+EXIT 0
+$ node tests/verification/contracts/check-plugin-system-v2-engine.mjs
+{"ok":true,"contract":"plugin-system-v2-engine"}
+
+EXIT 0
+$ node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs
+{"ok":true,"contract":"plugin-system-v2-checkpoint-recovery"}
+
+EXIT 0
+Original journal prefix: recovery requires reconstructed orchestrator signal; resume rejects it because no top-level wait creation exists
+Original Delivery-Lint + artifact-store: completed attempt contains report; recovery succeeds without restoring artifact.created, no second producer attempt
