@@ -45,3 +45,7 @@ oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
 |---|---|
 | prism-contract-tests.txt / prism-contract-repro.mjs | Original-Vertragsprüfungen und Generatorvergleich bestanden; ungültige Patchreferenz und Stacküberlauf reproduziert. |
 | prism-domain-tests.txt / prism-domain-repro.mjs | Original-Domaintests bestanden; Datenverlust bei Verschiebung in Nachfahren, nicht rekursive Duplikation und Patchprioritätsfehler reproduziert. |
+
+| test-gate-contract-tests.txt / test-gate-contract-repro.mjs | Fünf Originalprüfkommandos bestanden; Zusatzschema-/Beispielchecks und DeclaredEvidence-Typabweichung. Korrigierte Reviewprobe dokumentiert. |
+
+| effects-tests.txt / effect-lock-leak.mjs | Original-Capabilityruntimeprüfung bestanden; zwei echte Filejournale reproduzieren Lock-Leck nach konkurrierendem Konflikt. Phase7-Lauf siehe vorhandene Evidenz. |

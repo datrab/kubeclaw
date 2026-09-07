@@ -1,6 +1,6 @@
 # Fortsetzungsstand — laufender Gesamtauftrag
 
-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`. 93 Einheiten; derzeit 19 abgeschlossen.
+Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`. 93 Einheiten; derzeit 21 abgeschlossen.
 Autonomer Gesamtauftrag läuft bis zu allen 93 ausführlichen Reviews weiter.
 Dieser Speichercheckpoint ist kein Abschluss. Nur docs/review verändert,
 keine funktionalen Reparaturen, Deployments oder CI-Anforderung.
@@ -8,20 +8,21 @@ Remote-Arbeitsbranch: docs/pipeline-component-review-20260906.
 
 ## Abdeckung
 
-- **abgeschlossen (19)**: lib.prompt-contract, kubeclaw.state-store, contract.plugin-system, contract.worker, contract.observability, contract.agent-events, contract.telemetry, contract.prism, lib.sdk, foundation.registry, foundation.config, foundation.isolation, foundation.packages, foundation.observability, nova.state, nova.telemetry, nova.observability, worker.core, prism.domain.
+- **abgeschlossen (21)**: lib.prompt-contract, kubeclaw.state-store, contract.plugin-system, contract.worker, contract.test-gate, contract.observability, contract.agent-events, contract.telemetry, contract.prism, lib.sdk, foundation.registry, foundation.config, foundation.isolation, foundation.packages, foundation.observability, nova.state, nova.effects, nova.telemetry, nova.observability, worker.core, prism.domain.
 
 - **teilweise geprüft (2)**: prism.service-control, prism.service-worker.
 
-- **ungeprüft (72)**: kubeclaw.agent-observability, kubeclaw.artifact-store, kubeclaw.command-runner, kubeclaw.git-workspace, kubeclaw.network-http, kubeclaw.notification-observer, kubeclaw.openclaw-agent-events, kubeclaw-agent-observer, kubeclaw.operator-messaging, kubeclaw.redis-transport, kubeclaw.runtime-dispatch, kubeclaw.secret-resolver, kubeclaw.telemetry-observer, kubeclaw.telemetry-store, kubeclaw.transport-publisher, kubeclaw.wait-store, kubeclaw.architecture-validator, kubeclaw.blueprint-sync, kubeclaw.buster-quality-gate, kubeclaw.case-study, kubeclaw.delivery-lint, kubeclaw.human-approval, kubeclaw.implementation-agent, kubeclaw.lint, kubeclaw.pipeline-review, kubeclaw.preflight-contract, kubeclaw.prism-design, kubeclaw.project-summary, kubeclaw.remote-test-gate, kubeclaw.repository-adapter, kubeclaw.review, kubeclaw.api-flow, kubeclaw.axe, kubeclaw.container-build, kubeclaw.coverage-budget, kubeclaw.direct-command, kubeclaw.http, kubeclaw.junit-report, kubeclaw.kubernetes-fixture, kubeclaw.lighthouse, kubeclaw.openapi, kubeclaw.playwright, kubeclaw.security-providers, kubeclaw.size-budget, kubeclaw.tailscale-exposure, kubeclaw.visual, contract.test-gate, nova.effects, nova.execution, nova.lifecycle, nova.test-gates, nova.entry, nova.scaffold, buster.engine, buster.entry, prism.control, prism.corpus, prism.directions, prism.engine, prism.evaluation, prism.pipeline-adapter, prism.preferences, prism.renderer, prism.storage, prism.studio, prism.service-ingestion, prism.service-studio, prism.service-agent-bridge, prism.service-common, prism.entry, prism.extension, buster.namespace-controller.
+- **ungeprüft (70)**: kubeclaw.agent-observability, kubeclaw.artifact-store, kubeclaw.command-runner, kubeclaw.git-workspace, kubeclaw.network-http, kubeclaw.notification-observer, kubeclaw.openclaw-agent-events, kubeclaw-agent-observer, kubeclaw.operator-messaging, kubeclaw.redis-transport, kubeclaw.runtime-dispatch, kubeclaw.secret-resolver, kubeclaw.telemetry-observer, kubeclaw.telemetry-store, kubeclaw.transport-publisher, kubeclaw.wait-store, kubeclaw.architecture-validator, kubeclaw.blueprint-sync, kubeclaw.buster-quality-gate, kubeclaw.case-study, kubeclaw.delivery-lint, kubeclaw.human-approval, kubeclaw.implementation-agent, kubeclaw.lint, kubeclaw.pipeline-review, kubeclaw.preflight-contract, kubeclaw.prism-design, kubeclaw.project-summary, kubeclaw.remote-test-gate, kubeclaw.repository-adapter, kubeclaw.review, kubeclaw.api-flow, kubeclaw.axe, kubeclaw.container-build, kubeclaw.coverage-budget, kubeclaw.direct-command, kubeclaw.http, kubeclaw.junit-report, kubeclaw.kubernetes-fixture, kubeclaw.lighthouse, kubeclaw.openapi, kubeclaw.playwright, kubeclaw.security-providers, kubeclaw.size-budget, kubeclaw.tailscale-exposure, kubeclaw.visual, nova.execution, nova.lifecycle, nova.test-gates, nova.entry, nova.scaffold, buster.engine, buster.entry, prism.control, prism.corpus, prism.directions, prism.engine, prism.evaluation, prism.pipeline-adapter, prism.preferences, prism.renderer, prism.storage, prism.studio, prism.service-ingestion, prism.service-studio, prism.service-agent-bridge, prism.service-common, prism.entry, prism.extension, buster.namespace-controller.
 
 - **Nachprüfung erforderlich (0)**: keine.
 
 ## Konkrete Fortsetzung
 
-1. contract.test-gate begonnen: validation.ts, gate-decision.ts, remote.ts, types.ts,
-   README und 49 Hauptschema-Definitionen gelesen. Offen: zusätzliche Schemas,
-   Suites/Beispiele, Tests und tatsächliche Aufrufer/Gegenstellen. Noch ungeprüft.
-2. contract.test-gate, Nova effects/execution/lifecycle/test-gates danach; anschließend
+1. nova.execution: sämtliche Implementierungspfade, Runner/Stageexecutor,
+   Snapshots/Recovery/Administration und Tests systematisch prüfen. Bislang
+   AdapterRuntime, effect-recovery und adapter-support als Effects-Gegenstelle
+   gelesen, Engineverdrahtung und Stagefehlerklassifikation in Ausschnitten.
+2. Nova lifecycle/test-gates danach; anschließend
    Entrypoints und alle darauf aufbauenden Plugins/Dienste. Nicht verbleibende
    Reviews kürzen oder alte Reviewbehauptungen als Nachweis übernehmen.
 3. Inventarvollständigkeit noch offen: role-bundle-Builder/Closure, dynamische
@@ -32,14 +33,15 @@ Remote-Arbeitsbranch: docs/pipeline-component-review-20260906.
 
 ## Offene Befunde mit Eigentümer
 
-- [PCR-PROMPT-001 — Akzeptierte Nicht-JSON-Eigenschaften gehen verloren](components/lib.prompt-contract.md).
 - [PCR-CONTRACT-PLUGIN-001 — Leeres Plugin passiert die Manifestvalidierung](components/contract.plugin-system.md).
+- [PCR-TEST-CONTRACT-001 — Dateideklaration erlaubt im Typ ein verbotenes Artefakt](components/contract.test-gate.md).
 - [PCR-AGENT-CONTRACT-001 — Tiefe gültige JSON-Nutzlast überläuft Validatorstack](components/contract.agent-events.md).
 - [PCR-TELEMETRY-CONTRACT-001 — Payload schwächt Envelopeidentität](components/contract.telemetry.md).
 - [PCR-TELEMETRY-CONTRACT-002 — Generierte Typen verlieren erlaubte Wireformen](components/contract.telemetry.md).
+- [PCR-PRISM-CONTRACT-001 — Viewpatch kann ungültige Komponentenziele einschleusen](components/contract.prism.md).
+- [PCR-PRISM-CONTRACT-002 — Rekursive Validierung ohne Eingangstiefenbudget](components/contract.prism.md).
 - [PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten](components/lib.sdk.md).
 - [PCR-SDK-002 — Deklarierter Workspacebuild nicht ausführbar](components/lib.sdk.md).
-- [PCR-REGISTRY-001 — Globale Ajv-ID verhindert erneuten Registryaufbau](components/foundation.registry.md).
 - [PCR-REGISTRY-002 — Securitytest erreicht seine Autorisierungsfälle nicht](components/foundation.registry.md).
 - [PCR-ISOLATION-001 — Pipefehler beendet den Hostprozess](components/foundation.isolation.md).
 - [PCR-ISOLATION-002 — SIGKILL trifft Supervisor statt Prozessbaum](components/foundation.isolation.md).
@@ -50,18 +52,13 @@ Remote-Arbeitsbranch: docs/pipeline-component-review-20260906.
 - [PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt](components/foundation.observability.md).
 - [PCR-STATE-001 — Journal-Cache enthält fremd veränderbare Payloads](components/nova.state.md).
 - [PCR-STATE-002 — Stale-Lock-Übernahme ist nicht an beobachteten Besitzer gebunden](components/nova.state.md).
+- [PCR-EFFECT-001 — Konflikt nach Lockakquise lässt Ressourcenlock zurück](components/nova.effects.md).
 - [PCR-TELEM-001 — Release-Verifikation erwartet entfernten Auditobserver](components/nova.telemetry.md).
-- [PCR-WORKER-001 — Claim-Deadline deckt nicht alle Abschlussphasen ab](components/worker.core.md).
-- [PCR-PRISM-CONTROL-001 — Worker-Ergebnis ohne Envelope-Bindung angenommen](components/prism.service-control.md).
-- [PCR-PRISM-WORKER-001 — Pflicht-Logspeicher fehlt am Executor-Aufruf](components/prism.service-worker.md).
-- [PCR-PRISM-WORKER-002 — CPU-Messung zählt die gesamte Prozesslebensdauer](components/prism.service-worker.md).
-
-- [PCR-PRISM-CONTRACT-001 — Viewpatch kann ungültige Komponentenziele einschleusen](components/contract.prism.md).
-- [PCR-PRISM-CONTRACT-002 — Rekursive Validierung ohne Eingangstiefenbudget](components/contract.prism.md).
-
 - [PCR-PRISM-DOMAIN-001 — Move in eigenen Nachkommen verliert Teilbaum](components/prism.domain.md).
 - [PCR-PRISM-DOMAIN-002 — Nichtleere Teilbäume lassen sich nicht duplizieren](components/prism.domain.md).
 - [PCR-PRISM-DOMAIN-003 — Responsivepatch verwirft andere Stateproperties](components/prism.domain.md).
+- [PCR-PRISM-WORKER-001 — Pflicht-Logspeicher fehlt am Executor-Aufruf](components/prism.service-worker.md).
+- [PCR-PRISM-WORKER-002 — CPU-Messung zählt die gesamte Prozesslebensdauer](components/prism.service-worker.md).
 
 ## Tests / Blockaden
 
@@ -84,6 +81,10 @@ Prism: Originalvalidator-/Typechecks, Generatorvergleich auf temporärer Kopie,
 Engine-/Domainprüfungen und Archiveprüfung bestanden; zusätzliche echte
 Reproduktionen für Patchreferenzen, Tiefe, Verschiebung, Duplikation und
 Patchpriorität dokumentiert. Kein PostgreSQL-/Browser-Laufzeitnachweis.
+
+Test-Gate-Vertrag: fünf Originalprüfkommandos einschließlich Gitarchiv, Signatur,
+Snapshot-SIGKILL und Typecheck bestanden. Effects: Capabilityruntime bestanden,
+Lock-Leck mit zwei originalen Filejournals und Filelocks reproduziert.
 
 ## Qualitätsstand
 

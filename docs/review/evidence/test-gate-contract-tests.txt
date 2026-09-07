@@ -1,0 +1,87 @@
+$ node tests/verification/contracts/check-pipeline-test-gate-contracts.mts
+{"ok":true,"contracts":11,"schema":"contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json"}
+
+EXIT 0
+$ node tests/verification/contracts/check-pipeline-remote-plan-contracts.mts
+{"ok":true,"phase":"7-B","contracts":3}
+
+EXIT 0
+$ node tests/verification/contracts/check-pipeline-committed-source-snapshot.mts
+{"ok":true,"decision":"D-094","revision":"git:b50e5087d31026aa516d0dec79130756911b935c","excludesWorkingTree":true}
+
+EXIT 0
+$ node --test tests/verification/reliability/decisions-and-snapshots.test.mts
+✔ native terminal decisions retain their distinct dispositions and reject altered evidence (26.999415ms)
+✔ snapshot publication survives process death as a complete set and rejects overwrite or corruption (363.39521ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 786.416318
+
+EXIT 0
+$ npm run typecheck --workspace @kubeclaw/pipeline-test-gate-contract
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/pipeline-test-gate-contract@1.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+EXIT 0
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/docs/review/evidence/test-gate-contract-repro.mjs:11:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+Reviewprobe korrigiert: Escaping des JSON-RegEx zunächst falsch interpretiert. Originalschema korrekt; kein Routenbefund.
+$ node docs/review/evidence/test-gate-contract-repro.mjs
+{"route":"/pricing","schemaAccepted":true,"runtimeRouteAccepted":true}
+{"route":"/home","schemaAccepted":true,"runtimeRouteAccepted":true}
+{"route":"/\n","schemaAccepted":false,"runtimeRouteAccepted":false}
+browser-profiles: original example accepted
+lighthouse-settings: original example accepted
+/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/core.js:466
+            throw new Error(`schema with key or id "${id}" already exists`);
+                  ^
+
+Error: schema with key or id "https://kubeclaw.dev/contracts/pipeline-test-gate/visual-baselines.v1.schema.json" already exists
+    at Ajv2020._checkUnique (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/core.js:466:19)
+    at Ajv2020._addSchema (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/core.js:457:22)
+    at Ajv2020.compile (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/core.js:159:26)
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/docs/review/evidence/test-gate-contract-repro.mjs:14:19
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+
+Reviewprobe: separater Ajv pro Beispielschema vermeidet doppelte Registrierung derselben $id in der Probe.
+$ node docs/review/evidence/test-gate-contract-repro.mjs
+{"route":"/pricing","schemaAccepted":true,"runtimeRouteAccepted":true}
+{"route":"/home","schemaAccepted":true,"runtimeRouteAccepted":true}
+{"route":"/\n","schemaAccepted":false,"runtimeRouteAccepted":false}
+browser-profiles: original example accepted
+lighthouse-settings: original example accepted
+visual-baselines: original example accepted
+Cypress conformance example accepted; no Cypress execution
+DeclaredEvidenceV1 optional artifact rejected by original wire validator
