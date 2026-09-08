@@ -1,6 +1,6 @@
 # Zentrales Befundregister
 
-93 stabile Befundkennungen im aktuellen Prüfstand. Alle bleiben offen;
+97 stabile Befundkennungen im aktuellen Prüfstand. Alle bleiben offen;
 dieser Auftrag verändert keine Implementierung. Schweregrad, Begründung,
 Evidenzklasse, Auslöser, konkrete Folgen, Ursachenbehebung und Regression stehen
 im verlinkten Eigentümerbericht. Querverweise erzeugen keine weiteren Befunde.
@@ -40,6 +40,9 @@ Ein nachgewiesener Codepfad ist kein bestandener Laufzeittest.
 | PCR-JUNIT-001 | niedrig: Fehlender Attributtrenner wird akzeptiert | [kubeclaw.junit-report](components/kubeclaw.junit-report.md) |
 | PCR-KUBERNETES-FIXTURE-001 | Ressourcenlimit erst nach Aliasexpansion | [kubeclaw.kubernetes-fixture](components/kubeclaw.kubernetes-fixture.md) |
 | PCR-KUBERNETES-FIXTURE-002 | Schreibpipe kann den Busterprozess beenden | [kubeclaw.kubernetes-fixture](components/kubeclaw.kubernetes-fixture.md) |
+| PCR-LINT-001 | hoch: generische Targets verlassen die freigegebene Repositorygrenze | [kubeclaw.lint](components/kubeclaw.lint.md) |
+| PCR-LINT-002 | hoch: laufender Lintversuch besitzt keinen wirksamen Abbruch-Lifecycle | [kubeclaw.lint](components/kubeclaw.lint.md) |
+| PCR-LINT-003 | mittel: echte native Timeouts werden als Startfehler klassifiziert | [kubeclaw.lint](components/kubeclaw.lint.md) |
 | PCR-NETWORK-001 | Responsebudget greift erst nach vollständigem Download | [kubeclaw.network-http](components/kubeclaw.network-http.md) |
 | PCR-NETWORK-002 | Bodytimeout verliert stabile Adapterfehlerdisposition | [kubeclaw.network-http](components/kubeclaw.network-http.md) |
 | PCR-NOTIFY-001 | Projektion erzeugt vom eigenen Provider abgelehnte Nachrichten | [kubeclaw.notification-observer](components/kubeclaw.notification-observer.md) |
@@ -83,6 +86,7 @@ Ein nachgewiesener Codepfad ist kein bestandener Laufzeittest.
 | PCR-REDISTRANSPORT-002 | RESP-Antwortbuffer wächst vor Längenprüfung unbegrenzt | [kubeclaw.redis-transport](components/kubeclaw.redis-transport.md) |
 | PCR-REGISTRY-001 | Globale Ajv-ID verhindert erneuten Registryaufbau | [foundation.registry](components/foundation.registry.md) |
 | PCR-REGISTRY-002 | Securitytest erreicht seine Autorisierungsfälle nicht | [foundation.registry](components/foundation.registry.md) |
+| PCR-REPOSITORY-001 | Fehlender Symlinkpfad aktiviert Schreibausbruch im Collector | [kubeclaw.repository-adapter](components/kubeclaw.repository-adapter.md) |
 | PCR-RUNTIME-001 | Sessioncleanup bleibt bei Ablauf/Elternabbruch wirkungslos | [kubeclaw.runtime-dispatch](components/kubeclaw.runtime-dispatch.md) |
 | PCR-SCAFFOLD-001 | Regeneration verwirft ausgefüllten Providerplan | [nova.scaffold](components/nova.scaffold.md) |
 | PCR-SCAFFOLD-OPS-001 | Statusfehler beendet Supervisor scheinbar erfolgreich | [operations-and-packaging](operations-and-packaging.md) |

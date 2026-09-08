@@ -46,5 +46,11 @@
     "usage": "index.html → app.tsx React/Puck; Production Session/Control APIs und RevisionRepository.apply, DEV lokale Fixture; preview Originalrenderer.",
     "responsibility": "Browsereditor, verlustarme typed-operation Übersetzung, isolierte Vorschau und Approval-/Revision-UI.",
     "docStatus": "vorhanden; unvollständig; Roundtrip-/Assetpreview-Ziel nicht erfüllt"
+  },
+  "kubeclaw.lint": {
+    "status": "abgeschlossen",
+    "usage": "Nova project/compiler.ts erstellt full nach Implementation/sourceStageId; Stage→Core grants→eigener Executor→native Tools→Artifactstore. Original Coreclean-Pfad ausgeführt, Native-Toolchain teilweise fehlend.",
+    "responsibility": "Policy v7, sourceRevision-gepinnte Kandidatenanalyse, Sprach-/Architektur-/Kubernetes-Tools, Reportvalidierung und Gateklassifikation.",
+    "docStatus": "veraltet; unvollständig; v1-Autorität und npm-test-Buildbehauptung falsch"
   }
 }

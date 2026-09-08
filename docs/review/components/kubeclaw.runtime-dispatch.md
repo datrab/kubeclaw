@@ -154,3 +154,14 @@ Regression mit echtem Core-AdapterRuntime und kontrolliertem HTTP-Peer: lebende
 Session, maxPolls-/sessionTimeout und Parentabort; Peer muss genau passenden
 Cancel erhalten oder Reconciliation muss dauerhaft sichtbar sein. Zusätzlich
 späte Spawnantwort nach Abort und Timeout während Pollrequest prüfen.
+
+Nachprüfung der Resultimport-Gegenstelle: **PCR-REPOSITORY-001** wird kanonisch
+im Repositoryreview geführt. Fehlende Datei unter einem bereits existierenden
+ausbrechenden Directorysymlink wird dort zunächst FILE_NOT_FOUND; OpenClaws
+localResult behandelt dies als fehlendes lokales Resultat und persistResult
+schreibt über den nur lexikalisch begrenzten Pfad. Nova-Reviewer bestätigte die
+Kette mit Original readOpenClawResult, echtem Repositoryadapter und echten
+Symlinks (`../evidence/nova-batch-repository-symlink-probe.mjs`). Der Fix muss
+deshalb auch diese schreibende Runtimegegenstelle sicher binden, einschließlich
+fehlender Zieldateien und bereits vorhandener Elternsymlinks; kein eigener
+doppelter Runtimebefund.

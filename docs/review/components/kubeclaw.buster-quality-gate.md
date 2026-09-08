@@ -1,90 +1,51 @@
 # kubeclaw.buster-quality-gate
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+Nova-Stage quality/kubeclaw.test.quality-evaluation. Projectcompiler verdrahtet sie nach Implementation und finale Testpläne; Registry capability test.plan.execute wird vom Remoteadapter bedient. Alle Quellen protocol.ts/stage.ts, Manifest, drei Schemas, README und vier Pakettests vollständig gelesen. Keine Busterworkerimplementierung in diesem Paket.
 
-- `skills/nova/plugins/buster-quality-gate`
+## 2. Verträge und Gegenstellen
 
-Entrypoints: `src/stage.ts#execute`.
+Providerplan mit XOR revision/sourceStageId; kein caller-owned suiteEvidence/runId/attempt. SDK resolveSourceRevision bindet an echte Implementationartefakte. Remoteadapter führt Plan aus, parseGateDecision prüft geschlossene Felder, Digest und widersprüchliche Erfolgsevidenz; Run muss Lease entsprechen. Native Entscheidung wird vor optionalem Agenturteil gespeichert. Nur passed erreicht runtime.dispatch mit geschlossenem kubeclaw.buster-test-judgment.v2-Vertrag. project-summary konsumiert Decision/Verdict samt sourceRevision und decisionDigest.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand und Nebenwirkungen
 
-Registrierungen aus Manifest:
+Externer Busterjob und Agentdispatch laufen über Effektadapter, kein direkter Netzwerk-/Workspacezugriff. Native Decisionartefakt enthält noch keinen Qualityverdict; nichtpassender Providerpfad endet ohne Agent. Qualityartefakt enthält Verdict, Sourcerevision, Decisiondigest und reduzierte Suitebelege. Persistenz/einmalige externe Wirkung sind Core-/Adapterzuständigkeit.
 
-- `stages:quality` → `src/stage.ts#execute`; benötigte Capabilities: test.plan.execute, runtime.dispatch, artifacts.write, artifacts.read
+## 4. Korrektheit
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`, `@kubeclaw/pipeline-test-gate-contract`
+Native failed→request_fix, cancelled→cancelled, review_required/execution_error→blocked bleiben erhalten. Agent kann fehlgeschlagenen Provider nicht überschreiben. parseVerdict prüft erlaubte Schlüssel, Begrenzungen, Findings und failureClass; passed verlangt alle übergebenen Suites passed und keine Findings. Advisory_failure/skipped werden durch gateDecisionEvidence bewusst als nichtblockierend übersetzt, nicht als bestandene echte Einzeltests dokumentieren. Der Agent sieht summaries, keine automatisch eingebundenen vollständigen Logs.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout, Retry und Parallelität
 
-## Tests und Dokumentation
+Keine eigene Poll-/Retry-/Zeitsteuerung. Remoteparameter werden unverändert übergeben, Corekontext schützt Calls. Runtimeaufruffehler werden bewusst nicht in gewöhnliche Pluginfehlermeldung umgeformt: die externe Reconciliation bleibt erhalten. Lediglich ungültiger empfangener Verdict wird blocked mit bereits gespeichertem Decisionbeleg. Timeoutlücken PCR-NOVA-GATE-001/002 wirken über Remoteadapter durch.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Recovery und Teilaktionen
 
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs`
-- `skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts`
-- `skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs`
-- `tests/verification/contracts/check-pipeline-phase10-cutover.mts`
-- `tests/verification/contracts/check-plugin-agent-output-contracts.mts`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
-- `tests/verification/e2e/real-run-evidence.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
+Crash nach native decision vor Agent führt über Core-/Effektjournal zur Wiederaufnahme, kein Pluginjournal. Decision und Verdict sind getrennte Writes: nur Decision ist kein erfolgreicher Qualitätsnachweis; project-summary fordert beide. Gültige Journalpräfixe/fehlende Artefaktprojektion bleiben [nova.execution](nova.execution.md). Vollständiger Remoteprovider/Agentrestart hier nicht erfolgreich verifiziert.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Authentifizierung und Vertrauen
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-changelog.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/buster-quality-gate/README.md`
+Run-/Attemptidentität aus Lease; Konfiguration bestimmt Agentziel, Registry autorisiert Capabilities. Native Entscheidung stammt aus verifiziertem Remoteimport, Digest allein wäre keine Autorisierung beliebigen Callerinputs. Inputschema verhindert alte suiteEvidence/plan-Doppelpfade. Runtimeagent bleibt semantische Vertrauenskomponente; ein geschlossener Verdict ersetzt keinen unabhängigen Beleg einer subjektiven Bewertung.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Protocol begrenzt Summary auf 8192 Zeichen und Findings auf 128 mit je 4096 Zeichen; Inputtask höchstens32768, GateID128. Busterparallelität und Gatezeit kommen aus Providerplan (max64 und zwei Stunden). Vollständige Logs werden nicht im Verdict dupliziert. Artefaktretention und Remotequoten gehören zu Stores; Agentantwortgröße Runtimeadapter.
 
-- `charts/kubeclaw/files/config/knip.json:533`
-- `docs/architecture/plugin-system-current-inventory.md:55`
-- `docs/architecture/plugin-system-implementation-plan.md:801`
-- `docs/architecture/plugin-system-phase9-changelog.md:143`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:102`
-- `docs/site/extend/plugin-catalogue/README.md:20`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:67`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:68`
-- `docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md:69`
-- `docs/site/reference/capabilities.md:17`
-- `docs/site/reference/capabilities.md:18`
-- `docs/site/reference/capabilities.md:37`
-- `docs/site/reference/capabilities.md:44`
-- `package.json:74`
-- `packaging/runtime/roles/nova.json:42`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts:56`
-- `skills/nova/plugins/project-summary/src/summary.ts:49`
-- `skills/nova/plugins/project-summary/src/summary.ts:50`
-- `skills/nova/plugins/project-summary/tests/live-function.test.ts:10`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs:35`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs:36`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs:46`
+## 9. Architektur
 
-## Offene Prüfpfade
+Klare suite-first-Trennung bewahrt native Gateentscheidung. Bezeichnungen suiteEvidence/provider-plan und historischer READMEtext können Testbeweise überzeichnen: tatsächliche Daten sind Knotenzustände und Kurzgründe. Für echte agentische Evidenceprüfung explizite digestgebundene Leserechte/Refs und Budget dokumentieren. Keine zweite Bustersteuerung einführen.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests
+
+`npm test` bestanden, `../evidence/nova-batch-buster-quality-gate-tests.txt`. Protocol-/Suite-firsttests prüfen Validatoren und Schema; Packageboundary ist statisch. Live-function baut reale Registry/Git/HTTPfixture, prüft aber nur Zurückweisung des alten Graphinputs; null Provider-/Agentrequests. Zusätzlicher gemeinsamer Originaltest check-pipeline-remote-real-provider.mts separat gestartet, Ergebnisdatei `../evidence/nova-batch-quality-real-provider-tests.txt`; Exit1: Sandbox meldet open task children: No such file or directory, Provider endet execution_error/EPIPE statt passed (Assertion Zeile144). Die späteren Quality-pass/fail-Aufrufe ab154/171 wurden nicht erreicht; nicht als ausgeführte Qualityintegration zählen. Qualitätsevaluator im Integrationshelper ist feste HTTP-Testantwort, kein reales Modell. Helper und service/run/import-Verkabelung gelesen.
+
+## 11. Dokumentation
+
+README nennt geschlossene Identität/Fehlerklassen korrekt, ist aber zu suite-first Produktionspfad und den genauen Provenienzgrenzen unvollständig. Historische Parityblocker müssen getrennt von lokal geprüften Pfaden aktualisiert werden. Fehlende Agentbewertung voller Evidence darf nicht aus Testnamen als bereits gelöst gelten.
+
+## 12. Befunde und Restunsicherheiten
+
+Keine neue doppelte Befund-ID; Remoteprobleme siehe nova.test-gates, Source-/Workspacebindung siehe PCR-IMPLEMENTATION-001. Keine Freigabe echter Agentqualität oder Sandboxparität. Geeignete Folgeprüfung: realer isolierter Provider pass/fail, dabei failed garantiert null Agentrequests; erfolgreiche native Decision plus ungültiger Verdict bewahrt Evidence, Restart zwischen beiden Artefaktwrites.

@@ -64,8 +64,43 @@
   },
   "kubeclaw.delivery-lint": {
     "responsibility": "Statische Forge-Deliveryanforderungen prüfen",
-    "usage": "Projectcompiler Abschlussstage; Repository-/Artefaktadapter",
+    "usage": "Explizite Nova-Graphstage; Repository-/Artefaktadapter; Projectcompiler verwendet full lint",
     "docStatus": "veraltet; Config-/Buildhinweise, unvollständige Dockerfilegrammatik",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.buster-quality-gate": {
+    "responsibility": "Native Remoteproviderentscheidung und nachgelagerte agentische Qualitätsbewertung",
+    "usage": "Projectcompiler-Modul/final-Gates; remote-test-gate und runtime.dispatch; summary konsumiert Evidence",
+    "docStatus": "unvollständig: suite-first-Provenienz, reduzierte Evidence und Testgrenzen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.remote-test-gate": {
+    "responsibility": "Autorisierte Nova→Buster-Planexecution mit signiertem Sourceimport",
+    "usage": "test.plan.execute-Adapter für buster-quality-gate; produktiver Nova-Gateclient",
+    "docStatus": "unvollständig: Quoten, Importdeadline, Restart und Shutdown",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.prism-design": {
+    "responsibility": "Architekturdispatch, Operatorwait und verifizierter Prism-Baselineimport",
+    "usage": "Explizite Nova-Stage; standalone Prism-Control und Archiv-/Waitstores",
+    "docStatus": "vorhanden; unvollständig zu Crash-/Speichergrenzen, Materialisierung ausdrücklich offen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.project-summary": {
+    "responsibility": "Digestgebundener Abschlussmanifest aus Implementation-/Gate-/Lint-/Reviewbelegen",
+    "usage": "Projectcompiler-Abschlussstage; nur Artefaktreads und Manifestwrite",
+    "docStatus": "vorhanden; unvollständig zu Attemptauswahl/Budgets/Producervertrauen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.repository-adapter": {
+    "responsibility": "Worktreelesen und proofgebundene Gitrevision/Inventar/Referenzoperationen",
+    "usage": "preflight/delivery-lint/review und OpenClaw-Collector; runtime-dispatch Fallbackwriter verfolgt",
+    "docStatus": "veraltet: activation-time HEAD; unvollständig zu Missing-Symlinks und Ressourcen",
     "review": "abgeschlossen",
     "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
   }

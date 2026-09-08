@@ -1,81 +1,51 @@
 # kubeclaw.project-summary
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Nova-Abschlussstage summary/kubeclaw.report.project-summary; Projectcompiler verdrahtet Modul- und finale Gates. `src/summary.ts` vollständig 69 Zeilen, stage.ts, Manifest, drei Schemas, README und alle drei Tests gelesen. Liefert delivery-manifest.v1 aus Core-Artefaktrefs, keine Veröffentlichung oder Deployment.
 
-- `skills/nova/plugins/project-summary`
+## 2. Schnittstellen und Gegenstellen
 
-Entrypoints: `src/stage.ts#execute`.
+Input projectId, eindeutige Module mit Source-/Teststage und finaler Source/Lint/Review/Testbindung. Laufzeit ergänzt Schemaregeln um eindeutige Modul-/Stage-IDs und finale Sourcezugehörigkeit. SDK source-revision.ts prüft jüngstes Implementationartefakt desselben Runs, Integrität und ready_for_testing. Qualitygate liefert native decision sowie separaten Verdict; lint liefert sourceRevision/summary, review revision.head/outcome. Alle vier Produzentenformen gegen deren Source/Tests abgeglichen.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Persistenz und Nebenwirkungen
 
-Registrierungen aus Manifest:
+Liest ausschließlich über artifacts.read und schreibt fertiges Manifest über artifacts.write. Read rekalkuliert kanonischen Digest und Bytelänge, statt Storebehauptung blind zu akzeptieren. Manifest enthält Evidence-Refs und eigenen kanonischen Digest. Keine Änderung am Arbeitsrepo, kein eigener dauerhafter Zustand.
 
-- `stages:summary` → `src/stage.ts#execute`; benötigte Capabilities: artifacts.read, artifacts.write
+## 4. Korrektheit
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`, `@kubeclaw/pipeline-test-gate-contract`
+Jüngster Attempt pro Stage/Namespace muss genau einen passenden Bericht liefern. Entscheidung muss schema-/digestgültig, passed und rungebunden sein; Qualitybericht muss dieselbe Entscheidung und Source bezeichnen. Finales Lint und Review müssen exakt dieselbe Revision prüfen, tools_failed/total_blocking nullfreie Zahl 0 und review passed. Fehler werden blocked. SDK liest Implementation zusätzlich zum lokalen read; kein alleiniger Vertrauensbeweis durch erfolgreiche JSON-Dekodierung.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Abbruch, Wiederholung und Konkurrenz
 
-## Tests und Dokumentation
+Keine eigenen Timer oder parallelen Tasks. Sequenzielle Adaptercalls nutzen Corekontext; Abbruch kommt von dessen Lease. Immutable Core-Refs verhindern nachträglich gewählte fremde Runs; Storebytes werden nochmals geprüft. Artefaktauswahl ist auf Contextsnapshot bezogen, keine Liveabfrage von Repository-HEAD. Doppelte Aufrufe unter gleichem Kontext erzeugen denselben Manifestinhalt.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Wiederanlauf und Teilaktionen
 
-- `skills/nova/plugins/project-summary/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/package-boundary.test.mjs`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs`
-- `tests/verification/e2e/real-run-evidence.mjs`
-- `tests/verification/e2e/run-real-pipeline-e2e.test.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
+Crash vor Write hinterlässt keinen halbfertigen Report im Plugin. Write vor Stagecommit unterliegt gemeinsamer Coreprojektion [PCR-EXEC-002](nova.execution.md), siehe auch [nova.lifecycle](nova.lifecycle.md). Es gibt keine automatische Reparatur fehlender Producerartefakte, sondern blocked. Externe Veröffentlichung gehört nicht zu dieser Stage.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauensgrenzen
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-changelog.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/project-summary/README.md`
+Run-ID stammt ausschließlich aus Lease. Input wählt Stage-IDs, kann aber keine Counts oder Verdicts direkt liefern. Registry/Graph ist vertrauenswürdige Policy; producergebundene Refs plus erneute Digests sind entscheidend. Lint-/Reviewbericht werden nicht voll gegen deren Gesamtschema validiert; Integrität beweist Herkunft/Unverändertheit, nicht fachliche Wahrheit eines kompromittierten Producers.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen und Aufbewahrung
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Höchstens 128 Module, 8 MiB kumuliertes Evidence-Lesebudget im summary read, Einzelobjekte müssen positive sichere Bytelängen haben. Finale Gatebindung wird nochmals gelesen, auch wenn sie einem Modul entspricht; zählt erneut zum Budget. SDK-eigene Source-Leseoperation liegt vor diesem Zähler, daher kein allgemeines Gesamt-I/O-/Heaplimit behauptet. Retention übernimmt Artefaktstore.
 
-- `charts/kubeclaw/files/config/knip.json:643`
-- `docs/architecture/plugin-system-current-inventory.md:64`
-- `docs/architecture/plugin-system-implementation-plan.md:780`
-- `docs/architecture/plugin-system-phase9-changelog.md:76`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:234`
-- `docs/site/extend/plugin-catalogue/README.md:29`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:67`
-- `docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md:68`
-- `docs/site/reference/capabilities.md:17`
-- `docs/site/reference/capabilities.md:18`
-- `packaging/runtime/roles/nova.json:51`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs:170`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs:173`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs:174`
-- `tests/verification/e2e/real-run-evidence.mjs:305`
-- `tests/verification/e2e/real-run-evidence.mjs:390`
-- `tests/verification/e2e/run-real-pipeline-e2e.test.mjs:234`
-- `tests/verification/e2e/run-v2-production-pipeline.mts:317`
-- `tests/verification/e2e/run-v2-production-pipeline.mts:319`
+## 9. Architektur
 
-## Offene Prüfpfade
+Kompakte deterministische Aggregation, sinnvoller Gegensatz zu ungebundenen Zählwerten. Doppelte Implementation-/Finalreads können durch klar begrenzten Cache für bereits digestgeprüfte Refs entfallen. Eindeutige versionierte Producerverträge würden Feldzugriffe über Record<string,any> reduzieren; keine neue Facade nötig. Finalrevision ist explizit deklarierte Auswahl, nicht automatisch aktuelles HEAD.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests
+
+`npm test` bestanden; `../evidence/nova-batch-project-summary-tests.txt`. summary.test.mjs nutzt echten Artefaktadapter mit erzeugten Producer-Fixtures und prüft Erfolg, fehlende/manipulierte/fremde Evidence sowie falsche Qualityrevision. Live-Test führt echten Runner ohne notwendige Artefakte aus und erwartet blocked. Paketgrenzentest ist statisch. Kein durchgehender Implementer→Buster→Lint→Review-Erfolgslauf dadurch bewiesen.
+
+## 11. Dokumentation
+
+README beschreibt evidencebasierten Abschluss zutreffend. Fehlend: genaueste Auswahl jüngster Attempts, doppelte Reads/Budgets, Graphpolicy als Vertrauensannahme und Grenze zwischen erfolgreich gebundenen Berichten und tatsächlicher Produktkorrektheit. Provider-/Runtimefehler bleiben bei ihren Komponenten.
+
+## 12. Befunde und Unsicherheit
+
+Kein zusätzlicher nachgewiesener Defekt in dieser Komponente. Zentraler Workspacefehler [PCR-IMPLEMENTATION-001](kubeclaw.implementation-agent.md) und fehlende Coreartefaktprojektion können Abschluss verhindern, werden hier nicht dupliziert. Offene Verifikation: vollständiger realer Producerlauf, Revisionen über Reparaturversuche und Budgetgrenzfälle mit vielen Modulen. Belegte Semantik: ein fehlender/inkonsistenter Bericht führt zum blockierten Abschluss.

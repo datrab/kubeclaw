@@ -1,0 +1,26 @@
+{"ts":"2026-09-08T14:25:44.605Z","level":"INFO","component":"lint-report","msg":"Detected project types: helm, yaml","data":{"markers":{"helm":"**/Chart.yaml","yaml":"**/*.yaml"}}}
+{"ts":"2026-09-08T14:25:44.606Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-09-08T14:25:44.607Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["kubernetes-policy","kubernetes-schema"]}}
+{"ts":"2026-09-08T14:25:44.607Z","level":"STEP","component":"lint-report","msg":"Running: Kubernetes manifest policy"}
+{"ts":"2026-09-08T14:25:44.691Z","level":"WARN","component":"lint-report","msg":"Tool kubernetes-policy failed: helm-template could not execute: spawnSync helm ENOENT"}
+{"ts":"2026-09-08T14:25:44.692Z","level":"WARN","component":"lint-report","msg":"Kubernetes manifest policy: error — helm-template could not execute: spawnSync helm ENOENT"}
+{"ts":"2026-09-08T14:25:44.693Z","level":"STEP","component":"lint-report","msg":"Running: Kubernetes schema validation"}
+{"ts":"2026-09-08T14:25:44.728Z","level":"WARN","component":"lint-report","msg":"Kubernetes schema validation: error — kubeconform not found in PATH"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'error' !== 'ok'
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts:145:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'error',
+  expected: 'ok',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

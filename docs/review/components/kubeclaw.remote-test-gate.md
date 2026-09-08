@@ -1,81 +1,51 @@
 # kubeclaw.remote-test-gate
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Adapter `test.plan.execute`, `src/adapter.ts:63–109`, vom buster-quality-gate aufgerufen. Übersetzt eine autorisierte Capability in den produktiven Nova→Buster-Remote-Gatepfad. Alle Source, Manifest, Configschema, README und Pakettest gelesen; Transport/Import bleiben bei [nova.test-gates](nova.test-gates.md).
 
-- `skills/nova/plugins/remote-test-gate`
+## 2. Verträge und Gegenstellen
 
-Entrypoints: `src/adapter.ts#activate`.
+Capability, Operation run und Ressourcentyp test.resolved-plan werden geprüft. Payloadplan durch gemeinsamen Contract validiert, plan.runId gegen Attempt geprüft, Grantkeys müssen exakt den Planknoten entsprechen. Repository wird realpath-kontrolliert gegen konfigurierte erlaubte Wurzeln. Revision/Repository-ID, Stage-ID, Idempotenzschlüssel, Timeout und Signal gehen an createProductionNovaTestGate; nur dessen native Entscheidung wird an die Stage zurückgegeben. Sourceattestierungsschlüssel und optional Bearer-Token kommen aus confidential secrets.read.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand und Nebenwirkungen
 
-Registrierungen aus Manifest:
+Jeder Aufruf konstruiert produktive Gate-Stores unter stateRoot; lokale Archive/Importe und externer Busterjob entstehen im delegierten Pfad. Adapter selbst hält nur Konfiguration und stopping. Gleicher stateRoot setzt funktionierende Journal-/Dateisperren voraus; Befunde bei nova.state und nova.test-gates beachten.
 
-- `adapters:plan` → `src/adapter.ts#activate`; benötigte Capabilities: secrets.read
+## 4. Korrektheit
 
-Paketabhängigkeiten: `@kubeclaw/nova-core`, `@kubeclaw/pipeline-test-gate-contract`, `@kubeclaw/plugin-sdk`
+Planownership und Wurzelprüfung verhindern einfaches Vertauschen von Runs/Repos. IPv6-Loopback scheitert bereits in parseConfig: URL.hostname liefert [::1], Whitelist enthält ::1. Dies ist derselbe Ursachenbefund [PCR-NOVA-GATE-003](nova.test-gates.md), hier zusätzlicher betroffener Produktionsentrypoint. Keine zweite Befund-ID.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Zeitlimits, Abbruch und Parallelität
 
-## Tests und Dokumentation
+Initialer Abort und Leasefence werden geprüft; Signal wird vollständig weitergegeben. Eigene Timeoutsteuerung fehlt bewusst. PCR-NOVA-GATE-001/002 betreffen verlorene Submitantwort und hängenden Import auch über diesen Adapter. Maximal 64 Provider parallel, Zeitlimit höchstens zwei Stunden. shutdown blockiert neue Aufrufe, besitzt aber keine eigene Liste laufender Jobs; deren Ende hängt von Core-Abbruch und Gate ab.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Neustart und Teilaktionen
 
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/remote-test-gate/tests/live-function.test.ts`
-- `tests/verification/contracts/check-pipeline-legacy-retirement.mts`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
+Neuer Adapter rekonstruiert Gate aus denselben Storepfaden. Effektjournal/Importjournal müssen externen Submit und Replay versöhnen; kein eigener Versuch, einen unklaren Job blind erneut auszuführen. Abgestürzte Nova/Buster-Kette hier nicht erfolgreich als Gesamtlauf getestet. Persistenzbefunde werden nicht durch frische Gateinstanz behoben.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Authentifizierung und Vertrauen
 
-- `docs/architecture/pipeline-test-gate-implementation-plan.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/remote-test-gate/README.md`
+Secrets werden nicht in normaler Stagepayload transportiert. Bearer bzw. SPIFFE-Proxykonfiguration an produktiven Client; Proxy/TLS/Dateirechte sind Infrastrukturannahmen, kein Infrastrukturreview. Rootallowlist realpath-basiert; Symlinkziel muss innerhalb liegen. Plan-/Grantprüfung ersetzt nicht Registryautorisierung. Freie Payloadgrants werden durch nachgelagerte signierte Plan-/Providerprüfungen beschränkt.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen und Aufbewahrung
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Konstanten: 64 MiB Antwort/Resultat/Archiv/Evidence, 1 GiB jeweiliger Gesamtstore, 10.000 Records, 64 MiB Record. Nicht konfigurierbar je Adapter. [PCR-NOVA-GATE-004](nova.test-gates.md) widerlegt die korrekte Durchsetzung eines Teilbudgets. Kein adaptereigenes GC; Retention/Quoten in Stores und Betrieb zu dokumentieren.
 
-- `charts/kubeclaw/files/config/knip.json:655`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:124`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:728`
-- `docs/architecture/pipeline-test-gate-unit-cutover-inventory.json:30`
-- `docs/architecture/plugin-system-current-inventory.md:65`
-- `docs/architecture/plugin-system-phase5-capabilities.json:21`
-- `docs/site/extend/plugin-catalogue/README.md:48`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md:66`
-- `docs/site/reference/capabilities.md:38`
-- `docs/site/reference/capabilities.md:44`
-- `package.json:74`
-- `packaging/runtime/roles/nova.json:52`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts:58`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts:76`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts:107`
-- `tests/verification/contracts/check-pipeline-legacy-retirement.mts:11`
-- `tests/verification/contracts/check-pipeline-legacy-retirement.mts:19`
-- `tests/verification/contracts/check-project-compiler.mts:82`
-- `tests/verification/contracts/check-project-compiler.mts:93`
-- `tests/verification/contracts/check-project-compiler.mts:103`
-- `tests/verification/contracts/quality-provider-runtime.mts:72`
-- `tests/verification/contracts/quality-provider-runtime.mts:95`
-- `tests/verification/contracts/quality-provider-runtime.mts:127`
+## 9. Architektur und Vereinfachung
 
-## Offene Prüfpfade
+Sinnvolle dünne Capabilitygrenze. Loopbackprüfung an mehreren Stellen driftet bereits: gemeinsam kanonische Hostprüfung verwenden. Gatebudgetkonfiguration sollte einen geprüften strukturierten Vertrag statt duplizierter Zahlen haben. Shutdownzuständigkeit ausdrücklich Core/Gate zuordnen und integrieren.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests und Aussagekraft
+
+`npm test` bestanden; gespeichertes Ergebnis: `../evidence/nova-batch-remote-test-gate-tests.txt`. Pakettest prüft lediglich typeof activate, kein laufender Gate! Zusätzliche Originalprobe `../evidence/nova-batch-remote-ipv6-probe.mjs` validiert Schema und reproduziert Aktivierungsfehler ohne Netzwerk. Ausgeführte Transport-/Storebelege in Review24 sind getrennte gemeinsame Tests; keine eigene Provider-E2E-Bestätigung.
+
+## 11. Dokumentationsabgleich
+
+README erklärt Capability/Remotegrenze, aber Importdeadline, konkrete Budgetdurchsetzung, Restart und shutdown laufender Aufträge bleiben unvollständig. Testname live-function bedeutet hier nur Importierbarkeit. IPv6-Konfiguration wird vom Schema zugelassen, zur Laufzeit abgewiesen.
+
+## 12. Befunde und offene Nachweise
+
+Zentrale Befunde PCR-NOVA-GATE-001 bis004 verlinkt; zusätzlicher Codebeleg für003: adapter.ts49–53 und Originalprobe. Regression: IPv4/IPv6/localhost akzeptieren, externe Hosts abweisen, anschließend echte Proxyverbindung prüfen. Offene Gesamtnachweise: produktive SPIFFE-Verbindung, aktiver Job bei shutdown/Neustart und kombinierte Quoten. Review abgeschlossen bedeutet untersuchter Codepfad, keine Bestätigung dieser Integrationen.

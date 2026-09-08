@@ -26,7 +26,7 @@ jedes relevanten Übergangs gemeinsam prüfen. Vollständige Projekt-E2E-Traces
 sind ein Folgeauftrag. Infrastruktur nur als Abhängigkeit/Annahme erfassen;
 auffällige Infrastrukturfragen separat zur Folgeprüfung notieren.
 
-## Lebendes gemeinsames Review-Schema (Revision 6)
+## Lebendes gemeinsames Review-Schema (Revision 7)
 
 Jede fachlich abgeschlossene Review-Datei muss folgende Kriterien konkret
 behandeln; nicht anwendbare Kriterien begründen:
@@ -105,6 +105,15 @@ Reine Verträge/Registry/Config und lokale Read-/Writeadapter führen keine solc
 Observerzustellung aus; ihre eigenen Replay-/Fehlergrenzen bleiben dokumentiert.
 Busterprovider-Retries besitzen eigene Workerattempts und dürfen daraus keine
 automatische Behebung des Observerpfads ableiten. Keine pauschale Testwiederholung.
+Revision 7: Fehlerdispositionen bis zu Consumer-Fallbacks verfolgen. Insbesondere
+ENOENT/missing darf nicht ungeprüft einen Create-/Writepfad freigeben; existente
+Elternpfade bei fehlender Leaf und anschließende Writes gemeinsam prüfen.
+Repositoryadapter und Runtimecollector wurden auf beiden Seiten erneut geprüft:
+PCR-REPOSITORY-001 führt den Originalnachweis zentral, Runtime verlinkt ihn.
+Lint wurde auf dieselbe Eltern-/Targetgrenze geprüft und besitzt eine getrennte
+native Ausführungsgrenze (PCR-LINT-001). Die bisherigen Store-/Git-/Artefakt-
+reviews enthalten ihre eigenen Pfad-/Create-/Replaygrenzen; daraus folgt keine
+pauschale Rückstufung und kein unbewiesener allgemeiner Symlinkschutz.
 Bei neuer Erkenntnis Schema hier erweitern; betroffene bereits abgeschlossene
 Reviews explizit zur Nachprüfung markieren und ihren Status aktualisieren.
 
