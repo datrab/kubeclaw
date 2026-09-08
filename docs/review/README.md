@@ -12,6 +12,9 @@ besitzt denselben verifizierten Git tree
 `e43c39eea59b07f0a749b7b49f3aefdd11b14ed0`. Der Codeinhalt entspricht
 damit exakt der Baseline. Eigene Arbeitskopie; fremde Arbeitsstände unverändert.
 
+Abschluss: **93/93 Einzelreviews**, 103 offene Befundkennungen; Codebaseline unverändert.
+[Abschlussübersicht](summary.md) trennt Reviewabdeckung von fehlender Laufzeitverifikation.
+
 Einstieg: [Inventar](inventory.md), [Übergabe](handoff.md),
 [Befundregister](findings.md), [Operations-/Paketprüfung](operations-and-packaging.md).
 `inventory-data.json` enthält die ausführlichen Zuordnungsbelege, keine

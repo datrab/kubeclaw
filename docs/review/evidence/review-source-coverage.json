@@ -1,0 +1,557 @@
+{
+  "baseline": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+  "meaning": "Vollständige verteilte Lektüre; keine Test-PASS-Aussage. Root schloss gekürzten Context-production-Abschnitt und Gesamtübergänge.",
+  "sourceModules": [
+    {
+      "path": "skills/nova/plugins/review/src/echo-context-request-parser.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-evidence-verification.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-contract.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-parser.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-verification-parser.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/protocol.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-cache.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-results.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-contract.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-values.ts",
+      "readBy": [
+        "observers",
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-cluster-contract.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-cluster-identity.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-cluster-ranking.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-clustering.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-authority.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-candidates.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-production.ts",
+      "readBy": [
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-selection.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-evaluation-metadata.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-evidence-authority.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-execution-settings.ts",
+      "readBy": [
+        "observers",
+        "root",
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-fact-extractors.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-finding-governance.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-governor-decision.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-governor-history.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-governor.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-graph.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-hard-limits.ts",
+      "readBy": [
+        "observers",
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-import-scanner.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-import-syntax.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-invariants.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-inventory-lookup.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-json.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-local-aliases.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-map-artifacts.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-ordering.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-contract.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-parser.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-preparation.ts",
+      "readBy": [
+        "observers",
+        "root",
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+      "readBy": [
+        "observers",
+        "root",
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-proposal-preflight.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-reducer.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-reduction-state.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-repair-batch.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-builder.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-contract.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-flow.ts",
+      "readBy": [
+        "root",
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-storage.ts",
+      "readBy": [
+        "root",
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-repository.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-runtime-attestation.ts",
+      "readBy": [
+        "observers",
+        "root",
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-scale-slicing.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-semantic-flow.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-slicing.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-input.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-result.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-verification.ts",
+      "readBy": [
+        "observers",
+        "root",
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-test-relations.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verdict-policy.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verification-reconciliation.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verified-findings.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verifier.ts",
+      "readBy": [
+        "observers"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-execution.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-topology.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-types.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-verification-evidence.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-verification.ts",
+      "readBy": [
+        "review_audit"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-contract.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-fact-producer.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-manifest.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-miner.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-parser.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-registry.ts",
+      "readBy": [
+        "buster"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/stage.ts",
+      "readBy": [
+        "observers",
+        "root"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/verification-protocol.ts",
+      "readBy": [
+        "observers"
+      ]
+    }
+  ]
+}

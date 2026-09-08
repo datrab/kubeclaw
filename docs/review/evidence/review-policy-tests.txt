@@ -1,0 +1,79 @@
+COMMAND node tests/review-governor.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-governor"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evidence-authority"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-fact-producer"}
+
+COMMAND node tests/review-report-contract.unit.test.mjs
+EXIT 0
+review report contract unit tests passed
+
+COMMAND node tests/review-report-builder.unit.test.mjs
+EXIT 0
+review report builder unit tests passed
+
+COMMAND node tests/simplification-contract.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-contract"}
+
+COMMAND node tests/simplification-miner.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-miner"}
+
+COMMAND node tests/simplification-manifest.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-manifest"}
+
+COMMAND node tests/simplification-fact-producer.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-fact-producer"}
+
+COMMAND node tests/echo-review-output.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"echo-review-output"}
+
+COMMAND node tests/echo-review-verification.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"echo-review-verification"}
+
+COMMAND node tests/review-verdict-policy.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verdict-policy"}
+
+COMMAND node tests/review-verified-findings.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verified-findings"}
+
+COMMAND node tests/review-policy-contract.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-contract"}
+
+COMMAND node tests/review-invariants.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-invariants"}
+
+COMMAND node tests/review-policy-resolver.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-resolver"}
+
+COMMAND node tests/review-policy-profiles.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-profiles"}
+
+COMMAND node tests/review-reducer.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-reducer"}
+
+COMMAND node tests/review-decision-matrix.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-decision-matrix","cases":34}
+
+COMMAND node tests/review-contract-parity.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-contract-parity","echoCases":15,"verificationCases":9,"policyCases":8,"stageResults":4}
+
+COMMAND node tests/review-evaluation-metadata.unit.test.mjs
+EXIT 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evaluation-metadata"}

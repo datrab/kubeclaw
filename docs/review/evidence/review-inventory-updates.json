@@ -1,0 +1,9 @@
+{
+  "kubeclaw.review": {
+    "review": "abgeschlossen",
+    "responsibility": "Deterministisches Diffgate, Repositoryaudit und Revalidation um begrenzte agentische Urteile.",
+    "usage": "Nova-Compiler → Diffgate; Audit/Revalidation über explizite Graphregistrierungen; drei getrennte Stageexports.",
+    "entry": "src/stage.ts#execute; src/repository-audit-stage.ts#executeRepositoryAudit; src/repository-revalidation-stage.ts#executeRepositoryRevalidation",
+    "docStatus": "vorhanden / veraltet / unvollständig; Fail-closed, Scope, Retry, Recovery und Scale komponentengenau abgeglichen"
+  }
+}

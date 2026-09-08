@@ -1,0 +1,4 @@
+{"ok":true,"suite":"repository-revalidation"}
+{"probe":"revalidation-zero-shared-retries","outcome":"passed","calls":2}
+{"probe":"revalidation-transport","outcome":"blocked","reason":{"code":"kubeclaw.review.repository_revalidation_incomplete","message":"transport unavailable"}}
+{"probe":"revalidation-one-job-cap","outcome":"passed","calls":2,"cap":1}

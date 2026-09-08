@@ -1,6 +1,6 @@
 # Zentrales Befundregister
 
-97 stabile Befundkennungen im aktuellen Prüfstand. Alle bleiben offen;
+103 stabile Befundkennungen im aktuellen Prüfstand. Alle bleiben offen;
 dieser Auftrag verändert keine Implementierung. Schweregrad, Begründung,
 Evidenzklasse, Auslöser, konkrete Folgen, Ursachenbehebung und Regression stehen
 im verlinkten Eigentümerbericht. Querverweise erzeugen keine weiteren Befunde.
@@ -87,6 +87,12 @@ Ein nachgewiesener Codepfad ist kein bestandener Laufzeittest.
 | PCR-REGISTRY-001 | Globale Ajv-ID verhindert erneuten Registryaufbau | [foundation.registry](components/foundation.registry.md) |
 | PCR-REGISTRY-002 | Securitytest erreicht seine Autorisierungsfälle nicht | [foundation.registry](components/foundation.registry.md) |
 | PCR-REPOSITORY-001 | Fehlender Symlinkpfad aktiviert Schreibausbruch im Collector | [kubeclaw.repository-adapter](components/kubeclaw.repository-adapter.md) |
+| PCR-REVIEW-AUDIT-001 | Malformed Review wird als vollständig bestanden berichtet und erneut gecacht | [kubeclaw.review](components/kubeclaw.review.md) |
+| PCR-REVIEW-AUDIT-002 | Automatisch erzeugter Plugin-Scope wird vom echten Repository-Adapter abgewiesen | [kubeclaw.review](components/kubeclaw.review.md) |
+| PCR-REVIEW-AUDIT-003 | Revalidation ignoriert konfigurierte Job- und gemeinsame Retrygrenzen | [kubeclaw.review](components/kubeclaw.review.md) |
+| PCR-REVIEW-AUDIT-004 | Revalidation verwandelt temporäre Infrastrukturfehler in endgültigen Integritätsblock | [kubeclaw.review](components/kubeclaw.review.md) |
+| PCR-REVIEW-POLICY-001 | medium — Gültige Custompolicy scheitert erst an erforderlichem Report | [kubeclaw.review](components/kubeclaw.review.md) |
+| PCR-REVIEW-POLICY-002 | medium — Eigenproduzierte Simplification-Evidenz ist nicht parser- und scopekohärent | [kubeclaw.review](components/kubeclaw.review.md) |
 | PCR-RUNTIME-001 | Sessioncleanup bleibt bei Ablauf/Elternabbruch wirkungslos | [kubeclaw.runtime-dispatch](components/kubeclaw.runtime-dispatch.md) |
 | PCR-SCAFFOLD-001 | Regeneration verwirft ausgefüllten Providerplan | [nova.scaffold](components/nova.scaffold.md) |
 | PCR-SCAFFOLD-OPS-001 | Statusfehler beendet Supervisor scheinbar erfolgreich | [operations-and-packaging](operations-and-packaging.md) |

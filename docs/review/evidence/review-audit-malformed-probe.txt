@@ -1,0 +1,3 @@
+{"ok":true,"suite":"repository-audit-stage"}
+{"probe":"malformed-audit","outcome":"passed","incomplete":1,"completeness":"all-requested-work-completed"}
+{"probe":"malformed-audit-retry-cache","outcome":"passed","incomplete":1,"freshCalls":0}

@@ -1,0 +1,21 @@
+$ node tests/repository-audit-stage.unit.test.mjs
+{"ok":true,"suite":"repository-audit-stage"}
+EXIT 0
+$ node tests/repository-revalidation.unit.test.mjs
+{"ok":true,"suite":"repository-revalidation"}
+EXIT 0
+$ node tests/repository-review-profile.unit.test.mjs
+{"ok":true,"suite":"repository-review-profile"}
+EXIT 0
+$ node tests/review-content-cache.unit.test.mjs
+{"ok":true,"suite":"review-content-cache"}
+EXIT 0
+$ node tests/scalable-review-topology.unit.test.mjs
+{"ok":true,"suite":"scalable-review-topology"}
+EXIT 0
+$ node tests/scalable-review-jobs.unit.test.mjs
+{"ok":true,"suite":"scalable-review-jobs"}
+EXIT 0
+$ node tests/scalable-review-verification.unit.test.mjs
+{"ok":true,"suite":"scalable-review-verification"}
+EXIT 0

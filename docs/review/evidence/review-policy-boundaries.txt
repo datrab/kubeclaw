@@ -1,0 +1,4 @@
+CONFIRMED custom settings policy accepted; required report rejected
+{"case":"legal-dollar-symbol","generated":2,"candidates":0,"diagnostics":[{"sourceDigest":"sha256:580f84e3ae0b6abdbbfdd6f04562fe4575c5f1c6c102b8b82f225ed9a0041997","code":"malformed_source","message":"facts[1].symbol is invalid"}]}
+{"case":"same-name-in-independent-scopes","generated":2,"candidates":0,"diagnostics":[{"sourceDigest":"sha256:1cb56851fee5ca9a086d684cb161251786767f73cefab32ea4c59c0eecd1ca64","code":"malformed_source","message":"fact IDs contains duplicates"}]}
+CONFIRMED non-executable comment produces high-confidence wrapper fact (advisory candidate, no repair authorization)

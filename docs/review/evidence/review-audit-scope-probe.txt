@@ -1,0 +1,2 @@
+{"probe":"actual-adapter-scope","scope":{"kind":"plugin","names":["review"],"dependencyRadius":0},"error":"REPOSITORY_PATH_FORBIDDEN"}
+{"probe":"actual-adapter-scope","scope":{"kind":"path","prefixes":["skills/nova/plugins/review/"]},"error":"REPOSITORY_PATH_FORBIDDEN"}
