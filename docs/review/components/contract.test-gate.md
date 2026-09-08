@@ -239,3 +239,23 @@ Orientierung, keine Betriebsanleitung für die jetzige Implementierung.
 Weitere offene Fragen sind Ressourcen-/Decodergrenzen und externe Leser der
 Dateischemas. Kein neuer Sicherheitsbefund allein aus fehlender isolierter
 Querverifikation: die aufgeführten produktiven Gegenprüfungen wurden berücksichtigt.
+
+### PCR-TEST-CONTRACT-002 — Beispiele deklarieren verbotenes Inputfeld
+
+**Niedrig; nachgewiesener Dokumentationsdefekt.**
+`examples/api-suite.json:10,14` und `examples/tailscale-exposure.json:7,15`
+enthalten `inputs.*.schemaId`. Novas Originalresolver erlaubt dort nur
+from/output/mediaType (`skills/nova/core/test-gates/resolver.ts:171–178`,
+`types.ts:11–15`); die Schemaidentität kommt aus den registrierten Ports.
+Beide Originalbeispiele mit echter Busterregistry an den Resolver übergeben:
+`TEST_PLAN_FIELD_UNKNOWN` am schemaId, bevor eine Ausführung entstehen kann.
+Auswirkung: dokumentierte Konfigurationsfragmente sind nicht direkt nutzbar.
+Ursache beheben: Beispiele an die tatsächliche Deklarationsschnittstelle
+anpassen, keine redundante schemaId-Overridefunktion hinzufügen.
+Regression: alle Beispiele in ein vollständiges echtes Projekt einbetten und
+mit Originalregistry/-resolver prüfen, einschließlich Suite-lokaler Referenzen.
+[Probe](../evidence/nova-resolver-examples.mjs),
+[Resultat](../evidence/nova-resolver-examples.txt). Die Probe bestätigt die
+unzulässigen Felder; sie behauptet nicht, dass deren Entfernung allein alle
+externen Fixturebezüge vollständig macht. Rückprüfung aus nova.test-gates;
+Vertragsreviewabschluss bleibt bestehen, Dokumentationsbefund ergänzt.

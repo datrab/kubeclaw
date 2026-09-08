@@ -52,3 +52,10 @@ oder Agent-Ergebnisse aus lokalen Testdoubles ableiten.
 
 | nova-execution-tests.txt / orchestrator-wait-window.mjs / result-artifact-window.mjs | Vier Original-Coreprüfkommandos bestanden; zwei gültige Journalpräfixe reproduzieren Wait-/Artefaktprojektionsfehler. |
 | nova-lifecycle-tests.txt | Original-Lifecycleregeln und echter Recorder-/Journal-/SIGKILL-Replaytest bestanden. |
+
+| nova-test-gates-tests.txt | Vier Original-Resolver-/Remote-/Import-/Konfigurationsprüfungen bestanden; vorhandene synthetische Provider-/Transportfixtures im Review offengelegt. |
+| nova-remote-timeouts.mjs / .txt | Original-HTTP-/Store-/Importpfad mit realem Loopback-Fehlerproxy: fehlendes Cancel und ungebundene Importdauer; vorhandener synthetischer Serviceexecutor, kein Provider-Sandboxnachweis. |
+| nova-resolver-examples.mjs / .txt | Originalbeispiele mit echter Busterregistry am Resolver abgelehnt; IPv6loopback am Originalconstructor abgelehnt. |
+| nova-archive-budget.mjs / .txt | Zwei echte signierte Gitarchive überschreiten Original-Dispatchstoregesamtquote: 452 > 228 Bytes. |
+
+Nachprüfung Review 24: `nova-remote-timeouts-recheck.txt` bestätigt beide Fehler mit lasttoleranter Beobachtung; ursprüngliche Kurzzeitprobe scheiterte zunächst an accepted/running bzw. noch nicht erreichtem Import (siehe Review).

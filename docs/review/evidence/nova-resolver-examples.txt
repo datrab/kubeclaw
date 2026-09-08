@@ -1,0 +1,3 @@
+{"example":"api-suite","rejected":"TestPlanResolutionError: TEST_PLAN_FIELD_UNKNOWN:scope.suites.api.overrides.http.inputs.deployment.schemaId"}
+{"example":"tailscale-exposure","rejected":"TestPlanResolutionError: TEST_PLAN_FIELD_UNKNOWN:scope.tests.public-health.inputs.endpoint.schemaId"}
+{"ipv6Loopback":"[::1]","spiffeProxy":"rejected by original constructor"}

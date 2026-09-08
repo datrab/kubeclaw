@@ -75,7 +75,7 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [nova.lifecycle](components/nova.lifecycle.md) | Aktiver Resultreducer, Journalreplay und gemeinsame Remediationinvalidierung | unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [nova.telemetry](components/nova.telemetry.md) | Aktiv: Engine/Admin → serialisierte Observerdrains; CLI → Audit aus Journal | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.observability](components/nova.observability.md) | Recoveryhook aktiv; Planwriter nur Tests; keine belegte Lifecycleübernahme | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
-| [nova.test-gates](components/nova.test-gates.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [nova.test-gates](components/nova.test-gates.md) | Aktive Remote-Gate-Komposition via Adapter/CLI; Resolver-API direkt in Tests und Preflights aufgerufen. | unvollständig und teilweise veraltet | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [nova.entry](components/nova.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [nova.scaffold](components/nova.scaffold.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [worker.core](components/worker.core.md) | Buster: Runtime + Executor; Prism: Executor direkt | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
