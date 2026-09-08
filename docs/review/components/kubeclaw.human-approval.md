@@ -1,77 +1,117 @@
 # kubeclaw.human-approval
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Zwei Nova-Registrierungen: approval / kubeclaw.decision.human-approval und
+architecture-approval / kubeclaw.decision.architecture-approval. Manifest routet
+auf stage.ts und architecture-approval.ts; gemeinsamer strikter approval.ts.
+Alle Sourcefiles, Schemas, Manifest, README und Pakettests gelesen. Nur explizite
+Graphauswahl; Architecturefactbedingung ist Graphverantwortung, kein automatischer
+Trigger im Plugin. Aktueller Projectcompiler enthält keine dieser Stages.
 
-- `skills/nova/plugins/human-approval`
+## 2. Verträge und Gegenstellen
 
-Entrypoints: `src/architecture-approval.ts#execute; src/stage.ts#execute`.
+Summary, config target/issuerId/timeoutMinutes; Guidance pending oder
+approved/rejected mit passendem operator-Issuer. Pending erstellt signal.wait
+und prüft zurückgegebenen Wait vollständig, danach operator.request. Wait-ID,
+Typ approval.resolved, Issuer, Expiry und Summary müssen übereinstimmen.
+wait-store/src/adapter.ts erzeugt durable/idempotente Waits; operator-messaging
+publiziert an konfigurierte Ziele. Core engine-snapshots.ts#validateSignal prüft
+Wait/Signal/Issuer, Expiry und issuedAt; danach reicht engine-run.ts Payload als
+Guidance durch. Terminalguidance erzeugt keine neuen Capabilityaufrufe.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Architecturevariante selektiert genau einen neuesten Attempt eines Producers im
+aktuellen Run, prüft JSON, <=256 KiB, Digest/Bytes und verdict=passed. Leere
+Findings passieren, sonst digestgebundene gekürzte Zusammenfassung an dieselbe
+Approvalstage. Gegenstelle architecture-validator schreibt genau dieses Format.
 
-Registrierungen aus Manifest:
+## 3. Zustand und Nebenwirkungen
 
-- `stages:approval` → `src/stage.ts#execute`; benötigte Capabilities: operator.request, signal.wait
-- `stages:architecture-approval` → `src/architecture-approval.ts#execute`; benötigte Capabilities: artifacts.read, operator.request, signal.wait
+Durable Wait vor Operatornachricht verhindert eine Nachricht ohne bereits
+existierenden Adapterwait. Danach Stage-Waitcommit im Core ist ein separater
+Schritt. Approval-ID enthält Run+Stage, konkrete Wait-ID folgt Effectidentität.
+Kein eigener Journalstore; Response-/Inputwerte eingefroren. Architecturelesen
+verändert keine Evidenz, Reporttrunkierung betrifft nur Benachrichtigungstext.
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+## 4. Fehlerbehandlung
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+Ungültiger Issuer/Guidance/Input wirft; Core blockiert nach seinen Regeln.
+Ablehnung ergibt blocked mit Grund, Zustimmung passed. Waitabweichung verhindert
+Benachrichtigung. Konfigurationsschema und Runtimeparser unterscheiden sich bei
+agentRole: PCR-APPROVAL-001. Große gültige Architekturberichte können am
+256-KiB-Empfängerlimit blockieren; kein gemeinsames Producerbudget zugesichert.
 
-## Tests und Dokumentation
+## 5. Timeout, Abbruch und Wiederholung
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+1–525600 Minuten, Default 60; berechnet aus aktuellem Prozesszeitpunkt. Keine
+aktive Timerwarteschleife; Expiry wird durch Core beim Resume geprüft. Neue
+Versuche berechnen neue Expiry, bestehende Effectreceipts benötigen daher
+konsistente Wiederaufnahme statt blindem Neuaufruf. Keine Cancellationnachricht
+im Plugin. Operatorzustellung/Retry und Duplikate sind Adapter-/Coreverantwortung.
 
-- `skills/nova/plugins/human-approval/tests/approval.unit.test.mjs`
-- `skills/nova/plugins/human-approval/tests/architecture-approval.unit.test.ts`
-- `skills/nova/plugins/human-approval/tests/live-function.test.ts`
-- `skills/nova/plugins/human-approval/tests/package-boundary.test.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
+## 6. Crash und Resume
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+Crash nach Waitadapter oder Nachricht, vor Corewaitcommit lässt mehrere
+persistierte Ebenen unterschiedlich weit zurück. Coredefekt PCR-EXEC-001 und
+Wait-/Messagingrecovery zentral verlinken; nicht hier nochmals beanspruchen.
+Architectureapproval prüft nach Neustart wieder exakte Artefaktrefs. Kein eigener
+Replay, der externe Zustimmung erfindet.
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-changelog.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/human-approval/README.md`
+## 7. Authentifizierung und Autorisierung
 
-## Aufrufer- und Abhängigkeitsbelege
+Plugin vergleicht Issuer-ID, authentifiziert aber keine Person kryptographisch.
+Transport-/CLIgrenze muss die Signalherkunft authentifizieren. README-Begriff
+„operator-issuer authentication“ ist deshalb ohne Kontext überstark. Grants
+beschränken Targets, Signalklassen und Issuerlisten. Architectureartefakte sind
+an Run/Producer/Digest gebunden; keine bloße Suche nach neuestem Storeobjekt.
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+## 8. Limits und Retention
 
-- `charts/kubeclaw/files/config/knip.json:569`
-- `docs/architecture/plugin-system-current-inventory.md:58`
-- `docs/architecture/plugin-system-implementation-plan.md:688`
-- `docs/architecture/plugin-system-phase9-changelog.md:73`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:146`
-- `docs/site/extend/plugin-catalogue/README.md:23`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:71`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:78`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:79`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:80`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:81`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:82`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:83`
-- `docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md:84`
-- `docs/site/reference/capabilities.md:17`
-- `docs/site/reference/capabilities.md:36`
-- `docs/site/reference/capabilities.md:40`
-- `packaging/runtime/roles/nova.json:45`
-- `skills/nova/plugins/architecture-validator/README.md:10`
-- `tests/verification/e2e/run-v2-production-pipeline.mts:296`
-- `tests/verification/e2e/run-v2-production-pipeline.mts:303`
+Summary 10000 Zeichen, Configtexte 1024, Grund 4096; Architectureinput 4096 und
+Report maximal 256 KiB. Findingszusammenfassung kürzt mit Verweis auf Original-
+artefakt. Wait-/Deliveryretention gehört den Stores; kein autonomes Löschen.
+Voraussetzungen: persistente Wait-/Effects-/Artefaktstorage, Operatorendpoint,
+korrekte Uhr und authentifizierter Resumezugriff.
 
-## Offene Prüfpfade
+## 9. Architektur
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+Gemeinsamer Approvalpfad plus kleine Evidencevariante hält Zuständigkeit klar.
+Schema-/Parserregeln aus gemeinsamer Definition ableiten. Durable Wait und
+Nachricht bleiben eine dokumentierte mehrstufige Transaktion, keine behauptete
+Atomarität. Große Berichtbudgets mit Architekturproducer abstimmen.
+
+## 10. Tests
+
+`npm test` **bestanden**:
+[Protokoll](../evidence/nova-batch-human-approval-tests.txt).
+Unitprüfungen zu Guidance/Issuer/Expiry/Wait; Architecturetest mit echtem
+Artefaktadapter (handverdrahteter Context, keine volle Corelease), gefälschten
+Refs und späteren Storeversionen; Live-Test echter Runner/Waitstore/HTTP/HMAC und
+Nachweis Wait existiert vor Receipt. Terminalguidance wird im Test direkt dem
+Runner gegeben: kein authentifizierter vollständiger Resume-CLItest.
+Zusätzliche Originalparser-/Schema-Gegenprobe
+`node docs/review/evidence/nova-batch-approval-config-probe.mjs` reproduziert
+schemaAccepted=true/runtimeRejected=APPROVAL_CONFIG_UNKNOWN_FIELD:agentRole.
+
+## 11. Dokumentation
+
+README zu Stageaufteilung, durable Wait und terminalem No-call-Verhalten stimmt.
+**Unvollständig** zur externen Authentifizierungsgrenze, Expiry-/Crashfenstern;
+Schema bietet nicht verwendbares agentRole an. Abhängiger Architekturreview
+enthält genaue Budget-/Factgrenzen.
+
+## 12. PCR-APPROVAL-001 — Schema akzeptiert unerlaubte Runtimekonfiguration
+
+**Mittel; nachgewiesener Vertragsdefekt.** `schemas/config.schema.json` erlaubt
+agentRole, `src/approval.ts:73–75` erlaubt ausschließlich target, issuerId,
+timeoutMinutes. Beide Stageregistrierungen verwenden diese Kombination.
+Auslöser: config {target:'ops',issuerId:'operator:ops',agentRole:'nova'} passiert
+Schema und scheitert sofort im Originalparser. Auswirkung: formal valide
+Approvalkonfiguration kann niemals ihren Wait/Zustimmungsprozess ausführen.
+Keine Rechteausweitung. Rootfix: agentRole aus diesem nichtagentischen
+Approvalvertrag entfernen oder begründete Semantik konsistent implementieren;
+kein stilles generisches Wegfiltern. Regression: echte Registryaktivierung und
+Stageinvocation mit allen erlaubten Schemafeldern, vor Capabilitycalls denselben
+Vertrag erzwingen. Crash-/Operatorauthentifizierung bleiben separate Folgeprüfungen.

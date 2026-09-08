@@ -1,83 +1,111 @@
 # kubeclaw.openclaw-agent-events
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Schema: Revision 5. Lokale Originaltests/Code-Trace, kein produktiver E2E-Nachweis.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung, Registrierung und Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+`skills/common/plugins/openclaw-agent-events/src/adapter.ts` ist ein v2-Adapter
+source für agent.events.subscribe, Rolle nova. Manifest/Config erlauben zwölf
+Hooks; aktivierter Adapter abonniert im ready. Originalexport activate verlangt
+`openclaw/plugin-sdk`, die Tests verwenden ausschließlich activateWithSdk mit
+Subscriptionfixture. Host-native Extension ist getrennt, keine bewiesene
+Produktivumschaltung durch bloße Auslieferung dieses Pakets.
 
-- `skills/common/plugins/openclaw-agent-events`
+## 2. Eingänge und beide Schnittstellenseiten
 
-Entrypoints: `src/adapter.ts#activate`.
+SDK on(hook,handler) liefert untypisierte Events. normalizeAgentEvent akzeptiert
+runId/run_id aus identity oder Top-Level, optional stage/attempt bis512 Zeichen;
+fehlende Run-ID wird verworfen. Projektion ist openclaw-agent-event.v2 mit
+observedFields und begrenzter metrischer Whitelist, kein Promptinhalt. context.emit
+liefert plugin.kubeclaw.openclaw-agent-events.<hook-mit-bindestrich> an den
+Adapterruntime-emitDomainEvent-Pfad. agent-observability subscribiert genau diese
+Namen; sein v2-Format ist ausdrücklich verschieden vom v1-Redis-Extensionformat.
+Status capability liefert subscriptions/emitted/failures/shuttingDown.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand/Commit
 
-Registrierungen aus Manifest:
+Subscriptionliste, pending-Promisekette und Zähler sind ausschließlich im RAM.
+Commit erst beim awaited context.emit in Corejournal; Statuszähler danach.
+Keine Ingress-Outbox oder Hook-ACK-Persistenz. Runtimeemit liefert Registrierung
+als Producerprovenienz; Hookinhalt selbst ist nicht dauerhaft authentifiziert.
 
-- `adapters:source` → `src/adapter.ts#activate`; benötigte Capabilities: 
+## 4. Fehlerdisposition
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+Unbekannte/doppelte Hooks werden bei Aktivierung abgewiesen; partielles ready
+räumt schon registrierte Subscriptions auf. Fehlende Run-ID wird ohne Zähler
+ignoriert, Emitfehler erhöht failures und verwirft das Event endgültig. Keine
+Retrygarantie für die Quelle; die downstream Observer können nur bereits
+committete Domainevents wiederholen. Ein werfendes unsubscribe kann weitere
+Cleanupoperationen unterbrechen; reale SDK-Lifecyclekompatibilität bleibt offen.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeouts, Abbruch, Parallelität
 
-## Tests und Dokumentation
+Emit wird seriell ausgeführt, Produzent wird nicht zurückgebremst (PCR-AGENTSOURCE-001).
+status prüft Abort nur vor await pending, shutdown ignoriert einen Abbruch während
+des Wartens. Kein eigener Emitdeadline-/Queue-Limit. Wiederholtes ready ist nicht
+idempotent, Core muss es einmal aufrufen. Kein Workerclaim/Stageabschluss hier.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Restart/Ungewissheit
 
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts`
-- `skills/common/plugins/agent-observability/tests/observers.unit.test.mjs`
-- `skills/common/plugins/agent-observability/tests/parity.test.ts`
-- `skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts`
-- `skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs`
+Uncommittete Queue und Fehlerzähler gehen beim Prozessende verloren. Ein Emit
+mit verlorenem ACK hat keine stabile quellseitige Event-ID zur deduplizierten
+Wiederaufnahme. shutdown stoppt neue Handlerzugänge und wartet auf Queue, kann
+bei hängendem Emit unbegrenzt warten. Kein mehrstufiger persistierter Präfix.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauen
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/developers/hooks-and-plugins.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md`
-- `docs/site/reference/capabilities.md`
-- `skills/common/plugins/openclaw-agent-events/README.md`
+Sensitive Feldnamen und Identitätsfelder werden aus observedFields entfernt;
+nur finite Zahlen/Booleans bekannter Metriken behalten Inhalte. runId ist aus
+Hookdaten übernommen, keine Zuordnung zu autoritativem Hostkontext; vertrauens-
+würdiger SDK-Produzent vorausgesetzt. observedFields können vom Eingang
+beeinflusste Namen enthalten. Keine zusätzliche Scheduler-/Datei-/Netzcapability.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+128 Felder mit auf128 Zeichen gekürzten Namen; Object.entries/filter materialisiert
+vor slice sämtliche Felder und wertet Getter aus. Keine Grenze der pending-Queue
+oder globale Payloadtraversalgrenze, kein persistierter Overflowmarker. Diese
+Quelle kann den Host mit Memorywachstum belasten, auch wenn der Sink später
+Bytebudgets besitzt. Keine lokalen Dateien/Retention zu bereinigen.
 
-- `charts/kubeclaw/files/config/knip.json:355`
-- `docs/architecture/plugin-system-current-inventory.md:42`
-- `docs/architecture/plugin-system-implementation-plan.md:736`
-- `docs/architecture/plugin-system-phase5-capabilities.json:24`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:352`
-- `docs/blueprint/04-evidence-matrix.md:42`
-- `docs/developers/hooks-and-plugins.md:8`
-- `docs/site/extend/plugin-catalogue/README.md:45`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md:67`
-- `docs/site/reference/capabilities.md:16`
-- `packaging/runtime/roles/nova.json:30`
-- `skills/common/plugins/agent-observability/plugin.json:12`
-- `skills/common/plugins/agent-observability/plugin.json:13`
-- `skills/common/plugins/agent-observability/plugin.json:14`
-- `skills/common/plugins/agent-observability/plugin.json:15`
-- `skills/common/plugins/agent-observability/plugin.json:16`
-- `skills/common/plugins/agent-observability/plugin.json:17`
-- `skills/common/plugins/agent-observability/plugin.json:18`
-- `skills/common/plugins/agent-observability/plugin.json:19`
-- `skills/common/plugins/agent-observability/plugin.json:20`
-- `skills/common/plugins/agent-observability/plugin.json:21`
-- `skills/common/plugins/agent-observability/plugin.json:22`
+## 9. Architektur
 
-## Offene Prüfpfade
+Zwei Hostpfade mit verschiedenen Formaten und Freitextpolitiken bleiben offen.
+Die src/adapter.ts:128-Root-SDK-Annahme ist besonders fraglich: benachbarter
+Extension-boundary-Test bezeichnet den Rootexport als entfernt, reale
+openclaw-Abhängigkeit fehlt lokal. Das ist eine explizite Integrationsfrage,
+kein bestandenes Hostaktivierungsurteil. Gemeinsamen tatsächlichen Hostadapter
+klären, nicht mit zusätzlichem Shim einen Fixtureerfolg produzieren.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests
+
+Beide Originaltests vollständig gelesen; `npm test` bestanden:
+[Log](../evidence/observers-openclaw-agent-events-tests.txt). Live-function nutzt
+synthetische SDKhandler und echtes temporäres Corejournal: Identitätsaliases,
+Dataminimierung, Status, unsubscribe, unbekannter Hook, delivery-target,
+partieller Subscriptionfehler. Boundary prüft Quelltextimporte. Kein aufgerufener
+activate-Export gegen OpenClaw, keine Backpressure-/Last-/SIGKILLprüfung.
+
+## 11. Dokumentation
+
+README vorhanden, aber 'serializes emission to provide backpressure' ist
+sachlich falsch: nur Konsumentausführung wird serialisiert. SDKexport-/
+Hostkompatibilität und Verlust vor Corecommit fehlen. Katalog implemented
+belegt Registrierung, nicht reale Hookintegration. Dual-source-E2E-Gate wird
+im README zutreffend als noch offen bezeichnet.
+
+## 12. PCR-AGENTSOURCE-001 — Unbegrenzte Ingressqueue und nicht abbrechbarer Drain
+
+**Mittel, nachgewiesener Codepfad; Lastlauf nicht ausgeführt.**
+`src/adapter.ts:75–100,110–122`: jeder synchrone Hook hängt eine neue Closure mit
+normalisiertem Event an pending und gibt void zurück. Ein langsames/hängendes
+context.emit hält sämtliche Folgeevents; weder Höchstzahl/-bytes noch Rückdruck
+oder Overflowdisposition existieren. Status/Shutdown warten ohne erneute
+Signalprüfung. Auswirkung: wachsende Hostspeicherlast und nicht endender Drain,
+bei Prozessende Verlust aller noch nicht committeten Events. Ursachenbehebung:
+begrenzte explizite Queue mit messbarem Overflow-/Gapnachweis, abbruchfähiger
+Drain und klare Quelle-ACK-Grenze. Regression mit originalem Adapter, kontrolliert
+verzögertem Emit, Burst über Grenze, überprüftem Queue/Dropbudget und Shutdown-
+Deadline; anschließend echten OpenClawhook verwenden. Root-SDK-Frage getrennt
+gegen die ausgelieferte OpenClawversion verifizieren.

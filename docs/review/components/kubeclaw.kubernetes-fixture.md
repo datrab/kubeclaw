@@ -1,97 +1,24 @@
 # kubeclaw.kubernetes-fixture
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+1. **Verantwortung/Nutzung.** Busterrolle registriert `kubeclaw.kubernetes-fixture@1` als Fixture, retrySafe=false, Capability kubernetes.fixture. Registry/Runner lädt isoliert provider.js; Parentinvoker erstellt BusterNamespaceLease, wartet Controller, wendet geprüftes Manifest an und wartet Pods/Service. Output deployment wird von HTTP/Browser/Tailscale/Security konsumiert; zusätzlicher Imageoutput verbindet denselben Digest.
+2. **Vertrag.** Provider verlangt checked-manifest-Artefakt mit passendem Mediatyp/Digest/Datei, Image entweder Valueinput oder Config (nicht beide), Service/Port, Namespaceprefix, Retention und optionale Secrets. Namen sind deterministisch aus run/node/attempt gehasht. Invoker prüft Image-/Registryallowlist und tatsächliche Manifestbytes/Digest, Kind-/Pod-/PVC-/Servicepolitik; Lease-CRD und Controller sind Gegenstelle. Das Wort checked ist keine unabhängige Attestation: Policy kommt erst von dieser Invokerinspektion und optionalem Securitygate.
+3. **Zustand/Commit.** can-i→server dry-run→Lease apply→Controller Ready→exakte geprüfte Manifestbytes via kubectl apply→Pods/Endpoints bereit. Erst dann typed deployment. Kein lokaler Commit; externe Teilaktionen existieren vor Result. Lease-TTL und Finalizer gehören Controller. Cleanup delete/retain wird aus Originalinvocation rekonstruiert und funktioniert ohne Inmemory-Preparezustand.
+4. **Korrektheit/Fehler.** O_NOFOLLOW/fstat/Digest schützt finalen Manifestread; sichere YAMLkindliste enthält ConfigMap/CronJob/Deployment/Job/PVC/Pod/Service/StatefulSet. Keine expliziten Namespaces, Hostnetwork/HostPath/Hostports/generic ephemeral volumes; positive ganzzahlige Storagebytes mit bigint und Replica-Multiplikation. Image muss irgendwo benutzt werden; weitere erlaubte immutableImages sind zulässig, Controller-Security verlangt dagegen für jeden Container dasselbe Image. Podready prüft alle Pods: abgeschlossene Jobpods können readiness scheitern lassen. Errorcodes bleiben geworfene Fehler, kein false-pass.
+5. **Zeit/Abbruch/Retry.** Invokerbegrenzungen pro kubectl-Aufruf, Leasewait und Pod/Servicewait; nur Pod+Service teilen eine absolute Deadline. can-i×3, dry-run, apply, Leasewait und Applyzeit kommen davor. Äußerer Workerabort ist daher wesentliche Gesamtgrenze. Preparefehlercleanup verwendet eigenen AbortController und kann weitere maximumExecutionMs verbrauchen, während Parentattempt bereits terminiert. Keine sichere automatische Retrybehauptung im Manifest.
+6. **Neustart/Ungewisser Ausgang.** Providercleanup berechnet LeaseName erneut; Controller wiederholt Provisioning idempotent. Lease-apply liegt vor dem try-cleanup-Block (`runtime.ts:719–721`): verlorenes ACK dort kann existierende Lease ohne sofortigen Cleanup hinterlassen. TTL bleibt Rückfall. Preparefailure unterdrückt Fehler der eigenen Release-Nacharbeit, ursprünglicher Fehler bleibt sichtbar, nicht aber Cleanupdiagnose. Kein tatsächlicher Crash-/Clusterlauf.
+7. **Vertrauen.** Operator kontrolliert kubectl, Clusterkontext, Subject/Prefix/Image/Storage/Secretallowlists. Provider erhält keine Kubecredentials; Parentprocess benutzt ausgewählte Hostenv. Runner setzt Capabilitygrant, der Payload wird von Invoker erneut geprüft. Release prüft nur DNS-LeaseName, keine cryptographische Attemptbindung; korrekte Builtin-Namensbildung ist Teil der Vertrauensannahme. Controllerownership/Token-/Securitynamensbefunde siehe buster.namespace-controller.
+8. **Ressourcen.** Bytebegrenztes Manifest vor Parsing, Ressourcenobergrenze erst nach `flattenDocuments`; YAMLalias-DAG kann vorher Parentmemory/CPU beanspruchen (001). kubectl puffert stdout und stderr je bis 2×Manifestlimit, keine Child-CPU/RAMmessung; gemeinsame Engine-Ressourcenlücke siehe PCR-BUSTER-ENGINE-001. Pipeerror auf stdin besitzt keinen Handler (002). PVC/Quota begrenzen Clusterstorage, Retain endet mit TTL; ENOSPC wird Fehler, keine automatische Kompensation aller vorgelagerten Aktionen.
+9. **Architektur.** Broker statt direkter Namespaceauthority ist passend, aber der Parent enthält eine eigene rekursive YAML- und Spawnpipeline. Beides sollte durch gemeinsame bounded Parser/Prozessausführung vereinfacht werden. Ein gemeinsamer Podsecurityvertrag mit Controllerinspektion verhindert widersprechende zulässige Seccomp-/Image-/runAsNonRoot-Regeln.
+10. **Tests.** Original `plugins/kubernetes-fixture/tests/live-function.test.ts` gelesen und **bestanden**: reine Config/Identität plus eingesetzte Releaseantworten, trotz Ausgabe mocks:0 kein Clusterlauf. `check-pipeline-kubernetes-fixture-implementation.mts` und parity gelesen: Registry-/Plan-/Sourceassertions, viele Invokernegativfälle. Implementation ausgeführt, **blockiert** durch EXECUTABLE_NOT_FOUND:kubectl vor Invokerchecks. Logs `../evidence/buster-kubernetes-{validation,implementation}-original.txt`. Keine kubectl-Nachbildung eingesetzt; echte Lease/PVC/Netzwerk-/Reapingproofs fehlen.
+11. **Doku.** Fixture Security Model **veraltet** bei Kindliste: nennt Endpoints/Ingress/ReplicaSet, aktuelle ALLOWED_NAMESPACED_KINDS verweigert diese. Beschreibung Read-bytes/Digest/Storage/TTL ist vorhanden. Rootcause-Abgleich zeigt überprüfte Filesystem-/Clusterdurchsetzung sind unterschiedliche Nachweise; Sourceassertions ersetzen keinen Clusterlauf.
+12. **Befunde.** Zwei eigenständige statische Fehler unten. Deadline-/CleanupACK-Unsicherheiten oben nicht als nachgewiesene Datenverluste ausgegeben. Nächster Schritt echte kleine Lease mit kontrolliertem kubectl-Pipeabbruch und bounded YAMLnegativproben in separatem Prozess.
 
-## Verantwortung, Grenzen und Einstieg
+## PCR-KUBERNETES-FIXTURE-001 — Ressourcenlimit erst nach Aliasexpansion
 
-- `skills/buster/plugins/kubernetes-fixture`
+**Hoch; nachgewiesene fehlende Schranke, Schadensausmaß statisch begründet.** `kubernetes-fixture-runtime.ts:160–171,329–334` traversiert alle `List.items` rekursiv ohne Zyklus-, Tiefen-/Besuchszähler; erst nach vollständigem `flattenDocuments` wird maximumResources geprüft. YAML kann Listen als Aliase mehrfach referenzieren. Kleine verschachtelte DAGs erzeugen exponentiell viele Pushes in `out`, in der vertrauenswürdigen Buster-Parenteventloop; Bytebudget und Providerprozesslimit greifen dort nicht. Zyklen führen zumindest Stackoverflow, große DAGs können den Dienst vor Limitprüfung erschöpfen. **Ursache beheben:** bounded iterative Traversierung mit maximalen Knoten/Ressourcen/Tiefe und Zyklusprüfung vor jedem Besuch, YAMLaliasbudget; Parsing ebenfalls außerhalb unbegrenzter Parentarbeit. **Regression:** echte YAML-Dateien für Zyklus, tiefe Listen und geteilte Alias-DAG durch Originalinvoker, in separatem begrenztem Testprozess; früher definierter Fehler vor kubectl und unabhängig von exponentieller Expansion.
 
-Entrypoints: `src/provider.js#provider`.
+## PCR-KUBERNETES-FIXTURE-002 — Schreibpipe kann den Busterprozess beenden
 
-Nutzung: Ausgeliefert in: buster; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
-
-Registrierungen aus Manifest:
-
-- `testProviders:deployment` → `src/provider.js#provider`; benötigte Capabilities: kubernetes.fixture
-
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
-
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
-
-## Tests und Dokumentation
-
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
-
-- `skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-baseline.mjs`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts`
-- `tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts`
-- `tests/verification/e2e/nova-a11y-production-preflight.mts`
-- `tests/verification/e2e/nova-api-production-preflight.mts`
-- `tests/verification/e2e/nova-e2e-production-preflight.mts`
-- `tests/verification/e2e/nova-http-production-preflight.mts`
-- `tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts`
-- `tests/verification/e2e/nova-lighthouse-production-preflight.mts`
-- `tests/verification/e2e/nova-security-production-preflight.mts`
-- `tests/verification/e2e/nova-tailscale-production-preflight.mts`
-- `tests/verification/e2e/nova-visual-production-preflight.mts`
-- `tests/verification/e2e/real-run-workspace.mjs`
-- `tests/verification/e2e/real-run-workspace.test.mjs`
-
-Dokumentationsstatus: unvollständig (Abgleich offen).
-
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md`
-- `docs/site/reference/capabilities.md`
-- `skills/buster/plugins/kubernetes-fixture/README.md`
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `charts/kubeclaw/files/config/knip.json:153`
-- `contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json:4`
-- `contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json:3`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:27`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:28`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:30`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-baseline.json:4`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-final-audit.md:10`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-inventory.json:4`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-inventory.json:26`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-cutover-inventory.json:27`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-documentation-manifest.json:4`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-documentation-manifest.json:5`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-documentation-manifest.json:28`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-final-audit.md:10`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-implementation-plan.md:7`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-parity-ledger.json:4`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md:11`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-three-phase-audit.md:47`
-- `docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md:17`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.json:9`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md:21`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:39`
-- `docs/architecture/plugin-system-current-inventory.md:28`
-- `docs/site/extend/plugin-catalogue/README.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md:29`
-- `docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md:33`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+**Hoch; nachgewiesener fehlender Errorhandler.** `executeProcess` (`runtime.ts:33–68`) endet stdin mit Manifestbytes, registriert `error` nur auf ChildProcess, nicht auf child.stdin. Beendet kubectl seinen Lesevorgang früh (z.B. Auth-/Serverfehler während großer Applyeingabe), kann WriteStream EPIPE auslösen; EventEmitter ohne Handler macht daraus einen unbehandelten Prozessfehler. Parentcatch behandelt nur Promise-Reject, nicht dieses Event. Gleiche eigene Spawnkopie in tailscale-exposure-runtime.ts; owner hier. **Ursache beheben:** stdin-Fehler in dieselbe einmalige Abschluss-/Reapinglogik überführen, verbleibende Writes stoppen, Kind vollständig abwarten. **Regression:** echter früh abbrechender Childprozess und großer stdin-Payload; Originalausführung muss kontrolliert rejecten und Busterhost bleibt verfügbar. Kein grüner Clusterersatz als Testnachweis.

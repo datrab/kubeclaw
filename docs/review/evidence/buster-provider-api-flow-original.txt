@@ -1,0 +1,3 @@
+command: node skills/buster/plugins/api-flow/tests/live-function.test.ts
+exit: 0
+{"ok":true,"provider":"api-flow","realHttp":true,"realWebSocket":true,"mocks":0,"wrappers":0}

@@ -12,7 +12,8 @@ besitzt denselben verifizierten Git tree
 `e43c39eea59b07f0a749b7b49f3aefdd11b14ed0`. Der Codeinhalt entspricht
 damit exakt der Baseline. Eigene Arbeitskopie; fremde Arbeitsstände unverändert.
 
-Einstieg: [Inventar](inventory.md), [Übergabe](handoff.md).
+Einstieg: [Inventar](inventory.md), [Übergabe](handoff.md),
+[Befundregister](findings.md), [Operations-/Paketprüfung](operations-and-packaging.md).
 `inventory-data.json` enthält die ausführlichen Zuordnungsbelege, keine
 automatisch erzeugten Review-Urteile. Quellcode-Suchtreffer belegen allein
 weder Laufzeitnutzung noch ausreichende Testabdeckung.
@@ -25,7 +26,7 @@ jedes relevanten Übergangs gemeinsam prüfen. Vollständige Projekt-E2E-Traces
 sind ein Folgeauftrag. Infrastruktur nur als Abhängigkeit/Annahme erfassen;
 auffällige Infrastrukturfragen separat zur Folgeprüfung notieren.
 
-## Lebendes gemeinsames Review-Schema (Revision 5)
+## Lebendes gemeinsames Review-Schema (Revision 6)
 
 Jede fachlich abgeschlossene Review-Datei muss folgende Kriterien konkret
 behandeln; nicht anwendbare Kriterien begründen:
@@ -93,6 +94,17 @@ Core-Wait-/Artefaktprojektionen. Kein bestandener Gesamt-Crashnachweis daraus.
 Andere abgeschlossene reine Verträge/Registry/Config/SDK/Prism-Domainfunktionen
 führen kein solches persistiertes Abschlussprotokoll selbst aus; die noch
 ungeprüften Dienst-/Storage-/Adaptergrenzen müssen dieses Kriterium anwenden.
+Revision 6: Bei Retryprüfung muss der Originalempfänger nach einem transienten
+Fehler tatsächlich erneut angesprochen werden. Wiederholte Handleraufrufe allein
+belegen keinen Retry, wenn Core- oder Sinkreceipts den ersten Fehler wiedergeben.
+Stabile externe Deliveryidentität, Ausführungsattempt und ungewisser Remoteoutcome
+getrennt prüfen. Nachprüfung von nova.telemetry/nova.effects und den inzwischen
+abgeschlossenen Operator-/Transportadaptern: Originalintegration mit einmaligem
+HTTP503 bestätigt PCR-OPERATOR-001; beide Coreberichte verlinken den Eigentümer.
+Reine Verträge/Registry/Config und lokale Read-/Writeadapter führen keine solche
+Observerzustellung aus; ihre eigenen Replay-/Fehlergrenzen bleiben dokumentiert.
+Busterprovider-Retries besitzen eigene Workerattempts und dürfen daraus keine
+automatische Behebung des Observerpfads ableiten. Keine pauschale Testwiederholung.
 Bei neuer Erkenntnis Schema hier erweitern; betroffene bereits abgeschlossene
 Reviews explizit zur Nachprüfung markieren und ihren Status aktualisieren.
 

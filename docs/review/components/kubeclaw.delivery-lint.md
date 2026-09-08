@@ -1,81 +1,97 @@
 # kubeclaw.delivery-lint
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Nova-Stage delivery-lint / kubeclaw.lint.delivery, src/stage.ts. Prüft begrenzt
+Dockerfile-/Staticdestinationdeclaration, kein Build oder Ersatz für full lint.
+Nur explizite Graphregistrierung, Projectcompiler nutzt full lint stattdessen.
+Komplette Source, Manifest, drei Schemas, README und zwei Pakettests gelesen.
 
-- `skills/nova/plugins/delivery-lint`
+## 2. Verträge und Gegenstellen
 
-Entrypoints: `src/stage.ts#execute`.
+Input moduleId plus nullable dockerfile/staticPath, config leer. Repositoryadapter
+read_text liest Worktreedatei mit Realpfad-/Größenkontrolle, Artefaktadapter speichert
+{moduleId,passed,failures}. Kein Dockerfile → passed mit Bericht. Regex extrahiert
+COPYziele, Vergleich gegen staticPath. Fehler: Pathinvalid blocked, jeder
+Readfailure request_fix, Destinationmismatch request_fix. Core on.request_fix
+steuert Reparatur; Plugin startet sie nicht selbst.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand und Nebenwirkungen
 
-Registrierungen aus Manifest:
+Read-only Repozugriff, immutable Report unter kubeclaw.delivery-lint. Kein Git-/
+Container-/Dateisystemdirektzugriff. Report vor Ergebniscommit; Artefaktstore
+und Core besitzen Persistenz, kein eigener Cache.
 
-- `stages:delivery-lint` → `src/stage.ts#execute`; benötigte Capabilities: git.repository.read, artifacts.write
+## 4. Korrektheit
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+Regex ist kein Dockerfileparser: einfache COPY src dest unterstützt, JSONform,
+mehrere Quellen, Fortsetzungen, Variablen/WORKDIR und Multistage-Endbild nicht
+zuverlässig. Keine gefundenen COPYziele werden als sauber akzeptiert. Konkreter
+falscher Reject gültiger JSONform reproduziert: PCR-DELIVERY-001.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout, Abbruch und Konkurrenz
 
-## Tests und Dokumentation
+Keine Timer/Retryloop; Corelease und Adapter begrenzen Calls. Read-Timeout/
+Zugriffsfehler werden derselben request_fix-Klasse wie fehlende Datei zugeordnet,
+obwohl Forge dies nicht zwingend beheben kann. Gleichzeitig mutierendes Worktree
+ist nicht revisionsgebunden; Snapshotreview/Gates dürfen diesen Report nicht
+als Commitbeweis behandeln.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Recovery
 
-- `skills/nova/plugins/delivery-lint/tests/live-function.test.ts`
-- `skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-e2e.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-engine.mjs`
+Wiederholung liest neu, kein persistierter Filedigest. Crash nach Reportwrite vor
+Stagecommit hat Coreprojektion PCR-EXEC-002 als Abhängigkeit. Keine irreversible
+externe Action im Plugin, keine Kompensation notwendig.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauen und Autorisierung
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/delivery-lint/README.md`
+Grants für git.repository.read/artifacts.write, Adapter prüft Root/Symlinks.
+Pluginpfade verbieten Traversal/NUL/Zeilenumbrüche; Finalpfadsicherheit beim
+Repositoryadapter. staticPath ist Containerpfad, kein Hostwriteziel. Keine Secrets
+und keine Agentenautorität. Caller kann dockerfile=null wählen; entsprechende
+Pflicht muss der Graph/Produktvertrag festlegen.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen und Cleanup
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Kein eigenes Gesamtbytebudget, Repositoryadapter standardmäßig 4 MiB pro Datei;
+Regex liest vollständigen Text. Kein eigener Retentionprozess; Storequote gilt.
+Node + Repositoryvolume + Artefaktstore reichen für diese deterministische Stage.
 
-- `charts/kubeclaw/files/config/knip.json:557`
-- `docs/architecture/plugin-system-current-inventory.md:57`
-- `docs/architecture/plugin-system-implementation-plan.md:210`
-- `docs/architecture/plugin-system-implementation-plan.md:409`
-- `docs/architecture/plugin-system-implementation-plan.md:619`
-- `docs/architecture/plugin-system-implementation-plan.md:953`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:130`
-- `docs/site/extend/plugin-catalogue/README.md:22`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md:67`
-- `docs/site/reference/capabilities.md:18`
-- `docs/site/reference/capabilities.md:27`
-- `packaging/runtime/roles/nova.json:44`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:34`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:52`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:57`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:72`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:85`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:96`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:102`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:199`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:214`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs:215`
+## 9. Architektur
 
-## Offene Prüfpfade
+Kleine Capabilityorchestrierung, aber zweiter sehr schwacher Dockerfileparser.
+Gemeinsamen etablierten Dockerfile-AST-/Buildmetadatenpfad verwenden und
+unterstützte Semantik explizit halten; unbekannte Syntax nicht als Beweis der
+Konsistenz deklarieren. Keine Folge-LLMheuristik zur Symptombehandlung.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests
+
+`npm test` **bestanden**:
+[Protokoll](../evidence/nova-batch-delivery-lint-tests.txt).
+Originalregistry/Runner/Repo-/Artefaktadapter, echte lokale Dockerfiles; simple
+COPY Pass/Mismatch, Missing, Traversal, Nullskip und echter Storepfadfehler.
+Letzterer ist Dateitypfehler, kein Prozesscrash, obwohl Test ihn crash nennt.
+Zusätzliche Probe mit unverändertem Stage und echten Repo-/Artefaktadaptern,
+handverdrahtetem Context: `node docs/review/evidence/nova-batch-delivery-probe.mjs`
+→ validJsonCopyRejected=true/request_fix. Kein Fakeparser, kein Dockerbuild.
+
+## 11. Dokumentation
+
+README **veraltet**: Config steuere Namespace (Schema leer, Namespace konstant),
+Input enthalte Repositorypfad (nur Dockerfilepfad), npm test baue Paket (kein
+Buildschritt). „internally consistent“ übertreibt Regexnachweis; unavailable
+Repositorycapability ist im Code request_fix statt dokumentiert blocked.
+
+## 12. PCR-DELIVERY-001 — Gültige JSON-COPYform wird falsch zurückgewiesen
+
+**Mittel; mit Originalstage und echten Adaptern reproduzierter Defekt.**
+`src/stage.ts#copyDestinations` Zeilen 33–38 und staticPathFailures Zeilen 93–104.
+Auslöser Dockerfile `COPY ["dist", "public"]`, staticPath `public`. Regex behält
+JSONsyntax am extrahierten Token; Vergleich misslingt und liefert request_fix.
+Auswirkung: gültige Lieferung blockiert bzw. unnötige Reparaturzyklen; andere
+COPYformen können falsche Sicherheit vermitteln. Rootfix parserbasierte
+Dockerfile-Semantik mit eindeutigem finalen Ziel; Regression über bestehende
+Realdatei-/Runnerroute für Shell/JSON/Multisource/Fortsetzung/WORKDIR/Multistage.
+Keine Aussage über erfolgreichen Build aus bloßer Parserkorrektur.

@@ -1,0 +1,25 @@
+Original package npm test in disposable mirrored tree; original sync-contract prerequisite; dependencies from repository.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/openclaw-agent-observer@0.0.0 test
+> node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/openclaw-agent-observer@0.0.0 pretypecheck
+> npm run sync-contract
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/openclaw-agent-observer@0.0.0 sync-contract
+> node scripts/sync-contract.mjs
+
+
+> @kubeclaw/openclaw-agent-observer@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"config"}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"live-function","registrations":{"openclaw:service":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.openclaw-agent-observer","suite":"package-boundary"}
+
+Exit: 0

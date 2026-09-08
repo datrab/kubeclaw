@@ -1,85 +1,54 @@
 # kubeclaw.size-budget
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Schema: Revision 5. Teststatus: bestanden. Dokumentationsstatus: vorhanden / unvollständig.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung, Registrierung und tatsächliche Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+Auslieferung über `packaging/runtime/roles/buster.json`; Manifest `plugin.json` registriert den unten genannten Vertrag. Nova `skills/nova/core/test-gates/resolver.ts:538–580` wählt anhand `uses`, prüft Kind, löst Konfiguration mit Schema-Defaults und pinnt Paket/Schema. Buster `runner.ts:1191–1250` lädt und ruft aus; `provider-loader.ts:49–89,151–180,382–389` kopiert digestgeprüft ins Versuchssnapshot und startet den Sandboxprozess; `provider-child.mjs:37–66` importiert Factory und ruft `execute`. Alle Engine-Dateien liegen in `skills/buster/engine/test-gates/`. Vertrag `kubeclaw.size-budget@1`, Registration `artifact`, keine Capability, retrySafe=true.
 
-- `skills/buster/plugins/size-budget`
+## 2. Eingaben, Ausgaben und Gegenstellen
 
-Entrypoints: `src/provider.js#provider`.
+Manifest verlangt build-output als file/tar/gzip, optional versionierte Baseline. `src/provider.js:35–100` prüft Limits/Globs und Blockinglimit. `verifiedFile:102–135` bindet offenen Deskriptor an Größe/Digest und nutzt denselben Handle für Messung; Archive werden nicht extrahiert. Tarparser prüft Checksummen, sichere Pfade, Typen, doppelte Namen und Abschluss. Baselineoutput wird als notwendiges Artefakt per EvidenceId gebunden.
 
-Nutzung: Ausgeliefert in: buster; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand, Persistenz und Commit-Punkt
 
-Registrierungen aus Manifest:
+Liest Artefakte, erzeugt ausschließlich `size-budget-baseline.json` mit wx/0600 und stdout-Messlog. SourceDigest ist Herkunft, nicht Commit. Provider-Rückgabe ist kein Commit: Runner validiert Vertrag, Zählwerte und Evidenzdeklarationen, klont/friert das Result, kopiert ausgewählte Dateien ins Staging und führt erst danach Workerabschluss/Artefaktspeicherung aus (`runner.ts:1226–1320`). Keine eigene Journal-/fsync-/Waitprojektion; Recovery und Abschlusspräfixe gehören dem Runner/Remote-Dienst. Keine Behauptung einer bestandenen Crashkette. Outputartifacts werden vom Runner auch bei anders gewählter Evidenzpolicy zum Staging hinzugefügt.
 
-- `testProviders:artifact` → `src/provider.js#provider`; benötigte Capabilities: 
+## 4. Korrektheit und Fehlerdisposition
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Datei-/Gesamt-/Pattern-/Growthbudgets ergeben voneinander getrennte Checks. Fehlender Baseline bei Growth wirft; Wachstum gegenüber Null wird bei positivem aktuellen Wert unbeschränkt und fällt durch Prozentbudget. Media-/Formatmismatch und unsicheres Archiv werfen. Geöffneter Handle verhindert Austausch per Rename, keine Schutzbehauptung gegen nachträgliche Mutation desselben Inodes.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout, Abbruch, Wiederholung und Parallelität
 
-## Tests und Dokumentation
+Async Hashreads und Tarloop prüfen Abortsignal; SIGKILL des Providers durch Worker bleibt letzte Grenze. Archive werden streaming dekomprimiert; kein paralleles Extrahieren. Gleiches Outputverzeichnis erneut zu verwenden schlägt wegen wx fehl, aber Runner hat versuchsspezifische Evidencepfade. Regexglobs werden aus bis 512 Zeichen generiert, komplexe Wildcardfolgen können CPU brauchen; äußeres CPUlimit relevant.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Neustart, Wiederaufnahme und ungewisser Ausgang
 
-- `skills/buster/plugins/size-budget/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-pipeline-size-budget-baseline.mjs`
-- `tests/verification/contracts/check-pipeline-size-budget-implementation.mts`
-- `tests/verification/contracts/check-pipeline-size-budget-production.mts`
-- `tests/verification/e2e/real-run-workspace.mjs`
-- `tests/verification/e2e/real-run-workspace.test.mjs`
+Replay misst digestgebundene Quelle erneut, keine externen Mutationen. Teilgeschriebene Baseline ist nach Crash ohne canonical Result nicht bestätigter Output. Handles werden in finally geschlossen; kein eigener Journalpräfix oder Wiederaufnahmezustand. Dateiretention beim Workspace-/Artefaktstore.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauensgrenzen und Evidenzherkunft
 
-- `docs/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md`
-- `docs/architecture/pipeline-test-gate-size-budget-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-size-budget-operator-guide.md`
-- `docs/architecture/pipeline-test-gate-size-budget-user-guide.md`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md`
-- `skills/buster/plugins/size-budget/README.md`
+VerifiedFile nutzt realpath, O_NOFOLLOW, stat/mtime-Vergleich und SHA-256; Loader lässt nur deklarierte Eingangsdateien lesen. Tarlinks/Sondertypen werden nicht akzeptiert. InputsourceDigest der Vergleichsbaseline wird gelesen, aber kein semantischer Nachweis, dass diese Baseline demselben Produkt entspricht: Bindung muss durch vertrauenswürdige Upstreamverknüpfung kommen.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen, Aufräumen und voller Speicher
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+512 MiB Input, 2 GiB expandiert, 100000 reguläre Dateien, 1 MiB Baseline. 64 KiB Hash-/Readchunks; Baseline allokiert nach verifiziertem Budget. Directoryeinträge zählen nicht zum regulären Filemaximum, bleiben aber durch expandierte Bytes begrenzt. Gunzip/source.pipe und Abbruchcleanup besitzen keinen im Originaltest provozierten Pipefehlernachweis. ENOSPC beim Baselineschreiben wirft; outputBudget wird zusätzlich im Runner geprüft.
 
-- `charts/kubeclaw/files/config/knip.json:217`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-growth.json:4`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-growth.json:37`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-growth.json:43`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-tar.json:4`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-tar.json:25`
-- `contracts/pipeline-test-gate/v1/suites/size-budget.v1.json:3`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:40`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:41`
-- `docs/architecture/pipeline-test-gate-size-budget-baseline.json:4`
-- `docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json:4`
-- `docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json:10`
-- `docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json:11`
-- `docs/architecture/pipeline-test-gate-size-budget-documentation-manifest.json:4`
-- `docs/architecture/pipeline-test-gate-size-budget-documentation-manifest.json:5`
-- `docs/architecture/pipeline-test-gate-size-budget-documentation-manifest.json:8`
-- `docs/architecture/pipeline-test-gate-size-budget-implementation-final-audit.md:8`
-- `docs/architecture/pipeline-test-gate-size-budget-implementation-plan.md:7`
-- `docs/architecture/pipeline-test-gate-size-budget-operator-guide.md:25`
-- `docs/architecture/pipeline-test-gate-size-budget-operator-guide.md:72`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:4`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:11`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:12`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:16`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:17`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:19`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:21`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:22`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:23`
-- `docs/architecture/pipeline-test-gate-size-budget-parity-ledger.json:24`
+## 9. Architektur und Vereinfachung
 
-## Offene Prüfpfade
+Streamingmessung ohne Extraktion reduziert Dateiangriffsfläche; vorhandener Handle vermeidet Rename-TOCTOU. Glob-/Tarunterumfang bewusst klein halten und dokumentieren; nicht vollständige GNU/PAXunterstützung suggerieren. Keine neue Funktion oder Testersatzimplementierung hinzugefügt.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Untersuchte und ausgeführte Tests
+
+`node skills/buster/plugins/size-budget/tests/live-function.test.ts` vollständig gelesen/exit 0: echte tar --format=ustar und gzip, file mode, Limits/fehlende Matches, Growth, Sourcepath-Renamerace, Cancel, Digest, Symlinktar, duplicated directory, fremde URL. Evidenz `../evidence/buster-provider-size-budget-original.txt`. Renamerace nutzt einen Getter als Ablaufsteuerung, echte Dateihandles/Archive bleiben Original; das ist kein SIGKILL-/Inodemutationsnachweis. Direkter Originaltest umgeht Registry, Prozessloader und kompletten Workerabschluss; seine Aussage reicht ausdrücklich nur über die darin wirklich aufgerufenen Komponenten. Kein Deployment, kein CI-Neulauf, kein Ersatzmock. Tests außerhalb der unten genannten Programme sind nicht als ausgeführt gewertet.
+
+## 11. Dokumentationsabgleich
+
+Plugin-README geprüft: Archiveinträge, optionale Baseline, strukturierte Fehler entsprechen dem Code. Canonical-Baseline meint hier feste JSONfelder, keine generische JCSkanonisierung; localeCompare beeinflusst LargestFiles-Reihenfolge, nicht Baselinebyteinhalt. Unterumfang für Tar-/Patterndialekte und externe Baselineidentität bleibt wenig dokumentiert.
+
+## 12. Befunde und nächste Verifikation
+
+Keine neue bestätigte Fehlmessung im ausgeführten Umfang. Nächste Verifikation: Quelle während des zweiten Handle-Reads im selben Inode ändern, Gunzipsourcefehler/Abort während Inflate, ENOSPC und Parentstagingprüfung. Diese offenen Stress-/Crashnachweise nicht aus Renamefixture als bestanden ableiten.
+
+Keine zusätzlichen bestätigten komponenteneigenen Defekte im untersuchten Umfang. Die genannten Laufzeitlücken bleiben offen.

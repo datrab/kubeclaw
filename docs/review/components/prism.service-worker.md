@@ -1,13 +1,11 @@
 # prism.service-worker — HTTP-Worker für deterministische Prism-Operationen
 
-Review-Status: teilweise geprüft. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
 Gelesen: vollständiges `skills/prism/server/worker.ts`, Gegenstelle
 `server/control.ts:142–226` (`runWorker`), `engine/worker-envelope.ts`,
 `engine/worker-binding.ts` bis Ergebnisvalidierung; Worker-Core-Logabschluss.
-Offen: sämtliche Engine-/Renderer-Pfade, Browserprozesse, Storage-/Nonce-Lifecycle,
-Deployment-Auslieferung und vollständige vorhandene Service-/Integrationstests.
-Kein vollständiger Service-Test ausgeführt.
+Zusätzlich vollständig gelesen: Engine/Renderer, Storage/Nonceimplementation und vorhandene Engine-/Internal-Auth-Tests; Auslieferung über Prism-Service-Chart/Runtimepaket. Kein vollständiger Service-E2E ausgeführt.
 
 ## 1–3. Grenze und konkreter Aufrufpfad
 
@@ -32,7 +30,7 @@ Renderer-/Engine-Aufrufe erhalten hier kein durchgehendes AbortSignal.
 Input-Fetch erhält es, Evidence-Upload nicht. Anfrage-Disconnect wird nicht als
 Executor-Signal verdrahtet. Requestfehler werden pauschal HTTP 422.
 `/health` antwortet ohne Abhängigkeitstest; `/ready` prüft die Nonce-Tabelle.
-Engine-Idempotenz/Restart und teilweise externe Uploads noch vollständig verfolgen.
+Enginecache hält erfolgreiche Resultate nur im RAM und unbegrenzt (PCR-PRISM-ENGINE-001). Control vergibt nach Rollback neue executionId; HMAC-Nonce schützt Replay der Nachricht, nicht fachliche Wiederholung. Nach Upload vor Resultcommit bleiben CASobjekte; derselbe Inhalt dedupliziert, aber keine GC.
 
 ## 7–9. Vertrauen, Limits und Architektur
 
@@ -41,8 +39,7 @@ keine hier geprüften Infrastrukturbehauptungen. HMAC-Pfad benötigt Postgres-
 Nonce-Tabelle und Secret; keine Werte in diesem Review. Input wird vollständig
 gepuffert; parallel zugelassene HTTP-Anfragen haben hier keine aggregierte
 Kapazitätsgrenze. Prozesse werden mit festem Wert 1 gemeldet, RSS/CPU auf
-Serviceprozess bezogen. Browser-Unterprozesse und harte Ressourcendurchsetzung
-sind noch nachzuprüfen. Permanente Engine/DB-Pool-Lebensdauer und Shutdown offen.
+Serviceprozess bezogen. Browser-Unterprozesse werden weder gemessen noch durch terminate geschlossen. Chromium finally in Engine arbeitet erst nach Rückkehr der laufenden Browseroperation. Kein eigenes SIGTERM-Reaping/Poolend im Worker; Containergrenzen sind Betriebsannahme.
 
 ## 10–12. Tests, Dokumentation und Befunde
 
@@ -50,7 +47,7 @@ Das vorhandene `check-pipeline-worker-attempt-executor.mts:596–601` erwartet
 explizit WORKER_LOG_STORE_FAILED für eine loggende Operation ohne storeFullLog.
 Das prüft den Core-Vertrag mit einer Testoperation, nicht diesen Prism-Service.
 Kein Ersatz-Control, kein Mock-Postgres und kein künstliches positives
-Prism-E2E-Ergebnis erstellt. Live-Service-Reproduktion ist ausstehend.
+Prism-E2E-Ergebnis erstellt. Original Engine/Storage/Session-Gruppe 13/13 bestanden; sieben Engine-Fixturefälle ohne HTTP-Executor, Browser und vollständigen Logabschluss. Weitere Originaltests in [prism-reviewed-modules-tests.txt](../evidence/prism-reviewed-modules-tests.txt) (PGlite-Nonce plus lokaler Signaturstore), kein echter Multi-Replica-Postgreslauf. Live-Service-Reproduktion ist ausstehend.
 Dokumentationsstatus: unvollständig; vorhandene Worker-/Prism-Betriebsbehauptungen
 müssen gegen diese konkrete Integration korrigiert werden. Historische W4/W6-
 Punkte aus `docs/architecture/pipeline-reliability-remediation.md` bleiben offen.
@@ -97,3 +94,13 @@ Punkte aus `docs/architecture/pipeline-reliability-remediation.md` bleiben offen
   sodass dessen Gesamt-CPU 4 Sekunden überschreitet; ein folgender kleiner Versuch
   muss bestehen, ein einzeln über dem Budget liegender muss scheitern. Erst nach
   Behebung des Logs-Vertrags ist dieser positive Pfad separat beobachtbar.
+
+### PCR-PRISM-WORKER-003 — Terminate beendet weder Browser noch Evidence-Upload
+
+- **Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** worker.ts:97–99 setzt nur terminated=true; Engine.execute (:79–84) und uploadEvidence (:37–40) erhalten kein AbortSignal. Chromium wird erst in Enginefinally geschlossen, Upload hat kein Timeout. Auslöser: laufender Browser/Upload überschreitet Deadline oder Controlclient trennt. Executor kann Ablauf als beendet behandeln, während externe Arbeit/Prozess weiterläuft; harte Claimabschluss-/Ressourcengrenze nicht gewährleistet. Keine tatsächlich beobachtete Prozessleckdauer behauptet.
+- **Behebung:** pro Attempt besitzbarer Browser-/Prozesshandle, Abort weitergeben, Upload/Log/Cleanup gemeinsam gegen absolute Claimdeadline begrenzen; terminate muss tatsächliche Beendigung/Reaping quittieren. Aggregierte Zulassung und messbare Ressourcen pro Versuch ergänzen, nicht nur Configzahlen vergleichen.
+- **Regression:** Originaldienste/echter Chromium, abbrechen während Capture und Upload; nach terminalem Result keine Kindprozesse, keine späteren Writes, alle Abschlussphasen innerhalb Claimdeadline. Disconnect zusätzlich auf bewusste Cancelpolicy prüfen.
+
+Dokumentationsabgleich: Implementationplan Engineprofil/Bounded Worker wird nur teilweise umgesetzt; fehlende Logs und fehlende reale Terminierung widerlegen vollständigen neutralen Abschluss. Service-README fehlt; Querverweise Engine-/Storage-/Controlreviews behandeln Idempotenz, CAS und Empfangsbindung. Die drei Befunde ersetzen keine Cluster-/SPIFFE-Betriebsprüfung.
+
+Ausführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).

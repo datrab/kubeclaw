@@ -1,0 +1,5 @@
+{"probe":"api-flow-all-skipped","outcome":"passed","counts":{"total":1,"passed":0,"failed":0,"skipped":1},"contacts":0}
+{"probe":"openapi-items-false","response":"[1]","outcome":"passed","counts":{"total":1,"passed":1,"failed":0,"skipped":0},"contacts":1}
+{"probe":"openapi-policy-disposition","outcome":"failed","message":"HTTP_REQUEST_ORIGIN_DENIED:http://127.0.0.2:42343","contacts":1}
+{"probe":"http-resolved-endpoint-path","declared":"/health","resolvedPath":"/","requestedPath":"/"}
+{"probe":"junit-missing-attribute-separator","xml":"<testsuite><testcase name=\"a\"time=\"1\"/></testsuite>","counts":{"total":1,"passed":1,"failed":0,"errored":0,"skipped":0}}

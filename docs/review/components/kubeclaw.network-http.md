@@ -1,93 +1,103 @@
 # kubeclaw.network-http
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–2. Verantwortung, Auswahl und Schnittstellen
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig gelesen: `skills/common/plugins/network-http/src/adapter.ts`, Manifest,
+Schema, README, Paketdatei und eigene Tests. `http` liefert network.http, keine
+Downstream-Capability. Nova/Buster/Prism liefern Paket. Core AdapterStarter prüft
+Configschema, provider selection und Grants; `authorization.ts:network` prüft
+Origin. Adapter prüft zusätzlich genaue Origin-/Methoden-/Headerallowlists,
+verbietet URL-Credentials und verfolgt Redirects nicht.
 
-- `skills/common/plugins/network-http`
+Sender runtime-dispatch `adapter.ts` baut POST, Idempotency-Key und HMAC; OpenClaw
+`openclaw-session.ts:gateway` baut POST/Bearer/JSON. Beide nutzen confidential,
+also keine geheimen Header im verschachtelten Effectjournal. Adapter liefert
+status, beschränkte response.headers und body (JSON, Text oder null).
+Generic Runtime-Empfänger prüft 2xx und Objektform, OpenClaw erwartet status 200
+und validiert Toolfehler-Envelopes. HTTP-Statusfehler sind Exceptions, nicht
+gewöhnliche `{status, body}`-Antworten. Keine eigene fachliche Resultatidentität.
 
-Entrypoints: `src/adapter.ts#activate`.
+## 3–4. Nebenwirkungen und Fehlerdisposition
 
-Nutzung: Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Kein lokaler persistenter Zustand; externe Servermutation beginnt bei fetch.
+Kein eigener receipt-/Idempotenzspeicher. request.idempotencyKey wird nicht
+automatisch als HTTP-Header eingesetzt: Sender muss ihn explizit setzen und
+Remote muss ihn durchsetzen. Netzwerkabbruch kann nach Remotecommit passieren.
+HTTP-Fehler enthalten bis 1000 Zeichen fremden Bodytexts; Vertraulichkeit dieser
+Fehler hängt am Core-confidential-Pfad, keine globale Inhaltsredaktion hier.
+JSON-Parsefehler propagieren. Redirects und deklarierte Übergrößen früh abgelehnt;
+unklare/chunked Responsegröße siehe PCR-NETWORK-001.
 
-Registrierungen aus Manifest:
+## 5–7. Deadline, Abbruch, Recovery und Sicherheit
 
-- `adapters:http` → `src/adapter.ts#activate`; benötigte Capabilities: 
+fetch kombiniert Aufrufsignal und AbortSignal.timeout (Default 30 s); Timeout gilt
+auch für Konsum des Responsebodys, dessen Fehler werden jedoch nicht normalisiert
+(PCR-NETWORK-002). shutdown ist leer; produktiver Core-Wrapper kombiniert das
+Lifecycle-Signal in laufende Invocations. Bei Direktgebrauch ohne Core bleiben
+laufende Requests nach shutdown aktiv. Wiederholung kann eine Mutation duplizieren;
+keine erfolgreiche Recovery ohne Remote-Idempotenz/Receipt behauptet.
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+Allowlist bindet Origin einschließlich Scheme/Port, nicht Ziel-IP nach DNSauflösung;
+DNS/Proxy/Netzpolicy sind Betriebsannahmen. Operator darf private Origins explizit
+erlauben. Header können explizit authorization umfassen; `connection: close` wird
+erzwungen. Vertrauenswürdiger Adapter im Host, keine Benutzerautorisierung selbst.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 8–9. Ressourcen und Vereinfachung
 
-## Tests und Dokumentation
+Default Request/Response jeweils 1 MiB. Requestlimit kommt nach JSON.stringify
+(Getter/Zyklen/natives JSON-Verhalten und voriger Speicherverbrauch); keine eigene
+Tiefen-/Knotenbegrenzung. Response arrayBuffer liest vollständig, siehe Befund.
+Keine eigene Maximalparallelität; Agent-/Core-Lease begrenzt Aufrufleben, nicht
+pauschal Zahl und Bytes aller parallelen Socketpuffer. Redirect-/Content-Length-
+Ablehnung konsumiert/cancelt response.body nicht ausdrücklich; Cleanup ist dem
+Fetch-/Timeoutpfad überlassen. Künftiger enger Streamreader kann Größenlimit,
+Abortmapping und Reader-Cancel in einer Grenze vereinigen.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 10. Tests und konkrete Evidenz
 
-- `skills/common/plugins/network-http/tests/live-function.test.ts`
-- `skills/common/plugins/network-http/tests/package-boundary.test.mjs`
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts`
-- `skills/common/plugins/transport-publisher/tests/live-function.test.ts`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/case-study/tests/live-function.test.ts`
-- `skills/nova/plugins/human-approval/tests/live-function.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- `skills/nova/plugins/pipeline-review/tests/live-function.test.ts`
-- `skills/nova/plugins/review/tests/live-function.test.ts`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
-- `tests/verification/reliability/external-effect-recovery.test.mts`
+Original `node tests/live-function.test.ts && node tests/package-boundary.test.mjs`
+im Paketverzeichnis: erster paralleler Lauf fehlgeschlagen mit NETWORK_TIMEOUT
+beim ersten positiven Request (100-ms-Testdeadline). Isolierte unveränderte
+Wiederholung bestanden. Echte Loopback-HTTP-Kommunikation, aber kontrollierter
+Testserver, kein produktiver Endpoint. Prüft JSON/Text, POST-Header, Redirect,
+deklarierte Übergröße, Timeout vor Headern, Allowlist und bereits abgebrochenes
+Signal. Kein Bodytimeout-/chunked-Budgetnachweis darin; Boundarytest ist Regex.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+Eigene Evidenz `node docs/review/evidence/capability-adapter-probes.mjs` nutzt
+Originaladapter und echten lokalen HTTP-Server mit kontrollierter Chunkfolge:
+bei 128-Byte-Maximum wurden alle 512 Byte gesendet, dann Größenfehler. Nach sofortigen
+Headern und verzögertem Body resultiert `TimeoutError: The operation was aborted
+due to timeout`, nicht NETWORK_TIMEOUT. Kein OOM absichtlich erzeugt; keine
+produktive Netzwerk-/TLS-/Auth-Infrastruktur getestet.
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md`
-- `docs/site/reference/capabilities.md`
-- `skills/common/plugins/network-http/README.md`
+## 11. Dokumentationsabweichung
 
-## Aufrufer- und Abhängigkeitsbelege
+README behauptet begrenzte Responsegröße und erhaltene Cancellation. Als harte
+Ressourcengrenze bzw. stabile Fehlersemantik ist dies durch 001/002 widerlegt.
+Katalog korrekt zu Manifest, zur Retry-/Remotecommitgrenze unvollständig.
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+## 12. Befunde
 
-- `charts/kubeclaw/files/config/knip.json:331`
-- `docs/architecture/plugin-system-current-inventory.md:40`
-- `docs/architecture/plugin-system-implementation-plan.md:651`
-- `docs/architecture/plugin-system-phase5-capabilities.json:19`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:340`
-- `docs/site/extend/plugin-catalogue/README.md:44`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.network-http.md:67`
-- `docs/site/reference/capabilities.md:35`
-- `packaging/runtime/roles/buster.json:33`
-- `packaging/runtime/roles/nova.json:28`
-- `packaging/runtime/roles/prism.json:18`
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts:47`
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts:74`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts:96`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts:149`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:230`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:257`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:334`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:381`
-- `skills/common/plugins/transport-publisher/tests/live-function.test.ts:99`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts:50`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts:72`
+### PCR-NETWORK-001 — Responsebudget greift erst nach vollständigem Download
 
-## Offene Prüfpfade
+Schweregrad hoch: erlaubter Endpoint kann mit schneller chunked/komprimierter
+Antwort beliebig mehr RAM als das konfigurierte Budget belegen und Hostverfügbarkeit
+beeinträchtigen. Nachgewiesener Defekt, `src/adapter.ts:70–78 responseBody`:
+Content-Length fehlt/ist klein, arrayBuffer allokiert vollständige Antwort,
+erst danach Bytecheck. Reale 512/128-Byte-Probe oben belegt Reihenfolge, keinen OOM.
+Ursachenbehebung: streaming/dekomprimierte Bytes zählen und Reader sofort beim
+Überschreiten abbrechen; alle Vorabfehler schließen Body. Regression mit echter
+chunked Antwort muss vor End-of-stream abbrechen und Spitzenpuffer begrenzen.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+### PCR-NETWORK-002 — Bodytimeout verliert stabile Adapterfehlerdisposition
+
+Schweregrad mittel: Retry-/Cancellation-Erkennung nach Fehlercode unterscheidet
+sonst gleiche Timeouts abhängig vom Zeitpunkt der HTTP-Header. Nachgewiesener
+Defekt, `src/adapter.ts:52–67 performRequest` versus `70–78 responseBody` und
+`104–105 invoke`: Catch umfasst nur fetch bis Response, nicht arrayBuffer.
+Auslöser sofortige Header, langsamer Body; echte Probe liefert nativen TimeoutError.
+Ursachenbehebung: Timeout-/Signalzuordnung über gesamten Request inklusive Body;
+Abbruchgrund getrennt bewahren, Reader schließen. Regression Timeout und aktiver
+Abort jeweils vor Headern und mitten im Body mit identischen stabilen Codes.

@@ -1,0 +1,361 @@
+[
+  {
+    "id": "prism.control",
+    "review": "abgeschlossen",
+    "responsibility": "Session-Helfer",
+    "usage": "Aktiv: Control Sessionexchange und authenticated Cookieprüfung; keine eigenen externen Nebenwirkungen.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/control/session.ts#mintSession,verifySession,exchangeTailscaleIdentity",
+    "docs": [
+      "docs/implementation/prism-implementation-plan.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/security/prism-threat-model.md"
+    ],
+    "tests": [
+      "skills/prism/tests/control.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.storage",
+    "review": "abgeschlossen",
+    "responsibility": "PostgreSQL-Revisionen und lokale Artefakte",
+    "usage": "Aktiv: Control RevisionRepository/CAS; MigrationCLI; SQL-CAS und Artefaktdateien.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/storage/index.ts#migrate,inTransaction,ContentAddressedArtifactStore,RevisionRepository",
+    "docs": [
+      "docs/architecture/prism-storage-model-v1.md",
+      "docs/architecture/prism-recovery-observability-v1.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/implementation/prism-implementation-plan.md"
+    ],
+    "tests": [
+      "skills/prism/tests/storage.test.mts",
+      "tests/verification/contracts/check-prism-postgres-transactions.mts",
+      "tests/verification/contracts/check-deploy-prism-command.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.engine",
+    "review": "abgeschlossen",
+    "responsibility": "deterministische Operationen und Workerbindung",
+    "usage": "Aktiv: HTTPworker executePrismOperation mit DeterministicDesignProvider; OpenAIprovider nur Testcaller gefunden.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/engine/index.ts#PrismEngine.execute; engine/worker-binding.ts#executePrismOperation; engine/worker-envelope.ts#prismAttempt",
+    "docs": [
+      "docs/architecture/prism-design-engine-contract-v1.md",
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/architecture/prism-prototype-runtime-v1.md",
+      "docs/implementation/prism-implementation-plan.md"
+    ],
+    "tests": [
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/e2e.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.service-worker",
+    "review": "abgeschlossen",
+    "responsibility": "HTTP-Worker für deterministische Prism-Operationen",
+    "usage": "Aktiver HTTP /v1/attempts; Controlcaller; fehlender Pflichtlogspeicher, kumulative CPU und fehlende tatsächliche Terminierung.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/server/worker.ts#createServer,operationFor,uploadEvidence",
+    "docs": [
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/architecture/prism-design-engine-contract-v1.md",
+      "docs/architecture/prism-recovery-observability-v1.md",
+      "docs/operations/prism-operator-guide.md"
+    ],
+    "tests": [
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/internal-auth.test.mts",
+      "tests/verification/live/prism-nova-production-e2e.mjs",
+      "tests/verification/live/prism-production-failures.mjs"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.corpus",
+    "review": "abgeschlossen",
+    "responsibility": "governte Referenzen und Retrieval",
+    "usage": "Aktiv: Control acquisition/ingest(pool)/search; expire nur Testcaller; Pooltransaktion nicht verbindungsgebunden.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/corpus/index.ts#validateSource,ingest,search,expire",
+    "docs": [
+      "docs/architecture/prism-corpus-ingestion-v1.md",
+      "docs/architecture/prism-retrieval-ranking-v1.md",
+      "docs/architecture/prism-storage-model-v1.md",
+      "skills/prism/prism-conventions.md"
+    ],
+    "tests": [
+      "skills/prism/tests/corpus.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.service-control",
+    "review": "abgeschlossen",
+    "responsibility": "Prism Control HTTP-Dienst",
+    "usage": "Aktiver zentraler HTTPdienst für Session/Dispatch/Agent/Studio/Approval/Baseline/Corpus/Preferences.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/server/control.ts#createServer; runWorker,hydrateWorkerEvidence,authenticated",
+    "docs": [
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/architecture/prism-storage-model-v1.md",
+      "docs/architecture/prism-baseline-bundle-v1.md",
+      "docs/architecture/prism-recovery-observability-v1.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/security/prism-threat-model.md"
+    ],
+    "tests": [
+      "tests/verification/contracts/check-deploy-prism-command.mts",
+      "tests/verification/live/prism-nova-production-e2e.mjs"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.preferences",
+    "review": "abgeschlossen",
+    "responsibility": "erklärbare Präferenzprojektion",
+    "usage": "Aktiv: Control GETpreferences über subject/optional Projekt; projectId fehlt im Projektionsschlüssel.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/preferences/index.ts#projectPreferences",
+    "docs": [
+      "docs/architecture/prism-preference-learning-v1.md",
+      "docs/architecture/prism-storage-model-v1.md",
+      "docs/implementation/prism-implementation-plan.md"
+    ],
+    "tests": [
+      "skills/prism/tests/quality.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.directions",
+    "review": "abgeschlossen",
+    "responsibility": "Strukturabstand von Designvorschlägen",
+    "usage": "Aktiv: Control Agentdesignsets Materialdiversity; Signature nur Tests, Distanzgate am Empfänger.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/directions/index.ts#directionSignature,materialDirectionDistance,assertMaterialDirectionDiversity",
+    "docs": [
+      "docs/implementation/prism-implementation-plan.md",
+      "docs/implementation/prism-completion-remediation-plan.md",
+      "skills/prism/prism-conventions.md"
+    ],
+    "tests": [
+      "skills/prism/tests/directions.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.pipeline-adapter",
+    "review": "abgeschlossen",
+    "responsibility": "deklarative Zielzuordnung",
+    "usage": "Nur direkte Tests/Conventionscaller gefunden; keine produktive Nova/Buster-Ausführung dieses Mappers.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/pipeline-adapter/index.ts#toBusterPlan,toForgeAssignments",
+    "docs": [
+      "docs/architecture/prism-pipeline-fidelity-adapter-v1.md",
+      "docs/architecture/prism-baseline-bundle-v1.md",
+      "skills/prism/prism-conventions.md"
+    ],
+    "tests": [
+      "skills/prism/tests/pipeline-adapter.test.mts",
+      "skills/prism/tests/e2e.test.mts",
+      "tests/verification/contracts/check-pipeline-legacy-retirement.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.entry",
+    "review": "abgeschlossen",
+    "responsibility": "Paket-Reexport",
+    "usage": "Paketroot-Reexport Engine/Binding/Domain; Rollenmanifest importiert @kubeclaw/prism, kein Serverlauncher.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/runtime.ts (Engine/Workerbinding/Domain-Reexports, package root @kubeclaw/prism)",
+    "docs": [
+      "docs/implementation/prism-production-integration-plan.md",
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/operations/prism-operator-guide.md"
+    ],
+    "tests": [
+      "tests/verification/contracts/check-prism-runtime-role.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.renderer",
+    "review": "abgeschlossen",
+    "responsibility": "deklaratives HTML",
+    "usage": "Aktiv: Enginecapture und Studioiframe; deklaratives HTML/Componenttemplates.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/renderer/index.ts#renderNode",
+    "docs": [
+      "docs/architecture/prism-prototype-runtime-v1.md",
+      "docs/architecture/prism-studio-interaction-v1.md",
+      "docs/architecture/prism-baseline-bundle-v1.md",
+      "docs/implementation/prism-implementation-plan.md"
+    ],
+    "tests": [
+      "skills/prism/tests/renderer.test.mts",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/studio-adapter.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.evaluation",
+    "review": "abgeschlossen",
+    "responsibility": "statische Qualitätsheuristiken",
+    "usage": "Aktiv: Engineevaluate und direkte Controlapproval-/Baselinegates; statische Heuristik.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/evaluation/index.ts#evaluate",
+    "docs": [
+      "docs/architecture/prism-quality-gates-v1.md",
+      "docs/architecture/prism-design-engine-contract-v1.md",
+      "docs/implementation/prism-implementation-plan.md"
+    ],
+    "tests": [
+      "skills/prism/tests/quality.test.mts",
+      "skills/prism/tests/engine.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.service-common",
+    "review": "abgeschlossen",
+    "responsibility": "interne Auth, Cookies und Datenbankbootstrap",
+    "usage": "Aktiv: Worker-HMAC/DBnonce, Studio-Cookiehelper, Bootstrap-/Migrationchartjobs.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/server/internal-auth.ts#signInternalRequest,verifyInternalRequest,PostgresNonceStore; server/proxy-headers.ts#prismProxyResponseHeaders; server/bootstrap-database.ts#bootstrap; server/migrate.ts (CLI)",
+    "docs": [
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/architecture/prism-storage-model-v1.md",
+      "docs/architecture/prism-recovery-observability-v1.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/security/prism-threat-model.md"
+    ],
+    "tests": [
+      "skills/prism/tests/internal-auth.test.mts",
+      "skills/prism/tests/studio-proxy.test.mts",
+      "skills/prism/tests/storage.test.mts",
+      "tests/verification/contracts/check-deploy-prism-command.mts",
+      "tests/verification/contracts/check-prism-postgres-transactions.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.service-studio",
+    "review": "abgeschlossen",
+    "responsibility": "statische Studioauslieferung und APIproxy",
+    "usage": "Aktiver statischer dist-studio/APIproxy zum Control; OriginalHTTPfluss noch nicht getestet.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/server/studio.ts#createServer; server/proxy-headers.ts#prismProxyResponseHeaders",
+    "docs": [
+      "docs/operations/prism-operator-guide.md",
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/architecture/prism-prototype-runtime-v1.md",
+      "docs/security/prism-threat-model.md"
+    ],
+    "tests": [
+      "skills/prism/tests/studio-proxy.test.mts",
+      "tests/verification/contracts/check-deploy-prism-command.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.service-ingestion",
+    "review": "abgeschlossen",
+    "responsibility": "Akquisition und Quarantäne",
+    "usage": "Aktiv: Controlacquisition/Cleanup; Publicweb beim Control deaktiviert, eigener Dienst unterstützt HTTPSacquisition.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/server/ingestion.ts#createServer,acquire,getPinned,reapQuarantine",
+    "docs": [
+      "docs/architecture/prism-corpus-ingestion-v1.md",
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/security/prism-threat-model.md"
+    ],
+    "tests": [
+      "skills/prism/tests/corpus.test.mts"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.service-agent-bridge",
+    "review": "abgeschlossen",
+    "responsibility": "OpenClaw-Auftragsbrücke",
+    "usage": "Aktiver lokaler HTTP→OpenClawspawn; RAMsessionqueue,202 vor Toolcommit, Control/Extensiongegenstellen.",
+    "docStatus": "vorhanden, teilweise veraltet/abweichend und unvollständig; genaue Quellen-/Codegegenüberstellung im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/server/agent-bridge.mjs#runAgent,createServer",
+    "docs": [
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/reference/workflows.md"
+    ],
+    "tests": [
+      "tests/verification/contracts/check-deploy-prism-command.mts",
+      "tests/verification/live/prism-nova-production-e2e.mjs"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.extension",
+    "review": "abgeschlossen",
+    "responsibility": "OpenClaw-Tools für Designcommits",
+    "usage": "OpenClaw onStartup Tools prism_create_design_set/prism_apply_revision; Control validiert/persistiert unter SPIFFE.",
+    "docStatus": "vorhanden; konkrete Implementierungsgrenzen und offene Verifikation im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/openclaw-plugin/index.mjs#default register; prism_create_design_set,prism_apply_revision",
+    "docs": [
+      "skills/prism/openclaw-plugin/README.md",
+      "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "docs/architecture/prism-openclaw-runtime.md",
+      "docs/reference/workflows.md"
+    ],
+    "tests": [
+      "skills/prism/openclaw-plugin/index.test.mjs"
+    ],
+    "testMappingNote": "Zuordnung vorhandener Tests, keine pauschale Bestehensaussage: Modul-/Fixture-/PGlite-, Sourcecontract- und nicht ausgeführte Livechecks getrennt im Review bewertet. Livechecks mit Podlöschung/Deployment/Provideraufrufen wurden nicht ausgeführt."
+  },
+  {
+    "id": "prism.studio",
+    "review": "abgeschlossen",
+    "responsibility": "React/Puck-Studio, Operationprojektion und isolierte Vorschau",
+    "usage": "Aktiv: index.html startet app.tsx; Produktions-ControlAPI, DEVFixture separat; Vitebuild wird durch service-studio ausgeliefert.",
+    "docStatus": "vorhanden, teilweise abweichend und unvollständig; Puckverlust/Assetpreview und Messageprotokoll im Komponentenreview",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+    "entry": "skills/prism/studio/index.html → skills/prism/studio/app.tsx#createRoot; skills/prism/studio/puck-adapter.ts#puckChangeToOperation; skills/prism/studio/preview.ts#previewDocument",
+    "docs": [
+      "docs/user-guides/prism-studio.md",
+      "docs/architecture/prism-studio-interaction-v1.md",
+      "docs/architecture/prism-prototype-runtime-v1.md",
+      "docs/implementation/prism-implementation-plan.md",
+      "docs/operations/prism-operator-guide.md",
+      "docs/security/prism-threat-model.md"
+    ],
+    "tests": [
+      "skills/prism/tests/studio-adapter.test.mts",
+      "skills/prism/studio/tests/studio.spec.mjs"
+    ],
+    "testMappingNote": "Capabilitiesreview: neun Original-Nodeadaptertests bestanden; neun Playwrightfälle vor Assertions wegen fehlendem Chromium blockiert. DEVbrowserfixtures beweisen keinen Produktions-Controlfluss; Originaladapter/Domain/Previewproben getrennt verlinkt."
+  }
+]

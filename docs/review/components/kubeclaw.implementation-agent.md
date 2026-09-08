@@ -1,95 +1,127 @@
 # kubeclaw.implementation-agent
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verwendung und Grenzen
 
-## Verantwortung, Grenzen und Einstieg
+Manifest implementation / kubeclaw.agent.implementation → src/stage.ts, aktiv
+im Projectcompiler pro Modul. Protokoll, Repairoverride und Gitworktreeintegration
+sind plugin-owned; Agentlauf/Gitoperationen/Store sind Capabilities. Alle drei
+Sourcefiles, Manifest, Input-/Config-/Resultschemas, README, Pakettests und
+separate repair-evidence-Regression gelesen.
 
-- `skills/nova/plugins/implementation-agent`
+## 2. Verträge und Gegenstellen
 
-Entrypoints: `src/stage.ts#execute`.
+Stage überschreibt runId/attempt aus Corelease, moduleId/task/headBefore sowie
+optionale Workspaceparameter stammen aus Graph. Compiler erzeugt individuellen
+Worktree je Run/Modul. Gitadapter create liefert reale Baserevision;
+commit/merge liefern neue sourceRevision, die SDK resolveSourceRevision und
+Lint/Review/Quality konsumieren. Completion verlangt ready_for_testing oder
+blocked, Summary, geänderte Pfade, Checks und Runtime-Sessionevidenz. ready
+verlangt completed Session und erfolgreiche Checks; blocked verbietet
+widersprüchliche erfolgreiche Evidenz. Gegenstelle Runtimeinput übernimmt
+**Worktree nicht** (PCR-IMPLEMENTATION-001).
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Repairrequest muss Zielstage, Requesterstage, Generation, request_fix und
+rungebundene JSONrefs enthalten. Originale Artefaktinhalte werden mit Namespace,
+Digest und Größenprüfung als Guidance geladen, nicht nur Pfadnamen weitergereicht.
 
-Registrierungen aus Manifest:
+## 3. Zustand und Nebenwirkungen
 
-- `stages:implementation` → `src/stage.ts#execute`; benötigte Capabilities: runtime.dispatch, git.workspace.create, git.workspace.remove, git.commit, git.merge, artifacts.read, artifacts.write
+Repairprüfung → Worktreecreate → Dispatch → Commit geänderter Pfade → Merge ins
+Zielrepo → Cleanup → Completionartefakt. Integration veröffentlicht vor den
+nachfolgenden Lint/Review/Testgates. Worktree wird nur nach bestätigtem Merge
+entfernt; bei ungewissem Ausgang bleibt er erhalten. Cleanupfehler erzeugt
+separates immutable cleanup-Artefakt und wiederholt fertige Implementation nicht.
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+## 4. Korrektheit und Fehler
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+Workspace-/Dispatch-/Completionfehler werden blocked, EFFECT-Präfix gibt
+reconciliation_required. Keine naive Wiederholung nach verlorener Antwort.
+Mergeerfolg plus Cleanupfehler bleibt passed mit zusätzlichem Bericht, absichtlich.
+Completion-Checks sind Agentenbehauptungen; tatsächliche Tests folgen unabhängig.
+ChangedPaths-Parser ist nicht die letzte Pfadgrenze: Gitadapter validiert erneut.
+Ohne Workspace kann passed ohne sourceRevision entstehen; revisionabhängige
+Consumer müssen dies blockieren, Compilerroute nutzt immer Workspace.
 
-## Tests und Dokumentation
+## 5. Abbruch, Wiederholung und Konkurrenz
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+Corelease/Effects/Gitrunner begrenzen Aufrufe. Keine eigene Retryloop. Repair
+beginnt bewusst bei HEAD; tatsächliche neue Worktreebase wird als headBefore
+übernommen. Merge-/Repoparallelität außerhalb der Compilerlane bleibt Risiko
+anderer Aufrufer. Cleanup läuft unter derselben Lease; abgelaufene Lease kann
+Cleanup verhindern, Restworktree bleibt sichtbar. Agententerminierung ist
+Runtimeadapterpflicht, nicht mit Promiseabbruch erledigt.
 
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs`
-- `skills/nova/plugins/implementation-agent/tests/protocol.test.ts`
-- `skills/nova/plugins/lint/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/summary.test.mjs`
-- `tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts`
-- `tests/verification/contracts/check-plugin-agent-output-contracts.mts`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
-- `tests/verification/e2e/real-run-evidence.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
-- `tests/verification/reliability/repair-evidence.test.mts`
-- `tests/verification/reliability/review-candidate.test.mts`
+## 6. Wiederanlauf und Commitfenster
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+Zwischen create/dispatch/commit/merge liegen externe Actions. Bei Mergeantwort-
+verlust darf Arbeit nicht gelöscht werden; vorhandene Resultreceipts/
+Gitzustand müssen reconciliiert werden. Crash nach Merge vor Completionwrite
+veröffentlicht Code ohne zugehöriges Completionartefakt. Core-/Effectsfenster
+zentral in nova.execution/nova.effects. Im Plugin keine separate Recoveryengine.
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-changelog.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/blueprint/01-platform-inventory.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/implementation-agent/README.md`
+## 7. Vertrauen
 
-## Aufrufer- und Abhängigkeitsbelege
+Agent/Workspaceroots/Commit/Merge/Artefaktnamespaces durch Grants. Handshake-
+Sessiondaten müssen vom Runtimeadapter kommen, nicht autonomer Modellautorität;
+HTTPworkerpfad vertraut entsprechend dem konfigurierten Workerendpoint.
+Repairoptions sind core-owned und digestgebunden. ownedPaths stehen im
+Compilerrequest als Aufgabenprosa und werden durch nachgelagerten Review geprüft;
+der Implementationstageparser erzwingt keine eigene Ownershipprefixliste.
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+## 8. Limits und Aufräumen
 
-- `charts/kubeclaw/files/config/knip.json:582`
-- `docs/architecture/plugin-system-current-inventory.md:59`
-- `docs/architecture/plugin-system-implementation-plan.md:766`
-- `docs/architecture/plugin-system-phase9-changelog.md:107`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:160`
-- `docs/blueprint/01-platform-inventory.md:31`
-- `docs/blueprint/04-evidence-matrix.md:38`
-- `docs/site/extend/plugin-catalogue/README.md:24`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:67`
-- `docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md:68`
-- `docs/site/reference/capabilities.md:17`
-- `docs/site/reference/capabilities.md:18`
-- `docs/site/reference/capabilities.md:25`
-- `docs/site/reference/capabilities.md:26`
-- `docs/site/reference/capabilities.md:29`
-- `docs/site/reference/capabilities.md:30`
-- `docs/site/reference/capabilities.md:37`
-- `packaging/runtime/roles/nova.json:46`
-- `scripts/docs-blueprint-generate.mjs:140`
-- `skills/common/plugin-runtime/sdk/src/source-revision.ts:7`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts:68`
-- `skills/nova/plugins/lint/tests/live-function.test.ts:95`
+512 geänderte Pfade je <=512 Zeichen, 128 Checks, Summary 8192; Repair maximal
+32 Artefakte und gesamter JSONhandoff 256 KiB. Große/cross-run/korrupte Evidenz
+blockiert vor Worktreecreate. Keine lokale Tempquote für zurückbehaltene
+Worktrees: Opscleanup erforderlich. Node, Git, verfügbare Host-/Agentworkspaces,
+Runtime und persistente Stores sind Voraussetzungen.
 
-## Offene Prüfpfade
+## 9. Architektur
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+Saubere Agent-vs-deterministische-Integrationsgrenze und Erhalt ungewisser
+Arbeit sinnvoll. Fehlende Arbeitsverzeichnisübergabe verletzt aber die gesamte
+Worktreeidee. Eine einzige autorisierte Workspaceidentität muss Erzeugung,
+Agentlauf, Commit und Cleanup verbinden; kein Promptshim zum Erraten des Pfads.
+
+## 10. Tests
+
+`npm test` **bestanden**:
+[Protokoll](../evidence/nova-batch-implementation-agent-tests.txt).
+Original-HTTPserver erzeugt echte Datei, führt echten Nodeassertionstest aus und
+liefert feste Completion/Transcriptdaten. Real-Gitcase bestätigt Commit/Merge,
+locked-worktree Cleanupfailure und verlorene HTTPantwort → retain/no retry.
+**Kein echter Forgeagent**: Test setzt workerWorkspace außerhalb des Requests.
+`node --test tests/verification/reliability/repair-evidence.test.mts` **bestanden**
+mit Originalartefaktstore, handverdrahtetem Context; echte Inhalte, tamper/cross-run/
+Limitfälle. Originalbuilderprobe
+`node docs/review/evidence/nova-batch-implementation-request-probe.mjs` bestätigt
+fehlenden Worktree im Request. Kein behaupteter produktiver Agent-Ende-zu-Ende-Test.
+
+## 11. Dokumentation
+
+Plugin-README nennt Agent-/Gitdiff-/Recoveryparität offen; Project-README
+beschreibt Worktreeworkflow detaillierter. **Unvollständig** zur tatsächlichen
+Arbeitsverzeichnislücke und benötigter gemeinsamer Nova/Workerpfadidentität.
+Cleanupbericht/Sourcerevision gehören in spätere Betriebsdokumentation.
+
+## 12. PCR-IMPLEMENTATION-001 — Erzeugter Worktree erreicht Forge nicht
+
+**Hoch; nachgewiesener Schnittstellendefekt durch beide Originalseiten.**
+`src/stage.ts:10–30` erzeugt input.workspace.workspacePath und dispatcht
+buildRequest; `src/protocol.ts:37–72` übernimmt weder Workspace noch dessen Pfad.
+`runtime-dispatch/src/openclaw.ts:207–222` startet ausschließlich mit statischem
+target.cwd. SDK runtime-agent-task.ts erklärt dieses Runtimecwd zusätzlich als
+einzigen mutierbaren Workspace. Compiler erzeugt dagegen wechselnde Pfade.
+Auslöser: reguläres Compilerprojekt mit target.cwd ungleich modularem Worktree.
+Auswirkung: Forge arbeitet am falschen Ort oder kann seinen erzeugten Worktree
+nicht bearbeiten; nachfolgender Commit im leeren Worktree scheitert, ggf. werden
+Dateien im statischen CWD geändert. Live-Test verdeckt dies durch externe
+workerWorkspace-Zuweisung, nicht durch tatsächlich übertragene Identität.
+Rootfix: typisierte, root-/leasegebundene Workspacereferenz im Dispatchvertrag,
+Runtime validiert und setzt tatsächliches CWD; Source-/Commit-/Mergegrenzen nutzen
+dieselbe Referenz. Kein ungeprüfter freier caller-CWD. Regression: zwei echte
+Compilerworktrees über Original-OpenClawgatewaypfad; Spawnpayload muss den jeweils
+autorisierten Pfad enthalten, Agent/Worker schreibt ausschließlich dort und
+Originalgit integriert exakt diese Datei. Negative fremde Root-/Runfälle ergänzen.

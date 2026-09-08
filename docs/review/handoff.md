@@ -1,119 +1,39 @@
 # Fortsetzungsstand — laufender Gesamtauftrag
 
-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`. 93 Einheiten; derzeit 37 abgeschlossen.
-Autonomer Gesamtauftrag läuft bis zu allen 93 ausführlichen Reviews weiter.
-Dieser Speichercheckpoint ist kein Abschluss. Nur docs/review verändert,
-keine funktionalen Reparaturen, Deployments oder CI-Anforderung.
-Remote-Arbeitsbranch: docs/pipeline-component-review-20260906.
+Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`. **86 von93 Reviews abgeschlossen und integriert.**
+Remote-Arbeitsbranch: `docs/pipeline-component-review-20260906`.
+Nur Review-Dokumentation; keine funktionalen Reparaturen, Deployments oder CI.
 
-## Abdeckung
+## Komponentenstatus
 
-- **abgeschlossen (37)**: kubeclaw.agent-observability, kubeclaw.artifact-store, kubeclaw.notification-observer, lib.prompt-contract, kubeclaw.secret-resolver, kubeclaw.state-store, kubeclaw.telemetry-observer, kubeclaw.wait-store, kubeclaw.architecture-validator, contract.plugin-system, contract.worker, contract.test-gate, contract.observability, contract.agent-events, contract.telemetry, contract.prism, lib.sdk, foundation.registry, foundation.config, foundation.isolation, foundation.packages, foundation.observability, nova.state, nova.effects, nova.execution, nova.lifecycle, nova.telemetry, nova.observability, nova.test-gates, nova.entry, worker.core, buster.entry, prism.control, prism.domain, prism.engine, prism.storage, buster.namespace-controller.
+- **abgeschlossen (86)**: kubeclaw.agent-observability, kubeclaw.artifact-store, kubeclaw.command-runner, kubeclaw.git-workspace, kubeclaw.network-http, kubeclaw.notification-observer, kubeclaw.openclaw-agent-events, kubeclaw-agent-observer, kubeclaw.operator-messaging, lib.prompt-contract, kubeclaw.redis-transport, kubeclaw.runtime-dispatch, kubeclaw.secret-resolver, kubeclaw.state-store, kubeclaw.telemetry-observer, kubeclaw.telemetry-store, kubeclaw.transport-publisher, kubeclaw.wait-store, kubeclaw.architecture-validator, kubeclaw.blueprint-sync, kubeclaw.case-study, kubeclaw.delivery-lint, kubeclaw.human-approval, kubeclaw.implementation-agent, kubeclaw.pipeline-review, kubeclaw.preflight-contract, kubeclaw.api-flow, kubeclaw.axe, kubeclaw.container-build, kubeclaw.coverage-budget, kubeclaw.direct-command, kubeclaw.http, kubeclaw.junit-report, kubeclaw.kubernetes-fixture, kubeclaw.lighthouse, kubeclaw.openapi, kubeclaw.playwright, kubeclaw.security-providers, kubeclaw.size-budget, kubeclaw.tailscale-exposure, kubeclaw.visual, contract.plugin-system, contract.worker, contract.test-gate, contract.observability, contract.agent-events, contract.telemetry, contract.prism, lib.sdk, foundation.registry, foundation.config, foundation.isolation, foundation.packages, foundation.observability, nova.state, nova.effects, nova.execution, nova.lifecycle, nova.telemetry, nova.observability, nova.test-gates, nova.entry, nova.scaffold, worker.core, buster.engine, buster.entry, prism.control, prism.corpus, prism.directions, prism.domain, prism.engine, prism.evaluation, prism.pipeline-adapter, prism.preferences, prism.renderer, prism.storage, prism.studio, prism.service-control, prism.service-worker, prism.service-ingestion, prism.service-studio, prism.service-agent-bridge, prism.service-common, prism.entry, prism.extension, buster.namespace-controller.
 
-- **teilweise geprüft (2)**: prism.service-control, prism.service-worker.
+- **teilweise geprüft (0)**: keine.
 
-- **ungeprüft (54)**: kubeclaw.command-runner, kubeclaw.git-workspace, kubeclaw.network-http, kubeclaw.openclaw-agent-events, kubeclaw-agent-observer, kubeclaw.operator-messaging, kubeclaw.redis-transport, kubeclaw.runtime-dispatch, kubeclaw.telemetry-store, kubeclaw.transport-publisher, kubeclaw.blueprint-sync, kubeclaw.buster-quality-gate, kubeclaw.case-study, kubeclaw.delivery-lint, kubeclaw.human-approval, kubeclaw.implementation-agent, kubeclaw.lint, kubeclaw.pipeline-review, kubeclaw.preflight-contract, kubeclaw.prism-design, kubeclaw.project-summary, kubeclaw.remote-test-gate, kubeclaw.repository-adapter, kubeclaw.review, kubeclaw.api-flow, kubeclaw.axe, kubeclaw.container-build, kubeclaw.coverage-budget, kubeclaw.direct-command, kubeclaw.http, kubeclaw.junit-report, kubeclaw.kubernetes-fixture, kubeclaw.lighthouse, kubeclaw.openapi, kubeclaw.playwright, kubeclaw.security-providers, kubeclaw.size-budget, kubeclaw.tailscale-exposure, kubeclaw.visual, nova.scaffold, buster.engine, prism.corpus, prism.directions, prism.evaluation, prism.pipeline-adapter, prism.preferences, prism.renderer, prism.studio, prism.service-ingestion, prism.service-studio, prism.service-agent-bridge, prism.service-common, prism.entry, prism.extension.
+- **ungeprüft (7)**: kubeclaw.buster-quality-gate, kubeclaw.lint, kubeclaw.prism-design, kubeclaw.project-summary, kubeclaw.remote-test-gate, kubeclaw.repository-adapter, kubeclaw.review.
 
 - **Nachprüfung erforderlich (0)**: keine.
 
-## Konkrete Fortsetzung
+## Konkrete nächste Arbeit
 
-1. Parallel laufende Prüfgruppen Nova-Plugins/Scaffold, Busterengine/Provider,
-   Prismdienste sowie gemeinsame Adapter/Observer weiterführen. Root prüft
-   Inventarclosure und integriert ausschließlich fachlich abgeschlossene Reviews.
-2. Danach nova.scaffold, Busterengine und sämtliche darauf aufbauenden Plugins/
-   Dienste. Umfang und Belegtiefe unverändert beibehalten.
-3. Inventarvollständigkeit noch offen: role-bundle-Builder/Closure, dynamische
-   Imports, Hilfsskripte und Spike-/Legacy-Auswahl mit93 Grenzen abgleichen.
-4. Prism.service-worker teilweise: service/executor gelesen, Engine/Storage/
-   Browserlifecycle/Tests offen. service-control: nur Workerübergabe geprüft,
-   übrige Routen/Transaktionen/Tests offen.
+Offene Nova-Plugins sowie große Lint-/Review-Engines fertig untersuchen und deren
+Berichte einzeln integrieren. Restprüfungen nicht verkürzen. Prism-Prototypen als
+historische Forschungs-/Verifikationsflächen gegen Produktionsimporte abgrenzen.
+Danach alle93 Status-/Beleglinks, Dokumentationszuordnungen und Eigentümerbefunde
+konsolidieren; keine offene Laufzeitprüfung als bestanden ausgeben.
 
-## Offene Befunde mit Eigentümer
+## Offene Befunde und Tests
 
-- [PCR-CONTRACT-PLUGIN-001 — Leeres Plugin passiert die Manifestvalidierung](components/contract.plugin-system.md).
-- [PCR-TEST-CONTRACT-001 — Dateideklaration erlaubt im Typ ein verbotenes Artefakt](components/contract.test-gate.md).
-- [PCR-AGENT-CONTRACT-001 — Tiefe gültige JSON-Nutzlast überläuft Validatorstack](components/contract.agent-events.md).
-- [PCR-TELEMETRY-CONTRACT-001 — Payload schwächt Envelopeidentität](components/contract.telemetry.md).
-- [PCR-TELEMETRY-CONTRACT-002 — Generierte Typen verlieren erlaubte Wireformen](components/contract.telemetry.md).
-- [PCR-PRISM-CONTRACT-001 — Viewpatch kann ungültige Komponentenziele einschleusen](components/contract.prism.md).
-- [PCR-PRISM-CONTRACT-002 — Rekursive Validierung ohne Eingangstiefenbudget](components/contract.prism.md).
-- [PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten](components/lib.sdk.md).
-- [PCR-SDK-002 — Deklarierter Workspacebuild nicht ausführbar](components/lib.sdk.md).
-- [PCR-REGISTRY-002 — Securitytest erreicht seine Autorisierungsfälle nicht](components/foundation.registry.md).
-- [PCR-ISOLATION-001 — Pipefehler beendet den Hostprozess](components/foundation.isolation.md).
-- [PCR-ISOLATION-002 — SIGKILL trifft Supervisor statt Prozessbaum](components/foundation.isolation.md).
-- [PCR-ISOLATION-003 — UTF-8 wird an Streamchunkgrenzen beschädigt](components/foundation.isolation.md).
-- [PCR-ISOLATION-004 — Lease-Memorywert ist kein erzwungenes Speichermaximum](components/foundation.isolation.md).
-- [PCR-PACKAGES-001 — Report-Adapter umgehen Installations-Syntaxprüfung](components/foundation.packages.md).
-- [PCR-OBS-001 — Persistierte Admission-/Attemptzustände umgehen Replayvalidierung](components/foundation.observability.md).
-- [PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt](components/foundation.observability.md).
-- [PCR-STATE-001 — Journal-Cache enthält fremd veränderbare Payloads](components/nova.state.md).
-- [PCR-STATE-002 — Stale-Lock-Übernahme ist nicht an beobachteten Besitzer gebunden](components/nova.state.md).
-- [PCR-EFFECT-001 — Konflikt nach Lockakquise lässt Ressourcenlock zurück](components/nova.effects.md).
-- [PCR-EXEC-001 — Rekonstruierter Wait kann nicht per Signal fortgesetzt werden](components/nova.execution.md).
-- [PCR-EXEC-002 — Resultartefakt verschwindet aus der Recoveryprojektion](components/nova.execution.md).
-- [PCR-TELEM-001 — Release-Verifikation erwartet entfernten Auditobserver](components/nova.telemetry.md).
-- [PCR-PRISM-DOMAIN-001 — Move in eigenen Nachkommen verliert Teilbaum](components/prism.domain.md).
-- [PCR-PRISM-DOMAIN-002 — Nichtleere Teilbäume lassen sich nicht duplizieren](components/prism.domain.md).
-- [PCR-PRISM-DOMAIN-003 — Responsivepatch verwirft andere Stateproperties](components/prism.domain.md).
-- [PCR-PRISM-WORKER-001 — Pflicht-Logspeicher fehlt am Executor-Aufruf](components/prism.service-worker.md).
-- [PCR-PRISM-WORKER-002 — CPU-Messung zählt die gesamte Prozesslebensdauer](components/prism.service-worker.md).
+Vollständige Eigentümerliste im [Befundregister](findings.md), genaue Befehle und
+Aussagekraft in jedem Review und dessen evidence-Links. Reale lokale Tests und
+Reproduktionen wurden ausgeführt; vorhandene Fixturetests bleiben als solche
+benannt. Blockaden: Go/gofmt fehlt; Sandbox scheitert hier am Proc-children-Zugriff;
+Browserbinaries/Buildctl/Kubectl/Trivy-Cache bzw. echte Cluster-/Hostumgebung fehlen.
+Einige Originaltests scheitern an veralteten Erwartungen, SDKbuild an fehlender
+Konfiguration, Reportadapterlauf an EPIPE. Spätere Assertions dieser Programme
+sind nicht bestätigt. PostgreSQLnahe PGliteproben ersetzen keinen produktiven
+Postgres-/SPIFFE-/OpenClaw-Ende-zu-Ende-Nachweis. Keine neue CI angefordert.
 
-## Tests / Blockaden
-
-Einzelreview und evidence/README.md führen genaue Befehle und Grenzen. Original-
-Tests für State/Journal/Lifecycle/Prompt, Workercontract/Executor/Runtime,
-SDK/Plugincontract/Agentcontract, Observabilitystores/Nova-Reconciliation,
-Audit/Observer, Platformconfig, Packageinstallation und drei Registryprüfungen
-bestanden. Synthetische Operation-/Contractfixtures bedeuten keine echten Agenten.
-Fehlgeschlagen: SDK-Workspacebuild (tsconfig.json fehlt), Phase12/Import-Safety
-(Observerzahl), Capability-Security (Fixture-Grant unvollständig, spätere24
-Invocationfälle nicht erreicht). Go/gofmt fehlen: Vertragsparität/Generierung
-nicht vollständig bestätigt. Sandbox-C-Build bestanden, Launcher kann erforderliche
-Proc-children-Datei hier nicht öffnen. Phase11/External-engine crashen außerdem
-mit unbehandeltem EPIPE; Runtime-bundle-Isolation endet beim ersten Supervisorfall.
-Keine Schutzumgehung, kein Ersatzlauncher. UTF-8-Repro ist Protokollprüfung ohne
-Sandbox und wird ausschließlich so gewertet. Keine CI, Livecluster/-agenten,
-Prism-Postgres-/Browser-E2E oder Clean-Install angefordert.
-
-Prism: Originalvalidator-/Typechecks, Generatorvergleich auf temporärer Kopie,
-Engine-/Domainprüfungen und Archiveprüfung bestanden; zusätzliche echte
-Reproduktionen für Patchreferenzen, Tiefe, Verschiebung, Duplikation und
-Patchpriorität dokumentiert. Kein PostgreSQL-/Browser-Laufzeitnachweis.
-
-Test-Gate-Vertrag: fünf Originalprüfkommandos einschließlich Gitarchiv, Signatur,
-Snapshot-SIGKILL und Typecheck bestanden. Effects: Capabilityruntime bestanden,
-Lock-Leck mit zwei originalen Filejournals und Filelocks reproduziert.
-
-Nova Execution: Phase6, Resume, echte Delivery-Lint-/Telemetryintegration und
-Checkpoint-SIGKILL bestanden. Lifecycle-/Recorder-/Replaytest bestanden.
-Wait-/Artefaktprojektionsfenster mit gültigen Journalpräfixen reproduziert;
-diese zwei Proben modellieren den Crash und behaupten keinen echten SIGKILL.
-
-## Qualitätsstand
-
-Lebendes Schema Revision5; Nachprüfung früherer Abschlüsse im README, Worker-
-Byte-Logpfad bei PCR-ISOLATION-003 verlinkt. State-/Foundationjournale unterscheiden
-sich beim Replay und bei Locking; keine pauschalen Aussagen. V1-Telemetryassets
-noch ausgeliefert, keine aktiven Verbraucher gefunden; aktive v2-Observer und
-Workerobservability sind andere Verträge. Tests, Code-Traces, Verdacht und
-ungeklärte externe Nutzung getrennt. Keine Secrets oder Betriebsdaten übernommen.
-Remote vor Update erneut prüfen, niemals force-push oder fremde Änderungen ersetzen.
-
-Nova Test-Gates: vier Originalkommandos bestanden. Reale HTTP-Fehlerproxyproben
-bestätigen Timeout ohne Cancel und fehlende Importdeadline. Zwei echte signierte
-Gitarchive überschreiten die konfigurierte Blobgesamtquote. Resolverbeispiele
-und IPv6constructorfehler reproduziert; Prozessrestart weiter ohne Laufzeit-
-Bestätigung, zudem obsolete Graphdatei im Originaltest identifiziert.
-
-Weitere offene Befunde:
-- [PCR-NOVA-GATE-001/002 — Timeout/Cancel und Importdeadline](components/nova.test-gates.md).
-- [PCR-NOVA-GATE-003/004/005 — IPv6, Storequoten, veralteter Restarttest](components/nova.test-gates.md).
-- [PCR-TEST-CONTRACT-002 — Unzulässiges Inputfeld in Originalbeispielen](components/contract.test-gate.md).
-
-Checkpoint 2026-09-08: Review24 nachgeprüft und remote 762243be gesichert;
-13 weitere Komponenten fachlich abgeschlossen und rootseitig auf Bericht-/
-Evidenzkonsistenz geprüft. Neue Befunde: PCR-BUSTER-NS-001..003,
-PCR-PRISM-STORAGE-001, PCR-PRISM-ENGINE-001, PCR-NOTIFY-001.
-Go weiterhin nicht verfügbar; echte Cluster-/Browser-/Powerlossnachweise nicht ersetzt.
+Schema Revision6 enthält nun tatsächliche externe Retrywirkung; nova.telemetry
+und nova.effects wurden entsprechend nachgeprüft (PCR-OPERATOR-001). Operations-
+und Packagingprüfung ist ein Anhang zu bestehenden Komponenten, keine94. Einheit.

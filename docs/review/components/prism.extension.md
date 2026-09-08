@@ -1,44 +1,19 @@
-# prism.extension
+# prism.extension — OpenClaw-Tools für Designcommits
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–3. Registrierung, Schnittstellen, Zustand
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig `skills/prism/openclaw-plugin/index.mjs`, index.test.mjs, openclaw.plugin.json, package.json und README gelesen. Manifest kubeclaw-prism onStartup nennt zwei Tools/codingprofile. register registriert prism_create_design_set und prism_apply_revision; keine Pipeline-Stepregistrierung. Bridgeprompts fordern genau diese Tools. Set verlangt drei Key/Title/Summary/Documenteinträge; Revision project/document/expectedRevision/instruction/Document. Documentschema absichtlich permissiv object, vollständige Schema-/Projekt-/CASvalidierung beim Control /v1/agent/design-sets und /v1/agent/revisions. Extension postet JSON zu config.controlUrl/env/default127.0.0.1:28080, liefert text(JSON) und details. Keine eigene DB oder Commitautorität; HTTP2xx von Control ist Bestätigung.
 
-- `skills/prism/openclaw-plugin`
+## 4–6. Fehler, Retry, Restart
 
-Entrypoints: `index.mjs`.
+Responsejsonfehler werden Ersatzerrorobjekt, nicht-2xx wirft. Bei2xx mit ungültigem JSON wird errorobjekt dennoch als erfolgreiches Toolresult gegeben; tatsächlicher Control liefert JSON, daher offene Robustheitsfrage, kein bestätigter aktueller Erfolgsfehler. Fetch hat kein Abort/Timeout/Toolcancellationsignal. Verlorenes AntwortACK lässt Ausgang ungewiss. Setreplay kann Repository anhand identischer Dokumentdigests als already-created erkennen, Revisionretry hat nur expectedRevision und wirft nach bereits erfolgtem Commit; keine durchgehende Toolaufruf-ID als Idempotenzkennung. Neustart hat keinen lokalen Zustand, nötige Reconciliation liegt Bridge/Control.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 7–9. Vertrauen, Ressourcen und Architektur
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Kein Bearerheader: Agenttools funktionieren im Control nur mit SPIFFE, lokaler Proxy trägt Identität. URL wird vom Operator konfiguriert, keine eigene Host-/TLSallowlist; Trust darf nicht aus Toolschema abgeleitet werden. Toolargs können große Dokumente enthalten; JSON.stringify/Responsejson komplett gepuffert, erst Controlbody2MB begrenzt Wiregröße. Keine Retention/Prozesshandles im Plugin. OpenClaw hat alleinige Aktivierungs-/Aufruf-/Modellverantwortung. Dauerhaft gemeinsame engere Dokument-/Resultschemagrenze, Abbruch und wiederholbare Commit-ID statt zusätzlicher blindes Fetchretry.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 10–12. Tests, Dokumentation, Ergebnis
 
-## Tests und Dokumentation
-
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
-
-- `skills/prism/openclaw-plugin/index.test.mjs`
-
-Dokumentationsstatus: unvollständig (Abgleich offen).
-
-- `docs/reference/workflows.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw-prism.md`
-- `skills/prism/openclaw-plugin/README.md`
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `docs/reference/workflows.md:26`
-- `docs/site/extend/plugin-catalogue/kubeclaw-prism.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw-prism.md:62`
-- `docs/site/extend/plugin-catalogue/kubeclaw-prism.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw-prism.md:64`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+`node --test skills/prism/openclaw-plugin/index.test.mjs`:1/1 bestanden, [prism-extension-tests.txt](../evidence/prism-extension-tests.txt). Test zeichnet registerTool auf, prüft Namen/exakt drei/required Felder; execute/post, echte OpenClawregistrierung, SPIFFE und Controlcommit nicht ausgeführt. README/Plugin-Katalog/Workflows vorhanden; Formulierung „validated request“ beschreibt vor allem Downstreamvalidierung, Timeout-/Unknownpolicy fehlt. Dokumentationsstatus vorhanden und unvollständig. Kein neuer unabhängiger Defekt-ID; verlorene accepted Jobs/Sessionidentitäten gehören prism.service-agent-bridge, Revision-/SQLidentität Control. Nächste Verifikation: Original-OpenClawtool mit echtem Control/PG/Proxy, gültiges/ungültiges Dokument, fremdes Projekt, verlorenes Commit-ACK und Abbruch; nicht nur Registrierungsfixture.

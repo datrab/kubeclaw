@@ -1,0 +1,65 @@
+{
+  "kubeclaw.agent-observability": {
+    "responsibility": "Agentereignisse in Telemetrie und Evidenzartefakte projizieren",
+    "usage": "Auslieferung nova/buster/prism; originaler Core-/Filesinktest, Produktivauswahl nicht belegt",
+    "docStatus": "vorhanden; unvollständig für Ressourcen/Herkunft/Retention",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.notification-observer": {
+    "responsibility": "Lifecycle- und Previewbenachrichtigungen projizieren",
+    "usage": "Nova-Observer an operator.request; Originalruntime/local HTTPfixture",
+    "docStatus": "vorhanden; unvollständig für kompatible Feld-/Zeichenlimits",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.openclaw-agent-events": {
+    "responsibility": "Allowlist-Hooks in namespaced v2-Domainevents übertragen",
+    "usage": "Nova-Adapterangebot; activateWithSdk getestet, realer OpenClawexport nicht verfügbar",
+    "docStatus": "veraltet: serielle Queue ist keine Backpressure",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw-agent-observer": {
+    "responsibility": "Hostnative Hooknormalisierung und v1-Rediswriter",
+    "usage": "Chart aktiviert aktuell buster; v1-Consumer nicht belegt, Originaltests mit bestehenden Redisfixtures",
+    "docStatus": "veraltet: Phase10-Redaction/Test-/Rollenbehauptungen; Consumer unvollständig",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.operator-messaging": {
+    "responsibility": "Targetgebundene signierte HTTP-/Discordnachrichten mit Deliveryjournal",
+    "usage": "Nova-provider für Notification/Operatoranforderungen; Originalruntime/local HTTPfixture",
+    "docStatus": "veraltet: pauschale interne Secretfreiheit; Retry/Unknown-Recovery unvollständig",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.redis-transport": {
+    "responsibility": "Redis-Streamsprovider für Transport/Telemetrie",
+    "usage": "Nova-Angebot, Originaladapter gegen RESP-TCPfixture; kein realer Redisserver",
+    "docStatus": "veraltet: bounded network I/O; TTL-/Shutdownbedingungen unvollständig",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.telemetry-observer": {
+    "responsibility": "Kanonische Lifecycleevents als stabiles Telemetrieenvelope",
+    "usage": "Nova-Observer; Originalprojektorfixtures, Coreauswahl über Grants",
+    "docStatus": "vorhanden; Produktivwahl/Ressourcen/Retention unvollständig",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.telemetry-store": {
+    "responsibility": "Durable Filetelemetriesink mit Redaction/Dedupe",
+    "usage": "nova/buster/prism-Provider; Originaladapter/Filetests und Agentobserverkette",
+    "docStatus": "veraltet: Secretfeldredaction/Cancellationgrenzen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.transport-publisher": {
+    "responsibility": "Signierter HTTPpublisher mit reserviertem Deliveryjournal",
+    "usage": "Nova-Angebot; Originalruntime mit Testconsumer/local HTTPfixture",
+    "docStatus": "vorhanden; Core-Recovery/Unknown/Retention unvollständig",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  }
+}

@@ -1,0 +1,45 @@
+// Original providers and original invoker; local HTTP only, no substitute implementation.
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import http from 'node:http';
+import { NetworkHttpCapabilityInvoker } from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
+import { provider as flowProvider } from '../../../skills/buster/plugins/api-flow/src/provider.js';
+import { provider as openapiProvider } from '../../../skills/buster/plugins/openapi/src/provider.js';
+import { provider as httpProvider } from '../../../skills/buster/plugins/http/src/provider.js';
+import { validateReferencedSchema, resolveReferencedValue } from '../../../skills/common/plugin-runtime/foundation/registry/schema.ts';
+import { adapt } from '../../../skills/buster/plugins/junit-report-adapter/src/adapter.js';
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'review-providers-'));
+for (const name of ['repository','evidence','scratch']) fs.mkdirSync(path.join(root,name));
+let contacts=0;
+const server=http.createServer((request,response)=>{ contacts++;response.setHeader('content-type','application/json');response.end('[1]'); });
+await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+const origin=`http://127.0.0.1:${server.address().port}`;
+const signal=new AbortController().signal;
+const invoker=new NetworkHttpCapabilityInvoker({allowedOrigins:[origin],allowedHostSuffixes:[],allowedPorts:[server.address().port],maximumResponseBytes:1024,maximumExecutionMs:1000});
+const context={workspaceRoot:root,signal,log(){},invoke:(name,request)=>invoker.invoke(name,request,signal)};
+const invocation={testIdentity:'test:review',mode:'blocking',inputs:[],timeoutMs:1000,workspace:{repository:'repository',evidence:'evidence',scratch:'scratch'}};
+try {
+ fs.writeFileSync(path.join(root,'repository/flow.json'),JSON.stringify({schemaVersion:'kubeclaw.api-flow.v1',steps:[{id:'required',path:'/{{missing}}',expect:{status:200}}]}));
+ const skipped=await flowProvider().execute({...invocation,configuration:{values:{flowFile:'flow.json',url:origin,maximumResponseBytes:1024}}},context);
+ assert.equal(skipped.outcome,'passed');assert.equal(skipped.counts.skipped,1);assert.equal(contacts,0);
+ console.log(JSON.stringify({probe:'api-flow-all-skipped',outcome:skipped.outcome,counts:skipped.counts,contacts}));
+ fs.writeFileSync(path.join(root,'repository/openapi.json'),JSON.stringify({openapi:'3.1.0',paths:{'/':{get:{operationId:'read',responses:{200:{content:{'application/json':{schema:{type:'array',items:false}}}}}}}}}));
+ const schema=await openapiProvider().execute({...invocation,configuration:{values:{specFile:'openapi.json',url:origin,maximumResponseBytes:1024,operations:[{operationId:'read'}]}}},context);
+ assert.equal(schema.outcome,'passed');assert.equal(contacts,1);
+ console.log(JSON.stringify({probe:'openapi-items-false',response:'[1]',outcome:schema.outcome,counts:schema.counts,contacts}));
+ const denied=await openapiProvider().execute({...invocation,configuration:{values:{specFile:'openapi.json',url:'http://127.0.0.2:'+server.address().port,maximumResponseBytes:1024,operations:[{operationId:'read'}]}}},context);
+ assert.equal(denied.outcome,'failed');assert.match(denied.findings[0].message,/ORIGIN_DENIED/);assert.equal(contacts,1);
+ console.log(JSON.stringify({probe:'openapi-policy-disposition',outcome:denied.outcome,message:denied.findings[0].message,contacts}));
+ const httpSchema=path.resolve('skills/buster/plugins/http/schemas/config.schema.json');
+ validateReferencedSchema(fs.readFileSync(httpSchema,'utf8'),httpSchema);
+ const resolved=resolveReferencedValue(httpSchema,{maximumResponseBytes:1024,requestTimeoutMs:1000});
+ const linked=await httpProvider().execute({...invocation,configuration:{values:resolved},inputs:[{name:'endpoint',kind:'value',schemaId:'kubeclaw.public-endpoint-fixture@1',value:{schemaVersion:'public-endpoint-fixture.v1',provider:'tailscale-ingress',url:origin+'/health'}}]},context);
+ assert.equal(linked.providerDetails.values.url,origin+'/');
+ console.log(JSON.stringify({probe:'http-resolved-endpoint-path',declared:'/health',resolvedPath:resolved.path,requestedPath:new URL(linked.providerDetails.values.url).pathname}));
+ const xml='<testsuite><testcase name="a"time="1"/></testsuite>';
+ const parsed=adapt({mediaType:'application/junit+xml',bytes:Buffer.from(xml),limits:{maximumCases:10,maximumFindings:10,maximumCaseFindings:10}});
+ assert.equal(parsed.counts.passed,1);
+ console.log(JSON.stringify({probe:'junit-missing-attribute-separator',xml,counts:parsed.counts}));
+} finally {await new Promise(resolve=>server.close(resolve));fs.rmSync(root,{recursive:true,force:true});}

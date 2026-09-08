@@ -1,0 +1,72 @@
+{
+  "kubeclaw.http": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.http@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Einzelne HTTP-Status-/Text-/Content-Typeprüfung",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "bestanden"
+  },
+  "kubeclaw.api-flow": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.api-flow@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Sequenzielle HTTP-/WebSocketflow-Ausführung samt Extraktion und Cleanup",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "bestanden"
+  },
+  "kubeclaw.openapi": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.openapi@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Ausgewählte OpenAPI-Operationen und Request-/Responseschemabewertung",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "bestanden"
+  },
+  "kubeclaw.axe": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.axe@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Axe-Accessibilitybewertung echter Browserkombinationen und Acceptances",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "blockiert (Browser fehlt)"
+  },
+  "kubeclaw.lighthouse": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.lighthouse@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Lighthouse-Performance-/SEO-/Best-practicesbewertung",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "blockiert (Chromium fehlt)"
+  },
+  "kubeclaw.visual": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.visual@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Identitätsgebundene Baseline-/Screenshotvergleiche mit Evidenz",
+    "docStatus": "vorhanden / veraltet (Upgradebindung)",
+    "testStatus": "blockiert (Chromium fehlt)"
+  },
+  "kubeclaw.playwright": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.playwright@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Projekt-Playwrightausführung und strukturierte Reporterbewertung",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "bestanden (Reportersemantik); blockiert (Browserlauf)"
+  },
+  "kubeclaw.coverage-budget": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.coverage-budget@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "LCOV-Linecoverage und Mindestbudgets aus Upstreamartefakten",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "bestanden"
+  },
+  "kubeclaw.size-budget": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Nova Resolver wählt kubeclaw.size-budget@1 über uses, pinnt Schema/Paket; Buster Runner → RegisteredTestProviderLoader → provider-child → execute.",
+    "responsibility": "Verifizierte File-/Tar-/Gzipgrößen und Baselinewachstumsbudgets",
+    "docStatus": "vorhanden / unvollständig",
+    "testStatus": "bestanden"
+  },
+  "kubeclaw.junit-report": {
+    "review": "abgeschlossen",
+    "usage": "Buster-Auslieferung; Resolver wählt JUnit-Reportadapter nach Format/Policy, Runner adaptiert gespeichertes test-report-Artefakt über RegisteredReportAdapterRuntime.",
+    "responsibility": "Begrenzte JUnit-XMLadaption zu exakten Berichtsfakten",
+    "docStatus": "vorhanden / veraltet (Malformed-XML-Ablehnung)",
+    "testStatus": "bestanden (Parser); fehlgeschlagen (isolierte Runtime/EPIPE)"
+  }
+}

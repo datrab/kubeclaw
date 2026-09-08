@@ -1,0 +1,72 @@
+{
+  "nova.entry": {
+    "responsibility": "CLI/Projectcompiler und öffentliche Coreexports",
+    "usage": "pipeline.ts delegiert explicit graphs an Core CLI, --project an Productcompiler; package.json pipeline",
+    "docStatus": "vorhanden; unvollständig für CLI-Abbruch/Crashreste",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.architecture-validator": {
+    "responsibility": "Agentisches Architekturreview und Factsteuerung",
+    "usage": "Nova-Stage bei expliziter Graphauswahl; nicht im Projectcompiler",
+    "docStatus": "vorhanden; unvollständig für Berichtbudgets und Graphapproval",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.blueprint-sync": {
+    "responsibility": "Gitkontrollpfade synchronisieren, committen, dokumentieren",
+    "usage": "Nova sync-Stage mit Git/State/Artefaktadaptern; nicht im Projectcompiler",
+    "docStatus": "vorhanden; unvollständig für Teilcommit/Refprovenienz",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.case-study": {
+    "responsibility": "Faktenbasierter Markdownbericht im JSONartefakt",
+    "usage": "Nova Reportstage bei expliziter Auswahl; feste Faktenliste, kein automatischer Agent-/Faktenbeweis",
+    "docStatus": "vorhanden; unvollständig zu Identität/Headingprüfung",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.pipeline-review": {
+    "responsibility": "Nachträglicher Bericht über fünf Pipelinedimensionen",
+    "usage": "Nova Reportstage, getrennt vom entscheidenden review-Plugin",
+    "docStatus": "veraltet: aktive Run-/Attemptbindung nicht implementiert",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.preflight-contract": {
+    "responsibility": "Forge-Blueprintdeklarationen vor Implementation prüfen",
+    "usage": "Nova Stage liest echte Modul-/Substepdateien über Repositoryadapter",
+    "docStatus": "unvollständig: behauptete Deklarationsprüfung nur Substringsuche",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "nova.scaffold": {
+    "responsibility": "Projektkonfiguration aus Blueprint und Fortschritt erzeugen und anwenden",
+    "usage": "CLI scaffold/refresh/apply; eigene lokale Schreibpfade; Betriebsskripte im verlinkten Appendix",
+    "docStatus": "veraltet; alte CLI und Suites, unvollständige Edit-/Crashsemantik",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.human-approval": {
+    "responsibility": "Signiertes Architekturartefakt prüfen und Operatorentscheidung erwarten",
+    "usage": "Explizite Nova-Stage vor Prism; wait/operator/artefact Gegenstellen",
+    "docStatus": "unvollständig; agentRole Schema widerspricht Parser und Identitätsgrenze fehlt",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.implementation-agent": {
+    "responsibility": "Isolierte Git-Worktree-Implementation über Runtimeagent",
+    "usage": "Projectcompiler Modulstages; Git-Workspace/Runtime/Artefaktadapter",
+    "docStatus": "unvollständig; Workspaceübergabe und unsichere Dispatch-Recovery",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.delivery-lint": {
+    "responsibility": "Statische Forge-Deliveryanforderungen prüfen",
+    "usage": "Projectcompiler Abschlussstage; Repository-/Artefaktadapter",
+    "docStatus": "veraltet; Config-/Buildhinweise, unvollständige Dockerfilegrammatik",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  }
+}

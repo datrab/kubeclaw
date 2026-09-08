@@ -1,84 +1,56 @@
 # kubeclaw.api-flow
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Schema: Revision 5. Teststatus: bestanden. Dokumentationsstatus: vorhanden / unvollständig.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung, Registrierung und tatsächliche Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+Auslieferung über `packaging/runtime/roles/buster.json`; Manifest `plugin.json` registriert den unten genannten Vertrag. Nova `skills/nova/core/test-gates/resolver.ts:538–580` wählt anhand `uses`, prüft Kind, löst Konfiguration mit Schema-Defaults und pinnt Paket/Schema. Buster `runner.ts:1191–1250` lädt und ruft aus; `provider-loader.ts:49–89,151–180,382–389` kopiert digestgeprüft ins Versuchssnapshot und startet den Sandboxprozess; `provider-child.mjs:37–66` importiert Factory und ruft `execute`. Alle Engine-Dateien liegen in `skills/buster/engine/test-gates/`. Vertrag `kubeclaw.api-flow@1`, Registration `flow`, Capability `network.http`, retrySafe=false.
 
-- `skills/buster/plugins/api-flow`
+## 2. Eingaben, Ausgaben und Gegenstellen
 
-Entrypoints: `src/provider.js#provider`.
+`src/provider.js:1–98` prüft versionierte Flowdatei, erlaubte Felder, Step-/Variablenidentitäten, Header und HTTP-/WebSocket-Assertionstypen. Optionales Deployment/Endpoint oder explizite URL; mehrdeutige Ziele werden verworfen. `execute:120–136` sendet HTTP/WebSocket-RPC an `network-http-runtime.ts:194–261`; Antwortassertionen und Extraktion sind providerseitig. Evidence ist ein JSON-Report ohne Bodies/extrahierte Werte.
 
-Nutzung: Ausgeliefert in: buster; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand, Persistenz und Commit-Punkt
 
-Registrierungen aus Manifest:
+Setup, Hauptschritte und Cleanup können POST/PATCH/DELETE und WebSocket-Nachrichten ausführen. Lokaler JSON-Report erst nach allen Schleifen; keine persistierte Schrittbestätigung. Provider-Rückgabe ist kein Commit: Runner validiert Vertrag, Zählwerte und Evidenzdeklarationen, klont/friert das Result, kopiert ausgewählte Dateien ins Staging und führt erst danach Workerabschluss/Artefaktspeicherung aus (`runner.ts:1226–1320`). Keine eigene Journal-/fsync-/Waitprojektion; Recovery und Abschlusspräfixe gehören dem Runner/Remote-Dienst. Keine Behauptung einer bestandenen Crashkette.
 
-- `testProviders:flow` → `src/provider.js#provider`; benötigte Capabilities: network.http
+## 4. Korrektheit und Fehlerdisposition
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Feldfehler vor Schleifen werfen; Schrittfehler werden Findings, fehlende Hauptschrittvariable wird skipped. Jeder weitere unabhängige Schritt und Cleanup laufen weiter. Nur Findings entscheiden über outcome: deshalb bestanden trotz ausschließlich übersprungener Hauptschritte (PCR-APIFLOW-001). Auch Policyfehler werden als failed materialisiert; siehe gemeinsame Fehlerdispositionsursache in PCR-OPENAPI-002.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout, Abbruch, Wiederholung und Parallelität
 
-## Tests und Dokumentation
+Je Schritt min(Requesttimeout, invocation.timeoutMs), keine selbst berechnete absolute Restdeadline; Gesamtzeit begrenzt Worker. Kein eigener Signalcheck zwischen Schritten: Invoker erhält das Contextsignal; harte Beendigung muss Loader/Worker leisten. retrySafe=false senkt Nova-Default auf null Retries und verlangt acceptUnsafeRetry bei expliziter Wiederholung. Kombinationen werden strikt sequenziell ausgeführt.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Neustart, Wiederaufnahme und ungewisser Ausgang
 
-- `skills/buster/plugins/api-flow/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-pipeline-api-implementation.mts`
-- `tests/verification/e2e/nova-api-production-preflight.mts`
-- `tests/verification/e2e/real-run-workspace.mjs`
-- `tests/verification/e2e/real-run-workspace.test.mjs`
+Keine Checkpoints für extrahierte Variablen und keine restartfähige Cleanupfunktion. Cleanup ist lediglich letzter Teil von execute, bei Prozesskill kann es ausfallen. Verlorener ACK nach Mutation lässt externen Zustand ungewiss; keine automatische Wiederaufnahme/Exactly-once-Zusage. Dafür ist die unsichere Retrydeklaration sachgerecht.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauensgrenzen und Evidenzherkunft
 
-- `docs/architecture/pipeline-test-gate-api-cutover-plan.md`
-- `docs/architecture/pipeline-test-gate-api-error-reference.md`
-- `docs/architecture/pipeline-test-gate-api-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-api-user-guide.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md`
-- `docs/site/reference/capabilities.md`
-- `skills/buster/plugins/api-flow/README.md`
+Der Projektinhalt ist untrusted. Planidentität und Digests kommen vom Resolver; Capability-Rechte werden im Runnerkontext geprüft, die Originalinvoker kontrollieren Ziel/Operation. Provider-Sandbox erhält Repository-Leserechte, versuchsbezogene Scratch-/Evidenzschreibrechte und ausdrücklich freigegebene Artefaktpfade. Eine echte HTTP-Antwort beweist Verhalten des adressierten Testservers, keine zusätzliche Identität außerhalb der festgelegten Origin-/Fixtureauthority. stepUrl hält interpolierten Pfad auf der Basisorigin. Mutationsmethoden, Header und WebSocket-Freigabe liegen im Invoker; Inhalte des Flowfiles bleiben Projektverantwortung. Fehlerstrings können interpolierte URLs enthalten und müssen bei sensiblen Pfaden bedacht werden.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen, Aufräumen und voller Speicher
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Flowdatei 1 MiB erst nach readFileSync geprüft, max. 256 Schritte, Request-/Responsebudgets im Invoker. JSON-Interpolation und Gleichheit rekursiv ohne eigenen Knoten-/Tiefenzähler; tiefes Dateijson kann Stack/CPU beanspruchen, begrenzt nur durch isolierten Prozess/Worker. Keine Filesystemquota vor Reportschreiben; ENOSPC wirft, dann kein gültiges Providerresult. Snapshot-/Evidenzretention im Runner.
 
-- `charts/kubeclaw/files/config/knip.json:69`
-- `contracts/pipeline-test-gate/v1/suites/api.v1.json:10`
-- `docs/architecture/pipeline-test-gate-api-baseline.json:12`
-- `docs/architecture/pipeline-test-gate-api-cutover-inventory.json:11`
-- `docs/architecture/pipeline-test-gate-api-cutover-plan.md:11`
-- `docs/architecture/pipeline-test-gate-api-error-reference.md:9`
-- `docs/architecture/pipeline-test-gate-api-flow-documentation-manifest.json:2`
-- `docs/architecture/pipeline-test-gate-api-flow-documentation-manifest.json:3`
-- `docs/architecture/pipeline-test-gate-api-flow-documentation-manifest.json:6`
-- `docs/architecture/pipeline-test-gate-api-implementation-plan.md:5`
-- `docs/architecture/pipeline-test-gate-api-implementation-plan.md:10`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:7`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:9`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:10`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:11`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:12`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:13`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:14`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:16`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:17`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:20`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:21`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:22`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:23`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:24`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:25`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:26`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:27`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:34`
-- `docs/architecture/pipeline-test-gate-api-user-guide.md:5`
+## 9. Architektur und Vereinfachung
 
-## Offene Prüfpfade
+Ein gemeinsamer brokering Pfad statt eigener Sockets ist sinnvoll. Fehlerklassifikation und Ausführungsabdeckung ausdrücklich modellieren; Flow-Cleanup nicht mit Worker-Recovery verwechseln. Flow-Schema und handgeschriebene Validierung müssen bei Erweiterungen gemeinsam geprüft werden.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Untersuchte und ausgeführte Tests
+
+`node skills/buster/plugins/api-flow/tests/live-function.test.ts` exit 0, Originalcode und echter lokaler HTTP-/WebSocketserver: Login/Tokeninterpolation, Assertions, Cleanupkontakt, unbekannte Assertion, falsche Protokollfelder, fehlende Datei und WS-Requestbudget. Evidenz `../evidence/buster-provider-api-flow-original.txt`. Zusätzliche Originalprobe in `buster-provider-boundaries.mjs` zeigt all-skipped/pass mit exakt null Serverkontakten. Direkter Originaltest umgeht Registry, Prozessloader und kompletten Workerabschluss; seine Aussage reicht ausdrücklich nur über die darin wirklich aufgerufenen Komponenten. Kein Deployment, kein CI-Neulauf, kein Ersatzmock. Tests außerhalb der unten genannten Programme sind nicht als ausgeführt gewertet.
+
+## 11. Dokumentationsabgleich
+
+README und `docs/architecture/pipeline-test-gate-api-user-guide.md` sind gelesen; sie beschreiben strict sequence und ausdrücklich Skip bei fehlender Variable. Die Dokumentation nennt keinen erfolgreichen komplett unausgeführten Blockinglauf; Cleanup-versprechen gilt im Code nur solange execute fortgesetzt wird, nicht nach Kill.
+
+## 12. Befunde und nächste Verifikation
+
+PCR-APIFLOW-001: Blockingausführung darf ohne ausgeführten fachlichen Schritt nicht erfolgreich sein. Nächster Test zusätzlich gemischte Skip-/Pass-/Setupfehler und Kill nach Mutation vor Cleanup; letzterer hier nicht ausgeführt.
+
+### PCR-APIFLOW-001 — hoch: Blockingflow ohne einen Request besteht
+
+Nachgewiesener Defekt. `skills/buster/plugins/api-flow/src/provider.js:113–117,132` klassifiziert unbekannte Variable im Hauptschritt als skipped ohne Finding und bestimmt outcome nur aus Findings. Ein ansonsten gültiger Flow mit `steps:[{id:"required",path:"/{{missing}}",expect:{status:200}}]` liefert `passed`, counts 1/0/0/1, null HTTP-Kontakte. Runner `validateCounts` verbietet dies nicht. Evidenz: `../evidence/buster-provider-boundaries.{mjs,txt}`, Probe `api-flow-all-skipped`. Auswirkung: erforderliches Gate liefert grünes Ergebnis ohne getestetes Verhalten. Ursachenbehebung: obligatorische Ausführungsabdeckung/erforderliche Schritte als separate Bedingung; Skipsemantik bei abhängigen Schritten erhalten. Regression über echte Resolver-/Runnerkette plus lokalen Kontaktzähler; kein Mockresult.

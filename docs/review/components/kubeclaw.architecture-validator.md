@@ -24,7 +24,7 @@ Scope domain_model/integration_boundary. passed verlangt checkedFiles und keine
 blocking-Findings; blocked verlangt mindestens ein blocking-Finding.
 **error/warn/info dürfen passed ergeben**, absichtlich mit
 `architecture.review=approval_required`. Das ist kein Clean-Befund.
-Gegenstelle `human-approval/src/architecture-stage.ts` liest digest-/größen- und
+Gegenstelle `human-approval/src/architecture-approval.ts` liest digest-/größen- und
 producergebundene Architekturartefakte und fordert bei Findings eine separate
 Genehmigung. Der Graph muss diese Stage und Factbedingung ausdrücklich verdrahten;
 das Validatorplugin erzwingt kein nachfolgendes Approval.

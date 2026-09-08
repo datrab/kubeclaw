@@ -1,105 +1,20 @@
 # kubeclaw.direct-command
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+1. **Verantwortung/Nutzung.** Buster-Rollenmanifest liefert `kubeclaw.direct-command`; `plugin.json` registriert `command`, Vertrag `kubeclaw.direct-command@1`, Test, Capability `command.execute`, retrySafe=true. Registry→TestPlanRunner→RegisteredTestProviderLoader lädt `src/provider.js#provider`. Parent routed an `DirectCommandCapabilityInvoker`, dieser instanziiert den tatsächlichen CommandRunner. Keine Shellinterpolation im Provider.
+2. **Schnittstellen.** `config.schema.json` plus `configuration` validieren Catalogname, Literalargs, relative cwd, Environment und exakte Report-/Coverage-/Artefaktdeklarationen. Invoker canonicalisiert Executable/CWD/WritableRoot, blockiert geschützte Environmentnamen erneut und klemmt Limits. CommandRunner liefert Exit/Signal/Records/Resources; Provider kopiert deklarierte Dateien; Runner validiert Result/Outputs und führt JUnitadapter aus. JUnit ist daher erst nach Runner-finalizeResult aussagefähig. Manifest-Ausgabemediatypen stimmen nicht überall mit Config überein (001).
+3. **Zustand.** Command schreibt in versuchseigene Repositorykopie, HOME/TMPDIR liegen darin. Evidenzcopy nutzt realpath, O_NOFOLLOW, exklusive Zielanlage, fstat und Bytebudget. Kein eigener dauerhafter Commit; Engine speichert Result/Evidenz. Der Catalog kann echte Programme mit eigenen Seiteneffekten umfassen, Sicherheitsgrenze ist CommandRunner-Sandbox.
+4. **Fehler.** `CommandRunError` wird als Output+errorCode über RPC transportiert; Provider loggt vorhandene Records und wirft anschließend errorCode, statt Infrastructurefehler als Passed auszuwerten. Exit!=0/Signal bleibt failed. Fehlender/unsicherer/zu großer deklarierter Report wirft. Runner vereinigt JUnitfälle mit Commandfehler, ZeroCases wird Fehler; exit-code-Modus überspringt Adapter ausdrücklich.
+5. **Timeout/Retry/Parallelität.** Nodezeit/-limits werden per Request an den CommandRunner gegeben, operatorseitig geklemmt. AbortSignal wird durchgereicht. `retrySafe=true` setzt sichere Isolation externer Seiteneffekte voraus, kein Exactly-once. Datei-ID-/Pfadduplikate werden vor Commandausführung geprüft; Filesbudget dagegen erst danach. Ressourcenaggregation in der Engine erfasst Commandressourcen nicht als einheitliches Attemptbudget: PCR-BUSTER-ENGINE-001.
+6. **Recovery.** Provider besitzt keine Recoverydatenbank. Neustart des laufenden Remotejobs wird von Engine als unterbrochen behandelt; neuer Attempt hat neue Arbeitskopie. Ergebnisunsicherheit eines Programms ist nicht durch wiederholtes execute auflösbar. Reaping/Prozessbaum sind CommandRunner/Isolation-Eigentum; keine eigene zweite Killimplementierung hier.
+7. **Vertrauen.** Projekt wählt nur einen Namen aus operatorseitigem Executablecatalog, Argumente sind dennoch Programmcode/-verhalten und keine Autorisierung. Keine Secrets/Hostenvironment übernommen; Runtime injiziert PATH/HOME/TMPDIR zusätzlich zu CI und deklarierter Umgebung. Builtin-Provider läuft isoliert, privilegierte Ausführung im Parent ist separat begrenzt.
+8. **Ressourcen.** Args 256×4096, Environment max65 mit injiziertem CI; Runtime misst Bytes, Provider teilweise Zeichen. Copy liest 64-KiB-Chunks, wächst nicht über Anfangsgröße/Budget, entfernt Teilziel bei Fehler. Commandlimits umfassen Output/Zeit/Prozesse/RAM/CPU/Openfiles. Evidenzfilesystem-GC gehört zur Engine; kein lokaler Retry bei ENOSPC.
+9. **Architektur.** Provider übersetzt deklarative Config und Result; Sandbox/Runner ist sinnvoll gemeinsame Ausführungsgrenze. Repeated Config-/Manifestmediatyplisten sollten aus einer Definition stammen, statt driftende Kopien zu pflegen.
+10. **Tests.** Beide vollständig gelesen: `skills/buster/plugins/direct-command/tests/live-function.test.ts` **bestanden** (`node …`), verwendet echtes Dateicopy aber eingesetzte `invoke`-Antworten, keinen gestarteten Testbefehl. `node tests/verification/contracts/check-pipeline-direct-command-provider.mts` **fehlgeschlagen**: erste Literalargumentprobe exit70 statt0 (`:26`); nachfolgende Netzwerk-/Hostread-/Prozessbaum-/Timeoutassertions dadurch nicht erreicht. Original-Invoker-Diagnose (`../evidence/buster-direct-command-diagnosis.mjs`/`.txt`) reproduziert exit70 mit `open task children: No such file or directory`; die Sandboxumgebung kann ihren Prozessbaum nicht öffnen. Keine Ersatzsandbox oder grüne Nachbildung verwendet. CommandRunner-Reaping wird durch diesen Lauf nicht bestätigt.
+11. **Doku.** README **vorhanden, unvollständig**: Beschreibung JUnit ist auf vollständigen Runnerpfad zutreffend; Provider allein parst kein XML. Satz zur Umgebung lässt operatorseitig hinzugefügtes PATH/HOME/TMPDIR weg. Package-/Schema-/Manifestverträge geprüft; kein Nachweis installierter Produktionssandbox.
+12. **Befund/Verifikation.** Ein eigener statischer Vertragsdefekt unten; native Sandboxausführung bleibt hier fehlerhaft/blockiert. Regression der Engine-Ressourcenaggregation bei Engine behandeln.
 
-## Verantwortung, Grenzen und Einstieg
+## PCR-DIRECT-COMMAND-001 — Deklarierbarer Mediatyp passt nur auf erste Ausgabe
 
-- `skills/buster/plugins/direct-command`
-
-Entrypoints: `src/provider.js#provider`.
-
-Nutzung: Ausgeliefert in: buster; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
-
-Registrierungen aus Manifest:
-
-- `testProviders:command` → `src/provider.js#provider`; benötigte Capabilities: command.execute
-
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
-
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
-
-## Tests und Dokumentation
-
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
-
-- `skills/buster/plugins/direct-command/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts`
-- `tests/verification/contracts/check-pipeline-phase10-vertical.mts`
-- `tests/verification/contracts/check-pipeline-phase8-vertical.mts`
-- `tests/verification/contracts/check-pipeline-phase9-parity.mts`
-- `tests/verification/contracts/check-pipeline-phase9-vertical.mts`
-- `tests/verification/contracts/check-pipeline-size-budget-implementation.mts`
-- `tests/verification/contracts/check-pipeline-size-budget-production.mts`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/e2e/nova-a11y-production-preflight.mts`
-- `tests/verification/e2e/nova-api-production-preflight.mts`
-- `tests/verification/e2e/nova-e2e-production-preflight.mts`
-- `tests/verification/e2e/nova-http-production-preflight.mts`
-- `tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts`
-- `tests/verification/e2e/nova-lighthouse-production-preflight.mts`
-- `tests/verification/e2e/nova-security-production-preflight.mts`
-- `tests/verification/e2e/nova-tailscale-production-preflight.mts`
-- `tests/verification/e2e/nova-unit-production-preflight.mts`
-- `tests/verification/e2e/nova-visual-production-preflight.mts`
-- `tests/verification/e2e/real-run-workspace.mjs`
-- `tests/verification/e2e/real-run-workspace.test.mjs`
-- `tests/verification/reliability/result-reservation.test.mts`
-
-Dokumentationsstatus: unvollständig (Abgleich offen).
-
-- `docs/architecture/pipeline-test-gate-phase-10-final-audit.md`
-- `docs/architecture/pipeline-test-gate-phase-10-plan.md`
-- `docs/architecture/pipeline-test-gate-phase-8-plan.md`
-- `docs/architecture/pipeline-test-gate-phase-9-final-audit.md`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md`
-- `docs/architecture/pipeline-test-gate-unit-operator-guide.md`
-- `docs/architecture/pipeline-test-gate-unit-user-guide.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md`
-- `docs/site/reference/capabilities.md`
-- `skills/buster/plugins/direct-command/README.md`
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `charts/kubeclaw/files/config/knip.json:117`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-growth.json:7`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-growth.json:25`
-- `contracts/pipeline-test-gate/v1/examples/size-budget-tar.json:7`
-- `contracts/pipeline-test-gate/v1/examples/unit-suite-blocking.json:7`
-- `contracts/pipeline-test-gate/v1/examples/unit-suite-with-coverage.json:7`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:63`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:65`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:96`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:126`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:127`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:128`
-- `docs/architecture/pipeline-test-gate-phase-10-final-audit.md:44`
-- `docs/architecture/pipeline-test-gate-phase-10-final-audit.md:52`
-- `docs/architecture/pipeline-test-gate-phase-10-plan.md:46`
-- `docs/architecture/pipeline-test-gate-phase-8-plan.md:314`
-- `docs/architecture/pipeline-test-gate-phase-8-plan.md:332`
-- `docs/architecture/pipeline-test-gate-phase-9-final-audit.md:75`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.json:5`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md:17`
-- `docs/architecture/pipeline-test-gate-unit-cutover-inventory.json:27`
-- `docs/architecture/pipeline-test-gate-unit-operator-guide.md:188`
-- `docs/architecture/pipeline-test-gate-unit-user-guide.md:93`
-- `docs/architecture/pipeline-test-gate-unit-user-guide.md:181`
-- `docs/architecture/pipeline-test-gate-unit-user-guide.md:215`
-- `docs/architecture/pipeline-test-gate-unit-user-guide.md:229`
-- `docs/architecture/plugin-system-current-inventory.md:25`
-- `docs/site/extend/plugin-catalogue/README.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md:5`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+**Mittel; nachgewiesener Vertragswiderspruch.** `src/provider.js:59–61,212–217` akzeptiert checked-kubernetes-yaml und size-budget-baseline für jedes deklarierte Artefakt und nummeriert Ausgänge nach Arrayposition. `plugin.json` erlaubt diese Typen nur für artifact-1, für artifact-2…8 fehlen sie; Schema erlaubt sie ebenfalls für jeden Eintrag. Ein Buildoutput als erstes und checked manifest als zweites Artefakt sind gültige Config, führen nach ausgeführtem Command/Copies aber im Runner `validateAndMapOutputs` zu Mediatypfehler. **Ursache beheben:** gleiche Typmenge je generischer Artefaktslot oder positionsabhängige Configvalidierung mit verständlichem Fehler vor Ausführung. **Regression:** echten Resolver/Runner mit zwei kleinen vorhandenen Artefakten und zweitem checked-manifest bzw. size-baseline durchlaufen; gültige Konfiguration darf nicht erst nach Ausführung wegen Manifestdrift scheitern.

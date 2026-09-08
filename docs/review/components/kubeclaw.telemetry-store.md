@@ -1,80 +1,122 @@
 # kubeclaw.telemetry-store
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Schema: Revision 5. Lokale Originaltests/Code-Trace, kein produktiver E2E-Nachweis.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+`skills/common/plugins/telemetry-store/src/adapter.ts#activate` stellt
+telemetry.emit bereit; Rolle nova/buster/prism. Beide Agent-/Lifecycleprojektoren
+senden append, nachgewiesen im Agent-live-function über Originalruntime.
+Diese Komponente ist Fileprovider, kein ClawDeck-/Redisconsumer. Aktivierung
+setzt root voraus; ready liest und validiert den bestehenden Stream.
 
-- `skills/common/plugins/telemetry-store`
+## 2. Vertrag beider Seiten
 
-Entrypoints: `src/adapter.ts#activate`.
+AdapterInvocation bringt Coreeffektidentität, Signal und Fence. capability/
+operation werden geprüft, Nutzlast offen. Sink legt alle append-Events in
+`telemetry/plugin-events` ab, idempotencyKey ist der Corekey; resource.canonicalId
+ist kein physischer Streamname. Antwort accepted bedeutet neu appended, false
+bei identischem Duplikat, plus monotone sequence. Sender ignorieren den bool
+und behandeln beide korrekterweise als erfolgreich erledigt. Geändertes
+sanitisiertes Payload bei gleichem Key wird im Originalstore abgewiesen.
 
-Nutzung: Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Persistenz und Commit
 
-Registrierungen aus Manifest:
+`foundation/observability/durable-records.ts` snapshotet mittels strengem
+Observability-canonicalJson, prüft Digest/Sequenz/Identität auch beim Replay und
+liefert strukturgeklonte Objekte. writeDurableState schreibt temporär0600,
+fsync, rename, fsync des Verzeichnisses; erst dann ACK. Elternverzeichnisse
+werden dauerhaft angelegt. Kein Aliasing des Storezustands durch Rückgabewerte.
 
-- `adapters:telemetry` → `src/adapter.ts#activate`; benötigte Capabilities: 
+## 4. Fehlerpfade
 
-Paketabhängigkeiten: `@kubeclaw/plugin-foundation`, `@kubeclaw/plugin-sdk`
+Falsche Operation und initialer Abort werden abgewiesen; Fence vor Write.
+DURABLE_RECORD_SIZE_EXCEEDED wird gezielt zu TELEMETRY_RECORD_SIZE_EXCEEDED,
+Konflikt/Vollspeicher/korruptes Replay bleiben unterscheidbare geworfene Fehler.
+Eigene sanitize läuft jedoch vor striktem Storevalidator und ist schwächer
+(PCR-TSTORE-001/002). Keine Bestätigung fehlgeschlagener Speicherung.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout/Parallelität
 
-## Tests und Dokumentation
+Append wird pro Store serialisiert und durch Kernel-flock pro Datei über
+Prozesse geschützt (5s Lockwartezeit). Signal wird nur vor sanitize geprüft,
+kein Abbruch wartender Locks/Dateischritte; Coretimeout verhindert nicht
+späteren Commit. Kein manueller PID-Lockreclaimer/PID-Namensraumfehler hier;
+Kernel-/Dateisystemsemantik vorausgesetzt. Keine Workerclaim-Deadline.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Restart und ACK-Verlust
 
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts`
-- `skills/common/plugins/telemetry-store/tests/live-function.test.ts`
-- `skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs`
-- `tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-engine.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
+ready validiert Replay. ACK-Verlust nach rename/fsync erlaubt identischen
+append mit accepted:false und derselben sequence. Abbruch vor rename hält
+alten Snapshot; temporäre Crashdateien werden unter Storelock beseitigt.
+Kein eigenes mehrstufiges Abschlussprotokoll. Stromausfall-/Mehrprozessnachweise
+liegen nicht in der lokalen Paketsuite.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauen
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md`
-- `docs/site/reference/capabilities.md`
-- `skills/common/plugins/telemetry-store/README.md`
+telemetry.emit wird vor Adapteraufruf durch Coregrants gescopt. Kein Secretresolver
+oder Netzwerk. root ist vertrauenswürdige Plattformkonfiguration; Storepfade
+werden gegen Symlinks geprüft. Eigene Feldredaction verspricht Secretfreiheit,
+erkennt aber api_key/credential nicht, anders als direkte Projektoren (s.u.).
+Eine beliebige neue telemetry.emit-Quelle darf daher nicht auf diese Promise vertrauen.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen/Retention
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Defaults 1MiB Record,100000 Records,256MiB Store; konfigurierbare positive sichere
+Integer. Vollspeicher schlägt geschlossen fehl, kein Ringpuffer oder Retention.
+Gemeinsame Ursache [PCR-OBS-002](foundation.observability.md), nicht dupliziert.
+Vollständige Snapshotreads und Serialisierung kosten Speicher/CPU vor Byteprüfung;
+sanitize besitzt nicht einmal Tiefen-/Zyklengrenze. shutdown ist leer und
+wartet nicht selbst auf in-flight append.
 
-- `charts/kubeclaw/files/config/knip.json:464`
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:197`
-- `docs/architecture/plugin-system-current-inventory.md:50`
-- `docs/architecture/plugin-system-implementation-plan.md:656`
-- `docs/architecture/plugin-system-phase5-capabilities.json:17`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:437`
-- `docs/site/extend/plugin-catalogue/README.md:53`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md:67`
-- `docs/site/reference/capabilities.md:43`
-- `packaging/runtime/roles/buster.json:37`
-- `packaging/runtime/roles/nova.json:37`
-- `packaging/runtime/roles/prism.json:19`
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts:30`
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts:46`
-- `tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:66`
-- `tests/verification/contracts/check-plugin-system-v2-engine.mjs:26`
-- `tests/verification/contracts/check-plugin-system-v2-engine.mjs:50`
-- `tests/verification/contracts/check-plugin-system-v2-engine.mjs:88`
-- `tests/verification/e2e/run-v2-production-pipeline.mts:265`
-- `tests/verification/e2e/run-v2-production-pipeline.mts:507`
+## 9. Architektur
 
-## Offene Prüfpfade
+Dünner Provider auf gemeinsamem DurableRecordStore ist sinnvoll; eigene schwache
+Redaction verdoppelt den SDKvertrag und erzeugt reale Abweichungen. Gemeinsame
+beschränkte JSON-/Redactionpolitik vor Storezugriff, dabei Duplikatsemantik
+bewahren und keine Ersatzpersistenz einführen.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests/Evidenz
+
+Beide Originaltests gelesen, `npm test` bestanden:
+[Log](../evidence/observers-telemetry-store-tests.txt). Live-function benutzt
+Originaladapter und echten temporären Store mit Dedupe, Konflikt, Sequenz,
+0600, Größenfehler und Vorab-Abort; Fence ist Fixture. Kein tatsächlicher
+Prozesscrash oder Timeout während fsync. [Grenzprobe](../evidence/observers-boundaries.mjs)
+und [Ausgabe](../evidence/observers-boundaries.txt) zeigen Originalpersistenz
+synthetischer API-Key/Credentialmarker und RangeError beim Zyklus. Keine Module ersetzt.
+
+## 11. Dokumentation
+
+README vorhanden; Dedupe/Durable-ACK sind codegedeckt. 'Secret-bearing fields
+remain redacted' ist für api_key/credential falsch; 'cancellation bounds' nur
+für initialen Abort, kein laufendes Dateiwait. ClawDeck-/Highvolume-Driver wird
+zutreffend als spätere Arbeit benannt. Retention fehlt.
+
+## 12. Befunde
+
+### PCR-TSTORE-001 — Secretfeldpolitik des Sinks lässt API-Schlüssel durch
+
+**Hoch, nachgewiesener Defekt:** `src/adapter.ts:4–14,38–42` sanitize erkennt
+nur authorization/cookie/password/secret/token. Originalprobe schreibt
+api_key und credential im Klartext in den echten0600-Store, password wird
+redigiert. Trigger: autorisierter telemetry.emit-Caller verlässt sich auf die
+Sinkredaction; bestehende redigierende Observer mindern ihren eigenen Pfad,
+beheben aber die Providergrenze nicht. Auswirkung: dauerhaft gespeicherte
+Credentials statt zugesicherter Redaction. Ursache: abweichende Regexpolitik.
+Behebung: gemeinsamen begrenzten Redaktionsvertrag an allen Telemetriesinks;
+Regression über originale append-Persistenz mit api_key/apiKey/credential und
+verschachtelten Varianten plus harmlosem Kontrollfeld.
+
+### PCR-TSTORE-002 — Redaction rekursiert vor validiertem JSONbudget
+
+**Mittel, nachgewiesener Defekt:** `src/adapter.ts:6–13,42`. Zyklisches Objekt
+verursacht RangeError vor Storevalidator; tiefes gültiges JSON besitzt denselben
+unbeschränkten Rekursionspfad. Bytebudget greift zu spät. Direkte Probe ist
+Adapter-API-Evidenz; Corewire kann Zyklen zuvor ablehnen, keine Remoteexploit-
+behauptung daraus. Auswirkung: unkontrollierte Ausnahme/CPU- und Stacklast
+statt gezieltem Ablehnen. Ursache beheben durch globales Tiefen-/Knotenbudget,
+Zyklus-/Getterprüfung bereits vor Traversal. Regression mit tiefem JSON, Zyklus,
+geteilten nichtzyklischen Referenzen, Gettern und gültigem Grenzpayload am
+Originaladapter; kontrollierter Fehler, keine Teilspeicherung.

@@ -21,7 +21,7 @@ Direkte Grenzen vollständig gelesen: AdapterRuntime und effect-recovery;
 Engineverdrahtung und Stagefehlerklassifikation gezielt geprüft. Als echte
 Adaptergegenstelle wurde artifact-store/src/adapter.ts vollständig untersucht:
 Fenceprüfung, Abortprüfung, lokale Metadaten-/Blobschreibfolge. Die separate
-Komponentenprüfung [kubeclaw.artifact-store](kubeclaw.artifact-store.md) bleibt offen.
+Komponentenprüfung [kubeclaw.artifact-store](kubeclaw.artifact-store.md) ist abgeschlossen.
 
 ## 2. Eingaben, Ausgaben, Schemas und Schnittstellen
 
@@ -231,3 +231,11 @@ an diesen konkreten Import-/Speicherpfaden erneut abgeglichen, nicht kopiert.
 Nicht dupliziert: PCR-STATE-001/002, PCR-SDK-001 und gemeinsame Retentionsfrage.
 Externe automatische Wiederaufnahme bleibt bewusst begrenzt; fehlender echter
 Sandboxlauf ist eine sichtbare Testblockade, kein abgeschlossener E2E-Nachweis.
+
+## Nachprüfung — Schema Revision 6
+
+Originaler Observer-/Effect-/Operatorpfad erneut abgeglichen: deliveryAttempt
+erhöht nicht die Effectattemptidentität; vorhandene failed-Receipts verhindern
+neuen Send. [PCR-OPERATOR-001](kubeclaw.operator-messaging.md) führt diesen
+Integrationsdefekt zentral samt Original-HTTP503-Reproduktion. Der bestehende
+Recoverytest allein belegt keine erneute externe Zustellung. Kein doppelter Befund.

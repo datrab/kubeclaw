@@ -172,3 +172,5 @@ und teilweise veraltet, eigener Domain-README fehlt.
 - **Regression:** OriginalresolveView mit disjunkten und kollidierenden Properties
   für alle Viewports, fehlenden Layern und unveränderter Source; Kombination muss
   beide disjunkten Werte erhalten und kollidierende gemäß deklarierter Priorität.
+
+Historische Prototypen und ihre getrennte Testaussage: [Prism-Spikeabgrenzung](../prism-spikes.md).

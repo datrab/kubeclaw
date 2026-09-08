@@ -1,94 +1,56 @@
 # kubeclaw.http
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Schema: Revision 5. Teststatus: bestanden. Dokumentationsstatus: vorhanden / unvollständig.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung, Registrierung und tatsächliche Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+Auslieferung über `packaging/runtime/roles/buster.json`; Manifest `plugin.json` registriert den unten genannten Vertrag. Nova `skills/nova/core/test-gates/resolver.ts:538–580` wählt anhand `uses`, prüft Kind, löst Konfiguration mit Schema-Defaults und pinnt Paket/Schema. Buster `runner.ts:1191–1250` lädt und ruft aus; `provider-loader.ts:49–89,151–180,382–389` kopiert digestgeprüft ins Versuchssnapshot und startet den Sandboxprozess; `provider-child.mjs:37–66` importiert Factory und ruft `execute`. Alle Engine-Dateien liegen in `skills/buster/engine/test-gates/`. Vertrag `kubeclaw.http@1`, Registration `request`, `src/provider.js#provider`, Capability `network.http`, retrySafe=true; Matrixfeld `path`.
 
-- `skills/buster/plugins/http`
+## 2. Eingaben, Ausgaben und Gegenstellen
 
-Entrypoints: `src/provider.js#provider`.
+`configuration()` und `deploymentInput()` (`skills/buster/plugins/http/src/provider.js:38–112`) wählen genau explizite Origin, Deployment-Endpunkt oder öffentlichen Endpoint; GET/HEAD, Statusliste, Inhaltstyp, Text und Grenzen werden geprüft. Netzwerkgegenstelle `network-http-runtime.ts:194–261` liefert Status, normalisierten Content-Type, vollständigen UTF-8-Body, Bytezahl und SHA-256. Provider gibt keine Bodyinhalte zurück. Schema-Default `path=/` überschreibt jedoch den Endpointpfad (PCR-HTTP-001).
 
-Nutzung: Ausgeliefert in: buster; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand, Persistenz und Commit-Punkt
 
-Registrierungen aus Manifest:
+Ein HTTP-Aufruf plus stdout-Log, keine Providerdateien/Outputs. Provider-Rückgabe ist kein Commit: Runner validiert Vertrag, Zählwerte und Evidenzdeklarationen, klont/friert das Result, kopiert ausgewählte Dateien ins Staging und führt erst danach Workerabschluss/Artefaktspeicherung aus (`runner.ts:1226–1320`). Keine eigene Journal-/fsync-/Waitprojektion; Recovery und Abschlusspräfixe gehören dem Runner/Remote-Dienst. Keine Behauptung einer bestandenen Crashkette.
 
-- `testProviders:request` → `src/provider.js#provider`; benötigte Capabilities: network.http
+## 4. Korrektheit und Fehlerdisposition
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Assertion, Timeout und Connectionfehler werden failed; Policyverweigerung, Redirect, Abbruch, Responseüberschreitung und unplausible Antwort werden geworfen (`provider.js:143–175`). Gegenstelle blockiert Redirects und prüft Status/Streamingbytes; Content-Type wird vor Vergleich von Parametern befreit. Falsches Ziel durch Schema-Default bleibt fachlich relevant.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout, Abbruch, Wiederholung und Parallelität
 
-## Tests und Dokumentation
+Anfragezeit=min(config, invocation.timeoutMs), zusätzlich Operatorobergrenze; Originalinvoker kombiniert Versuchssignal, Fixtureablauf und Requesttimer. Nur GET/HEAD; Wiederholung ist entsprechend als sicher markiert, wobei fremde GET-Endpunkte dennoch Nebenwirkungen besitzen können. Jeder Versuch hat eigenes Result; keine globale Providerzustandsmutation.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Neustart, Wiederaufnahme und ungewisser Ausgang
 
-- `skills/buster/plugins/http/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-pipeline-api-implementation.mts`
-- `tests/verification/contracts/check-pipeline-http-baseline.mjs`
-- `tests/verification/contracts/check-pipeline-http-implementation.mts`
-- `tests/verification/contracts/check-pipeline-http-live.mts`
-- `tests/verification/contracts/check-pipeline-http-parity.mts`
-- `tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts`
-- `tests/verification/e2e/nova-api-production-preflight.mts`
-- `tests/verification/e2e/nova-http-production-preflight.mts`
-- `tests/verification/e2e/nova-tailscale-production-preflight.mts`
-- `tests/verification/e2e/real-run-workspace.mjs`
-- `tests/verification/e2e/real-run-workspace.test.mjs`
+Keine Wiederaufnahme mitten im Request; beim Neustart kann ein neuer GET/HEAD entstehen. Ein verlorener Reply beweist keinen fehlenden Serverkontakt. Kein eigener Cleanup-Hook, keine dauerhaften Ressourcen; die Response wird in der Gegenstelle gelesen/cancelled.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauensgrenzen und Evidenzherkunft
 
-- `docs/architecture/pipeline-test-gate-api-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-http-cutover-final-audit.md`
-- `docs/architecture/pipeline-test-gate-http-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-http-operator-guide.md`
-- `docs/architecture/pipeline-test-gate-http-user-guide.md`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.http.md`
-- `docs/site/reference/capabilities.md`
-- `skills/buster/plugins/http/README.md`
+Der Projektinhalt ist untrusted. Planidentität und Digests kommen vom Resolver; Capability-Rechte werden im Runnerkontext geprüft, die Originalinvoker kontrollieren Ziel/Operation. Provider-Sandbox erhält Repository-Leserechte, versuchsbezogene Scratch-/Evidenzschreibrechte und ausdrücklich freigegebene Artefaktpfade. Eine echte HTTP-Antwort beweist Verhalten des adressierten Testservers, keine zusätzliche Identität außerhalb der festgelegten Origin-/Fixtureauthority. HTTP erfordert Portfreigabe und exakte Origin; Suffix allein autorisiert auch GET nicht. Headerallowlist und fixtureAuthoritySignal werden in der Gegenstelle benutzt.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen, Aufräumen und voller Speicher
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+1 MiB Default/16 MiB Providermaximum, Operator kann enger begrenzen. Bytes werden vor Bodyzusammenführung im Invoker gezählt; HTTP-Body wird vollständig decodiert, keine beliebige Chunk-UTF-8-Decodierung. Log-/Resultbudget im Runner, Speicher-/CPUgrenzen im Providerprozess. Keine eigene Dateiaufbewahrung; Runtime-Streaming-/Servernebenwirkungen bleiben Enginezuständigkeit.
 
-- `charts/kubeclaw/files/config/knip.json:129`
-- `contracts/pipeline-test-gate/v1/examples/http.json:4`
-- `contracts/pipeline-test-gate/v1/examples/tailscale-exposure.json:12`
-- `contracts/pipeline-test-gate/v1/suites/api.v1.json:6`
-- `contracts/pipeline-test-gate/v1/suites/http.v1.json:3`
-- `docs/architecture/pipeline-test-gate-api-implementation-plan.md:5`
-- `docs/architecture/pipeline-test-gate-api-parity-ledger.json:19`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:25`
-- `docs/architecture/pipeline-test-gate-http-baseline.json:4`
-- `docs/architecture/pipeline-test-gate-http-cutover-final-audit.md:11`
-- `docs/architecture/pipeline-test-gate-http-cutover-final-audit.md:17`
-- `docs/architecture/pipeline-test-gate-http-cutover-inventory.json:4`
-- `docs/architecture/pipeline-test-gate-http-cutover-inventory.json:19`
-- `docs/architecture/pipeline-test-gate-http-cutover-inventory.json:20`
-- `docs/architecture/pipeline-test-gate-http-documentation-manifest.json:4`
-- `docs/architecture/pipeline-test-gate-http-documentation-manifest.json:5`
-- `docs/architecture/pipeline-test-gate-http-documentation-manifest.json:24`
-- `docs/architecture/pipeline-test-gate-http-implementation-plan.md:10`
-- `docs/architecture/pipeline-test-gate-http-operator-guide.md:46`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:4`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:26`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:28`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:29`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:30`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:31`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:32`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:35`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:38`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:40`
-- `docs/architecture/pipeline-test-gate-http-parity-ledger.json:42`
+## 9. Architektur und Vereinfachung
 
-## Offene Prüfpfade
+Kleiner Adapter mit sinnvoller Trennung zu Netzwerkpolicy. Pfadentscheidung muss erst nach Fixtureauswahl erfolgen: Schema-Default und dynamischer Endpointdefault sollten nicht konkurrieren. Keine zweite HTTP-Ausführung im Provider.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Untersuchte und ausgeführte Tests
+
+Gelesen und ausgeführt: `node skills/buster/plugins/http/tests/live-function.test.ts` (exit 0); echte lokale Requests, Status/Text/Content-Type, Endpointpfad direkt, Redirect, Größe, Cancel und nicht kontaktierende Policyverweigerungen. Evidenz `../evidence/buster-provider-http-original.txt`. Ergänzende Originalprobe `node docs/review/evidence/buster-provider-boundaries.mjs` ruft echte Registry-Schemaauflösung, Originalprovider und Originalinvoker auf; zeigt `/health` → `/`. Direkter Originaltest umgeht Registry, Prozessloader und kompletten Workerabschluss; seine Aussage reicht ausdrücklich nur über die darin wirklich aufgerufenen Komponenten. Kein Deployment, kein CI-Neulauf, kein Ersatzmock. Tests außerhalb der unten genannten Programme sind nicht als ausgeführt gewertet.
+
+## 11. Dokumentationsabgleich
+
+Plugin-README und HTTP-Userguide bestätigen begrenzten Einzelrequest. Endpointunterstützung ist im direkten Test belegt, aber ein vollständiger Resolverlauf hat wegen Schema-Default anderes Verhalten. Das ist eine echte Implementierungsabweichung zur beabsichtigten Endpointübernahme, keine fehlende Browserumgebung.
+
+## 12. Befunde und nächste Verifikation
+
+PCR-HTTP-001 beheben und einen Resolver→Provider→Server-Test mit öffentlicher URL samt Pfad und ohne config.path ergänzen. Bestehender direkter Test ist dafür unzureichend.
+
+### PCR-HTTP-001 — mittel: Schema-Default verwirft öffentlichen Endpointpfad
+
+Nachgewiesener Defekt (Original-Schemaauflösung + Originalprovider + lokaler HTTP-Invoker). `skills/buster/plugins/http/schemas/config.schema.json` setzt für `path` den Default `/`; `skills/common/plugin-runtime/foundation/registry/schema.ts:34,87–98` trägt ihn vor Ausführung ein. `provider.js:53–54,107` möchte ohne expliziten Pfad den Fixturepfad verwenden, sieht aber bereits `/`. Auslöser: Endpoint-URL `/health` bei fehlendem config.path. Der Provider prüft `/`; ein anderer gesunder Root kann das Gate fälschlich grün machen. Evidenz `../evidence/buster-provider-boundaries.{mjs,txt}`, Probe `http-resolved-endpoint-path`. Ursachenbehebung: dynamische Fallbackentscheidung erhalten, statischen Schema-Default entfernen oder explizite Herkunft des Pfads modellieren. Regression: echten Plan auflösen, getrennte Root-/Health-Antworten liefern und tatsächlich kontaktierten Pfad prüfen.

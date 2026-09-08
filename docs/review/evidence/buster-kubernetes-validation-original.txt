@@ -1,0 +1,3 @@
+Command: node skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts
+Exit: 0
+{"ok":true,"provider":"kubernetes-fixture","deterministicIdentity":true,"mocks":0}

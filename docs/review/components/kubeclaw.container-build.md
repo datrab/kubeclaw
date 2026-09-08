@@ -1,84 +1,24 @@
 # kubeclaw.container-build
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+1. **Registrierung/Nutzung.** `plugin.json` registriert buildkit/Test `kubeclaw.container-build@1`, retrySafe=true, matrix platform, Capability container.build und erforderliches Valueoutput image. In Busterrolle enthalten, durch Registry/Runner/isolierten Provider geladen; Parent-Composite routes zu `ContainerBuildCapabilityInvoker`. Verbraucher sind u.a. Kubernetes-Fixture und Image-Securityprovider; Image ist erst nach Verify verfügbar.
+2. **Vertrag.** Configschema und `src/provider.js#config` erlauben genau Dockerfile oder versioniertes node-static@1-Template, Context, Platform, Outputname, Target und bounded nonsecret Buildargs. Provider löst Repository/Scratchpfade; Invoker prüft canonical containment, Executable, Plattform-/Argallowlist, Registryendpoint==Reference, Credentials/TLS erneut. `build_push_verify` erwartet attemptgebundene Resource-ID; Output enthält immutableImage, digest, registryImage und Definitionidentität. Consumer-Fixture kontrolliert Ref@Digest erneut. Definitionidentität bei Repositorydockerfile ist Pfad, Sourcebindung kommt aus signiertem Archive.
+3. **Nebenwirkungen/Commit.** Buildctl schickt Context/Dockerfile an operatorseitigen BuildKit, pusht attemptabgeleiteten Tag und schreibt Metadatendigest. Parent GET lädt Manifest per Digest, hashprüft echte Bytes und optional docker-content-digest. Erst danach ok/imageoutput. Credentialconfig 0600 in privatem Tempverzeichnis, finally löscht lokale Metadaten/Credentials. Registry/BuildKitcache werden nicht zurückgerollt.
+4. **Fehler.** Validierung vor externem Call wirft; Build/Verifyfehler ergeben ok=false/errorCode, Provider interpretiert sie zunächst als fachliches failed; der erforderliche Imageoutput macht sie anschließend im Runner zu errored (001). Äußerer Abort wirft CANCELLED. Redirects sind verboten, Responsebytes werden laufend begrenzt; kein Body/empty Body/Digestmismatch scheitert. Manifestsemantik/Platform wird nicht unabhängig aus dem Manifest analysiert, Vertrauensannahme ist BuildKit.
+5. **Zeit/Retry.** `execFile` erhält Timeout und maxBuffer; Registry-Verify erhält Signal, aber nicht verbleibendes maximumExecutionMs (002). Übergeordneter Runnerabort begrenzt den Gesamtattempt zusätzlich. retrySafe erlaubt neue attemptbezogene Tags; kein Dedupe von BuildKitaktionen bei verlorener Antwort. Kein Shellparser, literal args. RemoteBuildKitressourcen sind operatorseitig, nicht Provider-RAM; Clientkosten fehlen in aggregierter Engine-Messung (PCR-BUSTER-ENGINE-001).
+6. **Recovery.** Kein lokales Buildjournal. Crash nach Push vor Verify lässt Image/Tag mit unbestätigtem Result zurück. Remotejob wird nach Neustart interrupted, kein automatischer erneuter Build. Nach verlorenem Client-ACK kann BuildKit bereits erfolgreich gepusht haben. finally läuft nicht bei SIGKILL: Credentials/Metadata können im Jobworkspace bis externer Bereinigung zurückbleiben.
+7. **Vertrauen.** Untrusted Dockerfile bleibt BuildKitinput; Host/Registry/Credentials werden vom Operator bestimmt. HTTPS bei Remotecredentials erzwungen, Loopbacktest-HTTP ausdrücklich erlaubt. Keine Projektsecret-Buildargs anhand Namen; dies beweist keine semantische Secretfreiheit beliebiger Strings. Evidence ist gehashter Registryinhalt und Enginebindung, kein unabhängiger Supplychainattest.
+8. **Ressourcen.** Contextgröße durch Quellarchivegrenze, kein dediziertes Dockerfile/Metadatendateibudget bei readFileSync. Outputobergrenze ist execFile maxBuffer pro Stream, nicht kombinierter stdout+stderr-Wert. Manifeststreambudget ist real. Registrytags/BuildKitcache bleiben ohne eigenen GC; ENOSPC/Verifyfail erzeugt Fehlerdisposition. Tempcreation/Credentialwrite liegt vor try-finally, I/O-Fehler dort können Teile zurücklassen.
+9. **Architektur.** Build/Push/Verify getrennt vom Deployment ist passend. Operator-BuildKitbudget ausdrücklich nicht mit Providerlimit gleichsetzen. Dauerhafte Vereinfachung: ein definierter Deadline-/Fehlervertrag statt toolabhängiger Errorstrings.
+10. **Tests.** Provider-Livefunction, runtime und recovery Originalquellen gelesen und mit `node` ausgeführt. Provider-Validierung **bestanden**: echte Dateien, negative Pfad/Template/Argchecks und Sourceassertions; kein erfolgreicher Build. Runtime **blockiert**: `/usr/local/bin/buildctl` fehlt. Recovery **blockiert**: `CONTAINER_BUILD_LIVE_CONFIGURATION_REQUIRED`. Logs `../evidence/buster-container-{validation,runtime,recovery}-original.txt`. Recoverytest prüft preabort und 1ms Timeout am echten Tool, keinen Prozessneustart nach Push.
+11. **Dokumentation.** README und container-build-security-model **vorhanden**: Digestverify/Trustgrenzen stimmen. Executionzeit als allgemeiner Capabilityceiling ist wegen Verifyphase **unvollständig**; BuildKitressourcen als Operatorzuständigkeit ist ausdrücklich korrekt. Behauptung Tempcleanup nach jeder Failure berücksichtigt Vor-try-I/O/SIGKILL nicht. Keine Liveakzeptanz aus Sourcechecks abgeleitet.
+12. **Befunde.** Unten statisch belegte Dispositions- und Deadlinefehler; nächster Nachweis echter Buildkit/Registry mit kontrolliert verzögerter Manifestantwort und Verbindungsabbruch nach Push.
 
-## Verantwortung, Grenzen und Einstieg
+## PCR-CONTAINER-BUILD-001 — Fachlicher Buildfehler wird durch erforderliches Imageoutput zum Ausführungsfehler
 
-- `skills/buster/plugins/container-build`
+**Mittel; nachgewiesener Sender-/Empfängerwiderspruch.** `container-build-runtime.ts:219–226` liefert bei Buildfehler ok=false; `plugins/container-build/src/provider.js:125–147` gibt outcome=failed und outputs=[] zurück. `plugin.json` deklariert image jedoch required=true. `runner.ts#validateAndMapOutputs:516–523` verlangt erforderliche Ausgaben auch bei failed, aufgerufen in collectEvidence; fehlendes Image erzeugt evidenceFault/errored. Damit ist der bewusst implementierte fachliche Buildfehlerpfad über den vollständigen Runner nicht als completed/failed darstellbar. Timeout/Registryfehler werden schon beim Invoker in dieselbe ok=false-Form reduziert und gehen ebenfalls durch diesen Widerspruch. **Ursache beheben:** Requiredoutputpflicht an erfolgreiche Disposition binden oder Imageoutput optional machen, Downstream nur passende Ergebnisse zulassen; Infrastrukturstate zusätzlich typisiert erhalten. **Regression:** unveränderter Originalrunner mit real fehlgeschlagenem Dockerfilebuild muss completed/failed mit keinem Image erzeugen, Erfolgsbuild ohne Image muss weiterhin errored sein; Registryausfall/Timeout müssen eigene Ausführungsdisposition behalten.
 
-Entrypoints: `src/provider.js#provider`.
+## PCR-CONTAINER-BUILD-002 — Eigenes Zeitlimit endet vor Registryverify
 
-Nutzung: Ausgeliefert in: buster; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
-
-Registrierungen aus Manifest:
-
-- `testProviders:buildkit` → `src/provider.js#provider`; benötigte Capabilities: container.build
-
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
-
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
-
-## Tests und Dokumentation
-
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
-
-- `skills/buster/plugins/container-build/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts`
-- `tests/verification/contracts/check-pipeline-container-build-implementation.mts`
-- `tests/verification/e2e/real-run-workspace.mjs`
-- `tests/verification/e2e/real-run-workspace.test.mjs`
-
-Dokumentationsstatus: unvollständig (Abgleich offen).
-
-- `docs/architecture/pipeline-test-gate-container-build-cutover-plan.md`
-- `docs/architecture/pipeline-test-gate-container-build-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-container-build-user-guide.md`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md`
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.container-build.md`
-- `docs/site/reference/capabilities.md`
-- `skills/buster/plugins/container-build/README.md`
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `charts/kubeclaw/files/config/knip.json:93`
-- `contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json:4`
-- `contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json:7`
-- `contracts/pipeline-test-gate/v1/suites/container-build.v1.json:3`
-- `docs/architecture/pipeline-test-gate-container-build-baseline.json:5`
-- `docs/architecture/pipeline-test-gate-container-build-cutover-inventory.json:4`
-- `docs/architecture/pipeline-test-gate-container-build-cutover-inventory.json:15`
-- `docs/architecture/pipeline-test-gate-container-build-cutover-inventory.json:16`
-- `docs/architecture/pipeline-test-gate-container-build-cutover-plan.md:5`
-- `docs/architecture/pipeline-test-gate-container-build-documentation-manifest.json:4`
-- `docs/architecture/pipeline-test-gate-container-build-documentation-manifest.json:5`
-- `docs/architecture/pipeline-test-gate-container-build-documentation-manifest.json:11`
-- `docs/architecture/pipeline-test-gate-container-build-implementation-plan.md:28`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:22`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:23`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:27`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:28`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:29`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:42`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:45`
-- `docs/architecture/pipeline-test-gate-container-build-user-guide.md:26`
-- `docs/architecture/pipeline-test-gate-container-build-user-guide.md:29`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:21`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:22`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:24`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.json:7`
-- `docs/architecture/pipeline-test-gate-suite-migration-status.md:19`
-- `docs/architecture/plugin-system-current-inventory.md:23`
-- `docs/site/extend/plugin-catalogue/README.md:61`
-- `docs/site/extend/plugin-catalogue/kubeclaw.container-build.md:1`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+**Mittel; nachgewiesener Deadlinefehler im Invoker.** `container-build-runtime.ts:207–217` setzt maximumExecutionMs nur auf execFile; `#verify:125–152` benutzt ausschließlich das Aufrufersignal. Schneller Build plus offene Registryantwort kann die invokerseitige Operatorzeitgrenze überschreiten; ohne externen Abort unbegrenzt. Der Runner besitzt ein zusätzliches Nodebudget, ersetzt aber kein kleineres Operatorbudget. **Ursache beheben:** absolute Deadline ab Beginn aller Phasen und kombinierter Abbruch für Build+Verify; Restzeit an jede Operation. **Regression:** realer HTTPserver mit verzögertem Manifestbody, echter vorbereiteter Build; Verify muss spätestens mit Restbudget abbrechen und Reader/Client aufräumen.

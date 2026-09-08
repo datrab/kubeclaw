@@ -1,0 +1,592 @@
+{
+  "baseline": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+  "components": 93,
+  "pipelineManifests": 46,
+  "extensionManifests": 2,
+  "sourceFiles": 401,
+  "uncovered": [],
+  "manifestCoverage": [
+    {
+      "path": "skills/buster/plugins/api-flow/plugin.json",
+      "manifestId": "kubeclaw.api-flow",
+      "reviewIds": [
+        "kubeclaw.api-flow"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/axe/plugin.json",
+      "manifestId": "kubeclaw.axe",
+      "reviewIds": [
+        "kubeclaw.axe"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/container-build/plugin.json",
+      "manifestId": "kubeclaw.container-build",
+      "reviewIds": [
+        "kubeclaw.container-build"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "manifestId": "kubeclaw.coverage-budget",
+      "reviewIds": [
+        "kubeclaw.coverage-budget"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/plugin.json",
+      "manifestId": "kubeclaw.direct-command",
+      "reviewIds": [
+        "kubeclaw.direct-command"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/http/plugin.json",
+      "manifestId": "kubeclaw.http",
+      "reviewIds": [
+        "kubeclaw.http"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "manifestId": "kubeclaw.junit-report",
+      "reviewIds": [
+        "kubeclaw.junit-report"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "manifestId": "kubeclaw.kubernetes-fixture",
+      "reviewIds": [
+        "kubeclaw.kubernetes-fixture"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/plugin.json",
+      "manifestId": "kubeclaw.lighthouse",
+      "reviewIds": [
+        "kubeclaw.lighthouse"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/openapi/plugin.json",
+      "manifestId": "kubeclaw.openapi",
+      "reviewIds": [
+        "kubeclaw.openapi"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/playwright/plugin.json",
+      "manifestId": "kubeclaw.playwright",
+      "reviewIds": [
+        "kubeclaw.playwright"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "manifestId": "kubeclaw.security-providers",
+      "reviewIds": [
+        "kubeclaw.security-providers"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "manifestId": "kubeclaw.size-budget",
+      "reviewIds": [
+        "kubeclaw.size-budget"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "manifestId": "kubeclaw.tailscale-exposure",
+      "reviewIds": [
+        "kubeclaw.tailscale-exposure"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins/visual/plugin.json",
+      "manifestId": "kubeclaw.visual",
+      "reviewIds": [
+        "kubeclaw.visual"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "manifestId": "kubeclaw.agent-observability",
+      "reviewIds": [
+        "kubeclaw.agent-observability"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "manifestId": "kubeclaw.artifact-store",
+      "reviewIds": [
+        "kubeclaw.artifact-store"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "manifestId": "kubeclaw.command-runner",
+      "reviewIds": [
+        "kubeclaw.command-runner"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "manifestId": "kubeclaw.git-workspace",
+      "reviewIds": [
+        "kubeclaw.git-workspace"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/network-http/plugin.json",
+      "manifestId": "kubeclaw.network-http",
+      "reviewIds": [
+        "kubeclaw.network-http"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "manifestId": "kubeclaw.notification-observer",
+      "reviewIds": [
+        "kubeclaw.notification-observer"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "manifestId": "kubeclaw.openclaw-agent-events",
+      "reviewIds": [
+        "kubeclaw.openclaw-agent-events"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "manifestId": "kubeclaw-agent-observer",
+      "reviewIds": [
+        "kubeclaw-agent-observer"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/plugin.json",
+      "manifestId": "kubeclaw.operator-messaging",
+      "reviewIds": [
+        "kubeclaw.operator-messaging"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "manifestId": "kubeclaw.redis-transport",
+      "reviewIds": [
+        "kubeclaw.redis-transport"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "manifestId": "kubeclaw.runtime-dispatch",
+      "reviewIds": [
+        "kubeclaw.runtime-dispatch"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/plugin.json",
+      "manifestId": "kubeclaw.secret-resolver",
+      "reviewIds": [
+        "kubeclaw.secret-resolver"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "manifestId": "kubeclaw.state-store",
+      "reviewIds": [
+        "kubeclaw.state-store"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "manifestId": "kubeclaw.telemetry-observer",
+      "reviewIds": [
+        "kubeclaw.telemetry-observer"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/plugin.json",
+      "manifestId": "kubeclaw.telemetry-store",
+      "reviewIds": [
+        "kubeclaw.telemetry-store"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "manifestId": "kubeclaw.transport-publisher",
+      "reviewIds": [
+        "kubeclaw.transport-publisher"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/wait-store/plugin.json",
+      "manifestId": "kubeclaw.wait-store",
+      "reviewIds": [
+        "kubeclaw.wait-store"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "manifestId": "kubeclaw.architecture-validator",
+      "reviewIds": [
+        "kubeclaw.architecture-validator"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "manifestId": "kubeclaw.blueprint-sync",
+      "reviewIds": [
+        "kubeclaw.blueprint-sync"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "manifestId": "kubeclaw.buster-quality-gate",
+      "reviewIds": [
+        "kubeclaw.buster-quality-gate"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "manifestId": "kubeclaw.case-study",
+      "reviewIds": [
+        "kubeclaw.case-study"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/plugin.json",
+      "manifestId": "kubeclaw.delivery-lint",
+      "reviewIds": [
+        "kubeclaw.delivery-lint"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/plugin.json",
+      "manifestId": "kubeclaw.human-approval",
+      "reviewIds": [
+        "kubeclaw.human-approval"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "manifestId": "kubeclaw.implementation-agent",
+      "reviewIds": [
+        "kubeclaw.implementation-agent"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "manifestId": "kubeclaw.lint",
+      "reviewIds": [
+        "kubeclaw.lint"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "manifestId": "kubeclaw.pipeline-review",
+      "reviewIds": [
+        "kubeclaw.pipeline-review"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/plugin.json",
+      "manifestId": "kubeclaw.preflight-contract",
+      "reviewIds": [
+        "kubeclaw.preflight-contract"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/plugin.json",
+      "manifestId": "kubeclaw.prism-design",
+      "reviewIds": [
+        "kubeclaw.prism-design"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "manifestId": "kubeclaw.project-summary",
+      "reviewIds": [
+        "kubeclaw.project-summary"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "manifestId": "kubeclaw.remote-test-gate",
+      "reviewIds": [
+        "kubeclaw.remote-test-gate"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "manifestId": "kubeclaw.repository-adapter",
+      "reviewIds": [
+        "kubeclaw.repository-adapter"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/plugin.json",
+      "manifestId": "kubeclaw.review",
+      "reviewIds": [
+        "kubeclaw.review"
+      ]
+    },
+    {
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "manifestId": "kubeclaw-prism",
+      "reviewIds": [
+        "prism.extension"
+      ]
+    }
+  ],
+  "packageCoverage": [
+    {
+      "id": "plugin-sdk",
+      "source": "skills/common/plugin-runtime/sdk",
+      "reviewIds": [
+        "lib.sdk"
+      ]
+    },
+    {
+      "id": "plugin-foundation",
+      "source": "skills/common/plugin-runtime/foundation",
+      "reviewIds": [
+        "foundation.registry",
+        "foundation.config",
+        "foundation.isolation",
+        "foundation.packages",
+        "foundation.observability"
+      ]
+    },
+    {
+      "id": "plugin-system-contract",
+      "source": "skills/common/plugin-runtime/contracts/plugin-system/v2",
+      "reviewIds": [
+        "contract.plugin-system"
+      ]
+    },
+    {
+      "id": "nova-core",
+      "source": "skills/nova/core",
+      "reviewIds": [
+        "nova.state",
+        "nova.effects",
+        "nova.execution",
+        "nova.lifecycle",
+        "nova.telemetry",
+        "nova.observability",
+        "nova.test-gates",
+        "nova.entry"
+      ]
+    },
+    {
+      "id": "worker-core",
+      "source": "skills/worker/core",
+      "reviewIds": [
+        "worker.core"
+      ]
+    },
+    {
+      "id": "buster-engine",
+      "source": "skills/buster/engine",
+      "reviewIds": [
+        "buster.engine"
+      ]
+    },
+    {
+      "id": "nova-project",
+      "source": "skills/nova/project",
+      "reviewIds": [
+        "nova.entry"
+      ]
+    },
+    {
+      "id": "nova-runtime",
+      "source": "skills/nova",
+      "reviewIds": [
+        "kubeclaw.architecture-validator",
+        "kubeclaw.blueprint-sync",
+        "kubeclaw.buster-quality-gate",
+        "kubeclaw.case-study",
+        "kubeclaw.delivery-lint",
+        "kubeclaw.human-approval",
+        "kubeclaw.implementation-agent",
+        "kubeclaw.lint",
+        "kubeclaw.pipeline-review",
+        "kubeclaw.preflight-contract",
+        "kubeclaw.prism-design",
+        "kubeclaw.project-summary",
+        "kubeclaw.remote-test-gate",
+        "kubeclaw.repository-adapter",
+        "kubeclaw.review",
+        "nova.state",
+        "nova.effects",
+        "nova.execution",
+        "nova.lifecycle",
+        "nova.telemetry",
+        "nova.observability",
+        "nova.test-gates",
+        "nova.entry",
+        "nova.scaffold"
+      ]
+    },
+    {
+      "id": "buster-runtime",
+      "source": "skills/buster",
+      "reviewIds": [
+        "kubeclaw.api-flow",
+        "kubeclaw.axe",
+        "kubeclaw.container-build",
+        "kubeclaw.coverage-budget",
+        "kubeclaw.direct-command",
+        "kubeclaw.http",
+        "kubeclaw.junit-report",
+        "kubeclaw.kubernetes-fixture",
+        "kubeclaw.lighthouse",
+        "kubeclaw.openapi",
+        "kubeclaw.playwright",
+        "kubeclaw.security-providers",
+        "kubeclaw.size-budget",
+        "kubeclaw.tailscale-exposure",
+        "kubeclaw.visual",
+        "buster.engine",
+        "buster.entry"
+      ]
+    },
+    {
+      "id": "prism-engine",
+      "source": "skills/prism",
+      "reviewIds": [
+        "prism.control",
+        "prism.corpus",
+        "prism.directions",
+        "prism.domain",
+        "prism.engine",
+        "prism.evaluation",
+        "prism.pipeline-adapter",
+        "prism.preferences",
+        "prism.renderer",
+        "prism.storage",
+        "prism.studio",
+        "prism.service-control",
+        "prism.service-worker",
+        "prism.service-ingestion",
+        "prism.service-studio",
+        "prism.service-agent-bridge",
+        "prism.service-common",
+        "prism.entry",
+        "prism.extension"
+      ]
+    },
+    {
+      "id": "prism-runtime",
+      "source": "skills/prism",
+      "reviewIds": [
+        "prism.control",
+        "prism.corpus",
+        "prism.directions",
+        "prism.domain",
+        "prism.engine",
+        "prism.evaluation",
+        "prism.pipeline-adapter",
+        "prism.preferences",
+        "prism.renderer",
+        "prism.storage",
+        "prism.studio",
+        "prism.service-control",
+        "prism.service-worker",
+        "prism.service-ingestion",
+        "prism.service-studio",
+        "prism.service-agent-bridge",
+        "prism.service-common",
+        "prism.entry",
+        "prism.extension"
+      ]
+    },
+    {
+      "id": "agent-observability-contract",
+      "source": "contracts/agent-observability/v1",
+      "reviewIds": [
+        "contract.agent-events"
+      ]
+    },
+    {
+      "id": "telemetry-contract",
+      "source": "contracts/telemetry/v1",
+      "reviewIds": [
+        "contract.telemetry"
+      ]
+    },
+    {
+      "id": "pipeline-test-gate-contract",
+      "source": "contracts/pipeline-test-gate/v1",
+      "reviewIds": [
+        "contract.test-gate"
+      ]
+    },
+    {
+      "id": "pipeline-worker-core-contract",
+      "source": "contracts/pipeline-worker-core/v1",
+      "reviewIds": [
+        "contract.worker"
+      ]
+    },
+    {
+      "id": "prism-contract",
+      "source": "contracts/prism/v1",
+      "reviewIds": [
+        "contract.prism"
+      ]
+    },
+    {
+      "id": "pipeline-observability-contract",
+      "source": "contracts/pipeline-observability/v1",
+      "reviewIds": [
+        "contract.observability"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "role": "nova",
+      "entrypoint": {
+        "package": "nova-runtime",
+        "path": "pipeline.ts",
+        "output": "pipeline.ts",
+        "import": "@kubeclaw/nova-core",
+        "execute": "@kubeclaw/nova-project/cli"
+      },
+      "packages": 11,
+      "plugins": 30,
+      "extensions": 1
+    },
+    {
+      "role": "buster",
+      "entrypoint": {
+        "package": "buster-runtime",
+        "path": "runtime.ts",
+        "output": "runtime.ts",
+        "import": "@kubeclaw/buster-engine"
+      },
+      "packages": 11,
+      "plugins": 22,
+      "extensions": 1
+    },
+    {
+      "role": "prism",
+      "entrypoint": {
+        "package": "prism-runtime",
+        "path": "runtime.ts",
+        "output": "runtime.ts",
+        "import": "@kubeclaw/prism"
+      },
+      "packages": 11,
+      "plugins": 6,
+      "extensions": 1
+    }
+  ]
+}

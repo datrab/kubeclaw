@@ -1,0 +1,3 @@
+command: node skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts
+exit: 0
+{"ok":true,"dialects":["junit","pytest"],"bounded":true,"safeXml":true}

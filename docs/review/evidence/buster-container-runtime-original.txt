@@ -1,0 +1,20 @@
+Command: node tests/verification/contracts/check-pipeline-container-build-runtime.mts
+Exit: 1
+node:fs:2848
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat '/usr/local/bin/buildctl'
+    at Object.realpathSync (node:fs:2848:29)
+    at new ContainerBuildCapabilityInvoker (file:///workspace/scratch/4e25cf57c177/kubeclaw/skills/buster/engine/test-gates/container-build-runtime.ts:101:25)
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-pipeline-container-build-runtime.mts:14:13
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/usr/local/bin/buildctl'
+}
+
+Node.js v24.19.0

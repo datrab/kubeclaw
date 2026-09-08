@@ -1,76 +1,108 @@
 # kubeclaw.preflight-contract
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+Nova-Stage validate / kubeclaw.validate.preflight-contract → src/stage.ts.
+Explizit ausgewählter deterministischer Forgeblueprint-Check, keine Containerbuild-
+Ausführung. Kompletten Source, Manifest, Schemas, README und drei Tests gelesen.
+Neuer Projectcompiler erzeugt diese Stage nicht; das widerlegt nicht Verwendung
+in expliziten Graphen/älteren Projektabläufen.
 
-- `skills/nova/plugins/preflight-contract`
+## 2. Schnittstellen
 
-Entrypoints: `src/stage.ts#execute`.
+Input moduleId/modulePath/ownedPaths/serveDockerfile/apiSpecFile plus optionale
+substeps. Leere substeps im Schema verboten; Stage prüft zusätzlich. Blueprint
+über git.repository.read/read_text, Empfänger repository-adapter/src/adapter.ts
+prüft Realpfad, Dateityp und Größenlimit. Einzeldokument oder sequenziell gelesene
+Substep-FORGE.md werden zu Text zusammengeführt. validateDeclarations sucht
+Dockerfile/API-Basenamen. Ergebnisreport enthält moduleId/passed/failures und
+wird via artifacts.write gespeichert. passed, request_fix bei fehlender
+Deklaration, blocked bei fehlender Datei/ungültigem Pfad sind getrennt.
 
-Nutzung: Ausgeliefert in: nova; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand und Nebenwirkungen
 
-Registrierungen aus Manifest:
+Nur Lesecapability und immutable Reportwrite; keine Gitänderung/Builds. Report
+vor Stageabschluss. Wiederholung schreibt attemptgebundene Referenzen; keine
+eigene Cacheliste. Gelesener Text ist Worktreeinhalt, kein festgefrorener Commit.
 
-- `stages:validate` → `src/stage.ts#execute`; benötigte Capabilities: git.repository.read, artifacts.write
+## 4. Korrektheit
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+Pfadprüfung lehnt absolute Pfade, Laufwerkpfade, Traversal und NUL/Zeilenumbrüche
+ab; Adapter ergänzt Symlink-/Rootgrenze. Fehlercode nach Readfailure wird als
+blueprint_missing/path_invalid/substep_invalid klassifiziert, einschließlich
+Transport-/Zugriffsfehlern. Das ist fail-closed, aber nicht präzise Fehlerdiagnose.
+Fachliche Deklarationsprüfung ist nur Substringsuche; PCR-PREFLIGHT-001 unten.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Abbruch, Wiederholung und Parallelität
 
-## Tests und Dokumentation
+Keine eigenen Timer/Retries. Jede Read-/Writeoperation unter Corelease; große
+Substeplisten können viele sequenzielle Reads verursachen. Gleichzeitige
+Worktreeänderungen können verschiedene Versionen der Substeptexte mischen;
+kein Snapshotprotokoll. Antrag auf Reparatur über Graph/on.request_fix, nicht
+plugininterne Endlosschleife.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Neustart
 
-- `skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs`
-- `skills/nova/plugins/preflight-contract/tests/live-function.test.ts`
-- `skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
+Erneuter Attempt liest aktuelle Dateien neu, kein eigener persistierter
+Blueprintdigest. Crash nach Report, vor Result gilt unter Coreprojektion
+PCR-EXEC-002. Keine externe irreversible Aktion, deshalb keine eigene
+Reconciliationlogik erforderlich.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauen
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-changelog.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md`
-- `docs/site/reference/capabilities.md`
-- `skills/nova/plugins/preflight-contract/README.md`
+Repositorygrants/Realpfadprüfung beschränken Lesezugriff; keine Secrets. Input-
+Ownership wird nur als Callerbehauptung verglichen. API-Spec wird immer geprüft,
+Dockerfile nur wenn ownsPath es als eigenes erkennt (exakt oder Suffix, keine
+allgemeine Directoryprefixsemantik). Zeichenketteninhalt ist untrusted Blueprint,
+keine belastbare strukturierte Lieferzusage.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Repositoryadapter begrenzt eine Datei standardmäßig auf 4 MiB. Inputschema
+begrenzt weder Substepanzahl noch summierte Textbytes; zusammengeführter Speicher
+kann deutlich größer sein. Outer lease begrenzt Dauer, nicht synchrone
+Textallokation. Keine Retention im Plugin; Artefaktstore verwaltet Reportquote.
+Node, Repositoryvolume und Store erforderlich, keine laufende Buildinfra.
 
-- `charts/kubeclaw/files/config/knip.json:619`
-- `docs/architecture/plugin-system-current-inventory.md:62`
-- `docs/architecture/plugin-system-implementation-plan.md:624`
-- `docs/architecture/plugin-system-phase9-changelog.md:43`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:221`
-- `docs/site/extend/plugin-catalogue/README.md:27`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:67`
-- `docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md:68`
-- `docs/site/reference/capabilities.md:18`
-- `docs/site/reference/capabilities.md:27`
-- `packaging/runtime/roles/nova.json:49`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts:31`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts:32`
-- `tests/verification/contracts/quality-provider-runtime.mts:68`
-- `tests/verification/contracts/quality-provider-runtime.mts:81`
-- `tests/verification/contracts/quality-provider-runtime.mts:83`
+## 9. Architektur
 
-## Offene Prüfpfade
+Einfacher Capabilitypfad sinnvoll; strukturierte verbindliche Deliverables wären
+robuster als heuristische Textprüfung. Zusammenfassung mehrerer Substeps verliert
+Zuordnung, welcher Substep welche Datei liefern muss. Eine spätere Neufassung
+soll dieselbe Deklarationsquelle für Compiler/Forge/Prüfer verwenden.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests
+
+`npm test` **bestanden** (Boundary, declarations.unit, live-function):
+[Protokoll](../evidence/nova-batch-preflight-contract-tests.txt).
+Echte Dateien, Repositoryadapter, Registry, Store und Runner; kein Agent/Missing-
+Infra-Mock. Pass, fehlende API-Deklaration, fehlende Dateien, Traversal und
+Substeps getestet. Zusätzlicher Originalfunktionsaufruf:
+`node docs/review/evidence/nova-batch-preflight-probe.mjs` **bestanden als
+Defektreproduktion**, Ausgabe negativeDeclarationAccepted=true. Keine neue
+Ersatzimplementierung. Keine Tests für Crash/mutierende Worktrees/Gesamtbytebudget.
+
+## 11. Dokumentationsabgleich
+
+README nennt „verifies ... deliverables are declared“; tatsächlich beweist der
+Code nur Basenamenvorkommen. Dokumentation damit **unvollständig/überstark**.
+Containerbuildbeschreibung ist separate produktive Testplanroute, nicht hier
+ausgeführter Build. Die Testbeschreibung zu echten Dateien stimmt.
+
+## 12. PCR-PREFLIGHT-001 — Dateinennung wird als Lieferdeklaration akzeptiert
+
+**Mittel; nachgewiesener Defekt der deklarierten Preflightaussage.**
+`src/stage.ts`, validateDeclarations, insbesondere `content.includes(name)` in
+beiden Zweigen (Zeilen 84–102 am Baseline). Auslöser: gültiger Blueprinttext
+„Do not deliver Dockerfile or openapi.yaml. These files belong to another project.“
+bei Input mit diesen eigenen Dateien. Originalfunktion liefert keine Failure.
+Auswirkung: fehlende oder explizit ausgeschlossene Deliverables passieren den
+Preflight; außerdem genügt gleichnamige Datei an anderer Stelle. Dies behauptet
+keine spätere erfolgreiche Build-/Reviewumgehung. Lösung an der Ursache:
+maschinenlesbare normalisierte Deliverablepfade als gemeinsame Quelle prüfen,
+Prosa als Erklärung behalten. Echter Regressionstest: solche negierten/fremden
+Basenamen durch vorhandenen Realdatei-/Runnerpfad führen, bis ausschließlich
+explizite richtige Pfaddeklarationen bestehen. Ownership-Verzeichnisse und
+Substepzuordnung dabei separat spezifizieren.

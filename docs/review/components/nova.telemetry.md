@@ -127,3 +127,11 @@ innerhalb dieser Komponente offen.
 Nachprüfung Registry: check-plugin-system-v2-import-safety.mjs:29 scheitert ebenfalls
 an 5 statt6 Observern; [registry-tests.txt](../evidence/registry-tests.txt). Gleiche
 Ursache PCR-TELEM-001; keine separate Befundzählung.
+
+## Nachprüfung — Schema Revision 6
+
+Originaler Observer-/Effect-/Operatorpfad erneut abgeglichen: deliveryAttempt
+erhöht nicht die Effectattemptidentität; vorhandene failed-Receipts verhindern
+neuen Send. [PCR-OPERATOR-001](kubeclaw.operator-messaging.md) führt diesen
+Integrationsdefekt zentral samt Original-HTTP503-Reproduktion. Der bestehende
+Recoverytest allein belegt keine erneute externe Zustellung. Kein doppelter Befund.

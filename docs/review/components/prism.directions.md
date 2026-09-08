@@ -1,38 +1,19 @@
-# prism.directions
+# prism.directions — Strukturabstand von Designvorschlägen
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–3. Umfang, Vertrag, Zustand
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig `skills/prism/directions/index.ts:1–37` und directions.test.mts gelesen. Control /v1/agent/design-sets validiert drei DesignDocument-Schemas und ruft assertMaterialDirectionDiversity vor RepositorycreateDirectionSet. directionSignature nur Testaufrufe gefunden, materialDirectionDistance zusätzlich vom Gate verwendet. Keine Pluginregistrierung, rein interne Funktionen. Signatur enthält Themefarben/-typography/space/radius/shadow/motion, Viewoberfläche und Nodearten/ausgewählte visuelle Props, Componentroots. Canonical ordnet Objektkeys mit localeCompare, Arrays erhalten Reihenfolge. Distanz vergleicht Featurepfade, Nodeartunterschied3, Rootfeature2, sonst1; jedes Paar muss mindestens3 erreichen. Keine Persistenz oder externe Nebenwirkung.
 
-- `skills/prism/directions`
+## 4–6. Fehler, Parallelität, Restart
 
-Entrypoints: `directions/index.ts bzw. control/session.ts`.
+Gate wirft bei erstem zu ähnlichen Paar; Funktion selbst verlangt keine Anzahl drei oder Schema, Control macht beides zuvor. Idempotenz ergibt sich aus gleichem Input, keine Cache-/Journalzustände; Neustart irrelevant. Kein I/Otimeout/Abort erforderlich, aber rekursive Expansion ohne Tiefenbudget; Contract-Depthbefund gilt. Maximal drei produktive Dokumente begrenzen Paarzahl, nicht Dokumentgröße. Signaturelocale ist keine sprachübergreifend zugesicherte Kanonisierung; es gibt keinen gefundenen externen Signaturvergleich.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 7–9. Vertrauen, Ressourcen, Architektur
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+Gate bewertet Strukturmetadaten, keine Renderpixel und keine semantische Eignung. Nichtbenutzte Theme-Tokenänderungen können Distanz erzeugen; responsive/statepatches und Componentvariantdefinitionen zählen nicht. Drei Tokenänderungen sind nach originalem Test bewusst ausreichende Schwelle. Deshalb keine technische Behauptung, bestandene Distanz beweise sichtbare Vielfalt. LLM-Evidence wird hier nicht verifiziert; Control speichert sie als Agentangabe. Keine Ressourcen/Retention außer lokalen Maps/Clones und Rekursion. Gemeinsame Featureextraktion für Signatur/Distanz würde Duplikation reduzieren; sichtbare Vielfalt sollte an aufgelöste Render-/Viewzustände gebunden sein, wenn dieser Produktanspruch gilt.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 10–12. Tests, Dokumentation, Urteil
 
-## Tests und Dokumentation
-
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
-
-- Noch keine direkte Zuordnung.
-
-Dokumentationsstatus: fehlend (Zuordnung offen).
-
-- Noch keine direkte Zuordnung.
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `docs/implementation/prism/completion-status.json:9`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+Vier Originalfälle in [prism-reviewed-modules-tests.txt](../evidence/prism-reviewed-modules-tests.txt): Copy-only ignoriert, einzelne Tokenänderung verworfen, drei Systemtokenänderungen akzeptiert, Keyreihenfolge irrelevant. Keine Browser-/Agent-/DBintegration. Implementationcompletion/integrationtraceability ordnen Materialdiversity dem Produktionsfluss zu; README dieser kleinen Library fehlt, Plan/Conventions vorhanden aber Heuristikgrenze unvollständig. Kein neuer sicher nachgewiesener Fehler gegen deklarierte Schwelle. Offene Frage: Muss Gate sichtbare Vielfalt über alle States garantieren? Nächste Verifikation: zwei schema-valide, identisch gerenderte Dokumente mit drei ungenutzten Tokenänderungen gegen Originalgate und echte Screenshots; produktive Anforderung danach eindeutig formulieren. Kein mathematischer Abstand als visuelle Qualität ausgegeben.
