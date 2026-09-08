@@ -1,93 +1,73 @@
 # kubeclaw.secret-resolver
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–2. Verantwortung, Auswahl und Schnittstellen
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig gelesen: `skills/common/plugins/secret-resolver/src/adapter.ts`, Manifest,
+Schema, README, Paketdatei und beide eigenen Tests. Manifest `secrets` stellt
+`secrets.read` ohne weitere Capabilities bereit. Runtime-Rollen liefern Paket;
+Core `execution/adapter-startup.ts` validiert Schema und aktiviert ausgewählten
+Provider. Config environment bildet logische Namen auf Operator-Umgebungsnamen
+ab; Schema verlangt `[A-Z][A-Z0-9_]*`, Adapter friert eine flache Kopie ein.
 
-- `skills/common/plugins/secret-resolver`
+Sender z.B. runtime-dispatch `openclaw.ts:dispatchOpenClaw` nutzt
+invokeConfidential(secrets.read, resolve, secret.name, tokenSecret) und validiert
+response.value als nichtleeren Text. Empfänger prüft capability/operation,
+Signal und Mapping und liefert ausschließlich `{value}`. Unknown/leer/fehlend
+werden SECRET_DENIED/SECRET_UNAVAILABLE; keine Secretwerte in Fehlermeldungen.
+Maplookup nutzt gewöhnliches Objekt, keine eigene Benutzeridentität.
 
-Entrypoints: `src/adapter.ts#activate`.
+## 3–4. Zustand, Fehler und externe Nebenwirkungen
 
-Nutzung: Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Keine Datei, Journal, Mutation oder externe Aktion. Wert wird bei jedem invoke aus
+process.env gelesen, also kein dauerhaft gecachter Secretwert. Eingefrorenes Mapping
+bleibt bis Reaktivierung unverändert. Keine Commit-/fsync-/Replaytransaktion anwendbar.
+Falsche Operation wird abgelehnt, bereits abgebrochenes Signal ebenfalls.
 
-Registrierungen aus Manifest:
+## 5–7. Abbruch, Neustart und Geheimhaltung
 
-- `adapters:secrets` → `src/adapter.ts#activate`; benötigte Capabilities: 
+Synchroner Lookup innerhalb async invoke; keine offene RPC, Retryqueue oder eigene
+Timeoutphase. Parallelaufrufe lesen dasselbe process.env, Neustart lädt vom Operator
+bereitgestellte Umgebung. Wiederholung ist read-only und kann nach Secretrotation
+anderen Wert erhalten. shutdown/ready sind leer.
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+Beide Core-Seiten untersucht: `foundation/registry/capabilities.ts` klassifiziert
+secrets.read vertraulich; `execution/authorization.ts:secret` erzwingt allowedNames;
+AdapterStarter propagiert Grants und aktiviert vertraulichen Pfad auch bei normalem
+invoke. `effects/coordinator.ts:invokeConfidential` schreibt keine effektiven Werte
+in Effectjournal; Audit bekommt maskierte Ressource/Payload und generische Receipt.
+Vertraulicher Aufruf hat bewusst keinen Fence, Adapter prüft Fence nur für andere
+Direktaufrufe. Vertrauensgrenze ist Core/Adapterkonfiguration; Mapping ist keine
+OS-Isolation, Prozesscode selbst kann Umgebung lesen. Downstream muss Secretwerte
+weiter transient transportieren; daraus folgt kein pauschaler Nachweis sämtlicher
+externen Dienste oder Logs.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 8–9. Ressourcen und Architektur
 
-## Tests und Dokumentation
+Keine Aufbewahrung/Aufräumdaten außer Mapping; Secretlänge wird hier nicht begrenzt.
+OS-Umgebung/Operator bestimmen Wertgröße. Kein komplexer Resolver-Cache oder
+Fallback-Provider. Map statt gewöhnlichem Objekt/own-property-Lookup wäre eindeutiger
+für beliebige logische Namen; kein belegter produktiver Secretbypass aus geerbten
+Object-Namen, da passende unzulässige Umgebungsnamen nicht angenommen werden.
+Keine zusätzliche Komplexität oder Remote-Vault-Abhängigkeit erforderlich.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 10. Tests und Grenzen
 
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts`
-- `skills/common/plugins/secret-resolver/tests/live-function.test.ts`
-- `skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs`
-- `skills/common/plugins/transport-publisher/tests/live-function.test.ts`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/case-study/tests/live-function.test.ts`
-- `skills/nova/plugins/human-approval/tests/live-function.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- `skills/nova/plugins/pipeline-review/tests/live-function.test.ts`
-- `skills/nova/plugins/review/tests/live-function.test.ts`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
-- `tests/verification/reliability/external-effect-recovery.test.mts`
+`node tests/live-function.test.ts && node tests/package-boundary.test.mjs` im
+Paketverzeichnis bestanden (Node 24.19.0). Echter process.env-Lookup, temporäre
+synthetische Testwerte werden entfernt; positive Auflösung, unknown, leer und
+bereits abgebrochenes Signal. Fence ist leeres Testobjekt. Boundarytest verbietet
+Core-Pipeline-Imports/console per Regex. Kein Secretwert in diesem Review.
+Tests beweisen nicht produktive Grant-/Auditverdrahtung; diese ist oben Code-Trace,
+kein neu ausgeführter Core-E2E-Test. Weitere Inventartests nicht pauschal als gelesen
+oder bestanden gewertet.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 11–12. Dokumentationsabgleich und Ergebnis
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md`
-- `docs/site/reference/capabilities.md`
-- `skills/common/plugins/secret-resolver/README.md`
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `charts/kubeclaw/files/config/eslint.config.mjs:42`
-- `charts/kubeclaw/files/config/knip.json:428`
-- `docs/architecture/plugin-system-current-inventory.md:47`
-- `docs/architecture/plugin-system-implementation-plan.md:668`
-- `docs/architecture/plugin-system-phase5-capabilities.json:18`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:412`
-- `docs/site/extend/plugin-catalogue/README.md:51`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md:67`
-- `docs/site/reference/capabilities.md:38`
-- `packaging/runtime/roles/buster.json:36`
-- `packaging/runtime/roles/nova.json:34`
-- `packaging/runtime/roles/prism.json:19`
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts:48`
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts:78`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts:97`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts:161`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:231`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:272`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:335`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:396`
-- `skills/common/plugins/transport-publisher/tests/live-function.test.ts:98`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts:51`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+README beschreibt Mapping und vertraulichen Core-Pfad sachlich zutreffend;
+„never writes its request“ meint rohe Daten: maskierte Auditereignisse existieren.
+Katalog ist vorhanden, zu Registrierung korrekt, zur Prozessvertrauensgrenze und
+Rotationssemantik unvollständig. Keine neue bestätigte eigene Defekt-ID.
+Nächster sinnvoller Nachweis ist echter Core-Aufruf mit Audit/Journalinspektion,
+inklusive unbekanntem Namen und Downstream-Fehler; nicht allein der direkte Lookup.

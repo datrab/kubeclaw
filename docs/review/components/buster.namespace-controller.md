@@ -1,70 +1,28 @@
 # buster.namespace-controller
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+1. **Verantwortung und Nutzung.** `cmd/buster-namespace-controller/main.go` wird durch das bedingte Buster-Broker-Chart als `/app/buster-namespace-controller` mit einer Replik betrieben. `reconcileAll` listet namespaced BusterNamespaceLeases und reconciliert seriell. Gegenstellen: CRD, der `KubernetesFixtureCapabilityInvoker` (Lease create/wait/delete), Tailscale-Exposure-Invoker (mutable purpose/exposure), Runtime-Security-Invoker (Statusbeobachtung). Der Controller provisioniert Namespace, Limits, Policies, feste ClusterRoleBindings, genehmigte Secretkopien, dedizierte Zugangsdaten und optionalen Ingress; er entscheidet kein Nova-Gate.
+2. **Vertrag.** CRD `charts/kubeclaw/templates/buster-namespace-lease-crd.yaml` validiert Felder, Listen und unveränderliche Specfelder; purpose/exposure bleiben veränderlich. `validateLeaseSpec`, `accessRequests`, `credentialRequest` prüfen Allowlisten/TTL/Zugangsdaten erneut. Specdigest schließt purpose/exposure aus. Lease-UID und Name binden Namespace-Labels; Fixture-Invoker prüft zurückgegebene Namespaceidentität und Zeitfelder. Runtime-Security-Empfänger bindet Manifestdigest, immutableImage, Namespace, Frische, nichtleere Pod/Servicezählung, Accounting und Resultdigest. Digest ist Integrität über vertrauenswürdigen Kubernetes-Status, keine Signatur.
+3. **Zustand und Commit.** Kubernetes-API ist Persistenz, kein lokales Journal/fsync. Finalizer vor Provisioning-Status, dann Namespace/Quota/NetworkPolicy/RBAC/Secrets/Ingress, zuletzt Ready. API-ACK ist der lokale Commit; mehrfaches POST mit 409→PATCH reconciliert existierende Zielobjekte. Ingress-Off löscht den Ingress. Status enthält Secretreferenzen/Verfügbarkeit, keine Credentialwerte. Vor TTL-Löschung zuerst Expired; Finalizerentfernung erst nach Namespaceverschwinden (Eigentumskollision ausdrücklich ausgenommen).
+4. **Fehler.** 404/409 bleiben in `apiError` unterscheidbar. Reconcilefehler werden protokolliert und als Failed gepatcht; eine fehlgeschlagene Statusänderung wird ebenfalls geloggt. Rejected-Provisioned-Policy kann vorher gewährten Namespace löschen. Legacy-Leases dürfen nicht neu provisionieren. Namensnormalisierung und gekürzte Ownershiplabels besitzen PCR-BUSTER-NS-002. Ready und Exposure/CredentialsReady sind getrennte Zustände.
+5. **Timeout/Parallelität.** HTTP-Timeout 60 s pro Anfrage; serielle Liste ohne Gesamtdeadline oder Queuefairness. Namespace-Deletion wartet nominal zwei Minuten, eine laufende HTTP-Anfrage/Pollpause kann darüber hinausreichen und andere Leases verzögern. Kein Leader-Lock; eine Chartreplik begrenzt normalen Betrieb, ein Rolling-Update kann überlappen. Finalizer-PATCH hat keine resourceVersion-Vorbedingung; parallele fremde Finalizerupdates sind nicht zuverlässig erhalten. Kein Claim-Deadlinevertrag dieses Controllers: Lease-TTL ist vom Buster-Attempt unabhängig.
+6. **Neustart/Ungewisser Ausgang.** Wiederholung beginnt beim APIzustand, nicht bei lokalem Cache. Präfixe nach Finalizer, Provisioning, Namespace, RBAC oder Secretcreation werden erneut reconciliert; generierte Secrets werden bei vorhandenem Objekt wiederverwendet. Expired verhindert Neuprovisionierung. Kein echter Crashlauf durchgeführt. Namespace-DELETE folgt auf einen GET-Ownershipcheck ohne UID-Precondition: Austausch zwischen beiden ist eine offene Racegrenze. Nach Ausfall/Tokenverlust fehlt aktive TTLdurchsetzung bis zur Wiederherstellung (PCR-BUSTER-NS-001).
+7. **Vertrauen.** Kubernetes-CA erforderlich, TLS mindestens 1.2, kein insecure Fallback. Access-Allowlist erlaubt Subject+Mode, Secretcopy-Allowlist ist standardmäßig leer. CRD/RBAC sind tatsächliche vorgelagerte Grenzen; Namespacebeschriftung setzt restricted Pod Security. Deployer-ClusterRole im Chart darf Secrets lesen und Workloads erstellen; `namespaceRole()` wird dafür nicht verwendet. Kein Nachweis einer echten CNI-/RBAC-Durchsetzung. Runtime-Security inventarisiert nachgelagerten Zustand, seine Namensallowlist ist fehlerhaft (PCR-BUSTER-NS-003).
+8. **Ressourcen.** Namespacequoten begrenzen Pods/CPU/RAM/Ephemeral/PVC-Zahl/Storage; Defaultlimits werden vor Secretcopy gesetzt. Retain endet durch manuellen Release oder TTL, nicht unbegrenzt. API-Listen und `io.ReadAll` sind unpaginiert/unbegrenzt; Findingbudget (4096/512 KiB mit critical overflow) greift erst nach Aufbau aller Ressourcen/Funde. Controller-Ressourcen kommen aus Chartvalues. API-Fehler/volles etcd führen zu Retry über Polling, keine eigene GC von abgeschlossenen Leaseobjekten.
+9. **Architektur.** Reconciliation ist grundsätzlich passend. Ein monolithischer Controller mischt Provisioning, Exposure, Credentials und Securityinspektion; gemeinsame Namens-/Ownershipdefinitionen wären konkreter als zusätzliche Wrapper. Die ungenutzte `namespaceRole()` erzeugt andere Rechte als die tatsächlichen Chart-ClusterRoles, und ihr Originaltest testet daher keine ausgelieferten Rechte.
+10. **Tests.** `main_test.go` vollständig gelesen (CA, Pollintervalle, Ownership, Legacy-Cleanup, Credentialrollen, TTL, Secretcopy, Exposure, Runtime-Security-Digests/Budgets). HTTP-Fälle benutzen `httptest`-Antworten, reine Funktionen echte Implementierung; kein APIserver/CNI. `go test ./cmd/buster-namespace-controller` **blockiert**, Shell exit 127, Go fehlt. Implementierungs-/Parity-TS-Tests gelesen: mehrere Quelltextregex/Manifestassertions und invoker checks; kein Ersatztool hinzugefügt. Rotation, Chartnamensparameter in Securityinspektion, lange Namen in Ownershiproundtrip und konkurrierende Finalizer fehlen als Regression.
+11. **Dokumentation.** Fixture-Security-/User-/Operator-Guides sind **vorhanden, teilweise veraltet**: Security Model beschreibt erzeugte namespaced runner Role; real wird eine feste Chart-ClusterRole namespaced gebunden. Bounded Retention stimmt als beabsichtigter Ablauf, kann beim Controllerausfall nicht als harte Wandzeitgarantie gelten. Die Security-Model-Kindliste nennt Ingress; tatsächliche Manifestgrenze wird im Fixture-Review abgeglichen. Keine eigene vollständige Controller-Betriebsdokumentation zu Rotation/Mehrreplik/Tokenverlust gefunden in zugeordneten Fixture-/Exposure-Guides und Buster-Runtimearchitektur.
+12. **Befunde.** Statische Originalcodebelege unten, kein behaupteter Clusterlauf. Historische TTL-/Ownership-Proofreferenzen im Fixture-Parityledger decken die neu gefundenen Gegenfälle nicht ab.
 
-## Verantwortung, Grenzen und Einstieg
+## PCR-BUSTER-NS-001 — Kubernetes-Token wird nicht erneut gelesen
 
-- `cmd/buster-namespace-controller`
+**Hoch; nachgewiesener Implementierungsdefekt unter rotierendem/ablaufendem ServiceAccount-Token.** `main.go:125–128,153–161,1647` lädt Token einmal in `controller.token`; `kube` setzt anschließend immer denselben Bearer. Chart `:10,167` mountet ServiceAccount-Token. Wird der gemountete Token ersetzt und der alte serverseitig ungültig, bleibt dieser Prozess bei 401; Polling liest keinen neuen Token. Provisioning und die einzige aktive TTLcleanupinstanz fallen dauerhaft bis zum Neustart aus. Exakter Ablaufzeitpunkt hängt am Cluster und wurde nicht live verifiziert. **Ursache beheben:** rotierendes Tokenfile pro Request oder validierte refreshende Transport-Credentials verwenden; keine unendlichen Retries mit unveränderlichen Credentials. **Regression:** Originalcontroller gegen authentisierenden Testserver, gemountetes Testfile zwischen Requests atomar ersetzen, alten Token ablehnen; zweiter Request und TTLreconciliation müssen mit neuem Token gelingen. Kein Secretmaterial in Evidenz speichern.
 
-Entrypoints: `main.go`.
+## PCR-BUSTER-NS-002 — Ownership liest ungekürzte Leaseidentität
 
-Nutzung: Pipeline-Fixture-Dienst; Installation nicht im Umfang. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+**Mittel; nachgewiesener Codewiderspruch.** `ownerLabels`/`leaseLabelValue` (`main.go:1888–1908`) kürzen Namen auf 63 Zeichen; `verifyNamespaceLabels:787–796` und `deleteOwnedNamespace:1591–1594` vergleichen gegen vollständiges `item.Metadata.Name`. Kubernetes-CR-Namen können länger sein; CRD begrenzt metadata.name hier nicht zusätzlich. Lease mit über 63 Zeichen erzeugt Namespace mit gekürztem Label, verweigert danach seine eigene Ownership und TTLlöschung. Standard-Fixture-Invoker begrenzt LeaseName auf 63, daher kein allgemeiner Ausfall dieses Standardpfads; direkter CRD-Aufrufer/andere Sender sind betroffen. Bestehender Test prüft langes Label im Egressmanifest, keinen Ownershiproundtrip. **Ursache beheben:** einheitliche kanonische Labelidentität beim Schreiben und Prüfen, UID weiter vollständig berücksichtigen, gegebenenfalls zulässige Namen am CRD begrenzen. **Regression:** echter `ownerLabels`→`verifyNamespaceLabels`-Roundtrip für 63/64/253 Zeichen und TTLcleanup mit gleichem sowie anderem UID.
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+## PCR-BUSTER-NS-003 — Eigene konfigurierte RBAC wird als Angriff bewertet
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
-
-## Tests und Dokumentation
-
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
-
-- `cmd/buster-namespace-controller/main_test.go`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts`
-- `tests/verification/contracts/check-pipeline-e2e-cutover.mts`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts`
-- `tests/verification/contracts/check-pipeline-security-implementation.mts`
-- `tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts`
-- `tests/verification/e2e/CHANGELOG.md`
-
-Dokumentationsstatus: fehlend (Zuordnung offen).
-
-- Noch keine direkte Zuordnung.
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `charts/kubeclaw/files/config/lint-policy.json:58`
-- `charts/kubeclaw/files/config/lint-policy.json:332`
-- `charts/kubeclaw/files/config/lint-policy.json:588`
-- `charts/kubeclaw/files/config/lint-policy.json:613`
-- `charts/kubeclaw/files/config/lint-policy.json:638`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:28`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:30`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:31`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:48`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:10`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:18`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:20`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:23`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:33`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:39`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:44`
-- `docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json:45`
-- `package.json:129`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts:76`
-- `tests/verification/contracts/check-pipeline-e2e-cutover.mts:10`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts:23`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-parity.mts:37`
-- `tests/verification/contracts/check-pipeline-security-implementation.mts:48`
-- `tests/verification/contracts/check-pipeline-security-implementation.mts:51`
-- `tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts:22`
-- `tests/verification/e2e/CHANGELOG.md:49`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+**Hoch; nachgewiesener Code-/Chartwiderspruch, Clusterlauf offen.** `inspectRuntimeSecurityState` (`main.go:521–531`) erlaubt nur `buster-controller-secrets`, `buster-namespace-deployer`, `buster-namespace-tester`. Chart `buster-namespace-controller.yaml:187–196` setzt alle drei Namen auf `<fullname>-…`; `ensureControllerSecretAccess` und `ensureNamespaceAccess` erstellen genau damit RoleBindings. Jeder andere fullname als `buster` erzeugt somit high-Findings über eigene autorisierte Bindings. Zusätzlich fehlen die absichtlich erzeugten `buster-preview-credentials-reader/writer` Roles/Bindings. Securityprovider empfängt diese als echte Findings und kann einen ansonsten sicheren Lauf durchfallen lassen. **Ursache beheben:** Inspektion erhält tatsächliche vom Controller erzeugte RBACverträge einschließlich Credentialmodus; nicht nur Namen freistellen, auch Rolle/Subjects/Regeln/Eigentum prüfen. **Regression:** Ressourcen aus echten Provisioningfunktionen mit alternativem Chartfullname und beiden Credentialmodi inventarisieren: keine Selbstbefunde, veränderte Subjects/RoleRefs bleiben auffällig. Bestehender sicherer Test verwendet leere RBAC-Listen und übersieht diese Gegenstelle.

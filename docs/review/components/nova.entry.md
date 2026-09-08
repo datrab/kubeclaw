@@ -1,142 +1,136 @@
 # nova.entry
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und tatsächliche Verwendung
 
-## Verantwortung, Grenzen und Einstieg
+`skills/nova/pipeline.ts:1–14` ist der kanonische, importgeschützte Launcher und
+reexportiert `core/src/index.ts`. `package.json` führt ihn als `pipeline` aus.
+Direkter Start importiert `project/cli.ts`; ohne `--project` delegiert diese an
+`@kubeclaw/nova-core/cli`. Der Product-Compiler `project/compiler.ts` erzeugt
+Stagegraphen, nicht eine zweite Lifecycleengine. Der Index enthält Exporte und
+den eingefrorenen leeren Kernel, keine implizite Stageaktivierung. Registry,
+Execution, Test-Gates und Scaffold bleiben eigene Reviewgrenzen.
 
-- `skills/nova/pipeline.ts`
-- `skills/nova/core/cli.ts`
-- `skills/nova/core/src`
-- `skills/nova/project`
+## 2. Eingaben, Ausgaben und Gegenstellen
 
-Entrypoints: `pipeline.ts → core / project CLI`.
+Die Core-CLI lädt Plattform und `pipeline-definition.v2`, routet Run/Recover/
+Resume/Audit und liefert JSON plus Exitcode (nur succeeded = 0). Die Project-CLI
+lehnt unbekannte/doppelte Argumente und Compile/Recover/Signal-Kombinationen ab.
+Die ältere Core-CLI überschreibt doppelte Flags und ignoriert unbekannte Flags;
+die dokumentierten Run/Recover-/Audit-Konflikte werden dennoch abgewiesen.
+Compiler untersucht: geschlossene Objekte, absolute normalisierte Pfade,
+40-stelliger Gitbaseline, 1–128 Module, Abhängigkeiten/Zyklen, überlappende
+Ownership-Präfixe, Requirements, Agent-/Lintkonfiguration und digestgebundene
+Resolved Plans mit passendem Run/Project/Module und blockierendem Test.
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Ausgabe ist ein deterministischer DAG mit genau Implementation → Lint → Review
+→ Quality je Modul, `maxConcurrency=1`, serialisierter Veröffentlichung und
+Remediation zurück zur jeweiligen Implementation. Gegenstellen wurden an
+`implementation-agent`, `lint`, `review`, `buster-quality-gate` und deren
+Inputschemas abgeglichen: dynamische `sourceStageId` statt vorgetäuschtem
+Ergebnis; Requirements gehen in Revieweingabe und digestgebundene Evidenz.
+`validatePipelineRuntimeV2` (`core/execution/engine.ts:18–22`) überprüft
+installierte Registrierungen/Grants/Inputs vor Graphausgabe. Compile allein
+validiert weder physische Repoexistenz noch tatsächliche Providerleistung.
 
-Paketabhängigkeiten: `@kubeclaw/nova-core`, `@kubeclaw/plugin-sdk`, `@kubeclaw/plugin-foundation`, `@kubeclaw/pipeline-test-gate-contract`
+## 3. Zustand und Nebenwirkungen
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+`--compile` schreibt genau eine neue Datei mit `wx`; vorhandene Dateien werden
+nicht überschrieben. Kein Runverzeichnis wird dabei erstellt (im Test belegt).
+Normale Projectausführung prüft Git HEAD und sauberen Status vor Corestart.
+Runzustand/Locks/Artefakte verwaltet die Coreengine; `runRoot` validiert Run-IDs
+und bildet sie auf SHA-256-Verzeichnisse ab. Der Compiler bleibt ohne I/O und
+liefert einen geklonten Graphen. Compileausgabe ist nicht fsync-/rename-gesichert;
+bei Prozessabbruch kann eine unvollständige neue Datei zurückbleiben.
 
-## Tests und Dokumentation
+## 4. Fehlerbehandlung
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+Project-CLI gibt Fehler als JSON mit Exitcode 1 aus; `wx`, Schema- und Gitfehler
+laufen durch denselben Pfad. Coreusage verwendet Exitcode 2, Runtimefehler 1.
+Registry-/Graphfehler verhindern Stageausführung. Ein gültiger Graph beweist
+keine Feasibility oder Testabdeckung. Coredefekte werden nicht hier dupliziert:
+[Execution](nova.execution.md), [Lifecycle](nova.lifecycle.md),
+[Test-Gates](nova.test-gates.md).
 
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts`
-- `skills/common/plugins/notification-observer/tests/live-function.test.ts`
-- `skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts`
-- `skills/common/plugins/operator-messaging/tests/live-function.test.ts`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts`
-- `skills/nova/plugins/blueprint-sync/tests/live-function.test.ts`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/case-study/tests/live-function.test.ts`
-- `skills/nova/plugins/delivery-lint/tests/live-function.test.ts`
-- `skills/nova/plugins/human-approval/tests/live-function.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- `skills/nova/plugins/lint/tests/live-function.test.ts`
-- `skills/nova/plugins/pipeline-review/tests/live-function.test.ts`
-- `skills/nova/plugins/preflight-contract/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/live-function.test.ts`
-- `skills/nova/plugins/review/tests/live-function.test.ts`
-- `tests/skills/nova/project_setup/progress-scaffold.test.mjs`
-- `tests/verification/contracts/check-nova-journal-scale.mts`
-- `tests/verification/contracts/check-pipeline-a11y-cutover.mts`
-- `tests/verification/contracts/check-pipeline-api-cutover.mts`
-- `tests/verification/contracts/check-pipeline-container-build-cutover.mts`
-- `tests/verification/contracts/check-pipeline-e2e-cutover.mts`
-- `tests/verification/contracts/check-pipeline-http-cutover.mts`
-- `tests/verification/contracts/check-pipeline-junit-report-adapter.mts`
-- `tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts`
-- `tests/verification/contracts/check-pipeline-lighthouse-cutover.mts`
-- `tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts`
-- `tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts`
-- `tests/verification/contracts/check-pipeline-phase10-cutover.mts`
-- `tests/verification/contracts/check-pipeline-phase9-parity.mts`
-- `tests/verification/contracts/check-pipeline-report-adapter-registry.mts`
-- `tests/verification/contracts/check-pipeline-report-adapter-runtime.mts`
-- `tests/verification/contracts/check-pipeline-runtime-role-surfaces.mts`
-- `tests/verification/contracts/check-pipeline-security-cutover.mts`
-- `tests/verification/contracts/check-pipeline-size-budget-cutover.mts`
-- `tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts`
-- `tests/verification/contracts/check-pipeline-test-plan-runner.mts`
-- `tests/verification/contracts/check-pipeline-test-provider-registry.mts`
-- `tests/verification/contracts/check-pipeline-test-suite-resolver.mts`
-- `tests/verification/contracts/check-pipeline-visual-cutover.mts`
-- `tests/verification/contracts/check-plugin-system-v2-boundaries.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-e2e.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-import-safety.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-installation.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-live-crashes.mts`
-- `tests/verification/contracts/check-plugin-system-v2-phase11.mts`
-- `tests/verification/contracts/check-plugin-system-v2-phase12.mts`
-- `tests/verification/contracts/check-plugin-system-v2-phase6.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-phase7.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-platform-config.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-registry.mjs`
-- `tests/verification/deployment/check-deployment-truth.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
-- `tests/verification/e2e/scenario-proof.mts`
-- `tests/verification/reliability/external-effect-recovery.test.mts`
+## 5. Timeout, Abbruch, Wiederholung und Parallelität
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+Compiler begrenzt Module und setzt pro Stage 30 Minuten, 2 Attempts und
+2 Remediationzyklen; Semantik erzwingt der Core. Die Launcher verbinden
+SIGTERM/SIGINT nicht mit dem optionalen `runPipelineV2`-AbortSignal. Ein beendeter
+CLIprozess ist daher kein belegter sauberer Abbruch externer Aktionen. Git-
+Preflight verwendet synchrone Prozesse ohne explizites Timeout. Externe Änderungen
+zwischen HEAD-Prüfung und Ausführung bleiben möglich; die dokumentierte einzelne
+Projectlane koordiniert keine fremden Prozesse. Runidentität/Executionlock müssen
+Duplikate verhindern; der Launcher besitzt keinen zweiten Lock.
 
-- `docs/DOCUMENTATION_TOPIC_MAP.md`
-- `docs/architecture/README.md`
-- `docs/architecture/nova-project-runtime.md`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md`
-- `docs/architecture/pipeline-test-gate-manifest-lint-parity-report.md`
-- `docs/architecture/plugin-system-phase12-changelog.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/developers/contributing.md`
-- `docs/operators/running-the-pipeline.md`
-- `docs/pipeline/architecture.md`
-- `docs/site/use/README.md`
-- `docs/site/use/quickstart.md`
-- `docs/site/use/recovery.md`
-- `skills/nova/project/README.md`
+## 6. Neustart und teilweise abgeschlossene Aktionen
 
-## Aufrufer- und Abhängigkeitsbelege
+Recover verlangt denselben Project-Run; Resume lädt das Signal und delegiert
+Corevalidierung. Die Repository-Clean-Prüfung wird bei beiden bewusst nicht
+wiederholt, da Arbeit bereits veröffentlicht sein kann. Unveränderte Graph-/
+Registrysnapshots prüft Core. Für mehrstufige Result-/Wait-/Artefakt-Commitfenster
+gelten PCR-EXEC-001/002; kein eigener Wiederherstellungsmechanismus im Launcher.
+Unvollständige Compiledateien müssen nach einem Crash explizit geprüft/entfernt
+werden, bevor `wx` erneut schreiben kann.
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+## 7. Vertrauen und Autorisierung
 
-- `charts/kubeclaw/files/config/eslint.config.mjs:29`
-- `charts/kubeclaw/files/config/eslint.config.mjs:31`
-- `charts/kubeclaw/files/config/eslint.config.mjs:48`
-- `charts/kubeclaw/files/config/knip.json:40`
-- `charts/kubeclaw/files/config/knip.json:41`
-- `charts/kubeclaw/files/config/knip.json:46`
-- `charts/kubeclaw/files/config/knip.json:47`
-- `docs/DOCUMENTATION_TOPIC_MAP.md:11`
-- `docs/architecture/README.md:17`
-- `docs/architecture/nova-project-runtime.md:3`
-- `docs/architecture/nova-project-runtime.md:5`
-- `docs/architecture/pipeline-test-gate-a11y-cutover-inventory.json:6`
-- `docs/architecture/pipeline-test-gate-a11y-parity-ledger.json:27`
-- `docs/architecture/pipeline-test-gate-a11y-parity-ledger.json:28`
-- `docs/architecture/pipeline-test-gate-api-cutover-inventory.json:12`
-- `docs/architecture/pipeline-test-gate-container-build-parity-ledger.json:24`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:25`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:27`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:31`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:40`
-- `docs/architecture/pipeline-test-gate-decision-ledger.json:117`
-- `docs/architecture/pipeline-test-gate-http-cutover-inventory.json:28`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:423`
-- `docs/architecture/pipeline-test-gate-implementation-plan.md:426`
-- `docs/architecture/pipeline-test-gate-manifest-lint-cutover-inventory.json:18`
-- `docs/architecture/pipeline-test-gate-manifest-lint-cutover-inventory.json:19`
-- `docs/architecture/pipeline-test-gate-manifest-lint-cutover-inventory.json:27`
-- `docs/architecture/pipeline-test-gate-manifest-lint-parity-ledger.json:18`
-- `docs/architecture/pipeline-test-gate-manifest-lint-parity-report.md:27`
-- `docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json:13`
+Lokaler CLI-/Dateizugriff ist die administrative Vertrauensgrenze. JSON-Signale
+sind keine kryptographisch authentifizierten Operatoren allein durch ihren
+Inhalt; Core prüft Wait-/Issuerbindung, die CLI setzt autorisierten lokalen
+Dateizugriff voraus. Plattformgrants begrenzen tatsächliche Adapterrechte.
+Ownershipnamen im Compiler sind validiert, ersetzen aber keine Host-/Git-
+Sandbox. Workspace-Ausschluss ist lexikalisch; reale Pfad-/Symlinkgrenzen sind
+zusätzlich von Git-/Repositoryadaptern zu erzwingen.
 
-## Offene Prüfpfade
+## 8. Ressourcen und Aufräumen
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+128 Module begrenzen Graphbreite; Dateieingaben und Requirement-/Tasktexte haben
+hier kein eigenes Bytebudget vor JSON.parse. Lokale Eingaben sind vertrauenswürdig
+vorausgesetzt. Compiler benötigt nur Speicher; CLI erzeugt keine eigenen
+Worktrees. Retention/Artefaktquoten und externer Prozesscleanup gehören den
+zuständigen Adaptern. Voraussetzungen: passendes Node mit TS-Unterstützung,
+Workspacepakete, Git, installierte Plugins, persistente Corestorage und für
+ausgeführte Stages die jeweils freigegebenen Dienste.
+
+## 9. Architektur und Vereinfachung
+
+Productcompiler sauber vom generischen Core getrennt; einfache lineare
+Publikationslane vermeidet modulfremde HEAD-Drift innerhalb dieses Graphen.
+CLIargumentparser könnten zu einer geschlossenen konsistenten Schnittstelle
+vereinheitlicht werden. Kein Ersatz des alten Scaffolds behauptet. Ein zentrales
+Launcher-Abbruchprotokoll wäre einfacher als individuelle Signalhandler in
+Plugins; tatsächliche externe Effects-Recovery muss erhalten bleiben.
+
+## 10. Untersuchte Tests und ausgeführte Prüfung
+
+Vollständig gelesen und ausgeführt:
+`node tests/verification/contracts/check-project-compiler.mts` → **bestanden**,
+`{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}`.
+Originalcompiler, echte temporäre Gitcommits, Providerregistry, Planresolver,
+Stageinput-/Grantvalidierung und Start der Source-CLI; deterministische Sortierung,
+Zyklen, fremde Plans, Ownership, verbotenes Caller-Ergebnis und kein Runzustand bei
+Compile geprüft. **Keine Implementierungs-/Review-/Teststage ausgeführt.**
+Archivoption des Tests nicht ausgeführt; kein neuer Bundle- oder Agent-E2E-Nachweis.
+Die sehr breite alte Inventartestliste enthält transitive Coreimporte und zählt
+nicht als 60 eigene Entrypointprüfungen. Signal-/Crash-/External-Effecttests werden
+in den zuständigen Core-/Pluginreviews bewertet.
+
+## 11. Dokumentationsabgleich
+
+`skills/nova/project/README.md` und `docs/architecture/nova-project-runtime.md`
+beschreiben Routing, Compiler, Lane, Einschränkungen und Compile-Testgrenze korrekt.
+Dokumentationsstatus: **vorhanden, betrieblich unvollständig** für CLI-Signalabbruch,
+Compile-Crashreste, fehlende lokale Inputlimits und die Unterschiede der beiden
+Argumentparser. Keine pauschale Übernahme alter E2E-/Scaffold-Annahmen.
+
+## 12. Befunde und verbleibende Nachweise
+
+Kein zusätzlicher hoch-/mittelgradiger Defekt an dieser Grenze nachgewiesen.
+Die aufgeführten Abbruch-/Ressourcen-/TOCTOU-Grenzen sind konkrete Designgrenzen,
+keine behaupteten erfolgreichen Angriffe. Nachweisbedarf: echter CLI-SIGTERM mit
+laufendem Adapter/Kindprozess; Wiederaufnahme mit unveränderten Snapshots nach
+abgebrochener externer Aktion; extrahierter Launcher mit dem Produktionsbundle.
+Nicht erforderlich für den fachlichen Reviewabschluss, aber offen für spätere
+Betriebsabnahme. Ursachenbehebung bestehender Crashdefekte bleibt beim Core.

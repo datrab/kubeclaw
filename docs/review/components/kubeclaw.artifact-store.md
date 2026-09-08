@@ -1,106 +1,90 @@
 # kubeclaw.artifact-store
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–2. Verantwortung, Registrierung und Verträge
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig gelesen: `skills/common/plugins/artifact-store/src/adapter.ts`, Manifest,
+Config-Schema, Paketdatei, README und beide eigenen Tests. Manifest registriert
+`artifact-store` für `artifacts.read/write`; Rollen nova/buster/prism liefern das Paket.
+Core `execution/adapter-startup.ts` validiert Config und startet ausgewählte Provider;
+`execution/authorization.ts` bindet den Namespace an den Grant. Keine eigene
+Benutzer-/Run-Autorisierung im Store. Root und lokales Dateisystem sind vertrauenswürdig.
 
-- `skills/common/plugins/artifact-store`
+Sender etwa SDK `src/source-revision.ts:readImplementation`: exact get mit ID,
+Namespace und Digest; Empfänger sucht dieselben Metadaten und prüft Blob-SHA256.
+Der SDK-Empfänger vergleicht zusätzlich Digest, Größe und erneut serialisierten Inhalt.
+Put verlangt JSON-Medientyp und Namespace bis 246 Zeichen (plus `artifacts/` = 256).
+Output `{artifact}` enthält ID, Namespace, SHA256, Bytegröße und Core-Attempt.
+`get_latest_json` filtert zusätzlich producer.runId, nicht Stage/Attempt; fachliche
+Auswahl bleibt beim Aufrufer. Exact get darf bewusst innerhalb erlaubter Namespaces
+runübergreifend lesen. Das Artefakt ist Inhaltsnachweis, kein Herkunftssignaturnachweis.
 
-Entrypoints: `src/adapter.ts#activate`.
+## 3–4. Persistenz, Commit und Fehlerpfade
 
-Nutzung: Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+`invokeArtifact` schreibt zuerst immutable Metadaten mit request.idempotencyKey,
+dann Blob. `FileDurableRecordStore.append` bildet unabhängigen JSON-Snapshot,
+prüft identischen Digest bei Wiederholung und liefert Clone. Gesamter Recordstore
+liegt in `records/store.json`; Blob unter `blobs/sha256/<prefix>/<hash>`.
+Backend `durable-delivery.ts` schreibt exklusive 0600-Tempdatei, fsync, rename,
+Verzeichnis-fsync; neu angelegte Elternverzeichnisse werden synchronisiert.
+Blob: Tempdatei/fsync, Hardlink, Verzeichnis-fsync, Tempdatei entfernen.
+Erfolg nach beiden Schreibbestätigungen. Physisches ENOSPC/fsync-Versagen propagiert;
+fehlgeschlagene Metadatenaufnahme erzeugt keinen Blob. Metadaten nach erfolgreicher
+Aufnahme, aber fehlendem Blob bleiben als Intent bestehen.
 
-Registrierungen aus Manifest:
+`findArtifact` geht rückwärts und überspringt nur ARTIFACT_NOT_FOUND, niemals
+Integritätsfehler. Älterer vollständiger Inhalt bleibt bei neuestem offenen Intent
+sichtbar. Fehler unterscheiden missing/integrity/size/operation; Backend-Konflikte
+werden nicht in vermeintlichen Erfolg umgewandelt.
 
-- `adapters:artifact-store` → `src/adapter.ts#activate`; benötigte Capabilities: 
+## 5–7. Parallelität, Recovery, Abbruch und Vertrauensgrenze
 
-Paketabhängigkeiten: `@kubeclaw/plugin-foundation`, `@kubeclaw/plugin-sdk`
+Metadatenqueue plus echter Kernel-flock, Blobbudget eigener flock; kein PID-basiertes
+Stale-Reclaim. Kernel gibt Lock nach Schließen des flock-Prozesses frei; Host-PID-
+Namespaces sind keine eigene Reclamation-Heuristik. Voraussetzungen `/usr/bin/flock`,
+`/bin/sh`, `/bin/cat`, Linux-Dateisystem mit Hardlinks/rename/fsync. Flock wartet 5 s;
+Queue selbst hat keine Deadline/Abortübergabe. Fence/Signal werden nur am Adapter-
+Eintritt geprüft. Abbruch danach beweist nicht das Ausbleiben des Commits; siehe
+analoge Grenze in [state-store](kubeclaw.state-store.md).
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+Crashpräfixe: vor Metadaten kein Intent; danach fehlender Blob = unsichtbar und durch
+gleiche Wiederholung vervollständigbar; danach Blob = lesbar, auch vor äußerem
+Effect-Receipt. Adapter implementiert kein receipt(), daher Backend-Idempotenz
+nicht mit automatischem Core-Recovery gleichsetzen. Core-Präfixverluste bei Stage-
+Artefaktprojektion gehören [nova.execution](nova.execution.md), PCR-EXEC-001/002.
+Keine echten SIGKILL-/Powerloss-Tests dieses Adapters ausgeführt.
 
-## Tests und Dokumentation
+## 8–9. Ressourcen, Retention und Architektur
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+Default 16 MiB Artefakt, 100000 Records, 256 MiB Metadaten und separat 256 MiB
+Blobbudget; kein gemeinsames 256-MiB-Gesamtmaximum. Metadatenaufnahme 64 KiB.
+Alle Reads validieren den vollständigen Recordstore; wiederholte Puts serialisieren
+und hashen vor Größencheck. SDK-canonicalJson akzeptiert problematische Nicht-JSON-
+Werte und hat kein Tiefen-/Knotenlimit: [PCR-SDK-001](lib.sdk.md), keine neue ID.
+Backend nutzt strengeren Observability-Serializer für die Metadaten, nicht für den
+bereits erzeugten Blob. Keine sichere automatische Retention/GC; offene Intents
+verbrauchen Platz, Blob-Tempdateien nach hartem Crash können Budget verbrauchen.
+Gemeinsame Retentionsgrenze siehe PCR-OBS-002. Künftiger Entwurf sollte das
+Intent/Blob-Protokoll beibehalten und sichere GC mit Idempotenzfenster vereinbaren.
 
-- `scripts/tests/repository-review-operations.test.mjs`
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts`
-- `skills/common/plugins/artifact-store/tests/live-function.test.ts`
-- `skills/common/plugins/artifact-store/tests/package-boundary.test.mjs`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts`
-- `skills/nova/plugins/architecture-validator/tests/live-function.test.ts`
-- `skills/nova/plugins/blueprint-sync/tests/live-function.test.ts`
-- `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- `skills/nova/plugins/case-study/tests/live-function.test.ts`
-- `skills/nova/plugins/delivery-lint/tests/live-function.test.ts`
-- `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- `skills/nova/plugins/lint/tests/live-function.test.ts`
-- `skills/nova/plugins/pipeline-review/tests/live-function.test.ts`
-- `skills/nova/plugins/preflight-contract/tests/live-function.test.ts`
-- `skills/nova/plugins/project-summary/tests/live-function.test.ts`
-- `skills/nova/plugins/review/tests/live-function.test.ts`
-- `tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts`
-- `tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-capability-security.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-contracts.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-e2e.mjs`
-- `tests/verification/contracts/check-plugin-system-v2-engine.mjs`
-- `tests/verification/contracts/check-project-compiler.mts`
-- `tests/verification/contracts/quality-provider-runtime.mts`
-- `tests/verification/e2e/durable-evidence.test.mjs`
-- `tests/verification/e2e/run-v2-production-pipeline.mts`
-- `tests/verification/reliability/repair-evidence.test.mts`
-- `tests/verification/reliability/review-candidate.test.mts`
+## 10. Untersuchte und ausgeführte Tests
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+`node tests/package-boundary.test.mjs && node tests/live-function.test.ts` im
+Paketverzeichnis bestanden (Node 24.19.0). Originalbefehle aus package.json;
+keine neuen Mocks. Live-Test: echter Store/fsync/Blobs, idempotentes JSON,
+exact get, künstlich eingespielter Metadatenpräfix ohne Blob, runbezogenes latest,
+Recordlimit ohne orphan blob, Namespacegrenze, Manipulation/Integritätsfehler und
+bereits abgebrochenes Signal. Fence ist leeres Testobjekt, kein echter Core-Lease.
+Präfix ist modelliert, kein Prozessabbruch. Boundarytest ist Textprüfung.
+Workspace-npm-Sammelaufruf wurde durch die Ausführungsumgebung unterbrochen;
+die expliziten Original-Node-Befehle liefen erfolgreich. Kein Cluster-/Powerlossnachweis.
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/implementation/prism/phase-0-audit.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md`
-- `docs/site/reference/capabilities.md`
-- `skills/common/plugins/artifact-store/README.md`
+## 11–12. Dokumentation und Ergebnis
 
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `charts/kubeclaw/files/config/knip.json:294`
-- `docs/architecture/pipeline-observability-phase-5-7-a-inventory.json:141`
-- `docs/architecture/plugin-system-current-inventory.md:37`
-- `docs/architecture/plugin-system-implementation-plan.md:629`
-- `docs/architecture/plugin-system-phase5-capabilities.json:6`
-- `docs/architecture/plugin-system-phase5-capabilities.json:7`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:283`
-- `docs/implementation/prism/phase-0-audit.md:115`
-- `docs/site/extend/plugin-catalogue/README.md:40`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:56`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:63`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:64`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:65`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:66`
-- `docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md:67`
-- `docs/site/reference/capabilities.md:17`
-- `docs/site/reference/capabilities.md:18`
-- `packaging/runtime/roles/buster.json:25`
-- `packaging/runtime/roles/nova.json:26`
-- `packaging/runtime/roles/prism.json:17`
-- `scripts/repository-review-status.mjs:90`
-- `scripts/tests/repository-review-operations.test.mjs:34`
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts:31`
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts:47`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:228`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:229`
-- `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:269`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+README inhaltlich zutreffend zum Intent-before-Blob-Verfahren; Katalog bestätigt
+Manifest/Tests, beschreibt keine Laufzeitgarantie. Unvollständig bei getrennten
+Quoten, langfristiger Retention, Lockwerkzeugen und äußerem Receiptverlust.
+Kein zusätzlicher bestätigter eigener Defekt; bekannte SDK-/Core-/Retentionbefunde
+verlinkt. Nächste Verifikation: echte Prozessabbrüche an beiden Commitgrenzen und
+Core-Reconciliation bei verlorener Antwort; nicht als bestanden ausgewiesen.

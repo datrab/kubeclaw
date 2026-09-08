@@ -1,42 +1,27 @@
-# prism.engine
+# prism.engine — deterministische Operationen und Workerbindung
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1–3. Umfang, Aufrufer und Zustand
 
-## Verantwortung, Grenzen und Einstieg
+Vollständig engine/index.ts, worker-binding.ts, worker-envelope.ts und tests/engine.test.mts gelesen. HTTP-Worker instanziiert langlebige Engine mit DeterministicDesignProvider. Control erzeugt Envelope, Workerbindung prüft contractId, erlaubte Operation, installiertes Requestschema/-digest und operation-spezifische Ergebnisse. Worker verbietet generate; Control leitet Generation an OpenClaw-Bridge. OpenAICompatibleDesignProvider hat im Repository nur Testkonstruktoraufrufe, kein gefundener produktiver Aufrufer. Er ist somit ein paralleler ungenutzter Modellpfad neben dem dokumentierten model-free Worker, kein hier ausgeführter Modellzugriff.
 
-- `skills/prism/engine`
+Engine dispatcht generate/render/evaluate/ingest/publish. generate validiert Dokument und wendet Provideroperationen nacheinander mit neuer baseRevision an; Domainbefunde gelten mit. render löst View/State/Viewport, vertrauenswürdige HTML-Renderer und Daten-Assets auf. capture startet Chromium, sammelt PNG/ARIA und heuristische Accessibilitybefunde. evaluate liefert statische Qualitybewertung; ingest liefert Vektor-/Modell-/Quelldigest, der aktive Provider heißt ausdrücklich deterministic-test-only. publish erzeugt nur Minimalmanifest/Digests nach approved=true; echtes Baselinearchiv/Approval liegt im Control, nicht in dieser Hilfsoperation.
 
-Entrypoints: `engine/index.ts bzw. control/session.ts`.
+## 4–6. Fehler, Parallelität, Restart
 
-Nutzung: Aufrufpfade noch zu prüfen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+Idempotenzfingerprint ist natives JSON.stringify von operation/input; gleicher Key teilt Promise, anderer Fingerprint wirft, Fehler entfernen Entry. Erfolgreicher Return und Cache referenzieren dasselbe mutable Objekt; keine Clone-/Freeze-Grenze. Direkte In-process-Nicht-JSON-Werte können im Fingerprint kollabieren oder Serialisierung werfen; HTTP-Binding verlangt JSON und Schema, deshalb kein zusätzlicher nachgewiesener Wire-Digestbypass. Engineexecute besitzt selbst keinen AbortSignal; Browserfinally schließt Browser bei normalem Exceptionpfad, Workerterminate erreicht ihn nicht. Prozesskill/Reaping und absolute Deadline gehören dem Workerbefund. Envelope: 300s operation, 10s cleanup, Claim 600s; vollständiger Log-/Uploadabschluss hat keine eigene durchgehende begrenzte Umsetzung. Controlfetch kann unendlich länger halten. Neustart verliert Map; Controlpersistenz schützt nur gespeichertes Workerresult. Extern ausgeführte, aber nicht bestätigte Arbeit wird mit neuer executionId wiederholt.
 
-Paketabhängigkeiten: Noch keine direkte Zuordnung.
+## 7–9. Vertrauen, Ressourcen, Architektur
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+HTML verwendet CSP default-src none, Datenbilder und geprüfte Themefarben/-font; Browseraufrufe bekommen keinen externen Ziel-URL. OpenAI-Provider prüft HTTPS oder .svc-HTTP, hat 60s Timeout, aber Antwortgröße ohne Streaminglimit; als ungenutzter Pfad keine aktuelle Worker-Netzfreigabe daraus ableiten. Screenshot/ARIA entstehen im echten Browser, Accessibilityprüfung ist schmale Heuristik (Placeholder als Name, ausgewählte Elemente), kein vollständiger WCAG-Nachweis. Renderer-/Contract-Ressourcenlücken bleiben eigene Eigentümer. Enginecache speichert HTML/PNG/ARIA unbeschränkt (001). Browser wird je capture gestartet; keine globale Kapazität. Dauerhafte Vereinfachung: alleinigen produktiven Generationsweg klar exportieren, überschüssigen Provider-/Minimalpublishpfad als Testhilfe isolieren und Result-Ownership dokumentieren.
 
-## Tests und Dokumentation
+## 10–11. Tests und Dokumentationsabgleich
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+Originalbefehl `node --test skills/prism/tests/engine.test.mts skills/prism/tests/storage.test.mts skills/prism/tests/control.test.mts`: 13/13, davon sieben Enginefälle bestanden. Deterministischer Originalprovider und Fixture; concurrent test hat kontrollierten Provider mit Promisebarriere. Schema-/Envelopebindung, conflicting retry, lokales HTML und fehlende Approval geprüft; kein Browsercapture, echter Modellservice, Neustart oder HTTP-Workerabschluss. Implementationplan Phase5 beschreibt profilierte Engine/Capability/error/progress und echtes Publishing umfangreicher als Hilfsengine. Zuständigkeit echtes Publishing liegt nach Code im Control; Dokumentationsstatus vorhanden, unvollständig. Bestehende contract.prism-/prism.domain-Befunde nicht dupliziert.
 
-- Noch keine direkte Zuordnung.
+## 12. Befund
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+### PCR-PRISM-ENGINE-001 — Erfolgreiche Renderresultate bleiben unbegrenzt im Cache
 
-- `docs/implementation/prism-implementation-plan.md`
-
-## Aufrufer- und Abhängigkeitsbelege
-
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
-
-- `docs/implementation/prism-implementation-plan.md:201`
-- `docs/implementation/prism/completion-status.json:10`
-- `docs/implementation/prism/completion-status.json:11`
-- `docs/implementation/prism/integration-traceability.json:18`
-- `docs/implementation/prism/integration-traceability.json:19`
-
-## Offene Prüfpfade
-
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+**Mittel, nachgewiesener Codepfad:** index.ts:49–76 legt jede erfolgreiche executionId→Promise dauerhaft ab; Löschung nur im catch. Worker ruft mit neuer executionId auf (worker.ts:79–84), und Engine speichert Captureoutput inklusive screenshotBase64/ARIA (:194–286), bevor Worker es in Evidenz umwandelt. Wiederholt erfolgreiche Engineoperationen wachsen deshalb auch dann dauerhaft weiter, wenn der nachgeschaltete neutrale Worker wegen fehlendem Logstore errored liefert. Folge: langlebiger Service behält große Bilder und erreicht Speichergrenze/OOM; keine Lastmessung behauptet. Ursache ist Idempotenzcache ohne TTL/Volumen/Ownership statt an Claim-/Resultlebensdauer gebundener Speicher. Reparatur: begrenzter In-flight-Cache, erfolgreiche Evidence externalisieren und dauerhaften autoritativen Replaystore klar zuordnen; aktive Retries nicht durch willkürliches Eviction duplizieren. Regression: viele echte Captureoperationen in einem langlebigen Worker, Retained-Heap/Cachebudget nach Abschluss messen, paralleles Same-key weiterhin genau einmal, Restart über Controlpersistenz prüfen.

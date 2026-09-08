@@ -1,80 +1,107 @@
 # kubeclaw.agent-observability
 
-Review-Status: ungeprüft. Geprüfter Commit: —.
-Inventar-Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Review-Status: abgeschlossen. Geprüfter Commit: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`.
+Schema: Revision 5. Code-Trace und lokale Tests; kein Produktions-/OpenClaw-E2E-Nachweis.
 
-Dies sind Erfassungsbelege, kein Einzelreview.
+## 1. Verantwortung und tatsächliche Nutzung
 
-## Verantwortung, Grenzen und Einstieg
+`skills/common/plugins/agent-observability/src/observers.ts` enthält ausschließlich
+`ingest`, `recordEvidence` und die Projektion. `plugin.json` registriert ingester
+für zwölf namespaced Agentereignisse und evidence für fünf Abschluss-/Delivery-
+Ereignisse. Die Rollenpakete nova/buster/prism liefern es aus. Auslieferung ist
+keine Aktivierung: konkrete Auswahl und beide Sinkaufrufe sind im lokalen
+`tests/live-function.test.ts` über Registry/Grants/ObserverRuntime nachgewiesen.
+Kein produktiver Plattformkonfigurationsbeleg in den untersuchten Rollen-/Chart-
+und Pluginpfaden; die reale Hostquelle bleibt die benachbarte Extension.
 
-- `skills/common/plugins/agent-observability`
+## 2. Vertrag und Gegenstellen
 
-Entrypoints: `src/observers.ts#ingest; src/observers.ts#recordEvidence`.
+Eingang `ObserverDelivery` kommt aus `skills/nova/core/telemetry/observer-delivery.ts`;
+Core vergibt deliveryId, eventId, sequence und Identität. `projectAgentEvent`
+sendet `agent-observability-event.v2` ohne deliveryAttempt, aber mit ursprünglicher
+Identität und redigiertem payload. `ingest` ruft telemetry.emit/append mit
+telemetry.event und Eventtyp auf; `telemetry-store/src/adapter.ts` persistiert.
+`recordEvidence` ruft artifacts.write/put_json mit `agent-evidence:<eventId>`
+und Namespace `kubeclaw.agent-observability-evidence` auf; artifact-store nimmt
+JSON und schreibt Digest/Metadaten. Kein direkter Leser der projektierten
+Artefakte im Plugin, kein Telemetrie-v1-Promotionsnachweis.
 
-Nutzung: Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen. Verantwortung aus Registrierungen unten; bei Core/Diensten noch konkretisieren.
+## 3. Zustand und Commit
 
-Registrierungen aus Manifest:
+Keine eigenen Dateien oder Caches. Erfolg erst nach await des Sinkeffekts;
+Core schreibt danach completed und Checkpoint. Telemetrie und Artefakt sind
+unabhängige Registrierungen, also keine gemeinsame atomare Bestätigung.
+Sinkpersistenz einschließlich fsync/Verzeichnisdauerhaftigkeit liegt bei
+Foundation/Artefaktstore, nicht beim Projektor.
 
-- `observers:ingester` → `src/observers.ts#ingest`; benötigte Capabilities: telemetry.emit
-- `observers:evidence` → `src/observers.ts#recordEvidence`; benötigte Capabilities: artifacts.write
+## 4. Fehler und Disposition
 
-Paketabhängigkeiten: `@kubeclaw/plugin-sdk`
+Sinkfehler propagieren unverändert. Das Plugin verschluckt weder Ablehnung noch
+Timeout. Manifest best_effort bedeutet nach fünf Versuchen keine erfolgreiche
+Zustellung; `observers.ts` blockiert weitere Ereignisse desselben Runs am Fehler.
+Kein Nachweis, dass hier Schedulerzustände als erfolgreiche Evidenz umgedeutet werden.
 
-Infrastrukturannahmen: offen; konkrete Speicher-, Transport-, Identitäts- und Toolvoraussetzungen im Einzelreview nachweisen.
+## 5. Timeout, Retry, Parallelität
 
-## Tests und Dokumentation
+Manifest je Registrierung 10s, fünf Versuche, 1s Backoff, per_run. Core erzeugt
+stabile Effektidentität aus deliveryId und Aufrufsequenz. Projektion hängt nicht
+von Versuchszahl oder aktueller Zeit ab. Beide Registrierungen erhalten getrennte
+Grants/Checkpoints. Ein voller Sink erschöpft Versuche; Wiederholung repariert
+keinen permanenten Schema-/Kapazitätsfehler.
 
-Tests sind zugeordnet, noch nicht als gelesen oder ausgeführt gewertet:
+## 6. Restart und ungewisser Ausgang
 
-- `skills/common/plugins/agent-observability/tests/live-function.test.ts`
-- `skills/common/plugins/agent-observability/tests/observers.unit.test.mjs`
-- `skills/common/plugins/agent-observability/tests/package-boundary.test.mjs`
-- `skills/common/plugins/agent-observability/tests/parity.test.ts`
-- `tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs`
+Zwischen Sinkcommit und Observercompleted kann erneut aufgerufen werden;
+Foundation-Dedupe bzw. Effektjournal muss ACK-Verlust abfangen. Zwischen
+completed und Checkpoint stellt `observer-recovery.ts` den abgeschlossenen
+Status wieder her. Kein eigener mehrstufiger Abschlusspräfix. Ein Neustarttest
+dieser gesamten Kette wurde hier nicht ausgeführt.
 
-Dokumentationsstatus: unvollständig (Abgleich offen).
+## 7. Vertrauen
 
-- `docs/architecture/plugin-system-current-inventory.md`
-- `docs/architecture/plugin-system-implementation-plan.md`
-- `docs/architecture/plugin-system-phase10-observer-assessment.md`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md`
-- `docs/blueprint/04-evidence-matrix.md`
-- `docs/site/extend/plugin-catalogue/README.md`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md`
-- `docs/site/reference/capabilities.md`
-- `skills/common/plugins/agent-observability/README.md`
+Nur telemetry.emit bzw. artifacts.write, keine Schedulerautorität. Redaction
+kommt aus `plugin-runtime/sdk/src/values.ts` (Tiefe 16, pro Container 1000,
+Stringlimit); Identität wird direkt übernommen und setzt kanonischen Coreeingang
+voraus. Strukturredaction garantiert keine Entfernung eingebetteter Secrets in
+beliebigem Freitext. Quelle/Runbindung ist Aufgabe des emittierenden Adapters.
 
-## Aufrufer- und Abhängigkeitsbelege
+## 8. Ressourcen
 
-Suchtreffer; Auswahl, Import und tatsächlicher Aufruf noch zu unterscheiden. Bis zu 30 Referenzstellen im `../inventory-data.json`; referenceTotal nennt die ursprüngliche Trefferzahl.
+Keine eigenen Queues oder Retention. SDK begrenzt Tiefe/Kardinalität pro Ebene,
+kein globales Knotenbudget; Getter/Object.entries werden davor ausgewertet.
+Sinkbytebudget wirkt erst nach Projektion. Ein Prozessspeicherlimit wird durch
+die deklarative Observerlease nicht hier gemessen. Historienretention siehe
+[PCR-OBS-002](foundation.observability.md).
 
-- `charts/kubeclaw/files/config/knip.json:282`
-- `docs/architecture/plugin-system-current-inventory.md:36`
-- `docs/architecture/plugin-system-implementation-plan.md:744`
-- `docs/architecture/plugin-system-phase10-observer-assessment.md:26`
-- `docs/architecture/plugin-system-phase10-observer-assessment.md:37`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:480`
-- `docs/architecture/plugin-system-phase9-extension-assessment.md:491`
-- `docs/blueprint/04-evidence-matrix.md:42`
-- `docs/site/extend/plugin-catalogue/README.md:34`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:1`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:5`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:6`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:71`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:78`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:79`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:80`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:81`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:82`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:83`
-- `docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md:84`
-- `docs/site/reference/capabilities.md:18`
-- `docs/site/reference/capabilities.md:43`
-- `packaging/runtime/roles/buster.json:24`
-- `packaging/runtime/roles/nova.json:25`
-- `packaging/runtime/roles/prism.json:17`
-- `tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs:188`
+## 9. Architektur
 
-## Offene Prüfpfade
+35 Zeilen reine Projektion sind angemessen. Beide Berechtigungen bleiben
+bewusst getrennt. Unterschiedliche agent-observability-v1 Redis- und v2
+Domainereignispfade sollten erst nach geklärtem Consumer vereinheitlicht werden;
+diese Projektion ist kein Nachweis der Migration des Rohdatenkanals.
 
-Alle zwölf Kriterien des [Leitfadens](../README.md) sind offen. Implementierungen und Tests vollständig untersuchen, Sender und Empfänger vergleichen, bestehende Befunde neu belegen und Infrastrukturannahmen konkretisieren. Kein Fehlerfreiheits- oder Laufzeitnachweis.
+## 10. Tests
+
+Alle vier Originaltests vollständig gelesen und `npm test` im Paket bestanden:
+[Protokoll](../evidence/observers-agent-observability-tests.txt). Unit/Parity
+prüfen Redaction und versuchsunabhängige Bytes für Manifestsubscriptions;
+Package-boundary prüft Quelltextmuster. Live-function nutzt echte Registry,
+Observerruntime, temporäre Filejournale und originale Telemetrie-/Artefaktadapter,
+aber synthetisches Session-End-Ereignis, MemoryResourceLockManager und kein
+OpenClaw. Zwei Zustellungen, zwei Checkpoints, zweiter Drain leer; kein Redis-,
+SIGKILL-, Speichervoll- oder Herkunftsangriffstest.
+
+## 11. Dokumentation
+
+Paket-README vorhanden und inhaltlich geprüft; Rollen-/Katalogregistrierung passt.
+Die Bezeichnung immutable evidence betrifft den sinkseitigen Speicher, nicht
+eine atomare gemeinsame Telemetrie-/Artefaktbestätigung. Unvollständig sind
+Produktivaktivierung, globales Speicherbudget und Herkunfts-/Retentionsregeln.
+
+## 12. Ergebnis und nächste Verifikation
+
+Kein zusätzlicher komponenteneigener Defekt nachgewiesen. Abhängige Risiken
+[PCR-SDK-001](lib.sdk.md), [PCR-OBS-002](foundation.observability.md) bleiben;
+Agentquellenrisiken bei [openclaw-agent-events](kubeclaw.openclaw-agent-events.md).
+Nächster tatsächlicher Systemnachweis: Hosthook → kanonischer Event → beide
+originalen Sinks, mit Prozessabbruch nach Sinkcommit und vor Observercompleted.

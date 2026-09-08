@@ -8,25 +8,25 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 
 | Kennung / Review | Nutzung | Dokumentation | Review | Geprüfter Commit |
 |---|---|---|---|---|
-| [kubeclaw.agent-observability](components/kubeclaw.agent-observability.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [kubeclaw.artifact-store](components/kubeclaw.artifact-store.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [kubeclaw.agent-observability](components/kubeclaw.agent-observability.md) | Core-Agentereignisse → Telemetrie und Artefakte; Rollenlieferung nova/buster/prism, Hostaktivierung separat | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
+| [kubeclaw.artifact-store](components/kubeclaw.artifact-store.md) | Namespacegebundene immutable JSON-Artefakte; Core/SDK → Metadatenintent und Blobstore | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [kubeclaw.command-runner](components/kubeclaw.command-runner.md) | Ausgeliefert in: buster; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.git-workspace](components/kubeclaw.git-workspace.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.network-http](components/kubeclaw.network-http.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [kubeclaw.notification-observer](components/kubeclaw.notification-observer.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [kubeclaw.notification-observer](components/kubeclaw.notification-observer.md) | Nova-Lifecycle und Previewmetadaten → Operatornachrichten; inkompatible Feldgrenzen nachgewiesen | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [kubeclaw.openclaw-agent-events](components/kubeclaw.openclaw-agent-events.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw-agent-observer](components/kubeclaw-agent-observer.md) | OpenClaw-Extension; Rollen: nova, buster, prism | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.operator-messaging](components/kubeclaw.operator-messaging.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [lib.prompt-contract](components/lib.prompt-contract.md) | Ungenutzt im verfolgten Produktionscode; nur eigene Tests | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [kubeclaw.redis-transport](components/kubeclaw.redis-transport.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.runtime-dispatch](components/kubeclaw.runtime-dispatch.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [kubeclaw.secret-resolver](components/kubeclaw.secret-resolver.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [kubeclaw.secret-resolver](components/kubeclaw.secret-resolver.md) | Core-Grants → vertraulicher Mapping-Lookup aus process.env; keine eigene Persistenz | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [kubeclaw.state-store](components/kubeclaw.state-store.md) | Nova: blueprint-sync → state.append; produktiver state.read-Aufrufer nicht gefunden | unvollständig (Abgleich offen) | abgeschlossen | `85ddfcbf` |
-| [kubeclaw.telemetry-observer](components/kubeclaw.telemetry-observer.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [kubeclaw.telemetry-observer](components/kubeclaw.telemetry-observer.md) | Nova-Lifecycle → stabile Telemetrieprojektion; File-/Redisprovider über Grants | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [kubeclaw.telemetry-store](components/kubeclaw.telemetry-store.md) | Ausgeliefert in: nova, buster, prism; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.transport-publisher](components/kubeclaw.transport-publisher.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [kubeclaw.wait-store](components/kubeclaw.wait-store.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [kubeclaw.architecture-validator](components/kubeclaw.architecture-validator.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [kubeclaw.wait-store](components/kubeclaw.wait-store.md) | Human-Approval → persistierte Waitintents; Signalautorität und Resume bleiben im Core | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
+| [kubeclaw.architecture-validator](components/kubeclaw.architecture-validator.md) | Registrierte Nova-Architekturstage → Agentdispatch und Bericht; separate Approvalgegenstelle | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [kubeclaw.blueprint-sync](components/kubeclaw.blueprint-sync.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.buster-quality-gate](components/kubeclaw.buster-quality-gate.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [kubeclaw.case-study](components/kubeclaw.case-study.md) | Ausgeliefert in: nova; Auswahl und Aufruf offen | unvollständig (Abgleich offen) | ungeprüft | — |
@@ -76,21 +76,21 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [nova.telemetry](components/nova.telemetry.md) | Aktiv: Engine/Admin → serialisierte Observerdrains; CLI → Audit aus Journal | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.observability](components/nova.observability.md) | Recoveryhook aktiv; Planwriter nur Tests; keine belegte Lifecycleübernahme | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [nova.test-gates](components/nova.test-gates.md) | Aktive Remote-Gate-Komposition via Adapter/CLI; Resolver-API direkt in Tests und Preflights aufgerufen. | unvollständig und teilweise veraltet | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
-| [nova.entry](components/nova.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [nova.entry](components/nova.entry.md) | Source-/Paketlauncher, Core-CLI und validierender Projectcompiler; Compile-/Run-/Resumeaufrufer | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [nova.scaffold](components/nova.scaffold.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [worker.core](components/worker.core.md) | Buster: Runtime + Executor; Prism: Executor direkt | veraltet / unvollständig | abgeschlossen | `85ddfcbf` |
 | [buster.engine](components/buster.engine.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [buster.entry](components/buster.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [prism.control](components/prism.control.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [buster.entry](components/buster.entry.md) | Quell-/Bundle-Exportfassade auf Busterengine; keine Dienstinitialisierung | vorhanden | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
+| [prism.control](components/prism.control.md) | Control-Service → Tailscale-Identitätsaustausch und signierte Studiosession | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [prism.corpus](components/prism.corpus.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.directions](components/prism.directions.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.domain](components/prism.domain.md) | Aktiv: Engine/Storage/Studio; transition ohne gefundenen Aufrufer | unvollständig und teilweise veraltet | abgeschlossen | `85ddfcbfc15e` |
-| [prism.engine](components/prism.engine.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
+| [prism.engine](components/prism.engine.md) | HTTP-Worker → deterministische Operationen und Workerbindung; Modellprovider nur Testaufrufer gefunden | vorhanden / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [prism.evaluation](components/prism.evaluation.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.pipeline-adapter](components/prism.pipeline-adapter.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.preferences](components/prism.preferences.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.renderer](components/prism.renderer.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [prism.storage](components/prism.storage.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
+| [prism.storage](components/prism.storage.md) | Control → PostgreSQL-Revisionen/CAS-Updates und lokale inhaltsadressierte Artefakte | veraltet / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 | [prism.studio](components/prism.studio.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.service-control](components/prism.service-control.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | teilweise geprüft | `85ddfcbf` |
 | [prism.service-worker](components/prism.service-worker.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | teilweise geprüft | `85ddfcbf` |
@@ -100,7 +100,7 @@ Der Dokumentationsstatus ist vorläufig konservativ unvollständig bzw. fehlend.
 | [prism.service-common](components/prism.service-common.md) | Aufrufpfade noch zu prüfen | fehlend (Zuordnung offen) | ungeprüft | — |
 | [prism.entry](components/prism.entry.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
 | [prism.extension](components/prism.extension.md) | Aufrufpfade noch zu prüfen | unvollständig (Abgleich offen) | ungeprüft | — |
-| [buster.namespace-controller](components/buster.namespace-controller.md) | Pipeline-Fixture-Dienst; Installation nicht im Umfang | fehlend (Zuordnung offen) | ungeprüft | — |
+| [buster.namespace-controller](components/buster.namespace-controller.md) | Lease-Reconciler für Buster-Fixtures, Credentials, Exposure und Runtime-Securitystatus | veraltet / unvollständig | abgeschlossen | `85ddfcbfc15e078780ea0434fc167e6f9a9b9488` |
 
 ## Erfassungsmethode und Vollständigkeitslücken
 
