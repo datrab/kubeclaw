@@ -34,3 +34,4 @@ Jeder Trace belegt Sender, Transport/Persistenz/Zuordnung, Empfänger, Rückweg 
 ## Erste Codeorientierung
 
 `skills/nova/pipeline.ts` delegiert an `project/cli.ts`. Der Produktcompiler `skills/nova/project/compiler.ts::compileProject` generiert pro Modul Implementation → Lint → Review → Test, seriell (`maxConcurrency: 1`). Explizite Graphen sind ein anderer Einstieg. Registrierte Plugins sind nicht automatisch Teil des Projektgraphen. Insbesondere Behauptungen des bisherigen Inventars über finale Gates und Summary werden anhand der tatsächlichen Compiler-Rückgabe erneut geprüft.
+
