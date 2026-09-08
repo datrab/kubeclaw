@@ -1,6 +1,6 @@
 # T04 — Risikoakzeptanz, veraltete Freigaben und Resume
 
-Codebasis für **alle** folgenden Codebelege: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`; Subagent `/root/trace04`. Statische Prüfung, keine Tests, CI, Deployment oder funktionale Änderungen ausgeführt. Status: Trace abgeschlossen, Orchestrator-Gegenprüfung ausstehend. Referenzreviews: Commit `a9e080ab1e1981ec5713e9b742f94280835fd347`, Komponenten `kubeclaw.human-approval`, `kubeclaw.architecture-validator`, `nova.execution` und zentrales Befundregister gelesen. Historische Testerfolge daraus sind keine in diesem Trace ausgeführten Tests.
+Codebasis für **alle** folgenden Codebelege: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`; Subagent `/root/trace04`. Statische Prüfung, keine Tests, CI, Deployment oder funktionale Änderungen ausgeführt. Status: Trace abgeschlossen, Orchestrator-Gegenprüfung abgeschlossen (statisch). Referenzreviews: Commit `a9e080ab1e1981ec5713e9b742f94280835fd347`, Komponenten `kubeclaw.human-approval`, `kubeclaw.architecture-validator`, `nova.execution` und zentrales Befundregister gelesen. Historische Testerfolge daraus sind keine in diesem Trace ausgeführten Tests.
 
 ## Szenario, Voraussetzungen und erste Bruchstelle
 

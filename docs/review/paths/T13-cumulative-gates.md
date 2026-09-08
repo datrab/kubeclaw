@@ -91,4 +91,4 @@ Ausgeführt wurden ausschließlich Dateilektüre und statische Suchen sowie beid
 
 Offen bleiben echter M1–M5-Integrationslauf, fachliche Vollständigkeit U1–U5, Originalprovider-/Agentqualität, Altmodulreparatur mit Wiederholung abhängiger Module, ausreichende Budgets, neuer H5′/H6-Gatebeweis, Late-Result-/Restartmatrix und tatsächlicher Operatorabschluss. Empfohlene Reihenfolge: Compilerkomposition klären (T01-F02), Coverage-/Candidatevertrag (PATH-T13-001), gemeinsame administrative/automatische Invalidierung (PATH-T04-003), dann echte Originaldienste-/Providerläufe mit alter/neuer Source und adversarialem zu engem Plan. Erst solche späteren Läufe können E2E-Aussagen tragen.
 
-Orchestrator-Gegenprüfung: ausstehend; dieser Autorenbericht ist noch kein validiertes Gesamtergebnis.
+Orchestrator-Gegenprüfung: abgeschlossen (statisch); Details im Gegenprüfungsprotokoll.

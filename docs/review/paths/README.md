@@ -6,6 +6,8 @@ Codebaseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`, Tree `e43c39eea59b07f0
 
 Keine funktionalen Änderungen, Deployments, CI-Läufe oder Veröffentlichung. Nur `docs/review/paths/`. GitHub-Dokumentationscommits mit `[skip ci]`, kein PR/Merge.
 
+Gesamtbericht: [report.md](report.md). Er enthält alle 16 Übergangsfolgen, 17 neue eindeutige Befundkomplexe mit erhaltenen Aliassen, 56 historische Kennungen samt Eigentümerevidenz, Gegenprüfung und offene Laufzeitnachweise. [Gegenprüfungsprotokoll](orchestrator-verification.md).
+
 ## Abdeckungsmatrix
 
 | Szenario | Komponenten / Übergänge | Variante / Fehlersituation | Subagent | Status |

@@ -86,4 +86,4 @@ Offen: Originalgit-Konflikt mit realem Core und anschließender Operatorentschei
 
 Spätere Ursachenbehebung: zuerst Workspacereferenz (PCR-IMPLEMENTATION-001), dann stabile Gitaktions-/Receipt- und Reconciliationgrenze, anschließend Cleanup-/Attemptgeneration (PATH-T07-001) und korrekte Syncfehlerdisposition (PCR-GIT-001), danach aufgelöste Quell-/Zielrevisionen im Blueprintbericht. Abschließend reale lokale Originaldienste-/Gitfehler- und Restartmatrix; erst dann Aussage über erfolgreichen Recovery-/E2E-Lauf.
 
-Orchestrator-Gegenprüfung: ausstehend; Fertigstellung dieses Traces bedeutet noch keine Validierung.
+Orchestrator-Gegenprüfung: abgeschlossen (statisch); Details im Gegenprüfungsprotokoll.

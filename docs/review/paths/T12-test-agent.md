@@ -1,6 +1,6 @@
 # T12 — Native Testentscheidung und nachgelagerter Test-Agent
 
-Status: statischer Trace abgeschlossen, Orchestrator-Gegenprüfung ausstehend. Codebaseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`, Tree `e43c39eea59b07f0a749b7b49f3aefdd11b14ed0`. Sämtliche Quellen-/Zeilenbelege unten gehören zu diesem Commit. Bestehendes Komponentenreview: `docs/review/components/kubeclaw.buster-quality-gate.md` am Reviewref `a9e080ab1e1981ec5713e9b742f94280835fd347`, außerdem das dortige zentrale PCR-Register und bereits im T05 geprüfte Implementation-/Lifecycleberichte. Historische Testergebnisse werden nicht als Ergebnisse dieses Traces übernommen.
+Status: statischer Trace abgeschlossen, Orchestrator-Gegenprüfung abgeschlossen (statisch). Codebaseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`, Tree `e43c39eea59b07f0a749b7b49f3aefdd11b14ed0`. Sämtliche Quellen-/Zeilenbelege unten gehören zu diesem Commit. Bestehendes Komponentenreview: `docs/review/components/kubeclaw.buster-quality-gate.md` am Reviewref `a9e080ab1e1981ec5713e9b742f94280835fd347`, außerdem das dortige zentrale PCR-Register und bereits im T05 geprüfte Implementation-/Lifecycleberichte. Historische Testergebnisse werden nicht als Ergebnisse dieses Traces übernommen.
 
 ## Auftrag, Voraussetzungen und Endzustände
 

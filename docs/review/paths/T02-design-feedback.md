@@ -94,4 +94,4 @@ Gelesene Vorreviews: `docs/review/components/prism.service-control.md`, `prism.p
 
 Empfohlene Reihenfolge: (1) Feedback-Atomizität/IDvertrag und Worker-Logabschluss beheben; (2) Auftrag-/Architektur-/Generationsbindung sowie durable Agentannahme; (3) neue Designrunden und nachvollziehbaren Preferenceinput ergänzen; (4) expliziten Operator-Signalabschluss und Modulplan-/Readonly-Materialisierung verbinden; (5) Originaldienste mit echter DB/CAS/Chromium, Neustart/verspäteten Antworten und echter Nova-Resume-Kette prüfen. Erst danach könnte ein runtime-/E2E-Nachweis entstehen.
 
-Orchestrator-Gegenprüfung: ausstehend; dieser Autorenbericht ist nicht allein durch Fertigstellung validiert.
+Orchestrator-Gegenprüfung: abgeschlossen (statisch); Details im Gegenprüfungsprotokoll.

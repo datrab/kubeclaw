@@ -49,3 +49,7 @@ Widersprüche aufgelöst: Alte Summary-/Qualitygate-Reviews schreiben dem Compil
 Nacharbeiten: Zeilenspannen bei T01/T06 an Autoren zurückgegeben; T07 überlange Spannen korrigiert; T08 Reihenfolge konkret nachprüfen lassen; T13/T14/T16 Zuständigkeiten und Querverweise abgestimmt. Keine verbleibende unvalidierte Szenarioabgabe. Bekannte PCR-/IFR-Befunde bleiben mit ihren ursprünglichen Kennungen und Evidenzgrenzen verknüpft; nicht jeder historische Befund wurde neu reproduziert.
 
 Tatsächlich ausgeführte Softwaretests: 0. CI-Läufe: 0. Deployments: 0. Statische Suchen, vollständige ausgewählte Dateilektüre, Git-Tree-/Blobvergleich und Dokumentkonsistenzprüfung wurden durchgeführt. Bereits vorhandene Testdateien wurden nur gelesen; historische Passangaben sind keine Ergebnisse dieser Prüfung.
+
+Abschließender Sourceintegritätsabgleich: 828 vorhandene Originaldateien stimmen mit ihren Gitblob-SHA1-Werten am Baseline-Tree überein; keine Abweichung. Weitere agentseitige gezielte Abfragen verwendeten denselben Commit.
+
+Letzte gezielte Quellenstichprobe: Controller ensureTestCredentials1165–1225/ensureCredentialAccess1263–1283 erzeugt Secret/SA-Rechte, keine Appauthkonfiguration; previewNotification139–160 enthält ausschließlich Artefaktmetadaten. Prism agent-bridge25–92 und Controlgenerate621–654 übergeben Architektur bzw. Instruction/Dokument, keine persistierte Präferenzprojektion; deren tatsächliche Gewichtung wurde in preferences/index.ts40–108 nachgelesen.

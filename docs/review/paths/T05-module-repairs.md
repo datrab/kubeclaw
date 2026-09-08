@@ -1,6 +1,6 @@
 # T05 — Einzelmodul: Lint-, Echo- und Buster-Reparaturen
 
-Status: statischer Trace abgeschlossen; Orchestrator-Gegenprüfung ausstehend. Kein Laufzeit- oder E2E-Erfolg. Geprüfter Code-Commit für **alle** folgenden Quellbelege: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`, Tree `e43c39eea59b07f0a749b7b49f3aefdd11b14ed0`. Reviewquellen: `a9e080ab1e1981ec5713e9b742f94280835fd347`, insbesondere `docs/review/findings.md` und Komponentenberichte `kubeclaw.implementation-agent`, `nova.lifecycle`, `kubeclaw.buster-quality-gate`. Historische Testaussagen dieser Berichte sind keine Tests dieses Traces.
+Status: statischer Trace abgeschlossen; Orchestrator-Gegenprüfung abgeschlossen (statisch). Kein Laufzeit- oder E2E-Erfolg. Geprüfter Code-Commit für **alle** folgenden Quellbelege: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`, Tree `e43c39eea59b07f0a749b7b49f3aefdd11b14ed0`. Reviewquellen: `a9e080ab1e1981ec5713e9b742f94280835fd347`, insbesondere `docs/review/findings.md` und Komponentenberichte `kubeclaw.implementation-agent`, `nova.lifecycle`, `kubeclaw.buster-quality-gate`. Historische Testaussagen dieser Berichte sind keine Tests dieses Traces.
 
 ## Szenario, Ausgangszustand und Ergebnis
 
