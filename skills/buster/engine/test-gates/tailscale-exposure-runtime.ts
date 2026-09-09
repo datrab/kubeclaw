@@ -1,12 +1,11 @@
 import { runProcessInput } from './process-input.ts';
-import { randomUUID } from 'node:crypto';
+import { EXPOSURE_OWNER_ANNOTATION, EXPOSURE_REQUEST_ANNOTATION, EXPOSURE_PREDECESSORS_ANNOTATION, exposurePredecessors, exposureIdentity, generationObserved, assertExposureRequest, assertRequestedExposure, ownedReleaseAction } from './exposure-generation.ts';
 import fs from 'node:fs';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
 
 const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;
 const MAX_TIMER_MS = 2_147_483_647;
-const EXPOSURE_OWNER_ANNOTATION = 'kubeclaw.forgestack.ai/exposure-owner';
 type JsonObject = Record<string, unknown>;
 type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
   => Promise<{ stdout?: string; stderr?: string }>;
@@ -117,15 +116,20 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       throw error;
     }
   }
-  async #lease(name: string, signal: AbortSignal): Promise<JsonObject> {
-    return object(JSON.parse(await this.#run(['get', 'busternamespacelease', name, '-n', this.#controllerNamespace, '-o', 'json'], null, signal)), 'lease');
+  async #lease(name: string, signal: AbortSignal, timeout = this.#maximumExecutionMs): Promise<JsonObject> {
+    return object(JSON.parse(await this.#run(['get', 'busternamespacelease', name, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, timeout)), 'lease');
   }
-  async #wait(name: string, expected: 'Ready' | 'Off', signal: AbortSignal, timeoutMs: number): Promise<JsonObject> {
+  async #wait(name: string, expected: 'Ready' | 'Off', owner: string, signal: AbortSignal, timeoutMs: number): Promise<JsonObject> {
     const deadline = Date.now() + timeoutMs;
     for (;;) {
       if (signal.aborted) throw new Error('TAILSCALE_EXPOSURE_CANCELLED');
-      const lease = await this.#lease(name, signal); const status = object(lease.status ?? {}, 'lease.status');
-      if (status.exposurePhase === expected) return lease;
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) throw new Error('TAILSCALE_EXPOSURE_READINESS_TIMEOUT');
+      const lease = await this.#lease(name, signal, remaining); const status = object(lease.status ?? {}, 'lease.status');
+      const annotations = object(object(lease.metadata, 'lease.metadata').annotations ?? {}, 'lease.annotations');
+      if (annotations[EXPOSURE_OWNER_ANNOTATION] !== owner) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
+      if (Date.now() >= deadline) throw new Error('TAILSCALE_EXPOSURE_READINESS_TIMEOUT');
+      if (generationObserved(lease, owner, expected)) return lease;
       if (status.phase === 'Failed' || status.exposurePhase === 'Failed') throw new Error(`TAILSCALE_EXPOSURE_CONTROLLER_FAILED:${String(status.message ?? 'unknown')}`);
       if (Date.now() >= deadline) throw new Error('TAILSCALE_EXPOSURE_READINESS_TIMEOUT');
       await new Promise<void>((resolve, reject) => {
@@ -161,7 +165,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       if (annotations[EXPOSURE_OWNER_ANNOTATION] !== owner) return;
       const resourceVersion = text(metadata.resourceVersion, 'lease.metadata.resourceVersion', 64);
       const patch = JSON.stringify({
-        metadata: { resourceVersion, annotations: { [EXPOSURE_OWNER_ANNOTATION]: null } },
+        metadata: { resourceVersion },
         spec: { purpose: 'gate', exposure: { provider: 'off' } },
       });
       await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
@@ -172,7 +176,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       clearTimeout(timer);
     }
   }
-  async #prepare(payload: JsonObject, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+  async #prepare(payload: JsonObject, resourceId: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     const leaseName = text(payload.leaseName, 'leaseName', 63); if (!DNS_LABEL.test(leaseName)) throw new Error('TAILSCALE_EXPOSURE_LEASE_NAME_INVALID');
     const namespace = this.#namespace(payload.namespace); const timeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1, this.#maximumExecutionMs);
     const path = text(payload.path, 'path', 1024);
@@ -185,42 +189,57 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       if (allowed !== 'yes') throw new Error(`TAILSCALE_EXPOSURE_RBAC_DENIED:${verb}`);
     }
     const before = await this.#lease(leaseName, signal); const verified = this.#verifyLease(before, payload, namespace);
-    const owner = randomUUID();
-    const patch = { metadata: { annotations: { [EXPOSURE_OWNER_ANNOTATION]: owner } },
+    const identity = exposureIdentity(resourceId, payload); const { owner } = identity;
+    assertExposureRequest(before, identity);
+    const metadata = object(before.metadata, 'lease.metadata');
+    const resourceVersion = text(metadata.resourceVersion, 'lease.resourceVersion', 64);
+    const alreadyOwned = object(metadata.annotations ?? {}, 'lease.annotations')[EXPOSURE_OWNER_ANNOTATION] === owner;
+    if (alreadyOwned) assertRequestedExposure(before, payload);
+    const patch = { metadata: { resourceVersion, annotations: { [EXPOSURE_OWNER_ANNOTATION]: owner,
+      [EXPOSURE_REQUEST_ANNOTATION]: identity.request, [EXPOSURE_PREDECESSORS_ANNOTATION]: exposurePredecessors(before) } },
       spec: { purpose: 'final-preview', exposure: { provider: 'tailscale-ingress',
-        serviceName: verified.serviceName, servicePort: verified.servicePort, path, ...(hostname ? { hostname } : {}) } } };
+        serviceName: verified.serviceName, servicePort: verified.servicePort, path, hostname: hostname ?? null } } };
     try {
-      await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
+      if (!alreadyOwned) await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
         '--type=merge', '-p', JSON.stringify(patch)], null, signal, 15_000);
-      const ready = await this.#wait(leaseName, 'Ready', signal, timeoutMs);
-      const readyMetadata = object(ready.metadata, 'lease.metadata');
-      const readyAnnotations = object(readyMetadata.annotations ?? {}, 'lease.metadata.annotations');
-      if (readyAnnotations[EXPOSURE_OWNER_ANNOTATION] !== owner) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
+      const ready = await this.#wait(leaseName, 'Ready', owner, signal, timeoutMs);
+      assertRequestedExposure(ready, payload);
+      this.#verifyLease(ready, payload, namespace);
       const status = object(ready.status, 'lease.status');
-      if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
-      const urlText = text(status.previewUrl, 'previewUrl', 2048); const url = new URL(urlText);
-      if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.origin + url.pathname !== urlText) {
-        throw new Error('TAILSCALE_EXPOSURE_URL_INVALID');
-      }
-      const publicHost = url.hostname.toLowerCase();
-      if (!this.#suffixes.some((item) => publicHost.endsWith(item) && publicHost.length > item.length)) throw new Error('TAILSCALE_EXPOSURE_HOST_DENIED');
-      if (status.exposureHostname !== publicHost) throw new Error('TAILSCALE_EXPOSURE_HOST_MISMATCH');
+      const { urlText, publicHost } = this.#publicURL(status, path, hostname);
       return Object.freeze({ ok: true, leaseName, namespace, url: urlText, hostname: publicHost,
         createdAt: text(status.createdAt, 'createdAt', 64), expiresAt: verified.expiresAt,
-        releaseAction: `kubectl patch busternamespacelease ${leaseName} -n ${this.#controllerNamespace} --type=merge --patch '{"spec":{"purpose":"gate","exposure":{"provider":"off"}}}'` });
+        releaseAction: ownedReleaseAction(leaseName, this.#controllerNamespace, owner) });
     } catch (error) {
       await this.#rollbackFailedPrepare(leaseName, owner, error);
       throw error;
     }
   }
-  async #release(payload: JsonObject, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+  #publicURL(status: JsonObject, path: string, hostname: string | undefined): { urlText: string; publicHost: string } {
+    const urlText = text(status.previewUrl, 'previewUrl', 2048); const url = new URL(urlText);
+    if (url.protocol !== 'https:' || url.username || url.password || url.hash || url.origin + url.pathname !== urlText) {
+      throw new Error('TAILSCALE_EXPOSURE_URL_INVALID');
+    }
+    const publicHost = url.hostname.toLowerCase();
+    if (!this.#suffixes.some((item) => publicHost.endsWith(item) && publicHost.length > item.length)) throw new Error('TAILSCALE_EXPOSURE_HOST_DENIED');
+    if (status.exposureHostname !== publicHost || url.pathname !== path
+      || (hostname !== undefined && publicHost !== hostname && !publicHost.startsWith(`${hostname}.`))) throw new Error('TAILSCALE_EXPOSURE_HOST_MISMATCH');
+    return { urlText, publicHost };
+  }
+  async #release(payload: JsonObject, resourceId: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     const leaseName = text(payload.leaseName, 'leaseName', 63); if (!DNS_LABEL.test(leaseName)) throw new Error('TAILSCALE_EXPOSURE_LEASE_NAME_INVALID');
     const namespace = this.#namespace(payload.namespace);
     const before = await this.#lease(leaseName, signal);
+    const identity = exposureIdentity(resourceId, payload);
+    const metadata = object(before.metadata, 'lease.metadata');
+    const annotations = object(metadata.annotations ?? {}, 'lease.annotations');
+    if (annotations[EXPOSURE_OWNER_ANNOTATION] !== identity.owner) return Object.freeze({ ok: true, leaseName, released: false, superseded: true });
+    assertExposureRequest(before, identity);
     const verified = this.#verifyLease(before, payload, namespace);
-    const patch = JSON.stringify({ spec: { purpose: 'gate', exposure: { provider: 'off' } } });
+    const resourceVersion = text(metadata.resourceVersion, 'lease.resourceVersion', 64);
+    const patch = JSON.stringify({ metadata: { resourceVersion }, spec: { purpose: 'gate', exposure: { provider: 'off' } } });
     await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
-    const released = await this.#wait(leaseName, 'Off', signal, this.#maximumExecutionMs);
+    const released = await this.#wait(leaseName, 'Off', identity.owner, signal, this.#maximumExecutionMs);
     const status = object(released.status, 'lease.status');
     if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
     return Object.freeze({ ok: true, leaseName, released: true });
@@ -231,8 +250,8 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       throw new Error('TAILSCALE_EXPOSURE_CAPABILITY_REQUEST_INVALID');
     }
     const payload = object(request.payload, 'payload');
-    if (request.operation === 'prepare') return this.#prepare(payload, signal);
-    if (request.operation === 'release') return this.#release(payload, signal);
+    if (request.operation === 'prepare') return this.#prepare(payload, request.resource.canonicalId, signal);
+    if (request.operation === 'release') return this.#release(payload, request.resource.canonicalId, signal);
     throw new Error('TAILSCALE_EXPOSURE_OPERATION_INVALID');
   }
 }

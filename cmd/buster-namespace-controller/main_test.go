@@ -628,11 +628,11 @@ func TestIngressPreviewURLIsCanonical(t *testing.T) {
 	ingress := map[string]interface{}{"status": map[string]interface{}{"loadBalancer": map[string]interface{}{
 		"ingress": []interface{}{map[string]interface{}{"hostname": "preview.example.ts.net"}},
 	}}}
-	root := ingressPreviewURL(ingress, &previewExposure{Path: "/"})
+	root := ingressPreviewURL(ingress, &previewExposure{Hostname: "preview", Path: "/"})
 	if root != "https://preview.example.ts.net/" {
 		t.Fatalf("unexpected root preview URL %q", root)
 	}
-	nested := ingressPreviewURL(ingress, &previewExposure{Path: "/preview"})
+	nested := ingressPreviewURL(ingress, &previewExposure{Hostname: "preview", Path: "/preview"})
 	if nested != "https://preview.example.ts.net/preview" {
 		t.Fatalf("unexpected nested preview URL %q", nested)
 	}

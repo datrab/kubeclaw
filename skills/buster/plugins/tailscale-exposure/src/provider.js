@@ -46,11 +46,12 @@ function deploymentInput(invocation, endpointName) {
     throw new Error('TAILSCALE_EXPOSURE_INTERNAL_ENDPOINT_INVALID');
   }
   const expectedHost = `${selected.name}.${value.namespace}.svc.cluster.local`;
-  if (url.hostname !== expectedHost || !Number.isSafeInteger(Number(url.port)) || Number(url.port) < 1 || Number(url.port) > 65535) {
+  const servicePort = url.port === '' ? 80 : Number(url.port);
+  if (url.hostname !== expectedHost || !Number.isSafeInteger(servicePort) || servicePort < 1 || servicePort > 65535) {
     throw new Error('TAILSCALE_EXPOSURE_INTERNAL_ENDPOINT_INVALID');
   }
   return { leaseName: value.leaseName, namespace: value.namespace, expiresAt: value.expiresAt,
-    serviceName: selected.name, servicePort: Number(url.port) };
+    serviceName: selected.name, servicePort };
 }
 
 function details(values) {
@@ -87,7 +88,7 @@ export function provider() {
       const deployment = deploymentInput(invocation, config.endpointName);
       await context.invoke('kubernetes.exposure', { operation: 'release',
         resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:${invocation.attemptId}` },
-        payload: deployment });
+        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}) } });
     },
   };
 }

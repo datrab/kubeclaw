@@ -15,6 +15,16 @@ assert.deepEqual(testContract.deploymentInput(invocation, undefined), {
   leaseName: 'test-123', namespace: 'test-123', expiresAt: '2030-01-01T00:00:00.000Z',
   serviceName: 'web', servicePort: 8080,
 });
+for (const [port, expected] of [[':80', 80], ['', 80], [':8080', 8080]] as const) {
+  const candidate = structuredClone(invocation);
+  candidate.inputs[0].value.endpoints[0].url = `http://web.test-123.svc.cluster.local${port}`;
+  assert.equal(testContract.deploymentInput(candidate, undefined).servicePort, expected);
+}
+for (const host of ['evil.example', 'other.test-123.svc.cluster.local', 'web.other.svc.cluster.local']) {
+  const candidate = structuredClone(invocation);
+  candidate.inputs[0].value.endpoints[0].url = `http://${host}:80`;
+  assert.throws(() => testContract.deploymentInput(candidate, undefined), /INTERNAL_ENDPOINT_INVALID/);
+}
 assert.throws(() => testContract.deploymentInput({ ...invocation, inputs: [{ ...invocation.inputs[0], value: {
   ...invocation.inputs[0].value, endpoints: [{ name: 'web', url: 'http://evil.example:8080' }],
 } }] }, undefined), /TAILSCALE_EXPOSURE_INTERNAL_ENDPOINT_INVALID/);

@@ -195,6 +195,12 @@ spec:
                   nullable: true
                 exposurePhase:
                   type: string
+                exposureOwner:
+                  type: string
+                exposureGeneration:
+                  type: integer
+                  format: int64
+                  minimum: 0
                 exposureHostname:
                   type: string
                   nullable: true

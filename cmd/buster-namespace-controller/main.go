@@ -81,6 +81,8 @@ type metadata struct {
 	Name              string            `json:"name"`
 	Namespace         string            `json:"namespace"`
 	Labels            map[string]string `json:"labels"`
+	Annotations       map[string]string `json:"annotations"`
+	Generation        int64             `json:"generation"`
 	Finalizers        []string          `json:"finalizers"`
 	CreationTimestamp string            `json:"creationTimestamp"`
 	DeletionTimestamp string            `json:"deletionTimestamp"`
@@ -1318,15 +1320,15 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 		return nil, err
 	}
 	if exposure == nil {
-		if err := c.deleteIngress(ctx, namespaceName, "buster-final-preview"); err != nil {
+		if err := c.deleteOwnedExposure(ctx, item, namespaceName, "buster-final-preview"); err != nil {
 			return nil, err
 		}
-		return map[string]interface{}{
+		return exposureStatus(item, map[string]interface{}{
 			"exposurePhase":    "Off",
 			"previewUrl":       nil,
 			"exposureHostname": nil,
 			"message":          "Preview exposure disabled",
-		}, nil
+		}), nil
 	}
 
 	serviceReady, err := c.previewServiceReady(ctx, namespaceName, exposure.ServiceName, exposure.ServicePort)
@@ -1334,22 +1336,16 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 		return nil, err
 	}
 	if !serviceReady {
-		return map[string]interface{}{
+		return exposureStatus(item, map[string]interface{}{
 			"exposurePhase":    "Pending",
 			"previewUrl":       nil,
 			"exposureHostname": exposure.Hostname,
 			"message":          "Waiting for Service/" + exposure.ServiceName + " before creating Tailscale ingress",
-		}, nil
+		}), nil
 	}
 
 	var ingress map[string]interface{}
-	if err := c.createOrPatch(
-		ctx,
-		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/ingresses",
-		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/ingresses/"+exposure.IngressName,
-		previewIngress(item, namespaceName, exposure),
-		&ingress,
-	); err != nil {
+	if err := c.ensureOwnedExposure(ctx, item, namespaceName, exposure, &ingress); err != nil {
 		return nil, err
 	}
 
@@ -1364,12 +1360,12 @@ func (c *controller) ensurePreviewExposure(ctx context.Context, item *lease, nam
 		}
 		exposureHostname = parsed.Hostname()
 	}
-	return map[string]interface{}{
+	return exposureStatus(item, map[string]interface{}{
 		"exposurePhase":    ternaryString(previewURL != "", "Ready", "Pending"),
 		"previewUrl":       nullableString(previewURL),
 		"exposureHostname": exposureHostname,
 		"message":          message,
-	}, nil
+	}), nil
 }
 
 func (c *controller) previewServiceReady(ctx context.Context, namespaceName string, serviceName string, servicePort int) (bool, error) {
@@ -1431,28 +1427,15 @@ func serviceEndpointReady(service map[string]interface{}, endpoints map[string]i
 	return false
 }
 
-func (c *controller) deleteIngress(ctx context.Context, namespaceName string, ingressName string) error {
-	err := c.kube(ctx, http.MethodDelete,
-		"/apis/networking.k8s.io/v1/namespaces/"+namespaceName+"/ingresses/"+ingressName,
-		map[string]interface{}{}, "application/json", nil)
-	if err == nil {
-		return nil
-	}
-	var apiErr *apiError
-	if errors.As(err, &apiErr) && apiErr.statusCode == http.StatusNotFound {
-		return nil
-	}
-	return err
-}
-
 func previewIngress(item *lease, namespaceName string, exposure *previewExposure) map[string]interface{} {
 	return map[string]interface{}{
 		"apiVersion": "networking.k8s.io/v1",
 		"kind":       "Ingress",
 		"metadata": map[string]interface{}{
-			"name":      exposure.IngressName,
-			"namespace": namespaceName,
-			"labels":    ownerLabels(item, namespaceName),
+			"name":        exposure.IngressName,
+			"namespace":   namespaceName,
+			"labels":      ownerLabels(item, namespaceName),
+			"annotations": map[string]string{exposureOwnerAnnotation: item.Metadata.Annotations[exposureOwnerAnnotation]},
 		},
 		"spec": map[string]interface{}{
 			"ingressClassName": "tailscale",
@@ -1488,7 +1471,7 @@ func ingressPreviewURL(ingress map[string]interface{}, exposure *previewExposure
 	for _, entry := range entries {
 		item := objectValue(entry)
 		host := firstString(item["hostname"], item["ip"])
-		if host != "" {
+		if host != "" && (host == exposure.Hostname || strings.HasPrefix(host, exposure.Hostname+".")) {
 			if exposure.Path == "/" {
 				return "https://" + host + "/"
 			}
@@ -1884,7 +1867,7 @@ func leaseLabelValue(item *lease) string {
 }
 
 func exposureChanged(status map[string]interface{}, exposure map[string]interface{}) bool {
-	for _, key := range []string{"exposurePhase", "previewUrl", "exposureHostname", "message", "credentialsRef"} {
+	for _, key := range []string{"exposurePhase", "previewUrl", "exposureHostname", "exposureOwner", "exposureGeneration", "message", "credentialsRef"} {
 		if stringValue(status[key]) != stringValue(exposure[key]) {
 			return true
 		}
