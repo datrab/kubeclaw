@@ -1,9 +1,10 @@
 import path from 'path';
 
+import { assertNotAborted } from './process.ts';
 import { commandExists } from './execution.ts';
 import { log } from './output.ts';
 import { LINT_REPORT_SCHEMA_VERSION } from './report-contract.ts';
-import { policyIncludesFile } from './policy.ts';
+import { policyIncludesFile, validatePolicyTargetPaths } from './policy.ts';
 import { normalizeFindings } from './finding-fingerprints.ts';
 import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
@@ -135,6 +136,8 @@ function executionError(tool: any, error: any, startTime: any) {
 async function runTool(tool: any, ctx: any) {
   const startTime = Date.now();
 
+  assertNotAborted(ctx.signal);
+  validatePolicyTargetPaths(ctx.repoRoot, { ...ctx.policy, tools: [tool] }, ctx.policyProject);
   const scopedContext = toolContext(ctx, tool);
   if (tool.scope === 'changed-files' && scopedContext.changedFilesRequested && scopedContext.changedFiles.length === 0) {
     return { status: 'not_applicable', reason: 'No requested changed files match the configured tool scope.', duration_ms: Date.now() - startTime };
@@ -142,7 +145,7 @@ async function runTool(tool: any, ctx: any) {
 
   // Check if the tool binary exists
   const binaryName = toolBinaryName(tool);
-  if (!commandExists(binaryName)) return missingBinaryResult(tool, binaryName);
+  if (!await commandExists(binaryName, ctx.signal)) return missingBinaryResult(tool, binaryName);
 
   try {
     const result = await tool.run(scopedContext);
@@ -155,6 +158,7 @@ async function runTool(tool: any, ctx: any) {
     const findings = normalizeFindings(scopedContext, tool.id, resultFindings(result.findings));
     return successfulResult(ctx, tool, result, findings, durationMs);
   } catch (e: any) {
+    assertNotAborted(ctx.signal);
     return executionError(tool, e, startTime);
   }
 }
@@ -176,6 +180,7 @@ function logToolResult(tool: any, result: any) {
 async function executeTools(ctx: any, applicable: any) {
   const results: any = {};
   for (const tool of applicable) {
+    assertNotAborted(ctx.signal);
     log('STEP', `Running: ${tool.name}`);
     results[tool.id] = await runTool(tool, ctx);
     logToolResult(tool, results[tool.id]);

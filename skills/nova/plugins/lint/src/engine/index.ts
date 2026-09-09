@@ -1,4 +1,6 @@
+import { requireRepositoryPath } from './paths.ts';
 import fs from 'node:fs';
+import { assertNotAborted } from './process.ts';
 import path from 'node:path';
 
 import { detectProjectTypes, resolveScope, takeDiscoveryDiagnostics } from './discovery.ts';
@@ -13,6 +15,7 @@ import {
 import { buildToolRegistry } from './tool-registry.ts';
 
 export interface LintExecutionRequest {
+  readonly signal?: AbortSignal;
   readonly workingDirectory: string;
   readonly policyPath: string;
   readonly policyProject: string;
@@ -57,33 +60,36 @@ function normalizeModulePath(repositoryRoot: string, value: string | undefined):
   if (!value) return null;
   if (path.isAbsolute(value)) throw new Error('LINT_MODULE_PATH_ABSOLUTE');
   const normalized = path.normalize(value);
-  const absolute = path.resolve(repositoryRoot, normalized);
+  const absolute = requireRepositoryPath(repositoryRoot, path.resolve(repositoryRoot, normalized));
   const relative = path.relative(repositoryRoot, absolute);
   if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error('LINT_MODULE_PATH_ESCAPE');
   return normalized;
 }
 
-function normalizeChangedFiles(values: readonly string[] | undefined): string[] {
+function normalizeChangedFiles(repositoryRoot: string, values: readonly string[] | undefined): string[] {
   if (!values) return [];
   return values.map((value) => {
     if (typeof value !== 'string' || value.length === 0) throw new Error('LINT_CHANGED_FILE_INVALID');
     if (path.isAbsolute(value)) throw new Error('LINT_CHANGED_FILE_ABSOLUTE');
     const normalized = path.normalize(value);
     if (normalized === '..' || normalized.startsWith(`..${path.sep}`)) throw new Error('LINT_CHANGED_FILE_ESCAPE');
+    requireRepositoryPath(repositoryRoot, path.resolve(repositoryRoot, normalized));
     return normalized.split(path.sep).join('/');
   });
 }
 
 export async function executeLintReport(request: LintExecutionRequest): Promise<Record<string, unknown>> {
+  assertNotAborted(request.signal);
   const repositoryRoot = fs.realpathSync(request.workingDirectory);
   const policyPath = fs.realpathSync(request.policyPath);
   const policy = loadLintPolicy(policyPath);
   const policyProject = effectivePolicyProject(selectPolicyProject(policy, request.policyProject), request.kubernetes);
   validatePolicyTargetPaths(repositoryRoot, policy, policyProject);
   const modulePath = normalizeModulePath(repositoryRoot, request.modulePath);
-  const changedFiles = normalizeChangedFiles(request.changedFiles);
+  const changedFiles = normalizeChangedFiles(repositoryRoot, request.changedFiles);
   const { types: projectTypes } = detectProjectTypes(repositoryRoot, policyProject, policy.global_exclusions);
   const context: Record<string, any> = {
+    signal: request.signal,
     repoRoot: repositoryRoot,
     modulePath,
     requestedModulePath: modulePath,
@@ -108,6 +114,7 @@ export async function executeLintReport(request: LintExecutionRequest): Promise<
     ...takeDiscoveryDiagnostics(),
   ];
   const report = await runToolsForRegistry(context, buildToolRegistry(policy, projectTypes));
+  assertNotAborted(request.signal);
   validateLintReport(report);
   if (request.tier === 'full' && !context.changedFilesRequested && !modulePath) {
     const completedTools = new Set(Object.entries((report as any).tools)

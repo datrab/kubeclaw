@@ -1,9 +1,11 @@
 import fs from 'node:fs';
+import { assertNotAborted } from './engine/process.ts';
 import { withLintCandidate } from './candidate.ts';
 import path from 'node:path';
 
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
-import { executeLintReport, type LintExecutionRequest } from './engine/index.ts';
+import { requestPayload } from './request.ts';
+import { executeLintReport } from './engine/index.ts';
 
 function configuredRoots(config: Readonly<Record<string, unknown>>, key: string): string[] {
   const value = config[key];
@@ -22,48 +24,17 @@ function requireInside(value: unknown, roots: readonly string[], label: string):
   return canonical;
 }
 
-function requestPayload(value: Readonly<Record<string, unknown>>): LintExecutionRequest {
-  const tier = value.tier;
-  if (tier !== 'pre-check' && tier !== 'full') throw new Error('LINT_TIER_INVALID');
-  const changedFiles = value.changedFiles;
-  if (changedFiles !== undefined && (!Array.isArray(changedFiles) || changedFiles.some((item) => typeof item !== 'string'))) {
-    throw new Error('LINT_CHANGED_FILES_INVALID');
-  }
-  if (typeof value.workingDirectory !== 'string') throw new Error('LINT_WORKING_DIRECTORY_INVALID');
-  if (typeof value.policyPath !== 'string') throw new Error('LINT_POLICY_PATH_INVALID');
-  if (typeof value.policyProject !== 'string') throw new Error('LINT_POLICY_PROJECT_INVALID');
-  const kubernetes = value.kubernetes;
-  if (kubernetes !== undefined && (!kubernetes || typeof kubernetes !== 'object' || Array.isArray(kubernetes))) {
-    throw new Error('LINT_KUBERNETES_INPUT_INVALID');
-  }
-  const rawManifests = kubernetes === undefined ? undefined : (kubernetes as Record<string, unknown>).rawManifests;
-  const helmCharts = kubernetes === undefined ? undefined : (kubernetes as Record<string, unknown>).helmCharts;
-  if (kubernetes !== undefined && (![rawManifests, helmCharts].every((entries) => Array.isArray(entries)
-    && entries.every((entry) => typeof entry === 'string')))) {
-    throw new Error('LINT_KUBERNETES_INPUT_INVALID');
-  }
-  return {
-    workingDirectory: value.workingDirectory,
-    policyPath: value.policyPath,
-    policyProject: value.policyProject,
-    tier,
-    ...(typeof value.project === 'string' ? { project: value.project } : {}),
-    ...(typeof value.modulePath === 'string' ? { modulePath: value.modulePath } : {}),
-    ...(Array.isArray(changedFiles) ? { changedFiles: changedFiles as string[] } : {}),
-    ...(kubernetes === undefined ? {} : { kubernetes: {
-      rawManifests: rawManifests as string[], helmCharts: helmCharts as string[],
-    } }),
-    ...(value.includeDebt === true ? { includeDebt: true } : {}),
-    ...(value.includeExperimental === true ? { includeExperimental: true } : {}),
-  };
-}
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const repositoryRoots = configuredRoots(context.config, 'allowedRepositoryRoots');
   const policyRoots = configuredRoots(context.config, 'allowedPolicyRoots');
+  const shutdown = new AbortController();
+  const active = new Set<Promise<Readonly<Record<string, unknown>>>>();
   return {
     async ready() {},
-    async invoke({ request, signal, confidential, fence }) {
+    async invoke({ request, signal: callerSignal, confidential, fence }) {
+      const signal = AbortSignal.any([callerSignal, shutdown.signal]);
+      const execute = async (): Promise<Readonly<Record<string, unknown>>> => {
       if (!confidential) fence.assertCurrent();
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
       if (request.capability !== 'lint.execute' || request.operation !== 'run_report') {
@@ -74,11 +45,20 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const policyPath = requireInside(payload.policyPath, policyRoots, 'LINT_POLICY_PATH');
       const revision = request.payload.sourceRevision;
       if (revision !== undefined && (typeof revision !== 'string' || !/^[a-f0-9]{40}$/u.test(revision))) throw new Error('LINT_SOURCE_REVISION_INVALID');
-      const run = (root: string) => executeLintReport({ ...payload, workingDirectory: root, policyPath });
+      const run = (root: string) => executeLintReport({ ...payload, workingDirectory: root, policyPath, signal });
       const report = revision === undefined ? await run(workingDirectory)
-        : await withLintCandidate(workingDirectory, revision, run);
+        : await withLintCandidate(workingDirectory, revision, run, signal);
+      assertNotAborted(signal);
+      if (!confidential) fence.assertCurrent();
       return { report, ...(revision === undefined ? {} : { sourceRevision: revision }) };
+      };
+      const pending = execute();
+      active.add(pending);
+      try { return await pending; } finally { active.delete(pending); }
     },
-    async shutdown() {},
+    async shutdown() {
+      shutdown.abort(new Error('LINT_ADAPTER_SHUTDOWN'));
+      await Promise.allSettled([...active]);
+    },
   };
 }

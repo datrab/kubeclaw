@@ -51,6 +51,70 @@ function pullSecrets(pod: AnyRecord, namespace: string, lookup: AnyRecord): stri
   return [...new Set([...direct, ...(lookup.serviceAccounts.get(`${namespace}/${serviceAccount}`) || [])])];
 }
 
+function environmentRule(ctx: AnyRecord): AnyRecord[] {
+  const { resource, rule, lookup, pod, namespace, group, container, keys, label } = ctx;
+  const results: AnyRecord[] = [];
+      const environment = availableEnvironment(container, namespace, lookup);
+      for (const name of rule.parameters.names) if (!environment.names.has(name)) results.push(finding(resource, rule, `${label} does not declare required environment variable ${name}${environment.unresolved.length ? `; unresolved envFrom: ${environment.unresolved.join(', ')}` : ''}.`, keys));
+
+  return results;
+}
+
+function secretRule(ctx: AnyRecord): AnyRecord[] {
+  const { resource, rule, lookup, pod, namespace, group, container, keys, label } = ctx;
+  const results: AnyRecord[] = [];
+      for (const [envIndex, env] of (container.env || []).entries()) {
+        const ref = env?.valueFrom?.secretKeyRef;
+        if (ref && ref.optional !== true && !lookup.secrets.get(`${namespace}/${ref.name}`)?.has(ref.key)) results.push(finding(resource, rule, `${label} references missing Secret key ${ref.name}/${ref.key}.`, [...keys, 'env', envIndex]));
+      }
+  results.push(...secretSourceRule(ctx));
+
+  return results;
+}
+
+function secretSourceRule(ctx: AnyRecord): AnyRecord[] {
+  const { resource, rule, lookup, namespace, container, keys, label } = ctx;
+  const results: AnyRecord[] = [];
+      for (const [sourceIndex, source] of (container.envFrom || []).entries()) {
+        const ref = source?.secretRef;
+        if (ref?.name && ref.optional !== true && !lookup.secrets.has(`${namespace}/${ref.name}`)) results.push(finding(resource, rule, `${label} references missing Secret ${ref.name}.`, [...keys, 'envFrom', sourceIndex]));
+      }
+  return results;
+}
+
+function pullSecretRule(ctx: AnyRecord): AnyRecord[] {
+  const { resource, rule, lookup, pod, namespace, group, container, keys, label } = ctx;
+  const results: AnyRecord[] = [];
+      const registry = rule.parameters.registries.find((prefix: string) => typeof container.image === 'string' && (container.image === prefix || container.image.startsWith(`${prefix}/`)));
+      if (registry && pullSecrets(pod, namespace, lookup).length === 0) results.push(finding(resource, rule, `${label} uses private registry ${registry} without imagePullSecrets.`, keys));
+
+  return results;
+}
+
+function resourceRule(ctx: AnyRecord): AnyRecord[] {
+  const { resource, rule, lookup, pod, namespace, group, container, keys, label } = ctx;
+  const results: AnyRecord[] = [];
+      if (rule.parameters.cpu && !container.resources?.limits?.cpu) results.push(finding(resource, rule, `${label} has no CPU limit.`, keys));
+      if (rule.parameters.memory && !container.resources?.limits?.memory) results.push(finding(resource, rule, `${label} has no memory limit.`, keys));
+
+  return results;
+}
+
+function containerRule(ctx: AnyRecord): AnyRecord[] {
+  const { resource, rule, group, container, keys, label } = ctx;
+  switch (rule.type) {
+    case 'required-env': return environmentRule(ctx);
+    case 'secret-ref': return secretRule(ctx);
+    case 'private-registry-pull-secret': return pullSecretRule(ctx);
+    case 'resource-limits': return resourceRule(ctx);
+    case 'readiness-probe': return group.probes && !container.readinessProbe
+      ? [finding(resource, rule, `${label} has no readinessProbe.`, keys)] : [];
+    case 'liveness-probe': return group.probes && !container.livenessProbe
+      ? [finding(resource, rule, `${label} has no livenessProbe.`, keys)] : [];
+    default: return [];
+  }
+}
+
 function evaluateRule(resource: AnyRecord, podPath: Array<string | number>, rule: AnyRecord, lookup: AnyRecord): AnyRecord[] {
   const pod = podPath.reduce((value: AnyRecord, key) => value?.[key], resource.value);
   if (!pod || typeof pod !== 'object') return [];
@@ -63,27 +127,7 @@ function evaluateRule(resource: AnyRecord, podPath: Array<string | number>, rule
   for (const group of containerGroups) group.values.forEach((container: AnyRecord, index: number) => {
     const keys = [...podPath, group.field, index];
     const label = `${resourceName(resource)} ${group.field === 'initContainers' ? 'init container' : 'container'} '${container?.name || index}'`;
-    if (rule.type === 'required-env') {
-      const environment = availableEnvironment(container, namespace, lookup);
-      for (const name of rule.parameters.names) if (!environment.names.has(name)) results.push(finding(resource, rule, `${label} does not declare required environment variable ${name}${environment.unresolved.length ? `; unresolved envFrom: ${environment.unresolved.join(', ')}` : ''}.`, keys));
-    } else if (rule.type === 'secret-ref') {
-      for (const [envIndex, env] of (container.env || []).entries()) {
-        const ref = env?.valueFrom?.secretKeyRef;
-        if (ref && ref.optional !== true && !lookup.secrets.get(`${namespace}/${ref.name}`)?.has(ref.key)) results.push(finding(resource, rule, `${label} references missing Secret key ${ref.name}/${ref.key}.`, [...keys, 'env', envIndex]));
-      }
-      for (const [sourceIndex, source] of (container.envFrom || []).entries()) {
-        const ref = source?.secretRef;
-        if (ref?.name && ref.optional !== true && !lookup.secrets.has(`${namespace}/${ref.name}`)) results.push(finding(resource, rule, `${label} references missing Secret ${ref.name}.`, [...keys, 'envFrom', sourceIndex]));
-      }
-    } else if (rule.type === 'private-registry-pull-secret') {
-      const registry = rule.parameters.registries.find((prefix: string) => typeof container.image === 'string' && (container.image === prefix || container.image.startsWith(`${prefix}/`)));
-      if (registry && pullSecrets(pod, namespace, lookup).length === 0) results.push(finding(resource, rule, `${label} uses private registry ${registry} without imagePullSecrets.`, keys));
-    } else if (rule.type === 'readiness-probe' && group.probes && !container.readinessProbe) results.push(finding(resource, rule, `${label} has no readinessProbe.`, keys));
-    else if (rule.type === 'liveness-probe' && group.probes && !container.livenessProbe) results.push(finding(resource, rule, `${label} has no livenessProbe.`, keys));
-    else if (rule.type === 'resource-limits') {
-      if (rule.parameters.cpu && !container.resources?.limits?.cpu) results.push(finding(resource, rule, `${label} has no CPU limit.`, keys));
-      if (rule.parameters.memory && !container.resources?.limits?.memory) results.push(finding(resource, rule, `${label} has no memory limit.`, keys));
-    }
+    results.push(...containerRule({ resource, rule, lookup, pod, namespace, group, container, keys, label }));
   });
   return results;
 }
@@ -92,8 +136,8 @@ function kubernetesPolicyTool() {
   return {
     id: 'kubernetes-policy', name: 'Kubernetes manifest policy', binary: 'node', tier: 'full',
     detect: (ctx: AnyRecord) => ctx.policyProject.kubernetes.policy_packs.length > 0,
-    run: (ctx: AnyRecord) => {
-      const { resources, sources } = loadKubernetesResources(ctx);
+    run: async (ctx: AnyRecord) => {
+      const { resources, sources } = await loadKubernetesResources(ctx);
       const lookup = indexes(resources);
       const packs = ctx.policy.kubernetes_policy_packs.filter((pack: AnyRecord) => ctx.policyProject.kubernetes.policy_packs.includes(pack.id));
       const findings: AnyRecord[] = [];

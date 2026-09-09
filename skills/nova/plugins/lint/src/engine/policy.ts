@@ -1,3 +1,5 @@
+import { matchesPolicyPattern, policyIncludesFile } from './policy-patterns.ts';
+import { validatePolicyTargetPaths } from './policy-paths.ts';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
@@ -281,80 +283,5 @@ function policyDigest(policy: Record<string, any>): string {
   return text(policy.digest, 'policy.digest');
 }
 
-function globRegex(pattern: string): RegExp {
-  let source = '^';
-  for (let index = 0; index < pattern.length; index++) {
-    const char = pattern.charAt(index);
-    if (char === '*' && pattern[index + 1] === '*') {
-      const followedBySlash = pattern[index + 2] === '/';
-      source += followedBySlash ? '(?:.*/)?' : '.*';
-      index += followedBySlash ? 2 : 1;
-    } else if (char === '*') source += '[^/]*';
-    else source += /[.+^${}()|[\]\\]/.test(char) ? `\\${char}` : char;
-  }
-  return new RegExp(`${source}$`);
-}
-
-function matchesPolicyPattern(file: string, pattern: string): boolean {
-  return globRegex(pattern).test(file.replace(/\\/g, '/').replace(/^\.\//, ''));
-}
-
-function policyIncludesFile(file: string, tool: Record<string, any>, globalExclusions: string[]): boolean {
-  const normalized = file.replace(/\\/g, '/').replace(/^\.\//, '');
-  const targeted = tool.targets.some((target: string) => target === '.' || normalized === target || normalized.startsWith(`${target.replace(/\/$/, '')}/`));
-  if (!targeted) return false;
-  if ([...globalExclusions, ...tool.exclude].some((pattern: any) => matchesPolicyPattern(normalized, pattern))) return false;
-  return tool.include.length === 0 || tool.include.some((pattern: string) => matchesPolicyPattern(normalized, pattern));
-}
-
-function validatePolicyTargetPaths(repoRoot: string, policy: Record<string, any>, project: Record<string, any>): void {
-  const projectRoot = path.resolve(repoRoot, project.root);
-  const realProjectRoot = fs.realpathSync(projectRoot);
-  for (const module of project.go.modules) {
-    const absolute = path.resolve(projectRoot, module.mod_file);
-    if (!fs.existsSync(absolute)) fail('policy project go module', `does not exist: ${module.mod_file}`);
-  }
-  for (const root of project.terraform.roots) {
-    const absolute = path.resolve(projectRoot, root);
-    if (!fs.existsSync(absolute)) fail('policy project terraform root', `does not exist: ${root}`);
-  }
-  if (project.kubernetes.raw_manifests.length + project.kubernetes.helm_charts.length > project.kubernetes.limits.max_files) fail('policy project kubernetes', 'declared inputs exceed max_files');
-  for (const manifest of project.kubernetes.raw_manifests) {
-    const absolute = path.resolve(projectRoot, manifest);
-    const relative = path.relative(projectRoot, absolute);
-    if (relative.startsWith('..') || path.isAbsolute(relative)) fail('policy project kubernetes raw manifest', `escapes project root: ${manifest}`);
-    if (!fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) fail('policy project kubernetes raw manifest', `does not exist: ${manifest}`);
-    const real = fs.realpathSync(absolute);
-    const realRelative = path.relative(realProjectRoot, real);
-    if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) fail('policy project kubernetes raw manifest', `symlink escapes project root: ${manifest}`);
-    if (fs.statSync(absolute).size > project.kubernetes.limits.max_file_bytes) fail('policy project kubernetes raw manifest', `exceeds max_file_bytes: ${manifest}`);
-  }
-  for (const chart of project.kubernetes.helm_charts) {
-    const absolute = path.resolve(projectRoot, chart);
-    const relative = path.relative(projectRoot, absolute);
-    if (relative.startsWith('..') || path.isAbsolute(relative)) fail('policy project kubernetes Helm chart', `escapes project root: ${chart}`);
-    if (!fs.existsSync(path.join(absolute, 'Chart.yaml'))) fail('policy project kubernetes Helm chart', `Chart.yaml does not exist: ${chart}`);
-    const real = fs.realpathSync(absolute);
-    const realRelative = path.relative(realProjectRoot, real);
-    if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) fail('policy project kubernetes Helm chart', `symlink escapes project root: ${chart}`);
-  }
-  if (project.kubernetes.schema_location !== null) {
-    const schemaRoot = project.kubernetes.schema_location.split('{{', 1)[0].replace(/[\\/]$/u, '');
-    if (!schemaRoot || !fs.existsSync(schemaRoot) || !fs.statSync(schemaRoot).isDirectory()) fail('policy project kubernetes schema_location', `local schema directory does not exist: ${schemaRoot}`);
-  }
-  for (const tool of policy.tools) {
-    for (const target of tool.targets) {
-      const absolute = path.resolve(projectRoot, target);
-      const relative = path.relative(projectRoot, absolute);
-      if (relative.startsWith('..') || path.isAbsolute(relative)) fail(`policy.tools.${tool.id}.targets`, `escapes project root: ${target}`);
-      if (!fs.existsSync(absolute)) fail(`policy.tools.${tool.id}.targets`, `does not exist: ${target}`);
-    }
-  }
-  for (const layer of policy.architecture.layers) {
-    for (const root of layer.roots) {
-      if (!fs.existsSync(path.resolve(projectRoot, root))) fail(`policy.architecture.layers.${layer.id}.roots`, `does not exist: ${root}`);
-    }
-  }
-}
 
 export { LINT_POLICY_SCHEMA_VERSION, LintPolicyError, loadLintPolicy, matchesPolicyPattern, policyDigest, policyIncludesFile, selectPolicyProject, validateLintPolicy, validatePolicyTargetPaths };

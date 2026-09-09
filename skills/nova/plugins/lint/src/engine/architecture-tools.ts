@@ -198,12 +198,12 @@ function dependencyCruiserTool() {
     id: 'dependency-cruiser',
     name: 'Dependency Cruiser',
     binary: 'depcruise',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const targets = configuredTargetPaths(ctx);
-      const result = requireToolExecution(safeExec('depcruise', [
+      const result = requireToolExecution(await safeExec('depcruise', [
         '--no-config', '--output-type', 'json', '--progress', 'none',
         '--do-not-follow', '(^|/)node_modules/', ...targets,
-      ], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'dependency-cruiser');
+      ], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'dependency-cruiser');
       const parsed = tryParseJson(result.stdout);
       if (!parsed.ok) failParse(ctx, 'dependency-cruiser', parsed, result);
       if (!Array.isArray(parsed.data?.modules)) failParse(ctx, 'dependency-cruiser', { error: 'missing modules array' }, result);
@@ -218,9 +218,9 @@ function knipTool() {
     id: 'knip',
     name: 'Knip',
     binary: 'knip',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       if (!ctx.tool.config_path || !fs.existsSync(ctx.tool.config_path)) failConfigMissing('knip-config-missing', 'Knip requires its exact configured path.');
-      const result = requireToolExecution(safeExec('knip', [
+      const result = requireToolExecution(await safeExec('knip', [
         '--directory', ctx.repoRoot,
         '--config', ctx.tool.config_path,
         '--reporter', 'json',
@@ -229,7 +229,7 @@ function knipTool() {
         '--no-tag-hints',
         '--no-exit-code',
         '--include', 'files,exports,types,dependencies,unlisted,unresolved',
-      ], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'knip');
+      ], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'knip');
       const parsed = tryParseJson(result.stdout);
       if (!parsed.ok) failParse(ctx, 'knip', parsed, result);
       if (!Array.isArray(parsed.data?.issues)) failParse(ctx, 'knip', { error: 'missing issues array' }, result);
@@ -239,13 +239,13 @@ function knipTool() {
   };
 }
 
-function executeJscpd(ctx: any, configPath: any, targets: any, label: any) {
+async function executeJscpd(ctx: any, configPath: any, targets: any, label: any) {
   const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), `kubeclaw-jscpd-${label}-`));
   try {
-    const result = requireToolExecution(safeExec('jscpd', [
+    const result = requireToolExecution(await safeExec('jscpd', [
       '--config', configPath, '--output', outputDir, '--exit-code', '0', '--silent',
       '--no-colors', '--no-tips', ...targets,
-    ], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'jscpd');
+    ], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'jscpd');
     const reportPath = path.join(outputDir, 'jscpd-report.json');
     if (!fs.existsSync(reportPath)) failParse(ctx, 'jscpd', { error: 'missing JSON report' }, result);
     const parsed = tryParseJson(fs.readFileSync(reportPath, 'utf8'));
@@ -263,13 +263,13 @@ function jscpdTool() {
     id: 'jscpd',
     name: 'JSCPD',
     binary: 'jscpd',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       if (!ctx.tool.config_path || !fs.existsSync(ctx.tool.config_path)) failConfigMissing('jscpd-config-missing', 'JSCPD requires its exact configured path.');
       const testConfigPath = path.join(path.dirname(ctx.tool.config_path), 'jscpd-tests.json');
       if (!fs.existsSync(testConfigPath)) failConfigMissing('jscpd-test-config-missing', 'JSCPD requires its dedicated test calibration.');
 
-      const productionDuplicates = executeJscpd(ctx, ctx.tool.config_path, configuredTargetPaths(ctx), 'production');
-      const testDuplicates = executeJscpd(ctx, testConfigPath, ['tests'], 'tests');
+      const productionDuplicates = await executeJscpd(ctx, ctx.tool.config_path, configuredTargetPaths(ctx), 'production');
+      const testDuplicates = await executeJscpd(ctx, testConfigPath, ['tests'], 'tests');
       return findingsResult(jscpdFindings({ duplicates: [...productionDuplicates, ...testDuplicates] }, ctx.repoRoot));
     },
   };

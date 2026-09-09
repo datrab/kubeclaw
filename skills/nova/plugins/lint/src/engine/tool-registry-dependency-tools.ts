@@ -13,7 +13,7 @@ registerTool({
   binary: 'mypy',
   tier: 'full',
   detect: (ctx: any) => ctx.projectTypes.has('python'),
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['--output', 'json', '--no-color-output', target];
 
@@ -24,7 +24,7 @@ registerTool({
       args.push('--output', 'json', '--no-color-output', ...pyFiles.map((f: any) => path.join(ctx.repoRoot, f)));
     }
 
-    const result = requireToolExecution(safeExec('mypy', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'mypy');
+    const result = requireToolExecution(await safeExec('mypy', args, { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'mypy');
 
     // mypy JSON output: one JSON object per line
     const findings: any[] = [];

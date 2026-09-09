@@ -66,12 +66,12 @@ function terraformFmtTool() {
     id: 'terraform-fmt',
     name: 'terraform fmt',
     binary: 'terraform',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const roots = affectedTerraformRoots(ctx);
       if (roots.length === 0) return notApplicable('No Terraform root is affected by the requested scope.');
       for (const root of roots) {
-        const result = requireToolExecution(safeExec('terraform', [`-chdir=${root}`, 'fmt', '-check', '-recursive'], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'terraform-fmt');
+        const result = requireToolExecution(await safeExec('terraform', [`-chdir=${root}`, 'fmt', '-check', '-recursive'], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'terraform-fmt');
         const files = result.stdout.split('\n').filter(Boolean);
         if (result.exitCode !== 0 && files.length === 0) failParse(ctx, 'terraform-fmt', { error: 'non-zero exit without file names' }, result, root);
         findings.push(...files.map((file: any) => ({ file: path.resolve(root, file), line: null, column: null, severity: 'error', code: 'terraform-format', message: 'Terraform file is not in canonical terraform fmt format.' })));
@@ -86,26 +86,26 @@ function terraformValidateTool() {
     id: 'terraform-validate',
     name: 'terraform validate',
     binary: 'terraform',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const providerMirror = terraformProviderMirror(ctx);
-      for (const root of terraformRoots(ctx)) validateTerraformRoot(ctx, root, providerMirror, findings);
+      for (const root of terraformRoots(ctx)) await validateTerraformRoot(ctx, root, providerMirror, findings);
       return findingsResult(findings);
     },
   };
 }
 
-function validateTerraformRoot(ctx: any, root: string, providerMirror: string, findings: any[]): void {
+async function validateTerraformRoot(ctx: any, root: string, providerMirror: string, findings: any[]): Promise<void> {
   const findingsBefore = findings.length;
   const lockfile = path.join(root, '.terraform.lock.hcl');
   if (!fs.existsSync(lockfile)) failConfigMissing('terraform-lockfile-missing', `Terraform root requires a committed provider lockfile: ${lockfile}`);
   const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'terraform-lint-data-'));
   try {
     const cliConfig = writeTerraformCliConfig(dataDir, providerMirror);
-    const options = { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms, env: { TF_DATA_DIR: dataDir, TF_CLI_CONFIG_FILE: cliConfig } };
-    const initialized = requireToolExecution(safeExec('terraform', [`-chdir=${root}`, 'init', '-backend=false', '-get=false', '-input=false', '-lockfile=readonly', '-no-color'], options), 'terraform-init');
+    const options = { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms, env: { TF_DATA_DIR: dataDir, TF_CLI_CONFIG_FILE: cliConfig } };
+    const initialized = requireToolExecution(await safeExec('terraform', [`-chdir=${root}`, 'init', '-backend=false', '-get=false', '-input=false', '-lockfile=readonly', '-no-color'], options), 'terraform-init');
     if (initialized.exitCode !== 0) throw Object.assign(new Error(`terraform init -backend=false failed for ${root}: ${commandOutput(initialized).split('\n')[0] || 'no output'}`), { code: 'terraform-init-failed' });
-    const result = requireToolExecution(safeExec('terraform', [`-chdir=${root}`, 'validate', '-json'], options), 'terraform-validate');
+    const result = requireToolExecution(await safeExec('terraform', [`-chdir=${root}`, 'validate', '-json'], options), 'terraform-validate');
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) failParse(ctx, 'terraform-validate', parsed, result, root);
     findings.push(...terraformDiagnostics(parsed.data, root));
@@ -129,16 +129,16 @@ function tflintTool() {
     id: 'tflint',
     name: 'TFLint',
     binary: 'tflint',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
-      for (const root of terraformRoots(ctx)) findings.push(...runTflint(ctx, root));
+      for (const root of terraformRoots(ctx)) findings.push(...await runTflint(ctx, root));
       return findingsResult(findings);
     },
   };
 }
 
-function runTflint(ctx: any, root: string) {
-  const result = requireToolExecution(safeExec('tflint', [`--chdir=${root}`, `--config=${ctx.tool.config_path}`, '--format=json', ...ctx.tool.arguments], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'tflint');
+async function runTflint(ctx: any, root: string) {
+  const result = requireToolExecution(await safeExec('tflint', [`--chdir=${root}`, `--config=${ctx.tool.config_path}`, '--format=json', ...ctx.tool.arguments], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'tflint');
   const parsed = tryParseJson(result.stdout);
   if (!parsed.ok) failParse(ctx, 'tflint', parsed, result, root);
   const findings = (Array.isArray(parsed.data?.issues) ? parsed.data.issues : []).map((issue: any) => ({
@@ -156,16 +156,16 @@ function trivyTerraformTool() {
     id: 'trivy-terraform',
     name: 'Trivy Terraform',
     binary: 'trivy',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
-      for (const root of terraformRoots(ctx)) findings.push(...runTrivyTerraform(ctx, root));
+      for (const root of terraformRoots(ctx)) findings.push(...await runTrivyTerraform(ctx, root));
       return findingsResult(findings);
     },
   };
 }
 
-function runTrivyTerraform(ctx: any, root: string) {
-  const result = requireToolExecution(safeExec('trivy', ['config', '--quiet', '--format', 'json', '--misconfig-scanners', 'terraform', '--severity', 'HIGH,CRITICAL', '--skip-check-update', '--skip-version-check', '--skip-dirs', '.terraform', '--skip-files', '**/*.tfstate*', '--exit-code', '1', ...ctx.tool.arguments, root], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'trivy-terraform');
+async function runTrivyTerraform(ctx: any, root: string) {
+  const result = requireToolExecution(await safeExec('trivy', ['config', '--quiet', '--format', 'json', '--misconfig-scanners', 'terraform', '--severity', 'HIGH,CRITICAL', '--skip-check-update', '--skip-version-check', '--skip-dirs', '.terraform', '--skip-files', '**/*.tfstate*', '--exit-code', '1', ...ctx.tool.arguments, root], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'trivy-terraform');
   const parsed = tryParseJson(result.stdout);
   if (!parsed.ok) failParse(ctx, 'trivy-terraform', parsed, result, root);
   const findings = (Array.isArray(parsed.data?.Results) ? parsed.data.Results : []).flatMap((entry: any) =>

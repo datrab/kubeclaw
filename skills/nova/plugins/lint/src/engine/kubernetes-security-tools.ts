@@ -75,16 +75,16 @@ function trivyFindings(ctx: any, chartDir: any, rendered: any, issues: any) {
   });
 }
 
-function runTrivyKubernetes(ctx: any) {
+async function runTrivyKubernetes(ctx: any) {
   const findings: any[] = [];
   for (const chartDir of configuredMarkerDirectories(ctx, 'Chart.yaml')) {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-trivy-kubernetes-'));
     const manifestPath = path.join(tempDir, 'rendered.yaml');
     try {
-      const rendered = renderChart(ctx, chartDir);
+      const rendered = await renderChart(ctx, chartDir);
       fs.writeFileSync(manifestPath, rendered);
       const args = ['config', '--quiet', '--format', 'json', '--misconfig-scanners', 'kubernetes', '--severity', 'HIGH,CRITICAL', '--skip-check-update', '--skip-version-check', '--exit-code', '1', ...ctx.tool.arguments, manifestPath];
-      const result = requireToolExecution(safeExec('trivy', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'trivy-kubernetes');
+      const result = requireToolExecution(await safeExec('trivy', args, { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'trivy-kubernetes');
       const parsed = tryParseJson(result.stdout);
       if (!parsed.ok) return failParse(ctx, 'trivy-kubernetes', parsed, result, chartDir);
       if (result.exitCode !== 0 && result.exitCode !== 1) return failParse(ctx, 'trivy-kubernetes', { error: `unexpected exit code ${result.exitCode}` }, result, chartDir);

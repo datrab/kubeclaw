@@ -1,16 +1,14 @@
+import { kubeconformTool } from './kubeconform-tool.ts';
 import fs from 'fs';
 import path from 'path';
 
 import { requireToolExecution, safeExec } from './execution.ts';
 import { configuredMarkerDirectories, configuredTargetFilesForScope } from './discovery.ts';
-import { renderChart } from './helm-render.ts';
-import { loadKubernetesResources } from './kubernetes-manifests.ts';
 import { tryParseJson } from './parsers.ts';
 import { failParse } from './report.ts';
 
 import { selectDefinedValue, selectTruthyValue } from '../support/optional-absence.ts';
-import crypto from 'node:crypto';
-import { parseDocument } from 'yaml';
+import { openapiContractTool } from './openapi-tool.ts';
 function jsonResourceItems(data: any) {
   if (Array.isArray(data)) return data;
   return [];
@@ -27,7 +25,7 @@ function hadolintTool() {
     binary: 'hadolint',
     tier: 'full',
     detect: (ctx: any) => ctx.projectTypes.has('docker'),
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const dockerfiles = configuredTargetFilesForScope(ctx, (file: any) => /^Dockerfile|\.dockerfile$/i.test(path.basename(file)));
       if (dockerfiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
@@ -36,7 +34,7 @@ function hadolintTool() {
         const findingsBefore = allFindings.length;
         const sourceLines = fs.readFileSync(dockerfile, 'utf8').split('\n');
         const occurrences = new Map();
-        const result = requireToolExecution(safeExec('hadolint', ['--format', 'json', dockerfile], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'hadolint');
+        const result = requireToolExecution(await safeExec('hadolint', ['--format', 'json', dockerfile], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'hadolint');
         const parsed = tryParseJson(result.stdout);
         if (!parsed.ok) {
           return failParse(ctx, 'hadolint', parsed, result, dockerfile);
@@ -76,13 +74,13 @@ function helmLintTool() {
     binary: 'helm',
     tier: 'full',
     detect: (ctx: any) => ctx.projectTypes.has('helm'),
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const chartDirs = configuredMarkerDirectories(ctx, 'Chart.yaml');
 
       const allFindings: any[] = [];
       for (const chartDir of chartDirs) {
         const findingCountBeforeChart = allFindings.length;
-        const result = requireToolExecution(safeExec('helm', ['lint', '--strict', chartDir], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'helm-lint');
+        const result = requireToolExecution(await safeExec('helm', ['lint', '--strict', chartDir], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'helm-lint');
         const output = result.stdout + result.stderr;
 
         // Parse helm lint output: [ERROR] or [WARNING] lines
@@ -124,96 +122,6 @@ function helmLintTool() {
   };
 }
 
-function kubeconformTool(id = 'kubeconform', includeRaw = false) {
-  return {
-    id,
-    name: includeRaw ? 'Kubernetes schema validation' : 'Kubeconform',
-    binary: 'kubeconform',
-    tier: 'full',
-    detect: (ctx: any) => {
-      const kubernetes = ctx.policyProject?.kubernetes;
-      const explicitInputCount = (Array.isArray(kubernetes?.raw_manifests) ? kubernetes.raw_manifests.length : 0)
-        + (Array.isArray(kubernetes?.helm_charts) ? kubernetes.helm_charts.length : 0);
-      return includeRaw ? explicitInputCount > 0 : ctx.projectTypes.has('helm') && explicitInputCount === 0;
-    },
-    run: (ctx: any) => {
-      const findings: any[] = [];
-      const evidence: any[] = [];
-      const settings = ctx.policyProject.kubernetes;
-      const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject.root);
-      // The migrated Kubernetes lint path owns its pinned local schema source.
-      // The retained generic Helm adapter stays compatible for non-migrated use.
-      const baseArgs = includeRaw
-        ? ['-output', 'json', '-summary', '-strict', '-kubernetes-version', settings.kubernetes_version, '-schema-location', settings.schema_location]
-        : ['-output', 'json', '-summary', '-strict'];
-      if (includeRaw) evidence.push(...loadKubernetesResources(ctx).sources);
-
-      const pushResourceFinding = (item: any) => {
-        if (selectTruthyValue(() => (item?.status === 'statusInvalid'), () => (item?.status === 'statusError'))) {
-          const reportedFile = typeof item.filename === 'string' ? item.filename : '';
-          const relativeFile = path.isAbsolute(reportedFile) ? path.relative(ctx.repoRoot, reportedFile) : reportedFile;
-          const findingFile = relativeFile && !relativeFile.startsWith('..') && !path.isAbsolute(relativeFile)
-            ? relativeFile.split(path.sep).join('/')
-            : '<external>';
-          findings.push({
-            file: findingFile,
-            line: null,
-            column: null,
-            severity: 'error',
-            code: id,
-            message: selectDefinedValue(() => (item.msg), () => (`Invalid K8s manifest: ${findingFile}`)),
-          });
-        }
-      };
-
-      const recordEvidence = (kind: string, source: string, content: string) => {
-        const bytes = Buffer.byteLength(content);
-        evidence.push({ kind, source, sha256: crypto.createHash('sha256').update(content).digest('hex'), bytes, ...(bytes <= 262_144 ? { content } : {}) });
-      };
-
-      if (includeRaw && settings.raw_manifests.length > 0) {
-        const rawFiles = settings.raw_manifests.map((relative: string) => path.resolve(projectRoot, relative));
-        const rawArguments = rawFiles.map((absolute: string) => path.relative(ctx.repoRoot, absolute).split(path.sep).join('/'));
-        const result = requireToolExecution(safeExec('kubeconform', [...baseArgs, ...rawArguments], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'kubeconform');
-        const parsed = tryParseJson(result.stdout);
-        if (!parsed.ok) return failParse(ctx, 'kubeconform', parsed, result, rawFiles[0]);
-        recordEvidence('kubeconform-output', 'raw-manifests', result.stdout);
-        const resources = Array.isArray(parsed.data?.resources) ? parsed.data.resources : [];
-        for (const item of resources) pushResourceFinding(item);
-        if (resources.length === 0 && result.exitCode !== 0) return failParse(ctx, 'kubeconform', { error: 'non-zero exit without parsed resources' }, result, rawFiles[0]);
-      }
-
-      const chartDirs = includeRaw
-        ? settings.helm_charts.map((relative: string) => ({ chartDir: path.resolve(projectRoot, relative), source: relative }))
-        : configuredMarkerDirectories(ctx, 'Chart.yaml').map((chartDir: string) => ({ chartDir, source: path.relative(ctx.repoRoot, chartDir).split(path.sep).join('/') }));
-      for (const { chartDir, source } of chartDirs) {
-        const findingsBefore = findings.length;
-        const rendered = renderChart(ctx, chartDir);
-        if (includeRaw && Buffer.byteLength(rendered) > settings.limits.max_rendered_bytes) throw Object.assign(new Error(`${source} exceeds max_rendered_bytes`), { code: 'kubeconform-render-size-limit' });
-        const result = requireToolExecution(safeExec('kubeconform', [...baseArgs, '-'], {
-          cwd: ctx.repoRoot,
-          timeout: ctx.tool.timeout_ms,
-          input: rendered,
-        }), 'kubeconform');
-        const parsed = tryParseJson(result.stdout);
-        if (!parsed.ok) return failParse(ctx, 'kubeconform', parsed, result, chartDir);
-        if (includeRaw) recordEvidence('kubeconform-output', source, result.stdout);
-        const resources = Array.isArray(parsed.data?.resources) ? parsed.data.resources : [];
-        for (const item of resources) pushResourceFinding(item);
-        if (findings.length === findingsBefore && result.exitCode !== 0) {
-          return failParse(ctx, 'kubeconform', { error: 'non-zero exit without parsed findings' }, result, chartDir);
-        }
-      }
-
-      return {
-        errors: findings.filter((f: any) => f.severity === 'error').length,
-        warnings: findings.filter((f: any) => f.severity === 'warning').length,
-        findings,
-        evidence,
-      };
-    },
-  };
-}
 
 function yamllintTool() {
   return {
@@ -222,13 +130,13 @@ function yamllintTool() {
     binary: 'yamllint',
     tier: 'full',
     detect: (ctx: any) => ctx.projectTypes.has('yaml'),
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const config = ctx.tool.config_path;
       const yamlFiles = configuredTargetFilesForScope(ctx, (file: any) => file.endsWith('.yaml') || file.endsWith('.yml'));
       if (yamlFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
       const args = ['-c', config, '-f', 'parsable', '--strict', ...yamlFiles];
 
-      const result = requireToolExecution(safeExec('yamllint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'yamllint');
+      const result = requireToolExecution(await safeExec('yamllint', args, { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'yamllint');
 
       // parsable format: file:line:col: [level] message (rule)
       const findings: any[] = [];
@@ -255,76 +163,6 @@ function yamllintTool() {
         warnings: findings.filter((f: any) => f.severity === 'warning').length,
         findings,
       };
-    },
-  };
-}
-
-function openapiContractTool() {
-  const filePattern = (file: string) => /(?:^|\/)openapi\.(?:json|ya?ml)$/iu.test(file.split(path.sep).join('/'));
-  const pathItem = (spec: any, value: any): any | null => {
-    let current = value;
-    const seen = new Set<string>();
-    for (let depth = 0; depth < 32; depth += 1) {
-      if (!current || typeof current !== 'object' || Array.isArray(current)) return null;
-      if (current.$ref === undefined) return current;
-      if (typeof current.$ref !== 'string' || !current.$ref.startsWith('#/') || seen.has(current.$ref)) return null;
-      seen.add(current.$ref);
-      let resolved: any = spec;
-      for (const part of current.$ref.slice(2).split('/').map((item: string) => item.replace(/~1/gu, '/').replace(/~0/gu, '~'))) {
-        if (!resolved || typeof resolved !== 'object' || Array.isArray(resolved)
-          || !Object.prototype.hasOwnProperty.call(resolved, part)) return null;
-        resolved = resolved[part];
-      }
-      current = resolved;
-    }
-    return null;
-  };
-  return {
-    id: 'openapi-contract', name: 'OpenAPI contract validation', binary: 'node', tier: 'full',
-    detect: () => true,
-    run: (ctx: any) => {
-      const findings: any[] = [];
-      for (const file of configuredTargetFilesForScope(ctx, filePattern)) {
-        const document = parseDocument(fs.readFileSync(file, 'utf8'), { uniqueKeys: true });
-        for (const error of document.errors) findings.push({ file, line: null, column: null, severity: 'error',
-          code: 'openapi-syntax', message: error.message });
-        if (document.errors.length) continue;
-        let spec: any;
-        try {
-          spec = document.toJS({ maxAliasCount: 0 });
-        } catch (error) {
-          findings.push({ file, line: null, column: null, severity: 'error', code: 'openapi-syntax',
-            message: error instanceof Error ? error.message : 'The contract contains unsupported YAML aliases.' });
-          continue;
-        }
-        if (typeof spec?.openapi !== 'string' || !spec.openapi.startsWith('3.')) findings.push({ file, line: null,
-          column: null, severity: 'error', code: 'openapi-version', message: 'The contract must declare OpenAPI 3.' });
-        if (!spec?.paths || typeof spec.paths !== 'object' || Array.isArray(spec.paths)) findings.push({ file, line: null,
-          column: null, severity: 'error', code: 'openapi-paths', message: 'The contract must declare a paths object.' });
-        const seen = new Set<string>();
-        for (const [route, rawPathItem] of Object.entries(spec?.paths ?? {}) as [string, any][]) {
-          const resolvedPathItem = pathItem(spec, rawPathItem);
-          if (!resolvedPathItem) {
-            findings.push({ file, line: null, column: null, severity: 'error', code: 'openapi-path-item',
-              message: `Path ${route} must be an object or a valid local reference.` });
-            continue;
-          }
-          for (const method of ['delete', 'get', 'head', 'options', 'patch', 'post', 'put']) {
-          const operation = resolvedPathItem[method]; if (!operation) continue;
-          if (typeof operation !== 'object' || Array.isArray(operation)) {
-            findings.push({ file, line: null, column: null, severity: 'error', code: 'openapi-operation',
-              message: `Operation ${method.toUpperCase()} ${route} must be an object.` });
-            continue;
-          }
-          if (typeof operation.operationId !== 'string' || seen.has(operation.operationId)) findings.push({ file, line: null,
-            column: null, severity: 'error', code: 'openapi-operation-id', message: 'Every operation must have a unique operationId.' });
-          else seen.add(operation.operationId);
-          if (!operation.responses || typeof operation.responses !== 'object') findings.push({ file, line: null,
-            column: null, severity: 'error', code: 'openapi-responses', message: `Operation ${String(operation.operationId)} must declare responses.` });
-          }
-        }
-      }
-      return { errors: findings.length, warnings: 0, findings };
     },
   };
 }

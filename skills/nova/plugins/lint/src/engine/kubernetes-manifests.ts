@@ -91,7 +91,7 @@ function parseSource(content: string, source: string, sourceKind: string, limits
   return { resources, documentCount: documents.length };
 }
 
-function loadKubernetesResources(ctx: AnyRecord): { resources: AnyRecord[]; sources: AnyRecord[] } {
+async function loadKubernetesResources(ctx: AnyRecord): Promise<{ resources: AnyRecord[]; sources: AnyRecord[] }> {
   validateKubernetesInputs(ctx);
   const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject.root);
   const settings = ctx.policyProject.kubernetes;
@@ -111,7 +111,7 @@ function loadKubernetesResources(ctx: AnyRecord): { resources: AnyRecord[]; sour
   for (const relative of settings.helm_charts) {
     const absolute = path.resolve(projectRoot, relative);
     if (!inside(projectRoot, absolute)) throw Object.assign(new Error(`Helm chart escapes project root: ${relative}`), { code: 'kubernetes-manifest-path-invalid' });
-    const content = renderChart(ctx, absolute);
+    const content = await renderChart(ctx, absolute);
     const parsed = parseSource(content, relative, 'helm-render', settings.limits);
     resources.push(...parsed.resources);
     documentCount += parsed.documentCount;

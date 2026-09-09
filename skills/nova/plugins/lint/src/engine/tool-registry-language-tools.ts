@@ -26,12 +26,12 @@ registerTool({
   binary: 'tsc',
   tier: 'pre-check',
   detect: (ctx: any) => ctx.projectTypes.has('typescript'),
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const findings: any[] = [];
     const configs = affectedTypeScriptConfigs(ctx);
     if (configs.length === 0) return notApplicable('No configured TypeScript project is affected by the requested scope.');
     for (const config of configs) {
-      const result = requireToolExecution(safeExec('tsc', ['--noEmit', '--pretty', 'false', '--project', config], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'tsc');
+      const result = requireToolExecution(await safeExec('tsc', ['--noEmit', '--pretty', 'false', '--project', config], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'tsc');
       const lines = textValue(result.stdout).split('\n').filter(Boolean);
       const findingsBefore = findings.length;
       for (const line of lines) {
@@ -62,7 +62,7 @@ registerTool({
   binary: 'ruff',
   tier: 'pre-check',
   detect: (ctx: any) => ctx.projectTypes.has('python'),
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['check', '--output-format', 'json', target];
     if (ctx.changedFilesRequested) {
@@ -72,7 +72,7 @@ registerTool({
       args.push('check', '--output-format', 'json', ...pyFiles.map((f: any) => path.join(ctx.repoRoot, f)));
     }
 
-    const result = requireToolExecution(safeExec('ruff', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'ruff');
+    const result = requireToolExecution(await safeExec('ruff', args, { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'ruff');
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return failParse(ctx, 'ruff', parsed, result, target);
 
@@ -99,12 +99,12 @@ registerTool({
   binary: 'shellcheck',
   tier: 'pre-check',
   detect: (ctx: any) => ctx.projectTypes.has('shell'),
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const shellFiles = configuredTargetFilesForScope(ctx, (file: any) => file.endsWith('.sh'));
 
     if (shellFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
 
-    const result = requireToolExecution(safeExec('shellcheck', ['--format', 'json', ...ctx.tool.arguments, ...shellFiles], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'shellcheck');
+    const result = requireToolExecution(await safeExec('shellcheck', ['--format', 'json', ...ctx.tool.arguments, ...shellFiles], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'shellcheck');
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return failParse(ctx, 'shellcheck', parsed, result, ctx.repoRoot);
 
@@ -134,12 +134,12 @@ registerTool({
   binary: 'shfmt',
   tier: 'pre-check',
   detect: (ctx: any) => ctx.projectTypes.has('shell'),
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const shellFiles = configuredTargetFilesForScope(ctx, (file: any) => file.endsWith('.sh'));
     if (shellFiles.length === 0) return { errors: 0, warnings: 0, findings: [] };
     const findings: any[] = [];
     for (const file of shellFiles) {
-      const result = requireToolExecution(safeExec('shfmt', ['-d', ...ctx.tool.arguments, file], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'shfmt');
+      const result = requireToolExecution(await safeExec('shfmt', ['-d', ...ctx.tool.arguments, file], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'shfmt');
       if (result.exitCode === 1 && result.stdout.trim()) {
         findings.push({ file, line: null, column: null, severity: 'error', code: 'shell-format', message: `Shell file is not in canonical shfmt format. Run shfmt -w ${ctx.tool.arguments.join(' ')} on this file.` });
       } else if (result.exitCode !== 0) {
@@ -157,7 +157,7 @@ registerTool({
   binary: 'eslint',
   tier: 'full',
   detect: isJavaScriptOrTypeScriptProject,
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const target = ctx.modulePath ? path.join(ctx.repoRoot, ctx.modulePath) : ctx.repoRoot;
     const args = ['--format', 'json', '--no-error-on-unmatched-pattern'];
 
@@ -177,7 +177,7 @@ registerTool({
       args.push(...configuredTargetPaths(ctx));
     }
 
-    const result = requireToolExecution(safeExec('eslint', args, { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'eslint');
+    const result = requireToolExecution(await safeExec('eslint', args, { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'eslint');
     const parsed = tryParseJson(result.stdout);
     if (!parsed.ok) return failParse(ctx, 'eslint', parsed, result, target);
 

@@ -144,10 +144,10 @@ function gofmtTool() {
     id: 'gofmt',
     name: 'gofmt',
     binary: 'gofmt',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const files = goFiles(ctx);
       if (files.length === 0) return notApplicable('No Go files match the requested scope.');
-      const result = requireToolExecution(safeExec('gofmt', ['-l', ...files], { cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'gofmt');
+      const result = requireToolExecution(await safeExec('gofmt', ['-l', ...files], { signal: ctx.signal, cwd: ctx.repoRoot, timeout: ctx.tool.timeout_ms }), 'gofmt');
       if (result.exitCode !== 0) failParse(ctx, 'gofmt', { error: 'format check failed' }, result, ctx.repoRoot);
       const findings = result.stdout.split('\n').filter(Boolean).map((file: any) => ({
         file,
@@ -167,13 +167,13 @@ function goVetTool() {
     id: 'go-vet',
     name: 'go vet',
     binary: 'go',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const modules = affectedModuleDirectories(ctx);
       if (modules.length === 0) return notApplicable('No Go module is affected by the requested scope.');
       for (const moduleRoot of modules) {
         const findingsBefore = findings.length;
-        const result = requireToolExecution(safeExec('go', ['vet', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'go-vet');
+        const result = requireToolExecution(await safeExec('go', ['vet', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { signal: ctx.signal, cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'go-vet');
         for (const line of commandOutput(result).split('\n').filter(Boolean)) {
           const finding = parseGoDiagnostic(line, moduleRoot, 'go-vet');
           if (finding) findings.push(finding);
@@ -190,12 +190,12 @@ function gocycloTool() {
     id: 'gocyclo',
     name: 'gocyclo',
     binary: 'gocyclo',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const modules = affectedModuleDirectories(ctx);
       if (modules.length === 0) return notApplicable('No Go module is affected by the requested scope.');
       for (const moduleRoot of modules) {
-        const result = requireToolExecution(safeExec('gocyclo', [...ctx.tool.arguments, moduleRoot], { cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'gocyclo');
+        const result = requireToolExecution(await safeExec('gocyclo', [...ctx.tool.arguments, moduleRoot], { signal: ctx.signal, cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'gocyclo');
         for (const line of result.stdout.split('\n').filter(Boolean)) {
           const match = line.match(/^(\d+)\s+(\S+)\s+(\S+)\s+(.+?\.go):(\d+):(\d+)$/);
           if (!match) failParse(ctx, 'gocyclo', { error: 'unrecognized complexity finding' }, result, moduleRoot);
@@ -223,13 +223,13 @@ function goImportsTool() {
     id: 'go-imports',
     name: 'Go Import Boundaries',
     binary: 'go',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const modules = affectedModuleDirectories(ctx);
       if (modules.length === 0) return notApplicable('No Go module is affected by the requested scope.');
       for (const moduleRoot of modules) {
         const settings = goModuleSettings(ctx, moduleRoot);
-        const result = requireToolExecution(safeExec('go', ['list', '-json', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'go-imports');
+        const result = requireToolExecution(await safeExec('go', ['list', '-json', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { signal: ctx.signal, cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'go-imports');
         const packages = parseJsonStream(ctx, 'go-imports', result, moduleRoot);
         if (result.exitCode !== 0) {
           throw Object.assign(new Error(`go list failed for ${moduleRoot}: ${commandOutput(result).split('\n')[0] || 'non-zero exit'}`), { code: 'go-imports-execution-failed' });
@@ -246,12 +246,12 @@ function staticcheckTool() {
     id: 'staticcheck',
     name: 'Staticcheck',
     binary: 'staticcheck',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const modules = affectedModuleDirectories(ctx);
       if (modules.length === 0) return notApplicable('No Go module is affected by the requested scope.');
       for (const moduleRoot of modules) {
-        const result = requireToolExecution(safeExec('staticcheck', ['-f', 'json', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'staticcheck');
+        const result = requireToolExecution(await safeExec('staticcheck', ['-f', 'json', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { signal: ctx.signal, cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'staticcheck');
         for (const item of parseJsonLines(ctx, 'staticcheck', result, moduleRoot)) {
           findings.push({
             file: path.resolve(moduleRoot, item.location?.file || ''),
@@ -273,12 +273,12 @@ function govulncheckTool() {
     id: 'govulncheck',
     name: 'govulncheck',
     binary: 'govulncheck',
-    run: (ctx: any) => {
+    run: async (ctx: any) => {
       const findings: any[] = [];
       const modules = affectedModuleDirectories(ctx);
       if (modules.length === 0) return notApplicable('No Go module is affected by the requested scope.');
       for (const moduleRoot of modules) {
-        const result = requireToolExecution(safeExec('govulncheck', ['-format', 'json', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'govulncheck');
+        const result = requireToolExecution(await safeExec('govulncheck', ['-format', 'json', ...goBuildTagArguments(ctx, moduleRoot), ...ctx.tool.arguments], { signal: ctx.signal, cwd: moduleRoot, timeout: ctx.tool.timeout_ms }), 'govulncheck');
         const messages = parseJsonStream(ctx, 'govulncheck', result, moduleRoot);
         // Pinned govulncheck JSON mode exits 0 even when findings exist; any
         // nonzero exit is therefore an operational failure, not finding state.

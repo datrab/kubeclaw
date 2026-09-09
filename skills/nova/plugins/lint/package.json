@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/live-function.test.ts"
+    "test": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts",
+    "test:remediation": "node --test tests/remediation.test.mjs"
   },
   "dependencies": {
     "@kubeclaw/plugin-sdk": "*",

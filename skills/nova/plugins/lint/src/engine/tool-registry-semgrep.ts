@@ -81,7 +81,7 @@ registerTool({
   binary: 'semgrep',
   tier: 'full',
   detect: () => true,
-  run: (ctx: any) => {
+  run: async (ctx: any) => {
     const target = ctx.modulePath
       ? path.join(ctx.repoRoot, ctx.modulePath)
       : ctx.repoRoot;
@@ -93,11 +93,11 @@ registerTool({
       );
     }
     log('INFO', `Semgrep using config: ${config}`);
-    const result = requireToolExecution(safeExec(
+    const result = requireToolExecution(await safeExec(
       'semgrep',
       semgrepArgs(ctx, config),
       {
-        cwd: ctx.repoRoot,
+        signal: ctx.signal, cwd: ctx.repoRoot,
         timeout: ctx.tool.timeout_ms,
         env: {
           SEMGREP_LOG_FILE: path.join(

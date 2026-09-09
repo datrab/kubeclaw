@@ -1,3 +1,4 @@
+import { requireRepositoryPath } from './paths.ts';
 import fs from 'fs';
 import path from 'path';
 
@@ -62,14 +63,14 @@ function isPolicyIgnoredFile(filePath: any) {
 }
 
 function configuredTargetPaths(ctx: any, tool: any = ctx.tool) {
-  const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
-  return tool.targets.map((target: any) => path.resolve(projectRoot, target));
+  const projectRoot = requireRepositoryPath(ctx.repoRoot, path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.'));
+  return tool.targets.map((target: any) => requireRepositoryPath(ctx.repoRoot, path.resolve(projectRoot, target)));
 }
 
 function findPolicyTargetFiles(directory: any, projectRoot: any, globalExclusions: any) {
   const files: any[] = [];
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    const absolute = path.join(directory, entry.name);
+    const absolute = requireRepositoryPath(projectRoot, path.join(directory, entry.name));
     const relative = path.relative(projectRoot, absolute).split(path.sep).join('/');
     if (entry.isFile()) {
       files.push(absolute);
@@ -84,7 +85,7 @@ function findPolicyTargetFiles(directory: any, projectRoot: any, globalExclusion
 }
 
 function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
-  const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
+  const projectRoot = requireRepositoryPath(ctx.repoRoot, path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.'));
   const candidates: any[] = [];
   for (const target of configuredTargetPaths(ctx)) {
     const stat = fs.statSync(target);
@@ -102,9 +103,9 @@ function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
 
 function configuredTargetFilesForScope(ctx: any, predicate: any = () => true) {
   if (!ctx.changedFilesRequested) return listConfiguredTargetFiles(ctx, predicate);
-  const projectRoot = path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.');
+  const projectRoot = requireRepositoryPath(ctx.repoRoot, path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.'));
   return [...new Set(ctx.changedFiles
-    .map((file: any) => path.isAbsolute(file) ? file : path.join(ctx.repoRoot, file))
+    .map((file: any) => requireRepositoryPath(ctx.repoRoot, path.isAbsolute(file) ? file : path.join(ctx.repoRoot, file)))
     .filter((file: any) => fs.existsSync(file)))]
     .filter((file: any) => {
       const relative = path.relative(projectRoot, file).split(path.sep).join('/');
@@ -127,7 +128,7 @@ function configuredMarkerDirectories(ctx: any, markerName: any) {
  * @returns {{ types: Set<string>, markers: object }}
  */
 function detectProjectTypes(repoRoot: any, project: any, globalExclusions: any = []) {
-  const scanRoot = path.resolve(repoRoot, project.root);
+  const scanRoot = requireRepositoryPath(repoRoot, path.resolve(repoRoot, project.root));
   const types = new Set();
   const markers: any = {};
 
@@ -194,6 +195,7 @@ function resolveScope(ctx: any) {
     // Verify files exist (forge_diff_stat may reference files that were deleted)
     const existing = ctx.changedFiles.filter((f: any) => {
       const abs = path.isAbsolute(f) ? f : path.join(ctx.repoRoot, f);
+      requireRepositoryPath(ctx.repoRoot, abs);
       return fs.existsSync(abs);
     });
     log('INFO', `Scope: ${existing.length} changed files (${ctx.changedFiles.length} requested)`);
