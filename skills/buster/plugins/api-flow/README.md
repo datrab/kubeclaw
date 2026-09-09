@@ -16,3 +16,11 @@ Run the real local HTTP and WebSocket verification with:
 npm test --prefix skills/buster/plugins/api-flow
 ```
 
+
+A passing flow requires at least one executed main `steps` request. Setup and
+cleanup alone do not establish main-step coverage; unresolved dependency skips
+remain skipped and produce a separate coverage finding when every main step is
+skipped. An independent main step can still execute after a dependency skip.
+Capability errors remain execution errors: further main requests stop, cleanup
+is attempted, and the original error is rethrown. Caller cancellation takes
+precedence and stops further requests, including cleanup.

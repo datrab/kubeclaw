@@ -93,4 +93,22 @@ assert.throws(() => adapt({ ...input(''), bytes: Buffer.concat([
   Buffer.from([0xef, 0xbb, 0xbf, 0x20]), Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from('<testsuite/>'),
 ]) }), /JUNIT_BOM_INVALID/u);
 
+// XML permits only S (space, tab, CR, LF) between attributes, and requires it.
+for (const separator of [' ', '\t', '\r', '\n', ' \t\r\n']) {
+  const result = adapt(input(`<testsuite><testcase name='spaced'${separator}time = "1"/></testsuite>`));
+  assert.equal(result.counts.passed, 1);
+  assert.equal(result.cases[0].durationMs, 1000);
+}
+for (const separator of ['', '\u00a0', '\u2003']) {
+  assert.throws(() => adapt(input(`<testsuite><testcase name="a"${separator}time="1"/></testsuite>`)),
+    /JUNIT_XML_ATTRIBUTE_INVALID/u);
+}
+assert.throws(() => adapt(input('<testsuite><testcase name\u00a0="a"/></testsuite>')),
+  /JUNIT_XML_ATTRIBUTE_INVALID/u);
+assert.throws(() => adapt(input('<testsuite><testcase name=\u00a0"a"/></testsuite>')),
+  /JUNIT_XML_ATTRIBUTE_INVALID/u);
+// A capture cap must never hide malformed XML later in the document.
+assert.throws(() => adapt(input('<testsuite><testcase name="first"/><testcase name="a"time="1"/></testsuite>',
+  { maximumCases: 1 })), /JUNIT_XML_ATTRIBUTE_INVALID/u);
+
 console.log(JSON.stringify({ ok: true, dialects: ['junit', 'pytest'], bounded: true, safeXml: true }));

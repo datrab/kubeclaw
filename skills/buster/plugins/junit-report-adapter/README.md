@@ -36,3 +36,8 @@ Case durations use decimal seconds and cannot exceed 30 days.
 
 There is no project configuration. A provider declares a JUnit report. The
 resolved test plan selects this adapter or another registered JUnit adapter.
+
+Attributes require XML whitespace (space, tab, carriage return, or line feed)
+between their quoted values and subsequent names. Missing separators and Unicode
+spacing outside that set are rejected. Validation continues beyond capture caps;
+truncating retained cases never makes malformed XML acceptable.

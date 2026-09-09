@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import { fileURLToPath } from 'node:url';
+import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
 import { provider } from '../src/provider.js';
 
@@ -68,9 +70,36 @@ try {
   const publicEndpoint = { name: 'endpoint', kind: 'value', schemaId: 'kubeclaw.public-endpoint-fixture@1',
     value: { schemaVersion: 'public-endpoint-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), provider: 'tailscale-ingress',
       url: `${origin}/ok`, hostname: 'preview.example.ts.net' } };
-  const publicLinked = await provider().execute(invocation({}, 'public-linked', [publicEndpoint]), context());
+  const pluginRoot = fileURLToPath(new URL('../../', import.meta.url));
+  const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
+    trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
+    verifierId: 'http-endpoint-remediation',
+  } }));
+  const limits = { cpuMillis: 1000, memoryBytes: 64 * 1024 * 1024, logBytes: 1024 * 1024,
+    artifactBytes: 1024 * 1024, artifactFiles: 1, processes: 1 };
+  function resolved(values: Record<string, any>) {
+    return resolveTestPlan({ planId: 'plan:http-resolved', runId: 'run:http-resolved', project: 'http',
+      scope: { moduleId: 'app', gateId: null }, createdAt: '2026-09-09T00:00:00.000Z',
+      declaration: { tests: { health: { uses: 'kubeclaw.http@1', mode: 'blocking', config: values } } },
+      suiteTemplates: [], registry, facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' },
+      policy: { defaultTimeoutMs: 1000, maximumTimeoutMs: 1000, defaultLimits: limits, maximumLimits: limits,
+        maximumRetryCount: 1, maximumMatrixSize: 1, maximumNodes: 1, defaultConcurrencyLimit: 1,
+        maximumConcurrencyLimits: {} } }).nodes[0].configuration.values;
+  }
+  const resolvedConfig = resolved({});
+  assert.equal(Object.hasOwn(resolvedConfig, 'path'), false);
+  const publicLinked = await provider().execute(invocation(resolvedConfig, 'public-linked', [publicEndpoint]), context());
   assert.equal(publicLinked.outcome, 'passed');
   assert.equal(publicLinked.providerDetails.values.url, `${origin}/ok`);
+  const override = await provider().execute(invocation(resolved({ path: '/missing', expectedStatuses: [404] }),
+    'resolved-override', [publicEndpoint]), context());
+  assert.equal(override.outcome, 'passed');
+  assert.equal(override.providerDetails.values.url, `${origin}/missing`);
+  const rootDefault = await provider().execute(invocation(resolved({ url: origin, expectedStatuses: [503] }),
+    'resolved-root'), context());
+  assert.equal(rootDefault.outcome, 'passed');
+  assert.equal(rootDefault.providerDetails.values.url, `${origin}/`);
+
 
   const timeout = await provider().execute(invocation({ url: origin, path: '/slow', requestTimeoutMs: 25 }, 'timeout'), context());
   assert.equal(timeout.outcome, 'failed');

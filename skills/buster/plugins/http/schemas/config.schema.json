@@ -5,7 +5,7 @@
   "properties": {
     "url": { "type": "string", "minLength": 1, "maxLength": 2048 },
     "endpointName": { "type": "string", "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$" },
-    "path": { "type": "string", "pattern": "^/(?!/)", "maxLength": 2048, "default": "/" },
+    "path": { "type": "string", "pattern": "^/(?!/)", "maxLength": 2048 },
     "method": { "enum": ["GET", "HEAD"], "default": "GET" },
     "accept": { "type": "string", "minLength": 1, "maxLength": 512, "pattern": "^[^\\r\\n]+$", "default": "*/*" },
     "expectedStatuses": {

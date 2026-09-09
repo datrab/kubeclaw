@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { assertSupportedSchema } from './schema-support.js';
 
 const METHODS = ['delete', 'get', 'head', 'options', 'patch', 'post', 'put'];
 function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }
@@ -63,6 +64,7 @@ function safePattern(source) {
   try { return new RegExp(source, 'u'); } catch { throw new Error('OPENAPI_SCHEMA_PATTERN_INVALID'); }
 }
 function schemaFailures(value, rawSchema, label, spec, depth = 0) {
+  if (depth === 0) assertSupportedSchema(rawSchema, spec, resolveSchema);
   if (rawSchema === undefined || rawSchema === null || rawSchema === true) return [];
   if (rawSchema === false) return [`${label} is denied by the schema.`];
   if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');
@@ -75,7 +77,7 @@ function schemaFailures(value, rawSchema, label, spec, depth = 0) {
   if (Array.isArray(schema.allOf)) for (const child of schema.allOf) failures.push(...schemaFailures(value, child, label, spec, depth + 1));
   if (Array.isArray(schema.anyOf) && !schema.anyOf.some((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0)) failures.push(`${label} does not match any allowed schema.`);
   if (Array.isArray(schema.oneOf) && schema.oneOf.filter((child) => schemaFailures(value, child, label, spec, depth + 1).length === 0).length !== 1) failures.push(`${label} must match exactly one allowed schema.`);
-  if (schema.not && schemaFailures(value, schema.not, label, spec, depth + 1).length === 0) failures.push(`${label} matches a denied schema.`);
+  if (schema.not !== undefined && schemaFailures(value, schema.not, label, spec, depth + 1).length === 0) failures.push(`${label} matches a denied schema.`);
   const actual = Array.isArray(value) ? 'array' : value === null ? 'null' : Number.isInteger(value) ? 'integer' : typeof value;
   const types = schema.type === undefined ? [] : Array.isArray(schema.type) ? schema.type : [schema.type];
   if (types.length && !types.includes(actual) && !(actual === 'integer' && types.includes('number'))) return [...failures, `${label} must have type ${types.join(' or ')}.`];
@@ -102,7 +104,7 @@ function schemaFailures(value, rawSchema, label, spec, depth = 0) {
     if (schema.uniqueItems && value.some((item, index) => value.slice(0, index).some((prior) => same(item, prior)))) {
       failures.push(`${label} has duplicate items.`);
     }
-    if (schema.items) value.forEach((item, index) => failures.push(...schemaFailures(item, schema.items, `${label}[${index}]`, spec, depth + 1)));
+    if (schema.items !== undefined) value.forEach((item, index) => failures.push(...schemaFailures(item, schema.items, `${label}[${index}]`, spec, depth + 1)));
   }
   if (value && typeof value === 'object' && !Array.isArray(value)) {
     const propertyCount = Object.keys(value).length;
@@ -190,7 +192,7 @@ export function provider() { return { async execute(invocation, context) {
   const repositoryPath = path.resolve(workspace, invocation.workspace.repository); if (!repositoryPath.startsWith(`${workspace}${path.sep}`)) throw new Error('OPENAPI_WORKSPACE_INVALID');
   const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');
   let spec; try { spec = JSON.parse(bytes.toString('utf8')); } catch { throw new Error('OPENAPI_FILE_INVALID'); }
-  if (typeof spec?.openapi !== 'string' || !spec.openapi.startsWith('3.')) throw new Error('OPENAPI_VERSION_UNSUPPORTED');
+  if (typeof spec?.openapi !== 'string' || !/^3\.[01]\./u.test(spec.openapi)) throw new Error('OPENAPI_VERSION_UNSUPPORTED');
   const catalog = operations(spec); const explicit = Array.isArray(config.operations) ? config.operations : []; const tags = new Set(config.tags ?? []);
   const explicitIds = new Set(explicit.map((item) => item.operationId));
   const tagged = [...catalog.entries()].filter(([operationId, found]) => !explicitIds.has(operationId)
@@ -199,7 +201,14 @@ export function provider() { return { async execute(invocation, context) {
     .sort((left, right) => Number(Boolean(left.cleanup)) - Number(Boolean(right.cleanup)));
   if (!selections.length) throw new Error('OPENAPI_SELECTION_EMPTY'); if (selections.length > 128) throw new Error('OPENAPI_SELECTION_LIMIT_EXCEEDED');
   const base = endpoint(invocation, config); const records = [];
+  const execution = { failed: false, error: undefined };
+  async function invoke(request) {
+    try { return await context.invoke('network.http', request); }
+    catch (error) { if (!execution.failed) { execution.failed = true; execution.error = error; } throw error; }
+  }
   for (const selected of selections) {
+    context.signal.throwIfAborted();
+    if (execution.failed && !selected.cleanup) continue;
     const started = Date.now(); const failures = []; let response = { status: null, body: '', headers: {} };
     try {
     const found = catalog.get(selected.operationId); if (!found) throw new Error(`OPENAPI_OPERATION_NOT_FOUND:${selected.operationId}`);
@@ -210,7 +219,7 @@ export function provider() { return { async execute(invocation, context) {
     for (const [name, value] of Object.entries(selected.query ?? {})) url.searchParams.set(name, String(value));
     const requestBody = found.operation.requestBody ? resolveSchema(spec, found.operation.requestBody) : null;
     const requestMedia = requestBody?.content?.['application/json'];
-    const requestSchema = resolveSchema(spec, requestMedia?.schema);
+    const requestSchema = requestMedia?.schema;
     failures.push(...validateParameters(found, selected, spec));
     if (selected.body !== undefined && Object.keys(selected.headers ?? {}).some((name) => name.toLowerCase() === 'content-type')) {
       failures.push('The content-type request header is provider-controlled.');
@@ -218,16 +227,17 @@ export function provider() { return { async execute(invocation, context) {
     if (selected.body !== undefined && requestMedia === undefined) failures.push('A JSON request body is not declared.');
     else if (selected.body !== undefined && requestSchema !== undefined) failures.push(...schemaFailures(selected.body, requestSchema, 'request', spec));
     else if (selected.body === undefined && requestBody?.required === true) failures.push('A request body is required.');
-    if (!failures.length) try {
+    if (!failures.length) {
       const responseRules = Object.values(found.operation.responses ?? {}).map((entry) => resolveSchema(spec, entry));
       const responseHeaders = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.headers ?? {}))
         .map((name) => name.toLowerCase()))];
       const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];
-      response = await context.invoke('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });
+      response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });
+      context.signal.throwIfAborted();
       const rule = responseRule(spec, found.operation, response.status); if (!rule) failures.push(`Status ${response.status} is not documented.`);
       if (selected.expectedStatuses && !selected.expectedStatuses.includes(response.status)) failures.push(`Status ${response.status} is not expected.`);
       const contentType = response.headers?.['content-type']; const media = responseMedia(rule?.content, contentType);
-      const declared = resolveSchema(spec, media?.schema);
+      const declared = media?.schema;
       if (rule?.content && media === undefined) failures.push(`Content type ${String(contentType)} is not documented.`);
       if (declared !== undefined) {
         let body = response.body;
@@ -242,9 +252,11 @@ export function provider() { return { async execute(invocation, context) {
         if (value !== null && value !== undefined && header.schema !== undefined) failures.push(...schemaFailures(
           deserializeWireValue(value, header.schema, spec), header.schema, `response header ${name}`, spec));
       }
-    } catch (error) { failures.push(error instanceof Error ? error.message : String(error)); }
-    } catch (error) { failures.push(error instanceof Error ? error.message : String(error)); }
+    }
+    } catch (error) { context.signal.throwIfAborted(); if (execution.failed) continue; failures.push(error instanceof Error ? error.message : String(error)); }
     records.push({ operationId: selected.operationId, status: response.status, durationMs: Date.now() - started, failures });
   }
+  context.signal.throwIfAborted();
+  if (execution.failed) throw execution.error;
   const evidenceFile = 'openapi-runtime-result.json'; fs.writeFileSync(path.join(path.resolve(workspace, invocation.workspace.evidence), evidenceFile), `${JSON.stringify({ schemaVersion: 'kubeclaw.openapi-runtime-evidence.v1', records }, null, 2)}\n`); return output(invocation, records, evidenceFile);
 } }; }

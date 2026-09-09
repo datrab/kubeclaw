@@ -65,16 +65,18 @@ function parseAttributes(source) {
   const attributes = Object.create(null);
   let offset = 0;
   while (offset < source.length) {
-    while (/\s/u.test(source[offset] ?? '')) offset += 1;
+    const separatorStart = offset;
+    while (/[ \t\r\n]/u.test(source[offset] ?? '')) offset += 1;
     if (offset >= source.length) break;
+    if (offset === separatorStart) throw new Error('JUNIT_XML_ATTRIBUTE_INVALID');
     const match = XML_NAME.exec(source.slice(offset));
     if (!match) throw new Error('JUNIT_XML_ATTRIBUTE_INVALID');
     const name = match[0];
     offset += name.length;
-    while (/\s/u.test(source[offset] ?? '')) offset += 1;
+    while (/[ \t\r\n]/u.test(source[offset] ?? '')) offset += 1;
     if (source[offset] !== '=') throw new Error('JUNIT_XML_ATTRIBUTE_INVALID');
     offset += 1;
-    while (/\s/u.test(source[offset] ?? '')) offset += 1;
+    while (/[ \t\r\n]/u.test(source[offset] ?? '')) offset += 1;
     const quote = source[offset];
     if (quote !== '"' && quote !== "'") throw new Error('JUNIT_XML_ATTRIBUTE_INVALID');
     offset += 1;

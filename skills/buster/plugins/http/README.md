@@ -11,3 +11,7 @@ Run its verification with:
 ```bash
 npm test --prefix skills/buster/plugins/http
 ```
+
+The configuration schema intentionally does not default `path`. After plan
+resolution an omitted path retains a linked public endpoint's URL path. An
+explicit path overrides it; a target origin without a path still uses `/`.

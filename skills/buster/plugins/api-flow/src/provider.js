@@ -113,24 +113,38 @@ function failures(expect, response, websocket) {
   if (expect.json !== undefined) { let body; try { body = JSON.parse(response.body); } catch { return [...result, 'The response body was not valid JSON.']; } for (const [selector, expected] of Object.entries(expect.json)) if (!sameJson(byPath(body, selector), expected)) result.push(`JSON value ${selector} did not match.`); }
   return result;
 }
-function output(invocation, records, evidenceFile) {
+function output(invocation, records, evidenceFile, executedMainSteps) {
   const findings = records.flatMap((record) => record.failures.map((message) => ({ id: `api-flow:${invocation.testIdentity}:${record.id}:${crypto.createHash('sha256').update(message).digest('hex').slice(0, 12)}`, severity: 'high', message, rule: 'api-flow.assertion' })));
+  if (executedMainSteps === 0) findings.push({ id: `api-flow:${invocation.testIdentity}:coverage`, severity: 'high',
+    message: 'No main API flow step executed; setup, cleanup, and dependency skips do not prove coverage.', rule: 'api-flow.coverage' });
   const passed = records.filter((item) => item.state === 'passed').length; const skipped = records.filter((item) => item.state === 'skipped').length;
   return { schemaVersion: 'provider-result.v1', outcome: findings.length ? 'failed' : 'passed', summary: findings.length ? `${findings.length} API flow assertion(s) failed.` : `${passed} API flow step(s) passed.`, counts: { total: records.length, passed, failed: records.length - passed - skipped, skipped }, findings, metrics: [], evidenceFiles: [{ evidenceId: 'api-flow-report', type: 'test-report', file: evidenceFile, mediaType: 'application/vnd.kubeclaw.api-flow+json' }], reports: [], outputs: [], exitCode: null, signal: null, providerDetails: { schemaId: 'kubeclaw.api-flow-details.v1', schemaDigest: `sha256:${crypto.createHash('sha256').update('kubeclaw.api-flow-details.v1').digest('hex')}`, values: { steps: records.map(({ id, state, status, durationMs }) => ({ id, state, status, durationMs })) } } };
 }
 export function provider() { return { async execute(invocation, context) {
   const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));
-  const base = endpoint(invocation, config); const records = [];
-  for (const [group, items] of flow.groups) for (const step of items) {
+  const base = endpoint(invocation, config); const records = []; let executedMainSteps = 0;
+  const execution = { failed: false, error: undefined };
+  async function invoke(request) {
+    try { return await context.invoke('network.http', request); }
+    catch (error) { if (!execution.failed) { execution.failed = true; execution.error = error; } throw error; }
+  }
+  const steps = flow.groups.flatMap(([group, items]) => items.map((step) => ({ group, step })));
+  for (const { group, step } of steps) {
+    context.signal.throwIfAborted();
+    if (execution.failed && group !== 'cleanup') continue;
     const started = Date.now(); let response;
     try {
       const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');
-      if (step.protocol === 'websocket') response = await context.invoke('network.http', { operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });
-      else response = await context.invoke('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });
+      if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });
+      else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });
+      context.signal.throwIfAborted();
+      if (group === 'steps') executedMainSteps += 1;
       const stepFailures = failures(step.expect ?? {}, response, step.protocol === 'websocket');
       if (!stepFailures.length && step.extract) { let body; try { body = JSON.parse(response.body); } catch { stepFailures.push('The response body was not valid JSON for extraction.'); } if (body !== undefined) for (const [name, selector] of Object.entries(step.extract)) { const value = byPath(body, selector); if (value === undefined) stepFailures.push(`Extraction ${name} did not find ${selector}.`); else flow.variables[name] = String(value); } }
       records.push({ id: step.id, state: stepFailures.length ? 'failed' : 'passed', status: response.status ?? null, durationMs: Date.now() - started, failures: stepFailures });
-    } catch (error) { const message = error instanceof Error ? error.message : String(error); if (group === 'steps' && message.startsWith('API_FLOW_VARIABLE_MISSING:')) records.push({ id: step.id, state: 'skipped', status: null, durationMs: Date.now() - started, failures: [] }); else records.push({ id: step.id, state: 'failed', status: null, durationMs: Date.now() - started, failures: [message] }); }
+    } catch (error) { context.signal.throwIfAborted(); if (execution.failed) continue; const message = error instanceof Error ? error.message : String(error); if (group === 'steps' && message.startsWith('API_FLOW_VARIABLE_MISSING:')) records.push({ id: step.id, state: 'skipped', status: null, durationMs: Date.now() - started, failures: [] }); else records.push({ id: step.id, state: 'failed', status: null, durationMs: Date.now() - started, failures: [message] }); }
   }
-  const evidenceFile = 'api-flow-result.json'; fs.writeFileSync(path.join(path.resolve(context.workspaceRoot, invocation.workspace.evidence), evidenceFile), `${JSON.stringify({ schemaVersion: 'kubeclaw.api-flow-evidence.v1', records }, null, 2)}\n`); return output(invocation, records, evidenceFile);
+  context.signal.throwIfAborted();
+  if (execution.failed) throw execution.error;
+  const evidenceFile = 'api-flow-result.json'; fs.writeFileSync(path.join(path.resolve(context.workspaceRoot, invocation.workspace.evidence), evidenceFile), `${JSON.stringify({ schemaVersion: 'kubeclaw.api-flow-evidence.v1', records }, null, 2)}\n`); return output(invocation, records, evidenceFile, executedMainSteps);
 } }; }

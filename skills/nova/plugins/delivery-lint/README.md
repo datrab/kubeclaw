@@ -41,3 +41,15 @@ forward to the retained v1 validator, and runs the stage through the real v2
 registry, repository adapter, artifact adapter, effect journal, and pipeline
 runner. The live function test uses temporary files only and never spawns an
 agent or invokes the E2E harness.
+
+Static-path checks parse COPY shell/JSON argument forms, multiple sources,
+continuations, flags, literal WORKDIR changes, and final-stage destinations.
+A prior named stage inherited by FROM retains its known destinations. Earlier
+builder-stage copies alone cannot satisfy a final-stage destination check.
+Malformed or unresolved variable paths and heredocs produce an explicit
+`delivery_lint.static_path_unverifiable` finding rather than a guessed match.
+
+This is a lexical check, not Docker build or image filesystem verification.
+External base-image WORKDIR/filesystem metadata is unavailable and the initial
+lexical path anchor is `/`; RUN filesystem mutations and COPY source existence
+are not verified. A matching destination does not prove the image serves files.

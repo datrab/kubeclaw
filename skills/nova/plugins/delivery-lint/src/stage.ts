@@ -1,3 +1,4 @@
+import { matchesStaticPath } from './dockerfile.ts';
 import type {
   ArtifactRef,
   PluginInvocationContext,
@@ -30,12 +31,6 @@ function safeContainerPath(value: string): string {
   return value.replaceAll('\\', '/');
 }
 
-function copyDestinations(dockerfile: string): readonly string[] {
-  return dockerfile.split('\n').flatMap((line) => {
-    const match = line.trim().match(/^COPY(?:\s+--\S+)*\s+\S+\s+(\S+)/i);
-    return match?.[1] ? [match[1].replace(/\/$/, '')] : [];
-  });
-}
 
 function artifactRef(value: Readonly<Record<string, unknown>>): ArtifactRef {
   const artifact = value.artifact;
@@ -90,9 +85,14 @@ async function readDockerfile(
 }
 
 function staticPathFailures(content: string, staticPath: string | null): readonly Failure[] {
-  const normalizedStatic = staticPath?.replace(/\/$/, '') ?? null;
-  const destinations = copyDestinations(content);
-  if (normalizedStatic === null || destinations.length === 0 || destinations.includes(normalizedStatic)) return [];
+  if (staticPath === null) return [];
+  try {
+    if (matchesStaticPath(content, staticPath)) return [];
+  } catch (error) {
+    return [{ code: 'delivery_lint.static_path_unverifiable',
+      message: error instanceof Error ? error.message : String(error),
+      nextStep: 'Use literal COPY destinations and WORKDIR paths that can be checked statically.' }];
+  }
   return [{
     code: 'delivery_lint.static_path_mismatch',
     message: `No Dockerfile COPY destination matches '${staticPath}'.`,

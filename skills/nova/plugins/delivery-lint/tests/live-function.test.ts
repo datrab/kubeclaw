@@ -126,6 +126,26 @@ try {
   assert.equal((await run('skip', {
     moduleId: 'api', dockerfile: null, staticPath: null,
   })).outcome, 'passed');
+  const copyCases = [
+    { name: 'json', source: 'FROM scratch\nCOPY ["dist", "public"]\n', target: 'public', outcome: 'passed' },
+    { name: 'json-spaces', source: 'FROM scratch\nCOPY ["dist files", "public files/"]\n', target: 'public files', outcome: 'passed' },
+    { name: 'multi-source', source: 'FROM scratch\nCOPY one two public/\n', target: 'public', outcome: 'passed' },
+    { name: 'source-is-not-target', source: 'FROM scratch\nCOPY public two other/\n', target: 'public', outcome: 'request_fix' },
+    { name: 'continuation', source: 'FROM scratch\nCOPY --chown=1000:1000 ["dist", \\\n "public"]\n', target: 'public', outcome: 'passed' },
+    { name: 'workdir', source: 'FROM scratch\nWORKDIR /app\nCOPY dist public/\n', target: '/app/public', outcome: 'passed' },
+    { name: 'relative-workdir', source: 'FROM scratch\nWORKDIR /app\nWORKDIR sub\nCOPY dist public/\n', target: 'public', outcome: 'passed' },
+    { name: 'builder-only', source: 'FROM scratch AS build\nCOPY dist public\nFROM scratch\nCOPY --from=build /public /other\n', target: 'public', outcome: 'request_fix' },
+    { name: 'inherited-stage', source: 'FROM scratch AS build\nCOPY dist public\nFROM build\n', target: 'public', outcome: 'passed' },
+    { name: 'invalid-json', source: 'FROM scratch\nCOPY ["dist", "public"\n', target: 'public', outcome: 'request_fix' },
+    { name: 'variable', source: 'FROM scratch\nCOPY dist $DEST\n', target: 'public', outcome: 'request_fix' },
+  ];
+  for (const item of copyCases) {
+    fs.writeFileSync(path.join(project, 'Dockerfile'), item.source);
+    const result = await run(`copy-${item.name}`, { moduleId: 'web', dockerfile: 'Dockerfile', staticPath: item.target });
+    assert.equal(result.outcome, item.outcome, item.name);
+    if (['invalid-json', 'variable'].includes(item.name)) assert.equal(result.reason?.code, 'delivery_lint.static_path_unverifiable');
+  }
+  fs.writeFileSync(path.join(project, 'Dockerfile'), 'FROM scratch\nCOPY dist public\n');
   const unusableArtifactRoot = path.join(temporary, 'crash-artifacts');
   const crashed = await run('crash', {
     moduleId: 'web', dockerfile: 'Dockerfile', staticPath: 'public',
