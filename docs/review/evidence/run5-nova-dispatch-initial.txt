@@ -1,0 +1,17 @@
+Unreviewed work in progress, three actual storage tests only. Full package acceptance not established.
+Command: node --test tests/verification/reliability/nova-dispatch-projection.test.mjs
+Exit 0
+{"storagePositive":"original-complete-import","decision":"execution_error","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (2250.826608ms)
+{"storagePositive":"original-complete-import","decision":"execution_error","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (1588.585833ms)
+{"storagePositive":"original-complete-import","decision":"execution_error","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (1884.459425ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7170.639173

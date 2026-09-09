@@ -107,6 +107,11 @@ function verifyCompletedResult(job: RemotePlanJobV1, status: RemotePlanStatusV1,
   }
   validatePipelineTestGateContract('remotePlanResult', result);
   if (status.result.resultDigest !== result.resultDigest) throw new Error('NOVA_REMOTE_RESULT_REFERENCE_MISMATCH');
+  verifyResult(job, result);
+}
+
+function verifyResult(job: RemotePlanJobV1, result: RemotePlanResultV1): void {
+  validatePipelineTestGateContract('remotePlanResult', result);
   if (result.jobId !== job.jobId || result.planId !== job.plan.planId
     || result.planDigest !== job.plan.planDigest || result.runId !== job.plan.runId) {
     throw new Error('NOVA_REMOTE_RESULT_OWNERSHIP_MISMATCH');
@@ -183,6 +188,10 @@ function decide(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: Remote
       planId: job.plan.planId, runId: job.plan.runId, state, nodes: [], reviews: [], resultDigest: null };
     return coveredDecision(job, unsigned);
   }
+  return decideResult(job, result);
+}
+
+function decideResult(job: RemotePlanJobV1, result: RemotePlanResultV1): GateDecisionV1 {
   const resultNodes = new Map(result.nodes.map((node) => [node.nodeId, node]));
   const attempts = new Map(result.attempts.map((attempt) => [attempt.attemptId, attempt]));
   const nodes: GateNodeDecisionV1[] = [];
@@ -240,6 +249,42 @@ export class FileNovaGateImportStore {
     const record = (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))
       .find(item => item.idempotencyKey === binding.jobId);
     return validateVerifiedOutput(record?.payload, binding);
+  }
+
+  /** Retain this original import and every referenced blob under its writer fence.
+   * The caller holds the run fence and may acquire only the distinct dispatch
+   * store next. It must not reenter this import store from operation. */
+  async withRetainedImport<T>(inputJob: RemotePlanJobV1, expectedPayloadDigest: string,
+    operation: (authority: { readonly payloadDigest: string; readonly resultDigest: string;
+      readonly decisionDigest: string; readonly decision: GateDecisionV1 }) => Promise<T>): Promise<T> {
+    const job = structuredClone(inputJob);
+    validatePipelineTestGateContract('remotePlanJob', job);
+    return this.#records.withRecords<StoredGateImportV2, T>('remote-gate-imports', async records => {
+      const record = records.find(item => item.idempotencyKey === job.jobId);
+      const stored = record?.payload;
+      if (!record || record.payloadDigest !== expectedPayloadDigest || !stored
+        || stored.schemaVersion !== 'nova-test-gate-import.v2' || stored.state !== 'complete'
+        || !stored.remoteResult || stored.jobId !== job.jobId
+        || !same(stored.source, importSource(job)) || stored.requestDigest !== job.requestDigest
+        || stored.remoteResultDigest !== stored.remoteResult.resultDigest) {
+        throw new Error('NOVA_DISPATCH_RETENTION_IMPORT_REQUIRED');
+      }
+      verifyResult(job, stored.remoteResult);
+      const decision = decideResult(job, stored.remoteResult);
+      if (!same(decision, stored.decision) || decision.state === 'review_required') {
+        throw new Error('NOVA_DISPATCH_RETENTION_DECISION_INCOMPLETE');
+      }
+      const referenced = artifacts(stored.remoteResult);
+      if (!same(stored.evidenceDigests, referenced.map(item => item.contentDigest).sort())) {
+        throw new Error('NOVA_DISPATCH_RETENTION_EVIDENCE_MISMATCH');
+      }
+      for (const artifact of referenced) {
+        const bytes = await this.#blobs.get(artifact.contentDigest);
+        if (bytes.byteLength !== artifact.sizeBytes) throw new Error('NOVA_DISPATCH_RETENTION_EVIDENCE_MISMATCH');
+      }
+      return operation({ payloadDigest: record.payloadDigest, resultDigest: stored.remoteResult.resultDigest,
+        decisionDigest: decision.decisionDigest, decision: structuredClone(decision) });
+    });
   }
 
   async readExecutionGraphs(): Promise<readonly NovaTestExecutionGraphV1[]> {
