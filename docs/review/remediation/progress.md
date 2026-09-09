@@ -249,3 +249,5 @@ Demo-Voraussetzung und isolierte Belege sind remote in `3e0f50e8fa915aa2dc6c640e
 - Demo-Ready bleibt uncommittet: finaler Response-Fence muss Ablauf nach langsamen Ressourcenreads und offene Exposure-Claims erneut prüfen. Nova-Produzent und tatsächlich beobachtete Exposuregeneration sind weiterhin in Arbeit.
 
 Die JSON-Summenzähler wurden aus den 154 tatsächlichen Findingzeilen neu berechnet; die vorher veralteten Summenmetadaten sind korrigiert. Originaltexte und Kennungen bleiben unverändert.
+
+Controller-Voraussetzung remote `fbcdd69df8a7b307195747af099cc8a025c6c060` gesichert. [Kombinierte unveränderliche Prüfung](../evidence/integration-e03f7dc/README.md) besteht nach gezielter Korrektur der expliziten Registry-Testkonfiguration (`449f7af`); der ursprüngliche Renderfehler bleibt erhalten. Das ist keine abgeschlossene Nova-Demo-Übergabe. Initiale konfigurierbare Laufzeit wird ergänzt; für menschlich autorisierte Verlängerung fehlt weiterhin ein tatsächlicher authentifizierter Operator-Eingang. Caller-deklarierter issuer oder Runtime-ServiceAccount werden nicht als menschliche Freigabe ausgegeben.

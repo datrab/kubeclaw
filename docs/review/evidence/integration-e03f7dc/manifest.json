@@ -1,0 +1,115 @@
+{
+  "commit": "e03f7dcd88f5a12536c107ae91bbd36c98d436be",
+  "initialCommit": "d9fd619f5463e430394ef6de75dd2db08e04c1ba",
+  "initialTrackedClean": true,
+  "worktree": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9",
+  "startedAt": "2026-09-09T17:09:53.947871+00:00",
+  "pathPrefix": [
+    "/workspace/scratch/4e25cf57c177/toolchains/bin",
+    "/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+  ],
+  "testEnvironment": {
+    "KUBECLAW_TEST_HELM": "/workspace/scratch/4e25cf57c177/toolchains/bin/helm",
+    "REGISTRY_TRIVY_BINARY": "/workspace/scratch/4e25cf57c177/toolchains/trivy-0.74.0/trivy",
+    "REGISTRY_TRIVY_CACHE": "/workspace/scratch/4e25cf57c177/toolchains/trivy-cache"
+  },
+  "commands": {
+    "go-race": [
+      "go",
+      "test",
+      "-race",
+      "-count=1",
+      "./cmd/buster-namespace-controller"
+    ],
+    "ready-helm": [
+      "node",
+      "--test",
+      "tests/verification/contracts/check-demo-ready-controller.mts"
+    ],
+    "registry-config": [
+      "node",
+      "--test",
+      "tests/verification/deployment/registry-client-config.test.mjs"
+    ],
+    "registry-trivy-native": [
+      "node",
+      "--test",
+      "tests/verification/deployment/registry-trivy-native.test.mts"
+    ],
+    "container-source-cutover": [
+      "node",
+      "tests/verification/contracts/check-pipeline-container-build-cutover.mts"
+    ],
+    "deployment-truth": [
+      "node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ]
+  },
+  "scope": "Exact committed combined Registry+Ready sources; original tests and authentic tools. Local HTTP/TLS and scanner protocol evidence, no deployed Kubernetes, TokenReview, Discord or BuildKit claim.",
+  "results": {
+    "go-race": {
+      "exitCode": 0,
+      "log": "go-race.txt",
+      "startedAt": "2026-09-09T17:09:53.952108+00:00",
+      "finishedAt": "2026-09-09T17:09:59.906287+00:00"
+    },
+    "ready-helm": {
+      "exitCode": 0,
+      "log": "ready-helm.txt",
+      "startedAt": "2026-09-09T17:09:53.952557+00:00",
+      "finishedAt": "2026-09-09T17:09:54.606940+00:00"
+    },
+    "registry-config": {
+      "exitCode": 0,
+      "log": "registry-config.txt",
+      "startedAt": "2026-09-09T17:09:53.953009+00:00",
+      "finishedAt": "2026-09-09T17:09:55.508140+00:00"
+    },
+    "registry-trivy-native": {
+      "exitCode": 0,
+      "log": "registry-trivy-native.txt",
+      "startedAt": "2026-09-09T17:09:53.953412+00:00",
+      "finishedAt": "2026-09-09T17:10:25.992734+00:00"
+    },
+    "container-source-cutover": {
+      "exitCode": 0,
+      "log": "container-source-cutover.txt",
+      "startedAt": "2026-09-09T17:09:54.607083+00:00",
+      "finishedAt": "2026-09-09T17:09:54.740728+00:00"
+    },
+    "deployment-truth": {
+      "exitCode": 1,
+      "log": "deployment-truth.txt",
+      "startedAt": "2026-09-09T17:09:54.741021+00:00",
+      "finishedAt": "2026-09-09T17:09:55.009257+00:00"
+    }
+  },
+  "finalTrackedStatus": "",
+  "finishedAt": "2026-09-09T17:10:26.011303+00:00",
+  "knownFailure": {
+    "gate": "deployment-truth",
+    "cause": "Buster Helm fixture supplies committed my-values without required explicit registry endpoint and transport; chart rejects missing origin.",
+    "location": "tests/verification/deployment/check-deployment-truth.mjs:936-948",
+    "sourceModified": false
+  },
+  "toolVersions": {
+    "go": "go version go1.24.13 linux/amd64",
+    "helm": "v3.18.4+gd80839c",
+    "node": "v24.19.0",
+    "trivy": "Version: 0.74.0"
+  },
+  "followup449f7af": {
+    "commit": "449f7afd1bfff34c6f04dcfb4f9696c7b7b04444",
+    "initialTrackedClean": true,
+    "command": [
+      "node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    "log": "deployment-truth-449f7af.txt",
+    "exitCode": 0,
+    "startedAt": "2026-09-09T17:11:57.770164+00:00",
+    "finishedAt": "2026-09-09T17:11:58.197799+00:00",
+    "finalTrackedStatus": "",
+    "scope": "Only originally failing deployment-truth rerun after test-only explicit HTTPS registry fixture change; original failing log retained; no chart changes or broader retest."
+  }
+}
