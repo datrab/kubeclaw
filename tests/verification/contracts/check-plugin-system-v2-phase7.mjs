@@ -146,7 +146,7 @@ const replay = await new core.EffectCoordinator(
 ).invoke(adapter, owner, invocation, new AbortController().signal);
 assert.equal(calls, 1, 'durable receipt prevents duplicate external execution');
 assert.equal(first.effectId, replay.effectId);
-assert.match(first.effectId, /^effect:[a-f0-9]{64}$/);
+assert.match(first.effectId, /^effect:json-utf16-v1:[a-f0-9]{64}$/);
 assert.equal(observedLock.fencingToken, 1);
 assert.equal(observedLock.resource.canonicalId, invocation.resource.canonicalId);
 

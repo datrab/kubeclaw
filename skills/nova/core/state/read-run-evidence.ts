@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { canonicalJson, type ArtifactRef, type AttemptIdentity, type EffectRequest, type EffectReceipt, type RegistrationProvenance, type LifecycleEvent, type PipelineDefinition, type PluginDomainEvent, type StageAttempt, type StageResult } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
-import { stableEffectId } from '../effects/identity.ts';
+import { validEffectIdentity } from '../effects/identity.ts';
 import { runRoot } from '../execution/run-root.ts';
 import { assertRunSnapshot, type RunSnapshot } from '../execution/engine-snapshots.ts';
 import { recoverStageStates } from '../lifecycle/recovery.ts';
@@ -73,7 +73,7 @@ function effectRecords(file: string, maximumBytes: number) {
   const effects=new Map<string,EffectEvidence>();
   for(const {entry} of records) {
     if(entry.type==='requested') {
-      const request=entry.request!; if(request.schemaVersion!=='effect-request.v2'||request.effectId!==stableEffectId(request))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
+      const request=entry.request!; if(request.schemaVersion!=='effect-request.v2'||!validEffectIdentity(request))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
       if(effects.has(request.idempotencyKey))throw new Error('RUN_EVIDENCE_EFFECT_INVALID');
       effects.set(request.idempotencyKey,{request,accepted:false});
     } else completeEffectEntry(effects,entry);

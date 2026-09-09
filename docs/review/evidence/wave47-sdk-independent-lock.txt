@@ -1,0 +1,4 @@
+Command: node docs/review/evidence/wave47-sdk-independent-lock-probe.mjs /workspace/scratch/0d8f8ddb55c3/wave47-sdk
+Exit code: 0
+Captured stdout:
+{"review":"independent-held-legacy-lock","httpCallsWhileHeld":0,"httpCallsAfterReleaseAndReplay":1,"legacyEffectIdPreserved":true,"journalPrefixPreserved":true}

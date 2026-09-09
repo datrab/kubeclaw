@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "354ee88060c93e8a0482ac91b7786788eda76fe8",
+  "locale": "en-US",
+  "capturedBy": "Original Coordinator/DurableInvocation/Identity with actual file journal, locks, artifact, HTTP/network adapters",
+  "sources": {
+    "skills/nova/core/effects/coordinator.ts": "64bbfffe2e4f53b2b75c8062708949bdbeaa7ab1f8d851f1f19a5d114304e747",
+    "skills/nova/core/effects/durable-invocation.ts": "a09708a8647793a6881d20a66ebf13588e5c8874c28245db2ecc372e99087a61",
+    "skills/nova/core/effects/identity.ts": "8a26d1d28071622a05d5f35247b344e4cce7fc2c191f13dc3a73973f9eb4691e"
+  },
+  "fixtures": {
+    "tests/verification/reliability/fixtures/legacy-effects/artifact.jsonl": "374e0d12fa5c566527708c864d4ff8c56fdd882450c69c6f91e5f878767a2fa4",
+    "tests/verification/reliability/fixtures/legacy-effects/dispatch.jsonl": "5e04527db75775f71a3a87142c57fa2dc77aaa4f72b0a1b5185f1bcff642e28a",
+    "tests/verification/reliability/fixtures/legacy-effects/locale-dependent.jsonl": "0e9524de55d22aa579ddd0a3343894a417a9825c612189e3b515173097747a17"
+  }
+}
