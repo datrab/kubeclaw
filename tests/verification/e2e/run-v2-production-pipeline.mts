@@ -267,6 +267,7 @@ async function main(): Promise<void> {
   };
   const grants: Record<string, Record<string, unknown>> = {
     'kubeclaw.architecture-validator:architecture': {
+      'artifacts.read': artifact('kubeclaw.preflight-contract'),
       'git.repository.read': { allowedPrefixes: ['.'] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.architecture-validator'),

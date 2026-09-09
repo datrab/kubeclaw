@@ -1,1 +1,56 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["blueprintId","repositoryRoot","branchRef","controlPaths"],"properties":{"blueprintId":{"type":"string","minLength":1},"repositoryRoot":{"type":"string","minLength":1},"branchRef":{"type":"string","minLength":1},"controlPaths":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprintId",
+    "repositoryRoot",
+    "branchRef",
+    "controlPaths"
+  ],
+  "properties": {
+    "blueprintId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repositoryRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "branchRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "controlPaths": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stageId",
+        "inputDigest"
+      ],
+      "properties": {
+        "stageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "reviewStageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

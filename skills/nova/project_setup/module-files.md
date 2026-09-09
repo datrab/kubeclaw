@@ -29,7 +29,8 @@ Test files with concrete test cases. ← REQUIRED
 
 ### Machine-readable delivery declaration
 
-When a graph uses `kubeclaw.validate.preflight-contract`, each consumed blueprint
+For `nova-project.v2` mandatory source preflight and graphs using
+`kubeclaw.validate.preflight-contract`, each consumed blueprint
 must include one explicit declaration in addition to explanatory prose:
 
 ```kubeclaw-deliverables
@@ -248,3 +249,12 @@ The node requires a reviewed `kubeclaw.visual-baselines.v2` manifest, a shared `
 Baseline generation is a separate trusted workflow. Test execution never updates baseline files. Review a candidate and its difference evidence, approve it through the durable human gate, then apply all PNG and manifest digest changes in one commit. See the [visual user guide](../../../docs/architecture/pipeline-test-gate-visual-user-guide.md).
 
 Authentication belongs in the typed deployment contract. Do not add query-string bypasses or credentials to visual URLs.
+
+## Project source admission
+
+The canonical project runtime now requires `nova-project.v2` with explicit
+`architecture` and per-module `blueprint` declarations. See
+[the project contract and commands](../project/README.md). Commit all declared
+control files on the stated architecture ref; the source preflight captures their
+exact contents before the single Blueprint sync and first implementation. The
+legacy progress/scaffold output is not a v2 project file and is not auto-imported.

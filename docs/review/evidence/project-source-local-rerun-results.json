@@ -1,0 +1,83 @@
+[
+  {
+    "name": "compiler",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-project-compiler.mts"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 6.081,
+    "evidence": "docs/review/evidence/project-source-local-rerun-compiler.txt"
+  },
+  {
+    "name": "project-source",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/project-source.test.mjs"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 27.442,
+    "evidence": "docs/review/evidence/project-source-local-rerun-project-source.txt"
+  },
+  {
+    "name": "architecture-validator-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/architecture-validator"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 2.829,
+    "evidence": "docs/review/evidence/project-source-local-rerun-architecture-validator-tests.txt"
+  },
+  {
+    "name": "preflight-contract-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/preflight-contract"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 15.008,
+    "evidence": "docs/review/evidence/project-source-local-rerun-preflight-contract-tests.txt"
+  },
+  {
+    "name": "blueprint-sync-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/blueprint-sync"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 2.089,
+    "evidence": "docs/review/evidence/project-source-local-rerun-blueprint-sync-tests.txt"
+  },
+  {
+    "name": "implementation-agent-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/implementation-agent"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 2.906,
+    "evidence": "docs/review/evidence/project-source-local-rerun-implementation-agent-tests.txt"
+  },
+  {
+    "name": "nova-typecheck",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 2.512,
+    "evidence": "docs/review/evidence/project-source-local-rerun-nova-typecheck.txt"
+  }
+]

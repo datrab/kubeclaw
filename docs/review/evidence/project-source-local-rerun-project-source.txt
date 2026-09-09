@@ -1,0 +1,18 @@
+$ node --test tests/verification/reliability/project-source.test.mjs
+✔ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (4040.550384ms)
+✔ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (5664.94652ms)
+✔ mandatory source failure prevents enabled architecture review, sync and implementation (3798.788921ms)
+✔ source admission rejects missing-producer before Git sync (2891.901987ms)
+✔ source admission rejects wrong-contract before Git sync (2979.100949ms)
+✔ actual external source change after admission rejects original Git merge (4015.010742ms)
+✔ implementation independently requires the admitted producer after a genuine Blueprint sync (3511.344164ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27365.035581
+
+Exit code: 0

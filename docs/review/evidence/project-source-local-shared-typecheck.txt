@@ -1,0 +1,3 @@
+$ node_modules/.bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+
+Exit code: 0

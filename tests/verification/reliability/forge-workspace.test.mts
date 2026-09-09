@@ -9,10 +9,10 @@ import { targetsFrom } from '../../../skills/common/plugins/runtime-dispatch/src
 process.env.PATH = `${path.join(repository, 'node_modules/.bin')}:${process.env.PATH}`;
 const records = (file: string) => fs.readFileSync(file, 'utf8').trim().split('\n').map(line => JSON.parse(line).entry);
 
-// Real compiler inputs, core runner/effects/locks/Git and original HTTP gateway
+// Standalone worktree graph, real Core runner/effects/locks/Git and original HTTP gateway
 // transport. The controlled HTTP endpoint executes native file operations; no
 // real OpenClaw model or deployed Forge execution is claimed.
-test('two real compiler workspaces reach original OpenClaw spawn and integrate only their own files', async () => {
+test('two real standalone workspaces reach original OpenClaw spawn and integrate only their own files', async () => {
   const f = await forgeFixture('parallel');
   try {
     const result = await f.runner.run(f.runId); f.assertServer();

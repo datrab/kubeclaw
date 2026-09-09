@@ -1,0 +1,25 @@
+$ npm test --prefix skills/nova/plugins/preflight-contract
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/package-boundary.test.mjs && node tests/declarations.unit.test.mjs && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.preflight-contract","suite":"unit"}
+file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugin-runtime/foundation/registry/capabilities.ts:69
+        throw new RegistryError('REGISTRY_CAPABILITY_UNKNOWN', `Adapter provides unknown capability: ${capability}`);
+              ^
+
+RegistryError: Adapter provides unknown capability: test.plan.evidence
+    at validateVocabulary (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugin-runtime/foundation/registry/capabilities.ts:69:15)
+    at Module.resolveCapabilityGrants (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugin-runtime/foundation/registry/capabilities.ts:180:3)
+    at grantedRegistry (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/plugins/preflight-contract/tests/live-function.test.ts:41:15)
+    at run (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/plugins/preflight-contract/tests/live-function.test.ts:57:19)
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/plugins/preflight-contract/tests/live-function.test.ts:121:26 {
+  code: 'REGISTRY_CAPABILITY_UNKNOWN',
+  details: {}
+}
+
+Node.js v24.19.0
+
+Exit code: 1

@@ -1,0 +1,23 @@
+$ npm test --prefix skills/nova/plugins/blueprint-sync
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+Switched to a new branch 'project/architecture'
+Switched to branch 'main'
+file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugin-runtime/foundation/registry/capabilities.ts:69
+        throw new RegistryError('REGISTRY_CAPABILITY_UNKNOWN', `Adapter provides unknown capability: ${capability}`);
+              ^
+
+RegistryError: Adapter provides unknown capability: test.plan.evidence
+    at validateVocabulary (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugin-runtime/foundation/registry/capabilities.ts:69:15)
+    at Module.resolveCapabilityGrants (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugin-runtime/foundation/registry/capabilities.ts:180:3)
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/plugins/blueprint-sync/tests/live-function.test.ts:38:22 {
+  code: 'REGISTRY_CAPABILITY_UNKNOWN',
+  details: {}
+}
+
+Node.js v24.19.0
+
+Exit code: 1

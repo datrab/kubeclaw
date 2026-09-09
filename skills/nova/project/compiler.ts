@@ -1,6 +1,7 @@
+import {sourceStages} from './source.ts';
 import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
 import path from 'node:path';
-import { canonicalJson, sha256Text, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
@@ -40,7 +41,7 @@ function agent(value: unknown): ObjectValue {
   return config;
 }
 
-interface ModuleContext { readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
+interface ModuleContext { readonly sourceBinding: SourceBinding; readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
 function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinition[] {
   const { projectId, runId, repository, workspaces, baseline, previousGate } = context;
   const runNamespace = sha256Text(runId).slice(7, 23);
@@ -61,8 +62,8 @@ function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinit
     maxRemediationCycles: maximumOrders, maxTechnicalRetries, timeoutMs: 1_800_000 };
   stages.push({ id: implementationId, type: 'kubeclaw.agent.implementation',
     dependsOn: [...new Set([...(previousGate ? [previousGate] : []), ...module.dependsOn.map((dependency: string) => `test-${dependency}`)])].sort(),
-    config: module.implementation, input: { runId, moduleId: module.id, attempt: 1, headBefore: baseline,
-      task: `${module.task}\n\nOwned paths: ${module.ownedPaths.join(', ')}\nRequirements:\n${canonicalJson(module.requirements)}`,
+    config: module.implementation, input: { runId, moduleId: module.id, attempt: 1, headBefore: baseline, sourceBinding: context.sourceBinding,
+      task: `${module.task}\n\nRead the source-bound Forge blueprint(s) under ${module.blueprint.modulePath}${module.blueprint.substeps ? ` in substeps ${module.blueprint.substeps.join(', ')}` : ''}.\nOwned paths: ${module.ownedPaths.join(', ')}\nRequirements:\n${canonicalJson(module.requirements)}`,
       workspace: { repositoryRoot: repository, workspacePath: path.join(workspaces, runNamespace, module.id),
         branch: `nova/${projectId}/${runNamespace}/${module.id}`, baseRef: 'HEAD', mergeTarget: repository,
         commitMessage: `[forge:${module.id}] ${projectId}` } }, execution: { ...execution, repairBudget } });
@@ -113,7 +114,7 @@ function projectModules(project: ObjectValue, runId: string, projectId: string):
   const modules = new Map<string, ObjectValue>();
   const owned: { module: string; prefix: string }[] = [];
   for (const value of project.modules) {
-    const module = object(value, ['id', 'dependsOn', 'task', 'ownedPaths', 'requirements', 'implementation', 'lint', 'review', 'test'], 'module');
+    const module = object(value, ['id', 'dependsOn', 'task', 'ownedPaths', 'requirements', 'implementation', 'lint', 'review', 'test', 'blueprint'], 'module');
     const moduleId = id(module.id);
     if (modules.has(moduleId)) throw new Error(`PROJECT_MODULE_DUPLICATE:${moduleId}`);
     text(module.task, 'task');
@@ -149,8 +150,8 @@ function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[
  * retain their existing concurrency semantics.
  */
 export function compileProject(value: unknown): { runId: string; definition: PipelineDefinition } {
-  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final'], 'project');
-  if (project.schemaVersion !== 'nova-project.v1') throw new Error('PROJECT_SCHEMA_UNSUPPORTED');
+  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture'], 'project');
+  if (project.schemaVersion !== 'nova-project.v2') throw new Error('PROJECT_SCHEMA_UNSUPPORTED:nova-project.v2 requires explicit architecture and module blueprint declarations; legacy inputs need authored migration');
   const projectId = id(project.id);
   const runId = text(project.runId, 'runId');
   const repository = absolute(project.repositoryRoot, 'repositoryRoot');
@@ -159,12 +160,6 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
   const baseline = text(project.baseRevision, 'baseRevision');
   if (!/^[a-f0-9]{40}$/u.test(baseline)) throw new Error('PROJECT_BASE_REVISION_INVALID');
   const ordered = orderedModules(projectModules(project, runId, projectId));
-  const stages: StageDefinition[] = [];
-  let previousGate: string | undefined;
-  for (const module of ordered) {
-    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate }));
-    previousGate = `test-${module.id}`;
-  }
   const final = object(project.final, ['lint', 'test', 'review', 'integrationRequirements'], 'final');
   if (!Array.isArray(final.integrationRequirements)) throw new Error('PROJECT_INTEGRATION_REQUIREMENTS_REQUIRED');
   const finalLint = object(final.lint, ['policyPath', 'policyProject'], 'final.lint');
@@ -172,6 +167,13 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
   if (final.review !== undefined) { object(final.review, ['agent'], 'final.review'); text(final.review.agent, 'final.review.agent'); }
   object(final.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'final.test');
   object(final.test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'final.providerPlan');
+  const source = sourceStages(project, ordered);
+  const stages: StageDefinition[] = [...source.stages];
+  let previousGate: string | undefined = 'blueprint-sync';
+  for (const module of ordered) {
+    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding }));
+    previousGate = `test-${module.id}`;
+  }
   stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`));
   const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
   validateContractValue('pipelineDefinition', definition);

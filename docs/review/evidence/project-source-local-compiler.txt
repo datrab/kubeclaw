@@ -1,0 +1,22 @@
+$ node tests/verification/contracts/check-project-compiler.mts
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"status":"error","error":"Adapter provides unknown capability: test.plan.evidence"}
+
+
+1 !== 0
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-project-compiler.mts:173:35 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+Exit code: 1

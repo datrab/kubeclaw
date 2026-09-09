@@ -1,0 +1,12 @@
+$ npm test --prefix skills/nova/plugins/blueprint-sync
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+Switched to a new branch 'project/architecture'
+Switched to branch 'main'
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.blueprint-sync","suite":"package-boundary"}
+
+Exit code: 0

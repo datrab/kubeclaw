@@ -1,5 +1,6 @@
-import type { RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
+import type { RuntimeWorkspaceReference, SourceBinding } from '@kubeclaw/plugin-sdk';
 export interface ImplementationInput {
+  readonly sourceBinding?: SourceBinding;
   readonly runId: string;
   readonly moduleId: string;
   readonly attempt: number;

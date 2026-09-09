@@ -44,7 +44,11 @@ Keep these same `FORGE.md` files in the existing reviewed/synced control paths;
 this plugin checks current repository bytes and does not independently create
 an immutable source approval or prove implementation/build success.
 
-The project compiler currently does not emit this stage. This plugin correction
-does not implement globally mandatory deterministic architecture preflight or
-change the optional architecture agent. Existing project-setup discovery reads
-FORGE files; it does not author their delivery intent.
+The `nova-project.v2` compiler emits the companion `kubeclaw.validate.source-preflight`
+stage before the one Blueprint sync and module lane. That stage captures these
+same declarations from the existing immutable ReviewSubject and publishes typed
+source evidence including its exact project contract. Sync/implementation require
+its selected producer and input digest; the optional architecture agent consumes
+the same subject and actual contract bytes. The standalone mutable-read stage
+retains its narrower declaration-check semantics. Existing project-setup discovery
+reads FORGE files; it does not author their delivery intent.

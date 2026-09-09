@@ -1,0 +1,132 @@
+$ node --test tests/verification/reliability/project-source.test.mjs
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (164.47543ms)
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (110.80192ms)
+✖ mandatory source failure prevents enabled architecture review, sync and implementation (106.599427ms)
+✖ source admission rejects missing-producer before Git sync (139.809484ms)
+✖ source admission rejects wrong-contract before Git sync (136.002822ms)
+✖ actual external source change after admission rejects original Git merge (141.645664ms)
+✖ implementation independently requires the admitted producer after a genuine Blueprint sync (129.453584ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1355.148914
+
+✖ failing tests:
+
+test at tests/verification/reliability/project-source.test.mjs:15:34
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (164.47543ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:15:34
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (110.80192ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:35:1
+✖ mandatory source failure prevents enabled architecture review, sync and implementation (106.599427ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:44:61
+✖ source admission rejects missing-producer before Git sync (139.809484ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:44:61
+✖ source admission rejects wrong-contract before Git sync (136.002822ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:54:1
+✖ actual external source change after admission rejects original Git merge (141.645664ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:63:1
+✖ implementation independently requires the admitted producer after a genuine Blueprint sync (129.453584ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_REPORT_ADAPTER_MISSING:assertion:junit
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:530:34
+      at Array.map (<anonymous>)
+      at resolvedReportAdapters (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:522:46)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:585:25
+      at Array.map (<anonymous>)
+      at expandNodes (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:547:30)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:732:32)
+      at testPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:37:16)
+      at projectSourceFixture (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source-fixture.mjs:42:43) {
+    code: 'TEST_PLAN_REPORT_ADAPTER_MISSING'
+  }
+
+Exit code: 1

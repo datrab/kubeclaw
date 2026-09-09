@@ -1,0 +1,11 @@
+$ npm test --prefix skills/nova/plugins/architecture-validator
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.unit.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.architecture-validator","suite":"package-boundary"}
+
+Exit code: 0

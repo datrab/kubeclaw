@@ -1,3 +1,4 @@
+import { sourcePreflight, type SourceBinding } from './source-preflight.ts';
 import type { ArtifactRef } from './generated/contracts.ts';
 import type { PluginInvocationContext } from './runtime.ts';
 import { canonicalJson, sha256Text } from './values.ts';
@@ -22,8 +23,9 @@ function latest(artifacts: readonly ArtifactRef[]): ArtifactRef | undefined {
   return candidates[0];
 }
 /** Only report-bound approval artifacts from visible graph ancestors grant authority. */
-export async function approvedSource(context: PluginInvocationContext): Promise<{ subject: ReviewSubject; sourceRevision: string } | undefined> {
+export async function approvedSource(context: PluginInvocationContext, expected?: SourceBinding): Promise<{ subject: ReviewSubject; sourceRevision: string } | undefined> {
   const artifacts = context.contract.artifacts.filter(item => item.producer.runId === context.contract.lease.attempt.runId);
+  if (expected) return requiredSource(expected, artifacts, context);
   const report = latest(artifacts.filter(item => item.namespace === 'kubeclaw.architecture-validator' && item.artifactId === 'architecture-validation'));
   const approval = latest(artifacts.filter(item => item.namespace === 'kubeclaw.human-approval' && item.artifactId === 'architecture-approval'));
   if (!report && !approval) return undefined;
@@ -38,6 +40,26 @@ export async function approvedSource(context: PluginInvocationContext): Promise<
   }
   const subject = parseReviewSubject(reviewed.subject, context.contract.lease.attempt.runId);
   return { subject, sourceRevision: await approvedLineage(subject, artifacts, context) };
+}
+
+async function requiredSource(expected: SourceBinding, artifacts: readonly ArtifactRef[], context: PluginInvocationContext) {
+  const {binding, subject} = await sourcePreflight(expected, context);
+  if (binding.reviewStageId) {
+    const report = latest(artifacts.filter(item => item.namespace === 'kubeclaw.architecture-validator'
+      && item.artifactId === 'architecture-validation' && item.producer.stageId === binding.reviewStageId));
+    if (!report) throw new Error('SOURCE_APPROVAL_REQUIRED');
+    const reviewed = await readBoundArtifact(report, context);
+    if (reviewed.verdict !== 'passed' || !Array.isArray(reviewed.findings)
+      || canonicalJson(reviewed.subject) !== canonicalJson(subject)) throw new Error('SOURCE_APPROVAL_BINDING_INVALID');
+    if (reviewed.findings.length) {
+      const approval = latest(artifacts.filter(item => item.namespace === 'kubeclaw.human-approval' && item.artifactId === 'architecture-approval'));
+      if (!approval) throw new Error('SOURCE_APPROVAL_REQUIRED');
+      const accepted = await readBoundArtifact(approval, context);
+      if (accepted.reportDigest !== report.digest || accepted.reportStageId !== report.producer.stageId
+        || accepted.decision !== 'approved' || canonicalJson(accepted.subject) !== canonicalJson(subject)) throw new Error('SOURCE_APPROVAL_BINDING_INVALID');
+    }
+  }
+  return {subject, sourceRevision: await approvedLineage(subject, artifacts, context)};
 }
 
 async function syncedRevision(subject: ReviewSubject, artifacts: readonly ArtifactRef[], context: PluginInvocationContext): Promise<string> {

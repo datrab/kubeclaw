@@ -1,0 +1,3 @@
+$ node_modules/.bin/tsc --noEmit -p skills/nova/tsconfig.json
+
+Exit code: 0

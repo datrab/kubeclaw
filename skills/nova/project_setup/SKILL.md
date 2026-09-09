@@ -5,13 +5,19 @@ description: Set up a new KubeClaw project for the autonomous pipeline. Use when
 
 # Project Setup
 
-Set up a project so `pipeline.ts --resume` runs end-to-end.
+Use this guide to author architecture and module files. The progress/scaffold
+sections describe the legacy declaration editor; they do not produce a runnable
+`nova-project.v2` file. Before using the current Projectmode commands below, author
+the explicit source, requirement, coverage and final-gate fields in the
+[canonical project contract](../project/README.md). No automatic legacy import is
+implemented; missing intent must be supplied explicitly.
 
 ## Steps
 
 ### 1. Create Architecture Branch
 
-All module files live on the **architecture branch** (`<project>/architecture`). The pipeline releases them per module via `releaseBlueprint()`.
+All module files live on the **architecture branch** (`<project>/architecture`). In `nova-project.v2`, the mandatory source preflight captures all declared
+control files once, followed by one Blueprint sync before the module lane.
 
 ```bash
 git checkout -b <project>/architecture
@@ -218,8 +224,12 @@ modules/<dir>/
 
 ### 7. Verify
 
+This requires the explicitly authored v2 project and platform files described
+above. Compile validates the installed stage/config/grant contracts and writes a
+new graph; it does not execute agents/providers or prove delivery.
+
 ```bash
-node /app/skills/pipeline.ts --project <name> --dry-run
+node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile /path/new-pipeline.json
 ```
 
 ### 8. Run
@@ -229,7 +239,7 @@ git add Projects/<project>/src/.swarm/
 git commit -m "[architecture] Project setup: <project>"
 git push origin <project>/architecture
 git checkout main
-node /app/skills/pipeline.ts --project <project> --nova-channel <id> --resume
+node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json
 ```
 
 ## Suite Selection

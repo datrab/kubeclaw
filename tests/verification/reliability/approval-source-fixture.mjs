@@ -25,7 +25,7 @@ export async function sourceApprovalFixture(root, clean = false) {
         dispatches.push(body);
         if (body.protocol === 'kubeclaw.architecture-validation.v2') {
           response.end(JSON.stringify({ result: { verdict: 'passed', summary: 'Reviewed immutable architecture and plan.',
-            checkedFiles: ['architecture.md', 'plan.json'], findings: clean ? [] : [{ id: 'api-owner', severity: 'warn', scope: 'integration_boundary', paths: ['architecture.md'], explanation: 'Confirm ownership.', remediation: 'Operator confirms.' }] } })); return;
+            checkedFiles: body.reviewSubject?.paths ?? ['architecture.md', 'plan.json'], findings: clean ? [] : [{ id: 'api-owner', severity: 'warn', scope: 'integration_boundary', paths: ['architecture.md'], explanation: 'Confirm ownership.', remediation: 'Operator confirms.' }] } })); return;
         }
         const workspace = body.workspaceReference.workspacePath;
         const content = 'export const answer = 42;\n'; fs.writeFileSync(path.join(workspace, `${body.identity.moduleId}.mjs`), content);
@@ -51,7 +51,7 @@ export async function sourceApprovalFixture(root, clean = false) {
     providers: { 'artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store','signal.wait':'kubeclaw.wait-store:waits','operator.request':'kubeclaw.operator-messaging:operator',
       'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets','runtime.dispatch':'kubeclaw.runtime-dispatch:runtime','git.repository.read':'kubeclaw.repository-adapter:repository',
       ...Object.fromEntries(['git.workspace.create','git.workspace.remove','git.sync','git.commit','git.merge'].map(cap => [cap,'kubeclaw.git-workspace:git'])), 'state.append':'kubeclaw.state-store:state' },
-    grants: { 'kubeclaw.architecture-validator:architecture': { 'runtime.dispatch':{allowedAgents:['architect']},'artifacts.write':allArtifacts,'git.repository.read':read },
+    grants: { 'kubeclaw.architecture-validator:architecture': { 'runtime.dispatch':{allowedAgents:['architect']},'artifacts.read':allArtifacts,'artifacts.write':allArtifacts,'git.repository.read':read },
       'kubeclaw.human-approval:architecture-approval': {'artifacts.read':allArtifacts,'artifacts.write':allArtifacts,'git.repository.read':read,'operator.request':{allowedTargets:['operators']},'signal.wait':{allowedSignalTypes:['approval.resolved'],allowedIssuerIds:['operator:test']}},
       'kubeclaw.blueprint-sync:sync':{'git.sync':mutate,'git.commit':mutate,'state.append':{allowedNamespaces:['kubeclaw.blueprint-sync']},'artifacts.read':allArtifacts,'artifacts.write':allArtifacts},
       'kubeclaw.implementation-agent:implementation':{'runtime.dispatch':{allowedAgents:['forge']},'artifacts.read':allArtifacts,'artifacts.write':allArtifacts,'git.workspace.create':workspace,'git.workspace.remove':workspace,'git.commit':mutate,'git.merge':mutate},

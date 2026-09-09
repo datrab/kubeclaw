@@ -24,6 +24,10 @@ try {
   const repo = path.join(temporary, 'repository'); const workspaces = path.join(temporary, 'workspaces');
   fs.mkdirSync(repo); fs.mkdirSync(workspaces);
   fs.writeFileSync(path.join(repo, 'README.md'), 'compiler proof\n');
+  for (const moduleId of ['app','library']) {
+    fs.mkdirSync(path.join(repo,'modules',moduleId),{recursive:true});
+    fs.writeFileSync(path.join(repo,'modules',moduleId,'FORGE.md'),'```kubeclaw-deliverables\n'+JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId,substep:null,deliverables:[]})+'\n```');
+  }
   execFileSync('git', ['init', '-q', repo]);
   execFileSync('git', ['-C', repo, 'add', '.']);
   execFileSync('git', ['-C', repo, '-c', 'user.name=Proof', '-c', 'user.email=proof@example.invalid', 'commit', '-qm', 'baseline']);
@@ -49,13 +53,13 @@ try {
       facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' },
       policy: { defaultTimeoutMs: 30000, maximumTimeoutMs: 60000, defaultLimits: limits, maximumLimits: limits,
         maximumRetryCount: 1, maximumMatrixSize: 4, maximumNodes: 8, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { unit: 4 } } });
-    return { id, dependsOn, task: `Implement ${id}.`, ownedPaths: [id], requirements,
+    return { id, dependsOn, blueprint:{modulePath:`modules/${id}`,serveDockerfile:null,apiSpecFile:null}, task: `Implement ${id}.`, ownedPaths: [id], requirements,
       implementation: { agent: 'forge' }, review: { agent: 'echo' }, lint: { policyPath: path.join(temporary, 'lint.json'), policyProject: 'proof' },
       test: { agent: 'buster', requiredChecks, providerPlan: { repositoryId: 'proof', plan,
         grants: Object.fromEntries(plan.nodes.map(node => [node.id, ['command.execute']])), maximumConcurrency: 1, submittedAt: plan.createdAt, timeoutMs: 60000 } } };
   };
-  const project: any = { schemaVersion: 'nova-project.v1', id: 'proof', runId, repositoryRoot: repo, workspaceRoot: workspaces,
-    baseRevision: baseline, modules: [module('app', ['library']), module('library', [])] };
+  const project: any = { schemaVersion: 'nova-project.v2', id: 'proof', runId, repositoryRoot: repo, workspaceRoot: workspaces,
+    baseRevision: baseline, architecture: {ref:'HEAD',requiredFiles:['README.md']}, modules: [module('app', ['library']), module('library', [])] };
   const finalModules = project.modules.map((item: any) => ({ moduleId: item.id, ownedPaths: item.ownedPaths, requirements: item.requirements }))
     .sort((a: any, b: any) => a.moduleId.localeCompare(b.moduleId));
   const integrationRequirements = [{ id: 'integration', statement: 'The application consumes the library correctly.' }];
@@ -75,17 +79,27 @@ try {
     providerPlan: { ...project.modules[0].test.providerPlan, plan: finalPlan, grants: { integrated: ['command.execute'] } } } };
   const compiled = compileProject(project);
   assert.deepEqual(compiled, compileProject({ ...project, modules: [...project.modules].reverse() }));
-  assert.equal(compiled.definition.stages.length, 11);
-  for (const stage of compiled.definition.stages.filter((item: any) => !['final-lint', 'final-test', 'project-summary'].includes(item.id))) {
+  assert.equal(compiled.definition.stages.length, 13);
+  for (const stage of compiled.definition.stages.filter((item: any) => !['source-preflight','blueprint-sync','final-lint', 'final-test', 'project-summary'].includes(item.id))) {
     assert.equal(stage.execution.maxTechnicalRetries, 1, 'retain the former initial-plus-one technical allowance');
     assert.equal(stage.execution.maxAttempts, 9, 'ceiling includes six repairs, one extra and one technical retry');
     if (stage.id.startsWith('implement-')) assert.deepEqual(stage.execution.repairBudget, { categories: { lint: 2, review: 2, test: 2 }, maximumOrchestratorOrders: 1 });
     else assert.equal(stage.execution.repairCategory, stage.id.split('-')[0]);
   }
+  assert.deepEqual(compiled.definition.stages.find((stage:any)=>stage.id==='implement-library').dependsOn,['blueprint-sync']);
+  assert.equal(compiled.definition.stages[0].type,'kubeclaw.validate.source-preflight');
+  assert(compiled.definition.stages.find((stage:any)=>stage.id==='implement-app').input.sourceBinding);
+  const architectureOn=structuredClone(project);architectureOn.architecture.review={agent:'architect',approval:{target:'operators',issuerId:'operator:test'}};
+  const reviewed=compileProject(architectureOn).definition;
+  assert.equal(reviewed.stages.filter((stage:any)=>stage.type==='kubeclaw.validate.source-preflight').length,1);
+  assert.deepEqual(reviewed.stages.find((stage:any)=>stage.id==='blueprint-sync').dependsOn,['architecture-approval']);
+  assert.equal(reviewed.stages.find((stage:any)=>stage.id==='architecture-review').input.sourceBinding.inputDigest,compiled.definition.stages.find((stage:any)=>stage.id==='blueprint-sync').input.sourceBinding.inputDigest);
+  assert.throws(()=>compileProject({...project,schemaVersion:'nova-project.v1'}),/SCHEMA_UNSUPPORTED/);
+  assert.throws(()=>compileProject({...project,architecture:undefined}),/PROJECT_SOURCE_INVALID/);
   const noReview = structuredClone(project);
   for (const module of noReview.modules) delete (module as any).review;
   const deterministicOnly = compileProject(noReview).definition;
-  assert.equal(deterministicOnly.stages.length, 9, 'review defaults off; mandatory lint and tests remain');
+  assert.equal(deterministicOnly.stages.length, 11, 'review defaults off; mandatory lint and tests remain');
   assert.equal(deterministicOnly.stages.find((stage: any) => stage.id === 'final-test').config.testAgentEnabled, true);
   const agentOff = structuredClone(noReview); agentOff.final.test.testAgentEnabled = false;
   assert.equal(compileProject(agentOff).definition.stages.find((stage: any) => stage.id === 'final-test').config.testAgentEnabled, false);
@@ -122,10 +136,13 @@ try {
       'runtime.dispatch': 'kubeclaw.runtime-dispatch:runtime', 'network.http': 'kubeclaw.network-http:http',
       'secrets.read': 'kubeclaw.secret-resolver:secrets', 'artifacts.read': 'kubeclaw.artifact-store:artifact-store', 'artifacts.write': 'kubeclaw.artifact-store:artifact-store',
       'git.workspace.create': 'kubeclaw.git-workspace:git', 'git.workspace.remove': 'kubeclaw.git-workspace:git', 'git.commit': 'kubeclaw.git-workspace:git', 'git.merge': 'kubeclaw.git-workspace:git',
+      'git.sync':'kubeclaw.git-workspace:git','state.append':'kubeclaw.state-store:state',
       'git.repository.read': 'kubeclaw.repository-adapter:repository', 'lint.execute': 'kubeclaw.lint:executor', 'test.plan.execute': 'kubeclaw.remote-test-gate:plan',
     },
     grants: {
-      'kubeclaw.implementation-agent:implementation': { 'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate'] }, 'runtime.dispatch': { allowedAgents: ['forge'] }, 'artifacts.write': artifact('kubeclaw.implementation-agent'),
+      'kubeclaw.preflight-contract:source': {'git.repository.read':{allowedPrefixes:['.']},'artifacts.write':artifact('kubeclaw.preflight-contract')},
+      'kubeclaw.blueprint-sync:sync': {'git.sync':{allowedRoots:[repo]},'git.commit':{allowedRoots:[repo]},'state.append':{allowedNamespaces:['kubeclaw.blueprint-sync']},'artifacts.read':{allowedNamespaces:['kubeclaw.preflight-contract','kubeclaw.architecture-validator','kubeclaw.human-approval']},'artifacts.write':artifact('kubeclaw.blueprint-sync')},
+      'kubeclaw.implementation-agent:implementation': { 'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate','kubeclaw.preflight-contract','kubeclaw.blueprint-sync','kubeclaw.implementation-agent'] }, 'runtime.dispatch': { allowedAgents: ['forge'] }, 'artifacts.write': artifact('kubeclaw.implementation-agent'),
         'git.workspace.create': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.workspace.remove': { allowedRoots: [repo, workspaces], allowedWorkspaceRoots: [workspaces] },
         'git.commit': { allowedRoots: [repo, workspaces] }, 'git.merge': { allowedRoots: [repo, workspaces] } },
@@ -137,6 +154,7 @@ try {
       'kubeclaw.remote-test-gate:plan': { 'secrets.read': { allowedNames: ['worker', 'source-key'] } },
     },
     adapters: {
+      'kubeclaw.state-store:state':{root:path.join(temporary,'state-adapter')},
       'kubeclaw.runtime-dispatch:runtime': { targets: Object.fromEntries(['forge', 'echo', 'buster'].map(agent => [agent, { endpoint: `${origins[0]}/dispatch`, tokenSecret: 'worker' }])) },
       'kubeclaw.network-http:http': { allowedOrigins: origins, allowedMethods: ['POST'], allowedHeaders: ['authorization', 'content-type', 'idempotency-key'] },
       'kubeclaw.secret-resolver:secrets': { environment: { worker: 'PROJECT_TEST_TOKEN', 'source-key': 'PROJECT_TEST_SOURCE_KEY' } },

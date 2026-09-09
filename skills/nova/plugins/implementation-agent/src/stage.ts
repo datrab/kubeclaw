@@ -91,7 +91,7 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
   let subjectDigest: string | undefined;
   try {
     const evidence = await repairEvidence(context);
-    const approval = await approvedSource(context);
+    const approval = await approvedSource(context, input.sourceBinding);
     subjectDigest = approval?.subject.digest;
     const workspaceReference = await createWorkspace(input, context, approval);
     workspaceCreated = workspaceReference !== undefined;

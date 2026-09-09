@@ -1,0 +1,56 @@
+✖ compiled findings require bound operator approval before Git sync; source changes=false (4454.806823ms)
+✖ compiled findings require bound operator approval before Git sync; source changes=true (4505.084928ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9438.766185
+
+✖ failing tests:
+
+test at tests/verification/reliability/project-source.test.mjs:76:34
+✖ compiled findings require bound operator approval before Git sync; source changes=false (4454.806823ms)
+  AssertionError [ERR_ASSERTION]: {"stages":[["architecture-approval",{"stageId":"architecture-approval","status":"blocked","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}],["architecture-review",{"stageId":"architecture-review","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"approval_required"}}],["blueprint-sync",{"stageId":"blueprint-sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-api",{"stageId":"implement-api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-ui",{"stageId":"implement-ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["source-preflight",{"stageId":"source-preflight","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}]],"reasons":[{"code":"approval.pending","message":"Waiting for approval."},{"code":"approval.pending","message":"Waiting for approval."}]}
+  + actual - expected
+
+  + 'blocked'
+  - 'waiting'
+
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source.test.mjs:80:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source.test.mjs:77:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:76:34
+✖ compiled findings require bound operator approval before Git sync; source changes=true (4505.084928ms)
+  AssertionError [ERR_ASSERTION]: {"stages":[["architecture-approval",{"stageId":"architecture-approval","status":"blocked","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}],["architecture-review",{"stageId":"architecture-review","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"approval_required"}}],["blueprint-sync",{"stageId":"blueprint-sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-api",{"stageId":"implement-api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-ui",{"stageId":"implement-ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["source-preflight",{"stageId":"source-preflight","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}]],"reasons":[{"code":"approval.pending","message":"Waiting for approval."},{"code":"approval.pending","message":"Waiting for approval."}]}
+  + actual - expected
+
+  + 'blocked'
+  - 'waiting'
+
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source.test.mjs:80:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/project-source.test.mjs:77:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

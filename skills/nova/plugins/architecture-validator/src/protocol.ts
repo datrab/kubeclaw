@@ -1,10 +1,11 @@
-import type { ReviewSource, ReviewSubject } from '@kubeclaw/plugin-sdk';
+import type { ReviewSource, ReviewSubject, SourceBinding } from '@kubeclaw/plugin-sdk';
 
 export interface ArchitectureInput {
   readonly task: string;
   readonly architecture?: Readonly<Record<string, unknown>>;
   readonly source?: ReviewSource;
   readonly subject?: ReviewSubject;
+  readonly sourceBinding?: SourceBinding;
 }
 export function buildArchitectureRequest(agent: string, input: ArchitectureInput, guidance: unknown): Readonly<Record<string, unknown>> {
   return Object.freeze({

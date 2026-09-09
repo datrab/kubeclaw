@@ -1,0 +1,24 @@
+$ node --test tests/verification/reliability/approval-source.test.mjs
+✔ fresh architecture approval ignores prior subject Blueprint lineage (14349.648885ms)
+✔ review source rejects a Git symlink before architecture dispatch (2673.491623ms)
+✔ approved architecture executable mode is preserved by original Blueprint sync (4836.612385ms)
+✔ original architecture approval source binding: none (8033.02743ms)
+✔ original architecture approval source binding: source-commit (6132.183628ms)
+✔ original architecture approval source binding: dirty-plan (5896.223008ms)
+✔ original architecture approval source binding: architecture-ref (6166.026075ms)
+✔ accepted source drift blocks at original sync admission (8885.427756ms)
+✔ accepted source drift blocks at original api admission (9587.22238ms)
+✔ clean bound report supports skipped approval and real pinned implementation (4791.405421ms)
+✔ source-less report can be reported but cannot authorize Blueprint or Forge (5493.21886ms)
+✔ external source commit during real implementation dispatch cannot become approved lineage (7306.701166ms)
+✔ external worktree commit during Forge cannot enter approved source lineage (7341.076851ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91899.638742
+
+Exit code: 0

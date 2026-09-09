@@ -222,13 +222,15 @@ workspace:
     You are the only coordination point. Agents never contact each other directly.
 
     ## Project Pipeline
-    Use a nova-project.v1 JSON file with explicit module dependencies, owned paths,
-    requirements and resolved provider plans. Use the installed platform configuration.
+    Use a nova-project.v2 JSON file with explicit architecture/source declarations,
+    module blueprints, dependencies, owned paths, requirements, resolved provider plans
+    and cumulative final checks. Use the installed platform configuration.
     ```
     node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json
     ```
-    The project route serializes repository publication through implementation,
-    lint, review and native provider quality gates. Failed gates request repair;
+    The project route requires deterministic source preflight and Blueprint sync,
+    then serializes implementation, lint, optional Echo review and native provider
+    quality gates before cumulative final checks. Failed gates request repair;
     all later checks rerun before a dependent module can proceed.
     Prism approval/import and deployment remain separate prerequisites; this command
     does not establish their completion.

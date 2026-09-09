@@ -1,1 +1,103 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["runId","moduleId","attempt","task","headBefore"],"properties":{"runId":{"type":"string","minLength":1,"maxLength":128},"moduleId":{"type":"string","minLength":1,"maxLength":128},"attempt":{"type":"integer","minimum":1},"task":{"type":"string","minLength":1,"maxLength":32768},"headBefore":{"type":"string","pattern":"^[0-9a-f]{40,64}$"},"workspace":{"type":"object","additionalProperties":false,"required":["repositoryRoot","workspacePath","branch","baseRef","mergeTarget","commitMessage"],"properties":{"repositoryRoot":{"type":"string","minLength":1,"maxLength":4096},"workspacePath":{"type":"string","minLength":1,"maxLength":4096},"branch":{"type":"string","minLength":1,"maxLength":320},"baseRef":{"type":"string","minLength":1,"maxLength":320},"mergeTarget":{"type":"string","minLength":1,"maxLength":4096},"commitMessage":{"type":"string","minLength":1,"maxLength":4096}}}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "runId",
+    "moduleId",
+    "attempt",
+    "task",
+    "headBefore"
+  ],
+  "properties": {
+    "runId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "moduleId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768
+    },
+    "headBefore": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40,64}$"
+    },
+    "workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositoryRoot",
+        "workspacePath",
+        "branch",
+        "baseRef",
+        "mergeTarget",
+        "commitMessage"
+      ],
+      "properties": {
+        "repositoryRoot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "workspacePath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320
+        },
+        "baseRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320
+        },
+        "mergeTarget": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "commitMessage": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      }
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stageId",
+        "inputDigest"
+      ],
+      "properties": {
+        "stageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "reviewStageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

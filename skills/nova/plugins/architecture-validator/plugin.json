@@ -11,7 +11,8 @@
       "requiredCapabilities": [
         "runtime.dispatch",
         "artifacts.write",
-        "git.repository.read"
+        "git.repository.read",
+        "artifacts.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",

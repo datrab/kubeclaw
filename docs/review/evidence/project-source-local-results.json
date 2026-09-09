@@ -1,0 +1,158 @@
+[
+  {
+    "name": "compiler",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-project-compiler.mts"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 1.55,
+    "evidence": "docs/review/evidence/project-source-local-compiler.txt"
+  },
+  {
+    "name": "project-source",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/project-source.test.mjs"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 1.417,
+    "evidence": "docs/review/evidence/project-source-local-project-source.txt"
+  },
+  {
+    "name": "approval-source",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/approval-source.test.mjs"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 91.963,
+    "evidence": "docs/review/evidence/project-source-local-approval-source.txt"
+  },
+  {
+    "name": "architecture-validator-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/architecture-validator"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 1.214,
+    "evidence": "docs/review/evidence/project-source-local-architecture-validator-tests.txt"
+  },
+  {
+    "name": "preflight-contract-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/preflight-contract"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 1.34,
+    "evidence": "docs/review/evidence/project-source-local-preflight-contract-tests.txt"
+  },
+  {
+    "name": "blueprint-sync-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/blueprint-sync"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 1.299,
+    "evidence": "docs/review/evidence/project-source-local-blueprint-sync-tests.txt"
+  },
+  {
+    "name": "implementation-agent-tests",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/implementation-agent"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 1.357,
+    "evidence": "docs/review/evidence/project-source-local-implementation-agent-tests.txt"
+  },
+  {
+    "name": "architecture-validator-build",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/nova/plugins/architecture-validator"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.54,
+    "evidence": "docs/review/evidence/project-source-local-architecture-validator-build.txt"
+  },
+  {
+    "name": "preflight-contract-build",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/nova/plugins/preflight-contract"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.54,
+    "evidence": "docs/review/evidence/project-source-local-preflight-contract-build.txt"
+  },
+  {
+    "name": "blueprint-sync-build",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/nova/plugins/blueprint-sync"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.544,
+    "evidence": "docs/review/evidence/project-source-local-blueprint-sync-build.txt"
+  },
+  {
+    "name": "implementation-agent-build",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/nova/plugins/implementation-agent"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.552,
+    "evidence": "docs/review/evidence/project-source-local-implementation-agent-build.txt"
+  },
+  {
+    "name": "nova-typecheck",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 2.665,
+    "evidence": "docs/review/evidence/project-source-local-nova-typecheck.txt"
+  },
+  {
+    "name": "shared-typecheck",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 3.644,
+    "evidence": "docs/review/evidence/project-source-local-shared-typecheck.txt"
+  }
+]

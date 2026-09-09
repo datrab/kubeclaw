@@ -51,12 +51,14 @@ try {
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
+      ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([
       ['kubeclaw.architecture-validator:architecture', new Map([
         ['git.repository.read', { allowedPrefixes: ['.'] }],
         ['runtime.dispatch', { allowedAgents: ['architect'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.architecture-validator'] }],
+        ['artifacts.read', { allowedNamespaces: ['kubeclaw.preflight-contract'] }],
       ])],
       ['kubeclaw.runtime-dispatch:runtime', new Map([
         ['network.http', { allowedOrigins: [origin] }],

@@ -1,3 +1,4 @@
+import type {StageDefinition} from '@kubeclaw/plugin-sdk';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -5,7 +6,6 @@ import path from 'node:path';
 import http from 'node:http';
 import { execFileSync } from 'node:child_process';
 import * as core from '../../../../skills/nova/core/src/index.ts';
-import { compileProject } from '../../../../skills/nova/project/compiler.ts';
 
 export const repository = path.resolve(import.meta.dirname, '../../../..');
 export const git = (root: string, args: string[]) => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
@@ -60,13 +60,13 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
   policy.experimental_tools = policy.tools.map((tool: any) => tool.id).filter((id: string) => id !== 'eslint');
   policy.tools = policy.tools.map((tool: any) => ({ ...tool, targets: tool.languages.length === 1 && ['go', 'terraform'].includes(tool.languages[0]) ? [] : ['.'], config_path: tool.id === 'eslint' ? eslintConfig : null, ...(['go-vet', 'go-imports', 'staticcheck', 'govulncheck'].includes(tool.id) ? { arguments: [] } : {}) }));
   const policyPath = path.join(temporary, 'lint-policy.json'); fs.writeFileSync(policyPath, JSON.stringify(policy));
-  const providers = new Map([['runtime.dispatch', 'kubeclaw.runtime-dispatch:openclaw'], ['network.http', 'kubeclaw.network-http:http'], ['secrets.read', 'kubeclaw.secret-resolver:secrets'], ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'], ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'], ['git.repository.read', 'kubeclaw.repository-adapter:repository'], ['lint.execute', 'kubeclaw.lint:executor'], ...['git.workspace.create', 'git.workspace.remove', 'git.commit', 'git.merge'].map(cap => [cap, 'kubeclaw.git-workspace:git'])]);
+  const providers = new Map<string,string>([['runtime.dispatch', 'kubeclaw.runtime-dispatch:openclaw'], ['network.http', 'kubeclaw.network-http:http'], ['secrets.read', 'kubeclaw.secret-resolver:secrets'], ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'], ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'], ['git.repository.read', 'kubeclaw.repository-adapter:repository'], ['lint.execute', 'kubeclaw.lint:executor'], ...['git.workspace.create', 'git.workspace.remove', 'git.commit', 'git.merge'].map(cap => [cap, 'kubeclaw.git-workspace:git'] as const)]);
   const artifact = { allowedNamespaces: ['kubeclaw.implementation-agent', 'kubeclaw.lint'] };
   const granted = core.resolveCapabilityGrants(snapshot, { enabledRegistrations: new Set(['kubeclaw.implementation-agent:implementation', 'kubeclaw.lint:full']), providers,
-    grants: new Map([
-      ['kubeclaw.implementation-agent:implementation', new Map([['runtime.dispatch', { allowedAgents: ['forge'] }], ['artifacts.read', artifact], ['artifacts.write', artifact], ...['git.workspace.create', 'git.workspace.remove', 'git.commit', 'git.merge'].map(cap => [cap, { allowedRoots: [temporary], ...(cap.startsWith('git.workspace.') ? { allowedWorkspaceRoots: [workspaces] } : {}) }])])],
-      ['kubeclaw.runtime-dispatch:openclaw', new Map([['network.http', { allowedOrigins: [origin] }], ['secrets.read', { allowedNames: ['forge.token'] }], ['git.repository.read', { allowedPrefixes: ['.'] }]])],
-      ['kubeclaw.lint:full', new Map([['lint.execute', { allowedRoots: [repo], allowedPolicyRoots: [temporary], allowedProjects: ['fixture'] }], ['artifacts.read', artifact], ['artifacts.write', artifact]])],
+    grants: new Map<string,ReadonlyMap<string,Readonly<Record<string,unknown>>>>([
+      ['kubeclaw.implementation-agent:implementation', new Map<string,Readonly<Record<string,unknown>>>([['runtime.dispatch', { allowedAgents: ['forge'] }], ['artifacts.read', artifact], ['artifacts.write', artifact], ...['git.workspace.create', 'git.workspace.remove', 'git.commit', 'git.merge'].map(cap => [cap, { allowedRoots: [temporary], ...(cap.startsWith('git.workspace.') ? { allowedWorkspaceRoots: [workspaces] } : {}) }] as const)])],
+      ['kubeclaw.runtime-dispatch:openclaw', new Map<string,Readonly<Record<string,unknown>>>([['network.http', { allowedOrigins: [origin] }], ['secrets.read', { allowedNames: ['forge.token'] }], ['git.repository.read', { allowedPrefixes: ['.'] }]])],
+      ['kubeclaw.lint:full', new Map<string,Readonly<Record<string,unknown>>>([['lint.execute', { allowedRoots: [repo], allowedPolicyRoots: [temporary], allowedProjects: ['fixture'] }], ['artifacts.read', artifact], ['artifacts.write', artifact]])],
     ]),
   });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
@@ -92,18 +92,19 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
   const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   const runId = `run:forge:${mode}`;
-  const module = (id: string) => {
-    const limits = { cpuMillis: 30000, memoryBytes: 512 * 1024 * 1024, logBytes: 1024 * 1024, artifactBytes: 1024 * 1024, artifactFiles: 16, processes: 16 };
-    const plan = core.resolveTestPlan({ planId: `plan:${id}`, runId, project: 'fixture', scope: { moduleId: id, gateId: null }, createdAt: '2026-09-06T00:00:00Z', registry: snapshot,
-      declaration: { suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: { assertion: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', config: { executable: 'node', args: ['--test'], workingDirectory: '.', resultMode: 'exit-code' } } } } } },
-      suiteTemplates: [JSON.parse(fs.readFileSync(path.join(repository, 'contracts/pipeline-test-gate/v1/suites/unit.v1.json'), 'utf8'))], facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' }, policy: { defaultTimeoutMs: 30000, maximumTimeoutMs: 60000, defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 1, maximumMatrixSize: 4, maximumNodes: 8, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { unit: 4 } } });
-    return { id, dependsOn: [], task: `Implement ${id}`, ownedPaths: [`${id}.js`], requirements: [{ id: `${id}-ready`, statement: 'Native fixture file exists' }], implementation: { agent: 'forge' }, review: { agent: 'echo' }, lint: { policyPath, policyProject: 'fixture' }, test: { agent: 'buster', providerPlan: { repositoryId: 'fixture', plan, grants: Object.fromEntries(plan.nodes.map((node: any) => [node.id, ['command.execute']])), maximumConcurrency: 1, submittedAt: plan.createdAt, timeoutMs: 60000 } } };
-  };
-  const compiled = compileProject({ schemaVersion: 'nova-project.v1', id: 'fixture', runId, repositoryRoot: repo, workspaceRoot: workspaces, baseRevision: baseline, modules: (mode === 'parallel' ? ['a', 'b'] : ['a']).map(module) });
-  const selected = compiled.definition.stages.filter(stage => stage.type === 'kubeclaw.agent.implementation' || mode !== 'parallel' && stage.type === 'kubeclaw.lint.full');
-  const stages = selected.map(stage => ({ ...stage, dependsOn: stage.type === 'kubeclaw.agent.implementation' ? [] : stage.dependsOn, execution: { ...stage.execution, timeoutMs: 15000 } }));
+  // This standalone graph tests native parallel Git/worktree lifecycle and lint repair.
+  // It does not model project compilation, source admission or final coverage.
+  const stages: any[] = (mode === 'parallel' ? ['a','b'] : ['a']).flatMap(id => {
+    const execution={maxAttempts:9,maxRemediationCycles:7,maxTechnicalRetries:1,timeoutMs:15000};
+    const implementation={id:`implement-${id}`,type:'kubeclaw.agent.implementation',dependsOn:[],config:{agent:'forge'},
+      input:{runId,moduleId:id,attempt:1,task:`Implement ${id}`,headBefore:baseline,
+        workspace:{repositoryRoot:repo,workspacePath:path.join(workspaces,id),branch:`nova/fixture/${id}`,baseRef:'HEAD',mergeTarget:repo,commitMessage:`Implement ${id}`}},
+      execution:{...execution,repairBudget:{categories:{lint:2,review:2,test:2},maximumOrchestratorOrders:1}}};
+    return [implementation,...(mode==='parallel'?[]:[{id:`lint-${id}`,type:'kubeclaw.lint.full',dependsOn:[`implement-${id}`],config:{policyPath,policyProject:'fixture'},
+      input:{workingDirectory:repo,project:'fixture',sourceStageId:`implement-${id}`},on:{request_fix:`implement-${id}`},execution:{...execution,repairCategory:'lint'}}])];
+  });
   const eventsPath = path.join(temporary, 'events.jsonl');
-  const runner = new core.PipelineRunner({ definition: { ...compiled.definition, maxConcurrency: 2, stages }, registry: granted, activated, adapters, journal: new core.FileJournal(eventsPath) });
+  const runner = new core.PipelineRunner({ definition: { schemaVersion:'pipeline-definition.v2',id:'forge-workspace-lifecycle', maxConcurrency: 2, stages: stages as [StageDefinition,...StageDefinition[]] }, registry: granted, activated, adapters, orchestratorIssuerId:'forge-workspace-test', journal: new core.FileJournal(eventsPath) });
   return { temporary, repo, workspaces, baseline, spawns, retained, effectsPath, eventsPath, configs, runId, runner, journal, locks,
     assertServer() { if (serverError) throw serverError; },
     async close() { await adapters.shutdown(); await new Promise<void>(resolve => server.close(() => resolve())); delete process.env[secret]; fs.rmSync(temporary, { recursive: true, force: true }); },

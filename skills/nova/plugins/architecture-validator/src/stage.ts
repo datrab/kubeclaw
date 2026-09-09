@@ -1,13 +1,23 @@
-import { captureReviewSubject, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type ReviewSubject, type StageResult } from '@kubeclaw/plugin-sdk';
+import { sourcePreflight, captureReviewSubject, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type ReviewSubject, type StageResult } from '@kubeclaw/plugin-sdk';
 import { buildArchitectureRequest, type ArchitectureInput } from './protocol.ts';
 import { parseArchitectureOutput } from './output.ts';
+async function reviewedInput(input: ArchitectureInput, context: PluginInvocationContext): Promise<ArchitectureInput> {
+  if (input.sourceBinding) {
+    const bound = await sourcePreflight(input.sourceBinding, context);
+    return {...input,subject:bound.subject,architecture:bound.contract};
+  }
+  const subject = input.source ? await captureReviewSubject(input.source, {task:input.task,architecture:input.architecture ?? {}}, context) : undefined;
+  return {...input,...(subject ? {subject}:{})};
+}
 export async function execute(input: ArchitectureInput, context: PluginInvocationContext): Promise<StageResult> {
   const agent = context.contract.config.agent;
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('architecture validator agent is not configured');
   let output: ReturnType<typeof parseArchitectureOutput>;
   let subject: ReviewSubject | undefined;
   try {
-    subject = input.source ? await captureReviewSubject(input.source, { task: input.task, architecture: input.architecture ?? {} }, context) : undefined;
+    input = await reviewedInput(input, context);
+    subject = input.subject;
+    if (subject) await verifyReviewSubject(subject, context);
     output = parseArchitectureOutput(await context.invoke('runtime.dispatch', {
       operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
       payload: buildArchitectureRequest(agent, { ...input, ...(subject ? { subject } : {}) }, context.contract.guidance?.helperPrompt),

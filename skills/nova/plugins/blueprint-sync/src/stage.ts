@@ -1,5 +1,6 @@
-import { approvedSource, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+import { approvedSource, type SourceBinding, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 interface Input {
+  readonly sourceBinding?: SourceBinding;
   readonly blueprintId: string;
   readonly repositoryRoot: string;
   readonly branchRef: string;
@@ -16,7 +17,7 @@ function validateApprovedInput(input: Input, approval: Awaited<ReturnType<typeof
 }
 export async function execute(input: Input, context: PluginInvocationContext): Promise<StageResult> {
   validateInput(input);
-  const approval = await approvedSource(context);
+  const approval = await approvedSource(context, input.sourceBinding);
   validateApprovedInput(input, approval);
   const sync = await context.invoke('git.sync', {
     operation: 'sync_paths',
