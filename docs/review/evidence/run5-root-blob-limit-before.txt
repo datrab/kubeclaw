@@ -1,0 +1,6 @@
+Source: original shared FileDurableBlobStore.get, unchanged at remote8468868.
+Probe: create a disposable real content-addressed disk blob (33 bytes of ASCII a),
+then read it with new FileDurableBlobStore(root, 16).get(actual SHA-256 digest).
+The configured per-blob maximum is 16 bytes. Temporary files are removed afterward.
+{"source":"8468868 unchanged original BlobStore","maximumBytes":16,"storedBytes":33,"readBytes":33,"oversizeAccepted":true,"boundary":"actual disk blob reader; before defect, not passed acceptance"}
+Exit: 0 means the oversized-read defect was reproduced; it is not a passed limit gate.
