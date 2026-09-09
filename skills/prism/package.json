@@ -26,7 +26,8 @@
     "start:studio": "node --experimental-strip-types server/studio.ts",
     "start:worker": "node --experimental-strip-types server/worker.ts",
     "typecheck": "tsc --noEmit",
-    "test:studio-remediation": "node --test tests/studio-roundtrip.test.mts tests/preview-assets.test.mts && npm run build:studio && playwright test --config studio/playwright-remediation.mjs"
+    "test:studio-remediation": "node --test tests/studio-roundtrip.test.mts tests/preview-assets.test.mts && npm run build:studio && playwright test --config studio/playwright-remediation.mjs",
+    "test:corpus-pool": "node integration/corpus-pool.mts"
   },
   "dependencies": {
     "@kubeclaw/pipeline-worker-core-contract": "1.0.0",
