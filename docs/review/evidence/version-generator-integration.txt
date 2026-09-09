@@ -1,0 +1,31 @@
+node --test tests/verification/deployment/versions.test.mjs exit 0
+✔ central versions update actual build/deployment files and reject drift without repairing it (25.585385ms)
+✔ every central base requires a digest, including non-OpenClaw runtimes (0.360852ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.597954
+
+node scripts/versions.mjs --check exit 0
+{"checked":21,"changed":[]}
+
+HEAD baseline
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/versions.mjs
+  7:8  error  Function 'versionOutputs' has too many lines (83). Maximum allowed is 60  max-lines-per-function
+  7:8  error  Function 'versionOutputs' has a complexity of 30. Maximum allowed is 15   complexity
+
+✖ 2 problems (2 errors, 0 warnings)
+
+
+working
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/versions.mjs
+  7:8  error  Function 'versionOutputs' has too many lines (84). Maximum allowed is 60  max-lines-per-function
+  7:8  error  Function 'versionOutputs' has a complexity of 30. Maximum allowed is 15   complexity
+
+✖ 2 problems (2 errors, 0 warnings)

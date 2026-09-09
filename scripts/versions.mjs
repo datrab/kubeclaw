@@ -40,6 +40,7 @@ export function versionOutputs(root) {
     const usedOverrides = new Set();
     const content = read(name).replace(/^ARG ([A-Z0-9_]+)=(\S+)$/gm, (line, key) => {
       if (['KUBECLAW_BUILD_REVISION', 'TARGETARCH'].includes(key)) return line;
+      if (name === 'docker/Dockerfile.buster-runtime' && key === 'TRIVY_DATABASE_REFRESH') return line;
       if (!Object.hasOwn(args, key)) throw new Error(`${name}: unmanaged version argument ${key}`);
       used.add(key);
       if (Object.hasOwn(overrides, key)) usedOverrides.add(key);
@@ -53,10 +54,10 @@ export function versionOutputs(root) {
     outputs.set(name, content);
   }
   for (const key of Object.keys(args)) if (!used.has(key)) throw new Error(`Unused central version: ${key}`);
-  const replaceOne = (file, regex, replacement) => {
+  const replaceOne = (file, regex, replacement, expectedCount = 1) => {
     const source = outputs.get(file) ?? read(file);
-    if ([...source.matchAll(new RegExp(regex.source, 'gm'))].length !== 1) throw new Error(`${file}: version field missing or ambiguous`);
-    outputs.set(file, source.replace(regex, replacement));
+    if ([...source.matchAll(new RegExp(regex.source, 'gm'))].length !== expectedCount) throw new Error(`${file}: version field missing or ambiguous`);
+    outputs.set(file, source.replace(new RegExp(regex.source, 'gm'), replacement));
   };
   for (const reference of [manifest.infrastructure?.envoy, ...Object.values(manifest.automation ?? {})]) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
@@ -78,7 +79,7 @@ export function versionOutputs(root) {
   replaceOne('skills/common/plugins/openclaw-agent-observer/package.json', /"openclawVersion": "[^"]+"/,
     `"openclawVersion": "${manifest.openclaw.version}"`);
   replaceOne('.github/workflows/build-ops-mcp.yaml', /^          version: v\d+\.\d+\.\d+$/m,
-    `          version: ${manifest.imageOverrides['ops-pod'].HELM_VERSION}`);
+    `          version: ${manifest.imageOverrides['ops-pod'].HELM_VERSION}`, 2);
   replaceOne('.github/workflows/update-checks.yaml', /^          version: v\d+\.\d+\.\d+$/m,
     `          version: v${args.HELM_VERSION}`);
   replaceOne('.github/workflows/pipeline-reliability.yaml', /^          version: v\d+\.\d+\.\d+$/m,
