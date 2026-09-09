@@ -1,0 +1,3 @@
+Source freeze 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81
+Command: /workspace/scratch/4e25cf57c177/toolchains/go/bin/go vet ./cmd/buster-namespace-controller
+Exit: 0

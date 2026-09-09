@@ -3464,6 +3464,10 @@
         {
           "report": "implementation/demo-handoff-independent-review.md",
           "summary": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
+        },
+        {
+          "report": "implementation/run6-coupled-root-review.md",
+          "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3471,7 +3475,7 @@
       "source_finding_text": "### F-T14-01 — Finalpreview-Exposure wird vor Operatorübergabe entfernt\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch; statisch bestätigter komponentenübergreifender Lifecycledefekt gegenüber dem gewünschten Operatorabschluss.** Trigger: erfolgreicher Plan mit Kubernetesfixture retention=retain und Tailscale-Exposurefixture. Runner finally räumt Fixture auf (runner.ts 897–899,2005–2018), Exposurecleanup ist unbedingt (provider.js 85–90), Runtime schaltet off (231–241), Controller löscht Ingress (1353–1362). Folge: Namespace erhalten, URL nach Abschluss nicht erhalten. Rootfix: bewusster, persistierter Ownership-/Lifecycletransfer einer finalen Preview einschließlich Exposure, Namespace, TTL, Source-/Imagedigest und Cleanupbefugnis; normale Testfixtures weiterhin am Planende aufräumen. Kein pauschales Entfernen des Cleanup-finally. Regression: echter End-to-end-Fixtureplan, danach erlaubter Tailnetbrowser erreicht Anwendung für festgelegten Operatorzeitraum; explizites Release/TTL entfernt exakt diese Generation. Keine Ausführung hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
+      "next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
       "related_findings": [
         "F-T14-02",
         "IFR-04-001",
@@ -3504,6 +3508,10 @@
         {
           "report": "implementation/demo-handoff-independent-review.md",
           "summary": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
+        },
+        {
+          "report": "implementation/run6-coupled-root-review.md",
+          "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3511,7 +3519,7 @@
       "source_finding_text": "### F-T14-02 — Vollständiger Operatorzugang und Appauth-Handoff fehlen\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch für das Abschlussziel; statisch bestätigte Integrationslücke, keine behauptete Credentialoffenlegung.** Trigger: Pipeline verlangt Login und „ohne manuelle Clusterarbeit testen“. Controller erstellt nur dediziertes Secret (main.go 1165–1225); Manifest-/Ingresspfad bindet die App nicht automatisch daran; Summary konsumiert keine Exposure (summary.ts 46–68); Previewobserver sendet nur Artefaktmetadaten (observer.ts 139–160). Folge: weder funktionierender Login noch URL-/Credentialempfang/Abnahme sind durch den Runabschluss garantiert. Rootfix: verpflichtender Previewdeliveryvertrag mit Source/Image/Lease/Generation/URL/Authmodus/Expiry, Appseitiger Secretintegration und überprüftem Login; Credentials als gezielt abrufbare geschützte Referenz und autorisierte sichere Zustellung, nicht als unredigiertes allgemeines Runartefakt. Operatorfeedback an dieselbe Generation und Sourcebindung koppeln. Regression: Anwendung mit tatsächlicher Auth, erlaubter Operator kann lesen/login/Feedback geben, anderer Tailnetnutzer und alte Previewgeneration werden abgewiesen; Nachricht enthält nötige URL ohne öffentliche Secretbytes. Keine Tests hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
+      "next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
       "related_findings": [
         "F-T14-01",
         "IFR-04-001",
@@ -4137,13 +4145,17 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP12",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "9a566c7c884561f1cb17af500fdc842f22bac5fb",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "bestanden",
       "verification_evidence": [
         {
           "report": "implementation/namespace-broker.md",
           "summary": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run."
+        },
+        {
+          "report": "implementation/run6-coupled-root-review.md",
+          "summary": "Originales natives Kubernetes 1.35.0 mit TokenRequest/TokenReview, tatsächlichem Controller-SA/RBAC und VAP: alternative Namespaces/Präfixe, erlaubtes CREATE201/DELETE200 und verweigerte Kontrollnamespace-Löschung422 samt unverändertem Kontrollobjekt; unabhängig und am integrierten Root-Stand erneut bestanden. Vollständiger gekoppelter CRD/CEL-/signierter Controller-Gate ebenfalls bestanden."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/namespace-broker.md",
@@ -4153,10 +4165,11 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/buster-namespace-fence.yaml#L21"
       ],
       "unresolved_code_references": [],
-      "next_action": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run.",
+      "next_action": "Originalbefund abgeschlossen. Bei später separat autorisiertem Deployment dokumentierte Legacy-Policy-Migration beachten; keine Betriebsfreigabe oder vollständige Product-/Tailnet-/Zustellungsabnahme behauptet.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run."
+      "remaining_work": "Keine im ursprünglichen IFR-18-001-Scope. Deployment/Migration und andere Finding-Gates bleiben separat.",
+      "verification_scope": "Echter isolierter API-Server mit originalen gerenderten Policies und tatsächlicher alternativer Controller-SA; zwei Konfigurationen sequenziell, kein Workload-Deployment."
     },
     {
       "id": "IFR-27-001",
@@ -4639,7 +4652,11 @@
       "verification_status": "Pflicht-Sourcepreflight, optionaler gebundener Architekturreview/Freigabepfad und Sync vor Modullane integriert; neun echte lokale Sourceverbraucherfälle, Compiler, Builds/Typen/Lint und unabhängige Gegenprüfung bestanden. Legacyimport und vollständiger Demo-/Acceptance-Abschluss bleiben offen.",
       "verification_evidence": [
         "docs/review/remediation/implementation/project-source-v2.md",
-        "docs/review/evidence/integration-eb1d7cc/manifest.json"
+        "docs/review/evidence/integration-eb1d7cc/manifest.json",
+        {
+          "report": "implementation/run6-coupled-root-review.md",
+          "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -4653,7 +4670,7 @@
       "unresolved_code_references": [
         "nova.entry.md"
       ],
-      "next_action": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
+      "next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T13-001",
@@ -4697,8 +4714,8 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 93,
-    "implementiert": 40,
+    "verifiziert": 94,
+    "implementiert": 39,
     "in Bearbeitung": 2,
     "offen": 19
   },

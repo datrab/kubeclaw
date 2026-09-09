@@ -242,9 +242,9 @@
     },
     {
       "id": "IFR-18-001",
-      "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Alternate controller SA enforced by actual Kubernetes VAP admission. | Original Helm gate passes both namespaces/identities/prefixes and rejects Kubernetes 1.29. Original controller Go suite passes. Its local HTTP fixtures are not a Kubernetes API server; actual CEL/admission and installed-policy migration remain open."
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/run6-coupled-root-review.md",
+      "next_action": "Original scope passed independently and at integrated root: genuine native API/TokenRequest/TokenReview/controller-SA/RBAC/VAP, two alternative namespace/prefix configurations with allowed201/200 and policy422 control deletion denied. Preserve the documented migration procedure for a later separately authorized deployment; no full Product delivery claim."
     },
     {
       "id": "IFR-14-001",

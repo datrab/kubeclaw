@@ -1,0 +1,20 @@
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:229:181): Ready producer ServiceAccount is required
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:237:16): Product decisions require the Ready TLS listener
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:246:24): Human product issuer is required
+
+Use --debug flag to render out invalid YAML
+✔ original Helm renders internal Ready TLS server and exact TokenReview authority (155.083191ms)
+✔ original chart mounts opt-in audience token only into actual Nova runtime container (135.152891ms)
+✔ product decisions are disabled by default and require separate explicit human authority (336.035469ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 769.979232

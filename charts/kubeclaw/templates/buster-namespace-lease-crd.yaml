@@ -32,6 +32,9 @@ spec:
           jsonPath: .spec.cleanupPolicy
       schema:
         openAPIV3Schema:
+          x-kubernetes-validations:
+            - rule: "!has(oldSelf.status) || !has(oldSelf.status.demoProduct) || (has(self.status) && has(self.status.demoProduct))"
+              message: "recorded human product decisions cannot be removed"
           type: object
           properties:
             spec:
@@ -220,6 +223,109 @@ spec:
                     startedAt:
                       type: string
                       format: date-time
+                demoProduct:
+                  type: object
+                  required: [leaseUID, readyDigest, decisions]
+                  x-kubernetes-validations:
+                    - rule: "self.leaseUID == oldSelf.leaseUID && self.readyDigest == oldSelf.readyDigest"
+                      message: "product history remains bound to its committed ready subject"
+                  properties:
+                    leaseUID:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    readyDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                      maxLength: 71
+                    decisions:
+                      type: array
+                      maxItems: 128
+                      x-kubernetes-list-type: map
+                      x-kubernetes-list-map-keys: [decisionId]
+                      x-kubernetes-validations:
+                        - rule: "oldSelf.all(old, self.exists(entry, entry.decisionId == old.decisionId))"
+                          message: "human decision history is append-only"
+                      items:
+                        type: object
+                        x-kubernetes-validations:
+                          - rule: "self == oldSelf"
+                            message: "an existing human decision receipt is immutable"
+                        required: [schemaVersion, decisionId, payloadDigest, action, leaseName, leaseUID, readyDigest, generation, actorId, issuer, appliedAt, previousExpiry, expiresAt, state, envelope]
+                        properties:
+                          schemaVersion:
+                            type: string
+                            enum: ["demo-product-decision-receipt.v1"]
+                            maxLength: 32
+                          action:
+                            type: string
+                            enum: ["accept", "extend"]
+                            maxLength: 6
+                          state:
+                            type: string
+                            enum: ["accepted", "extended"]
+                            maxLength: 8
+                          generation:
+                            type: integer
+                            format: int64
+                            minimum: 1
+                            maximum: 9007199254740991
+                          decisionId:
+                            type: string
+                            minLength: 36
+                            maxLength: 36
+                            pattern: '^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$'
+                          leaseName:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          leaseUID:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          actorId:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          issuer:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          payloadDigest:
+                            type: string
+                            pattern: '^sha256:[a-f0-9]{64}$'
+                            maxLength: 71
+                          readyDigest:
+                            type: string
+                            pattern: '^sha256:[a-f0-9]{64}$'
+                            maxLength: 71
+                          appliedAt:
+                            type: string
+                            format: date-time
+                            maxLength: 35
+                          previousExpiry:
+                            type: string
+                            format: date-time
+                            maxLength: 35
+                          expiresAt:
+                            type: string
+                            format: date-time
+                            maxLength: 35
+                          envelope:
+                            type: object
+                            required: [schemaVersion, payload, signature]
+                            properties:
+                              schemaVersion:
+                                type: string
+                                enum: ["demo-product-decision-envelope.v1"]
+                                maxLength: 33
+                              payload:
+                                type: string
+                                maxLength: 10924
+                              signature:
+                                type: string
+                                minLength: 88
+                                maxLength: 88
                 demoReadiness:
                   type: object
                   x-kubernetes-validations:

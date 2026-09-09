@@ -1,0 +1,18 @@
+Source freeze 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81; subsequent e0cf0e7 adds only initial failure evidence
+Command: env TMPDIR=<own-test-temp> node --test tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs
+Exit: 0
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (11.668945ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (55.348023ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (23.7428ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (65.541973ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (274.97713ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (436.936522ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 711.01071

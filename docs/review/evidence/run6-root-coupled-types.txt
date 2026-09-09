@@ -1,0 +1,3 @@
+Source: b16d9d2f8b4c68afe5702a9c080f0ffff768d520
+Command: ./node_modules/.bin/tsc -p skills/prism/tsconfig.json --noEmit
+Exit: 0

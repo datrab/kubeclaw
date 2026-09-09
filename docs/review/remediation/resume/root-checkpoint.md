@@ -1,7 +1,7 @@
 # Root checkpoint: reviewed integration and resumable work
 
-Frozen scope remains exactly 47 IDs. Seven now satisfy their original finding
-requirements; 40 remain incomplete. Overall completion is false. The latest
+Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
+requirements; 39 remain incomplete. Overall completion is false. The latest
 continuation is in `run-20260909t225913.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
@@ -44,8 +44,10 @@ remains open. Raw output: `docs/review/evidence/wave47-scaffold-root-integrated.
 Seven separate remote package checkpoints preserve all outstanding tracked work;
 see `package-checkpoints.json` for immutable SHAs and integration dependencies.
 They were verified by blob SHA and mode and remain backups, not approvals.
-Product/controller/chart remain a coupled pending package with a real native
-CRD/CEL acceptance gate. Do not install or silently integrate them from a backup.
+Product/controller/chart were subsequently integrated as a coupled reviewed
+package after their genuine native CRD/CEL acceptance gate passed. See
+`implementation/run6-coupled-root-review.md` (relative to the remediation root).
+This is not a deployment or full Product/Tailnet/delivery acceptance.
 
 The remote review identified a local-history dependency in a historical CLI
 probe. Seven original producer files were then archived with Git/SHA256 hashes;

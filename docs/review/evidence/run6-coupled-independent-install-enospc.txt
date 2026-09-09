@@ -1,0 +1,5 @@
+Command: npm ci --offline --ignore-scripts --no-audit --no-fund
+Exit: 1
+npm warn deprecated deep-diff@1.0.2: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn tar TAR_ENTRY_ERROR ENOSPC: no space left on device, write
+Filesystem was 100% full. This setup failure is not counted as test evidence. Only the reviewer's own reproducible dependency directories were removed. Root-authorized immutable external dependency hardlinks were then used with all 62 workspace source links reconstructed inside the current checkout; no production source or test assertion changed.

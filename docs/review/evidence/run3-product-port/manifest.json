@@ -1,0 +1,39 @@
+{
+  "run": "20260909t2146-product-port",
+  "remote_base": "b284a15ebfa58c31688271c62d9bf1ea276fa2f0",
+  "local_base": "c8dd0917f4f0eb53dd6719c657ff90578e697602",
+  "exact_base_tree": "197e8efc34c001cfabf74caba0c55f99fb7e1b0b",
+  "source_backup": "74e0cc0f848269e7e6b163c82253952f638682d7",
+  "status": "incomplete coupled product package; source port awaiting independent review, no native approval",
+  "restoration": "22 added files fetched from immutable remote Product backup and individually compared by Git blob SHA; three modified legacy paths reconciled instead of replacing current files",
+  "coupled_controller": "e21a2998f8b0e39b60705dfd8bbd6855452a0395",
+  "coupled_chart": "47b392dc2aa36cb37fdbd8f63b1a6f10a1823973",
+  "commands": [
+    {
+      "cmd": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/prism/control/product-decisions.ts skills/prism/server/control-config.ts skills/prism/server/control.ts skills/prism/server/product-controller.ts skills/prism/server/product-decisions.ts skills/prism/server/product-operator-page.ts skills/prism/server/studio-request.ts skills/prism/storage/product-decisions.ts skills/prism/tests/product-controller.test.mts skills/prism/tests/product-decisions.test.mts skills/prism/tests/export-product-vectors.mts skills/prism/tests/control-product-composition.test.mts skills/prism/tests/control-generation-http.test.mts",
+      "log": "lint-final.txt",
+      "exit": 0,
+      "scope": "bounded listed gate"
+    },
+    {
+      "cmd": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/prism/server/control-server.ts",
+      "log": "server-lint-final.txt",
+      "exit": 1,
+      "scope": "25 existing handler errors, same baseline categories; newly introduced import diagnostic corrected"
+    },
+    {
+      "cmd": "node --test skills/prism/tests/product-decisions.test.mts skills/prism/tests/product-controller.test.mts skills/prism/tests/studio-proxy.test.mts skills/prism/tests/control-product-composition.test.mts skills/prism/tests/control-generation-http.test.mts skills/prism/tests/control-server-config.test.mts",
+      "log": "tests-final.txt",
+      "exit": 0,
+      "scope": "15 passed, zero skipped; one PATH-T02-002 case remains diagnostic, not acceptance"
+    },
+    {
+      "cmd": "npm run typecheck -w @kubeclaw/prism",
+      "log": "typecheck-final.txt",
+      "exit": 0,
+      "scope": "bounded listed gate"
+    }
+  ],
+  "next_action": "Independently review port and rerun listed local tests. Keep isolated backup unintegrated until paired controller/chart native CRD/CEL installation/cost gate actually passes; actual Tailnet/browser/API authority tests remain separately incomplete.",
+  "overall_complete": false
+}

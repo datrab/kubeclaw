@@ -4,6 +4,6 @@ import { loadControlListenerConfig } from "./control-config.ts";
 
 const config = loadControlListenerConfig();
 const pool = new Pool({ connectionString: config.databaseUrl });
-const server = createControlServer(pool);
+const server = await createControlServer(pool);
 server.listen(config.port, "0.0.0.0");
 process.on("SIGTERM", () => server.close(() => { void pool.end(); }));

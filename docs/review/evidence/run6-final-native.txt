@@ -1,0 +1,4 @@
+Source freeze 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81; subsequent e0cf0e7 adds only initial failure evidence
+Command: env TMPDIR=<own-test-temp> HELM=<helm> GO=<go> KUBEBUILDER_ASSETS=<verified-envtest-v1.35.0> NATIVE_CONTROLLER=true NATIVE_EVIDENCE_DIR=docs/review/evidence/run6-native-final node tests/verification/integration/product-native-api.mjs
+Exit: 0
+Native RBAC/ServiceAccount/VAP fence and original CRD status/CEL matrix passed. No workload or full product-delivery claim.

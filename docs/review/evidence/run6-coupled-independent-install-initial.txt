@@ -1,0 +1,5 @@
+Command: npm ci --offline --ignore-scripts --no-audit --no-fund
+Exit: 1
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/workspace/scratch/15fb596e6560/run6-coupled-review/node_modules/yargs-parser/build'
+This failed dependency setup is not a test pass. Retry in the same owned new checkout is recorded separately.

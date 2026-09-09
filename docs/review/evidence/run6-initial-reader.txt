@@ -1,0 +1,24 @@
+Source freeze 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81
+Command: node --test tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs
+Exit: 1
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (46.322869ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (193.399174ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (53.198466ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (283.33595ms)
+✖ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (20020.067575ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (1317.717295ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21301.540496
+
+✖ failing tests:
+
+test at tests/verification/reliability/blob-read-boundary.test.mjs:55:1
+✖ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (20020.067575ms)
+  'test timed out after 20000ms'

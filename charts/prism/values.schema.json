@@ -114,6 +114,149 @@
         "pipelinePreferenceSubject": {
           "type": "string",
           "pattern": "^$|^user-[a-f0-9]{24}$"
+        },
+        "productDecisions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "operators",
+            "tokenExpirationSeconds",
+            "issuer",
+            "origin",
+            "authorityRevision",
+            "signingSecretName",
+            "signingSecretKey",
+            "controllerUrl",
+            "controllerNamespace",
+            "controllerRelease",
+            "controllerCaSecretName",
+            "controllerCaSecretKey",
+            "tokenAudience"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "operators": {
+              "type": "array",
+              "uniqueItems": true,
+              "maxItems": 100,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+              }
+            },
+            "tokenExpirationSeconds": {
+              "type": "integer",
+              "minimum": 600,
+              "maximum": 3600
+            },
+            "issuer": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "origin": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "authorityRevision": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "signingSecretName": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "signingSecretKey": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerUrl": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerNamespace": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerRelease": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerCaSecretName": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerCaSecretKey": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "tokenAudience": {
+              "type": "string",
+              "maxLength": 2048
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "issuer": {
+                    "minLength": 1
+                  },
+                  "origin": {
+                    "minLength": 1,
+                    "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?/?$"
+                  },
+                  "authorityRevision": {
+                    "minLength": 1
+                  },
+                  "signingSecretName": {
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+                  },
+                  "signingSecretKey": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9._-]+$"
+                  },
+                  "controllerUrl": {
+                    "minLength": 1,
+                    "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?:8443/?$"
+                  },
+                  "controllerNamespace": {
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+                  },
+                  "controllerRelease": {
+                    "minLength": 1
+                  },
+                  "controllerCaSecretName": {
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+                  },
+                  "controllerCaSecretKey": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9._-]+$"
+                  },
+                  "tokenAudience": {
+                    "minLength": 1
+                  },
+                  "operators": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     },

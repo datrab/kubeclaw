@@ -1,0 +1,244 @@
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: agent-buster-namespace-controller
+  namespace: native-alternate-a
+  labels:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: native-a
+    app.kubernetes.io/component: buster
+    app.kubernetes.io/managed-by: Helm
+    kubeclaw/role: buster
+automountServiceAccountToken: true
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: agent-buster-controller-secrets
+  labels:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: native-a
+    app.kubernetes.io/component: buster
+    app.kubernetes.io/managed-by: Helm
+    kubeclaw/role: buster
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "create", "patch"]
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: agent-buster-namespace-deployer
+rules:
+  # Deployer subjects are explicitly allowlisted trusted agents. They need full
+  # Service lifecycle access for Helm; external Service forms are rejected at
+  # the broker manifest boundary because Kubernetes RBAC cannot filter spec.type.
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "endpoints", "configmaps", "persistentvolumeclaims", "serviceaccounts"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  # A deployer can already project any Secret into a Pod it creates. Direct
+  # read access avoids that indirect path for copied, lease-scoped credentials.
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: agent-buster-namespace-tester
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "endpoints", "configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: agent-buster-namespace-controller
+  labels:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: native-a
+    app.kubernetes.io/component: buster
+    app.kubernetes.io/managed-by: Helm
+    kubeclaw/role: buster
+rules:
+  - apiGroups: ["kubeclaw.forgestack.ai"]
+    resources: ["busternamespaceleases"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+  - apiGroups: ["kubeclaw.forgestack.ai"]
+    resources: ["busternamespaceleases/status"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["create", "get", "delete"]
+  - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["resourcequotas", "limitranges"]
+    verbs: ["create", "get", "delete", "patch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["create", "get", "list", "delete", "patch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["create", "get", "delete", "patch"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings"]
+    verbs: ["create", "get", "list", "delete", "patch"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterroles"]
+    resourceNames:
+      - agent-buster-controller-secrets
+      - agent-buster-namespace-deployer
+      - agent-buster-namespace-tester
+    verbs: ["bind"]
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: agent-buster-namespace-controller
+  labels:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: native-a
+    app.kubernetes.io/component: buster
+    app.kubernetes.io/managed-by: Helm
+    kubeclaw/role: buster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: agent-buster-namespace-controller
+subjects:
+  - kind: ServiceAccount
+    name: agent-buster-namespace-controller
+    namespace: native-alternate-a
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: agent-buster-namespace-controller-source-secrets
+  namespace: native-alternate-a
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames:
+      - kubeclaw-fixture-preflight
+      - prism-test-provider
+      - prism-test-runtime
+      - prism-test-postgresql-auth
+      - prism-test-ghcr
+    verbs: ["get"]
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: agent-buster-namespace-controller-source-secrets
+  namespace: native-alternate-a
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: agent-buster-namespace-controller-source-secrets
+subjects:
+  - kind: ServiceAccount
+    name: agent-buster-namespace-controller
+    namespace: native-alternate-a
+---
+# Source: kubeclaw/templates/buster-namespace-controller.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-buster-namespace-controller
+  namespace: native-alternate-a
+  labels:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: native-a
+    app.kubernetes.io/component: buster
+    app.kubernetes.io/managed-by: Helm
+    kubeclaw/role: buster
+    kubeclaw/controller: buster-namespace-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/instance: native-a
+      app.kubernetes.io/component: buster-namespace-controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kubeclaw
+        app.kubernetes.io/instance: native-a
+        app.kubernetes.io/component: buster-namespace-controller
+        kubeclaw/role: buster
+    spec:
+      serviceAccountName: agent-buster-namespace-controller
+      automountServiceAccountToken: true
+      imagePullSecrets:
+        - name: ghcr-secret
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: controller
+          image: "ghcr.io/datrab/kubeclaw-namespace-controller:latest"
+          imagePullPolicy: Always
+          command:
+            - /app/buster-namespace-controller
+          env:
+            - name: KUBECLAW_NAMESPACE
+              value: "native-alternate-a"
+            - name: BUSTER_CONTROLLER_SERVICE_ACCOUNT
+              value: "agent-buster-namespace-controller"
+            - name: BUSTER_SECRET_ROLE_NAME
+              value: "agent-buster-controller-secrets"
+            - name: BUSTER_DEPLOYER_ROLE_NAME
+              value: "agent-buster-namespace-deployer"
+            - name: BUSTER_TESTER_ROLE_NAME
+              value: "agent-buster-namespace-tester"
+            - name: BUSTER_ALLOWED_ACCESS_JSON
+              value: "[{\"modes\":[\"deployer\"],\"subject\":\"kubeclaw/agent-nova\"},{\"modes\":[\"deployer\",\"tester\"],\"subject\":\"kubeclaw/agent-buster\"}]"
+            - name: BUSTER_ALLOWED_SOURCE_SECRETS
+              value: "kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr"
+            - name: BUSTER_LEASE_API_GROUP
+              value: "kubeclaw.forgestack.ai"
+            - name: BUSTER_LEASE_API_VERSION
+              value: "v1alpha1"
+            - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
+              value: "proofa"
+            - name: BUSTER_DEFAULT_TTL_SECONDS
+              value: "7200"
+            - name: BUSTER_MAX_TTL_SECONDS
+              value: "86400"
+            - name: BUSTER_CONTROLLER_POLL_MS
+              value: "3000"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi

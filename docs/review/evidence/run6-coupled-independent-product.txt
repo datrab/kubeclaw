@@ -1,0 +1,44 @@
+Source: 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81
+Fresh remote base: b06c06dce3364c482a1da5637c36bc2b14ba8c72
+Command: TMPDIR=/workspace/scratch/15fb596e6560/run6-coupled-review-tmp node --test --test-concurrency=1 skills/prism/tests/{control-product-independent,product-decisions,product-controller,studio-proxy,control-generation-http,control-server-config,control-product-composition}.test.mts
+Exit: 0
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (2873.070174ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (1811.938644ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (1642.410881ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (259.632344ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2250.263755ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (1805.255607ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (1728.291495ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (263.166748ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (1760.27481ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (1846.564908ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (2023.78407ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2095.903996ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (1.269285ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (0.541096ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.238409ms)
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (440.613741ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (3.842577ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (2443.636637ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1286.108792ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1632.144377ms)
+✔ Studio preserves every Control Set-Cookie header (1.693575ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28075.178524
+

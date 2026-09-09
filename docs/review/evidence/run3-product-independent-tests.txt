@@ -1,0 +1,38 @@
+Author4d93e5721fc99580ab4af6a3405f1d372a9a7ff6; reviewer388ba62 plus independent test. Node v24.19.0.
+Command: node --test skills/prism/tests/control-product-independent.test.mts skills/prism/tests/product-decisions.test.mts skills/prism/tests/product-controller.test.mts skills/prism/tests/studio-proxy.test.mts skills/prism/tests/control-generation-http.test.mts skills/prism/tests/control-server-config.test.mts
+Exit0
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (4698.561726ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2146.865414ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (3207.785183ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (278.553681ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2137.973954ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2004.733666ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (2053.496665ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2632.883746ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (2.719093ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (0.950815ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.386063ms)
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (775.329363ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (4.421352ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (3858.215015ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1526.725387ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1413.951257ms)
+✔ Studio preserves every Control Set-Cookie header (2.695809ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12774.331037

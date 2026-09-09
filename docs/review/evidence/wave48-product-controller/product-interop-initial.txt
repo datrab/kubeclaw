@@ -1,0 +1,42 @@
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/accept_leaves_TTL;_exact_replay_and_changed_replay
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/extend_preserves_fractional_expiry_and_rejects_stale_cleanup
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/uncertain_response_recovers_atomically_without_second_apply
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/generation
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/source
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/candidate
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/result
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/ready
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/expiry
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/revision
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/expired
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/deleting
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/signature
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/actor
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/issuer
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/token
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/conflict
+--- PASS: TestProductDecisionCASRecoveryAndLifecycle (0.14s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/accept_leaves_TTL;_exact_replay_and_changed_replay (0.02s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/extend_preserves_fractional_expiry_and_rejects_stale_cleanup (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/uncertain_response_recovers_atomically_without_second_apply (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/generation (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/source (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/candidate (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/result (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/ready (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/expiry (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/revision (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/expired (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/deleting (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/signature (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/actor (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/issuer (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/token (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/conflict (0.01s)
+=== RUN   TestProductClosedSignedWire
+--- PASS: TestProductClosedSignedWire (0.00s)
+=== RUN   TestProductTypeScriptInterop
+--- PASS: TestProductTypeScriptInterop (0.10s)
+PASS
+ok  	github.com/datrab/kubeclaw/cmd/buster-namespace-controller	0.245s

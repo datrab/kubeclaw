@@ -1,0 +1,11 @@
+✔ disabled product authority creates no key mount, audience token, environment or network access (51.004211ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (131.377728ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (455.704854ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 732.800777

@@ -50,6 +50,7 @@ type controller struct {
 	tokenPath            string
 	httpClient           *http.Client
 	readiness            *readinessConfig
+	product              *productConfig
 }
 
 type serviceAccountRef struct {
@@ -173,6 +174,9 @@ func newController() (*controller, error) {
 		return nil, err
 	}
 	if err := ctrl.configureReadiness(); err != nil {
+		return nil, err
+	}
+	if err := ctrl.configureProduct(); err != nil {
 		return nil, err
 	}
 	ctrl.allowedAccess = access
@@ -1575,7 +1579,7 @@ func (c *controller) statusPath(name string) string {
 
 func (c *controller) expiresAt(item *lease) time.Time {
 	if deadline, ok := demoReadyDeadline(item); ok {
-		return deadline
+		return productDeadline(item, deadline)
 	}
 	ttl := c.defaultTTL
 	if value := intValue(item.Spec["ttlSeconds"], 0); value > 0 {
