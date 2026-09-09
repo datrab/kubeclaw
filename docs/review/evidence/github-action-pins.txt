@@ -1,0 +1,32 @@
+node scripts/check-action-pins.mjs
+exit 0
+{"ok":true,"files":10,"external":68,"local":5}
+
+node --test tests/verification/contracts/action-pins.test.mjs tests/verification/contracts/workflow-trust-split.test.mjs tests/verification/deployment/release-configuration.test.mjs
+exit 0
+✔ all actual active workflows and source action manifests are immutable and have provenance (61.117831ms)
+✔ original guard catches floating references, missing provenance and nested local composite actions (27.103568ms)
+✔ parsed job guards keep PRs and non-main dispatches read-only (1.772936ms)
+✔ read-only jobs cannot publish, persist checkout credentials or pass artifacts forward (0.575996ms)
+✔ trusted publication rebuilds source and retains digest smoke and receipt authority (0.331829ms)
+✔ trusted docs check before a scoped main-only commit and consume no validation artifacts (0.289115ms)
+✔ every external action in the two entrypoints is commit pinned (0.273181ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (111.514132ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (39.930788ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (46.639537ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 288.796998
+
+node scripts/check-workflow-yaml.mjs .github/workflows/build-images.yaml .github/workflows/build-ops-mcp.yaml .github/workflows/dependency-updates.yaml .github/workflows/docs-checks.yaml .github/workflows/pipeline-reliability.yaml .github/workflows/promote-runtime.yaml .github/workflows/publish-image-receipts.yaml .github/workflows/release-security.yaml .github/workflows/role-images.yaml .github/workflows/update-checks.yaml
+exit 0
+{"ok":true,"files":[".github/workflows/build-images.yaml",".github/workflows/build-ops-mcp.yaml",".github/workflows/dependency-updates.yaml",".github/workflows/docs-checks.yaml",".github/workflows/pipeline-reliability.yaml",".github/workflows/promote-runtime.yaml",".github/workflows/publish-image-receipts.yaml",".github/workflows/release-security.yaml",".github/workflows/role-images.yaml",".github/workflows/update-checks.yaml"]}
+
+node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs scripts/check-action-pins.mjs tests/verification/contracts/action-pins.test.mjs
+exit 0

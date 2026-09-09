@@ -9,18 +9,20 @@ jobs:
   policy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
         with:
           version: v3.18.4
       - name: Check generated versions and release receipt validation
         run: |
+          node scripts/check-action-pins.mjs
+          node --test tests/verification/contracts/action-pins.test.mjs
           node scripts/versions.mjs --check
           node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/release-configuration.test.mjs
           if test -f releases/runtime-images.json; then node scripts/updates/materialize-release.mjs --check; fi
@@ -37,15 +39,15 @@ jobs:
   envoy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Exercise actual Envoy mTLS with positive and negative controls
         run: bash tests/verification/deployment/check-envoy-image.sh "$(node -p 'require("./versions.json").infrastructure.envoy')"
   upstream-checksums:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24
       - name: Exercise updater against real release metadata and binary bytes
