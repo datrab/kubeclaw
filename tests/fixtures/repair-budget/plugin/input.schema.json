@@ -1,0 +1,1 @@
+{"type":"object","additionalProperties":false,"properties":{"repairVersions":{"type":"array","items":{"type":"integer"}},"failedVersions":{"type":"array","items":{"type":"integer"}},"blockedVersions":{"type":"array","items":{"type":"integer"}},"retryAttempts":{"type":"array","items":{"type":"integer"}}}}

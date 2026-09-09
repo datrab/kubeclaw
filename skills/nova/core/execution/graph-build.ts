@@ -1,4 +1,5 @@
 import type { StageDefinition } from '@kubeclaw/plugin-sdk';
+import { validateRepairBudgets } from './graph-repair-budget.ts';
 
 type Edge = Readonly<{ from: string; to: string }>;
 export interface BuiltGraph { readonly stages: Map<string, StageDefinition>; readonly dependents: Map<string, string[]>; readonly ordinaryEdges: Edge[]; readonly remediationEdges: Edge[]; readonly remediationOnly: Set<string>; }
@@ -62,16 +63,18 @@ function ancestry(stages: ReadonlyMap<string, StageDefinition>): (stage: string,
 }
 
 function validateRemediation(stages: ReadonlyMap<string, StageDefinition>, edges: readonly Edge[], depends: ReturnType<typeof ancestry>): void {
-  for (const left of edges) for (const right of edges) {
-    if (left.to === right.to && left.from !== right.from && !depends(left.from, right.from) && !depends(right.from, left.from)) {
-      throw new Error(`GRAPH_SHARED_REMEDIATION_TARGET:${left.to}:${left.from}:${right.from}`);
-    }
-  }
+  for (const left of edges) for (const right of edges) assertOrderedRequesters(left, right, depends);
   for (const { from, to } of edges) {
     if (from !== to && !stages.get(to)?.dependsOn.includes(from) && !depends(from, to)) throw new Error(`GRAPH_REMEDIATION_TARGET_UNORDERED:${from}:${to}`);
     for (const prerequisite of stages.get(to)?.dependsOn ?? []) {
       if (prerequisite !== from && depends(prerequisite, from)) throw new Error(`GRAPH_REMEDIATION_PREREQUISITE_DEADLOCK:${from}:${to}:${prerequisite}`);
     }
+  }
+}
+
+function assertOrderedRequesters(left: Edge, right: Edge, depends: ReturnType<typeof ancestry>): void {
+  if (left.to === right.to && left.from !== right.from && !depends(left.from, right.from) && !depends(right.from, left.from)) {
+    throw new Error(`GRAPH_SHARED_REMEDIATION_TARGET:${left.to}:${left.from}:${right.from}`);
   }
 }
 
@@ -84,6 +87,7 @@ function validateActivations(stages: ReadonlyMap<string, StageDefinition>, reque
 
 export function buildGraph(input: readonly StageDefinition[]): BuiltGraph {
   const stages = stagesById(input); const dependents = new Map<string, string[]>(); const requesters = new Map<string, string>();
+  validateRepairBudgets(stages);
   const ordinaryEdges: Edge[] = []; const remediationEdges: Edge[] = [];
   for (const stage of stages.values()) { addDependencies(stage, stages, dependents, ordinaryEdges); addRemediation(stage, stages, requesters, remediationEdges); }
   assertAcyclic(stages); const depends = ancestry(stages); validateRemediation(stages, remediationEdges, depends); validateActivations(stages, requesters, depends);

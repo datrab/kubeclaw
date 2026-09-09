@@ -1,0 +1,1 @@
+{"id":"test.repair-budget","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"execute","type":"test.repair-budget.execute","module":"stage.mjs","export":"execute","requiredCapabilities":["artifacts.write"],"configSchema":"config.schema.json","inputSchema":"input.schema.json","resultSchema":"result.schema.json"}],"observers":[],"adapters":[]}

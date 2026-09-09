@@ -349,6 +349,14 @@ export interface StageDefinition {
   execution: {
     maxAttempts: number;
     maxRemediationCycles: number;
+    maxTechnicalRetries?: number;
+    repairCategory?: LocalId;
+    repairBudget?: {
+      categories: {
+        [k: string]: number;
+      };
+      maximumOrchestratorOrders: number;
+    };
     orchestratorAfterAttempt?: number;
     timeoutMs: number;
   };

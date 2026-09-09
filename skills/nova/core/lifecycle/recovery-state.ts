@@ -8,6 +8,8 @@ import type {
 } from '@kubeclaw/plugin-sdk';
 import { applyStageResult, type StageRuntimeState } from './reducer.ts';
 import { decisionWait } from './wait-request.ts';
+import { budgetedRepairDecision } from './repair-budget.ts';
+import { authorizedRepair } from './repair-authorization.ts';
 
 type StateMap = Map<string, StageRuntimeState>;
 
@@ -41,18 +43,27 @@ function recoverAttemptResult(
   event: LifecycleEvent,
   current: StageRuntimeState,
   orchestratorIssuerId: string,
+  states: StateMap,
 ): StageRuntimeState | undefined {
   if (!['attempt.completed', 'attempt.cancelled', 'attempt.timed_out'].includes(event.type)) return undefined;
   if (!event.payload.result || typeof event.payload.result !== 'object' || current.status !== 'running') return undefined;
   const stage = definition.stages.find(({ id }) => id === current.stageId);
   if (!stage) return undefined;
-  const decision = applyStageResult(stage, {
+  const result = event.payload.result as StageResult;
+  const original = applyStageResult(stage, {
     ...current,
     attemptNumber: Math.max(0, current.attemptNumber - 1),
     attemptsUsed: Math.max(0, current.attemptsUsed - 1),
-  }, event.payload.result as StageResult);
+  }, result);
+  const decision = budgetedRepairDecision(definition.stages, states, stage, original, result, event.identity.runId);
   const wait = decisionWait(decision, event.identity.runId, orchestratorIssuerId);
   const state = wait ? { ...decision.state, wait } : decision.state;
+  if (decision.action.type === 'schedule_remediation') {
+    states.set(stage.id, state);
+    applyRepair(states, decision.action.repairRequest ?? repairRequest(definition.stages, stage.id,
+      decision.action.stageId, state.remediationCyclesUsed, result));
+    return states.get(stage.id);
+  }
   return decision.action.type === 'schedule_attempt' ? { ...state, status: 'pending' } : state;
 }
 
@@ -145,15 +156,13 @@ export function applyRecoveryEvent(
     return;
   }
   if (event.type === 'wait.resolved') {
+    const repair = authorizedRepair(definition.stages, states, current, event.payload.signal as ResumeSignal);
+    if (repair) { applyRepair(states, repair); return; }
     states.set(stageId, resolvedWaitState(event, current));
     return;
   }
-  const recovered = recoverAttemptResult(definition, event, current, orchestratorIssuerId)
+  const recovered = recoverAttemptResult(definition, event, current, orchestratorIssuerId, states)
     ?? stageEventState(event, current, states);
-  if (recovered?.remediationTarget && event.type === 'attempt.completed' && (event.payload.result as StageResult)?.outcome === 'request_fix') {
-    states.set(stageId, recovered);
-    applyRepair(states, repairRequest(definition.stages, stageId, recovered.remediationTarget, recovered.remediationCyclesUsed, event.payload.result as StageResult)); return;
-  }
   if (recovered) {
     states.set(stageId, recovered);
   }

@@ -5,8 +5,9 @@ import type { LifecycleDecision } from './reducer.ts';
 export function decisionWait(decision: LifecycleDecision, runId: string, issuer: string): WaitRequest | undefined {
   const action = decision.action;
   if (action.type === 'persist_wait') return action.wait;
-  if (action.type !== 'pause_for_orchestrator' && action.type !== 'request_orchestrator') return undefined;
-  const request = action.type === 'request_orchestrator' ? { afterAttempt: action.afterAttempt } : action.wait.request;
+  if (action.type !== 'pause_for_orchestrator' && action.type !== 'request_orchestrator' && action.type !== 'request_repair_authorization') return undefined;
+  const request = action.type === 'request_repair_authorization' ? { repairAuthorization: action.pending }
+    : action.type === 'request_orchestrator' ? { afterAttempt: action.afterAttempt } : action.wait.request;
   const identity = canonicalJson([runId, decision.state.stageId, decision.state.attemptNumber]);
   return {
     schemaVersion: 'wait-request.v2',

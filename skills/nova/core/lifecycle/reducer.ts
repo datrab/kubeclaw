@@ -3,6 +3,8 @@ import type {
   StageResult,
   WaitRequest,
 } from '@kubeclaw/plugin-sdk';
+import type { PendingRepair, RepairOrder } from './repair-budget.ts';
+import type { RepairRequest } from './remediation.ts';
 
 export type StageStatus =
   | 'pending'
@@ -22,6 +24,9 @@ export interface StageRuntimeState {
   readonly attemptNumber: number;
   readonly attemptsUsed: number;
   readonly remediationCyclesUsed: number;
+  readonly technicalRetriesUsed?: number;
+  readonly repairLedger?: readonly RepairOrder[];
+  readonly pendingRepair?: PendingRepair;
   readonly continuationGuidance?: Readonly<Record<string, unknown>>;
   readonly facts?: Readonly<Record<string, string | number | boolean | null>>;
   readonly wait?: WaitRequest;
@@ -33,7 +38,8 @@ export interface StageRuntimeState {
 export type LifecycleAction =
   | { readonly type: 'complete' }
   | { readonly type: 'schedule_attempt' }
-  | { readonly type: 'schedule_remediation'; readonly stageId: string }
+  | { readonly type: 'schedule_remediation'; readonly stageId: string; readonly repairRequest?: RepairRequest }
+  | { readonly type: 'request_repair_authorization'; readonly pending: PendingRepair }
   | { readonly type: 'persist_wait'; readonly wait: WaitRequest }
   | { readonly type: 'pause_for_orchestrator'; readonly wait: WaitRequest }
   | { readonly type: 'request_orchestrator'; readonly afterAttempt: number }
@@ -82,7 +88,7 @@ const requestFix: ResultHandler = (definition, current, attempted) => {
   const target = definition.on?.request_fix;
   if (!target) throw new Error(`STAGE_REMEDIATION_UNDECLARED:${definition.id}`);
   const exhausted = attempted.attemptsUsed >= definition.execution.maxAttempts
-    || remediationCyclesUsed > definition.execution.maxRemediationCycles;
+    || (!definition.execution.repairCategory && remediationCyclesUsed > definition.execution.maxRemediationCycles);
   if (exhausted) return { state: { ...attempted, remediationCyclesUsed, status: 'blocked' }, action: { type: 'stop' } };
   return { state: { ...attempted, remediationCyclesUsed, status: 'waiting', remediationTarget: target }, action: { type: 'schedule_remediation', stageId: target } };
 };
@@ -112,6 +118,7 @@ export function applyStageResult(
   const {
     wait: _wait,
     retryAt: _retryAt,
+    pendingRepair: _pendingRepair,
     ...activeState
   } = current;
   const attempted = {
@@ -119,5 +126,11 @@ export function applyStageResult(
     attemptNumber: current.attemptNumber + 1,
     attemptsUsed: current.attemptsUsed + 1,
   };
+  if (definition.execution.maxTechnicalRetries !== undefined && ['retry', 'rate_limited'].includes(result.outcome)) {
+    const technicalRetriesUsed = (current.technicalRetriesUsed ?? 0) + 1;
+    const technical = { ...attempted, technicalRetriesUsed };
+    if (technicalRetriesUsed > definition.execution.maxTechnicalRetries) return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
+    return handlers[result.outcome](definition, current, technical, result);
+  }
   return handlers[result.outcome](definition, current, attempted, result);
 }

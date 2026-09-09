@@ -101,7 +101,7 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
   };
   const compiled = compileProject({ schemaVersion: 'nova-project.v1', id: 'fixture', runId, repositoryRoot: repo, workspaceRoot: workspaces, baseRevision: baseline, modules: (mode === 'parallel' ? ['a', 'b'] : ['a']).map(module) });
   const selected = compiled.definition.stages.filter(stage => stage.type === 'kubeclaw.agent.implementation' || mode !== 'parallel' && stage.type === 'kubeclaw.lint.full');
-  const stages = selected.map(stage => ({ ...stage, dependsOn: stage.type === 'kubeclaw.agent.implementation' ? [] : stage.dependsOn, execution: { ...stage.execution, maxAttempts: 3, maxRemediationCycles: 2, timeoutMs: 15000 } }));
+  const stages = selected.map(stage => ({ ...stage, dependsOn: stage.type === 'kubeclaw.agent.implementation' ? [] : stage.dependsOn, execution: { ...stage.execution, timeoutMs: 15000 } }));
   const eventsPath = path.join(temporary, 'events.jsonl');
   const runner = new core.PipelineRunner({ definition: { ...compiled.definition, maxConcurrency: 2, stages }, registry: granted, activated, adapters, journal: new core.FileJournal(eventsPath) });
   return { temporary, repo, workspaces, baseline, spawns, retained, effectsPath, eventsPath, configs, runId, runner, journal, locks,

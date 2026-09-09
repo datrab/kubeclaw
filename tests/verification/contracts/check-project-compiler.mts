@@ -53,6 +53,22 @@ try {
   const compiled = compileProject(project);
   assert.deepEqual(compiled, compileProject({ ...project, modules: [...project.modules].reverse() }));
   assert.equal(compiled.definition.stages.length, 8);
+  for (const stage of compiled.definition.stages) {
+    assert.equal(stage.execution.maxTechnicalRetries, 1, 'retain the former initial-plus-one technical allowance');
+    assert.equal(stage.execution.maxAttempts, 9, 'ceiling includes six repairs, one extra and one technical retry');
+    if (stage.id.startsWith('implement-')) assert.deepEqual(stage.execution.repairBudget, { categories: { lint: 2, review: 2, test: 2 }, maximumOrchestratorOrders: 1 });
+    else assert.equal(stage.execution.repairCategory, stage.id.split('-')[0]);
+  }
+  const noReview = structuredClone(project);
+  for (const module of noReview.modules) delete (module as any).review;
+  const deterministicOnly = compileProject(noReview).definition;
+  assert.equal(deterministicOnly.stages.length, 6, 'review defaults off; mandatory lint and tests remain');
+  for (const moduleId of ['library', 'app']) {
+    const implementation = deterministicOnly.stages.find((stage: any) => stage.id === `implement-${moduleId}`);
+    assert.deepEqual(implementation.execution.repairBudget.categories, { lint: 2, test: 2 });
+    assert.equal(implementation.execution.maxAttempts, 7);
+    assert.deepEqual(deterministicOnly.stages.find((stage: any) => stage.id === `test-${moduleId}`).dependsOn, [`lint-${moduleId}`]);
+  }
   assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === 'implement-app').dependsOn, ['test-library']);
   for (const moduleId of ['library', 'app']) {
     assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === `review-${moduleId}`).input.revisions, { sourceStageId: `implement-${moduleId}` });

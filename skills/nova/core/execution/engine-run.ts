@@ -4,6 +4,7 @@ import path from 'node:path';
 import type { AdministrativeReopenDecision, LifecycleEvent, PipelineDefinition, PluginDomainEvent, ResumeSignal } from '@kubeclaw/plugin-sdk';
 import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { recoverStageStates, recoverWaitCreation } from '../lifecycle/recovery.ts';
+import { authorizedRepair } from '../lifecycle/repair-authorization.ts';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
 import { assertEffectRecoverySafe } from './effect-recovery.ts';
 import { FileJournal } from '../state/journal.ts';
@@ -82,6 +83,7 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
     const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'WAIT');
     const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
     const created = validateWaitHistory(events, runId, signal.waitId, definition, platform.orchestratorIssuerId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
+    authorizedRepair(definition.stages, recovered, waiting, signal);
     recordSignal(runRoot, signal); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
     const initialStates = recoveryStates(definition, events, runId, platform.orchestratorIssuerId);
     return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates,

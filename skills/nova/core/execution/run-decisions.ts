@@ -1,4 +1,5 @@
 import { applyRepair, repairRequest } from '../lifecycle/remediation.ts';
+import { budgetedRepairDecision } from '../lifecycle/repair-budget.ts';
 import type { ExecutionGraph } from './graph.ts';
 import { decisionWait } from '../lifecycle/wait-request.ts';
 import type { LifecycleEvent, StageDefinition, StageResult } from '@kubeclaw/plugin-sdk';
@@ -26,7 +27,9 @@ export class DecisionRecorder {
   }
 
   record(runId: string, completed: CompletedStageDecision): void {
-    const { definition, decision, administrativeOverride } = completed;
+    const { definition, administrativeOverride } = completed;
+    const decision = { ...budgetedRepairDecision(this.#graph.stages(), this.#states, definition, completed.decision, completed.decision.result, runId), result: completed.decision.result };
+    completed = { ...completed, decision };
     this.#states.set(definition.id, decision.state); this.#artifacts(runId, definition.id, decision.result);
     if (administrativeOverride && !['complete', 'stop'].includes(decision.action.type)) { this.#administrativeBlocked(runId, definition.id, decision.state); return; }
     const handler = this.#handlers()[decision.action.type]; handler(runId, completed);
@@ -40,6 +43,7 @@ export class DecisionRecorder {
       schedule_remediation: (runId, completed) => this.#remediate(runId, completed),
       request_orchestrator: (runId, completed) => this.#orchestrator(runId, completed),
       pause_for_orchestrator: (runId, completed) => this.#orchestrator(runId, completed),
+      request_repair_authorization: (runId, completed) => this.#orchestrator(runId, completed),
       persist_wait: (runId, completed) => this.#wait(runId, completed), cooldown: (runId, completed) => this.#wait(runId, completed),
       stop: (runId, completed) => this.#stop(runId, completed), complete: (runId, completed) => this.#complete(runId, completed),
     };
@@ -65,7 +69,7 @@ export class DecisionRecorder {
     if (decision.action.type !== 'schedule_remediation') return;
     const targetId = decision.action.stageId; const remediation = this.#states.get(targetId)!;
     if (['blocked', 'failed', 'cancelled'].includes(remediation.status)) { this.#terminalRemediation(runId, definition.id, targetId, decision.state, remediation.status); return; }
-    const request = repairRequest(this.#graph.stages(), definition.id, targetId, decision.state.remediationCyclesUsed, decision.result);
+    const request = decision.action.repairRequest ?? repairRequest(this.#graph.stages(), definition.id, targetId, decision.state.remediationCyclesUsed, decision.result);
     if (remediation.remediationReturnTo && remediation.remediationReturnTo !== definition.id) {
       this.#terminalRemediation(runId, definition.id, targetId, decision.state, 'blocked'); return;
     }
@@ -82,7 +86,7 @@ export class DecisionRecorder {
 
   #orchestrator(runId: string, { definition, decision }: CompletedStageDecision): void {
     const action = decision.action;
-    if (action.type !== 'request_orchestrator' && action.type !== 'pause_for_orchestrator') return;
+    if (action.type !== 'request_orchestrator' && action.type !== 'pause_for_orchestrator' && action.type !== 'request_repair_authorization') return;
     const wait = decisionWait(decision, runId, this.#issuer)!;
     this.#states.set(definition.id, { ...decision.state, wait });
     this.#append('orchestrator.required', { runId, stageId: definition.id }, { ...(action.type === 'request_orchestrator' ? { afterAttempt: action.afterAttempt } : {}),

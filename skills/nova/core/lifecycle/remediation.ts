@@ -1,5 +1,6 @@
 import type { StageDefinition, StageResult } from '@kubeclaw/plugin-sdk';
 import type { StageRuntimeState } from './reducer.ts';
+import { recordRepairOrder, type RepairOrder } from './repair-budget.ts';
 
 export interface RepairRequest {
   readonly schemaVersion: 'repair-request.v1';
@@ -8,6 +9,7 @@ export interface RepairRequest {
   readonly generation: number;
   readonly requesterResult: StageResult;
   readonly invalidatedStageIds: readonly string[];
+  readonly budgetOrder?: RepairOrder;
 }
 
 export function repairRequest(stages: readonly StageDefinition[], requester: string, target: string,
@@ -36,18 +38,21 @@ export function repairRequest(stages: readonly StageDefinition[], requester: str
 
 /** Applied identically during live recording and replay of the durable request. */
 export function applyRepair(states: Map<string, StageRuntimeState>, request: RepairRequest): void {
-  const target = states.get(request.targetStageId);
+  let target = states.get(request.targetStageId);
   if (!target) throw new Error('REPAIR_TARGET_MISSING');
   if (target.remediationReturnTo && target.remediationReturnTo !== request.requesterStageId) throw new Error('REPAIR_TARGET_BUSY');
+  recordRepairOrder(states, request);
+  target = states.get(request.targetStageId)!;
   for (const id of request.invalidatedStageIds) {
     const old = states.get(id);
     if (!old) throw new Error(`REPAIR_DEPENDENCY_MISSING:${id}`);
-    const { facts: _facts, wait: _wait, retryAt: _retry, continuationGuidance: _guidance, remediationTarget: _target, remediationReturnTo: _return, ...state } = old;
+    const { facts: _facts, wait: _wait, retryAt: _retry, continuationGuidance: _guidance, pendingRepair: _pending,
+      remediationTarget: _target, remediationReturnTo: _return, ...state } = old;
     states.set(id, { ...state, status: id === request.requesterStageId ? 'waiting' : 'pending',
       ...(id === request.requesterStageId ? { remediationTarget: request.targetStageId } : {}) });
   }
   const { facts: _facts, wait: _wait, retryAt: _retry, continuationGuidance: _guidance,
-    remediationTarget: _target, remediationReturnTo: _return, ...withoutDecision } = target;
+    remediationTarget: _target, remediationReturnTo: _return, pendingRepair: _pending, ...withoutDecision } = target;
   states.set(request.targetStageId, { ...withoutDecision, status: 'pending',
     remediationReturnTo: request.requesterStageId, continuationGuidance: { repairRequest: request } });
 }

@@ -374,6 +374,20 @@
           "properties": {
             "maxAttempts": { "type": "integer", "minimum": 1 },
             "maxRemediationCycles": { "type": "integer", "minimum": 0 },
+            "maxTechnicalRetries": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "repairCategory": { "$ref": "#/$defs/localId" },
+            "repairBudget": {
+              "type": "object", "additionalProperties": false,
+              "required": ["categories", "maximumOrchestratorOrders"],
+              "properties": {
+                "categories": {
+                  "type": "object", "minProperties": 1, "maxProperties": 32,
+                  "propertyNames": { "$ref": "#/$defs/localId" },
+                  "additionalProperties": { "type": "integer", "minimum": 0, "maximum": 100 }
+                },
+                "maximumOrchestratorOrders": { "type": "integer", "minimum": 0, "maximum": 1 }
+              }
+            },
             "orchestratorAfterAttempt": { "type": "integer", "minimum": 1 },
             "timeoutMs": { "type": "integer", "minimum": 1 }
           }

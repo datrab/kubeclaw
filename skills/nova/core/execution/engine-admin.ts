@@ -75,7 +75,7 @@ class AdministrativeReopener {
     if (!recorded && terminal && terminal.entry.type !== 'run.blocked') throw new Error(`ADMIN_REOPEN_RUN_NOT_BLOCKED:${this.#decision.runId}`);
     if (this.#decision.continuation === 'remediation' && !recorded) {
       this.#validateRemediation(recovered, target, stage.execution.maxRemediationCycles, this.#decision.remediationStageId);
-      administrativeRepairRequest(this.#definition, this.#decision, events, target.remediationCyclesUsed + 1);
+      administrativeRepairRequest(this.#definition, this.#decision, events, target.remediationCyclesUsed + 1, recovered);
     }
     return target;
   }
@@ -128,7 +128,7 @@ class AdministrativeReopener {
     if (context.decision.continuation !== 'remediation' || this.#hasEvent(context, 'stage.waiting', context.decision.stageId)) return;
     const id = context.decision.remediationStageId!; const remediation = states.get(id); if (!remediation) throw new Error(`GRAPH_STAGE_MISSING:${id}`);
     const cycles = context.target.remediationCyclesUsed + 1;
-    const request = administrativeRepairRequest(context.definition, context.decision, context.events, cycles);
+    const request = administrativeRepairRequest(context.definition, context.decision, context.events, cycles, states);
     this.#appendOnce(context, 'stage.waiting', context.decision.stageId, { ...this.#audit(), attemptsUsed: context.target.attemptsUsed,
       remediationCyclesUsed: cycles, remediationStageId: id, repairRequest: request });
     states.set(context.decision.stageId, { ...context.target, remediationCyclesUsed: cycles });
