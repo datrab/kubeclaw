@@ -1,0 +1,25 @@
+{
+  "prism": {
+    "skills/prism/control/product-decisions.ts": "65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2",
+    "skills/prism/server/product-decisions.ts": "04be267143d97a628ff607527ff67166faf3c32405536292d326c52ac5b1283d",
+    "skills/prism/server/product-controller.ts": "1b2ccc2bbe84e204b5ca40f749c3faf5308bad4e5052228a3ba40550d1bb77b1",
+    "skills/prism/server/product-operator-page.ts": "d5a9d08d8aafaa992a8ad32f711bd6336ac48f4f4bf67001922a1cff575731fc",
+    "skills/prism/storage/product-decisions.ts": "522e30f6c1e668e145b05b055dcc9d4ca4226df8f4b1183e0918f4f99183c174",
+    "skills/prism/storage/migrations/015_product_decisions.sql": "69c0c7aa95ecd70cf5599eccdc35ff9ed01de83fd9be31c7ddda06473696993d",
+    "skills/prism/server/control.ts": "1ccc7953bcefef76ae0fd03edfe139903736251f6e112b7f60ecae0a07a28d95",
+    "skills/prism/server/control-config.ts": "956dd3adb34ec54619cc2bcde2364cf09c51df71611afba565755014dfa7b5e4",
+    "skills/prism/server/studio-request.ts": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+  },
+  "controller": {
+    "cmd/buster-namespace-controller/demo-product.go": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+    "cmd/buster-namespace-controller/demo-product_test.go": "8c497590d088d7c41a3432d02d628471374074569ebfd47655cb61710b17d831",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8",
+    "charts/kubeclaw/templates/demo-ready-service.yaml": "770f0e10f731ec8881c879654147fd62b12b3c549e2f88288c561101956be5f1"
+  },
+  "prism-chart": {
+    "charts/prism/templates/_product-decisions.tpl": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+    "charts/prism/templates/product-decisions-networkpolicy.yaml": "1a0764020a197daa59c240b2292e3317bedd9695817a2a48c819dcb344e88c7c",
+    "charts/prism/templates/workloads.yaml": "dcc081f5facf8b592822a4d28712c3c98b98a784f0f453fc5052c2f64ab68c8c",
+    "charts/prism/values.schema.json": "273c5d2456d49a2dd4da072415d2a1ebf29537efade55a8df330582ed01883d5"
+  }
+}

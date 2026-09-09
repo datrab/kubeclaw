@@ -33,6 +33,14 @@ spec:
           podSelector:
             matchLabels:
               kubeclaw/role: nova
+        {{- if .Values.busterNamespaceBroker.controller.productDecisions.enabled }}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ required "Product producer namespace is required" .Values.busterNamespaceBroker.controller.productDecisions.producerNamespace | quote }}
+          podSelector:
+            matchLabels:
+              app: prism-control
+        {{- end }}
       ports:
         - { protocol: TCP, port: 8443 }
 {{- end }}

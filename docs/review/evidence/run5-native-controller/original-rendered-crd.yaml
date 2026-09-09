@@ -1,0 +1,573 @@
+---
+# Source: kubeclaw/templates/buster-namespace-lease-crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: busternamespaceleases.kubeclaw.forgestack.ai
+  labels:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: native-product
+    app.kubernetes.io/component: buster
+    app.kubernetes.io/managed-by: Helm
+    kubeclaw/role: buster
+spec:
+  group: kubeclaw.forgestack.ai
+  scope: Namespaced
+  names:
+    plural: busternamespaceleases
+    singular: busternamespacelease
+    kind: BusterNamespaceLease
+    shortNames:
+      - bnl
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: Phase
+          type: string
+          jsonPath: .status.phase
+        - name: Namespace
+          type: string
+          jsonPath: .status.namespaceName
+        - name: Cleanup
+          type: string
+          jsonPath: .spec.cleanupPolicy
+      schema:
+        openAPIV3Schema:
+          x-kubernetes-validations:
+            - rule: "!has(oldSelf.status) || !has(oldSelf.status.demoProduct) || (has(self.status) && has(self.status.demoProduct))"
+              message: "recorded human product decisions cannot be removed"
+          type: object
+          properties:
+            spec:
+              type: object
+              x-kubernetes-validations:
+                - rule: "self.namespaceName == oldSelf.namespaceName"
+                  message: "namespaceName is immutable"
+                - rule: "has(self.namespacePrefix) == has(oldSelf.namespacePrefix) && (!has(self.namespacePrefix) || self.namespacePrefix == oldSelf.namespacePrefix)"
+                  message: "namespacePrefix is immutable"
+                - rule: "has(self.runId) == has(oldSelf.runId) && (!has(self.runId) || self.runId == oldSelf.runId)"
+                  message: "runId is immutable"
+                - rule: "has(self.project) == has(oldSelf.project) && (!has(self.project) || self.project == oldSelf.project)"
+                  message: "project is immutable"
+                - rule: "has(self.access) == has(oldSelf.access) && (!has(self.access) || self.access == oldSelf.access)"
+                  message: "access is immutable"
+                - rule: "has(self.serviceName) == has(oldSelf.serviceName) && (!has(self.serviceName) || self.serviceName == oldSelf.serviceName)"
+                  message: "serviceName is immutable"
+                - rule: "has(self.servicePort) == has(oldSelf.servicePort) && (!has(self.servicePort) || self.servicePort == oldSelf.servicePort)"
+                  message: "servicePort is immutable"
+                - rule: "has(self.serviceTargetPort) == has(oldSelf.serviceTargetPort) && (!has(self.serviceTargetPort) || self.serviceTargetPort == oldSelf.serviceTargetPort)"
+                  message: "serviceTargetPort is immutable"
+                - rule: "has(self.verifiedImage) == has(oldSelf.verifiedImage) && (!has(self.verifiedImage) || self.verifiedImage == oldSelf.verifiedImage)"
+                  message: "verifiedImage is immutable"
+                - rule: "has(self.manifestDigest) == has(oldSelf.manifestDigest) && (!has(self.manifestDigest) || self.manifestDigest == oldSelf.manifestDigest)"
+                  message: "manifestDigest is immutable"
+                - rule: "has(self.cleanupPolicy) == has(oldSelf.cleanupPolicy) && (!has(self.cleanupPolicy) || self.cleanupPolicy == oldSelf.cleanupPolicy)"
+                  message: "cleanupPolicy is immutable"
+                - rule: "has(self.ttlSeconds) == has(oldSelf.ttlSeconds) && (!has(self.ttlSeconds) || self.ttlSeconds == oldSelf.ttlSeconds)"
+                  message: "ttlSeconds is immutable"
+                - rule: "has(self.secretsToCopy) == has(oldSelf.secretsToCopy) && (!has(self.secretsToCopy) || self.secretsToCopy == oldSelf.secretsToCopy)"
+                  message: "secretsToCopy is immutable"
+                - rule: "has(self.testCredentials) == has(oldSelf.testCredentials) && (!has(self.testCredentials) || self.testCredentials == oldSelf.testCredentials)"
+                  message: "testCredentials is immutable"
+              properties:
+                namespaceName:
+                  type: string
+                  pattern: '^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$'
+                namespacePrefix:
+                  type: string
+                  enum:
+                    - test
+                runId:
+                  type: string
+                project:
+                  type: string
+                purpose:
+                  type: string
+                  enum: ["pretest", "gate", "final-preview"]
+                access:
+                  type: array
+                  minItems: 1
+                  maxItems: 8
+                  x-kubernetes-list-type: atomic
+                  items:
+                    type: object
+                    properties:
+                      subject:
+                        type: string
+                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                      mode:
+                        type: string
+                        enum: ["deployer", "tester"]
+                    required: ["subject", "mode"]
+                serviceName:
+                  type: string
+                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                servicePort:
+                  type: integer
+                  minimum: 1
+                  maximum: 65535
+                serviceTargetPort:
+                  type: integer
+                  minimum: 1
+                  maximum: 65535
+                verifiedImage:
+                  type: string
+                  maxLength: 2048
+                  pattern: '^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$'
+                manifestDigest:
+                  type: string
+                  pattern: '^sha256:[a-f0-9]{64}$'
+                cleanupPolicy:
+                  type: string
+                  enum: ["delete", "retain"]
+                ttlSeconds:
+                  type: integer
+                  minimum: 60
+                  maximum: 86400
+                secretsToCopy:
+                  type: array
+                  items:
+                    type: string
+                    pattern: '^[A-Za-z0-9._-]+$'
+                testCredentials:
+                  type: object
+                  x-kubernetes-validations:
+                    - rule: "self.mode != 'generate' || !has(self.keys) || (size(self.keys) == 2 && self.keys.exists(k, k == 'username') && self.keys.exists(k, k == 'password'))"
+                      message: "generated credentials can only use username and password keys"
+                    - rule: "self.mode != 'existing' || (has(self.keys) && size(self.keys) > 0)"
+                      message: "existing credentials require at least one key"
+                  properties:
+                    mode:
+                      type: string
+                      enum: ["generate", "existing"]
+                    secretName:
+                      type: string
+                      pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                    readers:
+                      type: array
+                      minItems: 1
+                      maxItems: 8
+                      x-kubernetes-list-type: set
+                      items:
+                        type: string
+                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'
+                    keys:
+                      type: array
+                      maxItems: 16
+                      x-kubernetes-list-type: set
+                      items:
+                        type: string
+                        pattern: '^[A-Za-z0-9._-]+$'
+                  required: ["mode", "secretName", "readers"]
+                exposure:
+                  type: object
+                  properties:
+                    provider:
+                      type: string
+                      enum: ["off", "tailscale-ingress"]
+                    hostname:
+                      type: string
+                      pattern: '^[a-z0-9]([a-z0-9-]*[a-z0-9])?$'
+                    serviceName:
+                      type: string
+                    servicePort:
+                      type: integer
+                      minimum: 1
+                      maximum: 65535
+                    path:
+                      type: string
+                      maxLength: 1024
+                      pattern: '^/(?:[^/?#\r\n][^?#\r\n]*)?$'
+              required:
+                - namespaceName
+                - cleanupPolicy
+            status:
+              type: object
+              properties:
+                phase:
+                  type: string
+                namespaceName:
+                  type: string
+                createdAt:
+                  type: string
+                  format: date-time
+                internalUrl:
+                  type: string
+                  nullable: true
+                previewUrl:
+                  type: string
+                  nullable: true
+                exposurePhase:
+                  type: string
+                exposureOwner:
+                  type: string
+                exposureGeneration:
+                  type: integer
+                  format: int64
+                  minimum: 0
+                exposureHostname:
+                  type: string
+                  nullable: true
+                credentialsRef:
+                  type: string
+                  nullable: true
+                credentialsAvailable:
+                  type: boolean
+                exposureMutation:
+                  type: object
+                  nullable: true
+                  required: [id, startedAt]
+                  properties:
+                    id:
+                      type: string
+                      pattern: '^[a-f0-9]{48}$'
+                    startedAt:
+                      type: string
+                      format: date-time
+                demoProduct:
+                  type: object
+                  required: [leaseUID, readyDigest, decisions]
+                  x-kubernetes-validations:
+                    - rule: "self.leaseUID == oldSelf.leaseUID && self.readyDigest == oldSelf.readyDigest"
+                      message: "product history remains bound to its committed ready subject"
+                  properties:
+                    leaseUID:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    readyDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                      maxLength: 71
+                    decisions:
+                      type: array
+                      maxItems: 128
+                      x-kubernetes-list-type: map
+                      x-kubernetes-list-map-keys: [decisionId]
+                      x-kubernetes-validations:
+                        - rule: "oldSelf.all(old, self.exists(entry, entry.decisionId == old.decisionId))"
+                          message: "human decision history is append-only"
+                      items:
+                        type: object
+                        x-kubernetes-validations:
+                          - rule: "self == oldSelf"
+                            message: "an existing human decision receipt is immutable"
+                        required: [schemaVersion, decisionId, payloadDigest, action, leaseName, leaseUID, readyDigest, generation, actorId, issuer, appliedAt, previousExpiry, expiresAt, state, envelope]
+                        properties:
+                          schemaVersion:
+                            type: string
+                            enum: ["demo-product-decision-receipt.v1"]
+                            maxLength: 32
+                          action:
+                            type: string
+                            enum: ["accept", "extend"]
+                            maxLength: 6
+                          state:
+                            type: string
+                            enum: ["accepted", "extended"]
+                            maxLength: 8
+                          generation:
+                            type: integer
+                            format: int64
+                            minimum: 1
+                            maximum: 9007199254740991
+                          decisionId:
+                            type: string
+                            minLength: 36
+                            maxLength: 36
+                            pattern: '^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$'
+                          leaseName:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          leaseUID:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          actorId:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          issuer:
+                            type: string
+                            minLength: 1
+                            maxLength: 1024
+                          payloadDigest:
+                            type: string
+                            pattern: '^sha256:[a-f0-9]{64}$'
+                            maxLength: 71
+                          readyDigest:
+                            type: string
+                            pattern: '^sha256:[a-f0-9]{64}$'
+                            maxLength: 71
+                          appliedAt:
+                            type: string
+                            format: date-time
+                            maxLength: 35
+                          previousExpiry:
+                            type: string
+                            format: date-time
+                            maxLength: 35
+                          expiresAt:
+                            type: string
+                            format: date-time
+                            maxLength: 35
+                          envelope:
+                            type: object
+                            required: [schemaVersion, payload, signature]
+                            properties:
+                              schemaVersion:
+                                type: string
+                                enum: ["demo-product-decision-envelope.v1"]
+                                maxLength: 33
+                              payload:
+                                type: string
+                                maxLength: 10924
+                              signature:
+                                type: string
+                                minLength: 88
+                                maxLength: 88
+                demoReadiness:
+                  type: object
+                  x-kubernetes-validations:
+                    - rule: "(self.schemaVersion == 'demo-readiness.v1' && !has(self.retentionSeconds)) || (self.schemaVersion == 'demo-readiness.v2' && has(self.retentionSeconds))"
+                      message: "v2 readiness requires retentionSeconds; historical v1 has implicit seven days"
+                    - rule: "self.schemaVersion == oldSelf.schemaVersion"
+                      message: "committed readiness schema version is immutable"
+                  required: [schemaVersion, state, requestId, requestDigest, readyAt, expiresAt, leaseUID, owner, previousOwner, exposureGeneration, exposureSpec, receipt]
+                  properties:
+                    schemaVersion:
+                      type: string
+                      enum: ["demo-readiness.v1", "demo-readiness.v2"]
+                    state:
+                      type: string
+                      enum: ["ready-for-acceptance"]
+                    requestId:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    namespace:
+                      type: string
+                      minLength: 1
+                      maxLength: 253
+                    runId:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    sourceRevision:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    leaseUID:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    immutableImage:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    secretUID:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    url:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    previousOwner:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    owner:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    retentionSeconds:
+                      type: integer
+                      format: int64
+                      minimum: 1
+                      maximum: 9223372036
+                    requestDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    candidateDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    decisionDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    resultDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    manifestDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    credentialDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    readyAt:
+                      type: string
+                      format: date-time
+                    expiresAt:
+                      type: string
+                      format: date-time
+                    exposureGeneration:
+                      type: integer
+                      format: int64
+                      minimum: 1
+                    exposureSpec:
+                      type: object
+                      properties:
+                        provider:
+                          type: string
+                          enum: ["tailscale-ingress"]
+                        serviceName:
+                          type: string
+                          maxLength: 1024
+                        hostname:
+                          type: string
+                          maxLength: 1024
+                        path:
+                          type: string
+                          maxLength: 1024
+                        servicePort:
+                          type: integer
+                          minimum: 1
+                          maximum: 65535
+                    receipt:
+                      type: object
+                      required: [schemaVersion, accepted, target, status, messageId, deliveryId, payloadDigest]
+                      properties:
+                        schemaVersion:
+                          type: string
+                          enum: ["discord-delivery-receipt.v1"]
+                        accepted:
+                          type: boolean
+                          enum: [true]
+                        status:
+                          type: integer
+                          minimum: 200
+                          maximum: 299
+                        target:
+                          type: string
+                          minLength: 1
+                          maxLength: 1024
+                        messageId:
+                          type: string
+                          minLength: 1
+                          maxLength: 1024
+                        deliveryId:
+                          type: string
+                          minLength: 1
+                          maxLength: 1024
+                        payloadDigest:
+                          type: string
+                          pattern: '^sha256:[a-f0-9]{64}$'
+                generatedCredentialIntent:
+                  type: object
+                  required: [leaseUID, namespace, secretName, credentialDigest]
+                  properties:
+                    leaseUID:
+                      type: string
+                      minLength: 1
+                    namespace:
+                      type: string
+                      minLength: 1
+                    secretName:
+                      type: string
+                      minLength: 1
+                    credentialDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                generatedCredentials:
+                  type: object
+                  required: [schemaVersion, leaseUID, secretUID, secretResourceVersion, namespace, secretName, credentialDigest]
+                  properties:
+                    schemaVersion:
+                      type: string
+                      enum: ["generated-demo-credential-source.v1"]
+                    leaseUID:
+                      type: string
+                      minLength: 1
+                    secretUID:
+                      type: string
+                      minLength: 1
+                    secretResourceVersion:
+                      type: string
+                      minLength: 1
+                    namespace:
+                      type: string
+                      minLength: 1
+                    secretName:
+                      type: string
+                      minLength: 1
+                    credentialDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                specDigest:
+                  type: string
+                  pattern: '^sha256:[a-f0-9]{64}$'
+                conditions:
+                  type: array
+                  x-kubernetes-list-type: map
+                  x-kubernetes-list-map-keys: ["type"]
+                  items:
+                    type: object
+                    properties:
+                      type: { type: string }
+                      status: { type: string, enum: ["True", "False", "Unknown"] }
+                      reason: { type: string }
+                      lastTransitionTime: { type: string, format: date-time }
+                    required: ["type", "status", "reason", "lastTransitionTime"]
+                expiresAt:
+                  type: string
+                message:
+                  type: string
+                runtimeSecurity:
+                  type: object
+                  properties:
+                    phase:
+                      type: string
+                      enum: ["Observed", "Unavailable"]
+                    observedAt:
+                      type: string
+                      format: date-time
+                    manifestDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    immutableImage:
+                      type: string
+                      maxLength: 2048
+                    podCount:
+                      type: integer
+                      minimum: 0
+                    serviceCount:
+                      type: integer
+                      minimum: 0
+                    resultDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    totalFindingCount:
+                      type: integer
+                      minimum: 0
+                    omittedFindingCount:
+                      type: integer
+                      minimum: 0
+                    message:
+                      type: string
+                    findings:
+                      type: array
+                      maxItems: 4096
+                      items:
+                        type: object
+                        properties:
+                          id: { type: string, maxLength: 256 }
+                          severity: { type: string, enum: ["critical", "high", "medium", "low", "info"] }
+                          message: { type: string, maxLength: 4096 }
+                          resource: { type: string, maxLength: 512 }
+                        required: ["id", "severity", "message", "resource"]
+                  required: ["phase"]

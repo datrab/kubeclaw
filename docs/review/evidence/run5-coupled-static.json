@@ -1,0 +1,20 @@
+{
+  "source": "ef41e378633ea04cf728e48c2413e92c33d39bd8",
+  "checks": [
+    {
+      "command": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/prism/control/product-decisions.ts skills/prism/server/control-config.ts skills/prism/server/control.ts skills/prism/server/product-controller.ts skills/prism/server/product-decisions.ts skills/prism/server/product-operator-page.ts skills/prism/server/studio-request.ts skills/prism/storage/product-decisions.ts skills/prism/tests/product-controller.test.mts skills/prism/tests/product-decisions.test.mts skills/prism/tests/export-product-vectors.mts skills/prism/tests/control-product-composition.test.mts skills/prism/tests/control-generation-http.test.mts skills/prism/tests/control-product-independent.test.mts",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "command": "go vet ./cmd/buster-namespace-controller",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "command": "npm run typecheck -w @kubeclaw/prism",
+      "exit": 0
+    }
+  ],
+  "dependencies": "fresh npm ci --ignore-scripts --no-audit --no-fund: 458 packages; offline attempt ENOTCACHED for zustand-5.0.15 then normal installation succeeded"
+}

@@ -1,0 +1,139 @@
+{
+  "main": "b284a15ebfa58c31688271c62d9bf1ea276fa2f0",
+  "main_non_docs_blobs_verified": 2034,
+  "source_backup": "74e0cc0f848269e7e6b163c82253952f638682d7",
+  "restored": [
+    {
+      "equal": true,
+      "local": "c939c455569da99172f0ffe7b95ffd43743b973d",
+      "path": "docs/review/evidence/wave48-prism-product/baseline-control-lint.log",
+      "remote": "c939c455569da99172f0ffe7b95ffd43743b973d"
+    },
+    {
+      "equal": true,
+      "local": "60e94802c2cf01cbd2fbb0d9be0eabcb909c89ed",
+      "path": "docs/review/evidence/wave48-prism-product/existing-lint.log",
+      "remote": "60e94802c2cf01cbd2fbb0d9be0eabcb909c89ed"
+    },
+    {
+      "equal": true,
+      "local": "83b5f9d4df0d01aa0059b4e2ce67617225986b34",
+      "path": "docs/review/evidence/wave48-prism-product/lint.log",
+      "remote": "83b5f9d4df0d01aa0059b4e2ce67617225986b34"
+    },
+    {
+      "equal": true,
+      "local": "536f8eb9946ae10d4d507d2d1f83259fb2d0f0c7",
+      "path": "docs/review/evidence/wave48-prism-product/targeted-tests.log",
+      "remote": "536f8eb9946ae10d4d507d2d1f83259fb2d0f0c7"
+    },
+    {
+      "equal": true,
+      "local": "c6fb73cb174c6bf96b47a499be7faa338aeef76d",
+      "path": "docs/review/evidence/wave48-prism-product/typecheck.log",
+      "remote": "c6fb73cb174c6bf96b47a499be7faa338aeef76d"
+    },
+    {
+      "equal": true,
+      "local": "281cf11d8a342a60877ab45b8a6e98193f6d3836",
+      "path": "docs/review/evidence/wave48-product-independent/go-product-cost-followup.txt",
+      "remote": "281cf11d8a342a60877ab45b8a6e98193f6d3836"
+    },
+    {
+      "equal": true,
+      "local": "0ab4fb40c7017e5e78c3c5813e2d882d685dffd6",
+      "path": "docs/review/evidence/wave48-product-independent/go-product.txt",
+      "remote": "0ab4fb40c7017e5e78c3c5813e2d882d685dffd6"
+    },
+    {
+      "equal": true,
+      "local": "e438b791623d480565c5bab9bea2cb3db267d6b0",
+      "path": "docs/review/evidence/wave48-product-independent/prism-chart.txt",
+      "remote": "e438b791623d480565c5bab9bea2cb3db267d6b0"
+    },
+    {
+      "equal": true,
+      "local": "e83a5043ca3ff77db4253fdaf52bcdf4a116901e",
+      "path": "docs/review/evidence/wave48-product-independent/prism-product.txt",
+      "remote": "e83a5043ca3ff77db4253fdaf52bcdf4a116901e"
+    },
+    {
+      "equal": true,
+      "local": "fba24048cd319fe7e796eebc763a45906543fb79",
+      "path": "docs/review/evidence/wave48-product-independent/prism-tls.txt",
+      "remote": "fba24048cd319fe7e796eebc763a45906543fb79"
+    },
+    {
+      "equal": true,
+      "local": "099800f3cd43c07011250bb81e3435c72934e916",
+      "path": "docs/review/evidence/wave48-product-independent/source-sha256.json",
+      "remote": "099800f3cd43c07011250bb81e3435c72934e916"
+    },
+    {
+      "equal": true,
+      "local": "a00dc56dd49b3274a3680e73c4d5a6b77d7d0070",
+      "path": "docs/review/remediation/implementation/prism-product-decisions.md",
+      "remote": "a00dc56dd49b3274a3680e73c4d5a6b77d7d0070"
+    },
+    {
+      "equal": true,
+      "local": "a8042aeb37d02cbadbee432929dff666b45e5272",
+      "path": "docs/review/remediation/implementation/product-decisions-independent-review.md",
+      "remote": "a8042aeb37d02cbadbee432929dff666b45e5272"
+    },
+    {
+      "equal": true,
+      "local": "4eccebc1e4b4db3e0b887eb3d5cc7a0928a0b001",
+      "path": "skills/prism/control/product-decisions.ts",
+      "remote": "4eccebc1e4b4db3e0b887eb3d5cc7a0928a0b001"
+    },
+    {
+      "equal": true,
+      "local": "c1e8bc9b980360f9545f0c930ce2008b73f7e05a",
+      "path": "skills/prism/server/product-controller.ts",
+      "remote": "c1e8bc9b980360f9545f0c930ce2008b73f7e05a"
+    },
+    {
+      "equal": true,
+      "local": "1d55a6141909ca161bb447ff6f62169f001efdaa",
+      "path": "skills/prism/server/product-decisions.ts",
+      "remote": "1d55a6141909ca161bb447ff6f62169f001efdaa"
+    },
+    {
+      "equal": true,
+      "local": "d03e02bbb603fd7891831a5c8fb1f221abb027fd",
+      "path": "skills/prism/server/product-operator-page.ts",
+      "remote": "d03e02bbb603fd7891831a5c8fb1f221abb027fd"
+    },
+    {
+      "equal": true,
+      "local": "1cb0c9bf6a89c692f270665cd832f6028c25f5cd",
+      "path": "skills/prism/storage/migrations/015_product_decisions.sql",
+      "remote": "1cb0c9bf6a89c692f270665cd832f6028c25f5cd"
+    },
+    {
+      "equal": true,
+      "local": "f6848da6655ef1db42912c2a83beb6640ab2fa16",
+      "path": "skills/prism/storage/product-decisions.ts",
+      "remote": "f6848da6655ef1db42912c2a83beb6640ab2fa16"
+    },
+    {
+      "equal": true,
+      "local": "95a750583f34c8ae9b2aac83e2376412a4464a88",
+      "path": "skills/prism/tests/export-product-vectors.mts",
+      "remote": "95a750583f34c8ae9b2aac83e2376412a4464a88"
+    },
+    {
+      "equal": true,
+      "local": "d5c1dd6245d68f5ef40e4acf17040bad2f9a5643",
+      "path": "skills/prism/tests/product-controller.test.mts",
+      "remote": "d5c1dd6245d68f5ef40e4acf17040bad2f9a5643"
+    },
+    {
+      "equal": true,
+      "local": "f45af62263ad645a02cf8cb7987d81326102909a",
+      "path": "skills/prism/tests/product-decisions.test.mts",
+      "remote": "f45af62263ad645a02cf8cb7987d81326102909a"
+    }
+  ]
+}

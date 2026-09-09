@@ -1,0 +1,58 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+/workspace/scratch/0d8f8ddb55c3/wave47-product/skills/prism/server/control.ts
+    52:21  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    52:21  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    53:43  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    56:3   error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    56:3   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    59:3   error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    59:3   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    63:23  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    66:29  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    66:29  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    67:35  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    67:35  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    68:31  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    68:31  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    69:32  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    69:32  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    70:35  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    70:35  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    75:28  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    75:28  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    76:34  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+    76:34  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+    78:17  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   137:1   error  Async function 'runWorker' has too many lines (73). Maximum allowed is 60              max-lines-per-function
+   223:79  error  Async arrow function has too many lines (815). Maximum allowed is 60                   max-lines-per-function
+   223:79  error  Async arrow function has a complexity of 208. Maximum allowed is 15                    complexity
+   259:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   273:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   283:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   304:1   error  File has too many lines (1036). Maximum allowed is 300                                 max-lines
+   307:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   349:23  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+   349:23  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   541:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   543:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   544:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   560:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   564:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   568:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   580:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   581:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   590:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   755:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   759:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   785:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   786:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   801:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   806:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   810:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   928:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+  1029:5   error  Unexpected console statement                                                           no-console
+  1041:42  error  Promise returned in function argument where a void return was expected                 @typescript-eslint/no-misused-promises
+
+✖ 52 problems (52 errors, 0 warnings)
+
