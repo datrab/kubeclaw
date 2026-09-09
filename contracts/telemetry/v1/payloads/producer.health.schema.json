@@ -4,10 +4,13 @@
   "additionalProperties": false,
   "properties": {
     "agent_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "artifact_reference": {
@@ -15,10 +18,7 @@
       "type": "string"
     },
     "attempt": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "$ref": "../envelope.schema.json#/properties/attempt"
     },
     "checkpoint": {
       "type": [
@@ -30,12 +30,36 @@
       "items": {
         "additionalProperties": false,
         "properties": {
-          "capability": { "minLength": 1, "type": "string" },
-          "details": { "type": ["object", "null"] },
-          "reason_code": { "type": ["string", "null"] },
-          "status": { "enum": ["available", "capability_unavailable", "degraded", "unknown"] }
+          "capability": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "details": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "reason_code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "available",
+              "capability_unavailable",
+              "degraded",
+              "unknown"
+            ]
+          }
         },
-        "required": ["capability", "status", "reason_code"],
+        "required": [
+          "capability",
+          "status",
+          "reason_code"
+        ],
         "type": "object"
       },
       "type": "array"
@@ -48,27 +72,36 @@
       "type": "integer"
     },
     "dispatch_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "extensions": {
-      "type": "object"
+      "$ref": "../envelope.schema.json#/properties/extensions"
     },
     "gate_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gate_type": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "invalid_count": {
@@ -90,17 +123,23 @@
       "type": "integer"
     },
     "model_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "module_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "producer_id": {
@@ -135,10 +174,13 @@
       ]
     },
     "tool_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     }
   },
@@ -148,8 +190,8 @@
     "invalid_count",
     "quarantined_count",
     "dead_letter_count",
-    "last_successful_emission"
-    ,"capabilities"
+    "last_successful_emission",
+    "capabilities"
   ],
   "type": "object"
 }

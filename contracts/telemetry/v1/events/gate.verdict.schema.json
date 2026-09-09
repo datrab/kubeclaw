@@ -4,10 +4,16 @@
   "additionalProperties": false,
   "properties": {
     "agent_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "artifact_reference": {
@@ -15,8 +21,9 @@
       "type": "string"
     },
     "attempt": {
+      "minimum": 0,
       "type": [
-        "number",
+        "integer",
         "null"
       ]
     },
@@ -47,10 +54,16 @@
       ]
     },
     "dispatch_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "duration_seconds": {
@@ -89,14 +102,30 @@
       ]
     },
     "gate_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "gate_type": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gateway_label": {
@@ -112,17 +141,29 @@
       ]
     },
     "model_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "module_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "occurred_at": {
@@ -157,10 +198,7 @@
     },
     "run_id": {
       "minLength": 1,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "schema_version": {
       "const": "telemetry_envelope.v1"
@@ -197,10 +235,16 @@
       ]
     },
     "tool_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "trace_id": {

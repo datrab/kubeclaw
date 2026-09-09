@@ -4,10 +4,16 @@
   "additionalProperties": false,
   "properties": {
     "agent_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "approval_id": {
@@ -19,8 +25,9 @@
       "type": "string"
     },
     "attempt": {
+      "minimum": 0,
       "type": [
-        "number",
+        "integer",
         "null"
       ]
     },
@@ -45,10 +52,16 @@
       ]
     },
     "dispatch_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "emitted_at": {
@@ -75,10 +88,16 @@
       "type": "object"
     },
     "gate_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gate_title": {
@@ -88,24 +107,42 @@
       ]
     },
     "gate_type": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "model_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "module_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "occurred_at": {
@@ -185,10 +222,16 @@
     },
     "timeout_policy": {},
     "tool_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "trace_id": {

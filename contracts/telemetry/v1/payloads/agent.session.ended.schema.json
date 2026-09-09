@@ -3,14 +3,32 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "transcript_reference": { "type": ["string", "null"] },
-    "status": { "type": ["string", "null"] },
-    "runtime_ms": { "type": ["number", "null"] },
-    "agent_id": {
-      "minLength": 1,
+    "transcript_reference": {
       "type": [
         "string",
         "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "runtime_ms": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "agent_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "agent_type": {
@@ -25,20 +43,20 @@
       "type": "string"
     },
     "attempt": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "$ref": "../envelope.schema.json#/properties/attempt"
     },
     "content_completeness": {
       "minLength": 1,
       "type": "string"
     },
     "dispatch_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "duration_seconds": {
@@ -67,20 +85,26 @@
       ]
     },
     "extensions": {
-      "type": "object"
+      "$ref": "../envelope.schema.json#/properties/extensions"
     },
     "gate_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gate_type": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gateway_label": {
@@ -90,17 +114,23 @@
       ]
     },
     "model_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "module_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "outcome": {
@@ -117,10 +147,13 @@
       ]
     },
     "session_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/session_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "session_key": {
@@ -131,10 +164,13 @@
       ]
     },
     "tool_call_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     }
   },

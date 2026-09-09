@@ -4,21 +4,14 @@
   "additionalProperties": false,
   "properties": {
     "agent_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/agent_id"
     },
     "authority_class": {
       "minLength": 1,
       "type": "string"
     },
     "attempt": {
-      "minimum": 0,
-      "type": [
-        "integer",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/attempt"
     },
     "causation_id": {
       "type": [
@@ -33,10 +26,7 @@
       ]
     },
     "dispatch_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/dispatch_id"
     },
     "emitted_at": {
       "format": "date-time",
@@ -50,48 +40,53 @@
       "type": "object",
       "properties": {
         "evidence_provenance": {
-          "enum": ["production", "recorded", "synthetic"]
+          "enum": [
+            "production",
+            "recorded",
+            "synthetic"
+          ]
         }
       },
-      "required": ["evidence_provenance"]
+      "required": [
+        "evidence_provenance"
+      ]
     },
     "gate_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/gate_id"
     },
     "gate_type": {
-      "type": ["string", "null"]
+      "$ref": "correlation_identity.schema.json#/properties/gate_type"
     },
     "module_id": {
-      "type": ["string", "null"]
+      "$ref": "correlation_identity.schema.json#/properties/module_id"
     },
     "model_call_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/model_call_id"
     },
     "occurred_at": {
       "format": "date-time",
       "type": "string"
     },
     "producer": {
-      "minLength": 1,
-      "type": "string"
+      "$ref": "correlation_identity.schema.json#/properties/producer"
     },
-    "parent_session_id": { "type": ["string", "null"] },
-    "trace_id": { "type": ["string", "null"] },
-    "span_id": { "type": ["string", "null"] },
-    "parent_span_id": { "type": ["string", "null"] },
+    "parent_session_id": {
+      "$ref": "correlation_identity.schema.json#/properties/parent_session_id"
+    },
+    "trace_id": {
+      "$ref": "correlation_identity.schema.json#/properties/trace_id"
+    },
+    "span_id": {
+      "$ref": "correlation_identity.schema.json#/properties/span_id"
+    },
+    "parent_span_id": {
+      "$ref": "correlation_identity.schema.json#/properties/parent_span_id"
+    },
     "project": {
-      "minLength": 1,
-      "type": "string"
+      "$ref": "correlation_identity.schema.json#/properties/project"
     },
     "run_id": {
-      "minLength": 1,
-      "type": "string"
+      "$ref": "correlation_identity.schema.json#/properties/run_id"
     },
     "schema_version": {
       "const": "telemetry_envelope.v1"
@@ -105,20 +100,13 @@
       "type": "integer"
     },
     "session_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/session_id"
     },
     "source": {
-      "minLength": 1,
-      "type": "string"
+      "$ref": "correlation_identity.schema.json#/properties/source"
     },
     "tool_call_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/tool_call_id"
     },
     "type": {
       "enum": [
@@ -178,21 +166,10 @@
       ]
     },
     "work_id": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/work_id"
     },
     "work_type": {
-      "enum": [
-        "pipeline",
-        "module",
-        "gate",
-        "generator",
-        "validator",
-        "pipeline_step",
-        null
-      ]
+      "$ref": "correlation_identity.schema.json#/properties/work_type"
     }
   },
   "required": [
@@ -208,8 +185,8 @@
     "run_id",
     "source",
     "producer",
-    "authority_class"
-    ,"extensions"
+    "authority_class",
+    "extensions"
   ],
   "type": "object"
 }

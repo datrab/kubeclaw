@@ -4,10 +4,16 @@
   "additionalProperties": false,
   "properties": {
     "agent_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "agent_type": {
@@ -22,7 +28,18 @@
       "type": "string"
     },
     "attempt": {
-      "type": "number"
+      "allOf": [
+        {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        {
+          "type": "number"
+        }
+      ]
     },
     "authority_class": {
       "minLength": 1,
@@ -45,8 +62,18 @@
       ]
     },
     "dispatch_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "emitted_at": {
       "format": "date-time",
@@ -72,17 +99,29 @@
       "type": "object"
     },
     "gate_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gate_type": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gateway_label": {
@@ -92,12 +131,32 @@
       ]
     },
     "model_call_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "module_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "occurred_at": {
       "format": "date-time",
@@ -174,8 +233,18 @@
       ]
     },
     "tool_call_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "tool_name": {
       "minLength": 1,

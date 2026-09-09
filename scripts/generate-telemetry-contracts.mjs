@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { resolveSchema, tsType, goFields, goName, assertEnvelopeReferences } from './lib/telemetry-type-generation.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const contractDir = path.join(root, 'contracts', 'telemetry', 'v1');
@@ -128,48 +129,22 @@ const durableSchemas = {
   }),
 };
 
-function tsType(schema = {}) {
-  if (schema.const !== undefined) return JSON.stringify(schema.const);
-  if (schema.enum) return schema.enum.map((value) => JSON.stringify(value)).join(' | ');
-  if (schema.oneOf) return schema.oneOf.map(tsType).join(' | ');
-  const types = Array.isArray(schema.type) ? schema.type : schema.type ? [schema.type] : [];
-  return types.map((type) => type === 'string' ? 'string' : type === 'integer' || type === 'number' ? 'number' : type === 'boolean' ? 'boolean' : type === 'null' ? 'null' : type === 'array' ? `Array<${tsType(schema.items)}>` : type === 'object' ? schema.properties ? `{ ${Object.entries(schema.properties).map(([name,value])=>`${JSON.stringify(name)}${(schema.required||[]).includes(name)?'':'?'}: ${tsType(value)}`).join('; ')} }` : schema.additionalProperties && typeof schema.additionalProperties==='object' ? `Record<string, ${tsType(schema.additionalProperties)}>` : 'Record<string, unknown>' : 'unknown').join(' | ') || 'unknown';
-}
-function goType(schema = {}) {
-  if (schema.oneOf) {
-    const nullable = schema.oneOf.some(item=>item.type==='null');
-    const selected = schema.oneOf.find(item=>item.type!=='null') ?? {};
-    const resolved = goType(selected);
-    return nullable && !resolved.startsWith('*') ? `*${resolved}` : resolved;
-  }
-  const types = Array.isArray(schema.type) ? schema.type.filter((type) => type !== 'null') : schema.type ? [schema.type] : [];
-  const base = goBaseType(types[0], schema);
-  return Array.isArray(schema.type) && schema.type.includes('null') ? `*${base}` : base;
-}
-function goBaseType(type, schema) {
-  const primitives = { string: 'string', integer: 'int64', number: 'float64', boolean: 'bool' };
-  if (primitives[type]) return primitives[type];
-  if (type === 'array') return `[]${goType(schema.items)}`;
-  if (type !== 'object') return 'json.RawMessage';
-  if (schema.properties) {
-    return `struct { ${Object.entries(schema.properties).map(([name,value])=>`${goName(name)} ${goType(value)} \`json:"${name}${(schema.required||[]).includes(name)?'':',omitempty'}"\``).join('; ')} }`;
-  }
-  return schema.additionalProperties && typeof schema.additionalProperties==='object'
-    ? `map[string]${goType(schema.additionalProperties)}`
-    : 'json.RawMessage';
-}
-function goName(value) { return value.split(/[^a-zA-Z0-9]+/).filter(Boolean).map((part) => part[0].toUpperCase()+part.slice(1)).join(''); }
+const sources = { 'correlation_identity.schema.json': identitySchema, 'envelope.schema.json': envelopeSchema };
+const resolvedEnvelope = resolveSchema(envelopeSchema, sources);
+const resolvedIdentity = resolveSchema(identitySchema, sources);
 
 const payloadSchemas = new Map();
 for (const type of catalog.event_types) {
   const relative = `payloads/${type}.schema.json`;
   const schema = JSON.parse(fs.readFileSync(path.join(contractDir, relative), 'utf8'));
-  payloadSchemas.set(type, schema);
+  assertEnvelopeReferences(schema, envelopeSchema);
+  const resolved = resolveSchema(schema, sources);
+  payloadSchemas.set(type, resolved);
   written.add(relative);
   output(`events/${type}.schema.json`, render({
     $schema:'https://json-schema.org/draft/2020-12/schema', $id:`${type}.event.v1`, type:'object', additionalProperties:false,
     required:[...new Set([...envelopeSchema.required, ...(schema.required || [])])],
-    properties:{...envelopeSchema.properties,...schema.properties,type:{const:type},extensions:envelopeSchema.properties.extensions},
+    properties:{...resolvedEnvelope.properties,...resolved.properties,type:{const:type},extensions:resolvedEnvelope.properties.extensions},
   }));
 }
 for (const [name, schema] of Object.entries(durableSchemas)) output(`bundle/${name}.schema.json`, render(schema));
@@ -177,17 +152,22 @@ for (const [name, schema] of Object.entries(durableSchemas)) output(`bundle/${na
 const eventUnion = catalog.event_types.map((type) => `  | ${JSON.stringify(type)}`).join('\n');
 const payloadInterfaces = [...payloadSchemas].map(([type,schema]) => {
   const required = new Set(schema.required || []);
-  const fields = Object.entries(schema.properties || {}).filter(([name])=>name!=='extensions').map(([name,value])=>`  ${JSON.stringify(name)}${required.has(name)?'':'?'}: ${tsType(value)};`).join('\n');
+  const fields = Object.entries(schema.properties || {}).map(([name,value])=>`  ${JSON.stringify(name)}${required.has(name)?'':'?'}: ${tsType(value)};`).join('\n');
   return `export interface ${goName(type)}Payload {\n${fields}\n}`;
 }).join('\n\n');
 const payloadMap = catalog.event_types.map((type)=>`  ${JSON.stringify(type)}: ${goName(type)}Payload;`).join('\n');
-output('telemetry-types.ts', `// Generated from contracts/telemetry/v1 JSON Schemas. Do not edit.\nexport type TelemetryEventType =\n${eventUnion};\n${payloadInterfaces}\nexport interface TelemetryPayloadMap {\n${payloadMap}\n}\nexport interface CorrelationIdentity { project:string; run_id:string; work_id?:string|null; work_type?:string|null; module_id?:string|null; gate_id?:string|null; gate_type?:string|null; attempt?:number|null; dispatch_id?:string|null; session_id?:string|null; parent_session_id?:string|null; agent_id?:string|null; model_call_id?:string|null; tool_call_id?:string|null; trace_id?:string|null; span_id?:string|null; parent_span_id?:string|null; source:string; producer:string; }\nexport type TelemetryEnvelope<K extends TelemetryEventType = TelemetryEventType> = CorrelationIdentity & TelemetryPayloadMap[K] & { schema_version:'telemetry_envelope.v1'; event_id:string; source_event_id:string; type:K; occurred_at:string; emitted_at:string; seq:number; cursor:string; authority_class:string; causation_id?:string|null; extensions?:Record<string,unknown>; };\n`);
-const goPayloads = [...payloadSchemas].map(([type,schema])=>`type ${goName(type)}Payload struct {\n${Object.entries(schema.properties||{}).filter(([name])=>name!=='extensions').map(([name,value])=>` ${goName(name)} ${goType(value)} \`json:"${name}${(schema.required||[]).includes(name)?'':',omitempty'}"\``).join('\n')}\n}`).join('\n\n');
-output('telemetry_types.go', formatGo(`// Code generated from contracts/telemetry/v1 JSON Schemas. DO NOT EDIT.\npackage telemetryv1\n\nimport "encoding/json"\n\ntype CorrelationIdentity struct { Project string \`json:"project"\`; RunID string \`json:"run_id"\`; WorkID *string \`json:"work_id,omitempty"\`; WorkType *string \`json:"work_type,omitempty"\`; ModuleID *string \`json:"module_id,omitempty"\`; GateID *string \`json:"gate_id,omitempty"\`; GateType *string \`json:"gate_type,omitempty"\`; Attempt *int64 \`json:"attempt,omitempty"\`; DispatchID *string \`json:"dispatch_id,omitempty"\`; SessionID *string \`json:"session_id,omitempty"\`; ParentSessionID *string \`json:"parent_session_id,omitempty"\`; AgentID *string \`json:"agent_id,omitempty"\`; ModelCallID *string \`json:"model_call_id,omitempty"\`; ToolCallID *string \`json:"tool_call_id,omitempty"\`; TraceID *string \`json:"trace_id,omitempty"\`; SpanID *string \`json:"span_id,omitempty"\`; ParentSpanID *string \`json:"parent_span_id,omitempty"\`; Source string \`json:"source"\`; Producer string \`json:"producer"\` }\ntype Envelope struct { CorrelationIdentity; SchemaVersion string \`json:"schema_version"\`; EventID string \`json:"event_id"\`; SourceEventID string \`json:"source_event_id"\`; Type string \`json:"type"\`; OccurredAt string \`json:"occurred_at"\`; EmittedAt string \`json:"emitted_at"\`; Seq uint64 \`json:"seq"\`; Cursor string \`json:"cursor"\`; AuthorityClass string \`json:"authority_class"\`; CausationID *string \`json:"causation_id,omitempty"\`; Extensions map[string]json.RawMessage \`json:"extensions,omitempty"\` }\n\n${goPayloads}\n`));
+const identityTs = tsType(resolvedIdentity);
+const envelopeTs = tsType({ ...resolvedEnvelope, properties: Object.fromEntries(Object.entries(resolvedEnvelope.properties).filter(([name]) => name !== 'type')) });
+output('telemetry-types.ts', `// Generated from contracts/telemetry/v1 JSON Schemas. Do not edit.\nexport type TelemetryEventType =\n${eventUnion};\n${payloadInterfaces}\nexport interface TelemetryPayloadMap {\n${payloadMap}\n}\nexport type CorrelationIdentity = ${identityTs};\nexport type TelemetryEnvelope<K extends TelemetryEventType = TelemetryEventType> = K extends TelemetryEventType ? TelemetryPayloadMap[K] & ${envelopeTs} & { type: K } : never;\n`);
+const goPayloads = [...payloadSchemas].map(([type,schema])=>`type ${goName(type)}Payload struct {\n${goFields(schema).join('\n')}\n}`).join('\n\n');
+const identityNames = Object.fromEntries(Object.keys(identitySchema.properties).map((name) => [name, goName(name).replace(/Id$/u, 'ID')]));
+const envelopeOwn = { ...resolvedEnvelope, properties: Object.fromEntries(Object.entries(resolvedEnvelope.properties).filter(([name]) => !Object.hasOwn(identitySchema.properties, name))) };
+const envelopeNames = { event_id:'EventID', source_event_id:'SourceEventID', causation_id:'CausationID' };
+output('telemetry_types.go', formatGo(`// Code generated from contracts/telemetry/v1 JSON Schemas. DO NOT EDIT.\npackage telemetryv1\n\nimport "encoding/json"\n\ntype CorrelationIdentity struct { ${goFields(resolvedIdentity, identityNames).join('; ')} }\ntype Envelope struct { CorrelationIdentity; ${goFields(envelopeOwn, envelopeNames).join('; ')} }\n\n${goPayloads}\n`));
 
-const durableTs = Object.entries(durableSchemas).map(([name,schema])=>`export type ${goName(name)} = ${tsType(schema)};`).join('\n\n');
+const durableTs = Object.entries(durableSchemas).map(([name,schema])=>`export type ${goName(name)} = ${tsType(resolveSchema(schema, sources))};`).join('\n\n');
 output('bundle-types.ts', `// Generated from bundle JSON Schemas. Do not edit.\n${durableTs}\n`);
-const durableGo = Object.entries(durableSchemas).map(([name,schema])=>`type ${goName(name)} struct {\n${Object.entries(schema.properties||{}).map(([field,value])=>` ${goName(field)} ${goType(value)} \`json:"${field}${(schema.required||[]).includes(field)?'':',omitempty'}"\``).join('\n')}\n}`).join('\n\n');
+const durableGo = Object.entries(durableSchemas).map(([name,schema])=>`type ${goName(name)} struct {\n${goFields(resolveSchema(schema, sources)).join('\n')}\n}`).join('\n\n');
 output('bundle_types.go', formatGo(`// Code generated from bundle JSON Schemas. DO NOT EDIT.\npackage telemetryv1\n\nimport "encoding/json"\n\nvar _ json.RawMessage\n\n${durableGo}\n`));
 
 output('fixtures/invalid/missing-run-id.json', render({schema_version:'telemetry_envelope.v1',event_id:'invalid',source_event_id:'invalid',type:'pipeline.started'}));

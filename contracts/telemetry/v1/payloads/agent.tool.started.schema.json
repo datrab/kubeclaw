@@ -4,10 +4,13 @@
   "additionalProperties": false,
   "properties": {
     "agent_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "agent_type": {
@@ -22,31 +25,51 @@
       "type": "string"
     },
     "attempt": {
-      "type": "number"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/attempt"
+        },
+        {
+          "type": "number"
+        }
+      ]
     },
     "content_completeness": {
       "minLength": 1,
       "type": "string"
     },
     "dispatch_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "extensions": {
-      "type": "object"
+      "$ref": "../envelope.schema.json#/properties/extensions"
     },
     "gate_id": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gate_type": {
-      "minLength": 1,
-      "type": [
-        "string",
-        "null"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
       ]
     },
     "gateway_label": {
@@ -56,12 +79,26 @@
       ]
     },
     "model_call_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "module_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "param_keys": {
       "items": {
@@ -83,8 +120,15 @@
       "type": "string"
     },
     "tool_call_id": {
-      "minLength": 1,
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1,
+          "type": "string"
+        }
+      ]
     },
     "tool_name": {
       "minLength": 1,
