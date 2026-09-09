@@ -1,0 +1,50 @@
+node --test tests/verification/reliability/observability-retirement-plan.test.mjs
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (974.676633ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1118.791949ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (973.168268ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (918.360894ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (752.4243ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (743.111832ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1026.683085ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (791.826616ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.2658ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.710302ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.364189ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (328.583171ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2209.280398ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (302.406291ms)
+✖ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (705.18665ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11257.951872
+
+✖ failing tests:
+
+test at tests/verification/reliability/observability-retirement-plan.test.mjs:251:1
+✖ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (705.18665ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'run-snapshot.v3'
+  - 'run-snapshot.v2'
+                   ^
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-sdk-transport-review/tests/verification/reliability/observability-retirement-plan.test.mjs:254:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'run-snapshot.v3',
+    expected: 'run-snapshot.v2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+exit=1
+
