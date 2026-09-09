@@ -25,3 +25,7 @@ Native BuildKit/buildctl, Docker and node CRI tools are unavailable. Actual node
 Exact paths are recorded in the adjacent registry-client-scope.json. deployment.yaml is shared: the three demoReadyClient includes belong to the separate Ready-controller author; registry edits are named-sidecar rendering/validation and registry CA volumes. buster-runtime-entrypoint.sh preserves the separate author's cookie header addition. Other concurrent paths are excluded. Root alone stages and commits. All raw registry-clients-* evidence, including initial failures and reruns, belongs to this slice.
 
 Independent counterreview passed the five configuration tests, the native Trivy transport/auth test and both source gates. Approval excludes shared Ready-controller edits and the native integration gates above.
+
+## Combined immutable Helm correction
+
+The isolated e03f7dc run with actual Helm on PATH exposed a missing configured registry in check-deployment-truth's Buster render. Earlier successful runs of that script had not established this optional render path; its ENOENT guard can skip Helm. The chart correctly failed closed. The test now supplies an explicit HTTPS example.test origin and a nonsecret test Secret reference; no chart fallback or deployed credential is invented. Actual Helm rerun passes (registry-clients-deployment-real-helm-rerun.txt). The original isolated failure remains in integration-e03f7dc/deployment-truth.txt. This is rendering evidence only.

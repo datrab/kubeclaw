@@ -942,6 +942,12 @@ if (helm.error?.code !== 'ENOENT') {
       'kubeclaw',
       '--values',
       path.join(sourceRoot, 'my-values/buster-values.yaml'),
+      '--set-string',
+      'runtimeInfrastructure.registry.endpoint=https://registry.example.test',
+      '--set-string',
+      'runtimeInfrastructure.registry.transport=https',
+      '--set-string',
+      'runtimeInfrastructure.registry.authSecretName=registry-contract-test',
     ],
     { cwd: sourceRoot, encoding: 'utf8' },
   );
