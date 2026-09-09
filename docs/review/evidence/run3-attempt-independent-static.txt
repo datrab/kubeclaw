@@ -1,0 +1,9 @@
+$ node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+Exit 0
+
+$ node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/reliability/attempt-projection-review.test.mjs skills/common/plugin-runtime/foundation/observability/attempt-projection.ts skills/common/plugin-runtime/foundation/observability/hash-journal.ts scripts/retire-attempt-result.mjs scripts/observability-retirement/stores.mjs skills/common/plugin-runtime/foundation/observability/admission-retirement.ts skills/common/plugin-runtime/foundation/observability/attempt-replay.ts skills/nova/core/state/journal.ts
+Exit 0
+
+$ node tests/verification/contracts/check-plugin-system-v2-phase7.mjs
+Exit 0
+{"ok":true,"contract":"plugin-system-v2-phase7"}

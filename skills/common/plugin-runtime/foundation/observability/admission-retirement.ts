@@ -3,10 +3,10 @@ import fs from 'node:fs/promises';
 import { constants } from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import { canonicalJson, validatePipelineObservabilityContract, type AdmissionAcknowledgementV1 } from '@kubeclaw/pipeline-observability-contract';
-import { assertAttemptReplay } from './attempt-replay.ts';
 import { replayAssert, replayIdentity, replayObject } from './replay-validation.ts';
 import { scopedEvidenceId, type DurableAttemptStoreSnapshot, type DurableResultMetadata } from './durable-attempts.ts';
 import {createHash} from 'node:crypto';
+import {decodeAttemptState} from './attempt-projection.ts';
 import type { AdmittedRecordView } from './durable-delivery.ts';
 
 /** A reference to an immutable, already committed completion, never a new archive. */
@@ -63,12 +63,11 @@ async function readRetirementBytes(file:string,maximumBytes:number):Promise<Buff
 }
 async function readSource(s:AdmissionCompletionReference):Promise<DurableAttemptStoreSnapshot> {
   const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as DurableAttemptStoreSnapshot;
-  assertAttemptReplay(state,path.dirname(s.file),{
+  return decodeAttemptState(state,path.dirname(s.file),{
     maximumEvidenceObjects:Number.MAX_SAFE_INTEGER,maximumEvidenceBytes:Number.MAX_SAFE_INTEGER,
     maximumEvidenceObjectBytes:Number.MAX_SAFE_INTEGER,maximumResults:Number.MAX_SAFE_INTEGER,
     maximumClosures:Number.MAX_SAFE_INTEGER,maximumMetadataBytes:s.maximumBytes,maximumPendingEvidenceAgeMs:Number.MAX_SAFE_INTEGER,
-  });
-  return state;
+  }).state;
 }
 export function resolveAdmissionRetiredSnapshot(entry:AdmissionRetiredEntry,state:DurableAttemptStoreSnapshot):AdmittedRecordView {
   assertAdmissionRetiredEntry(entry);

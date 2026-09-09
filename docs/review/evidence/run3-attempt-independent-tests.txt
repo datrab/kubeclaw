@@ -1,0 +1,32 @@
+Author source/test30e6a4d (production6ee3f37), reviewer checkout782433b plus independent test file. Nodev24.19.0.
+Command: node --test tests/verification/reliability/attempt-projection-review.test.mjs
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1358.286647ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (874.239425ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1018.979609ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (991.358921ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1214.416189ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1314.928932ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (963.293371ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2113.303558ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1025.124553ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (2105.884156ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1521.674233ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2878.927137ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (2056.59235ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1793.953884ms)
+✔ independent review: projected replay survives a real later journal append but missing or corrupt referenced history cannot produce an ACK (1390.323197ms)
+✔ independent review: structurally valid rehashed foreign or unimported checkpoints cannot authorize projection (1719.483832ms)
+✔ independent review: reclaimed unreferenced evidence preserves the projected result and metadata quota still applies (1001.863481ms)
+✔ independent review: original run fence rejects a concurrent retirement and permits unchanged replay after owner release (993.790029ms)
+✔ independent review: original synchronous journal reader does not time out while actual retirement awaits evidence IO (1012.5582ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27746.963727

@@ -1,0 +1,33 @@
+Source tested: 768fde8a9bc3176cf048ddf3313592c8c268d6b4; corresponding source blobs verified against remote8862643bd0def10004a0f43b743bbfc2d8d19be9.
+Command: node --test docs/review/evidence/run3-attempt-mutex-before.mjs
+Exit: 1
+✖ independent review: two asynchronous kernel lock users do not starve the first owner event loop (260.010632ms)
+✖ independent review: original synchronous journal append progresses while an asynchronous user releases its lock (265.023822ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 685.62986
+
+✖ failing tests:
+
+test at docs/review/evidence/run3-attempt-mutex-before.mjs:10:1
+✖ independent review: two asynchronous kernel lock users do not starve the first owner event loop (260.010632ms)
+  Error: REVIEW_ASYNC_LOCK_TIMEOUT
+      at FileMutex.withAsyncLock (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/skills/nova/core/state/file-mutex.ts:32:37)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/docs/review/evidence/run3-attempt-mutex-before.mjs:19:68)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at docs/review/evidence/run3-attempt-mutex-before.mjs:23:1
+✖ independent review: original synchronous journal append progresses while an asynchronous user releases its lock (265.023822ms)
+  Error: JOURNAL_APPEND_LOCK_TIMEOUT:/tmp/attempt-review-journal-OfACHv/journal.jsonl
+      at FileMutex.withLock (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/skills/nova/core/state/file-mutex.ts:17:41)
+      at FileJournal.transact (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/skills/nova/core/state/journal.ts:164:24)
+      at FileJournal.append (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/skills/nova/core/state/journal.ts:180:17)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/docs/review/evidence/run3-attempt-mutex-before.mjs:33:29)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

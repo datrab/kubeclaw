@@ -1,0 +1,43 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1706.277392ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1119.394248ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1247.095509ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1574.196424ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1550.894872ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1599.242246ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1266.733515ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2346.823564ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1158.059856ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (2110.970956ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1051.701671ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2001.538868ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (1578.26599ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1331.751222ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (376.694316ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (621.868184ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (111.99924ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1321.931634ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1295.29296ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (940.614114ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1073.092256ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1104.828205ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (974.240104ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1495.779696ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1094.043697ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.494444ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.98762ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.315764ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (386.936481ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2721.920725ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (434.156138ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (919.800892ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22139.195664

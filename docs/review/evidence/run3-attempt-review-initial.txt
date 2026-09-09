@@ -1,0 +1,42 @@
+Source6ee3f37; reviewer initially expected concurrent run mutations to queue. Existing original withRunMutationLock deliberately rejects concurrent callers. This test expectation is corrected to assert one rejection, one durable mutation, then unchanged replay; no production gate changed.
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1306.51307ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (875.831578ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (936.836575ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (996.4807ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1301.558452ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1355.365438ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (971.54861ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2181.751263ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (878.61783ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (1030.433185ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1560.868332ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2871.605381ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (2235.306648ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1847.707709ms)
+✔ independent review: structurally valid rehashed foreign or unimported checkpoints cannot authorize projection (1699.5939ms)
+✔ independent review: reclaimed unreferenced evidence preserves the projected result and metadata quota still applies (1316.116499ms)
+✖ independent review: two original retirement callers share the run and attempt fences without lock starvation (1063.55668ms)
+✔ independent review: original synchronous journal reader does not time out while actual retirement awaits evidence IO (1403.915196ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26289.367386
+
+✖ failing tests:
+
+test at tests/verification/reliability/attempt-projection-review.test.mjs:58:1
+✖ independent review: two original retirement callers share the run and attempt fences without lock starvation (1063.55668ms)
+  Error: PIPELINE_RUN_MUTATION_LOCKED:/tmp/admission-retirement-ki3xuS/state/runs/v2-af94777361a302940a21a0c711b2363a3c8280a9b226928e8305faeb92467bae
+      at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/skills/nova/core/execution/run-mutation.ts:8:65)
+      at retireAttemptResult (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/scripts/retire-attempt-result.mjs:53:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-attempt-review/tests/verification/reliability/attempt-projection-review.test.mjs:60:75)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

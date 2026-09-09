@@ -3232,20 +3232,23 @@
       "work_package": "WP09",
       "status": "implementiert",
       "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d",
-      "verification_status": "Read-only Retentionsplan und manuelle Kompaktierung abgeschlossener Buster-Archivkopien implementiert; zwölf echte lokale Git/HTTP/Store/CLI-Regressionen sowie Originalruntime und Planner bestehen. Freigabe von Metadatenbytes nachgewiesen; Recordanzahl-, Ergebnis- und allgemeine Run-/Logbereinigung nicht gelöst.",
+      "verification_status": "Teilweise: Telemetrie-, Admission- und importierte Attempt-Resultatkopien mit echter Quotenfreigabe und erhaltenem Replay geprüft. Attempt-v2 unabhängig 19/19; Root integriert 45/45, keine Skips. Zusammenhängende weitere Store-/Referenzretention bleibt offen.",
       "verification_evidence": [
         "docs/review/remediation/implementation/observability-retention.md",
         "docs/review/remediation/implementation/buster-job-compaction.md",
         "docs/review/evidence/integration-eb1d7cc/manifest.json",
         "docs/review/remediation/implementation/wave47-admission-independent-review.md",
-        "docs/review/remediation/implementation/wave47-retirement-snapshot-integration.md"
+        "docs/review/remediation/implementation/wave47-retirement-snapshot-integration.md",
+        "docs/review/remediation/implementation/run3-attempt-result-independent-review.md",
+        "docs/review/evidence/run3-root-attempt-final.txt",
+        "docs/review/remediation/implementation/run3-observability-next-package.md"
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
+      "next_action": "Weitere Consumerquoten gemäß implementation/run3-observability-next-package.md bearbeiten: Telemetrie-Retirement existiert bereits; Nova-Dispatch-Archiveinbettung ist ein konkreter nächster redundanter Bytepfad. Globale Closure-/Evidence-/Artifact-/Buster-Retention benötigt erhaltene Replay- und manuelle Dispositionsautorität. Keine automatische Loglöschung.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"

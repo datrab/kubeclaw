@@ -1,0 +1,35 @@
+{
+  "run_id": "20260909t2146",
+  "integration": {
+    "local_base": "c8dd091",
+    "remote_sha": "b284a15ebfa58c31688271c62d9bf1ea276fa2f0",
+    "parent": "5c20fedaa8c679206eaad75af4bd0744038c557e",
+    "tree": "197e8efc34c001cfabf74caba0c55f99fb7e1b0b",
+    "scope": "Two-file reviewed documentation checkpoint only; no source integration; 7/47 verified."
+  },
+  "packages": [
+    {
+      "package": "attempt",
+      "local_base": "147a9e003c8ccdc202953ec122a9112f72d339ca",
+      "local_sha": "6ee3f37bad915653e3dafe8756ee8c2dcc75021e",
+      "remote_branch": "fix/resume-47-run3-attempt-6ee3f37",
+      "remote_sha": "7ea4b2c49593333e888d680d6e20ef4befe3c4ad",
+      "parent": "b284a15ebfa58c31688271c62d9bf1ea276fa2f0",
+      "tree": "f1be08d87e5cc616bf8c813207e89ea71619ebb0",
+      "files": 11,
+      "status": "unreviewed WIP; not integrated"
+    },
+    {
+      "package": "sdk",
+      "local_base": "4baa56945abafc608303cf919a365921f2b7a18a",
+      "local_sha": "570f439281add4c42bfb85def7dee0398deae969",
+      "remote_branch": "fix/resume-47-run3-sdk-570f439",
+      "remote_sha": "f3259c3395c7258be030f831cd3834d7ad7d5237",
+      "parent": "b284a15ebfa58c31688271c62d9bf1ea276fa2f0",
+      "tree": "6c797b58bf923a83a87a7b304421899e2c36c335",
+      "files": 15,
+      "status": "unreviewed WIP; not integrated"
+    }
+  ],
+  "verification": "Fresh refs read back; affected paths match frozen local Git blob SHA/mode/type in untruncated remote trees. Push handlers restricted to main; no CI or deployment started."
+}

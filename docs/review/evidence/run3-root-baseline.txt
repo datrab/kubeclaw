@@ -1,0 +1,32 @@
+✔ authorized ancestor repair reruns every original graph approval and sibling gate (1726.666972ms)
+✔ real Git, architecture artifact and operator wait are renewed after earlier approval (11972.417788ms)
+✔ real Git, architecture artifact and operator wait are renewed after rejection (10754.124782ms)
+✔ administrative journal and repair projection crash prefixes converge without stale gates (2643.58485ms)
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (872.610328ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (71.648289ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (39.724319ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (47.074059ms)
+✔ independent genuine-store response still binds all owner and byte fields (85.790332ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (96.334908ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (87.590289ms)
+✔ independent unknown-codec recording rejects before journal append (113.059382ms)
+✔ administrative decision crash prefixes preserve exactly one category debit (4607.49298ms)
+✔ original completion and repair-intent crash prefixes debit each category order once (3435.857156ms)
+✔ restart before and after durable Nova signal projection schedules exactly one repair (4508.529991ms)
+✔ two orders per category survive all mandatory rechecks and original journal replay (4098.923911ms)
+✔ one Nova order is exact and module-wide; later repair=false (3298.31596ms)
+✔ one Nova order is exact and module-wide; later repair=true (3277.851506ms)
+✔ failed source after Nova order blocks with original evidence (1953.427388ms)
+✔ failed test after Nova order blocks with original evidence (2179.825828ms)
+✔ technical retry allowance remains separate; exhausted=false (990.433199ms)
+✔ technical retry allowance remains separate; exhausted=true (621.20963ms)
+✔ administrative repair uses the same category ledger; exhausted=false (1715.813962ms)
+✔ administrative repair uses the same category ledger; exhausted=true (1831.417806ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27856.603783

@@ -1,0 +1,48 @@
+{
+  "source_remote_commit": "a29a9df8cce605f393fa0bec413604a5ae426eeb",
+  "checked_archive_commit": "ec8596e0d8c9f0b60149df90101a49f55a7cb4e0",
+  "files": [
+    {
+      "computed": "ec6bf3d09cffcd9b9287623b88797466f09967a7",
+      "declared": "ec6bf3d09cffcd9b9287623b88797466f09967a7",
+      "path": "docs/review/evidence/run2-sdk-remaining/repair-authorization-locale.mjs",
+      "remote": "ec6bf3d09cffcd9b9287623b88797466f09967a7"
+    },
+    {
+      "computed": "8253e701fafa982ac558ba8fd5227b317221dad3",
+      "declared": "8253e701fafa982ac558ba8fd5227b317221dad3",
+      "path": "skills/nova/core/execution/administrative-repair.ts",
+      "remote": "8253e701fafa982ac558ba8fd5227b317221dad3"
+    },
+    {
+      "computed": "fc1eced4b58cb9461fe8993343d0f8be906b41f4",
+      "declared": "fc1eced4b58cb9461fe8993343d0f8be906b41f4",
+      "path": "skills/nova/core/execution/run-decisions.ts",
+      "remote": "fc1eced4b58cb9461fe8993343d0f8be906b41f4"
+    },
+    {
+      "computed": "b0a939d8698ecb2b729bb2fcd79070444596614d",
+      "declared": "b0a939d8698ecb2b729bb2fcd79070444596614d",
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "remote": "b0a939d8698ecb2b729bb2fcd79070444596614d"
+    },
+    {
+      "computed": "3c300657b7237814f4a9123d2fb8bfd078fc2229",
+      "declared": "3c300657b7237814f4a9123d2fb8bfd078fc2229",
+      "path": "skills/nova/core/lifecycle/recovery-state.ts",
+      "remote": "3c300657b7237814f4a9123d2fb8bfd078fc2229"
+    },
+    {
+      "computed": "05d40408ecfee4ded5346f066ae48fff266366d8",
+      "declared": "05d40408ecfee4ded5346f066ae48fff266366d8",
+      "path": "skills/nova/core/lifecycle/recovery.ts",
+      "remote": "05d40408ecfee4ded5346f066ae48fff266366d8"
+    },
+    {
+      "computed": "d936ba8fcae0e6048cdfe535e6b71cd1d3826ebc",
+      "declared": "d936ba8fcae0e6048cdfe535e6b71cd1d3826ebc",
+      "path": "skills/nova/core/lifecycle/repair-budget.ts",
+      "remote": "d936ba8fcae0e6048cdfe535e6b71cd1d3826ebc"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (1030.930129ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (92.516183ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (35.542907ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (45.762546ms)
+✔ independent genuine-store response still binds all owner and byte fields (209.240627ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (137.735395ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (82.966009ms)
+✔ independent unknown-codec recording rejects before journal append (52.372629ms)
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (2290.012163ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1839.983442ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (2318.410529ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1835.522873ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1647.58259ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1813.352704ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1211.925131ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2713.947154ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1183.335214ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (3065.473011ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1269.763301ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2717.232754ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (2559.904935ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1667.287573ms)
+✔ independent review: projected replay survives a real later journal append but missing or corrupt referenced history cannot produce an ACK (1517.506226ms)
+✔ independent review: structurally valid rehashed foreign or unimported checkpoints cannot authorize projection (1805.70195ms)
+✔ independent review: reclaimed unreferenced evidence preserves the projected result and metadata quota still applies (1392.438256ms)
+✔ independent review: original run fence rejects a concurrent retirement and permits unchanged replay after owner release (1237.087573ms)
+✔ independent review: original synchronous journal reader does not time out while actual retirement awaits evidence IO (978.943782ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (727.585524ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (1016.351544ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (156.668641ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1550.045334ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (2030.647046ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1574.150781ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1791.818924ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1357.70773ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1036.677553ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1606.064129ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1054.476975ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (13.586189ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (2.132818ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (4.46716ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (419.118138ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2909.599405ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (347.610718ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (975.505564ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36184.194653

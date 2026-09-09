@@ -1,0 +1,32 @@
+{"ref":"147a9e0","status":1}
+
+/workspace/scratch/0d8f8ddb55c3/run3-attempt/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+  171:17  error  `import()` type annotations are forbidden                                            @typescript-eslint/consistent-type-imports
+  268:3   error  Async method 'storeEvidence' has too many lines (89). Maximum allowed is 60          max-lines-per-function
+  304:1   error  File has too many lines (757). Maximum allowed is 300                                max-lines
+  357:3   error  Async method 'storeResult' has too many lines (126). Maximum allowed is 60           max-lines-per-function
+  373:34  error  Async arrow function has too many lines (109). Maximum allowed is 60                 max-lines-per-function
+  373:34  error  Async arrow function has a complexity of 24. Maximum allowed is 15                   complexity
+  599:3   error  Async method 'evaluateCompleteness' has too many lines (140). Maximum allowed is 60  max-lines-per-function
+  626:34  error  Async arrow function has too many lines (112). Maximum allowed is 60                 max-lines-per-function
+  668:13  error  Blocks are nested too deeply (4). Maximum allowed is 3                               max-depth
+  672:15  error  Blocks are nested too deeply (5). Maximum allowed is 3                               max-depth
+
+✖ 10 problems (10 errors, 0 warnings)
+
+{"ref":"HEAD","status":1}
+
+/workspace/scratch/0d8f8ddb55c3/run3-attempt/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+  173:17  error  `import()` type annotations are forbidden                                            @typescript-eslint/consistent-type-imports
+  277:3   error  Async method 'storeEvidence' has too many lines (89). Maximum allowed is 60          max-lines-per-function
+  304:1   error  File has too many lines (799). Maximum allowed is 300                                max-lines
+  366:3   error  Async method 'storeResult' has too many lines (126). Maximum allowed is 60           max-lines-per-function
+  382:34  error  Async arrow function has too many lines (109). Maximum allowed is 60                 max-lines-per-function
+  382:34  error  Async arrow function has a complexity of 24. Maximum allowed is 15                   complexity
+  645:3   error  Async method 'evaluateCompleteness' has too many lines (140). Maximum allowed is 60  max-lines-per-function
+  672:34  error  Async arrow function has too many lines (112). Maximum allowed is 60                 max-lines-per-function
+  714:13  error  Blocks are nested too deeply (4). Maximum allowed is 3                               max-depth
+  718:15  error  Blocks are nested too deeply (5). Maximum allowed is 3                               max-depth
+
+✖ 10 problems (10 errors, 0 warnings)
+
