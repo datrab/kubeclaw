@@ -18,21 +18,21 @@ export async function approvalFixture(root, rejected) {
   // Freeze only the actual packages used by this graph, independent of unrelated concurrent package edits.
   const installation = path.join(root, 'installed'); fs.mkdirSync(installation);
   for (const source of ['tests/fixtures/admin-repair/source-plugin', 'tests/fixtures/plugin-system-v2/graph-plugin',
-    'skills/nova/plugins/human-approval', ...['artifact-store', 'wait-store', 'operator-messaging', 'network-http', 'secret-resolver'].map(name => `skills/common/plugins/${name}`)]) {
+    'skills/nova/plugins/human-approval', 'skills/nova/plugins/repository-adapter', ...['artifact-store', 'wait-store', 'operator-messaging', 'network-http', 'secret-resolver'].map(name => `skills/common/plugins/${name}`)]) {
     fs.cpSync(path.resolve(source), path.join(installation, path.basename(source)), { recursive: true, filter: file => path.basename(file) !== 'node_modules' });
   }
   fs.symlinkSync(path.resolve('node_modules'), path.join(root, 'node_modules'), 'dir');
   const roots = [installation];
   const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
-    providers: { 'artifacts.write': 'kubeclaw.artifact-store:artifact-store', 'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
+    providers: { 'git.repository.read': 'kubeclaw.repository-adapter:repository', 'artifacts.write': 'kubeclaw.artifact-store:artifact-store', 'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
       'signal.wait': 'kubeclaw.wait-store:waits', 'operator.request': 'kubeclaw.operator-messaging:operator',
       'network.http': 'kubeclaw.network-http:http', 'secrets.read': 'kubeclaw.secret-resolver:secrets' },
     grants: { 'test.admin-repair:source': { 'artifacts.write': { allowedNamespaces: ['test.admin-repair'] } },
-      'kubeclaw.human-approval:architecture-approval': { 'artifacts.read': { allowedNamespaces: ['test.admin-repair'] },
+      'kubeclaw.human-approval:architecture-approval': { 'git.repository.read': { allowedPrefixes: ['.'] }, 'artifacts.write': { allowedNamespaces: ['kubeclaw.human-approval'] }, 'artifacts.read': { allowedNamespaces: ['test.admin-repair'] },
         'operator.request': { allowedTargets: ['operators'] }, 'signal.wait': { allowedSignalTypes: ['approval.resolved'], allowedIssuerIds: ['operator:test'] } },
       'kubeclaw.operator-messaging:operator': { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['approval-token'] } } },
-    adapters: { 'kubeclaw.artifact-store:artifact-store': { artifactRoot: path.join(root, 'artifacts') },
+    adapters: { 'kubeclaw.repository-adapter:repository': { repositoryRoot: repository }, 'kubeclaw.artifact-store:artifact-store': { artifactRoot: path.join(root, 'artifacts') },
       'kubeclaw.wait-store:waits': { root: path.join(root, 'waits') },
       'kubeclaw.operator-messaging:operator': { deliveryRoot: path.join(root, 'deliveries'), targets: { operators: { endpoint: `${origin}/approval`, tokenSecret: 'approval-token' } } },
       'kubeclaw.network-http:http': { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] },

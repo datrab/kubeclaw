@@ -38,11 +38,13 @@ const enabled = new Set(['kubeclaw.blueprint-sync:sync']);
 const granted = core.resolveCapabilityGrants(snapshot, {
   enabledRegistrations: enabled,
   providers: new Map([
+    ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'],
     ['git.sync', 'kubeclaw.git-workspace:git'], ['git.commit', 'kubeclaw.git-workspace:git'],
     ['state.append', 'kubeclaw.state-store:state'], ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
   ]),
   grants: new Map([
     ['kubeclaw.blueprint-sync:sync', new Map([
+      ['artifacts.read', { allowedNamespaces: ['kubeclaw.architecture-validator', 'kubeclaw.human-approval', 'kubeclaw.blueprint-sync', 'kubeclaw.implementation-agent'] }],
       ['git.sync', { allowedRoots: [repository] }], ['git.commit', { allowedRoots: [repository] }],
       ['state.append', { allowedNamespaces: ['kubeclaw.blueprint-sync'] }],
       ['artifacts.write', { allowedNamespaces: ['kubeclaw.blueprint-sync'] }],

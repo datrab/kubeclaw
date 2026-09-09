@@ -2,7 +2,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 
-import { compareCodeUnits, directlyReferences, parseRevisionInventory, referenceNeedle,
+import { compareCodeUnits, directlyReferences, fullObjectId, regularFileMode, parseRevisionInventory, referenceNeedle,
   type RevisionInventoryRecord } from './revision-parsers.ts';
 
 export type { RevisionInventoryRecord } from './revision-parsers.ts';
@@ -16,12 +16,6 @@ export interface ChangedPathRecord {
 export interface ChangedLineRange { readonly start: number; readonly end: number }
 export interface RevisionReferenceRecord { readonly path: string; readonly sourcePath: string }
 
-function fullObjectId(value: unknown, label: string): string {
-  if (typeof value !== 'string' || !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/u.test(value)) {
-    throw new Error(`${label.toUpperCase()}_INVALID`);
-  }
-  return value;
-}
 function assertExpected(payload: Readonly<Record<string, unknown>>, key: string, actual: unknown, code: string): void {
   if (payload[key] !== undefined && payload[key] !== actual) throw new Error(code);
 }
@@ -203,10 +197,14 @@ export class RevisionReader {
     return head;
   }
 
-  freezeHead(attemptId: string) {
-    const head = resolveHead(this.#root);
+  freezeHead(attemptId: string, payload: Readonly<Record<string, unknown>> = {}) {
+    if (payload.repositoryRoot !== undefined && payload.repositoryRoot !== this.#root) throw new Error('REVIEW_REPOSITORY_IDENTITY_INVALID');
+    const ref = payload.ref ?? 'HEAD';
+    if (typeof ref !== 'string' || !ref || ref.startsWith('-') || /[\0\r\n]/u.test(ref)) throw new Error('REPOSITORY_REF_INVALID');
+    const head = ref === 'HEAD' ? resolveHead(this.#root) : fullObjectId(git(this.#root, ['rev-parse', '--verify', `${ref}^{commit}`]).toString('utf8').trim(), 'ref');
+    if (payload.requireClean === true && git(this.#root, ['status', '--porcelain=v1', '--untracked-files=all']).length) throw new Error('REVIEW_SOURCE_DIRTY');
     if (this.#expectedHead !== undefined && head !== this.#expectedHead) throw new Error('REPOSITORY_HEAD_MISMATCH');
-    return { head, proof: this.#proof(head, attemptId) };
+    return { head, proof: this.#proof(head, attemptId), ...(payload.repositoryRoot === undefined ? {} : { repositoryRoot: this.#root }) };
   }
 
   verifyAncestry(payload: Readonly<Record<string, unknown>>, attemptId: string) {
@@ -297,6 +295,7 @@ export class RevisionReader {
     const allowedPrefixes = allowedScopePrefixes(payload.allowedPrefixes);
     if (!inScope(path, allowedPrefixes)) throw new Error(`REPOSITORY_PATH_OUT_OF_SCOPE:${path}`);
     const object = `${head}:${path}`;
+    const mode = payload.requireRegularFile === true ? regularFileMode(git(this.#root, ['--literal-pathspecs', 'ls-tree', '-z', head, '--', path]).toString('utf8'), path) : undefined;
     const requestedMaximum = payload.maxBytes === undefined ? this.#maxFileBytes : payload.maxBytes;
     if (!Number.isSafeInteger(requestedMaximum) || Number(requestedMaximum) < 1
       || Number(requestedMaximum) > this.#maxFileBytes) throw new Error('REPOSITORY_FILE_LIMIT_INVALID');
@@ -311,7 +310,7 @@ export class RevisionReader {
     if (size > maximum) throw new Error(`REPOSITORY_FILE_TOO_LARGE:${size}:${maximum}`);
     const bytes = git(this.#root, ['show', object], maximum + 1);
     const content = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-    return { path, head, objectId, content, sizeBytes: bytes.length, digest: sha256Text(content) };
+    return { path, head, objectId, content, sizeBytes: bytes.length, digest: sha256Text(content), ...(mode ? { mode } : {}) };
   }
 
   changedLineRanges(pathInput: unknown, payload: Readonly<Record<string, unknown>>, attemptId: string) {

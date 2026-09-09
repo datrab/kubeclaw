@@ -266,11 +266,12 @@ async function main(): Promise<void> {
   };
   const grants: Record<string, Record<string, unknown>> = {
     'kubeclaw.architecture-validator:architecture': {
+      'git.repository.read': { allowedPrefixes: ['.'] },
       'runtime.dispatch': runtimeGrants,
       'artifacts.write': artifact('kubeclaw.architecture-validator'),
     },
     'kubeclaw.implementation-agent:implementation': {
-      'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate'] },
+      'artifacts.read': { allowedNamespaces: ['kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate', 'kubeclaw.architecture-validator', 'kubeclaw.human-approval', 'kubeclaw.blueprint-sync', 'kubeclaw.implementation-agent'] },
       'runtime.dispatch': runtimeGrants,
       'git.workspace.create': gitWorkspaceGrant,
       'git.workspace.remove': gitWorkspaceGrant,
@@ -301,6 +302,8 @@ async function main(): Promise<void> {
       },
     },
     'kubeclaw.human-approval:architecture-approval': {
+      'git.repository.read': { allowedPrefixes: ['.'] },
+      'artifacts.write': artifact('kubeclaw.human-approval'),
       'artifacts.read': { allowedNamespaces: ['kubeclaw.architecture-validator'] },
       'operator.request': { allowedTargets: ['discord'] },
       'signal.wait': {
@@ -535,9 +538,10 @@ async function main(): Promise<void> {
       dependsOn: [],
       config: { agent: 'architect', agentRole: roles.nova },
       input: {
+        source: { projectId: projectName, repositoryRoot: repo, architectureRef: 'HEAD', paths: [path.relative(repo, path.join(swarm, 'progress.json')).split(path.sep).join('/'), path.relative(repo, path.join(swarm, 'pipeline.json')).split(path.sep).join('/')] },
         task: 'Validate the four-module real nginx E2E architecture, ownership boundaries, parallel branches, release assembly, Buster verification, operator approval, and final deployment verification. Inspect the repository and return concrete checkedFiles.',
         architecture: {
-          modules: moduleIds,
+          modules,
           intent: progress.architecture_intent,
           contracts: progress.contracts,
         },

@@ -205,7 +205,14 @@ try {
   git(repository, ['checkout', '-b', 'merge-source']);
   fs.writeFileSync(path.join(repository, 'merge.txt'), 'merged content\n');
   git(repository, ['add', 'merge.txt']);
-  gitWithIdentity(repository, ['commit', '-m', 'merge source']);
+  const mergeCommit = await invoke(adapter, 'git.commit', 'commit', fs.realpathSync(repository), { paths: ['merge.txt'], message: 'merge source' });
+  const targetBefore = git(workspace, ['rev-parse', 'HEAD']);
+  fs.writeFileSync(path.join(repository, 'branch-moved.txt'), 'Unapproved source movement\n');
+  git(repository, ['add', 'branch-moved.txt']); gitWithIdentity(repository, ['commit', '-m', 'Move source after returned commit']);
+  await assert.rejects(invoke(adapter, 'git.merge', 'merge', fs.realpathSync(workspace), {
+    sourceRef: 'merge-source', sourceRevision: mergeCommit.sourceRevision,
+  }), /GIT_MERGE_SOURCE_MOVED/);
+  assert.equal(git(workspace, ['rev-parse', 'HEAD']), targetBefore, 'rejected merge must not mutate target');
   const merged = await invoke(
     adapter,
     'git.merge',

@@ -3,6 +3,7 @@ import path from 'node:path';
 import type { AdapterInvocation } from '@kubeclaw/plugin-sdk';
 import type { GitRunner } from './runner.ts';
 import { recordWorkspaceOwner, verifyWorkspaceOwner } from './workspace-ownership.ts';
+import { verifyApprovedGitSource, verifyApprovedWorkspace, verifyApprovedTransition, verifyWorkspaceCommit, pinnedMergeRevision } from './review-source.ts';
 import { authorizedDirectory, canonicalExistingDirectory, commitMessage, gitRef, gitToken, pathInside, scopedPaths, workspaceDestination } from './values.ts';
 
 interface GitContext { readonly roots: readonly string[]; readonly workspaceRoot: string; readonly runner: GitRunner; }
@@ -14,11 +15,14 @@ async function createWorkspace(ctx: GitContext, invocation: AdapterInvocation): 
   if (request.resource.canonicalId !== repository) throw new Error('GIT_RESOURCE_MISMATCH');
   const workspace = workspaceDestination(request.payload.workspacePath, ctx.workspaceRoot);
   const branch = gitToken(request.payload.branch, 'branch');
-  await ctx.runner.run(repository, ['worktree', 'add', '-b', branch, '--', workspace, gitToken(request.payload.baseRef, 'baseRef')], signal);
+  const approved = await verifyApprovedGitSource(repository, invocation, ctx.runner);
+  await verifyApprovedWorkspace(repository, invocation, ctx.runner);
+  await ctx.runner.run(repository, ['worktree', 'add', '-b', branch, '--', workspace, approved ?? gitToken(request.payload.baseRef, 'baseRef')], signal);
   const canonical = canonicalExistingDirectory(workspace, 'workspacePath');
   if (!pathInside(canonical, ctx.workspaceRoot)) throw new Error(`GIT_PATH_DENIED:${canonical}`);
   const revision = await ctx.runner.run(canonical, ['rev-parse', '--verify', 'HEAD'], signal);
   const sourceRevision = String(revision.stdout).trim();
+  if (approved && sourceRevision !== approved) throw new Error('SOURCE_APPROVAL_WORKSPACE_MISMATCH');
   const workspaceReference = { schemaVersion: 'runtime-workspace.v1' as const, repositoryRoot: repository,
     workspaceRoot: ctx.workspaceRoot, workspacePath: canonical, branch, sourceRevision, owner: request.attempt };
   recordWorkspaceOwner(workspaceReference);
@@ -45,6 +49,7 @@ async function removeWorkspace(ctx: GitContext, invocation: AdapterInvocation): 
 async function syncPaths(ctx: GitContext, workspace: string, invocation: AdapterInvocation): Promise<Result> {
   const { request, signal } = invocation;
   const ref = gitRef(request.payload.ref, 'ref');
+  await verifyApprovedGitSource(workspace, invocation, ctx.runner);
   const resolved = await ctx.runner.run(workspace, ['rev-parse', '--verify', `${ref}^{tree}`], signal);
   const tree = String(resolved.stdout).trim();
   if (!/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(tree)) throw new Error('GIT_SYNC_TREE_INVALID');
@@ -58,7 +63,9 @@ async function syncPaths(ctx: GitContext, workspace: string, invocation: Adapter
     const remote = await ctx.runner.run(workspace, ['show', `${tree}:${file}`], signal);
     const destination = path.join(workspace, file);
     const local = fs.existsSync(destination) ? fs.readFileSync(destination, 'utf8') : undefined;
-    if (local !== undefined && local === String(remote.stdout)) continue;
+    const localMode = fs.existsSync(destination) ? fs.lstatSync(destination) : undefined;
+    const modeMatches = localMode?.isFile() && (localMode.mode & 0o111 ? '100755' : '100644') === metadata.slice(0, 6);
+    if (local !== undefined && local === String(remote.stdout) && modeMatches) continue;
     await ctx.runner.run(workspace, ['--literal-pathspecs', 'checkout', tree, '--', file], signal);
     synced.push({ path: file, action: local === undefined ? 'created' : 'updated' });
   }
@@ -80,15 +87,24 @@ async function workspaceOperation(ctx: GitContext, workspace: string, invocation
   const { request, signal } = invocation;
   verifyOperationWorkspace(ctx, workspace, invocation);
   if (request.capability === 'git.commit' && request.operation === 'commit') {
+    await verifyWorkspaceCommit(workspace, invocation, ctx.runner);
+    await verifyApprovedGitSource(workspace, invocation, ctx.runner, true);
     const paths = scopedPaths(request.payload.paths, workspace);
     await ctx.runner.run(workspace, ['add', '--', ...paths], signal);
     const result = await ctx.runner.run(workspace, ['commit', '-m', commitMessage(request.payload.message), '--', ...paths], signal);
     const revision = await ctx.runner.run(workspace, ['rev-parse', '--verify', 'HEAD'], signal);
+    await verifyWorkspaceCommit(workspace, invocation, ctx.runner, String(revision.stdout).trim());
+    await verifyApprovedTransition(workspace, invocation, ctx.runner, String(revision.stdout).trim());
     return { ...result, sourceRevision: String(revision.stdout).trim() };
   }
   if (request.capability === 'git.merge' && request.operation === 'merge') {
-    const result = await ctx.runner.run(workspace, ['merge', '--no-edit', '--no-ff', gitToken(request.payload.sourceRef, 'sourceRef')], signal);
+    await verifyApprovedGitSource(workspace, invocation, ctx.runner);
+    const source = await ctx.runner.run(workspace, ['rev-parse', '--verify', `${gitToken(request.payload.sourceRef, 'sourceRef')}^{commit}`], signal);
+    const sourceRevision = pinnedMergeRevision(invocation, String(source.stdout).trim());
+    await verifyApprovedWorkspace(workspace, invocation, ctx.runner, sourceRevision);
+    const result = await ctx.runner.run(workspace, ['merge', '--no-edit', '--no-ff', sourceRevision], signal);
     const revision = await ctx.runner.run(workspace, ['rev-parse', '--verify', 'HEAD'], signal);
+    await verifyApprovedTransition(workspace, invocation, ctx.runner, String(revision.stdout).trim());
     return { ...result, sourceRevision: String(revision.stdout).trim() };
   }
   if (request.capability === 'git.sync' && request.operation === 'sync_paths') return syncPaths(ctx, workspace, invocation);

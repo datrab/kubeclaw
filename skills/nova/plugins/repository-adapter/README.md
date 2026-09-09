@@ -27,3 +27,14 @@ read from that descriptor, preventing later symlink substitution from redirectin
 the read. Configured or subsequently substituted symlink roots are forbidden.
 This requires Linux `/proc/self/fd` and protected authorized root/ancestor paths.
 It is not a complete filesystem sandbox against moving the authorized root.
+
+Source-bound architecture review uses `freeze_head` with optional `ref`,
+`repositoryRoot` and `requireClean` payload fields. The adapter returns the actual
+canonical repository identity when requested, resolves the ref to a full commit,
+and issues the existing attempt-bound read proof. Explicit configured
+`expectedHead` remains enforced. `requireClean` rejects tracked or untracked
+working-tree changes rather than silently approving an ambient file snapshot.
+`read_revision_text` supports `requireRegularFile: true` for approved review
+inputs: it rejects symlink/tree modes and returns the exact regular Git file mode
+alongside the existing pinned bytes and digest. Other revision readers retain
+their existing behavior.

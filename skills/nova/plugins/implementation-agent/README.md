@@ -21,3 +21,13 @@ branch, so a retained cleanup failure cannot block repair by occupying the prior
 name. The cleanup artifact retains ownership and the confirmed merge revision.
 OpenClaw targets must configure the same protected `workspaceRoot` as Git and the
 compiler; the gateway must see those filesystem paths.
+
+For graphs with architecture report/approval ancestors, Forge reads the bound
+subject and authorized source transitions from their original ArtifactRefs.
+Configure `artifacts.read` namespaces for `kubeclaw.architecture-validator`,
+`kubeclaw.human-approval`, `kubeclaw.blueprint-sync` and
+`kubeclaw.implementation-agent` in addition to repair evidence. Worktree creation
+uses the pinned source revision and verifies the reviewed architecture/plan bytes.
+Merge admission rejects unexpected source changes and changed reviewed plan bytes;
+its parent commit is verified before the result can extend the authorized lineage.
+Source-less implementation graphs retain their existing behavior.

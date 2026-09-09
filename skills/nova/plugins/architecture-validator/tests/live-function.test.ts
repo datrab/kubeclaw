@@ -46,6 +46,7 @@ try {
   const granted = core.resolveCapabilityGrants(snapshot, {
     enabledRegistrations: enabled,
     providers: new Map([
+      ['git.repository.read', 'kubeclaw.repository-adapter:repository'],
       ['runtime.dispatch', 'kubeclaw.runtime-dispatch:runtime'],
       ['network.http', 'kubeclaw.network-http:http'],
       ['secrets.read', 'kubeclaw.secret-resolver:secrets'],
@@ -53,6 +54,7 @@ try {
     ]),
     grants: new Map([
       ['kubeclaw.architecture-validator:architecture', new Map([
+        ['git.repository.read', { allowedPrefixes: ['.'] }],
         ['runtime.dispatch', { allowedAgents: ['architect'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.architecture-validator'] }],
       ])],
@@ -66,6 +68,7 @@ try {
   const adapters = new core.AdapterRuntime({
     granted, activated,
     configs: new Map([
+      ['kubeclaw.repository-adapter:repository', { repositoryRoot: temporary }],
       ['kubeclaw.runtime-dispatch:runtime', { targets: {
         architect: { endpoint: `${origin}/dispatch`, tokenSecret: 'architecture.agent' },
       } }],

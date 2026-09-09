@@ -1,5 +1,5 @@
 import { repairEvidence } from './repair-evidence.ts';
-import { parseRuntimeWorkspace, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
+import { approvedSource, parseRuntimeWorkspace, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
 import { attemptWorkspace } from './workspace.ts';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import {
@@ -9,13 +9,17 @@ import {
   type ImplementationInput,
 } from './protocol.ts';
 
-async function createWorkspace(input: ImplementationInput, context: PluginInvocationContext): Promise<RuntimeWorkspaceReference | undefined> {
-  if (!input.workspace) return undefined;
+async function createWorkspace(input: ImplementationInput, context: PluginInvocationContext, approval: Awaited<ReturnType<typeof approvedSource>>): Promise<RuntimeWorkspaceReference | undefined> {
+  if (!input.workspace) {
+    if (approval) throw new Error('SOURCE_APPROVAL_WORKSPACE_REQUIRED');
+    return undefined;
+  }
   const created = await context.invoke('git.workspace.create', {
     operation: 'create', resource: { type: 'git.repository', canonicalId: input.workspace.repositoryRoot },
     payload: {
       repositoryRoot: input.workspace.repositoryRoot, workspacePath: input.workspace.workspacePath,
       branch: input.workspace.branch, baseRef: context.contract.guidance?.repairRequest ? 'HEAD' : input.workspace.baseRef,
+      ...(approval ? { approvedSource: approval } : {}),
     },
   });
   if (typeof created.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(created.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
@@ -37,15 +41,18 @@ async function dispatchImplementation(
 
 async function integrateWorkspace(
   input: ImplementationInput, completion: ImplementationCompletion, context: PluginInvocationContext,
+  approval: Awaited<ReturnType<typeof approvedSource>>,
 ): Promise<string | undefined> {
   if (!input.workspace || completion.status !== 'ready_for_testing') return undefined;
-  await context.invoke('git.commit', {
+  const committed = await context.invoke('git.commit', {
     operation: 'commit', resource: { type: 'git.workspace', canonicalId: input.workspace.workspacePath },
-    payload: { paths: completion.changedPaths, message: input.workspace.commitMessage, workspaceReference: input.workspaceReference },
+    payload: { paths: completion.changedPaths, message: input.workspace.commitMessage, workspaceReference: input.workspaceReference,
+      expectedParent: input.workspaceReference?.sourceRevision },
   });
+  if (typeof committed.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(committed.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
   const merged = await context.invoke('git.merge', {
     operation: 'merge', resource: { type: 'git.repository', canonicalId: input.workspace.mergeTarget },
-    payload: { sourceRef: input.workspace.branch, workspaceReference: input.workspaceReference },
+    payload: { sourceRef: input.workspace.branch, sourceRevision: committed.sourceRevision, workspaceReference: input.workspaceReference, ...(approval ? { approvedSource: approval } : {}) },
   });
   if (typeof merged.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(merged.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
   return merged.sourceRevision;
@@ -81,13 +88,16 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
   let workspaceIntegrated: string | undefined;
   let workspaceFailure: Error | undefined;
   let cleanupFailure: Error | undefined;
+  let subjectDigest: string | undefined;
   try {
     const evidence = await repairEvidence(context);
-    const workspaceReference = await createWorkspace(input, context);
+    const approval = await approvedSource(context);
+    subjectDigest = approval?.subject.digest;
+    const workspaceReference = await createWorkspace(input, context, approval);
     workspaceCreated = workspaceReference !== undefined;
     if (workspaceReference) input = { ...input, headBefore: workspaceReference.sourceRevision, workspaceReference };
     completion = await dispatchImplementation(agent, input, context, evidence);
-    workspaceIntegrated = await integrateWorkspace(input, completion, context);
+    workspaceIntegrated = await integrateWorkspace(input, completion, context, approval);
   } catch (error) {
     workspaceFailure = error instanceof Error ? error : new Error(String(error));
   } finally {
@@ -101,16 +111,17 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
     }
   }
   if (workspaceFailure || !completion) return blockedFailure(workspaceFailure, input, workspaceCreated && !workspaceIntegrated);
-  return storeCompletion(input, completion, context, workspaceCreated, workspaceIntegrated, cleanupFailure);
+  return storeCompletion(input, completion, context, workspaceCreated, workspaceIntegrated, cleanupFailure, subjectDigest);
 }
 
 async function storeCompletion(
   input: ImplementationInput, completion: ImplementationCompletion, context: PluginInvocationContext,
   workspaceCreated: boolean, workspaceIntegrated: string | undefined, cleanupFailure: Error | undefined,
+  subjectDigest?: string,
 ): Promise<StageResult> {
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `implementation:${input.moduleId}:${input.attempt}` },
-    payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore,
+    payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore, ...(subjectDigest ? { subjectDigest } : {}),
       ...(workspaceCreated && !workspaceIntegrated && input.workspace ? { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, workspaceReference: input.workspaceReference } : {}) } },
   });
   const artifacts = [stored.artifact as ArtifactRef];

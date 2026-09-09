@@ -1,5 +1,12 @@
 import path from 'node:path';
 
+export function fullObjectId(value: unknown, label: string): string {
+  if (typeof value !== 'string' || !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/u.test(value)) {
+    throw new Error(`${label.toUpperCase()}_INVALID`);
+  }
+  return value;
+}
+
 export interface RevisionInventoryRecord {
   readonly path: string;
   readonly objectId: string;
@@ -55,4 +62,10 @@ export function directlyReferences(candidatePath: string, sourcePath: string, co
     if (specifier && possibleModulePaths(candidatePath, specifier).has(sourcePath)) return true;
   }
   return false;
+}
+
+export function regularFileMode(listing: string, path: string): '100644' | '100755' {
+  const mode = listing.slice(0, 6);
+  if (!['100644', '100755'].includes(mode) || listing.slice(listing.indexOf('\t') + 1) !== `${path}\0`) throw new Error('REVIEW_SOURCE_NOT_REGULAR');
+  return mode as '100644' | '100755';
 }

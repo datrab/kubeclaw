@@ -1,15 +1,21 @@
-import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
+import { captureReviewSubject, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type ReviewSubject, type StageResult } from '@kubeclaw/plugin-sdk';
 import { buildArchitectureRequest, type ArchitectureInput } from './protocol.ts';
 import { parseArchitectureOutput } from './output.ts';
 export async function execute(input: ArchitectureInput, context: PluginInvocationContext): Promise<StageResult> {
   const agent = context.contract.config.agent;
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('architecture validator agent is not configured');
-  let output;
+  let output: ReturnType<typeof parseArchitectureOutput>;
+  let subject: ReviewSubject | undefined;
   try {
+    subject = input.source ? await captureReviewSubject(input.source, { task: input.task, architecture: input.architecture ?? {} }, context) : undefined;
     output = parseArchitectureOutput(await context.invoke('runtime.dispatch', {
       operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
-      payload: buildArchitectureRequest(agent, input, context.contract.guidance?.helperPrompt),
+      payload: buildArchitectureRequest(agent, { ...input, ...(subject ? { subject } : {}) }, context.contract.guidance?.helperPrompt),
     }));
+    if (subject) {
+      if (subject.paths.some(file => !output.checkedFiles.includes(file))) throw new Error('REVIEW_SUBJECT_COVERAGE_MISSING');
+      await verifyReviewSubject(subject, context);
+    }
   } catch (error) {
     return {
       schemaVersion: 'stage-result.v2', outcome: 'blocked',
@@ -19,7 +25,7 @@ export async function execute(input: ArchitectureInput, context: PluginInvocatio
   }
   const report = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'architecture-validation' },
-    payload: { namespace: 'kubeclaw.architecture-validator', mediaType: 'application/json', value: output },
+    payload: { namespace: 'kubeclaw.architecture-validator', mediaType: 'application/json', value: { ...output, ...(subject ? { subject } : {}) } },
   });
   const artifacts = [report.artifact as ArtifactRef];
   if (output.verdict === 'passed') {

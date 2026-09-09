@@ -24,7 +24,9 @@
       "requiredCapabilities": [
         "artifacts.read",
         "operator.request",
-        "signal.wait"
+        "signal.wait",
+        "git.repository.read",
+        "artifacts.write"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/architecture-input.schema.json",

@@ -1,6 +1,10 @@
+import type { ReviewSource, ReviewSubject } from '@kubeclaw/plugin-sdk';
+
 export interface ArchitectureInput {
   readonly task: string;
   readonly architecture?: Readonly<Record<string, unknown>>;
+  readonly source?: ReviewSource;
+  readonly subject?: ReviewSubject;
 }
 export function buildArchitectureRequest(agent: string, input: ArchitectureInput, guidance: unknown): Readonly<Record<string, unknown>> {
   return Object.freeze({
@@ -16,6 +20,7 @@ export function buildArchitectureRequest(agent: string, input: ArchitectureInput
       'Return only the agent-owned output object described by outputContract. Do not copy protocol, agent, task, architecture, or outputContract into the output.',
     ].join('\n\n'),
     architecture: input.architecture ?? {},
+    ...(input.subject ? { reviewSubject: input.subject } : {}),
     outputContract: {
       type: 'object',
       additionalProperties: false,

@@ -13,7 +13,7 @@ assert.equal(registration.type, 'kubeclaw.decision.human-approval');
 assert.equal(architectureRegistration.type, 'kubeclaw.decision.architecture-approval');
 assert.deepEqual(
   architectureRegistration.requiredCapabilities,
-  ['artifacts.read', 'operator.request', 'signal.wait'],
+  ['artifacts.read', 'operator.request', 'signal.wait', 'git.repository.read', 'artifacts.write'],
 );
 assert.deepEqual(manifest.observers, []);
 assert.deepEqual(manifest.adapters, []);

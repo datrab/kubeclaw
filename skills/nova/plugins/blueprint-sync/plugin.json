@@ -12,7 +12,8 @@
         "git.sync",
         "git.commit",
         "state.append",
-        "artifacts.write"
+        "artifacts.write",
+        "artifacts.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",

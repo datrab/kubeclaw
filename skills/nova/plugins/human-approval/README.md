@@ -39,3 +39,11 @@ Terminal guidance must contain:
 
 Both registrations use only the canonical v2 signal, wait, and resume
 contracts. They contain no legacy transport or compatibility fallback.
+
+Architecture approval additionally requires `git.repository.read` and
+`artifacts.write` (namespace `kubeclaw.human-approval`). It rechecks the report's
+source subject at the initial request and resumed decision and stores a report-
+bound approval artifact. The wait's report digest binds the subject transitively;
+changed source or plan revisions invalidate that authority. Source-less report
+approval is retained as report-only evidence and cannot authorize Blueprint/Forge.
+The generic human-approval registration and blocking-finding policy are unchanged.

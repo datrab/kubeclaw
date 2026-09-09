@@ -1,4 +1,4 @@
-import { canonicalJson, sha256Text, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, sha256Text, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 import { execute as executeApproval } from './stage.ts';
 
 interface ArchitectureApprovalInput {
@@ -79,10 +79,10 @@ function findingSummary(value: unknown, maximum: number): string {
   return rendered.slice(0, maximum).trimEnd();
 }
 
-export async function execute(
+async function approvalReport(
   rawInput: unknown,
   context: PluginInvocationContext,
-): Promise<StageResult> {
+) {
   const input = parseInput(rawInput);
   const candidates = context.contract.artifacts.filter((artifact) =>
     artifact.artifactId === input.artifactId && artifact.namespace === input.namespace
@@ -104,16 +104,29 @@ export async function execute(
     || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) {
     throw new Error('ARCHITECTURE_APPROVAL_CONTENT_INVALID');
   }
-  const report = response.value as { verdict?: unknown } | null;
+  const report = response.value as { verdict?: unknown; subject?: unknown } | null;
   if (!report || report.verdict !== 'passed') throw new Error('ARCHITECTURE_APPROVAL_REPORT_NOT_PASSED');
+  return { input, artifact, report };
+}
+
+export async function execute(rawInput: unknown, context: PluginInvocationContext): Promise<StageResult> {
+  const { input, artifact, report } = await approvalReport(rawInput, context);
+  const subject = report.subject === undefined ? undefined : await verifyReviewSubject(report.subject, context);
   const approvalPrefix = `${input.summary} Evidence: ${artifact.digest}. Findings: `;
-  const findings = findingSummary(response.value, 10_000 - approvalPrefix.length);
-  if (!findings) {
-    return {
+  const findings = findingSummary(report, 10_000 - approvalPrefix.length);
+  const result = findings ? await executeApproval({ summary: `${approvalPrefix}${findings}` }, context) : {
       schemaVersion: 'stage-result.v2',
       outcome: 'passed',
       artifacts: [],
-    };
-  }
-  return executeApproval({ summary: `${approvalPrefix}${findings}` }, context);
+    } as StageResult;
+  if (result.outcome !== 'passed') return result;
+  if (subject) await verifyReviewSubject(subject, context);
+  const stored = await context.invoke('artifacts.write', {
+    operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'architecture-approval' },
+    payload: { namespace: 'kubeclaw.human-approval', mediaType: 'application/json', value: {
+      decision: 'approved', subject: subject ?? null, reportDigest: artifact.digest, reportStageId: artifact.producer.stageId,
+      guidance: context.contract.guidance ?? null, clean: !findings,
+    } },
+  });
+  return { ...result, artifacts: [stored.artifact as ArtifactRef] };
 }
