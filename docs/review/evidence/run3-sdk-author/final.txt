@@ -1,0 +1,67 @@
+Source: 3b7f609
+Command: node --test tests/verification/reliability/repair-identity-independent.test.mjs tests/verification/reliability/repair-identity-admin-independent.test.mjs tests/verification/reliability/repair-identity-locale.test.mjs tests/verification/reliability/repair-identity-historical-producer.test.mjs tests/verification/reliability/repair-budget.test.mjs tests/verification/reliability/repair-budget-recovery.test.mjs tests/verification/reliability/admin-repair.test.mjs
+Exit: 0
+✔ authorized ancestor repair reruns every original graph approval and sibling gate (2983.798165ms)
+✔ real Git, architecture artifact and operator wait are renewed after earlier approval (21862.008465ms)
+✔ real Git, architecture artifact and operator wait are renewed after rejection (11013.626807ms)
+✔ administrative journal and repair projection crash prefixes converge without stale gates (3744.1249ms)
+✔ administrative decision crash prefixes preserve exactly one category debit (12546.51405ms)
+✔ original completion and repair-intent crash prefixes debit each category order once (6171.514148ms)
+✔ restart before and after durable Nova signal projection schedules exactly one repair (4817.29545ms)
+✔ two orders per category survive all mandatory rechecks and original journal replay (11451.986655ms)
+✔ one Nova order is exact and module-wide; later repair=false (6078.772833ms)
+✔ one Nova order is exact and module-wide; later repair=true (3837.004794ms)
+✔ failed source after Nova order blocks with original evidence (1952.24608ms)
+✔ failed test after Nova order blocks with original evidence (1975.726664ms)
+✔ technical retry allowance remains separate; exhausted=false (1265.719631ms)
+✔ technical retry allowance remains separate; exhausted=true (631.159028ms)
+✔ administrative repair uses the same category ledger; exhausted=false (1410.071343ms)
+✔ administrative repair uses the same category ledger; exhausted=true (1750.593983ms)
+▶ independent administrative repair projection binds the original authorized decision
+  ✔ real original blocked run reopens and final disk replay equals live result (28.834753ms)
+  ✔ wrong stage (919.768005ms)
+  ✔ wrong run in decision (817.44575ms)
+  ✔ wrong declared target (647.052357ms)
+  ✔ wrong actual request target (674.353351ms)
+  ✔ wrong actual request source findings (531.837253ms)
+  ✔ duplicate administrative cause (589.435393ms)
+  ✔ duplicate administrative projection (710.091813ms)
+✔ independent administrative repair projection binds the original authorized decision (10453.887038ms)
+{"originalProducer":"a29a9df8cce605f393fa0bec413604a5ae426eeb","producer":{"locale":"en-US","state":"waiting","originalDigest":"sha256:057e40667e786c21b95a5e2112b54e62003fd2306ab854c62f87745c790f6213","sourceAttempts":3},"english":{"locale":"en-US","originalDigest":"sha256:057e40667e786c21b95a5e2112b54e62003fd2306ab854c62f87745c790f6213","recoveredDigest":"sha256:057e40667e786c21b95a5e2112b54e62003fd2306ab854c62f87745c790f6213","originalWaitDigest":"sha256:057e40667e786c21b95a5e2112b54e62003fd2306ab854c62f87745c790f6213","authorized":true},"swedish":{"locale":"sv-SE","originalDigest":"sha256:057e40667e786c21b95a5e2112b54e62003fd2306ab854c62f87745c790f6213","recoveredDigest":"sha256:4254bcf11f54ac72a5068d03328c4e7ffe0af2cefa311da089a85c87849a816d","originalWaitDigest":"sha256:057e40667e786c21b95a5e2112b54e62003fd2306ab854c62f87745c790f6213","authorized":false,"error":"REPAIR_AUTHORIZATION_INVALID"}}
+✔ archived original producer reproduces locale defect without historical Git objects (10142.352779ms)
+▶ independent original-producer recovery and semantically invalid repair projection matrix
+  ✔ old en-US producer is authorized unchanged by current sv-SE recovery (825.583553ms)
+  ✔ pending category (1190.84671ms)
+  ✔ pending source facts (864.110579ms)
+  ✔ pending history removal (1093.519807ms)
+  ✔ pending history order (1069.49715ms)
+  ✔ pending history attempt (959.359191ms)
+  ✔ pending finding details (730.574218ms)
+  ✔ pending requester identity (731.621728ms)
+  ✔ pending extra field (703.188131ms)
+  ✔ order source facts (530.744327ms)
+  ✔ order requester attempt (534.083099ms)
+  ✔ order digest mismatch (451.009438ms)
+  ✔ order nested finding details (568.534352ms)
+  ✔ projection wrong stage (409.347139ms)
+  ✔ projection wrong causation (377.140272ms)
+  ✔ duplicate pending projection (363.447545ms)
+  ✔ duplicate order projection (355.88426ms)
+  ✔ unknown original completion encoding (477.54251ms)
+  ✔ order projection cannot attach to a successful non-requester completion (248.70395ms)
+  ✔ legacy same-locale completion-only prefix 17 preserves existing decision (461.064177ms)
+  ✔ legacy same-locale completion-only prefix 36 preserves existing decision (501.758012ms)
+  ✔ legacy same-locale completion-only prefix 55 preserves existing decision (686.626392ms)
+✔ independent original-producer recovery and semantically invalid repair projection matrix (21156.55615ms)
+{"historical":false,"original":{"locale":"en-US","state":"waiting","originalDigest":"sha256:96bb6c9da8a25e71471c6f64d99238c39d755d34825a053cdcf72a35ae71990e","sourceAttempts":3},"resumed":{"locale":"sv-SE","status":"succeeded","sourceAttempts":4,"approvedOriginalDigest":"sha256:96bb6c9da8a25e71471c6f64d99238c39d755d34825a053cdcf72a35ae71990e","completeNativePipelineProof":false}}
+{"historical":true,"original":{"locale":"en-US","state":"waiting","originalDigest":"sha256:32e02ea8f8e55905152e166cb40d3b59314da99bbaa5d41767c6aa9f990e01d5","sourceAttempts":3},"resumed":{"locale":"sv-SE","status":"succeeded","sourceAttempts":4,"approvedOriginalDigest":"sha256:32e02ea8f8e55905152e166cb40d3b59314da99bbaa5d41767c6aa9f990e01d5","completeNativePipelineProof":false}}
+✔ original tagged repair authorizes and resumes across native locales (15695.75761ms)
+✔ original legacy repair authorizes and resumes across native locales (6846.325543ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40348.784789

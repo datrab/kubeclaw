@@ -8,8 +8,9 @@ import type {
 } from '@kubeclaw/plugin-sdk';
 import { applyStageResult, type StageRuntimeState } from './reducer.ts';
 import { decisionWait } from './wait-request.ts';
-import { budgetedRepairDecision } from './repair-budget.ts';
+import { budgetedRepairDecision, validateAdministrativeRepairProjection } from './repair-budget.ts';
 import { authorizedRepair } from './repair-authorization.ts';
+import { repairIdentityEncoding, type RepairIdentityContext } from './repair-projection.ts';
 
 type StateMap = Map<string, StageRuntimeState>;
 
@@ -44,8 +45,10 @@ function recoverAttemptResult(
   current: StageRuntimeState,
   orchestratorIssuerId: string,
   states: StateMap,
+  identity: RepairIdentityContext,
 ): StageRuntimeState | undefined {
   if (!['attempt.completed', 'attempt.cancelled', 'attempt.timed_out'].includes(event.type)) return undefined;
+  if (identity.projection && current.status !== 'running') throw new Error('REPAIR_PROJECTION_COMPLETION_STATE_INVALID');
   if (!event.payload.result || typeof event.payload.result !== 'object' || current.status !== 'running') return undefined;
   const stage = definition.stages.find(({ id }) => id === current.stageId);
   if (!stage) return undefined;
@@ -55,7 +58,7 @@ function recoverAttemptResult(
     attemptNumber: Math.max(0, current.attemptNumber - 1),
     attemptsUsed: Math.max(0, current.attemptsUsed - 1),
   }, result);
-  const decision = budgetedRepairDecision(definition.stages, states, stage, original, result, event.identity.runId);
+  const decision = budgetedRepairDecision(definition.stages, states, stage, original, result, event.identity.runId, identity);
   const wait = decisionWait(decision, event.identity.runId, orchestratorIssuerId);
   const state = wait ? { ...decision.state, wait } : decision.state;
   if (decision.action.type === 'schedule_remediation') {
@@ -141,12 +144,14 @@ export function applyRecoveryEvent(
   states: StateMap,
   event: LifecycleEvent,
   orchestratorIssuerId: string,
+  identity: RepairIdentityContext = { encoding: repairIdentityEncoding(event.payload.repairIdentityEncoding) },
 ): void {
   const stageId = event.identity.stageId;
   if (!stageId) return;
   const current = states.get(stageId);
   if (!current) return;
   if (event.type === 'stage.waiting' && event.payload.repairRequest) {
+    validateAdministrativeRepairProjection(definition.stages, states, current, event, identity);
     states.set(stageId, { ...current, ...budgets(event, current) });
     applyRepair(states, event.payload.repairRequest as unknown as RepairRequest); return;
   }
@@ -161,7 +166,7 @@ export function applyRecoveryEvent(
     states.set(stageId, resolvedWaitState(event, current));
     return;
   }
-  const recovered = recoverAttemptResult(definition, event, current, orchestratorIssuerId, states)
+  const recovered = recoverAttemptResult(definition, event, current, orchestratorIssuerId, states, identity)
     ?? stageEventState(event, current, states);
   if (recovered) {
     states.set(stageId, recovered);

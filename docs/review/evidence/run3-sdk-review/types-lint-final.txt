@@ -1,0 +1,14 @@
+Reviewed implementation: 3b7f609a8165bf35f2435530a870c020c1b496b2
+Review checkout source/test commit: 5600749
+Runtime: Node v24.19.0
+
+Command 1: node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+Exit: 0; no diagnostics.
+
+Command 2: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/core/execution/administrative-repair.ts skills/nova/core/execution/run-decisions.ts skills/nova/core/execution/stage-executor.ts skills/nova/core/lifecycle/recovery-state.ts skills/nova/core/lifecycle/recovery.ts skills/nova/core/lifecycle/repair-budget.ts skills/nova/core/lifecycle/repair-projection.ts tests/verification/reliability/repair-identity-historical.mjs tests/verification/reliability/repair-identity-historical-producer.test.mjs tests/verification/reliability/repair-identity-independent.test.mjs tests/verification/reliability/repair-identity-admin-independent.test.mjs tests/verification/reliability/repair-identity-locale.test.mjs tests/verification/reliability/repair-identity-resume.mjs
+Exit: 0; no diagnostics.
+
+Command 3: git diff --exit-code 3b7f609a8165bf35f2435530a870c020c1b496b2 HEAD -- skills/nova/core
+Exit: 0; no differences between author frozen core and independently tested core.
+
+Earlier e72fc85 source passed typecheck but failed canonical lint: budgetedRepairDecision complexity 17 > unchanged maximum 15. Author extracted actual extra-order predicate in 3b7f609; no rule suppression or threshold relaxation.

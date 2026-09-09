@@ -28,7 +28,8 @@ export class DecisionRecorder {
 
   record(runId: string, completed: CompletedStageDecision): void {
     const { definition, administrativeOverride } = completed;
-    const decision = { ...budgetedRepairDecision(this.#graph.stages(), this.#states, definition, completed.decision, completed.decision.result, runId), result: completed.decision.result };
+    const decision = { ...budgetedRepairDecision(this.#graph.stages(), this.#states, definition, completed.decision, completed.decision.result, runId,
+      { encoding: 'kubeclaw-json.utf16.v1' }), result: completed.decision.result };
     completed = { ...completed, decision };
     this.#states.set(definition.id, decision.state); this.#artifacts(runId, definition.id, decision.result);
     if (administrativeOverride && !['complete', 'stop'].includes(decision.action.type)) { this.#administrativeBlocked(runId, definition.id, decision.state); return; }

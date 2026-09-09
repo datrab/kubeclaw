@@ -1,0 +1,5 @@
+Source: 3b7f609
+Command: npx --no-install tsc --noEmit -p skills/nova/tsconfig.json && npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/core/lifecycle/repair-budget.ts skills/nova/core/lifecycle/repair-projection.ts skills/nova/core/lifecycle/recovery.ts skills/nova/core/lifecycle/recovery-state.ts skills/nova/core/execution/stage-executor.ts skills/nova/core/execution/run-decisions.ts skills/nova/core/execution/administrative-repair.ts tests/verification/reliability/repair-identity-locale.test.mjs tests/verification/reliability/repair-identity-resume.mjs tests/verification/reliability/repair-identity-historical.mjs tests/verification/reliability/repair-budget-fixture.mjs
+Exit: 0
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

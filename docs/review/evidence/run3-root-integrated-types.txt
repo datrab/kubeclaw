@@ -1,0 +1,6 @@
+Source/test integration: 0531c08c70a1c17c743760bf383a45305ca3bf32
+Runtime: Node v24.19.0
+Command: node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+Exit: 0; stdout/stderr empty.
+Command: node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+Exit: 0; stdout/stderr empty.

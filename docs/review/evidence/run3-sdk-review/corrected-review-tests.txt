@@ -1,0 +1,59 @@
+Reviewed source: e72fc85ca3d0ea702ddea9499536cadd69cc8b6b
+Command: node --test tests/verification/reliability/repair-identity-independent.test.mjs tests/verification/reliability/repair-identity-admin-independent.test.mjs tests/verification/reliability/repair-identity-historical-producer.test.mjs tests/verification/reliability/repair-budget.test.mjs tests/verification/reliability/repair-budget-recovery.test.mjs
+Runtime: Node v24.19.0
+✔ administrative decision crash prefixes preserve exactly one category debit (3974.122621ms)
+✔ original completion and repair-intent crash prefixes debit each category order once (7660.66021ms)
+✔ restart before and after durable Nova signal projection schedules exactly one repair (9332.897515ms)
+✔ two orders per category survive all mandatory rechecks and original journal replay (3448.57326ms)
+✔ one Nova order is exact and module-wide; later repair=false (6171.602784ms)
+✔ one Nova order is exact and module-wide; later repair=true (6938.365544ms)
+✔ failed source after Nova order blocks with original evidence (3653.135316ms)
+✔ failed test after Nova order blocks with original evidence (3849.489467ms)
+✔ technical retry allowance remains separate; exhausted=false (1381.021531ms)
+✔ technical retry allowance remains separate; exhausted=true (1183.019564ms)
+✔ administrative repair uses the same category ledger; exhausted=false (2647.467466ms)
+✔ administrative repair uses the same category ledger; exhausted=true (2384.305065ms)
+▶ independent administrative repair projection binds the original authorized decision
+  ✔ real original blocked run reopens and final disk replay equals live result (7.173863ms)
+  ✔ wrong stage (149.204149ms)
+  ✔ wrong run in decision (169.618862ms)
+  ✔ wrong declared target (159.49275ms)
+  ✔ wrong actual request target (156.599621ms)
+  ✔ wrong actual request source findings (159.310029ms)
+  ✔ duplicate administrative cause (158.621291ms)
+  ✔ duplicate administrative projection (170.370339ms)
+✔ independent administrative repair projection binds the original authorized decision (3028.561046ms)
+{"originalProducer":"a29a9df8cce605f393fa0bec413604a5ae426eeb","producer":{"locale":"en-US","state":"waiting","originalDigest":"sha256:9528ce6d12c995d522f489428e1a836fae2d4506e3590332df1061232603221d","sourceAttempts":3},"english":{"locale":"en-US","originalDigest":"sha256:9528ce6d12c995d522f489428e1a836fae2d4506e3590332df1061232603221d","recoveredDigest":"sha256:9528ce6d12c995d522f489428e1a836fae2d4506e3590332df1061232603221d","originalWaitDigest":"sha256:9528ce6d12c995d522f489428e1a836fae2d4506e3590332df1061232603221d","authorized":true},"swedish":{"locale":"sv-SE","originalDigest":"sha256:9528ce6d12c995d522f489428e1a836fae2d4506e3590332df1061232603221d","recoveredDigest":"sha256:eb7c8f1b43d164e4481f7cacedd818c29f6c5dffd0692fb1e8d5c9bb960546ac","originalWaitDigest":"sha256:9528ce6d12c995d522f489428e1a836fae2d4506e3590332df1061232603221d","authorized":false,"error":"REPAIR_AUTHORIZATION_INVALID"}}
+✔ archived original producer reproduces locale defect without historical Git objects (3289.336952ms)
+▶ independent original-producer recovery and semantically invalid repair projection matrix
+  ✔ old en-US producer is authorized unchanged by current sv-SE recovery (225.479194ms)
+  ✔ pending category (325.504351ms)
+  ✔ pending source facts (318.40604ms)
+  ✔ pending history removal (297.430003ms)
+  ✔ pending history order (285.488449ms)
+  ✔ pending history attempt (321.594832ms)
+  ✔ pending finding details (340.288014ms)
+  ✔ pending requester identity (394.570928ms)
+  ✔ pending extra field (829.316401ms)
+  ✔ order source facts (1000.475552ms)
+  ✔ order requester attempt (762.915829ms)
+  ✔ order digest mismatch (675.113306ms)
+  ✔ order nested finding details (592.236181ms)
+  ✔ projection wrong stage (493.010581ms)
+  ✔ projection wrong causation (707.771073ms)
+  ✔ duplicate pending projection (622.07283ms)
+  ✔ duplicate order projection (570.631783ms)
+  ✔ unknown original completion encoding (546.33833ms)
+  ✔ order projection cannot attach to a successful non-requester completion (372.75603ms)
+  ✔ legacy same-locale completion-only prefix 17 preserves existing decision (700.025845ms)
+  ✔ legacy same-locale completion-only prefix 36 preserves existing decision (1047.846094ms)
+  ✔ legacy same-locale completion-only prefix 55 preserves existing decision (1025.010317ms)
+✔ independent original-producer recovery and semantically invalid repair projection matrix (14807.542371ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32297.321933

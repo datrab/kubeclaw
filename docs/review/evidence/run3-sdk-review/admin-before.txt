@@ -1,0 +1,103 @@
+Reviewed source: 570f439281add4c42bfb85def7dee0398deae969
+Command: node --test tests/verification/reliability/repair-identity-admin-independent.test.mjs
+Runtime: Node v24.19.0
+▶ independent administrative repair projection binds the original authorized decision
+  ✔ real original blocked run reopens and final disk replay equals live result (5.300367ms)
+  ✔ wrong stage (113.179848ms)
+  ✔ wrong run in decision (115.243862ms)
+  ✔ wrong declared target (111.184052ms)
+  ✖ wrong actual request target (114.693822ms)
+  ✖ wrong actual request source findings (108.312195ms)
+  ✖ duplicate administrative cause (110.008819ms)
+  ✖ duplicate administrative projection (124.802107ms)
+✖ independent administrative repair projection binds the original authorized decision (2225.46961ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 4
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2629.715321
+
+✖ failing tests:
+
+test at tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59
+✖ wrong actual request target (114.693822ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:52:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at TestContext.test (node:internal/test_runner/test:394:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /^Error: REPAIR_/u,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59
+✖ wrong actual request source findings (108.312195ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:52:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at TestContext.test (node:internal/test_runner/test:394:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /^Error: REPAIR_/u,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59
+✖ duplicate administrative cause (110.008819ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:52:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at TestContext.test (node:internal/test_runner/test:394:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /^Error: REPAIR_/u,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59
+✖ duplicate administrative projection (124.802107ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:52:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at TestContext.test (node:internal/test_runner/test:394:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-admin-independent.test.mjs:48:59)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /^Error: REPAIR_/u,
+    operator: 'throws',
+    diff: 'simple'
+  }

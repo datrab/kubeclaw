@@ -1,0 +1,26 @@
+{
+  "reproducedOpenDefect": true,
+  "producer": {
+    "locale": "en-US",
+    "state": "waiting",
+    "originalDigest": "sha256:6d9e924ff7ca7891607fd6d665f0547a486c7e3d308fe1dd17e13065fc6cb2d8",
+    "sourceAttempts": 3
+  },
+  "english": {
+    "locale": "en-US",
+    "originalDigest": "sha256:6d9e924ff7ca7891607fd6d665f0547a486c7e3d308fe1dd17e13065fc6cb2d8",
+    "recoveredDigest": "sha256:6d9e924ff7ca7891607fd6d665f0547a486c7e3d308fe1dd17e13065fc6cb2d8",
+    "originalWaitDigest": "sha256:6d9e924ff7ca7891607fd6d665f0547a486c7e3d308fe1dd17e13065fc6cb2d8",
+    "authorized": true
+  },
+  "swedish": {
+    "locale": "sv-SE",
+    "originalDigest": "sha256:6d9e924ff7ca7891607fd6d665f0547a486c7e3d308fe1dd17e13065fc6cb2d8",
+    "recoveredDigest": "sha256:241711c4c40bd13c46e54c28d6cac26d9cebc589468338034794e2698159afd1",
+    "originalWaitDigest": "sha256:6d9e924ff7ca7891607fd6d665f0547a486c7e3d308fe1dd17e13065fc6cb2d8",
+    "authorized": false,
+    "error": "REPAIR_AUTHORIZATION_INVALID"
+  },
+  "journalUnchanged": true,
+  "completePipelineOrNativeProof": false
+}
