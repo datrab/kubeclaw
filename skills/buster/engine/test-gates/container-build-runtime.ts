@@ -77,10 +77,80 @@ function message(error: unknown): string {
   return String(error).slice(0, 4096);
 }
 
+function executionError(code: string, error: unknown): Error {
+  // Runner serialization retains error.message, so the cause alone is insufficient.
+  const diagnostic = error instanceof Error ? error.message : String(error);
+  return new Error(diagnostic === code || diagnostic.startsWith(`${code}:`)
+    ? diagnostic : `${code}:${diagnostic}`, { cause: error });
+}
+
+export function containerBuildExecutionError(error: unknown, phase: 'build' | 'verify'): Error {
+  const diagnostic = error instanceof Error ? error.message : String(error);
+  const code = phase === 'verify'
+    ? (/^CONTAINER_BUILD_[A-Z0-9_]+/u.exec(diagnostic)?.[0] ?? 'CONTAINER_BUILD_REGISTRY_ERROR')
+    : 'CONTAINER_BUILD_EXECUTION_ERROR';
+  return executionError(code, error);
+}
+
 function commandOutput(error: unknown, field: 'stdout' | 'stderr'): string {
   if (!error || typeof error !== 'object') return '';
   const value = (error as Record<string, unknown>)[field];
   return typeof value === 'string' ? value : Buffer.isBuffer(value) ? value.toString('utf8') : '';
+}
+
+export function createContainerBuildDeadline(started: number, maximumExecutionMs: number, caller: AbortSignal) {
+  const expiresAt = started + maximumExecutionMs;
+  const remainingMs = () => Math.max(0, expiresAt - Date.now());
+  const controller = new AbortController();
+  const expire = () => controller.abort(new Error('CONTAINER_BUILD_TIMEOUT'));
+  const timer = setTimeout(expire, remainingMs());
+  if (remainingMs() === 0) expire();
+  return { signal: AbortSignal.any([caller, controller.signal]), remainingMs,
+    dispose: () => clearTimeout(timer) };
+}
+
+export async function verifyContainerManifest(
+  options: Pick<ContainerBuildCapabilityInvokerOptions, 'registryUsername' | 'registryPassword' | 'maximumManifestBytes' | 'fetch'>,
+  baseUrl: URL, repository: string, digest: string, signal: AbortSignal,
+): Promise<void> {
+  const url = new URL(`/v2/${repository.split('/').map(encodeURIComponent).join('/')}/manifests/${digest}`, baseUrl);
+  const headers: Record<string, string> = { Accept: ACCEPT };
+  if (options.registryUsername !== undefined) {
+    headers.Authorization = `Basic ${Buffer.from(`${options.registryUsername}:${options.registryPassword}`).toString('base64')}`;
+  }
+  const response = await (options.fetch ?? globalThis.fetch)(url, { method: 'GET', headers, signal, redirect: 'error' });
+  if (!response.ok) {
+    await response.body?.cancel();
+    throw new Error(`CONTAINER_BUILD_REGISTRY_READ_FAILED:${response.status}`);
+  }
+  const declaredLength = Number(response.headers.get('content-length'));
+  if (Number.isFinite(declaredLength) && declaredLength > options.maximumManifestBytes) {
+    await response.body?.cancel();
+    throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE');
+  }
+  if (!response.body) throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_SIZE_INVALID');
+  const reader = response.body.getReader();
+  const hash = crypto.createHash('sha256');
+  let received = 0;
+  try {
+    for (;;) {
+      const part = await reader.read();
+      if (part.done) break;
+      received += part.value.byteLength;
+      if (received > options.maximumManifestBytes) {
+        await reader.cancel('CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE');
+        throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE');
+      }
+      hash.update(part.value);
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+  if (received < 1) throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_SIZE_INVALID');
+  const actual = `sha256:${hash.digest('hex')}`;
+  const header = response.headers.get('docker-content-digest');
+  if (actual !== digest || (header !== null && header !== digest)) throw new Error('CONTAINER_BUILD_REGISTRY_DIGEST_MISMATCH');
 }
 
 export class ContainerBuildCapabilityInvoker implements TestProviderCapabilityInvoker {
@@ -94,7 +164,6 @@ export class ContainerBuildCapabilityInvoker implements TestProviderCapabilityIn
   readonly #buildArguments: ReadonlySet<string>;
   readonly #options: ContainerBuildCapabilityInvokerOptions;
   readonly #execute: Execute;
-  readonly #fetch: typeof globalThis.fetch;
 
   constructor(options: ContainerBuildCapabilityInvokerOptions) {
     this.#root = fs.realpathSync(options.workspaceRoot);
@@ -126,42 +195,10 @@ export class ContainerBuildCapabilityInvoker implements TestProviderCapabilityIn
     }
     this.#options = options;
     this.#execute = options.execute ?? (async (command, args, settings) => execFileDefault(command, [...args], settings) as Promise<{ stdout?: string; stderr?: string }>);
-    this.#fetch = options.fetch ?? globalThis.fetch;
-  }
-
-  async #verify(repository: string, digest: string, signal: AbortSignal): Promise<void> {
-    const url = new URL(`/v2/${repository.split('/').map(encodeURIComponent).join('/')}/manifests/${digest}`, this.#baseUrl);
-    const headers: Record<string, string> = { Accept: ACCEPT };
-    if (this.#options.registryUsername !== undefined) {
-      headers.Authorization = `Basic ${Buffer.from(`${this.#options.registryUsername}:${this.#options.registryPassword}`).toString('base64')}`;
-    }
-    const response = await this.#fetch(url, { method: 'GET', headers, signal, redirect: 'error' });
-    if (!response.ok) throw new Error(`CONTAINER_BUILD_REGISTRY_READ_FAILED:${response.status}`);
-    const declaredLength = Number(response.headers.get('content-length'));
-    if (Number.isFinite(declaredLength) && declaredLength > this.#options.maximumManifestBytes) throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE');
-    if (!response.body) throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_SIZE_INVALID');
-    const reader = response.body.getReader();
-    const hash = crypto.createHash('sha256');
-    let received = 0;
-    try {
-      for (;;) {
-        const part = await reader.read();
-        if (part.done) break;
-        received += part.value.byteLength;
-        if (received > this.#options.maximumManifestBytes) {
-          await reader.cancel('CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE');
-          throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE');
-        }
-        hash.update(part.value);
-      }
-    } finally { reader.releaseLock(); }
-    if (received < 1) throw new Error('CONTAINER_BUILD_REGISTRY_MANIFEST_SIZE_INVALID');
-    const actual = `sha256:${hash.digest('hex')}`;
-    const header = response.headers.get('docker-content-digest');
-    if (actual !== digest || (header !== null && header !== digest)) throw new Error('CONTAINER_BUILD_REGISTRY_DIGEST_MISMATCH');
   }
 
   async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+    const started = Date.now();
     if (capability !== 'container.build' || request.operation !== 'build_push_verify'
       || request.resource.type !== 'container.build-definition' || !/^build:[a-z0-9._-]+:attempt:[a-z0-9._:-]+$/u.test(request.resource.canonicalId)) {
       throw new Error('CONTAINER_BUILD_CAPABILITY_REQUEST_INVALID');
@@ -205,25 +242,38 @@ export class ContainerBuildCapabilityInvoker implements TestProviderCapabilityIn
     for (const [name, value] of Object.entries(buildArgs).sort(([left], [right]) => left.localeCompare(right))) args.push('--opt', `build-arg:${name}=${value}`);
     args.push('--output', `type=image,name=${registryImage},push=true${this.#baseUrl.protocol === 'http:' ? ',registry.insecure=true' : ''}`,
       '--metadata-file', metadata);
-    const started = Date.now();
+    const deadline = createContainerBuildDeadline(started, maximumExecutionMs, signal);
+    let phase: 'build' | 'verify' = 'build';
     let stdout = ''; let stderr = '';
     try {
+      deadline.signal.throwIfAborted();
       const result = await this.#execute(this.#buildctl, args, { encoding: 'utf8', maxBuffer: maximumLogBytes,
-        timeout: maximumExecutionMs, signal, env: { PATH: path.dirname(this.#buildctl), BUILDKIT_HOST: this.#host,
+        timeout: deadline.remainingMs(), signal: deadline.signal, env: { PATH: path.dirname(this.#buildctl), BUILDKIT_HOST: this.#host,
           ...(this.#options.registryUsername === undefined ? {} : { DOCKER_CONFIG: dockerConfig }) } });
       stdout = result.stdout ?? ''; stderr = result.stderr ?? '';
+      phase = 'verify';
+      deadline.signal.throwIfAborted();
       const digest = digestFromMetadata(metadata);
-      await this.#verify(registryRepository, digest, signal);
+      await verifyContainerManifest(this.#options, this.#baseUrl, registryRepository, digest, deadline.signal);
+      deadline.signal.throwIfAborted();
       return Object.freeze({ ok: true, stdout, stderr, registryImage, digest,
         immutableImage: `${this.#registryReference}/${registryRepository}@${digest}`, durationMs: Date.now() - started,
         definitionIdentity: payload.definitionIdentity, platform: payload.platform });
     } catch (error) {
-      if (signal.aborted) throw new Error('CONTAINER_BUILD_CANCELLED', { cause: error });
+      if (signal.aborted) throw executionError('CONTAINER_BUILD_CANCELLED', error);
+      if (deadline.signal.aborted || deadline.remainingMs() <= 0) throw executionError('CONTAINER_BUILD_TIMEOUT', error);
+      const commandError = error as { code?: unknown; killed?: boolean; signal?: unknown };
+      // A completed nonzero BuildKit command retains its failed build result.
+      // Verification, launch, and resource-limit failures remain execution errors.
+      if (phase !== 'build' || !Number.isInteger(commandError?.code) || commandError.killed || commandError.signal) {
+        throw containerBuildExecutionError(error, phase);
+      }
       stdout ||= commandOutput(error, 'stdout'); stderr ||= commandOutput(error, 'stderr');
       const failureMessage = message(error);
       const classified = /^(CONTAINER_BUILD_[A-Z0-9_]+)/u.exec(failureMessage)?.[1] ?? 'CONTAINER_BUILD_FAILED';
       return Object.freeze({ ok: false, stdout, stderr, errorCode: classified, message: failureMessage, durationMs: Date.now() - started });
     } finally {
+      deadline.dispose();
       fs.rmSync(temporary, { recursive: true, force: true });
     }
   }

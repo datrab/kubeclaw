@@ -490,7 +490,7 @@ function invocationInputs(
     });
 }
 
-function validateAndMapOutputs(
+export function validateAndMapOutputs(
   entry: TestProviderRegistryEntry,
   result: ProviderResultV1,
   artifacts: ReadonlyMap<string, EvidenceRefV1>,
@@ -530,7 +530,7 @@ function validateAndMapOutputs(
     }
   }
   for (const declaration of entry.registration.outputs) {
-    if (declaration.required && !seen.has(declaration.name))
+    if (result.outcome === "passed" && declaration.required && !seen.has(declaration.name))
       throw new Error(`TEST_PROVIDER_OUTPUT_REQUIRED:${declaration.name}`);
   }
   return outputs;
