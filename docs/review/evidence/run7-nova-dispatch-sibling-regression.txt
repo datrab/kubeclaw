@@ -1,0 +1,69 @@
+Source: a393d914 reconciled with approved4f70.
+Command: node --test tests/verification/reliability/admission-retirement.test.mjs tests/verification/reliability/telemetry-retirement.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs tests/verification/reliability/buster-job-compaction.test.mts tests/verification/reliability/blob-read-boundary.test.mjs
+Exit: 0
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1634.662412ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1205.535406ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1247.808963ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1364.453217ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1618.07298ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1879.430284ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1035.348421ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2266.417386ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1151.973028ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (2362.781235ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1290.456284ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (1954.981421ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (1698.280298ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1439.995506ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (28.540609ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (126.446719ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (33.85462ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (54.638451ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (336.029517ms)
+▶ manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay
+  ✔ real metadata byte quota is released; record count and completed status remain (246.224768ms)
+  ✔ reopened original HTTP consumer returns same completion; full validation and conflicts survive (212.75923ms)
+  ✔ stale scope, unknown identity, movable branch and missing retained tag reject unchanged (271.310519ms)
+  ✔ missing or changed real result blocks compaction (81.222477ms)
+  ✔ accepted, running and uncertain execution remain ineligible (278.830169ms)
+  ▶ actual artifact bytes stay readable over HTTP; missing artifact prevents mutation
+    ✔ FIFO evidence rejects before read in original compactor and HTTP route (3027.420922ms)
+  ✔ actual artifact bytes stay readable over HTTP; missing artifact prevents mutation (3426.814272ms)
+  ✔ caller mutation after submission cannot alter the persisted intent or poison replay (121.429778ms)
+  ✔ concurrent identical operation has one writer; stale original CAS cannot restore archive (596.388502ms)
+  ✔ SIGKILL before mutation and after durable commit recover without double release (2739.431723ms)
+  ✔ manual CLI persists one receipt and idempotent retry returns zero additional bytes (7265.375835ms)
+✔ manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay (15915.773534ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1143.358503ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1299.919374ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1024.499882ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1020.618616ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1063.89232ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1008.968174ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1657.673028ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1006.163266ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.294012ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.598223ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.19327ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (426.519871ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2620.15301ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (336.797641ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (1012.047432ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (215.277169ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (74.623821ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1425.72776ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2605.315757ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1160.470632ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (2240.677777ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1603.041547ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 53
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22728.382884
