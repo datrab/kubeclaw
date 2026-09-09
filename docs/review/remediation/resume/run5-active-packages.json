@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "run_id": "20260909t225913",
-  "fresh_remote_base": "5a437c726646d75d5500c23504ee3a3540547c3f",
-  "last_source_integration": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
+  "run_id": "20260909t233622",
+  "fresh_remote_base": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
+  "last_source_integration": "4f70d8f13e282e01d014fe82557d37c90d52cb71",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "verified_count": 8,
@@ -45,6 +45,7 @@
       "fresh_b06_candidate_backup": "7f9055c58d85e09cdece2ee2cb112689832f1845",
       "final_b06_candidate_backup": "d9b9a42d1ae3f2e3f3ea8795f93b5e81c03edfdf",
       "final_b06_review_backup": "6ff6061e08e371c1b92107496447d03dd190c079",
+      "integration_commit": "4f70d8f13e282e01d014fe82557d37c90d52cb71",
       "status": "independently-approved-root-integrated-and-native-retested",
       "next_action": "Coupled source and native CRD/CEL/IFR18 gate are complete in this integration, preserving all Reader/Adapter changes. Root full native, Product21registered17distinct, Chart6 and Prismtypes passed. IFR18 verified; actual application login/Tailnet/recipient/human acceptance gates remain open. No workload deployment or full delivery claim."
     },
@@ -58,20 +59,24 @@
       "failing_review_backup": "cebd19aa95ad7c949143cd15a6f068929a5f5c46",
       "read_fence_review_backup": "776e966f01572bbaa4dc78af3ef537d7d96e1073",
       "causal_correction_incomplete_backup": "1acf137c72b89b1d70d9aaacdb295f527670be31",
-      "next_action": "Causal original quality-stage/effect/artifact binding now rejects independent cross-Core negative, but malformed selected requestedAt with honestly rehashed journal still passes: add owning canonical request/receipt validation and complete corruption/race matrix before independent approval. Preserve original errored/cancelled history without claiming provider success."
+      "canonical_correction_and_races_review_backup": "2c96f13d5b23dc8217f41e661ea725e16bef0509",
+      "next_action": "Canonical selected-request validation now rejects independently reproduced rehashed malformed date. Complete original evidence/record-limit/missing-or-corrupt-blob/race matrix and fresh-main review. Initial slice requires explicit original providerPlan.revision; unresolved derived sourceStageId is fail-closed, not inferred from caller revision. Preserve original errored/cancelled history without claiming provider success."
     },
     {
       "package": "sdk-openclaw-run-frozen-transport-profile",
       "status": "causal-counterexample-proven-versioned-design-approved-implementation-pending",
       "audit_backup": "a79809da359452eaba2a4305b83a0dd564154730",
-      "next_action": "Implement explicit canonical run-snapshot.v3 transport profile at genuine run creation; v1/v2 remain exact legacy. Propagate through original Core context and eleven dispatch producers before journaling, excluding control from model/network bytes. Validate real old resume and new en/sv transport with independent review. Confidential support remains explicit, not silently removed; no Gateway success or confidential exactly-once claim."
+      "rejected_payload_marker_wip": "1db8e915d36ddea354a87896d66542a33295e514",
+      "independent_collision_review": "482a97b49b19b48ce25d652f3b87ec505f08be12",
+      "next_action": "Move explicit run-v3 transport profile OUTSIDE open model payload into canonical closed CapabilityInvocation/EffectRequest. Preserve historically valid model field runtimeDispatchProfile verbatim; independent real network regression proves the rejected WIP collision. Thread original Core matching/identity/dependency ownership and all eleven producers; v1/v2 exact legacy, new-run-only v3 selection. Complete original resume/transport/CLI/profile/retirement gates and fresh-main independent review."
     },
     {
       "package": "worker-trust-native-envoy",
       "status": "original-native-prerequisite-obtained-author-test-passed-independent-review-pending",
       "source_candidate": "docs/review/remediation/candidates/worker-trust-native-unverified.patch",
       "native_candidate_backup": "fe88490266175c91c0eb624a1c3a63b5f7d42462",
-      "next_action": "Preserve exact official Envoy1.39.0 digest/version and full raw six-configuration/TLS/SDS test output in a remote package checkpoint; independently inspect and repeat before integrating configuration. Actual SPIRE gRPC attestation and delivered operator alarm remain open. No deployment."
+      "independent_pending_corrections_backup": "f3eb268f223090bb32d5bc3e89f9282b4008df5b",
+      "next_action": "Fix independently found accepted default-SA/expected-dedicated-SVID mismatch in owning Helm validation. Correct test expired certificate to a genuine previously valid past interval, not reversed dates. Reconcile new coupled charts at4f70 and rerun all native Envoy config/TLS/SDS/cert assertions and original charts independently. Actual SPIRE gRPC attestation and delivered operator alarm remain open. No deployment."
     }
   ],
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment."
