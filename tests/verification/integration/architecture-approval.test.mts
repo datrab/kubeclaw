@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import type { AdapterActivationContext, AdapterInvocation, ArtifactRef, PluginInvocationContext } from '@kubeclaw/plugin-sdk';
-import { activate } from '../../../../common/plugins/artifact-store/src/adapter.ts';
-import { execute } from '../src/architecture-approval.ts';
+import { activate } from '../../../skills/common/plugins/artifact-store/src/adapter.ts';
+import { execute } from '../../../skills/nova/plugins/human-approval/src/architecture-approval.ts';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'architecture-approval-'));
 const adapter = activate({ config: { artifactRoot: root } } as AdapterActivationContext);

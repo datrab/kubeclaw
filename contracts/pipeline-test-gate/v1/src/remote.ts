@@ -1,5 +1,7 @@
+import { remotePlanDigest } from './digest.ts';
+export { remotePlanDigest } from './digest.ts';
 import crypto from 'node:crypto';
-import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
+import { canonicalJson } from '@kubeclaw/pipeline-observability-contract/canonical-json';
 import type {
   AttemptResultV1,
   NodeResultV1,
@@ -10,9 +12,6 @@ import type {
   SourceSnapshotV1,
 } from './types.ts';
 
-export function remotePlanDigest(value: unknown): string {
-  return `sha256:${crypto.createHash('sha256').update(canonicalJson(value)).digest('hex')}`;
-}
 
 export function remotePlanJobId(idempotencyKey: string): string {
   return `job:${crypto.createHash('sha256').update(idempotencyKey).digest('hex')}`;

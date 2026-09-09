@@ -1,4 +1,4 @@
-import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
+import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 
 export interface GateBinding {

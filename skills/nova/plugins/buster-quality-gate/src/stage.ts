@@ -1,5 +1,5 @@
 import { resolveSourceRevision } from '@kubeclaw/plugin-sdk';
-import { parseGateDecision, gateDecisionEvidence, gateDecisionStageResult } from '@kubeclaw/pipeline-test-gate-contract';
+import { parseGateDecision, gateDecisionEvidence, gateDecisionStageResult } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import { buildRequest, parseVerdict, type GateInput } from './protocol.ts';
 

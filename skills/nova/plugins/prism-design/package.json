@@ -8,6 +8,6 @@
   },
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/live-function.test.ts && node tests/wait.test.ts && node tests/archive.test.ts"
+    "test": "node tests/live-function.test.ts && node ../../../../tests/verification/integration/prism-wait.test.mts && node ../../../../tests/verification/integration/prism-archive.test.mts"
   }
 }

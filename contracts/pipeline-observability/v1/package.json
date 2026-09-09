@@ -1,1 +1,24 @@
-{"name":"@kubeclaw/pipeline-observability-contract","version":"1.0.0","private":true,"type":"module","files":["schemas","src","fixtures","go"],"exports":{".":"./src/index.ts","./schema":"./schemas/pipeline-observability.v1.schema.json"},"scripts":{"typecheck":"tsc --noEmit -p tsconfig.json"},"dependencies":{"ajv":"^8.20.0","ajv-formats":"^3.0.1"}}
+{
+  "name": "@kubeclaw/pipeline-observability-contract",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "schemas",
+    "src",
+    "fixtures",
+    "go"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./schemas/pipeline-observability.v1.schema.json",
+    "./canonical-json": "./src/canonical-json.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

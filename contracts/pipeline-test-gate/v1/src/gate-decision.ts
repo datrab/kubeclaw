@@ -1,4 +1,4 @@
-import { remotePlanDigest } from './remote.ts';
+import { remotePlanDigest } from './digest.ts';
 
 export type GateDecisionState = 'passed' | 'failed' | 'execution_error' | 'review_required' | 'cancelled';
 export type GateNodeEffect = 'passed' | 'failed' | 'advisory_failure' | 'execution_error' | 'review_required' | 'skipped';

@@ -1,6 +1,6 @@
-import crypto from 'node:crypto';
+import { sha256Text } from '@kubeclaw/plugin-sdk';
 
-import { LINT_POLICY_SCHEMA_VERSION } from './policy.ts';
+import { LINT_POLICY_SCHEMA_VERSION } from './policy-version.ts';
 import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
 
 const LINT_REPORT_SCHEMA_VERSION = 'pipeline_lint_report.v7';
@@ -68,7 +68,7 @@ function validateEvidence(input: unknown, path: string): void {
       if (typeof value.content !== 'string') fail(`${path}[${index}].content`, 'required string');
       if (Buffer.byteLength(value.content) > 262_144) fail(`${path}[${index}].content`, 'inline evidence exceeds 256 KiB limit');
       if (Buffer.byteLength(value.content) !== value.bytes) fail(`${path}[${index}].content`, 'byte count mismatch');
-      if (crypto.createHash('sha256').update(value.content).digest('hex') !== value.sha256) fail(`${path}[${index}].content`, 'digest mismatch');
+      if (sha256Text(value.content) !== `sha256:${value.sha256}`) fail(`${path}[${index}].content`, 'digest mismatch');
     }
   });
 }

@@ -1,7 +1,7 @@
 import { validatePrism } from '@kubeclaw/prism-contracts-v1';
-import { createHash } from 'node:crypto';
+import { sha256Bytes, sha256Text } from '@kubeclaw/plugin-sdk';
 
-const digest = (bytes: string | Buffer) => `sha256:${createHash('sha256').update(bytes).digest('hex')}`;
+const digest = (bytes: string | Buffer) => typeof bytes === 'string' ? sha256Text(bytes) : sha256Bytes(bytes);
 const maximumBytes = 32 * 1024 * 1024;
 function object(value: unknown): Record<string, any> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('PRISM_ARCHIVE_OBJECT_INVALID');

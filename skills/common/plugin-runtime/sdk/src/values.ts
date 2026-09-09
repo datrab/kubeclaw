@@ -92,6 +92,10 @@ export function sha256Text(value: string): `sha256:${string}` {
   return `sha256:${createHash('sha256').update(value).digest('hex')}`;
 }
 
+export function sha256Bytes(value: Uint8Array): `sha256:${string}` {
+  return `sha256:${createHash('sha256').update(value).digest('hex')}`;
+}
+
 const DEFAULT_SENSITIVE_KEY = /(?:authorization|cookie|password|secret|token|api[_-]?key|credential)/i;
 
 function redact(value: unknown, depth: number): unknown {

@@ -8,7 +8,7 @@ import { validateBaseline, validateRuleAdmission } from './lint-governance.ts';
 import { loadKubernetesPolicyPacks } from './kubernetes-policy-pack.ts';
 import { LintPolicyError, fail, isoDate, record, repoRelative, stringList, text } from './policy-validation.ts';
 
-const LINT_POLICY_SCHEMA_VERSION = 'pipeline_lint_policy.v7';
+import { LINT_POLICY_SCHEMA_VERSION } from './policy-version.ts';
 const LANGUAGES = new Set(['javascript', 'typescript', 'python', 'shell', 'docker', 'helm', 'yaml', 'go', 'terraform']);
 const CATEGORIES = new Set(['format', 'lint', 'types', 'architecture', 'duplication', 'security', 'dependencies', 'manifests']);
 const SCOPES = new Set(['changed-files', 'affected-projects', 'project', 'repository']);

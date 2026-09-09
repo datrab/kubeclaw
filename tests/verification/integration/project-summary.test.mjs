@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
-import { activate } from '../../../../common/plugins/artifact-store/src/adapter.ts';
-import { buildSummary } from '../src/summary.ts';
+import { activate } from '../../../skills/common/plugins/artifact-store/src/adapter.ts';
+import { buildSummary } from '../../../skills/nova/plugins/project-summary/src/summary.ts';
 
 // Artifact-contract verification: these stored report fixtures do not execute providers or agents.
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-evidence-'));

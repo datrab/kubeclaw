@@ -4,8 +4,8 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { ContentAddressedArtifactStore } from '../../../../prism/storage/index.ts';
-import { verifyBaselineArchive } from '../src/archive.ts';
+import { ContentAddressedArtifactStore } from '../../../skills/prism/storage/index.ts';
+import { verifyBaselineArchive } from '../../../skills/nova/plugins/prism-design/src/archive.ts';
 
 // Archive transport/integrity contract; no design generation or render acceptance is claimed.
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-archive-'));
@@ -16,7 +16,7 @@ png.data.fill(255);
 const pngBytes = PNG.sync.write(png);
 async function archive(extra: Record<string, string> = {}) {
   const textFiles: Record<string, string> = {
-    'design-document.json': JSON.stringify({ ...JSON.parse(fs.readFileSync(new URL('../../../../../contracts/prism/v1/fixtures/minimal-web.json', import.meta.url), 'utf8')), meta: { ...JSON.parse(fs.readFileSync(new URL('../../../../../contracts/prism/v1/fixtures/minimal-web.json', import.meta.url), 'utf8')).meta, projectId: 'project' } }), 'design-specification.md': '# Approved design',
+    'design-document.json': JSON.stringify({ ...JSON.parse(fs.readFileSync(new URL('../../../contracts/prism/v1/fixtures/minimal-web.json', import.meta.url), 'utf8')), meta: { ...JSON.parse(fs.readFileSync(new URL('../../../contracts/prism/v1/fixtures/minimal-web.json', import.meta.url), 'utf8')).meta, projectId: 'project' } }), 'design-specification.md': '# Approved design',
     'acceptance-criteria.json': JSON.stringify({ schema: 'prism.acceptance-criteria.v1', criteria: [{ id: 'home-visible', category: 'visual', requirement: 'Home is visible.', targets: [{ view: 'home', state: 'default' }], priority: 'required', verification: ['visual'] }] }),
     'previews/home.aria.txt': 'Home',
     'previews/index.json': JSON.stringify({ schema: 'prism.preview-index.v1', previews: [{ id: 'home', view: 'home', state: 'default', viewport: 'wide', path: 'previews/home.png', width: 1, height: 1, digest: digest(pngBytes), fidelity: 'intent', ariaPath: 'previews/home.aria.txt', ariaDigest: digest('Home'), renderer: { name: 'contract-fixture' } }] }), ...extra,
