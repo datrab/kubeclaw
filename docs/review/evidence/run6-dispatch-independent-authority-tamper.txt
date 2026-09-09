@@ -1,0 +1,15 @@
+Independent source eaf5b29 on approved main b06c06d, local d5be3f5 plus additive test.
+Command: node --test --test-name-pattern='independent selected stage' tests/verification/reliability/nova-dispatch-projection.test.mjs
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (8887.024524ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10525.370035
+
+Exit 0. Five actual journal corruption cases (selected request stage/attempt/source/plan and completed adapter) each reject after honest chain recomputation, preserve exact dispatch bytes; restored genuine original journal permits projection. No fabricated positive Core history. Canonical ESLint on original test file exit 0. Overall source review remains incomplete.
+

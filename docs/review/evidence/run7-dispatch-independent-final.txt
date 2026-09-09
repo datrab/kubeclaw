@@ -1,0 +1,103 @@
+Independent final bounded Nova dispatch projection review
+Author source freeze: 4d449833700da583d662646a9d682a4007e18d4a
+Review source: 611b28c1ba99404b1b29cd851ce835f98cd36de3
+Fresh approved remote base: 4f70d8f13e282e01d014fe82557d37c90d52cb71, tree a92a55844d829d5cfd9d2ef397c54f937d035a80, independently verified against local3ea43f497d3c18445adf89a4346718185dc5b00a.
+Original local helper build:
+[fix/resume-47-run5-dispatch-review 950b5d1] test(storage): preserve independent factored projection 10/10 and original gates [skip ci]
+ 1 file changed, 50 insertions(+)
+ create mode 100644 docs/review/evidence/run6-dispatch-independent-factored.txt
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+
+Commands: node --test tests/verification/reliability/{nova-dispatch-projection.test.mjs,nova-dispatch-retained-authority.test.mjs,record-fenced-read-independent.test.mjs,telemetry-retirement.test.mjs,nova-store-boundaries.test.mts,blob-budget.test.mts}
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (737.882524ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (9619.286298ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (7934.193134ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (7224.335743ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7196.448094ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (6395.8505ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (7148.749351ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (3759.428332ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (6541.336107ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (7153.916208ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (7380.634856ms)
+✔ retained import verifies every evidence, output and report blob with actual missing/corrupt files (635.202527ms)
+✔ retained import rejects pending, null-result, incomplete decision and result identity despite valid record CAS (210.738023ms)
+✔ bounded original record fenced read refuses oversized snapshot before callback and releases fence (67.993658ms)
+✔ genuine original decision calculation retains review_required as incomplete authority (104.996069ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (4.22925ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (495.0184ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (488.589908ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (740.559206ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (695.862712ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (292.274933ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (79.900836ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (2105.213683ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (3727.336556ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1622.982678ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (2960.324591ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (2163.875189ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72680.811269
+
+Commands: npm run verify:test-gate:remote-import && npm run verify:test-gate:remote-runtime && node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs [all eight affected production files and three added test files]
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-import
+> node tests/verification/contracts/check-pipeline-remote-result-import.mts && node tests/verification/contracts/check-junit-executed-required.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"ok":true,"phase":"7-D","decisions":7,"evidence":"verified-before-import"}
+PASS actual Node JUnit files -> original parser/finalizer; HTTP import and durable decision reconstruction; no native runner claim
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-runtime
+> node tests/verification/contracts/check-pipeline-remote-plan-runtime.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":6}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":3}
+{"ok":true,"regression":"nova-remote-deadlines","lostSubmit":"cancelled","unavailableRemote":"durable-unknown","stalledBodies":["result","evidence"],"restart":"reconnected"}
+{"ok":true,"phase":"7-C","transport":"authenticated-http"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+All commands exit 0; 27/27 tests, zero skips. Native provider sandbox execution remains unavailable (actual EPIPE/exit70 errors). Tests retain original non-null errored results and exact original imported execution_error decision; not provider success. No native gate reclassification.
+Exact source and test SHA256:
+96c2616a01b2169c4c6d16503013c74640700455d53dde0ed689f3b7eabc6fc4 scripts/retire-nova-dispatch.mjs
+a5389adb5680fc0c9b8c0d26190cf46a5bd2ca97c7e26352d25c59faab1975d2 scripts/observability-retirement/dispatch.mjs
+6a66292deda2e556b7d6c4792d5dd88fc494a2c67081bb5e23c2900d01bc4a4f skills/common/plugin-runtime/foundation/observability/durable-records.ts
+0dcce75d3c75064638270d1405c287f58e51d27d82930b6ebb661d2edccaa8fd skills/nova/core/test-gates/dispatch-projection.ts
+634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069 skills/nova/core/test-gates/remote-dispatch-store.ts
+18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5 skills/nova/core/test-gates/remote-dispatch.ts
+f32cda2218fb9fef4d3405bd3aef99b2f4c497750d9f7c5ff23bb2e36b799835 skills/nova/core/test-gates/remote-result-authority.ts
+ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81 skills/nova/core/test-gates/remote-result-import.ts
+566572be0836e40373c24e25aedd106ee35b2e0acf8185844819c2bb1fd14761 tests/verification/reliability/nova-dispatch-projection.test.mjs
+61e593387a562459e57649b63a85aefaae82284f1e609b7e7474e9ce001e4c64 tests/verification/reliability/nova-dispatch-retained-authority.test.mjs
+354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea tests/verification/reliability/record-fenced-read-independent.test.mjs
+
