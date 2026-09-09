@@ -56,3 +56,44 @@ test('original chart mounts opt-in audience token only into actual Nova runtime 
   assert.equal(pod.containers.find((c:any)=>c.name==='kubeclaw').env.find((e:any)=>e.name==='KUBECLAW_DEMO_READY_TOKEN_PATH').value,'/var/run/kubeclaw/demo-ready/token');
   assert.equal(docs.filter(d=>['Role','ClusterRole'].includes(d.kind)).some(d=>d.rules.some((r:any)=>r.resources?.includes('tokenreviews'))),false);
 });
+
+test('product decisions are disabled by default and require separate explicit human authority',()=>{
+  assert.equal(JSON.stringify(render(server)).includes('BUSTER_PRODUCT_ENABLED'),false);
+  const values={...server,'busterNamespaceBroker.controller.productDecisions.enabled':true,
+    'busterNamespaceBroker.controller.productDecisions.audience':'product-contract-audience',
+    'busterNamespaceBroker.controller.productDecisions.producerNamespace':'prism-contract',
+    'busterNamespaceBroker.controller.productDecisions.producerServiceAccount':'prism-control',
+    'busterNamespaceBroker.controller.productDecisions.issuer':'human-contract-issuer',
+    'busterNamespaceBroker.controller.productDecisions.verifyKey':Buffer.alloc(32,1).toString('base64'),
+    'busterNamespaceBroker.controller.productDecisions.allowedActors[0]':'human-contract-actor'};
+  const docs=render(values);
+  const controller=docs.find(d=>d.kind==='Deployment'&&d.metadata.name.endsWith('-namespace-controller'));
+  const env=Object.fromEntries(controller.spec.template.spec.containers[0].env.map((entry:any)=>[entry.name,entry.value]));
+  assert.equal(env.BUSTER_PRODUCT_PRODUCER,'system:serviceaccount:prism-contract:prism-control');
+  assert.equal(env.BUSTER_PRODUCT_ISSUER,'human-contract-issuer');
+  assert.deepEqual(JSON.parse(env.BUSTER_PRODUCT_ACTORS_JSON),['human-contract-actor']);
+  const policy=docs.find(d=>d.kind==='NetworkPolicy'&&d.metadata.name.endsWith('-demo-ready'));
+  const peer=policy.spec.ingress[0].from.find((p:any)=>p.namespaceSelector.matchLabels['kubernetes.io/metadata.name']==='prism-contract');
+  const prismDocs=YAML.parseAllDocuments(execFileSync(helm,['template','prism-contract','charts/prism','--namespace','prism-contract','--set','postgresql.existingSecret=contract-db-secret',...['ingestion','control','studio','worker'].flatMap(name=>['--set',`images.${name}.digest=sha256:${'a'.repeat(64)}`])],{encoding:'utf8',maxBuffer:8*1024*1024})).map(d=>d.toJSON()).filter(Boolean);
+  const prismControl=prismDocs.find(d=>d.kind==='Deployment'&&d.spec.template.metadata.labels.app==='prism-control');
+  for(const [key,value] of Object.entries(peer.podSelector.matchLabels))assert.equal(prismControl.spec.template.metadata.labels[key],value);
+  const crd=docs.find(d=>d.kind==='CustomResourceDefinition'&&d.metadata.name.startsWith('busternamespaceleases.'));
+  const schema=crd.spec.versions[0].schema.openAPIV3Schema;
+  assert.ok(schema['x-kubernetes-validations'].some((r:any)=>r.rule.includes('has(self.status.demoProduct)')));
+  const history=schema.properties.status.properties.demoProduct.properties.decisions;
+  assert.deepEqual(history['x-kubernetes-list-map-keys'],['decisionId']);
+  assert.equal(history.maxItems,128);
+  assert.ok(history['x-kubernetes-validations'].some((r:any)=>r.rule==='oldSelf.all(old, self.exists(entry, entry.decisionId == old.decisionId))'));
+  assert.deepEqual(history.items['x-kubernetes-validations'].map((r:any)=>r.rule),['self == oldSelf']);
+  assert.equal(history.items.properties.decisionId.maxLength,36);
+  function checkReceiptStringBounds(node:any) {
+    if(node.type==='string') {
+      assert.ok(Number.isInteger(node.maxLength));
+      for(const value of node.enum??[])assert.ok(value.length<=node.maxLength);
+    }
+    for(const child of Object.values(node.properties??{}))checkReceiptStringBounds(child);
+  }
+  checkReceiptStringBounds(history.items);
+  assert.throws(()=>render({...values,'busterNamespaceBroker.controller.readiness.enabled':false}),/TLS listener/);
+  assert.throws(()=>render({...values,'busterNamespaceBroker.controller.productDecisions.issuer':''}),/issuer/);
+});

@@ -73,7 +73,9 @@ func demoReadyDeadline(item *lease) (time.Time, bool) {
 func readyStateEqual(left, right *lease) bool {
 	a, _ := json.Marshal(left.Status["demoReadiness"])
 	b, _ := json.Marshal(right.Status["demoReadiness"])
-	return string(a) == string(b)
+	pa, _ := json.Marshal(left.Status["demoProduct"])
+	pb, _ := json.Marshal(right.Status["demoProduct"])
+	return string(a) == string(b) && string(pa) == string(pb)
 }
 
 // Every API-backed mutation uses authoritative identity and resource-version CAS.
