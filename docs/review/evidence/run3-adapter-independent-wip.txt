@@ -1,0 +1,22 @@
+Reviewed WIPc39d76dff34833fe855589e4ee3a0ab3f5cfa65e (reviewer07bffa0) before required shared-contract correction. These actual dependency results do NOT approve the shadow manual request validator or integration.
+Command: node --test tests/verification/reliability/adapter-dependency-independent.test.mjs
+Exit0
+✔ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (7782.578483ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+ℹ unknown original request version: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (3061.40704ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (2186.18163ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (2172.859477ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (1744.712354ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17071.676786

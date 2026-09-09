@@ -1,0 +1,3 @@
+Source: fca25ae66dc360560b44f40f2f4444e259a4d301; reviewer b0c5a94, Node24.19.0.
+Command: node scripts/generate-plugin-sdk-types.mjs --check && ./node_modules/.bin/tsc --noEmit -p skills/nova/tsconfig.json && ./node_modules/.bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && ./node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/core/effects/contracts.ts skills/nova/core/effects/dependency-identity.ts skills/nova/core/effects/dependency-journal.ts skills/nova/core/effects/durable-invocation.ts skills/nova/core/effects/journal.ts skills/nova/core/execution/adapter-invocation-phase.ts skills/nova/core/execution/adapter-startup.ts
+No stdout/stderr. Exit0; && ensures each preceding check completed successfully.

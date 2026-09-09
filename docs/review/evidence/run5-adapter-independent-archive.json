@@ -1,0 +1,24 @@
+{
+  "remoteHead": "4627f01fe532d3dd890b7c8f93df40ae59547071",
+  "base": "143b0cf9d73572f61687f85c6c3c886bad8e7278",
+  "remoteBlobCount": 3354,
+  "exactBlobModeTypeMatches": 3354,
+  "frozenFindingCount": 47,
+  "scopeSetExact": true,
+  "archive": [
+    {
+      "actual": "feab5c6fed20926a18c981b475a234f8656818a3",
+      "declared": "feab5c6fed20926a18c981b475a234f8656818a3",
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "freshRemoteBlob": "feab5c6fed20926a18c981b475a234f8656818a3",
+      "exact": true
+    },
+    {
+      "actual": "752b9246a6331fe2b31d5cc00a859a15aa0ce910",
+      "declared": "752b9246a6331fe2b31d5cc00a859a15aa0ce910",
+      "path": "skills/nova/core/execution/adapter-support.ts",
+      "freshRemoteBlob": "752b9246a6331fe2b31d5cc00a859a15aa0ce910",
+      "exact": true
+    }
+  ]
+}

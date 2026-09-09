@@ -1,0 +1,7 @@
+Source: fca25ae66dc360560b44f40f2f4444e259a4d301; reviewer b0c5a94, Node24.19.0.
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs .
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:1868b53d69b066c2e18a94a522b93b59a31c836281498418954682ef65e2856c:sha256:ac034fa45d719df591f00b57c7a03264ff8e5bfbb5e2f2515620a8296cd837df\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:1868b53d69b066c2e18a94a522b93b59a31c836281498418954682ef65e2856c"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+Exit0.

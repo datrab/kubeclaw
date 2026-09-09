@@ -1,0 +1,19 @@
+Source53640e08b6214909aa495fec48036048a4bd4c2c; default-form test registration c9d957f4079a2903c0c6efecf98589882caad1f4. Command: node --test tests/verification/reliability/adapter-dependency-boundary.test.mjs
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (4204.699402ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (3626.067144ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7928.666354

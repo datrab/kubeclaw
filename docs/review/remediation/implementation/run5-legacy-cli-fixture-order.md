@@ -24,8 +24,3 @@ missing worker-secret boundary blocks implementation as expected. The archived
 unfixed CLI still rejects graph mismatch. Current CLI recognizes the original
 terminal run without mutating its persisted files. This is source/recovery
 compatibility evidence, not provider execution or full PCR-SDK-001 completion.
-
-Root independently inspected the one-line hook relocation and reran the complete
-corrected probe on integrated source (before the new Adapter package), exit 0.
-All original assertions remain; the later legacy-authoring import still executes.
-Raw root output: `docs/review/evidence/run5-root-historical-cli.txt`.

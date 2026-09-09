@@ -1,0 +1,5 @@
+Product source: author53640e08b6214909aa495fec48036048a4bd4c2c; own independent reviewer checkout at9d992fd, base143b0cf exactremote4627. Node24.19.0. Exit0.
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:f1aed45674837a28ca967cd46fe950104edf92c283e1cce4479502cf249db0fe:sha256:16d375cf63e01e2d50adfded438ad9cab14f431d46bd9c794f5a43786dfaf6e9\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:f1aed45674837a28ca967cd46fe950104edf92c283e1cce4479502cf249db0fe"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}

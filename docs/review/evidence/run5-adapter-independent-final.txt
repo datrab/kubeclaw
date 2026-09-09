@@ -1,0 +1,59 @@
+Product source: author53640e08b6214909aa495fec48036048a4bd4c2c; own independent reviewer checkout at9d992fd, base143b0cf exactremote4627. Node24.19.0. Exit0.
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (12541.826145ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (12842.596013ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (38.671095ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.428275ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (10.321992ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (3.807063ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (3623.394527ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (4497.799328ms)
+✔ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (11203.443028ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+ℹ child request before parent accepted: rejected before another HTTP request
+ℹ unknown original request version: rejected before another HTTP request
+ℹ valid foreign attempt hidden behind known legacy owner key: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (3805.769311ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (2747.207169ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (2318.98826ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (2897.76914ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:7a0e08081b0fb13eccdd7fa2751f23030af085d2aac303ff5a0a6e3ac18249ed"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (2659.730023ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:b8379ad485fbe96ea08a1885703fd363a59943431879461d17f5769b5a9e5ed3:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (2649.676586ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:a7d676590ce105ecc3603cbc7a3a561490a752fe50eebfbd5a8dd4a4daa97a09:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:1e7ec11ff3a75692f336e94e0df920b75b2e96272617250865ddaa9a02c48a1d:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2750.938669ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (700.023166ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1471.975779ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (800.286414ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (36.981888ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25565.110828
