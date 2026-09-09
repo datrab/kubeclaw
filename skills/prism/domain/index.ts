@@ -1,5 +1,7 @@
 import { validatePrism, type PrismDocument, type PrismNode } from "@kubeclaw/prism-contracts-v1";
 
+import { duplicateSubtree } from "./duplicate.ts";
+
 export type Viewport = "compact" | "regular" | "wide";
 export type PrismOperation =
   | { type: "node.insert"; baseRevision: number; parentId: string; index: number; node: PrismNode }
@@ -39,6 +41,29 @@ function ensureUnique(document: PrismDocument): void {
   }
 }
 
+function containsNode(root: PrismNode, id: string): boolean {
+  return root.id === id || Boolean(root.children?.some((child) => containsNode(child, id)));
+}
+
+function moveNode(document: PrismDocument, node: PrismNode, parent: PrismNode, operation: Extract<PrismOperation, { type: "node.move" }>): void {
+  const target = findNode(document, operation.parentId);
+  if (containsNode(node, target.id)) throw new Error("node cannot move into itself or its descendant");
+  const targetLength = (target.children?.length ?? 0) - (target === parent ? 1 : 0);
+  if (operation.index > targetLength) throw new Error("move index out of range");
+  const sourceIndex = parent.children!.findIndex((child) => child.id === node.id);
+  parent.children!.splice(sourceIndex, 1);
+  target.children ??= [];
+  target.children.splice(operation.index, 0, node);
+  ensureUnique(document);
+}
+
+function setResponsiveProps(document: PrismDocument, operation: Extract<PrismOperation, { type: "responsive.props.set" }>): void {
+  const view = Object.values(document.views).find((candidate) => containsNode(candidate.root, operation.nodeId));
+  if (!view) throw new Error(`missing node: ${operation.nodeId}`);
+  const patches = view.responsive[operation.viewport]!.patches;
+  patches[operation.nodeId] = { ...(patches[operation.nodeId] ?? {}), ...operation.props };
+}
+
 function applyMutable(document: PrismDocument, operation: PrismOperation): void {
   if (operation.type === "operation.batch") {
     for (const child of operation.operations) {
@@ -48,12 +73,7 @@ function applyMutable(document: PrismDocument, operation: PrismOperation): void 
     return;
   }
   if (operation.type === "responsive.props.set") {
-    const view = Object.values(document.views).find((candidate) => {
-      const visit = (node: PrismNode): boolean => node.id === operation.nodeId || Boolean(node.children?.some(visit));
-      return visit(candidate.root);
-    });
-    if (!view) throw new Error(`missing node: ${operation.nodeId}`);
-    view.responsive[operation.viewport]!.patches[operation.nodeId] = { ...(view.responsive[operation.viewport]!.patches[operation.nodeId] ?? {}), ...operation.props };
+    setResponsiveProps(document, operation);
     return;
   }
   if (operation.type === "node.props.set") {
@@ -75,14 +95,10 @@ function applyMutable(document: PrismDocument, operation: PrismOperation): void 
   const sourceIndex = parent.children.findIndex((child) => child.id === operation.nodeId);
   if (operation.type === "node.remove") { parent.children.splice(sourceIndex, 1); return; }
   if (operation.type === "node.duplicate") {
-    const copy = clone(node); copy.id = operation.newNodeId;
+    const copy = duplicateSubtree(document, node, operation.newNodeId);
     parent.children.splice(sourceIndex + 1, 0, copy); ensureUnique(document); return;
   }
-  const target = findNode(document, operation.parentId);
-  if (operation.nodeId === operation.parentId) throw new Error("node cannot contain itself");
-  parent.children.splice(sourceIndex, 1); target.children ??= [];
-  if (operation.index > target.children.length) throw new Error("move index out of range");
-  target.children.splice(operation.index, 0, node); ensureUnique(document);
+  moveNode(document, node, parent, operation);
 }
 
 export function applyOperation(source: PrismDocument, input: PrismOperation): PrismDocument {
@@ -100,8 +116,14 @@ export function resolveView(document: PrismDocument, viewId: string, state = "de
   const view = document.views[viewId];
   if (!view) throw new Error(`missing view: ${viewId}`);
   const root = clone(view.root);
-  const patches = { ...(view.states[state]?.patches ?? {}), ...(view.responsive[viewport]?.patches ?? {}) };
-  const visit = (node: PrismNode): void => { if (patches[node.id]) node.props = { ...(node.props ?? {}), ...patches[node.id] }; node.children?.forEach(visit); };
+  const statePatches = view.states[state]?.patches ?? {};
+  const viewportPatches = view.responsive[viewport]?.patches ?? {};
+  const visit = (node: PrismNode): void => {
+    if (statePatches[node.id] || viewportPatches[node.id]) {
+      node.props = { ...(node.props ?? {}), ...statePatches[node.id], ...viewportPatches[node.id] };
+    }
+    node.children?.forEach(visit);
+  };
   visit(root);
   return root;
 }
