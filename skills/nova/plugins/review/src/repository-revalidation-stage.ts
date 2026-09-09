@@ -5,6 +5,7 @@ import { compileRepositoryAudit } from './repository-audit-stage.ts';
 import { parseRepositoryReviewInput } from './repository-review-profile.ts';
 import { freezeReviewRevision } from './review-repository.ts';
 import { compareCodeUnits } from './review-ordering.ts';
+import { ReviewPhaseAdmission, ReviewPhaseAdmissionError } from './review-phase-admission.ts';
 import { ReviewDispatchBudget } from './review-prompt-budget.ts';
 import { assertReviewRuntimeIdentity, parseReviewRuntimeAttestation,
   type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
@@ -17,6 +18,11 @@ const REPORT_NAMESPACE = 'kubeclaw.review';
 const MAX_BASELINE_BYTES = 128 * 1024 * 1024;
 const MAX_BASELINE_RELATIONS = 100_000;
 type JsonObject = Readonly<Record<string, unknown>>;
+export class RepositoryRevalidationIntegrityError extends Error {}
+function integrity<T>(check: () => T): T {
+  try { return check(); }
+  catch (error) { throw new RepositoryRevalidationIntegrityError(error instanceof Error ? error.message : String(error)); }
+}
 
 interface BaselineReference {
   readonly artifactId: string;
@@ -30,18 +36,18 @@ interface BaselineFinding {
 }
 
 function record(value: unknown, label: string): JsonObject {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} is invalid`);
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new RepositoryRevalidationIntegrityError(`${label} is invalid`);
   return value as JsonObject;
 }
 function text(value: unknown, label: string, maximum = 1024): string {
   if (typeof value !== 'string' || value !== value.trim() || value.length < 1 || value.length > maximum) {
-    throw new Error(`${label} is invalid`);
+    throw new RepositoryRevalidationIntegrityError(`${label} is invalid`);
   }
   return value;
 }
 function digest(value: unknown, label: string): `sha256:${string}` {
   const parsed = text(value, label, 71);
-  if (!/^sha256:[0-9a-f]{64}$/u.test(parsed)) throw new Error(`${label} is invalid`);
+  if (!/^sha256:[0-9a-f]{64}$/u.test(parsed)) throw new RepositoryRevalidationIntegrityError(`${label} is invalid`);
   return parsed as `sha256:${string}`;
 }
 function baselineReference(value: unknown): BaselineReference {
@@ -49,12 +55,12 @@ function baselineReference(value: unknown): BaselineReference {
   const fields = ['artifactId', 'digest', 'sizeBytes', 'namespace', 'mediaType'];
   if (Object.keys(source).some((field) => !fields.includes(field))
     || source.namespace !== REPORT_NAMESPACE || source.mediaType !== 'application/json') {
-    throw new Error('baselineReport is invalid');
+    throw new RepositoryRevalidationIntegrityError('baselineReport is invalid');
   }
   const artifactId = text(source.artifactId, 'baselineReport.artifactId', 512);
-  if (!artifactId.startsWith('repository-review:')) throw new Error('baselineReport.artifactId is invalid');
+  if (!artifactId.startsWith('repository-review:')) throw new RepositoryRevalidationIntegrityError('baselineReport.artifactId is invalid');
   if (!Number.isSafeInteger(source.sizeBytes) || Number(source.sizeBytes) < 1
-    || Number(source.sizeBytes) > MAX_BASELINE_BYTES) throw new Error('baselineReport.sizeBytes is invalid');
+    || Number(source.sizeBytes) > MAX_BASELINE_BYTES) throw new RepositoryRevalidationIntegrityError('baselineReport.sizeBytes is invalid');
   return Object.freeze({ artifactId, digest: digest(source.digest, 'baselineReport.digest'),
     sizeBytes: Number(source.sizeBytes) });
 }
@@ -62,7 +68,7 @@ function input(value: unknown): { readonly baseline: BaselineReference;
   readonly profile: ReturnType<typeof parseRepositoryReviewInput> } {
   const source = record(value, 'repository revalidation input');
   const allowed = ['baselineReport', 'grade', 'scope', 'overrides'];
-  if (Object.keys(source).some((field) => !allowed.includes(field))) throw new Error('repository revalidation input has unknown fields');
+  if (Object.keys(source).some((field) => !allowed.includes(field))) throw new RepositoryRevalidationIntegrityError('repository revalidation input has unknown fields');
   return Object.freeze({ baseline: baselineReference(source.baselineReport),
     profile: parseRepositoryReviewInput({ grade: source.grade, scope: source.scope,
       overrides: source.overrides, mode: 'execute' }) });
@@ -70,16 +76,16 @@ function input(value: unknown): { readonly baseline: BaselineReference;
 function baselineFindings(value: unknown): { readonly head: string; readonly findings: readonly BaselineFinding[];
   readonly relatedPaths: ReadonlyMap<string, readonly string[]> } {
   const report = record(value, 'baseline repository report');
-  if (report.schemaVersion !== 'repository-review-report.v1') throw new Error('baseline repository report version is invalid');
+  if (report.schemaVersion !== 'repository-review-report.v1') throw new RepositoryRevalidationIntegrityError('baseline repository report version is invalid');
   const reduction = record(report.reduction, 'baseline repository report reduction');
   if (!Array.isArray(reduction.confirmed) || reduction.confirmed.length > 2048) {
-    throw new Error('baseline repository report findings are invalid');
+    throw new RepositoryRevalidationIntegrityError('baseline repository report findings are invalid');
   }
   const findings = reduction.confirmed.map((raw, index) => {
     const item = record(raw, `baseline finding ${index}`), finding = record(item.finding, `baseline finding ${index}.finding`);
     if (!Array.isArray(finding.locations) || finding.locations.length < 1 || finding.locations.length > 64
       || !['P0', 'P1', 'P2', 'P3'].includes(String(finding.priority))) {
-      throw new Error(`baseline finding ${index} is invalid`);
+      throw new RepositoryRevalidationIntegrityError(`baseline finding ${index} is invalid`);
     }
     for (const [locationIndex, rawLocation] of finding.locations.entries()) {
       const location = record(rawLocation, `baseline finding ${index}.location ${locationIndex}`);
@@ -90,9 +96,9 @@ function baselineFindings(value: unknown): { readonly head: string; readonly fin
   });
   const map = record(report.map, 'baseline repository report map');
   const relationsText = typeof map.relationsJsonl === 'string' ? map.relationsJsonl : '';
-  if (Buffer.byteLength(relationsText, 'utf8') > MAX_BASELINE_BYTES) throw new Error('baseline relation map is too large');
+  if (Buffer.byteLength(relationsText, 'utf8') > MAX_BASELINE_BYTES) throw new RepositoryRevalidationIntegrityError('baseline relation map is too large');
   const relationLines = relationsText.split('\n').filter(Boolean);
-  if (relationLines.length > MAX_BASELINE_RELATIONS) throw new Error('baseline relation count is too large');
+  if (relationLines.length > MAX_BASELINE_RELATIONS) throw new RepositoryRevalidationIntegrityError('baseline relation count is too large');
   const relationIndex = new Map<string, Set<string>>();
   relationLines.forEach((line, index) => {
     const relation = record(JSON.parse(line), `baseline relation ${index}`);
@@ -116,9 +122,9 @@ async function readBaseline(reference: BaselineReference, context: PluginInvocat
   const serialized = canonicalJson(response.value);
   if (response.digest !== reference.digest || response.sizeBytes !== reference.sizeBytes
     || sha256Text(serialized) !== reference.digest || Buffer.byteLength(serialized) !== reference.sizeBytes) {
-    throw new Error('baseline repository report proof is invalid');
+    throw new RepositoryRevalidationIntegrityError('baseline repository report proof is invalid');
   }
-  return baselineFindings(response.value);
+  return integrity(() => baselineFindings(response.value));
 }
 
 function runtimeIdentity(context: PluginInvocationContext): { readonly target: string; readonly identity: ReviewRuntimeIdentity } {
@@ -180,23 +186,29 @@ async function dispatchOne(values: { readonly finding: BaselineFinding; readonly
   readonly pathStates: readonly JsonObject[];
   readonly relationshipCandidates: readonly JsonObject[];
   readonly expectedRuntime: ReviewRuntimeIdentity; readonly context: PluginInvocationContext;
-  readonly budget: ReviewDispatchBudget; readonly maxRetries: number }): Promise<RepositoryRevalidationResult> {
+  readonly budget: ReviewDispatchBudget; readonly admission: ReviewPhaseAdmission; readonly maxRetries: number }): Promise<RepositoryRevalidationResult> {
   const sourceEvidence = new Map(values.sources.map((source) => [source.path,
     { digest: source.digest, ranges: source.ranges }]));
   let lastError: unknown;
   for (let attempt = 0; attempt <= values.maxRetries; attempt += 1) {
+    if (attempt > 0) values.admission.retry();
     try {
       const requestPayload = values.budget.reserve(payload(values.finding, values.baselineHead,
         values.targetHead, values.sources, values.pathStates, values.relationshipCandidates), 'verification');
       const response = record(await values.context.invoke('runtime.dispatch', { operation: 'dispatch',
         resource: { type: 'runtime.agent', canonicalId: values.target },
         payload: Object.freeze({ ...requestPayload, runtimeDispatchAttempt: attempt }) }), 'runtime dispatch response');
+      return integrity(() => {
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, values.expectedRuntime);
       return parseRepositoryRevalidationResult(response.result, { fingerprint: values.finding.fingerprint,
         targetHead: values.targetHead, sources: sourceEvidence,
         relationshipFingerprints: new Set(values.relationshipCandidates.map((candidate) => String(candidate.fingerprint))) });
-    } catch (error) { lastError = error; }
+      });
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('EFFECT_OUTCOME_UNRESOLVED:')) throw error;
+      lastError = error;
+    }
   }
   throw lastError;
 }
@@ -236,13 +248,13 @@ export function buildRepositoryRevalidationBacklog(
       const dependencyResult = resultByFingerprint.get(dependency);
       if (dependency === result.findingFingerprint || !byFingerprint.has(dependency)
         || dependencyResult?.disposition !== 'accepted_current') {
-        throw new Error('repository revalidation remediation dependency is invalid');
+        throw new RepositoryRevalidationIntegrityError('repository revalidation remediation dependency is invalid');
       }
     }
   }
   const visiting = new Set<`sha256:${string}`>(), visited = new Set<`sha256:${string}`>();
   const visit = (fingerprint: `sha256:${string}`): void => {
-    if (visiting.has(fingerprint)) throw new Error('repository revalidation remediation dependency cycle is invalid');
+    if (visiting.has(fingerprint)) throw new RepositoryRevalidationIntegrityError('repository revalidation remediation dependency cycle is invalid');
     if (visited.has(fingerprint)) return;
     visiting.add(fingerprint);
     for (const dependency of resultByFingerprint.get(fingerprint)?.remediationDependencies ?? []) visit(dependency);
@@ -256,7 +268,7 @@ export function buildRepositoryRevalidationBacklog(
       const targetResult = resultByFingerprint.get(result.supersededBy);
       if (!target || target.fingerprint === original.fingerprint || target.clusterId !== original.clusterId
         || targetResult?.disposition !== 'accepted_current') {
-        throw new Error('repository revalidation supersession target is invalid');
+        throw new RepositoryRevalidationIntegrityError('repository revalidation supersession target is invalid');
       }
     }
     const firstPath = result.evidence[0]?.path ?? findingLocations(original.finding)[0] as string;
@@ -288,24 +300,26 @@ async function storeBacklog(value: JsonObject, context: PluginInvocationContext)
     || result.mediaType !== 'application/json' || result.digest !== valueDigest
     || result.sizeBytes !== Buffer.byteLength(serialized) || !attempt
     || result.producer.runId !== attempt.runId || result.producer.stageId !== attempt.stageId
-    || result.producer.attemptId !== attempt.attemptId) throw new Error('repository revalidation artifact proof is invalid');
+    || result.producer.attemptId !== attempt.attemptId) throw new RepositoryRevalidationIntegrityError('repository revalidation artifact proof is invalid');
   return result;
 }
 
 async function run(value: unknown, context: PluginInvocationContext): Promise<StageResult> {
-  const parsed = input(value), baseline = await readBaseline(parsed.baseline, context);
+  const parsed = integrity(() => input(value)), baseline = await readBaseline(parsed.baseline, context);
   const revision = await freezeReviewRevision(context);
   const ancestry = record(await context.invoke('git.repository.read', { operation: 'verify_ancestry',
     resource: { type: 'git.repository.path', canonicalId: '.' }, payload: { base: baseline.head,
       head: revision.head, proof: revision.proof } }), 'repository ancestry response');
   if (ancestry.base !== baseline.head || ancestry.head !== revision.head || ancestry.ancestryVerified !== true) {
-    throw new Error('repository revalidation ancestry proof is invalid');
+    throw new RepositoryRevalidationIntegrityError('repository revalidation ancestry proof is invalid');
   }
   const current = await compileRepositoryAudit({ reviewProfile: parsed.profile }, context, revision);
-  const runtime = runtimeIdentity(context), budget = new ReviewDispatchBudget(parsed.profile, Date.now()
+  const runtime = integrity(() => runtimeIdentity(context)), budget = new ReviewDispatchBudget(parsed.profile, Date.now()
     + parsed.profile.maxWallTimeSeconds * 1000);
   const inScope = baseline.findings.filter((finding) => findingLocations(finding.finding)
     .some((path) => inProfileScope(path, parsed.profile.allowedPrefixes)));
+  ReviewPhaseAdmission.requireJobs(inScope.length, parsed.profile.maxVerificationJobs);
+  const admission = new ReviewPhaseAdmission(parsed.profile.maxRetryAttemptsPerPhase);
   const scopedBaseline = Object.freeze({ ...baseline, findings: Object.freeze(inScope) });
   const currentFiles = new Map(current.snapshot.files.map((file) => [file.path, file]));
   const results: RepositoryRevalidationResult[] = [];
@@ -320,7 +334,7 @@ async function run(value: unknown, context: PluginInvocationContext): Promise<St
         : Object.freeze({ path, state: 'outside-scope' })),
       relationshipCandidates: relationshipCandidates(finding, inScope),
       target: runtime.target,
-      expectedRuntime: runtime.identity, context, budget, maxRetries: parsed.profile.maxRetries }))));
+      expectedRuntime: runtime.identity, context, budget, admission, maxRetries: parsed.profile.maxRetries }))));
   }
   const report = buildRepositoryRevalidationBacklog(scopedBaseline, revision.head, results, budget.snapshot());
   const stored = await storeBacklog(report, context);
@@ -335,6 +349,8 @@ async function run(value: unknown, context: PluginInvocationContext): Promise<St
 
 export async function executeRepositoryRevalidation(value: unknown, context: PluginInvocationContext): Promise<StageResult> {
   try { return await run(value, context); }
-  catch (error) { return blockedReviewStage('kubeclaw.review.repository_revalidation_incomplete',
-    error instanceof Error ? error.message : String(error)); }
+  catch (error) {
+    if (!(error instanceof RepositoryRevalidationIntegrityError) && !(error instanceof ReviewPhaseAdmissionError)) throw error;
+    return blockedReviewStage('kubeclaw.review.repository_revalidation_incomplete', error.message);
+  }
 }

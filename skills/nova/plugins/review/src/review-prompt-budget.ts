@@ -1,4 +1,4 @@
-import { get_encoding } from 'tiktoken';
+import { getEncoding } from 'js-tiktoken';
 import { buildRuntimeAgentTask, RUNTIME_RESULT_FILE_MAX_BYTES } from '@kubeclaw/plugin-sdk';
 
 export interface ReviewPromptMetrics {
@@ -36,12 +36,12 @@ export interface ReviewDispatchLimits {
   readonly outputUsdPerMillionTokens: number;
 }
 
-const ENCODERS = new Map<ReviewTokenizerEncoding, ReturnType<typeof get_encoding>>();
+const ENCODERS = new Map<ReviewTokenizerEncoding, ReturnType<typeof getEncoding>>();
 const PROMPT_TOKEN_BOUNDARY_RESERVE = 64;
 
 export function countReviewTextTokens(text: string, encoding: ReviewTokenizerEncoding = 'o200k_base'): number {
   let encoder = ENCODERS.get(encoding);
-  if (!encoder) { encoder = get_encoding(encoding); ENCODERS.set(encoding, encoder); }
+  if (!encoder) { encoder = getEncoding(encoding); ENCODERS.set(encoding, encoder); }
   return encoder.encode(text).length;
 }
 

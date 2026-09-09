@@ -1,6 +1,8 @@
 /* eslint-disable max-lines -- The stage keeps compile, dispatch, cache, and report authority in one auditable transaction. */
 import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 
+import { reusableReviewResult, selectedReviewIncomplete } from './review-completion.ts';
+import { ReviewPhaseAdmission } from './review-phase-admission.ts';
 import { getReviewPolicyProfile } from './review-policy-profiles.ts';
 import { resolveReviewPolicy } from './review-policy-resolver.ts';
 import { freezeReviewRevision } from './review-repository.ts';
@@ -345,15 +347,12 @@ async function verifiedReduction(
   const deadlineEpochMs = Date.now() + compilation.profile.maxWallTimeSeconds * 1_000;
   const dispatchBudget = new ReviewDispatchBudget(compilation.profile, deadlineEpochMs);
   const execution = (phase: ReviewDispatchPhase) => {
-    let remainingRetryAttempts = compilation.profile.maxRetryAttemptsPerPhase;
+    const admission = new ReviewPhaseAdmission(compilation.profile.maxRetryAttemptsPerPhase);
     return {
     concurrency: compilation.profile.concurrency, maxRetries: compilation.profile.maxRetries,
     deadlineEpochMs,
     beforeDispatch: (payload: Readonly<Record<string, unknown>>) => dispatchBudget.reserve(payload, phase),
-    beforeRetry: () => {
-      if (remainingRetryAttempts < 1) throw new Error(`repository audit ${phase} shared retry budget exhausted`);
-      remainingRetryAttempts -= 1;
-    },
+    beforeRetry: () => admission.retry(),
   }; };
   const runtime = { cache, agent: config.agent, context, execution: execution('initial'), expectedRuntime };
   const reviewRun = await cachedReviewJobs(compilation.jobs, reviewIdentity, runtime);
@@ -410,7 +409,7 @@ async function verifiedReduction(
   if (expandedJobs.length > 0) {
     expansionAccounting = selectedExpansion.accounting;
     const expandedRun = await cachedReviewJobs(expandedJobs, reviewIdentity,
-      { ...runtime, execution: execution('context-expansion') });
+      { ...runtime, execution: execution('context-expansion') }, false);
     expansionRun = expandedRun;
     const replacement = new Map(expandedJobs.map((job) => [job.id, job]));
     finalJobs = Object.freeze(compilation.jobs.map((job) => replacement.get(job.id) ?? job));
@@ -420,7 +419,7 @@ async function verifiedReduction(
     reviewRuns = [reviewRun, expandedRun];
   }
   const preflight = preflightScalableReviewResults(finalJobs, reviewResults, deferredExpansionIds);
-  if (preflight.integrityIssues.length > 0) {
+  if (selectedReviewIncomplete(preflight, deferredExpansionIds)) {
     throw new RepositoryAuditIntegrityError(`repository audit review is incomplete: ${canonicalJson(preflight)}`);
   }
   const requestedVerificationJobs = buildScalableVerificationJobs(preflight, finalJobs, policyDigest, {
@@ -470,6 +469,7 @@ async function verifiedReduction(
 
 async function auditDispatch<T>(label: string, execute: () => Promise<T>): Promise<T> {
   try { return await execute(); } catch (error) {
+    if (error instanceof Error && error.message.startsWith('EFFECT_OUTCOME_UNRESOLVED:')) throw error;
     if (error instanceof ReviewRuntimeAttestationError) {
       throw new RepositoryAuditIntegrityError(error.message);
     }
@@ -579,7 +579,7 @@ function exactDispatchResults<T extends { readonly jobId: string }>(
 
 async function cachedReviewJobs(
   jobs: readonly ScalableReviewJob[], identity: ReviewCacheIdentity,
-  runtime: AuditRuntime,
+  runtime: AuditRuntime, allowContextRequest = true,
 ): Promise<ReviewCacheRun<ScalableReviewJobResult>> {
   const run = await runWithReviewCache<ScalableReviewJobResult>(jobs, identity, runtime.cache, async (misses, checkpoint) => {
     const wanted = new Set(misses.map(({ id }) => id));
@@ -589,6 +589,9 @@ async function cachedReviewJobs(
       async (result) => checkpoint(result.jobId, result),
     ));
     return exactDispatchResults('review dispatch', selected, results);
+  }, (unit, value) => {
+    const job = jobs.find(({ id }) => id === unit.id);
+    return job !== undefined && reusableReviewResult(job, value, allowContextRequest);
   });
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
@@ -606,6 +609,9 @@ async function cachedVerificationJobs(
       async (result) => checkpoint(result.jobId, result),
     ));
     return exactDispatchResults('verification dispatch', selected, results);
+  }, (unit, value) => {
+    const job = jobs.find(({ id }) => id === unit.id);
+    return job !== undefined && reduceScalableReview([job], [value]).incompleteJobs.length === 0;
   });
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
@@ -616,7 +622,7 @@ function cacheIdentity(
 ): ReviewCacheIdentity {
   return Object.freeze({ policyDigest, reviewerProtocol, reviewerModel: runtime.model,
     reviewerRuntimeIdentityDigest: reviewRuntimeIdentityDigest(runtime),
-    evidenceVersion: 'repository-review-evidence.v1' });
+    evidenceVersion: 'repository-review-evidence.v2' });
 }
 
 function cacheSummary<T>(identity: ReviewCacheIdentity, run: ReviewCacheRun<T>): AuditCacheRunSummary {

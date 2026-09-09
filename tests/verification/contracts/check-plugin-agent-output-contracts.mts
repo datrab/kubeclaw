@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import {
   attachRuntimeEvidence,
   buildOpenClawTask,
@@ -39,10 +40,7 @@ import {
   parseCaseStudy,
   requiredSections,
 } from '../../../skills/nova/plugins/case-study/src/protocol.ts';
-import {
-  buildRequest as buildBusterRequest,
-  parseVerdict as parseBusterVerdict,
-} from '../../../skills/buster/plugins/test-agent/src/protocol.ts';
+
 
 type Json = Record<string, unknown>;
 
@@ -184,32 +182,8 @@ assert.throws(() => parseQualityVerdict({
   identity: qualityRequest.identity,
 }, qualityInput));
 
-const busterInput = {
-  runId: 'run-1',
-  taskId: 'module-1',
-  attempt: 1,
-  task: 'Judge tests.',
-  suiteEvidence: [{ suite: 'unit', passed: true, summary: 'Passed.' }],
-};
-const busterRequest = buildBusterRequest('buster', busterInput);
-taskContract(busterRequest);
-parseBusterVerdict(
-  attachRuntimeEvidence(busterRequest as Json, {
-    verdict: 'PASS',
-    summary: 'Passed.',
-    findings: [],
-  }, session),
-  busterInput,
-);
-assert.throws(() => parseBusterVerdict(
-  attachRuntimeEvidence(busterRequest as Json, {
-    protocol: busterRequest.protocol,
-    verdict: 'PASS',
-    summary: 'Invalid envelope.',
-    findings: [],
-  }, session),
-  busterInput,
-));
+assert.equal(fs.existsSync(new URL('../../../skills/buster/plugins/test-agent', import.meta.url)), false,
+  'retired test-agent is replaced by the active judged quality-gate contract above');
 
 const markdown = requiredSections.map((section) => `## ${section}\n\nEvidence.`).join('\n\n');
 const caseStudyInput = {
@@ -230,6 +204,6 @@ assert.throws(() => parseCaseStudy({
 console.log(JSON.stringify({
   ok: true,
   suite: 'agent-output-contracts',
-  registrations: 7,
+  registrations: 6,
   runtimeEvidenceProtocols: 2,
 }));

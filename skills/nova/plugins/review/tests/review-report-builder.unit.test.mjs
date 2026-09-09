@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import Ajv2020 from 'ajv/dist/2020.js';
+import { isReviewReport } from '../src/review-report-contract.ts';
 import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
 import { buildReviewReport } from '../src/review-report-builder.ts';
 import { snapshotReviewBundle } from '../src/review-bundle-snapshot.ts';
@@ -72,4 +75,21 @@ const confirmedWithoutFinding = buildReviewReport({
 });
 assert.equal(Object.values(confirmedWithoutFinding.items)[0]?.disposition, 'follow_up');
 assert.match(Object.values(confirmedWithoutFinding.items)[0]?.reason ?? '', /normalized verified finding was unavailable/u);
+
+const custom = resolveReviewPolicy({ builtIn: getReviewPolicyProfile('gate'),
+  settingsFile: { ...getReviewPolicyProfile('gate'), profile: 'custom.settings' } });
+const customSnapshot = snapshotReviewBundle({ ...snapshot.bundle, policyDigest: custom.digest });
+const customReport = buildReviewReport({ attemptId: 'custom-attempt', snapshot: customSnapshot, policy: custom,
+  parsed: { ok: false, error: 'report construction only' }, findings: [],
+  result: { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [] },
+  governor: makeReviewGovernor(snapshot.bundle.revisions.changedManifestDigest, 'within_scope', custom.digest) });
+const validateReport = new Ajv2020({ strict: true }).compile(JSON.parse(fs.readFileSync(
+  new URL('../schemas/review-report.v2.schema.json', import.meta.url), 'utf8')));
+assert.equal(customReport.profile, 'custom.settings');
+assert.equal(isReviewReport(customReport), true);
+assert.equal(validateReport(customReport), true, JSON.stringify(validateReport.errors));
+for (const profile of ['', 'bad profile', 'x'.repeat(129)]) {
+  assert.equal(isReviewReport({ ...customReport, profile }), false);
+  assert.equal(validateReport({ ...customReport, profile }), false);
+}
 console.log('review report builder unit tests passed');

@@ -14,7 +14,7 @@ export const SIMPLIFICATION_CANDIDATE_MANIFEST_SCHEMA_VERSION = 'simplification-
 export const SIMPLIFICATION_FACTS_EVIDENCE_KIND = 'simplification-facts' as const;
 export const SIMPLIFICATION_CANDIDATES_EVIDENCE_KIND = 'simplification-candidates' as const;
 export const SIMPLIFICATION_DIAGNOSTIC_CODES = [
-  'malformed_source', 'revision_mismatch', 'scope_mismatch', 'candidate_limit',
+  'malformed_source', 'revision_mismatch', 'scope_mismatch', 'candidate_limit', 'unsupported_source',
 ] as const;
 
 export type SimplificationDiagnosticCode = typeof SIMPLIFICATION_DIAGNOSTIC_CODES[number];
@@ -40,6 +40,8 @@ export interface SimplificationFacts {
   readonly schemaVersion: typeof SIMPLIFICATION_FACTS_SCHEMA_VERSION;
   readonly revision: SimplificationRevisionIdentity;
   readonly facts: readonly SimplificationFact[];
+  readonly omittedFactCount?: number;
+  readonly omittedSourceCount?: number;
 }
 
 export interface SimplificationCandidate {
@@ -75,6 +77,8 @@ export interface SimplificationCandidateManifest {
 
 const text = (maximum: number) => ({ type: 'string', minLength: 1, maxLength: maximum } as const);
 const identifier = { ...text(REVIEW_HARD_LIMITS.identifierCharacters), pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]*$' } as const;
+export const SIMPLIFICATION_SYMBOL_PATTERN = '^(?:[A-Za-z0-9][A-Za-z0-9._:-]*|[$_A-Za-z][$_A-Za-z0-9]*(?:\\.[$_A-Za-z][$_A-Za-z0-9]*)*)(?![\\s\\S])';
+const symbol = { ...text(REVIEW_HARD_LIMITS.identifierCharacters), pattern: SIMPLIFICATION_SYMBOL_PATTERN } as const;
 const digest = { type: 'string', pattern: '^sha256:[0-9a-f]{64}$' } as const;
 const gitObject = { type: 'string', pattern: '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' } as const;
 const path = {
@@ -93,13 +97,15 @@ const factSchema = closed([
   'factId', 'ruleId', 'confidence', 'path', 'basis', 'smallestReplacement',
 ], {
   factId: identifier, ruleId: { enum: SIMPLIFICATION_RULE_IDS }, confidence: { enum: SIMPLIFICATION_CONFIDENCE_LEVELS },
-  path, symbol: identifier, basis: text(REVIEW_HARD_LIMITS.explanationCharacters),
+  path, symbol, basis: text(REVIEW_HARD_LIMITS.explanationCharacters),
   smallestReplacement: text(REVIEW_HARD_LIMITS.explanationCharacters),
   estimatedNetLocReduction: optionalLoc,
 });
 
 export const simplificationFactsSchema = closed(['schemaVersion', 'revision', 'facts'], {
   schemaVersion: { const: SIMPLIFICATION_FACTS_SCHEMA_VERSION }, revision: revisionSchema,
+  omittedSourceCount: { type: 'integer', minimum: 0, maximum: Number.MAX_SAFE_INTEGER },
+  omittedFactCount: { type: 'integer', minimum: 0, maximum: Number.MAX_SAFE_INTEGER },
   facts: { type: 'array', maxItems: REVIEW_HARD_LIMITS.simplificationFacts, items: factSchema },
 });
 
@@ -108,7 +114,7 @@ const candidateSchema = {
   'candidateId', 'ruleId', 'category', 'confidence', 'path', 'basis', 'smallestReplacement', 'source',
 ], {
   candidateId: digest, ruleId: { enum: SIMPLIFICATION_RULE_IDS }, category: { enum: SIMPLIFICATION_CATEGORIES },
-  confidence: { enum: SIMPLIFICATION_CONFIDENCE_LEVELS }, path, symbol: identifier,
+  confidence: { enum: SIMPLIFICATION_CONFIDENCE_LEVELS }, path, symbol,
   basis: text(REVIEW_HARD_LIMITS.explanationCharacters),
   smallestReplacement: text(REVIEW_HARD_LIMITS.explanationCharacters),
   source: closed(['kind', 'digest', 'factId'], {

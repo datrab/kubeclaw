@@ -331,7 +331,10 @@ async function dispatchVerificationJob(
       if (completeVerificationResponse(value, parsed) || attempt === maxRetries) {
         return Object.freeze({ jobId: value.id, parsed, runtime: attestation });
       }
-    } catch (error) { if (attempt === maxRetries) throw error; }
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('EFFECT_OUTCOME_UNRESOLVED:')) throw error;
+      if (attempt === maxRetries) throw error;
+    }
   }
   throw new Error(`scalable verification retry state is invalid: ${value.id}`);
 }

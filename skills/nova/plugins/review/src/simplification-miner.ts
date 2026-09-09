@@ -99,9 +99,14 @@ function sourceCandidates(
   )).map((fact) => factCandidate(fact, evidence));
   return {
     candidates,
-    diagnostics: outOfScope.length === 0 ? [] : [diagnostic(
-      evidence.digest, 'scope_mismatch', `${outOfScope.length} fact(s) are outside reviewed context.`,
-    )],
+    diagnostics: [
+      ...(outOfScope.length === 0 ? [] : [diagnostic(evidence.digest, 'scope_mismatch',
+        `${outOfScope.length} fact(s) are outside reviewed context.`)]),
+      ...(!parsed.value.omittedSourceCount ? [] : [diagnostic(evidence.digest, 'unsupported_source',
+        `${parsed.value.omittedSourceCount} JSX/TSX source document(s) omitted by the bounded forwarding-function scanner.`)]),
+      ...(!parsed.value.omittedFactCount ? [] : [diagnostic(evidence.digest, 'candidate_limit',
+        `${parsed.value.omittedFactCount} source fact(s) omitted by the producer limit.`)]),
+    ],
   };
 }
 

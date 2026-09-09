@@ -2,12 +2,17 @@ import { standaloneImportTokenAt } from './review-import-syntax.ts';
 
 type ImportScanMode = 'code' | 'single' | 'double' | 'template' | 'regex' | 'line_comment' | 'block_comment';
 interface ImportScanState {
-  readonly content: string; readonly output: string[]; cursor: number; mode: ImportScanMode;
+  readonly content: string; readonly preserveImportStrings: boolean; readonly markLiterals: boolean; readonly output: string[]; cursor: number; mode: ImportScanMode;
   escaped: boolean; preserveQuote: boolean; regexClass: boolean; expressionDepth: number;
   templateReturns: number[]; regexAfterControl: boolean; controlParentheses: boolean[]; blockBraces: boolean[];
 }
 function maskScan(state: ImportScanState, offset = 0): void {
-  const index = state.cursor + offset; if (state.output[index] !== '\n') state.output[index] = ' ';
+  const index = state.cursor + offset;
+  const lineTerminators = state.markLiterals ? '\n\r\u2028\u2029' : '\n';
+  if (!lineTerminators.includes(state.output[index] ?? ' ')) state.output[index] = ' ';
+}
+function markLiteral(state: ImportScanState): void {
+  if (state.markLiterals) state.output[state.cursor] = '#';
 }
 function scanQuoted(state: ImportScanState, closing: string): void {
   const current = state.content[state.cursor] as string;
@@ -25,7 +30,8 @@ function scanTemplate(state: ImportScanState): void {
   state.escaped = !state.escaped && current === '\\';
 }
 function scanLineComment(state: ImportScanState): void {
-  const newline = state.content[state.cursor] === '\n'; maskScan(state); if (newline) state.mode = 'code';
+  const newline = state.markLiterals ? /[\n\r\u2028\u2029]/u.test(state.content[state.cursor] ?? '') : state.content[state.cursor] === '\n';
+  maskScan(state); if (newline) state.mode = 'code';
 }
 function scanBlockComment(state: ImportScanState): void {
   const closes = state.content[state.cursor] === '*' && state.content[state.cursor + 1] === '/'; maskScan(state);
@@ -57,8 +63,8 @@ function importSpecifierQuote(state: ImportScanState): boolean {
 }
 function scanQuoteOpening(state: ImportScanState, current: string | undefined): void {
   if (current !== "'" && current !== '"') return;
-  state.mode = current === "'" ? 'single' : 'double'; state.preserveQuote = importSpecifierQuote(state);
-  if (!state.preserveQuote) maskScan(state);
+  state.mode = current === "'" ? 'single' : 'double'; state.preserveQuote = state.preserveImportStrings && importSpecifierQuote(state);
+  if (!state.preserveQuote) { maskScan(state); markLiteral(state); }
 }
 function scanSlashOpening(state: ImportScanState, current: string | undefined, next: string | undefined): boolean {
   if (current !== '/') return false;
@@ -67,7 +73,7 @@ function scanSlashOpening(state: ImportScanState, current: string | undefined, n
     return true;
   }
   if (!regexCanStart(state)) return false;
-  maskScan(state); state.mode = 'regex'; state.escaped = false; state.regexClass = false; state.regexAfterControl = false;
+  maskScan(state); markLiteral(state); state.mode = 'regex'; state.escaped = false; state.regexClass = false; state.regexAfterControl = false;
   return true;
 }
 function scanParenthesis(state: ImportScanState, current: string | undefined): boolean {
@@ -98,7 +104,7 @@ function scanCode(state: ImportScanState): void {
   if (/\s/u.test(current ?? '')) return;
   if (scanParenthesis(state, current) || scanBrace(state, current)) return;
   if (current === '`') {
-    state.regexAfterControl = false; maskScan(state);
+    state.regexAfterControl = false; maskScan(state); markLiteral(state);
     state.templateReturns.push(state.expressionDepth); state.expressionDepth = 0; state.mode = 'template';
   } else { state.regexAfterControl = false; scanQuoteOpening(state, current); }
 }
@@ -106,9 +112,9 @@ const IMPORT_SCAN_HANDLERS: Readonly<Record<ImportScanMode, (state: ImportScanSt
   code: scanCode, single: (state) => scanQuoted(state, "'"), double: (state) => scanQuoted(state, '"'),
   template: scanTemplate, regex: scanRegex, line_comment: scanLineComment, block_comment: scanBlockComment,
 };
-export function importScanSource(content: string): string {
+export function importScanSource(content: string, preserveImportStrings = true, markLiterals = false): string {
   const state: ImportScanState = {
-    content, output: content.split(''), cursor: 0, mode: 'code', escaped: false, preserveQuote: false,
+    content, preserveImportStrings, markLiterals, output: content.split(''), cursor: 0, mode: 'code', escaped: false, preserveQuote: false,
     regexClass: false, expressionDepth: 0, templateReturns: [], regexAfterControl: false,
     controlParentheses: [], blockBraces: [],
   };

@@ -8,7 +8,7 @@
     "schemaVersion": { "const": "review-report.v2" },
     "attemptId": { "$ref": "#/$defs/identifier" },
     "taskId": { "$ref": "#/$defs/identifier" },
-    "profile": { "enum": ["gate", "lean", "audit"] },
+    "profile": { "type": "string", "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}(?![\\s\\S])" },
     "policyDigest": { "$ref": "#/$defs/digest" },
     "bundleDigest": { "$ref": "#/$defs/digest" },
     "revision": { "type": "object", "additionalProperties": false, "required": ["base", "head", "changedManifestDigest"], "properties": {

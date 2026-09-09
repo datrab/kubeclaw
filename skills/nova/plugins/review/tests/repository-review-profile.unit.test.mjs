@@ -29,8 +29,8 @@ const plugin = resolveRepositoryReviewProfile({ grade: 'deep', mode: 'plan',
   overrides: { concurrency: 2, maxPrimaryJobs: 240, boundaryBudget: { maxRelations: 25 },
     enabledLenses: ['security', 'lifecycle'] } });
 assert.equal(plugin.mode, 'plan');
-assert.deepEqual(plugin.allowedPrefixes, ['contracts/', 'skills/common/plugin-runtime/',
-  'skills/common/plugins/runtime-dispatch/', 'skills/nova/plugins/pipeline/', 'skills/nova/plugins/review/']);
+assert.deepEqual(plugin.allowedPrefixes, ['contracts', 'skills/common/plugin-runtime',
+  'skills/common/plugins/runtime-dispatch', 'skills/nova/plugins/pipeline', 'skills/nova/plugins/review']);
 assert.equal(plugin.concurrency, 2);
 assert.equal(plugin.boundaryBudget.maxRelations, 25);
 assert.deepEqual(plugin.enabledLenses, ['security', 'lifecycle']);

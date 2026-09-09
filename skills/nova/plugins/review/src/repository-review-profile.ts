@@ -189,10 +189,16 @@ function checkedPrefixes(raw: unknown): readonly string[] {
   if (!Array.isArray(raw) || raw.some((value) => typeof value !== 'string')) {
     throw new Error('repository review profile scope is invalid');
   }
-  if (raw.length < 1 || raw.length > 64 || raw.some((value) => !value || value.startsWith('/') || value.includes('..'))) {
-    throw new Error('repository review profile scope is invalid');
-  }
-  return raw;
+  if (raw.length < 1 || raw.length > 64) throw new Error('repository review profile scope is invalid');
+  return raw.map((value: string) => {
+    const normalized = value.replace(/\/+$/u, '');
+    if (value === '.') return value;
+    if (!normalized || normalized.startsWith('/') || normalized.includes(':') || /[\\\u0000-\u001f\u007f]/u.test(normalized)
+      || normalized.split('/').some((part) => !part || part === '.' || part === '..')) {
+      throw new Error('repository review profile scope is invalid');
+    }
+    return normalized;
+  });
 }
 function pluginPrefixes(scope: Extract<RepositoryReviewScope, { readonly kind: 'plugin' }>): readonly string[] {
   const names = checkedPrefixes(scope.names), radius = scope.dependencyRadius ?? 1;
@@ -200,8 +206,8 @@ function pluginPrefixes(scope: Extract<RepositoryReviewScope, { readonly kind: '
   if (names.some((name) => !/^[a-z0-9][a-z0-9-]*$/u.test(name)))
     throw new Error('repository review profile plugin name is invalid');
   const dependencies = radius === 1
-    ? ['skills/common/plugin-runtime/', 'skills/common/plugins/runtime-dispatch/', 'contracts/'] : [];
-  return Object.freeze([...new Set([...names.map((name) => `skills/nova/plugins/${name}/`), ...dependencies])].sort());
+    ? ['skills/common/plugin-runtime', 'skills/common/plugins/runtime-dispatch', 'contracts'] : [];
+  return Object.freeze([...new Set([...names.map((name) => `skills/nova/plugins/${name}`), ...dependencies])].sort());
 }
 function prefixes(scope: RepositoryReviewScope): readonly string[] {
   if (scope.kind === 'repository') return Object.freeze(['.']);

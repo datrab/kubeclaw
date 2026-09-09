@@ -1,5 +1,6 @@
 import {
   SIMPLIFICATION_CANDIDATE_MANIFEST_SCHEMA_VERSION,
+  SIMPLIFICATION_SYMBOL_PATTERN,
   SIMPLIFICATION_DIAGNOSTIC_CODES,
   SIMPLIFICATION_FACTS_EVIDENCE_KIND,
   SIMPLIFICATION_FACTS_SCHEMA_VERSION,
@@ -36,6 +37,12 @@ function integer(value: unknown, label: string): number {
   return value as number;
 }
 
+function symbol(value: unknown, label: string): string {
+  const text = bundleText(value, label, REVIEW_HARD_LIMITS.identifierCharacters);
+  if (!new RegExp(SIMPLIFICATION_SYMBOL_PATTERN, 'u').test(text)) throw new Error(`${label} is invalid`);
+  return text;
+}
+
 function fact(value: unknown, index: number): SimplificationFact {
   const label = `facts[${index}]`;
   const item = bundleRecord(value, label);
@@ -47,7 +54,7 @@ function fact(value: unknown, index: number): SimplificationFact {
     ruleId: bundleSelection(item.ruleId, SIMPLIFICATION_RULE_IDS, `${label}.ruleId`),
     confidence: bundleSelection(item.confidence, SIMPLIFICATION_CONFIDENCE_LEVELS, `${label}.confidence`),
     path: bundlePath(item.path, `${label}.path`),
-    ...(item.symbol === undefined ? {} : { symbol: bundleIdentifier(item.symbol, `${label}.symbol`) }),
+    ...(item.symbol === undefined ? {} : { symbol: symbol(item.symbol, `${label}.symbol`) }),
     basis: bundleText(item.basis, `${label}.basis`, REVIEW_HARD_LIMITS.explanationCharacters),
     smallestReplacement: bundleText(
       item.smallestReplacement, `${label}.smallestReplacement`, REVIEW_HARD_LIMITS.explanationCharacters,
@@ -60,8 +67,12 @@ function fact(value: unknown, index: number): SimplificationFact {
 
 function parseFacts(value: unknown): SimplificationFacts {
   const input = bundleRecord(value, 'simplification facts');
-  bundleExact(input, ['schemaVersion', 'revision', 'facts'], [], 'simplification facts');
+  bundleExact(input, ['schemaVersion', 'revision', 'facts'], ['omittedFactCount', 'omittedSourceCount'], 'simplification facts');
   if (input.schemaVersion !== SIMPLIFICATION_FACTS_SCHEMA_VERSION) throw new Error('simplification facts schemaVersion is invalid');
+  if (input.omittedFactCount !== undefined && (!Number.isSafeInteger(input.omittedFactCount)
+    || Number(input.omittedFactCount) < 0)) throw new Error('omittedFactCount is invalid');
+  if (input.omittedSourceCount !== undefined && (!Number.isSafeInteger(input.omittedSourceCount)
+    || Number(input.omittedSourceCount) < 0)) throw new Error('omittedSourceCount is invalid');
   const revision = bundleRecord(input.revision, 'revision');
   bundleExact(revision, ['base', 'head', 'changedManifestDigest'], [], 'revision');
   const facts = bundleArray(input.facts, 'facts', 0, REVIEW_HARD_LIMITS.simplificationFacts).map(fact);
@@ -73,6 +84,8 @@ function parseFacts(value: unknown): SimplificationFacts {
       head: bundleGitObject(revision.head, 'revision.head'),
       changedManifestDigest: bundleDigest(revision.changedManifestDigest, 'revision.changedManifestDigest'),
     },
+    ...(input.omittedSourceCount === undefined ? {} : { omittedSourceCount: Number(input.omittedSourceCount) }),
+    ...(input.omittedFactCount === undefined ? {} : { omittedFactCount: Number(input.omittedFactCount) }),
     facts: [...facts].sort((left, right) => compareCodeUnits(left.factId, right.factId)),
   });
 }
@@ -96,7 +109,7 @@ function candidate(value: unknown, index: number): SimplificationCandidate {
     ruleId, category,
     confidence: bundleSelection(item.confidence, SIMPLIFICATION_CONFIDENCE_LEVELS, `${label}.confidence`),
     path: bundlePath(item.path, `${label}.path`),
-    ...(item.symbol === undefined ? {} : { symbol: bundleIdentifier(item.symbol, `${label}.symbol`) }),
+    ...(item.symbol === undefined ? {} : { symbol: symbol(item.symbol, `${label}.symbol`) }),
     basis: bundleText(item.basis, `${label}.basis`, REVIEW_HARD_LIMITS.explanationCharacters),
     smallestReplacement: bundleText(
       item.smallestReplacement, `${label}.smallestReplacement`, REVIEW_HARD_LIMITS.explanationCharacters,

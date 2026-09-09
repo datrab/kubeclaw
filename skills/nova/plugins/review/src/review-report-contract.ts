@@ -29,7 +29,7 @@ export interface ReviewReport {
   readonly schemaVersion: typeof REVIEW_REPORT_SCHEMA_VERSION;
   readonly attemptId: string;
   readonly taskId: string;
-  readonly profile: 'gate' | 'lean' | 'audit';
+  readonly profile: string;
   readonly policyDigest: `sha256:${string}`;
   readonly bundleDigest: `sha256:${string}`;
   readonly revision: {
@@ -124,7 +124,7 @@ function validReportIdentity(report: Readonly<Record<string, unknown>>): boolean
     report.schemaVersion === REVIEW_REPORT_SCHEMA_VERSION,
     typeof report.attemptId === 'string' && IDENTIFIER.test(report.attemptId),
     typeof report.taskId === 'string' && IDENTIFIER.test(report.taskId),
-    ['gate', 'lean', 'audit'].includes(String(report.profile)),
+    typeof report.profile === 'string' && report.profile.length <= 128 && IDENTIFIER.test(report.profile),
     digest(report.policyDigest), digest(report.bundleDigest),
     ['passed', 'request_fix', 'blocked', 'orchestrator_required'].includes(String(report.outcome)),
   ].every(Boolean);

@@ -171,3 +171,43 @@ Run package-local deterministic tests with:
 ```bash
 npm test
 ```
+
+## Review completion and revalidation boundaries
+
+Selected audit jobs must pass result preflight before a completion report is
+built. Malformed output, foreign evidence and a further context request after
+selected expansion are incomplete. Deliberately deferred context expansion
+remains distinct. Only certified terminal results (or valid initial context
+requests) are checkpointed and reused; cache evidence identity v2 invalidates
+older records that did not enforce this condition.
+
+Repository and revalidation profiles use canonical relative prefixes without a
+terminal slash. Path input accepts a terminal slash and normalizes it; internal
+empty, `.`/`..`, absolute, colon, backslash and control-character paths are rejected.
+The only repository-root sentinel is `.`. Plugin dependency radius 0/1 retains
+its existing scope while using the receiver's canonical path form.
+
+Revalidation rejects an in-scope finding set larger than maxVerificationJobs
+before dispatch. Retry admissions share maxRetryAttemptsPerPhase, synchronously
+reserved across concurrent jobs. Invalid completed output and input/proof errors
+are integrity blocks; storage/transport errors propagate to Core. An uncertain
+external effect is never retried locally: Core retains reconciliation authority.
+Missing storage can reach Core's bounded retry policy; an uncertain transport
+outcome may require reconciliation instead. Revalidation does not promise
+per-finding resume checkpoints; successful repository-audit jobs do.
+
+Policy profile names are stable identifiers, including authorized custom
+settings names, in both policy and report contracts. Runtime budget enforcement
+uses the pure JavaScript js-tiktoken API with the existing o200k_base/cl100k_base
+encodings; token thresholds, reservations and special-token rejection are
+unchanged. The privileged runtime adapter retains its native tokenizer.
+
+Simplification facts use the existing lexical scanner to remove comments,
+strings, templates and regex contents before recognizing bounded JS/TS forwarding
+function syntax. Source positions distinguish same-name local wrappers. Symbols
+support legal `$`/`_` names independently of stable fact IDs. Default/rest-argument
+wrappers are not certified as pure forwarding. JSX/TSX is explicitly omitted with
+an unsupported-source diagnostic because this scanner does not parse JSX text.
+Producer truncation includes omittedFactCount and remains visible in mining
+diagnostics; produced evidence is checked against its own parser before use.
+This is advisory syntax evidence, not whole-program semantic equivalence proof.
