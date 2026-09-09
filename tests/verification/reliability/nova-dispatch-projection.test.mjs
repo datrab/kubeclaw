@@ -167,3 +167,20 @@ test('manual scope rejects stale CAS/import/run, foreign and aliased paths, and 
   assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
   assert.equal((await retireNovaDispatch(f.scope)).newlyProjected, true);
 });
+
+test('independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId', { timeout: 60000 }, async t => {
+  const f = await fixture(t), unrelated = path.join(f.root, 'unrelated-core');
+  fs.mkdirSync(unrelated);
+  const core = budgetFixture(unrelated);
+  await runPipelineV2(core.platform, core.definition, f.runId);
+  const otherRun = runRoot(core.platform.storageRoot, f.runId);
+  assert.notEqual(otherRun, f.run);
+  assert.notEqual(core.repository, f.core.repository);
+  const before = fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot));
+  const scope = { ...f.scope, novaStorageRoot: core.platform.storageRoot, intent: { ...f.scope.intent,
+    runRoot: otherRun,
+    runJournalHead: JSON.parse(fs.readFileSync(path.join(otherRun, 'events.jsonl'), 'utf8').trim().split('\n').at(-1)).hash,
+    snapshotDigest: json(path.join(otherRun, 'run-snapshot.json')).digest } };
+  await assert.rejects(retireNovaDispatch(scope), /NOVA_DISPATCH_RETENTION_/u);
+  assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
+});
