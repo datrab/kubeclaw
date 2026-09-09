@@ -85,9 +85,23 @@ function releaseLease(lease) {
 function reviewStatus(script, cwd, platform, runId, heartbeat, resourceLog) {
   const result = spawnSync(process.execPath, [script, '--platform', platform, '--run-id', runId,
     '--heartbeat', heartbeat, '--resource-log', resourceLog, '--stale-after-seconds', '120'],
-  { cwd, encoding: 'utf8' });
-  if (result.status !== 0) return undefined;
-  try { return JSON.parse(result.stdout); } catch (_error) { return undefined; }
+  { cwd, encoding: 'utf8', timeout: 30_000 });
+  if (result.error || result.status !== 0) {
+    throw new Error(`REVIEW_SUPERVISOR_STATUS_FAILED: run=${runId}; exit=${result.status}; signal=${result.signal}; ${result.error?.message ?? ''}\n${result.stderr ?? ''}`, { cause: result.error });
+  }
+  let status;
+  try { status = JSON.parse(result.stdout); }
+  catch (cause) { throw new Error(`REVIEW_SUPERVISOR_STATUS_INVALID_JSON: run=${runId}`, { cause }); }
+  if (status?.schemaVersion !== 'repository-review-status.v1' || status.runId !== runId
+    || !['running', 'succeeded', 'failed', 'blocked', 'cancelled'].includes(status.status)) {
+    throw new Error(`REVIEW_SUPERVISOR_STATUS_INVALID: run=${runId}`);
+  }
+  return status;
+}
+
+function terminalExit(status) {
+  process.stdout.write(`${JSON.stringify(status)}\n`);
+  return status.status === 'succeeded' ? 0 : 1;
 }
 
 function pipelineArguments(mode, platform, graph, runId) {
@@ -200,7 +214,7 @@ async function observeExistingPipeline(params, pipelinePid, stopSignal) {
     await writeHeartbeat({ ...params, pipelinePid, stopping: false });
     const status = reviewStatus(params.statusScript, params.cwd, params.platform, params.runId,
       params.heartbeat, params.resourceLog);
-    if (status?.status !== 'running') return { terminal: true };
+    if (status.status !== 'running') return { terminal: status };
     await new Promise((resolve) => setTimeout(resolve, SAMPLE_INTERVAL_MS));
   }
   return { terminal: false };
@@ -229,10 +243,10 @@ async function main(values) {
       const observed = await observeExistingPipeline({ cwd, platform, runId, heartbeat, resourceLog,
         statusScript, gatewayUrl, attempt: existingHeartbeat.attempt ?? 0, mode: 'adopted' },
       existingHeartbeat.pipelinePid, stopController.signal);
-      if (observed.terminal) return 0;
+      if (observed.terminal) return terminalExit(observed.terminal);
     }
     const initialStatus = reviewStatus(statusScript, cwd, platform, runId, heartbeat, resourceLog);
-    if (initialStatus?.status !== 'running') return 0;
+    if (initialStatus.status !== 'running') return terminalExit(initialStatus);
     let mode = args.get('initial-mode') ?? 'auto';
     if (!['auto', 'start', 'recover'].includes(mode)) throw new Error('REVIEW_SUPERVISOR_INITIAL_MODE_INVALID');
     const platformConfig = optionalJson(platform);
@@ -245,7 +259,7 @@ async function main(values) {
         diagnosticDir, log, gatewayUrl, mode, attempt }, stopController.signal);
       if (result.stopping) return 130;
       const status = reviewStatus(statusScript, cwd, platform, runId, heartbeat, resourceLog);
-      if (status && status.status !== 'running') return status.status === 'succeeded' ? 0 : (result.exit.code || 1);
+      if (status.status !== 'running') return terminalExit(status);
       if (attempt > maximumRecoveries) return 75;
       mode = 'recover';
       await new Promise((resolve) => setTimeout(resolve, 5_000));
