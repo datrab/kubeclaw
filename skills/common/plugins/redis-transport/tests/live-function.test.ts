@@ -48,12 +48,12 @@ try {
   await telemetry.ready();
   assert.deepEqual(await invoke(publisher, 'transport.publish', 'publish', 'transport.target', 'audit'), {
     accepted: true,
-    stream: 'kubeclaw:audit',
+    stream: 'kubeclaw:v2:publisher:audit',
     entryId: '1785270000-1',
   });
   assert.deepEqual(await invoke(telemetry, 'telemetry.emit', 'append', 'telemetry.event', 'pipeline.completed'), {
     accepted: true,
-    stream: 'kubeclaw:pipeline_completed',
+    stream: 'kubeclaw:v2:telemetry:pipeline.completed',
     entryId: '1785270000-1',
   });
   assert.equal(received.length, 2);
