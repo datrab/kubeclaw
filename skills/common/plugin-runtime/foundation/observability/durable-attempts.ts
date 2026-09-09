@@ -1,3 +1,4 @@
+import { assertAttemptReplay, assertCompletionIntent } from "./attempt-replay.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
@@ -223,7 +224,13 @@ export class FileDurableAttemptStore {
     );
     return result;
   }
+  async #readState(): Promise<DurableAttemptStoreSnapshot> {
+    const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumMetadataBytes);
+    assertAttemptReplay(state, this.#root, this.#limits);
+    return state;
+  }
   #checkSize(state: DurableAttemptStoreSnapshot): void {
+    assertAttemptReplay(state, this.#root, this.#limits);
     if (
       Buffer.byteLength(canonicalJson(state)) >
       this.#limits.maximumMetadataBytes
@@ -286,7 +293,7 @@ export class FileDurableAttemptStore {
     if (content.byteLength > this.#limits.maximumEvidenceObjectBytes)
       throw new Error("OBSERVABILITY_EVIDENCE_OBJECT_TOO_LARGE");
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await this.#readState();
       await this.#reclaimExpiredEvidence(state);
       await cleanupUnreferencedBlobs(this.#root, state);
       const existing = state.evidence.find(
@@ -361,38 +368,9 @@ export class FileDurableAttemptStore {
       requireIdentity(ownerSnapshot.nodeId, "OBSERVABILITY_NODE_ID_INVALID");
     }
     validatePipelineWorkerCoreContract("workerAttemptResult", snapshot);
-    if (intent) {
-      validatePipelineObservabilityContract("producerRecord", intent.record);
-      validatePipelineObservabilityContract("producerClosure", intent.closure);
-      const declared = new Set(intent.closure.requiredEvidenceIds);
-      const evidenceBound = snapshot.evidence.every((item) =>
-        declared.has(
-          scopedEvidenceId(
-            snapshot.attemptId,
-            snapshot.claimGeneration,
-            item.evidenceId,
-          ),
-        ),
-      );
-      const payload = intent.record.payload as Record<string, unknown> | null;
-      if (
-        intent.record.recordType !== "attempt.completed" ||
-        !payload ||
-        payload.resultDigest !== snapshot.resultDigest ||
-        payload.workerId !== snapshot.workerId ||
-        intent.record.correlation.pipelineRunId !== pipelineRunId ||
-        intent.record.correlation.attemptId !== snapshot.attemptId ||
-        intent.record.correlation.claimId !== snapshot.claimId ||
-        intent.record.correlation.claimGeneration !==
-          snapshot.claimGeneration ||
-        intent.closure.pipelineRunId !== pipelineRunId ||
-        !sameProducer(intent.record.producer, intent.closure.producer) ||
-        !evidenceBound
-      )
-        throw new Error("OBSERVABILITY_COMPLETION_INTENT_IDENTITY_MISMATCH");
-    }
+    assertCompletionIntent(pipelineRunId, snapshot, intent);
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await this.#readState();
       await this.#reclaimExpiredEvidence(state);
       await cleanupUnreferencedBlobs(this.#root, state);
       const generations = state.results
@@ -508,7 +486,7 @@ export class FileDurableAttemptStore {
     admission: FileObservabilityAdmissionStore,
   ): Promise<ProducerClosureV1> {
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await this.#readState();
       await this.#reclaimExpiredEvidence(state);
       if (
         state.results.some(
@@ -596,7 +574,7 @@ export class FileDurableAttemptStore {
     validatePipelineObservabilityContract("producerClosure", snapshot);
     const admitted = await admission.admittedRecords();
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await this.#readState();
       await this.#reclaimExpiredEvidence(state);
       return this.#storeClosureUnlocked(state, snapshot, admitted);
     });
@@ -629,7 +607,7 @@ export class FileDurableAttemptStore {
     );
     const admittedRecords = await admission.admittedTail(pipelineRunId, 1);
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await this.#readState();
       await this.#reclaimExpiredEvidence(state);
       const requiredClosureIds = requirements.map((item) => item.closureId);
       if (new Set(requiredClosureIds).size !== requiredClosureIds.length)
@@ -743,7 +721,7 @@ export class FileDurableAttemptStore {
   }
   async snapshot(): Promise<Readonly<DurableAttemptStoreSnapshot>> {
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await this.#readState();
       await this.#reclaimExpiredEvidence(state);
       return state;
     });

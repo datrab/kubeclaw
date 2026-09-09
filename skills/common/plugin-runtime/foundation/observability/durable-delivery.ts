@@ -1,3 +1,4 @@
+import { assertAdmissionReplay, readBoundedSnapshot } from "./replay-validation.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
@@ -48,7 +49,7 @@ interface QuarantineOverflow {
   lastRawDigest: string;
   lastRawBytes: number;
 }
-interface AdmissionState {
+export interface AdmissionState {
   schemaVersion: "observability-admission-store.v1";
   nextCursor: number;
   entries: AdmissionEntry[];
@@ -99,20 +100,20 @@ const EMPTY_ADMISSION: AdmissionState = {
   overflowUnresolvedItems: [],
 };
 const ADMISSION_METADATA_RESERVE = 1024;
-async function readAdmissionState(file: string): Promise<AdmissionState> {
-  const state = await readDurableState(file, EMPTY_ADMISSION);
-  state.gaps ??= [];
-  state.unresolvedItems ??= [];
-  state.overflowUnresolvedItems ??= [];
+async function readAdmissionState(file: string, limits: AdmissionStoreLimits): Promise<AdmissionState> {
+  const state = await readDurableState(file, EMPTY_ADMISSION, limits.maximumBytes);
+  assertAdmissionReplay(state, limits);
   return state;
 }
 
 export async function readDurableState<T>(
   file: string,
   fallback: T,
+  maximumBytes?: number,
 ): Promise<T> {
   try {
-    return JSON.parse(await fs.readFile(file, "utf8")) as T;
+    if (maximumBytes === undefined) return JSON.parse(await fs.readFile(file, "utf8")) as T;
+    return JSON.parse(await readBoundedSnapshot(file, maximumBytes)) as T;
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT")
       return structuredClone(fallback);
@@ -547,7 +548,7 @@ export class FileObservabilityAdmissionStore {
       typeof raw === "string" ? Buffer.byteLength(raw) : raw.byteLength;
     if (inputBytes <= this.#limits.maximumIngressBytes) return;
     await this.#serial(async () => {
-      const state = await readAdmissionState(this.#file);
+      const state = await readAdmissionState(this.#file, this.#limits);
       await this.#recordOverflow(
         state,
         raw,
@@ -633,7 +634,7 @@ export class FileObservabilityAdmissionStore {
     return this.#serial(async () => {
       const bytes = Buffer.from(raw);
       const admitted = await this.#admitUnlocked(
-        await readAdmissionState(this.#file),
+        await readAdmissionState(this.#file, this.#limits),
         bytes,
       );
       return { acknowledgement: admitted.acknowledgement };
@@ -645,7 +646,7 @@ export class FileObservabilityAdmissionStore {
     await this.#rejectOversizedIngress(raw);
     return this.#serial(async () => {
       const admitted = await this.#admitUnlocked(
-        await readAdmissionState(this.#file),
+        await readAdmissionState(this.#file, this.#limits),
         Buffer.from(raw),
       );
       return {
@@ -671,11 +672,11 @@ export class FileObservabilityAdmissionStore {
     };
   }
   async snapshot(): Promise<Readonly<AdmissionState>> {
-    return this.#serial(() => readAdmissionState(this.#file));
+    return this.#serial(() => readAdmissionState(this.#file, this.#limits));
   }
   async admittedRecords(): Promise<ReadonlyArray<AdmittedRecordView>> {
     return this.#serial(async () => {
-      return this.#recordViews(await readAdmissionState(this.#file));
+      return this.#recordViews(await readAdmissionState(this.#file, this.#limits));
     });
   }
   async admittedTail(
@@ -691,7 +692,7 @@ export class FileObservabilityAdmissionStore {
     if (!Number.isSafeInteger(fromCursor) || fromCursor < 1)
       throw new Error("OBSERVABILITY_CURSOR_INVALID");
     return this.#serial(async () => {
-      const state = await readAdmissionState(this.#file);
+      const state = await readAdmissionState(this.#file, this.#limits);
       const records = state.entries
         .filter(
           (entry) =>
@@ -710,7 +711,7 @@ export class FileObservabilityAdmissionStore {
     validatePipelineObservabilityContract("gapReport", gap);
     const snapshot = structuredClone(gap);
     await this.#serial(async () => {
-      const state = await readAdmissionState(this.#file);
+      const state = await readAdmissionState(this.#file, this.#limits);
       const existing = state.gaps.find(
         (item) =>
           item.pipelineRunId === snapshot.pipelineRunId &&
@@ -759,7 +760,7 @@ export class FileObservabilityAdmissionStore {
     unresolvedItems: UnresolvedObservabilityItemV1[];
   }> {
     return this.#serial(async () => {
-      const state = await readAdmissionState(this.#file);
+      const state = await readAdmissionState(this.#file, this.#limits);
       return {
         missingRanges: state.gaps
           .filter(

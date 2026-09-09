@@ -22,3 +22,20 @@ The interfaces permit a PostgreSQL admission driver later.
 The durable attempt store adds content-addressed evidence, normalized attempt
 results, and producer closures. It accepts a result only after its declared
 evidence is durable and verified.
+
+Admission and attempt snapshots are revalidated on every read under the store
+lock, before duplicate acknowledgement, recovery, or mutation. The configured
+metadata byte limit applies before JSON parsing. Admission checks record contract
+and digest, the original wire bytes against the stored record, identity uniqueness,
+contiguous canonical cursors and the next cursor. Attempt replay checks worker
+result and closure contracts/digests, wrapper identities and generations,
+completion-intent bindings, evidence metadata paths and result references.
+Pending result commit markers remain recoverable.
+
+Malformed existing snapshots fail explicitly and remain on disk for diagnosis;
+missing envelope fields are not silently restored with defaults. A missing file
+still initializes a new store. Blob-byte corruption continues to appear through
+the existing result-ingress and completeness checks. These unkeyed digests detect
+inconsistent stored facts; they do not authenticate a complete rewritten store.
+Store roots must remain protected. Replay validation adds no log deletion,
+retention deadline or automatic history repair.
