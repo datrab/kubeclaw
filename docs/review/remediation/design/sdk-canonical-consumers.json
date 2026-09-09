@@ -1,6 +1,11 @@
 {
   "purpose": "Read-only cutover design inventory; version literals are local, imported constants require contract inspection.",
   "sdkConsumerFiles": 57,
+  "run2Followup": {
+    "report": "../implementation/sdk-checkpoint-encoding.md",
+    "artifactCheckpoint": "Actual portable write rejected by legacy reserialization; bounded encoding-bound consumer correction with original disk store and journal tests.",
+    "deliveryManifest": "Producer/reader inspected: closed fixed-ASCII object keys; no demonstrated accepted dynamic-key locale failure. No preventive version migration applied."
+  },
   "entries": [
     {
       "file": "skills/prism/directions/index.ts",

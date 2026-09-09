@@ -1,0 +1,24 @@
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (645.273714ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (235.097148ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (46.899955ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (62.216853ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (11455.152104ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (2770.790276ms)
+✔ effect journal owns request and receipt payloads: memory (17.520272ms)
+✔ effect journal owns request and receipt payloads: file (68.190976ms)
+✔ effect journal owns request and receipt payloads: file-sidecar (26.492873ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (55.427244ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (62.875417ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (50.422184ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (112.623088ms)
+✔ before-receipt cannot silently repeat a real external mutation (2325.280581ms)
+✔ after-receipt cannot silently repeat a real external mutation (2293.614969ms)
+✔ lost-response cannot silently repeat a real external mutation (2252.076638ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14648.723019
