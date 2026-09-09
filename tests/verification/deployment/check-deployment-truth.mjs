@@ -401,16 +401,23 @@ for (const [label, source] of [['artifacts', prismWorkloads], ['backups', prismJ
   assert.match(source, /kind:\s*PersistentVolumeClaim[\s\S]*helm\.sh\/resource-policy:\s*keep/u,
     `Prism ${label} PVC must survive release recovery`);
 }
-assert.match(
-  deploy,
-  /reconcile_nova_retired_trust_mount[\s\S]*?NODE_EXTRA_CA_CERTS[\s\S]*?--type=strategic[\s\S]*?volumeMounts[\s\S]*?mountPath":"\/var\/run\/buster-plan-trust","\$patch":"delete"[\s\S]*?volumes[\s\S]*?name":"buster-plan-trust","\$patch":"delete"[\s\S]*?if \[\[ \$role == "nova" \]\]; then\s+reconcile_nova_retired_trust_mount/u,
-  'Nova deploy must remove retired direct-TLS trust metadata from a drifted live Deployment',
-);
-assert.match(
-  deploy,
-  /reconcile_buster_runtime_ports[\s\S]*?go-template=[\s\S]*?runtime_index[\s\S]*?--type=json[\s\S]*?\\"op\\":\\"test[\s\S]*?buster-v2-runtime[\s\S]*?\\"op\\":\\"replace[\s\S]*?plan-runtime[\s\S]*?28891[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+reconcile_buster_runtime_ports/u,
-  'Buster deploy must replace stale runtime port metadata before Helm upgrades',
-);
+function deployFunction(name) {
+  const start=deploy.indexOf(`${name}() {`); const end=deploy.indexOf('\n}',start);
+  assert.ok(start>=0 && end>start,`${name} must exist`);return deploy.slice(start,end+2);
+}
+const novaReconcile=deployFunction('reconcile_nova_retired_trust_mount');
+const strategicPatch=novaReconcile.match(/--type=strategic --patch \\\n\s*'([^']+)'/u);assert.ok(strategicPatch);
+assert.deepEqual(JSON.parse(strategicPatch[1]),{spec:{template:{spec:{containers:[{name:'kubeclaw',env:[{name:'NODE_EXTRA_CA_CERTS',$patch:'delete'}],volumeMounts:[{mountPath:'/var/run/buster-plan-trust',$patch:'delete'}]}],volumes:[{name:'buster-plan-trust',$patch:'delete'}]}}}});
+const busterReconcile=deployFunction('reconcile_buster_runtime_ports');
+assert.match(busterReconcile,/go-template=[\s\S]*?runtime_index[\s\S]*?--type=json[\s\S]*?\\"op\\":\\"test[\s\S]*?buster-v2-runtime[\s\S]*?\\"op\\":\\"replace[\s\S]*?plan-runtime[\s\S]*?28891/u);
+const roleDeploy=deployFunction('deploy_agent');
+const renderPosition=roleDeploy.indexOf('render_selected_role');
+const renderOnlyPosition=roleDeploy.indexOf('KUBECLAW_DEPLOY_RENDER_ONLY', renderPosition);
+const cleanupPosition=roleDeploy.indexOf('if [[ $role == nova ]]; then reconcile_nova_retired_trust_mount; else reconcile_buster_runtime_ports; fi');
+const upgradePosition=roleDeploy.indexOf('helm_args=(upgrade --install');
+assert.ok(renderPosition>=0 && renderOnlyPosition>renderPosition && cleanupPosition>renderOnlyPosition && upgradePosition>cleanupPosition,'render-only must precede role-specific cleanup, which must precede Helm upgrade');
+assert.match(roleDeploy.slice(renderOnlyPosition,cleanupPosition),/return 0/u);
+
 assert.match(
   deploy,
   /verify_buster_port_routing[\s\S]*?expected_runtime[\s\S]*?expected_proxy[\s\S]*?expected_service[\s\S]*?Buster port routing invariant failed[\s\S]*?if \[\[ \$role == "buster" \]\]; then\s+verify_buster_port_routing/u,
@@ -454,7 +461,6 @@ assert.doesNotMatch(networkPolicies, /name:\s*kubeclaw-buster-managed-test-egres
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
   'all Buster plan runtime probes must use the loopback-only internal HTTP endpoint');
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
-assert.match(busterValues, /CONTAINER_BUILD_REGISTRY_BASE_URL[\s\S]*registry-local/);
 assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
 assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\.mts/);
 for (const probe of ['startupProbe', 'readinessProbe', 'livenessProbe']) {
@@ -1127,6 +1133,13 @@ assert.equal(
   0,
   `Secret key reconciliation probe failed:\n${secretProbe.stdout}\n${secretProbe.stderr}`,
 );
+
+
+assert.doesNotMatch(busterValues, /name: (KUBECLAW_LOCAL_REGISTRY|CONTAINER_BUILD_REGISTRY_REFERENCE|CONTAINER_BUILD_REGISTRY_BASE_URL)/u);
+const registryTemplate = read('charts/kubeclaw/templates/_registry-clients.tpl');
+assert.match(registryTemplate, /KUBECLAW_REGISTRY_CONFIG/u);
+assert.match(registryTemplate, /authSecretName is required/u);
+assert.match(registryTemplate, /transport must explicitly select https or http-lab/u);
 
 console.log(
   JSON.stringify({

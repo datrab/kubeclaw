@@ -15,6 +15,8 @@ export interface SecurityScanCapabilityInvokerOptions {
   readonly maximumOutputBytes: number;
   readonly cacheDirectory: string;
   readonly databasePolicy?: TrivyDatabasePolicy;
+  readonly unsupportedHttpRegistry?: string;
+  readonly registryAccess?: {readonly registryReference:string;readonly username:string;readonly password:string;readonly caFile?:string};
 }
 
 const DIGEST = /^sha256:[a-f0-9]{64}$/u;
@@ -49,14 +51,15 @@ function relative(root: string, value: unknown): string | null {
   return resolved === root || resolved.startsWith(`${root}${path.sep}`) ? path.relative(root, resolved) || '.' : path.basename(value);
 }
 
-async function execute(executable: string, args: readonly string[], cwd: string, cacheDirectory: string,
+async function execute(executable: string, args: readonly string[], cwd: string, cache: {directory:string;registryEnvironment:Record<string,string>},
   timeoutMs: number, maximumBytes: number, signal: AbortSignal): Promise<Buffer> {
+  const {directory:cacheDirectory,registryEnvironment}=cache;
   return await new Promise<Buffer>((resolve, reject) => {
     const controller = new AbortController();
     const combined = AbortSignal.any([signal, controller.signal]);
     const child = spawn(executable, [...args], {
       cwd, signal: combined, stdio: ['ignore', 'pipe', 'pipe'],
-      env: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: cacheDirectory, TRIVY_CACHE_DIR: cacheDirectory,
+      env: { ...registryEnvironment, PATH: '/usr/local/bin:/usr/bin:/bin', HOME: cacheDirectory, TRIVY_CACHE_DIR: cacheDirectory,
         NO_COLOR: '1', LANG: 'C.UTF-8', LC_ALL: 'C.UTF-8' },
     });
     const stdout: Buffer[] = [];
@@ -146,6 +149,8 @@ function scanTarget(operation: string, root: string, target: string): string {
 export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvoker {
   readonly #root: string;
   readonly #trivy: string;
+  readonly #unsupportedHttpRegistry: string|undefined;
+  readonly #registryAccess: SecurityScanCapabilityInvokerOptions['registryAccess'];
   readonly #registryPrefixes: readonly string[];
   readonly #maximumExecutionMs: number;
   readonly #maximumOutputBytes: number;
@@ -161,6 +166,12 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
       throw new Error('SECURITY_SCAN_LIMIT_INVALID');
     }
     if (options.allowedRegistryPrefixes.length < 1) throw new Error('SECURITY_SCAN_REGISTRY_POLICY_INVALID');
+    this.#unsupportedHttpRegistry=options.unsupportedHttpRegistry;
+    this.#registryAccess=options.registryAccess;
+    if(options.registryAccess){
+      if(!/^[A-Za-z0-9.-]+(?::[0-9]{1,5})?$/u.test(options.registryAccess.registryReference) || !options.registryAccess.username || !options.registryAccess.password)throw new Error('SECURITY_SCAN_REGISTRY_AUTH_INVALID');
+      if(options.registryAccess.caFile)fs.accessSync(options.registryAccess.caFile,fs.constants.R_OK);
+    }
     this.#registryPrefixes = [...options.allowedRegistryPrefixes];
     this.#maximumExecutionMs = options.maximumExecutionMs;
     this.#maximumOutputBytes = options.maximumOutputBytes;
@@ -188,8 +199,9 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
         || !this.#registryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
         throw new Error('SECURITY_SCAN_IMAGE_DENIED');
       }
+      if(image.split('/')[0]===this.#unsupportedHttpRegistry)throw new Error('SECURITY_SCAN_HTTP_LAB_UNSUPPORTED: pinned scanner transport cannot be restricted to plaintext without relaxing TLS verification; configure an authenticated HTTPS registry');
       target = image;
-      args = ['image', '--scanners', 'vuln', '--format', 'json', '--quiet', '--skip-db-update', '--skip-java-db-update', '--offline-scan',
+      args = ['image', '--image-src', 'remote', '--scanners', 'vuln', '--format', 'json', '--quiet', '--skip-db-update', '--skip-java-db-update', '--offline-scan',
         '--skip-version-check', '--disable-telemetry', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, image];
     } else if (operation === 'kubernetes-policy') {
       target = contained(this.#root, payload.manifestPath, 'manifestPath');
@@ -205,15 +217,31 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
     return this.#scan(operation, target, args, timeoutMs, signal);
   }
 
+  #registryConfiguration(operation:string,target:string,args:string[]){
+    let credentialDirectory:string|undefined;
+      const registryEnvironment:Record<string,string>={};
+      const access=this.#registryAccess;
+      if(operation==='image' && access && target.split('/')[0]===access.registryReference){
+        credentialDirectory=fs.mkdtempSync(path.join(this.#cache,'.registry-auth-'));fs.chmodSync(credentialDirectory,0o700);
+        fs.writeFileSync(path.join(credentialDirectory,'config.json'),JSON.stringify({auths:{[access.registryReference]:{auth:Buffer.from(`${access.username}:${access.password}`).toString('base64')}}}),{mode:0o600});
+        registryEnvironment.DOCKER_CONFIG=credentialDirectory;
+        if(access.caFile)args.splice(args.length-1,0,'--cacert',access.caFile);
+      }
+    return {directory:credentialDirectory,environment:registryEnvironment};
+  }
+
   async #scan(operation: string, target: string, args: string[], timeoutMs: number, signal: AbortSignal) {
     const deadline = Date.now() + timeoutMs;
     const bounded = AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]);
+    let credentialDirectory:string|undefined;
     try {
+      const registryConfig=this.#registryConfiguration(operation,target,args);
+      credentialDirectory=registryConfig.directory;
       const before = operation === 'kubernetes-policy' ? undefined
         : await inspectTrivyDatabases(this.#cache, this.#databasePolicy, bounded);
       const remaining = deadline - Date.now();
       if (remaining <= 0) throw new Error('SECURITY_SCAN_TIMEOUT');
-      const output = trivyResults(await execute(this.#trivy, args, this.#root, this.#cache,
+      const output = trivyResults(await execute(this.#trivy, args, this.#root, {directory:this.#cache,registryEnvironment:registryConfig.environment},
         remaining, this.#maximumOutputBytes, bounded));
       const findings = operation === 'kubernetes-policy' ? policyFindings(this.#root, output) : dependencyFindings(this.#root, output);
       const databaseEvidence = before ? await inspectTrivyDatabases(this.#cache, this.#databasePolicy, bounded) : undefined;
@@ -229,6 +257,8 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
       if (signal.aborted) throw new Error('SECURITY_SCAN_CANCELLED', { cause: error });
       if (bounded.aborted || Date.now() >= deadline) throw new Error('SECURITY_SCAN_TIMEOUT', { cause: error });
       throw error;
+    } finally {
+      if(credentialDirectory)fs.rmSync(credentialDirectory,{recursive:true,force:true});
     }
   }
 }

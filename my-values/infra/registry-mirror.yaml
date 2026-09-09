@@ -1,8 +1,11 @@
 # =============================================================================
 # Registry Mirror — Pull-Through Cache for Docker Hub
 # =============================================================================
-# Transparent proxy that caches Docker Hub images locally.
-# First pull hits Docker Hub, all subsequent pulls are served from cluster.
+# Docker Hub pull-through cache. A running Pod does not configure any client.
+# Set runtimeInfrastructure.dockerHubMirror explicitly for BuildKit and generate
+# node configuration separately. GHCR/private registries are not mirrored here.
+# Cache hits/misses and upstream availability need actual client verification.
+# See docs/operations/registry-clients.md.
 #
 # Deploy: kubectl apply -n kubeclaw -f registry-mirror.yaml
 # =============================================================================

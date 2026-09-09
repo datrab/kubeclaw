@@ -25,7 +25,14 @@ assert.match(scaffold, /kubeclaw\.container-image@1/u);
 assert.match(scaffold, /LEGACY_BUILD_CONTEXT_MISSING/u);
 const workspace = read('tests/verification/e2e/real-run-workspace.mjs');
 assert.match(workspace, /uses: 'kubeclaw\.container-build@1'/u);
-assert.match(workspace, /schemaId: 'kubeclaw\.container-image@1'/u);
+const buildManifest = JSON.parse(read('skills/buster/plugins/container-build/plugin.json'));
+assert.deepEqual(buildManifest.testProviders.find((provider: {contractId: string}) => provider.contractId === 'kubeclaw.container-build@1').outputs,
+  [{name:'image',kind:'value',required:true,schemaId:'kubeclaw.container-image@1'}]);
+for(const [consumer,next] of [['image-security','kubernetes-policy-security'],['kubernetes-deployment','tailscale-exposure']]) {
+  const start=workspace.indexOf(`'${consumer}':`); const end=workspace.indexOf(`'${next}':`,start);
+  assert.ok(start>=0 && end>start, `${consumer} production test node must exist`);
+  assert.match(workspace.slice(start,end), /image: \{ from: 'container-build', output: 'image' \}/u);
+}
 assert.doesNotMatch(workspace, /test_suites:\s*\['build'\]/u);
 
 assert.equal(fs.existsSync('skills/nova/plugins/preflight-contract/src/buildkit.ts'), false);
@@ -57,8 +64,6 @@ assert.match(secretSetup, /openssl genpkey -algorithm ED25519/u);
 assert.match(busterValues, /BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY[\s\S]*pipeline-test-gate-source-attestation/u);
 assert.doesNotMatch(busterValues, /buster-plan-tls/u);
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/u);
-assert.match(busterValues, /CONTAINER_BUILD_REGISTRY_REFERENCE[\s\S]*registry-local/u);
-assert.match(busterValues, /CONTAINER_BUILD_REGISTRY_BASE_URL[\s\S]*http:\/\/registry-local/u);
 assert.match(novaValues, /BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY[\s\S]*pipeline-test-gate-source-attestation/u);
 assert.doesNotMatch(novaValues, /NODE_EXTRA_CA_CERTS|buster-plan-trust/u);
 const dockerfile = read('docker/Dockerfile.buster-runtime');
@@ -74,10 +79,22 @@ for (const file of [
   assert.match(source, /CONTAINER_BUILD_BUILDKIT_HOST/u);
 }
 const namespaceController = read('cmd/buster-namespace-controller/main.go');
-assert.match(namespaceController,
-  /"resources": \[\]string\{"secrets"\},\s*"resourceNames": \[\]string\{request\.SecretName\}, "verbs": \[\]string\{"get"\}/u);
-assert.doesNotMatch(namespaceController,
-  /"resources": \[\]string\{"secrets"\},\s*"verbs": \[\]string\{"get", "list"/u);
+const credentialRBAC = read('cmd/buster-namespace-controller/rbac.go');
+const credentialFunction = credentialRBAC.slice(credentialRBAC.indexOf('func (c *controller) credentialAccessObjects('), credentialRBAC.indexOf('func (c *controller) expectedNamespaceRBAC('));
+assert.match(credentialFunction, /"resources":\s*\[\]string\{"secrets"\},\s*"resourceNames":\s*\[\]string\{request\.SecretName\},\s*"verbs":\s*\[\]string\{verb\}/u);
+assert.deepEqual([...credentialFunction.matchAll(/verb\s*(?::=|=)\s*"([^"\n]+)"/gu)].map(match=>match[1]), ['get','patch']);
+assert.match(credentialFunction, /if mode == "writer" \{\s*verb = "patch"\s*subjects = request\.Writers/u);
+assert.match(credentialFunction, /subjects := request\.Readers/u);
+assert.match(namespaceController, /for _, manifest := range c\.credentialAccessObjects\(namespaceName, request\)/u);
+assert.match(credentialRBAC, /out = append\(out, c\.credentialAccessObjects\(namespace, credentials\)\.\.\.\)/u);
+assert.doesNotMatch(credentialFunction, /"verbs":\s*\[\]string\{"get", "list"/u);
+
+
+assert.doesNotMatch(busterValues, /name: (KUBECLAW_LOCAL_REGISTRY|CONTAINER_BUILD_REGISTRY_REFERENCE|CONTAINER_BUILD_REGISTRY_BASE_URL)/u);
+const registryTemplate = read('charts/kubeclaw/templates/_registry-clients.tpl');
+assert.match(registryTemplate, /KUBECLAW_REGISTRY_CONFIG/u);
+assert.match(registryTemplate, /authSecretName is required/u);
+assert.match(registryTemplate, /transport must explicitly select https or http-lab/u);
 
 console.log(JSON.stringify({ ok: true, phase: 'container-build-cutover',
   soleAuthority: 'kubeclaw.container-build@1', parityItems: 36,

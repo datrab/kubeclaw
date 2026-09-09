@@ -1,0 +1,13 @@
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/production.ts
+  106:8   error  Function 'loadProductionBusterRemotePlanRuntime' has too many lines (300). Maximum allowed is 60  max-lines-per-function
+  106:8   error  Function 'loadProductionBusterRemotePlanRuntime' has a complexity of 93. Maximum allowed is 15    complexity
+  108:63  error  Read environment variables only in a declared configuration or infrastructure adapter             discipline/no-direct-env-access
+  313:1   error  File has too many lines (393). Maximum allowed is 300                                             max-lines
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/security-scan-runtime.ts
+  137:23  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+  138:25  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+
+✖ 6 problems (6 errors, 0 warnings)
+

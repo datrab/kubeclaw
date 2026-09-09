@@ -1285,8 +1285,6 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.redis.secretName }}
                   key: {{ .Values.redis.secretKey | default "redis-password" }}
-            - name: KUBECLAW_LOCAL_REGISTRY
-              value: {{ .Values.runtimeInfrastructure.localRegistry | quote }}
             - name: QDRANT_URL
               value: {{ .Values.qdrant.url | quote }}
             - name: LITELLM_URL
@@ -1512,8 +1510,19 @@ spec:
             failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
           {{- end }}
 
-        {{- with .Values.extraContainers }}
-        {{- toYaml . | nindent 8 }}
+        {{- $registryWorkers := 0 }}
+        {{- range .Values.extraContainers }}
+        {{- if eq .name "buster-v2-runtime" }}{{- $registryWorkers = add1 $registryWorkers }}{{- end }}
+        {{- end }}
+        {{- if or (gt (int $registryWorkers) 1) (and (eq .Values.agentRole "buster") (ne (int $registryWorkers) 1)) }}
+        {{- fail "Buster registry configuration requires exactly one extraContainers entry named buster-v2-runtime" }}
+        {{- end }}
+        {{- range .Values.extraContainers }}
+        {{- if eq .name "buster-v2-runtime" }}
+        - {{ include "kubeclaw.registryContainer" (dict "root" $ "container" .) | nindent 10 | trim }}
+        {{- else }}
+        - {{ toYaml . | nindent 10 | trim }}
+        {{- end }}
         {{- end }}
         {{- if .Values.workerTrust.spiffe.enabled }}
         - name: worker-trust-proxy
@@ -1553,6 +1562,16 @@ spec:
       # VOLUMES
       # ---------------------------------------------------------------
       volumes:
+        {{- range $name, $client := dict "registry" .Values.runtimeInfrastructure.registry "dockerHubMirror" .Values.runtimeInfrastructure.dockerHubMirror }}
+        {{- if $client.caSecretName }}
+        - name: registry-client-{{ lower $name }}
+          secret:
+            secretName: {{ $client.caSecretName | quote }}
+            items:
+              - key: {{ required "registry CA secret key is required" $client.caSecretKey | quote }}
+                path: ca.crt
+        {{- end }}
+        {{- end }}
         - name: config
           {{- if .Values.persistence.config.enabled }}
           persistentVolumeClaim:

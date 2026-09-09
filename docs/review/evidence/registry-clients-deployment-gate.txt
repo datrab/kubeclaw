@@ -1,0 +1,194 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Nova deploy must remove retired direct-TLS trust metadata from a drifted live Deployment
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/check-deployment-truth.mjs:404:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '#!/usr/bin/env bash\n' +
+    '# =============================================================================\n' +
+    '# KubeClaw — Full Stack Deployment\n' +
+    '# =============================================================================\n' +
+    '# Deploys everything from scratch: namespace, secrets, infra, agents.\n' +
+    '#\n' +
+    '# Usage:\n' +
+    '#   ./deploy.sh setup              Create namespace + secrets + helm repos\n' +
+    '#   ./deploy.sh secrets            Create/copy/prompt required Kubernetes secrets\n' +
+    '#   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM\n' +
+    '#   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator\n' +
+    '#   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node\n' +
+    "#   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph\n" +
+    '#   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster\n' +
+    '#   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster\n' +
+    '#   ./deploy.sh nova-api-preflight Verify API providers through Nova and Buster\n' +
+    '#   ./deploy.sh nova-a11y-preflight Verify real browser accessibility through Nova and Buster\n' +
+    '#   ./deploy.sh nova-security-preflight Verify all five security providers through Nova and Buster\n' +
+    '#   ./deploy.sh nova-tailscale-preflight Verify a public endpoint through Nova, Buster, Kubernetes, and Tailscale\n' +
+    '#   ./deploy.sh nova-production-preflights <image> Run all required proofs after all source cutovers\n' +
+    '#   ./deploy.sh buster-infra-smoke Publish a task through Redis for the deployed Buster consumer\n' +
+    '#   ./deploy.sh agents             Deploy agents (Nova + Buster)\n' +
+    '#   ./deploy.sh agent <name> [--with-code]  Deploy Nova, Buster, or Prism\n' +
+    '#   ./deploy.sh image              Deploy both agents using image/runtime values\n' +
+    '#   ./deploy.sh image <name>       Deploy one agent using image/runtime values\n' +
+    '#   ./deploy.sh code [target]      Deploy code bundles for all agents or one target\n' +
+    '#   ./deploy.sh smoke              Run pod-level smoke checks for Nova + Buster\n' +
+    '#   ./deploy.sh smoke-agent <name> Run pod-level smoke checks for one agent\n' +
+    '#   ./deploy.sh all                Full deployment (setup + infra + agents)\n' +
+    '#   ./deploy.sh status             Show all pods and services\n' +
+    '#   ./deploy.sh teardown           Remove agents + infra, keep namespace/secrets\n' +
+    '#   ./deploy.sh teardown-agents    Remove agents only, keep infra\n' +
+    '#   ./deploy.sh teardown-all       Destroy namespace and everything in it\n' +
+    '#\n' +
+    '# Environment variables:\n' +
+    '#   NAMESPACE            Target namespace (default: kubeclaw)\n' +
+    '#   AGENT_HELM_TIMEOUT   Helm wait timeout for agent upgrades (default: 45m)\n' +
+    '#   AGENT_ROLLOUT_TIMEOUT  Pod/deployment readiness timeout for agents (default: 45m)\n' +
+    '#   CODE_BUNDLE_GITHUB_REPOSITORY      owner/repo override for derived GitHub release bundle URLs\n' +
+    '#   NOVA_VALUES_FILE / BUSTER_VALUES_FILE   Optional private overlay over selected release values\n' +
+    '#   PRISM_VALUES_FILE / PRISM_AGENT_VALUES_FILE Optional private overlays over selected Prism release values\n' +
+    '#   CODE_BUNDLE_RELEASE_TAG            GitHub release tag for published bundles (default: agent-code-bundles)\n' +
+    '#   CODE_BUNDLE_PREFLIGHT_SKIP         true|false to skip bundle URL existence checks before code deploy (default: false)\n' +
+    '#   NOVA_CODE_BUNDLE_ARCHIVE_URL       Resolved Nova bundle archive URL for code deploy\n' +
+    '#   NOVA_CODE_BUNDLE_EXPECTED_COMMIT   Expected Nova source commit for code deploy\n' +
+    '#   BUSTER_CODE_BUNDLE_ARCHIVE_URL     Resolved Buster bundle archive URL for code deploy\n' +
+    '#   BUSTER_CODE_BUNDLE_EXPECTED_COMMIT   Expected Buster source commit for code deploy\n' +
+    '#   PRISM_CODE_BUNDLE_ARCHIVE_URL      Resolved Prism bundle archive URL for Prism deploy\n' +
+    '#   PRISM_CODE_BUNDLE_EXPECTED_COMMIT  Expected Prism source commit for Prism deploy\n' +
+    '#   TAILSCALE_OPERATOR_ENABLED     true|false (default: true)\n' +
+    '#   TAILSCALE_OAUTH_CLIENT_ID      Optional bootstrap source for Secret/operator-oauth\n' +
+    '#   TAILSCALE_OAUTH_CLIENT_SECRET  Optional bootstrap source for Secret/operator-oauth\n' +
+    '#   KUBECLAW_SECRET_SETUP_MODE     auto|interactive|noninteractive (default: auto)\n' +
+    '#   KUBECLAW_RUN_SECRET_SETUP      auto|true|false for setup/all (default: auto)\n' +
+    '#   KUBECLAW_WORKSPACE_PROMPT      auto|true|false (default: auto)\n' +
+    '#   KUBECLAW_DEPLOY_POSTGRESQL    true|false (default: true)\n' +
+    '#   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)\n' +
+    '#   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)\n' +
+    '#   LITELLM_NODE_PORT             LiteLLM Service NodePort (default: 30050)\n' +
+    '#   KUBECLAW_DEPLOY_SPIRE         true|false (default: true)\n' +
+    '#   ALLOW_PARTIAL_INFRA           true|false (default: false)\n' +
+    '#   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Rootless BuildKit probe image (default: moby/buildkit:rootless)\n' +
+    '#   BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT Probe pod readiness timeout (default: 180s)\n' +
+    '# =============================================================================\n' +
+    'set -euo pipefail\n' +
+    '\n' +
+    'SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"\n' +
+    'REPO_DIR="$(dirname "$SCRIPT_DIR")"\n' +
+    'CHART_DIR="$REPO_DIR/charts/kubeclaw"\n' +
+    'VALUES_DIR="$REPO_DIR/my-values"\n' +
+    'INFRA_DIR="$VALUES_DIR/infra"\n' +
+    'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE="/etc/kubeclaw/production-receipt-authority.pub"\n' +
+    '\n' +
+    'NAMESPACE_WAS_SET="${NAMESPACE+x}"\n' +
+    'NAMESPACE="${NAMESPACE:-kubeclaw}"\n' +
+    'TAILSCALE_OPERATOR_NAMESPACE="${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}"\n' +
+    'TAILSCALE_OPERATOR_RELEASE="${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}"\n' +
+    'TAILSCALE_HELM_REPO="${TAILSCALE_HELM_REPO:-https://pkgs.tailscale.com/helmcharts}"\n' +
+    'TAILSCALE_OAUTH_SECRET_NAME="${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}"\n' +
+    'TAILSCALE_VALUES_FILE="${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}"\n' +
+    'KUBECLAW_WORKSPACE_PROMPT="${KUBECLAW_WORKSPACE_PROMPT:-auto}"\n' +
+    'KUBECLAW_WORKSPACE_NAMESPACE_FILE="${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}"\n' +
+    'KUBECLAW_DEPLOY_POSTGRESQL="${KUBECLAW_DEPLOY_POSTGRESQL:-true}"\n' +
+    'KUBECLAW_DEPLOY_QDRANT="${KUBECLAW_DEPLOY_QDRANT:-true}"\n' +
+    'KUBECLAW_DEPLOY_LITELLM="${KUBECLAW_DEPLOY_LITELLM:-true}"\n' +
+    'LITELLM_NODE_PORT="${LITELLM_NODE_PORT:-30050}"\n' +
+    'KUBECLAW_DEPLOY_SPIRE="${KUBECLAW_DEPLOY_SPIRE:-true}"\n' +
+    'SPIFFE_HELM_REPO="${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}"\n' +
+    'SPIRE_CRDS_CHART_VERSION="${SPIRE_CRDS_CHART_VERSION:-0.6.0}"\n' +
+    'SPIRE_CHART_VERSION="${SPIRE_CHART_VERSION:-0.30.0}"\n' +
+    'SPIRE_VALUES_FILE="${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}"\n' +
+    'KUBECLAW_DEPLOY_PRISM="${KUBECLAW_DEPLOY_PRISM:-true}"\n' +
+    'PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"\n' +
+    'PRISM_RELEASE="${PRISM_RELEASE:-prism}"\n' +
+    'PRISM_VALUES_OVERLAY="${PRISM_VALUES_FILE:-}"\n' +
+    'PRISM_VALUES_FILE="$REPO_DIR/releases/values/prism.yaml"\n' +
+    'PRISM_AGENT_VALUES_OVERLAY="${PRISM_AGENT_VALUES_FILE:-}"\n' +
+    'PRISM_AGENT_VALUES_FILE="$REPO_DIR/releases/values/prism-agent.yaml"\n' +
+    'PRISM_HELM_TIMEOUT="${PRISM_HELM_TIMEOUT:-45m}"\n' +
+    'PRISM_ROLLOUT_TIMEOUT="${PRISM_ROLLOUT_TIMEOUT:-45m}"\n' +
+    'PRISM_CONTROL_IMAGE_REPOSITORY="${PRISM_CONTROL_IMAGE_REPOSITORY:-}"\n' +
+    'PRISM_CONTROL_IMAGE_DIGEST="${PRISM_CONTROL_IMAGE_DIGEST:-}"\n' +
+    'PRISM_STUDIO_IMAGE_REPOSITORY="${PRISM_STUDIO_IMAGE_REPOSITORY:-}"\n' +
+    'PRISM_STUDIO_IMAGE_DIGEST="${PRISM_STUDIO_IMAGE_DIGEST:-}"\n' +
+    'PRISM_WORKER_IMAGE_REPOSITORY="${PRISM_WORKER_IMAGE_REPOSITORY:-}"\n' +
+    'PRISM_WORKER_IMAGE_DIGEST="${PRISM_WORKER_IMAGE_DIGEST:-}"\n' +
+    'PRISM_INGESTION_IMAGE_REPOSITORY="${PRISM_INGESTION_IMAGE_REPOSITORY:-}"\n' +
+    'PRISM_INGESTION_IMAGE_DIGEST="${PRISM_INGESTION_IMAGE_DIGEST:-}"\n' +
+    'PRISM_RUNTIME_SECRET_NAME="${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}"\n' +
+    'PRISM_DATABASE_SECRET_NAME="${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}"\n' +
+    'PRISM_IMAGE_PULL_SECRET_NAME="${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}"\n' +
+    'ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"\n' +
+    'AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"\n' +
+    'AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"\n' +
+    'CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"\n' +
+    'CODE_BUNDLE_PREFLIGHT_SKIP="${CODE_BUNDLE_PREFLIGHT_SKIP:-false}"\n' +
+    'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:rootless}"\n' +
+    'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT="${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}"\n' +
+    '\n' +
+    'export NAMESPACE\n' +
+    'export KUBECLAW_DEPLOY_POSTGRESQL\n' +
+    'export KUBECLAW_DEPLOY_QDRANT\n' +
+    'export KUBECLAW_DEPLOY_LITELLM\n' +
+    'export LITELLM_NODE_PORT\n' +
+    'export KUBECLAW_DEPLOY_SPIRE\n' +
+    'export KUBECLAW_DEPLOY_PRISM PRISM_NAMESPACE PRISM_RELEASE PRISM_VALUES_FILE PRISM_AGENT_VALUES_FILE\n' +
+    'export ALLOW_PARTIAL_INFRA\n' +
+    '\n' +
+    '# Colors\n' +
+    "RED='\\033[0;31m'\n" +
+    "GREEN='\\033[0;32m'\n" +
+    "YELLOW='\\033[1;33m'\n" +
+    "BLUE='\\033[0;34m'\n" +
+    "NC='\\033[0m'\n" +
+    'log() { echo -e "${GREEN}[✓]${NC} $1"; }\n' +
+    'warn() { echo -e "${YELLOW}[!]${NC} $1"; }\n' +
+    'err() { echo -e "${RED}[✗]${NC} $1" >&2; }\n' +
+    'info() { echo -e "${BLUE}[i]${NC} $1"; }\n' +
+    'header() {\n' +
+    '  echo -e "\\n${BLUE}═══════════════════════════════════════${NC}"\n' +
+    '  echo -e "${BLUE} $1${NC}"\n' +
+    '  echo -e "${BLUE}═══════════════════════════════════════${NC}"\n' +
+    '}\n' +
+    '\n' +
+    'require_command() {\n' +
+    '  if ! command -v "$1" >/dev/null 2>&1; then\n' +
+    '    err "Required command not found: $1"\n' +
+    '    return 1\n' +
+    '  fi\n' +
+    '}\n' +
+    '\n' +
+    'is_not_found_error() {\n' +
+    '  local text="$1"\n' +
+    '  [[ $text =~ [Nn]ot[Ff]ound|[Nn]ot\\ [Ff]ound|No\\ resources\\ found ]]\n' +
+    '}\n' +
+    '\n' +
+    'require_helm_release_idle() {\n' +
+    '  local release="$1"\n' +
+    '  local namespace="$2"\n' +
+    '  local output status\n' +
+    '\n' +
+    '  if ! output="$(helm status "$release" -n "$namespace" 2>&1)"; then\n' +
+    '    if is_not_found_error "$output"; then\n' +
+    '      return 0\n' +
+    '    fi\n' +
+    '    err "Cannot inspect Helm release ${namespace}/${release} before deployment"\n' +
+    '    echo "$output" >&2\n' +
+    '    return 1\n' +
+    '  fi\n' +
+    '\n' +
+    `  status="$(awk -F ':[[:space:]]*' '$1 == "STATUS" { print $2; exit }' <<<"$output")"\n` +
+    '  case "$status" in\n' +
+    '    pending-install|pending-upgrade|pending-rollback)\n' +
+    '      err "Helm release ${namespace}/${release} is ${status}; refusing to start a competing operation"\n' +
+    `      info "Inspect local owners: ps -eo pid,ppid,etime,args | grep -E '[h]elm (upgrade|install|rollback)|[d]eploy\\\\.sh'"\n` +
+    '      info "Inspect release state: helm status ${release} -n ${namespace} && helm history ${release} -n ${namespace} --max 10"\n' +
+    '      info "Sto'... 131456 more characters,
+  expected: /reconcile_nova_retired_trust_mount[\s\S]*?NODE_EXTRA_CA_CERTS[\s\S]*?--type=strategic[\s\S]*?volumeMounts[\s\S]*?mountPath":"\/var\/run\/buster-plan-trust","\$patch":"delete"[\s\S]*?volumes[\s\S]*?name":"buster-plan-trust","\$patch":"delete"[\s\S]*?if \[\[ \$role == "nova" \]\]; then\s+reconcile_nova_retired_trust_mount/u,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

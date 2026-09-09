@@ -1,0 +1,9 @@
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/production.ts
+   92:8   error  Function 'loadProductionBusterRemotePlanRuntime' has too many lines (299). Maximum allowed is 60  max-lines-per-function
+   92:8   error  Function 'loadProductionBusterRemotePlanRuntime' has a complexity of 93. Maximum allowed is 15    complexity
+   94:63  error  Read environment variables only in a declared configuration or infrastructure adapter             discipline/no-direct-env-access
+  312:1   error  File has too many lines (379). Maximum allowed is 300                                             max-lines
+
+✖ 4 problems (4 errors, 0 warnings)
+

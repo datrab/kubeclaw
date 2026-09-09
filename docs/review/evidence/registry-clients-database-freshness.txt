@@ -1,0 +1,29 @@
+node:internal/fs/promises:1241
+  return await PromisePrototypeThen(
+         ^
+
+Error: ENOENT: no such file or directory, realpath '/root/.cache/trivy'
+    at async realpath (node:internal/fs/promises:1241:10)
+    at async file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/security-providers/tests/database-freshness.test.mts:15:15 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'realpath',
+  path: '/root/.cache/trivy'
+}
+
+Node.js v24.19.0
+✖ skills/buster/plugins/security-providers/tests/database-freshness.test.mts (156.602616ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 167.247105
+
+✖ failing tests:
+
+test at skills/buster/plugins/security-providers/tests/database-freshness.test.mts:1:1
+✖ skills/buster/plugins/security-providers/tests/database-freshness.test.mts (156.602616ms)
+  'test failed'

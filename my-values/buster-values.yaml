@@ -116,14 +116,8 @@ extraContainers:
         value: /var/run/buster-worker/kubernetes
       - name: BUSTER_ALLOWED_SOURCE_SECRETS
         value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
-      - name: KUBECLAW_LOCAL_REGISTRY
-        value: registry-local.kubeclaw.svc.cluster.local:5001
       - name: CONTAINER_BUILD_BUILDKIT_HOST
         value: unix:///run/user/1000/buildkit/buildkitd.sock
-      - name: CONTAINER_BUILD_REGISTRY_REFERENCE
-        value: registry-local.kubeclaw.svc.cluster.local:5001
-      - name: CONTAINER_BUILD_REGISTRY_BASE_URL
-        value: http://registry-local.kubeclaw.svc.cluster.local:5001
       - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT
         value: /var/run/kubeclaw-browser-cgroup
     ports:
@@ -255,3 +249,7 @@ busterRuntimePersistence:
   claimName: agent-buster-runtime-state
   size: 64Gi
   storageClass: ""
+
+# Supply runtimeInfrastructure.registry in your private overlay before rendering
+# this runtime. See docs/operations/registry-clients.md for HTTPS/auth/node trust
+# and the explicitly selected anonymous HTTP lab alternative.

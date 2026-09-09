@@ -32,6 +32,7 @@ const CONSOLE_BOUNDARIES = [
 ];
 
 const ENVIRONMENT_BOUNDARIES = [
+  'scripts/registry-client-config.mjs',
   'skills/prism/server/studio-config.ts',
   'skills/prism/server/control-config.ts',
   'scripts/clawpatch-pipeline-light.mjs',

@@ -1,0 +1,13 @@
+✔ one explicit registry contract produces aligned BuildKit, runtime and node clients (3.262054ms)
+✔ missing transport, URL mismatches, plaintext credentials and incomplete trust fail explicitly (0.64281ms)
+✔ generator writes node credentials privately, never overwrites existing host configuration (58.549245ms)
+✔ real Helm wires exactly the selected sidecar and refuses missing/duplicate/contradictory configuration (393.212678ms)
+✔ original container-build manifest consumer verifies generated HTTPS origin, CA and scoped credentials (761.028525ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1313.71722

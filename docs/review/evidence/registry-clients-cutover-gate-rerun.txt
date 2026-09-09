@@ -1,0 +1,657 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /"resources": \[\]string\{"secrets"\},\s*"resourceNames": \[\]string\{request\.SecretName\}, "verbs": \[\]string\{"get"\}/u. Input:
+
+'package main\n' +
+  '\n' +
+  'import (\n' +
+  '\t"bytes"\n' +
+  '\t"context"\n' +
+  '\t"crypto/sha256"\n' +
+  '\t"crypto/tls"\n' +
+  '\t"crypto/x509"\n' +
+  '\t"encoding/hex"\n' +
+  '\t"encoding/json"\n' +
+  '\t"errors"\n' +
+  '\t"fmt"\n' +
+  '\t"io"\n' +
+  '\t"net/http"\n' +
+  '\t"net/url"\n' +
+  '\t"os"\n' +
+  '\t"regexp"\n' +
+  '\t"sort"\n' +
+  '\t"strconv"\n' +
+  '\t"strings"\n' +
+  '\t"time"\n' +
+  ')\n' +
+  '\n' +
+  'const (\n' +
+  '\tserviceAccountNamespacePath = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"\n' +
+  '\tserviceAccountTokenPath     = "/var/run/secrets/kubernetes.io/serviceaccount/token"\n' +
+  '\tserviceAccountCAPath        = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"\n' +
+  '\tleasePlural                 = "busternamespaceleases"\n' +
+  '\truntimeSecurityRefreshAfter = 5 * time.Second\n' +
+  ')\n' +
+  '\n' +
+  'var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")\n' +
+  '\n' +
+  'type controller struct {\n' +
+  '\tnamespace            string\n' +
+  '\tapiGroup             string\n' +
+  '\tapiVersion           string\n' +
+  '\tallowedAccess        map[serviceAccountRef]map[string]bool\n' +
+  '\tallowedSourceSecrets map[string]bool\n' +
+  '\tserviceAccountName   string\n' +
+  '\tsecretRoleName       string\n' +
+  '\tdeployerRoleName     string\n' +
+  '\ttesterRoleName       string\n' +
+  '\tallowedPrefixes      []string\n' +
+  '\tdefaultTTL           time.Duration\n' +
+  '\tmaxTTL               time.Duration\n' +
+  '\tpollInterval         time.Duration\n' +
+  '\tfinalizer            string\n' +
+  '\tapiURL               string\n' +
+  '\ttokenPath            string\n' +
+  '\thttpClient           *http.Client\n' +
+  '\treadiness            *readinessConfig\n' +
+  '}\n' +
+  '\n' +
+  'type serviceAccountRef struct {\n' +
+  '\tNamespace string\n' +
+  '\tName      string\n' +
+  '}\n' +
+  '\n' +
+  'type accessRequest struct {\n' +
+  '\tSubject serviceAccountRef\n' +
+  '\tMode    string\n' +
+  '}\n' +
+  '\n' +
+  'type testCredentialRequest struct {\n' +
+  '\tMode       string\n' +
+  '\tSecretName string\n' +
+  '\tReaders    []serviceAccountRef\n' +
+  '\tWriters    []serviceAccountRef\n' +
+  '\tKeys       []string\n' +
+  '}\n' +
+  '\n' +
+  'type lease struct {\n' +
+  '\tMetadata metadata               `json:"metadata"`\n' +
+  '\tSpec     map[string]interface{} `json:"spec"`\n' +
+  '\tStatus   map[string]interface{} `json:"status"`\n' +
+  '}\n' +
+  '\n' +
+  'type metadata struct {\n' +
+  '\tName              string            `json:"name"`\n' +
+  '\tResourceVersion   string            `json:"resourceVersion"`\n' +
+  '\tNamespace         string            `json:"namespace"`\n' +
+  '\tLabels            map[string]string `json:"labels"`\n' +
+  '\tAnnotations       map[string]string `json:"annotations"`\n' +
+  '\tGeneration        int64             `json:"generation"`\n' +
+  '\tFinalizers        []string          `json:"finalizers"`\n' +
+  '\tCreationTimestamp string            `json:"creationTimestamp"`\n' +
+  '\tDeletionTimestamp string            `json:"deletionTimestamp"`\n' +
+  '\tUID               string            `json:"uid"`\n' +
+  '}\n' +
+  '\n' +
+  'type leaseList struct {\n' +
+  '\tItems []lease `json:"items"`\n' +
+  '}\n' +
+  '\n' +
+  'type apiError struct {\n' +
+  '\tstatusCode int\n' +
+  '\tmessage    string\n' +
+  '}\n' +
+  '\n' +
+  'func (e *apiError) Error() string {\n' +
+  '\treturn e.message\n' +
+  '}\n' +
+  '\n' +
+  'func main() {\n' +
+  '\tctrl, err := newController()\n' +
+  '\tif err != nil {\n' +
+  '\t\tpanic(err)\n' +
+  '\t}\n' +
+  '\n' +
+  '\tlogJSON("info", "controller started", map[string]interface{}{\n' +
+  '\t\t"namespace":       ctrl.namespace,\n' +
+  '\t\t"apiGroup":        ctrl.apiGroup,\n' +
+  '\t\t"apiVersion":      ctrl.apiVersion,\n' +
+  '\t\t"allowedPrefixes": ctrl.allowedPrefixes,\n' +
+  '\t})\n' +
+  '\n' +
+  '\tctx := context.Background()\n' +
+  '\tif err := ctrl.startReadinessServer(ctx); err != nil {\n' +
+  '\t\tpanic(err)\n' +
+  '\t}\n' +
+  '\tfor {\n' +
+  '\t\tif err := ctrl.reconcileAll(ctx); err != nil {\n' +
+  '\t\t\tlogJSON("error", "controller loop failed", err.Error())\n' +
+  '\t\t}\n' +
+  '\t\ttime.Sleep(ctrl.pollInterval)\n' +
+  '\t}\n' +
+  '}\n' +
+  '\n' +
+  'func newController() (*controller, error) {\n' +
+  '\tnamespace := getenvFile("KUBECLAW_NAMESPACE", serviceAccountNamespacePath, "kubeclaw")\n' +
+  '\ttoken := readFile(serviceAccountTokenPath, "")\n' +
+  '\thost := os.Getenv("KUBERNETES_SERVICE_HOST")\n' +
+  '\tport := env("KUBERNETES_SERVICE_PORT", "443")\n' +
+  '\tif host == "" || token == "" {\n' +
+  '\t\treturn nil, errors.New("kubernetes service host and ServiceAccount token are required")\n' +
+  '\t}\n' +
+  '\n' +
+  '\tapiGroup := env("BUSTER_LEASE_API_GROUP", "kubeclaw.forgestack.ai")\n' +
+  '\tapiVersion := env("BUSTER_LEASE_API_VERSION", "v1alpha1")\n' +
+  '\tprefixes := splitCSV(env("BUSTER_ALLOWED_NAMESPACE_PREFIXES", "test"))\n' +
+  '\tif len(prefixes) == 0 {\n' +
+  '\t\tprefixes = []string{"test"}\n' +
+  '\t}\n' +
+  '\n' +
+  '\tttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)\n' +
+  '\tmaxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)\n' +
+  '\tpollInterval, err := controllerPollInterval()\n' +
+  '\tif err != nil {\n' +
+  '\t\treturn nil, err\n' +
+  '\t}\n' +
+  '\n' +
+  '\tctrl := &controller{\n' +
+  '\t\tnamespace:          namespace,\n' +
+  '\t\tapiGroup:           apiGroup,\n' +
+  '\t\tapiVersion:         apiVersion,\n' +
+  '\t\tallowedPrefixes:    prefixes,\n' +
+  '\t\tdefaultTTL:         time.Duration(ttlSeconds) * time.Second,\n' +
+  '\t\tmaxTTL:             time.Duration(maxTTLSeconds) * time.Second,\n' +
+  '\t\tpollInterval:       pollInterval,\n' +
+  '\t\tfinalizer:          apiGroup + "/buster-namespace-cleanup",\n' +
+  '\t\tapiURL:             "https://" + host + ":" + port,\n' +
+  '\t\ttokenPath:          serviceAccountTokenPath,\n' +
+  '\t\tserviceAccountName: env("BUSTER_CONTROLLER_SERVICE_ACCOUNT", "agent-buster-namespace-controller"),\n' +
+  '\t\tsecretRoleName:     env("BUSTER_SECRET_ROLE_NAME", "buster-controller-secrets"),\n' +
+  '\t\tdeployerRoleName:   env("BUSTER_DEPLOYER_ROLE_NAME", "buster-namespace-deployer"),\n' +
+  '\t\ttesterRoleName:     env("BUSTER_TESTER_ROLE_NAME", "buster-namespace-tester"),\n' +
+  '\t}\n' +
+  '\n' +
+  '\taccess, err := parseAllowedAccess(env("BUSTER_ALLOWED_ACCESS_JSON", `[{"subject":"kubeclaw/agent-buster","modes":["tester"]}]`))\n' +
+  '\tif err != nil {\n' +
+  '\t\treturn nil, err\n' +
+  '\t}\n' +
+  '\tif err := ctrl.configureReadiness(); err != nil {\n' +
+  '\t\treturn nil, err\n' +
+  '\t}\n' +
+  '\tctrl.allowedAccess = access\n' +
+  '\tctrl.allowedSourceSecrets = map[string]bool{}\n' +
+  '\tfor _, name := range splitCSV(os.Getenv("BUSTER_ALLOWED_SOURCE_SECRETS")) {\n' +
+  '\t\tif !validSecretRefName(name) {\n' +
+  '\t\t\treturn nil, fmt.Errorf("invalid BUSTER_ALLOWED_SOURCE_SECRETS entry: %s", name)\n' +
+  '\t\t}\n' +
+  '\t\tctrl.allowedSourceSecrets[name] = true\n' +
+  '\t}\n' +
+  '\n' +
+  '\tclient, err := kubernetesHTTPClient()\n' +
+  '\tif err != nil {\n' +
+  '\t\treturn nil, err\n' +
+  '\t}\n' +
+  '\tctrl.httpClient = client\n' +
+  '\treturn ctrl, nil\n' +
+  '}\n' +
+  '\n' +
+  'func kubernetesHTTPClient() (*http.Client, error) {\n' +
+  '\treturn kubernetesHTTPClientFromCA(serviceAccountCAPath)\n' +
+  '}\n' +
+  '\n' +
+  'func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {\n' +
+  '\tcaPEM, err := os.ReadFile(caPath)\n' +
+  '\tif err != nil {\n' +
+  '\t\treturn nil, fmt.Errorf("read Kubernetes ServiceAccount CA: %w", err)\n' +
+  '\t}\n' +
+  '\troots := x509.NewCertPool()\n' +
+  '\tif !roots.AppendCertsFromPEM(caPEM) {\n' +
+  '\t\treturn nil, fmt.Errorf("failed to parse Kubernetes ServiceAccount CA")\n' +
+  '\t}\n' +
+  '\treturn &http.Client{\n' +
+  '\t\tTimeout: 60 * time.Second,\n' +
+  '\t\tTransport: &http.Transport{\n' +
+  '\t\t\tTLSClientConfig: &tls.Config{RootCAs: roots, MinVersion: tls.VersionTLS12},\n' +
+  '\t\t},\n' +
+  '\t}, nil\n' +
+  '}\n' +
+  '\n' +
+  'func (c *controller) reconcileAll(ctx context.Context) error {\n' +
+  '\tvar list leaseList\n' +
+  '\tif err := c.kube(ctx, http.MethodGet, c.leasePath(""), nil, "application/json", &list); err != nil {\n' +
+  '\t\treturn err\n' +
+  '\t}\n' +
+  '\n' +
+  '\tfor _, item := range list.Items {\n' +
+  '\t\tcurrent := item\n' +
+  '\t\tif err := c.reconcileLease(ctx, &current); err != nil {\n' +
+  '\t\t\tlogJSON("error", "lease reconcile failed: "+current.Metadata.Name, err.Error())\n' +
+  '\t\t\tif current.Metadata.Name == "" {\n' +
+  '\t\t\t\tcontinue\n' +
+  '\t\t\t}\n' +
+  '\t\t\tnamespaceName := c.normalizeLeaseNamespaceName(stringValue(current.Spec["namespaceName"]))\n' +
+  '\t\t\tif namespaceName == "" {\n' +
+  '\t\t\t\tnamespaceName = stringValue(current.Spec["namespaceName"])\n' +
+  '\t\t\t}\n' +
+  '\t\t\tstatusErr := c.patchLeaseStatus(ctx, &current, map[string]interface{}{\n' +
+  '\t\t\t\t"phase":         "Failed",\n' +
+  '\t\t\t\t"namespaceName": nullableString(namespaceName),\n' +
+  '\t\t\t\t"message":       err.Error(),\n' +
+  '\t\t\t\t"conditions":    []interface{}{leaseCondition("Ready", false, "ReconcileFailed")},\n' +
+  '\t\t\t})\n' +
+  '\t\t\tif statusErr != nil {\n' +
+  '\t\t\t\tlogJSON("error", "status patch failed: "+current.Metadata.Name, statusErr.Error())\n' +
+  '\t\t\t}\n' +
+  '\t\t}\n' +
+  '\t}\n' +
+  '\treturn nil\n' +
+  '}\n' +
+  '\n' +
+  'func (c *controller) reconcileLease(ctx context.Context, item *lease) error {\n' +
+  '\trequestedNamespace := stringValue(item.Spec["namespaceName"])\n' +
+  '\tnamespaceName := c.normalizeLeaseNamespaceName(requestedNamespace)\n' +
+  '\tif item.Metadata.DeletionTimestamp != "" {\n' +
+  '\t\tif !contains(item.Metadata.Finalizers, c.finalizer) {\n' +
+  '\t\t\treturn nil\n' +
+  '\t\t}\n' +
+  '\t\tif stringValue(item.Status["phase"]) == "Rejected" && stringValue(item.Status["namespaceName"]) == "" {\n' +
+  '\t\t\treturn c.removeFinalizer(ctx, item)\n' +
+  '\t\t}\n' +
+  '\t\townedNamespace := firstNonEmpty(stringValue(item.Status["namespaceName"]), namespaceName)\n' +
+  '\t\treturn c.reconcileDeletedLease(ctx, item, ownedNamespace)\n' +
+  '\t}\n' +
+  '\tif namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {\n' +
+  '\t\treturn c.patchLeaseStatus(ctx, item, map[string]interface{}{\n' +
+  '\t\t\t"phase":         "Rejected",\n' +
+  '\t\t\t"namespaceName": nullableString(requestedNamespace),\n' +
+  '\t\t\t"message":       "namespaceName must normalize to a valid broker-owned namespace",\n' +
+  '\t\t})\n' +
+  '\t}\n' +
+  '\tcurrent, err := c.ensureFinalizer(ctx, item)\n' +
+  '\tif err != nil {\n' +
+  '\t\treturn err\n' +
+  '\t}\n' +
+  '\titem = current\n' +
+  '\tif len(interfaceSlice(item.Spec["access"])) == 0 {\n' +
+  '\t\towned, err := c.legacyNamespaceOwned(ctx, item, namespaceName)\n' +
+  '\t\tif err != nil {\n' +
+  '\t\t\treturn err\n' +
+  '\t\t}\n' +
+  '\t\tif owned {\n' +
+  '\t\t\tif err := c.deleteLegacyRunnerAccess(ctx, namespaceName); err != nil {\n' +
+  '\t\t\t\treturn err\n' +
+  '\t\t\t}\n' +
+  '\t\t}\n' +
+  '\t\tif expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {\n' +
+  '\t\t\treturn err\n' +
+  '\t\t}\n' +
+  '\t\treturn c.patchLeaseStatus(ctx, item, map[string]interface{}{\n' +
+  '\t\t\t"phase": "Failed", "namespaceName": namespaceName,\n' +
+  '\t\t\t"expiresAt": c.expiresAt(item).Format(time.RFC3339),\n' +
+  '\t\t\t"message":   "Legacy lease cannot provision new work; delete it or wait for TTL cleanup",\n' +
+  '\t\t})\n' +
+  '\t}\n' +
+  '\tif expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {\n' +
+  '\t\treturn err\n' +
+  '\t}\n' +
+  '\n' +
+  '\tif err := c.validateLeaseSpec(item); err != nil {\n' +
+  '\t\tif stringValue(item.Status["specDigest"]) != "" {\n' +
+  '\t\t\tif deleteErr := c.deleteOwnedNamespace(ctx, item, namespaceName); deleteErr != nil {\n' +
+  '\t\t\t\treturn deleteErr\n' +
+  '\t\t\t}\n' +
+  '\t\t}\n' +
+  '\t\treturn c.patchLeaseStatus(ctx, item, rejectedStatus(namespaceName, err.Error()))\n' +
+  '\t}\n' +
+  '\tif digest := stringValue(item.Status["specDigest"]); digest != "" && digest != leaseSpecDigest(item.Spec) {\n' +
+  '\t\tif stringValue(item.Status["phase"]) != "Ready" || !legacyMutableExposureDigest(digest, item.Spec) {\n' +
+  '\t\t\treturn c.patchLeaseStatus(ctx, item, rejectedStatus(namespaceName, "lease spec is immutable after provisioning"))\n' +
+  '\t\t}\n' +
+  '\t}\n' +
+  '\n' +
+  '\tif stringValue(item.Status["phase"]) == "Ready" {\n' +
+  '\t\treturn c.reconcileReadyLease(ctx, item, namespaceName)\n' +
+  '\t}\n' +
+  '\treturn c.provisionLease(ctx, item, namespaceName)\n' +
+  '}\n' +
+  '\n' +
+  'func (c *controller) expireLease(ctx context.Context, item *lease, namespaceName string) (bool, error) {\n' +
+  '\tdeadline := c.expiresAt(item)\n' +
+  '\tif !time.Now().After(deadline) {\n' +
+  '\t\treturn false, nil\n' +
+  '\t}\n' +
+  '\tif stringValue(item.St'... 63468 more characters
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-container-build-cutover.mts:82:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'package main\n' +
+    '\n' +
+    'import (\n' +
+    '\t"bytes"\n' +
+    '\t"context"\n' +
+    '\t"crypto/sha256"\n' +
+    '\t"crypto/tls"\n' +
+    '\t"crypto/x509"\n' +
+    '\t"encoding/hex"\n' +
+    '\t"encoding/json"\n' +
+    '\t"errors"\n' +
+    '\t"fmt"\n' +
+    '\t"io"\n' +
+    '\t"net/http"\n' +
+    '\t"net/url"\n' +
+    '\t"os"\n' +
+    '\t"regexp"\n' +
+    '\t"sort"\n' +
+    '\t"strconv"\n' +
+    '\t"strings"\n' +
+    '\t"time"\n' +
+    ')\n' +
+    '\n' +
+    'const (\n' +
+    '\tserviceAccountNamespacePath = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"\n' +
+    '\tserviceAccountTokenPath     = "/var/run/secrets/kubernetes.io/serviceaccount/token"\n' +
+    '\tserviceAccountCAPath        = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"\n' +
+    '\tleasePlural                 = "busternamespaceleases"\n' +
+    '\truntimeSecurityRefreshAfter = 5 * time.Second\n' +
+    ')\n' +
+    '\n' +
+    'var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")\n' +
+    '\n' +
+    'type controller struct {\n' +
+    '\tnamespace            string\n' +
+    '\tapiGroup             string\n' +
+    '\tapiVersion           string\n' +
+    '\tallowedAccess        map[serviceAccountRef]map[string]bool\n' +
+    '\tallowedSourceSecrets map[string]bool\n' +
+    '\tserviceAccountName   string\n' +
+    '\tsecretRoleName       string\n' +
+    '\tdeployerRoleName     string\n' +
+    '\ttesterRoleName       string\n' +
+    '\tallowedPrefixes      []string\n' +
+    '\tdefaultTTL           time.Duration\n' +
+    '\tmaxTTL               time.Duration\n' +
+    '\tpollInterval         time.Duration\n' +
+    '\tfinalizer            string\n' +
+    '\tapiURL               string\n' +
+    '\ttokenPath            string\n' +
+    '\thttpClient           *http.Client\n' +
+    '\treadiness            *readinessConfig\n' +
+    '}\n' +
+    '\n' +
+    'type serviceAccountRef struct {\n' +
+    '\tNamespace string\n' +
+    '\tName      string\n' +
+    '}\n' +
+    '\n' +
+    'type accessRequest struct {\n' +
+    '\tSubject serviceAccountRef\n' +
+    '\tMode    string\n' +
+    '}\n' +
+    '\n' +
+    'type testCredentialRequest struct {\n' +
+    '\tMode       string\n' +
+    '\tSecretName string\n' +
+    '\tReaders    []serviceAccountRef\n' +
+    '\tWriters    []serviceAccountRef\n' +
+    '\tKeys       []string\n' +
+    '}\n' +
+    '\n' +
+    'type lease struct {\n' +
+    '\tMetadata metadata               `json:"metadata"`\n' +
+    '\tSpec     map[string]interface{} `json:"spec"`\n' +
+    '\tStatus   map[string]interface{} `json:"status"`\n' +
+    '}\n' +
+    '\n' +
+    'type metadata struct {\n' +
+    '\tName              string            `json:"name"`\n' +
+    '\tResourceVersion   string            `json:"resourceVersion"`\n' +
+    '\tNamespace         string            `json:"namespace"`\n' +
+    '\tLabels            map[string]string `json:"labels"`\n' +
+    '\tAnnotations       map[string]string `json:"annotations"`\n' +
+    '\tGeneration        int64             `json:"generation"`\n' +
+    '\tFinalizers        []string          `json:"finalizers"`\n' +
+    '\tCreationTimestamp string            `json:"creationTimestamp"`\n' +
+    '\tDeletionTimestamp string            `json:"deletionTimestamp"`\n' +
+    '\tUID               string            `json:"uid"`\n' +
+    '}\n' +
+    '\n' +
+    'type leaseList struct {\n' +
+    '\tItems []lease `json:"items"`\n' +
+    '}\n' +
+    '\n' +
+    'type apiError struct {\n' +
+    '\tstatusCode int\n' +
+    '\tmessage    string\n' +
+    '}\n' +
+    '\n' +
+    'func (e *apiError) Error() string {\n' +
+    '\treturn e.message\n' +
+    '}\n' +
+    '\n' +
+    'func main() {\n' +
+    '\tctrl, err := newController()\n' +
+    '\tif err != nil {\n' +
+    '\t\tpanic(err)\n' +
+    '\t}\n' +
+    '\n' +
+    '\tlogJSON("info", "controller started", map[string]interface{}{\n' +
+    '\t\t"namespace":       ctrl.namespace,\n' +
+    '\t\t"apiGroup":        ctrl.apiGroup,\n' +
+    '\t\t"apiVersion":      ctrl.apiVersion,\n' +
+    '\t\t"allowedPrefixes": ctrl.allowedPrefixes,\n' +
+    '\t})\n' +
+    '\n' +
+    '\tctx := context.Background()\n' +
+    '\tif err := ctrl.startReadinessServer(ctx); err != nil {\n' +
+    '\t\tpanic(err)\n' +
+    '\t}\n' +
+    '\tfor {\n' +
+    '\t\tif err := ctrl.reconcileAll(ctx); err != nil {\n' +
+    '\t\t\tlogJSON("error", "controller loop failed", err.Error())\n' +
+    '\t\t}\n' +
+    '\t\ttime.Sleep(ctrl.pollInterval)\n' +
+    '\t}\n' +
+    '}\n' +
+    '\n' +
+    'func newController() (*controller, error) {\n' +
+    '\tnamespace := getenvFile("KUBECLAW_NAMESPACE", serviceAccountNamespacePath, "kubeclaw")\n' +
+    '\ttoken := readFile(serviceAccountTokenPath, "")\n' +
+    '\thost := os.Getenv("KUBERNETES_SERVICE_HOST")\n' +
+    '\tport := env("KUBERNETES_SERVICE_PORT", "443")\n' +
+    '\tif host == "" || token == "" {\n' +
+    '\t\treturn nil, errors.New("kubernetes service host and ServiceAccount token are required")\n' +
+    '\t}\n' +
+    '\n' +
+    '\tapiGroup := env("BUSTER_LEASE_API_GROUP", "kubeclaw.forgestack.ai")\n' +
+    '\tapiVersion := env("BUSTER_LEASE_API_VERSION", "v1alpha1")\n' +
+    '\tprefixes := splitCSV(env("BUSTER_ALLOWED_NAMESPACE_PREFIXES", "test"))\n' +
+    '\tif len(prefixes) == 0 {\n' +
+    '\t\tprefixes = []string{"test"}\n' +
+    '\t}\n' +
+    '\n' +
+    '\tttlSeconds := envInt("BUSTER_DEFAULT_TTL_SECONDS", 7200)\n' +
+    '\tmaxTTLSeconds := envInt("BUSTER_MAX_TTL_SECONDS", 86400)\n' +
+    '\tpollInterval, err := controllerPollInterval()\n' +
+    '\tif err != nil {\n' +
+    '\t\treturn nil, err\n' +
+    '\t}\n' +
+    '\n' +
+    '\tctrl := &controller{\n' +
+    '\t\tnamespace:          namespace,\n' +
+    '\t\tapiGroup:           apiGroup,\n' +
+    '\t\tapiVersion:         apiVersion,\n' +
+    '\t\tallowedPrefixes:    prefixes,\n' +
+    '\t\tdefaultTTL:         time.Duration(ttlSeconds) * time.Second,\n' +
+    '\t\tmaxTTL:             time.Duration(maxTTLSeconds) * time.Second,\n' +
+    '\t\tpollInterval:       pollInterval,\n' +
+    '\t\tfinalizer:          apiGroup + "/buster-namespace-cleanup",\n' +
+    '\t\tapiURL:             "https://" + host + ":" + port,\n' +
+    '\t\ttokenPath:          serviceAccountTokenPath,\n' +
+    '\t\tserviceAccountName: env("BUSTER_CONTROLLER_SERVICE_ACCOUNT", "agent-buster-namespace-controller"),\n' +
+    '\t\tsecretRoleName:     env("BUSTER_SECRET_ROLE_NAME", "buster-controller-secrets"),\n' +
+    '\t\tdeployerRoleName:   env("BUSTER_DEPLOYER_ROLE_NAME", "buster-namespace-deployer"),\n' +
+    '\t\ttesterRoleName:     env("BUSTER_TESTER_ROLE_NAME", "buster-namespace-tester"),\n' +
+    '\t}\n' +
+    '\n' +
+    '\taccess, err := parseAllowedAccess(env("BUSTER_ALLOWED_ACCESS_JSON", `[{"subject":"kubeclaw/agent-buster","modes":["tester"]}]`))\n' +
+    '\tif err != nil {\n' +
+    '\t\treturn nil, err\n' +
+    '\t}\n' +
+    '\tif err := ctrl.configureReadiness(); err != nil {\n' +
+    '\t\treturn nil, err\n' +
+    '\t}\n' +
+    '\tctrl.allowedAccess = access\n' +
+    '\tctrl.allowedSourceSecrets = map[string]bool{}\n' +
+    '\tfor _, name := range splitCSV(os.Getenv("BUSTER_ALLOWED_SOURCE_SECRETS")) {\n' +
+    '\t\tif !validSecretRefName(name) {\n' +
+    '\t\t\treturn nil, fmt.Errorf("invalid BUSTER_ALLOWED_SOURCE_SECRETS entry: %s", name)\n' +
+    '\t\t}\n' +
+    '\t\tctrl.allowedSourceSecrets[name] = true\n' +
+    '\t}\n' +
+    '\n' +
+    '\tclient, err := kubernetesHTTPClient()\n' +
+    '\tif err != nil {\n' +
+    '\t\treturn nil, err\n' +
+    '\t}\n' +
+    '\tctrl.httpClient = client\n' +
+    '\treturn ctrl, nil\n' +
+    '}\n' +
+    '\n' +
+    'func kubernetesHTTPClient() (*http.Client, error) {\n' +
+    '\treturn kubernetesHTTPClientFromCA(serviceAccountCAPath)\n' +
+    '}\n' +
+    '\n' +
+    'func kubernetesHTTPClientFromCA(caPath string) (*http.Client, error) {\n' +
+    '\tcaPEM, err := os.ReadFile(caPath)\n' +
+    '\tif err != nil {\n' +
+    '\t\treturn nil, fmt.Errorf("read Kubernetes ServiceAccount CA: %w", err)\n' +
+    '\t}\n' +
+    '\troots := x509.NewCertPool()\n' +
+    '\tif !roots.AppendCertsFromPEM(caPEM) {\n' +
+    '\t\treturn nil, fmt.Errorf("failed to parse Kubernetes ServiceAccount CA")\n' +
+    '\t}\n' +
+    '\treturn &http.Client{\n' +
+    '\t\tTimeout: 60 * time.Second,\n' +
+    '\t\tTransport: &http.Transport{\n' +
+    '\t\t\tTLSClientConfig: &tls.Config{RootCAs: roots, MinVersion: tls.VersionTLS12},\n' +
+    '\t\t},\n' +
+    '\t}, nil\n' +
+    '}\n' +
+    '\n' +
+    'func (c *controller) reconcileAll(ctx context.Context) error {\n' +
+    '\tvar list leaseList\n' +
+    '\tif err := c.kube(ctx, http.MethodGet, c.leasePath(""), nil, "application/json", &list); err != nil {\n' +
+    '\t\treturn err\n' +
+    '\t}\n' +
+    '\n' +
+    '\tfor _, item := range list.Items {\n' +
+    '\t\tcurrent := item\n' +
+    '\t\tif err := c.reconcileLease(ctx, &current); err != nil {\n' +
+    '\t\t\tlogJSON("error", "lease reconcile failed: "+current.Metadata.Name, err.Error())\n' +
+    '\t\t\tif current.Metadata.Name == "" {\n' +
+    '\t\t\t\tcontinue\n' +
+    '\t\t\t}\n' +
+    '\t\t\tnamespaceName := c.normalizeLeaseNamespaceName(stringValue(current.Spec["namespaceName"]))\n' +
+    '\t\t\tif namespaceName == "" {\n' +
+    '\t\t\t\tnamespaceName = stringValue(current.Spec["namespaceName"])\n' +
+    '\t\t\t}\n' +
+    '\t\t\tstatusErr := c.patchLeaseStatus(ctx, &current, map[string]interface{}{\n' +
+    '\t\t\t\t"phase":         "Failed",\n' +
+    '\t\t\t\t"namespaceName": nullableString(namespaceName),\n' +
+    '\t\t\t\t"message":       err.Error(),\n' +
+    '\t\t\t\t"conditions":    []interface{}{leaseCondition("Ready", false, "ReconcileFailed")},\n' +
+    '\t\t\t})\n' +
+    '\t\t\tif statusErr != nil {\n' +
+    '\t\t\t\tlogJSON("error", "status patch failed: "+current.Metadata.Name, statusErr.Error())\n' +
+    '\t\t\t}\n' +
+    '\t\t}\n' +
+    '\t}\n' +
+    '\treturn nil\n' +
+    '}\n' +
+    '\n' +
+    'func (c *controller) reconcileLease(ctx context.Context, item *lease) error {\n' +
+    '\trequestedNamespace := stringValue(item.Spec["namespaceName"])\n' +
+    '\tnamespaceName := c.normalizeLeaseNamespaceName(requestedNamespace)\n' +
+    '\tif item.Metadata.DeletionTimestamp != "" {\n' +
+    '\t\tif !contains(item.Metadata.Finalizers, c.finalizer) {\n' +
+    '\t\t\treturn nil\n' +
+    '\t\t}\n' +
+    '\t\tif stringValue(item.Status["phase"]) == "Rejected" && stringValue(item.Status["namespaceName"]) == "" {\n' +
+    '\t\t\treturn c.removeFinalizer(ctx, item)\n' +
+    '\t\t}\n' +
+    '\t\townedNamespace := firstNonEmpty(stringValue(item.Status["namespaceName"]), namespaceName)\n' +
+    '\t\treturn c.reconcileDeletedLease(ctx, item, ownedNamespace)\n' +
+    '\t}\n' +
+    '\tif namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {\n' +
+    '\t\treturn c.patchLeaseStatus(ctx, item, map[string]interface{}{\n' +
+    '\t\t\t"phase":         "Rejected",\n' +
+    '\t\t\t"namespaceName": nullableString(requestedNamespace),\n' +
+    '\t\t\t"message":       "namespaceName must normalize to a valid broker-owned namespace",\n' +
+    '\t\t})\n' +
+    '\t}\n' +
+    '\tcurrent, err := c.ensureFinalizer(ctx, item)\n' +
+    '\tif err != nil {\n' +
+    '\t\treturn err\n' +
+    '\t}\n' +
+    '\titem = current\n' +
+    '\tif len(interfaceSlice(item.Spec["access"])) == 0 {\n' +
+    '\t\towned, err := c.legacyNamespaceOwned(ctx, item, namespaceName)\n' +
+    '\t\tif err != nil {\n' +
+    '\t\t\treturn err\n' +
+    '\t\t}\n' +
+    '\t\tif owned {\n' +
+    '\t\t\tif err := c.deleteLegacyRunnerAccess(ctx, namespaceName); err != nil {\n' +
+    '\t\t\t\treturn err\n' +
+    '\t\t\t}\n' +
+    '\t\t}\n' +
+    '\t\tif expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {\n' +
+    '\t\t\treturn err\n' +
+    '\t\t}\n' +
+    '\t\treturn c.patchLeaseStatus(ctx, item, map[string]interface{}{\n' +
+    '\t\t\t"phase": "Failed", "namespaceName": namespaceName,\n' +
+    '\t\t\t"expiresAt": c.expiresAt(item).Format(time.RFC3339),\n' +
+    '\t\t\t"message":   "Legacy lease cannot provision new work; delete it or wait for TTL cleanup",\n' +
+    '\t\t})\n' +
+    '\t}\n' +
+    '\tif expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {\n' +
+    '\t\treturn err\n' +
+    '\t}\n' +
+    '\n' +
+    '\tif err := c.validateLeaseSpec(item); err != nil {\n' +
+    '\t\tif stringValue(item.Status["specDigest"]) != "" {\n' +
+    '\t\t\tif deleteErr := c.deleteOwnedNamespace(ctx, item, namespaceName); deleteErr != nil {\n' +
+    '\t\t\t\treturn deleteErr\n' +
+    '\t\t\t}\n' +
+    '\t\t}\n' +
+    '\t\treturn c.patchLeaseStatus(ctx, item, rejectedStatus(namespaceName, err.Error()))\n' +
+    '\t}\n' +
+    '\tif digest := stringValue(item.Status["specDigest"]); digest != "" && digest != leaseSpecDigest(item.Spec) {\n' +
+    '\t\tif stringValue(item.Status["phase"]) != "Ready" || !legacyMutableExposureDigest(digest, item.Spec) {\n' +
+    '\t\t\treturn c.patchLeaseStatus(ctx, item, rejectedStatus(namespaceName, "lease spec is immutable after provisioning"))\n' +
+    '\t\t}\n' +
+    '\t}\n' +
+    '\n' +
+    '\tif stringValue(item.Status["phase"]) == "Ready" {\n' +
+    '\t\treturn c.reconcileReadyLease(ctx, item, namespaceName)\n' +
+    '\t}\n' +
+    '\treturn c.provisionLease(ctx, item, namespaceName)\n' +
+    '}\n' +
+    '\n' +
+    'func (c *controller) expireLease(ctx context.Context, item *lease, namespaceName string) (bool, error) {\n' +
+    '\tdeadline := c.expiresAt(item)\n' +
+    '\tif !time.Now().After(deadline) {\n' +
+    '\t\treturn false, nil\n' +
+    '\t}\n' +
+    '\tif stringValue(item.St'... 63468 more characters,
+  expected: /"resources": \[\]string\{"secrets"\},\s*"resourceNames": \[\]string\{request\.SecretName\}, "verbs": \[\]string\{"get"\}/u,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

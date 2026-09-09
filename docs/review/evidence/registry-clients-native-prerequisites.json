@@ -1,0 +1,14 @@
+{
+  "tools": {
+    "buildkitd": null,
+    "buildctl": null,
+    "docker": null,
+    "crictl": null,
+    "containerd": null,
+    "trivy": "/workspace/scratch/4e25cf57c177/toolchains/trivy-0.74.0/trivy"
+  },
+  "nativeCRIAndBuildKitGate": "not executed; tools and configured node/registry environment required",
+  "registryGC": "not implemented; reference lifecycle and operator capacity configuration unresolved",
+  "trivyVersion": "0.74.0",
+  "trivyNativeGate": "original scanner with local HTTPS OCI protocol fixture and genuine downloaded vulnerability databases passed; see registry-clients-trivy-native.txt"
+}

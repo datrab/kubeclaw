@@ -42,8 +42,23 @@ codeBundle:
     existingSecretKey: "token"
 
 runtimeInfrastructure:
-  # Writable in-cluster registry used by Buster k8s verification runs.
-  localRegistry: registry-local.kubeclaw.svc.cluster.local:5001
+  # Required when buster-v2-runtime is selected. No implicit HTTP or node endpoint.
+  registry:
+    endpoint: ""
+    transport: "" # https, or explicitly selected anonymous http-lab
+    authSecretName: ""
+    usernameKey: username
+    passwordKey: password
+    caSecretName: ""
+    caSecretKey: ca.crt
+    nodeCaFile: ""
+  # Docker Hub only. Empty means BuildKit and generated node config use no mirror.
+  dockerHubMirror:
+    endpoint: ""
+    transport: ""
+    caSecretName: ""
+    caSecretKey: ca.crt
+    nodeCaFile: ""
 
 # =============================================================================
 # GATEWAY

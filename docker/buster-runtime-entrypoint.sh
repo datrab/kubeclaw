@@ -8,14 +8,16 @@ socket="${BUILDKIT_HOST:?BUILDKIT_HOST is required}"
 address="${socket#unix://}"
 state="${BUILDKIT_STATE_DIR:?BUILDKIT_STATE_DIR is required}"
 otel_socket="${BUILDKIT_OTEL_SOCKET_PATH:-${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is required}/buildkit/otel-grpc.sock}"
-registry="${KUBECLAW_LOCAL_REGISTRY:?KUBECLAW_LOCAL_REGISTRY is required}"
+registry_client_dir="$(mktemp -d /tmp/registry-clients.XXXXXX)"
+registry_contract="$registry_client_dir/input.json"
+printf '%s' "${KUBECLAW_REGISTRY_CONFIG:?Explicit registry endpoint/transport/auth configuration is required; see docs/operations/registry-clients.md}" >"$registry_contract"
+chmod 0600 "$registry_contract"
+node /app/scripts/registry-client-config.mjs "$registry_contract" buildkit "$registry_client_dir/buildkit.toml"
+node /app/scripts/registry-client-config.mjs "$registry_contract" runtime "$registry_client_dir/runtime.json"
+registry="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")).registryReference)' "$registry_client_dir/runtime.json")"
 config="${HOME}/.config/buildkit/buildkitd.toml"
 mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "$state" "$(dirname "$config")"
-cat >"$config" <<EOF
-[registry."${registry}"]
-  http = true
-  insecure = true
-EOF
+cp "$registry_client_dir/buildkit.toml" "$config"
 chown root:builder "$config"
 chmod 0640 "$config"
 
@@ -142,7 +144,7 @@ contexts:
 current-context: buster
 EOF
 
-RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
+RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_client_dir/runtime.json" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
   BUSTER_ALLOWED_SOURCE_SECRETS="${BUSTER_ALLOWED_SOURCE_SECRETS:-}" \
   BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \
   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
@@ -210,7 +212,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   },
   containerBuild: {
     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
-    registryBaseUrl: `http://${registry}`, registryReference: registry,
+    ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
     repositoryPrefix: 'kubeclaw/pipeline', allowedPlatforms: ['linux/amd64', 'linux/arm64'],
     allowedBuildArguments: ['NODE_ENV'], maximumLogBytes: 8388608,
     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
@@ -290,6 +292,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     runAsGid: 1000,
   },
   securityScan: {
+    registry: JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
     trivyExecutable: '/usr/local/bin/trivy',
     allowedRegistryPrefixes: [`${registry}/kubeclaw`],
     maximumExecutionMs: 900000,
@@ -313,6 +316,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   },
 }, null, 2)}\n`);
 NODE
+rm -rf -- "$registry_client_dir"
 chmod 0640 "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
 chown -R builder:builder "$runtime_config_root"
 

@@ -1,0 +1,483 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /schemaId: 'kubeclaw\.container-image@1'/u. Input:
+
+"import fs from 'node:fs';\n" +
+  "import path from 'node:path';\n" +
+  "import { execFile } from 'node:child_process';\n" +
+  "import { promisify } from 'node:util';\n" +
+  "import { fileURLToPath } from 'node:url';\n" +
+  'import {\n' +
+  '  applyRealE2EConfigScenario,\n' +
+  '  applyRealE2EWorkspaceScenario,\n' +
+  '  applyRealE2EScenario,\n' +
+  '  assertScenarioMutationChannel,\n' +
+  '  realE2EScenarioModuleIds,\n' +
+  '  validateRealE2EScenarioSetup,\n' +
+  "} from './failure-scenarios.mjs';\n" +
+  "import { expandSwarmConfig } from './support/platform-config.ts';\n" +
+  '\n' +
+  'const execFileAsync = promisify(execFile);\n' +
+  '\n' +
+  'const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));\n' +
+  "export const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');\n" +
+  "export const DEFAULT_REAL_E2E_MODEL = 'openai/gpt-5.3-codex-spark';\n" +
+  "export const DEFAULT_REAL_E2E_THINKING = 'none';\n" +
+  'export const DEFAULT_REAL_E2E_MODULE_TIMEOUT_MINUTES = 10;\n' +
+  'export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 10;\n' +
+  'const REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD = 2;\n' +
+  'const REAL_E2E_MODULE_MAX_FAILS = REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD + 1;\n' +
+  "const FIXTURE_DIR = path.join(SCRIPT_DIR, 'fixtures', 'nginx-project');\n" +
+  'function realE2EDeploymentImage() {\n' +
+  '  const image = process.env.REAL_E2E_DEPLOYMENT_IMAGE?.trim();\n' +
+  "  if (!image) throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_REQUIRED: supply the published immutable release image');\n" +
+  '  if (!/^[a-z0-9.-]+\\.svc\\.cluster\\.local:\\d+\\/[a-z0-9._/:-]+@sha256:[a-f0-9]{64}$/u.test(image)) {\n' +
+  "    throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_INVALID: expected an in-cluster immutable SHA-256 image reference');\n" +
+  '  }\n' +
+  '  return image;\n' +
+  '}\n' +
+  "const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');\n" +
+  "const REAL_E2E_MODULE_ID = '01-nginx';\n" +
+  "const REAL_E2E_SEED_MODULE_IDS = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);\n" +
+  'const REAL_E2E_CONTRACT_REFS = Object.freeze({\n' +
+  "  deployableArtifact: 'contracts.deployable_artifact',\n" +
+  "  runtimeConfig: 'contracts.runtime_config',\n" +
+  "  moduleReview: 'contracts.module_review',\n" +
+  "  previewInfrastructure: 'contracts.preview_infrastructure',\n" +
+  '});\n' +
+  'const REAL_E2E_CONTRACT_PATHS = Object.freeze({\n' +
+  "  deployableArtifact: '.swarm/contracts/deployable-artifact.json',\n" +
+  "  runtimeConfig: '.swarm/contracts/runtime-config.json',\n" +
+  "  moduleReview: '.swarm/contracts/module-review.json',\n" +
+  "  previewInfrastructure: '.swarm/contracts/preview-infrastructure.json',\n" +
+  '});\n' +
+  "const FOUNDATION_RUNTIME_INTERFACE = 'foundation-runtime-static-serving.v2';\n" +
+  'const REAL_E2E_MODULE_SURFACES = Object.freeze({\n' +
+  "  '01-nginx': Object.freeze({\n" +
+  "    role: 'foundation',\n" +
+  "    source_paths: Object.freeze(['nginx/default.conf']),\n" +
+  "    output_contract: '.swarm/contracts/module-outputs/01-foundation.json',\n" +
+  '    provides: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),\n' +
+  "    provided_surfaces: Object.freeze(['nginx/default.conf']),\n" +
+  '    contract_boundaries: Object.freeze([\n' +
+  "      'runtime_foundation: nginx base image, listener, document root, and fallback behavior',\n" +
+  '    ]),\n' +
+  "    summary: 'Foundation module that owns reusable nginx runtime behavior.',\n" +
+  '  }),\n' +
+  "  '02-nginx': Object.freeze({\n" +
+  "    role: 'parallel-content',\n" +
+  "    source_paths: Object.freeze(['src/content/branch-a.html']),\n" +
+  "    output_contract: '.swarm/contracts/module-outputs/02-content.json',\n" +
+  "    consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),\n" +
+  '    consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),\n' +
+  "    provides: Object.freeze(['branch-a-static-content.v2']),\n" +
+  "    provided_surfaces: Object.freeze(['src/content/branch-a.html']),\n" +
+  "    summary: 'Parallel content branch that owns static content input only.',\n" +
+  '  }),\n' +
+  "  '03-nginx': Object.freeze({\n" +
+  "    role: 'parallel-assets',\n" +
+  "    source_paths: Object.freeze(['src/assets/branch-b.css']),\n" +
+  "    output_contract: '.swarm/contracts/module-outputs/03-assets.json',\n" +
+  "    consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),\n" +
+  '    consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),\n' +
+  "    provides: Object.freeze(['branch-b-static-asset.v2']),\n" +
+  "    provided_surfaces: Object.freeze(['src/assets/branch-b.css']),\n" +
+  "    summary: 'Parallel asset branch that owns presentation asset input only.',\n" +
+  '  }),\n' +
+  "  '04-nginx': Object.freeze({\n" +
+  "    role: 'release-assembly',\n" +
+  "    source_paths: Object.freeze(['Dockerfile', 'src/index.html', 'src/integration/module-map.json', 'k8s/deployment.yaml']),\n" +
+  "    output_contract: '.swarm/contracts/module-outputs/04-integration.json',\n" +
+  '    consumes: Object.freeze([\n' +
+  "      '.swarm/contracts/module-outputs/01-foundation.json',\n" +
+  "      '.swarm/contracts/module-outputs/02-content.json',\n" +
+  "      '.swarm/contracts/module-outputs/03-assets.json',\n" +
+  '    ]),\n' +
+  '    consumed_surfaces: Object.freeze([\n' +
+  '      FOUNDATION_RUNTIME_INTERFACE,\n' +
+  "      'src/content/branch-a.html',\n" +
+  "      'src/assets/branch-b.css',\n" +
+  '    ]),\n' +
+  '    contract_boundaries: Object.freeze([\n' +
+  "      'image_packaging: Dockerfile copies foundation config and assembled static source into nginx',\n" +
+  "      'app_composition: src/index.html + src/integration/module-map.json',\n" +
+  "      'deployment_packaging: k8s/deployment.yaml',\n" +
+  '    ]),\n' +
+  "    summary: 'Release assembly module that consumes foundation and branch outputs, then owns the deployable composition.',\n" +
+  '  }),\n' +
+  '});\n' +
+  '\n' +
+  'const REAL_E2E_BUSTER_AGENT_JUDGMENT = Object.freeze({\n' +
+  "  '01-nginx': Object.freeze({\n" +
+  '    required: true,\n' +
+  "    reason: 'foundation_module_requires_buster_agent_judgment',\n" +
+  '  }),\n' +
+  '});\n' +
+  '\n' +
+  'const REAL_E2E_DETERMINISTIC_BUSTER_AUTHORITY = Object.freeze({\n' +
+  '  required: false,\n' +
+  "  reason: 'seed_leaf_modules_use_deterministic_suite_authority',\n" +
+  '});\n' +
+  '\n' +
+  'function readJson(filePath) {\n' +
+  "  return JSON.parse(fs.readFileSync(filePath, 'utf8'));\n" +
+  '}\n' +
+  '\n' +
+  'function writeJson(filePath, value) {\n' +
+  '  fs.mkdirSync(path.dirname(filePath), { recursive: true });\n' +
+  '  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\\n`);\n' +
+  '}\n' +
+  '\n' +
+  'function writeText(filePath, value) {\n' +
+  '  fs.mkdirSync(path.dirname(filePath), { recursive: true });\n' +
+  '  fs.writeFileSync(filePath, value);\n' +
+  '}\n' +
+  '\n' +
+  'function canonicalModuleIds(moduleIds) {\n' +
+  "  const ids = Array.isArray(moduleIds) ? moduleIds.filter((id) => typeof id === 'string' && id.trim()) : [];\n" +
+  '  return ids.length ? ids : [REAL_E2E_MODULE_ID];\n' +
+  '}\n' +
+  '\n' +
+  'function moduleSurface(moduleId) {\n' +
+  '  return REAL_E2E_MODULE_SURFACES[moduleId] || Object.freeze({\n' +
+  "    role: 'module',\n" +
+  "    source_paths: Object.freeze(['src']),\n" +
+  '    output_contract: `.swarm/contracts/module-outputs/${moduleId}.json`,\n' +
+  '    summary: `Module ${moduleId} owns its declared source surface.`,\n' +
+  '  });\n' +
+  '}\n' +
+  '\n' +
+  'function moduleBusterAgentJudgment(moduleId) {\n' +
+  '  return REAL_E2E_BUSTER_AGENT_JUDGMENT[moduleId] || REAL_E2E_DETERMINISTIC_BUSTER_AUTHORITY;\n' +
+  '}\n' +
+  '\n' +
+  'function buildModuleOutputContracts(moduleIds) {\n' +
+  '  return Object.fromEntries(canonicalModuleIds(moduleIds).map((moduleId) => {\n' +
+  '    const surface = moduleSurface(moduleId);\n' +
+  '    return [moduleId, {\n' +
+  "      schema_version: 'real_e2e_module_output_contract.v2',\n" +
+  "      artifact_type: 'module_output_contract',\n" +
+  '      module_id: moduleId,\n' +
+  '      role: surface.role,\n' +
+  '      owned_source_paths: [...surface.source_paths],\n' +
+  '      provides: [...(surface.provides || [])],\n' +
+  '      provided_surfaces: [...(surface.provided_surfaces || [])],\n' +
+  '      consumes: [...(surface.consumes || [])],\n' +
+  '      consumed_surfaces: [...(surface.consumed_surfaces || [])],\n' +
+  '      contract_boundaries: [...(surface.contract_boundaries || [])],\n' +
+  '      summary: surface.summary,\n' +
+  '      authority: {\n' +
+  '        owner: moduleId,\n' +
+  "        verifier: 'module-buster',\n" +
+  "        rule: 'Each module owns only its declared source paths and output contract; parallel modules must not mutate each other or the final deployable artifact directly.',\n" +
+  '      },\n' +
+  '    }];\n' +
+  '  }));\n' +
+  '}\n' +
+  '\n' +
+  'function buildDeployableArtifactContract({ projectName, projectSrc, releaseCandidateImage, moduleIds = [REAL_E2E_MODULE_ID] }) {\n' +
+  '  const modules = canonicalModuleIds(moduleIds);\n' +
+  '  return {\n' +
+  "    schema_version: 'real_e2e_deployable_artifact_contract.v2',\n" +
+  "    artifact_type: 'deployable_artifact_contract',\n" +
+  '    project: projectName,\n' +
+  '    producer_modules: modules,\n' +
+  '    release_candidate_module: modules[modules.length - 1],\n' +
+  '    module_output_contracts: modules.map((moduleId) => ({\n' +
+  '      module_id: moduleId,\n' +
+  '      path: moduleSurface(moduleId).output_contract,\n' +
+  '      role: moduleSurface(moduleId).role,\n' +
+  '    })),\n' +
+  '    authority: {\n' +
+  "      producer: 'release-candidate-module-buster',\n" +
+  "      consumer: 'final-buster',\n" +
+  "      rule: 'Only the release_candidate_module Buster owns immutable image verification; Final Buster deploys the exact checked manifest and image.',\n" +
+  '    },\n' +
+  '    image: {\n' +
+  "      role: 'release_candidate',\n" +
+  '      reference: releaseCandidateImage,\n' +
+  "      digest_authority: 'module-buster-build-evidence',\n" +
+  '    },\n' +
+  '    manifests: [\n' +
+  '      {\n' +
+  '        path: `${projectSrc}/k8s/deployment.yaml`,\n' +
+  "        image_field: 'Deployment/spec/template/spec/containers[name=nginx]/image',\n" +
+  "        mutation_authority: 'none-checked-manifest-is-immutable',\n" +
+  '      },\n' +
+  '    ],\n' +
+  '    runtime_config_ref: REAL_E2E_CONTRACT_PATHS.runtimeConfig,\n' +
+  '  };\n' +
+  '}\n' +
+  '\n' +
+  'function buildRuntimeConfigContract({ projectName, moduleIds = [REAL_E2E_MODULE_ID] }) {\n' +
+  '  const modules = canonicalModuleIds(moduleIds);\n' +
+  '  const staticSurfaces = [\n' +
+  '    {\n' +
+  "      producer_module: '02-nginx',\n" +
+  "      consumer_module: '04-nginx',\n" +
+  "      producer_contract: '.swarm/contracts/module-outputs/02-content.json',\n" +
+  "      provided_surface: 'src/content/branch-a.html',\n" +
+  "      source_path: 'src/content/branch-a.html',\n" +
+  "      served_as: '/content/branch-a.html',\n" +
+  "      expected_marker: 'REAL_E2E_BRANCH_A_CONTENT',\n" +
+  '    },\n' +
+  '    {\n' +
+  "      producer_module: '03-nginx',\n" +
+  "      consumer_module: '04-nginx',\n" +
+  "      producer_contract: '.swarm/contracts/module-outputs/03-assets.json',\n" +
+  "      provided_surface: 'src/assets/branch-b.css',\n" +
+  "      source_path: 'src/assets/branch-b.css',\n" +
+  "      served_as: '/assets/branch-b.css',\n" +
+  "      expected_marker: '#real-e2e-content-branch',\n" +
+  '    },\n' +
+  '  ].filter((surface) => modules.includes(surface.producer_module) && modules.includes(surface.consumer_module));\n' +
+  '  return {\n' +
+  "    schema_version: 'real_e2e_runtime_config_contract.v2',\n" +
+  "    artifact_type: 'runtime_config_contract"... 80970 more characters
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-container-build-cutover.mts:28:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: "import fs from 'node:fs';\n" +
+    "import path from 'node:path';\n" +
+    "import { execFile } from 'node:child_process';\n" +
+    "import { promisify } from 'node:util';\n" +
+    "import { fileURLToPath } from 'node:url';\n" +
+    'import {\n' +
+    '  applyRealE2EConfigScenario,\n' +
+    '  applyRealE2EWorkspaceScenario,\n' +
+    '  applyRealE2EScenario,\n' +
+    '  assertScenarioMutationChannel,\n' +
+    '  realE2EScenarioModuleIds,\n' +
+    '  validateRealE2EScenarioSetup,\n' +
+    "} from './failure-scenarios.mjs';\n" +
+    "import { expandSwarmConfig } from './support/platform-config.ts';\n" +
+    '\n' +
+    'const execFileAsync = promisify(execFile);\n' +
+    '\n' +
+    'const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));\n' +
+    "export const REPO_ROOT = path.resolve(SCRIPT_DIR, '../../..');\n" +
+    "export const DEFAULT_REAL_E2E_MODEL = 'openai/gpt-5.3-codex-spark';\n" +
+    "export const DEFAULT_REAL_E2E_THINKING = 'none';\n" +
+    'export const DEFAULT_REAL_E2E_MODULE_TIMEOUT_MINUTES = 10;\n' +
+    'export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 10;\n' +
+    'const REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD = 2;\n' +
+    'const REAL_E2E_MODULE_MAX_FAILS = REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD + 1;\n' +
+    "const FIXTURE_DIR = path.join(SCRIPT_DIR, 'fixtures', 'nginx-project');\n" +
+    'function realE2EDeploymentImage() {\n' +
+    '  const image = process.env.REAL_E2E_DEPLOYMENT_IMAGE?.trim();\n' +
+    "  if (!image) throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_REQUIRED: supply the published immutable release image');\n" +
+    '  if (!/^[a-z0-9.-]+\\.svc\\.cluster\\.local:\\d+\\/[a-z0-9._/:-]+@sha256:[a-f0-9]{64}$/u.test(image)) {\n' +
+    "    throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_INVALID: expected an in-cluster immutable SHA-256 image reference');\n" +
+    '  }\n' +
+    '  return image;\n' +
+    '}\n' +
+    "const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');\n" +
+    "const REAL_E2E_MODULE_ID = '01-nginx';\n" +
+    "const REAL_E2E_SEED_MODULE_IDS = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);\n" +
+    'const REAL_E2E_CONTRACT_REFS = Object.freeze({\n' +
+    "  deployableArtifact: 'contracts.deployable_artifact',\n" +
+    "  runtimeConfig: 'contracts.runtime_config',\n" +
+    "  moduleReview: 'contracts.module_review',\n" +
+    "  previewInfrastructure: 'contracts.preview_infrastructure',\n" +
+    '});\n' +
+    'const REAL_E2E_CONTRACT_PATHS = Object.freeze({\n' +
+    "  deployableArtifact: '.swarm/contracts/deployable-artifact.json',\n" +
+    "  runtimeConfig: '.swarm/contracts/runtime-config.json',\n" +
+    "  moduleReview: '.swarm/contracts/module-review.json',\n" +
+    "  previewInfrastructure: '.swarm/contracts/preview-infrastructure.json',\n" +
+    '});\n' +
+    "const FOUNDATION_RUNTIME_INTERFACE = 'foundation-runtime-static-serving.v2';\n" +
+    'const REAL_E2E_MODULE_SURFACES = Object.freeze({\n' +
+    "  '01-nginx': Object.freeze({\n" +
+    "    role: 'foundation',\n" +
+    "    source_paths: Object.freeze(['nginx/default.conf']),\n" +
+    "    output_contract: '.swarm/contracts/module-outputs/01-foundation.json',\n" +
+    '    provides: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),\n' +
+    "    provided_surfaces: Object.freeze(['nginx/default.conf']),\n" +
+    '    contract_boundaries: Object.freeze([\n' +
+    "      'runtime_foundation: nginx base image, listener, document root, and fallback behavior',\n" +
+    '    ]),\n' +
+    "    summary: 'Foundation module that owns reusable nginx runtime behavior.',\n" +
+    '  }),\n' +
+    "  '02-nginx': Object.freeze({\n" +
+    "    role: 'parallel-content',\n" +
+    "    source_paths: Object.freeze(['src/content/branch-a.html']),\n" +
+    "    output_contract: '.swarm/contracts/module-outputs/02-content.json',\n" +
+    "    consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),\n" +
+    '    consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),\n' +
+    "    provides: Object.freeze(['branch-a-static-content.v2']),\n" +
+    "    provided_surfaces: Object.freeze(['src/content/branch-a.html']),\n" +
+    "    summary: 'Parallel content branch that owns static content input only.',\n" +
+    '  }),\n' +
+    "  '03-nginx': Object.freeze({\n" +
+    "    role: 'parallel-assets',\n" +
+    "    source_paths: Object.freeze(['src/assets/branch-b.css']),\n" +
+    "    output_contract: '.swarm/contracts/module-outputs/03-assets.json',\n" +
+    "    consumes: Object.freeze(['.swarm/contracts/module-outputs/01-foundation.json']),\n" +
+    '    consumed_surfaces: Object.freeze([FOUNDATION_RUNTIME_INTERFACE]),\n' +
+    "    provides: Object.freeze(['branch-b-static-asset.v2']),\n" +
+    "    provided_surfaces: Object.freeze(['src/assets/branch-b.css']),\n" +
+    "    summary: 'Parallel asset branch that owns presentation asset input only.',\n" +
+    '  }),\n' +
+    "  '04-nginx': Object.freeze({\n" +
+    "    role: 'release-assembly',\n" +
+    "    source_paths: Object.freeze(['Dockerfile', 'src/index.html', 'src/integration/module-map.json', 'k8s/deployment.yaml']),\n" +
+    "    output_contract: '.swarm/contracts/module-outputs/04-integration.json',\n" +
+    '    consumes: Object.freeze([\n' +
+    "      '.swarm/contracts/module-outputs/01-foundation.json',\n" +
+    "      '.swarm/contracts/module-outputs/02-content.json',\n" +
+    "      '.swarm/contracts/module-outputs/03-assets.json',\n" +
+    '    ]),\n' +
+    '    consumed_surfaces: Object.freeze([\n' +
+    '      FOUNDATION_RUNTIME_INTERFACE,\n' +
+    "      'src/content/branch-a.html',\n" +
+    "      'src/assets/branch-b.css',\n" +
+    '    ]),\n' +
+    '    contract_boundaries: Object.freeze([\n' +
+    "      'image_packaging: Dockerfile copies foundation config and assembled static source into nginx',\n" +
+    "      'app_composition: src/index.html + src/integration/module-map.json',\n" +
+    "      'deployment_packaging: k8s/deployment.yaml',\n" +
+    '    ]),\n' +
+    "    summary: 'Release assembly module that consumes foundation and branch outputs, then owns the deployable composition.',\n" +
+    '  }),\n' +
+    '});\n' +
+    '\n' +
+    'const REAL_E2E_BUSTER_AGENT_JUDGMENT = Object.freeze({\n' +
+    "  '01-nginx': Object.freeze({\n" +
+    '    required: true,\n' +
+    "    reason: 'foundation_module_requires_buster_agent_judgment',\n" +
+    '  }),\n' +
+    '});\n' +
+    '\n' +
+    'const REAL_E2E_DETERMINISTIC_BUSTER_AUTHORITY = Object.freeze({\n' +
+    '  required: false,\n' +
+    "  reason: 'seed_leaf_modules_use_deterministic_suite_authority',\n" +
+    '});\n' +
+    '\n' +
+    'function readJson(filePath) {\n' +
+    "  return JSON.parse(fs.readFileSync(filePath, 'utf8'));\n" +
+    '}\n' +
+    '\n' +
+    'function writeJson(filePath, value) {\n' +
+    '  fs.mkdirSync(path.dirname(filePath), { recursive: true });\n' +
+    '  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\\n`);\n' +
+    '}\n' +
+    '\n' +
+    'function writeText(filePath, value) {\n' +
+    '  fs.mkdirSync(path.dirname(filePath), { recursive: true });\n' +
+    '  fs.writeFileSync(filePath, value);\n' +
+    '}\n' +
+    '\n' +
+    'function canonicalModuleIds(moduleIds) {\n' +
+    "  const ids = Array.isArray(moduleIds) ? moduleIds.filter((id) => typeof id === 'string' && id.trim()) : [];\n" +
+    '  return ids.length ? ids : [REAL_E2E_MODULE_ID];\n' +
+    '}\n' +
+    '\n' +
+    'function moduleSurface(moduleId) {\n' +
+    '  return REAL_E2E_MODULE_SURFACES[moduleId] || Object.freeze({\n' +
+    "    role: 'module',\n" +
+    "    source_paths: Object.freeze(['src']),\n" +
+    '    output_contract: `.swarm/contracts/module-outputs/${moduleId}.json`,\n' +
+    '    summary: `Module ${moduleId} owns its declared source surface.`,\n' +
+    '  });\n' +
+    '}\n' +
+    '\n' +
+    'function moduleBusterAgentJudgment(moduleId) {\n' +
+    '  return REAL_E2E_BUSTER_AGENT_JUDGMENT[moduleId] || REAL_E2E_DETERMINISTIC_BUSTER_AUTHORITY;\n' +
+    '}\n' +
+    '\n' +
+    'function buildModuleOutputContracts(moduleIds) {\n' +
+    '  return Object.fromEntries(canonicalModuleIds(moduleIds).map((moduleId) => {\n' +
+    '    const surface = moduleSurface(moduleId);\n' +
+    '    return [moduleId, {\n' +
+    "      schema_version: 'real_e2e_module_output_contract.v2',\n" +
+    "      artifact_type: 'module_output_contract',\n" +
+    '      module_id: moduleId,\n' +
+    '      role: surface.role,\n' +
+    '      owned_source_paths: [...surface.source_paths],\n' +
+    '      provides: [...(surface.provides || [])],\n' +
+    '      provided_surfaces: [...(surface.provided_surfaces || [])],\n' +
+    '      consumes: [...(surface.consumes || [])],\n' +
+    '      consumed_surfaces: [...(surface.consumed_surfaces || [])],\n' +
+    '      contract_boundaries: [...(surface.contract_boundaries || [])],\n' +
+    '      summary: surface.summary,\n' +
+    '      authority: {\n' +
+    '        owner: moduleId,\n' +
+    "        verifier: 'module-buster',\n" +
+    "        rule: 'Each module owns only its declared source paths and output contract; parallel modules must not mutate each other or the final deployable artifact directly.',\n" +
+    '      },\n' +
+    '    }];\n' +
+    '  }));\n' +
+    '}\n' +
+    '\n' +
+    'function buildDeployableArtifactContract({ projectName, projectSrc, releaseCandidateImage, moduleIds = [REAL_E2E_MODULE_ID] }) {\n' +
+    '  const modules = canonicalModuleIds(moduleIds);\n' +
+    '  return {\n' +
+    "    schema_version: 'real_e2e_deployable_artifact_contract.v2',\n" +
+    "    artifact_type: 'deployable_artifact_contract',\n" +
+    '    project: projectName,\n' +
+    '    producer_modules: modules,\n' +
+    '    release_candidate_module: modules[modules.length - 1],\n' +
+    '    module_output_contracts: modules.map((moduleId) => ({\n' +
+    '      module_id: moduleId,\n' +
+    '      path: moduleSurface(moduleId).output_contract,\n' +
+    '      role: moduleSurface(moduleId).role,\n' +
+    '    })),\n' +
+    '    authority: {\n' +
+    "      producer: 'release-candidate-module-buster',\n" +
+    "      consumer: 'final-buster',\n" +
+    "      rule: 'Only the release_candidate_module Buster owns immutable image verification; Final Buster deploys the exact checked manifest and image.',\n" +
+    '    },\n' +
+    '    image: {\n' +
+    "      role: 'release_candidate',\n" +
+    '      reference: releaseCandidateImage,\n' +
+    "      digest_authority: 'module-buster-build-evidence',\n" +
+    '    },\n' +
+    '    manifests: [\n' +
+    '      {\n' +
+    '        path: `${projectSrc}/k8s/deployment.yaml`,\n' +
+    "        image_field: 'Deployment/spec/template/spec/containers[name=nginx]/image',\n" +
+    "        mutation_authority: 'none-checked-manifest-is-immutable',\n" +
+    '      },\n' +
+    '    ],\n' +
+    '    runtime_config_ref: REAL_E2E_CONTRACT_PATHS.runtimeConfig,\n' +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'function buildRuntimeConfigContract({ projectName, moduleIds = [REAL_E2E_MODULE_ID] }) {\n' +
+    '  const modules = canonicalModuleIds(moduleIds);\n' +
+    '  const staticSurfaces = [\n' +
+    '    {\n' +
+    "      producer_module: '02-nginx',\n" +
+    "      consumer_module: '04-nginx',\n" +
+    "      producer_contract: '.swarm/contracts/module-outputs/02-content.json',\n" +
+    "      provided_surface: 'src/content/branch-a.html',\n" +
+    "      source_path: 'src/content/branch-a.html',\n" +
+    "      served_as: '/content/branch-a.html',\n" +
+    "      expected_marker: 'REAL_E2E_BRANCH_A_CONTENT',\n" +
+    '    },\n' +
+    '    {\n' +
+    "      producer_module: '03-nginx',\n" +
+    "      consumer_module: '04-nginx',\n" +
+    "      producer_contract: '.swarm/contracts/module-outputs/03-assets.json',\n" +
+    "      provided_surface: 'src/assets/branch-b.css',\n" +
+    "      source_path: 'src/assets/branch-b.css',\n" +
+    "      served_as: '/assets/branch-b.css',\n" +
+    "      expected_marker: '#real-e2e-content-branch',\n" +
+    '    },\n' +
+    '  ].filter((surface) => modules.includes(surface.producer_module) && modules.includes(surface.consumer_module));\n' +
+    '  return {\n' +
+    "    schema_version: 'real_e2e_runtime_config_contract.v2',\n" +
+    "    artifact_type: 'runtime_config_contract"... 80970 more characters,
+  expected: /schemaId: 'kubeclaw\.container-image@1'/u,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

@@ -5,9 +5,14 @@
 # production Dockerfile and pushes to this registry before deploying to
 # the test namespace.
 #
-# No PVC — ephemeral. Test images are cleaned up when the namespace is deleted.
+# Anonymous HTTP lab registry only; never select it implicitly for node pulls.
+# No PVC: replacing this Pod can lose every image. Deleting a test namespace
+# does not delete shared registry data. There is no reference-aware GC here.
+# Operators must retain required digests for active leases/demos and resumable
+# runs, provision storage/capacity explicitly, and perform deliberate cleanup.
+# See docs/operations/registry-clients.md. This is not a durable registry service.
 # Port 5001 to avoid clash with registry-mirror (5000).
-# Image pulled from registry-mirror to respect the cluster pull policy.
+# The registry image uses a mirror only if the node CRI is separately configured.
 ---
 apiVersion: apps/v1
 kind: Deployment

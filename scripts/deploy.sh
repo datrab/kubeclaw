@@ -901,18 +901,11 @@ cmd_setup() {
   echo ""
   info "Next: ./deploy.sh infra && ./deploy.sh agents"
 
-  # k3s node registry config — local verification needs an explicit private pull path.
-  header "k3s Registry Config (optional local-image verification)"
-  K3S_REG_FILE="/etc/rancher/k3s/registries.yaml"
-  if [ -f "$K3S_REG_FILE" ] && grep -q "registry-local.${NAMESPACE}.svc.cluster.local" "$K3S_REG_FILE"; then
-    log "k3s registries.yaml already configured for registry-local"
-  else
-    warn "registry-local is ClusterIP by default and has no NodePort."
-    warn "Live local-image verification needs an explicit private pull path before containerd can pull those images."
-    echo ""
-    info "For now, keep using published images or configure a private registry path deliberately."
-    echo ""
-  fi
+  header "Node Registry Configuration"
+  info "Configure Buster runtimeInfrastructure.registry explicitly; see docs/operations/registry-clients.md."
+  info "Generate and review node config separately; deployment does not install host registry configuration."
+  warn "A registry Service or hostname in registries.yaml does not prove an uncached CRI pull."
+
 }
 
 cmd_secrets() {
@@ -1173,17 +1166,23 @@ cmd_infra() {
     warn "Skipping LiteLLM by KUBECLAW_DEPLOY_LITELLM=$KUBECLAW_DEPLOY_LITELLM"
   fi
 
-  header "Infrastructure: Registry Mirror"
-  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml"
-  info "Waiting for Registry Mirror to be ready..."
-  wait_for_rollout_required "Registry Mirror" deployment/registry-mirror -n "$NAMESPACE" --timeout=120s
-  log "Registry Mirror deployed"
-
-  header "Infrastructure: Registry Local (writable, buster test images)"
-  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml"
-  info "Waiting for Registry Local to be ready..."
-  wait_for_rollout_required "Registry Local" deployment/registry-local -n "$NAMESPACE" --timeout=60s
-  log "Registry Local deployed"
+  header "Infrastructure: Optional Anonymous HTTP Lab Registries"
+  case "${KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR:-false}" in
+    true)
+      kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-mirror.yaml"
+      wait_for_rollout_required "Registry Mirror" deployment/registry-mirror -n "$NAMESPACE" --timeout=120s
+      ;;
+    false) info "Docker Hub lab mirror not selected; configure actual clients explicitly." ;;
+    *) err "KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR must be true or false"; return 1 ;;
+  esac
+  case "${KUBECLAW_DEPLOY_LAB_REGISTRY:-false}" in
+    true)
+      kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml"
+      wait_for_rollout_required "Registry Local" deployment/registry-local -n "$NAMESPACE" --timeout=60s
+      ;;
+    false) info "Anonymous HTTP lab registry not selected; use an explicitly configured registry." ;;
+    *) err "KUBECLAW_DEPLOY_LAB_REGISTRY must be true or false"; return 1 ;;
+  esac
 
   info "Buster namespace admission fence is owned by the broker Helm release (Kubernetes >=1.30)."
 

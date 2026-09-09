@@ -118,6 +118,7 @@ RUN test -n "$TRIVY_DATABASE_REFRESH" && setpriv --reuid=1000 --regid=1000 --ini
     && test -s /home/builder/.cache/trivy/db/trivy.db \
     && test -s /home/builder/.cache/trivy/java-db/trivy-java.db
 
+COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
 RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
 

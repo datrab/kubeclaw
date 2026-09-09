@@ -89,6 +89,20 @@ function optionalEnvironmentSecret(source: Record<string, unknown>, field: strin
   return value;
 }
 
+function scannerRegistry(source:Record<string,unknown>,environment:NodeJS.ProcessEnv,directory:string){
+  if(source.registry===undefined)return {};
+  const registry=object(source.registry,'securityScan.registry');
+  const username=optionalEnvironmentSecret(registry,'registryUsernameEnvironmentVariable',environment);
+  const password=optionalEnvironmentSecret(registry,'registryPasswordEnvironmentVariable',environment);
+  if((username===undefined)!==(password===undefined))throw new Error('BUSTER_SCAN_REGISTRY_CREDENTIALS_INCOMPLETE');
+  const url=new URL(String(registry.registryBaseUrl));
+  if(url.username || url.password || url.search || url.hash || url.pathname!=='/' || !['https:','http:'].includes(url.protocol) || url.host!==registry.registryReference || (username!==undefined && url.protocol!=='https:'))throw new Error('BUSTER_SCAN_REGISTRY_ENDPOINT_INVALID');
+  if(url.protocol==='http:')return {unsupportedHttpRegistry:url.host};
+  if(username===undefined)throw new Error('BUSTER_SCAN_REGISTRY_CREDENTIALS_REQUIRED');
+  return {registryAccess:{registryReference:url.host,username,password:password!,
+    ...(registry.registryCaFile?{caFile:path.resolve(directory,String(registry.registryCaFile))}:{})}};
+}
+
 export function loadProductionBusterRemotePlanRuntime(
   file: string,
   environment: Readonly<Record<string, string | undefined>> = process.env,
@@ -351,6 +365,7 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumOutputBytes: integer(securityScanSource.maximumOutputBytes, 'securityScan.maximumOutputBytes'),
       cacheDirectory: path.resolve(directory, String(securityScanSource.cacheDirectory)),
       ...optionalDatabasePolicy(securityScanSource.databasePolicy),
+      ...scannerRegistry(securityScanSource,environment,directory),
     } } : {}),
     ...(kubernetesRuntimeSecuritySource ? { kubernetesRuntimeSecurity: {
       kubectlExecutable: path.resolve(directory, String(kubernetesRuntimeSecuritySource.kubectlExecutable)),

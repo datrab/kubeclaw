@@ -1,20 +1,7 @@
-# Legacy k3s containerd registry configuration for a deliberately exposed
-# registry-local endpoint.
-#
-# The default registry-local Service is ClusterIP and does not expose a NodePort.
-# Do not copy this file on a production/default install unless you also create
-# a private node-local registry endpoint and replace the placeholder below.
-#
-# Historical reason this existed:
-#   registry-local.kubeclaw.svc.cluster.local:5001 is a plain HTTP registry
-#   (no TLS). containerd rejects HTTP registries by default.
-#   containerd cannot resolve cluster DNS (.svc.cluster.local) at the host
-#   level, so local-image verification needs an explicit private pull path.
-#
-# After restarting k3s, verify with:
-#   crictl info | grep -A5 registry
-#
-mirrors:
-  "registry-local.kubeclaw.svc.cluster.local:5001":
-    endpoint:
-      - "http://127.0.0.1:<private-registry-port>"
+# No registry or mirror is selected by this file.
+# Generate an operator-owned node config from the same registry-clients.v1
+# contract used by Buster; see docs/operations/registry-clients.md.
+# Generated JSON is valid YAML for k3s. Generation does not install the file,
+# provision DNS/TLS/auth, or prove uncached CRI pull reachability.
+mirrors: {}
+configs: {}
