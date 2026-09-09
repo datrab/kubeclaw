@@ -8,7 +8,7 @@ export const DEFAULT_ENGINE_CACHE_LIMITS: EngineCacheLimits = Object.freeze({
   maximumCompletedEntries: 32,
   maximumCompletedBytes: 16 * 1024 * 1024,
 });
-type Pending<T> = { fingerprint: string; result: Promise<T> };
+type Pending<T> = { fingerprint: string; result: Promise<T>; owner: AbortSignal | undefined };
 type Completed = { fingerprint: string; serialized: string; bytes: number };
 
 /** RAM optimization only; durable request/result replay belongs to Control. */
@@ -30,13 +30,17 @@ export class EngineExecutionCache<T> {
       completedBytes: this.#completedBytes, totalEntries: this.#pending.size + this.#completed.size });
   }
 
-  async execute(key: string, fingerprint: string, execute: () => Promise<T>): Promise<T> {
+  async execute(key: string, fingerprint: string, execute: () => Promise<T>, owner?: AbortSignal): Promise<T> {
+    owner?.throwIfAborted();
     const pending = this.#pending.get(key);
     const completed = this.#completed.get(key);
     if ((pending && pending.fingerprint !== fingerprint) || (completed && completed.fingerprint !== fingerprint)) {
       throw new Error('idempotency key was used for a different request');
     }
-    if (pending) return pending.result;
+    if (pending) {
+      if (pending.owner !== owner) throw new Error('PRISM_ENGINE_EXECUTION_OWNER_CONFLICT');
+      return pending.result;
+    }
     if (completed) {
       this.#completed.delete(key);
       this.#completed.set(key, completed);
@@ -44,15 +48,22 @@ export class EngineExecutionCache<T> {
     }
     if (this.#pending.size >= this.#limits.maximumInFlight) throw new Error('PRISM_ENGINE_IN_FLIGHT_LIMIT');
     // Reserve ownership before beginning execution, including synchronous callbacks.
-    const result = Promise.resolve().then(execute);
-    this.#pending.set(key, { fingerprint, result });
-    try {
-      const value = await result;
-      this.#retain(key, fingerprint, value);
-      return value;
-    } finally {
+    const result = Promise.resolve().then(() => {
+      owner?.throwIfAborted();
+      return execute();
+    }).then(value => {
+      try {
+        owner?.throwIfAborted();
+        this.#retain(key, fingerprint, value);
+        return value;
+      } finally { this.#pending.delete(key); }
+    }, (error: unknown) => {
       this.#pending.delete(key);
-    }
+      throw error;
+    });
+    // Duplicates share the checked retention settlement, never inner execution alone.
+    this.#pending.set(key, { fingerprint, result, owner });
+    return result;
   }
 
   #retain(key: string, fingerprint: string, value: T): void {

@@ -4,7 +4,7 @@ import type {
 } from "@kubeclaw/pipeline-worker-core-contract";
 import { engineRequestSchema, engineResultSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import { validateEngineRequest, validateEngineResult, validatePrism } from "@kubeclaw/prism-contracts-v1";
-import { PrismEngine, type EngineOperation } from "./index.ts";
+import type { PrismEngine, EngineOperation } from "./index.ts";
 const supportedOperations = new Set<EngineOperation>([
   "generate",
   "render",
@@ -17,6 +17,7 @@ export async function executePrismOperation(
   operation: SpecialistOperationV1,
   idempotencyKey: string,
   hydratedInput?: Record<string,unknown>,
+  signal?: AbortSignal,
 ): Promise<WorkerSpecialistResultV1> {
   if (operation.contractId !== "kubeclaw.prism-design-engine@1")
     throw new Error("worker operation is not for Prism");
@@ -38,7 +39,7 @@ export async function executePrismOperation(
     operation: name,
     input,
     idempotencyKey,
-  });
+  }, signal ? { signal } : {});
   const resultContract = engineResultSchema(name);
   validateEngineResult(name,result.output);
   return {

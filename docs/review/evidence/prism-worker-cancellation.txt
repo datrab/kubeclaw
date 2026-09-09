@@ -1,0 +1,56 @@
+$ node --test skills/prism/tests/engine.test.mts skills/prism/tests/engine-cache.test.mts skills/prism/tests/worker-service.test.mts tests/verification/reliability/worker-deadline.test.mts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/provider-cancellation.test.mts
+✔ many original renders bound retained entries and bytes without changing returned output (65.352081ms)
+✔ byte pressure and oversized successful renders do not retain their large payloads (1.414934ms)
+✔ accumulated render bytes evict completed entries before the count ceiling (6.501488ms)
+✔ active duplicates share one original operation and admission never evicts active ownership (2.390967ms)
+✔ retained replay snapshots cannot be enlarged or corrupted through caller mutation (0.998165ms)
+✔ failure releases admission and invalid cache limits cannot disable its bounds (0.988171ms)
+✔ real render evidence survives RAM eviction and artifact-store reconstruction (13.350922ms)
+✔ deferred original rendering uses the request snapshot bound to its fingerprint (1.139709ms)
+✔ engine generates, renders, evaluates and publishes idempotently (14.829031ms)
+✔ the generic worker carries an opaque Prism operation (3.345678ms)
+✔ the worker binding rejects unknown operations (0.280423ms)
+✔ concurrent retries share one provider execution (0.762931ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.566655ms)
+✔ an idempotency key cannot identify different requests (0.74866ms)
+✔ Prism creates a valid neutral worker envelope (39.346173ms)
+✔ original ingest provider cancels an actual TLS response body after headers (329.665575ms)
+✔ original propose provider cancels an actual TLS response body after headers (462.01864ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (9.819905ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (230.171386ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (173.079471ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (16.376305ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.878633ms)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (157.136299ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (18.308871ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (58.574282ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (13.21796ms)
+✔ full log participates in the real neutral evidence budget before upload (11.707222ms)
+✔ direct: actual optional phases require a complete claim reservation (83.766091ms)
+✔ runtime: actual optional phases require a complete claim reservation (3.727753ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (94.178174ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (574.724666ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (561.035199ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (208.783238ms)
+✔ uncooperative storage is reported unresolved rather than completed (158.848026ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (87.490279ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (26.495612ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (11.440234ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2155.109786
+
+exit=0
+
+$ node_modules/.bin/tsc --noEmit -p skills/prism/tsconfig.json
+
+exit=0
+
+$ node_modules/.bin/eslint -c charts/kubeclaw/files/config/eslint.config.mjs skills/prism/engine/browser-capture.ts skills/prism/engine/execution-cache.ts skills/prism/engine/worker-binding.ts skills/prism/server/worker-operation.ts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/provider-cancellation.test.mts skills/prism/integration/worker-browser-cancellation.mts
+
+exit=0

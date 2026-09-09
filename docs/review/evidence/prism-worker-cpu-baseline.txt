@@ -1,0 +1,32 @@
+$ node --test --test-name-pattern=actual attempt CPU skills/prism/tests/worker-cancellation-baseline-review.test.mts
+✖ actual attempt CPU excludes prior process work and stays fixed after execution (132.773619ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 687.572713
+
+✖ failing tests:
+
+test at skills/prism/tests/worker-cancellation-baseline-review.test.mts:82:1
+✖ actual attempt CPU excludes prior process work and stays fixed after execution (132.773619ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert(measured.cpuTimeMs < (processTotal.user + processTotal.system) / 1000 - (prior.user + prior.system) / 2000)
+
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/prism/tests/worker-cancellation-baseline-review.test.mts:92:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+exit=1

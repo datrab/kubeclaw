@@ -9,6 +9,7 @@ import {
 import { renderNode } from "../renderer/index.ts";
 import { evaluate } from "../evaluation/index.ts";
 import { EngineExecutionCache, type EngineCacheLimits } from "./execution-cache.ts";
+import { openOwnedBrowser } from "./browser-capture.ts";
 
 export type EngineOperation =
   "generate" | "render" | "evaluate" | "ingest" | "publish";
@@ -26,9 +27,11 @@ export interface DesignProvider {
   propose(
     document: PrismDocument,
     instruction: string,
+    signal?: AbortSignal,
   ): Promise<PrismOperation[]>;
   embed(
     text: string,
+    signal?: AbortSignal,
   ): Promise<{ embedding: number[]; model: string; modelVersion: string }>;
 }
 const hash = (value: string) =>
@@ -55,7 +58,9 @@ export class PrismEngine {
   cacheUsage() {
     return this.executions.usage();
   }
-  async execute(request: EngineRequest): Promise<EngineResult> {
+  async execute(request: EngineRequest, options: { signal?: AbortSignal } = {}): Promise<EngineResult> {
+    const owner = options.signal;
+    owner?.throwIfAborted();
     if (request.contract !== "kubeclaw.prism-design-engine@1")
       throw new Error("unsupported Prism engine contract");
     // Bind deferred execution to the same caller-independent input as its identity.
@@ -63,9 +68,10 @@ export class PrismEngine {
     const fingerprint = hash(
       JSON.stringify({ operation: ownedRequest.operation, input: ownedRequest.input }),
     );
-    return this.executions.execute(ownedRequest.idempotencyKey, fingerprint, () => this.executeOnce(ownedRequest));
+    return this.executions.execute(ownedRequest.idempotencyKey, fingerprint, () => this.executeOnce(ownedRequest, owner), owner);
   }
-  private async executeOnce(request: EngineRequest): Promise<EngineResult> {
+  private async executeOnce(request: EngineRequest, signal?: AbortSignal): Promise<EngineResult> {
+    signal?.throwIfAborted();
     if (request.operation === "generate")
       exactInput(
         request.input,
@@ -87,7 +93,7 @@ export class PrismEngine {
       const text = String(request.input.text ?? "").trim();
       if (!text || text.length > 200_000)
         throw new Error("ingest text length is invalid");
-      const embedded = await this.provider.embed(text);
+      const embedded = await this.provider.embed(text, signal);
       if (
         !embedded.embedding.length ||
         embedded.embedding.some((value) => !Number.isFinite(value))
@@ -105,6 +111,7 @@ export class PrismEngine {
       const operations = await this.provider.propose(
         document,
         String(request.input.instruction ?? ""),
+        signal,
       );
       const next = operations.reduce(
         (current, operation) =>
@@ -175,8 +182,8 @@ export class PrismEngine {
       let accessibilityFindings: string[] | undefined;
       let rendererMetadata: Record<string,unknown>={name:"prism-html",version:"v1",locale:"en-US",timezone:"UTC",motion:"reduced"};
       if (capture) {
-        const { chromium } = await import("playwright");
-        const browser = await chromium.launch({ headless: true });
+        const owned = await openOwnedBrowser(signal);
+        const browser = owned.browser;
         rendererMetadata={...rendererMetadata,name:"chromium",version:browser.version()};
         try {
           const widths = { compact: 390, regular: 768, wide: 1440 } as const;
@@ -238,7 +245,7 @@ export class PrismEngine {
           accessibilityFindings.push(...contrastFindings);
           await context.close();
         } finally {
-          await browser.close();
+          await owned.close();
         }
       }
       result = {
@@ -278,7 +285,9 @@ export class PrismEngine {
 export class DeterministicDesignProvider implements DesignProvider {
   async embed(
     text: string,
+    signal?: AbortSignal,
   ): Promise<{ embedding: number[]; model: string; modelVersion: string }> {
+    signal?.throwIfAborted();
     const bytes = createHash("sha256").update(text).digest();
     return {
       embedding: Array.from(bytes.subarray(0, 16), (value) => value / 255),
@@ -289,7 +298,9 @@ export class DeterministicDesignProvider implements DesignProvider {
   async propose(
     document: PrismDocument,
     instruction: string,
+    signal?: AbortSignal,
   ): Promise<PrismOperation[]> {
+    signal?.throwIfAborted();
     const node = document.views.home?.root.children?.[0];
     if (!node) return [];
     return [
@@ -342,10 +353,11 @@ export class OpenAICompatibleDesignProvider implements DesignProvider {
   async propose(
     document: PrismDocument,
     instruction: string,
+    signal?: AbortSignal,
   ): Promise<PrismOperation[]> {
     const response = await fetch(this.#endpoint, {
       method: "POST",
-      signal: AbortSignal.timeout(this.#timeoutMs),
+      signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]) : AbortSignal.timeout(this.#timeoutMs),
       headers: {
         authorization: `Bearer ${this.#apiKey}`,
         "content-type": "application/json",
@@ -379,12 +391,13 @@ export class OpenAICompatibleDesignProvider implements DesignProvider {
   }
   async embed(
     text: string,
+    signal?: AbortSignal,
   ): Promise<{ embedding: number[]; model: string; modelVersion: string }> {
     if (!this.#embeddingEndpoint || !this.#embeddingModel)
       throw new Error("embedding provider is not configured");
     const response = await fetch(this.#embeddingEndpoint, {
       method: "POST",
-      signal: AbortSignal.timeout(this.#timeoutMs),
+      signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]) : AbortSignal.timeout(this.#timeoutMs),
       headers: {
         authorization: `Bearer ${this.#apiKey}`,
         "content-type": "application/json",
