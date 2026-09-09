@@ -2,7 +2,7 @@ import {demoStages,normalizeDemo} from './demo.ts';
 import {sourceStages} from './source.ts';
 import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
 import path from 'node:path';
-import { PORTABLE_JSON_ENCODING, canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
+import { PORTABLE_JSON_ENCODING, canonicalJson, portableJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
@@ -73,7 +73,8 @@ function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinit
   if (module.review) stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId], config: module.review,
     input: { task: { id: module.id, statement: module.task }, revisions: { sourceStageId: implementationId },
       scope: { allowedPrefixes: coverageReviewPrefixes(expectedCoverage), ownershipPrefixes: coverageReviewPrefixes(expectedCoverage) }, requirements: coverageReviewRequirements(expectedCoverage),
-      evidence: [{ kind: 'project-requirements', digest: sha256Text(canonicalJson(evidence)), content: evidence }, { kind: 'gate-coverage', digest: sha256Text(canonicalJson(expectedCoverage)), content: expectedCoverage }], contextCandidates: [] },
+      evidence: [{ kind: 'project-requirements', encoding: PORTABLE_JSON_ENCODING, digest: sha256Text(portableJson(evidence)), content: evidence },
+        { kind: 'gate-coverage', encoding: PORTABLE_JSON_ENCODING, digest: sha256Text(portableJson(expectedCoverage)), content: expectedCoverage }], contextCandidates: [] },
     execution: { ...execution, repairCategory: 'review' }, on: { request_fix: implementationId } });
   stages.push({ id: testId, type: 'kubeclaw.test.quality-evaluation', dependsOn: [module.review ? reviewId : lintId],
     config: testConfiguration(module.test),

@@ -2,6 +2,7 @@ import { canonicalJson } from '@kubeclaw/plugin-sdk';
 
 import type { ReviewBundle } from './review-bundle-contract.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
+import { reviewEvidenceJson } from './review-evidence-encoding.ts';
 
 function assertUtf8Bytes(value: string, maximum: number, label: string): number {
   const bytes = Buffer.byteLength(value, 'utf8');
@@ -28,12 +29,12 @@ function boundedJson(value: unknown, depth = 0): boolean {
   return Boolean(value && typeof value === 'object' && boundedJsonObject(value, depth));
 }
 
-export function assertReviewEvidenceContent(value: string, label: string): number {
+export function assertReviewEvidenceContent(value: string, label: string, encoding?: unknown): number {
   const bytes = assertUtf8Bytes(value, REVIEW_HARD_LIMITS.evidenceContentBytes, label);
   let parsed: unknown;
   try { parsed = JSON.parse(value); } catch { throw new Error(`${label} must be valid JSON`); }
   if (!boundedJson(parsed)) throw new Error(`${label} must be bounded JSON`);
-  if (canonicalJson(parsed) !== value) throw new Error(`${label} must be canonical JSON`);
+  if (reviewEvidenceJson(parsed, encoding) !== value) throw new Error(`${label} must be canonical JSON`);
   return bytes;
 }
 
@@ -56,7 +57,8 @@ export function assertReviewBundleInputResourceBounds(
   evidence.forEach((entry, index) => {
     const content = entry && typeof entry === 'object'
       ? (entry as Readonly<Record<string, unknown>>).content : undefined;
-    if (typeof content === 'string') bytes += assertReviewEvidenceContent(content, `evidence[${index}].content`);
+    const encoding = entry && typeof entry === 'object' ? (entry as Readonly<Record<string, unknown>>).encoding : undefined;
+    if (typeof content === 'string') bytes += assertReviewEvidenceContent(content, `evidence[${index}].content`, encoding);
   });
   context.forEach((entry, index) => {
     const content = entry && typeof entry === 'object'
@@ -72,7 +74,7 @@ export function assertReviewBundleResourceBounds(
   bundle: Pick<ReviewBundle, 'evidence' | 'context'>,
 ): void {
   bundle.evidence.forEach((item, index) => (
-    assertReviewEvidenceContent(item.content, `evidence[${index}].content`)
+    assertReviewEvidenceContent(item.content, `evidence[${index}].content`, item.encoding)
   ));
   bundle.context.forEach((item, index) => (
     assertReviewContextContent(

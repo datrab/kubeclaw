@@ -233,6 +233,9 @@
             "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
             "maxLength": 71
           },
+          "encoding": {
+            "const": "kubeclaw-json.utf16.v1"
+          },
           "content": {
             "type": "string",
             "maxLength": 2097152

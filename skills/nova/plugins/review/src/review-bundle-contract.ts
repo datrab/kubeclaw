@@ -1,4 +1,5 @@
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
+import { PORTABLE_JSON_ENCODING } from '@kubeclaw/plugin-sdk';
 
 export const REVIEW_BUNDLE_SCHEMA_VERSION = 'review-bundle.v1' as const;
 export const REVIEW_CONTEXT_SELECTION_VERSION = 'focused-context.v1' as const;
@@ -30,6 +31,7 @@ export interface ReviewBundleScope {
 }
 export interface ReviewBundleRequirement { readonly id: string; readonly statement: string }
 export interface ReviewBundleEvidence {
+  readonly encoding?: typeof PORTABLE_JSON_ENCODING;
   readonly kind: string;
   readonly digest: `sha256:${string}`;
   readonly content: string;
@@ -89,6 +91,7 @@ const closed = <T extends Readonly<Record<string, unknown>>>(
 
 const evidenceSchema = closed(['kind', 'digest', 'content'], {
   kind: identifier, digest,
+  encoding: { const: PORTABLE_JSON_ENCODING },
   content: { type: 'string', maxLength: REVIEW_HARD_LIMITS.evidenceContentBytes },
 });
 const requirementSchema = closed(['id', 'statement'], {
