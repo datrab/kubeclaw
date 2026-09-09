@@ -20,3 +20,19 @@ The adapter:
 Non-zero command exits are results, not adapter failures. Authorization,
 configuration, cancellation, timeout, and resource-limit violations fail with
 stable error codes.
+
+Process-group lifetime is tracked independently of the direct child's exit.
+Timeout, abort and shutdown still terminate descendants holding inherited
+stdout/stderr pipes after the leader exits. TERM and KILL share one grace
+budget; stream close does not restart it. Shutdown waits for command cleanup.
+The public `CommandRunner` and `CommandRunError` exports remain available for
+Buster. The first timeout/cancellation/resource failure keeps its disposition
+and original error chain; shutdown retains the existing exit-result behavior.
+Direct calls after shutdown or with an already-aborted signal start no process.
+
+POSIX process groups cannot contain programs that create independent sessions.
+Buster's configured sandbox/cgroup supplies that stronger boundary. Cgroup
+removal remains best effort, and this package does not promise hard cgroup
+accounting or complete orphan reaping on an undelegated host. An interrupted
+command may already have made external changes; callers must reconcile them
+before retrying, rather than treating cancellation as proof of no side effect.

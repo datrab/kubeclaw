@@ -52,30 +52,51 @@ function requestHeaders(value: unknown, allowed: ReadonlySet<string>): Record<st
 
 async function performRequest(
   url: URL, method: string, headers: Record<string, string>, body: string | undefined,
-  signal: AbortSignal, timeoutMs: number,
-): Promise<Response> {
+  signal: AbortSignal, timeoutMs: number, maximum: number,
+): Promise<{ response: Response; text: string; contentType: string | undefined }> {
   const timeout = AbortSignal.timeout(timeoutMs);
+  const requestSignal = AbortSignal.any([signal, timeout]);
   try {
-    return await fetch(url, {
+    const response = await fetch(url, {
       method, headers, ...(body === undefined ? {} : { body }),
-      signal: AbortSignal.any([signal, timeout]), redirect: 'manual',
+      signal: requestSignal, redirect: 'manual',
     });
+    return { response, ...await responseBody(response, maximum) };
   } catch (error) {
-    if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-    if (timeout.aborted) throw new Error('NETWORK_TIMEOUT');
+    if (requestSignal.aborted) {
+      const timedOut = timeout.aborted && requestSignal.reason === timeout.reason;
+      throw new Error(timedOut ? 'NETWORK_TIMEOUT' : 'ADAPTER_CANCELLED', { cause: requestSignal.reason });
+    }
     throw error;
   }
 }
 
 async function responseBody(response: Response, maximum: number): Promise<{ text: string; contentType: string | undefined }> {
-  if (response.status >= 300 && response.status < 400) throw new Error('NETWORK_REDIRECT_DENIED');
-  const declared = Number(response.headers.get('content-length') ?? 0);
-  if (declared > maximum) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  if (bytes.byteLength > maximum) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');
-  const text = new TextDecoder().decode(bytes);
-  if (!response.ok) throw new Error(`HTTP_${response.status}:${text.slice(0, 1000)}`);
-  return { text, contentType: response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase() };
+  const reader = response.body?.getReader();
+  try {
+    if (response.status >= 300 && response.status < 400) throw new Error('NETWORK_REDIRECT_DENIED');
+    const declared = Number(response.headers.get('content-length') ?? 0);
+    if (declared > maximum) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');
+    const chunks: Uint8Array[] = [];
+    let total = 0;
+    while (reader) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      // Fetch delivers decompressed bytes. Never retain a chunk over budget.
+      if (value.byteLength > maximum - total) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');
+      chunks.push(value);
+      total += value.byteLength;
+    }
+    const text = new TextDecoder().decode(Buffer.concat(chunks, total));
+    if (!response.ok) throw new Error(`HTTP_${response.status}:${text.slice(0, 1000)}`);
+    return { text, contentType: response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase() };
+  } finally {
+    if (reader) {
+      try { await reader.cancel(); }
+      catch { /* INTENTIONAL_NONCRITICAL(response_cancel_failed): Preserve the request failure if its stream is already errored. */ }
+      reader.releaseLock();
+    }
+  }
 }
 
 function decodedBody(text: string, contentType: string | undefined): unknown {
@@ -92,7 +113,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       if (request.capability !== 'network.http' || request.operation !== 'request') {
         throw new Error('NETWORK_OPERATION_UNSUPPORTED');
       }
-      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+      if (signal.aborted) throw new Error('ADAPTER_CANCELLED', { cause: signal.reason });
       const url = new URL(request.resource.canonicalId);
       if (!config.origins.has(url.origin)) throw new Error(`NETWORK_ORIGIN_DENIED:${url.origin}`);
       if (url.username || url.password) throw new Error('NETWORK_CREDENTIALS_DENIED');
@@ -101,8 +122,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       const headers = requestHeaders(request.payload.headers, config.headers);
       const body = request.payload.body === undefined ? undefined : JSON.stringify(request.payload.body);
       if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');
-      const response = await performRequest(url, method, headers, body, signal, config.timeoutMs);
-      const { text, contentType } = await responseBody(response, config.maxResponseBytes);
+      const { response, text, contentType } = await performRequest(url, method, headers, body, signal, config.timeoutMs, config.maxResponseBytes);
       return {
         status: response.status,
         headers: {
