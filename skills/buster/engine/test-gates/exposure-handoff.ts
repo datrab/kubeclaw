@@ -38,3 +38,12 @@ export function exposureHandoffPatch(lease:JsonObject,identity:{owner:string;req
   [EXPOSURE_PREDECESSORS_ANNOTATION]:exposurePredecessors(lease),[READINESS_HANDOFF_ANNOTATION]:JSON.stringify(handoff),
  }}}};
 }
+
+/** Bind the typed output to the controller observation after ownership transfer. */
+export function observedExposureHandoff(lease:JsonObject,identity:{owner:string;request:string}) {
+ const metadata=lease.metadata as JsonObject,status=lease.status as JsonObject;
+ const handoff=existingExposureHandoff(lease,identity);
+ if(!handoff||!Number.isSafeInteger(metadata.generation)||Number(metadata.generation)<1
+  ||status.exposureGeneration!==metadata.generation||status.exposurePhase!=='Ready'||status.exposureOwner!==handoff.owner)throw new Error('EXPOSURE_HANDOFF_OBSERVED_GENERATION_REQUIRED');
+ return {...handoff,exposureGeneration:metadata.generation};
+}

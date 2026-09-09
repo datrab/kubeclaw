@@ -88,6 +88,8 @@ test('original HTTP importer, artifact store and evidence adapter preserve owner
   const reopen=new FileNovaGateImportStore(storePath,options);const binding={jobId:job.jobId,runId:job.plan.runId,pipelineStageId:'final-test',sourceRevision:job.sourceSnapshot.revision,decisionDigest:decision.decisionDigest,resultDigest:result.resultDigest};
   const verified=await reopen.readVerifiedResult(binding);assert.equal(projectDemoEvidence(verified,'auth').resultDigest,result.resultDigest);
   for(const changed of [{runId:'foreign'},{sourceRevision:'git:foreign'},{decisionDigest:sha256Text('wrong')},{resultDigest:sha256Text('wrong')},{pipelineStageId:'foreign'}])await assert.rejects(reopen.readVerifiedResult({...binding,...changed}),/BINDING_MISMATCH/);
+  const changedGeneration=structuredClone(verified);const authAttempt=changedGeneration.result.attempts.find(item=>item.nodeId==='auth')!;
+  (authAttempt.outputs[0] as any).value.exposureGeneration+=1;assert.throws(()=>projectDemoEvidence(changedGeneration,'auth'),/SOURCE_MISMATCH/);
   const changed=structuredClone(verified);changed.source.plan.links=changed.source.plan.links.filter(link=>link.to.input!=='credentials');assert.throws(()=>projectDemoEvidence(changed,'auth'),/NATIVE_LINK_REQUIRED/);
   const noImage=structuredClone(verified);noImage.source.plan.links=noImage.source.plan.links.filter(link=>link.to.input!=='image');assert.throws(()=>projectDemoEvidence(noImage,'auth'),/SOURCE_LINK_REQUIRED/);
   const swapped=structuredClone(verified);const build=swapped.result.attempts.find(item=>item.nodeId==='build')!;(build.outputs[0] as any).value.reference='foreign';assert.throws(()=>projectDemoEvidence(swapped,'auth'),/BUILT_IMAGE_MISMATCH/);

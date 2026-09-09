@@ -84,7 +84,7 @@ export function provider() {
         url: result.url, hostname: result.hostname, namespace: deployment.namespace, leaseName: deployment.leaseName,
         createdAt: result.createdAt, expiresAt: result.expiresAt, releaseAction: result.releaseAction,
         ...(result.handoff ? {handoff:result.handoff} : {}) };
-      if(config.retentionMode==='await-readiness' && result.handoff?.phase!=='awaiting-readiness')throw new Error('TAILSCALE_EXPOSURE_HANDOFF_MISSING');
+      if(config.retentionMode==='await-readiness' && (result.handoff?.phase!=='awaiting-readiness'||!Number.isSafeInteger(result.handoff.exposureGeneration)||result.handoff.exposureGeneration<1))throw new Error('TAILSCALE_EXPOSURE_HANDOFF_MISSING');
       context.log('stdout', `Prepared Tailscale exposure ${result.url}.\n`);
       return { schemaVersion: 'provider-result.v1', outcome: 'passed', summary: `Prepared Tailscale exposure ${result.hostname}.`,
         counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [], evidenceFiles: [], reports: [],

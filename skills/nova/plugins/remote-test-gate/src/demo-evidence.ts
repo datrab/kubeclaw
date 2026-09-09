@@ -48,7 +48,7 @@ export function projectDemoEvidence(verified: Verified, authNodeId: string) {
     attemptId:auth.attempt.attemptId,attemptNumber:auth.attempt.attemptNumber,protocolDigest:sha256Text(canonicalJson(auth.node.configuration.values)),
     leaseName:credentials.value.leaseName,leaseUID:source.leaseUID,namespace:credentials.value.namespace,immutableImage:credentials.value.immutableImage,
     manifestDigest:credentials.value.manifestDigest,credentialDigest:source.credentialDigest,secretUID:source.secretUID,
-    url:exposure.value.url,exposureOwner:handoff.owner,expiresAt:exposure.value.expiresAt};
+    url:exposure.value.url,exposureOwner:handoff.owner,exposureGeneration:handoff.exposureGeneration,expiresAt:exposure.value.expiresAt};
   assertSource(value,expected,source,credentials.value,deployment.value,handoff,auth.attempt.completedAt);
   return {schemaVersion:'verified-demo-evidence.v1',runId:verified.source.plan.runId,sourceRevision:verified.source.sourceRevision,
     jobId:verified.source.jobId,planDigest:verified.source.plan.planDigest,decisionDigest:verified.decision.decisionDigest,
@@ -61,6 +61,7 @@ function assertSource(value:ObjectValue,expected:ObjectValue,source:ObjectValue,
     || source.credentialDigest !== sha256Text(canonicalJson(credentials.values))
     || deployment.manifestDigest !== value.manifestDigest || deployment.immutableImage !== value.immutableImage
     || handoff.leaseUID !== value.leaseUID || handoff.immutableImage !== value.immutableImage || handoff.manifestDigest !== value.manifestDigest
+    || !Number.isSafeInteger(handoff.exposureGeneration) || handoff.exposureGeneration < 1
     || handoff.phase !== 'awaiting-readiness' || !Number.isFinite(Date.parse(value.observedAt))
     || Date.parse(value.observedAt) > Date.parse(completedAt)) throw new Error('DEMO_EVIDENCE_SOURCE_MISMATCH');
 }

@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
 import { once } from 'node:events';
+import { spawn } from 'node:child_process';
 import * as core from '../../../skills/nova/core/src/index.ts';
 import { prepareRuntime } from '../../../skills/nova/core/execution/engine-runtime.ts';
 import { frozenRegistryRecord, graphSnapshot, writeRunSnapshots, readRunSnapshot, verifyPinnedPackages } from '../../../skills/nova/core/execution/engine-snapshots.ts';
@@ -16,17 +17,17 @@ import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform
 // A real consumer of the public dependency API. Native HTTP and the original
 // registry/runtime/effect journals execute every external operation.
 const consumer = `import fs from 'node:fs'; export function activate(context) {
+  const call=()=>context.invoke('network.http',{operation:'request',resource:{type:'network.url',canonicalId:context.config.origin},payload:{method:'POST',body:{value:'same'}}});
   return {async ready(){fs.appendFileSync(context.config.marker,'ready\\n');},async shutdown(){},async invoke({request,fence}) {
-    fence.assertCurrent();
-    const call=()=>context.invoke('network.http',{operation:'request',resource:{type:'network.url',canonicalId:context.config.origin},payload:{method:'POST',body:{value:'same'}}});
-    const first=await call();await call();return first;
-  }};
+    fence.assertCurrent();const first=await call();await call();
+    if(request.payload.crash)process.kill(process.pid,'SIGKILL');return first;
+  },async receipt(request){if(request.payload.abortRecovery)return context.invoke('network.http',{operation:'request',resource:{type:'network.url',canonicalId:context.config.origin+'/pending'},payload:{method:'POST'}});return call();}};
 }`;
 
 test('nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(),'dependency-identity-'));
-  let hits=0;
-  const server=http.createServer((request,response)=>{request.resume();request.on('end',()=>{hits++;response.writeHead(200,{'content-type':'application/json'});response.end('{"ok":true}');});});
+  let hits=0;let interruptKey:string|undefined;let pendingReceived!:()=>void;const pendingStarted=new Promise<void>(resolve=>{pendingReceived=resolve;});
+  const server=http.createServer((request,response)=>{request.resume();request.on('end',()=>{if(request.url==='/pending'){pendingReceived();return;}hits++;response.writeHead(200,{'content-type':'application/json'});response.end('{"ok":true}');});});
   server.listen(0,'127.0.0.1');await once(server,'listening');
   let runtime:core.AdapterRuntime|undefined;
   try {
@@ -51,7 +52,7 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     const prepared=await prepareRuntime(platform,definition);
     const observed:EffectRequest[]=[];
     const create=()=>new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(){},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')))});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')))});
     runtime=create();await runtime.start();
     const attempt={runId:'run:dependency',stageId:'one',attemptId:'attempt:one',attemptNumber:1};
     const invocation={operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}};
@@ -66,6 +67,31 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     const children=observed.filter(request=>request.capability==='network.http');
     assert.equal(new Set(children.map(request=>request.idempotencyKey)).size,3);
     assert(children.every(request=>request.deliveryId===undefined),'generic dependencies need no fabricated delivery identity');
+    // Kill a real separate runtime after its nested HTTP completion but before
+    // the outer effect can return. Recovery must reuse that child's exact key.
+    const crashAttempt={...attempt,attemptId:'attempt:crash',attemptNumber:3};
+    const crashRequest={...invocation,payload:{crash:true}};
+    const childSource=`import * as core from ${JSON.stringify(new URL('../../../skills/nova/core/src/index.ts',import.meta.url).href)};
+      import {prepareRuntime} from ${JSON.stringify(new URL('../../../skills/nova/core/execution/engine-runtime.ts',import.meta.url).href)};
+      const platform=${JSON.stringify(platform)},definition=${JSON.stringify(definition)};
+      const prepared=await prepareRuntime(platform,definition);
+      const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
+        effects:new core.EffectCoordinator(new core.FileEffectJournal(${JSON.stringify(path.join(root,'effects.jsonl'))}),undefined,undefined,new core.FileResourceLockManager(${JSON.stringify(path.join(root,'locks'))}),1000)});
+      await runtime.start();await runtime.invoke('runtime.dispatch',${JSON.stringify(crashAttempt)},'parent:crash',${JSON.stringify(crashRequest)},new AbortController().signal);`;
+    const child=spawn(process.execPath,['--input-type=module','-e',childSource],{stdio:['ignore','ignore','pipe']});let childError='';child.stderr.on('data',chunk=>{childError+=chunk;});
+    const [,killed]=await once(child,'exit');assert.equal(killed,'SIGKILL',childError);assert.equal(hits,4);
+    await runtime.shutdown();runtime=create();await runtime.start();
+    await runtime.invoke('runtime.dispatch',crashAttempt,'parent:crash',crashRequest,new AbortController().signal);
+    assert.equal(hits,4,'receipt nested invocation reuses the invoke-owned completed child after actual process death');
+    const foreign={...crashAttempt,runId:'run:foreign',attemptId:'attempt:foreign'};
+    interruptKey='parent:foreign';await assert.rejects(runtime.invoke('runtime.dispatch',foreign,interruptKey,invocation,new AbortController().signal),/TEST_ACCEPTED_PREFIX/);interruptKey=undefined;
+    await runtime.invoke('runtime.dispatch',foreign,'parent:foreign',invocation,new AbortController().signal);assert.equal(hits,5);
+    assert(observed.some(request=>request.capability==='network.http'&&request.attempt.runId==='run:foreign'),'receipt dependencies carry the real foreign run, never activation ownership');
+    const abortRequest={...invocation,payload:{abortRecovery:true}};
+    interruptKey='parent:abort';await assert.rejects(runtime.invoke('runtime.dispatch',attempt,interruptKey,abortRequest,new AbortController().signal),/TEST_ACCEPTED_PREFIX/);interruptKey=undefined;
+    const recovery=runtime.invoke('runtime.dispatch',attempt,'parent:abort',abortRequest,new AbortController().signal);
+    const rejected=assert.rejects(recovery,/abort|cancel|shutdown|revoke/iu);
+    await pendingStarted;await runtime.shutdown();await rejected;
     const readyBefore=fs.readFileSync(path.join(root,'ready.log'),'utf8');
     assert.equal(registry.dependencyIdentityVersion,'parent-invocation.v1');
     for(const marker of [undefined,'other-version']) {
@@ -75,7 +101,7 @@ test('nested effects bind actual invocation and attempt, replay once after recon
       assert.equal(readRunSnapshot(directory).graph.digest,graph.digest,'historical read stays available');
       await assert.rejects(recoverPipeline(platform,definition,id),/RECOVERY_DEPENDENCY_IDENTITY_MISMATCH/);
       assert.equal(fs.readFileSync(path.join(root,'ready.log'),'utf8'),readyBefore,'recovery never starts adapters');
-      assert.equal(hits,3,'incompatible persisted identity rejected before adapter/external execution');
+      assert.equal(hits,5,'incompatible persisted identity rejected before adapter/external execution');
     }
   } finally {await runtime?.shutdown();server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));fs.rmSync(root,{recursive:true,force:true});}
 });

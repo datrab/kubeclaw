@@ -1,0 +1,15 @@
+✔ original controller credentials authenticate against a real local session application through original network runtime (1544.73608ms)
+✔ missing or unsupported protocol and missing business assertion fail explicitly (0.706585ms)
+✔ session cookie contract rejects foreign domain, wrong path, expired and insecure sessions (0.286161ms)
+✔ original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors (3421.139181ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (3324.830683ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (3003.068649ms)
+✔ original provider and kubectl transfer pending exposure ownership without extending its lease (1725.494615ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7052.416479

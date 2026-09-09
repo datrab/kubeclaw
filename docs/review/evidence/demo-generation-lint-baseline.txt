@@ -1,0 +1,18 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
+  97:33  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  97:63  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  98:32  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  99:32  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+
+✖ 4 problems (4 errors, 0 warnings)
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/tailscale-exposure/src/provider.js
+  15:1  error  Function 'configuration' has a complexity of 17. Maximum allowed is 15    complexity
+  32:1  error  Function 'deploymentInput' has a complexity of 32. Maximum allowed is 15  complexity
+
+✖ 2 problems (2 errors, 0 warnings)
+

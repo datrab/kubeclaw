@@ -50,10 +50,10 @@ test('original controller credentials authenticate against a real local session 
  const immutableImage=`example.invalid/demo@${sha256Text('local application source identity contract vector')}`;
  const manifestDigest=sha256Text('local application manifest contract vector');const expiresAt=new Date(Date.now()+60000).toISOString();
  const expected={leaseName:'demo-auth-lease',namespace:'test-demo-auth',secretName:'demo-login',immutableImage,manifestDigest};
- const lease={metadata:{name:expected.leaseName,uid:produced.source.leaseUID},spec:{verifiedImage:immutableImage,manifestDigest,cleanupPolicy:'retain',testCredentials:{mode:'generate',secretName:expected.secretName}},status:{namespaceName:expected.namespace,credentialsAvailable:true,generatedCredentials:produced.source,expiresAt}};
+ const lease={metadata:{name:expected.leaseName,uid:produced.source.leaseUID,generation:7},spec:{verifiedImage:immutableImage,manifestDigest,cleanupPolicy:'retain',testCredentials:{mode:'generate',secretName:expected.secretName}},status:{exposureGeneration:7,exposurePhase:'Ready',namespaceName:expected.namespace,credentialsAvailable:true,generatedCredentials:produced.source,expiresAt}};
  const credentials=generatedDemoCredentials(lease,produced.secret,expected);
  const deployment={schemaVersion:'kubernetes-deployment-fixture.v1',...expected,expiresAt};
- const handoff=pendingExposureHandoff(lease,{owner:sha256Text('owner contract vector'),request:sha256Text('request contract vector')});
+ const handoff={...pendingExposureHandoff(lease,{owner:sha256Text('owner contract vector'),request:sha256Text('request contract vector')}),exposureGeneration:7};
  const exposure={schemaVersion:'public-endpoint-fixture.v1',provider:'tailscale-ingress',leaseName:expected.leaseName,namespace:expected.namespace,url:`${origin}/`,expiresAt,handoff};
  const invocation:any={runId:'run:local-contract',planId:'plan:local-contract',nodeId:'auth',attemptId:'attempt:local-contract',attemptNumber:1,timeoutMs:3000,configuration:{values:config},inputs:[
   {name:'deployment',kind:'value',schemaId:'kubeclaw.kubernetes-deployment-fixture@1',value:deployment},
@@ -69,6 +69,9 @@ test('original controller credentials authenticate against a real local session 
   const result=await provider().execute(invocation,context);const evidence=result.outputs[0].value;validatePipelineTestGateContract('providerResult',result);
   assert.equal(result.outcome,'passed');assert.deepEqual(requests,['GET /api/account','POST /api/login','GET /api/account']);
   assert.equal(evidence.credentialDigest,produced.source.credentialDigest);assert.equal(evidence.secretUID,produced.source.secretUID);
+  assert.equal(evidence.exposureGeneration,7);
+  const unbound=structuredClone(invocation);delete unbound.inputs[2].value.handoff.exposureGeneration;const requestCount=requests.length;
+  await assert.rejects(provider().execute(unbound,context),/EXPOSURE_GENERATION_REQUIRED/);assert.equal(requests.length,requestCount);
   assert.equal(evidence.protocolDigest,sha256Text(canonicalJson(config)));assert.equal(evidence.url,exposure.url);
   for(const session of sessions.keys()) assert(!JSON.stringify({result,logs}).includes(session));
   assert(!JSON.stringify({result,logs}).includes(password));

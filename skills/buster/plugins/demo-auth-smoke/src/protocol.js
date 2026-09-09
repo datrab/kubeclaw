@@ -63,6 +63,7 @@ function validateSource(d,c,e,source,handoff) {
   for (const key of ['immutableImage','manifestDigest']) if (text(d[key]) !== c[key] || d[key] !== handoff[key]) throw new Error('DEMO_AUTH_SOURCE_MISMATCH');
   if (!/@sha256:[a-f0-9]{64}$/u.test(d.immutableImage) || !/^sha256:[a-f0-9]{64}$/u.test(d.manifestDigest)
     || text(source.leaseUID) !== handoff.leaseUID || source.namespace !== d.namespace || source.secretName !== c.secretName) throw new Error('DEMO_AUTH_SOURCE_MISMATCH');
+  if (!Number.isSafeInteger(handoff.exposureGeneration) || handoff.exposureGeneration < 1) throw new Error('DEMO_AUTH_EXPOSURE_GENERATION_REQUIRED');
   text(source.secretUID); text(source.secretResourceVersion); text(handoff.owner);
   exact(c.values,['username','password']); text(c.values.username); text(c.values.password);
   if (sha256Text(canonicalJson(c.values)) !== source.credentialDigest) throw new Error('DEMO_AUTH_CREDENTIAL_DIGEST_MISMATCH');

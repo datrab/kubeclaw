@@ -106,7 +106,15 @@ export class AdapterStarter {
         return await this.#options.invocationContext.run({ adapterId, phase, signal, attempt: invocation.request.attempt, executionKey: invocation.request.idempotencyKey },
         () => raw.invoke({ ...invocation, signal }));
       } finally { phase.close(); }
-    }, ...(raw.receipt ? { receipt: (request) => raw.receipt!(request) } : {}), shutdown: (signal) => raw.shutdown(signal) };
+    }, ...(raw.receipt ? { receipt: async (request) => {
+      const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
+      try {
+        phase.assertActive();
+        const result = await this.#options.invocationContext.run({ adapterId, phase, signal: lifecycle.signal, attempt: request.attempt, executionKey: request.idempotencyKey },
+          () => raw.receipt!(request));
+        phase.assertActive();return result;
+      } finally { phase.close(); }
+    } } : {}), shutdown: (signal) => raw.shutdown(signal) };
   }
 
   async #cleanup<T>(adapterId: string, lifecycle: AbortController, active: () => void,

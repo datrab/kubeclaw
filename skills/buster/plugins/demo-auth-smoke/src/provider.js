@@ -21,7 +21,7 @@ function receipt(invocation, bound, config, observations) {
     attemptId:invocation.attemptId,attemptNumber:invocation.attemptNumber,protocolDigest:sha256Text(canonicalJson(config)),
     observedAt:new Date().toISOString(),leaseName:d.leaseName,leaseUID:c.source.leaseUID,namespace:d.namespace,
     immutableImage:d.immutableImage,manifestDigest:d.manifestDigest,credentialDigest:c.source.credentialDigest,
-    secretUID:c.source.secretUID,url:e.url,exposureOwner:e.handoff.owner,expiresAt:e.expiresAt,observations};
+    secretUID:c.source.secretUID,url:e.url,exposureOwner:e.handoff.owner,exposureGeneration:e.handoff.exposureGeneration,expiresAt:e.expiresAt,observations};
 }
 
 export function provider() {
