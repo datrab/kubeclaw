@@ -69,6 +69,7 @@ export { createProductionNovaTestGate, ProductionNovaTestGate,
   type ProductionNovaTestGateExecutionInput } from '../test-gates/production.ts';
 export type { ProductionNovaTestGateOptions } from '../test-gates/production.ts';
 export { loadProductionNovaTestGate } from '../test-gates/runtime-config.ts';
+export { isSpiffeProxyLoopback } from '../test-gates/secure-endpoint.ts';
 export { buildCommittedSourceSnapshot } from '../test-gates/source-snapshot.ts';
 export type { CommittedSourceSnapshot } from '../test-gates/source-snapshot.ts';
 export { invokeIsolated } from '@kubeclaw/plugin-foundation/isolation/runner';

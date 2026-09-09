@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { isSpiffeProxyLoopback } from './secure-endpoint.ts';
 import type {
   RemotePlanJobV1,
   RemotePlanStatusV1,
@@ -71,7 +72,7 @@ export class FileNovaRemotePlanStore {
       throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');
     }
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
-    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveStoreBytes);
+    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
   }
 
@@ -249,7 +250,7 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
       throw new Error('NOVA_REMOTE_PLAN_TOKEN_INVALID');
     }
     if (authentication === 'spiffe-proxy'
-      && !['127.0.0.1', 'localhost', '::1'].includes(endpoint.hostname)) {
+      && !isSpiffeProxyLoopback(endpoint)) {
       throw new Error('NOVA_REMOTE_PLAN_SPIFFE_PROXY_NOT_LOOPBACK');
     }
     if (!Number.isSafeInteger(options.maximumResponseBytes) || options.maximumResponseBytes < 1) {

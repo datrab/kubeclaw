@@ -1,3 +1,8 @@
+/** Hosts explicitly permitted for the local SPIFFE proxy; URL canonicalizes IPv6. */
+export function isSpiffeProxyLoopback(endpoint: URL): boolean {
+  return ['127.0.0.1', 'localhost', '[::1]'].includes(endpoint.hostname);
+}
+
 export function assertSecureRemoteEndpoint(value: string): URL {
   const endpoint = new URL(value);
   if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password) {

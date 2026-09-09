@@ -213,7 +213,9 @@ export class FileNovaGateImportStore {
   readonly #blobs: FileDurableBlobStore;
   constructor(root: string, options: { recordLimits: DurableRecordLimits; maximumEvidenceStoreBytes: number }) {
     this.#records = new FileDurableRecordStore(root, options.recordLimits);
-    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes);
+    // The importer enforces the per-job evidence limit; no blob can exceed the
+    // store quota, and the third argument enforces that quota across all jobs.
+    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);
   }
   async readExecutionGraphs(): Promise<readonly NovaTestExecutionGraphV1[]> {
     return (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { createProductionNovaTestGate } from '@kubeclaw/nova-core';
+import { createProductionNovaTestGate, isSpiffeProxyLoopback } from '@kubeclaw/nova-core';
 import { validatePipelineTestGateContract, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { AdapterActivationContext, AdapterInstance, AdapterInvocation } from '@kubeclaw/plugin-sdk';
 
@@ -49,7 +49,7 @@ function parseConfig(context: AdapterActivationContext) {
   const roots = (context.config.allowedRepositoryRoots as unknown[]).map((root) => canonicalDirectory(root,
     'REMOTE_TEST_GATE_CONFIG_INVALID'));
   const authentication = context.config.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'bearer';
-  if (authentication === 'spiffe-proxy' && !['127.0.0.1', 'localhost', '::1'].includes(endpoint.hostname)) {
+  if (authentication === 'spiffe-proxy' && !isSpiffeProxyLoopback(endpoint)) {
     throw new Error('REMOTE_TEST_GATE_SPIFFE_PROXY_NOT_LOOPBACK');
   }
   return Object.freeze({ endpoint: endpoint.href, stateRoot, roots,
