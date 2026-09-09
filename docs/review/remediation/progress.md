@@ -4,11 +4,12 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**31/154 lokal verifiziert und unabhängig gegengeprüft; 1 Finding teilweise
-implementiert; 23 in Bearbeitung; 99 noch offen.** Nur bereits gesicherte Fixes
-zählen als verifiziert. PCR-COMMAND-001 wurde nach einer zusätzlichen Gegenprobe
-wieder geöffnet. Keine allgemeine Aussage „regressionsfrei“, kein Deployment
-und keine vollständige Pipeline-E2E-Freigabe.
+**52/154 lokal verifiziert und unabhängig gegengeprüft; 5 Findings teilweise
+implementiert / durch fehlende Betriebsnachweise blockiert; 21 in Bearbeitung;
+76 noch offen.** Nur gesicherte Fixes zählen als verifiziert. Der zusätzlich
+gefundene Prozessende-Fehler von COMMAND-001 ist ebenfalls korrigiert und
+gegengeprüft (Folgecommit unten). Keine pauschale Regressionsfreiheit, kein
+Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -20,11 +21,21 @@ und keine vollständige Pipeline-E2E-Freigabe.
 | Attempt-Recovery | `e5a16848eb3287070560af910238774f05541fed` | PCR-EXEC-001/002 lokal verifiziert; [Nachweis](implementation/recovery.md) |
 | Admission-/Attempt-Replay | `9162c9272748246343febdd00cf494cd2e9a198f` | PCR-OBS-001 lokal verifiziert, zwei zusätzliche Reviewerblocker behoben; [Nachweis](implementation/observability-replay.md) |
 | Agent-/Prism-/Test-Gate-Verträge | `f22afee989872e9c999eee6499b1a0ecdafd882e` | Fünf Findings lokal verifiziert; [Nachweis](implementation/contracts-2.md) |
-| Prozessgruppen/HTTP-Streaming | `76bb9fd75f2f9367a27a48dc67e95b3c76a1c826` | NETWORK-001/002 lokal verifiziert; COMMAND-001 wegen zusätzlicher Prozessende-Gegenprobe wieder geöffnet; [Nachweis](implementation/process-network.md) |
+| Prozessgruppen/HTTP-Streaming | `76bb9fd75f2f9367a27a48dc67e95b3c76a1c826` | NETWORK-001/002 lokal verifiziert; COMMAND-001 danach erneut geprüft und im Folgecommit korrigiert; [Nachweis](implementation/process-network.md) |
 | Nova Remotegrenzen | `b4e64ce83ae3ee327f7c7086ba125ca89b026487` | NOVA-GATE-003/004 lokal verifiziert; [Nachweis](implementation/nova-remote-boundaries.md) |
 | Lint | `82902a198229488b84e0f6f9dd421104aad5209e` | LINT-001/002/003 lokal verifiziert, vollständige Paketsuite mit Shelltools; [Nachweis](implementation/lint.md) |
 | Git / Repository | `4301b03bcdd8d06dafd45414bd3e2c7ecf164928` | GIT-001/REPOSITORY-001 lokal verifiziert; [Nachweis](implementation/git-repository.md) |
 | Telemetrie | `9e12ab76d085d1d050fb4ad08b55969ede4407cf` | TELEMETRY-CONTRACT-001/002 lokal verifiziert; [Nachweis](implementation/telemetry.md) |
+| Buster / Command Folgefix | `aa10f3eb7fac33769f24fc3d41c628756e895d7a` | ENGINE-002/003, KUBERNETES-FIXTURE-002, COMMAND-001 verifiziert; ENGINE-004 teilweise; [Nachweis](implementation/buster-engine.md) |
+| Observer / Ingress | `fecd391d1af516ee3838f797fb3a96afc81e9cf2` | HOSTOBSERVER-001/002, AGENTSOURCE-001 verifiziert; [Nachweis](implementation/observer-ingress.md) |
+| Contract-Importgrenzen | `b5143cf6d099af0f9af683cb596b9640e3a58946` | Zusätzliches INT-BOUNDARY001 verifiziert, separat von154; [Nachweis](implementation/registration-contract-boundary.md) |
+| Nova Deadlines / Reconciliation | `508aef31cbf32218c2f03441f617eccfc7c5d634` | NOVA-GATE-001/002 verifiziert;005 Vollprozessnachweis blockiert; [Nachweis](implementation/nova-gate-deadlines.md) |
+| Git-disabled Chart | `941c6cdb632a4900535361228abe77fc4374fc37` | IFR-19-002 per echtem Render verifiziert; [Nachweis](implementation/role-git.md) |
+| Studio Service | `7df0919a6e23d483862f12d8437d412764474406` | STUDIO-SERVICE-001 verifiziert; [Nachweis](implementation/studio-service.md) |
+| Providersemantik | `42a56fc06b7d347dd8ada01d51475bbf4b1c1041` | Sechs Findings verifiziert; [Nachweis](implementation/test-provider-semantics.md) |
+| Ingestion Service | `e51b6b4a77ad726ea2dc29d9e94f0692606f670a` | INGESTION-001 verifiziert; [Nachweis](implementation/ingestion-service.md) |
+| Namespacegebundene Secretprüfung | `94cafe67c2b03bad5869c36a4b7975e0c27968df` | IFR-17-001 per echtem Render verifiziert; Live403 offen; [Nachweis](implementation/verification-secret-rbac.md) |
+| Isolation | `8feafb7fb9ae8a1425fe9439dae668f07b551d70` | ISOLATION-001/003 verifiziert;002/004 Kernelabnahme blockiert; [Nachweis](implementation/isolation.md) |
 
 Jede Änderung enthält Originalregressionen oder konkrete echte Verifikation und
 eine unabhängige Gegenprüfung durch einen anderen Agenten. Separate lokale
@@ -43,12 +54,10 @@ Branches wurden überschrieben, kein Merge ausgeführt.
   und prüft flock im Dockerbuild. Source-Deploymentcheck bestanden, aber hier
   kein Image gebaut/gestartet; Linux-Dateisystem-/Container-Betriebsabnahme offen.
 - **Breiter Boundarycheck:** reine Contract-Entrypoints und überprüfte transitive
-  Graphen sind implementiert, inklusive negativer Sicherheitsproben, aber noch
-  in unabhängiger Gegenprüfung. Boundary-only erreicht die bisher nicht erlaubte
-  tiktoken-Abhängigkeit des Reviewplugins. Der übergreifende Plugin-v2-Gate besteht
-  SDK-Generierung, Pluginbuilds, Sandboxbuild, Runtime-Typecheck und Contractcheck,
-  scheitert danach an einem veralteten Buster-Protokollimport des Agentoutputtests.
-  Kein Gesamt-PASS und keine pauschale Allowlist-Erweiterung.
+  Graphen einschließlich negativer Sicherheitsproben sind integriert und unabhängig
+  gegengeprüft. Review-Tokenizer und veralteter Buster-Protokollimport werden im
+  laufenden Reviewpaket ursächlich korrigiert. Gesamter Plugin-v2-Gate wurde nach
+  diesen noch uncommitteten Änderungen nicht als bestanden erklärt.
 - **Docs-Referenzcheck:** scheitert an historischen Review-Kurzpfaden und
   Zeilenangaben, die der Checker als Dateinamen interpretiert. Neue temporäre
   Prism-Testpfadangabe wurde korrigiert. Historische Befunde nicht gelöscht, um
@@ -63,22 +72,34 @@ Branches wurden überschrieben, kein Merge ausgeführt.
 - Keine Clawdeck-/Kubernetes-/Tailscale-/Host-Powerlossprüfung; PGlite belegt lokale
   echte DBtransaktionen, nicht einen externen PostgreSQL-Produktionsdienst.
 
+## Teilweise / blockiert
+
+- SDK-001: sichere JSON-Eingaben geprüft; portable Ordnung/versionierte Digest-
+  Umstellung offen, bestehende Bytes bleiben bis kontrollierter Migration erhalten.
+- BUSTER-ENGINE-004: bestätigte temporäre Eingaben werden entfernt; unsichere
+  Restart-/Orphanfälle behalten Daten bis zum Besitz-/Terminierungsnachweis.
+- NOVA-GATE-005: Graphreader korrigiert, tatsächlicher Prozess-Restart erreicht
+  wegen Sandboxfehler die neue Assertion nicht.
+- ISOLATION-002/004: native Prozess-/Cgroupmechanismen implementiert;
+  Credential-drop-/Host-SIGKILL-/OOM-Kernelabnahme mangels Hostdelegation blockiert.
+
 ## Laufende nächste Arbeit
 
-- WP03: Nova Deadline-/Restartpfade in Gegenprüfung. Echte HTTP-/Store-
-  Fehlerregressionen bestehen; Vollprozess-Restart erreicht wegen Sandboxgrenze
-  die korrigierte Graphassertion noch nicht. Source-Git-Abbruch weiter prüfen.
-- WP03: Buster-/Command-Prozessgruppenprimitive nach neuen Reviewerbefunden
-  korrigiert, Gegenprüfung läuft. Unsichere Orphan-/Cleanupfälle behalten ihre
-  Eingaben. Aggregierte harte Capability-Ressourcenmessung weiter offen.
-- WP03: Isolation lokal gegengeprüft; Kernelabnahme ausdrücklich blockiert.
-- WP06: Sechs Testproviderfindings fertig implementiert; alle fünf betroffenen
-  Pakettests/builds bestanden, unabhängige Gegenprüfung läuft.
-- WP09: Drei Observer-/Ingressfindings implementiert, echte Journaltests und
-  lokale Regressionen bestanden; unabhängige Gegenprüfung läuft.
-- WP08: Studio-Servicefehler/Timeout/Streaming lokal implementiert und getestet;
-  abschließende Gegenprüfung der Konfigurationsgrenze offen.
-- Übergreifend: Registrierungs-Contractgrenzen in unabhängiger Gegenprüfung.
+- WP04: administrative Reparaturinvalidierung und Approvalschema in unabhängigem
+  Gegenreview. Originale Phase6-Cancelzeitassertion scheitert; Baselinevergleich
+  klärt, ob der Fehler durch diesen Fix entsteht. Danach getrennte Reparaturbudgets
+  und sourcegebundene Approvalintegration gemäß bestätigten Entscheidungen.
+- WP05: besitzgebundene Forge-Workspaces, tatsächliches Runtime-cwd und abbrechbares
+  Warten vor Gitmutationen. Originale Git-/Transporttests entstehen parallel.
+- WP06: sechs Reviewplugin-Findings einschließlich Tokenbudget, terminaler Audit-
+  Ergebnisse, Revalidation und Syntax-/Scopeanalyse in Umsetzung.
+- WP08: vier Renderer-/Studioeditor-Findings. Reale Node-/HTTPprüfungen laufen;
+  benötigtes Chromium fehlt, Downloadtimeout verhindert derzeit Browsernachweis.
+- WP07: Corpus-Pooltransaktionen zuerst, atomare Direction-/Preferencecommits
+  anschließend. Echter Mehrverbindungs-Postgresnachweis benötigt zusätzliche
+  lokale native Toolchain; PGlite wird nicht als Poolnachweis ausgegeben.
+- BUSTER-ENGINE-001 bleibt offen in Bearbeitung: Cancellation allein belegt kein
+  hartes aggregiertes CPU-/Speicher-/Prozessbudget.
 
 Nächster Integrationsschritt: weitere Änderungen erst nach Gegenprüfung und
 Originalregressionen getrennt committen. Nicht abgeschlossene Arbeitsdateien
