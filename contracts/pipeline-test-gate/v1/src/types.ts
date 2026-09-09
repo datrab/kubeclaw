@@ -197,7 +197,6 @@ export interface DeclaredEvidenceV1 {
   type: string;
   file: string;
   mediaType: string;
-  artifact?: ArtifactRefV1;
 }
 
 export interface EvidenceManifestV1 {

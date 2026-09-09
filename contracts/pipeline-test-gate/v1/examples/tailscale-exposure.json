@@ -4,7 +4,7 @@
       "uses": "kubeclaw.tailscale-exposure@1",
       "needs": ["deployment"],
       "config": { "path": "/", "readinessTimeoutSeconds": 120 },
-      "inputs": { "deployment": { "from": "deployment", "output": "deployment", "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" } }
+      "inputs": { "deployment": { "from": "deployment", "output": "deployment" } }
     }
   },
   "tests": {
@@ -12,7 +12,7 @@
       "uses": "kubeclaw.http@1",
       "needs": ["public-exposure"],
       "config": { "path": "/", "expectedStatuses": [200], "requestTimeoutMs": 10000 },
-      "inputs": { "endpoint": { "from": "public-exposure", "output": "exposure", "schemaId": "kubeclaw.public-endpoint-fixture@1" } }
+      "inputs": { "endpoint": { "from": "public-exposure", "output": "exposure" } }
     }
   }
 }

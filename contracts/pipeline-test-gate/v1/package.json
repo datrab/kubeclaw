@@ -13,7 +13,8 @@
     "./e2e-result-schema": "./schemas/e2e-result.v1.schema.json"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/remediation.test.mts"
   },
   "dependencies": {
     "@kubeclaw/pipeline-observability-contract": "*",

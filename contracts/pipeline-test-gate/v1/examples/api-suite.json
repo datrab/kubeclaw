@@ -7,11 +7,11 @@
           "exclude": ["openapi"],
           "overrides": {
             "http": {
-              "inputs": { "deployment": { "from": "deployment", "output": "deployment", "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" } }
+              "inputs": { "deployment": { "from": "deployment", "output": "deployment" } }
             },
             "flow": {
               "config": { "flowFile": ".swarm/modules/api/api-flow.json" },
-              "inputs": { "deployment": { "from": "deployment", "output": "deployment", "schemaId": "kubeclaw.kubernetes-deployment-fixture@1" } }
+              "inputs": { "deployment": { "from": "deployment", "output": "deployment" } }
             }
           }
         }

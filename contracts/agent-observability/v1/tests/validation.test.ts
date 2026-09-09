@@ -1,3 +1,4 @@
+import { ingressComplexityError, AGENT_OBSERVABILITY_MAX_JSON_NODES } from '../src/complexity.ts';
 import assert from 'node:assert/strict';
 
 import { validateAgentObservabilityIngressEvent } from '../src/validation.ts';
@@ -39,3 +40,23 @@ for (const timestamp of [
 }
 
 console.log(JSON.stringify({ ok: true, contract: 'agent-observability-validation' }));
+
+const depthEvent = (nesting: number) => ({ ...event('2026-09-04T00:00:00Z'),
+  payload: { hook: 'session_start', metadata: JSON.parse('['.repeat(nesting) + '0' + ']'.repeat(nesting)) } });
+assert.equal(validateAgentObservabilityIngressEvent(depthEvent(254)).ok, true);
+assert.equal(validateAgentObservabilityIngressEvent(depthEvent(255)).ok, false);
+assert.doesNotThrow(() => assert.equal(validateAgentObservabilityIngressEvent(depthEvent(10_000)).ok, false));
+const alias = { evidence: [1, 2] };
+assert.equal(validateAgentObservabilityIngressEvent({ ...event('2026-09-04T00:00:00Z'),
+  payload: { hook: 'session_start', metadata: [alias, alias] } }).ok, true);
+
+// Reused acyclic subtrees exercise the serialized occurrence budget without
+// allocating millions of distinct objects in the test process.
+function occurrences(count: number): unknown {
+  if (count === 1) return 0;
+  if (count % 2 === 0) return [occurrences(count - 1)];
+  const child = occurrences((count - 1) / 2);
+  return [child, child];
+}
+assert.equal(ingressComplexityError(occurrences(AGENT_OBSERVABILITY_MAX_JSON_NODES)), undefined);
+assert.match(ingressComplexityError(occurrences(AGENT_OBSERVABILITY_MAX_JSON_NODES + 1))!, /node limit/);

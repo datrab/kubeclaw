@@ -115,3 +115,20 @@ schema digest and count relations before it accepts a provider result.
 `examples/e2e-result-cypress.json` is a second-provider conformance record. It
 proves contract portability only. Real acceptance for a Cypress provider would
 still require a real Cypress execution proof.
+
+Provider `DeclaredEvidenceV1` entries contain only evidenceId/type/file/mediaType.
+The runner assigns stored artifact identity (`EvidenceRefV1`); declaration
+objects carrying `artifact` are rejected both by the TypeScript literal contract
+and by the closed wire schema.
+
+Example input declarations use `from`, `output`, and optional `mediaType`.
+Schema identity is supplied by the registered input/output ports, never by an
+input override. The API-suite example's `deployment` reference is suite-local:
+when embedding it in a project, supply `api/deployment`. The deployment fixture
+also needs the checked-manifest producer shown by `kubernetes-fixture.json`'s
+`checkedYaml` reference. These examples are configuration fragments and do not
+execute or create those external resources by themselves. The real registry/
+resolver embedding in `tests/remediation.test.mts` checks all ten plan-declaration
+examples, including those dependencies and suite-local size-budget links.
+`npm test --prefix contracts/pipeline-test-gate/v1` also runs actual TypeScript
+negative/positive evidence fixtures and the unchanged wire rejection.

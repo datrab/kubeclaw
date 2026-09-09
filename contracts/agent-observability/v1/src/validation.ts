@@ -1,3 +1,5 @@
+import { ingressComplexityError } from './complexity.ts';
+export { AGENT_OBSERVABILITY_MAX_JSON_DEPTH, AGENT_OBSERVABILITY_MAX_JSON_NODES } from './complexity.ts';
 import {
   AGENT_OBSERVABILITY_HOOKS,
   AGENT_OBSERVABILITY_INGRESS_EVENT_TYPES,
@@ -221,6 +223,8 @@ function validatePayload(type: AgentObservabilityIngressEventType, payload: unkn
 }
 
 export function validateAgentObservabilityIngressEvent(value: unknown): AgentObservabilityValidationResult {
+  const complexityError = ingressComplexityError(value);
+  if (complexityError) return { ok: false, errors: [complexityError] };
   const errors: string[] = [];
   if (!isPlainObject(value)) return { ok: false, errors: ['event must be an object'] };
 
