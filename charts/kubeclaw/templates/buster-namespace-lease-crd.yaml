@@ -209,6 +209,143 @@ spec:
                   nullable: true
                 credentialsAvailable:
                   type: boolean
+                exposureMutation:
+                  type: object
+                  nullable: true
+                  required: [id, startedAt]
+                  properties:
+                    id:
+                      type: string
+                      pattern: '^[a-f0-9]{48}$'
+                    startedAt:
+                      type: string
+                      format: date-time
+                demoReadiness:
+                  type: object
+                  required: [schemaVersion, state, requestId, requestDigest, readyAt, expiresAt, leaseUID, owner, previousOwner, exposureGeneration, exposureSpec, receipt]
+                  properties:
+                    schemaVersion:
+                      type: string
+                      enum: ["demo-readiness.v1"]
+                    state:
+                      type: string
+                      enum: ["ready-for-acceptance"]
+                    requestId:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    namespace:
+                      type: string
+                      minLength: 1
+                      maxLength: 253
+                    runId:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    sourceRevision:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    leaseUID:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    immutableImage:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    secretUID:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    url:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    previousOwner:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    owner:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    requestDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    candidateDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    decisionDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    resultDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    manifestDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    credentialDigest:
+                      type: string
+                      pattern: '^sha256:[a-f0-9]{64}$'
+                    readyAt:
+                      type: string
+                      format: date-time
+                    expiresAt:
+                      type: string
+                      format: date-time
+                    exposureGeneration:
+                      type: integer
+                      format: int64
+                      minimum: 1
+                    exposureSpec:
+                      type: object
+                      properties:
+                        provider:
+                          type: string
+                          enum: ["tailscale-ingress"]
+                        serviceName:
+                          type: string
+                          maxLength: 1024
+                        hostname:
+                          type: string
+                          maxLength: 1024
+                        path:
+                          type: string
+                          maxLength: 1024
+                        servicePort:
+                          type: integer
+                          minimum: 1
+                          maximum: 65535
+                    receipt:
+                      type: object
+                      required: [schemaVersion, accepted, target, status, messageId, deliveryId, payloadDigest]
+                      properties:
+                        schemaVersion:
+                          type: string
+                          enum: ["discord-delivery-receipt.v1"]
+                        accepted:
+                          type: boolean
+                          enum: [true]
+                        status:
+                          type: integer
+                          minimum: 200
+                          maximum: 299
+                        target:
+                          type: string
+                          minLength: 1
+                          maxLength: 1024
+                        messageId:
+                          type: string
+                          minLength: 1
+                          maxLength: 1024
+                        deliveryId:
+                          type: string
+                          minLength: 1
+                          maxLength: 1024
+                        payloadDigest:
+                          type: string
+                          pattern: '^sha256:[a-f0-9]{64}$'
                 generatedCredentialIntent:
                   type: object
                   required: [leaseUID, namespace, secretName, credentialDigest]

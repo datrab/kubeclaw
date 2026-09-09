@@ -1274,6 +1274,7 @@ spec:
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
             {{- end }}
+            {{- include "kubeclaw.demoReadyClientEnv" . | nindent 12 }}
             - name: REPO_ROOT
               value: "/home/node/.openclaw/workspace/git-repo"
             - name: REDIS_HOST
@@ -1405,6 +1406,7 @@ spec:
               protocol: TCP
 
           volumeMounts:
+            {{- include "kubeclaw.demoReadyClientMounts" . | nindent 12 }}
             - name: config
               mountPath: /home/node/.openclaw
             - name: runtime-config
@@ -1562,6 +1564,7 @@ spec:
       # VOLUMES
       # ---------------------------------------------------------------
       volumes:
+        {{- include "kubeclaw.demoReadyClientVolumes" . | nindent 8 }}
         {{- range $name, $client := dict "registry" .Values.runtimeInfrastructure.registry "dockerHubMirror" .Values.runtimeInfrastructure.dockerHubMirror }}
         {{- if $client.caSecretName }}
         - name: registry-client-{{ lower $name }}

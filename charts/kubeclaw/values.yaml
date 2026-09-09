@@ -400,6 +400,12 @@ busterNamespaceBroker:
       # The agent release does not create or own this namespace or Secret.
       tailscaleOperatorNamespace: tailscale
       tailscaleOAuthSecretName: operator-oauth
+  # Opt-in trusted Nova runtime only; same-container code is not isolated by this mount.
+  readyClient:
+    enabled: false
+    endpoint: ""
+    audience: ""
+    caSecretName: ""
   leaseApiGroup: kubeclaw.forgestack.ai
   leaseApiVersion: v1alpha1
   allowedPrefixes:
@@ -407,6 +413,12 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
+    readiness:
+      enabled: false
+      audience: ""
+      producerNamespace: ""
+      producerServiceAccount: ""
+      tlsSecretName: ""
     # A lease can bind only these service accounts and access modes. Each lease
     # must explicitly request its subjects; no agent is added to all namespaces.
     allowedAccess:

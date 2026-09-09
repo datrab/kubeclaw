@@ -13,8 +13,8 @@ const exposureOwnerAnnotation = "kubeclaw.forgestack.ai/exposure-owner"
 const exposurePredecessorsAnnotation = "kubeclaw.forgestack.ai/exposure-predecessors"
 
 func exposureStatus(item *lease, status map[string]interface{}) map[string]interface{} {
-	status["exposureOwner"] = item.Metadata.Annotations[exposureOwnerAnnotation]
-	status["exposureGeneration"] = item.Metadata.Generation
+	status["exposureOwner"] = effectiveExposureOwner(item)
+	status["exposureGeneration"] = effectiveExposureGeneration(item)
 	return status
 }
 
@@ -23,8 +23,8 @@ func (c *controller) assertExposureCurrent(ctx context.Context, item *lease) err
 	if err := c.kube(ctx, http.MethodGet, c.leasePath(item.Metadata.Name), nil, "application/json", &current); err != nil {
 		return err
 	}
-	if current.Metadata.UID != item.Metadata.UID || current.Metadata.Generation != item.Metadata.Generation ||
-		current.Metadata.Annotations[exposureOwnerAnnotation] != item.Metadata.Annotations[exposureOwnerAnnotation] ||
+	if current.Metadata.UID != item.Metadata.UID || !readyStateEqual(item, &current) || current.Metadata.DeletionTimestamp != item.Metadata.DeletionTimestamp || effectiveExposureGeneration(&current) != effectiveExposureGeneration(item) ||
+		effectiveExposureOwner(&current) != effectiveExposureOwner(item) ||
 		current.Metadata.Annotations[exposurePredecessorsAnnotation] != item.Metadata.Annotations[exposurePredecessorsAnnotation] {
 		return errors.New("exposure lease generation has changed")
 	}
@@ -42,6 +42,9 @@ func (c *controller) ensureOwnedExposure(ctx context.Context, item *lease, names
 		return err
 	}
 	if err := c.assertExposureCurrent(ctx, item); err != nil {
+		return err
+	}
+	if err := c.fenceExposureMutation(ctx, item); err != nil {
 		return err
 	}
 	desired := previewIngress(item, namespace, exposure)
@@ -82,6 +85,9 @@ func (c *controller) deleteOwnedExposure(ctx context.Context, item *lease, names
 	if err := c.assertExposureCurrent(ctx, item); err != nil {
 		return err
 	}
+	if err := c.fenceExposureMutation(ctx, item); err != nil {
+		return err
+	}
 	err := c.kube(ctx, http.MethodDelete, resource, map[string]interface{}{
 		"apiVersion": "v1", "kind": "DeleteOptions", "preconditions": map[string]interface{}{"uid": uid, "resourceVersion": version},
 	}, "application/json", nil)
@@ -113,8 +119,11 @@ func authorizedExposureIngress(item *lease, namespace string, ingress map[string
 			return errors.New("exposure predecessor owner is invalid")
 		}
 	}
+	if _, ok := demoReadyDeadline(item); ok {
+		predecessors = append(predecessors, stringValue(objectValue(item.Status["demoReadiness"])["previousOwner"]))
+	}
 	owner := stringMap(metadata["annotations"])[exposureOwnerAnnotation]
-	if owner != item.Metadata.Annotations[exposureOwnerAnnotation] && !contains(predecessors, owner) {
+	if owner != effectiveExposureOwner(item) && !contains(predecessors, owner) {
 		return errors.New("exposure ingress owner has changed")
 	}
 	return nil

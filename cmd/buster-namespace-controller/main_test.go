@@ -9,10 +9,52 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
 )
+
+// Actual HTTP fixture for Kubernetes lease GET and merge-patch CAS semantics.
+// Resource versions belong to the wire resource, never to production fallbacks.
+func serveVersionedLease(t *testing.T, c *controller, item *lease, w http.ResponseWriter, r *http.Request) bool {
+	t.Helper()
+	if r.URL.Path != c.leasePath(item.Metadata.Name) && r.URL.Path != c.statusPath(item.Metadata.Name) {
+		return false
+	}
+	if item.Metadata.ResourceVersion == "" {
+		item.Metadata.ResourceVersion = "1"
+	}
+	if item.Status == nil {
+		item.Status = map[string]interface{}{}
+	}
+	if r.Method == http.MethodPatch {
+		var patch map[string]interface{}
+		if json.NewDecoder(r.Body).Decode(&patch) != nil {
+			http.Error(w, "invalid", 400)
+			return true
+		}
+		meta := objectValue(patch["metadata"])
+		if meta["resourceVersion"] != item.Metadata.ResourceVersion {
+			http.Error(w, "conflict", 409)
+			return true
+		}
+		for key, value := range objectValue(patch["status"]) {
+			if value == nil {
+				delete(item.Status, key)
+			} else {
+				item.Status[key] = value
+			}
+		}
+		if finals, ok := meta["finalizers"]; ok {
+			item.Metadata.Finalizers = stringSlice(finals)
+		}
+		version, _ := strconv.Atoi(item.Metadata.ResourceVersion)
+		item.Metadata.ResourceVersion = strconv.Itoa(version + 1)
+	}
+	_ = json.NewEncoder(w).Encode(item)
+	return true
+}
 
 func TestKubernetesHTTPClientRequiresServiceAccountCA(t *testing.T) {
 	if _, err := kubernetesHTTPClientFromCA(filepath.Join(t.TempDir(), "missing-ca.crt")); err == nil {
@@ -199,9 +241,18 @@ func TestLegacyLeaseCannotRevokeAnotherNamespacesAccess(t *testing.T) {
 }
 
 func TestOwnershipMismatchDoesNotBlockLeaseFinalizerRemoval(t *testing.T) {
+	ctrl := testController(t)
+	ctrl.apiGroup, ctrl.apiVersion, ctrl.finalizer = "kubeclaw.forgestack.ai", "v1alpha1", "kubeclaw.forgestack.ai/cleanup"
+	item := &lease{Metadata: metadata{Name: "lease-a", UID: "uid-a", DeletionTimestamp: time.Now().UTC().Format(time.RFC3339), Finalizers: []string{ctrl.finalizer}}}
 	finalizerPatched := false
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+		if r.Method == http.MethodPatch && r.URL.Path == ctrl.leasePath(item.Metadata.Name) {
+			finalizerPatched = true
+		}
+		if serveVersionedLease(t, ctrl, item, w, r) {
+			return
+		}
 		if r.Method == http.MethodGet && r.URL.Path == "/api/v1/namespaces/test-demo" {
 			_, _ = w.Write([]byte(`{"metadata":{"labels":{"kubeclaw/managed-by":"someone-else"}}}`))
 			return
@@ -212,10 +263,8 @@ func TestOwnershipMismatchDoesNotBlockLeaseFinalizerRemoval(t *testing.T) {
 		_, _ = w.Write([]byte(`{}`))
 	}))
 	defer server.Close()
-	ctrl := testController(t)
-	ctrl.apiGroup, ctrl.apiVersion, ctrl.finalizer = "kubeclaw.forgestack.ai", "v1alpha1", "kubeclaw.forgestack.ai/cleanup"
 	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
-	item := &lease{Metadata: metadata{Name: "lease-a", UID: "uid-a", Finalizers: []string{ctrl.finalizer}}}
+
 	if err := ctrl.reconcileDeletedLease(context.Background(), item, "test-demo"); err != nil {
 		t.Fatal(err)
 	}
@@ -516,9 +565,18 @@ func TestExpiresAtClampsLegacyTTLToMaximum(t *testing.T) {
 }
 
 func TestExpiredLeaseDoesNotRewriteStatusOnEveryPoll(t *testing.T) {
+	ctrl := testController(t)
+	item := &lease{
+		Metadata: metadata{Name: "lease-a", UID: "uid-a", CreationTimestamp: time.Now().Add(-3 * time.Hour).UTC().Format(time.RFC3339)},
+		Spec:     map[string]interface{}{"ttlSeconds": 7200},
+		Status:   map[string]interface{}{"phase": "Expired"},
+	}
 	statusPatches := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+		if serveVersionedLease(t, ctrl, item, w, r) {
+			return
+		}
 		if strings.HasSuffix(r.URL.Path, "/status") && r.Method == http.MethodPatch {
 			statusPatches++
 		}
@@ -526,13 +584,8 @@ func TestExpiredLeaseDoesNotRewriteStatusOnEveryPoll(t *testing.T) {
 		_, _ = w.Write([]byte(`{"message":"not found"}`))
 	}))
 	defer server.Close()
-	ctrl := testController(t)
 	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
-	item := &lease{
-		Metadata: metadata{Name: "lease-a", UID: "uid-a", CreationTimestamp: time.Now().Add(-3 * time.Hour).UTC().Format(time.RFC3339)},
-		Spec:     map[string]interface{}{"ttlSeconds": 7200},
-		Status:   map[string]interface{}{"phase": "Expired"},
-	}
+
 	expired, err := ctrl.expireLease(context.Background(), item, "test-demo")
 	if err != nil || !expired {
 		t.Fatalf("expected idempotent expiry: expired=%v err=%v", expired, err)
@@ -557,12 +610,24 @@ func TestReadyNamespaceOwnershipMustStillMatch(t *testing.T) {
 }
 
 func TestRejectedProvisionedLeaseDeletesPreviouslyGrantedNamespace(t *testing.T) {
+	ctrl := testController(t)
+	item := &lease{
+		Metadata: metadata{Name: "lease-a", UID: "uid-a", Finalizers: []string{ctrl.finalizer}, CreationTimestamp: time.Now().UTC().Format(time.RFC3339)},
+		Spec: map[string]interface{}{
+			"namespaceName": "test-demo", "ttlSeconds": 7200,
+			"access": []interface{}{map[string]interface{}{"subject": "revoked/agent", "mode": "deployer"}},
+		},
+		Status: map[string]interface{}{"phase": "Ready", "namespaceName": "test-demo", "specDigest": "sha256:provisioned"},
+	}
 	deleted := false
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
+		if serveVersionedLease(t, ctrl, item, w, r) {
+			return
+		}
 		switch {
 		case r.Method == http.MethodGet && r.URL.Path == "/api/v1/namespaces/test-demo" && !deleted:
-			_, _ = w.Write([]byte(`{"metadata":{"labels":{"kubeclaw/managed-by":"buster-namespace-controller","kubeclaw/buster-lease":"lease-a","kubeclaw/buster-lease-uid":"uid-a"}}}`))
+			_, _ = w.Write([]byte(`{"metadata":{"uid":"namespace-uid","resourceVersion":"1","labels":{"kubeclaw/managed-by":"buster-namespace-controller","kubeclaw/buster-lease":"lease-a","kubeclaw/buster-lease-uid":"uid-a"}}}`))
 		case r.Method == http.MethodDelete && r.URL.Path == "/api/v1/namespaces/test-demo":
 			deleted = true
 			_, _ = w.Write([]byte(`{}`))
@@ -574,16 +639,8 @@ func TestRejectedProvisionedLeaseDeletesPreviouslyGrantedNamespace(t *testing.T)
 		}
 	}))
 	defer server.Close()
-	ctrl := testController(t)
 	ctrl.apiURL, ctrl.httpClient, ctrl.pollInterval = server.URL, server.Client(), time.Millisecond
-	item := &lease{
-		Metadata: metadata{Name: "lease-a", UID: "uid-a", Finalizers: []string{ctrl.finalizer}, CreationTimestamp: time.Now().UTC().Format(time.RFC3339)},
-		Spec: map[string]interface{}{
-			"namespaceName": "test-demo", "ttlSeconds": 7200,
-			"access": []interface{}{map[string]interface{}{"subject": "revoked/agent", "mode": "deployer"}},
-		},
-		Status: map[string]interface{}{"phase": "Ready", "namespaceName": "test-demo", "specDigest": "sha256:provisioned"},
-	}
+
 	if err := ctrl.reconcileLease(context.Background(), item); err != nil {
 		t.Fatal(err)
 	}

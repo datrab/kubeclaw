@@ -27,15 +27,13 @@ func TestReadyLeasePersistsOwnershipOnlyTakeover(t *testing.T) {
 	objectValue(ingress["metadata"])["resourceVersion"] = "1"
 	patches := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		switch {
-		case r.URL.Path == ctrl.leasePath("lease"):
-			_ = json.NewEncoder(w).Encode(item)
-		case r.URL.Path == ctrl.statusPath("lease"):
-			var body map[string]interface{}
-			_ = json.NewDecoder(r.Body).Decode(&body)
-			item.Status = objectValue(body["status"])
+		if r.URL.Path == ctrl.statusPath("lease") && r.Method == http.MethodPatch {
 			patches++
-			_, _ = w.Write([]byte(`{}`))
+		}
+		if serveVersionedLease(t, ctrl, item, w, r) {
+			return
+		}
+		switch {
 		case r.URL.Path == "/api/v1/namespaces/test-one":
 			_ = json.NewEncoder(w).Encode(map[string]interface{}{"metadata": map[string]interface{}{"labels": ownerLabels(item, "test-one")}})
 		case strings.Contains(r.URL.Path, "/networkpolicies"):
@@ -67,21 +65,21 @@ func TestReadyLeasePersistsOwnershipOnlyTakeover(t *testing.T) {
 	if err := ctrl.reconcileReadyLease(context.Background(), item, "test-one"); err != nil {
 		t.Fatal(err)
 	}
-	if patches != 1 || item.Status["exposureOwner"] != "B" {
+	if patches != 2 || item.Status["exposureOwner"] != "B" {
 		t.Fatalf("same-spec owner acknowledgment was not persisted: %v", item.Status)
 	}
 	item.Metadata.Generation = 8
 	if err := ctrl.reconcileReadyLease(context.Background(), item, "test-one"); err != nil {
 		t.Fatal(err)
 	}
-	if patches != 2 || item.Status["exposureGeneration"] != float64(8) {
+	if patches != 4 || intValue(item.Status["exposureGeneration"], 0) != 8 {
 		t.Fatalf("generation-only acknowledgment was not persisted: %v", item.Status)
 	}
 	if err := ctrl.reconcileReadyLease(context.Background(), item, "test-one"); err != nil {
 		t.Fatal(err)
 	}
-	if patches != 2 {
-		t.Fatal("unchanged acknowledgment should preserve status short circuit")
+	if patches != 6 {
+		t.Fatal("each actual ingress mutation must reserve and release its status fence")
 	}
 }
 
@@ -109,8 +107,7 @@ func TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor(t *testing.T) {
 			objectValue(ingress["metadata"])["resourceVersion"] = "4"
 			deleted := false
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				if r.URL.Path == ctrl.leasePath("lease") {
-					_ = json.NewEncoder(w).Encode(item)
+				if serveVersionedLease(t, ctrl, item, w, r) {
 					return
 				}
 				if r.Method == http.MethodGet {

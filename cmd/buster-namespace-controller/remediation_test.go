@@ -17,7 +17,7 @@ func TestRotatedTokenAndLongLeaseCleanup(t *testing.T) {
 		t.Run(fmt.Sprint(length), func(t *testing.T) {
 			ctrl := testController(t)
 			item := &lease{Metadata: metadata{Name: strings.Repeat("x", length), UID: "canonical-uid", CreationTimestamp: "2020-01-01T00:00:00Z"}, Spec: map[string]interface{}{"access": []interface{}{map[string]interface{}{"subject": "agent-buster", "mode": "tester"}}}}
-			namespace := map[string]interface{}{"metadata": map[string]interface{}{"labels": ownerLabels(item, "test-owned")}}
+			namespace := map[string]interface{}{"metadata": map[string]interface{}{"uid": "namespace-uid", "resourceVersion": "1", "labels": ownerLabels(item, "test-owned")}}
 			if err := verifyNamespaceLabels(item, "test-owned", namespace); err != nil {
 				t.Fatal(err)
 			}
@@ -28,9 +28,14 @@ func TestRotatedTokenAndLongLeaseCleanup(t *testing.T) {
 					w.WriteHeader(401)
 					return
 				}
+				if serveVersionedLease(t, ctrl, item, w, r) {
+					return
+				}
 				if r.URL.Path == "/api/v1/namespaces/test-owned" {
 					if r.Method == http.MethodDelete {
 						deleted = true
+						_, _ = w.Write([]byte(`{}`))
+						return
 					}
 					if deleted {
 						w.WriteHeader(404)
@@ -88,7 +93,7 @@ func TestProvisionedConfiguredRBACIsExactAuthority(t *testing.T) {
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				if r.Method == http.MethodGet {
 					if r.URL.Path == "/api/v1/namespaces/test-owned" {
-						_ = json.NewEncoder(w).Encode(map[string]interface{}{"metadata": map[string]interface{}{"labels": ownerLabels(item, "test-owned")}})
+						_ = json.NewEncoder(w).Encode(map[string]interface{}{"metadata": map[string]interface{}{"uid": "namespace-uid", "resourceVersion": "1", "labels": ownerLabels(item, "test-owned")}})
 					} else {
 						_ = json.NewEncoder(w).Encode(state[path.Base(r.URL.Path)])
 					}

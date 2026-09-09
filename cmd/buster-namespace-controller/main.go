@@ -49,6 +49,7 @@ type controller struct {
 	apiURL               string
 	tokenPath            string
 	httpClient           *http.Client
+	readiness            *readinessConfig
 }
 
 type serviceAccountRef struct {
@@ -70,13 +71,15 @@ type testCredentialRequest struct {
 }
 
 type lease struct {
-	Metadata metadata               `json:"metadata"`
-	Spec     map[string]interface{} `json:"spec"`
-	Status   map[string]interface{} `json:"status"`
+	ExposureClaim string                 `json:"-"`
+	Metadata      metadata               `json:"metadata"`
+	Spec          map[string]interface{} `json:"spec"`
+	Status        map[string]interface{} `json:"status"`
 }
 
 type metadata struct {
 	Name              string            `json:"name"`
+	ResourceVersion   string            `json:"resourceVersion"`
 	Namespace         string            `json:"namespace"`
 	Labels            map[string]string `json:"labels"`
 	Annotations       map[string]string `json:"annotations"`
@@ -114,6 +117,9 @@ func main() {
 	})
 
 	ctx := context.Background()
+	if err := ctrl.startReadinessServer(ctx); err != nil {
+		panic(err)
+	}
 	for {
 		if err := ctrl.reconcileAll(ctx); err != nil {
 			logJSON("error", "controller loop failed", err.Error())
@@ -164,6 +170,9 @@ func newController() (*controller, error) {
 
 	access, err := parseAllowedAccess(env("BUSTER_ALLOWED_ACCESS_JSON", `[{"subject":"kubeclaw/agent-buster","modes":["tester"]}]`))
 	if err != nil {
+		return nil, err
+	}
+	if err := ctrl.configureReadiness(); err != nil {
 		return nil, err
 	}
 	ctrl.allowedAccess = access
@@ -221,7 +230,7 @@ func (c *controller) reconcileAll(ctx context.Context) error {
 			if namespaceName == "" {
 				namespaceName = stringValue(current.Spec["namespaceName"])
 			}
-			statusErr := c.patchStatus(ctx, current.Metadata.Name, map[string]interface{}{
+			statusErr := c.patchLeaseStatus(ctx, &current, map[string]interface{}{
 				"phase":         "Failed",
 				"namespaceName": nullableString(namespaceName),
 				"message":       err.Error(),
@@ -236,7 +245,6 @@ func (c *controller) reconcileAll(ctx context.Context) error {
 }
 
 func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
-	name := item.Metadata.Name
 	requestedNamespace := stringValue(item.Spec["namespaceName"])
 	namespaceName := c.normalizeLeaseNamespaceName(requestedNamespace)
 	if item.Metadata.DeletionTimestamp != "" {
@@ -250,7 +258,7 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 		return c.reconcileDeletedLease(ctx, item, ownedNamespace)
 	}
 	if namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {
-		return c.patchStatus(ctx, name, map[string]interface{}{
+		return c.patchLeaseStatus(ctx, item, map[string]interface{}{
 			"phase":         "Rejected",
 			"namespaceName": nullableString(requestedNamespace),
 			"message":       "namespaceName must normalize to a valid broker-owned namespace",
@@ -274,7 +282,7 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 		if expired, err := c.expireLease(ctx, item, namespaceName); expired || err != nil {
 			return err
 		}
-		return c.patchStatus(ctx, name, map[string]interface{}{
+		return c.patchLeaseStatus(ctx, item, map[string]interface{}{
 			"phase": "Failed", "namespaceName": namespaceName,
 			"expiresAt": c.expiresAt(item).Format(time.RFC3339),
 			"message":   "Legacy lease cannot provision new work; delete it or wait for TTL cleanup",
@@ -290,11 +298,11 @@ func (c *controller) reconcileLease(ctx context.Context, item *lease) error {
 				return deleteErr
 			}
 		}
-		return c.patchStatus(ctx, name, rejectedStatus(namespaceName, err.Error()))
+		return c.patchLeaseStatus(ctx, item, rejectedStatus(namespaceName, err.Error()))
 	}
 	if digest := stringValue(item.Status["specDigest"]); digest != "" && digest != leaseSpecDigest(item.Spec) {
 		if stringValue(item.Status["phase"]) != "Ready" || !legacyMutableExposureDigest(digest, item.Spec) {
-			return c.patchStatus(ctx, name, rejectedStatus(namespaceName, "lease spec is immutable after provisioning"))
+			return c.patchLeaseStatus(ctx, item, rejectedStatus(namespaceName, "lease spec is immutable after provisioning"))
 		}
 	}
 
@@ -312,7 +320,7 @@ func (c *controller) expireLease(ctx context.Context, item *lease, namespaceName
 	if stringValue(item.Status["phase"]) == "Expired" {
 		return true, c.deleteOwnedNamespace(ctx, item, namespaceName)
 	}
-	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
+	if err := c.patchLeaseStatus(ctx, item, map[string]interface{}{
 		"phase":         "Expired",
 		"namespaceName": namespaceName,
 		"message":       "Lease TTL expired; deleting broker-owned namespace",
@@ -368,7 +376,7 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 		leaseCondition("CredentialsReady", credentialsReady, ternaryString(credentialsReady, "Available", "Pending")),
 		leaseCondition("ExposureReady", exposureReady, ternaryString(exposureReady, "Available", "Pending")),
 	}
-	return c.patchStatus(ctx, item.Metadata.Name, next)
+	return c.patchLeaseStatus(ctx, item, next)
 }
 
 func runtimeSecurityRefreshDue(snapshot map[string]interface{}, now time.Time) bool {
@@ -580,7 +588,7 @@ func runtimeSecurityResultDigest(findings []interface{}, totalFindingCount, omit
 }
 
 func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceName string) error {
-	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
+	if err := c.patchLeaseStatus(ctx, item, map[string]interface{}{
 		"phase":         "Provisioning",
 		"namespaceName": namespaceName,
 		"expiresAt":     c.expiresAt(item).Format(time.RFC3339),
@@ -656,7 +664,7 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 		leaseCondition("CredentialsReady", credentialsReady, ternaryString(credentialsReady, "Available", "Pending")),
 		leaseCondition("ExposureReady", exposureReady, ternaryString(exposureReady, "Available", "Pending")),
 	}
-	return c.patchStatus(ctx, item.Metadata.Name, status)
+	return c.patchLeaseStatus(ctx, item, status)
 }
 
 func (c *controller) createdAt(item *lease) time.Time {
@@ -690,7 +698,7 @@ func (c *controller) controllerSecretRoleBinding(namespaceName string, roleName 
 }
 
 func (c *controller) reconcileDeletedLease(ctx context.Context, item *lease, namespaceName string) error {
-	if err := c.patchStatus(ctx, item.Metadata.Name, map[string]interface{}{
+	if err := c.patchLeaseStatus(ctx, item, map[string]interface{}{
 		"phase":         "Deleting",
 		"namespaceName": namespaceName,
 		"message":       "Lease deleted; deleting broker-owned namespace",
@@ -727,11 +735,20 @@ func (c *controller) ensureFinalizer(ctx context.Context, item *lease) (*lease, 
 	if contains(item.Metadata.Finalizers, c.finalizer) {
 		return item, nil
 	}
-	finalizers := append([]string{}, item.Metadata.Finalizers...)
-	finalizers = append(finalizers, c.finalizer)
+	var current lease
+	if err := c.kube(ctx, http.MethodGet, c.leasePath(item.Metadata.Name), nil, "application/json", &current); err != nil {
+		return nil, err
+	}
+	if current.Metadata.UID != item.Metadata.UID || current.Metadata.ResourceVersion == "" || current.Metadata.DeletionTimestamp != "" {
+		return nil, errors.New("lease finalizer identity changed")
+	}
+	finalizers := append([]string{}, current.Metadata.Finalizers...)
+	if !contains(finalizers, c.finalizer) {
+		finalizers = append(finalizers, c.finalizer)
+	}
 	var updated lease
 	err := c.kube(ctx, http.MethodPatch, c.leasePath(item.Metadata.Name), map[string]interface{}{
-		"metadata": map[string]interface{}{"finalizers": finalizers},
+		"metadata": map[string]interface{}{"resourceVersion": current.Metadata.ResourceVersion, "finalizers": finalizers},
 	}, "application/merge-patch+json", &updated)
 	if err != nil {
 		return nil, err
@@ -740,15 +757,7 @@ func (c *controller) ensureFinalizer(ctx context.Context, item *lease) (*lease, 
 }
 
 func (c *controller) removeFinalizer(ctx context.Context, item *lease) error {
-	finalizers := make([]string, 0, len(item.Metadata.Finalizers))
-	for _, value := range item.Metadata.Finalizers {
-		if value != c.finalizer {
-			finalizers = append(finalizers, value)
-		}
-	}
-	return c.kube(ctx, http.MethodPatch, c.leasePath(item.Metadata.Name), map[string]interface{}{
-		"metadata": map[string]interface{}{"finalizers": finalizers},
-	}, "application/merge-patch+json", nil)
+	return c.removeFinalizerCAS(ctx, item)
 }
 
 func (c *controller) ensureNamespace(ctx context.Context, item *lease, namespaceName string) error {
@@ -1184,10 +1193,14 @@ type previewExposure struct {
 }
 
 func previewExposureSpec(item *lease, namespaceName string) (*previewExposure, error) {
-	if stringValueDefault(item.Spec["purpose"], "pretest") != "final-preview" {
+	_, retained := demoReadyDeadline(item)
+	if !retained && stringValueDefault(item.Spec["purpose"], "pretest") != "final-preview" {
 		return nil, nil
 	}
 	exposureMap := objectValue(item.Spec["exposure"])
+	if _, ok := demoReadyDeadline(item); ok {
+		exposureMap = objectValue(objectValue(item.Status["demoReadiness"])["exposureSpec"])
+	}
 	if stringValueDefault(exposureMap["provider"], "off") != "tailscale-ingress" {
 		return nil, nil
 	}
@@ -1335,7 +1348,7 @@ func previewIngress(item *lease, namespaceName string, exposure *previewExposure
 			"name":        exposure.IngressName,
 			"namespace":   namespaceName,
 			"labels":      ownerLabels(item, namespaceName),
-			"annotations": map[string]string{exposureOwnerAnnotation: item.Metadata.Annotations[exposureOwnerAnnotation]},
+			"annotations": map[string]string{exposureOwnerAnnotation: effectiveExposureOwner(item)},
 		},
 		"spec": map[string]interface{}{
 			"ingressClassName": "tailscale",
@@ -1423,6 +1436,9 @@ func (c *controller) deleteNamespace(ctx context.Context, namespaceName string) 
 }
 
 func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, namespaceName string) error {
+	if err := c.fenceNamespaceCleanup(ctx, item); err != nil {
+		return err
+	}
 	if namespaceName == "" || !c.hasAllowedPrefix(namespaceName) {
 		return fmt.Errorf("refusing to delete invalid broker namespace %q", namespaceName)
 	}
@@ -1446,7 +1462,7 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 	if err := c.deleteBusterE2EEgressPolicy(ctx, item); err != nil {
 		return err
 	}
-	return c.deleteNamespace(ctx, namespaceName)
+	return c.deleteNamespaceCAS(ctx, namespaceName, namespace)
 }
 
 func (c *controller) waitForNamespaceDeleted(ctx context.Context, namespaceName string) error {
@@ -1475,10 +1491,6 @@ func (c *controller) createOrPatch(ctx context.Context, createPath string, patch
 		return err
 	}
 	return c.kube(ctx, http.MethodPatch, patchPath, manifest, "application/merge-patch+json", out)
-}
-
-func (c *controller) patchStatus(ctx context.Context, name string, status map[string]interface{}) error {
-	return c.kube(ctx, http.MethodPatch, c.statusPath(name), map[string]interface{}{"status": status}, "application/merge-patch+json", nil)
 }
 
 func (c *controller) kube(ctx context.Context, method string, path string, body interface{}, contentType string, out interface{}) error {
@@ -1562,6 +1574,9 @@ func (c *controller) statusPath(name string) string {
 }
 
 func (c *controller) expiresAt(item *lease) time.Time {
+	if deadline, ok := demoReadyDeadline(item); ok {
+		return deadline
+	}
 	ttl := c.defaultTTL
 	if value := intValue(item.Spec["ttlSeconds"], 0); value > 0 {
 		ttl = time.Duration(value) * time.Second

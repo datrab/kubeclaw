@@ -19,6 +19,9 @@ func TestExposureAcknowledgesOwnerAndGenerationThroughActualHTTP(t *testing.T) {
 	var ingress map[string]interface{}
 	observedPatch := false
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if serveVersionedLease(t, ctrl, item, w, r) {
+			return
+		}
 		switch {
 		case r.URL.Path == ctrl.leasePath(item.Metadata.Name):
 			_ = json.NewEncoder(w).Encode(item)

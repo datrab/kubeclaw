@@ -62,6 +62,11 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 rules:
+  {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+  - apiGroups: ["authentication.k8s.io"]
+    resources: ["tokenreviews"]
+    verbs: ["create"]
+  {{- end }}
   - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
     resources: ["busternamespaceleases"]
     verbs: ["get", "list", "watch", "patch", "update"]
@@ -215,6 +220,31 @@ spec:
               value: {{ .Values.busterNamespaceBroker.maxTtlSeconds | quote }}
             - name: BUSTER_CONTROLLER_POLL_MS
               value: {{ .Values.busterNamespaceBroker.controller.pollIntervalMs | quote }}
+            {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+            - name: BUSTER_READY_LISTEN
+              value: ":8443"
+            - name: BUSTER_READY_AUDIENCE
+              value: {{ required "Ready audience is required" .Values.busterNamespaceBroker.controller.readiness.audience | quote }}
+            - name: BUSTER_READY_PRODUCER
+              value: {{ printf "system:serviceaccount:%s:%s" (required "Ready producer namespace is required" .Values.busterNamespaceBroker.controller.readiness.producerNamespace) (required "Ready producer ServiceAccount is required" .Values.busterNamespaceBroker.controller.readiness.producerServiceAccount) | quote }}
+            - name: BUSTER_READY_TLS_CERT
+              value: /var/run/kubeclaw/ready-server/tls.crt
+            - name: BUSTER_READY_TLS_KEY
+              value: /var/run/kubeclaw/ready-server/tls.key
+            {{- end }}
           resources:
             {{- toYaml .Values.busterNamespaceBroker.controller.resources | nindent 12 }}
+          {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+          ports:
+            - { name: demo-ready, containerPort: 8443, protocol: TCP }
+          volumeMounts:
+            - { name: demo-ready-server, mountPath: /var/run/kubeclaw/ready-server, readOnly: true }
+          {{- end }}
+      {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+      volumes:
+        - name: demo-ready-server
+          secret:
+            secretName: {{ required "Ready TLS Secret is required" .Values.busterNamespaceBroker.controller.readiness.tlsSecretName | quote }}
+            defaultMode: 0440
+      {{- end }}
 {{- end }}

@@ -1,0 +1,38 @@
+{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") .Values.busterNamespaceBroker.controller.readiness.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-demo-ready
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: kubeclaw
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: buster-namespace-controller
+  ports:
+    - { name: https, port: 8443, targetPort: demo-ready, protocol: TCP }
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-demo-ready
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kubeclaw
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: buster-namespace-controller
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ required "Ready producer namespace is required" .Values.busterNamespaceBroker.controller.readiness.producerNamespace | quote }}
+          podSelector:
+            matchLabels:
+              kubeclaw/role: nova
+      ports:
+        - { protocol: TCP, port: 8443 }
+{{- end }}
