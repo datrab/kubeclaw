@@ -46,7 +46,7 @@ subjects:
 {{- if and .Values.serviceAccount.create $verificationReadEnabled }}
 ---
 # Read-only visibility for Nova's real E2E capability probe. This does not grant
-# namespace/workload mutation and does not expose arbitrary Secret reads.
+# namespace/workload mutation. Secret access is separately namespace-scoped below.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -57,10 +57,6 @@ rules:
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    resourceNames: ["{{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName }}"]
-    verbs: ["get"]
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingressclasses"]
     resourceNames: ["tailscale"]
@@ -76,6 +72,40 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: {{ include "kubeclaw.fullname" . }}-verification-read
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "kubeclaw.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+---
+{{- $operatorNamespace := required "verificationRead.tailscaleOperatorNamespace is required" .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace }}
+{{- $oauthSecret := required "verificationRead.tailscaleOAuthSecretName is required" .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName }}
+{{- $secretReadName := printf "%s-verification-secret-%s" (include "kubeclaw.fullname" .) (printf "%s/%s" .Release.Namespace .Release.Name | sha256sum | trunc 8) }}
+# The operator namespace must already exist. The agent release owns only these
+# RBAC resources there, not the namespace or the OAuth Secret itself.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $secretReadName }}
+  namespace: {{ $operatorNamespace | quote }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: [{{ $oauthSecret | quote }}]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $secretReadName }}
+  namespace: {{ $operatorNamespace | quote }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $secretReadName }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "kubeclaw.fullname" . }}

@@ -1251,6 +1251,12 @@ spec:
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: KUBECLAW_CONTAINER_ROLE
               value: "agent"
+            {{- if .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled }}
+            - name: TAILSCALE_OPERATOR_NAMESPACE
+              value: {{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace | quote }}
+            - name: TAILSCALE_OAUTH_SECRET_NAME
+              value: {{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName | quote }}
+            {{- end }}
             - name: KUBECLAW_CODE_BUNDLE_ENABLED
               value: {{ .Values.codeBundle.enabled | default false | quote }}
             - name: KUBECLAW_CODE_BUNDLE_AGENT

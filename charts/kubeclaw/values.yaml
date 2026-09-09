@@ -381,6 +381,9 @@ busterNamespaceBroker:
     enabled: false
     verificationRead:
       enabled: false
+      # Existing operator namespace; shared by the scoped RBAC and agent probe.
+      # The agent release does not create or own this namespace or Secret.
+      tailscaleOperatorNamespace: tailscale
       tailscaleOAuthSecretName: operator-oauth
   leaseApiGroup: kubeclaw.forgestack.ai
   leaseApiVersion: v1alpha1
