@@ -646,7 +646,7 @@ try {
     packageVersion: '2.0.0', contentDigest: `sha256:${'1'.repeat(64)}` };
   const newIdentity = { ...oldIdentity, packageVersion: '2.0.1', contentDigest: `sha256:${'2'.repeat(64)}` };
   const { writeRunSnapshots, graphSnapshot } = await import('../../../skills/nova/core/execution/engine-snapshots.ts');
-  writeRunSnapshots(upgradeRoot, graphSnapshot(definition), { configuration: {}, packages: [['kubeclaw.review', { package: oldIdentity }]] });
+  writeRunSnapshots(upgradeRoot, graphSnapshot(definition), { dependencyIdentityVersion: 'parent-invocation.v1', configuration: {}, packages: [['kubeclaw.review', { package: oldIdentity }]] });
   const upgradedRuntime = { configuration: {}, snapshot: { packages: new Map([['kubeclaw.review', {
     provenance: { package: newIdentity },
   }]]) } };

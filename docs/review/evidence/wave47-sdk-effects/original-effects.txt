@@ -1,0 +1,15 @@
+✔ effect journal owns request and receipt payloads: memory (1.780567ms)
+✔ effect journal owns request and receipt payloads: file (27.561422ms)
+✔ effect journal owns request and receipt payloads: file-sidecar (25.121869ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (54.742184ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (49.834681ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (45.75324ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (95.876796ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 470.387216

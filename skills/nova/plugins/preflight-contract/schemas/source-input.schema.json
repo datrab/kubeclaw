@@ -38,6 +38,9 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "identityEncoding": {
+          "const": "kubeclaw-json.utf16.v1"
         }
       }
     },

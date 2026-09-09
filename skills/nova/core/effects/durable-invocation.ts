@@ -11,9 +11,9 @@ interface Dependencies {
   readonly lockTtlMs: number;
 }
 
-function lockResource(invocation: EffectInvocation): ResourceLock['resource'] {
+function lockResource(invocation: EffectInvocation, prior?: EffectRequest): ResourceLock['resource'] {
   if (invocation.capability !== 'runtime.dispatch') return invocation.resource;
-  return Object.freeze({ type: 'runtime.invocation', canonicalId: stableEffectId(invocation) });
+  return Object.freeze({ type: 'runtime.invocation', canonicalId: prior?.effectId ?? stableEffectId(invocation) });
 }
 
 export async function invokeDurableEffect(
@@ -38,7 +38,7 @@ class DurableInvocation {
     assertMatchingRequest(prior, this.#invocation);
     const existing = await this.#existingReceipt(prior);
     if (existing) return existing;
-    this.#lock = await acquireResource(this.#dependencies.locks, lockResource(this.#invocation), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs, this.#signal);
+    this.#lock = await acquireResource(this.#dependencies.locks, lockResource(this.#invocation, prior), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs, this.#signal);
     let failed = false;
     let failure: unknown;
     try {
@@ -46,6 +46,9 @@ class DurableInvocation {
       assertMatchingRequest(prior, this.#invocation);
       const lockedExisting = await this.#existingReceipt(prior);
       if (lockedExisting) return lockedExisting;
+      if (this.#lock.resource.canonicalId !== lockResource(this.#invocation, prior).canonicalId) {
+        throw new Error(`EFFECT_IDENTITY_CHANGED_DURING_ADMISSION:${this.#invocation.idempotencyKey}`);
+      }
       return await this.#executeLocked(prior);
     } catch (error) {
       failed = true; failure = error; throw error;

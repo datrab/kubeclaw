@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import type { PipelineDefinition, StageDefinition } from '@kubeclaw/plugin-sdk';
+import { portableJson, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { FrozenMap } from '@kubeclaw/plugin-foundation/registry/frozen-map';
 import { buildGraph } from './graph-build.ts';
 
@@ -11,7 +11,7 @@ function canonical(value: unknown): string {
 function deepFreeze<T>(value: T): T { if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value; for (const nested of Object.values(value as Record<string, unknown>)) deepFreeze(nested); return Object.freeze(value); }
 
 export interface ExecutionGraphSnapshot {
-  readonly schemaVersion: 'execution-graph-snapshot.v2'; readonly pipelineId: string; readonly maxConcurrency: number;
+  readonly schemaVersion: 'execution-graph-snapshot.v2' | 'execution-graph-snapshot.v3'; readonly pipelineId: string; readonly maxConcurrency: number;
   readonly nodes: readonly StageDefinition[]; readonly ordinaryEdges: readonly Readonly<{ readonly from: string; readonly to: string }>[];
   readonly remediationEdges: readonly Readonly<{ readonly from: string; readonly to: string }>[]; readonly digest: string;
 }
@@ -37,10 +37,17 @@ export class ExecutionGraph {
   remediationEdges(): ExecutionGraphSnapshot['remediationEdges'] { return this.#remediationEdges; }
   isRemediationOnlyTarget(id: string): boolean { return this.#remediationOnlyTargets.has(id); }
   activation(id: string): StageDefinition['activation'] { return this.stage(id).activation; }
-  snapshot(pipelineId: string, maxConcurrency: number): ExecutionGraphSnapshot {
+  snapshot(pipelineId: string, maxConcurrency: number, version: ExecutionGraphSnapshot['schemaVersion'] = 'execution-graph-snapshot.v3'): ExecutionGraphSnapshot {
     if (!Number.isInteger(maxConcurrency) || maxConcurrency < 1) throw new Error('GRAPH_CONCURRENCY_INVALID');
-    const content = { schemaVersion: 'execution-graph-snapshot.v2' as const, pipelineId, maxConcurrency, nodes: this.stages(), ordinaryEdges: this.#ordinaryEdges, remediationEdges: this.#remediationEdges };
-    return deepFreeze({ ...content, digest: `sha256:${crypto.createHash('sha256').update(canonical(content)).digest('hex')}` });
+    if (!['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(version)) throw new Error('GRAPH_SNAPSHOT_VERSION_INVALID');
+    const portable = version === 'execution-graph-snapshot.v3';
+    const compare = (left: string, right: string): number => left < right ? -1 : left > right ? 1 : 0;
+    const edges = (entries: ExecutionGraphSnapshot['ordinaryEdges']) => portable
+      ? [...entries].sort((left, right) => compare(left.from, right.from) || compare(left.to, right.to)) : entries;
+    const content = { schemaVersion: version, pipelineId, maxConcurrency,
+      nodes: portable ? [...this.stages()].sort((left, right) => compare(left.id, right.id)) : this.stages(),
+      ordinaryEdges: edges(this.#ordinaryEdges), remediationEdges: edges(this.#remediationEdges) };
+    return deepFreeze({ ...content, digest: `sha256:${crypto.createHash('sha256').update(portable ? portableJson(content) : canonical(content)).digest('hex')}` });
   }
   ready(completed: ReadonlySet<string>, active: ReadonlySet<string>): readonly StageDefinition[] {
     return Object.freeze([...this.#stages.values()].filter((stage) => !completed.has(stage.id) && !active.has(stage.id)).filter((stage) => !this.#remediationOnlyTargets.has(stage.id)).filter((stage) => stage.dependsOn.every((dependency) => completed.has(dependency))).sort((left, right) => left.id.localeCompare(right.id)));

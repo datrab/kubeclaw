@@ -35,7 +35,7 @@ export async function execute(input: ArchitectureInput, context: PluginInvocatio
   }
   const report = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'architecture-validation' },
-    payload: { namespace: 'kubeclaw.architecture-validator', mediaType: 'application/json', value: { ...output, ...(subject ? { subject } : {}) } },
+    payload: { ...(subject?.identityEncoding ? {encoding:subject.identityEncoding} : {}), namespace: 'kubeclaw.architecture-validator', mediaType: 'application/json', value: { ...output, ...(subject ? { subject } : {}) } },
   });
   const artifacts = [report.artifact as ArtifactRef];
   if (output.verdict === 'passed') {

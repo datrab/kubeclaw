@@ -1,9 +1,10 @@
-import {canonicalJson, sha256Text} from './values.ts';
+import {PORTABLE_JSON_ENCODING} from './values.ts';
 import type { PluginInvocationContext } from './runtime.ts';
-import { parseReviewSubject } from './review-subject.ts';
+import { parseReviewSubject, reviewIdentityDigest } from './review-subject.ts';
 import { readBoundArtifact } from './source-approval.ts';
 
 export interface SourceBinding {
+  readonly identityEncoding?: typeof PORTABLE_JSON_ENCODING;
   readonly stageId: string;
   readonly inputDigest: string;
   readonly reviewStageId?: string;
@@ -11,7 +12,8 @@ export interface SourceBinding {
 
 export function parseSourceBinding(value: unknown): SourceBinding {
   const binding = value as SourceBinding | undefined;
-  if (!binding || Object.keys(binding).some(key => !['stageId', 'inputDigest', 'reviewStageId'].includes(key))
+  if (!binding || Object.keys(binding).some(key => !['stageId', 'inputDigest', 'reviewStageId', 'identityEncoding'].includes(key))
+    || (Object.hasOwn(binding, 'identityEncoding') && binding.identityEncoding !== PORTABLE_JSON_ENCODING)
     || typeof binding.stageId !== 'string' || !binding.stageId
     || typeof binding.inputDigest !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(binding.inputDigest)
     || (binding.reviewStageId !== undefined && (typeof binding.reviewStageId !== 'string' || !binding.reviewStageId))) {
@@ -32,6 +34,6 @@ export async function sourcePreflight(value: unknown, context: PluginInvocationC
   const result = await readBoundArtifact(candidates[0]!, context);
   if (result.schemaVersion !== 'source-preflight.v1' || result.outcome !== 'passed') throw new Error('SOURCE_PREFLIGHT_FAILED');
   const subject = parseReviewSubject(result.subject, context.contract.lease.attempt.runId);
-  if (subject.inputDigest !== binding.inputDigest || sha256Text(canonicalJson(result.contract)) !== subject.inputDigest) throw new Error('SOURCE_PREFLIGHT_INPUT_MISMATCH');
+  if (subject.identityEncoding !== binding.identityEncoding || subject.inputDigest !== binding.inputDigest || reviewIdentityDigest(result.contract, binding) !== subject.inputDigest) throw new Error('SOURCE_PREFLIGHT_INPUT_MISMATCH');
   return { binding, subject, contract: result.contract as Readonly<Record<string, unknown>> };
 }

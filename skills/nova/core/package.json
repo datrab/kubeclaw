@@ -5,7 +5,9 @@
   "exports": {
     ".": "./src/index.ts",
     "./cli": "./cli.ts",
-    "./remote-gate-cli": "./test-gates/remote-gate-cli.ts"
+    "./remote-gate-cli": "./test-gates/remote-gate-cli.ts",
+    "./run-snapshots": "./execution/engine-snapshots.ts",
+    "./run-root": "./execution/run-root.ts"
   },
   "dependencies": {
     "@kubeclaw/pipeline-observability-contract": "*",

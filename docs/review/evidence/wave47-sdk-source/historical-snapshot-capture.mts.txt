@@ -1,0 +1,9 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {graphSnapshot,writeRunSnapshots} from './engine-snapshots.ts';
+const directory='tests/verification/reliability/fixtures/legacy-source-snapshots';fs.mkdirSync(directory,{recursive:true});
+for(const unicode of [false,true]){
+ const definition:any={schemaVersion:'pipeline-definition.v2',id:'legacy-source-snapshot',maxConcurrency:1,stages:[{id:'one',type:'test.one',dependsOn:[],config:{},input:unicode?{policy:{ä:1,z:2,a:3}}:{policy:{a:3,z:2}},execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:1000}}]};
+ const root=path.join(directory,unicode?'unicode':'ascii');fs.mkdirSync(root);const graph=graphSnapshot(definition);writeRunSnapshots(root,graph,{executionGraph:{pipelineId:graph.pipelineId,digest:graph.digest}});
+ fs.writeFileSync(path.join(root,'definition.json'),JSON.stringify(definition));
+}

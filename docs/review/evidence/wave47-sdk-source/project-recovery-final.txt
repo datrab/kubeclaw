@@ -1,0 +1,10 @@
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1520.887549ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1148.572522ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3139.126866

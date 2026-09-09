@@ -124,7 +124,7 @@ export async function execute(rawInput: unknown, context: PluginInvocationContex
   if (subject) await verifyReviewSubject(subject, context);
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'architecture-approval' },
-    payload: { namespace: 'kubeclaw.human-approval', mediaType: 'application/json', value: {
+    payload: { ...(subject?.identityEncoding ? {encoding:subject.identityEncoding} : {}), namespace: 'kubeclaw.human-approval', mediaType: 'application/json', value: {
       decision: 'approved', subject: subject ?? null, reportDigest: artifact.digest, reportStageId: artifact.producer.stageId,
       guidance: context.contract.guidance ?? null, clean: !findings,
     } },

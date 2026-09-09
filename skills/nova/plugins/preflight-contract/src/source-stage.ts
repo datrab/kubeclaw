@@ -33,7 +33,7 @@ export async function execute(input: SourceInput, context: PluginInvocationConte
       if (failures.length) throw new Error(`SOURCE_PREFLIGHT_DELIVERY_REQUIRED:${canonicalJson(failures)}`);
     }
     const stored = await context.invoke('artifacts.write', {operation:'put_json',resource:{type:'artifact.object',canonicalId:'source-preflight'},
-      payload:{namespace:'kubeclaw.preflight-contract',mediaType:'application/json',value:{schemaVersion:'source-preflight.v1',outcome:'passed',contract:input.contract,subject}}});
+      payload:{...(subject?.identityEncoding ? {encoding:subject.identityEncoding} : {}), namespace:'kubeclaw.preflight-contract',mediaType:'application/json',value:{schemaVersion:'source-preflight.v1',outcome:'passed',contract:input.contract,subject}}});
     return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[stored.artifact as ArtifactRef]};
   } catch (error) {
     return {schemaVersion:'stage-result.v2',outcome:'blocked',artifacts:[],reason:{code:'source_preflight.invalid',message:error instanceof Error ? error.message : String(error)}};

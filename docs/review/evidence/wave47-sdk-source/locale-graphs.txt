@@ -1,0 +1,110 @@
+✖ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (9209.285149ms)
+✖ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (8434.462624ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11916.110572ms)
+✖ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (8456.115189ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38463.98902
+
+✖ failing tests:
+
+test at tests/verification/reliability/source-identity-version.test.mjs:33:5
+✖ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (9209.285149ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs --child resume /tmp/source-version-whYrzb
+  file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79
+    if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+                                                                                                   ^
+  
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at assertRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79:98)
+      at readRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:83:3)
+      at verifyPinnedPackages (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:29:18)
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:82:5
+      at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/run-mutation.ts:16:26)
+      at resumePipeline (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:80:10)
+      at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs:22:25
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: false,
+    signal: null,
+    cmd: '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs --child resume /tmp/source-version-whYrzb',
+    stdout: '',
+    stderr: "file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79\n  if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');\n                                                                                                 ^\n\nError: RUN_SNAPSHOT_INTEGRITY_INVALID\n    at assertRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79:98)\n    at readRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:83:3)\n    at verifyPinnedPackages (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:29:18)\n    at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:82:5\n    at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/run-mutation.ts:16:26)\n    at resumePipeline (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:80:10)\n    at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs:22:25\n\nNode.js v24.19.0\n"
+  }
+
+test at tests/verification/reliability/source-identity-version.test.mjs:33:5
+✖ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (8434.462624ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs --child resume /tmp/source-version-sXzf9p
+  file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79
+    if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+                                                                                                   ^
+  
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at assertRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79:98)
+      at readRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:83:3)
+      at verifyPinnedPackages (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:29:18)
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:82:5
+      at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/run-mutation.ts:16:26)
+      at resumePipeline (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:80:10)
+      at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs:22:25
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: false,
+    signal: null,
+    cmd: '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs --child resume /tmp/source-version-sXzf9p',
+    stdout: '',
+    stderr: "file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79\n  if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');\n                                                                                                 ^\n\nError: RUN_SNAPSHOT_INTEGRITY_INVALID\n    at assertRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79:98)\n    at readRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:83:3)\n    at verifyPinnedPackages (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:29:18)\n    at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:82:5\n    at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/run-mutation.ts:16:26)\n    at resumePipeline (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:80:10)\n    at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs:22:25\n\nNode.js v24.19.0\n"
+  }
+
+test at tests/verification/reliability/source-identity-version.test.mjs:33:5
+✖ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (8456.115189ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs --child resume /tmp/source-version-n4r3S4
+  file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79
+    if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+                                                                                                   ^
+  
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at assertRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79:98)
+      at readRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:83:3)
+      at verifyPinnedPackages (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:29:18)
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:82:5
+      at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/run-mutation.ts:16:26)
+      at resumePipeline (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:80:10)
+      at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs:22:25
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at ChildProcess.exithandler (node:child_process:417:12)
+      at ChildProcess.emit (node:events:509:28)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+    code: 1,
+    killed: false,
+    signal: null,
+    cmd: '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs --child resume /tmp/source-version-n4r3S4',
+    stdout: '',
+    stderr: "file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79\n  if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');\n                                                                                                 ^\n\nError: RUN_SNAPSHOT_INTEGRITY_INVALID\n    at assertRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:79:98)\n    at readRunSnapshot (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:83:3)\n    at verifyPinnedPackages (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-snapshots.ts:29:18)\n    at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:82:5\n    at withRunMutationLock (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/run-mutation.ts:16:26)\n    at resumePipeline (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/core/execution/engine-run.ts:80:10)\n    at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/source-identity-version.test.mjs:22:25\n\nNode.js v24.19.0\n"
+  }

@@ -1,7 +1,8 @@
-import { canonicalJson, sha256Text } from './values.ts';
+import { canonicalJson, portableJson, PORTABLE_JSON_ENCODING, sha256Text } from './values.ts';
 import type { PluginInvocationContext } from './runtime.ts';
 
 export interface ReviewSource {
+  readonly identityEncoding?: typeof PORTABLE_JSON_ENCODING;
   readonly projectId: string;
   readonly repositoryRoot: string;
   readonly architectureRef: string;
@@ -16,15 +17,21 @@ export interface ReviewSubject extends ReviewSource {
   readonly digest: string;
 }
 
+/** Untagged persisted contracts retain their original locale-sensitive identity. */
+export function reviewIdentityDigest(value: unknown, source: Pick<ReviewSource, 'identityEncoding'>): string {
+  if (Object.hasOwn(source, 'identityEncoding') && source.identityEncoding !== PORTABLE_JSON_ENCODING) throw new Error('REVIEW_IDENTITY_ENCODING_INVALID');
+  return sha256Text(source.identityEncoding === PORTABLE_JSON_ENCODING ? portableJson(value) : canonicalJson(value));
+}
+
 function text(value: unknown): value is string { return typeof value === 'string' && value.length > 0 && value.length <= 4096 && !/[\0\r\n]/u.test(value); }
 function revision(value: unknown): value is string { return typeof value === 'string' && /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/u.test(value); }
 export function parseReviewSource(value: unknown): ReviewSource {
   const source = value as ReviewSource | null;
-  if (!source || !text(source.projectId) || !text(source.repositoryRoot) || !source.repositoryRoot.startsWith('/')
+  if (!source || (Object.hasOwn(source, 'identityEncoding') && source.identityEncoding !== PORTABLE_JSON_ENCODING) || !text(source.projectId) || !text(source.repositoryRoot) || !source.repositoryRoot.startsWith('/')
     || !text(source.architectureRef) || !Array.isArray(source.paths) || !source.paths.length || source.paths.length > 128
     || source.paths.some(file => !text(file) || file.startsWith('/') || file.includes('\\') || file.split('/').some(part => !part || part === '.' || part === '..'))
     || new Set(source.paths).size !== source.paths.length) throw new Error('REVIEW_SOURCE_INVALID');
-  return { projectId: source.projectId, repositoryRoot: source.repositoryRoot, architectureRef: source.architectureRef, paths: [...source.paths].sort() };
+  return { ...(source.identityEncoding ? {identityEncoding: source.identityEncoding} : {}), projectId: source.projectId, repositoryRoot: source.repositoryRoot, architectureRef: source.architectureRef, paths: [...source.paths].sort() };
 }
 export function parseReviewSubject(value: unknown, runId: string): ReviewSubject {
   const subject = value as ReviewSubject;
@@ -37,7 +44,7 @@ export function parseReviewSubject(value: unknown, runId: string): ReviewSubject
       || file.sizeBytes !== Buffer.byteLength(file.content) || file.digest !== sha256Text(file.content)) throw new Error('REVIEW_SUBJECT_FILE_INVALID');
   }
   const { digest, ...unsigned } = subject;
-  if (sha256Text(canonicalJson(unsigned)) !== digest) throw new Error('REVIEW_SUBJECT_DIGEST_INVALID');
+  if (reviewIdentityDigest(unsigned, source) !== digest) throw new Error('REVIEW_SUBJECT_DIGEST_INVALID');
   return subject;
 }
 
@@ -62,8 +69,8 @@ export async function captureReviewSubject(sourceInput: unknown, input: unknown,
     files.push({ path: file, mode: read.mode as '100644' | '100755', content: read.content, digest: read.digest, sizeBytes: read.sizeBytes });
   }
   const unsigned = { ...source, runId: context.contract.lease.attempt.runId, sourceRevision: current.head,
-    architectureRevision: architecture.head, inputDigest: sha256Text(canonicalJson(input)), files };
-  const subject = { ...unsigned, digest: sha256Text(canonicalJson(unsigned)) };
+    architectureRevision: architecture.head, inputDigest: reviewIdentityDigest(input, source), files };
+  const subject = { ...unsigned, digest: reviewIdentityDigest(unsigned, source) };
   await verifyReviewSubject(subject, context);
   return subject;
 }

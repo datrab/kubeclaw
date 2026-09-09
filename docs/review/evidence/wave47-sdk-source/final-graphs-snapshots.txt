@@ -1,0 +1,18 @@
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (2939.368718ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (3024.819954ms)
+✔ native terminal decisions retain their distinct dispositions and reject altered evidence (19.841746ms)
+✔ snapshot publication survives process death as a complete set and rejects overwrite or corruption (272.630458ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (11675.01596ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (11241.818809ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11851.775529ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (10129.411887ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3785.32587ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3641.365259ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52871.055123

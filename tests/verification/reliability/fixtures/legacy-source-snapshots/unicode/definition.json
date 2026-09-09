@@ -1,0 +1,1 @@
+{"schemaVersion":"pipeline-definition.v2","id":"legacy-source-snapshot","maxConcurrency":1,"stages":[{"id":"one","type":"test.one","dependsOn":[],"config":{},"input":{"policy":{"ä":1,"z":2,"a":3}},"execution":{"maxAttempts":1,"maxRemediationCycles":0,"timeoutMs":1000}}]}

@@ -2,7 +2,7 @@ import {demoStages,normalizeDemo} from './demo.ts';
 import {sourceStages} from './source.ts';
 import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
 import path from 'node:path';
-import { canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
+import { PORTABLE_JSON_ENCODING, canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
@@ -150,7 +150,7 @@ function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[
  * A project is a single repository publication lane. Explicit pipeline graphs
  * retain their existing concurrency semantics.
  */
-export function compileProject(value: unknown): { runId: string; definition: PipelineDefinition } {
+export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING): { runId: string; definition: PipelineDefinition } {
   const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture', 'demo'], 'project');
   if (project.schemaVersion !== 'nova-project.v2') throw new Error('PROJECT_SCHEMA_UNSUPPORTED:nova-project.v2 requires explicit architecture and module blueprint declarations; legacy inputs need authored migration');
   const projectId = id(project.id);
@@ -169,7 +169,7 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
   object(final.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'final.test');
   object(final.test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'final.providerPlan');
   const demo = normalizeDemo(project.demo);
-  const source = sourceStages(project, ordered, demo);
+  const source = sourceStages(project, ordered, demo, sourceIdentity);
   const stages: StageDefinition[] = [...source.stages];
   let previousGate: string | undefined = 'blueprint-sync';
   for (const module of ordered) {

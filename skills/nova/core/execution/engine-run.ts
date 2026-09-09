@@ -19,12 +19,13 @@ import { reconcileNovaObservabilityOnRecovery } from '../observability/reconcile
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
 
 export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted'>): Promise<PipelineRunResult> {
+  const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
   await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events);
   const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
   const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
   try { return await new PipelineRunner({ definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
     adapters, journal: context.events, orchestratorIssuerId: context.platform.orchestratorIssuerId, signal: context.leaseSignal,
-    onEventsCommitted: flush, ...options }).run(context.runId); }
+    onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion }).run(context.runId); }
   finally { try { await flush(); } finally { await adapters.shutdown(); } }
 }
 
