@@ -4,11 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**66/154 lokal verifiziert und unabhängig gegengeprüft; 8 Findings teilweise
-implementiert / durch fehlende Betriebsnachweise blockiert; 12 in Bearbeitung;
-68 noch offen.** Zusätzlich drei bei der Integration gefundene Probleme behoben
-(separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine
-vollständige Pipeline-E2E-Freigabe.
+**70/154 lokal verifiziert und unabhängig gegengeprüft; 11 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 15 in Bearbeitung; 58 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -119,3 +115,18 @@ Nächster Integrationsschritt: weitere Änderungen erst nach Gegenprüfung und
 Originalregressionen getrennt committen. Nicht abgeschlossene Arbeitsdateien
 gehören nicht in einen als geprüft gekennzeichneten Fixcommit.
 Fortschritt nach drei abgeschlossenen Findings oder spätestens zehn Minuten.
+
+
+## Fortsetzung und neue gesicherte Pakete
+
+- Telemetrie-Prüfprogramme: `8a7754b08db32923e7e2809fbce35832c3880c11`; konkrete Observeridentitäten und Rollen statt veralteter Anzahl geprüft.
+- Redis: `50b692e16f64b84c5ef072ba72ae7f9153631348`; echte Server-/Wiretests und unabhängige Gegenprüfung bestanden. Externe Streammigration bleibt Betriebsaufgabe.
+- Prism-Entscheidungen: `84b7048c41f8f12420daa0ac5e7f383eb4fe5959`; atomare SQLquittung und erforderliche Idempotency-Key-Weitergabe durch Studio geprüft. Voller PostgreSQLdienstnachweis offen.
+- Prism Worker/Control: `a328cfc29c20094a66d826237e4b347f89ba33a9`; Pflichtvoll-Log und gebundene Evidenzannahme geprüft. Voller PostgreSQLdienstnachweis und bestehende Servicelintbefunde offen.
+- Observerbuild: `e3ae22ba92c533fbbadd6ec744f9db32051234a0`; echte saubere Compilierung und drei Rollenbundles unabhängig geprüft. Übergreifender Gate auf exakt diesem committed Stand läuft separat. Der zuvor dokumentierte fehlende Generator ist behoben; spätere Gates noch nicht bestätigt.
+- Budgetgegenprüfung: `4fb4e50fa8ec59437e5f372d202aa692d9d6252a`;12 Budget-/Recoveryfälle und13 Originaltests bestanden. Nach Nova-Zusatzauftrag führen auch terminale Fehler zu blocked. Unveränderter Fehlerbericht bleibt erhalten.
+- Neue Arbeit: Operator-/Benachrichtigungszustellung, Containerbuild-/Registrydeadline und Medientypen, Namespacebroker und Aliasressourcenbudget.
+- Die Markdown-Statusspalte wurde vollständig aus dem JSONregister abgeglichen; der frühere Aktualisierer hatte einzelne Zeilen trotz korrektem JSON-/Summenstand unverändert gelassen.
+
+- Übergreifender Gate auf lokal `d3c20536210c918e32dce24dce09254198fac8a0` / remote `e3ae22ba92c533fbbadd6ec744f9db32051234a0`: sauberer Observerbuild, SDKprüfung, Pluginbuilds, Sandboxbuild, Runtime-Typecheck, Verträge, Agentoutput, Boundaries, Plattformkonfiguration, Registry, Importsicherheit, Lifecycle, Phase6 und Phase7 bestanden. Phase11 stoppt mit `ISOLATION_CGROUP_REQUIRED`, da das originale npm-Prüfkommando keinen erforderlichen Cgroup-Pfad übergibt. Spätere Gates liefen nicht. Log-SHA256: `05e076100064965666f9cfc0d360c1bf76a0f155b0745cd951e0eb81ad79a0a9`. Keine Gateabschwächung.
+- Aktuelle Quellenbindung: PATH-T04-001 in Umsetzung; Präferenzweitergabe PATH-T02-001/PCR-PRISM-PREFERENCES-001 ebenfalls aufgenommen.

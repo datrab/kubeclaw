@@ -275,7 +275,7 @@
       "root_fix": "Ownership/Generation über Planende übertragen; Demo eine Woche ab Bereit-zur-Abnahme, jederzeit bereinigbar/verlängerbar; URL, Login und Credentials an exakt getestete Version koppeln.",
       "acceptance": "Echte Namespace-/Ingress-/Appkette: erlaubter Operator erreicht Login nach Planende, erhält URL/Credentials; alte Owner können neue Exposure nicht löschen; TTL/Release/Rotation entfernen exakt zugehörige Ressourcen.",
       "verification_environment": "Kubernetes, Tailscale und echter Browser zwingend für Betriebsbestätigung; derzeit nicht ausgeführt",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "F-T14-01",
@@ -1583,16 +1583,21 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP04",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "4fb4e50fa8ec59437e5f372d202aa692d9d6252a",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/nova-repair-budget.md",
+          "summary": "Independent review plus12 genuine budget/recovery tests and13 original admin/evidence/Forge tests pass. Post-extra-order hard failure explicitly blocked. Final exact-commit typecheck runs separately after transient unrelated shared SDK edit."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PTR-T05-001 — Compilerbudget verhindert mehr als eine Modulreparatur insgesamt\n\nEigentümertrace: [T05-module-repairs.md](T05-module-repairs.md); Codecommit wie oben.\n\n- **Mittel; bestätigte Zielbild-/Compilerabweichung mit deterministischer statischer Ableitung.** Kein Fehler der Budgetprüfung selbst: sie setzt die vom Compiler gelieferten Grenzen korrekt durch.\n- Auslöser: Nach einer erfolgreichen initialen Implementation und einer erfolgreichen Reparatur findet eine nachfolgende Prüfung einen weiteren reparierbaren Fehler. Auch zwei verschiedene Reviewer teilen faktisch dasselbe Forgebudget.\n- Codebeleg: C1 Zeile 112 gibt jedem Stage maxAttempts=2/maxRemediationCycles=2; C9 Zeilen 117–120 zählen **jeden** Ausgang einschließlich passed; C10 Zeilen 45–51 erhalten attemptsUsed; C12 Zeilen 118–123 verweigern F3. C9 Zeilen 80–87 blockieren außerdem schon die zweite request_fix-Antwort desselben Requesters, wenn dessen zweiter Attempt verbraucht ist.\n- Konkrete statische Ableitung: F1 passed→F.attemptsUsed=1; L1 request_fix; F2 passed→F.attemptsUsed=2; L2 passed; E1 request_fix→erneut F pending; Scheduler vor F3 sieht 2>=2→core.attempt_budget_exhausted→run.blocked. Noch kein Busterlauf. Die deklarierte maxRemediationCycles=2 ist auf diesem Weg nicht voll nutzbar.\n- Der Compiler setzt auch kein `orchestratorAfterAttempt`; außerdem führt der request_fix-Erschöpfungspfad direkt stop aus, nicht request_orchestrator. Ein blockierter Run ist daher nicht automatisch ein persistierter Needs-Nova-Wait. Spätere administrative Wiedereröffnung ist ein eigener, hier nicht behaupteter Pfad.\n- Ursachenbehebung: fachlich festlegen, ob Budgets pro Candidate, Prüfer oder Modul gelten; Compilerbudget für Implementation und obligatorische Wiederprüfungen aus dieser Policy ableiten bzw. konfigurierbar validieren. Bestehende monotone Sicherheitszähler nicht einfach bei jeder Invalidierung auf null setzen. Eine explizite, autorisierte Nova-Entscheidung bei Erschöpfung vorsehen, falls gewünscht.\n- Geeignete Verifikation: echten **Compileroutput** im Original-Runner durch Lintfehler→Echofehler→Busterfehler führen, Budgets und erneute Revisionen nach jedem Schritt prüfen; eigener Test für zweiten Fehler erst in wiederholtem Lint. Ausbleibende Tests/Suiteausführungen müssen sichtbar bleiben. Nicht ausgeführt.\n\nKonkrete Zählerableitung für T05-D; A bezeichnet attemptsUsed, R remediationCyclesUsed. Die Werte sind aus dem Reducer abgeleitet, nicht gemessen:\n\n| Nach Ereignis | F A/R | L A/R | E A/R | B A/R | Nächster Zustand |\n|---|---|---|---|---|---|\n| Initialisierung | 0/0 | 0/0 | 0/0 | 0/0 | F1 bereit |\n| F1 passed | 1/0 | 0/0 | 0/0 | 0/0 | L1 bereit |\n| L1 request_fix | 1/0 | 1/1 | 0/0 | 0/0 | F pending, L waiting |\n| F2 passed | 2/0 | 1/1 | 0/0 | 0/0 | L2 bereit |\n| L2 passed | 2/0 | 2/1 | 0/0 | 0/0 | E1 bereit |\n| E1 request_fix | 2/0 | 2/1 | 1/1 | 0/0 | F pending, L pending, E waiting |\n| F3 vor Dispatch verweigert | 2/0 | 2/1 | 1/1 | 0/0 | F blocked, Run blocked; kein neuer Attempt gestartet |\n\nDas Beispiel zeigt auch: Forges remediationCyclesUsed bleibt 0, weil **Requester** L/E die Reparaturzyklen zählen. Das erschöpfte Targetbudget ist ein separater Zähler. Selbst eine einzelne administrative F3-Freigabe würde das bereits verbrauchte Lintbudget nicht automatisch erneuern; administrative Weiterführung wird im Eskalationstrace separat geprüft.\n\n**Zusammengeführte Ausprägung T09-D01 (T09):** Needs Nova nach Retry-Limit fehlt im Compilerablauf.\n\n**Zielbildabweichung, mittel; statisch gesichert, keine eigenständige Behauptung eines kaputten optionalen Corefeatures.** Compiler setzt keine orchestratorAfterAttempt; Erschöpfung endet blocked. Graphvalidator verbietet Schwelle≥maxAttempts und request_fix nutzt Schwelle überhaupt nicht. Ein explizites Review-orchestrator_required bleibt möglich, wird aber bei Limit ebenfalls blocked. Ein optionaler früherer Corewait beweist nicht den gewünschten gemeinsamen Eskalationspfad.\n\nUrsachenbehebung: gewünschte Disposition für retry exhaustion, Reparaturbudget exhaustion und operative blocked-Fälle produktseitig explizit definieren, einschließlich autorisierter Fortsetzung und begrenzter Zusatzversuche. Kein pauschales Reset der Zähler. Verifikation: echter Compilergraph, wiederholtes retry und request_fix sowie neuer Fehler nach erster Reparatur; Journal muss gewollten Wait/Entscheidungsbezug enthalten und genau die genehmigte Arbeit fortsetzen. **Nicht ausgeführt.** Budgetursache deduplizieren unter PTR-T05-001, wenn der Gesamtbericht diese Abweichung gemeinsam behandelt.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen; keine fertige Umsetzung behauptet.",
+      "next_action": "Gesamtintegration und exakte committed Typprüfung dokumentieren.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T13-001",
@@ -1882,7 +1887,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1897,7 +1902,7 @@
         "plugin.json",
         "runner.ts#validateAndMapOutputs:516–523"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -1907,7 +1912,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1918,7 +1923,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/container-build-runtime.ts#L207"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -1955,7 +1960,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1967,7 +1972,7 @@
         "src/provider.js:59–61,212–217",
         "plugin.json"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -2387,7 +2392,7 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2401,7 +2406,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L1124"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpräferenz-/Generationspfad ursächlich korrigieren und unabhängig prüfen.",
       "related_findings": [
         "PCR-PRISM-PREFERENCES-001"
       ],
@@ -2506,10 +2511,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "a328cfc29c20094a66d826237e4b347f89ba33a9",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-worker-control.md",
+          "summary": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-control.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-PRISM-CONTROL-001 — Worker-Ergebnis ohne Envelope-Bindung angenommen\n\n- Schweregrad: mittel; falsches oder falsch korreliertes completed-Ergebnis kann\n  als Antwort auf den aktuellen Auftrag gespeichert werden. Kein Nachweis einer\n  ausnutzbaren Netzwerkinjektion; Transportauthentisierung bleibt eigene Grenze.\n- Evidenzklasse: nachgewiesene Validierungslücke im Code-Trace; Laufzeit-Negativtest\n  gegen Originaldienste noch offen.\n- Belege: `control.ts:198–210` castet JSON auf ein Partial-Shape, prüft ausschließlich\n  state und liest Specialist-Werte/Evidence. Es fehlen Worker-Vertragsvalidierung,\n  Result-Digest und Vergleich mit der zuvor erzeugten Attempt-/Claim-/Worker-ID.\n  `:210–215` persistiert unter der aktuellen Idempotenzkennung. Worker sendet den\n  vollständigen Vertrag (`worker.ts:157–158`); Contract-Helfer existieren, sind\n  am Empfänger aber nicht aufgerufen.\n- Auslöser: authentisierter Worker liefert ein syntaktisch gültiges completed-\n  Objekt zu anderem Attempt oder mit verändertem neutralem Result-Digest.\n- Auswirkung: neutrale Ergebnisintegrität/Korrelation wird vor Commit nicht\n  geprüft. Inhaltliche Folgeprüfungen ersetzen diesen Identitätsvergleich nicht.\n- Ursachenbehebung: eine gemeinsame Eingangsgrenze aus Schema-/Digestprüfung,\n  vollständiger Envelope-Bindung und operation-spezifischem Result-Schema nutzen;\n  erst danach Evidenz importieren und DB-Result committen.\n- Verifikation: echten Control-Handler mit realem Postgres und kontrolliertem\n  authentisierten Transport exercisen; vollständig gültiges Worker-Ergebnis\n  eines anderen echten Attempts zurückspielen und Ablehnung vor Persistenz\n  verlangen. Nicht nur einen Mock-Parser testen. Anschließend gültigen Pfad prüfen.\n\nWeitere Befunde werden nicht dupliziert: fehlender Logs-Store und kumulative\nCPU-Messung gehören [prism.service-worker](prism.service-worker.md).\nDokumentationsstatus vorhanden und unvollständig; Vollabgleich unten.",
@@ -2518,12 +2528,13 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/worker.ts#L157"
       ],
       "unresolved_code_references": [],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
       "related_findings": [
         "PATH-T02-002",
         "PATH-T02-003"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
     },
     {
       "id": "PCR-PRISM-CONTROL-002",
@@ -2531,18 +2542,24 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "84b7048c41f8f12420daa0ac5e7f383eb4fe5959",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-control.md",
+          "summary": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-control.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-CONTROL-002 — Directionevent-ID verletzt UUID-Spalte nach Zustandscommit\n\n- **Hoch; Evidenzklasse: nachgewiesener Defekt.** control.ts:504,552 erstellt `event-${randomBytes(12).toString(\"hex\")}`, Inserts :519–522/:567–578 senden diese ID an `prism.preference_event.id`; migrations/001_prism.sql definiert diese als uuid. PGliteprobe bestätigt `invalid input syntax for type uuid` für exakt diese Form; kein voller HTTPfluss behauptet.\n- **Auslöser/Ablauf:** Select einer vorgeschlagenen Direction oder Feedback (auch liked/disliked) → Eventinsert scheitert immer. Select/Reject haben davor per pool.query Directionzustand bereits committed. API antwortet422; Selectretry findet keine proposed Direction mehr, Preferencebeleg fehlt dauerhaft. Auch /v1/preferences erlaubt schema-konforme nicht-UUID-EventIDs.\n- **Ursache/Behebung:** Wire-eventId und SQLid wurden ohne passenden Persistenzvertrag gleichgesetzt; zusätzlich fehlt atomarer Direction-/Eventcommit. UUID als interne Zeilen-ID getrennt von eindeutigem Wire-eventId oder SQLtyp dem Vertrag angleichen; Directionwechsel/Event in gemeinsamer Transaktion mit Replaykennung.\n- **Regression:** Original-Control + echter temporärer Postgres, Select und vier Feedbackaktionen mit gültiger Session durchführen;200/201 plus konsistente Direction/Eventzeile. Injizierter DBfehler vor Event muss Directionrollback bewirken; verlorenes ACK muss wiederholbar dieselbe Entscheidung liefern.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).\n\nDirekte Probeausgabe: [prism-service-review-probe.txt](../evidence/prism-service-review-probe.txt).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen; keine fertige Umsetzung behauptet.",
+      "next_action": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted."
     },
     {
       "id": "PCR-PRISM-CORPUS-001",
@@ -2604,7 +2621,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2615,7 +2632,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/prism-preference-learning-v1.md#L17"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpräferenz-/Generationspfad ursächlich korrigieren und unabhängig prüfen.",
       "related_findings": [
         "PATH-T02-001"
       ],
@@ -2654,10 +2671,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "a328cfc29c20094a66d826237e4b347f89ba33a9",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-worker-control.md",
+          "summary": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-WORKER-001 — Pflicht-Logspeicher fehlt am Executor-Aufruf\n\n- Schweregrad: hoch; der deterministische Worker-Pfad kann eine ansonsten\n  erfolgreiche Operation nicht als completed zurückgeben, wodurch Control scheitert.\n- Evidenzklasse: nachgewiesener Defekt durch beidseitigen Code-Trace;\n  kein bestandener/ausgeführter vollständiger Dienstlauf.\n- Beleg: `worker.ts:65–68` loggt vor dem Engine-Aufruf; `:152–156` übergibt nur\n  envelope, operation und receiptNamespace. `worker/core/worker/attempt-executor.ts:482–507`\n  hält Logs standardmäßig fest; `:540–570` verlangt storeFullLog und setzt andernfalls\n  WORKER_LOG_STORE_FAILED. `prism/server/control.ts:204–207` lehnt errored ab.\n- Ablauf: authentifizierter gültiger Render/Evaluate-Auftrag → System-Log →\n  fachlich erfolgreiche Operation → fehlender Logspeicher → errored → Control rollback.\n- Auswirkung: gebrochener normaler Worker-Abschluss unabhängig vom fachlichen\n  Ergebnis. Bei anderem vorgelagertem Fehler bleibt dessen Fehler maßgeblich.\n- Ursachenbehebung: vollständiges Log über denselben dauerhaften, digestgeprüften\n  Evidence-Store ablegen und als Worker-Evidenz referenzieren; Budget mitführen.\n  Nicht den Logeintrag entfernen oder Logretention deaktivieren, nur um Erfolg zu erzwingen.\n- Echter Regressionstest: Original-Control + Original-Worker + echte temporäre\n  Postgres-/Artifact-Speicher starten, gültige deterministische Operation ausführen,\n  completed und tatsächlich lesbares Voll-Log mit passendem Digest/Größe prüfen;\n  Logspeicherausfall muss weiter errored liefern.",
@@ -2667,14 +2689,15 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L204"
       ],
       "unresolved_code_references": [],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
       "related_findings": [
         "PCR-OBS-002",
         "PCR-TSTORE-001"
       ],
       "decision_notes": [
         "D01/D09: fehlender bestehender Pflicht-Logspeicher bleibt Vertragsbruch. Workerabschluss und benötigte Evidenceablage sauber an Clawdeck/zulässige lokale Artefakte koppeln; weder Dummy-Store noch stiller Logverlust."
-      ]
+      ],
+      "remaining_work": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
     },
     {
       "id": "PCR-PRISM-WORKER-002",
@@ -3105,10 +3128,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "50b692e16f64b84c5ef072ba72ae7f9153631348",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/redis-transport.md",
+          "summary": "Three genuine native Redis/wire tests, original package tests/build/lint and independent code review pass; external consumer migration remains operational gate."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.redis-transport.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-REDISTRANSPORT-001 — Unterschiedliche logische Ziele teilen einen Stream\n\n**Mittel, nachgewiesener Defekt durch Originalcode und vorhandenes Wirefixture.**\n`src/adapter.ts:143–144` ersetzt jeden Nicht-[a-zA-Z0-9:_-]-Buchstaben durch _. So\nführen die unterschiedlichen gültigen Namen pipeline.completed und\npipeline_completed beide zu <prefix>:pipeline_completed. Originaltest erwartet\nbereits diese Projektion für den ersten Namen. Auswirkung: Ziel-/Eventfeeds\nlassen sich nicht mehr getrennt adressieren, Daten verschiedener freigegebener\nTargets vermischen sich; keine zusätzliche unbewiesene Remoteautorisierung\nbehauptet. Ursache beheben durch reversible kollisionsfreie Kodierung oder\nkanonisch validierten injektiven Namensraum, getrennt nach Providerart wenn\nbeabsichtigt. Regression mit originalem Redis und beiden Namen, unterschiedlichem\nPayload/Key, getrennten Streams und eindeutigem Consumerlookup.",
@@ -3116,7 +3144,7 @@
       "unresolved_code_references": [
         "src/adapter.ts:143–144"
       ],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Übergreifende Integration und dokumentierte Betriebsnachweise ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3126,10 +3154,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "50b692e16f64b84c5ef072ba72ae7f9153631348",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/redis-transport.md",
+          "summary": "Three genuine native Redis/wire tests, original package tests/build/lint and independent code review pass; external consumer migration remains operational gate."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.redis-transport.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-REDISTRANSPORT-002 — RESP-Antwortbuffer wächst vor Längenprüfung unbegrenzt\n\n**Mittel, nachgewiesener Codepfad; kein OOM-Lauf ausgeführt.**\n`src/adapter.ts:53–68,96–109`: jeder Chunk wird mit Buffer.concat angehängt;\nparseReply wartet bei fehlendem CRLF ohne Bytecap. Ein defekter/kompromittierter\nRedispeer kann bis zum Timeout beliebig viele Bytes liefern, unabhängig vom\n1MiB-Bulklimit. Auswirkung: Hostmemory-/Kopierlast, durch parallele Requests\nverstärkbar. Ursache: Budget erst nach parsebarer Headerzeile. Behebung:\nGesamtbuffer/RESPheader vor Concat begrenzen, close/end sofort als Fehler,\nSocket beim Überschreiten schließen. Regression am originalen Socketpfad mit\nfragmentiertem Header, fehlendem CRLF, Oversizedbulk und UTF8-Chunks;\nunterhalb Limit gültige Antwort weiterhin erfolgreich.",
@@ -3137,7 +3170,7 @@
       "unresolved_code_references": [
         "src/adapter.ts:53–68,96–109"
       ],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Übergreifende Integration und dokumentierte Betriebsnachweise ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3147,16 +3180,21 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP09",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "8a7754b08db32923e7e2809fbce35832c3880c11",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/telemetry-release-identities.md",
+          "summary": "Both unchanged original gate programs pass after expected observer identities correction; independent Root rerun."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.telemetry.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-TELEM-001 — Release-Verifikation erwartet entfernten Auditobserver\n\n- **Niedrig, nachgewiesener Defekt:** lokaler bestehender Releasecheck scheitert\n  an überholter Bestandserwartung, verhindert spätere Assertions; kein\n  produktiver Obserververlust daraus abgeleitet.\n- **Beleg:** check-plugin-system-v2-phase12.mts:51 erwartet 6 Registryobserver;\n  reale discoverPackages/buildRegistry liefern 5. Auditprojektion wurde laut\n  aktuellem Code/Entfernung aus Registrierungen und Reliabilitybericht :169\n  absichtlich aus Observerzustellung entfernt.\n- **Auslöser/Auswirkung:** unveränderter node-Aufruf Exit1, `5 !== 6`; Log oben.\n- **Ursachenbehebung:** beabsichtigte genaue Observer-/Surfaceidentitäten gegen\n  tatsächliche Rollenregistrierungen prüfen, obsolete Auditerwartung entfernen.\n  Keine Dummyregistrierung hinzufügen, nur um Anzahl wieder grün zu machen.\n- **Regression:** vorhandenen echten Releasecheck erneut laufen lassen;\n  zusätzlich Audit ohne Observer-Persistenzabhängigkeit und tatsächliche\n  aktive Observerzuordnung belegen. CI hier nicht erneut anfordern.\n\nGemeinsame Journal-/Retentionsbefunde bleiben bei nova.state bzw.\nfoundation.observability. Echte weitere Verifikation nach späterer Umsetzung:\nSIGKILL nach bestätigter externer Sendeaktion vor Deliverycommit, Wiederaufnahme\ngegen Originaltransport, genau dokumentiertes Unknown-/Receiptverfahren und\nkein unbegründetes erneutes Senden. Kein noch ungelesener Implementierungspfad\ninnerhalb dieser Komponente offen.\n\nNachprüfung Registry: check-plugin-system-v2-import-safety.mjs:29 scheitert ebenfalls\nan 5 statt6 Observern; [registry-tests.txt](../evidence/registry-tests.txt). Gleiche\nUrsache PCR-TELEM-001; keine separate Befundzählung.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Übergreifende Integration und dokumentierte Betriebsnachweise ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3263,7 +3301,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3274,7 +3312,7 @@
       "unresolved_code_references": [
         "main.go:125–128,153–161,1647"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3284,7 +3322,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3295,7 +3333,7 @@
       "unresolved_code_references": [
         "main.go:1888–1908"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3305,7 +3343,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3318,7 +3356,7 @@
       "unresolved_code_references": [
         "main.go:521–531"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3328,7 +3366,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3339,7 +3377,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L160"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3794,7 +3832,7 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP12",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3805,7 +3843,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/buster-namespace-fence.yaml#L21"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4292,10 +4330,10 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 66,
-    "implementiert": 8,
-    "in Bearbeitung": 12,
-    "offen": 68
+    "verifiziert": 70,
+    "implementiert": 11,
+    "in Bearbeitung": 15,
+    "offen": 58
   },
   "additional_integration_findings": [
     {
@@ -4318,6 +4356,13 @@
       "implementation_commit": "10440ac1e20e3744cfe78e70182c2dd17bacd801",
       "report": "implementation/review.md",
       "scope": "Actual auditTCP fault produced2external calls plus genericretry before; sameprobe now1call plus core.effect_reconciliation_required. No automatic retry of uncertain effect."
+    },
+    {
+      "id": "INT-OBSERVER-BUILD001",
+      "status": "verifiziert",
+      "implementation_commit": "e3ae22ba92c533fbbadd6ec744f9db32051234a0",
+      "report": "implementation/observer-build.md",
+      "scope": "Clean source compilation and actual three-role packaging independently rerun. Canonical generation now prerequisite; no generated-cache fallback. Full global gate runs separately."
     }
   ]
 }
