@@ -311,7 +311,7 @@ try {
   cancelled.abort();
   await assert.rejects(
     publish('operators', { type: 'test.notice' }, { signal: cancelled.signal }),
-    /ADAPTER_CANCELLED/,
+    /ADAPTER_CANCELLED|EFFECT_RESOURCE_WAIT_CANCELLED/,
   );
   const midflight = new AbortController();
   const slow = publish('slow', { type: 'test.notice', message: 'cancel me' }, {
@@ -378,19 +378,18 @@ try {
     fence: { assertCurrent() {} },
   });
   await assert.rejects(directInvoke(attempt), /HTTP_503/);
-  const directRetried = await directInvoke({
+  await assert.rejects(directInvoke({
     ...attempt,
     attemptId: 'attempt:operator-retry',
     attemptNumber: 2,
-  });
-  assert.equal(directRetried.accepted, true);
-  assert.equal(directSends, 2);
+  }), /OPERATOR_DELIVERY_UNRESOLVED/);
+  assert.equal(directSends, 1, 'an unverified receiver must not be blindly retried');
   await assert.rejects(
     directInvoke(attempt, 'operator:retry-across-attempts', { ...directPayload, message: 'changed' }),
     /DURABLE_RECORD_IDEMPOTENCY_CONFLICT/,
   );
   assert.equal((await directInvoke(attempt, 'a'.repeat(256))).accepted, true);
-  assert.equal(directSends, 3, 'a distinct delivery key must not reuse an unrelated receipt');
+  assert.equal(directSends, 2, 'a distinct delivery key must not reuse an unrelated receipt');
   await direct.shutdown();
 
   let capacitySends = 0;

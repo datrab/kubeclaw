@@ -28,7 +28,13 @@ export async function deliverObserver(options: ObserverRuntimeOptions, now: () =
   const contract: PluginContext = { schemaVersion: 'plugin-context.v2', lease: leaseContract, config: options.configs.get(observerId) ?? {}, input: { delivery }, artifacts: [] };
   let sequence = 0;
   const context = createPluginInvocationContext(contract, lease, { invoke: async (_leaseId, capability, operation, resource, payload) => {
-    sequence += 1; return options.adapters.invoke(capability, attempt, `${delivery.deliveryId}:${sequence}`, { operation, resource, payload }, controller.signal);
+    sequence += 1;
+    const stableKey = `${delivery.deliveryId}:${sequence}`;
+    const provider = options.registry.selectedProviders.get(capability);
+    const supported = capability === 'operator.request' && provider?.package.manifest.id === 'kubeclaw.operator-messaging';
+    const executionAttempt = supported ? { ...attempt, attemptId: `${attempt.attemptId}:execution:${deliveryAttempt}`, attemptNumber: deliveryAttempt } : attempt;
+    return options.adapters.invoke(capability, executionAttempt, supported ? `${stableKey}:execution:${deliveryAttempt}` : stableKey,
+      { operation, resource, payload }, controller.signal, supported ? stableKey : undefined);
   } }, { append: async (_leaseId, type, identity, payload) => { options.events.appendSequenced((eventSequence) => ({
     schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence: eventSequence,
     type, producer: entry.provenance, identity, occurredAt: now().toISOString(), causationId: delivery.deliveryId, payload,

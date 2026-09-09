@@ -1,10 +1,11 @@
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 
 const TARGET_ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const TARGET_KEYS = new Set(['endpoint', 'endpointOrigin', 'endpointSecret', 'tokenSecret', 'maxPayloadBytes', 'format']);
+const TARGET_KEYS = new Set(['endpoint', 'endpointOrigin', 'endpointSecret', 'tokenSecret', 'maxPayloadBytes', 'format', 'receiptEndpoint']);
 
 export interface TargetConfig {
   readonly endpoint?: string;
+  readonly receiptEndpoint?: string;
   readonly endpointOrigin?: string;
   readonly endpointSecret?: string;
   readonly tokenSecret?: string;
@@ -47,6 +48,14 @@ function parsePayloadLimit(value: unknown, targetId: string): number {
   return Number(limit);
 }
 
+function receiptConfig(raw: Record<string, unknown>, targetId: string, origin: string): { readonly receiptEndpoint?: string } {
+  if (raw.receiptEndpoint === undefined) return {};
+  const endpoint = parseUrl(raw.receiptEndpoint, `OPERATOR_CONFIG_INVALID:receiptEndpoint:${targetId}`);
+  validateEndpoint(endpoint, targetId, false);
+  if (endpoint.origin !== origin) throw new Error('OPERATOR_RECEIPT_ORIGIN_DENIED');
+  return { receiptEndpoint: endpoint.href };
+}
+
 function parseTarget(targetId: string, raw: unknown): TargetConfig {
   if (!TARGET_ID.test(targetId) || !isRecord(raw)) throw new Error(`OPERATOR_CONFIG_INVALID:target:${targetId}`);
   exactKeys(raw, TARGET_KEYS, 'OPERATOR_CONFIG_UNKNOWN_TARGET_FIELD');
@@ -61,14 +70,14 @@ function parseTarget(targetId: string, raw: unknown): TargetConfig {
     }
     const endpointOrigin = parseUrl(raw.endpointOrigin, `OPERATOR_CONFIG_INVALID:endpointOrigin:${targetId}`);
     validateEndpoint(endpointOrigin, targetId, true);
-    return Object.freeze({ endpointOrigin: endpointOrigin.origin, endpointSecret: raw.endpointSecret, maxPayloadBytes, format });
+    return Object.freeze({ ...receiptConfig(raw, targetId, endpointOrigin.origin), endpointOrigin: endpointOrigin.origin, endpointSecret: raw.endpointSecret, maxPayloadBytes, format });
   }
   const endpoint = parseUrl(raw.endpoint, `OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);
   validateEndpoint(endpoint, targetId, false);
   if (typeof raw.tokenSecret !== 'string' || !TARGET_ID.test(raw.tokenSecret)) {
     throw new Error(`OPERATOR_CONFIG_INVALID:tokenSecret:${targetId}`);
   }
-  return Object.freeze({ endpoint: endpoint.href, tokenSecret: raw.tokenSecret, maxPayloadBytes, format });
+  return Object.freeze({ ...receiptConfig(raw, targetId, endpoint.origin), endpoint: endpoint.href, tokenSecret: raw.tokenSecret, maxPayloadBytes, format });
 }
 
 export function parseConfig(config: AdapterActivationContext['config']): OperatorConfig {

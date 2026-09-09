@@ -65,7 +65,7 @@ const effectsPath = path.join(temporary, 'effects.jsonl');
 const adapters = new core.AdapterRuntime({
   granted, activated,
   configs: new Map([
-    ['kubeclaw.notification-observer:notifications', { target: 'operators' }],
+    ['kubeclaw.notification-observer:notifications', { target: 'operators', pipelineLabel: 'p'.repeat(256), modelLabel: 'm'.repeat(256), stageLabels: { ['s'.repeat(512)]: 'l'.repeat(256) } }],
     ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
     ['kubeclaw.operator-messaging:operator', {
       deliveryRoot: path.join(temporary, 'notification-deliveries'),
@@ -86,13 +86,18 @@ const producer = snapshot.observers.get('kubeclaw.notification-observer:notifica
 events.append({
   schemaVersion: 'lifecycle-event.v2', eventId: 'event:failed', sequence: 1, type: 'run.failed',
   identity: { runId: 'run:1' }, occurredAt: '2026-07-26T00:00:00Z', causationId: null,
-  payload: { summary: 'Tests failed.' },
+  payload: { summary: 'Tests failed.\nOriginal diagnostic\twith details.', reasonCode: 'r'.repeat(257) },
 });
 events.append({
   schemaVersion: 'lifecycle-event.v2', eventId: 'event:artifact', sequence: 2, type: 'artifact.created',
   identity: { runId: 'run:1', artifactId: 'artifact:preview' },
   occurredAt: '2026-07-26T00:00:01Z', causationId: 'event:failed',
   payload: { artifact: { artifactId: 'artifact:preview', digest: 'sha256:abc', mediaType: 'text/html', secret } },
+});
+events.append({
+  schemaVersion: 'lifecycle-event.v2', eventId: 'event:max-labels', sequence: 3, type: 'stage.failed',
+  identity: { runId: 'run:1', stageId: 's'.repeat(512) }, occurredAt: '2026-07-26T00:00:02Z', causationId: null,
+  payload: { summary: 'x'.repeat(8193), reasonCode: 'r'.repeat(256), agentRole: 'a'.repeat(256) },
 });
 void producer;
 const checkpoints = new core.FileJournal(path.join(temporary, 'checkpoints.jsonl'));
@@ -102,21 +107,28 @@ try {
     registry: granted, activated, adapters, events, checkpoints,
     deliveries: new core.FileJournal(path.join(temporary, 'deliveries.jsonl')),
     configs: new Map([
-      ['kubeclaw.notification-observer:notifications', { target: 'operators' }],
+      ['kubeclaw.notification-observer:notifications', { target: 'operators', pipelineLabel: 'p'.repeat(256), modelLabel: 'm'.repeat(256), stageLabels: { ['s'.repeat(512)]: 'l'.repeat(256) } }],
       ['kubeclaw.notification-observer:preview-delivery', { target: 'operators' }],
       ]),
     wait: async () => {},
   });
-  assert.deepEqual(await observers.drain(), { delivered: 2, failures: [] });
+  assert.deepEqual(await observers.drain(), { delivered: 3, failures: [] });
   assert.deepEqual(await observers.drain(), { delivered: 0, failures: [] });
-  assert.equal(messages.length, 2);
+  assert.equal(messages.length, 3);
   assert.equal(messages[0].type, 'run.failed');
   assert.equal(messages[0].severity, 'error');
-  assert.equal(messages[1].type, 'preview.artifact.available');
-  assert.equal(messages[1].artifact.secret, undefined);
-  assert.equal(checkpoints.records().length, 2);
+  assert.equal(messages[0].summary, 'Tests failed.\nOriginal diagnostic\twith details.');
+  assert.equal(messages[0].reasonCode, `${'r'.repeat(255)}…`);
+  assert.equal(messages[1].type, 'stage.failed');
+  assert.equal(messages[1].reasonCode.length, 256);
+  assert.equal(messages[1].title.length, 512);
+  assert.equal(messages[1].summary.length, 8192);
+  assert(messages[1].summary.endsWith('…'));
+  assert.equal(messages[2].type, 'preview.artifact.available');
+  assert.equal(messages[2].artifact.secret, undefined);
+  assert.equal(checkpoints.records().length, 3);
   const audit = core.readPipelineAudit(temporary, 'run:1');
-  assert.deepEqual(audit.events.map(event => event.eventId), ['event:failed', 'event:artifact']);
+  assert.deepEqual(audit.events.map(event => event.eventId), ['event:failed', 'event:artifact', 'event:max-labels']);
   assert.doesNotMatch(JSON.stringify(audit), new RegExp(secret));
   assert.equal(fs.existsSync(path.join(temporary, 'artifacts')), false);
   assert.doesNotMatch(fs.readFileSync(effectsPath, 'utf8'), new RegExp(secret));

@@ -9,7 +9,7 @@ import type { AdapterRuntimeOptions } from './adapters.ts';
 import { adapterOwner, requestDigest, shutdownLateAdapter, withAdapterStartupTimeout } from './adapter-support.ts';
 
 interface StartupOptions {
-  readonly runtime: AdapterRuntimeOptions; readonly invocationContext: AsyncLocalStorage<Readonly<{ signal: AbortSignal; attempt: AttemptIdentity }>>;
+  readonly runtime: AdapterRuntimeOptions; readonly invocationContext: AsyncLocalStorage<Readonly<{ signal: AbortSignal; attempt: AttemptIdentity; executionKey?: string }>>;
   readonly stopping: () => boolean; readonly pendingControllers: Map<string, AbortController>; readonly pendingInstances: Map<string, AdapterInstance>;
   readonly shutdown: (instance: AdapterInstance, signal: AbortSignal) => Promise<void>;
 }
@@ -76,7 +76,7 @@ export class AdapterStarter {
     const dependency = this.#options.runtime.granted.selectedProviders.get(capability); if (!dependency) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
     const dependencyId = `${dependency.package.manifest.id}:${dependency.registration.id}`; const adapter = await this.#start(dependencyId);
     const attempt = parent?.attempt ?? { runId: `adapter:${adapterId}`, stageId: 'adapter-activation', attemptId: `adapter:${adapterId}`, attemptNumber: 1 };
-    const invocation = { idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}`, attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
+    const invocation = { idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}${parent?.executionKey ? `:parent:${requestDigest({ operation: "owner", resource: { type: "effect.key", canonicalId: parent.executionKey }, payload: { attempt: parent.attempt } })}` : ""}`, attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
     const result = confidential || isConfidentialCapability(capability)
       ? await this.#options.runtime.effects.invokeConfidential(adapter, adapterOwner(this.#options.runtime, dependencyId), invocation, signal)
       : await this.#durable(adapter, dependencyId, invocation, signal);
@@ -96,7 +96,7 @@ export class AdapterStarter {
 
   #wrap(raw: AdapterInstance, lifecycle: AbortController): AdapterInstance {
     return { ready: () => raw.ready(), invoke: (invocation) => { const signal = AbortSignal.any([invocation.signal, lifecycle.signal]);
-      return this.#options.invocationContext.run({ signal, attempt: invocation.request.attempt }, () => raw.invoke({ ...invocation, signal })); },
+      return this.#options.invocationContext.run({ signal, attempt: invocation.request.attempt, ...(invocation.request.deliveryId === undefined ? {} : { executionKey: invocation.request.idempotencyKey }) }, () => raw.invoke({ ...invocation, signal })); },
       ...(raw.receipt ? { receipt: (request) => raw.receipt!(request) } : {}), shutdown: (signal) => raw.shutdown(signal) };
   }
 

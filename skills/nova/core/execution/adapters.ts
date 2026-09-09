@@ -16,7 +16,7 @@ export interface AdapterRuntimeOptions {
 }
 
 export class AdapterRuntime {
-  readonly #options: AdapterRuntimeOptions; readonly #invocations = new AsyncLocalStorage<Readonly<{ signal: AbortSignal; attempt: AttemptIdentity }>>();
+  readonly #options: AdapterRuntimeOptions; readonly #invocations = new AsyncLocalStorage<Readonly<{ signal: AbortSignal; attempt: AttemptIdentity; executionKey?: string }>>();
   #instances: ReadonlyMap<string, AdapterInstance> = new FrozenMap([]); #controllers: ReadonlyMap<string, AbortController> = new FrozenMap([]);
   readonly #pendingControllers = new Map<string, AbortController>(); readonly #pendingInstances = new Map<string, AdapterInstance>();
   readonly #teardowns = new WeakMap<AdapterInstance, Promise<void>>(); #startPromise: Promise<void> | undefined; #shutdownPromise: Promise<void> | undefined;
@@ -46,12 +46,12 @@ export class AdapterRuntime {
     } catch (error) { this.#started = false; throw error; }
   }
 
-  async invoke(capability: string, attempt: AttemptIdentity, idempotencyKey: string, request: CapabilityInvocation, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+  async invoke(capability: string, attempt: AttemptIdentity, idempotencyKey: string, request: CapabilityInvocation, signal: AbortSignal, deliveryId?: string): Promise<Readonly<Record<string, unknown>>> {
     if (this.#stopping) throw new Error('ADAPTER_RUNTIME_STOPPING');
     const provider = this.#options.granted.selectedProviders.get(capability); if (!provider) throw new Error(`CAPABILITY_PROVIDER_MISSING:${capability}`);
     const adapterId = `${provider.package.manifest.id}:${provider.registration.id}`; const adapter = this.#instances.get(adapterId);
     if (!adapter) throw new Error(`ADAPTER_NOT_READY:${adapterId}`);
-    const invocation = { idempotencyKey, attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
+    const invocation = { idempotencyKey, ...(deliveryId === undefined ? {} : { deliveryId }), attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
     if (isConfidentialCapability(capability)) return this.#options.effects.invokeConfidential(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
     const receipt = await this.#options.effects.invoke(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
     if (receipt.status !== 'completed') {

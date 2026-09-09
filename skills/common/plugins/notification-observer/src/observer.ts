@@ -52,7 +52,13 @@ function target(context: PluginInvocationContext): string {
 }
 function bounded(value: unknown, maximum = 8_192): string | undefined {
   if (typeof value !== 'string' || value.length === 0) return undefined;
-  return value.length <= maximum ? value : `${value.slice(0, maximum)}…`;
+  const normalized = value.replace(/[\u0000-\u001f\u007f]/gu, ' ');
+  return normalized.length <= maximum ? normalized : `${normalized.slice(0, maximum - 1)}…`;
+}
+function messageSummary(value: unknown, maximum: number): string | undefined {
+  if (typeof value !== 'string' || value.length === 0) return undefined;
+  const text = value.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/gu, ' ');
+  return text.length <= maximum ? text : `${text.slice(0, maximum - 1)}…`;
 }
 function firstNonNullish(...values: readonly unknown[]): unknown {
   return values.find((value) => value !== undefined && value !== null);
@@ -118,7 +124,7 @@ export function lifecycleNotification(
   const runId = delivery.event.identity.runId;
   const stageId = delivery.event.identity.stageId ?? null;
   const stageLabel = stagePresentation(stageId, bounded(payload.agentRole, 256), options.stageLabels);
-  const title = notificationTitle(type, stageLabel);
+  const title = bounded(notificationTitle(type, stageLabel), 512)!;
   const fields = notificationFields(runId, stageId, options.modelLabel);
   return Object.freeze({
     type,
@@ -127,7 +133,7 @@ export function lifecycleNotification(
     stageId,
     severity: SEVERITY[type] ?? 'info',
     title,
-    summary: bounded(payload.summary ?? payload.message, maximum) ?? title,
+    summary: messageSummary(payload.summary ?? payload.message, maximum) ?? title,
     reasonCode: reasonCode(payload),
     fields: Object.freeze(fields.map((field) => Object.freeze(field))),
     footer: `${bounded(options.pipelineLabel, 256) ?? 'KubeClaw Pipeline'} · ${runId}`,

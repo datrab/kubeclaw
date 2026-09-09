@@ -2,6 +2,7 @@ import type { AttemptIdentity, EffectReceipt, EffectRequest, ResourceLock } from
 
 export interface EffectInvocation {
   readonly idempotencyKey: string;
+  readonly deliveryId?: string;
   readonly attempt: AttemptIdentity;
   readonly capability: string;
   readonly operation: string;

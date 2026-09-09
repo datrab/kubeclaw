@@ -7,6 +7,7 @@ export const canonical = canonicalJson;
 export function stableEffectId(invocation: EffectInvocation): string {
   const digest = crypto.createHash('sha256').update(canonical({
     idempotencyKey: invocation.idempotencyKey,
+    ...(invocation.deliveryId === undefined ? {} : { deliveryId: invocation.deliveryId }),
     attempt: invocation.attempt,
     capability: invocation.capability,
     operation: invocation.operation,
@@ -17,7 +18,7 @@ export function stableEffectId(invocation: EffectInvocation): string {
 
 export function assertMatchingRequest(prior: EffectRequest | undefined, invocation: EffectInvocation): void {
   if (!prior) return;
-  if (prior.effectId !== stableEffectId(invocation) || canonical(prior.payload) !== canonical(invocation.payload)) {
+  if (prior.deliveryId !== invocation.deliveryId || prior.effectId !== stableEffectId(invocation) || canonical(prior.payload) !== canonical(invocation.payload)) {
     throw new Error(`EFFECT_IDEMPOTENCY_CONFLICT:${invocation.idempotencyKey}`);
   }
 }

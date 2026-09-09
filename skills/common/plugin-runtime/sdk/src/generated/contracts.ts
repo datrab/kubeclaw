@@ -444,6 +444,7 @@ export interface EffectRequest {
   schemaVersion: 'effect-request.v2';
   effectId: OpaqueId;
   idempotencyKey: OpaqueId;
+  deliveryId?: OpaqueId;
   attempt: AttemptIdentity;
   capability: NamespacedId;
   operation: LocalId;

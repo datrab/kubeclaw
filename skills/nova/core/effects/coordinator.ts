@@ -48,6 +48,7 @@ export class EffectCoordinator {
   #confidentialRequest(invocation: EffectInvocation): EffectRequest {
     return {
       schemaVersion: 'effect-request.v2', effectId: `effect:${crypto.randomUUID()}`, idempotencyKey: invocation.idempotencyKey,
+      ...(invocation.deliveryId === undefined ? {} : { deliveryId: invocation.deliveryId }),
       attempt: invocation.attempt, capability: invocation.capability, operation: invocation.operation, resource: invocation.resource,
       payload: invocation.payload, requestedAt: this.#now().toISOString(),
     };

@@ -1,0 +1,66 @@
+import crypto from 'node:crypto';
+import type { EffectRequest } from '@kubeclaw/plugin-sdk';
+import type { FileDurableRecordStore, DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
+
+type Payload = Readonly<Record<string, unknown>>;
+export interface Reservation { readonly stream: string; readonly key: string; readonly digest: string; }
+function hash(value: string): string { return crypto.createHash('sha256').update(value).digest('hex'); }
+function key(deliveryId: string, kind: string): string { return `delivery:${kind}:${hash(deliveryId)}`; }
+export function deliveryIdentity(request: EffectRequest): string { return request.deliveryId ?? request.idempotencyKey; }
+function completed(records: readonly DurableRecord<Payload>[], deliveryId: string): Payload | undefined {
+  return records.find(entry => entry.idempotencyKey.endsWith(`:${hash(deliveryId)}`)
+    && entry.payload.schemaVersion === 'notification-delivery-receipt.v1')?.payload.receipt as Payload | undefined;
+}
+
+export async function deliveryReceipt(records: FileDurableRecordStore, request: EffectRequest): Promise<Payload | undefined> {
+  return completed(await records.read<Payload>(`notifications/${request.resource.canonicalId}`), deliveryIdentity(request));
+}
+
+export async function reserveDelivery(records: FileDurableRecordStore, request: EffectRequest, payload: Payload, receiverSupported: boolean): Promise<Reservation | Payload> {
+  const deliveryId = deliveryIdentity(request), stream = `notifications/${request.resource.canonicalId}`;
+  await records.append(stream, key(deliveryId, 'request'), { schemaVersion: 'notification-delivery-request.v1',
+    idempotencyKey: deliveryId, target: request.resource.canonicalId, payload });
+  const prior = await records.read<Payload>(stream), receipt = completed(prior, deliveryId);
+  if (receipt) return receipt;
+  const uncertain = prior.some(entry => entry.idempotencyKey.endsWith(`:${hash(deliveryId)}`)
+    && ['notification-delivery-reservation.v1', 'notification-delivery-failure.v1'].includes(String(entry.payload.schemaVersion))
+    && entry.payload.outcome !== 'not_sent');
+  if (uncertain && !receiverSupported) throw new Error('OPERATOR_DELIVERY_UNRESOLVED:receiver_receipt_required');
+  const terminalKey = key(deliveryId, `attempt-${request.attempt.attemptNumber}-${hash(request.attempt.attemptId).slice(0, 16)}`);
+  const existing = prior.find(entry => entry.idempotencyKey === terminalKey);
+  const reserved = existing ?? (await records.append<Payload>(stream, terminalKey, {
+    schemaVersion: 'notification-delivery-reservation.v1', attempt: request.attempt, reserved: ' '.repeat(8192),
+  })).record;
+  if (reserved.payload.schemaVersion === 'notification-delivery-failure.v1') throw new Error(String(reserved.payload.error));
+  return { stream, key: terminalKey, digest: reserved.payloadDigest };
+}
+
+export async function completeDelivery(records: FileDurableRecordStore, request: EffectRequest, reservation: Reservation, receipt: Payload): Promise<Payload> {
+  const payload = { schemaVersion: 'notification-delivery-receipt.v1', attempt: request.attempt, receipt };
+  try { await records.transition(reservation.stream, reservation.key, reservation.digest, payload); }
+  catch (error) {
+    if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_TRANSITION_CONFLICT') throw error;
+    const current = await records.read<Payload>(reservation.stream), accepted = completed(current, deliveryIdentity(request));
+    if (accepted) return accepted;
+    const terminal = current.find(entry => entry.idempotencyKey === reservation.key);
+    if (!terminal) throw error;
+    await records.transition(reservation.stream, reservation.key, terminal.payloadDigest, payload);
+  }
+  return receipt;
+}
+
+export async function failDelivery(records: FileDurableRecordStore, request: EffectRequest, reservation: Reservation, sent: boolean, error: unknown): Promise<Payload> {
+  const reason = error instanceof Error ? error.message : String(error);
+  try {
+    await records.transition(reservation.stream, reservation.key, reservation.digest, {
+      schemaVersion: 'notification-delivery-failure.v1', idempotencyKey: deliveryIdentity(request), target: request.resource.canonicalId,
+      attempt: request.attempt, outcome: sent ? 'possible' : 'not_sent', reasonId: hash(reason).slice(0, 16), error: reason.slice(0, 2048),
+    });
+  } catch (transitionError) {
+    if (transitionError instanceof Error && transitionError.message === 'DURABLE_RECORD_TRANSITION_CONFLICT') {
+      const accepted = await deliveryReceipt(records, request); if (accepted) return accepted;
+    }
+    throw transitionError;
+  }
+  throw error;
+}

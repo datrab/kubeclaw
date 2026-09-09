@@ -575,6 +575,7 @@
         "schemaVersion": { "const": "effect-request.v2" },
         "effectId": { "$ref": "#/$defs/opaqueId" },
         "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "deliveryId": { "$ref": "#/$defs/opaqueId" },
         "attempt": { "$ref": "#/$defs/attemptIdentity" },
         "capability": { "$ref": "#/$defs/namespacedId" },
         "operation": { "$ref": "#/$defs/localId" },

@@ -67,6 +67,7 @@ class DurableInvocation {
   #request(prior: EffectRequest | undefined): EffectRequest {
     return prior ?? {
       schemaVersion: 'effect-request.v2', effectId: stableEffectId(this.#invocation), idempotencyKey: this.#invocation.idempotencyKey,
+      ...(this.#invocation.deliveryId === undefined ? {} : { deliveryId: this.#invocation.deliveryId }),
       attempt: this.#invocation.attempt, capability: this.#invocation.capability, operation: this.#invocation.operation,
       resource: this.#invocation.resource, payload: this.#invocation.payload, requestedAt: this.#dependencies.now().toISOString(),
     };

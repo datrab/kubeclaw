@@ -32,6 +32,7 @@
             }
           ],
           "properties": {
+            "receiptEndpoint": { "type": "string", "format": "uri", "pattern": "^https?://" },
             "endpoint": {
               "type": "string",
               "format": "uri",

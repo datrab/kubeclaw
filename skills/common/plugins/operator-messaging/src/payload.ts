@@ -12,10 +12,11 @@ function exactKeys(value: Record<string, unknown>, allowed: ReadonlySet<string>,
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${error}:${key}`);
 }
 
-function boundedString(value: unknown, label: string, maximum: number, nullable = false): string | null | undefined {
+function boundedString(value: unknown, label: string, maximum: number, nullable = false, multiline = false): string | null | undefined {
   if (value === undefined) return undefined;
   if (value === null && nullable) return null;
-  if (typeof value !== 'string' || value.length < 1 || value.length > maximum || /[\u0000-\u001f\u007f]/.test(value)) {
+  const forbidden = multiline ? /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/ : /[\u0000-\u001f\u007f]/;
+  if (typeof value !== 'string' || value.length < 1 || value.length > maximum || forbidden.test(value)) {
     throw new Error(`OPERATOR_PAYLOAD_INVALID:${label}`);
   }
   return value;
@@ -54,7 +55,7 @@ function validateFields(value: unknown): void {
     if (!isRecord(field)) throw new Error(`OPERATOR_PAYLOAD_INVALID:fields[${index}]`);
     exactKeys(field, new Set(['name', 'value', 'inline']), 'OPERATOR_PAYLOAD_UNKNOWN_FIELD_ITEM');
     boundedString(field.name, `fields[${index}].name`, 256);
-    boundedString(field.value, `fields[${index}].value`, 1_024);
+    boundedString(field.value, `fields[${index}].value`, 1_024, false, true);
     if (field.inline !== undefined && typeof field.inline !== 'boolean') {
       throw new Error(`OPERATOR_PAYLOAD_INVALID:fields[${index}].inline`);
     }
@@ -81,7 +82,7 @@ function validateKnownFields(raw: Record<string, unknown>): void {
     ['artifactId', 512, true], ['approvalId', 512], ['summary', 16_384], ['footer', 2_048],
     ['severity', 32], ['title', 512], ['reasonCode', 256, true], ['signalType', 256],
   ];
-  for (const [key, limit, nullable] of strings) boundedString(raw[key], key, limit, nullable);
+  for (const [key, limit, nullable] of strings) boundedString(raw[key], key, limit, nullable, ['message', 'summary', 'footer'].includes(key));
   validateDate(raw.occurredAt, 'occurredAt');
   validateDate(raw.expiresAt, 'expiresAt');
   validateFields(raw.fields);

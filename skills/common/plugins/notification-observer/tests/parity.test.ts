@@ -51,7 +51,7 @@ assert.equal(lifecycleNotification({
     identity: { runId: 'run:1' },
     payload: { summary: long },
   },
-}, 256).summary, `${'x'.repeat(256)}…`);
+}, 256).summary, `${'x'.repeat(255)}…`);
 
 let calls = 0;
 await observe({
