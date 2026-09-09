@@ -1,9 +1,8 @@
-import { dispatchOperation, type RemoteInterruption } from './dispatch-operation.ts';
-import { checkGateSignal } from './deadline.ts';
+import crypto from 'node:crypto';
+import { dispatchOperation } from './dispatch-operation.ts';
 import { remoteBytes, retryableStatus } from './http-response.ts';
 import { RemotePlanTransportError } from './transport-error.ts';
 export { RemotePlanTransportError } from './transport-error.ts';
-import crypto from 'node:crypto';
 import { isSpiffeProxyLoopback } from './secure-endpoint.ts';
 import type {
   RemotePlanJobV1,
@@ -16,19 +15,10 @@ import {
   remotePlanJobDigest,
   remotePlanJobId,
   repositoryArchive,
-  repositoryArchiveBytes,
   validatePipelineTestGateContract,
 } from '@kubeclaw/pipeline-test-gate-contract';
-import {
-  FileDurableBlobStore,
-  FileDurableRecordStore,
-  type DurableRecordLimits,
-} from '@kubeclaw/plugin-foundation/observability/durable-records';
-
-interface StoredRemotePlanJob {
-  readonly schemaVersion: 'nova-remote-plan-dispatch.v1';
-  readonly job: RemotePlanJobV1;
-}
+import { FileNovaRemotePlanStore } from './remote-dispatch-store.ts';
+export { FileNovaRemotePlanStore } from './remote-dispatch-store.ts';
 
 export interface RemotePlanJobInput {
   readonly idempotencyKey: string;
@@ -61,78 +51,6 @@ export function createRemotePlanJob(input: RemotePlanJobInput): RemotePlanJobV1 
   const job: RemotePlanJobV1 = { ...unsigned, requestDigest: remotePlanJobDigest(unsigned) };
   validatePipelineTestGateContract('remotePlanJob', job);
   return Object.freeze(job);
-}
-
-export class FileNovaRemotePlanStore {
-  readonly #records: FileDurableRecordStore;
-  readonly #blobs: FileDurableBlobStore;
-  readonly #maximumArchiveBytes: number;
-
-  constructor(root: string, options: {
-    readonly recordLimits: DurableRecordLimits;
-    readonly maximumArchiveBytes: number;
-    readonly maximumArchiveStoreBytes: number;
-  }) {
-    if (!Number.isSafeInteger(options.maximumArchiveBytes) || options.maximumArchiveBytes < 1) {
-      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');
-    }
-    this.#records = new FileDurableRecordStore(root, options.recordLimits);
-    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);
-    this.#maximumArchiveBytes = options.maximumArchiveBytes;
-  }
-
-  async persistBeforeDispatch(job: RemotePlanJobV1, signal?: AbortSignal): Promise<RemotePlanJobV1> {
-    checkGateSignal(signal);
-    const maximumEncodedBytes = Math.ceil(this.#maximumArchiveBytes / 3) * 4;
-    if (
-      job.repositoryArchive.sizeBytes > this.#maximumArchiveBytes
-      || job.repositoryArchive.data.length > maximumEncodedBytes
-    ) throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_SIZE_EXCEEDED');
-    validatePipelineTestGateContract('remotePlanJob', job);
-    const archive = repositoryArchiveBytes(job.repositoryArchive);
-    if (archive.byteLength > this.#maximumArchiveBytes) throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_SIZE_EXCEEDED');
-    const payload: StoredRemotePlanJob = {
-      schemaVersion: 'nova-remote-plan-dispatch.v1',
-      job: structuredClone(job),
-    };
-    await this.#records.append('remote-plan-jobs', job.idempotencyKey, payload);
-    checkGateSignal(signal);
-    const stored = await this.#blobs.put(archive);
-    if (stored.digest !== job.repositoryArchive.contentDigest || stored.sizeBytes !== archive.byteLength) {
-      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_STORE_MISMATCH');
-    }
-    checkGateSignal(signal);
-    return this.load(job.jobId, signal);
-  }
-
-  async recordInterruption(outcome: RemoteInterruption): Promise<void> {
-    await this.#records.append('remote-plan-interruptions', `interruption:${crypto.randomUUID()}`, outcome);
-  }
-  async interruptions(): Promise<readonly RemoteInterruption[]> {
-    return (await this.#records.read<RemoteInterruption>('remote-plan-interruptions')).map(({ payload }) => payload);
-  }
-
-  async load(jobId: string, signal?: AbortSignal): Promise<RemotePlanJobV1> {
-    checkGateSignal(signal);
-    const records = await this.#records.read<StoredRemotePlanJob>('remote-plan-jobs');
-    const payload = records.find((record) => record.payload.job.jobId === jobId)?.payload;
-    if (!payload || payload.schemaVersion !== 'nova-remote-plan-dispatch.v1') {
-      throw new Error('NOVA_REMOTE_PLAN_JOB_NOT_FOUND');
-    }
-    const recordedArchive = repositoryArchiveBytes(payload.job.repositoryArchive);
-    checkGateSignal(signal);
-    await this.#blobs.put(recordedArchive);
-    checkGateSignal(signal);
-    const archive = await this.#blobs.get(payload.job.repositoryArchive.contentDigest);
-    if (archive.byteLength > this.#maximumArchiveBytes) throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_SIZE_EXCEEDED');
-    const job: RemotePlanJobV1 = {
-      ...structuredClone(payload.job),
-      repositoryArchive: { ...payload.job.repositoryArchive, data: archive.toString('base64') },
-    };
-    validatePipelineTestGateContract('remotePlanJob', job);
-    checkGateSignal(signal);
-    return Object.freeze(job);
-  }
 }
 
 export interface RemotePlanTransport {
