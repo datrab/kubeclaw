@@ -1,0 +1,14 @@
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (545.945959ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (4.320673ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (2270.914913ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1268.914725ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1486.568859ms)
+✔ Studio preserves every Control Set-Cookie header (2.273953ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5227.796624

@@ -6,6 +6,22 @@ images:
 imagePullSecrets:
   - name: ghcr-secret
 control:
+  # Explicit human decision authority. No operator, issuer or endpoint is inferred.
+  productDecisions:
+    enabled: false
+    issuer: ""
+    operators: []
+    origin: ""
+    authorityRevision: ""
+    signingSecretName: ""
+    signingSecretKey: private-key.pem
+    controllerUrl: ""
+    controllerNamespace: ""
+    controllerRelease: ""
+    controllerCaSecretName: ""
+    controllerCaSecretKey: ca.crt
+    tokenAudience: ""
+    tokenExpirationSeconds: 600
   # Existing authenticated Prism subject; empty disables pipeline personal learning.
   pipelinePreferenceSubject: ""
   replicas: 1

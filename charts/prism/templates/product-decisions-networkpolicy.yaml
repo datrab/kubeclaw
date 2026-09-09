@@ -1,0 +1,19 @@
+{{- if .Values.control.productDecisions.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: { name: prism-product-decisions }
+spec:
+  podSelector: { matchLabels: { app: prism-control } }
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.control.productDecisions.controllerNamespace | quote }}
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: kubeclaw
+              app.kubernetes.io/instance: {{ .Values.control.productDecisions.controllerRelease | quote }}
+              app.kubernetes.io/component: buster-namespace-controller
+      ports: [{ protocol: TCP, port: 8443 }]
+{{- end }}

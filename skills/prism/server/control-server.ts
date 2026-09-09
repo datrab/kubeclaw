@@ -1,8 +1,9 @@
+import { productAuthorityHandler } from './product-decisions.ts';
 import { handleAgentJobs } from './agent-job-routes.ts';
 import { agentJob } from '../control/agent-jobs.ts';
 import { agentReceipt, startAgentRevision, admitDesignAgent } from '../control/agent-admission.ts';
 import { startDesignRound, assertArchitectureTransition, approvedRoundBaseline } from "../control/design-generations.ts";
-import { loadControlServerConfig } from "./control-config.ts";
+import { type loadControlServerConfig, loadControlCompositionConfig } from "./control-config.ts";
 import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
 import { preferenceEvents, setPersonalPreferences, requirePreferenceGeneration } from "../control/preference-snapshot.ts";
 import { decideDirection, directionIdempotencyKey } from "../control/direction-decisions.ts";
@@ -106,8 +107,8 @@ class ControlService {
   private readonly artifacts: ContentAddressedArtifactStore;
   private readonly pool: Database;
 
-  constructor(pool: Database, environment?: NodeJS.ProcessEnv) {
-    this.config = loadControlServerConfig(environment);
+  constructor(pool: Database, config: ReturnType<typeof loadControlServerConfig>) {
+    this.config = config;
     this.pool = pool;
     this.repository = new RevisionRepository(pool);
     this.artifacts = new ContentAddressedArtifactStore(this.config.artifactRoot);
@@ -1018,7 +1019,9 @@ private async runWorker(
 }
 
 /** Compose the original HTTP service; the caller owns database/listener lifetime. */
-export function createControlServer(pool: Database, environment?: NodeJS.ProcessEnv) {
-  const service = new ControlService(pool, environment);
-  return createServer((request, response) => { void service.handle(request, response); });
+export async function createControlServer(pool: Database, environment?: NodeJS.ProcessEnv) {
+  const {service: config, product: productConfig} = await loadControlCompositionConfig(environment);
+  const service = new ControlService(pool, config);
+  return createServer(productAuthorityHandler((request, response) => service.handle(request, response),
+    {db: pool, config: productConfig, sessionSecret: config.sessionSecret}));
 }
