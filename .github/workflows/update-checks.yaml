@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
           node-version: 24
@@ -20,7 +22,7 @@ jobs:
       - name: Check generated versions and release receipt validation
         run: |
           node scripts/versions.mjs --check
-          node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs
+          node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/release-configuration.test.mjs
           if test -f releases/runtime-images.json; then node scripts/updates/materialize-release.mjs --check; fi
           if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
       - name: Verify selected digests against successful source workflow receipts
