@@ -12,6 +12,9 @@ import {migrate} from '../storage/index.ts';
 import {createControlServer} from '../server/control-server.ts';
 import {agentPrompt} from '../server/agent-prompt.mjs';
 import register from '../openclaw-plugin/index.mjs';
+import {WorkerAttemptExecutor} from '@kubeclaw/worker-core';
+import {AgentProcess} from '../server/agent-process.ts';
+import {WorkerArtifactClient} from '../server/worker-artifacts.ts';
 
 const identity = 'operator@example.invalid';
 const subject = `user-${createHash('sha256').update(identity).digest('hex').slice(0,24)}`;
@@ -35,8 +38,8 @@ async function setup() {
   const relay=createServer(async(request,response)=>{
     try {
       const chunks:Buffer[]=[];for await(const chunk of request)chunks.push(Buffer.from(chunk));
-      const result=await fetch(new URL(request.url!,url),{method:request.method,headers:{'content-type':'application/json',...headers},body:Buffer.concat(chunks)});
-      response.writeHead(result.status,{'content-type':'application/json'});response.end(await result.text());
+      const result=await fetch(new URL(request.url!,url),{method:request.method,headers:{'content-type':String(request.headers['content-type']??'application/json'),...headers},...(['GET','HEAD'].includes(request.method??'GET')?{}:{body:Buffer.concat(chunks)})});
+      response.writeHead(result.status,{'content-type':result.headers.get('content-type')??'application/octet-stream'});response.end(Buffer.from(await result.arrayBuffer()));
     }catch(error){response.writeHead(502);response.end(String(error));}
   });
   const relayUrl=await listen(relay);
@@ -60,7 +63,7 @@ async function setup() {
     return ['one','two','three'].map((key,index)=>{const document=structuredClone(fixture);document.meta.projectId=projectId;document.meta.title=`${label}-${key}`;document.theme.colors.action=['#123456','#654321','#abcdef'][index]!;document.theme.colors.background=['#111111','#222222','#333333'][index]!;document.theme.space.medium=20+index*5;return {key,title:document.meta.title,summary:label,document};});
   }
   async function deliver(job:any,label:string) {return tools.get('prism_create_design_set')!.execute('actual-tool-invocation',{jobId:job.id,fence:job.fence,generationId:job.id,projectId:job.request.projectId,designs:designs(job.request.projectId,label)},{config:{controlUrl:relayUrl}});}
-  return {api,session,dispatch,claim,deliver,db:()=>db,
+  return {api,session,dispatch,claim,deliver,relayUrl,db:()=>db,
     restart:async()=>{await close(server);await db.close();db=new PGlite(join(root,'db'),{extensions:{vector}});await db.waitReady;server=createControlServer(db,environment);url=await listen(server);},
     close:async()=>{await close(relay);await close(server);await db.close();await rm(root,{recursive:true,force:true});}};
 }
@@ -93,7 +96,7 @@ test('PATH-T02-001 original HTTP event survives database/service restart and a f
   }finally{await context.close();}
 });
 
-test('PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim',async()=>{
+test('PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim',async(t)=>{
   const context=await setup();try {
     await context.dispatch('overlap',1);const first=await context.claim();assert.ok(first.fence);
     const second=await context.dispatch('overlap',2);
@@ -103,5 +106,24 @@ test('PATH-T02-002 diagnostic: original stale tool callback makes no successor m
     const current=await context.db().query<{current_round_id:string}>("SELECT current_round_id FROM prism.design_request WHERE status='active'");assert.equal(current.rows[0]!.current_round_id,second.preferences.generationId);
     assert.equal(await context.claim(),null,'A2 acceptance is NOT proved; requires genuine predecessor lifecycle reconciliation');
     assert.equal((await context.api(`/v1/agent/jobs/${first.id}`,undefined,headers)).value.job.result,null);
+    // Genuine local child execution, not OpenClaw/gateway emulation. This is
+    // exactly the limited localProcessClosed producer authority we can inspect.
+    const artifacts=new WorkerArtifactClient(new URL(context.relayUrl),'',true);
+    const receipt=await new WorkerAttemptExecutor({envelope:first.attempt_envelope,
+      operation:new AgentProcess(process.execPath,['-e','process.stdout.write("local-process-only-proof\\n")']),
+      storeFullLog:(id,content,{signal})=>artifacts.upload(`${id}-logs`,'worker-log','text/plain',Buffer.from(content),signal),
+    }).execute();
+    assert.equal(receipt.state,'completed');assert.equal(receipt.specialistResult?.values.localProcessClosed,true);
+    const log=receipt.evidence.find(item=>item.type==='worker-log');assert.ok(log);
+    assert.match((await artifacts.read(log.artifact,AbortSignal.timeout(10_000))).toString(),/local-process-only-proof/);
+    const finished=await context.api(`/v1/agent/jobs/${first.id}/finish`,{fence:first.fence,outcome:receipt},headers);
+    assert.equal(finished.status,200,JSON.stringify(finished.value));assert.equal(finished.value.job.state,'needs_nova');
+    assert.equal(finished.value.job.result,null);assert.equal(await context.claim(),null);
+    await context.restart();
+    const persisted=await context.api(`/v1/agent/jobs/${first.id}`,undefined,headers);
+    assert.equal(persisted.value.job.state,'needs_nova');assert.deepEqual(persisted.value.job.outcome,receipt);
+    assert.equal(await context.claim(),null,'even a genuine completed local child does not attest remote gateway termination');
+    assert.equal((await context.db().query('SELECT id FROM prism.design_document')).rows.length,0);
+    t.diagnostic(JSON.stringify({producer:'actual Node child via original AgentProcess and WorkerAttemptExecutor',localState:receipt.state,localProcessClosed:receipt.specialistResult?.values.localProcessClosed,fullLogDigest:log.artifact.contentDigest,controlStateAfterReopen:persisted.value.job.state,committedToolResult:persisted.value.job.result,successorClaim:null,documentCount:0,nativeGatewayAttestation:false}));
   }finally{await context.close();}
 });

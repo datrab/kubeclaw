@@ -1,0 +1,21 @@
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (3718.62093ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2906.152973ms)
+ℹ {"producer":"actual Node child via original AgentProcess and WorkerAttemptExecutor","localState":"completed","localProcessClosed":true,"fullLogDigest":"sha256:23f8ec20daa2838f429c2ee3c41f7669e2bd316a353e9282557f7e882cd37ef5","controlStateAfterReopen":"needs_nova","committedToolResult":null,"successorClaim":null,"documentCount":0,"nativeGatewayAttestation":false}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6962.427148
