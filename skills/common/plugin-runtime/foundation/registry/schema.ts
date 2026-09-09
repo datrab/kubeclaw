@@ -12,13 +12,25 @@ interface AjvValidator {
 interface AjvInstance {
   addSchema(schema: object): void;
   compile(schema: object): AjvValidator;
+  validateSchema(schema: object, throwOrLogError: true): boolean;
+}
+
+function freezeSchema<T>(value: T): T {
+  const pending: unknown[] = [value];
+  while (pending.length) {
+    const item = pending.pop();
+    if (!item || typeof item !== 'object') continue;
+    for (const child of Object.values(item)) pending.push(child);
+    Object.freeze(item);
+  }
+  return value;
 }
 
 const schemaUrl = new URL(
   '../../contracts/plugin-system/v2/plugin-system-v2.schema.json',
   import.meta.url,
 );
-const contract = JSON.parse(fs.readFileSync(schemaUrl, 'utf8')) as {
+const contract = freezeSchema(JSON.parse(fs.readFileSync(schemaUrl, 'utf8'))) as {
   $id: string;
   [key: string]: unknown;
 };
@@ -26,12 +38,18 @@ const AjvConstructor = Ajv2020 as unknown as new (options: {
   allErrors: boolean;
   strict: boolean;
   useDefaults?: boolean;
+  validateSchema?: boolean;
 }) => AjvInstance;
 const installFormats = addFormats as unknown as (instance: AjvInstance) => AjvInstance;
 const ajv = new AjvConstructor({ allErrors: true, strict: true });
 installFormats(ajv);
 ajv.addSchema(contract);
 const validate = ajv.compile({ $ref: `${contract.$id}#/$defs/pluginManifest` });
+// validateSchema does not register the document's $id. Only its standard meta-
+// schemas and the bundled contract are shared; documents keep isolated scopes.
+const schemaMetaValidator = new AjvConstructor({ allErrors: true, strict: true });
+installFormats(schemaMetaValidator);
+schemaMetaValidator.addSchema(contract);
 
 export interface ReferencedSchemaValidator {
   readonly validate: (value: unknown) => void;
@@ -64,9 +82,12 @@ export function parsePluginManifest(source: string, manifestPath: string): Plugi
 // schema bytes read at build time, and live only as long as their snapshot.
 export function validateReferencedSchema(source: string, schemaPath: string): ReferencedSchemaValidator {
   try {
-    const value = JSON.parse(source) as object;
+    const value = freezeSchema(JSON.parse(source)) as object;
     const compile = (useDefaults: boolean): AjvValidator => {
-      const instance = new AjvConstructor({ allErrors: true, strict: true, useDefaults });
+      // Validate this exact immutable document before each isolated compilation.
+      // Recompiling the standard meta-schema in every instance stalls startup.
+      schemaMetaValidator.validateSchema(value, true);
+      const instance = new AjvConstructor({ allErrors: true, strict: true, useDefaults, validateSchema: false });
       installFormats(instance);
       instance.addSchema(contract);
       return instance.compile(value);
