@@ -57,6 +57,9 @@ function boundStage(job, context) {
   return { stage, configured };
 }
 function boundProviderPlan(job, payload, stage, context) {
+  // Derived source-stage authority needs its original producer artifact linkage.
+  // This bounded projection slice must not guess that missing ownership.
+  if (typeof stage.input.providerPlan?.revision !== 'string' || stage.input.providerPlan.sourceStageId !== undefined) fail();
   for (const key of ['plan', 'repositoryRoot', 'repositoryId', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs']) {
     if (!same(payload[key], stage.input.providerPlan?.[key])) fail();
   }

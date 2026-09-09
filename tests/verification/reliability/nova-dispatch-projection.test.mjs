@@ -6,14 +6,14 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { once } from 'node:events';
+import { setTimeout as delay } from 'node:timers/promises';
 import { test } from 'node:test';
-import { buildRegistry, discoverPackages, resolveTestPlan, createProductionNovaTestGate } from '@kubeclaw/nova-core';
+import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { FileBusterPlanJobStore, BusterRemotePlanService } from '@kubeclaw/buster-engine';
 import { createBusterRemotePlanHttpServer } from '../../../skills/buster/engine/test-gates/remote-plan-http.ts';
 import { FileNovaRemotePlanStore, NovaRemotePlanDispatcher, HttpRemotePlanTransport } from '../../../skills/nova/core/test-gates/remote-dispatch.ts';
 import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
 import { FileDurableRecordStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
-import { dispatchProjectionDigest } from '../../../skills/nova/core/test-gates/dispatch-projection.ts';
 import { remotePlanJobDigest, remotePlanJobId } from '@kubeclaw/pipeline-test-gate-contract';
 import { runPipelineV2, reopenBlockedPipelineV2 } from '../../../skills/nova/core/execution/engine.ts';
 import { runRoot } from '../../../skills/nova/core/execution/run-root.ts';
@@ -277,4 +277,68 @@ test('independent selected stage, attempt, source, plan and adapter corruptions 
   assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
   fs.writeFileSync(file, original);
   assert.equal((await retireNovaDispatch(f.scope)).newlyProjected, true);
+});
+
+async function stop(child) {
+  if (child.exitCode !== null || child.signalCode !== null) return;
+  const exited = once(child, 'exit'); child.kill('SIGKILL'); await exited;
+}
+
+test('actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job', { timeout: 60000 }, async t => {
+  const f = await fixture(t);
+  const moduleURL = new URL('../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts', import.meta.url).href;
+  const child = spawn(process.execPath, ['--input-type=module', '-e', `
+    const { FileDurableRecordStore } = await import(process.argv[1]);
+    const store = new FileDurableRecordStore(process.argv[2], JSON.parse(process.argv[3]));
+    await store.withRecords('remote-gate-imports', async records => {
+      process.send({ held: records.length });
+      await new Promise(resolve => process.once('message', resolve));
+    });
+    process.disconnect();
+  `, moduleURL, f.scope.intent.importRoot, JSON.stringify(recordLimits)], { stdio: ['ignore', 'pipe', 'pipe', 'ipc'] });
+  t.after(() => stop(child));
+  const [held] = await once(child, 'message'); assert.equal(held.held, 1);
+  let finished = false;
+  const operation = retireNovaDispatch(f.scope).finally(() => { finished = true; });
+  const rejected = assert.rejects(operation, /NOVA_DISPATCH_RETENTION_BLOCKED:SNAPSHOT_CHANGED/);
+  await delay(200); assert.equal(finished, false);
+  await assert.rejects(withRunMutationLock(f.run, async () => undefined), /PIPELINE_RUN_MUTATION_LOCKED/);
+  const concurrent = newJob(f.job, 'projection:concurrent-writer');
+  await new FileNovaRemotePlanStore(f.scope.intent.dispatchRoot, dispatchOptions).persistBeforeDispatch(concurrent);
+  const exited = once(child, 'exit'); child.send({ release: true });
+  assert.equal((await exited)[0], 0); await rejected;
+  const store = new FileNovaRemotePlanStore(f.scope.intent.dispatchRoot, dispatchOptions);
+  assert.deepEqual(await store.load(concurrent.jobId), concurrent);
+  assert.deepEqual(await store.load(f.job.jobId), f.job);
+  assert.equal(json(recordsFile(f.scope.intent.dispatchRoot)).records[0].payload.schemaVersion, 'nova-remote-plan-dispatch.v1');
+  assert.equal((await retireNovaDispatch(f.scope)).newlyProjected, true);
+  assert.deepEqual(await store.load(concurrent.jobId), concurrent);
+});
+
+test('actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery', { timeout: 60000 }, async t => {
+  const f = await fixture(t), directory = path.dirname(recordsFile(f.scope.intent.dispatchRoot));
+  const imports = fs.readFileSync(recordsFile(f.scope.intent.importRoot));
+  const blob = blobFile(f.scope.intent.dispatchRoot, f.job.repositoryArchive.contentDigest), bytes = fs.readFileSync(blob);
+  const scopeFile = path.join(f.root, 'manual-scope.json'); fs.writeFileSync(scopeFile, JSON.stringify(f.scope));
+  let observedTemporary = null, child;
+  const watcher = fs.watch(directory, (_event, name) => {
+    if (child && name?.startsWith(`store.json.${child.pid}.`) && name.endsWith('.tmp')) {
+      observedTemporary = name; child.kill('SIGKILL');
+    }
+  });
+  t.after(() => watcher.close());
+  child = spawn(process.execPath, ['scripts/retire-nova-dispatch.mjs', '--apply', scopeFile], { stdio: ['ignore', 'pipe', 'pipe'] });
+  t.after(() => stop(child));
+  let stderr = ''; child.stderr.on('data', bytes => { stderr += bytes; });
+  const [code, signal] = await once(child, 'exit'); watcher.close();
+  assert.equal(code, null, stderr); assert.equal(signal, 'SIGKILL'); assert.ok(observedTemporary);
+  // Original atomic state may be old or committed; neither authorizes rebuilding a missing source.
+  const store = new FileNovaRemotePlanStore(f.scope.intent.dispatchRoot, dispatchOptions);
+  assert.deepEqual(await store.load(f.job.jobId), f.job);
+  assert.deepEqual(fs.readFileSync(blob), bytes); assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.importRoot)), imports);
+  const receipt = await retireNovaDispatch(f.scope);
+  assert.ok(receipt.newlyProjected === true || receipt.newlyProjected === false);
+  assert.deepEqual(await store.persistBeforeDispatch(f.job), f.job);
+  assert.equal(json(recordsFile(f.scope.intent.dispatchRoot)).records[0].payload.schemaVersion, 'nova-remote-plan-dispatch-projected.v1');
+  assert.equal(json(recordsFile(f.scope.intent.dispatchRoot)).records.length, 1);
 });

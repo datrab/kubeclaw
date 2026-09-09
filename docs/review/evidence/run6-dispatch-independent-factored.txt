@@ -1,0 +1,50 @@
+Independent review author 7aa642539fc5c661cfb6ec6a52e00d3dbab49855 integrated locally at 6a6c26d on approved b06c06d dependencies. Additive test conflict resolved keeping both independent regressions and both author races without assertion changes.
+Command: node --test tests/verification/reliability/nova-dispatch-projection.test.mjs tests/verification/reliability/record-fenced-read-independent.test.mjs
+[fix/resume-47-run5-dispatch-review 6a6c26d] wip(storage): factor original import authority and add real operator race boundaries [skip ci]
+ Date: Thu Sep 10 01:34:27 2026 +0200
+ 4 files changed, 285 insertions(+), 178 deletions(-)
+ create mode 100644 skills/nova/core/test-gates/remote-result-authority.ts
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (6374.465222ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (5876.553643ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (6037.630208ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7189.169793ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (6468.501161ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (6419.880472ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (6423.556604ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (6920.220604ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (423.123027ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (404.576633ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53048.559542
+
+Command: npm run verify:test-gate:remote-import
+Then canonical ESLint config charts/kubeclaw/files/config/eslint.config.mjs on importer, authority, dispatch store/projection, original durable-records, both operator files and both test files.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-import
+> node tests/verification/contracts/check-pipeline-remote-result-import.mts && node tests/verification/contracts/check-junit-executed-required.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"ok":true,"phase":"7-D","decisions":7,"evidence":"verified-before-import"}
+PASS actual Node JUnit files -> original parser/finalizer; HTTP import and durable decision reconstruction; no native runner claim
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+Both commands completed exit 0. Ten tests pass, zero skips. Original actual provider unavailable-before-build error retained as executed errored terminal history, not native success. Full original import/JUnit regressions, shared-runtime/Nova typecheck, focused lint all exit 0. Overall package review remains INCOMPLETE pending final source/evidence vectors; no finding closure.
+

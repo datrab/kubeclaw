@@ -44,6 +44,23 @@ interface StoredGateImportV2 {
   readonly state: 'pending_evidence' | 'complete';
 }
 
+function retainedResult(stored: StoredGateImportV2 | undefined, job: RemotePlanJobV1): RemotePlanResultV1 {
+  if (!stored || stored.schemaVersion !== 'nova-test-gate-import.v2' || stored.state !== 'complete'
+    || !stored.remoteResult || stored.jobId !== job.jobId || !same(stored.source, importSource(job))
+    || stored.requestDigest !== job.requestDigest || stored.remoteResultDigest !== stored.remoteResult.resultDigest) {
+    throw new Error('NOVA_DISPATCH_RETENTION_IMPORT_REQUIRED');
+  }
+  return stored.remoteResult;
+}
+
+function assertSameImport(existing: StoredGateImportV2, pending: StoredGateImportV2): void {
+  if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source)
+    || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
+    || existing.decision.decisionDigest !== pending.decision.decisionDigest || !same(existing.evidenceDigests, pending.evidenceDigests)) {
+    throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
+  }
+}
+
 export interface NovaTestExecutionGraphV1 {
   readonly schemaVersion: 'nova-test-execution-graph.v1';
   readonly runId: string;
@@ -74,165 +91,7 @@ function executionGraph(job: GateImportSource, result: RemotePlanResultV1 | null
   };
 }
 
-function same(left: unknown, right: unknown): boolean {
-  return remotePlanDigest(left) === remotePlanDigest(right);
-}
-
-function nodeAuthorityReceipt(planDigest: string, receipt: { receiptId: string; receiptDigest: string }, resultDigest: string): boolean {
-  return receipt.receiptDigest === remotePlanDigest({ authorityId: `test-runner:${planDigest}`, receiptId: receipt.receiptId, resultDigest });
-}
-
-function artifacts(result: RemotePlanResultV1 | null): ArtifactRefV1[] {
-  if (!result) return [];
-  const found = result.attempts.flatMap((attempt) => [
-    ...attempt.evidence.map((item) => item.artifact),
-    ...attempt.outputs.filter((item) => item.kind === 'artifact').map((item) => item.artifact),
-    ...attempt.reports.map((item) => item.sourceArtifact),
-  ]);
-  const byDigest = new Map<string, ArtifactRefV1>();
-  for (const artifact of found) {
-    const prior = byDigest.get(artifact.contentDigest);
-    if (prior && prior.sizeBytes !== artifact.sizeBytes) {
-      throw new Error('NOVA_REMOTE_EVIDENCE_IDENTITY_CONFLICT');
-    }
-    byDigest.set(artifact.contentDigest, artifact);
-  }
-  return [...byDigest.values()].sort((a, b) => a.contentDigest.localeCompare(b.contentDigest));
-}
-
-function verifyCompletedResult(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: RemotePlanResultV1): void {
-  validatePipelineTestGateContract('remotePlanStatus', status);
-  if (status.jobId !== job.jobId || status.requestDigest !== job.requestDigest || status.state !== 'completed' || !status.result) {
-    throw new Error('NOVA_REMOTE_RESULT_STATUS_INVALID');
-  }
-  validatePipelineTestGateContract('remotePlanResult', result);
-  if (status.result.resultDigest !== result.resultDigest) throw new Error('NOVA_REMOTE_RESULT_REFERENCE_MISMATCH');
-  verifyResult(job, result);
-}
-
-function verifyResult(job: RemotePlanJobV1, result: RemotePlanResultV1): void {
-  validatePipelineTestGateContract('remotePlanResult', result);
-  if (result.jobId !== job.jobId || result.planId !== job.plan.planId
-    || result.planDigest !== job.plan.planDigest || result.runId !== job.plan.runId) {
-    throw new Error('NOVA_REMOTE_RESULT_OWNERSHIP_MISMATCH');
-  }
-  if (remotePlanResultDigest(result) !== result.resultDigest
-    || !same(result.receipt, remotePlanResultReceipt(job.jobId, result.resultDigest))) {
-    throw new Error('NOVA_REMOTE_RESULT_RECEIPT_INVALID');
-  }
-  const planNodes = new Map(job.plan.nodes.map((node) => [node.id, node]));
-  const resultNodes = new Map(result.nodes.map((node) => [node.nodeId, node]));
-  if (planNodes.size !== resultNodes.size || [...planNodes.keys()].some((id) => !resultNodes.has(id))) {
-    throw new Error('NOVA_REMOTE_RESULT_NODE_SET_MISMATCH');
-  }
-  const attemptsByNode = new Map<string, typeof result.attempts>();
-  for (const attempt of result.attempts) {
-    const planNode = planNodes.get(attempt.nodeId);
-    if (!planNode) throw new Error('NOVA_REMOTE_RESULT_ATTEMPT_NODE_UNKNOWN');
-    validatePipelineTestGateContract('attemptResult', attempt);
-    if (attemptResultDigest(attempt) !== attempt.resultDigest
-      || !nodeAuthorityReceipt(job.plan.planDigest, attempt.receipt, attempt.resultDigest)
-      || attempt.executionId !== planNode.executionId || attempt.testIdentity !== planNode.testIdentity
-      || attempt.nodeKind !== planNode.kind
-      || attempt.mode !== planNode.mode || !same(attempt.provider, planNode.provider)
-      || attempt.moduleId !== job.plan.scope.moduleId || attempt.gateId !== job.plan.scope.gateId
-      || attempt.suiteInstanceId !== planNode.suiteInstanceId) {
-      throw new Error(`NOVA_REMOTE_RESULT_ATTEMPT_IDENTITY_MISMATCH:${attempt.attemptId}`);
-    }
-    const list = attemptsByNode.get(attempt.nodeId) ?? [];
-    attemptsByNode.set(attempt.nodeId, [...list, attempt]);
-  }
-  for (const [nodeId, planNode] of planNodes) {
-    const node = resultNodes.get(nodeId)!;
-    validatePipelineTestGateContract('nodeResult', node);
-    const attempts = [...(attemptsByNode.get(nodeId) ?? [])].sort((a, b) => a.attemptNumber - b.attemptNumber);
-    const expectedAttemptIds = attempts.map((item) => item.attemptId);
-    const finalAttempt = attempts.at(-1) ?? null;
-    const attemptsContiguous = attempts.every((attempt, index) => attempt.attemptNumber === index + 1);
-    const terminalMatchesAttempt = node.state === 'skipped'
-      ? finalAttempt === null && node.outcome === 'skipped'
-      : finalAttempt !== null && node.state === finalAttempt.executionState && node.outcome === finalAttempt.outcome;
-    if (nodeResultDigest(node) !== node.resultDigest
-      || !nodeAuthorityReceipt(job.plan.planDigest, node.receipt, node.resultDigest)
-      || node.executionId !== planNode.executionId || node.testIdentity !== planNode.testIdentity
-      || node.nodeKind !== planNode.kind || node.mode !== planNode.mode
-      || node.moduleId !== job.plan.scope.moduleId || node.gateId !== job.plan.scope.gateId
-      || node.suiteInstanceId !== planNode.suiteInstanceId || !same(node.attemptIds, expectedAttemptIds)
-      || node.finalAttemptId !== (expectedAttemptIds.at(-1) ?? null) || !attemptsContiguous
-      || attempts.length > planNode.retryCount + 1 || !terminalMatchesAttempt) {
-      throw new Error(`NOVA_REMOTE_RESULT_NODE_IDENTITY_MISMATCH:${nodeId}`);
-    }
-  }
-  if (result.cleanupErrors.some((item) => !planNodes.has(item.nodeId))) {
-    throw new Error('NOVA_REMOTE_RESULT_CLEANUP_NODE_UNKNOWN');
-  }
-}
-
-function failedReport(nodeId: string, result: RemotePlanResultV1): boolean {
-  return result.attempts
-    .filter((attempt) => attempt.nodeId === nodeId && attempt.attemptId === result.nodes.find((node) => node.nodeId === nodeId)?.finalAttemptId)
-    .some((attempt) => attempt.reports.some((report) => report.counts.failed > 0 || report.counts.errored > 0));
-}
-
-function coveredDecision(job: RemotePlanJobV1, decision: Omit<GateDecisionV1, 'decisionDigest'>): GateDecisionV1 {
-  const coverage = bindGateCoverage(job, decision.nodes);
-  const unsigned = coverage ? { ...decision, schemaVersion: 'test-gate-decision.v2' as const, coverage,
-    state: decision.state === 'passed' && !coveragePassed(coverage) ? 'failed' as const : decision.state } : decision;
-  return { ...unsigned, decisionDigest: remotePlanDigest(unsigned) };
-}
-
-function decide(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: RemotePlanResultV1 | null): GateDecisionV1 {
-  if (status.state !== 'completed' || !result) {
-    const state: GateDecisionState = status.state === 'cancelled' ? 'cancelled' : 'execution_error';
-    const unsigned = { schemaVersion: 'test-gate-decision.v1' as const, jobId: job.jobId,
-      planId: job.plan.planId, runId: job.plan.runId, state, nodes: [], reviews: [], resultDigest: null };
-    return coveredDecision(job, unsigned);
-  }
-  return decideResult(job, result);
-}
-
-function decideResult(job: RemotePlanJobV1, result: RemotePlanResultV1): GateDecisionV1 {
-  const resultNodes = new Map(result.nodes.map((node) => [node.nodeId, node]));
-  const attempts = new Map(result.attempts.map((attempt) => [attempt.attemptId, attempt]));
-  const nodes: GateNodeDecisionV1[] = [];
-  const reviews: AgentEvidenceReviewRequestV1[] = [];
-  for (const planNode of job.plan.nodes) {
-    const node = resultNodes.get(planNode.id)!;
-    const finalAttempt = node.finalAttemptId ? attempts.get(node.finalAttemptId) : undefined;
-    let effect: GateNodeEffect;
-    let reason: string;
-    if (node.state === 'skipped') { effect = 'skipped'; reason = node.skipReason ?? 'condition skipped'; }
-    else if (node.state !== 'completed' || result.cleanupErrors.some((item) => item.nodeId === node.nodeId)) {
-      effect = 'execution_error';
-      reason = node.state !== 'completed' ? `execution ${node.state}` : 'cleanup failed';
-    } else {
-      const failed = node.outcome === 'failed' || failedReport(node.nodeId, result);
-      const missingExecution = planNode.mode === 'blocking'
-        && planNode.provider.contractId === 'kubeclaw.direct-command@1'
-        && planNode.configuration.values.resultMode === 'junit-required'
-        && !(finalAttempt?.reports.some((report) => report.adapter.format === 'junit'
-          && report.counts.passed + report.counts.failed + report.counts.errored > 0));
-      if (missingExecution) {
-        effect = 'failed'; reason = 'TEST_REPORT_NO_EXECUTED_CASES: blocking JUnit requires at least one executed case';
-      } else if (!failed) { effect = 'passed'; reason = 'all declared checks passed'; }
-      else if (planNode.mode === 'advisory') { effect = 'advisory_failure'; reason = 'advisory checks failed'; }
-      else if (planNode.reviewAgent && node.outcome === 'failed' && !failedReport(node.nodeId, result) && finalAttempt) {
-        effect = 'review_required'; reason = `evidence review by ${planNode.reviewAgent}`;
-        reviews.push({ schemaVersion: 'agent-evidence-review-request.v1', agent: planNode.reviewAgent,
-          planId: job.plan.planId, runId: job.plan.runId, nodeId: node.nodeId, attemptId: finalAttempt.attemptId,
-          evidenceDigests: finalAttempt.evidence.map((item) => item.artifact.contentDigest).sort() });
-      } else { effect = 'failed'; reason = 'blocking checks failed'; }
-    }
-    nodes.push({ nodeId: planNode.id, kind: planNode.kind, mode: planNode.mode, effect, reason });
-  }
-  const state: GateDecisionState = nodes.some((node) => node.effect === 'execution_error') ? 'execution_error'
-    : nodes.some((node) => node.effect === 'review_required') ? 'review_required'
-      : nodes.some((node) => node.effect === 'failed') ? 'failed' : 'passed';
-  const unsigned = { schemaVersion: 'test-gate-decision.v1' as const, jobId: job.jobId,
-    planId: job.plan.planId, runId: job.plan.runId, state, nodes, reviews,
-    resultDigest: result.resultDigest };
-  return coveredDecision(job, unsigned);
-}
+import { same, artifacts, verifyCompletedResult, verifyResult, decide, decideResult } from './remote-result-authority.ts';
 
 export class FileNovaGateImportStore {
   readonly #records: FileDurableRecordStore;
@@ -262,19 +121,16 @@ export class FileNovaGateImportStore {
     return this.#records.withRecords<StoredGateImportV2, T>('remote-gate-imports', async records => {
       const record = records.find(item => item.idempotencyKey === job.jobId);
       const stored = record?.payload;
-      if (!record || record.payloadDigest !== expectedPayloadDigest || !stored
-        || stored.schemaVersion !== 'nova-test-gate-import.v2' || stored.state !== 'complete'
-        || !stored.remoteResult || stored.jobId !== job.jobId
-        || !same(stored.source, importSource(job)) || stored.requestDigest !== job.requestDigest
-        || stored.remoteResultDigest !== stored.remoteResult.resultDigest) {
+      if (!record || record.payloadDigest !== expectedPayloadDigest || !stored) {
         throw new Error('NOVA_DISPATCH_RETENTION_IMPORT_REQUIRED');
       }
-      verifyResult(job, stored.remoteResult);
-      const decision = decideResult(job, stored.remoteResult);
+      const result = retainedResult(stored, job);
+      verifyResult(job, result);
+      const decision = decideResult(job, result);
       if (!same(decision, stored.decision) || decision.state === 'review_required') {
         throw new Error('NOVA_DISPATCH_RETENTION_DECISION_INCOMPLETE');
       }
-      const referenced = artifacts(stored.remoteResult);
+      const referenced = artifacts(result);
       if (!same(stored.evidenceDigests, referenced.map(item => item.contentDigest).sort())) {
         throw new Error('NOVA_DISPATCH_RETENTION_EVIDENCE_MISMATCH');
       }
@@ -282,7 +138,7 @@ export class FileNovaGateImportStore {
         const bytes = await this.#blobs.get(artifact.contentDigest);
         if (bytes.byteLength !== artifact.sizeBytes) throw new Error('NOVA_DISPATCH_RETENTION_EVIDENCE_MISMATCH');
       }
-      return operation({ payloadDigest: record.payloadDigest, resultDigest: stored.remoteResult.resultDigest,
+      return operation({ payloadDigest: record.payloadDigest, resultDigest: result.resultDigest,
         decisionDigest: decision.decisionDigest, decision: structuredClone(decision) });
     });
   }
@@ -315,20 +171,14 @@ export class FileNovaGateImportStore {
       if (!record) throw error;
       checkGateSignal(signal);
       const existing = record.payload;
-      if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
-        || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, evidence.map((item) => item.artifact.contentDigest).sort())) {
-        throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
-      }
+      assertSameImport(existing, pending);
       if (existing.state === 'complete') {
         return structuredClone(existing.decision);
       }
       appended = { appended: false, record };
     }
     const existing = appended.record.payload as StoredGateImportV2;
-    if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
-      || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, digests)) {
-      throw new Error('NOVA_REMOTE_IMPORT_CONFLICT');
-    }
+    assertSameImport(existing, pending);
     if (existing.state === 'complete') {
       return structuredClone(existing.decision);
     }
