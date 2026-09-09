@@ -4,6 +4,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+const isolation = process.argv[2] ? { cgroupRoot: path.resolve(process.argv[2]) } : undefined;
+
 const { invokeIsolated } = await import(
   pathToFileURL(path.resolve('skills/common/plugin-runtime/foundation/isolation/runner.ts')).href
 );
@@ -79,6 +81,7 @@ try {
     }
   `);
   const result = await invokeIsolated({
+    ...isolation,
     packageRoot: temporary,
     modulePath,
     exportName: 'execute',

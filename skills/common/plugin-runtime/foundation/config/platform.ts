@@ -16,6 +16,7 @@ export interface PlatformConfig {
   readonly adapters: Readonly<Record<string, Readonly<Record<string, unknown>>>>;
   readonly activeAdapters: readonly string[];
   readonly observers: Readonly<Record<string, Readonly<Record<string, unknown>>>>;
+  readonly isolation?: Readonly<{ readonly cgroupRoot: string }>;
   readonly storageRoot: string;
   readonly shutdownTimeoutMs: number;
   readonly effectLockTtlMs?: number;
@@ -55,6 +56,7 @@ function resolvePaths(config: PlatformConfig, directory: string): PlatformConfig
     installationRoots: config.installationRoots.map((value) => path.resolve(directory, value)),
     trustedBuiltinRoots: config.trustedBuiltinRoots.map((value) => path.resolve(directory, value)),
     storageRoot: path.resolve(directory, config.storageRoot),
+    ...(config.isolation ? { isolation: { cgroupRoot: path.resolve(directory, config.isolation.cgroupRoot) } } : {}),
   });
 }
 

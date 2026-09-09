@@ -244,6 +244,8 @@ static int join_cgroup(const char *root) {
 
 static volatile sig_atomic_t terminate_requested = 0;
 static int supervisor_children_fd = -1;
+static const char *child_cgroup = NULL;
+static int child_cgroup_kill_fd = -1;
 
 static void request_termination(int signal_number) {
   terminate_requested = signal_number;
@@ -266,11 +268,11 @@ static int signal_children(int signal_number) {
   return 0;
 }
 
-static int reap_adopted_children(void) {
+static int reap_adopted_children(pid_t main_child, int *main_status) {
   for (;;) {
     int status = 0;
     pid_t child = waitpid(-1, &status, WNOHANG);
-    if (child > 0) continue;
+    if (child > 0) { if (child == main_child) *main_status = status; continue; }
     if (child == 0) return 1;
     if (errno == ECHILD) return 0;
     if (errno == EINTR) continue;
@@ -280,31 +282,33 @@ static int reap_adopted_children(void) {
 
 static int supervise(char **program) {
   if (prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0) != 0) return -1;
+  pid_t supervisor = getpid();
+  if (terminate_requested) return 70;
   pid_t main_child = fork();
   if (main_child < 0) return -1;
   if (main_child == 0) {
+    if (prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0) != 0 || getppid() != supervisor) _exit(70);
+    if (child_cgroup && join_cgroup(child_cgroup) != 0) { perror("child cgroup"); _exit(70); }
     signal(SIGTERM, SIG_DFL);
     signal(SIGINT, SIG_DFL);
     execv(program[0], program);
     perror("execv");
     _exit(71);
   }
-  struct sigaction action = {0};
-  action.sa_handler = request_termination;
-  sigemptyset(&action.sa_mask);
-  sigaction(SIGTERM, &action, NULL);
-  sigaction(SIGINT, &action, NULL);
   int main_status = 0;
   int main_complete = 0;
   for (;;) {
     if (terminate_requested || main_complete) {
       if (signal_children(SIGTERM) != 0) return -1;
       for (int iteration = 0; iteration < 20; iteration++) {
-        int remaining = reap_adopted_children();
+        int remaining = reap_adopted_children(main_child, &main_status);
         if (remaining < 0) return -1;
         if (remaining == 0) break;
         usleep(5000);
       }
+      /* The Nova group contains only the workload, so the supervisor survives
+         a whole-tree kill and can reap setsid/double-fork descendants. */
+      if (child_cgroup_kill_fd >= 0 && write(child_cgroup_kill_fd, "1", 1) != 1) return -1;
       if (signal_children(SIGKILL) != 0) return -1;
     }
     int status = 0;
@@ -330,8 +334,21 @@ static int supervise(char **program) {
 }
 
 int main(int argc, char **argv) {
+  if (argc == 2 && strcmp(argv[1], "--page-size") == 0) {
+    long page_size = sysconf(_SC_PAGESIZE);
+    if (page_size <= 0) { perror("page size"); return 70; }
+    printf("%ld\n", page_size);
+    return 0;
+  }
+  pid_t host_parent = getppid();
+  struct sigaction action = {0};
+  action.sa_handler = request_termination;
+  sigemptyset(&action.sa_mask);
+  if (sigaction(SIGTERM, &action, NULL) != 0 || sigaction(SIGINT, &action, NULL) != 0
+    || prctl(PR_SET_PDEATHSIG, SIGTERM, 0, 0, 0) != 0) { perror("parent death signal"); return 70; }
+  if (getppid() != host_parent) return 70;
   if (argc < 5) {
-    fprintf(stderr, "usage: plugin-sandbox <memory-bytes> <cpu-seconds> <max-files> [--allow-network] [--connect-tcp-port port] [--run-as-uid uid --run-as-gid gid] [--no-address-space-limit] [--cgroup path] [--read-root path]... [--write-root path] <program> [args...]\n");
+    fprintf(stderr, "usage: plugin-sandbox <memory-bytes> <cpu-seconds> <max-files> [--allow-network] [--connect-tcp-port port] [--run-as-uid uid --run-as-gid gid] [--no-address-space-limit] [--cgroup path | --child-cgroup path] [--read-root path]... [--write-root path] <program> [args...]\n");
     return 64;
   }
   char *end = NULL;
@@ -401,12 +418,27 @@ int main(int argc, char **argv) {
     }
     program_index += 2;
   }
+  if (argc >= program_index + 2 && strcmp(argv[program_index], "--child-cgroup") == 0) {
+    child_cgroup = argv[program_index + 1];
+    char kill_file[PATH_MAX];
+    int length = snprintf(kill_file, sizeof(kill_file), "%s/cgroup.kill", child_cgroup);
+    if (length < 0 || (size_t)length >= sizeof(kill_file)) return 64;
+    child_cgroup_kill_fd = open(kill_file, O_WRONLY | O_CLOEXEC);
+    if (child_cgroup_kill_fd < 0) { perror("child cgroup kill"); return 70; }
+    program_index += 2;
+  }
   if ((run_as_uid == ULLONG_MAX) != (run_as_gid == ULLONG_MAX)) return 64;
   if (run_as_uid != ULLONG_MAX) {
     if (setgroups(0, NULL) != 0
       || setresgid((gid_t)run_as_gid, (gid_t)run_as_gid, (gid_t)run_as_gid) != 0
       || setresuid((uid_t)run_as_uid, (uid_t)run_as_uid, (uid_t)run_as_uid) != 0) {
       perror("set identity");
+      return 70;
+    }
+    /* Linux clears PDEATHSIG on effective UID/GID changes. Preserve the host
+       death boundary for browser/worker callers that drop credentials. */
+    if (prctl(PR_SET_PDEATHSIG, SIGTERM, 0, 0, 0) != 0 || getppid() != host_parent) {
+      perror("parent death signal after identity");
       return 70;
     }
   }

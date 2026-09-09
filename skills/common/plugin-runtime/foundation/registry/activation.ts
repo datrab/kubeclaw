@@ -8,6 +8,8 @@ import { RegistryError } from './errors.ts';
 import { FrozenMap } from './frozen-map.ts';
 import type { RegistrySnapshot } from './types.ts';
 
+export interface IsolationPolicy { readonly cgroupRoot: string }
+
 export interface ActivatedRegistration {
   readonly execute: (
     argument: unknown,
@@ -48,6 +50,7 @@ async function load(
     readonly package: { readonly root: string; readonly provenance: { readonly trustScope: string } };
     readonly registration: { readonly module: string; readonly export: string };
   },
+  isolation?: IsolationPolicy,
 ): Promise<ActivatedRegistration> {
   if (entry.package.provenance.trustScope !== 'trusted_first_party') {
     if (surface === 'adapter') {
@@ -74,6 +77,7 @@ async function load(
           modulePath: path.join(entry.package.root, entry.registration.module),
           exportName: entry.registration.export,
           surface,
+          ...(isolation ? { cgroupRoot: isolation.cgroupRoot } : {}),
           argument,
           context: context as PluginInvocationContext,
           ...(signal === undefined ? {} : { signal }),
@@ -99,6 +103,7 @@ async function load(
 export async function activateRegistry(
   snapshot: RegistrySnapshot,
   enabledRegistrations: ReadonlySet<string>,
+  isolation?: IsolationPolicy,
 ): Promise<ActivatedRegistry> {
   const enabledPackages = new Map<string, RegistrySnapshot['packages'] extends ReadonlyMap<string, infer V> ? V : never>();
   const enabledEntries = [
@@ -117,13 +122,13 @@ export async function activateRegistry(
   assertPackageIntegrity(enabledPackages.values());
   const stageEntries = await Promise.all([...snapshot.stages]
     .filter(([, entry]) => enabledRegistrations.has(`${entry.package.manifest.id}:${entry.registration.id}`))
-    .map(async ([id, entry]) => [id, await load('stage', entry)] as const));
+    .map(async ([id, entry]) => [id, await load('stage', entry, isolation)] as const));
   const observerEntries = await Promise.all([...snapshot.observers]
     .filter(([id]) => enabledRegistrations.has(id))
-    .map(async ([id, entry]) => [id, await load('observer', entry)] as const));
+    .map(async ([id, entry]) => [id, await load('observer', entry, isolation)] as const));
   const adapterEntries = await Promise.all([...snapshot.adapters]
     .filter(([id]) => enabledRegistrations.has(id))
-    .map(async ([id, entry]) => [id, await load('adapter', entry)] as const));
+    .map(async ([id, entry]) => [id, await load('adapter', entry, isolation)] as const));
   return Object.freeze({
     snapshot,
     stages: new FrozenMap(stageEntries),

@@ -4,6 +4,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+const isolation = process.argv[2] ? { cgroupRoot: path.resolve(process.argv[2]) } : undefined;
+
 const root = path.resolve('.');
 const core = await import(pathToFileURL(path.join(
   root,
@@ -197,7 +199,7 @@ try {
   });
   assert.equal(discovered[0]?.provenance.trustScope, 'isolated_external');
   const snapshot = core.buildRegistry(discovered);
-  const activated = await core.activateRegistry(snapshot, new Set(['external.phase11:main']));
+  const activated = await core.activateRegistry(snapshot, new Set(['external.phase11:main']), isolation);
   const result = await activated.stages.get('external.phase11')!.execute(
     { real: true },
     context(installed.root),
@@ -212,6 +214,7 @@ try {
   fs.writeFileSync(outside, 'export async function execute() { return {}; }');
   assert.throws(
     () => core.invokeIsolated({
+      ...isolation,
       packageRoot: installed.root,
       modulePath: outside,
       exportName: 'execute',
@@ -249,6 +252,7 @@ try {
   `);
   const controller = new AbortController();
   const cancelled = core.invokeIsolated({
+      ...isolation,
     packageRoot: cancellationRoot,
     modulePath: path.join(cancellationRoot, 'dist', 'main.mjs'),
     exportName: 'execute',
@@ -264,6 +268,7 @@ try {
   writePackage(crashRoot, 'export async function execute() { process.kill(process.pid, "SIGKILL"); }');
   await assert.rejects(
     core.invokeIsolated({
+      ...isolation,
       packageRoot: crashRoot,
       modulePath: path.join(crashRoot, 'dist', 'main.mjs'),
       exportName: 'execute',

@@ -38,7 +38,7 @@ export async function prepareRuntime(platform: PlatformConfig, definition: Pipel
   validateRuntimeRegistrationConfiguration(snapshot, granted.enabledRegistrations, {
     stages: definition.stages.map((stage) => ({ type: stage.type, config: stage.config })), observers: objectMap(platform.observers), adapters: objectMap(platform.adapters),
   });
-  return { configuration: { providers: platform.providers, grants: platform.grants, adapters: platform.adapters, activeAdapters: platform.activeAdapters, observers: platform.observers }, snapshot, granted, activated: await activateRegistry(snapshot, new Set(granted.grants.keys())) };
+  return { configuration: { providers: platform.providers, grants: platform.grants, adapters: platform.adapters, activeAdapters: platform.activeAdapters, observers: platform.observers, ...(platform.isolation ? { isolation: platform.isolation } : {}) }, snapshot, granted, activated: await activateRegistry(snapshot, new Set(granted.grants.keys()), platform.isolation) };
 }
 
 function enabledRegistrations(platform: PlatformConfig, definition: PipelineDefinition, snapshot: ReturnType<typeof buildRegistry>): Set<string> {

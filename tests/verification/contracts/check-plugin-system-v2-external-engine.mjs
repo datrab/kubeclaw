@@ -4,6 +4,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+const isolation = process.argv[2] ? { cgroupRoot: path.resolve(process.argv[2]) } : undefined;
+
 const { runPipelineV2 } = await import(
   pathToFileURL(path.resolve('skills/nova/core/execution/engine.ts')).href
 );
@@ -64,6 +66,7 @@ fs.writeFileSync(path.join(packageRoot, 'plugin.json'), JSON.stringify({
 try {
   const digest = computePackageDigest(packageRoot);
   const result = await runPipelineV2({
+    ...(isolation ? { isolation } : {}),
     schemaVersion: 'pipeline-platform.v2',
     installationRoots: [installationRoot],
     trustedBuiltinRoots: [
