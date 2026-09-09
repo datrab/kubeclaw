@@ -1,0 +1,13 @@
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:229:181): Ready producer ServiceAccount is required
+
+Use --debug flag to render out invalid YAML
+✔ original Helm renders internal Ready TLS server and exact TokenReview authority (152.156532ms)
+✔ original chart mounts opt-in audience token only into actual Nova runtime container (142.943723ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 448.102404

@@ -44,7 +44,7 @@ func readyCredentials(t *testing.T) map[string]interface{} {
 type readyHTTPFixture struct {
 	ingress                                             map[string]interface{}
 	namespaceTerminating, secretMissing, ingressMissing bool
-	pruneReadiness, pruneClaim                          bool
+	pruneReadiness, pruneClaim, pruneRetention          bool
 	delaySecretUntil                                    time.Time
 	delayedSecretReads                                  int
 	t                                                   *testing.T
@@ -119,6 +119,9 @@ func (f *readyHTTPFixture) kubernetes(w http.ResponseWriter, r *http.Request) {
 			for k, v := range objectValue(patch["status"]) {
 				if (k == "demoReadiness" && f.pruneReadiness) || (k == "exposureMutation" && f.pruneClaim) {
 					continue
+				}
+				if k == "demoReadiness" && f.pruneRetention {
+					delete(objectValue(v), "retentionSeconds")
 				}
 				f.item.Status[k] = v
 			}

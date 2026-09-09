@@ -56,8 +56,16 @@ func demoReadyDeadline(item *lease) (time.Time, bool) {
 	if err != nil {
 		return time.Time{}, false
 	}
+	seconds, err := storedDemoRetention(state)
+	if err != nil {
+		return time.Time{}, false
+	}
+	expected, err := demoRetentionDeadline(ready, seconds)
+	if err != nil {
+		return time.Time{}, false
+	}
 	expires, err := time.Parse(time.RFC3339, stringValue(state["expiresAt"]))
-	if err != nil || !expires.Equal(ready.Add(demoRetention)) || state["schemaVersion"] != "demo-readiness.v1" || state["leaseUID"] != item.Metadata.UID || !readyDigest.MatchString(stringValue(state["requestDigest"])) {
+	if err != nil || !expires.Equal(expected) || state["leaseUID"] != item.Metadata.UID || !readyDigest.MatchString(stringValue(state["requestDigest"])) {
 		return time.Time{}, false
 	}
 	return expires, true

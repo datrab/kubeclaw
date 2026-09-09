@@ -30,6 +30,12 @@ test('original Helm renders internal Ready TLS server and exact TokenReview auth
   const crd=docs.find(d=>d.kind==='CustomResourceDefinition'&&d.metadata.name.startsWith('busternamespaceleases.'));
   const status=crd.spec.versions[0].schema.openAPIV3Schema.properties.status.properties;
   assert.deepEqual(status.demoReadiness.properties.state.enum,['ready-for-acceptance']);
+  assert.equal(status.demoReadiness.properties.retentionSeconds.minimum,1);
+  assert.equal(status.demoReadiness.properties.retentionSeconds.maximum,9223372036);
+  assert.equal(status.demoReadiness.required.includes('retentionSeconds'),false);
+  assert.deepEqual(status.demoReadiness.properties.schemaVersion.enum,['demo-readiness.v1','demo-readiness.v2']);
+  assert.equal(status.demoReadiness['x-kubernetes-validations'].some((rule:any)=>rule.rule.includes("self.schemaVersion == 'demo-readiness.v2' && has(self.retentionSeconds)")),true);
+  assert.equal(status.demoReadiness['x-kubernetes-validations'].some((rule:any)=>rule.rule==='self.schemaVersion == oldSelf.schemaVersion'),true);
   assert.equal(JSON.stringify(status.demoReadiness).includes('password'),false);
   assert.deepEqual(crd.spec.versions[0].subresources,{status:{}});
   const policy=docs.find(d=>d.kind==='NetworkPolicy'&&d.metadata.name.endsWith('-demo-ready'));

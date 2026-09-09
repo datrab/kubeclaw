@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-const demoRetention = 7 * 24 * time.Hour
+const demoRetention = time.Duration(defaultDemoRetentionSeconds) * time.Second
 
 type readinessConfig struct{ Audience, Producer, Certificate, Key, Address string }
 type demoReceipt struct {
@@ -28,6 +28,7 @@ type demoReceipt struct {
 	PayloadDigest string `json:"payloadDigest"`
 }
 type demoReadyRequest struct {
+	RetentionSeconds   json.RawMessage `json:"retentionSeconds,omitempty"`
 	wireDigest         string
 	SchemaVersion      string      `json:"schemaVersion"`
 	RequestID          string      `json:"requestId"`
@@ -63,6 +64,9 @@ func readyText(s string) bool {
 	return len(s) > 0 && len(s) <= 1024 && !strings.ContainsAny(s, "\x00\r\n")
 }
 func (r demoReadyRequest) validate() error {
+	if _, err := parseDemoRetention(r.RetentionSeconds); err != nil {
+		return err
+	}
 	if r.SchemaVersion != "demo-ready-request.v1" || !readyName.MatchString(r.LeaseName) || !readyName.MatchString(r.Namespace) || r.ExposureGeneration < 1 {
 		return errors.New("DEMO_READY_REQUEST_INVALID")
 	}
@@ -183,7 +187,8 @@ func (c *controller) readDemoReady(ctx context.Context, r demoReadyStatusRequest
 	return readyResponse(&item, state), nil
 }
 func readyResponse(item *lease, state map[string]interface{}) map[string]interface{} {
-	return map[string]interface{}{"schemaVersion": "demo-ready-response.v1", "leaseName": item.Metadata.Name, "leaseUID": item.Metadata.UID, "requestId": state["requestId"], "state": state["state"], "readyAt": state["readyAt"], "expiresAt": state["expiresAt"], "requestDigest": state["requestDigest"]}
+	seconds, _ := storedDemoRetention(state)
+	return map[string]interface{}{"retentionSeconds": seconds, "schemaVersion": "demo-ready-response.v1", "leaseName": item.Metadata.Name, "leaseUID": item.Metadata.UID, "requestId": state["requestId"], "state": state["state"], "readyAt": state["readyAt"], "expiresAt": state["expiresAt"], "requestDigest": state["requestDigest"]}
 }
 
 func (c *controller) commitDemoReady(ctx context.Context, r demoReadyRequest) (map[string]interface{}, error) {
@@ -232,7 +237,15 @@ func (c *controller) commitDemoReady(ctx context.Context, r demoReadyRequest) (m
 	if !now.Before(c.expiresAt(&item)) || now.Sub(observed) > 5*time.Minute {
 		return nil, errors.New("DEMO_READY_EXPIRED")
 	}
-	state = map[string]interface{}{"namespace": r.Namespace, "schemaVersion": "demo-readiness.v1", "state": "ready-for-acceptance", "requestId": r.RequestID, "requestDigest": readyRequestDigest(r), "readyAt": now.Format(time.RFC3339Nano), "expiresAt": now.Add(demoRetention).Format(time.RFC3339Nano), "runId": r.RunID, "sourceRevision": r.SourceRevision, "candidateDigest": r.CandidateDigest, "decisionDigest": r.DecisionDigest, "resultDigest": r.ResultDigest, "leaseUID": r.LeaseUID, "immutableImage": r.ImmutableImage, "manifestDigest": r.ManifestDigest, "credentialDigest": r.CredentialDigest, "secretUID": r.SecretUID, "url": r.URL, "previousOwner": r.ExposureOwner, "owner": "ready:" + readyRequestDigest(r), "exposureGeneration": r.ExposureGeneration, "exposureSpec": item.Spec["exposure"], "receipt": r.Receipt}
+	seconds, err := parseDemoRetention(r.RetentionSeconds)
+	if err != nil {
+		return nil, err
+	}
+	expires, err := demoRetentionDeadline(now, seconds)
+	if err != nil {
+		return nil, err
+	}
+	state = map[string]interface{}{"retentionSeconds": seconds, "namespace": r.Namespace, "schemaVersion": "demo-readiness.v2", "state": "ready-for-acceptance", "requestId": r.RequestID, "requestDigest": readyRequestDigest(r), "readyAt": now.Format(time.RFC3339Nano), "expiresAt": expires.Format(time.RFC3339Nano), "runId": r.RunID, "sourceRevision": r.SourceRevision, "candidateDigest": r.CandidateDigest, "decisionDigest": r.DecisionDigest, "resultDigest": r.ResultDigest, "leaseUID": r.LeaseUID, "immutableImage": r.ImmutableImage, "manifestDigest": r.ManifestDigest, "credentialDigest": r.CredentialDigest, "secretUID": r.SecretUID, "url": r.URL, "previousOwner": r.ExposureOwner, "owner": "ready:" + readyRequestDigest(r), "exposureGeneration": r.ExposureGeneration, "exposureSpec": item.Spec["exposure"], "receipt": r.Receipt}
 	patch := map[string]interface{}{"metadata": map[string]interface{}{"resourceVersion": item.Metadata.ResourceVersion}, "status": map[string]interface{}{"demoReadiness": state, "expiresAt": state["expiresAt"], "exposureOwner": state["owner"]}}
 	if err = c.kube(ctx, http.MethodPatch, c.statusPath(r.LeaseName), patch, "application/merge-patch+json", nil); err != nil {
 		var apiErr *apiError
@@ -246,6 +259,10 @@ func (c *controller) commitDemoReady(ctx context.Context, r demoReadyRequest) (m
 		return nil, errors.New("DEMO_READY_COMMIT_UNCERTAIN")
 	}
 	actual := objectValue(persisted.Status["demoReadiness"])
+	actualSeconds, retentionErr := storedDemoRetention(actual)
+	if _, present := actual["retentionSeconds"]; !present || retentionErr != nil || actualSeconds != seconds {
+		return nil, errors.New("DEMO_READY_COMMIT_UNCERTAIN")
+	}
 	if persisted.Metadata.UID != item.Metadata.UID || persisted.Metadata.DeletionTimestamp != "" || actual["requestDigest"] != state["requestDigest"] || actual["readyAt"] != state["readyAt"] || actual["expiresAt"] != state["expiresAt"] {
 		return nil, errors.New("DEMO_READY_COMMIT_UNCERTAIN")
 	}

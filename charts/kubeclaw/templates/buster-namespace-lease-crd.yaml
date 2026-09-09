@@ -222,11 +222,16 @@ spec:
                       format: date-time
                 demoReadiness:
                   type: object
+                  x-kubernetes-validations:
+                    - rule: "(self.schemaVersion == 'demo-readiness.v1' && !has(self.retentionSeconds)) || (self.schemaVersion == 'demo-readiness.v2' && has(self.retentionSeconds))"
+                      message: "v2 readiness requires retentionSeconds; historical v1 has implicit seven days"
+                    - rule: "self.schemaVersion == oldSelf.schemaVersion"
+                      message: "committed readiness schema version is immutable"
                   required: [schemaVersion, state, requestId, requestDigest, readyAt, expiresAt, leaseUID, owner, previousOwner, exposureGeneration, exposureSpec, receipt]
                   properties:
                     schemaVersion:
                       type: string
-                      enum: ["demo-readiness.v1"]
+                      enum: ["demo-readiness.v1", "demo-readiness.v2"]
                     state:
                       type: string
                       enum: ["ready-for-acceptance"]
@@ -270,6 +275,11 @@ spec:
                       type: string
                       minLength: 1
                       maxLength: 1024
+                    retentionSeconds:
+                      type: integer
+                      format: int64
+                      minimum: 1
+                      maximum: 9223372036
                     requestDigest:
                       type: string
                       pattern: '^sha256:[a-f0-9]{64}$'

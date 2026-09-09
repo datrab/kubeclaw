@@ -1,0 +1,5 @@
+--- FAIL: TestReviewPrunedDefaultReplayCannotAcknowledge (0.01s)
+    demo-retention_test.go:144: pruned NEW default status acknowledged as legacy on retry 200 map[expiresAt:2026-09-16T17:19:14.004527331Z leaseName:demo-auth-lease leaseUID:native-http-lease-uid readyAt:2026-09-09T17:19:14.004527331Z requestDigest:sha256:7d7be95eeeeda894c97c21bffaee7c4398090c8cac769d81ef8821eb52550592 requestId:candidate-1 retentionSeconds:604800 schemaVersion:demo-ready-response.v1 state:ready-for-acceptance]
+FAIL
+FAIL	github.com/datrab/kubeclaw/cmd/buster-namespace-controller	0.016s
+FAIL

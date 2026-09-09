@@ -40,6 +40,7 @@ producer identity; there is no public ingress, default identity or default grant
   "exposureGeneration": 1,
   "url": "https://actual-demo.example/",
   "observedAt": "2026-09-09T12:00:00Z",
+  "retentionSeconds": 604800,
   "receipt": {
     "schemaVersion": "discord-delivery-receipt.v1",
     "accepted": true,
@@ -53,8 +54,10 @@ producer identity; there is no public ingress, default identity or default grant
 ```
 
 All identities are bounded nonempty strings. Digests use exact lowercase SHA-256
-syntax. A request cannot specify Ready time, retention duration or credential
-values. Unknown fields, trailing data and noncanonical/non-HTTPS URLs reject.
+syntax. A request cannot specify Ready time or credential values. Optional
+`retentionSeconds` selects the source/candidate-bound initial duration, default
+604800. It must be a positive JSON integer no greater than 9223372036 (the Go
+duration arithmetic bound); null, fractions and overflow reject. Unknown fields, trailing data and noncanonical/non-HTTPS URLs reject.
 Observation must not be in the future and must be within the bounded
 five-minute freshness window at first commit.
 
@@ -69,7 +72,10 @@ namespace ownership, pending exposure owner/generation/URL and expiry.
 Response: `demo-ready-response.v1` with `leaseName`, `leaseUID`, `requestId`,
 `state: "ready-for-acceptance"`, `readyAt`, `expiresAt` and the immutable request
 binding digest. The controller persists these facts under `status.demoReadiness`;
-`expiresAt` is exactly `readyAt + 604800 seconds`. No credential values, token,
+`expiresAt` is exactly `readyAt + retentionSeconds`. The response also includes
+the selected `retentionSeconds`; only historical `demo-readiness.v1` records without that field retain
+their original seven-day interpretation. New records use `demo-readiness.v2`
+and require an explicit stored duration even when the request omitted it. No credential values, token,
 request dump or response bodies enter controller logs/status.
 
 Status request is strict `{schemaVersion:"demo-ready-status-request.v1",
@@ -106,11 +112,11 @@ implementation is included in this controller slice.
 
 ## Remaining D06 policy
 
-This first bounded operation implements the default seven days only. D06 also
-requires project-configurable retention and explicit authorized extension. Those
-need separate policy-bound fields and an operator-authorized CAS extension
-operation, not automatic retry or delivery replay. They remain open; this slice
-does not claim complete D06 implementation.
+Configured initial retention is implemented in the follow-up below and must be
+supplied by the source-bound project candidate. Explicit authorized extension
+still requires a genuine operator ingress and a separately bound CAS decision,
+not automatic retry or delivery replay. That remains open; this slice does not
+claim complete D06 implementation.
 
 ## Implemented authority and recovery details
 
@@ -208,3 +214,63 @@ No Nova plugin/compiler, Core, production credential helper, logging policy,
 existing operator messaging, deployment or commit is included.
 
 Independent final counterreview: original Go 1.24.13 race suite passed (4.258 seconds); both actual Helm semantic checks passed. Delayed live-read deadline crossing and active-claim replay/status rejection were included. No remaining demonstrated blocker within the frozen controller scope.
+
+## Configured initial duration follow-up
+
+The controller accepts optional positive whole retentionSeconds, default 604800,
+without reusing the pre-Ready 24-hour cap or inventing an operating maximum.
+Go duration multiplication and RFC3339 timestamp representability are checked.
+A changed duration changes the exact request binding and is rejected on replay.
+The committed selected duration controls both namespace and exposure expiry;
+manual deletion still wins. Invalid/pruned stored duration cannot acknowledge
+Ready. No extension endpoint, extra operator identity or logging change was added.
+
+Original Go race tests cover omitted default, prior committed default records,
+custom 60 seconds/14 days, the technical maximum, null/fraction/negative/overflow,
+unchanged replay and changed-duration rejection, custom expiry cleanup, immediate
+manual deletion and a pruned selected duration. Actual Helm checks the CRD bounds.
+No real Kubernetes/operator/source compiler proof is claimed by these HTTP tests.
+
+Follow-up exact 14 paths: new controller demo-retention.go/demo-retention_test.go;
+modified demo-readiness.go, demo-readiness-lifecycle.go,
+demo-readiness-sources.go, demo-readiness_test.go;
+charts/kubeclaw/templates/buster-namespace-lease-crd.yaml;
+tests/verification/contracts/check-demo-ready-controller.mts;
+this note and demo-retention-policy-design.md;
+docs/review/evidence/demo-initial-retention-tests.txt and
+ demo-initial-retention-chart-tests.txt;
+ demo-initial-retention-default-pruning-before.txt and
+ demo-initial-retention-default-pruning-after.txt.
+
+### Independent default-pruning counterexample and correction
+
+Reviewer `resume_budget` reproduced a real flaw through the original controller
+HTTP fixture: a pruned new default duration returned COMMIT_UNCERTAIN first, then
+incorrectly returned Ready on replay by treating the missing field as legacy.
+Its original failed output is preserved byte-for-byte in
+`docs/review/evidence/demo-initial-retention-default-pruning-before.txt`.
+The reviewer used an overlay adding TestReviewPrunedDefaultReplayCannotAcknowledge
+and ran the original Go package; the substantive regression is now in
+`demo-retention_test.go`, covering omitted default, explicit default and custom
+requests, then both replay and status after pruning.
+
+Correction: only historical demo-readiness.v1 without retentionSeconds means
+seven days. New writes are demo-readiness.v2 and missing/null/invalid duration
+never becomes a legacy record. The CRD permits both explicit versions, requires
+v2's duration via CEL, forbids a duration on v1, and prevents version changes.
+Go independently enforces the same version distinction. Request and response
+wire schemas remain v1; this is a persisted-record discriminator, not a caller
+identity convention. Native API-server CEL enforcement is still an open gate.
+
+After-fix output for the reviewer's unchanged original counterprobe is preserved
+separately in demo-initial-retention-default-pruning-after.txt. Exact rerun:
+
+```sh
+go test -overlay /tmp/review-retention-overlay.json -count=1 ./cmd/buster-namespace-controller -run '^TestReviewPrunedDefaultReplayCannotAcknowledge$'
+```
+
+The temporary overlay is not shipped. The committed HTTP regression covers its
+case and additional status/custom-duration failures; no passing output replaces
+the original failure evidence.
+
+Independent final retention counterreview passed the unchanged original pruning counterexample, a malformed/version matrix rejecting both replay and status without writes, full original Go race suite (6.752 seconds) and both Helm checks. Raw reviewer outputs are preserved as demo-retention-independent-{default-pruning-final,malformed-final,final-go,final-helm}.txt under docs/review/evidence. The first two are original-handler overlay counterprobes, not modifications to production source; the committed tests cover default/custom pruning. Live CRD CEL enforcement remains an explicit native gate.
