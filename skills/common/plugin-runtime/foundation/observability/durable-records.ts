@@ -85,7 +85,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
       assertDurableRecordReplay(state);
       const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);
       if (duplicate) return { appended: false, record: duplicate };
@@ -111,18 +111,24 @@ export class FileDurableRecordStore implements DurableRecordStore {
   }
 
   async read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>> {
+    return this.withRecords<T, ReadonlyArray<DurableRecord<T>>>(stream, async records => records);
+  }
+
+  /** Domain owners may inspect records while holding this store's writer fence.
+   * Never reenter this store from operation; acquire other stores in a fixed order. */
+  async withRecords<T, R>(stream: string, operation: (records: ReadonlyArray<DurableRecord<T>>) => Promise<R>): Promise<R> {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
       assertDurableRecordReplay(state);
-      return structuredClone(state.records.filter((record) => record.stream === stream)) as DurableRecord<T>[];
+      return operation(structuredClone(state.records.filter((record) => record.stream === stream)) as DurableRecord<T>[]);
     });
   }
 
   async retirements(stream: string): Promise<readonly RecordRetirement[]> {
     identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE); assertDurableRecordReplay(state);
+      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);
       return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));
     });
   }
@@ -132,7 +138,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
     const intent = JSON.parse(canonicalJson(intentInput)) as RecordRetirementIntent; assertRetirementIntent(intent);
     const intentDigest = payloadDigest(intent);
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE); assertDurableRecordReplay(state);
+      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);
       const previous = state.retirements?.find(item => item.intent.operationId === intent.operationId);
       if (previous) {
         if (previous.intentDigest !== intentDigest) throw new Error('DURABLE_RETIREMENT_CONFLICT');
@@ -172,6 +178,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
     idempotencyKey: string,
     expectedPayloadDigest: string,
     payload: T,
+    authorize?: () => void,
   ): Promise<DurableRecord<T>> {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
@@ -181,7 +188,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
     return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE);
+      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
       assertDurableRecordReplay(state);
       const index = state.records.findIndex(
         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
@@ -205,6 +212,9 @@ export class FileDurableRecordStore implements DurableRecordStore {
       const candidate: DurableRecordState = { ...state, records: next };
       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)
         throw new Error("DURABLE_RECORD_STORE_FULL");
+      // The domain fence is already held; the final check must not yield or
+      // reenter this store between its CAS comparison and durable write.
+      if (authorize?.() !== undefined) throw new Error('DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS');
       await writeDurableState(this.#file, candidate);
       return structuredClone(record);
     });
