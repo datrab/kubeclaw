@@ -2,7 +2,7 @@
 
 Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
 requirements; 39 remain incomplete. Overall completion is false. The latest
-continuation is in `run-20260909t225913.md`; current remote package refs are
+continuation is in `run-20260909t233622.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 

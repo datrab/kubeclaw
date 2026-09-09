@@ -1,0 +1,33 @@
+Independent original Store.withRecords boundary at frozen a2bed5b.
+node --test tests/verification/reliability/record-fenced-read-independent.test.mjs
+✔ independent actual competing process waits for original read fence, and callback receives owned records (408.085448ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (393.534429ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1041.690387
+
+Exit0. Real original lock across separate Node processes; SIGKILL of owner, no injected Store/filesystem. These two primitive proofs do not fix or approve the separate dispatch causal-ownership defect. Original store/HTTP/telemetry regression subset:
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (445.195423ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (3.464868ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (303.728593ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (319.818557ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (271.558074ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (67.041855ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1397.277495ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2388.18153ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1010.066373ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1950.499506ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1392.014792ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9003.690351

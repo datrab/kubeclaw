@@ -1,0 +1,98 @@
+Source: 9e3caa9f5440268f18db30cee0dd240fbb1eb338
+Command: node --test --test-concurrency=1 tests/verification/reliability/nova-dispatch-projection.test.mjs tests/verification/reliability/nova-dispatch-retained-authority.test.mjs tests/verification/reliability/record-fenced-read-independent.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs tests/verification/reliability/blob-budget.test.mts tests/verification/reliability/artifact-checkpoint-encoding.test.mjs tests/verification/reliability/artifact-checkpoint-review.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs tests/verification/reliability/telemetry-retirement.test.mjs tests/verification/reliability/admission-retirement.test.mjs tests/verification/reliability/nova-store-boundaries.test.mts
+Exit: 0
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1052.789846ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (841.506486ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (987.41366ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (949.373488ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1129.578735ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1203.96676ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (826.795748ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (1926.860864ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1083.115425ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (2241.703458ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1166.842236ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2075.452676ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (1686.053085ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1417.22847ms)
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (553.599194ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (42.424721ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (21.212551ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (28.837053ms)
+✔ independent genuine-store response still binds all owner and byte fields (27.847154ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (45.014168ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (24.641273ms)
+✔ independent unknown-codec recording rejects before journal append (20.363891ms)
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (298.267829ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (7.664322ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (42.194915ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (10.35385ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (29.080807ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (286.724469ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (355.527339ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (6804.521361ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (5952.135616ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (6177.76337ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7170.107249ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (5991.130912ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (6448.123348ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (3898.66285ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (6274.963309ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (7016.537165ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (6634.751329ms)
+✔ retained import verifies every evidence, output and report blob with actual missing/corrupt files (259.152107ms)
+✔ retained import rejects pending, null-result, incomplete decision and result identity despite valid record CAS (87.092156ms)
+✔ bounded original record fenced read refuses oversized snapshot before callback and releases fence (25.059118ms)
+✔ genuine original decision calculation retains review_required as incomplete authority (24.72636ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (2.045896ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (202.433792ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (229.761028ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (874.838056ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (931.125073ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (781.873507ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (805.569365ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (838.355688ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (838.304614ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1054.558335ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (817.233309ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.415616ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.705324ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.706365ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (315.235819ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2256.245705ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (308.347432ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (902.731172ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (442.700887ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (455.050697ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1209.256269ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (545.268767ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (28.354783ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (109.978747ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (39.00621ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1258.198438ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2149.095871ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (909.039562ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1615.132469ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1296.191604ms)
+ℹ tests 73
+ℹ suites 0
+ℹ pass 73
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109392.699152

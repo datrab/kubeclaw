@@ -1,0 +1,29 @@
+Source: 9e3caa9f5440268f18db30cee0dd240fbb1eb338
+Command: npm run verify:test-gate:remote-import && npm run verify:test-gate:remote-runtime && ./node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs scripts/retire-nova-dispatch.mjs scripts/observability-retirement/dispatch.mjs skills/common/plugin-runtime/foundation/observability/durable-records.ts skills/nova/core/test-gates/dispatch-projection.ts skills/nova/core/test-gates/remote-dispatch-store.ts skills/nova/core/test-gates/remote-dispatch.ts skills/nova/core/test-gates/remote-result-authority.ts skills/nova/core/test-gates/remote-result-import.ts tests/verification/reliability/nova-dispatch-projection.test.mjs tests/verification/reliability/nova-dispatch-retained-authority.test.mjs tests/verification/reliability/record-fenced-read-independent.test.mjs
+Exit: 0
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-import
+> node tests/verification/contracts/check-pipeline-remote-result-import.mts && node tests/verification/contracts/check-junit-executed-required.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"ok":true,"phase":"7-D","decisions":7,"evidence":"verified-before-import"}
+PASS actual Node JUnit files -> original parser/finalizer; HTTP import and durable decision reconstruction; no native runner claim
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-runtime
+> node tests/verification/contracts/check-pipeline-remote-plan-runtime.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+{"ok":true,"regression":"nova-remote-deadlines","lostSubmit":"cancelled","unavailableRemote":"durable-unknown","stalledBodies":["result","evidence"],"restart":"reconnected"}
+{"ok":true,"phase":"7-C","transport":"authenticated-http"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+

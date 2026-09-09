@@ -3261,14 +3261,18 @@
         "docs/review/remediation/implementation/run3-observability-next-package.md",
         "docs/review/remediation/implementation/run5-blob-reader-independent-review.md",
         "docs/review/evidence/run5-root-blob-reader-final.txt",
-        "docs/review/evidence/run6-root-blob-reader-recheck.txt"
+        "docs/review/evidence/run6-root-blob-reader-recheck.txt",
+        {
+          "report": "implementation/run7-dispatch-root-review.md",
+          "summary": "Kausal gebundene Nova-Dispatch-Projektion unabhängig geprüft (27 Fälle) und Root kombiniert73/73 plus Originalimport/-runtime/Typen/Lint bestanden. Nur redundante Archiveinbettung wird entfernt; Originalblob/Job/Receipt/Evidence bleiben. Reale fehlgeschlagene Arbeit mit vollständigem Import und Original-Cancel, kein erfolgreicher nativer Provider."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Weitere Consumerquoten gemäß implementation/run3-observability-next-package.md bearbeiten: Telemetrie-Retirement existiert bereits; Nova-Dispatch-Archiveinbettung ist ein konkreter nächster redundanter Bytepfad. Globale Closure-/Evidence-/Artifact-/Buster-Retention benötigt erhaltene Replay- und manuelle Dispositionsautorität. Keine automatische Loglöschung.",
+      "next_action": "Explizite Revisionen: begrenzte Dispatch-Projektion integriert. Derived-sourceStageId bis echtem ursprünglichem Source-Artefakt-/Read-/Commit→Merge-Nachweis ablehnen. Weitere ursprüngliche Consumer-/Blob-/Buster-Retention und native Langlaufnachweise bearbeiten; keine automatische Loglöschung, keine Quotenlockerung oder globale Closure aus Teiltests.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
