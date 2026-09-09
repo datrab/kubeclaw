@@ -661,10 +661,17 @@ export function buildScaffold(context: Context): AnyRecord {
     ? [...moduleIds, ...gateIds.map((gateId) => `${TODO_PREFIX} place gate:${gateId} among [${moduleIds.join(', ')}]`)]
     : moduleIds;
   // Provider conversion reads raw legacy config before retired fields are removed from persisted progress.
-  const pipeline = buildPipeline(context, progress, modules, gates);
+  // Once generated, the scaffold is the operator's editable source until apply.
+  // Regeneration must not replace its provider plans with applied or inferred data.
+  if (Object.hasOwn(prior, 'pipeline') && (!isPlainObject(prior.pipeline) || prior.pipeline.project !== context.project)) {
+    throw new Error('SCAFFOLD_PIPELINE_INVALID: repair the existing scaffold pipeline before regeneration; no files were written');
+  }
+  const pipeline = Object.hasOwn(prior, 'pipeline') ? prior.pipeline : buildPipeline(context, progress, modules, gates);
   return {
     _schema: SCHEMA,
-    _instructions: ['Edit TODO values and gate placements.', 'Run with --apply to write progress.json.'],
+    _instructions: ['Edit TODO values and gate placements.',
+      'Regeneration preserves the existing scaffold pipeline; add explicit provider plans for newly discovered scopes.',
+      'Run with --apply to write progress.json and pipeline.json.'],
     project: context.project,
     version: valueOrDefault(prior.version, valueOrDefault(progress.version, DEFAULTS.version)),
     description: valueOrDefault(prior.description, valueOrDefault(progress.description, `${TODO_PREFIX} one-sentence project purpose`)),
