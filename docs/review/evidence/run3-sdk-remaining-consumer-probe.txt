@@ -1,0 +1,30 @@
+{
+  "producer": "en-US",
+  "input": {
+    "ä": 1,
+    "z": 2
+  },
+  "digest": "sha256:597a8244534226f771781ce0ca794742e42396ae5a6761e182ae8c16ba485e0f",
+  "sameLocale": {
+    "locale": "en-US",
+    "reviewAccepted": true,
+    "cacheAccepted": true
+  },
+  "crossLocale": {
+    "locale": "sv-SE",
+    "review": {
+      "ok": false,
+      "error": "evidence[0].digest does not match canonical content"
+    },
+    "cache": {
+      "ok": false,
+      "error": "review cache value digest is invalid"
+    }
+  },
+  "adapterDependencyRequestDigest": {
+    "en": "1daf546f2bac6488111817e83afe0e5f3d9cafa14126f70dd60d885fbf382d1b",
+    "sv": "95e429212b7a7a361b8c54011a969a340b7f4b7675e14891ff763b3e15931ac1",
+    "boundary": "original hash function plus separately inspected durable idempotency-key caller; not a full adapter restart"
+  },
+  "boundary": "original pure producer/parser contracts; not whole ArtifactStore/review runtime or gateway execution"
+}

@@ -1,0 +1,41 @@
+Source: remote 9628872976da8d43c3a17faa89962f9e32d88979; local audit-only checkpoint 8b5f85a.
+Command: node docs/review/evidence/run3-adapter-dependency-locale.mjs
+Exit 0 reproduces the OPEN defect; this is not a passing repair acceptance test.
+{
+  "observations": [
+    {
+      "name": "same",
+      "resumeLocale": "en-US",
+      "receiverCalls": 1,
+      "requestBodies": [
+        {
+          "ä": 1,
+          "z": 2
+        }
+      ],
+      "dependencyKeys": [
+        "adapter:test.locale-dependency:consumer:network.http:7f2b9a24bbf32d4043f39872a826684c0c2bd6371ab3d951d96c5c60d14c009a:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"
+      ]
+    },
+    {
+      "name": "cross",
+      "resumeLocale": "sv-SE",
+      "receiverCalls": 2,
+      "requestBodies": [
+        {
+          "ä": 1,
+          "z": 2
+        },
+        {
+          "ä": 1,
+          "z": 2
+        }
+      ],
+      "dependencyKeys": [
+        "adapter:test.locale-dependency:consumer:network.http:0b9b7e3968cd6f6d37bf5ac88a014276d0a79b2b205bdb5e8c07f7de3285cb47:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604",
+        "adapter:test.locale-dependency:consumer:network.http:786cc8111121241c47b9cc5d4f85e12d20dd23c9575a639291a3461ad13ba427:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"
+      ]
+    }
+  ],
+  "boundary": "Actual registered adapter via original AdapterRuntime; real SIGKILL after child HTTP completion before parent completion; original dependency receipt recovery and disk effect journal; local HTTP receiver only, no gateway or production service"
+}

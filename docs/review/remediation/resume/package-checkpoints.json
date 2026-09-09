@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "additional_current_inventory": "run4-active-packages.json",
   "repository": "datrab/kubeclaw",
   "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
   "purpose": "Interrupted work preservation; backup does not establish acceptance or integration readiness.",
