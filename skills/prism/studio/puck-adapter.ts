@@ -2,6 +2,8 @@ import type { Data } from "@puckeditor/core";
 import type { PrismDocument, PrismNode } from "@kubeclaw/prism-contracts-v1";
 import type { PrismOperation } from "../domain/index.ts";
 
+import { mapNode } from "./projection.ts";
+
 type PuckItem = Data["content"][number] & { props: Record<string, unknown> };
 type PositionedPrism = { node: PrismNode; parentId: string; index: number };
 type PositionedPuck = { item: PuckItem; parentId: string; index: number };
@@ -189,6 +191,16 @@ const toPrismNode = (
   };
 };
 
+function changedProps(node: PrismNode, item: PuckItem): Record<string, unknown> {
+  const projected = mapNode(node) as PuckItem;
+  if (item.type !== projected.type || item.props.nodeType !== projected.props.nodeType)
+    throw new Error("PRISM_NODE_TYPE_CHANGE_UNSUPPORTED");
+  const previous = nodeProps(projected);
+  return Object.fromEntries(Object.entries(nodeProps(item)).filter(
+    ([key, value]) => JSON.stringify(previous[key as keyof typeof previous]) !== JSON.stringify(value),
+  ));
+}
+
 export function puckChangeToOperation(
   document: PrismDocument,
   next: Data,
@@ -255,13 +267,9 @@ export function puckChangeToOperation(
   for (const entry of incoming) {
     const id = String(entry.item.props.id);
     const before = current.find((candidate) => candidate.node.id === id);
-    const props = nodeProps(entry.item);
-    if (
-      before &&
-      Object.entries(props).some(
-        ([key, value]) => before.node.props?.[key] !== value,
-      )
-    )
+    if (!before) continue;
+    const props = changedProps(before.node, entry.item);
+    if (Object.keys(props).length)
       operations.push({
         type: "node.props.set",
         baseRevision: document.meta.revision,

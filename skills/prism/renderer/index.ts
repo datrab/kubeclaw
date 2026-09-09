@@ -13,6 +13,10 @@ const text = (value: unknown): string =>
     : escape(value);
 const attrs = (node: PrismNode, props: Record<string, unknown>): string =>
   ` data-prism-id="${escape(node.id)}" data-prism-type="${escape(node.type)}"${typeof props.action === "string" ? ` data-prism-action="${escape(props.action)}"` : ""}${props.hidden === true ? " hidden" : ""}${typeof props.accessibilityLabel === "string" && props.accessibilityLabel ? ` aria-label="${escape(props.accessibilityLabel)}"` : ""}`;
+const actionAttr = (action: unknown): string =>
+  typeof action === "string" ? ` data-prism-action="${escape(action)}"` : "";
+const actionButton = (action: unknown, label: unknown): string =>
+  action ? `<button type="button"${actionAttr(action)}>${text(label)}</button>` : '';
 const options = (value: unknown): string =>
   Array.isArray(value)
     ? value
@@ -159,15 +163,11 @@ const patchedComponent = (
 ): PrismNode => {
   if (!component.root) throw new Error("component root is missing");
   const root = structuredClone(component.root);
-  const patches = {
-    ...((variant && component.variants?.[String(variant)]) as
-      Record<string, Record<string, unknown>> | undefined),
-    ...((overrides as Record<string, Record<string, unknown>> | undefined) ??
-      {}),
-  };
+  const variantPatch = (variant && component.variants?.[String(variant)]) as
+    Record<string, Record<string, unknown>> | undefined;
+  const overridePatch = overrides as Record<string, Record<string, unknown>> | undefined;
   const visit = (node: PrismNode): void => {
-    if (patches[node.id])
-      node.props = { ...(node.props ?? {}), ...patches[node.id] };
+    node.props = { ...(node.props ?? {}), ...variantPatch?.[node.id], ...overridePatch?.[node.id] };
     node.children?.forEach(visit);
   };
   visit(root);
@@ -267,8 +267,8 @@ export function renderNode(
         Array.isArray(p.items)
           ? p.items
               .map((item) => {
-                const entry = item as { id?: unknown; label?: unknown };
-                return `<button type="button" role="tab" aria-selected="${entry.id === p.active}">${text(entry.label)}</button>`;
+                const entry = item as { id?: unknown; label?: unknown; action?: unknown };
+                return `<button type="button" role="tab"${actionAttr(entry.action)} aria-selected="${entry.id === p.active}">${text(entry.label)}</button>`;
               })
               .join("")
           : ""
@@ -276,17 +276,17 @@ export function renderNode(
     case "breadcrumb":
       return `<nav${a} aria-label="Breadcrumb"><ol>${items(p.items)}</ol></nav>`;
     case "pagination":
-      return `<nav${a} aria-label="Pagination"><button type="button">Previous</button><span>${escape(p.page)} / ${escape(p.pageCount)}</span><button type="button">Next</button></nav>`;
+      return `<nav${a} aria-label="Pagination"><button type="button"${actionAttr(p.previousAction)}>Previous</button><span>${escape(p.page)} / ${escape(p.pageCount)}</span><button type="button"${actionAttr(p.nextAction)}>Next</button></nav>`;
     case "alert":
       return `<section role="alert"${a}>${p.title ? `<h2>${text(p.title)}</h2>` : ""}<p>${text(p.message)}</p>${children}</section>`;
     case "dialog":
-      return `<section role="dialog" aria-modal="${p.modal !== false}"${p.accessibilityLabel ? "" : ` aria-labelledby="${escape(node.id)}-title"`}${a}><h2 id="${escape(node.id)}-title">${text(p.title)}</h2>${p.description ? `<p>${text(p.description)}</p>` : ""}${children}</section>`;
+      return `<section role="dialog" aria-modal="${p.modal !== false}"${p.accessibilityLabel ? "" : ` aria-labelledby="${escape(node.id)}-title"`}${a}><h2 id="${escape(node.id)}-title">${text(p.title)}</h2>${p.description ? `<p>${text(p.description)}</p>` : ""}${children}${actionButton(p.dismissAction, "Close")}</section>`;
     case "toast":
       return `<div role="status"${a}>${text(p.message)}</div>`;
     case "tooltip":
       return `<span${a}>${children}<span role="tooltip">${text(p.content)}</span></span>`;
     case "empty-state":
-      return `<section${a}><h2>${text(p.title)}</h2><p>${text(p.message)}</p>${p.action ? `<button type="button">${text(p.actionLabel)}</button>` : ""}</section>`;
+      return `<section${a}><h2>${text(p.title)}</h2><p>${text(p.message)}</p>${p.action ? `<button type="button"${actionAttr(p.action)}>${text(p.actionLabel)}</button>` : ""}</section>`;
     case "spinner":
       return `<span role="status"${a}>${text(p.label)}</span>`;
     case "component":

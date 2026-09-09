@@ -11,7 +11,7 @@
   "scripts": {
     "test": "node --test tests/*.test.mts openclaw-plugin/index.test.mjs",
     "test:domain": "node --test tests/domain.test.mts tests/domain-storage.test.mts",
-    "test:renderer": "node --test tests/renderer.test.mts",
+    "test:renderer": "node --test tests/renderer.test.mts tests/renderer-remediation.test.mts",
     "test:storage": "node --test tests/storage.test.mts tests/control.test.mts",
     "test:engine": "node --test tests/engine.test.mts",
     "test:corpus": "node --test tests/corpus.test.mts",
@@ -25,7 +25,8 @@
     "start:control": "node --experimental-strip-types server/control.ts",
     "start:studio": "node --experimental-strip-types server/studio.ts",
     "start:worker": "node --experimental-strip-types server/worker.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:studio-remediation": "node --test tests/studio-roundtrip.test.mts tests/preview-assets.test.mts && npm run build:studio && playwright test --config studio/playwright-remediation.mjs"
   },
   "dependencies": {
     "@kubeclaw/pipeline-worker-core-contract": "1.0.0",

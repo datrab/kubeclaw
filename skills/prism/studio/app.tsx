@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Puck, type Config, type Data } from "@puckeditor/core";
+import { Puck, type Config } from "@puckeditor/core";
 import "@puckeditor/core/puck.css";
 import "./studio.css";
 import type { PrismDocument, PrismNode } from "@kubeclaw/prism-contracts-v1";
@@ -10,22 +10,10 @@ import {
   type Viewport,
 } from "../domain/index.ts";
 import { puckChangeToOperation } from "./puck-adapter.ts";
+import { project, type Props } from "./projection.ts";
+import { loadPreviewAssets, type PreviewAssets } from "./preview-assets.ts";
 import { previewDocument } from "./preview.ts";
 
-type Props = {
-  Stack: { gap: number; content: unknown };
-  Heading: { text: string };
-  Text: { text: string };
-  Button: { label: string };
-  PrismBlock: {
-    nodeType: string;
-    label: string;
-    text: string;
-    action: string;
-    tone: string;
-    content: unknown;
-  };
-};
 const nodeTypes = [
   "grid",
   "split",
@@ -133,52 +121,21 @@ const config: Config<Props> = {
     },
   },
 };
-const mapNode = (node: PrismNode): Data<Props>["content"][number] => ({
-  type:
-    node.type === "heading"
-      ? "Heading"
-      : node.type === "button"
-        ? "Button"
-        : node.type === "text"
-          ? "Text"
-          : node.type === "stack"
-            ? "Stack"
-            : "PrismBlock",
-  props: {
-    id: node.id,
-    ...(node.type === "heading"
-      ? { text: String(node.props?.content ?? "") }
-      : node.type === "button"
-        ? { label: String(node.props?.label ?? "") }
-        : node.type === "text"
-          ? { text: String(node.props?.content ?? "") }
-          : node.type === "stack"
-            ? {
-                gap: Number(node.props?.gap ?? 16),
-                content: (node.children ?? []).map(mapNode),
-              }
-            : {
-                nodeType: node.type,
-                label: String(node.props?.label ?? node.props?.title ?? ""),
-                text: String(
-                  node.props?.content ??
-                    node.props?.message ??
-                    node.props?.description ??
-                    "",
-                ),
-                action: String(node.props?.action ?? ""),
-                tone: String(node.props?.tone ?? "default"),
-                content: (node.children ?? []).map(mapNode),
-              }),
-  },
-});
-const project = (document: PrismDocument, viewId: string): Data<Props> => ({
-  root: { props: { title: document.meta.title } },
-  content: (document.views[viewId]?.root.children ?? []).map(mapNode),
-});
 
 function App() {
   const [document, setDocument] = useState<PrismDocument | null>(null);
+  const [previewAssets, setPreviewAssets] = useState<{ document: PrismDocument; assets: PreviewAssets } | null>(null);
+  const [previewAssetError, setPreviewAssetError] = useState<string | null>(null);
+  useEffect(() => {
+    if (!document) return;
+    const controller = new AbortController();
+    setPreviewAssets(null); setPreviewAssetError(null);
+    void loadPreviewAssets(document, controller.signal).then(
+      (assets) => { if (!controller.signal.aborted) setPreviewAssets({ document, assets }); },
+      (error: unknown) => { if (!controller.signal.aborted) setPreviewAssetError(error instanceof Error ? error.message : String(error)); },
+    );
+    return () => controller.abort();
+  }, [document]);
   const [csrf, setCsrf] = useState("");
   const [userId, setUserId] = useState("");
   const [failure, setFailure] = useState("");
@@ -854,13 +811,16 @@ function App() {
               }}
             />
           ) : (
+            <>
+            {previewAssetError && <p role="alert">Preview asset failed: {previewAssetError}</p>}
             <iframe
               ref={previewRef}
               className="plain-preview"
               title="Isolated prototype preview"
               sandbox="allow-scripts"
-              srcDoc={previewDocument(document, viewId, viewState, viewport)}
+              srcDoc={previewDocument(document, viewId, viewState, viewport, previewAssets?.document === document ? previewAssets.assets : {})}
             />
+            </>
           )}
         </div>
       </section>
