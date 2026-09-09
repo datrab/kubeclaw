@@ -11,6 +11,33 @@ not uncommitted work or another run's checkout.
 Source checkpoint: `53640e08b6214909aa495fec48036048a4bd4c2c`.
 No finding is closed and this report is not independent approval.
 
+Final production follow-up: `fca25ae66dc360560b44f40f2f4444e259a4d301`.
+Owning canonical receipt validation now occurs before first persistence and
+acknowledgement, not merely on replay. It rejects invalid JSON-domain values
+without executing getters, and rejects arrays/null as result records. Genuine
+registered adapters perform real HTTP and return five invalid result forms;
+the original coordinator records canonical failure, never malformed success,
+and does not repeat the effect on cross-locale restart.
+
+Receipt construction/validation is synchronous, while original journal/audit
+persistence remains asynchronous. This preserves original uncertainty on an
+I/O or audit rejection; it does not catch that rejection and invent terminal
+failure. An initial test exposed the async-validation catch boundary; the raw
+failure is preserved in run5-adapter-result-initial.txt. The final 15-case
+write/locale/uncertainty/lock suite and all types/generation/lint checks pass.
+The complete final production matrix passes 28/28, zero skips, including the
+original effect identity/journal/dependency and both boundary suites; raw output
+is run5-adapter-final-28.txt. This remains author verification pending independent
+approval and root integration.
+Boundary restart tests are included in the existing verify:reliability glob as
+adapter-dependency-boundary.test.mjs (2/2 zero skips).
+
+Durable unapproved checkpoint: branch fix/resume-47-run5-adapter-fca25ae at
+`9bdc73c19a5518f1292ac126581c9cb941572bb2`, parent freshly read
+`5a437c726646d75d5500c23504ee3a3540547c3f`. All 32 affected blobs and modes
+were read back exactly. All 10 workflows were inspected; this branch push has
+no CI/deployment trigger. No integration branch update was performed.
+
 ## Owning contracts, not a shadow validator
 
 The private dependency-request-validation module has been removed. Both original

@@ -1,0 +1,108 @@
+Source03d3b54: initial canonical #complete rejection escaped original async catch, yielding no malformed completed receipt but also no canonical failed receipt. Assertions retained; fixed by synchronous construction/validation, separate original async persistence.
+Command: node --test tests/verification/reliability/adapter-dependency-result.test.mjs
+✖ original registered adapter rejects malformed dependency result [] (947.167108ms)
+✖ original registered adapter rejects malformed dependency result null (1005.300502ms)
+✖ original registered adapter rejects malformed dependency result Array(2) (879.846625ms)
+✖ original registered adapter rejects malformed dependency result ({value:NaN}) (890.520836ms)
+✖ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (829.396825ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4653.15813
+
+✖ failing tests:
+
+test at tests/verification/reliability/adapter-dependency-result.test.mjs:8:3
+✖ original registered adapter rejects malformed dependency result [] (947.167108ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-adapter/tests/verification/reliability/adapter-dependency-result.test.mjs:28:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-result.test.mjs:8:3
+✖ original registered adapter rejects malformed dependency result null (1005.300502ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-adapter/tests/verification/reliability/adapter-dependency-result.test.mjs:28:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-result.test.mjs:8:3
+✖ original registered adapter rejects malformed dependency result Array(2) (879.846625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-adapter/tests/verification/reliability/adapter-dependency-result.test.mjs:28:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-result.test.mjs:8:3
+✖ original registered adapter rejects malformed dependency result ({value:NaN}) (890.520836ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-adapter/tests/verification/reliability/adapter-dependency-result.test.mjs:28:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-result.test.mjs:8:3
+✖ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (829.396825ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-adapter/tests/verification/reliability/adapter-dependency-result.test.mjs:28:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+Exit1.

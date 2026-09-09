@@ -1,0 +1,50 @@
+Source fca25ae66dc360560b44f40f2f4444e259a4d301
+Command: node --test tests/verification/reliability/{adapter-dependency-contract.test.mjs,adapter-dependency-boundary.test.mjs,adapter-dependency-result.test.mjs,adapter-dependency-locale.test.mjs,adapter-dependency-identity.test.mts,effect-identity-version.test.mts,effect-lock-lifetime.test.mts,effect-journal-ownership.test.mts,external-effect-recovery.test.mts}
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (6527.926438ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (5267.73125ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (38.209656ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.447886ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (4.055122ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (3.640816ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (4496.560046ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (5781.776047ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:89f402ab31ae31e055bd9c6a804d3d79cc7053bf82393bf4d179f287ce7f9e7a"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (2885.395223ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:a3ee3fb832a066de3dd531d75529b766b13cfab4847f8f9a4202b5b7181f365e:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (3438.054313ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:0d67b4f7a8fa9b2e6da401d46a6e26c539ca844bc5e7c86346108017a87927bc:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:09b454e178beb90611ad5dbca4ef9ac09810ea5199a259f9fe9afab16916a274:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (3667.049338ms)
+✔ original registered adapter rejects malformed dependency result [] (2840.914857ms)
+✔ original registered adapter rejects malformed dependency result null (2382.216879ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (2526.553023ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (2682.17196ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (1803.162126ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (16011.290608ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3121.801827ms)
+✔ effect journal owns request and receipt payloads: memory (32.642707ms)
+✔ effect journal owns request and receipt payloads: file (58.294201ms)
+✔ effect journal owns request and receipt payloads: file-sidecar (48.017672ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (124.01008ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (114.597247ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (79.75209ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (223.467126ms)
+✔ before-receipt cannot silently repeat a real external mutation (2842.709557ms)
+✔ after-receipt cannot silently repeat a real external mutation (2777.725745ms)
+✔ lost-response cannot silently repeat a real external mutation (3120.680385ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19816.05064
+Exit 0.

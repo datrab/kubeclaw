@@ -1,0 +1,203 @@
+{
+  "source": "fca25ae66dc360560b44f40f2f4444e259a4d301",
+  "remoteCommit": "9bdc73c19a5518f1292ac126581c9cb941572bb2",
+  "parent": "5a437c726646d75d5500c23504ee3a3540547c3f",
+  "branch": "fix/resume-47-run5-adapter-fca25ae",
+  "files": [
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/adaptercheck-types.txt",
+      "sha": "5fcd44292bd748bdc436da7579ca3efb4e0fd578"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/adapterfinal-lint.txt",
+      "sha": "5fcd44292bd748bdc436da7579ca3efb4e0fd578"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/adapterlocaletests.txt",
+      "sha": "7a09d1bf730f7b9fc69c9409a228ba111f58f6b3"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/before.txt",
+      "sha": "a478966fc6b6cd238be2b3e5df03f511489ef3d7"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/regressions-after.txt",
+      "sha": "a0d633b809bd0ce2822af53b6c74908af5a5a91e"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/regressions-initial.txt",
+      "sha": "d25420760ff7d5c57a7020c4e199d90bfe63e364"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run3-adapter-identity/typecheck-initial.txt",
+      "sha": "7d91350f808c1a8c011539b1833d0c1d68a844f9"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-archive.json",
+      "sha": "c0103e6d39a0af786aa011ff2a12035a168d8a88"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-author-regressions.txt",
+      "sha": "ef15892470adac9a7b2653fcb9b04004d5086a78"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-boundary-after.txt",
+      "sha": "c65ca00d6a887422e44150839828b00f945ab00c"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-boundary-default.txt",
+      "sha": "dee0e9dfcc1714285a339d08c95e35117cd60e93"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-lint.txt",
+      "sha": "657d4ce20df9702580f4730269b83a3457f9b4d5"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-original-contracts.txt",
+      "sha": "64ae72cc45590f249adbc4d9e45f485f6926fbb7"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/evidence/run5-adapter-types.txt",
+      "sha": "1533968da9cbcf705d83eb7e59f222ed202a00c7"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/remediation/implementation/run3-adapter-dependency-identity.md",
+      "sha": "59381315c609915f9f87ae39cb4e4eefed2adb1b"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "docs/review/remediation/implementation/run5-adapter-canonical-identity.md",
+      "sha": "ee97d19203af844043462418366b04d0c99020b0"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha": "c44c573d2d86fecdaee7a255eeef0977c20e80a6"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha": "0a264094b5b1b9eaacff2412091cbd3176235bc3"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/effects/contracts.ts",
+      "sha": "4ed58a23577dc193007ddc3e5a2b57e3b99cc423"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/effects/dependency-identity.ts",
+      "sha": "1fdff52e67be877d858745970ed80e46220c91af"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/effects/dependency-journal.ts",
+      "sha": "7d3b8a388515d0682c526100936cb63a9a8474a0"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "sha": "9cfe1650b49047803f104e74b78f191bdb845985"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/effects/journal.ts",
+      "sha": "c17cbe961426e5fd87facb492b20d867c2eb9473"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "sha": "57f3be49d3ac855f305ba773fc4096e166106691"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha": "a944b28af6b5b17f7674aab7ac4d9d5aec847b90"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/fixtures/adapter-dependency/legacy-core.json",
+      "sha": "9eee510bb1a5066c243f606dfcdcb3f9e41b8926"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/verification/reliability/adapter-dependency-boundary.test.mjs",
+      "sha": "a71783fb0a30a5dad8ad3e85dbdec5a9d95d4227"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/verification/reliability/adapter-dependency-contract.test.mjs",
+      "sha": "26425c4c36f550b27b4c2d2e96708100b21dc0b9"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/verification/reliability/adapter-dependency-historical.mjs",
+      "sha": "988dfdb03af31fd1949016bbd3f23a1b89ff42bc"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "sha": "4659e79cd19a4286985558ff99962f1a75d4a11f"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/verification/reliability/adapter-dependency-locale.test.mjs",
+      "sha": "a9875ac48541f1d748a148c965f3b26cd01e3513"
+    },
+    {
+      "match": true,
+      "mode": "100644",
+      "path": "tests/verification/reliability/adapter-dependency-result.test.mjs",
+      "sha": "93ec3d279772345b4adb0a7173c041fa99b403b1"
+    }
+  ],
+  "workflowCount": 10,
+  "repairPushTriggers": false,
+  "unreviewed": true
+}

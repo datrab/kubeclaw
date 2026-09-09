@@ -1,0 +1,33 @@
+Source fca25ae66dc360560b44f40f2f4444e259a4d301
+Command: node --test tests/verification/reliability/{adapter-dependency-result.test.mjs,adapter-dependency-locale.test.mjs,external-effect-recovery.test.mts,effect-lock-lifetime.test.mts}
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:2c4a48f5fc4ecbf9b57aaa17275da1f6e90fb7132dc9dd6bf763e2a3650caeb6"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (2070.166877ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:f0a7af9928f23b096f1eee2abf0a4b47c54ef3ac105381b3e2aaf8dce9b3901e:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (2240.22439ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:65f34516087a2e2187666731216e6d8b8535e58d63cf38a07c2e80cc2a40c278:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:45cda79ee5362a8ca958c5a53be1e0c240e9be59701b2c90ec334a21000b24b5:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2322.207397ms)
+✔ original registered adapter rejects malformed dependency result [] (1970.268446ms)
+✔ original registered adapter rejects malformed dependency result null (1721.073406ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (1746.91685ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (1799.210908ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (1627.803424ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (67.983515ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (65.399594ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (51.211456ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (111.830852ms)
+✔ before-receipt cannot silently repeat a real external mutation (2256.750888ms)
+✔ after-receipt cannot silently repeat a real external mutation (2060.139788ms)
+✔ lost-response cannot silently repeat a real external mutation (2038.252364ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8974.009467
+Exit0.
+Commands: Nova typecheck; Foundation typecheck; generate-plugin-sdk-types --check; original configured focused eslint.
+All four exit0.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
