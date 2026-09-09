@@ -1,22 +1,11 @@
 import assert from 'node:assert/strict';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
-
-const { validateDeclarations } = await import(pathToFileURL(path.resolve('src/stage.ts')).href);
-const base = {
-  moduleId: 'web',
-  modulePath: 'modules/web',
-  ownedPaths: ['docker/Dockerfile', 'api/openapi.yaml'],
-  serveDockerfile: 'docker/Dockerfile',
-  apiSpecFile: 'api/openapi.yaml',
-};
-assert.deepEqual(validateDeclarations(base, 'Deliver Dockerfile and openapi.yaml'), []);
-assert.deepEqual(
-  validateDeclarations({ ...base, ownedPaths: [], serveDockerfile: 'runtime/Dockerfile' }, 'Deliver openapi.yaml'),
-  [],
-);
-assert.deepEqual(
-  validateDeclarations(base, 'No declared outputs').map(({ code }) => code),
-  ['preflight_contract.serve_dockerfile_not_declared', 'preflight_contract.api_spec_not_declared'],
-);
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.preflight-contract', suite: 'unit' }));
+import {parseDeclaration, validateDeliveryPaths} from '../src/declarations.ts';
+const block=(paths,extra={})=>'```kubeclaw-deliverables\n'+JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'web',substep:null,deliverables:paths,...extra})+'\n```';
+const input={moduleId:'web',modulePath:'modules/web',ownedPaths:['docker/'],serveDockerfile:'docker/Dockerfile',apiSpecFile:'api/openapi.yaml'};
+const paths=['docker/Dockerfile','api/openapi.yaml'];
+assert.deepEqual(validateDeliveryPaths(input,parseDeclaration('web',null,block(paths))),[]);
+for(const content of ['Do not deliver Dockerfile or openapi.yaml. These files belong to another project.',block(paths)+block(paths),'````markdown\n'+block(paths)+'\n````',block(paths,{moduleId:'foreign'}),block(paths,{substep:'backend'}),block(['../Dockerfile']),block(['/Dockerfile']),block(['api/./openapi.yaml']),block(['api\\openapi.yaml']),block(paths,{unknown:true}),block(['docker/Dockerfile','docker/Dockerfile'])]) assert.throws(()=>parseDeclaration('web',null,content),/FORGE_DECLARATION_INVALID/);
+assert.equal(validateDeliveryPaths(input,['other/Dockerfile','foreign/openapi.yaml']).length,2);
+assert.equal(validateDeliveryPaths({...input,ownedPaths:['Dockerfile'],apiSpecFile:null},[]).length,0,'suffix is not ownership');
+assert.throws(()=>validateDeliveryPaths(input,[...paths,...paths]),/duplicate_substep_assignment/);
+console.log(JSON.stringify({ok:true,plugin:'kubeclaw.preflight-contract',suite:'unit'}));

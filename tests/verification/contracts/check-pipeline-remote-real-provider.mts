@@ -39,7 +39,7 @@ try {
   fs.mkdirSync(repository, { recursive: true });
   fs.writeFileSync(path.join(repository, 'README.md'), 'phase-7 real remote provider\n');
   fs.mkdirSync(path.join(repository, 'module'));
-  fs.writeFileSync(path.join(repository, 'module', 'FORGE.md'), 'Required deliverable: README.md\n');
+  fs.writeFileSync(path.join(repository, 'module', 'FORGE.md'), '```kubeclaw-deliverables\n' + JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'module',substep:null,deliverables:['README.md']}) + '\n```\n');
   fs.writeFileSync(path.join(packageRoot, 'schemas', 'config.json'), JSON.stringify({
     $schema: 'https://json-schema.org/draft/2020-12/schema', type: 'object', additionalProperties: false,
   }));

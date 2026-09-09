@@ -27,6 +27,24 @@ Test files with concrete test cases. ← REQUIRED
 
 **Note:** `Out of Scope` is optional. Only include it on standalone modules (no substeps) where scope boundaries are non-obvious — e.g. Module 01 "scaffold only, no implementations". For substep FORGEs, omit it — the Goal section already defines scope, and OOS across concatenated substeps adds noise.
 
+### Machine-readable delivery declaration
+
+When a graph uses `kubeclaw.validate.preflight-contract`, each consumed blueprint
+must include one explicit declaration in addition to explanatory prose:
+
+```kubeclaw-deliverables
+{"schemaVersion":"forge-deliverables.v1","moduleId":"web","substep":null,"deliverables":["docker/Dockerfile","api/openapi.yaml"]}
+```
+
+Author the actual full repository-relative output paths; do not infer them from
+basenames or ownership. Replace `web` with the exact module identity and `null`
+with the configured substep identity for a substep blueprint. Assign each path
+to one substep. A prose mention (including negated or foreign-file examples) does
+not declare delivery. Existing prose-only files need explicit migration.
+See [the preflight contract](../plugins/preflight-contract/README.md) for the
+closed schema and ownership rules. The scaffold does not auto-create these
+assertions. Include the same blueprint in reviewed/synced control paths.
+
 ### Unit Test Section — REQUIRED
 
 Without this section Forge writes no tests. The declared `kubeclaw.direct-command@1`

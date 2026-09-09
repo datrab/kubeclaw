@@ -1,20 +1,5 @@
-import path from 'node:path';
+import { parseDeclaration, validateDeliveryPaths, type Input, type Failure } from './declarations.ts';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
-
-interface Input {
-  readonly moduleId: string;
-  readonly modulePath: string;
-  readonly substeps?: readonly string[];
-  readonly ownedPaths: readonly string[];
-  readonly serveDockerfile: string | null;
-  readonly apiSpecFile: string | null;
-}
-
-interface Failure {
-  readonly code: string;
-  readonly message: string;
-  readonly nextStep: string;
-}
 
 function safePath(value: string, label: string): string {
   if (
@@ -28,18 +13,6 @@ function safePath(value: string, label: string): string {
   return value.replaceAll('\\', '/').replace(/\/+$/, '');
 }
 
-function normalizeComparablePath(value: string): string {
-  return value.replaceAll('\\', '/').replace(/^\/+/, '').replace(/^(?:\.\/)+/, '').replace(/\/+$/, '').trim();
-}
-
-function ownsPath(ownedPaths: readonly string[], reference: string): boolean {
-  const candidate = normalizeComparablePath(reference);
-  return ownedPaths
-    .map(normalizeComparablePath)
-    .filter(Boolean)
-    .some((owned) => candidate === owned || candidate.endsWith(`/${owned}`));
-}
-
 async function readText(context: PluginInvocationContext, file: string): Promise<string> {
   const response = await context.invoke('git.repository.read', {
     operation: 'read_text',
@@ -50,7 +23,7 @@ async function readText(context: PluginInvocationContext, file: string): Promise
   return response.content;
 }
 
-async function readBlueprint(input: Input, context: PluginInvocationContext): Promise<string> {
+async function readBlueprint(input: Input, context: PluginInvocationContext): Promise<readonly string[]> {
   const moduleRoot = safePath(input.modulePath, 'modulePath');
   if (input.substeps !== undefined) {
     if (input.substeps.length === 0) throw new Error('FORGE_SUBSTEP_INVALID:at least one substep is required');
@@ -58,39 +31,18 @@ async function readBlueprint(input: Input, context: PluginInvocationContext): Pr
     for (const raw of input.substeps) {
       const substep = safePath(raw, 'substep');
       try {
-        parts.push(await readText(context, `${moduleRoot}/${substep}/FORGE.md`));
+        parts.push(...parseDeclaration(input.moduleId, substep, await readText(context, `${moduleRoot}/${substep}/FORGE.md`)));
       } catch (error) {
         throw new Error(`FORGE_BLUEPRINT_MISSING:${substep}:${error instanceof Error ? error.message : String(error)}`);
       }
     }
-    return parts.join('\n\n---\n\n');
+    return parts;
   }
   try {
-    return await readText(context, `${moduleRoot}/FORGE.md`);
+    return parseDeclaration(input.moduleId, null, await readText(context, `${moduleRoot}/FORGE.md`));
   } catch (error) {
     throw new Error(`FORGE_BLUEPRINT_MISSING:${error instanceof Error ? error.message : String(error)}`);
   }
-}
-
-export function validateDeclarations(input: Input, content: string): readonly Failure[] {
-  const failures: Failure[] = [];
-  if (input.serveDockerfile && ownsPath(input.ownedPaths, input.serveDockerfile)) {
-    const name = path.posix.basename(normalizeComparablePath(input.serveDockerfile));
-    if (!content.includes(name)) failures.push({
-      code: 'preflight_contract.serve_dockerfile_not_declared',
-      message: `Owned serve Dockerfile '${name}' is not declared in the Forge blueprint.`,
-      nextStep: `Add '${name}' to the required deliverables before retrying Forge.`,
-    });
-  }
-  if (input.apiSpecFile) {
-    const name = path.posix.basename(normalizeComparablePath(input.apiSpecFile));
-    if (!content.includes(name)) failures.push({
-      code: 'preflight_contract.api_spec_not_declared',
-      message: `API specification '${name}' is not declared in the Forge blueprint.`,
-      nextStep: `Add '${name}' to the required deliverables before retrying Forge.`,
-    });
-  }
-  return failures;
 }
 
 async function report(
@@ -111,12 +63,13 @@ async function report(
 }
 
 export async function execute(input: Input, context: PluginInvocationContext): Promise<StageResult> {
-  let content: string;
+  let failures: readonly Failure[];
   try {
-    content = await readBlueprint(input, context);
+    failures = validateDeliveryPaths(input, await readBlueprint(input, context));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    const code = message.startsWith('FORGE_SUBSTEP_INVALID')
+    const code = message.includes('FORGE_DECLARATION_INVALID') ? 'preflight_contract.declaration_invalid'
+      : message.startsWith('FORGE_SUBSTEP_INVALID')
       ? 'preflight_contract.substep_invalid'
       : message.includes('must be a non-empty repository-relative')
         ? 'preflight_contract.path_invalid'
@@ -129,7 +82,6 @@ export async function execute(input: Input, context: PluginInvocationContext): P
       artifacts: [await report(context, input, [failure])],
     };
   }
-  const failures = validateDeclarations(input, content);
   const artifact = await report(context, input, failures);
   if (failures.length > 0) return {
     schemaVersion: 'stage-result.v2',

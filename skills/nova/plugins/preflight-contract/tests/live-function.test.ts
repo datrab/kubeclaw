@@ -12,9 +12,15 @@ const artifacts = path.join(temporary, 'artifacts');
 fs.mkdirSync(path.join(project, 'modules/web/api'), { recursive: true });
 fs.mkdirSync(path.join(project, 'modules/split/frontend'), { recursive: true });
 fs.mkdirSync(path.join(project, 'modules/split/backend'), { recursive: true });
-fs.writeFileSync(path.join(project, 'modules/web/FORGE.md'), 'Deliver Dockerfile and openapi.yaml.\n');
-fs.writeFileSync(path.join(project, 'modules/split/frontend/FORGE.md'), 'Deliver index.html.\n');
-fs.writeFileSync(path.join(project, 'modules/split/backend/FORGE.md'), 'Deliver openapi.yaml.\n');
+function blueprint(moduleId, substep, deliverables) {
+  return 'Build the explicitly declared outputs.\n```kubeclaw-deliverables\n'
+    + JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId,substep,deliverables}) + '\n```\n';
+}
+const moduleBlueprint = path.join(project, 'modules/web/FORGE.md');
+const writeModule = (content) => fs.writeFileSync(moduleBlueprint, content);
+writeModule(blueprint('web',null,['docker/Dockerfile','api/openapi.yaml']));
+fs.writeFileSync(path.join(project,'modules/split/frontend/FORGE.md'),blueprint('split','frontend',['web/index.html']));
+fs.writeFileSync(path.join(project,'modules/split/backend/FORGE.md'),blueprint('split','backend',['api/openapi.yaml']));
 
 function grantedRegistry() {
   const roots = [
@@ -124,6 +130,19 @@ try {
     serveDockerfile: null,
     apiSpecFile: 'api/openapi.yaml',
   })).outcome, 'passed');
+  for (const [name, content, expected] of [
+    ['negated', 'Do not deliver Dockerfile or openapi.yaml. These files belong to another project.', 'blocked'],
+    ['wrong-path', blueprint('web', null, ['foreign/Dockerfile', 'foreign/openapi.yaml']), 'request_fix'],
+    ['wrong-module', blueprint('foreign', null, ['docker/Dockerfile','api/openapi.yaml']), 'blocked'],
+    ['directory-owned', blueprint('web', null, ['api/openapi.yaml']), 'request_fix'],
+  ]) {
+    writeModule(content);
+    assert.equal((await run(name,{...moduleInput,ownedPaths:['docker/']})).outcome,expected);
+  }
+  writeModule(blueprint('web',null,['docker/Dockerfile','api/openapi.yaml']));
+  assert.equal((await run('exact-after-migration',moduleInput)).outcome,'passed');
+  fs.writeFileSync(path.join(project,'modules/split/backend/FORGE.md'),blueprint('split','frontend',['api/openapi.yaml']));
+  assert.equal((await run('wrong-substep',{...moduleInput,moduleId:'split',modulePath:'modules/split',substeps:['frontend','backend']})).outcome,'blocked');
   const catalog = JSON.parse(fs.readFileSync(path.join(artifacts, 'records', 'store.json'), 'utf8')).records;
   assert.ok(catalog.length >= 5);
 } finally {
