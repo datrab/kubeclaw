@@ -2,6 +2,7 @@ import type { AdapterInstance, EffectJournal, EffectReceipt, EffectRequest, Pack
 import type { EffectAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 import { assertMatchingRequest, stableEffectId } from './identity.ts';
 import { acquireResource } from './resource-acquisition.ts';
+import { resolveDependencyInvocation } from './dependency-identity.ts';
 
 interface Dependencies {
   readonly journal: EffectJournal;
@@ -28,12 +29,13 @@ export async function invokeDurableEffect(
 
 class DurableInvocation {
   readonly #dependencies: Dependencies; readonly #adapter: AdapterInstance; readonly #adapterOwner: PackageResolution;
-  readonly #invocation: EffectInvocation; readonly #signal: AbortSignal; #lock: ResourceLock | undefined;
+  #invocation: EffectInvocation; readonly #signal: AbortSignal; #lock: ResourceLock | undefined;
   constructor(dependencies: Dependencies, adapter: AdapterInstance, adapterOwner: PackageResolution, invocation: EffectInvocation, signal: AbortSignal) {
     this.#dependencies = dependencies; this.#adapter = adapter; this.#adapterOwner = adapterOwner; this.#invocation = invocation; this.#signal = signal;
   }
 
   async execute(): Promise<EffectReceipt> {
+    if (this.#invocation.dependencyIdentity) this.#invocation = await resolveDependencyInvocation(this.#dependencies.journal, this.#invocation);
     let prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
     assertMatchingRequest(prior, this.#invocation);
     const existing = await this.#existingReceipt(prior);
@@ -42,6 +44,7 @@ class DurableInvocation {
     let failed = false;
     let failure: unknown;
     try {
+      if (this.#invocation.dependencyIdentity) this.#invocation = await resolveDependencyInvocation(this.#dependencies.journal, this.#invocation);
       prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
       assertMatchingRequest(prior, this.#invocation);
       const lockedExisting = await this.#existingReceipt(prior);
