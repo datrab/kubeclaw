@@ -1,0 +1,22 @@
+▶ manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay
+  ✔ real metadata byte quota is released; record count and completed status remain (227.786896ms)
+  ✔ reopened original HTTP consumer returns same completion; full validation and conflicts survive (205.921889ms)
+  ✔ stale scope, unknown identity, movable branch and missing retained tag reject unchanged (222.10015ms)
+  ✔ missing or changed real result blocks compaction (50.618595ms)
+  ✔ accepted, running and uncertain execution remain ineligible (189.309524ms)
+  ▶ actual artifact bytes stay readable over HTTP; missing artifact prevents mutation
+    ✔ FIFO evidence rejects before read in original compactor and HTTP route (2764.832248ms)
+  ✔ actual artifact bytes stay readable over HTTP; missing artifact prevents mutation (3045.998765ms)
+  ✔ caller mutation after submission cannot alter the persisted intent or poison replay (68.825525ms)
+  ✔ concurrent identical operation has one writer; stale original CAS cannot restore archive (330.389124ms)
+  ✔ SIGKILL before mutation and after durable commit recover without double release (2350.658202ms)
+  ✔ manual CLI persists one receipt and idempotent retry returns zero additional bytes (7511.104139ms)
+✔ manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay (14763.888881ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16147.595684

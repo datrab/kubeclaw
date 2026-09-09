@@ -3,7 +3,6 @@ import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import {
   remotePlanDigest,
   remotePlanJobDigest,
@@ -44,11 +43,10 @@ import { KubernetesRuntimeSecurityCapabilityInvoker,
   type KubernetesRuntimeSecurityCapabilityInvokerOptions } from './kubernetes-runtime-security.ts';
 import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
 
-interface StoredPlanJob {
-  readonly schemaVersion: 'buster-plan-job-record.v1';
-  readonly job: RemotePlanJobV1;
-  readonly status: RemotePlanStatusV1;
-}
+import {
+  assertCompactionIntent, assertCompactedPlanJobRecord, compactionDigest, readJobArtifact, resultArtifacts, verifyRetainedSource,
+  type StoredPlanJob, type CompactedPlanJobRecord, type CompactionIntent, type CompactionReceipt,
+} from './remote-plan-compaction.ts';
 
 export interface BusterPlanJobStoreOptions {
   readonly recordLimits: DurableRecordLimits;
@@ -166,7 +164,16 @@ export class FileBusterPlanJobStore {
   }
 
   async records(): Promise<ReadonlyArray<DurableRecord<StoredPlanJob>>> {
-    return this.#records.read<StoredPlanJob>('buster-plan-jobs');
+    const records = await this.#records.read<StoredPlanJob>('buster-plan-jobs');
+    for (const { payload } of records) {
+      if (payload.schemaVersion === 'buster-plan-job-compacted-record.v1') {
+        assertCompactedPlanJobRecord(payload);
+        if (!verifySourceSnapshotAttestation(payload.job.sourceSnapshot, this.#trustedSourceAuthority, this.#sourceAttestationPublicKey)) {
+          throw new Error('BUSTER_SOURCE_ATTESTATION_INVALID');
+        }
+      } else if (payload.schemaVersion !== 'buster-plan-job-record.v1') throw new Error('BUSTER_JOB_RECORD_INVALID');
+    }
+    return records;
   }
 
   async get(jobId: string): Promise<Readonly<{ record: DurableRecord<StoredPlanJob>; payload: StoredPlanJob }>> {
@@ -183,6 +190,10 @@ export class FileBusterPlanJobStore {
     terminal?: { readonly error?: string },
   ): Promise<RemotePlanStatusV1> {
     const current = await this.get(jobId);
+    if (current.payload.status.state === 'completed') {
+      if (state === 'completed') return current.payload.status;
+      throw new Error('BUSTER_COMPACTED_JOB_TERMINAL');
+    }
     if (!expected.includes(current.payload.status.state)) {
       if (current.payload.status.state === state) return current.payload.status;
       throw new Error(`BUSTER_REMOTE_JOB_STATE_CONFLICT:${current.payload.status.state}`);
@@ -244,6 +255,63 @@ export class FileBusterPlanJobStore {
       'buster-plan-jobs', current.record.idempotencyKey, current.record.payloadDigest, next,
     );
     return structuredClone((stored.payload as StoredPlanJob).status);
+  }
+
+  /** Manual local operation; never schedules execution or removes result/evidence files. */
+  async compactCompletedArchive(inputIntent: CompactionIntent, runtimeRoot: string): Promise<{
+    readonly receipt: CompactionReceipt; readonly releasedMetadataBytes: number;
+  }> {
+    // Own the complete intent before validation or asynchronous lock acquisition.
+    const intent = structuredClone(inputIntent);
+    assertCompactionIntent(intent);
+    return withDurableStoreLock(this.#admissionLock, async () => {
+      const current = await this.get(intent.jobId);
+      if (current.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') {
+        if (current.payload.compaction.intentDigest !== compactionDigest(intent)) throw new Error('BUSTER_COMPACTION_INTENT_CONFLICT');
+        return { receipt: current.payload.compaction, releasedMetadataBytes: 0 };
+      }
+      if (current.record.payloadDigest !== intent.expectedPayloadDigest) throw new Error('BUSTER_COMPACTION_RECORD_CHANGED');
+      const { job, status } = current.payload;
+      if (status.state !== 'completed' || !status.result) throw new Error('BUSTER_COMPACTION_JOB_NOT_COMPLETED');
+      this.#preflight(job);
+      const result = JSON.parse((await this.result(job.jobId, status.result.contentDigest, status.result.sizeBytes)).toString()) as RemotePlanResultV1;
+      if (result.cleanupErrors.length || result.attempts.some(attempt => attempt.executionState !== 'completed')) {
+        throw new Error('BUSTER_COMPACTION_EXECUTION_UNCERTAIN');
+      }
+      let evidenceBytes = 0;
+      for (const artifact of resultArtifacts(result)) {
+        evidenceBytes += artifact.sizeBytes;
+        if (!Number.isSafeInteger(evidenceBytes) || evidenceBytes > intent.maximumEvidenceBytes) throw new Error('BUSTER_COMPACTION_EVIDENCE_BUDGET_EXCEEDED');
+        await readJobArtifact(runtimeRoot, job.jobId, artifact, intent.maximumEvidenceBytes);
+      }
+      await verifyRetainedSource(job, intent);
+      const archive = { schemaVersion: 'repository-archive-summary.v1' as const, encoding: job.repositoryArchive.encoding,
+        contentDigest: job.repositoryArchive.contentDigest, sizeBytes: job.repositoryArchive.sizeBytes };
+      const receipt: CompactionReceipt = {
+        schemaVersion: 'buster-job-compaction-receipt.v1', intent: structuredClone(intent),
+        intentDigest: compactionDigest(intent), compactedAt: new Date().toISOString(),
+        revision: job.sourceSnapshot.revision, tree: job.sourceSnapshot.tree,
+        archiveDigest: archive.contentDigest, archiveBytes: archive.sizeBytes, releasedMetadataBytes: 0,
+      };
+      let next: CompactedPlanJobRecord = {
+        schemaVersion: 'buster-plan-job-compacted-record.v1', job: { ...job, schemaVersion: 'buster-plan-job-header.v1', repositoryArchive: archive }, status, compaction: receipt,
+      };
+      // Canonical record envelopes have fixed-size digests and ISO timestamps.
+      // Include the receipt itself in the net metadata byte saving.
+      const oldBytes = Buffer.byteLength(canonicalJson(current.payload));
+      for (let iteration = 0; iteration < 8; iteration += 1) {
+        const releasedMetadataBytes = oldBytes - Buffer.byteLength(canonicalJson(next));
+        if (releasedMetadataBytes === next.compaction.releasedMetadataBytes) break;
+        next = { ...next, compaction: { ...next.compaction, releasedMetadataBytes } };
+      }
+      if (next.compaction.releasedMetadataBytes < 1
+        || next.compaction.releasedMetadataBytes !== oldBytes - Buffer.byteLength(canonicalJson(next))) {
+        throw new Error('BUSTER_COMPACTION_NO_BYTE_SAVING');
+      }
+      assertCompactedPlanJobRecord(next);
+      await this.#records.transition('buster-plan-jobs', current.record.idempotencyKey, current.record.payloadDigest, next);
+      return { receipt: next.compaction, releasedMetadataBytes: next.compaction.releasedMetadataBytes };
+    });
   }
 
   async result(jobId: string, contentDigest: string, maximumBytes: number): Promise<Buffer> {
@@ -459,44 +527,12 @@ export class BusterRemotePlanService {
     if (status.state !== 'completed' || !status.result) throw new Error('BUSTER_REMOTE_EVIDENCE_NOT_READY');
     const result = JSON.parse((await this.#options.store.result(jobId, status.result.contentDigest,
       status.result.sizeBytes)).toString('utf8')) as RemotePlanResultV1;
-    const artifacts = result.attempts.flatMap((attempt) => [
-      ...attempt.evidence.map((item) => item.artifact),
-      ...attempt.outputs.filter((item) => item.kind === 'artifact').map((item) => item.artifact),
-      ...attempt.reports.map((item) => item.sourceArtifact),
-    ]);
-    const matches = artifacts.filter((artifact) => artifact.contentDigest === contentDigest);
+    const matches = resultArtifacts(result).filter(artifact => artifact.contentDigest === contentDigest);
     if (matches.length === 0) throw new Error('BUSTER_REMOTE_EVIDENCE_NOT_FOUND');
-    const expected = matches[0]!;
-    if (matches.some((item) => item.sizeBytes !== expected.sizeBytes)) {
-      throw new Error('BUSTER_REMOTE_EVIDENCE_IDENTITY_CONFLICT');
-    }
-    if (expected.sizeBytes > maximumBytes) throw new Error('BUSTER_REMOTE_EVIDENCE_SIZE_EXCEEDED');
-    const source = new URL(expected.storageUrl);
-    if (source.protocol !== 'file:') throw new Error('BUSTER_REMOTE_EVIDENCE_STORAGE_UNSUPPORTED');
-    const candidate = fs.realpathSync(fileURLToPath(source));
-    const root = fs.realpathSync(jobDirectory(path.resolve(this.#options.runtimeRoot), jobId));
-    if (candidate !== root && !candidate.startsWith(`${root}${path.sep}`)) {
-      throw new Error('BUSTER_REMOTE_EVIDENCE_PATH_FORBIDDEN');
-    }
-    const handle = await fs.promises.open(candidate, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
-    try {
-      const stat = await handle.stat();
-      if (!stat.isFile() || stat.size !== expected.sizeBytes || stat.size > maximumBytes) {
-        throw new Error('BUSTER_REMOTE_EVIDENCE_SIZE_MISMATCH');
-      }
-      const bounded = Buffer.alloc(expected.sizeBytes + 1);
-      let total = 0;
-      while (total < bounded.byteLength) {
-        const read = await handle.read(bounded, total, bounded.byteLength - total, total);
-        if (read.bytesRead === 0) break;
-        total += read.bytesRead;
-      }
-      if (total !== expected.sizeBytes) throw new Error('BUSTER_REMOTE_EVIDENCE_SIZE_MISMATCH');
-      const bytes = bounded.subarray(0, total);
-      const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
-      if (digest !== contentDigest) throw new Error('BUSTER_REMOTE_EVIDENCE_DIGEST_MISMATCH');
-      return bytes;
-    } finally { await handle.close(); }
+    if (matches.some(item => item.sizeBytes !== matches[0]!.sizeBytes)) throw new Error('BUSTER_REMOTE_EVIDENCE_IDENTITY_CONFLICT');
+    let bytes!: Buffer;
+    for (const artifact of matches) bytes = await readJobArtifact(this.#options.runtimeRoot, jobId, artifact, maximumBytes);
+    return bytes;
   }
 
   async result(jobId: string, contentDigest: string, maximumBytes: number): Promise<Buffer> {
@@ -521,6 +557,7 @@ export class BusterRemotePlanService {
 
   async recover(): Promise<void> {
     for (const record of await this.#options.store.records()) {
+      if (record.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') continue;
       const { job, status } = record.payload;
       if (status.state === 'accepted') {
         try {

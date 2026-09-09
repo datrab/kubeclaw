@@ -1,0 +1,22 @@
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (842.918459ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1024.461639ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (907.292672ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (921.463057ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (808.590254ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (957.300823ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1358.826026ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (779.569554ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.669057ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.7095ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.638781ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (327.817171ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2471.900999ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (323.349261ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11189.2313

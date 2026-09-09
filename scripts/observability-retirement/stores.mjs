@@ -4,6 +4,7 @@ import { assertDurableRecordReplay } from '../../skills/common/plugin-runtime/fo
 import { assertAdmissionReplay } from '../../skills/common/plugin-runtime/foundation/observability/replay-validation.ts';
 import { assertAttemptReplay } from '../../skills/common/plugin-runtime/foundation/observability/attempt-replay.ts';
 import { identityHash } from './files.mjs';
+import { assertCompactedPlanJobRecord } from '../../skills/buster/engine/test-gates/remote-plan-compaction.ts';
 import { remotePlanJobId } from '../../contracts/pipeline-test-gate/v1/src/index.ts';
 
 const digestPattern = /^sha256:[a-f0-9]{64}$/u;
@@ -98,9 +99,14 @@ export function inspectAttempts(inventory, root, runId, references) {
     closures: state.closures.filter(item => item.pipelineRunId === runId).map(item => ({ closureId: item.closureId, digest: item.closureDigest })) };
 }
 
+function validJobVariant(payload) {
+  if (payload?.schemaVersion === 'buster-plan-job-record.v1') return true;
+  if (payload?.schemaVersion !== 'buster-plan-job-compacted-record.v1') return false;
+  try { assertCompactedPlanJobRecord(payload); return true; } catch { return false; }
+}
 function validJobRecord(record) {
   const { job, status } = record.payload ?? {};
-  return record.payload?.schemaVersion === 'buster-plan-job-record.v1' && typeof job?.plan?.runId === 'string'
+  return validJobVariant(record.payload) && typeof job?.plan?.runId === 'string'
     && job.idempotencyKey === record.idempotencyKey && remotePlanJobId(record.idempotencyKey) === job.jobId
     && digestPattern.test(job.requestDigest) && status?.jobId === job.jobId && status?.requestDigest === job.requestDigest;
 }
