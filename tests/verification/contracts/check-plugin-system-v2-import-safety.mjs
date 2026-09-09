@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { assertObserverIdentities, assertObserverSurfaces } from './plugin-system-v2-observer-expectations.mjs';
 
 const core = await import(pathToFileURL(path.resolve('skills/nova/core/src/index.ts')).href);
 const roots = [
@@ -24,9 +25,10 @@ const enabled = new Set([
   ...snapshot.observers.keys(),
   ...snapshot.adapters.keys(),
 ]);
+assertObserverSurfaces(snapshot, path.resolve('.'));
 const activated = await core.activateRegistry(snapshot, enabled);
 assert.equal(activated.stages.size, 17);
-assert.equal(activated.observers.size, 6);
+assertObserverIdentities(activated.observers);
 assert.equal(activated.adapters.size, 18);
 console.log(JSON.stringify({
   ok: true,

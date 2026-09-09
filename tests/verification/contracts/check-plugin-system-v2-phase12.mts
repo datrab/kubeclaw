@@ -6,6 +6,7 @@ import { discoverPackages } from '../../../skills/common/plugin-runtime/foundati
 import { buildRegistry } from '../../../skills/common/plugin-runtime/foundation/registry/build.ts';
 import { isObserverDeliveryInput } from '../../../skills/nova/core/telemetry/observers.ts';
 import type { LifecycleEvent } from '../../../skills/common/plugin-runtime/sdk/src/index.ts';
+import { assertObserverSurfaces } from './plugin-system-v2-observer-expectations.mjs';
 
 const root = path.resolve('.');
 const removed = [
@@ -48,7 +49,7 @@ const packages = discoverPackages({
 });
 const registry = buildRegistry(packages);
 assert.equal(registry.stages.size, 17);
-assert.equal(registry.observers.size, 6);
+assertObserverSurfaces(registry, root);
 assert.equal(registry.adapters.size, 18);
 for (const [type, owner] of registry.stages) {
   assert.ok(type.startsWith('kubeclaw.'), `stage type is not namespaced: ${type}`);
