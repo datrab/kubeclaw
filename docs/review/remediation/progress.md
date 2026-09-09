@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**83/154 lokal verifiziert und unabhängig gegengeprüft; 30 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 8 in Bearbeitung; 33 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**83/154 lokal verifiziert und unabhängig gegengeprüft; 33 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 8 in Bearbeitung; 30 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -177,3 +177,19 @@ Die vier Commits `4870483973cda017f8c2f0465d91b83f6706009b`, `d109cfd917514e3cc5
 Aktiv: vollständige Pflichtprüfungsabdeckung, Agent-Bridge-Recovery, echte Demo-/Zugangsdatenübergabe, read-only Retirementplaner, bestehende Studio-Typfehler und isolierte Integrationsgegenprüfung des lokalen Commits `ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1`. Noch keine vollständige E2E-Freigabe.
 
 Die isolierte Integrationsgegenprüfung von `ab79ad9` ist abgeschlossen: 14 ausgewählte Originalkommandos bestanden, darunter 112 Tests ohne Skips, zusätzlich Vertrags- und TypeScriptprüfungen. Kein neuer Fehler in diesen Grenzen gefunden; dies ersetzt keine native/E2E-Abnahme. [Vollständige Kommandos, Ausgaben und Hashmanifest](../evidence/integration-ab79ad9/checkpoint.md).
+
+## Studio-Typprüfung und visuelle Browseridentität
+
+Studio-Folgefix `0582d9b35ae3aa6ddf450db893be13bb2bfc8b7b` beseitigt sechs vorhandene TypeScriptfehler durch tatsächliche Puck-Slottypen, das bereits bestehende initialState-Schemafeld und validierte Flowdaten. Originale Puck-Konfiguration ist unverändert extrahiert; 51 Tests, Owning-Typechecks und Build bestanden. [Nachweis](implementation/studio-types.md).
+
+Visual-Fix `0765d19b76327a14ac735e7d51a121ab1efa3ff3` bindet Baselines an beobachtete Browserversionen und verweigert ungesicherte v1-Migration. Drei lokale Tests und unabhängiger Review bestanden; tatsächlicher Browservergleich bleibt offen. [Nachweis](implementation/visual-browser-identity.md).
+
+Die Coverage-Slice ist mit 44 Dateien eingefroren und wird unabhängig geprüft. Der read-only Retirementplaner wird nach drei echten Gegenbefunden (Legacybudget, erneute Rootprüfung, nachträglicher Verzeichnislink) korrigiert; noch nicht committet. Agent-Bridge-Recovery, kontrollierte OpenClaw-Cleanup-Phase und typisierte Demo-Credential-/Exposureübergabe bleiben aktiv. Trivy-Datenbankfrische ist in der Ursachen-/Vertragsklärung.
+
+## Fortsetzung: geprüfte Vorstufen gesichert
+
+- Coverage: lokal `109db4500f8b03de33932a5547b066c37551a0d7`, remote `0fb075858bf78b2b87b0429f64be6a3bdba80981`; verpflichtende deklarierte kumulative Abdeckung, weiterhin keine Ready-/Zustellungsfreigabe.
+- Rein lesender Retirementplaner: lokal `beabc8db7320c82ae3bfab2c6569acec809d5b25`, remote `dee2ab5ea3c9e99c8f8eb82b501eba124cd2d12c`; 17 Originaltests bestanden. Gibt keine Quote frei und löscht nichts.
+- Credential-/Pending-Handoff-Vorstufe: lokal `dea72baac30b981873118525c81d47e90dab4d51`, remote `5ce5bda2318efff700343ad623c62cfb520e8732`; unabhängige Go/HTTP-Gegenprüfung einschließlich fremder Vorbelegung, verlorener Create-Antwort, Lease-UID-Wechsel und Status-CAS bestanden. Finaler Ready-/Receipt-Produzent offen.
+- Bridge bleibt blockiert: echte Gegenprobe verbrauchte im Kindprozess mindestens 1500 ms CPU bei deklarierten 200 ms, während Elternzähler 49 ms meldete. Elternmessung wird nicht als Kindprozessbudget akzeptiert. Cgroup-Alternative benötigt echte Deployment-/Delegationsprüfung und korrekte Thread-/Prozesssemantik; kein stiller Wechsel auf eine standardmäßig funktionslose Konfiguration.
+- Runtime-Identitätsgegenprüfung und native Trivy-Datenbankprüfung laufen weiter. Keine Gesamt-E2E-, Deployment- oder pauschale Regressionsfreiheitsbehauptung.

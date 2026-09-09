@@ -1402,7 +1402,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP03",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1418,7 +1418,7 @@
       "unresolved_code_references": [
         "../evidence/nova-batch-repository-symlink-probe.mjs"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale Ausführungs-/Konfigurationsgrenze ursächlich korrigieren und unabhängig prüfen; fehlende native Laufzeitnachweise sichtbar halten.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -1814,10 +1814,15 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "0fb075858bf78b2b87b0429f64be6a3bdba80981",
+      "verification_status": "lokale Prüfungen bestanden; native Gesamtintegration offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/gate-coverage.md",
+          "summary": "44-Dateien-Änderung unabhängig geprüft: vorab deklarierte vollständige Abdeckung, echte Git/HTTP/Store/Node-Gegenproben und originale Consumerchecks; vollständige native Ausführung offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T11-002 — Suiteauswahl und All-skipped-Gate sind kein Nachweis vollständiger geforderter Abdeckung\n\nEigentümertrace: [T11-deterministic-suites.md](T11-deterministic-suites.md); Codecommit wie oben.\n\n**Mittel; statisch belegte Zielbild-/Policygrenze, kein generelles Verbot optionaler Skips vorgeschlagen.** Leere Templates werden in `plan.suites` geführt, erzeugen aber keine Nodes (`resolver.ts:359–378`). Solange ein anderer Node existiert, scheitert TEST_PLAN_EMPTY nicht. Außerdem erzeugt ein vollständiger Plan mit ausschließlich bedingt übersprungenen Nodes gültige skipped-Ergebnisse (`runner.ts:789–803`); `decide:185,202–204` kennt keine Mindestmenge ausgeführter blocking Nodes und kann passed ausgeben. Nicht gewählte/excluded Suites werden ebenfalls nicht als fehlender Pflichtumfang gewertet. Dies ist konfigurierte Selektionssemantik, erfüllt jedoch keinen behaupteten „alle 13 wurden ausgeführt“-Nachweis.\n\nUrsachenbehebung: Produktseitigen Pflichtumfang getrennt von Template-/Providerverfügbarkeit modellieren und in Gesamtentscheidung executed/skipped/excluded/advisory offen darstellen; Freigabe für „vollständiger Stand geprüft“ nur mit erfüllten Pflichtchecks. Für den hier beauftragten Review stets alle tatsächlichen Nodes statt bloßer Suitezahl berichten. Verifikation: Alle zwölf Templates wählen, aber mehrere leer belassen; zusätzlich All-conditions-false-Plan. Der Produktabschluss muss Abdeckungslücken sichtbar machen und bei obligatorischem Umfang blockieren. Keine Abschaffung sinnvoller optionaler/bedingt irrelevanter Tests.",
@@ -1827,7 +1832,7 @@
       "unresolved_code_references": [
         "runner.ts:789–803"
       ],
-      "next_action": "Abgestimmten Originalpfad/Policyvertrag umsetzen und unabhängig gegenprüfen; fehlende native Betriebsnachweise ausdrücklich offen halten.",
+      "next_action": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
       "related_findings": [
         "PATH-T11-001",
         "PATH-T13-001",
@@ -1841,10 +1846,15 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "0fb075858bf78b2b87b0429f64be6a3bdba80981",
+      "verification_status": "lokale Prüfungen bestanden; native Gesamtintegration offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/gate-coverage.md",
+          "summary": "44-Dateien-Änderung unabhängig geprüft: vorab deklarierte vollständige Abdeckung, echte Git/HTTP/Store/Node-Gegenproben und originale Consumerchecks; vollständige native Ausführung offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T13-001 — Kumulativer Prüfumfang ist nicht gebunden; letzte Modulbelege genügen dem Abschluss\n\nEigentümertrace: [T13-cumulative-gates.md](T13-cumulative-gates.md); Codecommit wie oben.\n\n**Hoch bezogen auf einen als kumulativ verwendeten Qualitätsabschluss; nachgewiesene Integrations-/Policylücke.** Kein behaupteter Fehler beim korrekt deklarierten isolierten Modultest und keine Behauptung, beliebiger fremder Evidenceinput könne die Digestprüfungen umgehen.\n\nKonkreter Auslöser: Ein expliziter Graph erklärt ein final/cumulative Gate nach M5 oder M6, übernimmt aber dessen Modulplan und letztes Modulreview. Alle Tests können korrekt auf dem vollständig integrierten H5/H6 ausgeführt werden und trotzdem nur M5/M6 prüfen. `loadPipelineTestScope` selektiert genau die angegebene Deklaration (`pipeline.ts:39–55`), der Resolver nimmt scope und Nodes unverändert als ausgewählten Prüfgegenstand (`resolver.ts:718–749`). Der Remoteadapter prüft runId, nicht outer gateId gegen plan.scope (`remote-test-gate/src/adapter.ts:70–72,84–94`); Qualitystage bindet Source und native Decision, erwartet keine kumulative Anforderungsmenge (`buster-quality-gate/src/stage.ts:11–25,41–43`).\n\nAm Abschluss genügt `input.final.sourceStageId` als eines der Module (`project-summary/src/summary.ts:17–24`). `verify` prüft aktuelle Artefakte/Revision und passed, nicht welche Module/Requirements/Tests der Plan abdeckt (`:46–57`). Finaler Lint und Review werden auf dieselbe head-Revision und passed geprüft, aber nicht auf kumulative Basis/Scope/Requirementmenge (`:60–65`). Ein letzter Modulreview H4→H5 kann deshalb die Rolle des finalen Reviews einnehmen, obwohl frühere Integrationsanforderungen nicht untersucht wurden. Gleichheit der Codeversion ist notwendig, aber kein Beweis gleicher oder vollständiger Prüfmenge.\n\nAuswirkung: delivery-manifest kann technisch kohärente Modulbelege als final aufführen, ohne den gewünschten kumulativen Qualitätsnachweis. Das ist eine falsche Schlussfolgerung aus gültiger, aber engerer Evidenz. Korrekt konfigurierte explizite kumulative Pläne/Reviews bleiben möglich und werden durch den Befund nicht abgewertet.\n\nUrsachenbehebung: versionierte Gate-Coverage mit erwarteter Modulmenge, Requirements-/Scope-/Planpolicy-Digest und Kandidatensnapshot erzeugen; Planauswahl/Reviewbundle/Ergebnis/Delivery müssen denselben Coveragevertrag nachweisen. Finale Modulbelegwiederverwendung nur zulassen, wenn dessen Coverage tatsächlich die erwartete Gesamtmenge erfüllt. Gatescope-IDvergleich allein genügt nicht: ein formal TG5-genannter Ein-Test-Plan bleibt unvollständig.\n\nGeeignete Verifikation später: Original-Core/-Provider/-Summary, M1–M5 mit einer realen Interaktionsregression ausschließlich zwischen M1/M2; letzter M5-Modultest besteht, kumulativer Plan muss sie finden. Der Modulplan darf den kumulativen Abschluss nicht erfüllen; vollständiger deklarierter Plan nach tatsächlicher Reparatur darf bestehen. Jeweils gleiche Commitbytes verwenden, damit der Test echte Coveragebindung und nicht bloß SourceMismatch prüft. Keine synthetischen Passed-Berichte als E2E-Nachweis.",
@@ -1857,7 +1867,7 @@
       "unresolved_code_references": [
         "pipeline.ts:39–55"
       ],
-      "next_action": "Abgestimmten Originalpfad/Policyvertrag umsetzen und unabhängig gegenprüfen; fehlende native Betriebsnachweise ausdrücklich offen halten.",
+      "next_action": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T11-001",
@@ -2406,10 +2416,13 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "0765d19b76327a14ac735e7d51a121ab1efa3ff3",
+      "verification_status": "Drei echte lokale Schema-/Provider-/Preflighttests, Originalregistry-/Resolvercheck, fokussierter Lint und unabhängige Gegenprüfung bestanden. Native Browseraufnahme/Upgradevergleich und freigegebene Neubaseline fehlen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/visual-browser-identity.md",
+        "docs/review/evidence/visual-browser-identity.txt"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.visual.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-VISUAL-001 — mittel: Baselineidentität bindet keine Browserversion\n\nNachgewiesene Vertrags-/Implementierungslücke im Quelltrace, kein ausgeführter Zweiversionen-Browsertest. `skills/buster/plugins/visual/src/provider.js:77–96` erlaubt Manifestfelder ohne browserVersion und prüft ausschließlich Familie/Viewport/Pageconditions; `:140–145,175–179` übernimmt aktuelle Browserversion erst nach Capture. `docs/architecture/pipeline-test-gate-visual-operator-guide.md`, Upgrade, untersagt stilles Wiederverwenden zwischen Versionen. Auslöser: Workerbrowserupgrade bei unverändertem Manifest; derselbe Vertrag bleibt akzeptiert und kann bei 0%-Differenz bestehen. Auswirkungen: fehlende reproduzierbare Baselinefreigabe und schwer erklärbare Renderabweichungen. Ursachenbehebung: versionierte Engine-/Renderidentität in Baseline und Gegenstellen prüfen, Migration explizit. Regression: alte Version im Manifest, neue im echten Capture muss vor Bewertung ablehnen; anschließende freigegebene Neubaseline zulassen.",
@@ -2418,7 +2431,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/pipeline-test-gate-visual-operator-guide.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3149,7 +3162,7 @@
       "severity": "mittel",
       "work_package": "WP09",
       "status": "implementiert",
-      "implementation_commit": "7f1b888eda4a74478a771b1363a844cd3093910b",
+      "implementation_commit": "dee2ab5ea3c9e99c8f8eb82b501eba124cd2d12c",
       "verification_status": "D01/D07 Aufbewahrung und tatsächliche Storequoten/codebelegte Bereinigungsgrenzen dokumentiert; keine Laufzeitänderung und kein bestandener Quotafreigabenachweis.",
       "verification_evidence": [
         "docs/review/remediation/implementation/observability-retention.md"
@@ -3159,7 +3172,7 @@
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Read-only Retirementplaner mit echten Referenzen prüfen, anschließend writergefencete Retire-/Replaygrenze umsetzen; keine automatische Loglöschung.",
+      "next_action": "Rein lesender Planer mit 17 bestandenen Originaltests vorhanden; tatsächliche quota-freigebende, replay-sichere Bereinigung bleibt unimplementiert. Keine automatische Loglöschung.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
@@ -3339,9 +3352,14 @@
       "severity": "hoch",
       "work_package": "WP10",
       "status": "in Bearbeitung",
-      "implementation_commit": null,
+      "implementation_commit": "5ce5bda2318efff700343ad623c62cfb520e8732",
       "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_evidence": [
+        {
+          "report": "implementation/demo-credential-handoff.md",
+          "summary": "Vorstufe unabhängig geprüft: dauerhafter Credential-Intent vor Create, Ablehnung fremder Vorbelegung, verlorene Antwort rekonstruierbar; pending Exposure ohne TTL-Verlängerung. Finaler Ready-/Receipt-Produzent fehlt."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### F-T14-01 — Finalpreview-Exposure wird vor Operatorübergabe entfernt\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch; statisch bestätigter komponentenübergreifender Lifecycledefekt gegenüber dem gewünschten Operatorabschluss.** Trigger: erfolgreicher Plan mit Kubernetesfixture retention=retain und Tailscale-Exposurefixture. Runner finally räumt Fixture auf (runner.ts 897–899,2005–2018), Exposurecleanup ist unbedingt (provider.js 85–90), Runtime schaltet off (231–241), Controller löscht Ingress (1353–1362). Folge: Namespace erhalten, URL nach Abschluss nicht erhalten. Rootfix: bewusster, persistierter Ownership-/Lifecycletransfer einer finalen Preview einschließlich Exposure, Namespace, TTL, Source-/Imagedigest und Cleanupbefugnis; normale Testfixtures weiterhin am Planende aufräumen. Kein pauschales Entfernen des Cleanup-finally. Regression: echter End-to-end-Fixtureplan, danach erlaubter Tailnetbrowser erreicht Anwendung für festgelegten Operatorzeitraum; explizites Release/TTL entfernt exakt diese Generation. Keine Ausführung hier.",
@@ -3364,9 +3382,14 @@
       "severity": "hoch",
       "work_package": "WP10",
       "status": "in Bearbeitung",
-      "implementation_commit": null,
+      "implementation_commit": "5ce5bda2318efff700343ad623c62cfb520e8732",
       "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_evidence": [
+        {
+          "report": "implementation/demo-credential-handoff.md",
+          "summary": "Vorstufe unabhängig geprüft: dauerhafter Credential-Intent vor Create, Ablehnung fremder Vorbelegung, verlorene Antwort rekonstruierbar; pending Exposure ohne TTL-Verlängerung. Finaler Ready-/Receipt-Produzent fehlt."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### F-T14-02 — Vollständiger Operatorzugang und Appauth-Handoff fehlen\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch für das Abschlussziel; statisch bestätigte Integrationslücke, keine behauptete Credentialoffenlegung.** Trigger: Pipeline verlangt Login und „ohne manuelle Clusterarbeit testen“. Controller erstellt nur dediziertes Secret (main.go 1165–1225); Manifest-/Ingresspfad bindet die App nicht automatisch daran; Summary konsumiert keine Exposure (summary.ts 46–68); Previewobserver sendet nur Artefaktmetadaten (observer.ts 139–160). Folge: weder funktionierender Login noch URL-/Credentialempfang/Abnahme sind durch den Runabschluss garantiert. Rootfix: verpflichtender Previewdeliveryvertrag mit Source/Image/Lease/Generation/URL/Authmodus/Expiry, Appseitiger Secretintegration und überprüftem Login; Credentials als gezielt abrufbare geschützte Referenz und autorisierte sichere Zustellung, nicht als unredigiertes allgemeines Runartefakt. Operatorfeedback an dieselbe Generation und Sourcebindung koppeln. Regression: Anwendung mit tatsächlicher Auth, erlaubter Operator kann lesen/login/Feedback geben, anderer Tailnetnutzer und alte Previewgeneration werden abgewiesen; Nachricht enthält nötige URL ohne öffentliche Secretbytes. Keine Tests hier.",
@@ -3756,7 +3779,7 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3767,7 +3790,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/security-scan-runtime.ts#L170"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale Ausführungs-/Konfigurationsgrenze ursächlich korrigieren und unabhängig prüfen; fehlende native Laufzeitnachweise sichtbar halten.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4494,9 +4517,9 @@
   "updated_at": "2026-09-09",
   "progress_counts": {
     "verifiziert": 83,
-    "implementiert": 30,
+    "implementiert": 33,
     "in Bearbeitung": 8,
-    "offen": 33
+    "offen": 30
   },
   "additional_integration_findings": [
     {
