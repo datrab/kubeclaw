@@ -85,6 +85,7 @@
             ],
             "properties": {
               "path": {
+                "type": "string",
                 "allOf": [
                   {
                     "type": "string",
@@ -108,6 +109,7 @@
                 ]
               },
               "previousPath": {
+                "type": "string",
                 "allOf": [
                   {
                     "type": "string",
@@ -137,6 +139,46 @@
                   ]
                 },
                 "then": {
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "allOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024,
+                          "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                        },
+                        {
+                          "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                        }
+                      ]
+                    },
+                    "status": {
+                      "enum": [
+                        "added",
+                        "modified",
+                        "deleted",
+                        "renamed",
+                        "copied",
+                        "type_changed"
+                      ]
+                    },
+                    "previousPath": {
+                      "type": "string",
+                      "allOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024,
+                          "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                        },
+                        {
+                          "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                        }
+                      ]
+                    }
+                  },
                   "required": [
                     "path",
                     "status",
@@ -145,6 +187,9 @@
                 },
                 "else": {
                   "not": {
+                    "properties": {
+                      "previousPath": {}
+                    },
                     "required": [
                       "previousPath"
                     ]
@@ -165,6 +210,7 @@
                 "const": "."
               },
               {
+                "type": "string",
                 "allOf": [
                   {
                     "type": "string",
@@ -233,6 +279,9 @@
             "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
             "maxLength": 71
           },
+          "encoding": {
+            "const": "kubeclaw-json.utf16.v1"
+          },
           "content": {
             "type": "string",
             "maxLength": 2097152
@@ -254,6 +303,7 @@
         ],
         "properties": {
           "path": {
+            "type": "string",
             "allOf": [
               {
                 "type": "string",
@@ -303,6 +353,7 @@
                   ]
                 },
                 "sourcePath": {
+                  "type": "string",
                   "allOf": [
                     {
                       "type": "string",

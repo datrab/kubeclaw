@@ -1,0 +1,6 @@
+Source initially 00713ac; final schema path declaration b33873e independently checked separately.
+Command: npx --no-install tsc --noEmit -p skills/nova/plugins/review/tsconfig.json && npx --no-install tsc --noEmit -p skills/nova/tsconfig.json && npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/plugins/review/src/review-evidence-encoding.ts skills/nova/plugins/review/src/review-stage-input.ts skills/nova/plugins/review/src/review-bundle-contract.ts skills/nova/plugins/review/src/review-bundle-parser.ts skills/nova/plugins/review/src/review-bundle-bounds.ts skills/nova/plugins/review/src/review-coverage.ts skills/nova/plugins/review/tests/live-function.test.ts skills/nova/project/compiler.ts
+Exit: 0
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

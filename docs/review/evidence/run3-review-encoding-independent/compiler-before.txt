@@ -1,0 +1,23 @@
+Original compiler source archived with verified remote962887 blob. Reviewed candidate b33873e.
+Command: node --test tests/verification/reliability/review-evidence-compiler-recovery.test.mjs
+✖ original compiler module-review graph remains recoverable under its existing source version (881.933043ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1517.27133
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-evidence-compiler-recovery.test.mjs:14:1
+✖ original compiler module-review graph remains recoverable under its existing source version (881.933043ms)
+  Error: RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:e4c9c5170ca63cd7321cf2065d1c9e071368b1cfd0e25461091dc60073ca9782:sha256:3a879c0ec0fded35c71fc580c58b274bd8952b224aff2d49e3674ee6918ac78b
+      at verifyPinnedGraph (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding-review/skills/nova/core/execution/engine-snapshots.ts:72:47)
+      at compileProjectRecovery (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding-review/skills/nova/project/recovery.ts:15:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding-review/tests/verification/reliability/review-evidence-compiler-recovery.test.mjs:32:22)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
