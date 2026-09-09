@@ -8,9 +8,10 @@
   },
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/process-group.test.ts"
+    "test": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/process-group.test.ts && node tests/process-group-exit.test.ts"
   },
   "dependencies": {
-    "@kubeclaw/plugin-sdk": "*"
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/plugin-foundation": "*"
   }
 }

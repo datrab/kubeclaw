@@ -65,7 +65,7 @@ export class CommandRunner {
     const graceMs = this.#options.sandboxExecutable ? Math.max(250, this.#options.terminationGraceMs) : this.#options.terminationGraceMs;
     const execution = new CommandExecution({ child, signal, limits, graceMs, cgroup, sandboxed: Boolean(this.#options.sandboxExecutable) });
     this.#active.add(execution);
-    void execution.finished.then(() => this.#active.delete(execution));
+    void execution.finished.then(() => this.#active.delete(execution), () => this.#active.delete(execution));
     return execution.result;
   }
 

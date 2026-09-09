@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { spawn } from 'node:child_process';
+import { runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { loadAll } from 'js-yaml';
@@ -30,41 +30,17 @@ type Execute = (command: string, args: readonly string[], options: Readonly<Reco
   => Promise<{ stdout?: string; stderr?: string }>;
 type JsonObject = Record<string, unknown>;
 
-function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
-  return new Promise((resolve, reject) => {
-    const maximum = Number(options.maxBuffer ?? 1024 * 1024);
-    const input = options.input;
-    const child = spawn(command, [...args], {
-      env: options.env as NodeJS.ProcessEnv | undefined,
-      signal: options.signal as AbortSignal | undefined,
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-    const output: Buffer[] = [];
-    const errors: Buffer[] = [];
-    let outputBytes = 0;
-    let errorBytes = 0;
-    let limited = false;
-    const timer = setTimeout(() => child.kill('SIGKILL'), Number(options.timeout ?? 30_000));
-    const collect = (target: Buffer[], chunk: Buffer, current: number): number => {
-      const next = current + chunk.byteLength;
-      if (next > maximum) { limited = true; child.kill('SIGKILL'); return next; }
-      target.push(chunk); return next;
-    };
-    child.stdout.on('data', (chunk: Buffer) => { outputBytes = collect(output, chunk, outputBytes); });
-    child.stderr.on('data', (chunk: Buffer) => { errorBytes = collect(errors, chunk, errorBytes); });
-    child.once('error', (error) => { clearTimeout(timer); reject(error); });
-    child.once('close', (code, signal) => {
-      clearTimeout(timer);
-      const stdout = Buffer.concat(output).toString('utf8');
-      const stderr = Buffer.concat(errors).toString('utf8');
-      if (code === 0 && !limited) { resolve({ stdout, stderr }); return; }
-      const error = new Error(limited ? 'KUBERNETES_FIXTURE_KUBECTL_OUTPUT_LIMIT'
-        : `Command failed with code ${String(code)} and signal ${String(signal)}`) as Error & { stdout: string; stderr: string };
-      error.stdout = stdout; error.stderr = stderr; reject(error);
-    });
-    if (input === null || input === undefined) child.stdin.end();
-    else child.stdin.end(input as string | Buffer);
+async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
+  const result = await runProcessInput(command, args, {
+    ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
+    ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
+    input: options.input as string | Buffer | null ?? null,
+    timeoutMs: Number(options.timeout ?? 30_000), maximumOutputBytes: Number(options.maxBuffer ?? 1024 * 1024),
+    prefix: 'KUBERNETES_FIXTURE_KUBECTL',
   });
+  const stdout = result.stdout.toString('utf8'); const stderr = result.stderr.toString('utf8');
+  if (result.code !== 0) throw Object.assign(new Error(`Command failed with code ${String(result.code)} and signal ${String(result.signal)}`), { stdout, stderr });
+  return { stdout, stderr };
 }
 
 export interface KubernetesFixtureCapabilityInvokerOptions {

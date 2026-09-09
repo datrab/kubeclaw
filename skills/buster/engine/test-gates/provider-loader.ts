@@ -1,3 +1,4 @@
+import { ProviderCapabilities } from './provider-capabilities.ts';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs';
@@ -128,6 +129,8 @@ class ProviderProcessSession {
   #cleanupResolve: (() => void) | null = null;
   #cleanupReject: ((error: Error) => void) | null = null;
   #closed = false;
+  readonly #capabilities = new ProviderCapabilities();
+  #termination: Promise<void> | null = null;
   #protocolBytes = 0;
   #resources: ProviderProcessResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 1 };
 
@@ -165,18 +168,24 @@ class ProviderProcessSession {
     ], { cwd: entry.package.root, detached: process.platform !== 'win32',
       env: { NODE_NO_WARNINGS: '1' }, stdio: ['pipe', 'pipe', 'pipe'] });
     this.#lines = readline.createInterface({ input: this.#child.stdout, crlfDelay: Infinity });
-    this.#lines.on('line', (line) => { void this.#message(line); });
+    this.#lines.on('line', (line) => {
+      void this.#message(line).catch(async (error) => {
+        this.#fail(error instanceof Error ? error : new Error(String(error)));
+        await this.terminate();
+      }).catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error))));
+    });
     this.#child.stdout.on('data', (chunk: Buffer) => {
       this.#protocolBytes += chunk.byteLength;
-      if (this.#protocolBytes > MAX_PROTOCOL_BYTES) { this.#fail(new Error('TEST_PROVIDER_PROTOCOL_LIMIT')); void this.terminate(); }
+      if (this.#protocolBytes > MAX_PROTOCOL_BYTES) { this.#fail(new Error('TEST_PROVIDER_PROTOCOL_LIMIT')); void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error)))); }
     });
     this.#child.stderr.on('data', (chunk: Buffer) => this.#context?.log('stderr', chunk));
     this.#child.stdin.on('error', (error) => {
-      if (!this.#closed) this.#fail(error);
+      if (!this.#closed) { this.#fail(error); void this.terminate().catch((failure) => this.#fail(failure)); }
     });
     this.#child.once('error', (error) => this.#fail(error));
     this.#child.once('close', (code, signal) => {
       this.#closed = true;
+      this.#capabilities.abort(new Error('TEST_PROVIDER_PROCESS_CLOSED'));
       if (this.#initializeReject) { this.#initializeReject(new Error(`TEST_PROVIDER_INITIALIZE_EXITED:${String(code)}:${String(signal)}`)); this.#clearInitialize(); }
       if (this.#resultReject) this.#fail(new Error(`TEST_PROVIDER_PROCESS_EXITED:${String(code)}:${String(signal)}`));
       if (this.#cleanupReject) { this.#cleanupReject(new Error(`TEST_PROVIDER_CLEANUP_EXITED:${String(code)}:${String(signal)}`)); this.#clearCleanup(); }
@@ -192,8 +201,8 @@ class ProviderProcessSession {
     if (this.#initialized !== null) return Promise.resolve(this.#initialized);
     if (this.#initializeResolve) throw new Error('TEST_PROVIDER_INITIALIZE_DUPLICATE');
     const operation = new Promise<boolean>((resolve, reject) => { this.#initializeResolve = resolve; this.#initializeReject = reject; });
-    this.#send({ kind: 'initialize', modulePath: this.#modulePath, exportName: this.#entry.registration.entrypoint.export,
-      invocation: this.#invocation, workspaceRoot: context.workspaceRoot });
+    if (!this.#send({ kind: 'initialize', modulePath: this.#modulePath, exportName: this.#entry.registration.entrypoint.export,
+      invocation: this.#invocation, workspaceRoot: context.workspaceRoot })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));
     return operation;
   }
 
@@ -202,7 +211,7 @@ class ProviderProcessSession {
     if (this.#resultResolve) throw new Error('TEST_PROVIDER_EXECUTE_DUPLICATE');
     this.#setContext(context);
     const operation = new Promise<ProviderResultV1>((resolve, reject) => { this.#resultResolve = resolve; this.#resultReject = reject; });
-    this.#send({ kind: 'execute' });
+    if (!this.#send({ kind: 'execute' })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));
     return operation;
   }
 
@@ -212,13 +221,19 @@ class ProviderProcessSession {
     const supported = await this.initialize(context);
     if (!supported) return;
     const operation = new Promise<void>((resolve, reject) => { this.#cleanupResolve = resolve; this.#cleanupReject = reject; });
-    this.#send({ kind: 'cleanup' });
+    if (!this.#send({ kind: 'cleanup' })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));
     return operation;
   }
 
-  async terminate(): Promise<void> {
-    if (this.#closed) return;
-    await new Promise<void>((resolve) => {
+  terminate(): Promise<void> {
+    this.#termination ??= this.#terminate();
+    return this.#termination;
+  }
+
+  async #terminate(): Promise<void> {
+    this.#capabilities.abort(new Error('TEST_PROVIDER_TERMINATED'));
+    if (this.#closed) { await this.#capabilities.drain(); return; }
+    await new Promise<void>((resolve, reject) => {
       const signal = (value: NodeJS.Signals): void => {
         try {
           if (process.platform !== 'win32' && this.#child.pid) process.kill(-this.#child.pid, value);
@@ -226,11 +241,12 @@ class ProviderProcessSession {
         } catch { /* The provider group can stop before the signal is sent. */ }
       };
       const force = setTimeout(() => signal('SIGKILL'), 500);
-      const bound = setTimeout(resolve, 1_000);
+      const bound = setTimeout(() => { signal('SIGKILL'); reject(new Error('TEST_PROVIDER_TERMINATION_TIMEOUT')); }, 1_000);
       this.#child.once('close', () => { clearTimeout(force); clearTimeout(bound); resolve(); });
       try { this.#send({ kind: 'abort', reason: 'TEST_PROVIDER_TERMINATED' }); signal('SIGTERM'); }
       catch { signal('SIGKILL'); }
     });
+    await this.#capabilities.drain();
   }
 
   resources(): ProviderProcessResources { this.#sample(); return { ...this.#resources }; }
@@ -246,7 +262,7 @@ class ProviderProcessSession {
     const limit = facts.cpuTimeMs > this.#invocation.limits.cpuMillis ? 'TEST_PROVIDER_CPU_LIMIT'
       : facts.memoryBytes > this.#invocation.limits.memoryBytes ? 'TEST_PROVIDER_MEMORY_LIMIT'
         : facts.processes > this.#invocation.limits.processes ? 'TEST_PROVIDER_PROCESS_LIMIT' : null;
-    if (limit !== null) { this.#fail(new Error(limit)); void this.terminate(); }
+    if (limit !== null) { this.#fail(new Error(limit)); void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error)))); }
   }
 
   async #message(line: string): Promise<void> {
@@ -262,12 +278,18 @@ class ProviderProcessSession {
     if (message.kind === 'log' && (message.stream === 'stdout' || message.stream === 'stderr') && typeof message.content === 'string') {
       this.#context?.log(message.stream, message.encoding === 'base64' ? Buffer.from(message.content, 'base64') : message.content); return;
     }
-    if (message.kind === 'capability' && typeof message.id === 'string' && typeof message.capability === 'string') {
-      try {
-        const value = await this.#context!.invoke(message.capability, message.request as never);
-        this.#send({ kind: 'capability-result', id: message.id, ok: true, value });
-      } catch (error) { this.#send({ kind: 'capability-result', id: message.id, ok: false, error: error instanceof Error ? error.message : String(error) }); }
+    if (message.kind === 'capability-abort' && typeof message.id === 'string') {
+      this.#capabilities.cancel(message.id, new Error(String(message.reason ?? 'TEST_PROVIDER_CAPABILITY_CANCELLED')));
       return;
+    }
+    if (message.kind === 'capability' && typeof message.id === 'string' && typeof message.capability === 'string') {
+      if (!this.#context) throw new Error('TEST_PROVIDER_CONTEXT_MISSING');
+      await this.#capabilities.handle(message.id, message.capability, message.request as never,
+        this.#context, (value) => this.#send(value));
+      return;
+    }
+    if ((message.kind === 'result' || message.kind === 'cleanup-result') && this.#capabilities.pending > 0) {
+      throw new Error('TEST_PROVIDER_UNAWAITED_CAPABILITIES');
     }
     if (message.kind === 'initialized' && typeof message.supportsCleanup === 'boolean') {
       this.#initialized = message.supportsCleanup;
@@ -278,17 +300,21 @@ class ProviderProcessSession {
     if (message.kind === 'error') this.#fail(new Error(`TEST_PROVIDER_FAILED:${String(message.error)}`));
   }
 
-  #send(value: unknown): void {
-    if (this.#closed) throw new Error('TEST_PROVIDER_PROCESS_CLOSED');
+  #send(value: unknown): boolean {
+    if (this.#closed || this.#termination || this.#child.stdin.destroyed || this.#child.stdin.writableEnded) return false;
     this.#child.stdin.write(`${JSON.stringify(value)}\n`);
+    return true;
   }
 
   #setContext(context: TestProviderExecutionContext): void {
     this.#detachContext(); this.#context = context;
     this.#contextAbort = () => {
       if (this.#closed) return;
-      try { this.#send({ kind: 'abort', reason: String(context.signal.reason ?? 'TEST_PROVIDER_CANCELLED') }); }
-      catch { /* The close handler completes the pending operation. */ }
+      const reason = context.signal.reason instanceof Error ? context.signal.reason
+        : new Error('TEST_PROVIDER_CANCELLED', { cause: context.signal.reason });
+      this.#capabilities.abort(reason);
+      this.#fail(reason);
+      void this.terminate().catch((error) => this.#fail(error instanceof Error ? error : new Error(String(error))));
     };
     if (context.signal.aborted) this.#contextAbort();
     else context.signal.addEventListener('abort', this.#contextAbort, { once: true });
@@ -334,29 +360,29 @@ class IsolatedLoadedProvider implements LoadedTestProvider {
   }
 
   async cleanup(_invocation: ProviderInvocationV1, context: TestProviderExecutionContext): Promise<void> {
-    try {
-      if (!this.#terminated) {
-        if (await this.#session.initialize(context)) await this.#session.cleanup(context);
-        this.#resources = this.#session.resources(); await this.#session.terminate(); this.#terminated = true; return;
-      }
-      const recovery = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot);
-      try { if (await recovery.initialize(context)) await recovery.cleanup(context); }
-      finally { this.#resources = recovery.resources(); await recovery.terminate(); }
-    } finally {
-      const snapshots = path.join(fs.realpathSync(this.#workspaceRoot), 'test-provider-snapshots');
-      const relative = path.relative(snapshots, this.#entry.package.root);
-      if (relative === '' || relative === '..' || relative.startsWith(`..${path.sep}`)) throw new Error('TEST_PROVIDER_SNAPSHOT_PATH_INVALID');
-      fs.rmSync(this.#entry.package.root, { recursive: true, force: true });
+    if (!this.#terminated) {
+      try { if (await this.#session.initialize(context)) await this.#session.cleanup(context); }
+      finally { await this.terminate(); this.#removeSnapshot(); }
+      return;
+    }
+    const recovery = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot);
+    try { if (await recovery.initialize(context)) await recovery.cleanup(context); }
+    finally {
+      this.#resources = recovery.resources();
+      await recovery.terminate();
+      this.#removeSnapshot();
     }
   }
 
   async terminate(): Promise<void> {
-    this.#resources = this.#session.resources(); this.#terminated = true; await this.#session.terminate();
+    this.#resources = this.#session.resources();
+    await this.#session.terminate();
+    this.#terminated = true;
   }
 
   async discard(): Promise<void> {
-    try { await this.terminate(); }
-    finally { this.#removeSnapshot(); }
+    await this.terminate();
+    this.#removeSnapshot();
   }
 
   #removeSnapshot(): void {

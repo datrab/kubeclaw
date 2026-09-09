@@ -102,3 +102,30 @@ metadata has overhead, and final concatenation, decoding and JSON parsing create
 bounded copies. No unbounded full-response `arrayBuffer()` remains. No production
 endpoint, TLS/auth infrastructure, OOM stress, deployment or operator acceptance
 is claimed here.
+
+## COMMAND-001 follow-up — descendant acknowledgement
+
+Independent review found the first patch still returned immediately after KILL
+when descendants had already closed their pipes. Its original process-group
+regression waited for death after the API returned and therefore did not prove
+nonrunning state at settlement. That earlier closure claim was too broad.
+
+A new real-process regression runs the production `CommandProcessGroup` with
+an exited leader and three SIGTERM-resistant descendants using closed pipes,
+with an immediate post-cleanup liveness assertion and no test-side wait. Against
+the pre-follow-up implementation it failed at iteration 6 of 8 with one still
+running descendant. The changed implementation passed all eight iterations.
+The original Runner timeout/abort/shutdown test now also checks immediate death.
+
+Linux cleanup captures the outer PGID with same-PID-namespace matching before
+leader identity is lost. After TERM/grace/KILL it scans actual group members for
+non-Z/non-X state, with one second for exit acknowledgement; unidentified groups,
+non-race proc errors and acknowledgement timeout are explicit failures. Both
+command result and active shutdown drain receive cleanup failures. This does
+not claim orphan reaping or containment of independent process sessions.
+
+The repeated full-Runner version of this new test encountered the already-noted
+namespace mismatch in the unchanged resource sampler (an unrelated 15,490 ms CPU
+sample). The targeted race test consequently calls the actual production process-
+group owner with real native processes, while the complete original Runner suite
+remains a separate gate. No resource limit assertion was relaxed to make it pass.

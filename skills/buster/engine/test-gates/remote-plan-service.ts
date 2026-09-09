@@ -1,3 +1,4 @@
+import { cleanupTerminalWorkspace } from './terminal-workspace.ts';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -542,6 +543,8 @@ export class BusterRemotePlanService {
           error: 'cancelled during restart recovery',
         });
       }
+      // A previous host's terminal record does not prove orphan quiescence.
+      // Retain workspace inputs until an ownership reconciliation can prove it.
     }
   }
 
@@ -600,14 +603,13 @@ export class BusterRemotePlanService {
       }
       const archive = path.join(jobRoot, 'repository.tar.gz');
       fs.writeFileSync(archive, repositoryArchiveBytes(job.repositoryArchive), { flag: 'wx', mode: 0o600 });
-      await safeExtract(
-        this.#options.tarExecutable,
-        archive,
-        repositoryRoot,
-        this.#options.maximumExtractedBytes,
-        controller.signal,
-      );
-      fs.rmSync(archive, { force: true });
+      try {
+        await safeExtract(this.#options.tarExecutable, archive, repositoryRoot,
+          this.#options.maximumExtractedBytes, controller.signal);
+      } catch (error) {
+        await cleanupTerminalWorkspace(jobRoot);
+        throw error;
+      } finally { fs.rmSync(archive, { force: true }); }
       const paths = { jobRoot, repositoryRoot, workspaceRoot, artifactRoot, observabilityRoot };
       const directCommand = this.#options.allowedCapabilities.has('command.execute')
         ? new DirectCommandCapabilityInvoker({
@@ -690,6 +692,9 @@ export class BusterRemotePlanService {
           ...(capabilities ? { capabilityInvoker: capabilities } : {}),
           signal: controller.signal,
         }).run().finally(() => directCommand?.shutdown());
+      if (run.cleanupErrors.length === 0 && run.attempts.every((attempt) => attempt.executionState === 'completed')) {
+        await cleanupTerminalWorkspace(jobRoot);
+      }
       if (controller.signal.aborted) {
         await this.#options.store.transition(job.jobId, ['running', 'cancelling'], 'cancelled',
           this.#now().toISOString(), { error: 'cancelled by Nova' });

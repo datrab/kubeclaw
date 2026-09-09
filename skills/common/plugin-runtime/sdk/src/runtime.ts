@@ -121,6 +121,7 @@ export interface TestProviderExecutionContext {
   invoke(
     capability: string,
     request: TestProviderCapabilityRequest,
+    signal?: AbortSignal,
   ): Promise<Readonly<Record<string, unknown>>>;
 }
 

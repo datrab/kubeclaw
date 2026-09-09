@@ -49,7 +49,7 @@ try {
       if (mode === 'shutdown') assert.equal(outcome.result?.exitCode, 0);
       assert(Date.now() - (mode === 'timeout' ? started : triggered) < (mode === 'timeout' ? 1_600 : 1_000),
         `${mode} must finish on termination grace, before descendant's 5-second self-exit`);
-      await waitFor(() => !running(identity.childHost), 'descendant is dead before test cleanup');
+      assert.equal(running(identity.childHost), false, 'descendant is already dead when the operation settles');
       console.log(JSON.stringify({ mode, elapsedMs: Date.now() - started, descendantStopped: true }));
     } finally {
       if (identity) {

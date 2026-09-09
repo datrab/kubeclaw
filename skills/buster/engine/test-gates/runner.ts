@@ -1892,6 +1892,7 @@ export class TestPlanRunner {
       invoke: async (
         capability: string,
         request: TestProviderCapabilityRequest,
+        invocationSignal?: AbortSignal,
       ) => {
         if (!granted.has(capability))
           throw new Error(`TEST_PROVIDER_CAPABILITY_DENIED:${capability}`);
@@ -1900,7 +1901,7 @@ export class TestPlanRunner {
         return this.#options.capabilityInvoker.invoke(
           capability,
           request,
-          signal,
+          invocationSignal ? AbortSignal.any([signal, invocationSignal]) : signal,
           inputs,
         );
       },
@@ -2004,8 +2005,9 @@ export class TestPlanRunner {
 
   async #cleanupFixtures(): Promise<void> {
     for (const retained of [...this.#retainedFixtures].reverse()) {
-      try { await this.#cleanupInstance(retained.node, retained.execution); }
-      finally {
+      if (!await this.#cleanupInstance(retained.node, retained.execution)) continue;
+      await retained.execution.instance?.terminate();
+      {
         const repository = path.resolve(this.#workspaceRoot, retained.execution.invocation.workspace.repository);
         const attemptsRoot = path.join(path.resolve(this.#workspaceRoot), 'test-attempts');
         const attemptRoot = path.dirname(repository);
@@ -2013,7 +2015,7 @@ export class TestPlanRunner {
         if (!relative || relative === '..' || relative.startsWith(`..${path.sep}`)) {
           throw new Error('TEST_PROVIDER_ATTEMPT_PATH_INVALID');
         }
-        fs.rmSync(attemptRoot, { recursive: true, force: true });
+        fs.rmSync(repository, { recursive: true, force: true });
       }
     }
   }

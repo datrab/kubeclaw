@@ -22,11 +22,22 @@ function finish() {
   setImmediate(() => process.exit(process.exitCode ?? 0));
 }
 
-function rpc(capability, request) {
+function rpc(capability, request, signal = contextController.signal) {
+  const combined = AbortSignal.any([contextController.signal, signal]);
+  if (combined.aborted) return Promise.reject(combined.reason);
   sequence += 1;
   const id = `capability:${sequence}`;
+  const operation = new Promise((resolve, reject) => {
+    const abort = () => {
+      pending.delete(id);
+      send({ kind: 'capability-abort', id, reason: String(combined.reason ?? 'TEST_PROVIDER_CAPABILITY_CANCELLED') });
+      reject(combined.reason);
+    };
+    pending.set(id, { resolve, reject, detach: () => combined.removeEventListener('abort', abort) });
+    combined.addEventListener('abort', abort, { once: true });
+  });
   send({ kind: 'capability', id, capability, request });
-  return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+  return operation;
 }
 
 function resources() {
@@ -60,6 +71,7 @@ async function initialize(command) {
 async function execute() {
   if (!instance) throw new Error('TEST_PROVIDER_NOT_INITIALIZED');
   const value = await instance.execute(invocation, context);
+  if (pending.size) throw new Error('TEST_PROVIDER_UNAWAITED_CAPABILITIES');
   send({ kind: 'result', value, resources: resources() });
 }
 
@@ -76,6 +88,7 @@ lines.on('line', (line) => {
       const request = pending.get(message.id);
       if (!request) return;
       pending.delete(message.id);
+      request.detach();
       if (message.ok) request.resolve(message.value);
       else request.reject(new Error(String(message.error || 'capability failed')));
       return;

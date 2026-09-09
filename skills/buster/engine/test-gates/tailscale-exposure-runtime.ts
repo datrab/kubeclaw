@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { runProcessInput } from './process-input.ts';
 import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
@@ -11,32 +11,17 @@ type JsonObject = Record<string, unknown>;
 type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
   => Promise<{ stdout?: string; stderr?: string }>;
 
-function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
-  return new Promise((resolve, reject) => {
-    const child = spawn(command, [...args], { env: options.env as NodeJS.ProcessEnv | undefined,
-      signal: options.signal as AbortSignal | undefined, stdio: ['pipe', 'pipe', 'pipe'] });
-    const output: Buffer[] = []; const errors: Buffer[] = [];
-    let outputBytes = 0; let errorBytes = 0; let limited = false;
-    const maximum = Number(options.maxBuffer ?? 1024 * 1024);
-    const collect = (target: Buffer[], chunk: Buffer, current: number) => {
-      const next = current + chunk.byteLength;
-      if (next > maximum) { limited = true; child.kill('SIGKILL'); return next; }
-      target.push(chunk); return next;
-    };
-    const timer = setTimeout(() => child.kill('SIGKILL'), Number(options.timeout ?? 30_000));
-    child.stdout.on('data', (chunk: Buffer) => { outputBytes = collect(output, chunk, outputBytes); });
-    child.stderr.on('data', (chunk: Buffer) => { errorBytes = collect(errors, chunk, errorBytes); });
-    child.once('error', (error) => { clearTimeout(timer); reject(error); });
-    child.once('close', (code, signal) => {
-      clearTimeout(timer);
-      const stdout = Buffer.concat(output).toString('utf8'); const stderr = Buffer.concat(errors).toString('utf8');
-      if (code === 0 && !limited) { resolve({ stdout, stderr }); return; }
-      const error = new Error(limited ? 'TAILSCALE_EXPOSURE_KUBECTL_OUTPUT_LIMIT'
-        : `TAILSCALE_EXPOSURE_KUBECTL_FAILED:${String(code)}:${String(signal)}`) as Error & { stdout: string; stderr: string };
-      error.stdout = stdout; error.stderr = stderr; reject(error);
-    });
-    if (options.input === null || options.input === undefined) child.stdin.end(); else child.stdin.end(options.input as string | Buffer);
+async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
+  const result = await runProcessInput(command, args, {
+    ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
+    ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
+    input: options.input as string | Buffer | null ?? null,
+    timeoutMs: Number(options.timeout ?? 30_000), maximumOutputBytes: Number(options.maxBuffer ?? 1024 * 1024),
+    prefix: 'TAILSCALE_EXPOSURE_KUBECTL',
   });
+  const stdout = result.stdout.toString('utf8'); const stderr = result.stderr.toString('utf8');
+  if (result.code !== 0) throw Object.assign(new Error(`TAILSCALE_EXPOSURE_KUBECTL_FAILED:${String(result.code)}:${String(result.signal)}`), { stdout, stderr });
+  return { stdout, stderr };
 }
 
 export interface TailscaleExposureCapabilityInvokerOptions {

@@ -36,3 +36,11 @@ removal remains best effort, and this package does not promise hard cgroup
 accounting or complete orphan reaping on an undelegated host. An interrupted
 command may already have made external changes; callers must reconcile them
 before retrying, rather than treating cancellation as proof of no side effect.
+
+Linux cleanup now acknowledges that the process group has no running members
+before returning. It records the outer PGID with PID-namespace identity while
+the leader/group exists, then polls actual `/proc` states after force termination.
+Zombie/exited entries are nonrunning; PID-namespace-local numbers alone are never
+used to select proc records. Acknowledgement has an additional one-second budget
+and fails explicitly if proc identity/status cannot be established. Cleanup
+failure rejects both the command and an in-progress shutdown drain.

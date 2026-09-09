@@ -38,13 +38,14 @@ export class CommandExecution {
   #resolve!: (result: Readonly<Record<string, unknown>>) => void;
   #reject!: (error: Error) => void;
   #finishActive!: () => void;
+  #failActive!: (error: Error) => void;
   readonly #abort = (): void => this.#fail(new Error('ADAPTER_CANCELLED', { cause: this.#options.signal.reason }));
 
   constructor(options: ExecutionOptions) {
     this.#options = options;
     this.#group = new CommandProcessGroup(options.child, options.graceMs, options.cgroup);
     this.result = new Promise((resolve, reject) => { this.#resolve = resolve; this.#reject = reject; });
-    this.finished = new Promise((resolve) => { this.#finishActive = resolve; });
+    this.finished = new Promise((resolve, reject) => { this.#finishActive = resolve; this.#failActive = reject; });
     this.#timeout = setTimeout(() => this.#fail(new Error('COMMAND_TIMEOUT')), options.limits.maxExecutionMs);
     this.#timeout.unref();
     this.#sampleTimer = setInterval(() => this.#sample(), 25);
@@ -87,7 +88,9 @@ export class CommandExecution {
       cleanupCgroup(this.#options.cgroup);
       this.#settle(this.#pendingError, code, signal);
     } catch (error) {
-      this.#settle(error instanceof Error ? error : new Error(String(error)), code, signal);
+      const failure = error instanceof Error ? error : new Error(String(error));
+      this.#settle(failure, code, signal);
+      this.#failActive(failure);
     } finally { this.#finishActive(); }
   }
 

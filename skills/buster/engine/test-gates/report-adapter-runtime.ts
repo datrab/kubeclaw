@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { spawn } from 'node:child_process';
+import { ProcessInputCleanupError, runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
@@ -287,6 +287,7 @@ export class RegisteredReportAdapterRuntime {
     }
 
     const snapshot = path.join(this.#runtimeRoot, `adapter-${crypto.randomUUID()}`);
+    let disposalConfirmed = true;
     try {
       await abortable(writePackageSnapshot(snapshot, sourcePackage.files, signal), signal);
       this.#assertRuntimeRoot();
@@ -317,69 +318,30 @@ export class RegisteredReportAdapterRuntime {
         throw new Error('REPORT_ADAPTER_CASE_FINDING_LIMIT');
       }
       return Object.freeze(structuredClone(result));
+    } catch (error) {
+      if (error instanceof ProcessInputCleanupError) disposalConfirmed = false;
+      throw error;
     } finally {
-      fs.rmSync(snapshot, { recursive: true, force: true });
+      if (disposalConfirmed) fs.rmSync(snapshot, { recursive: true, force: true });
     }
   }
 
-  #run(entry: ReportAdapterRegistryEntry, artifact: ArtifactRefV1, bytes: Buffer,
+  async #run(entry: ReportAdapterRegistryEntry, artifact: ArtifactRefV1, bytes: Buffer,
     limits: ReportAdapterRuntimeLimits, packageRoot: string, modulePath: string,
     signal?: AbortSignal): Promise<ReportAdapterOutput> {
     if (signal?.aborted) return Promise.reject(signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED'));
     if (limits.cpuMillis % 1000 !== 0) return Promise.reject(new Error('REPORT_ADAPTER_CPU_LIMIT_GRANULARITY'));
     const runtime = runtimePaths();
-    return new Promise<ReportAdapterOutput>((resolve, reject) => {
-      const child = spawn(runtime.launcher, [
+    const result = await runProcessInput(runtime.launcher, [
         String(limits.memoryBytes), String(limits.cpuMillis / 1000),
         String(limits.openFiles), process.execPath,
         `--max-old-space-size=${Math.max(16, Math.floor(limits.memoryBytes / (1024 * 1024) * 0.7))}`,
         '--permission', `--allow-fs-read=${runtime.child}`, `--allow-fs-read=${packageRoot}`,
         '--no-addons', '--no-experimental-sqlite', runtime.child,
-      ], { cwd: packageRoot, env: { NODE_NO_WARNINGS: '1' }, stdio: ['pipe', 'pipe', 'pipe'] });
-      const outputChunks: Buffer[] = [];
-      let outputBytes = 0;
-      let settled = false;
-      let timer: NodeJS.Timeout | undefined;
-      const finish = (error?: Error, value?: ReportAdapterOutput) => {
-        if (settled) return;
-        settled = true;
-        if (timer) clearTimeout(timer);
-        signal?.removeEventListener('abort', abort);
-        if (!child.killed) child.kill('SIGKILL');
-        if (error) reject(error); else resolve(value!);
-      };
-      const abort = () => finish(signal?.reason instanceof Error ? signal.reason : new Error('REPORT_ADAPTER_CANCELLED'));
-      timer = setTimeout(() => finish(new Error('REPORT_ADAPTER_TIMEOUT')), limits.timeoutMs);
-      signal?.addEventListener('abort', abort, { once: true });
-      if (signal?.aborted) { abort(); return; }
-      child.stdout.on('data', (chunk: Buffer) => {
-        if (settled) return;
-        if (outputBytes + chunk.byteLength > limits.maximumResultBytes) {
-          child.stdout.pause();
-          finish(new Error('REPORT_ADAPTER_RESULT_LIMIT'));
-          return;
-        }
-        outputChunks.push(chunk);
-        outputBytes += chunk.byteLength;
-      });
-      child.stderr.on('data', () => {});
-      child.once('error', (error) => finish(error));
-      child.once('close', (code, closeSignal) => {
-        if (settled) return;
-        const output = Buffer.concat(outputChunks, outputBytes);
-        const lines = output.toString('utf8').trim().split('\n');
-        if (lines.length !== 1 || outputBytes > limits.maximumResultBytes) {
-          finish(new Error('REPORT_ADAPTER_PROTOCOL_INVALID')); return;
-        }
-        let message: { kind?: string; value?: ReportAdapterOutput; error?: string };
-        try { message = JSON.parse(lines[0]!) as typeof message; }
-        catch { finish(new Error(`REPORT_ADAPTER_PROTOCOL_INVALID:${String(code)}:${String(closeSignal)}`)); return; }
-        if (message.kind === 'result' && code === 0 && message.value) {
-          finish(undefined, message.value);
-        }
-        else finish(new Error(`REPORT_ADAPTER_FAILED:${message.error ?? `${String(code)}:${String(closeSignal)}`}`));
-      });
-      child.stdin.end(`${JSON.stringify({
+      ], {
+      cwd: packageRoot, env: { NODE_NO_WARNINGS: '1' }, ...(signal ? { signal } : {}),
+      timeoutMs: limits.timeoutMs, maximumOutputBytes: limits.maximumResultBytes,
+      prefix: 'REPORT_ADAPTER', outputLimitError: 'REPORT_ADAPTER_RESULT_LIMIT', input: `${JSON.stringify({
         kind: 'adapt',
         modulePath,
         exportName: entry.registration.entrypoint.export,
@@ -390,7 +352,14 @@ export class RegisteredReportAdapterRuntime {
           maximumFindings: limits.maximumFindings,
           maximumCaseFindings: limits.maximumCaseFindings,
         },
-      })}\n`);
+      })}\n`,
     });
+    const lines = result.stdout.toString('utf8').trim().split('\n');
+    if (lines.length !== 1) throw new Error('REPORT_ADAPTER_PROTOCOL_INVALID');
+    let message: { kind?: string; value?: ReportAdapterOutput; error?: string };
+    try { message = JSON.parse(lines[0]!) as typeof message; }
+    catch (error) { throw new Error(`REPORT_ADAPTER_PROTOCOL_INVALID:${String(result.code)}:${String(result.signal)}`, { cause: error }); }
+    if (message.kind === 'result' && result.code === 0 && message.value) return message.value;
+    throw new Error(`REPORT_ADAPTER_FAILED:${message.error ?? `${String(result.code)}:${String(result.signal)}`}`);
   }
 }

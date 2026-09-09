@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import type { ChildProcess } from 'node:child_process';
+import { captureLinuxProcessGroup, linuxProcessGroupRunning } from '@kubeclaw/plugin-foundation/processes/linux-process-group';
 
 // The leader's exit and the group's lifetime are separate: descendants may
 // still own stdout/stderr, even when child.exitCode is already set.
@@ -9,11 +10,17 @@ export class CommandProcessGroup {
   readonly #cgroup: string | undefined;
   #deadline: number | undefined;
   #force: NodeJS.Timeout | undefined;
+  readonly #linuxGroup: number | undefined;
+  readonly #identityError: unknown;
 
   constructor(child: ChildProcess, graceMs: number, cgroup?: string) {
     this.#child = child;
     this.#graceMs = graceMs;
     this.#cgroup = cgroup;
+    if (process.platform === 'linux' && child.pid) {
+      try { this.#linuxGroup = captureLinuxProcessGroup(child.pid); }
+      catch (error) { this.#identityError = error; }
+    }
   }
 
   terminate(): void {
@@ -34,6 +41,18 @@ export class CommandProcessGroup {
       if (this.#alive()) this.#signal('SIGKILL');
     }
     clearTimeout(this.#force);
+    await this.#acknowledgeExit();
+  }
+
+  async #acknowledgeExit(): Promise<void> {
+    if (process.platform !== 'linux' || !this.#alive()) return;
+    if (this.#linuxGroup === undefined) throw new Error('COMMAND_PROCESS_GROUP_IDENTITY_UNAVAILABLE', { cause: this.#identityError });
+    const deadline = (this.#deadline ?? Date.now()) + 1_000;
+    while (await linuxProcessGroupRunning(this.#linuxGroup, deadline)) {
+      if (Date.now() >= deadline) throw new Error('COMMAND_PROCESS_GROUP_CLEANUP_TIMEOUT');
+      this.#signal('SIGKILL');
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    }
   }
 
   #signal(signal: NodeJS.Signals): void {
@@ -50,6 +69,9 @@ export class CommandProcessGroup {
   #alive(): boolean {
     if (process.platform === 'win32' || !this.#child.pid) return false;
     try { process.kill(-this.#child.pid, 0); return true; }
-    catch { return false; }
+    catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ESRCH') return false;
+      throw new Error('COMMAND_PROCESS_GROUP_STATUS_FAILED', { cause: error });
+    }
   }
 }
