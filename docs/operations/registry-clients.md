@@ -100,6 +100,23 @@ and digest lookup use the same validated input. Arbitrary duplicate registry env
 entries on the named sidecar are rejected at chart render time. Exactly one
 `buster-v2-runtime` sidecar is required for the Buster role.
 
+For the real E2E workspace generator, supply the same non-secret
+`KUBECLAW_REGISTRY_CONFIG` JSON in its operator environment. Missing configuration
+fails before workspace creation. The generator validates the contract and copies
+only its registry origin into module HTTP and intentional API-failure tests;
+it does not resolve credentials or write credential names into project files.
+
+The Buster entrypoint explicitly enables `networkHttp.registryHealth`. This uses
+the existing container-build credential environment references and Node CA trust.
+It permits the configured origin and port only for `GET`/`HEAD /v2/`, with no
+query, body, WebSocket, redirects, or caller headers other than `Accept`. The
+runtime adds authentication after the provider request boundary; platform
+credentials never enter authored pipeline or API-flow configuration. Other
+origins receive no registry credentials. Plain HTTP remains an explicitly
+selected anonymous lab mode. Module health still requires an actual HTTP 200;
+the intentional API-failure scenario still expects 599 and fails against the
+actual 200. These checks establish registry health, not image push/pull success.
+
 ## Image lifetime and outstanding native evidence
 
 Deleting a test namespace does not remove images from a shared registry.

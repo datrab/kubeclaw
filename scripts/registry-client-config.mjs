@@ -35,7 +35,7 @@ function endpoint(input,label){
   return {...input,endpoint:url.origin,host:url.host};
 }
 
-function authentication(registry,environment){
+function credentialNames(registry){
   const auth=registry.auth;
   if(!auth){
     if(registry.transport==='https')throw new Error('HTTPS registry requires explicit authentication configuration');
@@ -44,6 +44,11 @@ function authentication(registry,environment){
   if(registry.transport!=='https')throw new Error('registry credentials require HTTPS; lab HTTP must be anonymous');
   const names=[auth.usernameEnvironmentVariable,auth.passwordEnvironmentVariable];
   if(names.some(name=>typeof name!=='string' || !/^[A-Z][A-Z0-9_]+$/u.test(name)))throw new Error('registry auth requires explicit credential environment names');
+  return names;
+}
+function authentication(registry,environment){
+  const names=credentialNames(registry);
+  if(!names)return undefined;
   const [username,password]=names.map(name=>environment[name]);
   if(!username || !password)throw new Error('registry credential environment variables are missing or empty');
   return {username,password};
@@ -75,13 +80,23 @@ function validateRouting(registry,mirror){
   if(mirror?.host===registry.host)throw new Error('writable registry cannot also be a pull-through mirror');
 }
 
-/** One operator-owned contract; generation does not install or verify node configuration. */
-export function registryClientConfig(input,environment={}){
+function clients(input){
   if(input?.schemaVersion!=='registry-clients.v1')throw new Error('registry-clients.v1 configuration is required; see docs/operations/registry-clients.md');
   contractShape(input);
   const registry=endpoint(input.registry,'registry');
   const mirror=input.dockerHubMirror?.endpoint?endpoint(input.dockerHubMirror,'dockerHubMirror'):null;
   validateRouting(registry,mirror);
+  return {registry,mirror};
+}
+/** Non-secret origin projection for callers; never resolves credential values. */
+export function registryClientOrigin(input){
+  const {registry}=clients(input);
+  credentialNames(registry);
+  return registry.endpoint;
+}
+/** One operator-owned contract; generation does not install or verify node configuration. */
+export function registryClientConfig(input,environment={}){
+  const {registry,mirror}=clients(input);
   const auth=input.registry.auth;
   const credentials=authentication(registry,environment);
   return {buildkit:buildkitConfiguration(registry,mirror),runtime:{registryBaseUrl:registry.endpoint,registryReference:registry.host,...(registry.caFile?{registryCaFile:registry.caFile}:{}),

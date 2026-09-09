@@ -12,6 +12,7 @@ import {
   validateRealE2EScenarioSetup,
 } from './failure-scenarios.mjs';
 import { expandSwarmConfig } from './support/platform-config.ts';
+import { registryClientOrigin } from '../../../scripts/registry-client-config.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -933,7 +934,14 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
   return progress;
 }
 
+function realE2ERegistryOrigin() {
+  const contract = process.env.KUBECLAW_REGISTRY_CONFIG;
+  if (!contract) throw new Error('REAL_E2E_REGISTRY_CONFIG_REQUIRED: supply the operator registry-clients.v1 contract');
+  return registryClientOrigin(JSON.parse(contract));
+}
+
 function instructionFiles(progress) {
+  const registryOrigin = realE2ERegistryOrigin();
   const contracts = progress?.contracts || {};
   const projectSrc = `Projects/${progress.project}/src`;
   const moduleIds = Object.keys(progress?.modules || {});
@@ -990,7 +998,7 @@ function instructionFiles(progress) {
           concurrencyGroup: 'security-dependency', config: { projectDirectory: projectSrc,
             policy: { profile: 'strict-v1' } } },
         health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 2,
-          needs: ['size-budget'], concurrencyGroup: 'http', config: { url: 'http://registry-local.kubeclaw.svc.cluster.local:5001',
+          needs: ['size-budget'], concurrencyGroup: 'http', config: { url: registryOrigin,
             path: '/v2/', expectedStatuses: [200], requestTimeoutMs: 10000 } },
       },
       concurrencyLimits: { unit: 2, 'size-budget': 1, http: 2, 'security-dependency': 1 },
@@ -1106,7 +1114,7 @@ function instructionFiles(progress) {
     if (typeof flowFile !== 'string') return;
     scope.tests['intentional-api-failure'] = { uses: 'kubeclaw.api-flow@1', mode: 'blocking', retries: 0,
       concurrencyGroup: 'api-flow', config: { flowFile: `${projectSrc}/${flowFile}`,
-        url: 'http://registry-local.kubeclaw.svc.cluster.local:5001' } };
+        url: registryOrigin } };
     scope.concurrencyLimits['api-flow'] = 1;
     apiFailureSpecs.push(flowFile);
   };
@@ -1540,6 +1548,7 @@ export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) 
 }
 
 export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 'success' } = {}) {
+  realE2ERegistryOrigin();
   const runId = `real-e2e-${Date.now()}-${process.pid}`;
   const model = e2eModel();
   const projectName = projectNameForRun(runId);

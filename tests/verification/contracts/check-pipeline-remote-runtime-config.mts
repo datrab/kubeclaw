@@ -129,6 +129,25 @@ try {
   const httpAddress = await httpRuntime.start(); assert.equal(httpAddress.address, '127.0.0.1');
   await httpRuntime.stop();
 
+  const httpConfiguration = JSON.parse(fs.readFileSync(busterConfig, 'utf8'));
+  const healthConfiguration = { ...httpConfiguration, networkHttp: { ...httpConfiguration.networkHttp, registryHealth: true } };
+  const healthEnvironment = { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey };
+  fs.writeFileSync(busterConfig, JSON.stringify(healthConfiguration));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, healthEnvironment), /BUSTER_REGISTRY_HEALTH_CONFIG_INVALID/u);
+  // These are configuration-only checks: no build process is launched.
+  const containerBuild = { buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: 'unix:///run/buildkit.sock',
+    registryBaseUrl: 'https://registry.example.test:5443', registryReference: 'registry.example.test:5443',
+    registryUsernameEnvironmentVariable: 'REGISTRY_HEALTH_USER', registryPasswordEnvironmentVariable: 'REGISTRY_HEALTH_PASSWORD',
+    repositoryPrefix: 'kubeclaw/test', allowedPlatforms: ['linux/amd64'], allowedBuildArguments: [],
+    maximumLogBytes: 1024, maximumExecutionMs: 5000, maximumManifestBytes: 1024 };
+  fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, containerBuild }));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, healthEnvironment), /REGISTRY_HEALTH_USER|registryUsernameEnvironmentVariable/u);
+  const registryEnvironment = { ...healthEnvironment, REGISTRY_HEALTH_USER: 'health-test', REGISTRY_HEALTH_PASSWORD: 'private-health-config-canary' };
+  const configuredHealth = loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment);
+  const healthAddress = await configuredHealth.start(); assert.equal(healthAddress.address, '127.0.0.1'); await configuredHealth.stop();
+  fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, containerBuild: { ...containerBuild, registryReference: 'foreign.example.test' } }));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment), /BUSTER_REGISTRY_HEALTH_ENDPOINT_MISMATCH/u);
+
   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, host: '0.0.0.0' }));
   assert.ok(loadProductionBusterRemotePlanRuntime(busterConfig,
     { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }) instanceof BusterRemotePlanRuntime);

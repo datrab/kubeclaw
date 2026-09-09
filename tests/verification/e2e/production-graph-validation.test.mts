@@ -1,3 +1,4 @@
+import { registryTestContract } from './registry-test-contract.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -14,6 +15,8 @@ test('production harness validates native module gates and rejects counter-based
   const projectName = 'graph-proof';
   const source = path.join(repo, 'Projects', projectName, 'src');
   const swarm = path.join(source, '.swarm');
+  const oldRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
+  process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
   const oldImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
   process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx@sha256:${'a'.repeat(64)}`;
   try {
@@ -48,6 +51,7 @@ test('production harness validates native module gates and rejects counter-based
     assert.equal(rejected.status, 1);
     assert.match(rejected.stderr, /RETRY_FIXTURE_REQUIRES_COMMITTED_DEFECT/);
   } finally {
+    if (oldRegistry === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG; else process.env.KUBECLAW_REGISTRY_CONFIG = oldRegistry;
     if (oldImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE; else process.env.REAL_E2E_DEPLOYMENT_IMAGE = oldImage;
     fs.rmSync(root, { recursive: true, force: true });
   }

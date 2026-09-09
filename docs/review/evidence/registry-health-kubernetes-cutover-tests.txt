@@ -1,0 +1,28 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
+    from: 'container-build',
+    output: 'image',
+-   schemaId: 'kubeclaw.container-image@1'
+  }
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:111:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: { from: 'container-build', output: 'image' },
+  expected: {
+    from: 'container-build',
+    output: 'image',
+    schemaId: 'kubeclaw.container-image@1'
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

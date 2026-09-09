@@ -1,0 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/remediation.test.ts
+
+{"ok":true,"provider":"api-flow","realHttp":true,"realWebSocket":true,"mocks":0,"wrappers":0}
+{"ok":true,"provider":"api-flow","realHttp":true,"mocks":0}

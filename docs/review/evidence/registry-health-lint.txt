@@ -1,0 +1,13 @@
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/network-http-runtime.ts
+  107:35  error  Handle the error intentionally or rethrow it with context            discipline/no-swallowed-error
+  201:3   error  Async method 'invoke' has a complexity of 40. Maximum allowed is 15  complexity
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/production.ts
+  112:8   error  Function 'loadProductionBusterRemotePlanRuntime' has too many lines (303). Maximum allowed is 60  max-lines-per-function
+  112:8   error  Function 'loadProductionBusterRemotePlanRuntime' has a complexity of 94. Maximum allowed is 15    complexity
+  114:63  error  Read environment variables only in a declared configuration or infrastructure adapter             discipline/no-direct-env-access
+  314:1   error  File has too many lines (401). Maximum allowed is 300                                             max-lines
+
+✖ 6 problems (6 errors, 0 warnings)
+

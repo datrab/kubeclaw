@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { validateRegistryHealth } from './registry-health-access.ts';
 import path from 'node:path';
 import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { buildRegistry } from '@kubeclaw/plugin-foundation/registry/build';
@@ -87,6 +88,15 @@ function optionalEnvironmentSecret(source: Record<string, unknown>, field: strin
   const value = environment[name];
   if (!value) throw new Error(`BUSTER_REMOTE_CONFIG_SECRET_MISSING:${field}`);
   return value;
+}
+
+function registryHealthConfiguration(enabled: unknown, source: Record<string, unknown> | null, username: string | undefined, password: string | undefined) {
+  if (enabled !== true || !source) throw new Error('BUSTER_REGISTRY_HEALTH_CONFIG_INVALID');
+  const options = { origin: String(source.registryBaseUrl),
+    ...(username === undefined ? {} : { username, password: password! }) };
+  validateRegistryHealth(options);
+  if (new URL(options.origin).host !== source.registryReference) throw new Error('BUSTER_REGISTRY_HEALTH_ENDPOINT_MISMATCH');
+  return options;
 }
 
 function scannerRegistry(source:Record<string,unknown>,environment:NodeJS.ProcessEnv,directory:string){
@@ -289,6 +299,9 @@ export function loadProductionBusterRemotePlanRuntime(
       }),
     } } : {}),
     ...(networkHttpSource ? { networkHttp: {
+      ...(networkHttpSource.registryHealth === undefined ? {} : {
+        registryHealth: registryHealthConfiguration(networkHttpSource.registryHealth, containerBuildSource, registryUsername, registryPassword),
+      }),
       allowedOrigins: optionalStringArray(networkHttpSource.allowedOrigins, 'networkHttp.allowedOrigins'),
       allowedHostSuffixes: optionalStringArray(networkHttpSource.allowedHostSuffixes, 'networkHttp.allowedHostSuffixes'),
       allowedPorts: integerArray(networkHttpSource.allowedPorts, 'networkHttp.allowedPorts', 65_535),

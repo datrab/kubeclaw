@@ -1,3 +1,4 @@
+import { registryTestContract } from '../e2e/registry-test-contract.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -92,7 +93,10 @@ try {
 
 const priorImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
 process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+const priorRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
+process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
 const workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
+if (priorRegistry === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG; else process.env.KUBECLAW_REGISTRY_CONFIG = priorRegistry;
 if (priorImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE;
 else process.env.REAL_E2E_DEPLOYMENT_IMAGE = priorImage;
 try {

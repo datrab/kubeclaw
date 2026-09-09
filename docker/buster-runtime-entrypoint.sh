@@ -236,6 +236,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 900000, pollIntervalMs: 1000,
   },
   networkHttp: {
+    registryHealth: true,
     allowedOrigins: exactHttpOrigins, allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],
     allowedMethods: ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'],
     allowedRequestHeaders: ['accept', 'authorization', 'content-type', 'cookie', 'x-api-key'],

@@ -1,3 +1,4 @@
+import { registryTestContract } from '../e2e/registry-test-contract.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -96,7 +97,10 @@ try {
 
 const prior = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
 process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx@sha256:${'b'.repeat(64)}`;
+const priorRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
+process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
 const workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
+if (priorRegistry === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG; else process.env.KUBECLAW_REGISTRY_CONFIG = priorRegistry;
 if (prior === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE; else process.env.REAL_E2E_DEPLOYMENT_IMAGE = prior;
 try {
   const scope = loadPipelineTestScope(path.join(workspace.swarmDir, 'pipeline.json'), { moduleId: null, gateId: 'final-buster' });

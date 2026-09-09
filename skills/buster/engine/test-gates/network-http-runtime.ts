@@ -1,3 +1,4 @@
+import { RegistryHealthAccess, type RegistryHealthOptions } from './registry-health-access.ts';
 import { fixtureOrigins, fixtureAuthoritySignal } from './fixture-authority.ts';
 import crypto from 'node:crypto';
 import WebSocket from 'ws';
@@ -18,6 +19,7 @@ export interface NetworkHttpCapabilityInvokerOptions {
   readonly allowedMethods?: readonly string[];
   readonly allowedRequestHeaders?: readonly string[];
   readonly allowWebSocket?: boolean;
+  readonly registryHealth?: RegistryHealthOptions;
 }
 
 function positiveInteger(value: unknown, code: string, maximum = Number.MAX_SAFE_INTEGER): number {
@@ -155,8 +157,10 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
   readonly #allowedMethods: ReadonlySet<string>;
   readonly #allowedRequestHeaders: ReadonlySet<string>;
   readonly #allowWebSocket: boolean;
+  readonly #registryHealth: RegistryHealthAccess | undefined;
 
   constructor(options: NetworkHttpCapabilityInvokerOptions) {
+    this.#registryHealth = options.registryHealth ? new RegistryHealthAccess(options.registryHealth) : undefined;
     this.#allowedOrigins = new Set(options.allowedOrigins.map(canonicalOrigin));
     this.#allowedHostSuffixes = Object.freeze(options.allowedHostSuffixes.map(canonicalSuffix));
     this.#allowedPorts = new Set(options.allowedPorts.map((port) => positiveInteger(port, 'HTTP_RUNTIME_PORT_INVALID', 65_535)));
@@ -176,19 +180,29 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     if (this.#allowedPorts.size === 0) throw new Error('HTTP_RUNTIME_PORT_POLICY_REQUIRED');
   }
 
+  #isRegistryHealth(url: URL): boolean { return this.#registryHealth?.matches(url) === true; }
+
   #target(value: string, inputs?: readonly ResolvedInputV1[]): Readonly<{ url: URL; exactOrigin: boolean }> {
     let url: URL;
     try { url = new URL(value); } catch { throw new Error('HTTP_REQUEST_URL_INVALID'); }
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.hash) throw new Error('HTTP_REQUEST_URL_INVALID');
     const port = Number(url.port || (url.protocol === 'https:' ? 443 : 80));
-    if (!this.#allowedPorts.has(port)) throw new Error(`HTTP_REQUEST_PORT_DENIED:${port}`);
+    const registryHealth = this.#isRegistryHealth(url);
+    if (!registryHealth && !this.#allowedPorts.has(port)) throw new Error(`HTTP_REQUEST_PORT_DENIED:${port}`);
     const hostname = url.hostname.toLowerCase();
     const suffixAllowed = this.#allowedHostSuffixes.some((suffix) => hostname.endsWith(suffix)
       && hostname.length > suffix.length);
-    const configuredExactOrigin = this.#allowedOrigins.has(url.origin);
+    const configuredExactOrigin = registryHealth || this.#allowedOrigins.has(url.origin);
     if (!configuredExactOrigin && !suffixAllowed) throw new Error(`HTTP_REQUEST_ORIGIN_DENIED:${url.origin}`);
     const exactOrigin = configuredExactOrigin || fixtureOrigins(inputs ?? []).has(url.origin);
     return Object.freeze({ url, exactOrigin });
+  }
+
+  async #responseBytes(response: Response, scope: { method: string; maximumBytes: number; signal: AbortSignal; registryHealth: boolean }): Promise<Buffer> {
+    const bytes = scope.method === 'HEAD' ? Buffer.alloc(0) : await responseBytes(response, scope.maximumBytes, scope.signal);
+    if (scope.registryHealth) this.#registryHealth!.assertResponse(bytes, response.headers.get('content-type'));
+    if (scope.method === 'HEAD') await response.body?.cancel().catch(() => undefined);
+    return bytes;
   }
 
   async invoke(capability: string, request: any, signal: AbortSignal,
@@ -200,7 +214,7 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
     if (signal.aborted) throw new Error('HTTP_REQUEST_CANCELLED');
     signal = fixtureAuthoritySignal(inputs ?? [], signal);
     const { url, exactOrigin } = this.#target(request.resource.canonicalId, inputs);
-    const payload = exactPayload(request.payload);
+    const payload = exactPayload(request.payload); const registryHeaders = this.#registryHealth?.headers(url, request.operation, payload);
     if (request.operation === 'websocket') {
       if (!this.#allowWebSocket) throw new Error('HTTP_WEBSOCKET_DENIED');
       if (!exactOrigin) throw new Error('HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED');
@@ -228,11 +242,11 @@ export class NetworkHttpCapabilityInvoker implements TestProviderCapabilityInvok
       const body = ['GET', 'HEAD'].includes(method) ? undefined
         : requestBody(payload.body, this.#maximumRequestBytes);
       const permittedHeaders = this.#allowedRequestHeaders;
-      response = await fetch(url, { method, headers: requestHeaders(payload.headers, permittedHeaders),
+      response = await fetch(url, { method, headers: { ...requestHeaders(payload.headers, permittedHeaders), ...registryHeaders },
         ...(body === undefined ? {} : { body }), redirect: 'manual', signal: combined });
       if (response.status >= 300 && response.status < 400) throw new Error('HTTP_RESPONSE_REDIRECT_DENIED');
-      const bytes = method === 'HEAD' ? Buffer.alloc(0) : await responseBytes(response, maximumResponseBytes, combined);
-      if (method === 'HEAD') await response.body?.cancel().catch(() => undefined);
+      const bytes = await this.#responseBytes(response, { method, maximumBytes: maximumResponseBytes,
+        signal: combined, registryHealth: Boolean(registryHeaders) });
       return Object.freeze({
         status: response.status,
         headers: Object.freeze(Object.fromEntries(returnedHeaders.map((name) => [name,
