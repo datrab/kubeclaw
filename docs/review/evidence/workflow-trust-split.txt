@@ -1,0 +1,170 @@
+IFR-22-001 local workflow trust split evidence
+No GitHub Actions run or token capability test was performed.
+
+Official source lookup: github_fetch_commit(repo_full_name=<repo>, commit_sha=<existing tag>) resolved the tag through the commit endpoint to its commit URL (including tag dereference); then github_fetch_file(repository_full_name=<repo>, ref=<resolved SHA>, path=action.yml). All returned file bytes independently reproduce the Git blob SHA1; SHA256 also recorded. Existing tag major/minor selections were preserved.
+[
+  {
+    "repo": "actions/checkout",
+    "ref": "v6",
+    "sha": "d23441a48e516b6c34aea4fa41551a30e30af803",
+    "url": "https://github.com/actions/checkout/commit/d23441a48e516b6c34aea4fa41551a30e30af803",
+    "blob": "5b0524f730db83f9513c18ab31a6c086c7239076",
+    "actionYamlSha256": "d59219cb79590abdb877deaa14e3b65a00c05318bf5a6f3b989b9162b5d08c35",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "actions/checkout",
+    "ref": "v4",
+    "sha": "11d5960a326750d5838078e36cf38b85af677262",
+    "url": "https://github.com/actions/checkout/commit/11d5960a326750d5838078e36cf38b85af677262",
+    "blob": "24e73e5a12126edc2adb9e5cd1bf245ce85bde56",
+    "actionYamlSha256": "6188f6991491ed38977347cdaad0b0cd921a6d6232892363c91f433c22954f4f",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "actions/setup-node",
+    "ref": "v6",
+    "sha": "249970729cb0ef3589644e2896645e5dc5ba9c38",
+    "url": "https://github.com/actions/setup-node/commit/249970729cb0ef3589644e2896645e5dc5ba9c38",
+    "blob": "79813721449fefd25fbf7008327b5d59735eeb89",
+    "actionYamlSha256": "ad45f1922115116fb4706651d0a9262332bc4e4f11eb2021e09789dd1af18085",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "actions/setup-node",
+    "ref": "v4",
+    "sha": "49933ea5288caeca8642d1e84afbd3f7d6820020",
+    "url": "https://github.com/actions/setup-node/commit/49933ea5288caeca8642d1e84afbd3f7d6820020",
+    "blob": "ef58e69919a94e6a823d333159fad95e2720c896",
+    "actionYamlSha256": "8aee59063ebc272d850507febb30930de2684be1b1240cf5f3dff13179fcff0b",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "azure/setup-helm",
+    "ref": "v4.3.1",
+    "sha": "1a275c3b69536ee54be43f2070a358922e12c8d4",
+    "url": "https://github.com/Azure/setup-helm/commit/1a275c3b69536ee54be43f2070a358922e12c8d4",
+    "blob": "b67b5fbf75a8cee9b265cacde12b6566ee715564",
+    "actionYamlSha256": "10de0b290d182ef312355f2f3472f57730f700d26aa839e0ab4bbd4eaebf8bd8",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "docker/setup-buildx-action",
+    "ref": "v4",
+    "sha": "37fe631027851001ddb9b187196cc803df7f5f0e",
+    "url": "https://github.com/docker/setup-buildx-action/commit/37fe631027851001ddb9b187196cc803df7f5f0e",
+    "blob": "1ea4b62fdb83f1818d5ba23e69e5b0df7652b606",
+    "actionYamlSha256": "9c55229011a0566758962f36c74309c8ab06f8905a5997591a6a46319401ab38",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "docker/login-action",
+    "ref": "v4",
+    "sha": "dbcb813823bdd20940b903addbd779551569679f",
+    "url": "https://github.com/docker/login-action/commit/dbcb813823bdd20940b903addbd779551569679f",
+    "blob": "6eadfff765e47ed2882bd843fbe9a0193acc069d",
+    "actionYamlSha256": "e65e6bdc57fc10adcee036a393229aae6b9a9f451b69528f4ff50d4b0e93f156",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "docker/metadata-action",
+    "ref": "v6",
+    "sha": "dc802804100637a589fabce1cb79ff13a1411302",
+    "url": "https://github.com/docker/metadata-action/commit/dc802804100637a589fabce1cb79ff13a1411302",
+    "blob": "38392f0680f1b8b353cc9191c9068174e2412c3a",
+    "actionYamlSha256": "b339c251938cde1297c3aacfe3af62132e1a4f27e625672c7d5cd85050848e25",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "docker/build-push-action",
+    "ref": "v7",
+    "sha": "53b7df96c91f9c12dcc8a07bcb9ccacbed38856a",
+    "url": "https://github.com/docker/build-push-action/commit/53b7df96c91f9c12dcc8a07bcb9ccacbed38856a",
+    "blob": "7a1a94d46f66694384cb558b6f164027cdc3b667",
+    "actionYamlSha256": "5c1ade75252eabe541b96cc39a2165a07c8850f9bcd3f9b75f5394fbdfb215fd",
+    "gitBlobVerified": true
+  },
+  {
+    "repo": "actions/upload-artifact",
+    "ref": "v4",
+    "sha": "ea165f8d65b6e75b540449e92b4886f43607fa02",
+    "url": "https://github.com/actions/upload-artifact/commit/ea165f8d65b6e75b540449e92b4886f43607fa02",
+    "blob": "2a0ecf19e8d0087dd2e5d1785dcf764811e79fae",
+    "actionYamlSha256": "29b21270ff44638a165ea12abb4481796770c629e513217af7b4df1aa3821177",
+    "gitBlobVerified": true
+  }
+]
+
+Remaining tag-pinned actions outside the two owned entrypoints (observed current checkout; not remediated):
+.github/workflows/build-images.yaml:31 actions/checkout@v6
+.github/workflows/build-images.yaml:36 dorny/paths-filter@v3
+.github/workflows/build-images.yaml:105 actions/checkout@v6
+.github/workflows/build-images.yaml:109 docker/setup-buildx-action@v4
+.github/workflows/build-images.yaml:111 docker/login-action@v4
+.github/workflows/build-images.yaml:118 docker/metadata-action@v6
+.github/workflows/build-images.yaml:125 docker/build-push-action@v7
+.github/workflows/build-images.yaml:156 actions/upload-artifact@v4
+.github/workflows/build-images.yaml:184 actions/checkout@v6
+.github/workflows/build-images.yaml:187 actions/setup-node@v5
+.github/workflows/build-images.yaml:246 actions/checkout@v6
+.github/workflows/build-images.yaml:247 azure/setup-kubectl@v4
+.github/workflows/build-images.yaml:248 azure/setup-helm@v4
+.github/workflows/dependency-updates.yaml:16 actions/checkout@v6
+.github/workflows/dependency-updates.yaml:25 actions/create-github-app-token@v2
+.github/workflows/pipeline-reliability.yaml:14 actions/checkout@v6
+.github/workflows/pipeline-reliability.yaml:15 actions/setup-node@v5
+.github/workflows/pipeline-reliability.yaml:48 azure/setup-helm@v4
+.github/workflows/pipeline-reliability.yaml:79 actions/checkout@v6
+.github/workflows/pipeline-reliability.yaml:80 actions/setup-node@v5
+.github/workflows/pipeline-reliability.yaml:111 actions/checkout@v6
+.github/workflows/pipeline-reliability.yaml:112 actions/setup-node@v5
+.github/workflows/pipeline-reliability.yaml:144 actions/checkout@v6
+.github/workflows/pipeline-reliability.yaml:145 actions/setup-node@v5
+.github/workflows/promote-runtime.yaml:26 actions/checkout@v6
+.github/workflows/promote-runtime.yaml:31 actions/setup-node@v5
+.github/workflows/promote-runtime.yaml:65 actions/upload-artifact@v4
+.github/workflows/promote-runtime.yaml:70 actions/create-github-app-token@v2
+.github/workflows/publish-image-receipts.yaml:15 actions/checkout@v6
+.github/workflows/publish-image-receipts.yaml:16 actions/setup-node@v5
+.github/workflows/publish-image-receipts.yaml:19 actions/download-artifact@v4
+.github/workflows/release-security.yaml:15 actions/checkout@v6
+.github/workflows/release-security.yaml:16 actions/setup-node@v5
+.github/workflows/release-security.yaml:25 actions/upload-artifact@v4
+.github/workflows/role-images.yaml:34 actions/checkout@v6
+.github/workflows/role-images.yaml:35 actions/setup-node@v5
+.github/workflows/role-images.yaml:42 docker/setup-buildx-action@v4
+.github/workflows/role-images.yaml:44 docker/build-push-action@v7
+.github/workflows/role-images.yaml:68 actions/checkout@v6
+.github/workflows/role-images.yaml:70 docker/setup-buildx-action@v4
+.github/workflows/role-images.yaml:71 docker/build-push-action@v7
+.github/workflows/role-images.yaml:107 actions/checkout@v6
+.github/workflows/role-images.yaml:109 docker/setup-buildx-action@v4
+.github/workflows/role-images.yaml:111 docker/build-push-action@v7
+.github/workflows/update-checks.yaml:12 actions/checkout@v6
+.github/workflows/update-checks.yaml:15 actions/setup-node@v5
+.github/workflows/update-checks.yaml:19 azure/setup-helm@v4
+.github/workflows/update-checks.yaml:40 actions/checkout@v6
+.github/workflows/update-checks.yaml:47 actions/checkout@v6
+.github/workflows/update-checks.yaml:48 actions/setup-node@v5
+
+$ node --test tests/verification/contracts/workflow-trust-split.test.mjs
+✔ parsed job guards keep PRs and non-main dispatches read-only (1.813246ms)
+✔ read-only jobs cannot publish, persist checkout credentials or pass artifacts forward (0.341305ms)
+✔ trusted publication rebuilds source and retains digest smoke and receipt authority (0.402096ms)
+✔ trusted docs check before a scoped main-only commit and consume no validation artifacts (0.273723ms)
+✔ every external action in the two entrypoints is commit pinned (0.31202ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144.065096
+exit: 0
+
+$ node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/contracts/workflow-trust-split.test.mjs
+exit: 0
+
+$ git diff --check -- .github/workflows/build-ops-mcp.yaml .github/workflows/docs-checks.yaml tests/verification/contracts/workflow-trust-split.test.mjs docs/review/remediation/implementation/workflow-trust-split.md docs/review/evidence/workflow-trust-split.txt
+exit: 0

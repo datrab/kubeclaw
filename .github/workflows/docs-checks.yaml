@@ -1,60 +1,56 @@
 name: Docs Checks
-
 on:
   pull_request:
     paths:
-      - 'docs/**'
-      - 'scripts/docs-*.mjs'
-      - 'scripts/deploy.sh'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/**'
-      - 'my-values/**'
-      - 'charts/kubeclaw/**'
-      - 'deploy/**'
-      - 'docker/**'
-      - 'tests/**'
-      - 'skills/**'
+      - docs/**
+      - scripts/docs-*.mjs
+      - scripts/deploy.sh
+      - package.json
+      - package-lock.json
+      - .github/workflows/**
+      - my-values/**
+      - charts/kubeclaw/**
+      - deploy/**
+      - docker/**
+      - tests/**
+      - skills/**
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
-      - 'docs/**'
-      - 'scripts/docs-*.mjs'
-      - 'scripts/deploy.sh'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/**'
-      - 'my-values/**'
-      - 'charts/kubeclaw/**'
-      - 'deploy/**'
-      - 'docker/**'
-      - 'tests/**'
-      - 'skills/**'
-  workflow_dispatch:
-
+      - docs/**
+      - scripts/docs-*.mjs
+      - scripts/deploy.sh
+      - package.json
+      - package-lock.json
+      - .github/workflows/**
+      - my-values/**
+      - charts/kubeclaw/**
+      - deploy/**
+      - docker/**
+      - tests/**
+      - skills/**
+  workflow_dispatch: null
 permissions:
-  contents: write
-
+  contents: read
 jobs:
-  docs:
-    name: Documentation drift guardrails
+  validate:
+    name: Read-only documentation drift guardrails
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.head_ref || github.ref }}
+          persist-credentials: false
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: '24'
-          cache: npm
+          node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Regenerate docs
         run: npm run docs:inventory && npm run docs:generate
-      - name: Reject generated docs drift on read-only PRs
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+      - name: Reject generated docs drift
         run: |
           if git diff --quiet -- docs/generated docs/reference; then
             echo "Generated docs are already current."
@@ -64,19 +60,6 @@ jobs:
           echo "::error::Generated docs are stale. Run npm run docs:inventory && npm run docs:generate and commit the result."
           git diff --name-only -- docs/generated docs/reference
           exit 1
-      - name: Commit generated docs
-        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
-        run: |
-          if git diff --quiet -- docs/generated docs/reference; then
-            echo "Generated docs are already current."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/generated docs/reference
-          git commit -m "docs: refresh generated references"
-          git push
       - name: Check generated docs freshness
         run: npm run docs:check:generated
       - name: Check Markdown hygiene
@@ -87,3 +70,47 @@ jobs:
         run: npm run docs:check:coverage
       - name: Check whitespace
         run: git diff --check
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main')
+    permissions:
+      contents: read
+  update:
+    name: Trusted main documentation update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "24"
+      - name: Install repository dependencies
+        run: npm ci --ignore-scripts
+      - name: Regenerate docs
+        run: npm run docs:inventory && npm run docs:generate
+      - name: Check generated docs freshness
+        run: npm run docs:check:generated
+      - name: Check Markdown hygiene
+        run: node scripts/docs-check.mjs
+      - name: Check cited repository references
+        run: npm run docs:check:refs
+      - name: Check documentation topic map
+        run: npm run docs:check:coverage
+      - name: Check whitespace
+        run: git diff --check
+      - name: Commit generated docs
+        run: |
+          if git diff --quiet -- docs/generated docs/reference; then
+            echo "Generated docs are already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/generated docs/reference
+          git commit -m "docs: refresh generated references"
+          git push origin HEAD:refs/heads/main
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
