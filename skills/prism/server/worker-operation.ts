@@ -41,8 +41,8 @@ export function operationFor(
       if (terminated || context.signal.aborted)
         throw new Error("Prism attempt was cancelled");
       const values={...specialistResult.values};const evidence=[];
-      if(typeof values.screenshotBase64==="string"){evidence.push(await artifacts.upload("render-screenshot","preview","image/png",Buffer.from(values.screenshotBase64,"base64"), AbortSignal.timeout(envelope.limits.cleanupTimeoutMs)));delete values.screenshotBase64;}
-      if(typeof values.ariaSnapshot==="string"){evidence.push(await artifacts.upload("render-aria","accessibility-tree","text/plain",Buffer.from(values.ariaSnapshot), AbortSignal.timeout(envelope.limits.cleanupTimeoutMs)));delete values.ariaSnapshot;}
+      if(typeof values.screenshotBase64==="string"){evidence.push(await artifacts.upload("render-screenshot","preview","image/png",Buffer.from(values.screenshotBase64,"base64"), context.signal));delete values.screenshotBase64;}
+      if(typeof values.ariaSnapshot==="string"){evidence.push(await artifacts.upload("render-aria","accessibility-tree","text/plain",Buffer.from(values.ariaSnapshot), context.signal));delete values.ariaSnapshot;}
       const boundedResult={...specialistResult,values};
       return {
         summary: "Prism operation completed",

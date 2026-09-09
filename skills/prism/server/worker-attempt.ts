@@ -9,10 +9,10 @@ export async function executeWorkerAttempt(envelope: WorkerAttemptEnvelopeV1, en
   artifacts: WorkerArtifactClient): Promise<WorkerAttemptResultV1> {
   return new WorkerAttemptExecutor({
     envelope, operation: operationFor(envelope, engine, artifacts), receiptNamespace: 'prism-worker',
-    storeFullLog(attemptId, content) {
+    storeFullLog(attemptId, content, { signal }) {
       if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');
       return artifacts.upload('prism-full-log', 'log', 'text/plain', Buffer.from(content),
-        AbortSignal.timeout(envelope.limits.cleanupTimeoutMs));
+        signal);
     },
   }).execute();
 }

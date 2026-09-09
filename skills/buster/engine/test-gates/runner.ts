@@ -1344,7 +1344,8 @@ export class TestPlanRunner {
           ),
         );
       },
-      collectEvidence: async ({ state }) => {
+      collectEvidence: async ({ state, signal }) => {
+        signal.throwIfAborted();
         const workerExecutionState: ExecutionState =
           state === "interrupted" ? "errored" : state;
         const workerOutcome: TestOutcome =
@@ -1387,6 +1388,7 @@ export class TestPlanRunner {
             selectedFiles,
             node.limits.artifactFiles,
             node.limits.artifactBytes,
+            signal,
           );
           if (workerExecutionState === "completed" && providerResult) {
             producedOutputs = validateAndMapOutputs(
@@ -1411,10 +1413,12 @@ export class TestPlanRunner {
                   (sum, item) => sum + item.artifact.sizeBytes,
                   0,
                 ),
+              signal,
             );
             evidence.push(...logRefs);
           }
         } catch (error) {
+          signal.throwIfAborted();
           evidenceFault = detail(error);
           producedOutputs = [];
           evidence = [];
@@ -1427,8 +1431,10 @@ export class TestPlanRunner {
                 stagedErrorFiles,
                 node.limits.artifactFiles,
                 node.limits.artifactBytes,
+                signal,
               );
             } catch {
+              signal.throwIfAborted();
               evidence = [];
             }
           }
@@ -1447,10 +1453,12 @@ export class TestPlanRunner {
                       (sum, item) => sum + item.artifact.sizeBytes,
                       0,
                     ),
+                  signal,
                 );
                 evidence.push(...logRefs);
               }
             } catch {
+              signal.throwIfAborted();
               evidence = [];
             }
           }
@@ -1533,7 +1541,8 @@ export class TestPlanRunner {
     };
     const issuedAt = this.#now();
     const profile = createBusterWorkerProfile(this.#options.registry, granted);
-    const claimWindowMs = node.timeoutMs + 4 * cleanupTimeoutMs + 60_000;
+    const completionPhases = 2 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence)) + Number(Boolean(operation.finalizeResult));
+    const claimWindowMs = node.timeoutMs + completionPhases * cleanupTimeoutMs + 60_000;
     const envelopeBase = {
       schemaVersion: "worker-attempt-envelope.v1" as const,
       protocolVersion: "worker-protocol.v1" as const,
@@ -1915,7 +1924,9 @@ export class TestPlanRunner {
     declarations: readonly DeclaredEvidenceV1[],
     maximumFiles: number,
     maximumBytes: number,
+    signal: AbortSignal,
   ): Promise<EvidenceRefV1[]> {
+    signal.throwIfAborted();
     if (declarations.length > maximumFiles)
       throw new Error("TEST_PROVIDER_ARTIFACT_FILE_LIMIT");
     const ids = new Set<string>();
@@ -1923,6 +1934,7 @@ export class TestPlanRunner {
     const evidence: EvidenceRefV1[] = [];
     let total = 0;
     for (const declaration of declarations) {
+      signal.throwIfAborted();
       if (ids.has(declaration.evidenceId) || files.has(declaration.file))
         throw new Error(
           `TEST_PROVIDER_EVIDENCE_DUPLICATE:${declaration.evidenceId}`,
@@ -1938,7 +1950,9 @@ export class TestPlanRunner {
         evidenceDirectory,
         declaration,
         maximumBytes - total,
+        signal,
       );
+      signal.throwIfAborted();
       total += stored.artifact.sizeBytes;
       if (total > maximumBytes)
         throw new Error("TEST_PROVIDER_ARTIFACT_BYTE_LIMIT");

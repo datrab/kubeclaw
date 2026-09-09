@@ -258,7 +258,8 @@ assert.throws(() => new WorkerAttemptExecutor({ envelope: mapEnvelope, operation
 const timeoutOperation = new Operation(async () => new Promise<WorkerAttemptOperationResult>(() => undefined));
 const timedOut = await new WorkerAttemptExecutor({ envelope: envelope({ limits: { ...envelope().limits, timeoutMs: 5 } }),
   operation: timeoutOperation, id, now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(timedOut.state, 'timed_out');
+assert.equal(timedOut.state, 'errored');
+assert.equal(timedOut.error?.code, 'WORKER_PHASE_UNRESOLVED');
 assert.equal(timeoutOperation.terminated > 0, true);
 
 let completionNow = new Date('2026-08-05T12:30:00Z');
@@ -350,7 +351,7 @@ const cancelledDuringCleanup = await new WorkerAttemptExecutor({ envelope: envel
   now: () => new Date('2026-08-05T12:30:00Z') }).execute();
 assert.equal(cleanupReceivedCancellation, true);
 assert.equal(cleanupCancellationTerminated, true, 'terminal cancellation waits for provider termination');
-assert.equal(cancelledDuringCleanup.state, 'cancelled');
+assert.equal(cancelledDuringCleanup.state, 'cancelled', JSON.stringify(cancelledDuringCleanup));
 assert.equal(cancelledDuringCleanup.error?.code, 'WORKER_ATTEMPT_CANCELLED');
 
 const alreadyCancelled = new AbortController();
@@ -369,7 +370,8 @@ const logLimitOperation = new Operation(async (context) => {
 });
 const logLimited = await new WorkerAttemptExecutor({ envelope: logLimitEnvelope, operation: logLimitOperation,
   id, now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(logLimited.error?.code, 'WORKER_LOG_LIMIT');
+assert.equal(logLimited.error?.code, 'WORKER_PHASE_UNRESOLVED');
+assert.match(logLimited.error!.message, /WORKER_LOG_LIMIT/);
 
 const emptyLogEnvelope = envelope();
 emptyLogEnvelope.limits.logBytes = 20;
@@ -382,7 +384,8 @@ const emptyLogLimited = await new WorkerAttemptExecutor({ envelope: emptyLogEnve
     artifact: { ...evidence.artifact, artifactId: 'artifact:empty-log', type: 'log', mediaType: 'text/plain',
       contentDigest: sha256Text(content), sizeBytes: Buffer.byteLength(content) } }),
   now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(emptyLogLimited.error?.code, 'WORKER_LOG_LIMIT');
+assert.equal(emptyLogLimited.error?.code, 'WORKER_PHASE_UNRESOLVED');
+assert.match(emptyLogLimited.error!.message, /WORKER_LOG_LIMIT/);
 
 const logPartCountEnvelope = envelope();
 logPartCountEnvelope.limits.logBytes = 16 * 1024 * 1024;
@@ -393,7 +396,8 @@ const logPartCountLimited = await new WorkerAttemptExecutor({ envelope: logPartC
     return new Promise<WorkerAttemptOperationResult>(() => undefined);
   }), id,
   now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(logPartCountLimited.error?.code, 'WORKER_LOG_LIMIT');
+assert.equal(logPartCountLimited.error?.code, 'WORKER_PHASE_UNRESOLVED');
+assert.match(logPartCountLimited.error!.message, /WORKER_LOG_LIMIT/);
 
 const unretainedLogEnvelope = envelope();
 unretainedLogEnvelope.limits.logBytes = 5;
@@ -404,7 +408,8 @@ const unretainedLog = await new WorkerAttemptExecutor({ envelope: unretainedLogE
     return new Promise<WorkerAttemptOperationResult>(() => undefined);
   }), id,
   now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(unretainedLog.error?.code, 'WORKER_LOG_LIMIT');
+assert.equal(unretainedLog.error?.code, 'WORKER_PHASE_UNRESOLVED');
+assert.match(unretainedLog.error!.message, /WORKER_LOG_LIMIT/);
 assert.equal(unretainedLog.evidence.length, 0);
 
 const unicodeLogParts: string[] = [];
@@ -660,7 +665,7 @@ const hangingLogStore = await new WorkerAttemptExecutor({ envelope: hangingLogSt
   operation: new Operation(async (context) => { context.log('stdout', 'log'); return successResult(); }), id,
   storeFullLog: async () => new Promise<WorkerEvidenceRefV1 | null>(() => undefined),
   now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(hangingLogStore.error?.code, 'WORKER_LOG_STORE_FAILED');
+assert.equal(hangingLogStore.error?.code, 'WORKER_PHASE_UNRESOLVED');
 
 const terminationFailureOperation = new Operation(async () => new Promise<WorkerAttemptOperationResult>(() => undefined));
 terminationFailureOperation.terminate = async () => { throw new Error('terminate failed'); };

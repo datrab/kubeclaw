@@ -10,7 +10,7 @@ export interface StoredEvidence {
 }
 
 export interface EvidenceStore {
-  store(attemptId: string, evidenceRoot: string, declaration: DeclaredEvidenceV1, maximumBytes: number): Promise<StoredEvidence>;
+  store(attemptId: string, evidenceRoot: string, declaration: DeclaredEvidenceV1, maximumBytes: number, signal?: AbortSignal): Promise<StoredEvidence>;
 }
 
 interface StagedEvidenceUse {
@@ -89,13 +89,16 @@ export class FileEvidenceStore implements EvidenceStore {
     this.#root = fs.realpathSync(root);
   }
 
-  async store(attemptId: string, evidenceRoot: string, declaration: DeclaredEvidenceV1, maximumBytes: number): Promise<StoredEvidence> {
-    const content = await readContainedFile(evidenceRoot, declaration.file, maximumBytes);
+  async store(attemptId: string, evidenceRoot: string, declaration: DeclaredEvidenceV1, maximumBytes: number, signal?: AbortSignal): Promise<StoredEvidence> {
+    const content = await readContainedFile(evidenceRoot, declaration.file, maximumBytes, signal);
+    signal?.throwIfAborted();
     const digest = `sha256:${crypto.createHash('sha256').update(content).digest('hex')}`;
     const destinationDirectory = path.join(this.#root, safeName(attemptId));
     await fs.promises.mkdir(destinationDirectory, { recursive: true });
     const destination = path.join(destinationDirectory, `${safeName(declaration.evidenceId)}-${path.basename(declaration.file)}`);
-    await fs.promises.writeFile(destination, content, { flag: 'wx' });
+    signal?.throwIfAborted();
+    await fs.promises.writeFile(destination, content, { flag: 'wx', signal });
+    signal?.throwIfAborted();
     const artifact: ArtifactRefV1 = Object.freeze({
       artifactId: `artifact:${crypto.createHash('sha256').update(`${attemptId}:${declaration.evidenceId}`).digest('hex')}`,
       type: declaration.type,

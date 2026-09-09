@@ -1,4 +1,6 @@
 import crypto from 'node:crypto';
+import { WorkerPhaseDeadline, settlesWithin, armWorkerClaimDeadline } from './phase-deadline.ts';
+import { WorkerLogDecoder } from './log-decoder.ts';
 import {
   validatePipelineWorkerCoreContract,
   type AttemptProgressEventV1,
@@ -62,7 +64,7 @@ export interface WorkerAttemptOperation {
   prepare(limits: WorkerAttemptLimitsV1): undefined;
   execute(context: WorkerAttemptContext): Promise<WorkerAttemptOperationResult>;
   terminate(): Promise<void>;
-  measure(): Promise<WorkerAttemptOperationResources>;
+  measure(context: { readonly signal: AbortSignal }): Promise<WorkerAttemptOperationResources>;
   cleanup?(context: WorkerAttemptContext): Promise<void>;
   collectEvidence?(context: WorkerAttemptEvidenceContext): Promise<WorkerAttemptEvidenceResult>;
   /** Add evidence-derived facts before the terminal result becomes durable. */
@@ -76,7 +78,7 @@ export interface WorkerAttemptExecutorOptions {
   readonly onProgress?: (event: AttemptProgressEventV1) => void | Promise<void>;
   readonly onLogPart?: (part: WorkerLogPartV1) => void | Promise<void>;
   readonly retainLogs?: boolean;
-  readonly storeFullLog?: (attemptId: string, content: string) => Promise<WorkerEvidenceRefV1 | null>;
+  readonly storeFullLog?: (attemptId: string, content: string, context: { readonly signal: AbortSignal }) => Promise<WorkerEvidenceRefV1 | null>;
   readonly now?: () => Date;
   readonly id?: () => string;
   /** Local receipt namespace. This is not worker authentication. */
@@ -246,10 +248,12 @@ export class WorkerAttemptExecutor {
         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
       }, { state: 'not_required', summary: null });
     }
-    const requiredClaimWindow = envelope.limits.timeoutMs + (4 * envelope.limits.cleanupTimeoutMs);
+    const completionPhases = 2 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence))
+      + Number(this.#options.retainLogs !== false && Boolean(this.#options.storeFullLog)) + Number(Boolean(operation.finalizeResult));
+    const requiredClaimWindow = envelope.limits.timeoutMs + (completionPhases * envelope.limits.cleanupTimeoutMs);
     if (Date.parse(envelope.claim.expiresAt) - started.getTime() < requiredClaimWindow) {
       // The local executor cannot renew a claim. It starts only when the claim
-      // covers execution, termination, cleanup, measurement, and log storage.
+      // covers execution, termination, measurement and every configured completion hook.
       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT'), null, [], {
         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
       }, { state: 'not_required', summary: null });
@@ -257,6 +261,7 @@ export class WorkerAttemptExecutor {
 
     const controller = new AbortController();
     const logParts: WorkerLogPartV1[] = [];
+    const decoder = new WorkerLogDecoder(envelope.limits.logBytes);
     let logPartCount = 0;
     let logBytes = 0;
     let logClosed = false;
@@ -277,7 +282,10 @@ export class WorkerAttemptExecutor {
     if (this.#options.signal?.aborted) abort();
     const log: WorkerAttemptContext['log'] = (stream, value) => {
       if (logClosed || logFault) return;
-      const text = (typeof value === 'string' ? value : Buffer.from(value).toString('utf8')).toWellFormed();
+      let text: string;
+      try { text = decoder.decode(stream, value); }
+      catch (error) { logFault = new AttemptFault('errored', detail(error)); controller.abort(logFault); void terminate(); return; }
+      if (!text && typeof value !== 'string') return;
       let offset = 0;
       do {
         if (logPartCount >= MAX_ATTEMPT_LOG_PARTS) {
@@ -328,10 +336,16 @@ export class WorkerAttemptExecutor {
     };
 
     let operationResult: WorkerAttemptOperationResult | null = null;
+    let operationWork: Promise<WorkerAttemptOperationResult> | undefined;
+    let executionUnresolved = false;
     let fault: AttemptFault | null = null;
     let cleanup: WorkerAttemptResultV1['cleanup'] = { state: 'not_required', summary: null };
     const timeoutAt = started.getTime() + envelope.limits.timeoutMs;
     const claimExpiresAt = Date.parse(envelope.claim.expiresAt);
+    const phases = new WorkerPhaseDeadline(claimExpiresAt, envelope.limits.cleanupTimeoutMs, () => this.#now().getTime(), this.#options.signal);
+    const clearClaimTimer = armWorkerClaimDeadline(claimExpiresAt, () => this.#now().getTime(), () => {
+      claimExpired = true; controller.abort(new Error('WORKER_CLAIM_EXPIRED')); void terminate();
+    });
     const deadlineAt = Math.min(timeoutAt, claimExpiresAt);
     timer = setTimeout(() => {
       claimExpired = claimExpiresAt <= timeoutAt;
@@ -378,11 +392,12 @@ export class WorkerAttemptExecutor {
         await cancellation;
       }
       const remainingExecutionMs = timeoutAt - preparedAt;
-      if (claimExpiresAt - preparedAt < remainingExecutionMs + (4 * envelope.limits.cleanupTimeoutMs)) {
+      if (claimExpiresAt - preparedAt < remainingExecutionMs + (completionPhases * envelope.limits.cleanupTimeoutMs)) {
         throw new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT');
       }
       if (controller.signal.aborted) await cancellation;
-      operationResult = await Promise.race([operation.execute({ attempt: envelope, signal: controller.signal, log }), cancellation]);
+      operationWork = operation.execute({ attempt: envelope, signal: controller.signal, log });
+      operationResult = await Promise.race([operationWork, cancellation]);
       const operationCompletedAt = this.#now().getTime();
       if (operationCompletedAt >= claimExpiresAt && claimExpiresAt <= timeoutAt) {
         throw new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
@@ -405,30 +420,22 @@ export class WorkerAttemptExecutor {
           controller.signal.aborted ? (timedOut ? 'WORKER_ATTEMPT_TIMEOUT' : 'WORKER_ATTEMPT_CANCELLED') : 'WORKER_ATTEMPT_ERROR', detail(error));
       const terminationError = await terminate();
       if (terminationError) fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+      if (operationWork) executionUnresolved = !(await settlesWithin(operationWork, envelope.limits.cleanupTimeoutMs));
     } finally {
       if (timer) clearTimeout(timer);
     }
 
+    if (executionUnresolved) phases.quarantine();
+    const executionFault = fault;
     let measured: WorkerAttemptOperationResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 0 };
     let measurementsValid = false;
-    let measurementTimer: NodeJS.Timeout | undefined;
     try {
-      measured = await Promise.race([
-        Promise.resolve().then(() => operation.measure()),
-        new Promise<never>((_resolve, reject) => {
-          measurementTimer = setTimeout(() => reject(new Error('WORKER_RESOURCE_MEASUREMENT_TIMEOUT')),
-            envelope.limits.cleanupTimeoutMs);
-        }),
-      ]);
+      measured = await phases.run('WORKER_RESOURCE_MEASUREMENT', signal => operation.measure({ signal }), Boolean(executionFault));
       measurementsValid = measured !== null && typeof measured === 'object'
         && Number.isSafeInteger(measured.cpuTimeMs) && Number.isSafeInteger(measured.maximumMemoryBytes)
         && Number.isSafeInteger(measured.maximumProcesses) && measured.cpuTimeMs >= 0
         && measured.maximumMemoryBytes >= 0 && measured.maximumProcesses >= 0;
-    } catch {
-      measurementsValid = false;
-    } finally {
-      if (measurementTimer) clearTimeout(measurementTimer);
-    }
+    } catch { measurementsValid = false; }
     if (!measurementsValid) {
       fault = new AttemptFault('errored', 'WORKER_RESOURCE_MEASUREMENT_INVALID');
     } else {
@@ -445,36 +452,20 @@ export class WorkerAttemptExecutor {
     }
 
     if (operation.cleanup) {
+      if (claimExpired || this.#now().getTime() >= claimExpiresAt) await terminate();
       this.#progress('cleanup_started', 'Attempt cleanup started.');
-      const cleanupController = new AbortController();
-      const abortCleanup = (): void => cleanupController.abort(controller.signal.reason);
-      controller.signal.addEventListener('abort', abortCleanup, { once: true });
-      if (controller.signal.aborted) abortCleanup();
-      let cleanupTimer: NodeJS.Timeout | undefined;
       try {
-        await Promise.race([
-          operation.cleanup({ attempt: envelope, signal: cleanupController.signal, log }),
-          new Promise<never>((_resolve, reject) => {
-            cleanupTimer = setTimeout(() => {
-              cleanupController.abort(new Error('WORKER_CLEANUP_TIMEOUT'));
-              reject(new AttemptFault('errored', 'WORKER_CLEANUP_TIMEOUT'));
-            }, envelope.limits.cleanupTimeoutMs);
-          }),
-        ]);
+        await phases.run('WORKER_CLEANUP', signal => operation.cleanup!({ attempt: envelope, signal, log }), true);
         cleanup = { state: 'completed', summary: null };
         this.#progress('cleanup_completed', 'Attempt cleanup completed.');
       } catch (error) {
         const terminationError = await terminate();
         const message = detail(error);
         cleanup = { state: 'failed', summary: message };
-        fault = new AttemptFault('errored', terminationError ? 'WORKER_TERMINATION_FAILED' : 'WORKER_CLEANUP_FAILED',
-          terminationError ?? message);
-      } finally {
-        if (cleanupTimer) clearTimeout(cleanupTimer);
-        controller.signal.removeEventListener('abort', abortCleanup);
-        cleanupController.abort(new Error('WORKER_CLEANUP_COMPLETE'));
+        fault = new AttemptFault('errored', terminationError ? 'WORKER_TERMINATION_FAILED' : 'WORKER_CLEANUP_FAILED', terminationError ?? message);
       }
     }
+    try { decoder.finish(); } catch (error) { logFault = new AttemptFault('errored', detail(error)); }
 
     if (logFault) fault = logFault;
 
@@ -506,22 +497,10 @@ export class WorkerAttemptExecutor {
     const fullLog = logParts.map((part) => `[${part.stream}] ${part.text}`).join('');
     let evidence = [...(operationResult?.evidence ?? [])];
     if (operation.collectEvidence) {
-      const evidenceController = new AbortController();
-      let evidenceTimer: NodeJS.Timeout | undefined;
       try {
-        const collected = await Promise.race([
-          operation.collectEvidence({
-            attempt: envelope,
-            state: fault?.state ?? 'completed',
-            signal: evidenceController.signal,
-          }),
-          new Promise<never>((_resolve, reject) => {
-            evidenceTimer = setTimeout(() => {
-              evidenceController.abort(new Error('WORKER_EVIDENCE_COLLECTION_TIMEOUT'));
-              reject(new Error('WORKER_EVIDENCE_COLLECTION_TIMEOUT'));
-            }, envelope.limits.cleanupTimeoutMs);
-          }),
-        ]);
+        const collected = await phases.run('WORKER_EVIDENCE_COLLECTION', signal => operation.collectEvidence!({
+          attempt: envelope, state: fault?.state ?? 'completed', signal,
+        }));
         const candidateEvidence = [...evidence, ...collected.evidence];
         checkEvidence(candidateEvidence, envelope);
         evidence = candidateEvidence;
@@ -532,9 +511,6 @@ export class WorkerAttemptExecutor {
         fault = error instanceof AttemptFault
           ? error
           : new AttemptFault('errored', 'WORKER_EVIDENCE_COLLECTION_FAILED', detail(error));
-      } finally {
-        if (evidenceTimer) clearTimeout(evidenceTimer);
-        evidenceController.abort(new Error('WORKER_EVIDENCE_COLLECTION_COMPLETE'));
       }
     }
     if (fullLog) {
@@ -546,14 +522,7 @@ export class WorkerAttemptExecutor {
         if (existingEvidenceBytes + fullLogBytes > envelope.limits.evidenceBytes) {
           throw new Error('WORKER_EVIDENCE_BYTE_LIMIT');
         }
-        let storageTimer: NodeJS.Timeout | undefined;
-        const stored = await Promise.race([
-          this.#options.storeFullLog(envelope.attemptId, fullLog),
-          new Promise<never>((_resolve, reject) => {
-            storageTimer = setTimeout(() => reject(new Error('WORKER_LOG_STORE_TIMEOUT')),
-              envelope.limits.cleanupTimeoutMs);
-          }),
-        ]).finally(() => { if (storageTimer) clearTimeout(storageTimer); });
+        const stored = await phases.run('WORKER_LOG_STORE', signal => this.#options.storeFullLog!(envelope.attemptId, fullLog, { signal }));
         if (!stored) throw new Error('WORKER_FULL_LOG_STORE_REQUIRED');
         if (stored.artifact.contentDigest !== sha256Text(fullLog)
           || stored.artifact.sizeBytes !== fullLogBytes) {
@@ -567,36 +536,16 @@ export class WorkerAttemptExecutor {
       }
     }
     if (!fault && operationResult && operation.finalizeResult) {
-      const finalizationController = new AbortController();
-      const abortFinalization = (): void => finalizationController.abort(controller.signal.reason);
-      controller.signal.addEventListener('abort', abortFinalization, { once: true });
-      if (controller.signal.aborted) abortFinalization();
-      let finalizationTimer: NodeJS.Timeout | undefined;
       try {
-        const specialistResult = await Promise.race([
-          operation.finalizeResult({
-            attempt: envelope,
-            evidence: freeze(structuredClone(evidence)),
-            specialistResult: operationResult.specialistResult,
-            signal: finalizationController.signal,
-          }),
-          new Promise<never>((_resolve, reject) => {
-            finalizationTimer = setTimeout(() => {
-              finalizationController.abort(new Error('WORKER_RESULT_FINALIZATION_TIMEOUT'));
-              reject(new Error('WORKER_RESULT_FINALIZATION_TIMEOUT'));
-            }, envelope.limits.cleanupTimeoutMs);
-          }),
-        ]);
+        const specialistResult = await phases.run('WORKER_RESULT_FINALIZATION', signal => operation.finalizeResult!({
+          attempt: envelope, evidence: freeze(structuredClone(evidence)), specialistResult: operationResult!.specialistResult, signal,
+        }));
         preflightJson(specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
         const finalizedBytes = Buffer.byteLength(JSON.stringify(specialistResult));
         if (finalizedBytes > envelope.limits.resultBytes) throw new Error('WORKER_RESULT_LIMIT');
         operationResult = freeze({ ...operationResult, specialistResult: structuredClone(specialistResult) });
       } catch (error) {
         fault = new AttemptFault('errored', 'WORKER_RESULT_FINALIZATION_FAILED', detail(error));
-      } finally {
-        if (finalizationTimer) clearTimeout(finalizationTimer);
-        controller.signal.removeEventListener('abort', abortFinalization);
-        finalizationController.abort(new Error('WORKER_RESULT_FINALIZATION_COMPLETE'));
       }
     }
     this.#options.signal?.removeEventListener('abort', abort);
@@ -605,11 +554,18 @@ export class WorkerAttemptExecutor {
       if (terminationError) {
         fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
       } else {
-        fault ??= new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+        if (cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
       }
     } else if (!fault && controller.signal.aborted) {
       fault = new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
     }
+    if (claimExpired || this.#now().getTime() >= claimExpiresAt || phases.unresolved || executionUnresolved) {
+      const terminationError = await terminate();
+      if (terminationError) fault = new AttemptFault('errored', 'WORKER_TERMINATION_FAILED', terminationError);
+    }
+    clearClaimTimer();
+    if ((phases.unresolved || executionUnresolved) && fault?.code !== 'WORKER_TERMINATION_FAILED') fault = new AttemptFault('errored', 'WORKER_PHASE_UNRESOLVED', `${fault?.code ?? 'WORKER_ATTEMPT_ERROR'}: ${fault?.message ?? ''}; aborted work did not settle; external outcome requires reconciliation.`);
+    else if ((claimExpired || this.#now().getTime() >= claimExpiresAt) && fault?.code !== 'WORKER_TERMINATION_FAILED' && cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
     const completed = this.#now();
     const resultBytes = operationResult ? Buffer.byteLength(JSON.stringify(operationResult.specialistResult)) : 0;
     return this.#result(started, completed, fault, operationResult, evidence, {
@@ -712,7 +668,11 @@ export class WorkerAttemptExecutor {
     };
     try {
       validatePipelineWorkerCoreContract('workerAttemptResult', result);
-      return freeze(result);
+      const frozenResult = freeze(result);
+      if (!fault && this.#now().getTime() >= Date.parse(envelope.claim.expiresAt)) {
+        return this.#result(started, this.#now(), new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'), null, evidence, resources, cleanup);
+      }
+      return frozenResult;
     } catch (error) {
       if (fault?.code === 'WORKER_OPERATION_RESULT_INVALID') throw error;
       return this.#result(started, completed,

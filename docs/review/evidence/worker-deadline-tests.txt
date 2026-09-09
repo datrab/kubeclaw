@@ -1,0 +1,36 @@
+$ node --test tests/verification/reliability/worker-deadline.test.mts skills/prism/tests/worker-service.test.mts
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (164.952993ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (15.876508ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (33.765147ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (7.649157ms)
+✔ full log participates in the real neutral evidence budget before upload (8.908318ms)
+✔ direct: actual optional phases require a complete claim reservation (83.707595ms)
+✔ runtime: actual optional phases require a complete claim reservation (2.865856ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (80.509851ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (641.768831ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (572.324419ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (213.741667ms)
+✔ uncooperative storage is reported unresolved rather than completed (161.130374ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (112.536412ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (28.318368ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (11.770148ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2232.84267
+
+exit=0
+
+$ node tests/verification/contracts/check-pipeline-worker-attempt-executor.mts
+{"ok":true,"phase":"5.5-B","progressEvents":5,"logParts":2}
+
+exit=0
+
+$ node tests/verification/contracts/check-pipeline-worker-local-runtime.mts
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}
+
+exit=0
