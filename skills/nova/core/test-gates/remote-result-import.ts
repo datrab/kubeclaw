@@ -189,7 +189,14 @@ function decide(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: Remote
       reason = node.state !== 'completed' ? `execution ${node.state}` : 'cleanup failed';
     } else {
       const failed = node.outcome === 'failed' || failedReport(node.nodeId, result);
-      if (!failed) { effect = 'passed'; reason = 'all declared checks passed'; }
+      const missingExecution = planNode.mode === 'blocking'
+        && planNode.provider.contractId === 'kubeclaw.direct-command@1'
+        && planNode.configuration.values.resultMode === 'junit-required'
+        && !(finalAttempt?.reports.some((report) => report.adapter.format === 'junit'
+          && report.counts.passed + report.counts.failed + report.counts.errored > 0));
+      if (missingExecution) {
+        effect = 'failed'; reason = 'TEST_REPORT_NO_EXECUTED_CASES: blocking JUnit requires at least one executed case';
+      } else if (!failed) { effect = 'passed'; reason = 'all declared checks passed'; }
       else if (planNode.mode === 'advisory') { effect = 'advisory_failure'; reason = 'advisory checks failed'; }
       else if (planNode.reviewAgent && node.outcome === 'failed' && !failedReport(node.nodeId, result) && finalAttempt) {
         effect = 'review_required'; reason = `evidence review by ${planNode.reviewAgent}`;

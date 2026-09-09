@@ -1,3 +1,4 @@
+import { finalizeDirectCommandReports } from "./report-finalizer.ts";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -1504,33 +1505,8 @@ export class TestPlanRunner {
             values: { ...specialistResult.values, reports: structuredClone(reports) } as never,
           };
         }
-        const reportCounts = reports.reduce((counts, report) => ({
-          total: counts.total + report.counts.total,
-          passed: counts.passed + report.counts.passed,
-          failed: counts.failed + report.counts.failed,
-          skipped: counts.skipped + report.counts.skipped,
-          errored: counts.errored + report.counts.errored,
-        }), { total: 0, passed: 0, failed: 0, skipped: 0, errored: 0 });
-        if (reportCounts.total === 0) throw new Error('TEST_REPORT_ZERO_CASES');
-        const reportFailed = reportCounts.failed + reportCounts.errored;
-        const commandFailed = providerValue.outcome === 'failed';
-        const commandFailureChecks = commandFailed && reportFailed === 0 ? 1 : 0;
-        const finalizedProvider: ProviderResultV1 = {
-          ...providerValue,
-          outcome: commandFailed || reportFailed > 0 ? 'failed' : 'passed',
-          counts: {
-            total: reportCounts.total + commandFailureChecks,
-            passed: reportCounts.passed,
-            failed: reportFailed + commandFailureChecks,
-            skipped: reportCounts.skipped,
-          },
-          findings: [...providerValue.findings, ...reports.flatMap((report) => report.findings)],
-          summary: providerValue.outcome === 'failed'
-            ? providerValue.summary
-            : reportFailed > 0
-              ? `${reportFailed} JUnit case(s) failed or errored.`
-              : `${reportCounts.total} JUnit case(s) passed.`,
-        };
+        const finalizedProvider = finalizeDirectCommandReports(providerValue, reports,
+          node.mode === 'blocking' && node.configuration.values.resultMode === 'junit-required');
         validateCounts(finalizedProvider);
         return {
           ...specialistResult,
