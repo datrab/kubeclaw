@@ -1,0 +1,11 @@
+✔ disabled ingestion renders no Deployment and requires no invented sizing (82.891181ms)
+✔ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (205.946256ms)
+✔ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (770.912909ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1186.997717

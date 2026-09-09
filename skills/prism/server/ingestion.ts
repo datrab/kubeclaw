@@ -11,7 +11,9 @@ const secret=process.env.PRISM_INGESTION_SECRET??"";
 if(!secret)throw new Error("PRISM_INGESTION_SECRET is required");
 const root=process.env.PRISM_QUARANTINE_ROOT??"/quarantine";
 await mkdir(root,{recursive:true});
-const quarantineTtl=Math.min(86_400_000,Math.max(60_000,Number(process.env.PRISM_QUARANTINE_TTL_MS??3_600_000)));
+const configuredQuarantineTtl=Number(process.env.PRISM_QUARANTINE_TTL_MS??3_600_000);
+if(!Number.isSafeInteger(configuredQuarantineTtl))throw new Error("PRISM_QUARANTINE_TTL_MS must be a finite integer");
+const quarantineTtl=Math.min(86_400_000,Math.max(60_000,configuredQuarantineTtl));
 async function reapQuarantine():Promise<void>{
   const now=Date.now();for(const name of await readdir(root)){if(!/^[a-f0-9]{64}$/u.test(name))continue;const path=join(root,name);const info=await stat(path).catch(()=>undefined);if(info&&now-info.mtimeMs>=quarantineTtl)await unlink(path).catch((error:NodeJS.ErrnoException)=>{if(error.code!=="ENOENT")throw error;});}
 }

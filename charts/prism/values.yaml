@@ -16,7 +16,15 @@ studio:
 worker:
   replicas: 1
   resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }
-ingestion: { enabled: false, replicas: 1 }
+ingestion:
+  enabled: false
+  replicas: 1
+  # Required operator sizing when enabled; no host capacity is assumed.
+  resources:
+    requests: { cpu: "", memory: "" }
+    limits: { cpu: "", memory: "" }
+  # Acquired quarantine content only; this does not expire logs or reports.
+  quarantineTtlMs: 3600000
 postgresql:
   enabled: true
   image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f

@@ -1,0 +1,13 @@
+✔ real ingestion cleanup failure is explicit, preserves authorization and supports retry without process restart (338.571787ms)
+✔ real ingestion rejects nonfinite and fractional quarantine TTL before serving (755.626704ms)
+✔ disabled ingestion renders no Deployment and requires no invented sizing (99.777817ms)
+✔ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (224.942284ms)
+✔ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (780.048099ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1216.749911

@@ -1,0 +1,18 @@
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/prism/server/ingestion.ts
+  10:14   error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  10:14   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  12:12   error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  12:12   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  14:64   error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  14:64   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  18:78   error  Unexpected console statement                                                           no-console
+  45:1    error  Async function 'acquire' has a complexity of 21. Maximum allowed is 15                 complexity
+  51:140  error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+  51:238  error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+  58:1    error  Async function 'handleRequest' has a complexity of 21. Maximum allowed is 15           complexity
+  95:18   error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  95:18   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+
+✖ 13 problems (13 errors, 0 warnings)
+

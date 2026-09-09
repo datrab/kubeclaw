@@ -1,0 +1,84 @@
+✖ disabled ingestion renders no Deployment and requires no invented sizing (45.85088ms)
+✖ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (40.8985ms)
+✖ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (41.307013ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 263.65906
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-ingestion-resources.test.mjs:26:1
+✖ disabled ingestion renders no Deployment and requires no invented sizing (45.85088ms)
+  AssertionError [ERR_ASSERTION]: Error: values don't meet the specifications of the schema(s) in the following chart(s):
+  prism:
+  pattern must be a valid regex
+  
+  
+  1 !== 0
+  
+      at documents (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/prism-ingestion-resources.test.mjs:19:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/prism-ingestion-resources.test.mjs:27:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-ingestion-resources.test.mjs:31:1
+✖ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (40.8985ms)
+  AssertionError [ERR_ASSERTION]: Error: values don't meet the specifications of the schema(s) in the following chart(s):
+  prism:
+  pattern must be a valid regex
+  
+  
+  1 !== 0
+  
+      at documents (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/prism-ingestion-resources.test.mjs:19:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/prism-ingestion-resources.test.mjs:33:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-ingestion-resources.test.mjs:46:1
+✖ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (41.307013ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ingestion\.resources/u. Input:
+  
+  "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    'pattern must be a valid regex\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/prism-ingestion-resources.test.mjs:52:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Error: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\npattern must be a valid regex\n",
+    expected: /ingestion\.resources/u,
+    operator: 'match',
+    diff: 'simple'
+  }

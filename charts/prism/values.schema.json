@@ -26,6 +26,34 @@
         }
       },
       "additionalProperties": false
+    },
+    "resourceQuantity": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^([0-9]*[1-9][0-9]*(\\.[0-9]+)?|[0-9]*\\.[0-9]*[1-9][0-9]*)([numkMGTPE]|[KMGTPE]i|[eE][+-]?[0-9]+)?$"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      ]
+    },
+    "ingestionResourcePair": {
+      "type": "object",
+      "required": [
+        "cpu",
+        "memory"
+      ],
+      "properties": {
+        "cpu": {
+          "$ref": "#/$defs/resourceQuantity"
+        },
+        "memory": {
+          "$ref": "#/$defs/resourceQuantity"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": [
@@ -96,7 +124,64 @@
       "type": "object"
     },
     "ingestion": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "enabled",
+        "replicas",
+        "quarantineTtlMs"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "quarantineTtlMs": {
+          "type": "integer",
+          "minimum": 60000,
+          "maximum": 86400000
+        },
+        "resources": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "resources"
+            ],
+            "properties": {
+              "resources": {
+                "type": "object",
+                "required": [
+                  "requests",
+                  "limits"
+                ],
+                "properties": {
+                  "requests": {
+                    "$ref": "#/$defs/ingestionResourcePair"
+                  },
+                  "limits": {
+                    "$ref": "#/$defs/ingestionResourcePair"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
     },
     "postgresql": {
       "type": "object"
