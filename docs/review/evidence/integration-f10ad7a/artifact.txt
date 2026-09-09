@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/package-boundary.test.mjs && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"live-function"}
+exit_code=0

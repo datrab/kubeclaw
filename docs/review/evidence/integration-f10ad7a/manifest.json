@@ -1,0 +1,85 @@
+{
+  "commit": "f10ad7a8a9369d1e67a7bc294392068de1d2a4b4",
+  "worktree": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9",
+  "initialCommit": "449f7afd1bfff34c6f04dcfb4f9696c7b7b04444",
+  "initialTrackedClean": true,
+  "startedAt": "2026-09-09T17:16:44.241207+00:00",
+  "pathPrefix": "/workspace/scratch/4e25cf57c177/toolchains/bin:/workspace/scratch/4e25cf57c177/toolchains/go/bin",
+  "workspaceLinks": "workspace-links.json",
+  "knownDependencyLimitation": "One preexisting dangling local link plugin-test-agent to removed package; no workspace link escapes isolated tree. No link/source modification.",
+  "reportPackageDependencies": {
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/nova-core": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*"
+  },
+  "lockMatchesPackage": true,
+  "scope": "Exact committed f10ad7a source/fixtures; main worktree WIP absent. Actual local Git/Core/HTTP/store evidence, no model writer or deployed proof.",
+  "commands": {
+    "source": "node --test tests/verification/reliability/report-evidence.test.mts",
+    "review": "npm test --prefix skills/nova/plugins/pipeline-review",
+    "case": "npm test --prefix skills/nova/plugins/case-study",
+    "artifact": "npm test --prefix skills/common/plugins/artifact-store",
+    "cleanup": "node --test tests/verification/reliability/adapter-cleanup-scope.test.mts tests/verification/reliability/runtime-session-cleanup.test.mts",
+    "nova-tsc": "npx tsc --noEmit -p skills/nova/tsconfig.json",
+    "buster-tsc": "npx tsc --noEmit -p skills/buster/engine/tsconfig.json",
+    "generation": "node --test tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/demo-exposure-handoff.test.mjs skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts"
+  },
+  "finalTrackedStatus": "",
+  "finishedAt": "2026-09-09T17:17:51.748936+00:00",
+  "results": {
+    "source": {
+      "exitCode": 0,
+      "log": "source.txt",
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "skipped": 0
+    },
+    "review": {
+      "exitCode": 0,
+      "log": "review.txt"
+    },
+    "case": {
+      "exitCode": 0,
+      "log": "case.txt"
+    },
+    "artifact": {
+      "exitCode": 0,
+      "log": "artifact.txt"
+    },
+    "cleanup": {
+      "exitCode": 0,
+      "log": "cleanup.txt",
+      "tests": 29,
+      "pass": 29,
+      "fail": 0,
+      "skipped": 0
+    },
+    "nova-tsc": {
+      "exitCode": 0,
+      "log": "nova-tsc.txt"
+    },
+    "buster-tsc": {
+      "exitCode": 0,
+      "log": "buster-tsc.txt"
+    },
+    "generation": {
+      "exitCode": 0,
+      "log": "generation.txt",
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "toolVersions": {
+    "node": {
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "version": "v24.19.0"
+    },
+    "go": {
+      "executable": "/workspace/scratch/4e25cf57c177/toolchains/go/bin/go",
+      "version": "go version go1.24.13 linux/amd64"
+    }
+  }
+}

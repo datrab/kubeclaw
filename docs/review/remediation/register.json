@@ -4291,7 +4291,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4302,7 +4302,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/charts/prism/templates/ingestion.yaml"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Konfigurierbare Ingestion-Ressourcen und echte Health-/Quarantäne-Konfiguration werden geprüft. Native RAM/CPU/OOM-Messung bleibt separates Betriebsgate.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4550,10 +4550,13 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "86b11c0c7e58cbb7f87ef35bd67bbbccdfad6b37",
+      "verification_status": "Originale lokale Quellen-/Consumerprüfung bestanden; nativer Writerpfad offen",
+      "verification_evidence": [
+        "implementation/report-evidence.md",
+        "../evidence/integration-f10ad7a/README.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### T15-F01 — Pipeline Review verarbeitet unbelegte Digestlisten statt geprüfter Run-Evidenz\n\nEigentümertrace: [T15-pipeline-review.md](T15-pipeline-review.md); Codecommit wie oben.\n\n**Mittel; statisch nachgewiesene Evidenz-/Nachvollziehbarkeitslücke.** Auslöser: formal korrekte, aber fremde, veraltete, doppelte oder nicht auflösbare kind/digest-Liste. Stage dispatcht unverändert und akzeptiert jeden formal vollständigen Fünfdimensionenbericht. Es werden keine Artefaktinhalte, Metriken, Runvollständigkeit oder Gitrevision deterministisch geladen/geprüft. Daraus folgt nicht, dass jeder Agentbericht falsch ist, wohl aber, dass `passed` keinerlei solche Prüfung belegt. Der Report speichert außerdem nicht einmal die Input-Evidence-Zuordnung.\n\nBelege: vollständige `stage.ts:3–16`; `protocol.ts:1–31`; Manifest:11–14; Inputschema:1. Roots/Grants und HMAC schützen Transport/Operation, nicht behauptete Relevanz der Digests. README „evidence-pinned“ überzeichnet den Implementierungsstand.\n\nUrsachenbehebung: begrenztes, versioniertes Reviewbundle aus autoritativer Runprojektion und vollständig qualifizierten ArtifactRefs herstellen, Inhalte beim originalen Store lesen und Run/Stage/Attempt/Source-/Digestbindung prüfen; Coverage und ausgelassene Quellen ausdrücklich deklarieren. Berichtsbeobachtungen mit Bundle-/Belegreferenzen persistieren. Keine automatische Umsetzung der Vorschläge ergänzen, um eine Beweislücke zu verdecken.\n\nVerifikation: reale Journale/Artefakte von zwei Runs und zwei Sourcerevisionen, gültiges Bundle als Positivfall; nonexistent/cross-run/stale/duplicate Referenzen sowie manipulierte Inhalte getrennt prüfen. Originalruntime erhält nachweislich die geprüften Inhalte und erzeugt einen belegreferenzierenden Bericht. Kein solcher Test hier ausgeführt. CaseStudy mit demselben fehlenden Evidenzresolver als verwandte Ursache zusammenführen.\n\n**Gemeinsame Case-Study-Ausprägung aus T16:**\n\n**Gemeinsame Ursache mit T15, keine neue T16-Duplikatkennung.** Bei Case Study ist die Grenze noch unmittelbar sichtbar: Fakten sind Callerstrings ohne Artefaktref/Digest, Stage besitzt kein `artifacts.read`, Parser prüft keine Behauptung gegen Evidenz, gespeicherter Report behält nur Markdown und Identität. Promptregeln begrenzen gewünschtes Verhalten, erzwingen keine sachliche Richtigkeit. Auslöser: ungeprüfte/veraltete Faktentexte oder ein Writer, der trotz Vorgaben neue Ergebnisse behauptet. Formatgültiger Text wird als generated/passed gespeichert. Wirkung: Bericht ist ein Entwurf, kein belastbarer Beleg bestandener Tests oder Publikationsreife.\n\nBelege: `case-study/plugin.json:11–14`; `protocol.ts:1–22`; `stage.ts:6–11`. Ursachenbehebung gemeinsam mit T15: versionierten run-/source-/attemptgebundenen Quellenmanifestinput auflösen und prüfen, Quellenrefs/digests im Output erhalten, behauptete Mess-/Testresultate an strukturierte Evidenz binden; LLM-Text weiterhin als Entwurf kennzeichnen. Spätere Verifikation: echter Writer mit echten unveränderlichen Berichtsquellen; falscher Run/Source/Artefaktdigest verhindert Erstellung, unbelegte Tests/Metriken verhindern verifizierten Status. Keine bloße zusätzliche Promptmahnung als Ursachenbehebung.",
@@ -4565,7 +4568,7 @@
         "protocol.ts:1–22",
         "stage.ts:6–11"
       ],
-      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
+      "next_action": "Echte konfigurierte Writerintegration mit unveränderlichen Quellen nachweisen; generierten Text weiterhin als unverifizierten Entwurf behandeln. Ältere mode-ambige Runs nicht durch geratenen Marker migrieren.",
       "related_findings": [
         "PCR-PREPORT-001"
       ],
@@ -4576,9 +4579,9 @@
   "updated_at": "2026-09-09",
   "progress_counts": {
     "verifiziert": 85,
-    "implementiert": 43,
+    "implementiert": 44,
     "in Bearbeitung": 5,
-    "offen": 21
+    "offen": 20
   },
   "additional_integration_findings": [
     {

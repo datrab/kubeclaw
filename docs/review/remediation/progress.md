@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**85/154 lokal verifiziert und unabhängig gegengeprüft; 43 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 5 in Bearbeitung; 21 noch offen.** Zusätzlich fünf bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**85/154 lokal verifiziert und unabhängig gegengeprüft; 44 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 5 in Bearbeitung; 20 noch offen.** Zusätzlich fünf bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -251,3 +251,11 @@ Demo-Voraussetzung und isolierte Belege sind remote in `3e0f50e8fa915aa2dc6c640e
 Die JSON-Summenzähler wurden aus den 154 tatsächlichen Findingzeilen neu berechnet; die vorher veralteten Summenmetadaten sind korrigiert. Originaltexte und Kennungen bleiben unverändert.
 
 Controller-Voraussetzung remote `fbcdd69df8a7b307195747af099cc8a025c6c060` gesichert. [Kombinierte unveränderliche Prüfung](../evidence/integration-e03f7dc/README.md) besteht nach gezielter Korrektur der expliziten Registry-Testkonfiguration (`449f7af`); der ursprüngliche Renderfehler bleibt erhalten. Das ist keine abgeschlossene Nova-Demo-Übergabe. Initiale konfigurierbare Laufzeit wird ergänzt; für menschlich autorisierte Verlängerung fehlt weiterhin ein tatsächlicher authentifizierter Operator-Eingang. Caller-deklarierter issuer oder Runtime-ServiceAccount werden nicht als menschliche Freigabe ausgegeben.
+
+## Quellengebundene Berichte und beobachtete Exposuregeneration
+
+T15-Code lokal `f10ad7a`, remote `86b11c0c7e58cbb7f87ef35bd67bbbccdfad6b37`: ursprüngliche Journale werden rein lesend und begrenzt projiziert, Effects gegen Lifecycle-Einträge abgeglichen und reale Artefakte mit Run-/Producer-/Source-/Digestbindung gelesen. Ein vom Coordinator stammender Modusvertrag unterscheidet die tatsächlich vorkommenden vertraulichen Aufrufe; ältere mehrdeutige Historien bleiben unverifizierbar. Berichtstext bleibt Entwurf, Quellenzuordnung wird gespeichert.
+
+Generation/Receipt-Kontext lokal `4eece95`, remote `aa8d48b51e02f660d5405addc7441db21f53d24b`: tatsächlich beobachtete Exposuregeneration ist vom Provider über Authentifizierung bis zum Originalimport gebunden. Receipt-Recovery erhält die originale Parent-Identität, auch nach echtem SIGKILL.
+
+[Isolierte gemeinsame Commitprüfung](../evidence/integration-f10ad7a/README.md) besteht: 10 Source-, 29 Cleanup-, 7 Generation-/Recoveryfälle, Originalreport-/Artefaktpakete sowie Nova-/Buster-Typechecks. Nativer Modellwriter und Deployment bleiben unbestätigt; T15 zählt deshalb noch nicht als vollständig verifiziert. IFR-20-Ingestionressourcen sind jetzt in Bearbeitung.
